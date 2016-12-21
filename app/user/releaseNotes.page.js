@@ -28,8 +28,6 @@ export default class ReleaseNotesPage extends Component {
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
 
-        <h3>Trying automatic deploy</h3>
-
         <h3> r20161221a </h3>
         <ul>
           <li>Vytvořen Selenium webdriver test pro zrychlení procesu testování stránky </li>
