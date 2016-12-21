@@ -24,6 +24,7 @@ export default class ReleaseNotesPage extends Component {
         {/*<button onClick={onClick}>Generate PDF</button>*/}
 
         {/* Release notes ======================================================*/}
+        auto
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
