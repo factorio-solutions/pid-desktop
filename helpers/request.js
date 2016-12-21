@@ -10,7 +10,7 @@ import { setNotificationCount } from '../actions/notifications.actions'
 // request ((response) => { console.log(response) }, "{garages{name}}")
 export function request (onSuccess, query, variables = null, operationName = null ){
   // var entryPoint = 'http://localhost:3000/queries'
-  var entryPoint = process.env.API_ENTRYPOINT
+  var entryPoint = process.env.API_ENTRYPOINT+'/queries'
 
   var data = { query
              , operationName
