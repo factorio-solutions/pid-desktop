@@ -1,0 +1,105 @@
+@import '../_styles/app.desktop';
+
+.container{
+  display: block;
+}
+
+.pidHeader{
+  display: block;
+  background: $black;
+  // height: 28px;
+
+  > a > img {
+    height: 28px;
+    width: auto;
+  }
+
+  .languages{
+    float: right;
+    color: white;
+    margin: 5px 15px;
+
+    >span{
+      cursor: pointer;
+      margin: 0 5px;
+      color: $yellow;
+
+      &.active{
+        color: $white;
+      }
+    }
+  }
+}
+
+.content{
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+
+  > .mapConiner{
+    margin-top: 25px;
+    height: 400px;
+    width: 700px;
+    position: absolute;
+
+    > div {
+      position: inherit !important;
+      width: inherit !important;
+      height: inherit !important;
+    }
+  }
+}
+
+.displayFlex{
+  display: flex;
+
+  > .textContent{
+    flex: 2 0;
+  }
+
+  > .contacts {
+      flex: 1 0;
+      text-align: center;
+
+      > .contact{
+        padding: 15px 5px;
+        margin: 10px 0;
+        background: $lightGray;
+
+        > i {
+          font-size: 26px;
+        }
+      }
+  }
+}
+
+.innerContent{
+  padding: 0 10px;
+}
+
+h3{
+  margin: 20px 0 5px;
+}
+
+.propertiesTtable{
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+
+  >tbody>tr>td{
+    text-align: center;
+    color: $lightGray;
+
+    &.active{
+      color: $black;
+    }
+
+    >div {
+      font-size: 24px;
+      margin-top: 12px;
+      >i{
+        margin: 0 5px;
+      }
+    }
+  }
+}

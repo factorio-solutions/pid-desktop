@@ -1,0 +1,10 @@
+@import '../_styles/app.desktop';
+
+.clickable{
+  cursor: pointer;
+  font-weight: bold;
+}
+.addButton {
+	margin-top:  $addButtonMargin ;
+	text-align: center;
+}

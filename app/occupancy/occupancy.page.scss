@@ -1,0 +1,12 @@
+.dropdownContainer{
+  display: block;
+
+  >div{
+    display: inline-block;
+    width: 49%;
+
+    &:last-child{
+      float: right;
+    }
+  }
+}

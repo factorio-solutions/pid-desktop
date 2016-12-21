@@ -1,0 +1,52 @@
+@import '../_styles/app.desktop';
+
+.padding{
+  padding-right: 25px;
+}
+
+.clickable{
+  cursor: pointer;
+}
+.selected {
+  font-weight: bold;
+}
+.hidden {
+  display: none;
+}
+
+.floatRight{
+  float: right;
+}
+// .rightCollumn{
+//   padding: 0 25px;
+// }
+.floatCenter{
+  text-align: center
+}
+
+
+@media (min-width: $collapseWidth) {
+  .parent{
+    display: flex;
+  }
+
+  .leftCollumn{
+    display: inline-block;
+    width: 34%;
+
+    // border-right: 1px solid black;
+  }
+
+  .rightCollumn{
+    display: inline-block;
+    width: 66%;
+  }
+}
+
+@media (max-width: $collapseWidth) {
+  .leftCollumn{
+  }
+
+  .rightCollumn{
+  }
+}
