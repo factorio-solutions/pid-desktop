@@ -1,0 +1,16 @@
+@import '../../styles/app.components';
+
+.ul{
+  list-style-type:  none;
+  padding:          0;
+  margin:           0;
+}
+
+.horizontal{
+  display:  inline;
+  color:    $lightGray;
+}
+
+.vertical{
+  display: list-item;
+}
