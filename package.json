@@ -6,7 +6,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.my.js --progress --colors",
-    "prestart": "webpack --config webpack.config.my.js --colors",
+    "prestart": "webpack -p --config ./webpack.config.my.js --progress",
     "start": "node ./src/app.js"
   },
   "author": {
