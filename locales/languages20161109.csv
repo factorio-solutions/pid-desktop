@@ -1,0 +1,139 @@
+,en,cs,de,pl
+login_page.please,"Please, log-in or","Prosím, přihlaš se nebo si","Bitte, melde sich an oder",Zaloguj się lub
+login_page.Sign-Up,Sign-Up,Vytvoř účet,Registriere sich,Załóż konto
+login_page.email,E-mail,Zadej e-mail,E-mail,E-mail
+login_page.invalid-email,Invalid email address,Neplatná e-mailová adresa,Ungültiger E-mail,Niepoprawny adres e-mail
+login_page.password,Password,Heslo,Passwort,Hasło
+login_page.loginFailed,Login failed,Špatné přihlášení,Anmeldung fehlgeschlagen,Nie udało się zalogować
+signup_page.name,your full name*,Tvé celé jméno,Vorname und Nachname,Imię i nazwisko
+signup_page.phone,phone number,Telefonní číslo,Telefonnummer,Numer telefonu
+signup_page.email,E-mail *,E-mail,E-mail,E-mail
+signup_page.password,Password *,Heslo,Passwort,Hasło
+signup_page.confirmation,Password confirmation *,Potvrzení hesla,Passwort Bestätigung,Potwierdź hasło
+signup_page.nameInvalid,Invalid name,Neplatné jméno,Ungültiger Name,Niepoprawne imię lub nazwisko
+signup_page.phoneInvalid,Invalid phone number,Neplatné telefonní číslo,Ungültiger Telefonnummer,Niepoprawny numer telefonu
+signup_page.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Ungültiger E-mail,Niepoprawny adres e-mail
+signup_page.loginFailed,Login failed,Špatné přihlášení,Anmeldung fehlgeschlagen,Nie udało się zalogować
+signup_page.minimumLength,Minimum length is,Minimální délka je,Mindestens,Długość minimum
+signup_page.noMatching,Not matching password.,Heslo se neshoduje,Nicht passendes Passwort,Hasło się nie zgadza
+pageBase.Reservation,Reservation,Rezervace,Reservierung,Rezerwacja
+pageBase.Reservations,Reservations,Rezervace,Reservierungen,Rezerwacje
+pageBase.Accounts,Accounts,Účty,Konten,Konta
+pageBase.Account & Users,Client accounts,Zákaznické účty,Kundenkonten,Konta klienta
+pageBase.New Reservation,New Reservation,Nová rezervace,Neue Reservierung,Nowa rezerwacja
+pageBase.Garages,Garages,Garáže,Garagen,Garaże
+pageBase.Settings,Profile settings,Nastavení profilu,Profileinstellungen,Ustawienia profilu
+pageBase.Users,Users,Uživatelé,Benutzer,Użytkownicy
+pageBase.Logout,Logout,Odhlášení,Ausloggen,Wyloguj się
+pageBase.notifications,Notifications,Upozornění,Mitteilungen,Powiadomienia
+pageBase.error,Error,Chyba,Fehler,Błąd
+pageBase.reservationsHint,Here you have list of all reservations within your account.,Zde najdeš všechny rezervace pro Váš účet.,DE: Here you have list of all reservations within your account.,Tutaj znajdziesz wszystkie swoje rezerwacje.
+pageBase.newReservationHint,"You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.","Zde můžeš vytvořit novou rezervaci. Nejprve prosím vyber uživatele a garáž, poté datum a eventuelně parkovací místo. Voilá.","DE: You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!"
+pageBase.garagesHint,Here is a list of all garages registered within your account. When selected you can edit details or manage which parking places of the garage are assigned to which client account.,"Zde najdeš seznam všech garáží pro tvůj účet. Po vybrání garáže můžeš upravovat, která parkovací místa patří ke kterému zákaznickému účtu.",DE: Here is a list of all garages registered within your account. When selected you can edit details or manage which parking places of the garage are assigned to which client account.,Tutaj znajdziesz listę wszystkich garaży dostępnych dla Twojego konta. Po wybraniu garażu możesz edytować szczegóły oraz zarządzać miejscami parkingowymi przypisanymi do Twojego konta.
+pageBase.newGarageHint,"Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.","Vytvoř novou garáž. Zadej název a detaily, dále pokračuj definováním podlaží a parkovacích míst. Tyto informace jde zadat dvěma způsoby. Každý floorplan lze načíst ze souboru SVG s informacemi o parkovacích místech (s vytočením souboru Vám můžeme pomoci, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat rozsah čísel.","DE: Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.","Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze."
+pageBase.garageAccountsHint,Here you can manage which Parking  places are assigned to which Client account within selected garage. Just select Client account to see the plan of the garage and available places. Be aware garage might have more levels. Select desired level by the buttons on the right side.,"V této sekci můžeš přiřazovat parkovací místa ve vybrané garáži k jednotlivým zákaznickým účtům. Stačí zvolit zákaznický účet a zobrazí se plán garáže s dostupnými místy. Pozor, garáž může mít více pater! Vyber požadované patro tlačítky po pravé straně.",DE: Here you can manage which Parking  places are assigned to which Client account within selected garage. Just select Client account to see the plan of the garage and available places. Be aware garage might have more levels. Select desired level by the buttons on the right side.,"Tutaj możesz przypisać miejsca parkingowe w wybranym garażu do odpowiedniego konta klienta. W tym celu wybierz konto, a zobaczysz plan garażu z dostępnymi miejscami. Uwaga, garaż może mieć więcej pięter! Wybierz piętro za pomocą przycisków po prawej stronie."
+pageBase.accountsHint,"In this section you can manage Client accounts. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. Select an account to show action buttons for ""edit"" and ""manage users""","V této sekci můžeš spravovat zákaznické účty. V zákaznickém účtu nalezneš informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Po zvolení účtu se zobrazí tlačítka pro editaci a správu uživatelů.","DE: In this section you can manage Client accounts. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. Select an account to show action buttons for ""edit"" and ""manage users""","W tej sekcji możesz zarządzać kontami klienta. Znajdziesz w nich informacje o kliencie, użytkownikach, przyporządkowanych do nich miejscach parkingowych itp. Po wybraniu konta pojawią się przyciski umożliwiające edytowanie i zarządzanie użytkownikami."
+pageBase.newAccountHint,"Here you are creating a new Client account. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. You will be able to set these in corresponding sections of the system.","Zde můžeš vytvářet zákaznické účty. Ty v sobě obsahují informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Toto vše lze nastavit v patřičné sekci systému.","DE: Here you are creating a new Client account. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. You will be able to set these in corresponding sections of the system.","Tutaj utworzyć możesz konto klienta. Konto zawiera informacje o kliencie, użytkownikach, przyporządkowanych im miejscach parkingowych itp. Ustawienia znajdziesz w odpowiedniej sekcji systemu."
+pageBase.accountUsersHint,"This section allows for management of users of a particular Client account. By selecting a user you can see and setup user rights. You can as well invite new users to this selected Client account. Sent invitations, that are waiting for the confirmation are shown in the ""Pending invitations"" Section below","Zde můžeš spravovat jednotlivé uživatele vybraného zákaznického účtu. Po zvolení uživatele se zobrazí a jdou upravit práva uživatele. Můžeš také do zákaznického účtu pozvat nové uživatele. Odeslané pozvánky které čekají na potvrzení nalezneš v sekci ""Pozvánky čekající na potvrzení"" níže.","DE: This section allows for management of users of a particular Client account. By selecting a user you can see and setup user rights. You can as well invite new users to this selected Client account. Sent invitations, that are waiting for the confirmation are shown in the ""Pending invitations"" Section below","W tej sekcji zarządzać możesz poszczególnymi użytkownikami w ramach swojego konta klienta. Po wybraniu użytkownika zobaczysz jego uprawnienia, które możesz edytować. Do konta klienta zaprosić możesz też nowych użytkowników. Wysłane zaproszenia, które czekają na odpowiedź, znajdziesz w sekcji ""Zaproszenia czekające na odpowiedź"""
+pageBase.settingsHint,Settings,Nastavení,Einstellungen,Ustawienia
+pageBase.usersHint,Here you have a list of all known users. Select a user to see Client accounts membership.,Zde nalezneš seznam všech uživatelů. Po zvolení uživatele se zobrazí jeho členství v zákaznických účtech.,DE: Here you have a list of all known users. Select a user to see Client accounts membership.,"Tutaj znajdziesz listę wszystkich użytkowników. Wybierz użytkownika, aby zobaczyć jego członkowstwo w kontach klienta."
+pageBase.allKnownUsers,All known users,Všichni známí uživatelé,Alle bekannten Benutzer,Wszyscy znani użytkownicy
+newReservation.selectGarage,Select garage,Vyber garáž,Wählen Sie eine Garage,Wybierz garaż
+newReservation.selectUser,Select user,Vyber uživatele,Wählen Sie einen Benutzer aus,Wybierz użytkownika
+newReservation.begins,Begins,Začíná,Beginnt,Od
+newReservation.invalidaDate,Invalid date,neplatné datum,Ungültiges Datum,Niepoprawna data
+newReservation.invalidPlace,Invalid place,Neplatné místo,Ungültiger Platz,Niepoprawne miejsce
+newReservation.invalidaValue,Invalid value,Neplatná hodnota,Ungültiger Wert,Niepoprawna wartość
+newReservation.ends,Ends,Končí,endet,Do
+newReservation.duration,Duration,Doba,Dauer,Okres
+newReservation.date,Date,Datum,Datum,Data
+newReservation.place,Place,Místo,Ort,Miejsce
+newReservation.auto,auto,automaticky,Auto,automatycznie
+newReservation.Auto,Auto,Automaticky,Auto,Automatycznie
+newReservation.now,now,nyní,jetzt,teraz
+newReservation.fail,Reservation error,Chyba při vytváření rezervace,Reservierungsfehler,Podczas rezerwacji pojawił się błąd
+newReservation.noAvailableGarages,There are currently no available garages where you can create reservation.,"Momentálně nejsou dostupné žádné garáže, kde můžete vytvořit novou rezervaci.","Zurzeit gibt es keine Garagen, in denen Sie reservieren können.","Obecnie nie ma żadnych dostępnych garaży, aby utworzyć nową rezerwację."
+accounts.name,name,jméno,Name,Imię i nazwisko
+accounts.id,id,id,id,id
+accounts.from,from,od,von,od
+accounts.created,created,Vytvořen,Erstellt,utworzony
+accounts.users,users,uživatelé,Benutzer,użytkownicy
+accountUsers.name,username,uživatelské jméno,Benutzername,nazwa użytkownika
+accountUsers.email,e-mail,e-mail,Email,e-mail
+accountUsers.memberSince,member since,členem od,Mitglied seit,członek od
+accountUsers.phone,phone,telefon,Telefon,telefon
+accountUsers.isAdmin,is account admin,je administrátor účtu,Ist Kontoadministrator,jest administratorem konta
+accountUsers.canCreateOwn,can create own,může vytvářet vlastní,Kann eigene erstellen,może utworzyć własne
+accountUsers.canCreateInternal,can create internal,může vytvářet interní,Kann interne erstellen,może utworzyć wewnętrzne
+accountUsers.isInternal,is internal,je interní,ist intern,należy do
+accountUsers.presetAs,Preset as,Nastav jako,Voreinstellung als,Ustaw jako
+accountUsers.internal,Internal,Interní,Intern,Należy do
+accountUsers.secretary,Secretary,Sekretářka,Sekretariat,Sekretarz
+accountUsers.removeAccountUser,Are you sure you want to remove this user?,Určitě chceš odstranit tohoto uživatele?,Möchten Sie diesen Benutzer wirklich entfernen?,Czy na pewno chcesz usunąć użytkownika?
+accountUsers.pendingUsers,Pending invitations,Pozvánky čekající na potvrzení,Ausstehende Einladungen,Zaproszenia czekające na odpowiedź
+reservations.name,Name,jméno,Name,Imię i nazwisko
+reservations.from,From,od,Von,od
+reservations.to,To,do,Nach,do
+reservations.place,Place,místo,Ort,Miejsce
+reservations.creator,Creator,Vytvořil,Schöpfer,utworzył
+reservations.garage,garage,,,
+reservations.removeReservationQuestion,Are you sure you want to remove this reservation?,Určitě chceš odstranit tuto rezervaci?,Möchten Sie diese Reservierung wirklich entfernen?,Czy na pewno chcesz usunąć rezerwację?
+garages.name,garage name,Název garáže,Name der Garage,Nazwa garażu
+garages.id,id,id,id,id
+garages.created,created,Vytvořen,erstellt,utworzony
+garages.removeGarageQuestion,Are you sure you want to delete this garage?,Určitě chceš odstranit tuto garáž?,Möchten Sie diese Garage wirklich löschen?,Czy na pewno chcesz usunąć ten garaż?
+garages.places,places,místa,Platze,miejsca
+garageUsers.selectAccount,select client account,Vyber účet klienta,Client-Konto auswählen,Wybierz konto klienta
+newGarage.newGarage,New garage,Nová garáž,Neue Garage,Nowy garaż
+newGarage.name,Garage name,Název garáže,Name der Garage,Nazwa garażu
+newGarage.placeholder,Office center,Kancelářské centrum,Bürozentrum,Centrum biurowe
+newGarage.floorName,Floor name,Název patra,Name der Etage,Nazwa piętra
+newGarage.placeholderFloor,Set floor name,Nastav název patra,Fußbodennamen festlegen,Ustaw nazwę piętra
+newGarage.floorName,LVL,,,
+newGarage.placeholderFloor,-1,,,
+newGarage.invalidFloorName,Invalid floor name,Neplatné název patra,Ungültiger Name,Niepoprawna nazwa piętra
+newGarage.invalidName,Invalid garage name,Neplatný název garáže,Ungültiger Garagename,Niepoprawna nazwa garażu
+newGarage.removeFloorRowQuestion,Are you sure you want to delete this row?,Určitě chceš odstranit tento řádek?,Möchten Sie diese Zeile wirklich löschen?,Czy na pewno chcesz usunąć tę linijkę?
+newGarage.address,Address,,,
+newGarage.invalidAddress,Invalid garage address,,,
+newGarage.GPS,GPS location,,,
+newGarage.invalidGPS,invalid GPS location,,,
+newGarage.from,N° from,,,
+newGarage.to,N° to,,,
+newGarage.invalidFloorFrom,Invalid from number,,,
+newGarage.invalidFloorTo,Invalid to number,,,
+newGarage.placeholderFloorFrom,3,,,
+newGarage.placeholderFloorTo,12,,,
+newAccount.newAccount,New account,Nový účet,Neues Konto,Nowe konto
+newAccount.name,Account name,Název účtu,Kontobezeichnung,Nazwa konta
+newAccount.placeholder,Company account,Firemní účet,Unternehmenskonto,Konto firmowe
+newAccount.invalidName,Invalid account name,Neplatné jméno účtu,Ungültiger Kontoname,Niepoprawna nazwa konta
+editAccount.editAccount,Edit account,,,
+editAccount.name,name,,,
+editAccount.invalidName,Invalid account name,,,
+editAccount.placeholder,Firm account,,,
+newAccountUser.addUser,Add new user,Přidej nového uživatele,Neuen Benutzer hinzufügen,Dodaj nowego użytkownika
+newAccountUser.selectUser,Enter users e-mail,Zadej uživatelův e-mail,Geben Sie die E-Mail-Adresse des Benutzers ein,Podaj adres e-mail użytkownika
+newAccountUser.noSuchUser,No such user exists.,Takový uživatel neexistuje.,Kein solcher Benutzer existiert.,Użytkownik nie istnieje.
+newAccountUser.emailFail,E-mail failed,E-mail selhal,E-Mail fehlgeschlagen,Błąd w adresie e-mail
+newAccountUser.success,User found,Uživatel nalezen,Benutzer gefunden,Nie znaleziono użytkownika
+newAccountUser.notificationSend,Notification has been send to this user. Wait for him to accept.,Upozornění bylo odesláno tomuto uživateli. Vyčkej jeho potvrzení.,"Die Benachrichtigung wurde an diesen Benutzer gesendet. Warten Sie, bis er akzeptiert.",Powiadomienie zostało wysłane do użytkownika. Poczekaj na odpowiedź.
+newAccountUser.message,You have been invited to use account '%(account)s'!,Byl jsi pozván do Zákaznického účtu '%(account)s'!,"Sie wurden eingeladen, das Konto '%(account)s' zu verwenden!",Zostałeś zaproszony do Konta klienta '%(account)s'!
+newAccountUser.noRights,You don't have rights to do that.,K tomuto nemáš práva!!!,"Sie haben nicht das Recht, das zu tun.",Nie posiadasz odpowiednich uprawnień.
+notifications.user,user,Uživatel,Benutzer,Użytkownik nie istnieje.
+notifications.email,e-mail,E-mail,E-mail,E-mail
+notifications.phone,phone,Telefon,Telefon,Telefon
+notifications.sent,sent,Odesláno,Gesendet,Wysłane
+notifications.declineQuestion,Are you sure you want to decline?,Určitě chceš odmítnout?,Möchten Sie wirklich ablehnen?,Czy na pewno chcesz odrzucić?
+notifications.expiration,Notification will expire on ,Upozornění vyprší dne.,Die Benachrichtigung läuft ab,Powiadomienie ważne do
+notifications.accountInvitationMessage,Is asking for approval of new account.,Žádá o odsouhlasení nového účtu,Ist für die Genehmigung des neuen Kontos fragen.,prosi o potwierdzenie nowego konta
+notifications.accountUserDestroyed,"You have been removed from an account, all reservations associated to this account were canceled.",,,
+notifications.accountPlaceDestroyed,Reservation of yours has been canceled due to owner removed the place from used account.,,,
+settings.hints,I want to see hints.,Chci zobrazit nápovědu,Ich möchte Hinweise sehen.,Chcę zobaczyć Pomoc.
+settings.language,Choose language:,Vyber jazyk:,Wähle eine Sprache:,Wybierz język:
+users.username,username,,,
+users.email,e-mail,,,
+users.phone,phone,,,
+users.memberSince,member since,,,
+users.active,active,,,
+users.pending,pending,,,

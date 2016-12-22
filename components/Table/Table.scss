@@ -1,0 +1,54 @@
+@import '../../styles/app.components';
+
+.rtTable{
+  width: 100%;
+  border-spacing: 0px;
+  // border-collapse: collapse;
+
+  > thead {
+    > tr > td {
+      border-bottom: 1px solid $black;
+      // font-weight: bold;
+
+      > td:hover {
+        background:  darken($white, 10%);
+      }
+    }
+  }
+}
+
+.tr {
+  > td {
+    border-bottom: 1px solid $black;
+    padding: 4px
+  }
+}
+
+.spoilerRow {
+  background: $yellow;
+  >td{
+    border-bottom: 1px dashed $gray !important;
+  }
+
+  &:hover {
+    background: $yellow !important;
+    color: $black !important;
+  }
+}
+
+.disabled{
+  color: $lightGray
+}
+
+.spoiler {
+  background: darken($white, 10%) !important;
+  // border-top-style: dotted;
+}
+
+.tdHeader{
+  cursor: pointer;
+
+  &:hover{
+    background-color: darken($white, 10%);
+  }
+}
