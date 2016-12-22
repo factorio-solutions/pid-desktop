@@ -1,0 +1,52 @@
+@import '../_styles/app.desktop.scss';
+
+.contentPadding{
+  padding: 25px 15px 0;
+}
+
+.inputWidth{
+  width: calc(100% - 120px);
+}
+
+.hidden{
+  display: none;
+}
+
+.inline{
+  display: flex;
+}
+
+.floatCenter{
+  text-align: center;
+}
+
+
+.form{
+  display: flex;
+}
+.formChild{
+  flex-grow: 1;
+  width: 50%;
+}
+.mainInfo{
+  padding-right: 15px;
+}
+.additionalInfo{
+  padding: 15px;
+  background: darken($white, 10%);
+}
+
+.rights{
+  border-bottom: 1px dashed $gray;
+
+  > :first-child {
+    margin-left: 0;
+  }
+  > :last-child {
+    margin-right: 0;
+  }
+}
+
+.presets{
+  border-bottom: 1px solid $gray;
+}

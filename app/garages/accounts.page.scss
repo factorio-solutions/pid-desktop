@@ -1,0 +1,95 @@
+@import '../_styles/app.desktop.scss';
+
+.page {
+	padding: 10px;
+}
+
+.addButton {
+	margin-top: $addButtonMargin;
+	text-align: center;
+}
+
+.redText {
+	color: $red;
+}
+
+.devider {
+	border-bottom: 1px dashed $gray;
+	> * {
+		margin: 0 5px;
+	}
+
+	> :first-child {
+		margin-left: 0;
+	}
+
+	> :last-child {
+		margin-right: 0;
+	}
+
+	+ div {
+		span {
+			margin: 0 10px;
+		}
+	}
+}
+
+.spoiler {
+	> div {
+		padding: 5px 0;
+	}
+}
+
+.float {
+	float: right;
+	> * {
+		margin: 0 5px;
+	}
+}
+
+.clear {
+	clear: both;
+}
+
+
+.padding{
+  padding-right: 25px;
+}
+.rightCollumn{
+  padding: 0 25px;
+}
+
+.datepicker{
+	display: flex;
+  margin-bottom: 50px;
+}
+
+@media (min-width: $collapseWidth) {
+  .parent{
+    display: flex;
+  }
+
+  .leftCollumn{
+    display: inline-block;
+    width: 33%;
+
+    border-right: 1px solid black;
+  }
+
+  .rightCollumn{
+    display: inline-block;
+    width: 66%;
+  }
+}
+
+@media (max-width: $collapseWidth) {
+  .leftCollumn{
+  }
+
+  .rightCollumn{
+  }
+}
+
+.backButtonContainer{
+	margin-top: $backButtonTopMargin;
+}

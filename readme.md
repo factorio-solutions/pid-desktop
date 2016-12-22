@@ -1,5 +1,7 @@
-#[PID] API
-### This is code to Park-it-direct Front end React-Redux website
+# Park it direct
+### How to build this app
 
-
-### Master branch will be autmaticly built and will be published on heroku at pid-beta.herokuapp.com
+copy files from development desktop version of PID
+in input.scss change line 22 to width: 100%;
+run 'npm run build' command
+push to heroku for publishing

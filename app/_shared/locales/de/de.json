@@ -1,0 +1,179 @@
+{
+	"PID-RELEASE": "161110",
+	"login_page": {
+		"please": "Bitte, melde sich an oder",
+		"Sign-Up": "Registriere sich",
+		"email": "E-mail",
+		"invalid-email": "Ungültiger E-mail",
+		"password": "Passwort",
+		"loginFailed": "Anmeldung fehlgeschlagen"
+	},
+	"signup_page": {
+		"name": "Vorname und Nachname  *",
+		"phone": "Telefonnummer",
+		"email": "E-mail  *",
+		"password": "Passwort  *",
+		"confirmation": "Passwort Bestätigung  *",
+		"nameInvalid": "Ungültiger Name",
+		"phoneInvalid": "Ungültiger Telefonnummer",
+		"emailInvalid": "Ungültiger E-mail",
+		"loginFailed": "Anmeldung fehlgeschlagen",
+		"minimumLength": "Mindestens",
+		"noMatching": "Nicht passendes Passwort"
+	},
+	"pageBase": {
+		"Reservation": "Reservierung",
+		"Reservations": "Reservierungen",
+		"Accounts": "Konten",
+		"Account & Users": "Kundenkonten",
+		"New Reservation": "Neue Reservierung",
+		"NewGarage": "DE: pageBase.NewGarage",
+		"Garages": "Garagen",
+		"Settings": "Profileinstellungen",
+		"Users": "Benutzer",
+		"Logout": "Ausloggen",
+		"notifications": "Mitteilungen",
+		"error": "Fehler",
+		"reservationsHint": "DE: Here you have list of all reservations within your account.",
+		"newReservationHint": "DE: You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.",
+		"garagesHint": "DE: Here is a list of all garages registered within your account. When selected you can edit details or manage which parking places of the garage are assigned to which client account.",
+		"newGarageHint": "DE: Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.",
+		"garageAccountsHint": "DE: Here you can manage which Parking  places are assigned to which Client account within selected garage. Just select Client account to see the plan of the garage and available places. Be aware garage might have more levels. Select desired level by the buttons on the right side.",
+		"accountsHint": "DE: In this section you can manage Client accounts. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. Select an account to show action buttons for \"edit\" and \"manage users\"",
+		"newAccountHint": "DE: Here you are creating a new Client account. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. You will be able to set these in corresponding sections of the system.",
+		"accountUsersHint": "DE: This section allows for management of users of a particular Client account. By selecting a user you can see and setup user rights. You can as well invite new users to this selected Client account. Sent invitations, that are waiting for the confirmation are shown in the \"Pending invitations\" Section below",
+		"settingsHint": "Einstellungen",
+		"usersHint": "DE: Here you have a list of all known users. Select a user to see Client accounts membership.",
+		"allKnownUsers": "Alle bekannten Benutzer",
+		"editAccountHint": "DE: pageBase.editAccountHint",
+		"notificationsHint": "DE: pageBase.notificationsHint",
+		"newAccountUsersHint": "DE: pageBase.newAccountUsersHint"
+	},
+	"newReservation": {
+		"selectGarage": "Wählen Sie eine Garage",
+		"selectUser": "Wählen Sie einen Benutzer aus",
+		"begins": "Beginnt",
+		"invalidaDate": "Ungültiges Datum",
+		"invalidPlace": "Ungültiger Platz",
+		"invalidaValue": "Ungültiger Wert",
+		"ends": "endet",
+		"duration": "Dauer",
+		"date": "Datum",
+		"place": "Ort",
+		"auto": "Auto",
+		"Auto": "Auto",
+		"now": "jetzt",
+		"fail": "Reservierungsfehler",
+		"noAvailableGarages": "Zurzeit gibt es keine Garagen, in denen Sie reservieren können."
+	},
+	"accounts": {
+		"name": "Name",
+		"id": "id",
+		"from": "Von",
+		"created": "Erstellt",
+		"users": "Benutzer"
+	},
+	"accountUsers": {
+		"name": "Benutzername",
+		"email": "E-mail",
+		"memberSince": "Mitglied seit",
+		"phone": "Telefon",
+		"isAdmin": "Ist Kontoadministrator",
+		"canCreateOwn": "Kann eigene erstellen",
+		"canCreateInternal": "Kann interne erstellen",
+		"isInternal": "ist intern",
+		"presetAs": "Voreinstellung als",
+		"internal": "Intern",
+		"secretary": "Sekretariat",
+		"removeAccountUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
+		"pendingUsers": "Ausstehende Einladungen"
+	},
+	"reservations": {
+		"name": "Name",
+		"from": "Von",
+		"to": "Nach",
+		"place": "Ort",
+		"creator": "Schöpfer",
+		"garage": "DE: reservations.garage",
+		"removeReservationQuestion": "Möchten Sie diese Reservierung wirklich entfernen?"
+	},
+	"garages": {
+		"name": "Name der Garage",
+		"id": "id",
+		"created": "erstellt",
+		"removeGarageQuestion": "Möchten Sie diese Garage wirklich löschen?",
+		"places": "Platze"
+	},
+	"garageUsers": {
+		"selectAccount": "Client-Konto auswählen",
+		"begins": "DE: garageUsers.begins",
+		"ends": "DE: garageUsers.ends",
+		"invalidaDate": "DE: garageUsers.invalidaDate"
+	},
+	"newGarage": {
+		"newGarage": "Neue Garage",
+		"name": "Name der Garage",
+		"placeholder": "Bürozentrum",
+		"floorName": "DE: Level",
+		"placeholderFloor": "1",
+		"invalidFloorName": "Ungültiger Name",
+		"invalidName": "Ungültiger Garagename",
+		"removeFloorRowQuestion": "Möchten Sie diese Zeile wirklich löschen?",
+		"address": "DE: newGarage.address",
+		"invalidAddress": "DE: newGarage.invalidAddress",
+		"GPS": "DE: newGarage.GPS",
+		"invalidGPS": "DE: newGarage.invalidGPS",
+		"from": "DE: newGarage.from",
+		"to": "DE: newGarage.to",
+		"invalidFloorFrom": "DE: newGarage.invalidFloorFrom",
+		"invalidFloorTo": "DE: newGarage.invalidFloorTo",
+		"placeholderFloorFrom": "3",
+		"placeholderFloorTo": "12",
+		"addressPlaceholder": "DE: newGarage.addressPlaceholder",
+		"GPSPlaceholder": "DE: newGarage.GPSPlaceholder"
+	},
+	"newAccount": {
+		"newAccount": "Neues Konto",
+		"name": "Kontobezeichnung",
+		"placeholder": "Unternehmenskonto",
+		"invalidName": "Ungültiger Kontoname"
+	},
+	"editAccount": {
+		"editAccount": "DE: editAccount.editAccount",
+		"name": "Kontobezeichnung",
+		"invalidName": "Ungültiger Kontoname",
+		"placeholder": "Unternehmenskonto"
+	},
+	"newAccountUser": {
+		"addUser": "Neuen Benutzer hinzufügen",
+		"selectUser": "Geben Sie die E-Mail-Adresse des Benutzers ein",
+		"noSuchUser": "Kein solcher Benutzer existiert.",
+		"emailFail": "E-Mail fehlgeschlagen",
+		"success": "Benutzer gefunden",
+		"notificationSend": "Die Benachrichtigung wurde an diesen Benutzer gesendet. Warten Sie, bis er akzeptiert.",
+		"message": "Sie wurden eingeladen, das Konto '%(account)s' zu verwenden!",
+		"noRights": "Sie haben nicht das Recht, das zu tun."
+	},
+	"notifications": {
+		"user": "Benutzer",
+		"email": "E-mail",
+		"phone": "Telefon",
+		"sent": "Gesendet",
+		"declineQuestion": "Möchten Sie wirklich ablehnen?",
+		"expiration": "Die Benachrichtigung läuft ab",
+		"accountUserDestroyed": "DE: notifications.accountUserDestroyed",
+		"accountPlaceDestroyed": "DE: notifications.accountPlaceDestroyed"
+	},
+	"settings": {
+		"hints": "Ich möchte Hinweise sehen.",
+		"language": "Wähle eine Sprache:"
+	},
+	"users": {
+		"username": "DE: users.username",
+		"email": "E-mail",
+		"phone": "DE: users.phone",
+		"memberSince": "DE: users.memberSince",
+		"active": "DE: users.active",
+		"pending": "DE: users.pending"
+	}
+}

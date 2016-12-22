@@ -1,0 +1,7 @@
+@mixin colorize($color) {
+  background-color: $color;
+
+  &:not(.selected):not(.disabled):hover {
+    background-color: darken($color, 10%)
+  }
+}

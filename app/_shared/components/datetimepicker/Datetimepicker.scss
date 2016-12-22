@@ -1,0 +1,19 @@
+.datetimeContainer{
+  display: flex;
+  > div {
+    display: inline-block;
+    > div {
+      vertical-align: top;
+    }
+  }
+}
+
+
+
+.datePicker{
+  border-right: 1px solid black;
+  padding-right: 5px;
+}
+.timePicker{
+  padding-left: 4px;
+}
