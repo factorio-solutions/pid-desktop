@@ -65,7 +65,7 @@
     "spectron": "^3.3.0",
     "style-loader": "^0.13.1",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.12.2",
+    "webpack-hot-middleware": "^2.12.2"
   },
   "dependencies": {
     "babel-loader": "^6.2.5",
