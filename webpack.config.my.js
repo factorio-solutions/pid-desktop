@@ -31,7 +31,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production'),
-        'API_ENTRYPOINT': process.env.API_ENTRYPOINT
+        'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT)
       }
     })
   ],
@@ -57,11 +57,7 @@ module.exports = {
       // {
       //   test: /\.jsx?$/,
       //   loaders: 'babel-loader',
-      //   exclude: /node_modules/,
-      //   query:
-      //     {
-      //       presets:['react']
-      //     }
+      //   exclude: /node_modules/
       // },
       {
         test: /\.json$/,
