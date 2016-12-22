@@ -21,18 +21,6 @@ module.exports = {
   },
 
   plugins: [
-    // new webpack.optimize.OccurrenceOrderPlugin(),
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify('production')
-    // }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   minimize: true,
-    //   compressor: {
-    //     screw_ie8: true,
-    //     warnings: false
-    //   }
-    // }),
-    // new ExtractTextPlugin('style.css', { allChunks: true })
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
@@ -66,13 +54,6 @@ module.exports = {
         loader: 'json-loader'
       },
       {
-        test: /\.global\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap'
-        ]
-      },
-      {
         test: /\.scss$/,
         loaders: [
           'style',
@@ -81,7 +62,7 @@ module.exports = {
         ]
       },
       {
-        test: /^((?!\.global).)*\.css$/,
+        test: /\.css$/,
         loaders: [
           'style-loader',
           'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
