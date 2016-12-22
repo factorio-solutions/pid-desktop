@@ -1,0 +1,57 @@
+@import '../_styles/app.mobile';
+
+.selected{
+  color:        $black;
+  font-size:    35px;
+  font-weight:  bold;
+}
+
+.notSelected{
+  color:        $lightGray;
+  font-size:    25px;
+}
+
+.hidden{
+  display: none;
+}
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+}
+
+.rowContainer{
+  text-align: center;
+}
+
+.dateInput{
+  width: calc(100% - 24px);
+  font-size: 16px;
+  padding: 12px 12px 8px;
+  display: block;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.placeLabel{
+  font-size: 25px;
+  font-weight: bold;
+  color: $blue;
+  padding: 5px;
+  float: left;
+}
+
+.selectedPlace{
+  color: $yellow;
+}
+
+.error{
+  text-align: center;
+  color: $red;
+  font-weight: bold;
+  padding-top: 20px;
+}
