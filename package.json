@@ -6,7 +6,6 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.my.js --progress --colors",
-    "preinstall": "npm prune",
     "postinstall": "webpack -p --config ./webpack.config.my.js --progress",
     "start": "node ./src/app.js"
   },
