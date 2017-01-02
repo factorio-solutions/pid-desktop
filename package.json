@@ -2,12 +2,13 @@
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
   "version": "0.10.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.my.js --progress --colors",
     "postinstall": "webpack -p --config ./webpack.config.my.js --progress",
-    "start": "node ./src/app.js"
+    "start": "node ./src/app.js",
+    "dev": "webpack-dev-server --config webpack.config.dev.js --progress --colors --open"
   },
   "author": {
     "name": "T. Hrstka"

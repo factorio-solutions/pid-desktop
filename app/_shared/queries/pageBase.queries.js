@@ -1,4 +1,3 @@
-// Get currently logged in user
 export const GET_CURRENT_USER = `{
   current_user {
     full_name

@@ -5,7 +5,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
 
-  entry: ['./app/index'],
+  devServer: {
+    inline: true,
+    hot: true
+   },
+
+  entry: [ './app/index' ],
 
   output: {
     path: path.join(__dirname, 'public'),
@@ -13,23 +18,13 @@ module.exports = {
     publicPath: '/public/'
   },
 
-  resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
-  },
-
   plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-        'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT)
+        'NODE_ENV': JSON.stringify('development'),
+        'API_ENTRYPOINT': JSON.stringify('http://localhost:3000')
       }
     })
   ],
