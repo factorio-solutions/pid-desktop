@@ -270,7 +270,8 @@
 		"description": "Garage description",
 		"images": "Garage images",
 		"uploading": "Uploading...",
-		"notCreated": "Marketing was not created, selected short name is allready taken."
+		"notCreated": "Marketing was not created, selected short name is allready taken.",
+		"notUpdated": "Marketing was not updated, selected short name is allready taken."
 	},
 	"garageMarketing":{
 		"id": "id",

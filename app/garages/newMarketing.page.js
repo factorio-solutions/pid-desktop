@@ -36,7 +36,8 @@ export class NewMarketingPage extends Component {
     const { state, actions } = this.props
 
     const submitForm = () => {
-      actions.submitGarageMarketing(this.props.params.id)
+      this.props.params.marketingId ? actions.editGarageMarketing(this.props.params.marketingId, this.props.params.id)
+                                    : actions.submitGarageMarketing(this.props.params.id)
     }
 
     const goBack = () => {
@@ -82,7 +83,7 @@ export class NewMarketingPage extends Component {
             {state.images.length-1 != index && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newGarage', 'removeFloorRowQuestion'])} />}
           </div>
           <div className={styles.imgPreview}>
-            {image.img != '' && <img src={image.img.substring(0,10) == 'data:image' ? image.img : 'data:image/' + image.file.substring(image.file.lastIndexOf(".")+1) + ';base64,'+image.img}/>}
+            {image.img != '' && <img src={image.img}/>}
           </div>
         </div>
       )
