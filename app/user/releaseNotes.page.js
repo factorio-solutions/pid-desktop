@@ -18,12 +18,18 @@ export default class ReleaseNotesPage extends Component {
       request((response)=>{console.log(response);}, "mutation GeneratPdf { pdf }")
     }
 
+    const onSIPClick = () => {
+      request((response)=>{console.log(response);}, `mutation CallNumber{ gate(number: "${document.getElementById('tel').value}" ) }`)
+    }
+
     return (
       <div style={{padding: "15px"}}>
         {/* Generate PDF button ================================================*/}
         {/*<button onClick={onClick}>Generate PDF</button>*/}
 
         {/* Release notes ======================================================*/}
+
+        <button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
