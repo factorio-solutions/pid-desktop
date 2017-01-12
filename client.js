@@ -6,7 +6,7 @@ console.log(os.networkInterfaces());
 
 var client = new net.Socket();
 
-client.connect(5060, process.argv[2], function() { //'192.168.136.127'
+client.connect((process.argv[3] || 5060), process.argv[2], function() { //'192.168.136.127'
 	console.log('Connected');
 	client.write('Hello, server! Love, Client.');
 });
