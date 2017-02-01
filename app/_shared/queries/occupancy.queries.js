@@ -1,6 +1,6 @@
-// get available accounts and garages
+// get available clients and garages
 export const OCCUPANCY_INIT = `{
-  manageble_accounts {
+  manageble_clients {
     name
     id
     created_at
@@ -25,7 +25,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         id
         label
         reservations {
-          account {
+          client {
             name
             id
           }

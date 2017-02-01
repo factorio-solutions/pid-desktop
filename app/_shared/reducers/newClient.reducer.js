@@ -1,20 +1,20 @@
 import {
-  SET_ACCOUNT_NAME,
-  CLEAR_ACCOUNT_FORM
-}  from '../actions/newAccount.actions'
+  SET_CLIENT_NAME,
+  CLEAR_CLIENT_FORM
+}  from '../actions/newClient.actions'
 
 const defaultState =  { name: "" }
 
 
-export default function newAccount (state = defaultState, action) {
+export default function newClient (state = defaultState, action) {
   switch (action.type) {
 
-    case SET_ACCOUNT_NAME:
+    case SET_CLIENT_NAME:
     return  { ...state
             , name: action.value
             }
 
-    case CLEAR_ACCOUNT_FORM:
+    case CLEAR_CLIENT_FORM:
     return defaultState
 
     default:

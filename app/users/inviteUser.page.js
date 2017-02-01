@@ -24,14 +24,14 @@ export class inviteUserPage extends Component {
   }
 
   componentDidMount () {
-    this.props.actions.initAccounts()
+    this.props.actions.initClients()
   }
 
   render() {
     const {state, actions} = this.props
 
     const submitForm = () => {
-      checkSubmitable() && actions.createNewAccountUser()
+      checkSubmitable() && actions.createNewClientUser()
     }
 
     const goBack = () => {
@@ -39,7 +39,7 @@ export class inviteUserPage extends Component {
     }
 
     const checkSubmitable = () => {
-      return state.email.valid && state.account_id != undefined
+      return state.email.valid && state.client_id != undefined
     }
 
     const emailChanged = (value, valid) => {
@@ -71,11 +71,11 @@ export class inviteUserPage extends Component {
       goBack()
     }
 
-    const accountDropdown = () => {
-      const accountSelected = (index) => {
-        actions.setAccount(state.accounts[index].id)
+    const clientDropdown = () => {
+      const clientSelected = (index) => {
+        actions.setClient(state.clients[index].id)
       }
-      return state.accounts.map((account, index) => {return {label: account.name, onClick: accountSelected.bind(this, index) }})
+      return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
     }
 
     const errorContent = <div className={styles.floatCenter}>
@@ -102,7 +102,7 @@ export class inviteUserPage extends Component {
                       <div className={styles.form}>
                         <div className={`${styles.formChild} ${styles.mainInfo}`}>
                           <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} />
-                          <Dropdown label={t(['occupancy', 'selectClientAccount'])} content={accountDropdown()} style='light' selected={state.accounts.findIndex((account)=>{return account.id == state.account_id})}/>
+                          <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
                           <PatternInput onEnter={submitForm} onChange={messageChanged} label={t(['inviteUser', 'inviteMessage'])} error={t(['inviteUser', 'wrongMessage'])} pattern="^(?!\s*$).+" value={state.message} />
                         </div>
                         <div className={`${styles.formChild} ${styles.additionalInfo}`}>
@@ -111,15 +111,15 @@ export class inviteUserPage extends Component {
                           <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
                           <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
                           <p className={styles.rights}>
-                            <span className={state.can_manage ? styles.boldText : styles.inactiveText}  onClick={canManageClick}>{t(['accountUsers','isAdmin'])}</span>|
-                            <span className={state.can_create_own ? styles.boldText : styles.inactiveText} onClick={canCreateOwnClick}>{t(['accountUsers','canCreateOwn'])}</span>|
-                            <span className={state.can_create_internal ? styles.boldText : styles.inactiveText} onClick={canCreateInternalClick}>{t(['accountUsers','canCreateInternal'])}</span>|
-                            <span className={state.is_internal ? styles.boldText : styles.inactiveText} onClick={isInternalClick}>{t(['accountUsers','isInternal'])}</span>
+                            <span className={state.can_manage ? styles.boldText : styles.inactiveText}  onClick={canManageClick}>{t(['clientUsers','isAdmin'])}</span>|
+                            <span className={state.can_create_own ? styles.boldText : styles.inactiveText} onClick={canCreateOwnClick}>{t(['clientUsers','canCreateOwn'])}</span>|
+                            <span className={state.can_create_internal ? styles.boldText : styles.inactiveText} onClick={canCreateInternalClick}>{t(['clientUsers','canCreateInternal'])}</span>|
+                            <span className={state.is_internal ? styles.boldText : styles.inactiveText} onClick={isInternalClick}>{t(['clientUsers','isInternal'])}</span>
                           </p>
                           <div className={styles.presets}>
-                            {t(['accountUsers','presetAs']) }
-                            <span className={styles.clickable} onClick={internalClick}>{t(['accountUsers','internal'])}</span>|
-                            <span className={styles.clickable} onClick={secretaryClick}>{t(['accountUsers','secretary'])}</span>
+                            {t(['clientUsers','presetAs']) }
+                            <span className={styles.clickable} onClick={internalClick}>{t(['clientUsers','internal'])}</span>|
+                            <span className={styles.clickable} onClick={secretaryClick}>{t(['clientUsers','secretary'])}</span>
                           </div>
                         </div>
                       </div>

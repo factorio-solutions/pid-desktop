@@ -1,7 +1,7 @@
-// fetches all known users from all accounts
+// fetches all known users from all clients
 export const GET_KNOWN_USERS = `{
-  account_users {
-    account {
+  client_users {
+    client {
       id
       name
       created_at
@@ -14,7 +14,7 @@ export const GET_KNOWN_USERS = `{
       last_active
     }
   }
-  pending_account_users {
+  pending_client_users {
     user {
       id
       full_name

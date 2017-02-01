@@ -9,8 +9,8 @@ export const SET_USER               = 'SET_USER'
 export const SET_AVAILABLE_USERS    = 'SET_AVAILABLE_USERS'
 export const SET_FROM               = 'SET_FROM'
 export const SET_TO                 = 'SET_TO'
-export const SET_ACCOUNT            = 'SET_ACCOUNT'
-export const SET_AVAILABLE_ACCOUNTS = 'SET_AVAILABLE_ACCOUNTS'
+export const SET_CLIENT             = 'SET_CLIENT'
+export const SET_AVAILABLE_CLIENTS  = 'SET_AVAILABLE_CLIENTS'
 export const SET_PLACE              = 'SET_PLACE'
 export const SET_AVAILABLE_PLACES   = 'SET_AVAILABLE_PLACES'
 export const SET_FLOOR              = 'SET_FLOOR'
@@ -32,7 +32,7 @@ export function setUser (user){
              , value: user
              })
     dispatch( setPlace(-1) )
-    dispatch( setAccount(-1) )
+    dispatch( setClient(-1) )
     dispatch( getAvalilableFloors() )
   }
 }
@@ -74,14 +74,14 @@ export function setTo (toDate){
   }
 }
 
-export function setAccount (account){
-  return  { type: SET_ACCOUNT
-          , value: account
+export function setClient (client){
+  return  { type: SET_CLIENT
+          , value: client
           }
 }
-export function setAvailableAccounts (accounts){
-  return  { type: SET_AVAILABLE_ACCOUNTS
-          , value: accounts
+export function setAvailableClients (clients){
+  return  { type: SET_AVAILABLE_CLIENTS
+          , value: clients
           }
 }
 
@@ -148,7 +148,7 @@ export function handleGarageChange(index) {
     return (dispatch, getState) => {
       dispatch( setFloor(-1) )
       dispatch( setPlace(-1) )
-      dispatch( setAccount(-1) )
+      dispatch( setClient(-1) )
       dispatch( setGarage(getState().newReservation.availableGarages[index].id) )
       dispatch( getAvalilableFloors() )
     }
@@ -197,7 +197,7 @@ export function autoSelectPlace () {
   return (dispatch, getState) => {
 
     dispatch(setPlace(availablePlaces(getState().newReservation)[0].id))
-    dispatch(setAccount(availablePlaces(getState().newReservation)[0].account_places[0].account_id) )
+    dispatch(setClient(availablePlaces(getState().newReservation)[0].client_places[0].client_id) )
     dispatch(setAutoselect(true))
   }
 }
@@ -211,7 +211,7 @@ export function changeFloor (index) {
 export function changePlace (place) {
   return (dispatch, getState) => {
     dispatch(setPlace(place.id))
-    dispatch(setAccount( place.account_places[0].account_id ) )
+    dispatch(setClient( place.client_places[0].client_id ) )
     dispatch(setAutoselect(false))
   }
 }
@@ -266,7 +266,7 @@ function getAvalilableFloors() {
         dispatch( setFloor(response.data.garage.floors[0].id) )
         const freePlaces = availablePlaces(getState().newReservation)
         dispatch( setPlace( freePlaces.length==0 ? -1 : freePlaces[0].id ) )
-        dispatch( setAccount(freePlaces.length==0 ? -1 : freePlaces[0].account_places[0].account_id) )
+        dispatch( setClient(freePlaces.length==0 ? -1 : freePlaces[0].client_places[0].client_id) )
         dispatch( setAutoselect(true) )
       }
       // if no available places, change floor (if such floor exists)
@@ -296,7 +296,7 @@ export function submitForm () {
 
       request( onSuccess
              , CREATE_RESERVATION
-             , { reservation: { account_id: state.account_id
+             , { reservation: { client_id: state.client_id
                               , user_id:    state.user_id
                               , place_id:   state.place_id
                               , begins_at:  state.from

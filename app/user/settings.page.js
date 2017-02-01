@@ -3,12 +3,11 @@ import { request }                     from '../_shared/helpers/request'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase from '../_shared/containers/pageBase/PageBase'
+import PageBase     from '../_shared/containers/pageBase/PageBase'
 import Localization from '../_shared/components/localization/Localization'
 
-import * as nav from '../_shared/helpers/navigation'
-import { t }    from '../_shared/modules/localization/localization'
-
+import * as nav             from '../_shared/helpers/navigation'
+import { t }                from '../_shared/modules/localization/localization'
 import * as pageBaseActions from '../_shared/actions/pageBase.actions'
 
 

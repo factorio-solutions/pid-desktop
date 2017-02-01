@@ -3,8 +3,8 @@ import {
   OCCUPANCY_SET_GARAGE,
   OCCUPANCY_SET_GARAGES,
   OCCUPANCY_SET_GARAGE_ID,
-  OCCUPANCY_SET_ACCOUNTS,
-  OCCUPANCY_SET_ACCOUNT_ID,
+  OCCUPANCY_SET_CLIENTS,
+  OCCUPANCY_SET_CLIENT_ID,
   OCCUPANCY_SET_DURATION,
   OCCUPANCY_SET_FROM
 }  from '../actions/occupancy.actions'
@@ -12,8 +12,8 @@ import {
 const defaultState =  { garage:     undefined // current one
                       , garages:    []       // all available
                       , garage_id:  undefined // selected by picker
-                      , accounts:   []
-                      , account_id: undefined
+                      , clients:   []
+                      , client_id: undefined
                       , duration:   "week"
                       , from:       moment().startOf('day')
                       }
@@ -38,14 +38,14 @@ export default function occupancy (state = defaultState, action) {
             }
 
 
-    case OCCUPANCY_SET_ACCOUNTS:
+    case OCCUPANCY_SET_CLIENTS:
     return  { ...state
-            , accounts: action.value
+            , clients: action.value
             }
 
-    case OCCUPANCY_SET_ACCOUNT_ID:
+    case OCCUPANCY_SET_CLIENT_ID:
     return  { ...state
-            , account_id: action.value
+            , client_id: action.value
             }
 
 

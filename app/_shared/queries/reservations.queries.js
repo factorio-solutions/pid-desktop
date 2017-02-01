@@ -2,7 +2,7 @@
 export const GET_RESERVATIONS_QUERY = `{
   reservations {
     id
-    account {
+    client {
       name
     }
     created_at

@@ -12,50 +12,53 @@ import reservations     from '../_shared/reducers/reservations.reducer'
 
 import garages          from '../_shared/reducers/garages.reducer'
 import newGarage        from '../_shared/reducers/newGarage.reducer'
-import garageAccounts   from '../_shared/reducers/garageAccounts.reducer'
+import garageClients    from '../_shared/reducers/garageClients.reducer'
 import garageMarketing  from '../_shared/reducers/garageMarketing.reducer'
 import newMarketing     from '../_shared/reducers/newMarketing.reducer'
+import newPricing       from '../_shared/reducers/newPricing.reducer'
+import newRent          from '../_shared/reducers/newRent.reducer'
 
 import marketing        from '../_shared/reducers/marketing.reducer'
 
 import occupancy        from '../_shared/reducers/occupancy.reducer'
 
-import accounts         from '../_shared/reducers/accounts.reducer'
-import newAccount       from '../_shared/reducers/newAccount.reducer'
-import accountUsers     from '../_shared/reducers/accountUsers.reducer'
+import clients          from '../_shared/reducers/clients.reducer'
+import newClient        from '../_shared/reducers/newClient.reducer'
+import clientUsers      from '../_shared/reducers/clientUsers.reducer'
 
 import users            from '../_shared/reducers/users.reducer'
 import inviteUser       from '../_shared/reducers/inviteUser.reducer'
 
 
-const rootReducer = combineReducers({
-  routing,
+const rootReducer = combineReducers({ routing
 
-  login,
-  signUp,
+                                    , login
+                                    , signUp
 
-  pageBase,
-  notifications,
+                                    , pageBase
+                                    , notifications
 
-  newReservation,
-  reservations,
+                                    , newReservation
+                                    , reservations
 
-  garages,
-  newGarage,
-  garageAccounts,
-  garageMarketing,
-  newMarketing,
+                                    , garages
+                                    , newGarage
+                                    , garageClients
+                                    , garageMarketing
+                                    , newMarketing
+                                    , newPricing
+                                    , newRent
 
-  marketing,
+                                    , marketing
 
-  occupancy,
+                                    , occupancy
 
-  accounts,
-  newAccount,
-  accountUsers,
+                                    , clients
+                                    , newClient
+                                    , clientUsers
 
-  users,
-  inviteUser
-})
+                                    , users
+                                    , inviteUser
+                                    })
 
 export default rootReducer

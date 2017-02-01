@@ -30,9 +30,9 @@ export class OccupancyPage extends Component {
     const {state, actions} = this.props
     const garage = state.garage
 
-    const accountDropdown = () => {
-      const accountSelected = (index) => { actions.setAccountId(state.accounts[index].id) }
-      return state.accounts.map((account, index) => {return {label: account.name, onClick: accountSelected.bind(this, index) }})
+    const clientDropdown = () => {
+      const clientSelected = (index) => { actions.setClientId(state.clients[index].id) }
+      return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
     }
 
     const garageDropdown = () => {
@@ -44,7 +44,7 @@ export class OccupancyPage extends Component {
       return places.concat(floor.places.map((place)=>{
         return { ...place
                , floor: floor.label
-               , reservations: state.account_id ? place.reservations.filter((reservation) => {return state.account_id == reservation.account.id}) : place.reservations
+               , reservations: state.client_id ? place.reservations.filter((reservation) => {return state.client_id == reservation.client.id}) : place.reservations
                }
       }))
     }
@@ -59,7 +59,7 @@ export class OccupancyPage extends Component {
     const content = <div>
                       <div className={styles.dropdownContainer}>
                         <Dropdown label={t(['occupancy', 'selectGarage'])} content={garageDropdown()} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>
-                        <Dropdown label={t(['occupancy', 'selectClientAccount'])} content={accountDropdown()} style='light' selected={state.accounts.findIndex((account)=>{return account.id == state.account_id})}/>
+                        <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
                       </div>
                       <OccupancyOverview places={garage ? garage.floors.reduce(preparePlaces, []) : []} from={state.from} duration={state.duration}
                           leftClick={actions.subtractDay} rightClick={actions.addDay} weekClick={actions.weekClick} monthClick={actions.monthClick}/>

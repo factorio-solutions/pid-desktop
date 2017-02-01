@@ -4,8 +4,8 @@ import {
   SET_CREATOR,
   SET_FROM,
   SET_TO,
-  SET_ACCOUNT,
-  SET_AVAILABLE_ACCOUNTS,
+  SET_CLIENT,
+  SET_AVAILABLE_CLIENTS,
   SET_PLACE,
   SET_AVAILABLE_PLACES,
   SET_FLOOR,
@@ -24,8 +24,8 @@ const defaultState =  { user_id:        -1 // id of selected user reservation is
                       , from: ''
                       , to:   ''
 
-                      , account_id:         -1 // currently selected account
-                      , availableAccounts:  [] // available accounts for this reservation
+                      , client_id:         -1 // currently selected client
+                      , availableClients:  [] // available clients for this reservation
 
                       , place_id: -1 // json object of selected place
 
@@ -67,14 +67,14 @@ export default function newReservation (state = defaultState, action) {
             }
 
 
-    case SET_ACCOUNT:
+    case SET_CLIENT:
     return  { ...state
-            , account_id: action.value
+            , client_id: action.value
             }
 
-    case SET_AVAILABLE_ACCOUNTS:
+    case SET_AVAILABLE_CLIENTS:
     return  { ...state
-            , availableAccounts: action.value
+            , availableClients: action.value
             }
 
 

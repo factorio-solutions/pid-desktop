@@ -36,18 +36,18 @@ export class UsersPage extends Component {
                    , { key: 'last_active',  title: t(['users','active']),       comparator: 'date',   representer: o => moment(o).add(1, 'month').diff(moment()) > 0 ? <i className="fa fa-check" aria-hidden="true"></i> : null }
                    ]
 
-    const createAccountLink = (account, index, arr) => {
-      const onClick = () => {nav.to(`/accounts/${account.id}/users`)}
-      var name = arr.length-1 == index ? account.name : account.name +", "
+    const createClientLink = (client, index, arr) => {
+      const onClick = () => {nav.to(`/clients/${client.id}/users`)}
+      var name = arr.length-1 == index ? client.name : client.name +", "
       return <span key={index} className={styles.clickable} onClick={onClick}> {name} </span>
     }
 
     const usersData = state.users.map((user) => {
       user.disabled = user.pending
-      user.memberSince = user.accounts.length == 0 ? null : user.accounts.reduce((max, account)=> { return moment(account.created_at).diff(max) < 0 ? moment(account.created_at) : max}, moment(moment()))
+      user.memberSince = user.clients.length == 0 ? null : user.clients.reduce((max, client)=> { return moment(client.created_at).diff(max) < 0 ? moment(client.created_at) : max}, moment(moment()))
       if (!user.pending) user.spoiler = <div>
           member of <br/>
-          {user.accounts.map(createAccountLink)}
+          {user.clients.map(createClientLink)}
        </div>
       return user
     })

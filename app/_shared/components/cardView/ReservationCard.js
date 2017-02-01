@@ -12,7 +12,7 @@ import styles from './Card.scss'
 // onClick and selected are expected to be set by CardViewLayout
 export default function ReservationCard ({ reservation, destroy, state, onClick, selected })  {
   const body =  <div>
-                  <div>{reservation.account.name} <br/> {reservation.place.floor.garage.name}</div>
+                  <div>{reservation.client.name} <br/> {reservation.place.floor.garage.name}</div>
                   <div className={`${styles.reservationBody} ${styles.timeContainter}`}>
                     <strong className={styles.from}>{ moment(reservation.begins_at).format('ddd DD.MM.')} <br/> {moment(reservation.begins_at).format('H:mm')}</strong>
                     <strong className={styles.to}>{ moment(reservation.ends_at).format('ddd DD.MM.')} <br/> {moment(reservation.ends_at).format('H:mm')}</strong>

@@ -6,6 +6,8 @@ export const GET_CURRENT_USER = `{
     phone
     hint
     braintree_token
+    has_garages
+    garage_admin
   }
 }
 `

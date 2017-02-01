@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
@@ -40,25 +40,38 @@ export class GaragesPage extends Component {
                    , { key: 'address',      title: t(['garages','address']),  comparator: 'string' }
                    , { key: 'place_count',  title: t(['garages','places']),   comparator: 'number' }
                    ]
+    const pricingSchema = [ { key: 'name',         title: t(['garages','pricingName']), comparator: 'string', sort: 'asc' }
+                          , { key: 'packages',     title: t(['garages','packages']),     comparator: 'string' }
+                          , { key: 'place_count',  title: t(['garages','places']),      comparator: 'string' }
+                          ]
+    const rentSchema = [ { key: 'name',         title: t(['garages','rentName']), comparator: 'string', sort: 'asc' }
+                       , { key: 'price',        title: t(['garages','price']),    comparator: 'string' }
+                       , { key: 'place_count',  title: t(['garages','places']),   comparator: 'string' }
+                       ]
 
-   const garageClick = (garage) => {
-     actions.setGarageId(garage.id)
-     nav.to(`/occupancy`)
-   }
+    const garageClick = (garage) => {
+      actions.setGarageId(garage.id)
+      nav.to(`/occupancy`)
+    }
 
-   const newGarageClick = () => {
-     newGarage.id != undefined && actions.clearForm()
-     nav.to("/garages/newGarage")
-   }
+    const newGarageClick = () => {
+      newGarage.id != undefined && actions.clearForm()
+      nav.to("/garages/newGarage")
+    }
 
-   const editClick    = (garage) => { nav.to(`/garages/${garage.id}/newGarage`) }
-   const destroyClick = (garage) => { actions.destroyGarage(garage.id) }
-   const toAccount    = (garage) => { nav.to(`/garages/${garage.id}/accounts`) }
-   const toMarketing  = (garage) => { nav.to(`/garages/${garage.id}/marketing`) }
+    const newPricingClick = () => { nav.to("/garages/pricings/newPricing") }
+    const newRentClick = () => { nav.to("/garages/rents/newRent") }
 
-   const prepareCards = (garage, index) => {
-     return <GarageCard key={index} garage={garage} occupancy={()=>{garageClick(garage)}} edit={()=>{editClick(garage)}} account={()=>{toAccount(garage)}} marketing={()=>{toMarketing(garage)}} />
-   }
+    const editClick    = (garage) => { nav.to(`/garages/${garage.id}/newGarage`) }
+    const destroyClick = (garage) => { actions.destroyGarage(garage.id) }
+    const toClient     = (garage) => { nav.to(`/garages/${garage.id}/clients`) }
+    const toMarketing  = (garage) => { nav.to(`/garages/${garage.id}/marketing`) }
+    const editPricing  = (id)  => { nav.to(`/garages/pricings/${id}/edit`) }
+    const editRent     = (id)  => { nav.to(`/garages/rents/${id}/edit`) }
+
+    const prepareCards = (garage, index) => {
+      return <GarageCard key={index} garage={garage} occupancy={()=>{garageClick(garage)}} edit={()=>{editClick(garage)}} client={()=>{toClient(garage)}} marketing={()=>{toMarketing(garage)}} />
+    }
 
     const addSpoiler = (garage, index)=>{
       var spoiler = <div>
@@ -67,23 +80,65 @@ export class GaragesPage extends Component {
           <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>} onClick={()=>{garageClick(garage)}} type='action'/>
           <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{toMarketing(garage)}} type='action'/>
           <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(garage)}} type='action'/>
-          <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={()=>{toAccount(garage)}} type='action'/>
+          <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={()=>{toClient(garage)}} type='action'/>
           {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(garage)}} type='remove' state='disabled' question={t(['garages', 'removeGarageQuestion'])}/>*/}
         </span>
       </div>
 
-      return update(garage, {spoiler:{$set: spoiler}})
+      return update(garage, {spoiler:{$set: spoiler}, address: {$set: [garage.address.line_1, garage.address.line_2, garage.address.city, garage.address.postal_code, garage.address.state, garage.address.country].filter((o)=>{return o != undefined}).join(', ')}})
+    }
+
+    const preparePricing = (pricing, index) => {
+      let spoiler = <div>
+        <span className={styles.floatRight}>
+          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editPricing(pricing.id)}} type='action'/>
+        </span>
+      </div>
+
+      let packages = pricing.flat_price != null ? t(['newPricing','flatPrice']) + `: ${pricing.flat_price} ${pricing.currency.symbol}` : t(['newPricing','exponentialPrice']) + `: ${pricing.exponential_min_price} - ${pricing.exponential_max_price} ${pricing.currency.symbol}`
+      let weekends = pricing.weekend_price == null ? '' : `, ${t(['newPricing','weekendPrice'])}: ${pricing.weekend_price} ${pricing.currency.symbol}`
+
+      return update(pricing, {spoiler:{$set: spoiler}, packages: {$set: packages + weekends}, place_count: {$set: pricing.place_count+''}})
+    }
+
+    const prepareRent = (rent, index) => {
+      let spoiler = <div>
+        <span className={styles.floatRight}>
+          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editRent(rent.id)}} type='action'/>
+        </span>
+      </div>
+
+      return update(rent, {spoiler:{$set: spoiler}, price: {$set: `${rent.price} ${rent.currency.symbol}`}, place_count: {$set: rent.place_count+''}})
     }
 
     const content = <div>
-                      {state.tableView ? <Table schema={schema} data={state.garages.map(addSpoiler)} />
-                        : <CardViewLayout columns={2}>
-                            {state.garages.map(prepareCards)}
-                          </CardViewLayout> }
-                      <div className={styles.centerDiv}>
-                        <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newGarageClick} type='action' size='big' />
+                      <div>
+                        {state.tableView ? <Table schema={schema} data={state.garages.map(addSpoiler)} />
+                          : <CardViewLayout columns={2}>
+                              {state.garages.map(prepareCards)}
+                            </CardViewLayout> }
+                        <div className={styles.centerDiv}>
+                          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newGarageClick} type='action' size='big' />
+                        </div>
+                      </div>
+
+                      <div>
+                        <h2>{t(['garages','reservationsPricing'])}</h2>
+                        <Table schema={pricingSchema} data={state.pricings.map(preparePricing)} />
+                        <div className={styles.centerDiv}>
+                          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newPricingClick} type='action' size='big' />
+                        </div>
+                      </div>
+
+                      <div>
+                        <h2>{t(['garages','placeRent'])}</h2>
+                        <Table schema={rentSchema} data={state.rents.map(prepareRent)} />
+                        <div className={styles.centerDiv}>
+                          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newRentClick} type='action' size='big' />
+                        </div>
                       </div>
                     </div>
+
 
     const filters= <div>
             <ButtonStack divider={<span>|</span>} style='horizontal' >

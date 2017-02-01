@@ -59,9 +59,9 @@ export class PageBase extends Component {
       nav.to('/garages')
     }
 
-    const accountClick = () => {
-      actions.toAccounts()
-      nav.to('/accounts')
+    const clientClick = () => {
+      actions.toClients()
+      nav.to('/clients')
     }
 
     const usersClick = () => {
@@ -91,7 +91,7 @@ export class PageBase extends Component {
                     , {label: t(['pageBase', 'Occupancy']),                     icon: 'eye',          onClick: occupancyClick }
                     , {label: t(['pageBase', 'Reservation']),                   icon: 'ticket',       onClick: reservationClick }
                     , {label: t(['pageBase', 'Garages']),                       icon: 'home',         onClick: garageClick }
-                    , {label: t(['pageBase', 'Account & Users']),               icon: 'users',        onClick: accountClick }
+                    , {label: t(['pageBase', 'Client & Users']),               icon: 'users',        onClick: clientClick }
                     , {label: t(['pageBase', 'Users']),                         icon: 'child',        onClick: usersClick }
                     ]
 

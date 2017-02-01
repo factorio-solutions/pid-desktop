@@ -8,12 +8,12 @@ import Form     from '../_shared/components/form/Form'
 
 import * as nav               from '../_shared/helpers/navigation'
 import { t }                  from '../_shared/modules/localization/localization'
-import * as newAccountActions from '../_shared/actions/newAccount.actions'
+import * as newClientActions from '../_shared/actions/newClient.actions'
 
-import styles from './newAccount.page.scss'
+import styles from './newClient.page.scss'
 
 
-export class NewAccountPage extends Component {
+export class NewClientPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object
@@ -21,18 +21,18 @@ export class NewAccountPage extends Component {
 
   componentDidMount(){
     this.props.actions.setName('')
-    this.props.params.id && this.props.actions.initAccount(this.props.params.id)
+    this.props.params.id && this.props.actions.initClient(this.props.params.id)
   }
 
   render() {
     const { state, actions } = this.props
 
     const submitForm = () => {
-      checkSubmitable() && actions.submitNewAccount(this.props.params.id)
+      checkSubmitable() && actions.submitNewClient(this.props.params.id)
     }
 
     const goBack = () => {
-      nav.to('/accounts')
+      nav.to('/clients')
     }
 
     const checkSubmitable = () => {
@@ -42,7 +42,7 @@ export class NewAccountPage extends Component {
 
     const content = <div>
                       <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
-                        <Input onEnter={submitForm} onChange={actions.setName} label={t(['newAccount', 'name'])} error={t(['newAccount', 'invalidName'])} value={state.name} name="account[name]" placeholder={t(['newAccount', 'placeholder'])}/>
+                        <Input onEnter={submitForm} onChange={actions.setName} label={t(['newClient', 'name'])} error={t(['newClient', 'invalidName'])} value={state.name} name="client[name]" placeholder={t(['newClient', 'placeholder'])}/>
                       </Form>
                     </div>
 
@@ -53,6 +53,6 @@ export class NewAccountPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.newAccount }),
-  dispatch => ({ actions: bindActionCreators(newAccountActions, dispatch) })
-)(NewAccountPage)
+  state    => ({ state: state.newClient }),
+  dispatch => ({ actions: bindActionCreators(newClientActions, dispatch) })
+)(NewClientPage)

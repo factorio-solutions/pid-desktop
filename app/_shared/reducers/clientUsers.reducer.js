@@ -1,29 +1,29 @@
 import {
-  SET_ACCOUNT_USERS,
-  SET_ACCOUNTUSER_ACCOUNT,
-  SET_ACCOUNT_PENDING_USERS
-}  from '../actions/accountUsers.actions'
+  SET_CLIENT_USERS,
+  SET_CLIENT_USER_CLIENT,
+  SET_CLIENT_PENDING_USERS
+}  from '../actions/clientUsers.actions'
 
 const defaultState =  { users:          []
-                      , account:        {}
+                      , client:        {}
                       , pending_users:  []
                       }
 
 
-export default function accountUsers (state = defaultState, action) {
+export default function clientUsers (state = defaultState, action) {
   switch (action.type) {
 
-    case SET_ACCOUNT_USERS:
+    case SET_CLIENT_USERS:
     return  { ...state
             , users: action.value
             }
 
-    case SET_ACCOUNTUSER_ACCOUNT:
+    case SET_CLIENT_USER_CLIENT:
     return  { ...state
-            , account: action.value
+            , client: action.value
             }
 
-    case SET_ACCOUNT_PENDING_USERS:
+    case SET_CLIENT_PENDING_USERS:
     return  { ...state
             , pending_users: action.value
             }

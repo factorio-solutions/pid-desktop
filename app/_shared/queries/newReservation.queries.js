@@ -26,8 +26,8 @@ export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $en
         id
         label
         floor_id
-        account_places {
-          account_id
+        client_places {
+          client_id
         }
       }
     }

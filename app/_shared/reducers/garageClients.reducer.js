@@ -1,17 +1,17 @@
 import moment from 'moment'
 import {
-  ACCOUNTPLACES_RESET_FORM,
-  SET_ACCOUNTPLACES_FROM,
-  SET_ACCOUNTPLACES_TO,
-  SET_ACCOUNTPLACES_ACCOUNTS,
-  SET_ACCOUNTPLACES_FLOORS,
-  SET_ACCOUNTPLACES_GARAGE,
-  SET_ACCOUNTPLACES_FLOOR,
-  SET_ACCOUNTPLACES_ACCOUNT
-}  from '../actions/garageAccounts.actions'
+  CLIENTPLACES_RESET_FORM,
+  SET_CLIENTPLACES_FROM,
+  SET_CLIENTPLACES_TO,
+  SET_CLIENTPLACES_CLIENTS,
+  SET_CLIENTPLACES_FLOORS,
+  SET_CLIENTPLACES_GARAGE,
+  SET_CLIENTPLACES_FLOOR,
+  SET_CLIENTPLACES_CLIENT
+}  from '../actions/garageClients.actions'
 
-const defaultState =  { accounts:         []
-                      , account_id:       undefined
+const defaultState =  { clients:         []
+                      , client_id:       undefined
                       , garage:           undefined
                       , selectedFloor:    undefined
                       , availableFloors:  []
@@ -20,45 +20,45 @@ const defaultState =  { accounts:         []
                       }
 
 
-export default function garageAccounts (state = defaultState, action) {
+export default function garageClients (state = defaultState, action) {
   switch (action.type) {
 
-    case SET_ACCOUNTPLACES_ACCOUNTS:
+    case SET_CLIENTPLACES_CLIENTS:
     return  { ...state
-            , accounts: action.value
+            , clients: action.value
             }
 
-    case SET_ACCOUNTPLACES_ACCOUNT:
+    case SET_CLIENTPLACES_CLIENT:
     return  { ...state
-            , account_id: action.value
+            , client_id: action.value
             }
 
-    case SET_ACCOUNTPLACES_GARAGE:
+    case SET_CLIENTPLACES_GARAGE:
     return  { ...state
             , garage: action.value
             }
 
-    case SET_ACCOUNTPLACES_FLOOR:
+    case SET_CLIENTPLACES_FLOOR:
     return  { ...state
             , selectedFloor: action.value
             }
 
-    case SET_ACCOUNTPLACES_FLOORS:
+    case SET_CLIENTPLACES_FLOORS:
     return  { ...state
             , availableFloors: action.value
             }
 
-    case SET_ACCOUNTPLACES_FROM:
+    case SET_CLIENTPLACES_FROM:
     return  { ...state
             , from: action.value
             }
 
-    case SET_ACCOUNTPLACES_TO:
+    case SET_CLIENTPLACES_TO:
     return  { ...state
             , to: action.value
             }
 
-    case ACCOUNTPLACES_RESET_FORM:
+    case CLIENTPLACES_RESET_FORM:
     return  defaultState
 
     default:

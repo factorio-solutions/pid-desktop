@@ -2,18 +2,30 @@ import { request } from '../helpers/request'
 
 import { GET_GARAGES, DESTROY_GARAGE } from '../queries/garages.queries'
 
-export const SET_GARAGES            = "SET_GARAGES"
-export const SET_GARAGES_TABLEVIEW  = "SET_GARAGES_TABLEVIEW"
+export const GARAGES_SET_GARAGES            = "GARAGES_SET_GARAGES"
+export const GARAGES_SET_PRICINGS           = "GARAGES_SET_PRICINGS"
+export const GARAGES_SET_RENTS              = "GARAGES_SET_RENTS"
+export const GARAGES_SET_GARAGES_TABLEVIEW  = "GARAGES_SET_GARAGES_TABLEVIEW"
 
 
 export function setGarages (garages){
-  return  { type: SET_GARAGES
+  return  { type: GARAGES_SET_GARAGES
           , value: garages
+          }
+}
+export function setPricings (pricing){
+  return  { type: GARAGES_SET_PRICINGS
+          , value: pricing
+          }
+}
+export function setRents (rents){
+  return  { type: GARAGES_SET_RENTS
+          , value: rents
           }
 }
 
 export function setTableView (bool){
-  return  { type: SET_GARAGES_TABLEVIEW
+  return  { type: GARAGES_SET_GARAGES_TABLEVIEW
           , value: bool
           }
 }
@@ -22,7 +34,10 @@ export function setTableView (bool){
 export function initGarages (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
+      console.log(response.data.pricings);
       dispatch( setGarages(response.data.user_garages.map(function(user_garage){return user_garage.garage})) )
+      dispatch( setPricings(response.data.pricings) )
+      dispatch( setRents(response.data.rents) )
     }
     request(onSuccess, GET_GARAGES)
   }

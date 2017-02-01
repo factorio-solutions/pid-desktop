@@ -75,7 +75,7 @@ export class NewReservationPage extends Component {
     const isSubmitable = () => {
       return state.user_id != -1
       && state.creator_id != -1
-      && state.account_id != -1
+      && state.client_id != -1
       && state.place_id != -1
       && state.from != ''
       && state.to != ''

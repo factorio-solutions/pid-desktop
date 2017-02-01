@@ -7,8 +7,8 @@ import {
   INVITE_USER_SET_CAN_MANAGE,
   INVITE_USER_SET_CAN_CREATE_OWN,
   INVITE_USER_SET_CAN_CREATE_INTERNAL,
-  INVITE_USER_SET_ACCOUNT,
-  INVITE_USER_SET_ACCOUNTS,
+  INVITE_USER_SET_CLIENT,
+  INVITE_USER_SET_CLIENTS,
   INVITE_USER_SET_SUCCESS,
   INVITE_USER_SET_ERROR,
   INVITE_USER_SET_CURRENT_EMAIL,
@@ -26,8 +26,8 @@ const defaultState =  { email:      {value: '', valid: false},
                         can_create_internal:  false,
                         is_internal:          false,
 
-                        accounts:   [],
-                        account_id: undefined,
+                        clients:   [],
+                        client_id: undefined,
 
                         error:        undefined,
                         success:      undefined,
@@ -72,13 +72,13 @@ export default function inviteUser (state = defaultState, action) {
             , is_internal: action.value
             }
 
-    case INVITE_USER_SET_ACCOUNTS:
+    case INVITE_USER_SET_CLIENTS:
     return  { ...state
-            , accounts: action.value
+            , clients: action.value
             }
-    case INVITE_USER_SET_ACCOUNT:
+    case INVITE_USER_SET_CLIENT:
     return  { ...state
-            , account_id: action.value
+            , client_id: action.value
             }
 
     case INVITE_USER_SET_ERROR:

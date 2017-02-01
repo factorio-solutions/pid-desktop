@@ -83,8 +83,8 @@ export function initialPageBase () {
       case contains(hash, 'garages'):
         dispatch(toGarages())
         break;
-      case (contains(hash, 'accounts') && !contains(hash, 'garages')):
-        dispatch(toAccounts())
+      case (contains(hash, 'clients') && !contains(hash, 'garages')):
+        dispatch(toClients())
         break;
       case contains(hash, 'settings'):
         dispatch(toSettings())
@@ -112,8 +112,8 @@ export function initialPageBase () {
       case contains(hash, 'newGarage'):
         dispatch(setHint(t(['pageBase', 'EditGarageHint'])))
         break;
-      case contains(hash, 'garages') && contains(hash, 'accounts'):
-        dispatch(setHint(t(['pageBase', 'garageAccountsHint'])))
+      case contains(hash, 'garages') && contains(hash, 'clients'):
+        dispatch(setHint(t(['pageBase', 'garageClientsHint'])))
         break;
       case contains(hash, 'garages') && contains(hash, 'marketing'):
         dispatch(setHint(t(['pageBase', 'garageMarketingHint'])))
@@ -128,21 +128,21 @@ export function initialPageBase () {
         dispatch(setHint(t(['pageBase', 'garagesHint'])))
         break;
 
-      case contains(hash, 'accounts') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'accountUsersHint'])))
+      case contains(hash, 'clients') && contains(hash, 'users'):
+        dispatch(setHint(t(['pageBase', 'clientUsersHint'])))
         break;
-      case contains(hash, 'newAccount'):
-        dispatch(setHint(t(['pageBase', 'newAccountHint'])))
+      case contains(hash, 'newClient'):
+        dispatch(setHint(t(['pageBase', 'newClientHint'])))
         break;
-      case contains(hash, 'accounts') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editAccountHint'])))
+      case contains(hash, 'clients') && contains(hash, 'edit'):
+        dispatch(setHint(t(['pageBase', 'editClientHint'])))
         break;
-      case contains(hash, 'accounts'):
-        dispatch(setHint(t(['pageBase', 'accountsHint'])))
+      case contains(hash, 'clients'):
+        dispatch(setHint(t(['pageBase', 'clientsHint'])))
         break;
 
       case contains(hash, 'users') && contains(hash, 'inviteUser'):
-        dispatch(setHint(t(['pageBase', 'newAccountUsersHint'])))
+        dispatch(setHint(t(['pageBase', 'newClientUsersHint'])))
         break;
       case contains(hash, 'users'):
         dispatch(setHint(t(['pageBase', 'usersHint'])))
@@ -221,11 +221,11 @@ export function toGarages(){
             , {content: t(['pageBase', 'EditGarage']),  state: 'selected'}
           ]))
           break;
-        case contains(window.location.hash, 'accounts'):
+        case contains(window.location.hash, 'clients'):
           dispatch(setHoriontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageAccounts.garage ? "("+getState().garageAccounts.garage.name+")" : ""}`, state: 'disabled'}
+            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageClients.garage ? "("+getState().garageClients.garage.name+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Accounts']),  state: 'selected'}
+            , {content: t(['pageBase', 'Clients']),  state: 'selected'}
           ]))
           break;
           case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'newMarketing'):
@@ -255,35 +255,35 @@ export function toGarages(){
   }
 }
 
-export function toAccounts(){
+export function toClients(){
   return (dispatch, getState) => {
     dispatch(setVerticalSelected(4))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'accounts/')? 1 : 0))
+    dispatch(setHorizontalSelected(contains(window.location.hash, 'clients/')? 1 : 0))
 
     if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHoriontalContent([ {content: t(['pageBase', 'Account & Users']), state: 'selected'}]))
+      dispatch(setHoriontalContent([ {content: t(['pageBase', 'Client & Users']), state: 'selected'}]))
     }
     else {
       switch (true) { // HorizontalMenus
-        case contains(window.location.hash, 'accounts') && contains(window.location.hash, 'users'):
+        case contains(window.location.hash, 'clients') && contains(window.location.hash, 'users'):
           dispatch(setHoriontalContent(
-            [ {content: `${t(['pageBase', 'Account & Users'])} ${getState().accountUsers.account.name ? "("+getState().accountUsers.account.name+")" : ""}`, state: 'disabled'}
+            [ {content: `${t(['pageBase', 'Client & Users'])} ${getState().clientUsers.client.name ? "("+getState().clientUsers.client.name+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
             , {content: t(['pageBase', 'Users']),  state: 'selected'}
             ]))
           break;
-        case contains(window.location.hash, 'accounts/newAccount'):
+        case contains(window.location.hash, 'clients/newClient'):
           dispatch(setHoriontalContent(
-             [ {content: `${t(['pageBase', 'Account & Users'])}`, state: 'disabled'}
+             [ {content: `${t(['pageBase', 'Client & Users'])}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'NewAccount']),  state: 'selected'}
+            , {content: t(['pageBase', 'NewClient']),  state: 'selected'}
             ]))
           break
-        case contains(window.location.hash, 'accounts') && contains(window.location.hash, 'edit'):
+        case contains(window.location.hash, 'clients') && contains(window.location.hash, 'edit'):
           dispatch(setHoriontalContent(
-             [ {content: `${t(['pageBase', 'Account & Users'])}`, state: 'disabled'}
+             [ {content: `${t(['pageBase', 'Client & Users'])}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'EditAccount']),  state: 'selected'}
+            , {content: t(['pageBase', 'EditClient']),  state: 'selected'}
             ]))
           break
       }
