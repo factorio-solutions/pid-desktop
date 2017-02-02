@@ -26,6 +26,10 @@ import clients          from '../_shared/reducers/clients.reducer'
 import newClient        from '../_shared/reducers/newClient.reducer'
 import clientUsers      from '../_shared/reducers/clientUsers.reducer'
 
+import cars             from '../_shared/reducers/cars.reducer'
+import newCar           from '../_shared/reducers/newCar.reducer'
+import carUsers         from '../_shared/reducers/carUsers.reducer'
+
 import users            from '../_shared/reducers/users.reducer'
 import inviteUser       from '../_shared/reducers/inviteUser.reducer'
 
@@ -56,6 +60,10 @@ const rootReducer = combineReducers({ routing
                                     , clients
                                     , newClient
                                     , clientUsers
+
+                                    , cars
+                                    , newCar
+                                    , carUsers
 
                                     , users
                                     , inviteUser

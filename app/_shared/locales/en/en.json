@@ -53,6 +53,7 @@
 		"New Reservation": "New Reservation",
 		"NewGarage": "Setup New Garage",
 		"Garages": "Garages",
+		"Cars": "Cars",
 		"Settings": "Profile settings",
 		"Users": "Users",
 		"Logout": "Logout",
@@ -260,7 +261,7 @@
 		"declineQuestion": "Are you sure you want to decline?",
 		"expiration": "Notification will expire on ",
 		"clientInvitationMessage": "Is asking for approval of new client account '%(arg1)s'.",
-		"clientUserDestroyed": "You have been removed from an clients account, all reservations associated to this clients account were canceled.",
+		"clientUserDestroyed": "You have been removed from clients account '%(arg1)s', all reservations associated to this clients account were canceled.",
 		"clientPlaceDestroyed": "Reservation of yours has been canceled due to owner removed the place from used clients account.",
 		"past": "Show past notifications",
 		"NotificationAccepted": "accepted on ",
@@ -376,5 +377,39 @@
 		"pricePlaceholder":"500",
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency"
+	},
+
+	"cars":{
+		"licencePlate": "licence plate",
+		"color": "color",
+		"model": "Model",
+		"destroyCar": "Are you sure you want to destroy this car?"
+	},
+	"newCar":{
+		"licencePlate": "Licence plate",
+		"color": "Color",
+		"model": "Model",
+		"width": "Width [m]",
+		"height": "Height [m]",
+		"length": "Length [m]",
+		"licencePlatePlaceholder": "1A2 3456",
+		"colorPlaceholder": "Black",
+		"modelPlaceholder": "Porsche 911",
+		"widthPlaceholder": "1.80",
+		"heightPlaceholder": "1.30",
+		"lengthPlaceholder": "4.37",
+		"licencePlateInvalid": "Licence plate invalid",
+		"colorInvalid": "Color invalid",
+		"modelInvalid": "Model invalid",
+		"widthInvalid": "Width invalid",
+		"heightInvalid": "Height invalid",
+		"lengthInvalid": "Length invalid",
+		"lpg": "LPG"
+	},
+	"carUsers":{
+		"name": "name",
+		"email": "email",
+		"phone": "phone",
+		"admin": "admin"
 	}
 }

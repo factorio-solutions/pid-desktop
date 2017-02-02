@@ -28,6 +28,11 @@ import Occupancy            from './occupancy/occupancy.page'
 import ClientsPage          from './client/clients.page'
 import NewClientPage        from './client/newClient.page'
 import ClientUsersPage      from './client/users.page'
+
+import CarsPage             from './cars/cars.page'
+import NewCarPage           from './cars/newCar.page'
+import CarUsersPage         from './cars/users.page'
+
 import inviteUserPage       from './users/inviteUser.page'
 
 import UsersPage            from './users/users.page'
@@ -75,6 +80,16 @@ export default function createRoutes() {
       <Route path="clients/:id/users" component={ClientUsersPage}/>
       <Route path="clients/newClient" component={NewClientPage}/>
       <Route path="clients/:id/edit" component={NewClientPage}/>
+
+      <Route path="clients" component={ClientsPage}/>
+      <Route path="clients/:id/users" component={ClientUsersPage}/>
+      <Route path="clients/newClient" component={NewClientPage}/>
+      <Route path="clients/:id/edit" component={NewClientPage}/>
+
+      <Route path="cars" component={CarsPage}/>
+      <Route path="cars/:id/users" component={CarUsersPage}/>
+      <Route path="cars/newCar" component={NewCarPage}/>
+      <Route path="cars/:id/edit" component={NewCarPage}/>
 
       <Route path="users" component={UsersPage}/>
       <Route path="users/inviteUser" component={inviteUserPage}/>

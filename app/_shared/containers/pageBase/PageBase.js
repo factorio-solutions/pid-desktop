@@ -69,6 +69,10 @@ export class PageBase extends Component {
       nav.to('/users')
     }
 
+    const carsClick = () => {
+      nav.to('/cars')
+    }
+
     const settingClick = () => {
       nav.to('/settings')
     }
@@ -91,8 +95,9 @@ export class PageBase extends Component {
                     , {label: t(['pageBase', 'Occupancy']),                     icon: 'eye',          onClick: occupancyClick }
                     , {label: t(['pageBase', 'Reservation']),                   icon: 'ticket',       onClick: reservationClick }
                     , {label: t(['pageBase', 'Garages']),                       icon: 'home',         onClick: garageClick }
-                    , {label: t(['pageBase', 'Client & Users']),               icon: 'users',        onClick: clientClick }
+                    , {label: t(['pageBase', 'Client & Users']),                icon: 'users',        onClick: clientClick }
                     , {label: t(['pageBase', 'Users']),                         icon: 'child',        onClick: usersClick }
+                    , {label: t(['pageBase', 'Cars']),                          icon: 'car',          onClick: carsClick }
                     ]
 
     const  labelsBottom = [ {label: t(['pageBase', 'Logout']),                          icon: 'sign-out', onClick: logoutClick }
