@@ -5,7 +5,7 @@ import {
 }  from '../actions/clientUsers.actions'
 
 const defaultState =  { users:          []
-                      , client:        {}
+                      , client:         {}
                       , pending_users:  []
                       }
 

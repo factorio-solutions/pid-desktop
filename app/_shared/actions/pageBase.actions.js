@@ -55,6 +55,15 @@ export function setMenuWidth (menuWidth){
 }
 
 
+export function fetchCurrentUser(){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch( setCurrentUser( response.data.current_user ) )
+    }
+    request(onSuccess, GET_CURRENT_USER)
+  }
+}
+
 export function changeHints() {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
@@ -159,11 +168,7 @@ export function initialPageBase () {
     }
 
     if (getState().pageBase.current_user == undefined){ // if no information about current user
-      const onSuccess = (response) => {
-        dispatch( setCurrentUser( response.data.current_user ) )
-      }
-
-      request(onSuccess, GET_CURRENT_USER)
+      dispatch(fetchCurrentUser())
     }
   }
 }

@@ -11,19 +11,12 @@ export const GET_CLIENTUSERS = `query ($id: Id!) {
       id
       name
     }
-    can_manage
-    can_create_own
-    can_create_internal
-    is_internal
+    admin
+    host
+    secretary
+    pending
+    internal
     created_at
-  }
-  pending_client_users(client_id: $id) {
-    user {
-      id
-      full_name
-      email
-      phone
-    }
   }
 }
 `

@@ -40,7 +40,7 @@ export class ClientsPage extends Component {
       const toEditClient = () => { nav.to(`/clients/${client.id}/edit`) }
 
       var spoiler = <span className={styles.floatRight}>
-                      <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.can_manage ? "" : "disabled" }/>
+                      <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.admin ? "" : "disabled" }/>
                       <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type='action'/>
                     </span>
       return update(client, {spoiler:{$set: spoiler}})

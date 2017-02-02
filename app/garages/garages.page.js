@@ -26,7 +26,8 @@ export class GaragesPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object,
-    newGarage:    PropTypes.object
+    newGarage:    PropTypes.object,
+    pageBase:    PropTypes.object
   }
 
   componentDidMount () {
@@ -34,7 +35,7 @@ export class GaragesPage extends Component {
   }
 
   render() {
-    const { state, actions, newGarage } = this.props
+    const { state, actions, newGarage, pageBase } = this.props
 
     const schema = [ { key: 'name',         title: t(['garages','name']),     comparator: 'string', representer: o => <strong> {o} </strong>, sort: 'asc' }
                    , { key: 'address',      title: t(['garages','address']),  comparator: 'string' }
@@ -110,7 +111,7 @@ export class GaragesPage extends Component {
 
       return update(rent, {spoiler:{$set: spoiler}, price: {$set: `${rent.price} ${rent.currency.symbol}`}, place_count: {$set: rent.place_count+''}})
     }
-
+    
     const content = <div>
                       <div>
                         {state.tableView ? <Table schema={schema} data={state.garages.map(addSpoiler)} />
@@ -122,21 +123,25 @@ export class GaragesPage extends Component {
                         </div>
                       </div>
 
-                      <div>
-                        <h2>{t(['garages','reservationsPricing'])}</h2>
-                        <Table schema={pricingSchema} data={state.pricings.map(preparePricing)} />
-                        <div className={styles.centerDiv}>
-                          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newPricingClick} type='action' size='big' />
+                      {pageBase.current_user && pageBase.current_user.garage_admin &&
+                        <div>
+                          <h2>{t(['garages','reservationsPricing'])}</h2>
+                          <Table schema={pricingSchema} data={state.pricings.map(preparePricing)} />
+                          <div className={styles.centerDiv}>
+                            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newPricingClick} type='action' size='big' />
+                          </div>
                         </div>
-                      </div>
+                      }
 
-                      <div>
-                        <h2>{t(['garages','placeRent'])}</h2>
-                        <Table schema={rentSchema} data={state.rents.map(prepareRent)} />
-                        <div className={styles.centerDiv}>
-                          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newRentClick} type='action' size='big' />
+                      {pageBase.current_user && pageBase.current_user.garage_admin &&
+                        <div>
+                          <h2>{t(['garages','placeRent'])}</h2>
+                          <Table schema={rentSchema} data={state.rents.map(prepareRent)} />
+                          <div className={styles.centerDiv}>
+                            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newRentClick} type='action' size='big' />
+                          </div>
                         </div>
-                      </div>
+                      }
                     </div>
 
 
@@ -154,6 +159,6 @@ export class GaragesPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.garages, newGarage: state.newGarage }),
+  state    => ({ state: state.garages, newGarage: state.newGarage, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(Object.assign({}, garagesActions, newGarageActions, pageBaseActions, occupancyActions), dispatch) })
 )(GaragesPage)

@@ -29,7 +29,7 @@ export class ClientUsersPage extends Component {
   render() {
     const { state, pageBase, actions } = this.props
 
-    const schema = [ { key: 'full_name',        title: t(['clientUsers','name']),        comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
+    const schema = [ { key: 'full_name',   title: t(['clientUsers','name']),        comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
                    , { key: 'email',       title: t(['clientUsers','email']),       comparator: 'string' }
                    , { key: 'phone',       title: t(['clientUsers','phone']),       comparator: 'number' }
                    , { key: 'created_at',  title: t(['clientUsers','memberSince']), comparator: 'date',   representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span>, }
@@ -40,7 +40,7 @@ export class ClientUsersPage extends Component {
                           , { key: 'phone', title: t(['clientUsers','phone']), comparator: 'number' }
                           ]
 
-    const isClientAdmin = state.users.filter((user) => {return user.can_manage}).findIndex((user)=>{return pageBase.current_user ? user.user.id == pageBase.current_user.id : false}) == -1
+    const isClientAdmin = state.users.filter((user) => {return user.admin}).findIndex((user)=>{return pageBase.current_user ? user.user.id == pageBase.current_user.id : false}) == -1
 
     const addClientUserClick = () => {
       actions.setClient(this.props.params.id)
@@ -56,40 +56,40 @@ export class ClientUsersPage extends Component {
         actions.destroyClientUser(this.props.params.id, client_user.user.id )
       }
 
-      const secretaryClick = () => {
+      const secretaryPresetClick = () => {
         actions.setSecretary(this.props.params.id, client_user.user.id )
       }
-      const internalClick = () => {
+      const internalPresetClick = () => {
         actions.setInternal(this.props.params.id, client_user.user.id )
       }
 
-      const canManageClick = () => {
-        // actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"can_manage": !client_user.can_create_own})
+      const adminClick = () => {
+        // actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"admin": !client_user.admin})
       }
-      const canCreateOwnClick = () => {
-        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"can_create_own": !client_user.can_create_own})
+      const secretaryClick = () => {
+        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"secretary": !client_user.secretary})
       }
-      const canCreateInternalClick = () => {
-        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"can_create_internal": !client_user.can_create_internal})
+      const hostClick = () => {
+        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"host": !client_user.host})
       }
-      const isInternalClick = () => {
-        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"is_internal": !client_user.is_internal})
+      const internalClick = () => {
+        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"internal": !client_user.internal})
       }
 
       return(<div className={styles.spoiler}>
           <div className={styles.devider}>
-            <span className={client_user.can_manage ? styles.boldText : styles.inactiveText}  onClick={canManageClick}>{t(['clientUsers','isAdmin'])}</span>|
-            <span className={`${client_user.can_create_own ? styles.boldText : styles.inactiveText}`} onClick={canCreateOwnClick}>{t(['clientUsers','canCreateOwn'])}</span>|
-            <span className={`${client_user.can_create_internal ? styles.boldText : styles.inactiveText}`} onClick={canCreateInternalClick}>{t(['clientUsers','canCreateInternal'])}</span>|
-            <span className={`${client_user.is_internal ? styles.boldText : styles.inactiveText}`} onClick={isInternalClick}>{t(['clientUsers','isInternal'])}</span>
+            <span className={client_user.admin ? styles.boldText : styles.inactiveText}  onClick={adminClick}>{t(['clientUsers','admin'])}</span>|
+            <span className={`${client_user.secretary ? styles.boldText : styles.inactiveText}`} onClick={secretaryClick}>{t(['clientUsers','secretary'])}</span>|
+            <span className={`${client_user.host ? styles.boldText : styles.inactiveText}`} onClick={hostClick}>{t(['clientUsers','host'])}</span>|
+            <span className={`${client_user.internal ? styles.boldText : styles.inactiveText}`} onClick={internalClick}>{t(['clientUsers','internal'])}</span>
           </div>
           <div>
             {t(['clientUsers','presetAs'])}
-            <span className={styles.clickable} onClick={internalClick}>{t(['clientUsers','internal'])}</span>|
-            <span className={styles.clickable} onClick={secretaryClick}>{t(['clientUsers','secretary'])}</span>
+            <span className={styles.clickable} onClick={internalPresetClick}>{t(['clientUsers','internal'])}</span>|
+            <span className={styles.clickable} onClick={secretaryPresetClick}>{t(['clientUsers','secretary'])}</span>
 
             <div className={styles.float}>
-              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={client_user.can_manage && 'disabled'}/>
+              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={client_user.admin && 'disabled'}/>
             </div>
           </div>
         </div>

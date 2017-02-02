@@ -1,6 +1,7 @@
 import { request } from '../helpers/request'
 
 import { GET_GARAGES, DESTROY_GARAGE } from '../queries/garages.queries'
+import { fetchCurrentUser }            from './pageBase.actions'
 
 export const GARAGES_SET_GARAGES            = "GARAGES_SET_GARAGES"
 export const GARAGES_SET_PRICINGS           = "GARAGES_SET_PRICINGS"
@@ -34,12 +35,12 @@ export function setTableView (bool){
 export function initGarages (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      console.log(response.data.pricings);
       dispatch( setGarages(response.data.user_garages.map(function(user_garage){return user_garage.garage})) )
       dispatch( setPricings(response.data.pricings) )
       dispatch( setRents(response.data.rents) )
     }
     request(onSuccess, GET_GARAGES)
+    dispatch(fetchCurrentUser())
   }
 }
 

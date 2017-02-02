@@ -2,7 +2,6 @@
 export const CREATE_NEW_CLIENT = `mutation clientMutations($client: ClientInput!) {
   create_client(client: $client) {
     id
-    name
   }
 }
 `
@@ -13,6 +12,14 @@ export const EDIT_CLIENT_INIT = `query ($id: Id!) {
     client {
       id
       name
+      address{
+        line_1
+        line_2
+        city
+        postal_code
+        state
+        country
+      }
     }
   }
 }

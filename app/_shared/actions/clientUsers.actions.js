@@ -31,9 +31,9 @@ export function setClientUsersPendingUsers (users){
 export function initClientUsers (client_id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch( setClientUsersUsers( response.data.client_users ) )
+      dispatch( setClientUsersUsers( response.data.client_users.filter((clientUser)=>{return clientUser.pending == false}) ) )
       dispatch( setClientUsersClient(response.data.client_users[0].client) )
-      dispatch( setClientUsersPendingUsers(response.data.pending_client_users) )
+      dispatch( setClientUsersPendingUsers(response.data.client_users.filter((clientUser)=>{return clientUser.pending == true})) )
 
       dispatch(toClients())
     }
@@ -55,16 +55,15 @@ export function destroyClientUser(client_id, user_id){
           "client_id": parseInt(client_id)
         })
   }
-
 }
 
 export function setSecretary (client_id, user_id) {
   return (dispatch, getState) => {
     const relation = {
       // "admin": false,
-      "can_create_own": true,
-      "can_create_internal": true,
-      "is_internal": true
+      "secretary": true,
+      "host": true,
+      "internal": true
     }
     dispatch(setClientUserRelation(client_id, user_id, relation))
   }
@@ -73,10 +72,10 @@ export function setSecretary (client_id, user_id) {
 export function setInternal(client_id, user_id) {
   return (dispatch, getState) => {
     const relation = {
-      // "can_manage": false,
-      "can_create_own": true,
-      "can_create_internal": false,
-      "is_internal": true
+      // "admin": false,
+      "host": true,
+      "secretary": false,
+      "internal": true
     }
     dispatch(setClientUserRelation(client_id, user_id, relation))
   }
