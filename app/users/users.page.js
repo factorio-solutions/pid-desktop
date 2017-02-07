@@ -4,7 +4,7 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase from '../_shared/containers/pageBase/PageBase'
-import Table    from '../_shared/components/Table/Table'
+import Table    from '../_shared/components/table/Table'
 import RoundButton from '../_shared/components/buttons/RoundButton'
 
 import * as nav    from '../_shared/helpers/navigation'

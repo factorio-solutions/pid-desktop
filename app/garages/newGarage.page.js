@@ -8,7 +8,8 @@ import Input        from '../_shared/components/input/Input'
 import PatternInput from '../_shared/components/input/PatternInput'
 import Form         from '../_shared/components/form/Form'
 import Modal        from '../_shared/components/modal/Modal'
-import GarageLayout from '../_shared/components/GarageLayout/GarageLayout'
+import GarageLayout from '../_shared/components/garageLayout/GarageLayout'
+import GarageLayout2 from '../_shared/components/garageLayout/GarageLayout2'
 
 import * as newGarageActions from '../_shared/actions/newGarage.actions'
 import * as nav              from '../_shared/helpers/navigation'
@@ -31,7 +32,7 @@ export class NewGaragePage extends Component {
     const { state, actions } = this.props
 
     var allFloors = state.floors.filter((floor)=>{return floor.label.length > 0 && floor.scheme.length > 0 })
-
+    
     const submitForm = () => { actions.submitGarage() }
     const goBack     = () => { nav.to('/garages') }
 
@@ -125,6 +126,8 @@ export class NewGaragePage extends Component {
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={()=>{actions.setError(undefined)}} type='confirm'  />
                          </div>
 
+
+
     const content = <div className={styles.parent}>
                       <Modal content={errorContent} show={state.error!=undefined} />
 
@@ -143,7 +146,7 @@ export class NewGaragePage extends Component {
                       </div>
 
                       <div className={styles.rightCollumn}>
-                        <GarageLayout
+                        {/* <GarageLayout
                           svg                   = {allFloors[state.selectedFloor] && allFloors[state.selectedFloor].scheme || "<svg></svg>"}
                           floors                = {allFloors.map((floor) => {return floor.label})}
                           onFloorClick          = {actions.setFloor}
@@ -151,6 +154,10 @@ export class NewGaragePage extends Component {
                           activeFloor           = {state.selectedFloor}
                           availableFloorsPlaces = {[]}
                           activePlaces          = {[]}
+                        /> */}
+                        <GarageLayout2
+                          floors={allFloors}
+                          onPlaceClick = {(place)=>{console.log('place clicked', place);}}
                         />
                       </div>
                     </div>

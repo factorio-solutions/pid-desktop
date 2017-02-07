@@ -5,7 +5,7 @@ import moment                          from 'moment'
 import update                          from 'react-addons-update'
 
 import PageBase       from '../_shared/containers/pageBase/PageBase'
-import Table          from '../_shared/components/Table/Table'
+import Table          from '../_shared/components/table/Table'
 import RoundButton    from '../_shared/components/buttons/RoundButton'
 import ButtonStack    from '../_shared/components/buttonStack/ButtonStack'
 import TextButton     from '../_shared/components/buttons/TextButton'
@@ -111,7 +111,7 @@ export class GaragesPage extends Component {
 
       return update(rent, {spoiler:{$set: spoiler}, price: {$set: `${rent.price} ${rent.currency.symbol}`}, place_count: {$set: rent.place_count+''}})
     }
-    
+
     const content = <div>
                       <div>
                         {state.tableView ? <Table schema={schema} data={state.garages.map(addSpoiler)} />

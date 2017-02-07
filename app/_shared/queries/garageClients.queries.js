@@ -1,24 +1,50 @@
 // get clients and current garage layout
-export const GET_GARAGE_CLIENT = `query ($id: Id!, $valid_from: Datetime!, $invalid_from: Datetime!) {
-  garage(id: $id) {
+export const GET_GARAGE_CLIENT = `query($id: Id!){
+  garage(id: $id){
     id
     name
-    floors {
+    floors{
       label
       scheme
-      places {
-        label
+      places{
         id
-        client_places_interval(valid_from: $valid_from, invalid_from: $invalid_from) {
-          client_id
-        }
+        label
+      }
+    }
+    gates{
+      id
+      label
+      groups{
+        id
+        place_id
+      }
+    }
+    clients{
+      id
+      name
+      groups{
+        id
+        place_id
       }
     }
   }
-  manageble_clients {
-    name
+  pricings{
     id
-    created_at
+    name
+    place_count
+    groups{
+      id
+      place_id
+    }
+  }
+  rents{
+    id
+    name
+    place_count
+    groups{
+      id
+      place_id
+    }
   }
 }
 `
@@ -44,19 +70,26 @@ export const GET_GARAGE_CLIENT_UPDATE = `query ($id: Id!) {
 `
 
 // create place client connection
-export const CREATE_GARAGE_CLIENT = `mutation clientPlaceMutation($place_id: Id!, $client_id: Id!, $client_place: clientPlaceInput!) {
-  create_client_place(place_id: $place_id, client_id: $client_id, client_place: $client_place) {
-    client_id
-    place_id
+export const CREATE_GROUP = `mutation createGroup ($group: GroupInput!, $place_id:Id!){
+  create_group(group: $group, place_id: $place_id){
+    id
   }
 }
 `
 
 // destroy place client connection
-export const REMOVE_GARAGE_CLIENT = `mutation UpdateclientPlace($client_place: clientPlaceInput!, $place_id: Id!, $client_id: Id!) {
-  update_client_place(client_place: $client_place, place_id: $place_id, client_id: $client_id) {
-    place_id
-    client_id
+export const DESTROY_GROUP = `mutation destroyGroup ($id:Id!){
+  destroy_group(id: $id){
+    id
+  }
+}
+`
+
+// get client details
+export const ADD_CLIENT = `query ($id:Id!){
+  client(id: $id){
+    id
+    name
   }
 }
 `

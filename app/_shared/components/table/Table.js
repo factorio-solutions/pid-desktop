@@ -1,7 +1,7 @@
 import React, { Component, PropTypes }  from 'react'
 import moment 													from 'moment'
 
-import TableRow from '../TableRow/TableRow'
+import TableRow from '../tableRow/TableRow'
 
 import styles from './Table.scss'
 
@@ -32,7 +32,12 @@ export default class Table extends Component {
 	static propTypes = {
 		schema: 			PropTypes.array.isRequired,
 	  data: 				PropTypes.array.isRequired,   // Source data to fill the table
-		onRowSelect: 	PropTypes.func // will be called on select, gives it parameters (data, index) or (undefined, -1) on deselect
+		onRowSelect: 	PropTypes.func, // will be called on select, gives it parameters (data, index) or (undefined, -1) on deselect
+		deselect: 		PropTypes.bool // if set to true, will reset selected item
+	}
+
+	componentWillUpdate(nextProps){
+		nextProps.deselect && this.state.spoilerId != -1 && this.setState({...this.state, spoilerId: -1})
 	}
 
   constructor(props) {

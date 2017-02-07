@@ -3,7 +3,7 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
 import PageBase       from '../_shared/containers/pageBase/PageBase'
-import Table          from '../_shared/components/Table/Table'
+import Table          from '../_shared/components/table/Table'
 import Form           from '../_shared/components/form/Form'
 import Wysiwyg        from '../_shared/components/wysiwyg/Wysiwyg'
 import RoundButton    from '../_shared/components/buttons/RoundButton'

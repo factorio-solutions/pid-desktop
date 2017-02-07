@@ -4,7 +4,7 @@ import { bindActionCreators }          from 'redux'
 import update                          from 'react-addons-update'
 import moment                          from 'moment'
 
-import Table       from '../_shared/components/Table/Table'
+import Table       from '../_shared/components/table/Table'
 import RoundButton from '../_shared/components/buttons/RoundButton'
 import PageBase    from '../_shared/containers/pageBase/PageBase'
 

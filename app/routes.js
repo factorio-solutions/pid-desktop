@@ -20,6 +20,7 @@ import GarageMarketingPage  from './garages/garageMarketing.page'
 import NewMarketingPage     from './garages/newMarketing.page'
 import NewPricingPage       from './garages/newPricing.page'
 import NewRentPage          from './garages/newRent.page'
+import AddClientPage        from './garages/addClient.page'
 
 import MarketingPage        from './marketing/marketing.page'
 
@@ -71,6 +72,7 @@ export default function createRoutes() {
       <Route path="garages/pricings/:id/edit" component={NewPricingPage}/>
       <Route path="garages/rents/newRent"     component={NewRentPage}/>
       <Route path="garages/rents/:id/edit" component={NewRentPage}/>
+      <Route path="garages/:id/clients/addClient" component={AddClientPage}/>
 
       <Route path="marketing/:short_name" component={MarketingPage}/>
 
