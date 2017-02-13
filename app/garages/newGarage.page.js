@@ -32,9 +32,14 @@ export class NewGaragePage extends Component {
     const { state, actions } = this.props
 
     var allFloors = state.floors.filter((floor)=>{return floor.label.length > 0 && floor.scheme.length > 0 })
-    
+
     const submitForm = () => { actions.submitGarage() }
     const goBack     = () => { nav.to('/garages') }
+    const handleErrorClick = () => {
+      actions.setError(undefined)
+      actions.clearForm()
+      goBack()
+    }
 
     const getGPSLocation = (index) => {
       var geocoder = new google.maps.Geocoder()
@@ -123,7 +128,7 @@ export class NewGaragePage extends Component {
 
     const errorContent = <div className={styles.floatCenter}>
                             { state.error } <br/>
-                           <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={()=>{actions.setError(undefined)}} type='confirm'  />
+                           <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={handleErrorClick} type='confirm'  />
                          </div>
 
 

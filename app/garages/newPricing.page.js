@@ -39,9 +39,10 @@ export class NewPricingPage extends Component {
       if (state.name.value == undefined || state.name.value == ''|| !state.name.valid) return false
       // flat price or exponentiol price must be defined
       if ((state.flat_price.value == undefined || state.flat_price.value == ''|| !state.flat_price.valid) &
-          (state.exponential_max_price.value == undefined || state.exponential_max_price.value == ''|| !state.exponential_max_price.valid ||
-          state.exponential_min_price.value == undefined || state.exponential_min_price.value == ''|| !state.exponential_min_price.valid ||
-          state.exponential_decay.value == undefined || state.exponential_decay.value == ''|| !state.exponential_decay.valid)
+          (state.exponential_12h_price.value == undefined || state.exponential_12h_price.value == ''|| !state.exponential_12h_price.valid ||
+          state.exponential_day_price.value == undefined || state.exponential_day_price.value == ''|| !state.exponential_day_price.valid ||
+          state.exponential_week_price.value == undefined || state.exponential_week_price.value == ''|| !state.exponential_week_price.valid ||
+          state.exponential_month_price.value == undefined || state.exponential_month_price.value == ''|| !state.exponential_month_price.valid)
         ) return false
       if (state.weekend_price.value != undefined && state.weekend_price.value != '' && !state.weekend_price.valid) return false
       if (state.selectedCurrency == undefined) return false
@@ -66,9 +67,10 @@ export class NewPricingPage extends Component {
                       </div>
                       <div>
                         <h2>{t(['newPricing', 'exponentialPrice'])}</h2>
-                        <PatternInput onChange={actions.setExponentialMax}   label={t(['newPricing', 'maxPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.exponential_max_price.value || ''}/>
-                        <PatternInput onChange={actions.setExponentialMin}   label={t(['newPricing', 'minPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'minPlaceholder'])} value={state.exponential_min_price.value || ''}/>
-                        <PatternInput onChange={actions.setExponentialDecay} label={t(['newPricing', 'decay'])}    error={t(['newPricing', 'invalidDecay'])} pattern="^0([.,]\d+)?|1(.0+)?$" placeholder={t(['newPricing', 'decayPlaceholder'])} value={state.exponential_decay.value || ''}/>
+                        <PatternInput onChange={actions.setExponential12hPrice}   label={t(['newPricing', '12hPrice'])}   error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])}   value={state.exponential_12h_price.value || ''}/>
+                        <PatternInput onChange={actions.setExponentialDayPrice}   label={t(['newPricing', 'dayPrice'])}   error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])}   value={state.exponential_day_price.value || ''}/>
+                        <PatternInput onChange={actions.setExponentialWeekPrice}  label={t(['newPricing', 'weekPrice'])}  error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'minPlaceholder'])}   value={state.exponential_week_price.value || ''}/>
+                        <PatternInput onChange={actions.setExponentialMonthPrice} label={t(['newPricing', 'monthPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'decayPlaceholder'])} value={state.exponential_month_price.value || ''}/>
                       </div>
 
                       <div>

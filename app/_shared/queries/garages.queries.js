@@ -24,9 +24,10 @@ export const GET_GARAGES = `{
       code
       symbol
     }
-    exponential_decay
-    exponential_max_price
-    exponential_min_price
+    exponential_12h_price
+    exponential_day_price
+    exponential_week_price
+    exponential_month_price
     flat_price
     weekend_price
     place_count

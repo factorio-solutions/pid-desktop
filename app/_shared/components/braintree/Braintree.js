@@ -6,34 +6,21 @@ import { request } from '../../helpers/request'
 
 export default class Braintree extends Component {
   static contextTypes = {
-    store: PropTypes.object
+    token:     PropTypes.string,
+    onPayment: PropTypes.func
   }
 
   componentDidMount() {
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() => { this.forceUpdate() })
-
-    const paymentReceived = (payload) => {
-      request((response)=>{console.log(response);}, "mutation Payment($nonce: String!) {payment(nonce: $nonce)}", {"nonce": payload.nonce})
-    }
-
-    braintree.setup(store.getState().pageBase.current_user.braintree_token, 'dropin', {
+    braintree.setup(this.props.token, 'dropin', {
       container: this.refs.wrapper,
-      onPaymentMethodReceived: paymentReceived,
+      onPaymentMethodReceived: this.props.onPayment,
       paypal: { button: { type: 'checkout' } }
     })
   }
 
-  componentWillUnmount () {
-    this.unsubscribe()
-  }
-
   render(){
     return(
-      <form>
-        <div ref="wrapper"></div>
-        <input type="submit" value="Pay" />
-      </form>
+      <div ref="wrapper"></div>
     )
   }
 }

@@ -25,6 +25,7 @@ export const GET_RESERVATIONS_QUERY = `{
     }
     begins_at
     ends_at
+    approved
   }
 }
 `

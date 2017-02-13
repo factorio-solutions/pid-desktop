@@ -1,4 +1,5 @@
 import { request } from '../helpers/request'
+import _           from 'lodash'
 
 import { GET_GARAGES, DESTROY_GARAGE } from '../queries/garages.queries'
 import { fetchCurrentUser }            from './pageBase.actions'
@@ -35,7 +36,8 @@ export function setTableView (bool){
 export function initGarages (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch( setGarages(response.data.user_garages.map(function(user_garage){return user_garage.garage})) )
+      var uniqueGarages = _.uniqWith(response.data.user_garages.map(function (user_garage) {return user_garage.garage}),  _.isEqual)
+      dispatch( setGarages(uniqueGarages) )
       dispatch( setPricings(response.data.pricings) )
       dispatch( setRents(response.data.rents) )
     }

@@ -67,6 +67,7 @@ export class GaragesPage extends Component {
     const destroyClick = (garage) => { actions.destroyGarage(garage.id) }
     const toClient     = (garage) => { nav.to(`/garages/${garage.id}/clients`) }
     const toMarketing  = (garage) => { nav.to(`/garages/${garage.id}/marketing`) }
+    const toUsers      = (garage) => { nav.to(`/garages/${garage.id}/users`) }
     const editPricing  = (id)  => { nav.to(`/garages/pricings/${id}/edit`) }
     const editRent     = (id)  => { nav.to(`/garages/rents/${id}/edit`) }
 
@@ -82,6 +83,7 @@ export class GaragesPage extends Component {
           <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{toMarketing(garage)}} type='action'/>
           <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(garage)}} type='action'/>
           <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={()=>{toClient(garage)}} type='action'/>
+          <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={()=>{toUsers(garage)}} type='action'/>
           {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(garage)}} type='remove' state='disabled' question={t(['garages', 'removeGarageQuestion'])}/>*/}
         </span>
       </div>
@@ -96,7 +98,7 @@ export class GaragesPage extends Component {
         </span>
       </div>
 
-      let packages = pricing.flat_price != null ? t(['newPricing','flatPrice']) + `: ${pricing.flat_price} ${pricing.currency.symbol}` : t(['newPricing','exponentialPrice']) + `: ${pricing.exponential_min_price} - ${pricing.exponential_max_price} ${pricing.currency.symbol}`
+      let packages = pricing.flat_price != null ? t(['newPricing','flatPrice']) + `: ${pricing.flat_price} ${pricing.currency.symbol}` : t(['newPricing','exponentialPrice']) + `: ${pricing.exponential_12h_price} - ${pricing.exponential_day_price} - ${pricing.exponential_week_price} - ${pricing.exponential_month_price} ${pricing.currency.symbol}`
       let weekends = pricing.weekend_price == null ? '' : `, ${t(['newPricing','weekendPrice'])}: ${pricing.weekend_price} ${pricing.currency.symbol}`
 
       return update(pricing, {spoiler:{$set: spoiler}, packages: {$set: packages + weekends}, place_count: {$set: pricing.place_count+''}})

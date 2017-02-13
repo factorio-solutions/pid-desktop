@@ -50,9 +50,11 @@ export class ReservationsPage extends Component {
       return { name: reservation.user.full_name
              , from: reservation.begins_at
              , to: reservation.ends_at
+             , disabled: !reservation.approved
              , garage: reservation.place.floor.garage.name
              , place: { garagefloorName: reservation.place.floor.label, name: reservation.place.label }
              , spoiler: <div>
+                          {!reservation.approved && <div><b>{t(['reservations','reservationApproved'])}</b></div>}
                           {`${reservation.creator.full_name}  |  ${reservation.creator.email}  |  ${moment(reservation.created_at).format('DD.MM. HH:mm')}`}
                           <span className={styles.floatRight}>
                             <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>

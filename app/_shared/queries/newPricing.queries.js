@@ -17,9 +17,10 @@ export const GET_DETAILS =`query($pricing_id:Id!){
     currency_id
     name
     flat_price
-    exponential_decay
-    exponential_max_price
-    exponential_min_price
+    exponential_12h_price
+    exponential_day_price
+    exponential_week_price
+    exponential_month_price
     weekend_price
   }
 }

@@ -291,71 +291,69 @@ export function submitGarage() {
       return arr.concat(floor.places.map((place)=>{return place.label}))
     }, []).filter(unique).sort()
 
-    let gatePlaces = state.gates.reduce((arr, gate)=>{
-      return arr.concat(scanPlaces(gate.places))
+    // remove last (empty) floor, last (empty) gate, scan gate places
+    let newFloors = update(state.floors, {$splice: [[state.floors.length-1, 1]]})
+    let newGates = update(state.gates, {$splice: [[state.gates.length-1, 1]]})
+
+    newFloors = newFloors.map((floor) => {
+      return _.omit(floor, ['from', 'to']);
+    })
+
+    newGates = newGates.map((gate)=>{
+      let newGate = Object.assign({}, gate)
+      newGate.address.city = state.city
+      newGate.address.postal_code = state.postal_code
+      if (state.state != "") newGate.address.state = state.state
+      newGate.address.country = state.country
+      newGate.address.lng = parseFloat(newGate.address.lng)
+      newGate.address.lat = parseFloat(newGate.address.lat)
+      newGate.places = scanPlaces(newGate.places).filter((place)=>{return garagePlaces.indexOf(place) != -1}) // filter placeGates that have
+      return newGate
+    })
+
+    const onSuccess = (response) => {
+      if (state.error == undefined ){
+        nav.to('/garages')
+        dispatch(clearForm())
+      }
+    }
+
+    if (state.id == undefined) { // new garage
+      request( onSuccess
+             , CREATE_NEW_GARAGE
+             , { garage: { name: state.name
+                        //  , lpg: state.lpg
+                         , floors: newFloors
+                         , gates: newGates
+                         }
+               }
+             , "garageMutations"
+             )
+    } else { // garage edit
+      request( onSuccess
+             , UPDATE_GARAGE
+             , { id: state.id
+               , garage: { name: state.name
+                        //  , lpg: state.lpg
+                         , floors: newFloors
+                         , gates: newGates
+                         }
+               }
+             , "garageMutations"
+             )
+    }
+
+    // check if all places have gates
+    let gatePlaces = newGates.reduce((arr, gate)=>{
+      return arr.concat(gate.places)
     }, []).filter(unique).sort()
 
     let placesHaveGate = garagePlaces.reduce((bool, garagePlace)=>{
       return bool && gatePlaces.indexOf(garagePlace) != -1
     }, true)
 
-    let gatePlacesExist = gatePlaces.reduce((bool, gatePlace)=>{
-      return bool && garagePlaces.indexOf(gatePlace) != -1
-    }, true)
-
-    if (placesHaveGate && gatePlacesExist){ // all OK
-      // remove last (empty) floor, last (empty) gate, scan gate places
-      let newFloors = update(state.floors, {$splice: [[state.floors.length-1, 1]]})
-      let newGates = update(state.gates, {$splice: [[state.gates.length-1, 1]]})
-
-      newFloors = newFloors.map((floor) => {
-        return _.omit(floor, ['from', 'to']);
-      })
-
-      newGates = newGates.map((gate)=>{
-        let newGate = Object.assign({}, gate)
-        newGate.address.city = state.city
-        newGate.address.postal_code = state.postal_code
-        if (state.state != "") newGate.address.state = state.state
-        newGate.address.country = state.country
-        newGate.address.lng = parseFloat(newGate.address.lng)
-        newGate.address.lat = parseFloat(newGate.address.lat)
-        newGate.places = scanPlaces(newGate.places)
-        return newGate
-      })
-
-      const onSuccess = (response) => {
-        console.log('success');
-        dispatch(clearForm())
-        nav.to('/garages')
-      }
-
-      if (state.id == undefined) { // new garage
-        request( onSuccess
-               , CREATE_NEW_GARAGE
-               , { garage: { name: state.name
-                          //  , lpg: state.lpg
-                           , floors: newFloors
-                           , gates: newGates
-                           }
-                 }
-               , "garageMutations"
-               )
-      } else { // garage edit
-        request( onSuccess
-               , UPDATE_GARAGE
-               , { id: state.id
-                 , garage: { name: state.name
-                          //  , lpg: state.lpg
-                           , floors: newFloors
-                           , gates: newGates
-                           }
-                 }
-               , "garageMutations"
-               )
-      }
-    } else { // not OK
-      gatePlacesExist ? dispatch(setError(t(['newGarage', 'placeNoGate']))) : dispatch(setError(t(['newGarage', 'placeNoExist'])))
+    if (!placesHaveGate){
+      dispatch(setError(t(['newGarage', 'placeNoGate'])))
     }
   }
 }

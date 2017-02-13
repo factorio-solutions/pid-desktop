@@ -1,3 +1,4 @@
+
 export const GET_CURRENT_USER = `{
   current_user {
     full_name
@@ -5,7 +6,6 @@ export const GET_CURRENT_USER = `{
     email
     phone
     hint
-    braintree_token
     has_garages
     garage_admin
   }
