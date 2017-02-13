@@ -33,13 +33,30 @@ export default class ReleaseNotesPage extends Component {
 
         {/* Release notes ======================================================*/}
 
-        <button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />
-        <br/>
-        <button onClick={onBraintreeReport}>Braintree report</button>
+        {/* <button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />*/}
+        {/* <br/>*/}
+        {/* <button onClick={onBraintreeReport}>Braintree report</button>*/}
 
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
+
+        <h3>r20170213a</h3>
+        <ul>
+          <li><b>Pozměněná koncepce PID - nová specifikace a pojetí</b></li>
+          <li>Celkem od základu předěláni API aplikace</li>
+        </ul>
+        <ul>
+          <li>Na stránce "Garages" předěláno vytváření nové garáže, přidána nová komponenta GarageLayout, zařazeny Gates do tvorby garáže</li>
+          <li>Na stránce "Garages" přidána vztváření a editace pricing (cena rezervace) a rent (cena nájmu místa)</li>
+          <li>Na stránce "Garages" předělána stránka managementu garáže, nová logika přidělování míst k clientům, rents, places a gates</li>
+        </ul>
+        <ul>
+          <li>Stránka "Clients" spojena s novým API</li>
+        </ul>
+        <ul>
+          <li>Přibyla nová stránka "Cars" pro management aut uživatelů systému</li>
+        </ul>
 
         <h3> r20161221a </h3>
         <ul>

@@ -275,7 +275,11 @@
 		"phoneLabel": "Users phone number (optional)",
 		"noClients": "You have currently no clients where you have admin rights.",
 		"sucessfullyInvited": "%(success)s invitations were sucessfully send, %(failed)s failed.",
-		"zero": "no"
+		"zero": "no",
+
+		"selectClient": "Select client",
+		"selectGarage": "Select garage",
+		"selectCar": "Select car"
 	},
 	"notifications": {
 		"user": "user",
@@ -285,7 +289,9 @@
 		"created": "created on ",
 		"declineQuestion": "Are you sure you want to decline?",
 		"expiration": "Notification will expire on ",
-		"clientInvitationMessage": "Is asking for approval of new client account '%(arg1)s'.",
+		"clientInvitationMessage": "You have been invited to '%(arg1)s' client account. Do you want to accept?",
+		"garageInvitationMessage" : "You have been invited to '%(arg1)s' garage. Do you want to accept?",
+		"carInvitationMessage" : "You have been invited to use '%(arg1)s' car. Do you want to accept?",
 		"clientUserDestroyed": "You have been removed from clients account '%(arg1)s', all reservations associated to this clients account were canceled.",
 		"clientPlaceDestroyed": "Reservation of yours has been canceled due to owner removed the place from used clients account.",
 		"past": "Show past notifications",

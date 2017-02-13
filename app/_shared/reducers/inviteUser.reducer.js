@@ -3,12 +3,12 @@ import {
   INVITE_USER_SET_NAME,
   INVITE_USER_SET_MESSAGE,
   INVITE_USER_SET_EMAIL,
-  INVITE_USER_SET_IS_INTERNAL,
-  INVITE_USER_SET_CAN_MANAGE,
-  INVITE_USER_SET_CAN_CREATE_OWN,
-  INVITE_USER_SET_CAN_CREATE_INTERNAL,
   INVITE_USER_SET_CLIENT,
   INVITE_USER_SET_CLIENTS,
+  INVITE_USER_SET_GARAGE,
+  INVITE_USER_SET_GARGES,
+  INVITE_USER_SET_CAR,
+  INVITE_USER_SET_CARS,
   INVITE_USER_SET_SUCCESS,
   INVITE_USER_SET_ERROR,
   INVITE_USER_SET_CURRENT_EMAIL,
@@ -16,18 +16,19 @@ import {
 } from '../actions/inviteUser.actions'
 
 
-const defaultState =  { email:      {value: '', valid: false},
-                        message:    "",
-                        full_name:  "",
-                        phone:      "",
+const defaultState =  { email:        {value: '', valid: false},
+                        message:      "",
+                        full_name:    "",
+                        phone:        "",
 
-                        can_manage:           false,
-                        can_create_own:       false,
-                        can_create_internal:  false,
-                        is_internal:          false,
+                        clients:      [],
+                        client_id:    undefined,
 
-                        clients:   [],
-                        client_id: undefined,
+                        garages:      [],
+                        garage_id:    undefined,
+
+                        cars:         [],
+                        car_id:       undefined,
 
                         error:        undefined,
                         success:      undefined,
@@ -55,23 +56,6 @@ export default function inviteUser (state = defaultState, action) {
             , phone: action.value
             }
 
-    case INVITE_USER_SET_CAN_CREATE_INTERNAL:
-    return  { ...state
-            , can_create_internal: action.value
-            }
-    case INVITE_USER_SET_CAN_CREATE_OWN:
-    return  { ...state
-            , can_create_own: action.value
-            }
-    case INVITE_USER_SET_CAN_MANAGE:
-    return  { ...state
-            , can_manage: action.value
-            }
-    case INVITE_USER_SET_IS_INTERNAL:
-    return  { ...state
-            , is_internal: action.value
-            }
-
     case INVITE_USER_SET_CLIENTS:
     return  { ...state
             , clients: action.value
@@ -80,6 +64,24 @@ export default function inviteUser (state = defaultState, action) {
     return  { ...state
             , client_id: action.value
             }
+
+    case INVITE_USER_SET_GARAGE:
+    return { ...state
+           , garage_id: action.value
+           }
+    case INVITE_USER_SET_GARGES:
+    return { ...state
+           , garages: action.value
+           }
+
+    case INVITE_USER_SET_CAR:
+    return { ...state
+           , car_id: action.value
+           }
+    case INVITE_USER_SET_CARS:
+    return { ...state
+           , cars: action.value
+           }
 
     case INVITE_USER_SET_ERROR:
     return  { ...state

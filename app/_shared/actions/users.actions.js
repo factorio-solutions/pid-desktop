@@ -16,8 +16,8 @@ export function initUsers() {
   return (dispatch, getState) => {
 
     const onSuccess = (response) => {
-      var users = transformUsers([], response.data.client_users, false)
-      users = transformUsers(users, response.data.pending_client_users, true)
+      var users = transformUsers([], response.data.client_users.filter((client_user) => {return !client_user.pending}), false)
+      users = transformUsers(users, response.data.client_users.filter((client_user) => {return client_user.pending}), true)
 
       dispatch(setUsers( users ))
     }

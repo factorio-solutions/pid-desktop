@@ -24,42 +24,19 @@ export class inviteUserPage extends Component {
   }
 
   componentDidMount () {
-    this.props.actions.initClients()
+    this.props.actions.initManagebles()
   }
 
   render() {
     const {state, actions} = this.props
 
-    const submitForm = () => {
-      checkSubmitable() && actions.createNewClientUser()
-    }
-
-    const goBack = () => {
-      nav.back()
-    }
-
-    const checkSubmitable = () => {
-      return state.email.valid && state.client_id != undefined
-    }
-
-    const emailChanged = (value, valid) => {
-      actions.setEmail({ value, valid })
-    }
-    const messageChanged = (value, valid) => {
-      actions.setMessage(value)
-    }
-    const nameChanged = (value, valid) => {
-      actions.setName(value)
-    }
-    const phoneChanged = (value, valid) => {
-      actions.setPhone(value)
-    }
-    const canManageClick          = () => {actions.setCanManage(!state.can_manage)}
-    const canCreateOwnClick       = () => {actions.setCanCreateOwn(!state.can_create_own)}
-    const canCreateInternalClick  = () => {actions.setCanCreateInternal(!state.can_create_internal)}
-    const isInternalClick         = () => {actions.setIsInternal(!state.is_internal)}
-    const internalClick           = () => {actions.setInternal()}
-    const secretaryClick          = () => {actions.setSecretary()}
+    const submitForm      = () => { checkSubmitable() && actions.createNewManagebles() }
+    const goBack          = () => { nav.back() }
+    const checkSubmitable = () => { return state.email.valid && state.client_id != undefined }
+    const emailChanged    = (value, valid) => { actions.setEmail({ value, valid }) }
+    const messageChanged  = (value, valid) => { actions.setMessage(value) }
+    const nameChanged     = (value, valid) => { actions.setName(value) }
+    const phoneChanged    = (value, valid) => { actions.setPhone(value) }
 
     const modalClick = () => {
       actions.dismissModal()
@@ -71,12 +48,14 @@ export class inviteUserPage extends Component {
       goBack()
     }
 
-    const clientDropdown = () => {
-      const clientSelected = (index) => {
-        actions.setClient(state.clients[index].id)
-      }
-      return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
-    }
+    const clientSelected = (index) => { actions.setClient(state.clients[index].id) }
+    const clientDropdown = state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
+
+    const carSelected = (index) => { actions.setCar(state.cars[index].id) }
+    const carDropdown = state.cars.map((car, index) => {return {label: car.model, onClick: carSelected.bind(this, index) }})
+
+    const garageSelected = (index) => { actions.setGarage(state.garages[index].id) }
+    const garageDropdown = state.garages.map((garage, index) => {return {label: garage.name, onClick: garageSelected.bind(this, index) }})
 
     const errorContent = <div className={styles.floatCenter}>
                             { state.error } <br/>
@@ -102,7 +81,9 @@ export class inviteUserPage extends Component {
                       <div className={styles.form}>
                         <div className={`${styles.formChild} ${styles.mainInfo}`}>
                           <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} />
-                          <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
+                          {clientDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectClient'])} content={clientDropdown} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>}
+                          {garageDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectGarage'])} content={garageDropdown} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>}
+                          {carDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectCar'])}    content={carDropdown} style='light' selected={state.cars.findIndex((car)=>{return car.id == state.car_id})}/>}
                           <PatternInput onEnter={submitForm} onChange={messageChanged} label={t(['inviteUser', 'inviteMessage'])} error={t(['inviteUser', 'wrongMessage'])} pattern="^(?!\s*$).+" value={state.message} />
                         </div>
                         <div className={`${styles.formChild} ${styles.additionalInfo}`}>
@@ -110,17 +91,6 @@ export class inviteUserPage extends Component {
                           <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
                           <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
                           <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
-                          <p className={styles.rights}>
-                            <span className={state.can_manage ? styles.boldText : styles.inactiveText}  onClick={canManageClick}>{t(['clientUsers','isAdmin'])}</span>|
-                            <span className={state.can_create_own ? styles.boldText : styles.inactiveText} onClick={canCreateOwnClick}>{t(['clientUsers','canCreateOwn'])}</span>|
-                            <span className={state.can_create_internal ? styles.boldText : styles.inactiveText} onClick={canCreateInternalClick}>{t(['clientUsers','canCreateInternal'])}</span>|
-                            <span className={state.is_internal ? styles.boldText : styles.inactiveText} onClick={isInternalClick}>{t(['clientUsers','isInternal'])}</span>
-                          </p>
-                          <div className={styles.presets}>
-                            {t(['clientUsers','presetAs']) }
-                            <span className={styles.clickable} onClick={internalClick}>{t(['clientUsers','internal'])}</span>|
-                            <span className={styles.clickable} onClick={secretaryClick}>{t(['clientUsers','secretary'])}</span>
-                          </div>
                         </div>
                       </div>
 
