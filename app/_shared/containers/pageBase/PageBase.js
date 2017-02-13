@@ -107,7 +107,7 @@ export class PageBase extends Component {
     const VerticalMenuItemSize = state.menuWidth < 175 ? 'collapsed' : labels.length+labelsBottom.length > ITEM_NUMBER_TO_COLLAPSE ? 'small' : 'normal'
 
     const bottomLabels =  <div className={styles.bottom}>
-                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20161130a </div>
+                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170213a </div>
                             <VerticalMenu labels={labelsBottom} revertDivider={true} size={VerticalMenuItemSize}/>
                           </div>
 

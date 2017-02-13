@@ -44,7 +44,7 @@ export default class ReleaseNotesPage extends Component {
         <h3>r20170213a</h3>
         <ul>
           <li><b>Pozměněná koncepce PID - nová specifikace a pojetí</b></li>
-          <li>Celkem od základu předěláni API aplikace</li>
+          <li>Od základu předěláno API aplikace</li>
         </ul>
         <ul>
           <li>Na stránce "Garages" předěláno vytváření nové garáže, přidána nová komponenta GarageLayout, zařazeny Gates do tvorby garáže</li>
@@ -55,7 +55,15 @@ export default class ReleaseNotesPage extends Component {
           <li>Stránka "Clients" spojena s novým API</li>
         </ul>
         <ul>
+          <li>Stránka "Users" spojena s novým API</li>
+          <li>Stránka "Invite users" nyní slouží pro pozvání nových uživatelů do garáže, clienta nebo auta</li>
+        </ul>
+        <ul>
           <li>Přibyla nová stránka "Cars" pro management aut uživatelů systému</li>
+        </ul>
+        <ul>
+          <li>Stránka "Reservations" spojena s novým API</li>
+          <li>Na stránce "New Reservations" přibyl modul placení a výběru klienta, po vybrání parametrů rezervace je uživatel poslán na stránku s přehledem rezervace, odkud je možné rezervaci zrovna zaplatit.</li>
         </ul>
 
         <h3> r20161221a </h3>
