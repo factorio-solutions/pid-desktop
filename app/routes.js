@@ -8,6 +8,7 @@ import App from './_app/App'
 import LoginPage                  from './user/login.page'
 import SignUpPage                 from './user/signUp.page'
 import SettingsPage               from './user/settings.page'
+import AddFeaturesPage            from './user/addFeatures.page'
 import NotificationsPage          from './user/notifications.page'
 
 import ReservationsPage           from './reservations/reservations.page'
@@ -31,6 +32,9 @@ import Occupancy                  from './occupancy/occupancy.page'
 import ClientsPage                from './client/clients.page'
 import NewClientPage              from './client/newClient.page'
 import ClientUsersPage            from './client/users.page'
+
+import AccountsPage                from './accounts/accounts.page'
+import NewAccountPage              from './accounts/newAccount.page'
 
 import CarsPage                   from './cars/cars.page'
 import NewCarPage                 from './cars/newCar.page'
@@ -58,6 +62,7 @@ export default function createRoutes() {
       {/* other routes comes here */}
       <Route path="signUpPage"    component={SignUpPage}/>
       <Route path="settings"      component={SettingsPage}/>
+      <Route path="addFeatures"   component={AddFeaturesPage}/>
       <Route path="notifications" component={NotificationsPage}/>
 
       <Route path="reservations"                          component={ReservationsPage}/>
@@ -87,10 +92,9 @@ export default function createRoutes() {
       <Route path="clients/newClient" component={NewClientPage}/>
       <Route path="clients/:id/edit"  component={NewClientPage}/>
 
-      <Route path="clients"           component={ClientsPage}/>
-      <Route path="clients/:id/users" component={ClientUsersPage}/>
-      <Route path="clients/newClient" component={NewClientPage}/>
-      <Route path="clients/:id/edit"  component={NewClientPage}/>
+      <Route path="accounts"           component={AccountsPage}/>
+      <Route path="accounts/newAccount" component={NewAccountPage}/>
+      <Route path="accounts/:id/edit"  component={NewAccountPage}/>
 
       <Route path="cars"            component={CarsPage}/>
       <Route path="cars/:id/users"  component={CarUsersPage}/>

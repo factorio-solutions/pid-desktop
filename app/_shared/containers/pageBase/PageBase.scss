@@ -1,4 +1,5 @@
 @import '../../styles/app.components';
+@import '../../components/buttons/Button';
 
 .absoluteSpan{
   position: absolute;
@@ -17,6 +18,7 @@
   text-align: center;
   color: $white;
   background: $gray;
+  margin-top: 15px;
 }
 
 .clickable{
@@ -33,4 +35,20 @@
   padding: 10px;
   text-align: center;
   margin-bottom: 24px;
+}
+
+.featureButton{
+  width: 90%;
+  padding: 14px 8px;
+  margin-bottom: 10px;
+  @include border-radius(5px);
+  font-size:  18px;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  transition: all 0.4s ease;
+
+  @include colorize($blue);
+  color:   $white;
+  cursor:  pointer;
 }

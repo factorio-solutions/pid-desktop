@@ -86,6 +86,7 @@ export class inviteUserPage extends Component {
                           {carDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectCar'])}    content={carDropdown} style='light' selected={state.cars.findIndex((car)=>{return car.id == state.car_id})}/>}
                           <PatternInput onEnter={submitForm} onChange={messageChanged} label={t(['inviteUser', 'inviteMessage'])} error={t(['inviteUser', 'wrongMessage'])} pattern="^(?!\s*$).+" value={state.message} />
                         </div>
+
                         <div className={`${styles.formChild} ${styles.additionalInfo}`}>
                           <h3>{t(['inviteUser', 'optionalSettings'])}</h3>
                           <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
@@ -93,7 +94,6 @@ export class inviteUserPage extends Component {
                           <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
                         </div>
                       </div>
-
                       </Form>
                     </div>
 

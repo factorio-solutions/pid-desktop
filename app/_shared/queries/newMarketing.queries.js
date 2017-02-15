@@ -40,12 +40,12 @@ export const INIT_MARKETING = `query ($id: Id!) {
     ten_minutes_from_center
     tram_nearby
     wc
-    image {
+    images {
       file
       tag
       img
     }
-    description {
+    descriptions {
       language
       text
     }

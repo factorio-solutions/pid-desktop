@@ -10,6 +10,10 @@ import {
   NEW_GARAGE_SET_GATES,
   NEW_GARAGE_NEW_GARAGE_SELECT_FLOOR,
   NEW_GARAGE_SET_ERROR,
+  NEW_GARAGE_SET_AVAILABLE_ACCOUNTS,
+  NEW_GARAGE_SET_ACCOUNT,
+  NEW_GARAGE_SET_AVAILABLE_TARIFS,
+  NEW_GARAGE_SET_TARIF,
   NEW_GARAGE_CLEAR_FORM
 }  from '../actions/newGarage.actions'
 
@@ -30,18 +34,22 @@ export const emptyGate = { label:   ""
                                     }
                          }
 
-const defaultState =  { id:             undefined
-                      , name:           ""
-                      , lpg:            false
-                      , city:           ""
-                      , postal_code:    ""
-                      , state:          ""
-                      , country:        ""
-                      , gates:          [ emptyGate ]
-                      , floors:         [ emptyFloor ]
-                      , selectedFloor:  0
+const defaultState =  { id:                undefined
+                      , name:              ""
+                      , lpg:               false
+                      , city:              ""
+                      , postal_code:       ""
+                      , state:             ""
+                      , country:           ""
+                      , gates:             [ emptyGate ]
+                      , floors:            [ emptyFloor ]
+                      , selectedFloor:     0
+                      , availableTarifs:   []
+                      , tarif_id:          undefined
+                      , availableAccounts: []
+                      , account_id:        undefined
 
-                      , error:          undefined
+                      , error:             undefined
                       }
 
 
@@ -94,6 +102,26 @@ export default function newGarage (reducerState = defaultState, action) {
     return  { ...reducerState
             , gates: action.value
             }
+
+    case NEW_GARAGE_SET_AVAILABLE_ACCOUNTS:
+    return { ...reducerState
+           , availableAccounts: action.value
+           }
+
+    case NEW_GARAGE_SET_ACCOUNT:
+    return { ... reducerState
+           , account_id: action.value
+           }
+
+    case NEW_GARAGE_SET_AVAILABLE_TARIFS:
+    return { ...reducerState
+           , availableTarifs: action.value
+           }
+
+    case NEW_GARAGE_SET_TARIF:
+    return { ... reducerState
+           , tarif_id: action.value
+           }
 
     case NEW_GARAGE_SET_ERROR:
     return  { ...reducerState

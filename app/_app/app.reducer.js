@@ -5,6 +5,7 @@ import login            from '../_shared/reducers/login.reducer'
 import signUp           from '../_shared/reducers/signUp.reducer'
 
 import pageBase         from '../_shared/reducers/pageBase.reducer'
+import addFeatures      from '../_shared/reducers/addFeatures.reducer'
 import notifications    from '../_shared/reducers/notifications.reducer'
 
 import newReservation   from '../_shared/reducers/newReservation.reducer'
@@ -27,6 +28,9 @@ import clients          from '../_shared/reducers/clients.reducer'
 import newClient        from '../_shared/reducers/newClient.reducer'
 import clientUsers      from '../_shared/reducers/clientUsers.reducer'
 
+import accounts         from '../_shared/reducers/accounts.reducer'
+import newAccount       from '../_shared/reducers/newAccount.reducer'
+
 import cars             from '../_shared/reducers/cars.reducer'
 import newCar           from '../_shared/reducers/newCar.reducer'
 import carUsers         from '../_shared/reducers/carUsers.reducer'
@@ -41,6 +45,7 @@ const rootReducer = combineReducers({ routing
                                     , signUp
 
                                     , pageBase
+                                    , addFeatures
                                     , notifications
 
                                     , newReservation
@@ -62,6 +67,9 @@ const rootReducer = combineReducers({ routing
                                     , clients
                                     , newClient
                                     , clientUsers
+
+                                    , accounts
+                                    , newAccount
 
                                     , cars
                                     , newCar

@@ -18,6 +18,8 @@ export const UPDATE_GARAGE = `mutation UpdateGarage($garage: GarageInput!, $id: 
 export const GET_GARAGE_DETAILS = `query ($id: Id!) {
   garage(id: $id) {
     id
+    account_id
+    pid_tarif_id
     name
     lpg
     gates {
@@ -42,6 +44,22 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!) {
       label
       scheme
     }
+  }
+}
+`
+
+export const GET_ACCOUNTS_TARIFS = `query{
+  tarifs{
+    id
+    name
+    price
+    currency{
+      symbol
+    }
+  }
+  accounts{
+    id
+    name
   }
 }
 `

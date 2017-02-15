@@ -135,11 +135,11 @@ export function initMarketing(id) {
       attributes.forEach((attr) => {
         dispatch(setParameter (attr, response.data.marketing[0][attr]))
       })
-      dispatch(setDescription(response.data.marketing[0].description.reduce((descriptions, desc) => {
+      dispatch(setDescription(response.data.marketing[0].descriptions.reduce((descriptions, desc) => {
         descriptions[desc.language] = desc.text
         return descriptions
       }, {})))
-      dispatch(setImages(insertEmptyRow(response.data.marketing[0].image)))
+      dispatch(setImages(insertEmptyRow(response.data.marketing[0].images)))
     }
 
     request(onSuccess, INIT_MARKETING, {id: parseInt(id)})

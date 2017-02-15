@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase     from '../_shared/containers/pageBase/PageBase'
-import RoundButton  from '../_shared/components/buttons/RoundButton'
-import Input        from '../_shared/components/input/Input'
-import PatternInput from '../_shared/components/input/PatternInput'
-import Form         from '../_shared/components/form/Form'
-import Modal        from '../_shared/components/modal/Modal'
-import GarageLayout from '../_shared/components/garageLayout/GarageLayout'
+import PageBase      from '../_shared/containers/pageBase/PageBase'
+import RoundButton   from '../_shared/components/buttons/RoundButton'
+import Input         from '../_shared/components/input/Input'
+import PatternInput  from '../_shared/components/input/PatternInput'
+import Form          from '../_shared/components/form/Form'
+import Modal         from '../_shared/components/modal/Modal'
+import Dropdown      from '../_shared/components/dropdown/Dropdown'
 import GarageLayout2 from '../_shared/components/garageLayout/GarageLayout2'
 
 import * as newGarageActions from '../_shared/actions/newGarage.actions'
@@ -25,6 +25,7 @@ export class NewGaragePage extends Component {
   }
 
   componentDidMount () {
+    this.props.actions.initAccountTarif()
     this.props.params.id && this.props.actions.initEditGarage(this.props.params.id)
   }
 
@@ -55,6 +56,8 @@ export class NewGaragePage extends Component {
 
     const checkSubmitable = () => {
       // return true // TODO: <--- delete this
+      if (state.tarif_id == undefined) return false
+      if (state.tarif_id > 1 && state.account_id == undefined) return false // payd tarif has to have account selected
       if (state.name == "") return false
       if (state.city == "") return false
       if (state.postal_code == "") return false
@@ -66,6 +69,12 @@ export class NewGaragePage extends Component {
 
       return true
     }
+
+    const tarifSelected = (index) => { actions.setTarif(state.availableTarifs[index].id) }
+    const tarifDropdown = state.availableTarifs.map((tarif, index) => {return {label: `${t(['addFeatures',tarif.name])} - ${tarif.price} ${tarif.currency.symbol}`, onClick: tarifSelected.bind(this, index) }})
+
+    const accountSelected = (index) => { actions.setAccount(state.availableAccounts[index].id) }
+    const accountDropdown = state.availableAccounts.map((account, index) => {return {label: account.name, onClick: accountSelected.bind(this, index) }})
 
     const prepareGates = (gate, index) => {
       const handleGateLabelChange        = (value) => { actions.changeGateLabel(value, index ) }
@@ -138,6 +147,8 @@ export class NewGaragePage extends Component {
 
                       <div className={styles.leftCollumn}>
                         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+                          <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})}/>
+                          <Dropdown label={t(['newGarage', 'selectAccount'])} content={accountDropdown} style='light' selected={state.availableAccounts.findIndex((account)=>{return account.id == state.tarif_id})}/>
                           <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])}/>
                           { /*<input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG}/> <span className={styles.pointer} onClick={actions.toggleLPG}> {t(['newGarage', 'lpgAllowed'])} </span> */}
                           <Input onChange={actions.setCity}       label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])} />
@@ -151,18 +162,10 @@ export class NewGaragePage extends Component {
                       </div>
 
                       <div className={styles.rightCollumn}>
-                        {/* <GarageLayout
-                          svg                   = {allFloors[state.selectedFloor] && allFloors[state.selectedFloor].scheme || "<svg></svg>"}
-                          floors                = {allFloors.map((floor) => {return floor.label})}
-                          onFloorClick          = {actions.setFloor}
-                          onPlaceClick          = {no => op}
-                          activeFloor           = {state.selectedFloor}
-                          availableFloorsPlaces = {[]}
-                          activePlaces          = {[]}
-                        /> */}
                         <GarageLayout2
                           floors={allFloors}
                           onPlaceClick = {(place)=>{console.log('place clicked', place);}}
+                          showEmptyFloors = {true}
                         />
                       </div>
                     </div>

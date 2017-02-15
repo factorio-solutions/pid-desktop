@@ -6,8 +6,8 @@ import * as nav       from '../helpers/navigation'
 import { t }          from '../modules/localization/localization'
 import { toGarages }  from './pageBase.actions'
 
-import { CREATE_NEW_GARAGE, GET_GARAGE_DETAILS, UPDATE_GARAGE } from '../queries/newGarage.queries'
-import { emptyGate, emptyFloor }                                from '../reducers/newGarage.reducer'
+import { CREATE_NEW_GARAGE, GET_GARAGE_DETAILS, UPDATE_GARAGE, GET_ACCOUNTS_TARIFS } from '../queries/newGarage.queries'
+import { emptyGate, emptyFloor }                                                     from '../reducers/newGarage.reducer'
 
 
 export const NEW_GARAGE_SET_ID                  = "NEW_GARAGE_SET_ID"
@@ -20,6 +20,10 @@ export const NEW_GARAGE_SET_COUNTRY             = "NEW_GARAGE_SET_COUNTRY"
 export const NEW_GARAGE_SET_GATES               = "NEW_GARAGE_SET_GATES"
 export const NEW_GARAGE_SET_FLOORS              = "NEW_GARAGE_SET_FLOORS"
 export const NEW_GARAGE_NEW_GARAGE_SELECT_FLOOR = "NEW_GARAGE_NEW_GARAGE_SELECT_FLOOR"
+export const NEW_GARAGE_SET_AVAILABLE_ACCOUNTS  = "NEW_GARAGE_SET_AVAILABLE_ACCOUNTS"
+export const NEW_GARAGE_SET_ACCOUNT             = "NEW_GARAGE_SET_ACCOUNT"
+export const NEW_GARAGE_SET_AVAILABLE_TARIFS    = "NEW_GARAGE_SET_AVAILABLE_TARIFS"
+export const NEW_GARAGE_SET_TARIF               = "NEW_GARAGE_SET_TARIF"
 export const NEW_GARAGE_SET_ERROR               = "NEW_GARAGE_SET_ERROR"
 export const NEW_GARAGE_CLEAR_FORM              = "NEW_GARAGE_CLEAR_FORM"
 
@@ -78,6 +82,30 @@ export function setFloors (floors){
 export function setFloor (floor){
   return  { type: NEW_GARAGE_NEW_GARAGE_SELECT_FLOOR
           , value: floor
+          }
+}
+
+export function setAvailableAccounts (accounts){
+  return  { type: NEW_GARAGE_SET_AVAILABLE_ACCOUNTS
+          , value: accounts
+          }
+}
+
+export function setAccount (id){
+  return  { type: NEW_GARAGE_SET_ACCOUNT
+          , value: id
+          }
+}
+
+export function setAvailableTarifs (tarifs){
+  return  { type: NEW_GARAGE_SET_AVAILABLE_TARIFS
+          , value: tarifs
+          }
+}
+
+export function setTarif (id){
+  return  { type: NEW_GARAGE_SET_TARIF
+          , value: id
           }
 }
 
@@ -246,12 +274,24 @@ function createFloor (index) {
   }
 }
 
+export function initAccountTarif (){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setAvailableAccounts(response.data.accounts))
+      response.data.accounts.length == 1 && dispatch(setAccount(response.data.accounts[0].id))
+      dispatch(setAvailableTarifs(response.data.tarifs))
+    }
+
+    request(onSuccess, GET_ACCOUNTS_TARIFS)
+  }
+}
 
 // EDIT GARAGE
 export function initEditGarage(id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      console.log(response);
+      dispatch(setAccount(response.data.garage.account_id))
+      dispatch(setTarif(response.data.garage.pid_tarif_id))
 
       dispatch(setId(response.data.garage.id))
       dispatch(setName(response.data.garage.name))
@@ -321,10 +361,11 @@ export function submitGarage() {
     if (state.id == undefined) { // new garage
       request( onSuccess
              , CREATE_NEW_GARAGE
-             , { garage: { name: state.name
-                        //  , lpg: state.lpg
-                         , floors: newFloors
-                         , gates: newGates
+             , { garage: { name:         state.name
+                         , floors:       newFloors
+                         , gates:        newGates
+                         , account_id:   state.account_id
+                         , pid_tarif_id: state.tarif_id
                          }
                }
              , "garageMutations"
@@ -333,10 +374,11 @@ export function submitGarage() {
       request( onSuccess
              , UPDATE_GARAGE
              , { id: state.id
-               , garage: { name: state.name
-                        //  , lpg: state.lpg
-                         , floors: newFloors
-                         , gates: newGates
+               , garage: { name:         state.name
+                         , floors:       newFloors
+                         , gates:        newGates
+                         , account_id:   state.account_id
+                         , pid_tarif_id: state.tarif_id
                          }
                }
              , "garageMutations"

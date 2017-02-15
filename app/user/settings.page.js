@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { request }                     from '../_shared/helpers/request'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
@@ -36,11 +36,7 @@ export class SettingsPage extends Component {
   }
 }
 
-export default connect(state => {
-  const { pageBase } = state
-  return ({
-    state: pageBase
-  })
-}, dispatch => ({
-  actions: bindActionCreators(pageBaseActions, dispatch)
-}))(SettingsPage)
+export default connect(
+  state    => ({ state: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(pageBaseActions, dispatch) })
+)(SettingsPage)

@@ -1,12 +1,12 @@
 {
 	"PID-RELEASE": "r20161130a",
 	"addresses":{
-		"line1": "Line 1",
+		"line1": "Line 1 *",
 		"line2": "Line 2",
-		"city": "City",
-		"postalCode": "Postal code",
+		"city": "City *",
+		"postalCode": "Postal code *",
 		"state": "State",
-		"country": "Country",
+		"country": "Country *",
 		"line1Invalid": "Line 1 invalid",
 		"line2Invalid": "Line 2 invalid",
 		"cityInvalid": "City invalid",
@@ -91,7 +91,9 @@
 		"editMarketing": "Edit marketing",
 		"garageMarketingHint": "Here you can manage marketing for your garage. TODO: Change this",
 		"garageNewMarketingHint": "Here you can setup new marketing. TODO: Change this",
-		"garageEditMarketingHint": "Here you can manage edit marketing. TODO: Change this"
+		"garageEditMarketingHint": "Here you can manage edit marketing. TODO: Change this",
+		"addFeatures": "Add features",
+		"accounts":"Accounts"
 
 	},
 	"newReservation": {
@@ -251,7 +253,9 @@
 		"placesPlaceholder": "5-15, 17-20, 30, 32",
 		"lpgAllowed": "LPG is allowed",
 
-		"placeNoGate": "Not all places were assigned to gate. This can be changed later in garage management."
+		"placeNoGate": "Not all places were assigned to gate. This can be changed later in garage management.",
+		"selectTarif": "Select tarif",
+		"selectAccount": "Select account"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -467,5 +471,61 @@
 		"garage": "Garage",
 		"floor": "Floor",
 		"place": "Place"
+	},
+	"addFeatures": {
+		"ImGarageOwner": "I am a garage owner",
+		"LongTerm": "LONGTERM OR PERSONAL",
+		"Automation": "AUTOMATION & ACCESS",
+		"Integration": "INTEGRATIONS",
+		"custom": "CUSTOM",
+		"canAddGarage":"garage and places",
+		"users":"users",
+		"reservations":"reservations",
+		"saveContracts":"save contracts",
+		"hosts":"hosts",
+		"occupancy":"occupancy overview",
+		"notifications":"notifications",
+		"accessFeature": "access features",
+		"acceptPayments": "client accepts payments",
+		"issueTracking": "issue tracking",
+		"visitors": "visitor system",
+		"security": "overview and security features",
+		"analytics": "simple business analytics",
+		"3rdParty": "3rd party integrations and aggregators",
+		"advancedAnalytics": "advanced business analytics",
+		"customDesc": "haven't found your desired mix? let us know!",
+		"perSpot": " / spot",
+		"perMonth": " / month",
+		"free": "Free",
+		"customPrice": "Custom pricing",
+
+		"additionalGoods": "Additional goods",
+		"bookingPage": "MY OWN BOOKING PAGE",
+		"advertisement":"awesome advertisemnt",
+		"gateModule": "GATE MODULE",
+		"openGate":"opens gate via app",
+
+		"IdontHaveAccout":"I don't have a account",
+		"createAccount":"CREATE ACCOUNT",
+		"IamGarageClient":"I am client of garage",
+		"createClient":"CREATE CLIENT"
+	},
+
+	"accounts": {
+			"name": "name",
+			"id": "id",
+			"merchant_id": "merchant id"
+	},
+	"newAccount": {
+			"name": "Account name *",
+			"placeholder": "Money account",
+			"invalidName": "Invalid accounts name",
+			"merchant": "Braintree merchant id",
+			"placeholderMerchant": "tdcbjgcfh6czjk3m",
+			"invalidMerchant": "Invalid merchant id",
+
+			"whatIsMerchant": "What is merchant id?",
+			"merchantDesc": "We use Braintree to take care of your money. If you want to accept money, you have to get Braintree accounts and provide us with your merhcant ID. Got to braintree.com and sign up for production! Once you are logged in, go to Account > My user. Under API Keys, Tokenization Keys, Encryption Keys, click View Authorizations. ",
+			"merchantDesc2": "If no API keys appear, click Generate New API Key. Click View under the Private Key column to see your public and private keys, merchant ID, and environment."
 	}
 }

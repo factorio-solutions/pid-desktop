@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import Logo           from '../../components/logo/Logo'
-import HorizontalMenu from '../../components/horizontalMenu/HorizontalMenu'
-import VerticalMenu   from '../../components/verticalMenu/VerticalMenu'
-import MasterPage     from '../../components/masterPage/MasterPage'
-import ButtonStack    from '../../components/buttonStack/ButtonStack'
-import RoundButton    from '../../components/buttons/RoundButton'
-import Modal          from '../../components/modal/Modal'
+import Logo            from '../../components/logo/Logo'
+import HorizontalMenu  from '../../components/horizontalMenu/HorizontalMenu'
+import VerticalMenu    from '../../components/verticalMenu/VerticalMenu'
+import MasterPage      from '../../components/masterPage/MasterPage'
+import ButtonStack     from '../../components/buttonStack/ButtonStack'
+import RoundButton     from '../../components/buttons/RoundButton'
+import RoundTextButton from '../../components/buttons/RoundTextButton'
+import Modal           from '../../components/modal/Modal'
 
 import {t}      from '../../modules/localization/localization'
 import * as nav from '../../helpers/navigation'
@@ -64,6 +65,10 @@ export class PageBase extends Component {
       nav.to('/clients')
     }
 
+    const accountClick = () => {
+      nav.to('/accounts')
+    }
+
     const usersClick = () => {
       actions.toUsers()
       nav.to('/users')
@@ -71,6 +76,10 @@ export class PageBase extends Component {
 
     const carsClick = () => {
       nav.to('/cars')
+    }
+
+    const addFeaturesClic = () => {
+      nav.to('/addFeatures')
     }
 
     const settingClick = () => {
@@ -96,6 +105,7 @@ export class PageBase extends Component {
                     , {label: t(['pageBase', 'Reservation']),                   icon: 'ticket',       onClick: reservationClick }
                     , {label: t(['pageBase', 'Garages']),                       icon: 'home',         onClick: garageClick }
                     , {label: t(['pageBase', 'Client & Users']),                icon: 'users',        onClick: clientClick }
+                    , {label: t(['pageBase', 'accounts']),                      icon: 'money',        onClick: accountClick }
                     , {label: t(['pageBase', 'Users']),                         icon: 'child',        onClick: usersClick }
                     , {label: t(['pageBase', 'Cars']),                          icon: 'car',          onClick: carsClick }
                     ]
@@ -107,6 +117,7 @@ export class PageBase extends Component {
     const VerticalMenuItemSize = state.menuWidth < 175 ? 'collapsed' : labels.length+labelsBottom.length > ITEM_NUMBER_TO_COLLAPSE ? 'small' : 'normal'
 
     const bottomLabels =  <div className={styles.bottom}>
+                            <RoundTextButton onClick={addFeaturesClic} content={t(['pageBase', 'addFeatures'])} type="action" />
                             <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170213a </div>
                             <VerticalMenu labels={labelsBottom} revertDivider={true} size={VerticalMenuItemSize}/>
                           </div>

@@ -1,0 +1,36 @@
+@import '../_styles/app.desktop';
+
+.pricings {
+  display: flex;
+}
+
+.pricing{
+  position: relative;
+  flex: 1 1;
+  border: 1px solid $lightGray;
+  margin: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.points{
+  padding: 0;
+  margin: 25px 10px 75px;
+  list-style: none;
+  text-align: center;
+  border-bottom: 1px solid $lightGray;
+
+  >li{
+    padding: 10px 0;
+    line-height: 1.5;
+    letter-spacing: -.01em;
+    border-top: 1px solid $lightGray;
+  }
+}
+
+.button{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

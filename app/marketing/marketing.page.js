@@ -37,7 +37,7 @@ export class MarketingPage extends Component {
     }
 
     const filterLanguages = (lang) => {
-      return marketing.description.map((desc)=> {return desc.language}).includes(lang)
+      return marketing.descriptions.map((desc)=> {return desc.language}).includes(lang)
     }
 
     const prepareLanguages = (lang, index) => {
@@ -46,7 +46,8 @@ export class MarketingPage extends Component {
     }
 
     const prepareImages = (image) => {
-      return 'data:image/' + image.file.substring(image.file.lastIndexOf(".")+1) + ';base64,'+image.img
+      return image.img
+      // return 'data:image/' + image.file.substring(image.file.lastIndexOf(".")+1) + ';base64,'+image.img
     }
 
     return (
@@ -59,14 +60,14 @@ export class MarketingPage extends Component {
           <div className={styles.languages}> {AVAILABLE_LANGUAGES.filter(filterLanguages).map(prepareLanguages)} </div>
         </div>
 
-        {marketing.image && <Carousel width='100%' height='500px' images={marketing.image.map(prepareImages)} />}
+        {marketing.images && <Carousel width='100%' height='500px' images={marketing.images.map(prepareImages)} />}
 
         <div className={styles.content}>
           <div className={styles.displayFlex}>
             <div className={styles.textContent}>
               <h1>{marketing.garage.name}</h1>
               <h3>{t(['marketing', 'description'])}</h3>
-              <div className={styles.innerContent} dangerouslySetInnerHTML={{__html: marketing.description.filter((desc) => {return desc.language == window.location.hash.substring(2,4)})[0].text}} />
+              <div className={styles.innerContent} dangerouslySetInnerHTML={{__html: marketing.descriptions.filter((desc) => {return desc.language == window.location.hash.substring(2,4)})[0].text}} />
               <h3>{t(['marketing', 'properties'])}</h3>
               <div className={styles.innerContent} >
                 <table className={styles.propertiesTtable}>
@@ -225,15 +226,20 @@ export class MarketingPage extends Component {
               <div className={styles.contact}>
                 <i className="fa fa-map-marker" aria-hidden="true"></i><br/>
                 <strong>{marketing.garage.name}</strong><br/>
-                {marketing.garage.address}<br/>
-                <small>{t(['marketing', 'lat'])}: {marketing.garage.lat}, {t(['marketing', 'lng'])}: {marketing.garage.lng}<br/></small>
+                {marketing.garage.address.line_1}<br/>
+                {marketing.garage.address.line_2}{marketing.garage.address.line_2 && <br/>}
+                {marketing.garage.address.city}<br/>
+                {marketing.garage.address.postal_code}<br/>
+                {marketing.garage.address.state}{marketing.garage.address.state && <br/>}
+                {marketing.garage.address.country}<br/>
+                <small>{t(['marketing', 'lat'])}: {marketing.garage.address.lat}, {t(['marketing', 'lng'])}: {marketing.garage.address.lng}<br/></small>
               </div>
             </div>
           </div>
 
           <div className={styles.mapConiner}>
-            <Map google={window.google} zoom={14} center={{lat: marketing.garage.lat, lng: marketing.garage.lng}} style={{height: '400px', maxWidth: '700px'}}>
-              <Marker position={{lat: marketing.garage.lat, lng: marketing.garage.lng}} name='garagePosition'/>
+            <Map google={window.google} zoom={14} center={{lat: marketing.garage.address.lat, lng: marketing.garage.address.lng}} style={{height: '400px', maxWidth: '700px'}}>
+              <Marker position={{lat: marketing.garage.address.lat, lng: marketing.garage.address.lng}} name='garagePosition'/>
             </Map>
           </div>
         </div>
