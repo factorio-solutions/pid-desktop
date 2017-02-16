@@ -48,7 +48,7 @@ export class Login extends Component {
         loginActions.dismissModal()
       }
 
-    const loadingContent = <div>Loading ...</div>
+    const loadingContent =  <div> Loading ... </div>
 
     const errorContent = <div>
                            Login failed: <br/>

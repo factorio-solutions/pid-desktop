@@ -19,8 +19,9 @@ export const mobile = true
 
 const history = syncHistoryWithStore(hashHistory, store);
 
-document.addEventListener("offline", () => {store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: false})}, false);
-document.addEventListener("online", () => {store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: true})}, false);
+// document.addEventListener("offline", () => {store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: false})}, false);
+// document.addEventListener("online", () => {store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: true})}, false);
+store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: true})
 
 store.subscribe(() => { // continouous save to storage
   localStorage['store'] = JSON.stringify(store.getState())

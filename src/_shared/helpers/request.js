@@ -8,7 +8,7 @@ import { setNotificationCount } from '../actions/notifications.actions'
 // import { request }  from '../_shared/helpers/request'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
-export function request (onSuccess, query, variables = null, operationName = null ){
+export function request (onSuccess, query, variables = null, operationName = null, onError = ()=>{} ){
   var entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
 
   var data = { query
@@ -33,9 +33,13 @@ export function request (onSuccess, query, variables = null, operationName = nul
       }
     }
     if (xmlHttp.readyState == 4){
-      const response = JSON.parse(xmlHttp.responseText)
-      store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
-      onSuccess({data: response.data})
+      try {
+        const response = JSON.parse(xmlHttp.responseText)
+        store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
+        onSuccess({data: response.data})
+      } catch (e) {
+        onError()
+      }
     }
   }
 

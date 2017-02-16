@@ -30,7 +30,8 @@ const define = {
   __PROD__: JSON.stringify(__PROD__),
   'process.env': {
     'NODE_ENV': JSON.stringify(__PROD__ ? 'production' : 'development'),
-    'API_ENTRYPOINT': JSON.stringify(branch.sync() == 'master' ? 'https://park-it-direct.herokuapp.com' : 'https://park-it-direct-alpha.herokuapp.com')
+    'API_ENTRYPOINT': JSON.stringify('http://localhost:3000')
+    // 'API_ENTRYPOINT': JSON.stringify(branch.sync() == 'master' ? 'https://park-it-direct.herokuapp.com' : 'https://park-it-direct-alpha.herokuapp.com')
   },
   __CORDOVA__: JSON.stringify(__CORDOVA__),
   __SSR__: JSON.stringify(__SSR__),
