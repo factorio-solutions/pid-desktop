@@ -1,0 +1,271 @@
+import update         from 'react-addons-update'
+import { request }    from '../helpers/request'
+import * as nav       from '../helpers/navigation'
+import { t }          from '../modules/localization/localization'
+import { toGarages }  from './pageBase.actions'
+
+import { GET_GARAGE_NAME, CREATE_NEW_MARKTETING, INIT_MARKETING, EDIT_MARKETING } from '../queries/newMarketing.queries'
+
+export const NEW_MARKETING_SET_DESCRIPTIONS         = 'NEW_MARKETING_SET_DESCRIPTIONS'
+export const NEW_MARKETING_SET_PARAMETER            = 'NEW_MARKETING_SET_PARAMETER'
+export const NEW_MARKETING_SET_DESCRIPTION_LANGUAGE = 'NEW_MARKETING_SET_DESCRIPTION_LANGUAGE'
+export const NEW_MARKETING_SET_SHORT_NAME           = 'NEW_MARKETING_SET_SHORT_NAME'
+export const NEW_MARKETING_SET_PHONE                = 'NEW_MARKETING_SET_PHONE'
+export const NEW_MARKETING_SET_EMAIL                = 'NEW_MARKETING_SET_EMAIL'
+export const NEW_MARKETING_SET_IMAGES               = 'NEW_MARKETING_SET_IMAGES'
+export const NEW_MARKETING_SET_MODAL                = 'NEW_MARKETING_SET_MODAL'
+export const NEW_MARKETING_CLEAR_FORM               = 'NEW_MARKETING_CLEAR_FORM'
+export const NEW_MARKETING_SET_MODAL_ERROR          = 'NEW_MARKETING_SET_MODAL_ERROR'
+export const NEW_MARKETING_SET_GARAGE               = 'NEW_MARKETING_SET_GARAGE'
+
+export const attributes = [ // informative attributes - same tags are on server side
+  'size_restriction',
+  'non_stop_open',
+  'non_stop_reception',
+  'gate_opened_by_phone',
+  'gate_opened_by_receptionist',
+  'historical_center',
+  'city_center',
+  'five_minutes_from_center',
+  'ten_minutes_from_center',
+  'fifteen_minutes_from_center',
+  'cameras',
+  'camera_at_gate',
+  'tram_nearby',
+  'subway_nearby',
+  'wc',
+  'five_minutes_from_subway',
+  'number_plate_recognition',
+  'charging_station'
+]
+
+export const imageTags = [ // image tags
+  'garage',
+  'place',
+  'gate',
+  'building',
+  'map'
+]
+
+
+export function setGarage (garage){
+  return  { type: NEW_MARKETING_SET_GARAGE
+          , value: garage
+          }
+}
+
+export function setDescription (descriptions){
+  return  { type: NEW_MARKETING_SET_DESCRIPTIONS
+          , value: descriptions
+          }
+}
+
+export function setParameter (key, value){
+  return  { type: NEW_MARKETING_SET_PARAMETER
+          , key
+          , value
+          }
+}
+
+export function setLanguage (language){
+  return  { type: NEW_MARKETING_SET_DESCRIPTION_LANGUAGE
+          , value: language
+          }
+}
+
+export function setShortName (name, valid){
+  return  { type: NEW_MARKETING_SET_SHORT_NAME
+          , value: {value: name, valid: valid}
+          }
+}
+
+export function setPhone (phone, valid){
+  return  { type: NEW_MARKETING_SET_PHONE
+          , value: {value: phone, valid: valid}
+          }
+}
+
+export function setEmail (email, valid){
+  return  { type: NEW_MARKETING_SET_EMAIL
+          , value: {value: email, valid: valid}
+          }
+}
+
+export function setImages (images){
+  return  { type: NEW_MARKETING_SET_IMAGES
+          , value: images
+          }
+}
+
+export function setModal (modal){
+  return  { type: NEW_MARKETING_SET_MODAL
+          , value: modal
+          }
+}
+
+export function setModalError (error){
+  return  { type: NEW_MARKETING_SET_MODAL_ERROR
+          , value: error
+          }
+}
+
+export function clearForm (){
+  return  { type: NEW_MARKETING_CLEAR_FORM }
+}
+
+
+export function initMarketingPage (garageId){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setGarage(response.data.garage))
+      dispatch(toGarages())
+    }
+
+    dispatch(clearForm())
+    request(onSuccess, GET_GARAGE_NAME, {id: parseInt(garageId)} )
+  }
+}
+
+export function initMarketing(id) {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setShortName (response.data.marketing[0].short_name, true))
+      dispatch(setPhone (response.data.marketing[0].phone, true))
+      dispatch(setEmail (response.data.marketing[0].email, true))
+      attributes.forEach((attr) => {
+        dispatch(setParameter (attr, response.data.marketing[0][attr]))
+      })
+      dispatch(setDescription(response.data.marketing[0].descriptions.reduce((descriptions, desc) => {
+        descriptions[desc.language] = desc.text
+        return descriptions
+      }, {})))
+      dispatch(setImages(insertEmptyRow(response.data.marketing[0].images)))
+    }
+
+    request(onSuccess, INIT_MARKETING, {id: parseInt(id)})
+  }
+}
+
+export function descriptionChange(value){
+  return (dispatch, getState) => {
+    const state = getState().newMarketing
+    dispatch(setDescription( { ...state.descriptions, [state.descriptionLanguage]: value } ))
+  }
+}
+
+export function removeImage(index){
+  return (dispatch, getState) => {
+    dispatch(setImages(update(getState().newMarketing.images, {$splice: [[index, 1]]})))
+  }
+}
+
+export function setTag(value, index){
+  return (dispatch, getState) => {
+    dispatch(changeImages("tag", value, index))
+  }
+}
+
+export function setFile(value, index){
+  return (dispatch, getState) => {
+    dispatch(changeImages("file", value, index))
+  }
+}
+
+export function setImage(value, index){
+  return (dispatch, getState) => {
+    dispatch(changeImages("img", value, index))
+  }
+}
+
+function changeImages(name, value, index){
+  return (dispatch, getState) => {
+    var images = getState().newMarketing.images
+    var newImage = update(images[index], {[name]: {$set: value}})
+    var newData = update(images, {$splice: [[index, 1, newImage]] });
+
+    newData = insertEmptyRow(newData)
+    dispatch(setImages(newData))
+  }
+}
+
+function insertEmptyRow(data){
+  if (data.length == 0 || data[data.length-1].tag != undefined || data[data.length-1].img != "") {
+    data.push({tag: undefined, img: ''})
+  }
+  return data
+}
+
+export function submitGarageMarketing (garageId) {
+  return (dispatch, getState) => {
+    const state = getState().newMarketing
+
+    const onSuccess = (response) => {
+      if (response.data.create_marketing == null || !('id' in response.data.create_marketing)){
+        // not created
+        dispatch(setModal(undefined))
+        dispatch(setModalError(t(['newMarketing', 'notCreated'])))
+      } else{
+        // created
+        dispatch(setModal(undefined))
+        dispatch(clearForm())
+        nav.to(`/garages/${garageId}/marketing`)
+      }
+    }
+
+    dispatch(setModal(t(['newMarketing', 'uploading'])))
+    request(onSuccess, CREATE_NEW_MARKTETING,
+      { "garage_id": parseInt(garageId)
+      , "marketing": marketingObject(state)
+      }
+    )
+  }
+}
+
+export function editGarageMarketing (marketingId, garageId) {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      if (response.data.update_marketing == null) {
+        // not updated - probably existing name
+        dispatch(setModal(undefined))
+        dispatch(setModalError(t(['newMarketing', 'notUpdated'])))
+      } else {
+        // marketing updated
+        dispatch(setModal(undefined))
+        dispatch(clearForm())
+        nav.to(`/garages/${garageId}/marketing`)
+      }
+    }
+
+    request(onSuccess, EDIT_MARKETING,
+      { "id": parseInt(marketingId)
+      , "marketing": marketingObject(getState().newMarketing)
+      }
+    )
+  }
+}
+
+
+// private functions
+function marketingObject (state) { // creates MarketingInputType object for the request
+  return attributes.reduce(
+    (properties, attribute)=>{
+      properties[attribute] = state[attribute]
+      return properties
+    },
+    { short_name: state.short_name.value
+    , phone: state.phone.value
+    , email: state.email.value
+    , descriptions: marketingDescriptions(state)
+    , images: state.images.filter((img, index, arr)=>{return index != arr.length-1})
+    }
+  )
+}
+
+function marketingDescriptions (state) {
+  return Object.keys(state.descriptions).reduce(
+    (descs, key)=>{
+      descs.push({language: key, text: state.descriptions[key]})
+      return descs
+    }, []
+  )
+}

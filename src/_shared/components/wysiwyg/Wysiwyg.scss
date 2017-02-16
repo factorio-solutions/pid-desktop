@@ -1,0 +1,27 @@
+@import '../../styles/app.components';
+
+.button{
+  background: $white;
+  border: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  &:hover{
+    color: $blue
+  }
+}
+
+.floatRight{
+  float: right;
+}
+
+.active{
+  color: $blue;
+}
+
+.editor{
+  height: 200px !important;
+  border: 1px solid $gray;
+  @include border-radius(5px);
+  width: 100%;
+}

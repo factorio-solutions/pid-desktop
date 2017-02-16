@@ -1,0 +1,86 @@
+@import '../../styles/app.components';
+
+.timePickeContainer{
+  display: inline-block;
+}
+
+.picker{
+  display: flex;
+}
+
+.hoursContainer{
+  width: 204px;
+  display: inline-block;
+}
+.minutesContainer{
+  margin-left: 15px;
+  display: inline-block;
+}
+
+
+.hoursTable{
+  table-layout: fixed;
+  width:        100%;
+  text-align:   center;
+
+  >thead {
+    > tr {
+      > td {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.minuteTable{
+  table-layout: fixed;
+  text-align:   center;
+
+  >thead {
+    > tr {
+      > td {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+.selected{
+  background-color: $yellow;
+  font-weight:      bold;
+  margin:           auto;
+  border-radius:    12px;
+  height:           $pickerRowHeigh;
+  width:            $pickerRowHeigh;
+}
+
+.buttonContainer{
+  display: block;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.pickerRow{
+  height: $pickerRowHeigh;
+  >td{
+    >div{
+      height: $pickerRowHeigh;
+      vertical-align: middle;
+      display: inline-table;
+    }
+  }
+}
+// .buttonStyle{
+//   border:         none;
+//   border-radius:  3px;
+//   padding:        3px 12px;
+//   outline:        none;
+//   text-align:     center;
+//   transition:     all 0.4s ease;
+//   margin:         5px;
+//   cursor:         pointer;
+// }

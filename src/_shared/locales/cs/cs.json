@@ -1,0 +1,181 @@
+{
+	"PID-RELEASE": "161110",
+	"login_page": {
+		"please": "Prosím, přihlaš se nebo si",
+		"Sign-Up": "Vytvoř účet",
+		"email": "Zadej e-mail",
+		"invalid-email": "Neplatná e-mailová adresa",
+		"password": "Heslo",
+		"loginFailed": "Špatné přihlášení"
+	},
+	"signup_page": {
+		"name": "Tvé celé jméno  *",
+		"phone": "Telefonní číslo",
+		"email": "E-mail  *",
+		"password": "Heslo  *",
+		"confirmation": "Potvrzení hesla  *",
+		"nameInvalid": "Neplatné jméno",
+		"phoneInvalid": "Neplatné telefonní číslo",
+		"emailInvalid": "Neplatná e-mailová adresa",
+		"loginFailed": "Špatné přihlášení",
+		"minimumLength": "Minimální délka je",
+		"noMatching": "Heslo se neshoduje"
+	},
+	"pageBase": {
+		"Reservation": "Rezervace",
+		"Reservations": "Rezervace",
+		"Accounts": "Účty",
+		"Account & Users": "Zákaznické účty",
+		"New Reservation": "Nová rezervace",
+		"NewGarage": "Vytvoření nové garáže",
+		"Garages": "Garáže",
+		"Settings": "Nastavení profilu",
+		"Users": "Uživatelé",
+		"Logout": "Odhlášení",
+		"notifications": "Upozornění",
+		"error": "Chyba",
+		"reservationsHint": "Zde najdeš všechny rezervace pro Váš účet.",
+		"newReservationHint": "Zde můžeš vytvořit novou rezervaci. Nejprve prosím vyber uživatele a garáž, poté datum a eventuelně parkovací místo. Voilá.",
+		"garagesHint": "Zde najdeš seznam všech garáží pro tvůj účet. Po vybrání garáže můžeš upravovat, která parkovací místa patří ke kterému zákaznickému účtu.",
+		"newGarageHint": "Vytvoř novou garáž. Zadej název a detaily, dále pokračuj definováním podlaží a parkovacích míst. Tyto informace jde zadat dvěma způsoby. Každý floorplan lze načíst ze souboru SVG s informacemi o parkovacích místech (s vytočením souboru Vám můžeme pomoci, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat rozsah čísel.",
+		"garageAccountsHint": "V této sekci můžeš přiřazovat parkovací místa ve vybrané garáži k jednotlivým zákaznickým účtům. Stačí zvolit zákaznický účet a zobrazí se plán garáže s dostupnými místy. Pozor, garáž může mít více pater! Vyber požadované patro tlačítky po pravé straně.",
+		"accountsHint": "V této sekci můžeš spravovat zákaznické účty. V zákaznickém účtu nalezneš informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Po zvolení účtu se zobrazí tlačítka pro editaci a správu uživatelů.",
+		"newAccountHint": "Zde můžeš vytvářet zákaznické účty. Ty v sobě obsahují informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Toto vše lze nastavit v patřičné sekci systému.",
+		"accountUsersHint": "Zde můžeš spravovat jednotlivé uživatele vybraného zákaznického účtu. Po zvolení uživatele se zobrazí a jdou upravit práva uživatele. Můžeš také do zákaznického účtu pozvat nové uživatele. Odeslané pozvánky které čekají na potvrzení nalezneš v sekci \"Pozvánky čekající na potvrzení\" níže.",
+		"settingsHint": "Zde se můžeš nastavit jazyk aplikace a pak zde můžeš zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.",
+		"usersHint": "Zde nalezneš seznam všech uživatelů. Po zvolení uživatele se zobrazí jeho členství v zákaznických účtech.",
+		"allKnownUsers": "Všichni známí uživatelé",
+		"editAccountHint": "Zde můžete změnit údaje a název Klientského účtu.",
+		"notificationsHint": "Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.",
+		"newAccountUsersHint": "Pozvěte uživatele, aby se připojil k vybranému Zákaznickému účtu. Zadejte uživatelův E-mail a odešlete pozvánku. Po potvrzení a akceptování pozvánky uživatelem se stává automaticky členem Zvoleného Klientského účtu."
+	},
+	"newReservation": {
+		"selectGarage": "Vyber garáž",
+		"selectUser": "Vyber uživatele",
+		"begins": "Začíná",
+		"invalidaDate": "neplatné datum",
+		"invalidPlace": "Neplatné místo",
+		"invalidaValue": "Neplatná hodnota",
+		"ends": "Končí",
+		"duration": "Doba",
+		"date": "Datum",
+		"place": "Místo",
+		"auto": "automaticky",
+		"Auto": "Automaticky",
+		"now": "nyní",
+		"fail": "Chyba při vytváření rezervace",
+		"noAvailableGarages": "Momentálně nejsou dostupné žádné garáže, kde můžete vytvořit novou rezervaci."
+	},
+	"accounts": {
+		"name": "jméno",
+		"id": "id",
+		"from": "Od",
+		"created": "Vytvořen",
+		"users": "Uživatelé"
+	},
+	"accountUsers": {
+		"name": "Uživatelské jméno",
+		"email": "E-mail",
+		"memberSince": "členem od",
+		"phone": "telefon",
+		"isAdmin": "je administrátor účtu",
+		"canCreateOwn": "může vytvářet vlastní",
+		"canCreateInternal": "může vytvářet interní",
+		"isInternal": "je interní",
+		"presetAs": "Nastav jako",
+		"internal": "Interní",
+		"secretary": "Sekretářka",
+		"removeAccountUser": "Určitě chceš odstranit tohoto uživatele?",
+		"pendingUsers": "Pozvánky čekající na potvrzení"
+	},
+	"reservations": {
+		"name": "jméno",
+		"from": "od",
+		"to": "do",
+		"place": "místo",
+		"creator": "Vytvořil",
+		"garage": "Garáž",
+		"removeReservationQuestion": "Určitě chceš odstranit tuto rezervaci?"
+	},
+	"garages": {
+		"name": "Název garáže",
+		"id": "id",
+		"created": "Vytvořen",
+		"removeGarageQuestion": "Určitě chceš odstranit tuto garáž?",
+		"places": "místa"
+	},
+	"garageUsers": {
+		"selectAccount": "Vyber účet klienta",
+		"begins": "CS: garageUsers.begins",
+		"ends": "CS: garageUsers.ends",
+		"invalidaDate": "CS: garageUsers.invalidaDate"
+	},
+	"newGarage": {
+		"newGarage": "Nová garáž",
+		"name": "Název garáže",
+		"placeholder": "Kancelářské centrum",
+		"floorName": "Podlaží",
+		"placeholderFloor": "1",
+		"invalidFloorName": "Neplatné název patra",
+		"invalidName": "Neplatný název garáže",
+		"removeFloorRowQuestion": "Určitě chceš odstranit tento řádek?",
+		"address": "Adresa",
+		"invalidAddress": "Neplatná adresa garáže",
+		"GPS": "GPS lokace",
+		"invalidGPS": "Neplatná GPS lokace",
+		"from": "Čísla od",
+		"to": "Čísla do",
+		"invalidFloorFrom": "Neplatné číslo \"Od\"",
+		"invalidFloorTo": "Neplatné číslo \"Do\"",
+		"placeholderFloorFrom": "3",
+		"placeholderFloorTo": "12",
+		"addressPlaceholder": "CS: newGarage.addressPlaceholder",
+		"GPSPlaceholder": "CS: newGarage.GPSPlaceholder"
+	},
+	"newAccount": {
+		"newAccount": "Nový účet",
+		"name": "Název účtu",
+		"placeholder": "Firemní účet",
+		"invalidName": "Neplatné jméno účtu"
+	},
+	"editAccount": {
+		"editAccount": "Změnit údaje",
+		"name": "Název účtu",
+		"invalidName": "Neplatné jméno účtu",
+		"placeholder": "Firemní účet"
+	},
+	"newAccountUser": {
+		"addUser": "Pozvi nového uživatele k používání vybraného účtu.",
+		"selectUser": "Zadej uživatelův e-mail",
+		"noSuchUser": "Takový uživatel neexistuje.",
+		"emailFail": "E-mail selhal",
+		"success": "Uživatel nalezen",
+		"notificationSend": "Upozornění bylo odesláno tomuto uživateli. Vyčkej jeho potvrzení.",
+		"message": "Byl jsi pozván do Zákaznického účtu '%(account)s'!",
+		"noRights": "K tomuto nemáš práva!!!"
+	},
+	"notifications": {
+		"user": "Uživatel",
+		"email": "E-mail",
+		"phone": "Telefon",
+		"sent": "Odesláno",
+		"declineQuestion": "Určitě chceš odmítnout?",
+		"expiration": "Upozornění vyprší dne.",
+		"accountInvitationMessage": "Žádá o odsouhlasení nového účtu '%(arg1)s'.",
+		"accountUserDestroyed": "Byl jsi odstraněn z účtu. Všechny rezervace přiřazené k tomuto účtu byly stornovány.",
+		"accountPlaceDestroyed": "Tvoje rezervace byly stornovány, jelikož správce garáže odstranil parkovací místo z Klientského účtu.",
+		"sais": "vzkazuje"
+	},
+	"settings": {
+		"hints": "Chci zobrazovat nápovědy na každé stránce.",
+		"language": "Vyber jazyk:"
+	},
+	"users": {
+		"username": "uživatelské jméno",
+		"email": "E-mail",
+		"phone": "Telefonní číslo",
+		"memberSince": "Členem od",
+		"active": "Aktivní",
+		"pending": "Čekající"
+	}
+}
