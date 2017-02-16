@@ -1,6 +1,5 @@
-// page details
-export const GET_GARAGE_MARKETING_DETAILS = `query ($short_name: String!) {
-  marketing(short_name: $short_name) {
+// page details // marketing has to be on the same row as query
+export const GET_GARAGE_MARKETING_DETAILS = `query ($short_name: String!) { marketing(short_name: $short_name) {
     id
     camera_at_gate
     cameras
@@ -25,19 +24,26 @@ export const GET_GARAGE_MARKETING_DETAILS = `query ($short_name: String!) {
     ten_minutes_from_center
     tram_nearby
     wc
-    image {
+    images {
       file
       tag
       img
     }
-    description {
+    descriptions {
       language
       text
     }
     garage {
-      lat
-      lng
-      address
+      address{
+        lat
+        lng
+        line_1
+        line_2
+        city
+        postal_code
+        state
+        country
+      }
       name
       place_count
     }

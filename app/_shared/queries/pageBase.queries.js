@@ -1,4 +1,4 @@
-// Get currently logged in user
+
 export const GET_CURRENT_USER = `{
   current_user {
     full_name
@@ -6,7 +6,14 @@ export const GET_CURRENT_USER = `{
     email
     phone
     hint
-    braintree_token
+    garage_admin
+    receptionist
+    security
+    client_admin
+    secretary
+    has_garages
+    has_account
+    has_client
   }
 }
 `

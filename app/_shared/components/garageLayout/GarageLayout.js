@@ -1,7 +1,7 @@
 import React, { Component, PropTypes }  from 'react'
 
-import SvgFromText from '../SvgFromText/SvgFromText'
-import Tooltip     from '../Tooltip/Tooltip'
+import SvgFromText from '../svgFromText/SvgFromText'
+import Tooltip     from '../tooltip/Tooltip'
 import ButtonStack from '../buttonStack/ButtonStack'
 import RoundButton from '../buttons/RoundButton'
 
@@ -12,6 +12,20 @@ const INIT_STATE = { content: ''
                    , mouseY:  0
                    , visible: false
                    }
+
+
+// clicked floor is in components state
+//
+// floors:[
+//   { label: string...
+//     svg: string...
+//     places: [
+//       {label: string... , available: bool..., selected: bool... , tooltip: DOMelement... }
+//     ]
+//   }
+// ]
+//
+// onPlaceClick: function selected place
 
 
 export default class GarageLayout extends Component {

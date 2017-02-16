@@ -15,7 +15,7 @@ export const CREATE_NEW_MARKTETING = `mutation createMarketing($marketing: Marke
 `
 
 // init marketing edit
-export const EDIT_MARKETING = `query ($id: Id!) {
+export const INIT_MARKETING = `query ($id: Id!) {
   marketing(marketing_id: $id) {
     camera_at_gate
     cameras
@@ -40,15 +40,22 @@ export const EDIT_MARKETING = `query ($id: Id!) {
     ten_minutes_from_center
     tram_nearby
     wc
-    image {
+    images {
       file
       tag
       img
     }
-    description {
+    descriptions {
       language
       text
     }
   }
 }
 `
+
+// init marketing edit
+export const EDIT_MARKETING = `mutation editMarketing($marketing:MarketingInput!, $id:Id!){
+  update_marketing(marketing: $marketing, id: $id){
+    id
+  }
+}`
