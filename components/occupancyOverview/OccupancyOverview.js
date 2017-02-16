@@ -7,6 +7,7 @@ import { t }                            from '../../modules/localization/localiz
 
 import styles                           from './OccupancyOverview.scss'
 
+const DAY         = 1
 const WEEK_DAYS   = 7
 const MONTH_DAYS  = 30
 
@@ -60,7 +61,7 @@ export default class OccupancyOverview extends Component{
 
           var reservation = document.createElement("DIV")
           var span = document.createElement("SPAN")
-          span.appendChild(document.createTextNode(validReservations[j].user.full_name))
+          span.appendChild(document.createTextNode(validReservations[j].car.licence_plate +" - "+ validReservations[j].user.full_name))
           reservation.appendChild(span)
           reservation.className = styles.reservationDiv
           reservation.setAttribute("style", `left: ${reservationStart}px; width: ${reservationEnd - reservationStart}px;`) // HACK: Dont forget to substract padding!
@@ -80,10 +81,10 @@ export default class OccupancyOverview extends Component{
   }
 
   render(){
-    const { places, leftClick, rightClick, weekClick, monthClick } = this.props
+    const { places, leftClick, rightClick, dayClick, weekClick, monthClick } = this.props
 
     const prepareDates = () => {
-      const length = this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS
+      const length = this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS
       var days = []
       for (var i = 0; i < length; i++) {
         const curr_date = moment(this.props.from).add(i,'days')
@@ -96,7 +97,7 @@ export default class OccupancyOverview extends Component{
       return places.map((place) => {
         const prepareRow = () => {
           var row = []
-          const length = (this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
+          const length = (this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
           for (var i = 0; i < length; i++) {
             var tdStyles = [
               (i) % (2) == 1 ? styles.rightBorder : '',
@@ -134,6 +135,7 @@ export default class OccupancyOverview extends Component{
         <div className={styles.controlls}>
           <div className={`${styles.flex}`}> <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={leftClick} /> </div>
           <div className={`${styles.flex} ${styles.center}`}>
+            <RoundButton content={t(['occupancy', 'dayShortcut'])} onClick={dayClick} state={this.props.duration=="day" && "selected"}/>
             <RoundButton content={t(['occupancy', 'weekShortcut'])} onClick={weekClick} state={this.props.duration=="week" && "selected"}/>
             <RoundButton content={t(['occupancy', 'monthShortcut'])} onClick={monthClick} state={this.props.duration=="month" && "selected"} />
           </div>

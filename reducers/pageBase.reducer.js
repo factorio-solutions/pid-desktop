@@ -12,7 +12,7 @@ const defaultState =  { verticalSelected:   0 // id of selected user reservation
                       , horizontalSelected: 0
                       , horizontalContent:  []
                       , error:              undefined
-                      , current_user:       undefined
+                      , current_user:       {}
                       , hint:               undefined
                       , menuWidth:          200
                       }

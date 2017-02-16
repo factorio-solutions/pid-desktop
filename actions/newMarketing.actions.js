@@ -4,7 +4,7 @@ import * as nav       from '../helpers/navigation'
 import { t }          from '../modules/localization/localization'
 import { toGarages }  from './pageBase.actions'
 
-import { GET_GARAGE_NAME, CREATE_NEW_MARKTETING, EDIT_MARKETING } from '../queries/newMarketing.queries'
+import { GET_GARAGE_NAME, CREATE_NEW_MARKTETING, INIT_MARKETING, EDIT_MARKETING } from '../queries/newMarketing.queries'
 
 export const NEW_MARKETING_SET_DESCRIPTIONS         = 'NEW_MARKETING_SET_DESCRIPTIONS'
 export const NEW_MARKETING_SET_PARAMETER            = 'NEW_MARKETING_SET_PARAMETER'
@@ -135,14 +135,14 @@ export function initMarketing(id) {
       attributes.forEach((attr) => {
         dispatch(setParameter (attr, response.data.marketing[0][attr]))
       })
-      dispatch(setDescription(response.data.marketing[0].description.reduce((descriptions, desc) => {
+      dispatch(setDescription(response.data.marketing[0].descriptions.reduce((descriptions, desc) => {
         descriptions[desc.language] = desc.text
         return descriptions
       }, {})))
-      dispatch(setImages(insertEmptyRow(response.data.marketing[0].image)))
+      dispatch(setImages(insertEmptyRow(response.data.marketing[0].images)))
     }
 
-    request(onSuccess, EDIT_MARKETING, {id: parseInt(id)})
+    request(onSuccess, INIT_MARKETING, {id: parseInt(id)})
   }
 }
 
@@ -198,28 +198,9 @@ function insertEmptyRow(data){
 export function submitGarageMarketing (garageId) {
   return (dispatch, getState) => {
     const state = getState().newMarketing
-    const descriptions = Object.keys(state.descriptions).reduce(
-      (descs, key)=>{
-        descs.push({language: key, text: state.descriptions[key]})
-        return descs
-      }, []
-    )
-
-    const marketingDescription = attributes.reduce(
-      (properties, attribute)=>{
-        properties[attribute] = state[attribute]
-        return properties
-      },
-      { short_name: state.short_name.value
-      , phone: state.phone.value
-      , email: state.email.value
-      , descriptions: descriptions
-      , images: state.images.filter((img, index, arr)=>{return index != arr.length-1})
-      }
-    )
 
     const onSuccess = (response) => {
-      if (!('id' in response.data.create_marketing)){
+      if (response.data.create_marketing == null || !('id' in response.data.create_marketing)){
         // not created
         dispatch(setModal(undefined))
         dispatch(setModalError(t(['newMarketing', 'notCreated'])))
@@ -234,8 +215,57 @@ export function submitGarageMarketing (garageId) {
     dispatch(setModal(t(['newMarketing', 'uploading'])))
     request(onSuccess, CREATE_NEW_MARKTETING,
       { "garage_id": parseInt(garageId)
-      , "marketing": marketingDescription
+      , "marketing": marketingObject(state)
       }
     )
   }
+}
+
+export function editGarageMarketing (marketingId, garageId) {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      if (response.data.update_marketing == null) {
+        // not updated - probably existing name
+        dispatch(setModal(undefined))
+        dispatch(setModalError(t(['newMarketing', 'notUpdated'])))
+      } else {
+        // marketing updated
+        dispatch(setModal(undefined))
+        dispatch(clearForm())
+        nav.to(`/garages/${garageId}/marketing`)
+      }
+    }
+
+    request(onSuccess, EDIT_MARKETING,
+      { "id": parseInt(marketingId)
+      , "marketing": marketingObject(getState().newMarketing)
+      }
+    )
+  }
+}
+
+
+// private functions
+function marketingObject (state) { // creates MarketingInputType object for the request
+  return attributes.reduce(
+    (properties, attribute)=>{
+      properties[attribute] = state[attribute]
+      return properties
+    },
+    { short_name: state.short_name.value
+    , phone: state.phone.value
+    , email: state.email.value
+    , descriptions: marketingDescriptions(state)
+    , images: state.images.filter((img, index, arr)=>{return index != arr.length-1})
+    }
+  )
+}
+
+function marketingDescriptions (state) {
+  return Object.keys(state.descriptions).reduce(
+    (descs, key)=>{
+      descs.push({language: key, text: state.descriptions[key]})
+      return descs
+    }, []
+  )
 }

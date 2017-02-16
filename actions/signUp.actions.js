@@ -69,9 +69,9 @@ export function dismissModal() {
 
 export function init(params){
   return (dispatch, getState) => {
-    params.full_name    && dispatch(setName( {value: params.full_name, valid: true} ))
-    params.phone        && dispatch(setPhone( {value: params.phone, valid: true} ))
-    params.email        && dispatch(setEmail( {value: params.email, valid: true} ))
+    params.full_name    && dispatch(setName( params.full_name, true ))
+    params.phone        && dispatch(setPhone( params.phone, true ))
+    params.email        && dispatch(setEmail( params.email, true ))
     params.reset_token  && dispatch(setResetToken( params.reset_token ))
   }
 }

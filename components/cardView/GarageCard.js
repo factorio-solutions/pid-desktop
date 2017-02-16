@@ -10,7 +10,7 @@ import styles       from './Card.scss'
 
 
 // onClick and selected are expected to be set by CardViewLayout
-export default function GarageCard ({ garage, occupancy, edit, account, marketing, state, onClick, selected })  {
+export default function GarageCard ({ garage, occupancy, edit, client, marketing, state, onClick, selected })  {
 
   const footer =  <div className={styles.footerContainer}>
                     <span className={styles.footerInfo}>
@@ -19,7 +19,7 @@ export default function GarageCard ({ garage, occupancy, edit, account, marketin
                     <span className={styles.buttons}>
                       <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>} onClick={occupancy} type='action'/>
                       <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={edit} type='action'/>
-                      <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={account} type='action'/>
+                      <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={client} type='action'/>
                       <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={marketing} type='action'/>
                     </span>
                   </div>

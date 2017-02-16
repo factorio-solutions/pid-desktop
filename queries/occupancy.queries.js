@@ -1,10 +1,10 @@
-// get available accounts and garages
+// get available clients and garages
+// manageble_clients {
+//   name
+//   id
+//   created_at
+// }
 export const OCCUPANCY_INIT = `{
-  manageble_accounts {
-    name
-    id
-    created_at
-  }
   user_garages {
     garage {
       name
@@ -15,6 +15,10 @@ export const OCCUPANCY_INIT = `{
 `
 
 // Get details about garage id: $id
+// client {
+//   name
+//   id
+// }
 export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
   garage(id: $id) {
     id
@@ -25,9 +29,8 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         id
         label
         reservations {
-          account {
-            name
-            id
+          car{
+            licence_plate
           }
           begins_at
           ends_at
