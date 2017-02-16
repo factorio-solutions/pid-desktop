@@ -60,8 +60,12 @@ export function login(email, password, redirect = false, callback = ()=>{}) {
       }
     }
 
+    const onError = () => {
+      dispatch(setError('No response'))
+    }
+
     dispatch({ type: LOGIN_REQUEST })
-    request(success, LOGIN_USER, {email: email, password: password})
+    request(success, LOGIN_USER, {email: email, password: password},null, onError)
   }
 }
 
