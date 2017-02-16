@@ -8,6 +8,7 @@ import Table        from '../_shared/components/table/Table'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
 
 import * as carUserActions from '../_shared/actions/carUsers.actions'
+import { setCar }          from '../_shared/actions/inviteUser.actions'
 import * as nav            from '../_shared/helpers/navigation'
 import { t }               from '../_shared/modules/localization/localization'
 
@@ -40,6 +41,7 @@ export class CarUsersPage extends Component {
 
     const addCarUserClick = () => {
       // todo set car in invite user form
+      actions.setCar(this.props.params.id)
       nav.to(`/users/inviteUser`)
     }
 
@@ -90,5 +92,5 @@ export class CarUsersPage extends Component {
 
 export default connect(
   state    => ({ state: state.carUsers }),
-  dispatch => ({ actions: bindActionCreators(carUserActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...carUserActions, setCar}, dispatch) })
 )(CarUsersPage)

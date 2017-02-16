@@ -1,5 +1,7 @@
 import { request } from '../helpers/request'
+import * as nav    from '../helpers/navigation'
 
+import { setTarif }   from './newGarage.actions'
 import { GET_TARIFS } from '../queries/addFeatures.queries'
 
 
@@ -20,5 +22,12 @@ export function initTarifs(){
     }
 
     request(onSuccess, GET_TARIFS)
+  }
+}
+
+export function tarifSelected (id){
+  return (dispatch, getState) => {
+    dispatch(setTarif(id))
+    nav.to('/garages/newGarage')
   }
 }

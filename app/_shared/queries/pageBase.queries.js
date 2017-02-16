@@ -6,8 +6,14 @@ export const GET_CURRENT_USER = `{
     email
     phone
     hint
-    has_garages
     garage_admin
+    receptionist
+    security
+    client_admin
+    secretary
+    has_garages
+    has_account
+    has_client
   }
 }
 `

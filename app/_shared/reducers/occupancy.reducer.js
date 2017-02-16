@@ -12,8 +12,8 @@ import {
 const defaultState =  { garage:     undefined // current one
                       , garages:    []       // all available
                       , garage_id:  undefined // selected by picker
-                      , clients:   []
-                      , client_id: undefined
+                      , clients:    []
+                      , client_id:  undefined
                       , duration:   "week"
                       , from:       moment().startOf('day')
                       }

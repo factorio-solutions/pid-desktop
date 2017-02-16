@@ -1,6 +1,5 @@
-// page details
-export const GET_GARAGE_MARKETING_DETAILS = `query ($short_name: String!) {
-  marketing(short_name: $short_name) {
+// page details // marketing has to be on the same row as query
+export const GET_GARAGE_MARKETING_DETAILS = `query ($short_name: String!) { marketing(short_name: $short_name) {
     id
     camera_at_gate
     cameras

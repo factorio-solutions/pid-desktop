@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
@@ -51,18 +51,20 @@ export class OccupancyPage extends Component {
 
     const filters = <div>
                       <ButtonStack divider={<span>|</span>} style='horizontal' >
+                        <TextButton content={t(['occupancy', 'day'])} onClick={() => {actions.dayClick()}} state={state.duration=="day" && 'selected'}/>
                         <TextButton content={t(['occupancy', 'week'])} onClick={() => {actions.weekClick()}} state={state.duration=="week" && 'selected'}/>
                         <TextButton content={t(['occupancy', 'month'])} onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>
                       </ButtonStack>
                     </div>
 
     const content = <div>
-                      <div className={styles.dropdownContainer}>
+                      <div> <Dropdown label={t(['occupancy', 'selectGarage'])} content={garageDropdown()} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/> </div>
+                      {/* <div className={styles.dropdownContainer}>
                         <Dropdown label={t(['occupancy', 'selectGarage'])} content={garageDropdown()} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>
                         <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
-                      </div>
+                      </div> */}
                       <OccupancyOverview places={garage ? garage.floors.reduce(preparePlaces, []) : []} from={state.from} duration={state.duration}
-                          leftClick={actions.subtractDay} rightClick={actions.addDay} weekClick={actions.weekClick} monthClick={actions.monthClick}/>
+                          leftClick={actions.subtractDay} rightClick={actions.addDay} dayClick={actions.dayClick} weekClick={actions.weekClick} monthClick={actions.monthClick}/>
                     </div>
 
     return (

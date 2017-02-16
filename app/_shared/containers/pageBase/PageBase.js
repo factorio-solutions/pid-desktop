@@ -100,15 +100,22 @@ export class PageBase extends Component {
                             <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
                           </div>
 
-    const labels =  [ {label: <span>{t(['pageBase', 'notifications'])}</span>,  icon: 'certificate',  onClick: notificationClick, type:notifications.count>0 ?'action':null, count:notifications.count }
-                    , {label: t(['pageBase', 'Occupancy']),                     icon: 'eye',          onClick: occupancyClick }
-                    , {label: t(['pageBase', 'Reservation']),                   icon: 'ticket',       onClick: reservationClick }
-                    , {label: t(['pageBase', 'Garages']),                       icon: 'home',         onClick: garageClick }
-                    , {label: t(['pageBase', 'Client & Users']),                icon: 'users',        onClick: clientClick }
-                    , {label: t(['pageBase', 'accounts']),                      icon: 'money',        onClick: accountClick }
-                    , {label: t(['pageBase', 'Users']),                         icon: 'child',        onClick: usersClick }
-                    , {label: t(['pageBase', 'Cars']),                          icon: 'car',          onClick: carsClick }
+    const garageRole  = state.current_user.garage_admin || state.current_user.receptionist || state.current_user.security
+    const clientRole  = state.current_user.client_admin || state.current_user.secretary
+    const accountRole = state.current_user.has_account
+    const hasClient   = state.current_user.has_client
+    const hasGarage   = state.current_user.has_garages
+
+    const labels =  [ {label: <span>{t(['pageBase', 'notifications'])}</span>, key:"notifications", icon: 'certificate',                      onClick: notificationClick, type:notifications.count>0 ?'action':null, count:notifications.count }
+                    , {label: t(['pageBase', 'Reservation']),                  key:"Reservation",   icon: 'ticket',                           onClick: reservationClick }
+                    , {label: t(['pageBase', 'Cars']),                         key:"Cars",          icon: 'car',                              onClick: carsClick }
                     ]
+    garageRole  && labels.push({label: t(['pageBase', 'Occupancy']),      key: "Occupancy",      icon: 'eye',   onClick: occupancyClick })
+    hasGarage   && labels.push({label: t(['pageBase', 'Garages']),        key: "Garages",        icon: 'home',  onClick: garageClick })
+    hasClient   && labels.push({label: t(['pageBase', 'Client & Users']), key: "Client & Users", icon: 'users', onClick: clientClick })
+    accountRole && labels.push({label: t(['pageBase', 'accounts']),       key: "accounts",       icon: 'money', onClick: accountClick })
+    hasClient   && labels.push({label: t(['pageBase', 'Users']),          key: "Users",          icon: 'child', onClick: usersClick })
+
 
     const  labelsBottom = [ {label: t(['pageBase', 'Logout']),                          icon: 'sign-out', onClick: logoutClick }
                           , {label: state.current_user && state.current_user.full_name, icon: 'cog',      onClick: settingClick }
@@ -118,7 +125,7 @@ export class PageBase extends Component {
 
     const bottomLabels =  <div className={styles.bottom}>
                             <RoundTextButton onClick={addFeaturesClic} content={t(['pageBase', 'addFeatures'])} type="action" />
-                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170213a </div>
+                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170216a </div>
                             <VerticalMenu labels={labelsBottom} revertDivider={true} size={VerticalMenuItemSize}/>
                           </div>
 

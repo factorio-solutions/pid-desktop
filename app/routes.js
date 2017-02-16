@@ -33,8 +33,10 @@ import ClientsPage                from './client/clients.page'
 import NewClientPage              from './client/newClient.page'
 import ClientUsersPage            from './client/users.page'
 
-import AccountsPage                from './accounts/accounts.page'
-import NewAccountPage              from './accounts/newAccount.page'
+import AccountsPage               from './accounts/accounts.page'
+import NewAccountPage             from './accounts/newAccount.page'
+
+import InvoicesPage               from './invoices/invoices.page'
 
 import CarsPage                   from './cars/cars.page'
 import NewCarPage                 from './cars/newCar.page'
@@ -87,14 +89,16 @@ export default function createRoutes() {
 
       <Route path="occupancy" component={Occupancy}/>
 
-      <Route path="clients"           component={ClientsPage}/>
-      <Route path="clients/:id/users" component={ClientUsersPage}/>
-      <Route path="clients/newClient" component={NewClientPage}/>
-      <Route path="clients/:id/edit"  component={NewClientPage}/>
+      <Route path="clients"                     component={ClientsPage}/>
+      <Route path="clients/:id/users"           component={ClientUsersPage}/>
+      <Route path="clients/newClient"           component={NewClientPage}/>
+      <Route path="clients/:id/edit"            component={NewClientPage}/>
+      <Route path="clients/:client_id/invoices" component={InvoicesPage}/>
 
-      <Route path="accounts"           component={AccountsPage}/>
-      <Route path="accounts/newAccount" component={NewAccountPage}/>
-      <Route path="accounts/:id/edit"  component={NewAccountPage}/>
+      <Route path="accounts"                      component={AccountsPage}/>
+      <Route path="accounts/newAccount"           component={NewAccountPage}/>
+      <Route path="accounts/:id/edit"             component={NewAccountPage}/>
+      <Route path="accounts/:account_id/invoices" component={InvoicesPage}/>
 
       <Route path="cars"            component={CarsPage}/>
       <Route path="cars/:id/users"  component={CarUsersPage}/>

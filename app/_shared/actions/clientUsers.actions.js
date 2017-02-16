@@ -32,7 +32,7 @@ export function initClientUsers (client_id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch( setClientUsersUsers( response.data.client_users.filter((clientUser)=>{return clientUser.pending == false}) ) )
-      dispatch( setClientUsersClient(response.data.client_users[0].client) )
+      response.data.client_users[0] && dispatch( setClientUsersClient(response.data.client_users[0].client) )
       dispatch( setClientUsersPendingUsers(response.data.client_users.filter((clientUser)=>{return clientUser.pending == true})) )
 
       dispatch(toClients())

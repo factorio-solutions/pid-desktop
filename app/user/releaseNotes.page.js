@@ -33,13 +33,21 @@ export default class ReleaseNotesPage extends Component {
 
         {/* Release notes ======================================================*/}
 
-        {/* <button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />*/}
+        {/*<button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />*/}
         {/* <br/>*/}
         {/* <button onClick={onBraintreeReport}>Braintree report</button>*/}
 
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
+
+        <h3>r20170216a</h3>
+        <ul>
+          <li>Zprovoznění stránky pro zakládání a správu accountů</li>
+          <li>Zprovoznění 'Add features' stránky</li>
+          <li>Zprovoznění Occupancy overview stránky</li>
+          <li>Upraveno vertikální menu, zobrazuje pouze položky, ke kterým má uživatel přístup</li>
+        </ul>
 
         <h3>r20170213a</h3>
         <ul>

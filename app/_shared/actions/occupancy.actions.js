@@ -72,8 +72,8 @@ export function loadGarage(){
 export function initOccupancy () {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      response.data.manageble_clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
-      dispatch(setClients(response.data.manageble_clients))
+      // response.data.manageble_clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
+      // dispatch(setClients(response.data.manageble_clients))
       const garages = response.data.user_garages.map( (user_garage) => { return user_garage.garage } )
       dispatch(setGarages(garages))
 
@@ -95,6 +95,12 @@ export function subtractDay () {
 export function addDay () {
   return (dispatch, getState) => {
     dispatch(setFrom( moment(getState().occupancy.from).add(1,'day') ))
+  }
+}
+
+export function dayClick () {
+  return (dispatch, getState) => {
+    dispatch(setDuration( 'day' ))
   }
 }
 

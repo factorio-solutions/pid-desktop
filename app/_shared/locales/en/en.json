@@ -30,7 +30,7 @@
 	},
 	"signup_page": {
 		"name": "your full name*",
-		"phone": "phone number",
+		"phone": "phone number*",
 		"email": "E-mail *",
 		"password": "Password *",
 		"confirmation": "Password confirmation *",
@@ -62,6 +62,7 @@
 		"inviteUser": "Invite new user",
 		"reservationsHint": "Here you have list of all reservations within your client account.",
 		"newReservationHint": "You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.",
+		"newReservationOverviewHint":"TODO: New reservation overview hint",
 		"garagesHint": "Here is a list of all garages registered within your client account. When selected you can edit details or manage which parking places of the garage are assigned to which client account.",
 		"newGarageHint": "Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.",
 		"garageClientsHint": "Here you can manage which Parking  places are assigned to which Client account within selected garage. Just select Client account to see the plan of the garage and available places. Be aware garage might have more levels. Select desired level by the buttons on the right side.",
@@ -74,6 +75,23 @@
 		"editClientHint": "Here you can edit Client account details and its name.",
 		"notificationsHint": "Here are displayed all notifications that need to be resolved.",
 		"newClientUsersHint": "Invite new user to connect with selected Client Account. Please provide E-mail and send the invitation. After user accepts the invitation, he or she becomes automatically member of the selected Client Account.",
+		"addFeaturesHint":"Here you can add functionality to your system. TODO: add features hint",
+		"addFeatures": "Add features",
+
+		"newAccountHint": "Here you can create new account that will store your money. TODO: new account hint",
+		"editAccountHint": "Account properties editation. TODO: edit account hint",
+		"accountsHint": "Here you can see all your account. TODO: accounts hint",
+		"accounts":"Accounts",
+		"newAccount":"New account",
+		"editAccount":"Edit account",
+
+		"carUsersHint": "Here you can manage people using the cars. TODO: user car hint",
+		"newCarHint": "Here you can create new car. Creating new reservation will be easier than. TODO: new car hint",
+		"editCarHint": " Here you can edit car properties. TODO: edit car hint",
+		"carsHint": "This is list of all cars assigned to you.+ TODO: cars hint",
+		"cars":"Cars",
+		"newCar":"New car",
+		"editCar":"Edit car",
 
 		"OccupancyOverview": "Occupancy overview",
 		"OccupancyOverviewHint": "TODO: Occupancy overview hint",
@@ -82,6 +100,7 @@
 		"EditGarageHint": "TODO: Edit garage hint",
 
 		"Occupancy": "Occupancy",
+		"Invoices":"Invoices",
 
 		"tableView": "table view",
 		"cardView": "card view",
@@ -92,6 +111,12 @@
 		"garageMarketingHint": "Here you can manage marketing for your garage. TODO: Change this",
 		"garageNewMarketingHint": "Here you can setup new marketing. TODO: Change this",
 		"garageEditMarketingHint": "Here you can manage edit marketing. TODO: Change this",
+		"garageNewPricingHint":"Here you can set up new reservations pricing. TODO: New pricing Hint",
+		"garageEditPricingHint":"Here you can edit pricing properties. TODO: Edit pricing hint",
+		"garageNewRentHint":"Here you can set up new rent for your places. TODO: New rent hint",
+		"garageEditRentHint":"Now you can edit rent properties. TODO: Edit rent hint",
+		"garageAddClientHint": "Here you can add client to garage managemat page. TODO: add client to management hint",
+		"garageGarageUsersHint": "Here you can manage who can manage your garage. TODO: Garage users management",
 		"addFeatures": "Add features",
 		"accounts":"Accounts"
 
@@ -171,10 +196,12 @@
 	"occupancy": {
 		"selectClientAccount": "Select client account",
 		"allClients": "All clients",
+		"dayShortcut": "D",
 		"weekShortcut": "W",
 		"monthShortcut": "M",
 		"places": "place",
 		"selectGarage": "Select garage",
+		"day": "day",
 		"week":"week",
 		"month":"month"
 	},

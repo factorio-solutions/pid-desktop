@@ -35,8 +35,10 @@ export class AccountsPage extends Component {
 
     const addSpoiler = (account, index) =>{
       const toEditAccount = () => { nav.to(`/accounts/${account.id}/edit`) }
+      const toInvoices = () => { nav.to(`/accounts/${account.id}/invoices`) }
       var spoiler = <span className={styles.floatRight}>
                       <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditAccount} type='action'/>
+                      <RoundButton content={<span className='fa fa-file' aria-hidden="true"></span>} onClick={toInvoices} type='action'/>
                     </span>
 
       return update(account, {spoiler:{$set: spoiler}})

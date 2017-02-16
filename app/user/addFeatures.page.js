@@ -24,9 +24,9 @@ export class AddFeaturesPage extends Component {
   render() {
     const {state, actions} = this.props
 
-    const longtermClick     = () => { console.log('click');}
-    const automationClick   = () => { console.log('automation');}
-    const integrationClick  = () => { console.log('integration');}
+    const longtermClick     = () => { actions.tarifSelected(1) }
+    const automationClick   = () => { actions.tarifSelected(2) }
+    const integrationClick  = () => { actions.tarifSelected(3) }
     const customClick       = () => { location.href='mailto:support@park-it-direct.com' }
     const bookingPageClick  = () => { console.log('bookingClick');}
     const gateModuleClick   = () => { console.log('gateClick');}
