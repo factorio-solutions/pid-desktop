@@ -1,0 +1,179 @@
+{
+	"PID-RELEASE": "161110",
+	"login_page": {
+		"please": "Zaloguj się lub",
+		"Sign-Up": "Załóż konto",
+		"email": "E-mail",
+		"invalid-email": "Niepoprawny adres e-mail",
+		"password": "Hasło",
+		"loginFailed": "Nie udało się zalogować"
+	},
+	"signup_page": {
+		"name": "Imię i nazwisko  *",
+		"phone": "Numer telefonu",
+		"email": "E-mail  *",
+		"password": "Hasło  *",
+		"confirmation": "Potwierdź hasło  *",
+		"nameInvalid": "Niepoprawne imię lub nazwisko",
+		"phoneInvalid": "Niepoprawny numer telefonu",
+		"emailInvalid": "Niepoprawny adres e-mail",
+		"loginFailed": "Nie udało się zalogować",
+		"minimumLength": "Długość minimum",
+		"noMatching": "Hasło się nie zgadza"
+	},
+	"pageBase": {
+		"Reservation": "Rezerwacja",
+		"Reservations": "Rezerwacje",
+		"Accounts": "Konta",
+		"Account & Users": "Konta klienta",
+		"New Reservation": "Nowa rezerwacja",
+		"NewGarage": "PL: pageBase.NewGarage",
+		"Garages": "Garaże",
+		"Settings": "Ustawienia profilu",
+		"Users": "Użytkownicy",
+		"Logout": "Wyloguj się",
+		"notifications": "Powiadomienia",
+		"error": "Błąd",
+		"reservationsHint": "Tutaj znajdziesz wszystkie swoje rezerwacje.",
+		"newReservationHint": "Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!",
+		"garagesHint": "Tutaj znajdziesz listę wszystkich garaży dostępnych dla Twojego konta. Po wybraniu garażu możesz edytować szczegóły oraz zarządzać miejscami parkingowymi przypisanymi do Twojego konta.",
+		"newGarageHint": "Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",
+		"garageAccountsHint": "Tutaj możesz przypisać miejsca parkingowe w wybranym garażu do odpowiedniego konta klienta. W tym celu wybierz konto, a zobaczysz plan garażu z dostępnymi miejscami. Uwaga, garaż może mieć więcej pięter! Wybierz piętro za pomocą przycisków po prawej stronie.",
+		"accountsHint": "W tej sekcji możesz zarządzać kontami klienta. Znajdziesz w nich informacje o kliencie, użytkownikach, przyporządkowanych do nich miejscach parkingowych itp. Po wybraniu konta pojawią się przyciski umożliwiające edytowanie i zarządzanie użytkownikami.",
+		"newAccountHint": "Tutaj utworzyć możesz konto klienta. Konto zawiera informacje o kliencie, użytkownikach, przyporządkowanych im miejscach parkingowych itp. Ustawienia znajdziesz w odpowiedniej sekcji systemu.",
+		"accountUsersHint": "W tej sekcji zarządzać możesz poszczególnymi użytkownikami w ramach swojego konta klienta. Po wybraniu użytkownika zobaczysz jego uprawnienia, które możesz edytować. Do konta klienta zaprosić możesz też nowych użytkowników. Wysłane zaproszenia, które czekają na odpowiedź, znajdziesz w sekcji \"Zaproszenia czekające na odpowiedź\"",
+		"settingsHint": "Ustawienia",
+		"usersHint": "Tutaj znajdziesz listę wszystkich użytkowników. Wybierz użytkownika, aby zobaczyć jego członkowstwo w kontach klienta.",
+		"allKnownUsers": "Wszyscy znani użytkownicy",
+		"editAccountHint": "PL: pageBase.editAccountHint",
+		"notificationsHint": "PL: pageBase.notificationsHint",
+		"newAccountUsersHint": "PL: pageBase.newAccountUsersHint"
+	},
+	"newReservation": {
+		"selectGarage": "Wybierz garaż",
+		"selectUser": "Wybierz użytkownika",
+		"begins": "Od",
+		"invalidaDate": "Niepoprawna data",
+		"invalidPlace": "Niepoprawne miejsce",
+		"invalidaValue": "Niepoprawna wartość",
+		"ends": "Do",
+		"duration": "Okres",
+		"date": "Data",
+		"place": "Miejsce",
+		"auto": "automatycznie",
+		"Auto": "Automatycznie",
+		"now": "teraz",
+		"fail": "Podczas rezerwacji pojawił się błąd",
+		"noAvailableGarages": "Obecnie nie ma żadnych dostępnych garaży, aby utworzyć nową rezerwację."
+	},
+	"accounts": {
+		"name": "Imię i nazwisko",
+		"id": "id",
+		"from": "Od",
+		"created": "Utworzony",
+		"users": "Użytkownicy"
+	},
+	"accountUsers": {
+		"name": "nazwa użytkownika",
+		"email": "E-mail",
+		"memberSince": "członek od",
+		"phone": "telefon",
+		"isAdmin": "jest administratorem konta",
+		"canCreateOwn": "może utworzyć własne",
+		"canCreateInternal": "może utworzyć wewnętrzne",
+		"isInternal": "należy do",
+		"presetAs": "Ustaw jako",
+		"internal": "Należy do",
+		"secretary": "Sekretarz",
+		"removeAccountUser": "Czy na pewno chcesz usunąć użytkownika?",
+		"pendingUsers": "Zaproszenia czekające na odpowiedź"
+	},
+	"reservations": {
+		"name": "Imię i nazwisko",
+		"from": "od",
+		"to": "do",
+		"place": "Miejsce",
+		"creator": "utworzył",
+		"garage": "PL: reservations.garage",
+		"removeReservationQuestion": "Czy na pewno chcesz usunąć rezerwację?"
+	},
+	"garages": {
+		"name": "Nazwa garażu",
+		"id": "id",
+		"created": "utworzony",
+		"removeGarageQuestion": "Czy na pewno chcesz usunąć ten garaż?",
+		"places": "miejsca"
+	},
+	"garageUsers": {
+		"selectAccount": "Wybierz konto klienta",
+		"begins": "PL: garageUsers.begins",
+		"ends": "PL: garageUsers.ends",
+		"invalidaDate": "PL: garageUsers.invalidaDate"
+	},
+	"newGarage": {
+		"newGarage": "Nowy garaż",
+		"name": "Nazwa garażu",
+		"placeholder": "Centrum biurowe",
+		"floorName": "PL: Level",
+		"placeholderFloor": "1",
+		"invalidFloorName": "Niepoprawna nazwa piętra",
+		"invalidName": "Niepoprawna nazwa garażu",
+		"removeFloorRowQuestion": "Czy na pewno chcesz usunąć tę linijkę?",
+		"address": "PL: newGarage.address",
+		"invalidAddress": "PL: newGarage.invalidAddress",
+		"GPS": "PL: newGarage.GPS",
+		"invalidGPS": "PL: newGarage.invalidGPS",
+		"from": "PL: newGarage.from",
+		"to": "PL: newGarage.to",
+		"invalidFloorFrom": "PL: newGarage.invalidFloorFrom",
+		"invalidFloorTo": "PL: newGarage.invalidFloorTo",
+		"placeholderFloorFrom": "3",
+		"placeholderFloorTo": "12",
+		"addressPlaceholder": "PL: newGarage.addressPlaceholder",
+		"GPSPlaceholder": "PL: newGarage.GPSPlaceholder"
+	},
+	"newAccount": {
+		"newAccount": "Nowe konto",
+		"name": "Nazwa konta",
+		"placeholder": "Konto firmowe",
+		"invalidName": "Niepoprawna nazwa konta"
+	},
+	"editAccount": {
+		"editAccount": "PL: editAccount.editAccount",
+		"name": "Nazwa konta",
+		"invalidName": "Niepoprawna nazwa konta",
+		"placeholder": "Konto firmowe"
+	},
+	"newAccountUser": {
+		"addUser": "Dodaj nowego użytkownika",
+		"selectUser": "Podaj adres e-mail użytkownika",
+		"noSuchUser": "Użytkownik nie istnieje.",
+		"emailFail": "Błąd w adresie e-mail",
+		"success": "Nie znaleziono użytkownika",
+		"notificationSend": "Powiadomienie zostało wysłane do użytkownika. Poczekaj na odpowiedź.",
+		"message": "Zostałeś zaproszony do Konta klienta '%(account)s'!",
+		"noRights": "Nie posiadasz odpowiednich uprawnień."
+	},
+	"notifications": {
+		"user": "Użytkownik nie istnieje.",
+		"email": "E-mail",
+		"phone": "Telefon",
+		"sent": "Wysłane",
+		"declineQuestion": "Czy na pewno chcesz odrzucić?",
+		"expiration": "Powiadomienie ważne do",
+		"accountUserDestroyed": "PL: notifications.accountUserDestroyed",
+		"accountPlaceDestroyed": "PL: notifications.accountPlaceDestroyed"
+	},
+	"settings": {
+		"hints": "Chcę zobaczyć Pomoc.",
+		"language": "Wybierz język:"
+	},
+	"users": {
+		"username": "PL: users.username",
+		"email": "E-mail",
+		"phone": "PL: users.phone",
+		"memberSince": "PL: users.memberSince",
+		"active": "PL: users.active",
+		"pending": "PL: users.pending"
+	}
+}

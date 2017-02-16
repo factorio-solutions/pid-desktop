@@ -1,0 +1,14 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius:    $radius;
+  -ms-border-radius:     $radius;
+  -o-border-radius:      $radius;
+  border-radius:         $radius;
+}
+
+@mixin background-size($repeat) {
+  -webkit-background-size:  $repeat;
+  -moz-background-size:     $repeat;
+  -o-background-size:       $repeat;
+  background-size:          $repeat;
+}

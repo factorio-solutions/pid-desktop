@@ -1,0 +1,19 @@
+.masterLoginPage{
+  text-align: center;
+  margin: auto;
+  padding-top: 30px;
+}
+
+@media (min-width: 300px) {
+  .masterLoginPage{
+    width: 300px;
+  }
+}
+
+
+/* -- Only apply on small window -------------------------------------------- */
+@media (max-width: 300px) {
+  .masterLoginPage{
+    width: 100%;
+  }
+}
