@@ -25,6 +25,7 @@ export const NEW_GARAGE_SET_ACCOUNT             = "NEW_GARAGE_SET_ACCOUNT"
 export const NEW_GARAGE_SET_AVAILABLE_TARIFS    = "NEW_GARAGE_SET_AVAILABLE_TARIFS"
 export const NEW_GARAGE_SET_TARIF               = "NEW_GARAGE_SET_TARIF"
 export const NEW_GARAGE_SET_ERROR               = "NEW_GARAGE_SET_ERROR"
+export const NEW_GARAGE_SET_FETCHING            = "NEW_GARAGE_SET_FETCHING"
 export const NEW_GARAGE_CLEAR_FORM              = "NEW_GARAGE_CLEAR_FORM"
 
 
@@ -112,6 +113,12 @@ export function setTarif (id){
 export function setError (error){
   return  { type: NEW_GARAGE_SET_ERROR
           , value: error
+          }
+}
+
+export function setFetching (bool){
+  return  { type: NEW_GARAGE_SET_FETCHING
+          , value: bool
           }
 }
 
@@ -318,7 +325,10 @@ export function initEditGarage(id){
       dispatch(setGates(response.data.garage.gates))
 
       dispatch(toGarages())
+      dispatch(setFetching(false))
     }
+
+    dispatch(setFetching(true))
     request(onSuccess, GET_GARAGE_DETAILS, {id: parseInt(id)})
   }
 }
@@ -353,11 +363,15 @@ export function submitGarage() {
 
     const onSuccess = (response) => {
       if (state.error == undefined ){
-        nav.to('/garages')
-        dispatch(clearForm())
+        dispatch(setFetching(false))
+        if (placesHaveGate){
+          nav.to('/garages')
+          dispatch(clearForm())
+        }
       }
     }
 
+    dispatch(setFetching(true))
     if (state.id == undefined) { // new garage
       request( onSuccess
              , CREATE_NEW_GARAGE

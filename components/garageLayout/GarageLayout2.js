@@ -141,7 +141,7 @@ export default class GarageLayout extends Component {
     const prepareButtons = (floor, index, arr) => {
       const onFloorClick = () => { this.setState({...this.state, floor: index}), ()=>{ this.scanPlacesAddLabels() } }
       return(
-        <RoundButton key={index} content={floor.label} onClick={onFloorClick} state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places.findIndex((place)=>{return place.available == true}) === -1 && 'disabled')} />
+        <RoundButton key={index} content={floor.label} onClick={onFloorClick} state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex((place)=>{return place.available == true}) === -1 && 'disabled')} />
       )
     }
 

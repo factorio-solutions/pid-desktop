@@ -3,7 +3,7 @@ import {t}          from '../modules/localization/localization'
 import { setError } from './pageBase.actions'
 
 import { GET_GARAGEUSERS, UPDATE_GARAGEUSERS, DESTROY_GARAGEUSERS } from '../queries/garageUsers.queries'
-
+import { toGarages } from './pageBase.actions'
 
 export const SET_GARAGE_USERS         = 'SET_GARAGE_USERS'
 export const SET_GARAGE_PENDING_USERS = 'SET_GARAGE_PENDING_USERS'
@@ -33,9 +33,9 @@ export function initGarageUsers (garage_id){
     const onSuccess = (response) => {
       dispatch( setGarageUsersUsers( response.data.user_garages.filter((garageUser)=>{return garageUser.pending == false}) ) )
       dispatch( setGarageUsersPendingUsers(response.data.user_garages.filter((garageUser)=>{return garageUser.pending == true})) )
-      dispatch( setGarageUsersGarage(response.data.user_garages[0].garage) )
+      dispatch( setGarageUsersGarage(response.data.garage) )
 
-      // dispatch(toClients())
+      dispatch( toGarages() )
     }
     request(onSuccess, GET_GARAGEUSERS, {id: +garage_id })
   }

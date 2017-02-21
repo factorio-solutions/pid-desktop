@@ -299,15 +299,49 @@ export function toGarages(){
             , {content: t(['pageBase', 'Clients']),  state: 'selected'}
           ]))
           break;
-          case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'newMarketing'):
+        case contains(window.location.hash, 'users'):
+          dispatch(setHorizontalContent(
+            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
+            , {content: '>',  state: 'disabled'}
+            , {content: t(['pageBase', 'Users']),  state: 'selected'}
+          ]))
+          break;
+        case contains(window.location.hash, 'newPricing'):
+          dispatch(setHorizontalContent(
+            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
+            , {content: '>',  state: 'disabled'}
+            , {content: t(['pageBase', 'newPricing']),  state: 'selected'}
+          ]))
+          break;
+        case contains(window.location.hash, 'pricings'):
+          dispatch(setHorizontalContent(
+            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
+            , {content: '>',  state: 'disabled'}
+            , {content: t(['pageBase', 'Pricings']),  state: 'selected'}
+          ]))
+          break;
+        case contains(window.location.hash, 'newRent'):
+          dispatch(setHorizontalContent(
+            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
+            , {content: '>',  state: 'disabled'}
+            , {content: t(['pageBase', 'newRent']),  state: 'selected'}
+          ]))
+          break;
+        case contains(window.location.hash, 'rents'):
+          dispatch(setHorizontalContent(
+            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
+            , {content: '>',  state: 'disabled'}
+            , {content: t(['pageBase', 'Rents']),  state: 'selected'}
+          ]))
+          break;
+        case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'newMarketing'):
           dispatch(setHorizontalContent(
             [ {content: `${t(['pageBase', 'Garages'])} ${getState().newMarketing.garage ? "("+getState().newMarketing.garage.name+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
             , {content: t(['pageBase', 'newMarketing']),  state: 'selected'}
           ]))
           break;
-          case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'edit'):
-          console.log(getState());
+        case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'edit'):
           dispatch(setHorizontalContent(
             [ {content: `${t(['pageBase', 'Garages'])} ${getState().newMarketing.garage ? "("+getState().newMarketing.garage.name+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
@@ -359,7 +393,7 @@ export function toClients(){
           break
         case contains(window.location.hash, 'clients') && contains(window.location.hash, 'invoices'):
           dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'Client & Users'])}`, state: 'disabled'}
+             [ {content: `${t(['pageBase', 'Client & Users'])} ${getState().invoices.client ? "("+getState().invoices.client.name+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
             , {content: t(['pageBase', 'Invoices']),  state: 'selected'}
             ]))
@@ -395,7 +429,7 @@ export function toAccounts () {
           break
         case contains(window.location.hash, 'accounts') && contains(window.location.hash, 'invoices'):
           dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'accounts'])}`, state: 'disabled'}
+             [ {content: `${t(['pageBase', 'accounts'])} ${getState().invoices.account ? "("+getState().invoices.account.name+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
             , {content: t(['pageBase', 'Invoices']),  state: 'selected'}
             ]))
@@ -435,7 +469,7 @@ export function toCars () {
       switch (true) { // HorizontalMenus
         case contains(window.location.hash, 'cars') && contains(window.location.hash, 'users'):
           dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'cars'])} ${getState().clientUsers.client.name ? "("+getState().clientUsers.client.name+")" : ""}`, state: 'disabled'}
+            [ {content: `${t(['pageBase', 'cars'])} ${getState().carUsers.car.model ? "("+getState().carUsers.car.model+")" : ""}`, state: 'disabled'}
             , {content: '>',  state: 'disabled'}
             , {content: t(['pageBase', 'Users']),  state: 'selected'}
             ]))

@@ -17,6 +17,9 @@ export const GET_GARAGEUSERS = `query ($id: Id!) {
     pending
     created_at
   }
+  garage(id: $id){
+    name
+  }
 }
 `
 
