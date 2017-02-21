@@ -43,11 +43,26 @@ export class NewGaragePage extends Component {
     }
 
     const getGPSLocation = (index) => {
+      if (index != undefined || state.gates.length > 1){
+        if (index !== undefined){
+          geocode(index, `${state.gates[index].address.line_1}, ${state.city}, ${state.postal_code}, ${state.country}`)
+        } else {
+          state.gates.forEach((gate, i, arr) => {
+            if (i != arr.length-1){
+              geocode(i, `${state.gates[i].address.line_1}, ${state.city}, ${state.postal_code}, ${state.country}`)
+            }
+          })
+        }
+      }
+    }
+
+    const geocode = (index, address) => {
       var geocoder = new google.maps.Geocoder()
-      geocoder.geocode({'address': `${state.gates[index].address.line_1}, ${state.city}, ${state.postal_code}, ${state.country}`}, (results, status) => {
+      geocoder.geocode({ address }, (results, status) => {
         if (status === 'OK') {
           actions.changeGateAddressLat( results[0].geometry.location.lat(), index )
           actions.changeGateAddressLng( results[0].geometry.location.lng(), index )
+
         } else {
           console.log(`Geocode was not successful on ${state.gates[index].address.line_1}, ${state.city}, ${state.postal_code}, ${state.country} for the following reason: ` + status);
         }
@@ -76,7 +91,7 @@ export class NewGaragePage extends Component {
     const accountSelected = (index) => { actions.setAccount(state.availableAccounts[index].id) }
     const accountDropdown = state.availableAccounts.map((account, index) => {return {label: account.name, onClick: accountSelected.bind(this, index) }})
 
-    const prepareGates = (gate, index) => {
+    const prepareGates = (gate, index, arr) => {
       const handleGateLabelChange        = (value) => { actions.changeGateLabel(value, index ) }
       const handleGatePhoneChange        = (value) => { actions.changeGatePhone(value, index ) }
       const handleGatePlacesChange       = (value) => { actions.changeGatePlaces(value, index ) }
@@ -94,12 +109,12 @@ export class NewGaragePage extends Component {
       return (
         <div key={index}>
           <div className={styles.inline}>
-            <Input style={styles.gatePhoneInputWidth+" "+styles.rightMargin} onChange={handleGateLabelChange} label={t(['newGarage', 'gateLabel'], { index: index+1 })} error={t(['newGarage', 'invalidGateLabel'])} value={gate.label} name={`gate${index}[label]`} placeholder={t(['newGarage', 'placeholderGateLabel'])}/>
+            <Input style={styles.gatePhoneInputWidth+" "+styles.rightMargin} onChange={handleGateLabelChange} label={t(['newGarage', 'gateLabel'], { index: index+1 }) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidGateLabel'])} value={gate.label} name={`gate${index}[label]`} placeholder={t(['newGarage', 'placeholderGateLabel'])}/>
             <Input style={styles.gatePhoneInputWidth}                        onChange={handleGatePhoneChange} label={t(['newGarage', 'gatePhone'])} error={t(['newGarage', 'invalidGatePhone'])} value={gate.phone} name={`gate${index}[phone]`} placeholder={t(['newGarage', 'placeholderGatePhone'])} type="tel"/>
             {removeGateButton()}
           </div>
-          <Input onChange={handleGatePlacesChange} label={t(['newGarage', 'places'])} error={t(['newGarage', 'invalidPlaces'])} value={gate.places} placeholder={t(['newGarage', 'placesPlaceholder'])} pattern="(\d+\s*)(\s*(,|-)\s*\d+)*"/>
-          <Input onChange={handleGateAddressLine1Change} label={t(['newGarage', 'street'])} error={t(['newGarage', 'invalidStreet'])} value={gate.address.line_1} placeholder={t(['newGarage', 'streetPlaceholder'])} onBlur={()=>{getGPSLocation(index)}}/>
+          <Input onChange={handleGatePlacesChange} label={t(['newGarage', 'places']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidPlaces'])} value={gate.places} placeholder={t(['newGarage', 'placesPlaceholder'])} pattern="(\d+\s*)(\s*(,|-)\s*\d+)*"/>
+          <Input onChange={handleGateAddressLine1Change} label={t(['newGarage', 'street']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidStreet'])} value={gate.address.line_1} placeholder={t(['newGarage', 'streetPlaceholder'])} onBlur={()=>{getGPSLocation(index)}}/>
           <div className={styles.inline}>
             <Input style={styles.latLngInputWidth+" "+styles.rightMargin} onChange={handleGateAddressLat} label={t(['newGarage', 'lat'])} error={t(['newGarage', 'invalidLat'])} value={gate.address.lat} name="garage[lat]" placeholder={t(['newGarage', 'latPlaceholder'])}/>
             <Input style={styles.latLngInputWidth}                        onChange={handleGateAddressLng} label={t(['newGarage', 'lng'])} error={t(['newGarage', 'invalidLng'])} value={gate.address.lng} name="garage[lng]" placeholder={t(['newGarage', 'lngPlaceholder'])}/>
@@ -108,7 +123,7 @@ export class NewGaragePage extends Component {
       )
     }
 
-    const prepareFloors = (floor, index) => {
+    const prepareFloors = (floor, index, arr) => {
       const handleFileSelect      = (value) => { actions.scanSVG(value, index) }
       const handleFloorNameChange = (value) => { actions.changeFloorLabel(value, index) }
       const handleFloorFromChange = (value) => { actions.changeFloorFrom(value, index) }
@@ -124,9 +139,9 @@ export class NewGaragePage extends Component {
       return(
         <div key={index}>
           <div className={styles.inline}>
-            <Input style={styles.smallInputWidth}                         onChange={handleFloorNameChange} label={t(['newGarage', 'floorName'])} error={t(['newGarage', 'invalidFloorName'])} value={state.floors[index].label} name={`floor${index}[name]`} placeholder={t(['newGarage', 'placeholderFloor'], { index: index+1 })}/>
-            <Input style={styles.smallInputWidth+" "+styles.middleMargin} onChange={handleFloorFromChange} label={t(['newGarage', 'from'])}      error={t(['newGarage', 'invalidFloorFrom'])} value={floor.from} name={`floor${index}[from]`} placeholder={t(['newGarage', 'placeholderFloorFrom'])} type="tel" />
-            <Input style={styles.smallInputWidth}                         onChange={handleFloorToChange}   label={t(['newGarage', 'to'])}        error={t(['newGarage', 'invalidFloorTo'])}   value={floor.to} name={`floor${index}[to]`} placeholder={t(['newGarage', 'placeholderFloorTo'])} type="number" min={floor.from}/>
+            <Input style={styles.smallInputWidth}                         onChange={handleFloorNameChange} label={t(['newGarage', 'floorName']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidFloorName'])} value={state.floors[index].label} name={`floor${index}[name]`} placeholder={t(['newGarage', 'placeholderFloor'], { index: index+1 })}/>
+            <Input style={styles.smallInputWidth+" "+styles.middleMargin} onChange={handleFloorFromChange} label={t(['newGarage', 'from']) + (index!=arr.length-1 ? ' *' : '')}      error={t(['newGarage', 'invalidFloorFrom'])} value={floor.from} name={`floor${index}[from]`} placeholder={t(['newGarage', 'placeholderFloorFrom'])} type="tel" />
+            <Input style={styles.smallInputWidth}                         onChange={handleFloorToChange}   label={t(['newGarage', 'to']) + (index!=arr.length-1 ? ' *' : '')}        error={t(['newGarage', 'invalidFloorTo'])}   value={floor.to} name={`floor${index}[to]`} placeholder={t(['newGarage', 'placeholderFloorTo'])} type="number" min={floor.from}/>
             <Input style={styles.hidden}                                  onChange={handleFileSelect}      label='file' type="file"  name={`floor${index}[file]`} />
             <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.floors[index].scheme==""?'action':'confirm'} />
             {deleteButton()}
@@ -140,21 +155,26 @@ export class NewGaragePage extends Component {
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={handleErrorClick} type='confirm'  />
                          </div>
 
+    const processingContent = <div className={styles.floatCenter}>
+                                {t(['newGarage', 'processing'])}
+                             </div>
+
 
 
     const content = <div className={styles.parent}>
-                      <Modal content={errorContent} show={state.error!=undefined} />
+                      <Modal content={errorContent} show={state.error!=undefined && !state.fetching} />
+                      <Modal content={processingContent} show={state.fetching} />
 
                       <div className={styles.leftCollumn}>
                         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
                           <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})}/>
-                          <Dropdown label={t(['newGarage', 'selectAccount'])} content={accountDropdown} style='light' selected={state.availableAccounts.findIndex((account)=>{return account.id == state.tarif_id})}/>
+                          <Dropdown label={t(['newGarage', state.tarif_id===1?'selectAccount':'selectAccountMandatory'])} content={accountDropdown} style='light' selected={state.availableAccounts.findIndex((account)=>{return account.id == state.tarif_id})}/>
                           <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])}/>
                           { /*<input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG}/> <span className={styles.pointer} onClick={actions.toggleLPG}> {t(['newGarage', 'lpgAllowed'])} </span> */}
-                          <Input onChange={actions.setCity}       label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])} />
-                          <Input onChange={actions.setPostalCode} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} />
-                          <Input onChange={actions.setState}      label={t(['newGarage', 'state'])}      error={t(['newGarage', 'invalidCountry'])}     value={state.state}       placeholder={t(['newGarage', 'statePlaceholder'])} />
-                          <Input onChange={actions.setCountry}    label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.country}     placeholder={t(['newGarage', 'countryPlaceholder'])} />
+                          <Input onChange={actions.setCity}       onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])} />
+                          <Input onChange={actions.setPostalCode} onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} />
+                          <Input onChange={actions.setState}      onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'state'])}      error={t(['newGarage', 'invalidCountry'])}     value={state.state}       placeholder={t(['newGarage', 'statePlaceholder'])} />
+                          <Input onChange={actions.setCountry}    onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.country}     placeholder={t(['newGarage', 'countryPlaceholder'])} />
 
                           {state.floors.map(prepareFloors)}
                           {state.gates.map(prepareGates)}

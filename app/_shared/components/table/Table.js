@@ -126,6 +126,8 @@ export default class Table extends Component {
 				<TableRow key={key} className={`${spoilerId == key && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(key)}} hover/>,
 				value.spoiler && spoilerId == key && <tr key={key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
 			]
+			// if (value){
+			// }
 		}
 
 		return (

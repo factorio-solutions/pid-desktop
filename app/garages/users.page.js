@@ -83,7 +83,7 @@ export class GarageUsersPage extends Component {
       const { full_name, email, phone } = garage_user.user
       return { full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
     })
-
+    
     const content = <div>
                       <Table schema={schema} data={data} />
 

@@ -32,11 +32,17 @@ export class inviteUserPage extends Component {
 
     const submitForm      = () => { checkSubmitable() && actions.createNewManagebles() }
     const goBack          = () => { nav.back() }
-    const checkSubmitable = () => { return state.email.valid && state.client_id != undefined }
     const emailChanged    = (value, valid) => { actions.setEmail({ value, valid }) }
     const messageChanged  = (value, valid) => { actions.setMessage(value) }
     const nameChanged     = (value, valid) => { actions.setName(value) }
     const phoneChanged    = (value, valid) => { actions.setPhone(value) }
+
+    const checkSubmitable = () => {
+      if (!state.email.valid) return false
+      if (!/\+?\(?\d{2,4}\)?[\d\s-]{3,}/.test(state.phone) && state.phone!=="" ) return false
+      if (!/^(?!\s*$).+/.test(state.full_name) && state.phone!=="" ) return false
+      return true
+    }
 
     const modalClick = () => {
       actions.dismissModal()

@@ -29,7 +29,7 @@ export default class ReleaseNotesPage extends Component {
     return (
       <div style={{padding: "15px"}}>
         {/* Generate PDF button ================================================*/}
-        {/*<button onClick={onClick}>Generate PDF</button>*/}
+        <button onClick={onClick}>Generate PDF</button>
 
         {/* Release notes ======================================================*/}
 

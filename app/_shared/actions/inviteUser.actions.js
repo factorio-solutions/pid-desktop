@@ -134,7 +134,6 @@ export function createNewManagebles () {
     var unsucessfull = []
 
     const emailsSend = () => { // after invitations
-      console.log('here', emails, unsucessfull);
       dispatch(setCurrentEmail(undefined))
       dispatch(resetForm())
       if (emails.length > 1){
@@ -158,15 +157,15 @@ export function createNewManagebles () {
           request( onSuccess
                  , ADD_MANAGEBLES
                  , { user_id: response.data.user_by_email.id
-                   , client_user: { client_id: state.client_id
+                   , client_user: { client_id: +state.client_id
                                   , message: ["clientInvitationMessage", state.clients.find((client)=>{return client.id == state.client_id}).name].join(';')
                                   , custom_message: state.message
                                   }
-                   , user_garage: { garage_id: state.garage_id
+                   , user_garage: { garage_id: +state.garage_id
                                   , message: ["garageInvitationMessage", state.garages.find((garage)=>{return garage.id == state.garage_id}).name].join(';')
                                   , custom_message: state.message
                                   }
-                   , user_car: { car_id: state.car_id
+                   , user_car: { car_id: +state.car_id
                                , message: ["carInvitationMessage", state.cars.find((car)=>{return  car.id == state.car_id}).model].join(';')
                                , custom_message: state.message
                                }
@@ -178,9 +177,10 @@ export function createNewManagebles () {
       dispatch(setCurrentEmail(email))
       request (onUserExists
               , USER_AVAILABLE
-              , {user: { email: email.toLowerCase()
+              , {user: { email:     email.toLowerCase()
                        , full_name: state.full_name
-                       , phone: state.phone
+                       , phone:     state.phone
+                       , message:   state.message
                        }
                 }
               )

@@ -3,7 +3,7 @@ import {t}          from '../modules/localization/localization'
 import { setError } from './pageBase.actions'
 
 import { GET_CARUSERS, UPDATE_CARUSERS, DESTROY_CARUSERS } from '../queries/carUsers.queries'
-// import { toClients } from './pageBase.actions'
+import { toCars } from './pageBase.actions'
 
 export const SET_CAR_USERS         = 'SET_CAR_USERS'
 export const SET_CAR_USER_CAR      = 'SET_CAR_USER_CAR'
@@ -35,6 +35,8 @@ export function initCarUsers (id){
       dispatch( setCarUsersUsers(response.data.user_cars.filter((carUser)=>{return carUser.pending == false}) ) )
       dispatch( setCarUsersCar({ ...response.data.user_cars[0].car, admin: response.data.user_cars.find((carUser)=>{return carUser.user.id == response.data.current_user.id}).admin}) )
       dispatch( setCarUsersPendingUsers(response.data.user_cars.filter((carUser)=>{return carUser.pending == true})) )
+
+      dispatch(toCars())
     }
     request(onSuccess, GET_CARUSERS, {id: parseInt(id)})
   }

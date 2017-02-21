@@ -74,7 +74,9 @@ export class GarageClientsPage extends Component {
           let groupable = state.clients.find(c => c.id==state.client_id) || state.pricings.find(p => p.id==state.pricing_id) || state.rents.find(r => r.id==state.rent_id)
           let inGroupables = isInGroupables(state.client_id && 'clients' || state.pricing_id && 'pricings' || state.rent_id && 'rents', place.id)
           place.selected = isInGroupable(groupable, place.id)
-          place.available = inGroupables.length === 0 || isInGroupable(groupable, place.id)
+          // for client is only available if has rent
+          place.available = state.client_id ? inGroupables.length === 0  && isInGroupables('rents', place.id).length > 0 || isInGroupable(groupable, place.id) && isInGroupables('rents', place.id).length > 0
+                                            : inGroupables.length === 0 || isInGroupable(groupable, place.id)
           place.tooltip = inGroupables.length && <div> {inGroupables.map(g => <div>{g.label || g.name}</div>)} </div>
         }
         else if (state.gate_id){ // gate selected - multiple gates can be assigned
@@ -119,7 +121,7 @@ export class GarageClientsPage extends Component {
                         <GarageLayout
                           floors = {floors}
                           onPlaceClick = {actions.createConnection}
-                          showEmptyFloors = {false}
+                          showEmptyFloors = {true}
                         />
                         </div>
                       </div>
