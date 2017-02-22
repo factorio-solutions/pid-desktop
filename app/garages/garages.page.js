@@ -76,7 +76,6 @@ export class GaragesPage extends Component {
     }
 
     const addSpoiler = (garage, index)=>{
-      console.log(garage);
       var spoiler = <div>
         <span>{t(['garages','created'])} {moment(garage.created_at).format('ddd DD.MM.YYYY HH:mm')}</span>
         <span className={styles.floatRight}>

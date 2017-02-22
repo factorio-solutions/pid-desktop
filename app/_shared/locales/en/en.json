@@ -323,7 +323,20 @@
 
 		"selectClient": "Select client",
 		"selectGarage": "Select garage",
-		"selectCar": "Select car"
+		"selectCar": "Select car",
+
+		"admin": "admin",
+		"secretary": "secretary",
+		"host": "host",
+		"internal": "internal",
+		"security": "security",
+		"receptionist": "receptionist",
+		"clientRights": "Client rights",
+		"clientRightsDesc": "These rights will be only valid if client is specified",
+		"GarageRights": "Garage rights",
+		"GarageRightsDesc": "These rights will be only valid if garage is specified",
+		"carRights": "Car rights",
+		"carRightsDesc": "These rights will be only valid if car is specified"
 	},
 	"notifications": {
 		"user": "user",

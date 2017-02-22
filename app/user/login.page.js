@@ -26,12 +26,18 @@ export class LoginPage extends Component {
   render() {
     const { actions, state } = this.props
 
-    const onSubmit        = () => { isSubmitable() && actions.login(state.email.value, state.password.value , true) }
+    const onSubmit = () => {
+      if (state.error) {
+        actions.dismissModal()
+      } else {
+        isSubmitable() && actions.login(state.email.value, state.password.value , true)
+      }
+    }
     const isSubmitable    = () => { return state.email.valid && state.password.valid }
 
     const loadingContent = <div>Loading ...</div>
 
-    const errorContent = <div>
+    const errorContent = <div ref="error">
                            { t(['login_page', 'loginFailed']) }: <br/>
                            { state.error } <br/>
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={actions.dismissModal} type='confirm' />

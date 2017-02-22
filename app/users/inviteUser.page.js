@@ -33,7 +33,7 @@ export class inviteUserPage extends Component {
     const submitForm      = () => { checkSubmitable() && actions.createNewManagebles() }
     const goBack          = () => { nav.back() }
     const emailChanged    = (value, valid) => { actions.setEmail({ value, valid }) }
-    const messageChanged  = (value, valid) => { actions.setMessage(value) }
+    const messageChanged  = (event) => { actions.setMessage(event.target.value) }
     const nameChanged     = (value, valid) => { actions.setName(value) }
     const phoneChanged    = (value, valid) => { actions.setPhone(value) }
 
@@ -90,7 +90,12 @@ export class inviteUserPage extends Component {
                           {clientDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectClient'])} content={clientDropdown} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>}
                           {garageDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectGarage'])} content={garageDropdown} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>}
                           {carDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectCar'])}    content={carDropdown} style='light' selected={state.cars.findIndex((car)=>{return car.id == state.car_id})}/>}
-                          <PatternInput onEnter={submitForm} onChange={messageChanged} label={t(['inviteUser', 'inviteMessage'])} error={t(['inviteUser', 'wrongMessage'])} pattern="^(?!\s*$).+" value={state.message} />
+                          <div>
+                            <label>{t(['inviteUser', 'inviteMessage'])}</label>
+                          </div>
+                          <div>
+                            <textarea className={styles.textArea} onChange={messageChanged} value={state.message} />
+                          </div>
                         </div>
 
                         <div className={`${styles.formChild} ${styles.additionalInfo}`}>
@@ -98,6 +103,26 @@ export class inviteUserPage extends Component {
                           <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
                           <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
                           <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
+                          <h3>{t(['inviteUser', 'clientRights'])}</h3>
+                          <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
+                          <p className={styles.rights}>
+                            <span className={state.client_admin ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('client_admin', !state.client_admin)}}>         {t(['inviteUser','admin'])}</span>|
+                            <span className={state.client_secretary ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('client_secretary', !state.client_secretary)}}> {t(['inviteUser','secretary'])}</span>|
+                            <span className={state.client_host ? styles.boldText : styles.inactiveText}      onClick={()=>{actions.setBooleanAttr('client_host', !state.client_host)}}>           {t(['inviteUser','host'])}</span>|
+                            <span className={state.client_internal ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('client_internal', !state.client_internal)}}>   {t(['inviteUser','internal'])}</span>
+                          </p>
+                          <h3>{t(['inviteUser', 'GarageRights'])}</h3>
+                          <p>{t(['inviteUser', 'GarageRightsDesc'])}</p>
+                          <p className={styles.rights}>
+                            <span className={state.garage_admin ? styles.boldText : styles.inactiveText}        onClick={()=>{actions.setBooleanAttr('garage_admin', !state.garage_admin)}}>               {t(['inviteUser','admin'])}</span>|
+                            <span className={state.garage_receptionist ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('garage_receptionist', !state.garage_receptionist)}}> {t(['inviteUser','receptionist'])}</span>|
+                            <span className={state.garage_security ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('garage_security', !state.garage_security)}}>         {t(['inviteUser','security'])}</span>
+                          </p>
+                          <h3>{t(['inviteUser', 'carRights'])}</h3>
+                          <p>{t(['inviteUser', 'carRightsDesc'])}</p>
+                          <p className={styles.rights}>
+                            <span className={state.car_admin ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('car_admin', !state.car_admin)}}>   {t(['inviteUser','admin'])}</span>
+                          </p>
                         </div>
                       </div>
                       </Form>
