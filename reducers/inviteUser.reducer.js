@@ -1,4 +1,5 @@
 import {
+  INVITE_USER_BOOLEAN_ATTR,
   INVITE_USER_SET_PHONE,
   INVITE_USER_SET_NAME,
   INVITE_USER_SET_MESSAGE,
@@ -15,29 +16,44 @@ import {
   INVITE_USER_RESET_FORM
 } from '../actions/inviteUser.actions'
 
+const booleanAttributes = { client_admin:         false
+                          , client_secretary:     false
+                          , client_host:          false
+                          , client_internal:      false
+                          , garage_admin:         false
+                          , garage_receptionist:  false
+                          , garage_security:      false
+                          , car_admin:            false
+                          }
 
-const defaultState =  { email:        {value: '', valid: false},
-                        message:      "",
-                        full_name:    "",
-                        phone:        "",
+const defaultState =  { ...booleanAttributes
+                      , email:        {value: '', valid: false}
+                      , message:      ""
+                      , full_name:    ""
+                      , phone:        ""
 
-                        clients:      [],
-                        client_id:    undefined,
+                      , clients:      []
+                      , client_id:    undefined
 
-                        garages:      [],
-                        garage_id:    undefined,
+                      , garages:      []
+                      , garage_id:    undefined
 
-                        cars:         [],
-                        car_id:       undefined,
+                      , cars:         []
+                      , car_id:       undefined
 
-                        error:        undefined,
-                        success:      undefined,
-                        currentEmail: undefined
+                      , error:        undefined
+                      , success:      undefined
+                      , currentEmail: undefined
                       }
 
 
 export default function inviteUser (state = defaultState, action) {
   switch (action.type) {
+
+    case INVITE_USER_BOOLEAN_ATTR:
+    return { ...state
+           , [action.attribute]: action.value
+           }
 
     case INVITE_USER_SET_EMAIL:
     return  { ...state

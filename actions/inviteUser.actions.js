@@ -4,6 +4,7 @@ import { t }       from '../modules/localization/localization'
 
 import { USER_AVAILABLE, ADD_MANAGEBLES, INIT_MANAGEBLES } from '../queries/inviteUser.queries'
 
+export const INVITE_USER_BOOLEAN_ATTR             = "INVITE_USER_BOOLEAN_ATTR"
 export const INVITE_USER_SET_EMAIL                = "INVITE_USER_SET_EMAIL"
 export const INVITE_USER_SET_MESSAGE              = "INVITE_USER_SET_MESSAGE"
 export const INVITE_USER_SET_NAME                 = "INVITE_USER_SET_NAME"
@@ -21,6 +22,13 @@ export const INVITE_USER_SET_SUCCESS              = "INVITE_USER_SET_SUCCESS"
 export const INVITE_USER_RESET_FORM               = "INVITE_USER_RESET_FORM"
 export const INVITE_USER_SET_CURRENT_EMAIL        = "INVITE_USER_SET_CURRENT_EMAIL"
 
+
+export function setBooleanAttr (attr, value){
+  return { type: INVITE_USER_BOOLEAN_ATTR
+         , value
+         , attribute: attr
+         }
+}
 
 export function setEmail (email){
   return  { type: INVITE_USER_SET_EMAIL
@@ -158,14 +166,22 @@ export function createNewManagebles () {
                  , ADD_MANAGEBLES
                  , { user_id: response.data.user_by_email.id
                    , client_user: { client_id: +state.client_id
+                                  , admin: state.client_admin
+                                  , secretary: state.client_secretary
+                                  , host: state.client_host
+                                  , internal: state.client_internal
                                   , message: ["clientInvitationMessage", state.clients.find((client)=>{return client.id == state.client_id}).name].join(';')
                                   , custom_message: state.message
                                   }
                    , user_garage: { garage_id: +state.garage_id
+                                  , admin: state.garage_admin
+                                  , receptionist: state.garage_receptionist
+                                  , security: state.garage_security
                                   , message: ["garageInvitationMessage", state.garages.find((garage)=>{return garage.id == state.garage_id}).name].join(';')
                                   , custom_message: state.message
                                   }
                    , user_car: { car_id: +state.car_id
+                               , admin: state.car_admin
                                , message: ["carInvitationMessage", state.cars.find((car)=>{return  car.id == state.car_id}).model].join(';')
                                , custom_message: state.message
                                }
