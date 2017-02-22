@@ -28,6 +28,10 @@ export class InvoicesPage extends Component {
   render() {
     const {state, actions} = this.props
 
+    const onBack = () => {
+      this.props.params.client_id ? nav.to('/clients') : nav.to('/accounts')
+    }
+
     const schema = [ { key: 'invoice_date', title: t(['invoices','invoiceDate']),                                                      comparator: 'date',    representer: o => o ? moment(o).format('DD. MM. YYYY') : null , sort: 'asc' }
                    , { key: 'due_date',     title: t(['invoices','dueDate']),                                                          comparator: 'date',    representer: o => o ? moment(o).format('DD. MM. YYYY') : null }
                    , { key: 'whom',         title: this.props.params.client_id ? t(['invoices','account']) : t(['invoices','client']), comparator: 'string' }
@@ -54,6 +58,11 @@ export class InvoicesPage extends Component {
 
     const content = <div>
                       <Table schema={schema} data={invoiceData} />
+                      <div className={styles.addButton}>
+                        <div className={styles.floatLeft}>
+                          <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={onBack} />
+                        </div>
+                      </div>
                     </div>
 
     const filters= <div>
