@@ -1,0 +1,58 @@
+@import '../_shared/styles/app.components';
+@mixin colorize($color) {
+  background-color: $color;
+
+  &:not(.selected):not(.disabled):hover {
+    background-color: darken($color, 10%)
+  }
+}
+$size-normal: 50px;
+
+
+.submitButton{
+  @include border-radius(240px);
+
+  width:      $size-normal;
+  height:     $size-normal;
+  font-size:  24px;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  transition: all 0.4s ease;
+  margin:     5px;
+
+  @include colorize($clickableColor);
+  color:   $white;
+  cursor:  pointer;
+
+  @include colorize($confirmColor);
+}
+.disabled {
+  background: $lightGray;
+  color:      darken($lightGray, 10);
+  cursor:     default;
+}
+
+
+/* page styling */
+.floatRight{
+  float: right;
+}
+
+.floatLeft{
+  float: left;
+}
+
+.form{
+  margin-top: 15px;
+}
+
+.label{
+  font-weight: bold;
+  margin-left: 15px;
+  text-transform: capitalize;
+}
+
+.loading{
+  text-align: center;
+}

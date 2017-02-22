@@ -37,6 +37,7 @@ import AccountsPage               from './accounts/accounts.page'
 import NewAccountPage             from './accounts/newAccount.page'
 
 import InvoicesPage               from './invoices/invoices.page'
+import PayInvoicePage             from './invoices/payInvoice.page'
 
 import CarsPage                   from './cars/cars.page'
 import NewCarPage                 from './cars/newCar.page'
@@ -55,7 +56,7 @@ export const AVAILABLE_LANGUAGES = ['en', 'cs', 'pl', 'de']
 export default function createRoutes() {
 
   // localization.create('D:/Dokumenty/pid-desktop/app/_shared/locales', 'es')
-  // localization.exportCSV('C:/Users/Tomas Hrstka/Documents/pid-desktop/app/_shared/locales', availableLanguages)
+  // localization.exportCSV('/home/hrstka/Documents/pid-desktop/app/_shared/locales/', AVAILABLE_LANGUAGES)
   // localization.importCSV('C:/Users/Tomas Hrstka/Documents/pid-desktop/app/_shared/locales', 'C:/Users/Tomas Hrstka/Documents/pid-desktop/app/_shared/locales/languages_20161110.csv')
 
   const subRoutes = (
@@ -89,11 +90,12 @@ export default function createRoutes() {
 
       <Route path="occupancy" component={Occupancy}/>
 
-      <Route path="clients"                     component={ClientsPage}/>
-      <Route path="clients/:id/users"           component={ClientUsersPage}/>
-      <Route path="clients/newClient"           component={NewClientPage}/>
-      <Route path="clients/:id/edit"            component={NewClientPage}/>
-      <Route path="clients/:client_id/invoices" component={InvoicesPage}/>
+      <Route path="clients"                                     component={ClientsPage}/>
+      <Route path="clients/:id/users"                           component={ClientUsersPage}/>
+      <Route path="clients/newClient"                           component={NewClientPage}/>
+      <Route path="clients/:id/edit"                            component={NewClientPage}/>
+      <Route path="clients/:client_id/invoices"                 component={InvoicesPage}/>
+      <Route path="clients/:client_id/invoices/:invoice_id/pay" component={PayInvoicePage}/>
 
       <Route path="accounts"                      component={AccountsPage}/>
       <Route path="accounts/newAccount"           component={NewAccountPage}/>

@@ -7,8 +7,6 @@ import update                          from 'react-addons-update'
 import PageBase     from '../_shared/containers/pageBase/PageBase'
 import Input        from '../_shared/components/input/Input'
 import Form         from '../_shared/components/form/Form'
-import RoundButton  from '../_shared/components/buttons/RoundButton'
-import GarageLayout from '../_shared/components/garageLayout/GarageLayout2'
 
 import * as clientPlaceActions from '../_shared/actions/garageClients.actions'
 import * as nav                 from '../_shared/helpers/navigation'

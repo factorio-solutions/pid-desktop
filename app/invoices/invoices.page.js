@@ -39,10 +39,10 @@ export class InvoicesPage extends Component {
        invoice.price = invoice.ammount + ' ' + invoice.currency.symbol
        invoice.whom = this.props.params.client_id ? invoice.account && invoice.account.name : invoice.client && invoice.client.name
        invoice.spoiler = <div>
-                         {t(['invoices','subject'])} <br/>
+                         {t(['invoices','subject'])}: <br/>
                          {invoice.subject}
                          <span className={styles.floatRight}>
-                           {this.props.params.client_id && !invoice.payed &&  <RoundButton content={<span>{t(['invoices','pay'])}</span>}                        onClick={()=>{actions.payInvoice(invoice.id)}}      type='action'/>}
+                           {this.props.params.client_id && !invoice.payed &&  <RoundButton content={<span>{t(['invoices','pay'])}</span>}                        onClick={()=>{nav.to(`/clients/${this.props.params.client_id}/invoices/${invoice.id}/pay`)}}      type='action'/>}
                            {this.props.params.account_id && !invoice.payed && <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}    onClick={()=>{actions.invoicePayed(invoice.id)}}    type='remove' question={t(['invoices','invoicePayed'])}/>}
                            {invoice.payed &&                                  <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{actions.downloadInvoice(invoice.id)}} type='action'/>}
                            {this.props.params.account_id && !invoice.payed && <RoundButton content={<span className='fa fa-bell-o' aria-hidden="true"></span>}   onClick={()=>{actions.reminder(invoice.id)}}        type='action'/>}

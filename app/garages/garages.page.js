@@ -88,7 +88,7 @@ export class GaragesPage extends Component {
         </span>
       </div>
 
-      return update(garage, {spoiler:{$set: spoiler}, address: {$set: [garage.address.line_1, garage.address.line_2, garage.address.city, garage.address.postal_code, garage.address.state, garage.address.country].filter((o)=>{return o != undefined}).join(', ')}})
+      return update(garage, {spoiler:{$set: spoiler}, address: {$set: garage.address?[garage.address.line_1, garage.address.line_2, garage.address.city, garage.address.postal_code, garage.address.state, garage.address.country].filter((o)=>{return o != undefined}).join(', '):''}})
     }
 
     const preparePricing = (pricing, index) => {

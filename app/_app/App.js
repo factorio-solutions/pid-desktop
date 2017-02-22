@@ -24,6 +24,7 @@ export default class App extends Component {
       if (e.message != this.state.lastError) { // error cycle
         this.setState({lastError: e.message})
         const log = "Error occured at " + window.location.hash + " / " + e.message + " / " + JSON.stringify(store.getState())
+        console.log("Error occured at " + window.location.hash + " / " + e.message);
         request((response)=>{}, 'mutation ErrorSend ($error: String!) { error(error: $error) }', {error: log})
       }
     });

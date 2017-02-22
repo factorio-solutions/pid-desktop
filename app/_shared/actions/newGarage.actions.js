@@ -285,6 +285,7 @@ export function initAccountTarif (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setAvailableAccounts(response.data.accounts))
+      response.data.accounts.length == 1 && console.log('here');
       response.data.accounts.length == 1 && dispatch(setAccount(response.data.accounts[0].id))
       dispatch(setAvailableTarifs(response.data.tarifs))
     }
@@ -297,7 +298,7 @@ export function initAccountTarif (){
 export function initEditGarage(id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch(setAccount(response.data.garage.account_id))
+      response.data.garage.account_id && dispatch(setAccount(response.data.garage.account_id))
       dispatch(setTarif(response.data.garage.pid_tarif_id))
 
       dispatch(setId(response.data.garage.id))
