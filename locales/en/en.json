@@ -231,7 +231,8 @@
 		"places":"Places",
 		"newClientId":"Insert new client id",
 		"newClientIdInvalid":"Invalid id",
-		"newClientIdPlaceholder":"12354"
+		"newClientIdPlaceholder":"12354",
+		"clientNotFound": "No client with this id exists"
 	},
 	"newGarage": {
 		"newGarage": "New garage",
@@ -343,7 +344,8 @@
 		"past":"past",
 		"current":"current",
 		"sais": "says",
-		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses."
+		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses.",
+		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpayed invoices to handle."
 	},
 	"settings": {
 		"hints": "I want to see hints on all pages of the application.",
@@ -580,7 +582,7 @@
 		"client":"client",
 		"payed":"payed",
 		"ammount":"ammount",
-		"Subject":"subject",
+		"subject":"subject",
 		"pay":"Pay",
 		"invoicePayed": "Are you sure you want to mark this invoice as payed?"
 	}

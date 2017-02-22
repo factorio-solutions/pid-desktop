@@ -2,9 +2,10 @@ import { request } from '../helpers/request'
 import update      from 'react-addons-update'
 import * as nav    from '../helpers/navigation'
 import moment      from 'moment'
+import {t}         from '../modules/localization/localization'
 
 import { GET_GARAGE_CLIENT, GET_GARAGE_CLIENT_UPDATE, CREATE_GROUP, DESTROY_GROUP, ADD_CLIENT } from '../queries/garageClients.queries'
-import { toGarages } from './pageBase.actions'
+import { toGarages, setError } from './pageBase.actions'
 
 export const SET_CLIENTPLACES_GARAGE        = "SET_CLIENTPLACES_GARAGE"
 export const SET_CLIENTPLACES_CLIENTS       = "SET_CLIENTPLACES_CLIENTS"
@@ -167,8 +168,13 @@ export function submitNewClient() {
   return (dispatch, getState) => {
     let state = getState().garageClients
     const onSuccess = (response) =>{
-      dispatch(setClients(update(state.clients, {$push: [{...response.data.client, groups:[]}]} )))
-      nav.back()
+      if (response.data.client == null ){
+        dispatch(setError(t(['garageManagement','clientNotFound'])))
+      } else {
+        dispatch(setClients(update(state.clients, {$push: [{...response.data.client, groups:[]}]} )))
+        dispatch(setClient(+state.new_client_id))
+        nav.back()
+      }
     }
 
     request( onSuccess
