@@ -43,7 +43,7 @@ export class ClientsPage extends Component {
       var spoiler = <span className={styles.floatRight}>
                       <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.admin ? "" : "disabled" }/>
                       <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type='action'/>
-                      <RoundButton content={<span className='fa fa-file' aria-hidden="true"></span>} onClick={toInvoices} type='action'/>
+                      <RoundButton content={<span className='fa fa-file' aria-hidden="true"></span>} onClick={toInvoices} type='action' state={client.admin ? "" : "disabled" }/>
                     </span>
       return update(client, {spoiler:{$set: spoiler}})
     }

@@ -77,6 +77,7 @@ export function clearForm (){
 export function initClient(id) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
+      console.log(response);
       dispatch(setName(response.data.client_users[0].client.name))
       dispatch(setLine1(response.data.client_users[0].client.address.line_1))
       dispatch(setLine2(response.data.client_users[0].client.address.line_2))
@@ -84,6 +85,8 @@ export function initClient(id) {
       dispatch(setPostalCode(response.data.client_users[0].client.address.postal_code))
       dispatch(setState(response.data.client_users[0].client.address.state))
       dispatch(setCountry(response.data.client_users[0].client.address.country))
+      dispatch(setIC(response.data.client_users[0].client.ic))
+      dispatch(setDIC(response.data.client_users[0].client.dic))
     }
 
     request( onSuccess

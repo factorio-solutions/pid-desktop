@@ -76,13 +76,14 @@ export class GaragesPage extends Component {
     }
 
     const addSpoiler = (garage, index)=>{
+      console.log(garage);
       var spoiler = <div>
         <span>{t(['garages','created'])} {moment(garage.created_at).format('ddd DD.MM.YYYY HH:mm')}</span>
         <span className={styles.floatRight}>
           <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>}    onClick={()=>{garageClick(garage)}} type='action'/>
-          <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{toMarketing(garage)}} type='action'/>
-          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(garage)}} type='action'/>
-          <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>}  onClick={()=>{toClient(garage)}} type='action'/>
+          <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{toMarketing(garage)}} type='action' state={!garage.admin  && 'disabled'}/>
+          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(garage)}} type='action'   state={!garage.admin  && 'disabled'}/>
+          <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>}  onClick={()=>{toClient(garage)}} type='action'    state={!garage.admin  && 'disabled'}/>
           <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>}  onClick={()=>{toUsers(garage)}} type='action'/>
           {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(garage)}} type='remove' state='disabled' question={t(['garages', 'removeGarageQuestion'])}/>*/}
         </span>

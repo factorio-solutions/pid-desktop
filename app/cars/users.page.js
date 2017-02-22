@@ -18,6 +18,7 @@ import styles from './users.page.scss'
 export class CarUsersPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
+    pageBase:     PropTypes.object,
     actions:      PropTypes.object
   }
 
@@ -56,7 +57,7 @@ export class CarUsersPage extends Component {
       return( <div className={styles.spoiler}>
                 <span className={car_user.admin ? styles.boldText : styles.inactiveText}  onClick={adminClick}>{t(['clientUsers','admin'])}</span>
                 <div className={styles.float}>
-                  <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={car_user.admin && 'disabled'}/>
+                  <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}/>
                 </div>
               </div>
       )
@@ -91,6 +92,6 @@ export class CarUsersPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.carUsers }),
+  state    => ({ state: state.carUsers, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators({ ...carUserActions, setCar}, dispatch) })
 )(CarUsersPage)

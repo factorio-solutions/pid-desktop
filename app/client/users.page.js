@@ -89,7 +89,7 @@ export class ClientUsersPage extends Component {
             <span className={styles.clickable} onClick={secretaryPresetClick}>{t(['clientUsers','secretary'])}</span>
 
             <div className={styles.float}>
-              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={client_user.admin && 'disabled'}/>
+              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user.id !== client_user.user.id && isClientAdmin) || client_user.admin) && 'disabled'}/>
             </div>
           </div>
         </div>

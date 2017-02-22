@@ -36,7 +36,14 @@ export function setTableView (bool){
 export function initGarages (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
+      console.log(response);
       var uniqueGarages = _.uniqWith(response.data.user_garages.map(function (user_garage) {return user_garage.garage}),  _.isEqual)
+
+      uniqueGarages.map((garage) => {
+        garage.admin = response.data.user_garages.find((user_garage)=>{return user_garage.garage.id === garage.id && user_garage.user_id === response.data.current_user.id}).admin
+        return garage
+      })
+
       dispatch( setGarages(uniqueGarages) )
       dispatch( setPricings(response.data.pricings) )
       dispatch( setRents(response.data.rents) )

@@ -73,7 +73,7 @@ export class GarageUsersPage extends Component {
             <span className={`${garage_user.security ? styles.boldText : styles.inactiveText}`}     onClick={securityClick}>{t(['garageUsers','security'])}</span>
           </div>
           <div className={styles.float}>
-            <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])} state={garage_user.admin && 'disabled'}/>
+            <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'}/>
           </div>
         </div>
       )
@@ -83,7 +83,7 @@ export class GarageUsersPage extends Component {
       const { full_name, email, phone } = garage_user.user
       return { full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
     })
-    
+
     const content = <div>
                       <Table schema={schema} data={data} />
 
