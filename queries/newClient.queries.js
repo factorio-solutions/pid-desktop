@@ -12,6 +12,8 @@ export const EDIT_CLIENT_INIT = `query ($id: Id!) {
     client {
       id
       name
+      ic
+      dic
       address{
         line_1
         line_2

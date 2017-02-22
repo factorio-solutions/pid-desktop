@@ -11,18 +11,17 @@ import styles       from './Card.scss'
 
 // onClick and selected are expected to be set by CardViewLayout
 export default function GarageCard ({ garage, occupancy, edit, client, users, marketing, state, onClick, selected })  {
-  console.log(garage);
 
   const footer =  <div>
                     <div>
                       {t(['garages','created'])} {moment(garage.created_at).format('ddd DD.MM.YYYY HH:mm')}
                     </div>
                     <div>
-                      <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>} onClick={()=>{occupancy}} type='action'/>
-                      <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{marketing}} type='action'/>
-                      <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{edit}} type='action'/>
-                      <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={()=>{client}} type='action'/>
-                      <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={()=>{users}} type='action'/>
+                      <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>}    onClick={()=>{occupancy}} type='action'/>
+                      <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{marketing}} type='action' state={!garage.admin  && 'disabled'}/>
+                      <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{edit}} type='action'      state={!garage.admin  && 'disabled'}/>
+                      <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>}  onClick={()=>{client}} type='action'    state={!garage.admin  && 'disabled'}/>
+                      <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>}  onClick={()=>{users}} type='action'    />
 
                     </div>
                   </div>
