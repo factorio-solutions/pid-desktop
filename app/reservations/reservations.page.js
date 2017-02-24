@@ -44,6 +44,7 @@ export class ReservationsPage extends Component {
                    ]
 
     const destroyClick   = (reservation) => { actions.destroyReservation(reservation.id) }
+    const downloadClick  = (id) => {actions.downloadInvoice(id)}
     const newReservation = () => { nav.to('/reservations/newReservation') }
 
     const data = state.reservations.map(function (reservation) {
@@ -57,14 +58,15 @@ export class ReservationsPage extends Component {
                           {!reservation.approved && <div><b>{t(['reservations','reservationApproved'])}</b></div>}
                           {`${reservation.creator.full_name}  |  ${reservation.creator.email}  |  ${moment(reservation.created_at).format('DD.MM. HH:mm')}`}
                           <span className={styles.floatRight}>
-                            <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>
+                            {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>*/}
+                            {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed && <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{downloadClick(reservation.invoice_item.invoice.id)}} type='action'/>}
                           </span>
                         </div>
              }
     })
 
     const prepareCards = (reservation, index) => {
-      return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} />
+      return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} download={downloadClick} />
     }
 
     const content = <div>

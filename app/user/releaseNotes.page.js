@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { request } from '../_shared/helpers/request'
+import { download } from '../_shared/helpers/download'
 
 import * as nav     from '../_shared/helpers/navigation'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
@@ -18,6 +19,10 @@ export default class ReleaseNotesPage extends Component {
       request((response)=>{console.log(response);}, "mutation GeneratPdf { pdf }")
     }
 
+    const downloadClick = () => {
+      download ('HelloKity.pdf', "download { invoice }")
+    }
+
     const onSIPClick = () => {
       request((response)=>{console.log(response);}, `mutation CallNumber{ gate(number: "${document.getElementById('tel').value}" ) }`)
     }
@@ -26,10 +31,17 @@ export default class ReleaseNotesPage extends Component {
       request((response)=>{console.log(response);}, `mutation CallNumber{ transaction }`)
     }
 
+    const generateClick = () => {
+      request((response)=>{console.log(response);}, "mutation GeneratInvoices { generate_invoices }")
+    }
+
     return (
       <div style={{padding: "15px"}}>
         {/* Generate PDF button ================================================*/}
-        <button onClick={onClick}>Generate PDF</button>
+        {/* <button onClick={onClick}>Generate PDF</button> */}
+        {/* <button onClick={downloadClick}>Download PDF</button> */}
+        <button onClick={generateClick}>Generate invoices</button>
+
 
         {/* Release notes ======================================================*/}
 

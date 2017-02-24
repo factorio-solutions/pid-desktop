@@ -47,7 +47,6 @@ export const UPDATE_INVOICE = `mutation UpdatInvoice ($id: Id!, $invoice:Invoice
 }
 `
 
-
 // notification reminder
 export const REMINDER_NOTIFICATION = `mutation CreateNotification ($notification: NotificationInput!){
   create_notification( notification: $notification) {
@@ -55,3 +54,7 @@ export const REMINDER_NOTIFICATION = `mutation CreateNotification ($notification
   }
 }
 `
+
+export const DOWNLOAD_INVOICE = `download ($id:Id!) {
+  download_invoice(id:$id)
+}`
