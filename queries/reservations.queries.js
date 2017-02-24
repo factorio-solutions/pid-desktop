@@ -2,6 +2,13 @@
 export const GET_RESERVATIONS_QUERY = `{
   reservations {
     id
+    invoice_item{
+      id
+      invoice{
+        id
+        payed
+      }
+    }
     client {
       name
     }

@@ -1,7 +1,8 @@
-import { request } from '../helpers/request'
-import * as nav    from '../helpers/navigation'
+import { request }  from '../helpers/request'
+import { download } from '../helpers/download'
+import * as nav     from '../helpers/navigation'
 
-import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS, GET_CLIENT_DETAILS } from '../queries/invoices.queries'
+import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS, GET_CLIENT_DETAILS, DOWNLOAD_INVOICE } from '../queries/invoices.queries'
 import { GET_BRAINTREE_TOKEN } from '../queries/newReservation.queries'
 import { toAccounts, toClients } from './pageBase.actions'
 
@@ -115,7 +116,8 @@ export function invoicePayed (id) {
 
 export function downloadInvoice(id){
   return (dispatch, getState) => {
-    UPDATE_INVOICE
+    const invoice = getState().invoices.invoices.find(invoice => invoice.id === id)
+    download(`${invoice.id}.pdf`, DOWNLOAD_INVOICE, {id})
   }
 }
 

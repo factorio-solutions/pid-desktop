@@ -10,7 +10,7 @@ import styles from './Card.scss'
 
 
 // onClick and selected are expected to be set by CardViewLayout
-export default function ReservationCard ({ reservation, destroy, state, onClick, selected })  {
+export default function ReservationCard ({ reservation, download, destroy, state, onClick, selected })  {
   const body =  <div>
                   {reservation.client && <div>{reservation.client.name}</div>}
                   <div>{reservation.place.floor.garage.name}</div>
@@ -26,7 +26,8 @@ export default function ReservationCard ({ reservation, destroy, state, onClick,
                       {reservation.creator.full_name} <br/> {reservation.creator.email} <br/> {moment(reservation.created_at).format('DD.MM. HH:mm')}
                     </span>
                     <span className={styles.buttons}>
-                      <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroy} type='remove' question={t(['reservations','removeReservationQuestion'])}/>
+                      {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed && <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{download(reservation.invoice_item.invoice.id)}} type='action'/>}
+                      {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroy} type='remove' question={t(['reservations','removeReservationQuestion'])}/>*/}
                     </span>
                   </div>
 
