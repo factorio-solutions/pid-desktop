@@ -20,7 +20,8 @@ export class NewClientPage extends Component {
   }
 
   componentDidMount(){
-    this.props.actions.setName('')
+    // this.props.actions.setName('')
+    this.props.actions.clearForm()
     this.props.params.id && this.props.actions.initClient(this.props.params.id)
   }
 
