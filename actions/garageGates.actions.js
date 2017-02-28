@@ -190,17 +190,3 @@ export function submitNewClient() {
            )
   }
 }
-
-
-// EXPORTED FUNCTIONS FOR GARAGE CLIENTS AND GATES
-export function isInGroupables (state,group, place_id) { // will check array of groupables for place, retuns array of groupables selected place is attached to
-  return state[group].filter((groupable) => {
-    return groupable.groups.find((group) => {
-      return group.place_id === place_id
-    })
-  })
-}
-
-export function isInGroupable (groupable, place_id) { // will return true if place find in groupable.groups, false otherwise
-  return groupable && groupable.groups.find(g => g.place_id == place_id) != undefined
-}

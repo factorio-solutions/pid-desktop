@@ -14,6 +14,7 @@ const defaultState =  { verticalSelected:   0 // id of selected user reservation
                       , error:              undefined
                       , current_user:       {}
                       , hint:               undefined
+                      , hintVideo:          undefined
                       , menuWidth:          200
                       }
 
@@ -49,6 +50,7 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_HINT:
     return  { ...state
             , hint: action.value
+            , hintVideo: action.video
             }
 
     case PAGE_BASE_SET_MENU_WIDTH:

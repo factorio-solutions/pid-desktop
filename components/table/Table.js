@@ -45,7 +45,8 @@ export default class Table extends Component {
     this.state = {
     	sortKey: this.props.schema.find((s) => s.sort).key,
     	sortType: this.props.schema.find((s) => s.sort).sort,
-    	spoilerId: -1
+    	spoilerId: -1,
+			search: ''
     }
   }
 
@@ -79,6 +80,16 @@ export default class Table extends Component {
 		  	}
 		  }
 
+		const stringifyElement = (obj) => {
+			if (typeof obj === 'object'){
+				return obj && obj.props && obj.props.children ? (typeof obj.props.children ==='string' ? obj.props.children
+																																					 										 : obj.props.children.map((child)=>{return stringifyElement(child)}).join(' '))
+																								 			: ''
+			} else {
+				return obj
+			}
+		}
+
 			if (typeof comparator == 'function'){ // custom comparator
 				myComp = (aRow,bRow) => {
 					const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
@@ -110,9 +121,17 @@ export default class Table extends Component {
 				}
 			}
 
-		data.sort(myComp)
+		const newData = data.filter((object) => {
+			if (this.state.search === ''){
+				return true
+			} else {
+				return schema.map((value, index)=>{ return value.representer ? value.representer(object[value.key]) : object[value.key] })
+										 .map((value) => { return stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim().toLowerCase().includes(this.state.search.toLowerCase()) })
+										 .includes(true)
+			}
+		}).sort(myComp)
 
-		const prepareHeader = (value,key)=>{
+		const prepareHeader = (value,key) => {
 			return (
 				<td key={key} onClick={()=>{handleHeadClick(key)}} className={styles.tdHeader}>
 					{value.title}
@@ -121,26 +140,32 @@ export default class Table extends Component {
 			)
 		}
 
-		const prepareBody = (value,key)=>{
+		const prepareBody = (value,key, arr)=>{
 			return [
-				<TableRow key={key} className={`${spoilerId == key && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(key)}} hover/>,
-				value.spoiler && spoilerId == key && <tr key={key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
+				<TableRow key={key} className={`${(spoilerId == key) && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(key)}} hover/>,
+				(arr.length <=5 || spoilerId == key) && value.spoiler && <tr key={key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
 			]
-			// if (value){
-			// }
 		}
 
 		return (
-			<table className={styles.rtTable}>
-				<thead>
-					<tr>
-						{schema.map(prepareHeader)}
-					</tr>
-				</thead>
-				<tbody>
-					{data.map(prepareBody)}
-				</tbody>
-			</table>
+			<div>
+				<div className={styles.searchBox}>
+					<input type="search" onChange={(e)=>{this.setState( { ...this.state, search: e.target.value } )}} value={this.state.search}/>
+					<i className="fa fa-search" aria-hidden="true"></i>
+				</div>
+
+				<table className={styles.rtTable}>
+					<thead>
+						<tr>
+							{schema.map(prepareHeader)}
+						</tr>
+					</thead>
+					<tbody>
+						{newData.map(prepareBody)}
+					</tbody>
+				</table>
+			</div>
+
 		)
   }
 }

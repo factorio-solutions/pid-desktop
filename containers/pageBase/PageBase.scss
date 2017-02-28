@@ -29,12 +29,20 @@
   padding: 15px;
 }
 
-.hint {
+.hintContainer{
+  display: flex;
   background: $blue;
   color: $white;
+  margin-bottom: 24px;
+  >button {
+    margin: 10px;
+  }
+}
+
+.hint {
+  flex: 1 1;
   padding: 10px;
   text-align: center;
-  margin-bottom: 24px;
 }
 
 .featureButton{
