@@ -3,6 +3,8 @@ import { routerReducer as routing } from 'react-router-redux'
 
 import login            from '../_shared/reducers/login.reducer'
 import signUp           from '../_shared/reducers/signUp.reducer'
+import resetPassword    from '../_shared/reducers/resetPassword.reducer'
+import editUser         from '../_shared/reducers/editUser.reducer'
 
 import pageBase         from '../_shared/reducers/pageBase.reducer'
 import addFeatures      from '../_shared/reducers/addFeatures.reducer'
@@ -45,6 +47,8 @@ const rootReducer = combineReducers({ routing
 
                                     , login
                                     , signUp
+                                    , resetPassword
+                                    , editUser
 
                                     , pageBase
                                     , addFeatures

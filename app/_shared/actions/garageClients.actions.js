@@ -16,6 +16,7 @@ export const SET_CLIENTPLACES_PRICINGS      = "SET_CLIENTPLACES_PRICINGS"
 export const SET_CLIENTPLACES_PRICING       = "SET_CLIENTPLACES_PRICING"
 export const SET_CLIENTPLACES_RENTS         = "SET_CLIENTPLACES_RENTS"
 export const SET_CLIENTPLACES_RENT          = "SET_CLIENTPLACES_RENT"
+export const SET_CLIENTPLACES_OVERVIEW      = "SET_CLIENTPLACES_OVERVIEW"
 export const SET_CLIENTPLACES_FROM          = "SET_CLIENTPLACES_FROM"
 export const SET_CLIENTPLACES_TO            = "SET_CLIENTPLACES_TO"
 export const SET_CLIENTPLACES_NEW_CLIENT_ID = "SET_CLIENTPLACES_NEW_CLIENT_ID"
@@ -68,6 +69,12 @@ export function setRents (value){
 }
 export function setRent (value){
   return { type: SET_CLIENTPLACES_RENT
+         , value
+         }
+}
+
+export function setOverview (value){
+  return { type: SET_CLIENTPLACES_OVERVIEW
          , value
          }
 }
@@ -182,4 +189,18 @@ export function submitNewClient() {
            , { id: +state.new_client_id }
            )
   }
+}
+
+
+// EXPORTED FUNCTIONS FOR GARAGE CLIENTS AND GATES
+export function isInGroupables (state,group, place_id) { // will check array of groupables for place, retuns array of groupables selected place is attached to
+  return state[group].filter((groupable) => {
+    return groupable.groups.find((group) => {
+      return group.place_id === place_id
+    })
+  })
+}
+
+export function isInGroupable (groupable, place_id) { // will return true if place find in groupable.groups, false otherwise
+  return groupable && groupable.groups.find(g => g.place_id == place_id) != undefined
 }

@@ -51,30 +51,25 @@ export class ClientUsersPage extends Component {
       nav.to(`/clients`)
     }
 
+    const renderPendingSpoiler = (user) => {
+      let returnable = user.user
+      const destroyClick = () => { actions.destroyClientUser(this.props.params.id, user.user.id ) }
+      returnable.spoiler = <div className={styles.float}>
+        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} />
+      </div>
+      return returnable
+    }
+
     const renderSpoiler = (client_user) => {
-      const destroyClick = () => {
-        actions.destroyClientUser(this.props.params.id, client_user.user.id )
-      }
+      const destroyClick = () => { actions.destroyClientUser(this.props.params.id, client_user.user.id ) }
 
-      const secretaryPresetClick = () => {
-        actions.setSecretary(this.props.params.id, client_user.user.id )
-      }
-      const internalPresetClick = () => {
-        actions.setInternal(this.props.params.id, client_user.user.id )
-      }
+      const secretaryPresetClick  = () => { actions.setSecretary(this.props.params.id, client_user.user.id ) }
+      const internalPresetClick   = () => { actions.setInternal(this.props.params.id, client_user.user.id ) }
 
-      const adminClick = () => {
-        // actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"admin": !client_user.admin})
-      }
-      const secretaryClick = () => {
-        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"secretary": !client_user.secretary})
-      }
-      const hostClick = () => {
-        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"host": !client_user.host})
-      }
-      const internalClick = () => {
-        actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"internal": !client_user.internal})
-      }
+      const adminClick      = () => { /* actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"admin": !client_user.admin}) */}
+      const secretaryClick  = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"secretary": !client_user.secretary}) }
+      const hostClick       = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"host": !client_user.host}) }
+      const internalClick   = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"internal": !client_user.internal}) }
 
       return(<div className={styles.spoiler}>
           <div className={styles.devider}>
@@ -106,7 +101,7 @@ export class ClientUsersPage extends Component {
 
                       { state.pending_users.length > 0 && <div>
                         <h2>{t(['clientUsers','pendingUsers'])}</h2>
-                        <Table schema={schemaPending} data={state.pending_users.map((user) => { return user.user })} />
+                        <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
                       </div> }
 
                       <div className={styles.addButton}>

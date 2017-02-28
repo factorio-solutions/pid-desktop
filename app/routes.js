@@ -7,6 +7,8 @@ import App from './_app/App'
 
 import LoginPage                  from './user/login.page'
 import SignUpPage                 from './user/signUp.page'
+import ResetPasswordPage          from './user/resetPassword.page'
+import EditUserPage               from './user/editUser.page'
 import SettingsPage               from './user/settings.page'
 import AddFeaturesPage            from './user/addFeatures.page'
 import NotificationsPage          from './user/notifications.page'
@@ -64,6 +66,8 @@ export default function createRoutes() {
       <IndexRoute component={LoginPage} />
       {/* other routes comes here */}
       <Route path="signUpPage"    component={SignUpPage}/>
+      <Route path="resetPassword" component={ResetPasswordPage}/>
+      <Route path="editUser" component={EditUserPage}/>
       <Route path="settings"      component={SettingsPage}/>
       <Route path="addFeatures"   component={AddFeaturesPage}/>
       <Route path="notifications" component={NotificationsPage}/>

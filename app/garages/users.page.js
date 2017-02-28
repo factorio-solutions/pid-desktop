@@ -51,6 +51,15 @@ export class GarageUsersPage extends Component {
       nav.to(`/garages`)
     }
 
+    const renderPendingSpoiler = (user) => {
+      let returnable = user.user
+      const destroyClick = () => { actions.destroyGarageUser(this.props.params.id, user.user.id ) }
+      returnable.spoiler = <div className={styles.float}>
+        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])}/>
+      </div>
+      return returnable
+    }
+
     const renderSpoiler = (garage_user) => {
       const destroyClick = () => {
         actions.destroyGarageUser(this.props.params.id, garage_user.user.id )
@@ -89,7 +98,7 @@ export class GarageUsersPage extends Component {
 
                       { state.pending_users.length > 0 && <div>
                         <h2>{t(['garageUsers','pendingUsers'])}</h2>
-                        <Table schema={schemaPending} data={state.pending_users.map((user) => { return user.user })} />
+                        <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
                       </div> }
 
                       <div className={styles.addButton}>

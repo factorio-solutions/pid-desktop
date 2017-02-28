@@ -139,7 +139,10 @@ export class PageBase extends Component {
           vertTopContent={<VerticalMenu labels={labels} selected={state.verticalSelected} size={VerticalMenuItemSize}/>}
           vertBotContent={bottomLabels}
           bodyContent={ <div>
-                          {(state.current_user && state.current_user.hint && state.hint) && <div className={styles.hint}> {state.hint} </div>}
+                          {(state.current_user && state.current_user.hint && state.hint) && <div className={styles.hintContainer}>
+                            {state.hintVideo && <RoundButton content={<i className="fa fa-info" aria-hidden="true"></i>} onClick={()=>{window.open(state.hintVideo)}} type='info'/>}
+                            <div className={styles.hint}>  {state.hint} </div>
+                          </div>}
                           {content}
                         </div> }
         />

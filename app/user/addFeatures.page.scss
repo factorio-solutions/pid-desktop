@@ -10,7 +10,11 @@
   border: 1px solid $lightGray;
   margin: 5px;
   text-align: center;
-  cursor: pointer;
+  // cursor: pointer;
+  // &:hover {
+  //   background: $blue;
+  //   color: $white;
+  // }
 }
 
 .points{

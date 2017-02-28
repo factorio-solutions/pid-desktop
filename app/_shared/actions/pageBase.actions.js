@@ -42,9 +42,10 @@ export function setCurrentUser (currentUser){
           }
 }
 
-export function setHint (hint){
+export function setHint (hint, url){
   return  { type: PAGE_BASE_SET_HINT
           , value: hint
+          , video: url
           }
 }
 
@@ -113,116 +114,120 @@ export function initialPageBase () {
     }
 
     switch (true) { // Hints
+      case contains(hash, 'editUser?'):
+        dispatch(setHint(t(['pageBase', 'EditUserHint']), 'https://www.youtube.com/'))
+        break;
+
       case contains(hash, 'occupancy?'):
-        dispatch(setHint(t(['pageBase', 'OccupancyOverviewHint'])))
+        dispatch(setHint(t(['pageBase', 'OccupancyOverviewHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'addFeatures'):
-        dispatch(setHint(t(['pageBase', 'addFeaturesHint'])))
+        dispatch(setHint(t(['pageBase', 'addFeaturesHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'overview'):
-        dispatch(setHint(t(['pageBase', 'newReservationOverviewHint'])))
+        dispatch(setHint(t(['pageBase', 'newReservationOverviewHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'newReservation'):
-        dispatch(setHint(t(['pageBase', 'newReservationHint'])))
+        dispatch(setHint(t(['pageBase', 'newReservationHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'reservations'):
-        dispatch(setHint(t(['pageBase', 'reservationsHint'])))
+        dispatch(setHint(t(['pageBase', 'reservationsHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'garages/newGarage'):
-        dispatch(setHint(t(['pageBase', 'newGarageHint'])))
+        dispatch(setHint(t(['pageBase', 'newGarageHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'newGarage'):
-        dispatch(setHint(t(['pageBase', 'EditGarageHint'])))
+        dispatch(setHint(t(['pageBase', 'EditGarageHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'clients'):
-        dispatch(setHint(t(['pageBase', 'garageClientsHint'])))
+        dispatch(setHint(t(['pageBase', 'garageClientsHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'marketing'):
-        dispatch(setHint(t(['pageBase', 'garageMarketingHint'])))
+        dispatch(setHint(t(['pageBase', 'garageMarketingHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'newMarketing'):
-        dispatch(setHint(t(['pageBase', 'garageNewMarketingHint'])))
+        dispatch(setHint(t(['pageBase', 'garageNewMarketingHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'marketing') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'garageEditMarketingHint'])))
+        dispatch(setHint(t(['pageBase', 'garageEditMarketingHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'newPricing'):
-        dispatch(setHint(t(['pageBase', 'garageNewPricingHint'])))
+        dispatch(setHint(t(['pageBase', 'garageNewPricingHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'pricings') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'garageEditPricingHint'])))
+        dispatch(setHint(t(['pageBase', 'garageEditPricingHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'newRent'):
-        dispatch(setHint(t(['pageBase', 'garageNewRentHint'])))
+        dispatch(setHint(t(['pageBase', 'garageNewRentHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'rents') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'garageEditRentHint'])))
+        dispatch(setHint(t(['pageBase', 'garageEditRentHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'addClient'):
-        dispatch(setHint(t(['pageBase', 'garageAddClientHint'])))
+        dispatch(setHint(t(['pageBase', 'garageAddClientHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'garageGarageUsersHint'])))
+        dispatch(setHint(t(['pageBase', 'garageGarageUsersHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'garages?'):
-        dispatch(setHint(t(['pageBase', 'garagesHint'])))
+        dispatch(setHint(t(['pageBase', 'garagesHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'clients') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'clientUsersHint'])))
+        dispatch(setHint(t(['pageBase', 'clientUsersHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'clients') && contains(hash, 'newClient'):
-        dispatch(setHint(t(['pageBase', 'newClientHint'])))
+        dispatch(setHint(t(['pageBase', 'newClientHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'clients') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editClientHint'])))
+        dispatch(setHint(t(['pageBase', 'editClientHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'clients'):
-        dispatch(setHint(t(['pageBase', 'clientsHint'])))
+        dispatch(setHint(t(['pageBase', 'clientsHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'accounts') && contains(hash, 'newAccount'):
-        dispatch(setHint(t(['pageBase', 'newAccountHint'])))
+        dispatch(setHint(t(['pageBase', 'newAccountHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'accounts') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editAccountHint'])))
+        dispatch(setHint(t(['pageBase', 'editAccountHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'accounts'):
-        dispatch(setHint(t(['pageBase', 'accountsHint'])))
+        dispatch(setHint(t(['pageBase', 'accountsHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'cars') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'carUsersHint'])))
+        dispatch(setHint(t(['pageBase', 'carUsersHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'cars') && contains(hash, 'newClient'):
-        dispatch(setHint(t(['pageBase', 'newCarHint'])))
+        dispatch(setHint(t(['pageBase', 'newCarHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'cars') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editCarHint'])))
+        dispatch(setHint(t(['pageBase', 'editCarHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'cars'):
-        dispatch(setHint(t(['pageBase', 'carsHint'])))
+        dispatch(setHint(t(['pageBase', 'carsHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'users') && contains(hash, 'inviteUser'):
-        dispatch(setHint(t(['pageBase', 'newClientUsersHint'])))
+        dispatch(setHint(t(['pageBase', 'newClientUsersHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'usersHint'])))
+        dispatch(setHint(t(['pageBase', 'usersHint']), 'https://www.youtube.com/'))
         break;
 
       case contains(hash, 'settings'):
-        dispatch(setHint(t(['pageBase', 'settingsHint'])))
+        dispatch(setHint(t(['pageBase', 'settingsHint']), 'https://www.youtube.com/'))
         break;
       case contains(hash, 'notifications'):
-        dispatch(setHint(t(['pageBase', 'notificationsHint'])))
+        dispatch(setHint(t(['pageBase', 'notificationsHint']), 'https://www.youtube.com/'))
         break;
       default:
         dispatch(setHint(undefined))
-        dispatch(setHint('NO HINT FOUND'))
+        dispatch(setHint('NO HINT FOUND'), undefined)
     }
 
     // if (getState().pageBase.current_user == undefined){ // if no information about current user

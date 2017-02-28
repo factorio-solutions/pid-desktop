@@ -26,7 +26,9 @@
 		"email": "E-mail",
 		"invalid-email": "Invalid email address",
 		"password": "Password",
-		"loginFailed": "Login failed"
+		"loginFailed": "Login failed",
+		"forgot": "Forgot password?",
+		"proceed": "Proceed here"
 	},
 	"signup_page": {
 		"name": "your full name *",
@@ -122,7 +124,8 @@
 		"garageAddClientHint": "Here you can add client to garage managemat page. TODO: add client to management hint",
 		"garageGarageUsersHint": "Here you can manage who can manage your garage. TODO: Garage users management",
 		"addFeatures": "Add features",
-		"accounts":"Accounts"
+		"accounts":"Accounts",
+		"EditUserHint": "Here it is possible to change information about yourself."
 
 	},
 	"newReservation": {
@@ -362,7 +365,8 @@
 	},
 	"settings": {
 		"hints": "I want to see hints on all pages of the application.",
-		"language": "Choose language:"
+		"language": "Choose language:",
+		"editUser": "Edit my user profile"
 	},
 	"users": {
 		"username": "username",
@@ -598,5 +602,11 @@
 		"subject":"subject",
 		"pay":"Pay",
 		"invoicePayed": "Are you sure you want to mark this invoice as payed?"
+	},
+	"resetPassword": {
+		"send":"Password reseting email was sent to your email.",
+		"description":"Please, insert your email here and we will send you password reset process description",
+		"email": "e-mail",
+		"emailInvalid": "Invalid email"
 	}
 }

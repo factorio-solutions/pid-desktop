@@ -49,7 +49,7 @@ export class GarageMarketingPage extends Component {
                                   <RoundButton content={<span className='fa fa-play' aria-hidden="true"></span>}    onClick={()=>{actions.runMarketing(marketing.id)}}                                        type='action'                                                   state={marketing.marketing_launched && 'disabled'}/>
                                   <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>}  onClick={()=>{nav.to(`/garages/${this.props.params.id}/marketing/${marketing.id}/edit`)}} type='action' />
                                   <RoundButton content={<span className='fa fa-pause' aria-hidden="true"></span>}   onClick={()=>{actions.stopMarketing(marketing.id)}}                                       type='remove' question={t(['garageMarketing','stopMarketing'])} state={!marketing.marketing_launched && 'disabled'}/>
-                                  <RoundButton content={<span className='fa fa-play' aria-hidden="true"></span>}    onClick={()=>{nav.to(`/marketing/${marketing.short_name}`)}}                              type='remove' question='Go to page? '/>
+                                  <RoundButton content={<span className='fa fa-play' aria-hidden="true"></span>}    onClick={()=>{ window.open('#/'+nav.path(`/marketing/${marketing.short_name}`))}}                              type='remove' question='Go to page? '/>
                                 </span>
                               </div>
       return marketing

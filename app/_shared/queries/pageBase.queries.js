@@ -26,6 +26,14 @@ export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: 
     email
     phone
     hint
+    garage_admin
+    receptionist
+    security
+    client_admin
+    secretary
+    has_garages
+    has_account
+    has_client
   }
 }
 `

@@ -68,11 +68,12 @@ export class GaragesPage extends Component {
     const toClient     = (garage) => { nav.to(`/garages/${garage.id}/clients`) }
     const toMarketing  = (garage) => { nav.to(`/garages/${garage.id}/marketing`) }
     const toUsers      = (garage) => { nav.to(`/garages/${garage.id}/users`) }
+    const toGates      = (garage) => { nav.to(`/garages/${garage.id}/gates`) }
     const editPricing  = (id)  => { nav.to(`/garages/pricings/${id}/edit`) }
     const editRent     = (id)  => { nav.to(`/garages/rents/${id}/edit`) }
 
     const prepareCards = (garage, index) => {
-      return <GarageCard key={index} garage={garage} users={()=>{toUsers(garage)}} occupancy={()=>{garageClick(garage)}} edit={()=>{editClick(garage)}} client={()=>{toClient(garage)}} marketing={()=>{toMarketing(garage)}} />
+      return <GarageCard key={index} garage={garage} users={()=>{toUsers(garage)}} occupancy={()=>{garageClick(garage)}} edit={()=>{editClick(garage)}} client={()=>{toClient(garage)}} gates={()=>{toGates(garage)}} marketing={()=>{toMarketing(garage)}} />
     }
 
     const addSpoiler = (garage, index)=>{
@@ -81,9 +82,10 @@ export class GaragesPage extends Component {
         <span className={styles.floatRight}>
           <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>}    onClick={()=>{garageClick(garage)}} type='action'/>
           <RoundButton content={<span className='fa fa-rocket' aria-hidden="true"></span>} onClick={()=>{toMarketing(garage)}} type='action' state={!garage.admin  && 'disabled'}/>
-          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(garage)}} type='action'   state={!garage.admin  && 'disabled'}/>
-          <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>}  onClick={()=>{toClient(garage)}} type='action'    state={!garage.admin  && 'disabled'}/>
-          <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>}  onClick={()=>{toUsers(garage)}} type='action'/>
+          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(garage)}}   type='action' state={!garage.admin  && 'disabled'}/>
+          <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>}  onClick={()=>{toClient(garage)}}    type='action' state={!garage.admin  && 'disabled'}/>
+          <RoundButton content={<span className='fa fa-cog' aria-hidden="true"></span>}    onClick={()=>{toGates(garage)}}     type='action' state={!garage.admin  && 'disabled'}/>
+          <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>}  onClick={()=>{toUsers(garage)}}     type='action'/>
           {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(garage)}} type='remove' state='disabled' question={t(['garages', 'removeGarageQuestion'])}/>*/}
         </span>
       </div>

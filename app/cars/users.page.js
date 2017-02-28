@@ -50,6 +50,15 @@ export class CarUsersPage extends Component {
       nav.to(`/cars`)
     }
 
+    const renderPendingSpoiler = (user) => {
+      let returnable = user.user
+      const destroyClick = () => { actions.destroyCarUser(this.props.params.id, user.user.id ) }
+      returnable.spoiler = <div className={styles.float}>
+        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])}/>
+      </div>
+      return returnable
+    }
+
     const renderSpoiler = (car_user) => {
       const destroyClick = () => { actions.destroyCarUser(this.props.params.id, car_user.user.id ) }
       const adminClick   = () => { actions.setCarUserRelation(this.props.params.id, car_user.user.id , {"admin": !car_user.admin}) }
@@ -64,8 +73,6 @@ export class CarUsersPage extends Component {
     }
 
     const data = state.users.map((car_user) => {
-      // const { full_name, email, phone } = car_user.user
-      // return { full_name, email, phone, created_at: car_user.created_at, spoiler: renderSpoiler(car_user) }
       return { ...car_user.user, created_at: car_user.created_at, spoiler: renderSpoiler(car_user)}
     })
 
@@ -74,7 +81,7 @@ export class CarUsersPage extends Component {
 
                       { state.pending_users.length > 0 && <div>
                         <h2>{t(['clientUsers','pendingUsers'])}</h2>
-                        <Table schema={schemaPending} data={state.pending_users.map((user) => { return user.user })} />
+                        <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
                       </div> }
 
                       <div className={styles.addButton}>

@@ -34,6 +34,10 @@ export default class ReleaseNotesPage extends Component {
     const generateClick = () => {
       request((response)=>{console.log(response);}, "mutation GeneratInvoices { generate_invoices }")
     }
+    const resetPasswordClick = () => {
+      request((response)=>{console.log(response);}, "query ($email:String!) { reset_password(email:$email) }", { email: 'notExisting@seznam.cz'})
+
+    }
 
     return (
       <div style={{padding: "15px"}}>
@@ -41,6 +45,7 @@ export default class ReleaseNotesPage extends Component {
         {/* <button onClick={onClick}>Generate PDF</button> */}
         {/* <button onClick={downloadClick}>Download PDF</button> */}
         <button onClick={generateClick}>Generate invoices</button>
+        <button onClick={resetPasswordClick}>Reset passeword</button>
 
 
         {/* Release notes ======================================================*/}
