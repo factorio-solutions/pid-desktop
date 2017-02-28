@@ -16,6 +16,7 @@ import reservations     from '../_shared/reducers/reservations.reducer'
 import garages          from '../_shared/reducers/garages.reducer'
 import newGarage        from '../_shared/reducers/newGarage.reducer'
 import garageClients    from '../_shared/reducers/garageClients.reducer'
+import garageGates      from '../_shared/reducers/garageGates.reducer'
 import garageMarketing  from '../_shared/reducers/garageMarketing.reducer'
 import newMarketing     from '../_shared/reducers/newMarketing.reducer'
 import newPricing       from '../_shared/reducers/newPricing.reducer'
@@ -60,6 +61,7 @@ const rootReducer = combineReducers({ routing
                                     , garages
                                     , newGarage
                                     , garageClients
+                                    , garageGates
                                     , garageMarketing
                                     , newMarketing
                                     , newPricing

@@ -37,9 +37,6 @@ export class GarageClientsPage extends Component {
     const clientSchema = [ { key: 'name',         title: t(['garageManagement','selectClient']),  comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
                          , { key: 'place_count',  title: t(['garageManagement','places']),             comparator: 'number' }
                          ]
-    const gateSchema = [ { key: 'label',         title: t(['garageManagement','selectGate']),  comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
-                       , { key: 'place_count',  title: t(['garageManagement','places']),             comparator: 'number' }
-                       ]
     const pricingSchema = [ { key: 'name',         title: t(['garageManagement','selectPricing']),  comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
                           , { key: 'place_count',  title: t(['garageManagement','places']),             comparator: 'number' }
                           ]
@@ -49,7 +46,6 @@ export class GarageClientsPage extends Component {
 
 
     const clientClick  = (client, index)  => { client  ? actions.setClient(client.id)   : actions.setClient(undefined) }
-    const gateClick    = (gate, index)    => { gate    ? actions.setGate(gate.id)       : actions.setGate(undefined) }
     const pricingClick = (pricing, index) => { pricing ? actions.setPricing(pricing.id) : actions.setPricing(undefined) }
     const rentClick    = (rent, index)    => { rent    ? actions.setRent(rent.id)       : actions.setRent(undefined) }
 
@@ -75,12 +71,6 @@ export class GarageClientsPage extends Component {
           place.available = state.client_id ? inGroupables.length === 0  && isInGroupables('rents', place.id).length > 0 || isInGroupable(groupable, place.id) && isInGroupables('rents', place.id).length > 0
                                             : inGroupables.length === 0 || isInGroupable(groupable, place.id)
           place.tooltip = inGroupables.length && <div> {inGroupables.map(g => <div>{g.label || g.name}</div>)} </div>
-        } else if (state.gate_id){ // gate selected - multiple gates can be assigned
-          let inGates = isInGroupables('gates', place.id)
-          place.group = undefined
-          place.available = true
-          place.selected = isInGroupable(state.gates.find(g => g.id==state.gate_id), place.id)
-          place.tooltip = inGates.length && <div> {inGates.map(g => <div>{g.label}</div>)} </div>
         } else if (state.overview) {
           let inGroupables = isInGroupables(state.overview, place.id)
           place.group = inGroupables.length && (inGroupables[0].label || inGroupables[0].name)
@@ -104,21 +94,15 @@ export class GarageClientsPage extends Component {
 
                         <div className={styles.leftCollumn}>
                           <div className={styles.padding}>
-                            <h2 onClick={() => {actions.setOverview('clients')}}>
+                            <h2 className={styles.pointer} onClick={() => {actions.setOverview('clients')}}>
                               {t(['garageManagement','clients'])}
                               <RoundButton content={<span className="fa fa-plus" aria-hidden="true"></span>} onClick={onAddClient} type='action'/>
                             </h2>
                             <Table schema={clientSchema} data={state.clients} onRowSelect={clientClick} deselect={state.client_id == undefined}/>
-                            <h2>{t(['garageManagement','gates'])}</h2>
-                            <Table schema={gateSchema} data={state.gates} onRowSelect={gateClick} deselect={state.gate_id == undefined}/>
-                            <h2 onClick={() => {actions.setOverview('pricings')}}>{t(['garageManagement','pricing'])}</h2>
+                            <h2 className={styles.pointer} onClick={() => {actions.setOverview('pricings')}}>{t(['garageManagement','pricing'])}</h2>
                             <Table schema={pricingSchema} data={state.pricings} onRowSelect={pricingClick} deselect={state.pricing_id == undefined}/>
-                            <h2 onClick={() => {actions.setOverview('rents')}}>{t(['garageManagement','rent'])}</h2>
+                            <h2 className={styles.pointer} onClick={() => {actions.setOverview('rents')}}>{t(['garageManagement','rent'])}</h2>
                             <Table schema={rentSchema} data={state.rents} onRowSelect={rentClick} deselect={state.rent_id == undefined}/>
-                            {/* <div className={styles.datepicker}>
-                              <DateInput onChange={handleFrom} label={t(['garageUsers', 'begins'])} error={t(['garageUsers', 'invalidaDate'])} value={state.from} />
-                              <DateInput onChange={handleTo} label={t(['garageUsers', 'ends'])} error={t(['garageUsers', 'invalidaDate'])} value={state.to} showInf={true}/>
-                            </div> */}
                           </div>
                           <div className={styles.backButtonContainer}><RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/></div>
                         </div>

@@ -25,7 +25,7 @@ export class GarageGatesPage extends Component {
   }
 
   componentDidMount () {
-    this.props.state.new_client_id ? this.props.actions.setNewClientId(undefined) : this.props.actions.initClients(this.props.params.id)
+    this.props.actions.initGates(this.props.params.id)
   }
 
   render() {
@@ -35,22 +35,14 @@ export class GarageGatesPage extends Component {
                        , { key: 'place_count',  title: t(['garageManagement','places']),             comparator: 'number' }
                        ]
 
-    const gateClick    = (gate, index)    => { gate    ? actions.setGate(gate.id)       : actions.setGate(undefined) }
+    const gateClick = (gate, index) => { gate ? actions.setGate(gate.id) : actions.setGate(undefined) }
 
-    const onBack     = () => { nav.to('/garages') }
-
-    const isInGroupables = (group, place_id) => { // will check array of groupables for place, retuns array of groupables selected place is attached to
-      return isInGroupables(state, group, place_id)
-    }
-
-    const isInGroupable = (groupable, place_id) => { // will return true if place find in groupable.groups, false otherwise
-      return isInGroupable(groupable, place_id)
-    }
+    const onBack = () => { nav.to('/garages') }
 
     const floors = state.garage ? state.garage.floors.map((floor)=>{
       floor.places.map((place)=>{
         if (state.gate_id){ // gate selected - multiple gates can be assigned
-          let inGates = isInGroupables('gates', place.id)
+          let inGates = isInGroupables(state, 'gates', place.id)
           place.group = undefined
           place.available = true
           place.selected = isInGroupable(state.gates.find(g => g.id==state.gate_id), place.id)
@@ -65,7 +57,6 @@ export class GarageGatesPage extends Component {
       })
       return floor
     }) : []
-
 
     const content = <div>
                       <div className={styles.parent}>
@@ -95,6 +86,6 @@ export class GarageGatesPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.garageClients }),
+  state    => ({ state: state.garageGates }),
   dispatch => ({ actions: bindActionCreators(gatePlaceActions, dispatch) })
 )(GarageGatesPage)

@@ -21,7 +21,7 @@ export default class App extends Component {
   componentDidMount(){
     const { store } = this.context
     window.addEventListener('error', (e) => {
-      if (e.message != this.state.lastError) { // error cycle
+      if (e.message != this.state.lastError) { // block error cycle
         this.setState({lastError: e.message})
         const log = "Error occured at " + window.location.hash + " / " + e.message + " / " + JSON.stringify(store.getState())
         console.log("Error occured at " + window.location.hash + " / " + e.message);

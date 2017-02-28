@@ -77,7 +77,7 @@ export class NewGaragePage extends Component {
       if (state.city == "") return false
       if (state.postal_code == "") return false
       if (state.country == "") return false
-      if (state.floors.length == 1 ) return false
+      if (state.floors.length == 1 ) return falsetogg
       if (state.gates.length == 1 ) return false
       if (state.floors.filter((fl, index, arr)=>{return index != arr.length-1}).find((floor) => {return floor.label == "" || floor.scheme == ""}) != undefined) return false
       if (state.gates.filter((gate, index, arr)=>{return index != arr.length-1}).find((gate) => {return gate.label == "" || gate.address.line_1 == ""}) != undefined) return false

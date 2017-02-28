@@ -3,8 +3,6 @@ import {
   SET_CLIENTPLACES_GARAGE,
   SET_CLIENTPLACES_CLIENTS,
   SET_CLIENTPLACES_CLIENT,
-  SET_CLIENTPLACES_GATES,
-  SET_CLIENTPLACES_GATE,
   SET_CLIENTPLACES_PRICINGS,
   SET_CLIENTPLACES_PRICING,
   SET_CLIENTPLACES_RENTS,
@@ -18,13 +16,11 @@ import {
 
 const defaultState =  { garage:        undefined
                       , clients:       []
-                      , gates:         []
                       , pricings:      []
                       , rents:         []
                       , overview:      undefined // can be 'rents', 'pricings' or 'clients' - indicates colorcoding
                       // only one can be selected at time
                       , client_id:     undefined
-                      , gate_id:       undefined
                       , pricing_id:    undefined
                       , rent_id:       undefined
                       , new_client_id: ''
@@ -49,21 +45,6 @@ export default function garageClients (state = defaultState, action) {
     case SET_CLIENTPLACES_CLIENT:
       return { ...state
              , client_id: action.value
-             , gate_id: undefined
-             , pricing_id: undefined
-             , rent_id: undefined
-             , overview: undefined
-             }
-
-    case SET_CLIENTPLACES_GATES:
-      return { ...state
-             , gates: action.value
-             }
-
-    case SET_CLIENTPLACES_GATE:
-      return { ...state
-             , client_id: undefined
-             , gate_id: action.value
              , pricing_id: undefined
              , rent_id: undefined
              , overview: undefined
@@ -77,7 +58,6 @@ export default function garageClients (state = defaultState, action) {
     case SET_CLIENTPLACES_PRICING:
       return { ...state
              , client_id: undefined
-             , gate_id: undefined
              , pricing_id: action.value
              , rent_id: undefined
              , overview: undefined
@@ -91,7 +71,6 @@ export default function garageClients (state = defaultState, action) {
     case SET_CLIENTPLACES_RENT:
       return { ...state
              , client_id: undefined
-             , gate_id: undefined
              , pricing_id: undefined
              , rent_id: action.value
              , overview: undefined
@@ -100,7 +79,6 @@ export default function garageClients (state = defaultState, action) {
     case SET_CLIENTPLACES_OVERVIEW:
       return { ...state
              , client_id: undefined
-             , gate_id: undefined
              , pricing_id: undefined
              , rent_id: undefined
              , overview: action.value

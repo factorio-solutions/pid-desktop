@@ -19,6 +19,7 @@ import NewReservationOverviewPage from './reservations/newReservationOverview.pa
 
 import GaragesPage                from './garages/garages.page'
 import GarageClientsPage          from './garages/clients.page'
+import GarageGatesPage            from './garages/gates.page'
 import NewGaragePage              from './garages/newGarage.page'
 import GarageMarketingPage        from './garages/garageMarketing.page'
 import NewMarketingPage           from './garages/newMarketing.page'
@@ -78,6 +79,7 @@ export default function createRoutes() {
 
       <Route path="garages"                                 component={GaragesPage}/>
       <Route path="garages/:id/clients"                     component={GarageClientsPage}/>
+      <Route path="garages/:id/gates"                       component={GarageGatesPage}/>
       <Route path="garages/newGarage"                       component={NewGaragePage}/>
       <Route path="garages/:id/newGarage"                   component={NewGaragePage}/>
       <Route path="garages/:id/marketing"                   component={GarageMarketingPage}/>
