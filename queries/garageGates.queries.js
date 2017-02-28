@@ -1,5 +1,5 @@
 // get clients and current garage layout
-export const GET_GARAGE_CLIENT = `query($id: Id!){
+export const GET_GARAGE_GATE = `query($id: Id!){
   garage(id: $id){
     id
     name
@@ -19,52 +19,6 @@ export const GET_GARAGE_CLIENT = `query($id: Id!){
         place_id
       }
     }
-    clients{
-      id
-      name
-      groups{
-        id
-        place_id
-      }
-    }
-  }
-  pricings{
-    id
-    name
-    place_count
-    groups{
-      id
-      place_id
-    }
-  }
-  rents{
-    id
-    name
-    place_count
-    groups{
-      id
-      place_id
-    }
-  }
-}
-`
-
-// update garage afther update
-export const GET_GARAGE_CLIENT_UPDATE = `query ($id: Id!) {
-  garage(id: $id) {
-    id
-    name
-    floors {
-      label
-      scheme
-      places {
-        label
-        id
-        client_places {
-          client_id
-        }
-      }
-    }
   }
 }
 `
@@ -81,15 +35,6 @@ export const CREATE_GROUP = `mutation createGroup ($group: GroupInput!, $place_i
 export const DESTROY_GROUP = `mutation destroyGroup ($id:Id!){
   destroy_group(id: $id){
     id
-  }
-}
-`
-
-// get client details
-export const ADD_CLIENT = `query ($id:Id!){
-  client(id: $id){
-    id
-    name
   }
 }
 `

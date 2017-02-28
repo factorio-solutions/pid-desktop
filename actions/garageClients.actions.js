@@ -10,8 +10,6 @@ import { toGarages, setError } from './pageBase.actions'
 export const SET_CLIENTPLACES_GARAGE        = "SET_CLIENTPLACES_GARAGE"
 export const SET_CLIENTPLACES_CLIENTS       = "SET_CLIENTPLACES_CLIENTS"
 export const SET_CLIENTPLACES_CLIENT        = "SET_CLIENTPLACES_CLIENT"
-export const SET_CLIENTPLACES_GATES         = "SET_CLIENTPLACES_GATES"
-export const SET_CLIENTPLACES_GATE          = "SET_CLIENTPLACES_GATE"
 export const SET_CLIENTPLACES_PRICINGS      = "SET_CLIENTPLACES_PRICINGS"
 export const SET_CLIENTPLACES_PRICING       = "SET_CLIENTPLACES_PRICING"
 export const SET_CLIENTPLACES_RENTS         = "SET_CLIENTPLACES_RENTS"
@@ -36,17 +34,6 @@ export function setClients (value){
 }
 export function setClient (value){
   return { type: SET_CLIENTPLACES_CLIENT
-         , value
-         }
-}
-
-export function setGates (value){
-  return { type: SET_CLIENTPLACES_GATES
-         , value
-         }
-}
-export function setGate (value){
-  return { type: SET_CLIENTPLACES_GATE
          , value
          }
 }
@@ -122,10 +109,6 @@ export function initClients (id){
         client.place_count = client.groups.length
         return client
       })))
-      dispatch(setGates(response.data.garage.gates.map(gate=>{
-        gate.place_count = gate.groups.length
-        return gate
-      })))
       dispatch(setPricings(response.data.pricings))
       dispatch(setRents(response.data.rents))
       dispatch(setGarage(response.data.garage))
@@ -144,7 +127,6 @@ export function createConnection (place) {
     let groupable = state.clients.find(c => c.id==state.client_id)
     || state.pricings.find(p => p.id==state.pricing_id)
     || state.rents.find(r => r.id==state.rent_id)
-    || state.gates.find(g => g.id==state.gate_id)
 
     let group = groupable.groups.find((g) => {return g.place_id === place.id})
 
@@ -163,8 +145,8 @@ export function createConnection (place) {
       request( onSuccess
              , CREATE_GROUP
              , { place_id: place.id
-               , group: { groupable_id: state.client_id || state.pricing_id || state.rent_id || state.gate_id
-                        , groupable_type: state.client_id && 'Client' || state.pricing_id && 'Pricing' || state.rent_id && 'Rent' || state.gate_id && 'Gate'
+               , group: { groupable_id: state.client_id || state.pricing_id || state.rent_id
+                        , groupable_type: state.client_id && 'Client' || state.pricing_id && 'Pricing' || state.rent_id && 'Rent'
                         }
              })
     }
