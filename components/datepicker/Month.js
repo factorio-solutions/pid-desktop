@@ -1,9 +1,6 @@
 import React    from 'react'
 import moment   from 'moment'
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/new_api
 import styles   from './Datepicker.scss'
 
 

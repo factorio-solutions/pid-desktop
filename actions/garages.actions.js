@@ -1,21 +1,4 @@
 import { request } from '../helpers/request'
-<<<<<<< HEAD
-
-import { GET_GARAGES, DESTROY_GARAGE } from '../queries/garages.queries'
-
-export const SET_GARAGES            = "SET_GARAGES"
-export const SET_GARAGES_TABLEVIEW  = "SET_GARAGES_TABLEVIEW"
-
-
-export function setGarages (garages){
-  return  { type: SET_GARAGES
-          , value: garages
-          }
-}
-
-export function setTableView (bool){
-  return  { type: SET_GARAGES_TABLEVIEW
-=======
 import _           from 'lodash'
 
 import { GET_GARAGES, DESTROY_GARAGE } from '../queries/garages.queries'
@@ -45,7 +28,6 @@ export function setRents (rents){
 
 export function setTableView (bool){
   return  { type: GARAGES_SET_GARAGES_TABLEVIEW
->>>>>>> feature/new_api
           , value: bool
           }
 }
@@ -54,11 +36,6 @@ export function setTableView (bool){
 export function initGarages (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-<<<<<<< HEAD
-      dispatch( setGarages(response.data.user_garages.map(function(user_garage){return user_garage.garage})) )
-    }
-    request(onSuccess, GET_GARAGES)
-=======
       var uniqueGarages = _.uniqWith(response.data.user_garages.map(function (user_garage) {return user_garage.garage}),  _.isEqual)
 
       uniqueGarages.map((garage) => {
@@ -72,7 +49,6 @@ export function initGarages (){
     }
     request(onSuccess, GET_GARAGES)
     dispatch(fetchCurrentUser())
->>>>>>> feature/new_api
   }
 }
 

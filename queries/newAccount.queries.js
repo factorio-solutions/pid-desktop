@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// will create new account
-export const CREATE_NEW_ACCOUNT = 'mutation accountMutations($account: AccountInput!) { create_account(account: $account) { id, name } }'
-=======
 // creates new account
 export const CREATE_ACCOUNT = `mutation createAccount ($account:AccountInput!){
   create_account(account: $account){
@@ -30,4 +26,3 @@ export const INIT_ACCOUNT = `query ($id:Id){
     }
   }
 }`
->>>>>>> feature/new_api

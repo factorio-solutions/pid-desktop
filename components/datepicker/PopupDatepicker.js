@@ -3,20 +3,12 @@ import ReactDOM                         from 'react-dom'
 import moment                           from 'moment'
 
 import Datepicker  from './Datepicker'
-<<<<<<< HEAD
-import styles      from './PopupDatepicker.scss'
-import RoundButton from '../buttons/RoundButton'
-
-
-export default class PopupDatepicker extends Component{
-=======
 import RoundButton from '../buttons/RoundButton'
 
 import styles      from './PopupDatepicker.scss'
 
 
 export default class PopupDatepicker extends Component {
->>>>>>> feature/new_api
   static propTypes = {
     onSelect: PropTypes.func,
     okClick:  PropTypes.func,

@@ -1,24 +1,3 @@
-<<<<<<< HEAD
-import { SET_ACCOUNT_NAME, CLEAR_ACCOUNT_FORM }  from '../actions/newAccount.actions'
-
-
-const defaultState =  { name: ""
-                      }
-
-export default function newAccount (state = defaultState, action) {
-  switch (action.type) {
-
-    case SET_ACCOUNT_NAME:
-    return  { ...state
-            , name: action.value
-            }
-
-    case CLEAR_ACCOUNT_FORM:
-    return defaultState
-
-    default:
-      return state
-=======
 import {
   SET_NEW_ACCOUNT_NAME,
   SET_NEW_ACCOUNT_MERCHANT_ID,
@@ -118,6 +97,5 @@ export default function newAccount (appState = defaultState, action) {
 
     default:
       return appState
->>>>>>> feature/new_api
   }
 }

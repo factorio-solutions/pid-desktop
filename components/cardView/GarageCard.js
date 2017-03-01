@@ -1,8 +1,4 @@
 import React        from 'react'
-<<<<<<< HEAD
-import styles       from './Card.scss'
-=======
->>>>>>> feature/new_api
 import moment       from 'moment'
 
 import Card         from './Card'
@@ -10,22 +6,6 @@ import RoundButton  from '../buttons/RoundButton'
 
 import { t }       from '../../modules/localization/localization'
 
-<<<<<<< HEAD
-
-// onClick and selected are expected to be set by CardViewLayout
-export default function GarageCard ({ garage, occupancy, edit, account, state, onClick, selected })  {
-
-  const footer = <div className={styles.footerContainer}>
-            <span className={styles.footerInfo}>
-              {t(['garages','created'])} {moment(garage.created_at).format('ddd DD.MM.YYYY HH:mm')}
-            </span>
-            <span className={styles.buttons}>
-              <RoundButton content={<span className='fa fa-eye' aria-hidden="true"></span>} onClick={occupancy} type='action'/>
-              <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={edit} type='action'/>
-              <RoundButton content={<span className='fa fa-users' aria-hidden="true"></span>} onClick={account} type='action'/>
-            </span>
-          </div>
-=======
 import styles       from './Card.scss'
 
 
@@ -55,16 +35,11 @@ export default function GarageCard ({ garage, occupancy, edit, client, gates, us
                     {garage.address.state && <div>{garage.address.state}</div>}
                     <div>{garage.address.coutry}</div>
                   </div>
->>>>>>> feature/new_api
 
   return (
     <Card
       header = {<strong>{garage.name}</strong>}
-<<<<<<< HEAD
-      body = {garage.address || '\u00A0'}
-=======
       body = {garage.address ? address : '\u00A0'}
->>>>>>> feature/new_api
       footer = {footer}
       state = {state}
 

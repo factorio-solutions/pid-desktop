@@ -31,11 +31,7 @@
   cursor:   pointer;
 }
 .drop > li:not(.selected):hover{
-<<<<<<< HEAD
-  background-color: $black;
-=======
   background-color: $gray;
->>>>>>> feature/new_api
   color:            $white;
 }
 

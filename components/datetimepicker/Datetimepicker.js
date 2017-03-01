@@ -4,10 +4,7 @@ import moment                           from 'moment'
 
 import Datepicker from '../datepicker/Datepicker'
 import Timepicker from '../timepicker/Timepicker'
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/new_api
 import styles     from './Datetimepicker.scss'
 
 

@@ -1,28 +1,6 @@
 import { request } from '../helpers/request'
 import * as nav    from '../helpers/navigation'
 
-<<<<<<< HEAD
-import { CREATE_NEW_ACCOUNT } from '../queries/newAccount.queries'
-
-export const SET_ACCOUNT_NAME   = "SET_ACCOUNT_NAME"
-export const CLEAR_ACCOUNT_FORM = "CLEAR_ACCOUNT_FORM"
-
-export function setName (name){
-  return  { type: SET_ACCOUNT_NAME
-          , value: name
-          }
-}
-
-export function clearForm (){
-  return  { type: CLEAR_ACCOUNT_FORM }
-}
-
-
-export function submitNewAccount() {
-  return (dispatch, getState) => {
-
-    const onSuccess = (response) => {
-=======
 import { INIT_ACCOUNT, CREATE_ACCOUNT, UPDATE_ACCOUNT } from '../queries/newAccount.queries'
 
 
@@ -136,21 +114,10 @@ export function submitNewAccount (id){
   return (dispatch, getState) => {
     const state = getState().newAccount
     const onSuccess = (response) =>{
->>>>>>> feature/new_api
       dispatch(clearForm())
       nav.to('/accounts')
     }
 
-<<<<<<< HEAD
-    request( onSuccess
-           , CREATE_NEW_ACCOUNT
-           , { account: {name: getState().newAccount.name }}
-           , "garageMutations"
-           )
-
-  }
-}
-=======
     if (id){
       request(onSuccess
              , UPDATE_ACCOUNT
@@ -183,4 +150,3 @@ function generateAccount (state){
                     }
          }
 }
->>>>>>> feature/new_api

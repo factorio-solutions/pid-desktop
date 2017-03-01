@@ -1,17 +1,10 @@
 import React, { Component, PropTypes } from 'react'
-<<<<<<< HEAD
-import styles                          from './Input.scss'
-=======
->>>>>>> feature/new_api
 import moment                          from 'moment'
 
 import PopupDatepicker from '../datepicker/PopupDatepicker'
 
-<<<<<<< HEAD
-=======
 import styles                          from './Input.scss'
 
->>>>>>> feature/new_api
 
 export default class DatetimeInput extends Component {
   static propTypes = {

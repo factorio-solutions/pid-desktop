@@ -5,8 +5,6 @@
   -o-border-radius:      $radius;
   border-radius:         $radius;
 }
-<<<<<<< HEAD
-=======
 
 @mixin background-size($repeat) {
   -webkit-background-size:  $repeat;
@@ -14,4 +12,3 @@
   -o-background-size:       $repeat;
   background-size:          $repeat;
 }
->>>>>>> feature/new_api

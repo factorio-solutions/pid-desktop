@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import { SET_NOTIFICATIONS_TABLEVIEW, SET_NOTIFICATIONS_DETAILS, SET_NOTIFICATIONS_COUNT, SET_NOTIFICATIONS_PAST }  from '../actions/notifications.actions'
-
-const defaultState =  { count: 0
-                      , notifications:[]
-                      , past: false
-                      , tableView: true
-                      }
-
-=======
 import {
   SET_NOTIFICATIONS_TABLEVIEW,
   SET_NOTIFICATIONS_DETAILS,
@@ -22,7 +12,6 @@ const defaultState =  { count:          0
                       }
 
 
->>>>>>> feature/new_api
 export default function notifications (state = defaultState, action) {
   switch (action.type) {
 
@@ -46,10 +35,6 @@ export default function notifications (state = defaultState, action) {
             , tableView: action.value
             }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> feature/new_api
     default:
       return state
   }
