@@ -2,13 +2,14 @@ import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
 
-export const SET_HORIZONTAL_CONTENT     = 'SET_VERTICAL_CONTENT'
-export const SET_HORIZONTAL_SELECTED    = 'SET_HORIZONTAL_SELECTED'
-export const SET_VERTICAL_SELECTED      = 'SET_VERTICAL_SELECTED'
-export const PAGE_BASE_SET_ERROR        = 'PAGE_BASE_SET_ERROR'
-export const PAGE_BASE_SET_CURRENT_USER = 'PAGE_BASE_SET_CURRENT_USER'
-export const PAGE_BASE_SET_HINT         = 'PAGE_BASE_SET_HINT'
-export const PAGE_BASE_SET_MENU_WIDTH   = 'PAGE_BASE_SET_MENU_WIDTH'
+export const SET_HORIZONTAL_CONTENT            = 'SET_VERTICAL_CONTENT'
+export const SET_HORIZONTAL_SELECTED           = 'SET_HORIZONTAL_SELECTED'
+export const SET_VERTICAL_SELECTED             = 'SET_VERTICAL_SELECTED'
+export const PAGE_BASE_SET_ERROR               = 'PAGE_BASE_SET_ERROR'
+export const PAGE_BASE_SET_NOTIFICATIONS_MODAL = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
+export const PAGE_BASE_SET_CURRENT_USER        = 'PAGE_BASE_SET_CURRENT_USER'
+export const PAGE_BASE_SET_HINT                = 'PAGE_BASE_SET_HINT'
+export const PAGE_BASE_SET_MENU_WIDTH          = 'PAGE_BASE_SET_MENU_WIDTH'
 
 import { GET_CURRENT_USER, UPDATE_CURRENT_USER } from '../queries/pageBase.queries'
 
@@ -33,6 +34,12 @@ export function setVerticalSelected (index){
 export function setError (error){
   return  { type: PAGE_BASE_SET_ERROR
           , value: error
+          }
+}
+
+export function setShowModal (bool){
+  return  { type: PAGE_BASE_SET_NOTIFICATIONS_MODAL
+          , value: bool
           }
 }
 

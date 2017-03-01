@@ -18,6 +18,11 @@ import styles from './signUp.page.scss'
 const MINIMUM_PASSWORD_LENGTH = 4
 
 
+const NAME_REGEX  = `^(?!\\s*$).+`
+const PHONE_REGEX = `\\+?\\(?\\d{2,4}\\)?[\\d\\s-]{3,}`
+const EMAIL_REGEX = `[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$`
+
+
 export class SignUpPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
@@ -32,7 +37,12 @@ export class SignUpPage extends Component {
     const { actions, state } = this.props
 
     const onSubmit     = () => { isSubmitable() && actions.register() }
-    const isSubmitable = () => { return state.name.valid && state.phone.valid && state.email.valid && state.password.valid && state.confirmation.valid && state.password.value == state.confirmation.value}
+    const isSubmitable = () => { return state.name.valid
+                                        && state.email.valid
+                                        && state.phone.valid
+                                        && state.password.valid
+                                        && state.confirmation.valid
+                                        && state.password.value == state.confirmation.value}
     const goBack       = () => { nav.to('/') }
 
     const loadingContent = <div>{ t(['signup_page', 'loading']) } ...</div>
@@ -49,9 +59,9 @@ export class SignUpPage extends Component {
                       <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching||state.error!=undefined} />
                       <div className={styles.signUpPage}>
                         <Form onSubmit={onSubmit} onBack={goBack} submitable={isSubmitable()}>
-                          <PatternInput onEnter={onSubmit} onChange={actions.setName}         label={t(['signup_page', 'name'])}          error={t(['signup_page', 'nameInvalid'])}                                               pattern="^(?!\s*$).+"                                 value={state.name.value} />
-                          <PatternInput onEnter={onSubmit} onChange={actions.setPhone}        label={t(['signup_page', 'phone'])}         error={t(['signup_page', 'phoneInvalid'])}                                              pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}"                 value={state.phone.value} />
-                          <PatternInput onEnter={onSubmit} onChange={actions.setEmail}        label={t(['signup_page', 'email'])}         error={t(['signup_page', 'emailInvalid'])}                                              pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  value={state.email.value} />
+                          <PatternInput onEnter={onSubmit} onChange={actions.setName}         label={t(['signup_page', 'name'])}          error={t(['signup_page', 'nameInvalid'])}                                               pattern={NAME_REGEX}  value={state.name.value} />
+                          <PatternInput onEnter={onSubmit} onChange={actions.setPhone}        label={t(['signup_page', 'phone'])}         error={t(['signup_page', 'phoneInvalid'])}                                              pattern={PHONE_REGEX} value={state.phone.value} />
+                          <PatternInput onEnter={onSubmit} onChange={actions.setEmail}        label={t(['signup_page', 'email'])}         error={t(['signup_page', 'emailInvalid'])}                                              pattern={EMAIL_REGEX} value={state.email.value} />
                           <PatternInput onEnter={onSubmit} onChange={actions.setPassword}     label={t(['signup_page', 'password'])}      error={t(['signup_page', 'minimumLength'])+" "+MINIMUM_PASSWORD_LENGTH} type='password' pattern={`\\w{${MINIMUM_PASSWORD_LENGTH},}`}          value={state.password.value} />
                           <PatternInput onEnter={onSubmit} onChange={actions.setConfirmation} label={t(['signup_page', 'confirmation'])}  error={t(['signup_page', 'noMatching'])}                                type='password' pattern={state.password.value}                        value={state.confirmation.value} />
                         </Form>

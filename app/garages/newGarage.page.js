@@ -77,7 +77,7 @@ export class NewGaragePage extends Component {
       if (state.city == "") return false
       if (state.postal_code == "") return false
       if (state.country == "") return false
-      if (state.floors.length == 1 ) return falsetogg
+      if (state.floors.length == 1 ) return false
       if (state.gates.length == 1 ) return false
       if (state.floors.filter((fl, index, arr)=>{return index != arr.length-1}).find((floor) => {return floor.label == "" || floor.scheme == ""}) != undefined) return false
       if (state.gates.filter((gate, index, arr)=>{return index != arr.length-1}).find((gate) => {return gate.label == "" || gate.address.line_1 == ""}) != undefined) return false
@@ -113,7 +113,7 @@ export class NewGaragePage extends Component {
             <Input style={styles.gatePhoneInputWidth}                        onChange={handleGatePhoneChange} label={t(['newGarage', 'gatePhone'])} error={t(['newGarage', 'invalidGatePhone'])} value={gate.phone} name={`gate${index}[phone]`} placeholder={t(['newGarage', 'placeholderGatePhone'])} type="tel"/>
             {removeGateButton()}
           </div>
-          <Input onChange={handleGatePlacesChange} label={t(['newGarage', 'places']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidPlaces'])} value={gate.places} placeholder={t(['newGarage', 'placesPlaceholder'])} pattern="(\d+\s*)(\s*(,|-)\s*\d+)*"/>
+          <Input onChange={handleGatePlacesChange} label={t(['newGarage', 'places']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidPlaces'])} value={gate.places} placeholder={t(['newGarage', 'placesPlaceholder'])} pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"/> {/*(\d+\s*)(\s*(,|-)\s*\d+)**/}
           <Input onChange={handleGateAddressLine1Change} label={t(['newGarage', 'street']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidStreet'])} value={gate.address.line_1} placeholder={t(['newGarage', 'streetPlaceholder'])} onBlur={()=>{getGPSLocation(index)}}/>
           <div className={styles.inline}>
             <Input style={styles.latLngInputWidth+" "+styles.rightMargin} onChange={handleGateAddressLat} label={t(['newGarage', 'lat'])} error={t(['newGarage', 'invalidLat'])} value={gate.address.lat} name="garage[lat]" placeholder={t(['newGarage', 'latPlaceholder'])}/>

@@ -155,7 +155,7 @@ export function changeFloorScheme(value, index, scan){
 
 export function changeGateLabel(value, index){  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'label',  value)))) } }
 export function changeGatePhone(value, index){  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'phone',  value)))) } }
-export function changeGatePlaces(value, index){ return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
+export function changeGatePlaces(value, index){ return (dispatch, getState) => { console.log(scanPlaces(value)); dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
 
 export function changeGateAddressLine1(value, index){ return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey( getState().newGarage.gates[index].address, 'line_1', value))))) } }
 export function changeGateAddressLat(value, index){   return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey( getState().newGarage.gates[index].address, 'lat',    value))))) } }
@@ -206,16 +206,16 @@ function updateKey(object, key, value){
 function scanPlaces(string){
   return string.split(',').reduce((arr, val)=>{
     if (val.indexOf('-') == -1){ // single value
-      arr.push(parseInt(val)+"")
+      arr.push(val.trim())
     } else { // range
       const range = val.split('-')
       const from = parseInt(range[0])
       const to = parseInt(range[1])
 
       if (from < to){
-        for (var i = from; i <= to; i++) { arr.push(i+"") }
+        for (var i = from; i <= to; i++) { arr.push(i) }
       } else {
-        for (var i = to; i <= from; i++) { arr.push(i+"") }
+        for (var i = to; i <= from; i++) { arr.push(i) }
       }
     }
     return arr
@@ -358,7 +358,17 @@ export function submitGarage() {
       newGate.address.country = state.country
       newGate.address.lng = parseFloat(newGate.address.lng)
       newGate.address.lat = parseFloat(newGate.address.lat)
-      newGate.places = scanPlaces(newGate.places).filter((place)=>{return garagePlaces.indexOf(place) != -1}) // filter placeGates that have
+      const places = scanPlaces(newGate.places)
+      // newGate.places = scanPlaces(newGate.places).filter((place)=>{return garagePlaces.indexOf(place) != -1}) // filter placeGates that have
+      newGate.places = garagePlaces.filter((place)=>{
+        return places.find((label) => {
+          if (typeof label === 'string') {
+            return place === label
+          } else {
+            return label === parseInt(place.replace( /^\D+/g, ''))
+          }
+        }) !== undefined
+      })
       return newGate
     })
 

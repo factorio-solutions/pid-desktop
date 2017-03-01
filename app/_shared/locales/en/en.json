@@ -125,7 +125,11 @@
 		"garageGarageUsersHint": "Here you can manage who can manage your garage. TODO: Garage users management",
 		"addFeatures": "Add features",
 		"accounts":"Accounts",
-		"EditUserHint": "Here it is possible to change information about yourself."
+		"EditUserHint": "Here it is possible to change information about yourself.",
+		"unredNotifications":{
+			"one": "You have one unread notification",
+			"other": "You have %(count)s unread notifications"
+		}
 
 	},
 	"newReservation": {
