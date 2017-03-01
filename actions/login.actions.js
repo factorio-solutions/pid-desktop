@@ -1,6 +1,7 @@
 import { request }    from '../helpers/request'
 import * as nav       from '../helpers/navigation'
 import { LOGIN_USER } from '../queries/login.queries.js'
+import {setShowModal} from './pageBase.actions'
 
 export const LOGIN_REQUEST      = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS      = 'LOGIN_SUCCESS'
@@ -54,6 +55,7 @@ export function login(email, password, redirect = false, callback = ()=>{}) {
           const path = localStorage['redirect'] || '/reservations'
           delete localStorage['redirect']
           nav.to(path)
+          dispatch(setShowModal(true))
         }
       } else {
         dispatch(setError(result.error_description || 'no description'))

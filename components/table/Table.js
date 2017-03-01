@@ -62,23 +62,13 @@ export default class Table extends Component {
 			const isSame = sortKey == schema[index].key
 
 			if(schema[index].comparator) {
-				this.setState({ sortKey: isSame ? sortKey : schema[index].key
+				this.setState({ ...this.state
+											, sortKey: isSame ? sortKey : schema[index].key
 											, sortType: isSame ? ( sortType=='asc' ? 'desc' : 'asc' ) : 'asc'
-											, spoilerId: -1
+											// , spoilerId: -1
 											})
 			}
 		}
-
-		const handleRowClick = (spoilerId) => {
-				const { onRowSelect } = this.props
-		  	if(this.state.spoilerId === spoilerId) {
-		    	this.setState({ spoilerId: -1 })
-					onRowSelect && onRowSelect(undefined, -1)
-		  	} else {
-		  		this.setState({ spoilerId })
-					onRowSelect && onRowSelect(this.props.data[spoilerId], spoilerId)
-		  	}
-		  }
 
 		const stringifyElement = (obj) => {
 			if (typeof obj === 'object'){
@@ -90,46 +80,63 @@ export default class Table extends Component {
 			}
 		}
 
-			if (typeof comparator == 'function'){ // custom comparator
-				myComp = (aRow,bRow) => {
-					const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
-					const b = compareRepresentations ? representer(bRow) : bRow[sortKey]
-					return comparator(sortType, a, b)
-				}
-			} else { // predefined comparators
-				myComp = (aRow,bRow) => {
-					const a = compareRepresentations ? representer(aRow[sortKey]) : aRow[sortKey]
-					const b = compareRepresentations ? representer(bRow[sortKey]) : bRow[sortKey]
+		if (typeof comparator == 'function'){ // custom comparator
+			myComp = (aRow,bRow) => {
+				const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
+				const b = compareRepresentations ? representer(bRow) : bRow[sortKey]
+				return comparator(sortType, a, b)
+			}
+		} else { // predefined comparators
+			myComp = (aRow,bRow) => {
+				const a = compareRepresentations ? representer(aRow[sortKey]) : aRow[sortKey]
+				const b = compareRepresentations ? representer(bRow[sortKey]) : bRow[sortKey]
 
-					switch (comparator) {
-						case 'date':
-							return sortType=='asc' ? moment(a||'1970/1/1').diff(moment(b||'1970/1/1')) : moment(b||'1970/1/1').diff(moment(a||'1970/1/1'))
-							break
-						case 'string':
-							return a.toLowerCase()<b.toLowerCase() ? (sortType=='asc'?-1:1) : (a.toLowerCase()>b.toLowerCase() ? (sortType=='asc'?1:-1) : 0)
-							break
-						case 'number':
-							return sortType=='asc'? (parseFloat(a) || 0)-(parseFloat(b) || 0) : (parseFloat(b) || 0)-(parseFloat(a) || 0)
-							break
-						case 'boolean':
-							return sortType=='asc'? a-b : b-a
-							break
+				switch (comparator) {
+					case 'date':
+						return sortType=='asc' ? moment(a||'1970/1/1').diff(moment(b||'1970/1/1')) : moment(b||'1970/1/1').diff(moment(a||'1970/1/1'))
+						break
+					case 'string':
+						return a.toLowerCase()<b.toLowerCase() ? (sortType=='asc'?-1:1) : (a.toLowerCase()>b.toLowerCase() ? (sortType=='asc'?1:-1) : 0)
+						break
+					case 'number':
+						return sortType=='asc'? (parseFloat(a) || 0)-(parseFloat(b) || 0) : (parseFloat(b) || 0)-(parseFloat(a) || 0)
+						break
+					case 'boolean':
+						return sortType=='asc'? a-b : b-a
+						break
 
-						default:
-							return sortType=='asc' ? -1 : 1
-					}
+					default:
+						return sortType=='asc' ? -1 : 1
 				}
 			}
+		}
 
-		const newData = data.filter((object) => {
-			if (this.state.search === ''){
-				return true
-			} else {
-				return schema.map((value, index)=>{ return value.representer ? value.representer(object[value.key]) : object[value.key] })
-										 .map((value) => { return stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim().toLowerCase().includes(this.state.search.toLowerCase()) })
-										 .includes(true)
-			}
-		}).sort(myComp)
+		const newData = data
+			.map((object, index) => {
+				object.key = index
+				return object
+			})
+			.filter((object) => {
+				if (this.state.search === ''){
+					return true
+				} else {
+					return schema.map((value, index)=>{ return value.representer ? value.representer(object[value.key]) : object[value.key] })
+											 .map((value) => { return stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim().toLowerCase().includes(this.state.search.toLowerCase()) })
+											 .includes(true)
+				}
+			}).sort(myComp)
+
+
+		const handleRowClick = (spoilerId) => {
+				const { onRowSelect } = this.props
+		  	if(this.state.spoilerId === spoilerId) {
+		    	this.setState({ spoilerId: -1 })
+					onRowSelect && onRowSelect(undefined, -1)
+		  	} else {
+		  		this.setState({ spoilerId })
+					onRowSelect && onRowSelect(newData.find((obj)=>{return obj.key === spoilerId}), spoilerId)
+		  	}
+		  }
 
 		const prepareHeader = (value,key) => {
 			return (
@@ -142,8 +149,8 @@ export default class Table extends Component {
 
 		const prepareBody = (value,key, arr)=>{
 			return [
-				<TableRow key={key} className={`${(spoilerId == key) && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(key)}} hover/>,
-				(arr.length <=5 || spoilerId == key) && value.spoiler && <tr key={key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
+				<TableRow key={key} className={`${(spoilerId == value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(value.key)}} hover/>,
+				(arr.length <=5 || spoilerId == value.key) && value.spoiler && <tr key={value.key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
 			]
 		}
 

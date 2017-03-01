@@ -70,7 +70,7 @@ export function dismissModal() {
 export function init(params){
   return (dispatch, getState) => {
     params.full_name    && dispatch(setName( params.full_name, true ))
-    params.phone        && dispatch(setPhone( params.phone, true ))
+    params.phone        && dispatch(setPhone( params.phone[0] == ' ' ? '+'+params.phone.substring(1) : params.phone, true ))
     params.email        && dispatch(setEmail( params.email, true ))
     params.reset_token  && dispatch(setResetToken( params.reset_token ))
   }
