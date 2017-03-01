@@ -6,11 +6,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import createRoutes             from './routes'
 import configureStore           from './_store/configureStore'
 
-<<<<<<< HEAD
-=======
 import './_shared/styles/normalize.css'
 import './_shared/styles/fonts.scss'
->>>>>>> feature/new_api
 import './_styles/app.desktop.scss'
 
 

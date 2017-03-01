@@ -1,17 +1,4 @@
 import moment from 'moment'
-<<<<<<< HEAD
-import { OCCUPANCY_SET_GARAGE, OCCUPANCY_SET_GARAGES, OCCUPANCY_SET_GARAGE_ID, OCCUPANCY_SET_ACCOUNTS, OCCUPANCY_SET_ACCOUNT_ID, OCCUPANCY_SET_DURATION, OCCUPANCY_SET_FROM }  from '../actions/occupancy.actions'
-
-const defaultState =  { garage: undefined, // current one
-                        garages: [],       // all available
-                        garage_id: undefined, // selected by picker
-                        accounts: [],
-                        account_id: undefined,
-                        duration: "week",
-                        from: moment().startOf('day')
-                      }
-
-=======
 import {
   OCCUPANCY_SET_GARAGE,
   OCCUPANCY_SET_GARAGES,
@@ -32,7 +19,6 @@ const defaultState =  { garage:     undefined // current one
                       }
 
 
->>>>>>> feature/new_api
 export default function occupancy (state = defaultState, action) {
   switch (action.type) {
 
@@ -52,16 +38,6 @@ export default function occupancy (state = defaultState, action) {
             }
 
 
-<<<<<<< HEAD
-    case OCCUPANCY_SET_ACCOUNTS:
-    return  { ...state
-            , accounts: action.value
-            }
-
-    case OCCUPANCY_SET_ACCOUNT_ID:
-    return  { ...state
-            , account_id: action.value
-=======
     case OCCUPANCY_SET_CLIENTS:
     return  { ...state
             , clients: action.value
@@ -70,7 +46,6 @@ export default function occupancy (state = defaultState, action) {
     case OCCUPANCY_SET_CLIENT_ID:
     return  { ...state
             , client_id: action.value
->>>>>>> feature/new_api
             }
 
 

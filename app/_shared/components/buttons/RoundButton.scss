@@ -16,11 +16,7 @@ $big:         1.4;
   outline:    none;
   text-align: center;
   transition: all 0.4s ease;
-<<<<<<< HEAD
-  margin:     5px; 
-=======
   margin:     5px;
->>>>>>> feature/new_api
 
   @include colorize($clickableColor);
   color:   $white;
@@ -37,13 +33,10 @@ $big:         1.4;
 .remove {
   @include colorize($removeColor);
 }
-<<<<<<< HEAD
-=======
 .info{
   @include colorize($white);
   color: $blue;
 }
->>>>>>> feature/new_api
 
 .selected {
   background: $selectedColor;

@@ -9,10 +9,6 @@ export function path (dest) {
   return `${translate.getLocale()}${dest}`
 }
 
-<<<<<<< HEAD
-export function back(){
-=======
 export function back (){
->>>>>>> feature/new_api
   hashHistory.goBack()
 }

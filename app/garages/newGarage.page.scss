@@ -1,12 +1,9 @@
 @import '../_styles/app.desktop';
 
-<<<<<<< HEAD
-=======
 .pointer{
   cursor: pointer;
 }
 
->>>>>>> feature/new_api
 .contentPadding{
   padding: 25px 15px 0;
 }
@@ -23,8 +20,6 @@
   margin-right: 5px;
 }
 
-<<<<<<< HEAD
-=======
 .latLngInputWidth{
   width: calc(50% - 2.5px);
 }
@@ -35,7 +30,6 @@
   margin-right: 5px;
 }
 
->>>>>>> feature/new_api
 .hidden{
   display: none;
 }
@@ -44,14 +38,11 @@
   display: flex;
 }
 
-<<<<<<< HEAD
-=======
 .floatCenter{
   text-align: center;
 }
 
 
->>>>>>> feature/new_api
 @media (min-width: $collapseWidth) {
   .parent{
     display: flex;

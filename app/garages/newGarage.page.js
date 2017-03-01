@@ -1,63 +1,3 @@
-<<<<<<< HEAD
-import React, { Component, PropTypes } from 'react';
-import * as nav                        from '../_shared/helpers/navigation'
-import { t }                           from '../_shared/modules/localization/localization'
-
-import PageBase             from '../_shared/containers/pageBase/PageBase'
-import RoundButton          from '../_shared/components/buttons/RoundButton'
-import Input                from '../_shared/components/input/Input'
-import Form                 from '../_shared/components/form/Form'
-import GarageLayout         from '../_shared/components/GarageLayout/GarageLayout'
-
-import { setFloors, removeFloor, changeFloorName, changeScheme, setName, submitNewGarage,
-         setAddress, setGPS, setFloor, initEditGarage, changeFloorFrom, changeFloorTo} from '../_shared/actions/newGarage.actions'
-
-import styles from './newGarage.page.scss'
-
-export default class NewGaragePage extends Component {
-  static contextTypes = {
-    store: PropTypes.object
-  }
-
-  componentDidMount () {
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() => { this.forceUpdate() })
-    this.props.params.id && store.dispatch(initEditGarage(this.props.params.id))
-  }
-
-  componentWillUnmount () {
-    this.unsubscribe()
-  }
-
-  render() {
-    const { store } = this.context
-    const state = store.getState().newGarage
-
-    const handleNameChange = (value) => {
-      store.dispatch(setName(value))
-    }
-
-    const handleAddressChange = (value) => {
-      store.dispatch(setAddress(value))
-    }
-
-    const handleGPSChange = (value) => {
-      store.dispatch(setGPS(value))
-    }
-
-    const submitForm = () => {
-      store.dispatch(submitNewGarage(state))
-    }
-
-    const goBack = () => {
-      nav.to('/garages')
-    }
-
-    const checkSubmitable = () => {
-      if (state.name == "") return false
-      if (state.floors.length == 1 ) return false
-      if (state.floors.filter((fl, index, arr)=>{return index != arr.length-1}).find((floor) => {return floor.label == "" || floor.scheme == ""}) != undefined) return false
-=======
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
@@ -141,20 +81,10 @@ export class NewGaragePage extends Component {
       if (state.gates.length == 1 ) return false
       if (state.floors.filter((fl, index, arr)=>{return index != arr.length-1}).find((floor) => {return floor.label == "" || floor.scheme == ""}) != undefined) return false
       if (state.gates.filter((gate, index, arr)=>{return index != arr.length-1}).find((gate) => {return gate.label == "" || gate.address.line_1 == ""}) != undefined) return false
->>>>>>> feature/new_api
 
       return true
     }
 
-<<<<<<< HEAD
-    const prepareFloors = (floor, index) => {
-      const handleFileSelect      = (value) => {store.dispatch(changeScheme(value, index))}
-      const handleFloorNameChange = (value) => {store.dispatch(changeFloorName(value, index))}
-      const handleFloorFromChange = (value) => {store.dispatch(changeFloorFrom(value, index))}
-      const handleFloorToChange   = (value) => {store.dispatch(changeFloorTo(value, index))}
-      const fileSelector = () => {document.getElementsByName(`floor${index}[file]`)[0].click()}
-      const removeRow    = () => { store.dispatch(removeFloor(index)) }
-=======
     const tarifSelected = (index) => { actions.setTarif(state.availableTarifs[index].id) }
     const tarifDropdown = state.availableTarifs.map((tarif, index) => {return {label: `${t(['addFeatures',tarif.name])} - ${tarif.price} ${tarif.currency.symbol}`, onClick: tarifSelected.bind(this, index) }})
 
@@ -200,7 +130,6 @@ export class NewGaragePage extends Component {
       const handleFloorToChange   = (value) => { actions.changeFloorTo(value, index) }
       const fileSelector          = () => { document.getElementsByName(`floor${index}[file]`)[0].click() }
       const removeRow             = () => { actions.removeFloor(index) }
->>>>>>> feature/new_api
 
       const deleteButton = () => {
         if (state.floors.length-1 == index){ return null }
@@ -208,15 +137,6 @@ export class NewGaragePage extends Component {
       }
 
       return(
-<<<<<<< HEAD
-        <div className={styles.inline} key={index}>
-          <Input style={styles.smallInputWidth} onChange={handleFloorNameChange} label={t(['newGarage', 'floorName'])} error={t(['newGarage', 'invalidFloorName'])} value={state.floors[index].label} name={`floor${index}[name]`} placeholder={t(['newGarage', 'placeholderFloor'])}/>
-          <Input style={styles.smallInputWidth+" "+styles.middleMargin} onChange={handleFloorFromChange} label={t(['newGarage', 'from'])} error={t(['newGarage', 'invalidFloorFrom'])} value={floor.from} name={`floor${index}[from]`} placeholder={t(['newGarage', 'placeholderFloorFrom'])} type="number" />
-          <Input style={styles.smallInputWidth} onChange={handleFloorToChange} label={t(['newGarage', 'to'])} error={t(['newGarage', 'invalidFloorTo'])} value={floor.to} name={`floor${index}[to]`} placeholder={t(['newGarage', 'placeholderFloorTo'])} type="number" min={floor.from}/>
-          <Input style={styles.hidden} type="file" onChange={handleFileSelect} name={`floor${index}[file]`} label='file' />
-          <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.floors[index].scheme==""?'action':'confirm'} />
-          {deleteButton()}
-=======
         <div key={index}>
           <div className={styles.inline}>
             <Input style={styles.smallInputWidth}                         onChange={handleFloorNameChange} label={t(['newGarage', 'floorName']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidFloorName'])} value={state.floors[index].label} name={`floor${index}[name]`} placeholder={t(['newGarage', 'placeholderFloor'], { index: index+1 })}/>
@@ -226,37 +146,10 @@ export class NewGaragePage extends Component {
             <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.floors[index].scheme==""?'action':'confirm'} />
             {deleteButton()}
           </div>
->>>>>>> feature/new_api
         </div>
       )
     }
 
-<<<<<<< HEAD
-    const handleFloorClick = ( index ) => {
-      store.dispatch(setFloor(index))
-    }
-
-    var allFloors = state.floors.filter((floor)=>{return floor.label.length > 0 && floor.scheme.length > 0 })
-
-    const content = <div className={styles.parent}>
-                      <div className={styles.leftCollumn}>
-                        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
-                          <Input onChange={handleNameChange} label={t(['newGarage', 'name'])} error={t(['newGarage', 'invalidName'])} value={state.name} name="garage[name]" placeholder={t(['newGarage', 'placeholder'])}/>
-                          <Input onChange={handleAddressChange} label={t(['newGarage', 'address'])} error={t(['newGarage', 'invalidAddress'])} value={state.address} name="garage[name]" placeholder={t(['newGarage', 'addressPlaceholder'])}/>
-                          <Input onChange={handleGPSChange} label={t(['newGarage', 'GPS'])} error={t(['newGarage', 'invalidGPS'])} value={state.GPS} name="garage[name]" placeholder={t(['newGarage', 'GPSPlaceholder'])}/>
-                          {state.floors.map(prepareFloors)}
-                        </Form>
-                      </div>
-                      <div className={styles.rightCollumn}>
-                        <GarageLayout
-                          svg={allFloors[state.selectedFloor] && allFloors[state.selectedFloor].scheme || "<svg></svg>"}
-                          floors={allFloors.map((floor) => {return floor.label})}
-                          onFloorClick={handleFloorClick}
-                          onPlaceClick={no => op}
-                          availableFloorsPlaces={[]}
-                          activeFloor={state.selectedFloor}
-                          activePlaces={[]}
-=======
     const errorContent = <div className={styles.floatCenter}>
                             { state.error } <br/>
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={handleErrorClick} type='confirm'  />
@@ -293,7 +186,6 @@ export class NewGaragePage extends Component {
                           floors={allFloors}
                           onPlaceClick = {(place)=>{console.log('place clicked', place);}}
                           showEmptyFloors = {true}
->>>>>>> feature/new_api
                         />
                       </div>
                     </div>
@@ -303,11 +195,8 @@ export class NewGaragePage extends Component {
     )
   }
 }
-<<<<<<< HEAD
-=======
 
 export default connect(
   state    => ({ state: state.newGarage }),
   dispatch => ({ actions: bindActionCreators(newGarageActions, dispatch) })
 )(NewGaragePage)
->>>>>>> feature/new_api

@@ -4,32 +4,19 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
-<<<<<<< HEAD
-import Table            from '../_shared/components/Table/Table'
-=======
 import Table            from '../_shared/components/table/Table'
->>>>>>> feature/new_api
 import RoundButton      from '../_shared/components/buttons/RoundButton'
 import ButtonStack      from '../_shared/components/buttonStack/ButtonStack'
 import TextButton       from '../_shared/components/buttons/TextButton'
 import CardViewLayout   from '../_shared/components/cardView/CardViewLayout'
 import ReservationCard  from '../_shared/components/cardView/ReservationCard'
 
-<<<<<<< HEAD
-
-import styles from './reservations.page.scss'
-
-=======
->>>>>>> feature/new_api
 import * as nav                 from '../_shared/helpers/navigation'
 import { t }                    from '../_shared/modules/localization/localization'
 import * as reservationActions  from '../_shared/actions/reservations.actions'
 
-<<<<<<< HEAD
-=======
 import styles from './reservations.page.scss'
 
->>>>>>> feature/new_api
 
 export class ReservationsPage extends Component {
   static propTypes = {
@@ -56,23 +43,6 @@ export class ReservationsPage extends Component {
                        }, representer: o => <strong className={styles.place}> {o.garagefloorName} / {o.name} </strong>}
                    ]
 
-<<<<<<< HEAD
-     const destroyClick = (reservation) => {
-       actions.destroyReservation(reservation.id)
-     }
-
-    const data = state.reservations.map(function (reservation) {
-
-      return { name: reservation.user.full_name
-             , from: reservation.begins_at
-             , to: reservation.ends_at
-             , garage: reservation.place.floor.garage.name
-             , place: { garagefloorName: reservation.place.floor.label, name: reservation.place.label }
-             , spoiler: <div>
-                          {`${reservation.creator.full_name}  |  ${reservation.creator.email}  |  ${moment(reservation.created_at).format('DD.MM. HH:mm')}`}
-                          <span className={styles.floatRight}>
-                            <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>
-=======
     const destroyClick   = (reservation) => { actions.destroyReservation(reservation.id) }
     const downloadClick  = (id) => {actions.downloadInvoice(id)}
     const newReservation = () => { nav.to('/reservations/newReservation') }
@@ -90,23 +60,13 @@ export class ReservationsPage extends Component {
                           <span className={styles.floatRight}>
                             {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>*/}
                             {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed && <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{downloadClick(reservation.invoice_item.invoice.id)}} type='action'/>}
->>>>>>> feature/new_api
                           </span>
                         </div>
              }
     })
 
-<<<<<<< HEAD
-    const newReservation = () => {
-      nav.to('/reservations/newReservation')
-    }
-
-    const prepareCards = (reservation, index) => {
-      return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} />
-=======
     const prepareCards = (reservation, index) => {
       return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} download={downloadClick} />
->>>>>>> feature/new_api
     }
 
     const content = <div>
@@ -120,21 +80,12 @@ export class ReservationsPage extends Component {
                       </div>
                     </div>
 
-<<<<<<< HEAD
-    const filters= <div>
-            <ButtonStack divider={<span>|</span>} style='horizontal' >
-              <TextButton content={t(['pageBase','cardView'])} onClick={() => {actions.setTableView(false)}} state={!state.tableView && 'selected'}/>
-              <TextButton content={t(['pageBase','tableView'])} onClick={() => {actions.setTableView(true)}} state={state.tableView && 'selected'}/>
-            </ButtonStack>
-          </div>
-=======
     const filters=  <div>
                       <ButtonStack divider={<span>|</span>} style='horizontal' >
                         <TextButton content={t(['pageBase','cardView'])} onClick={() => {actions.setTableView(false)}} state={!state.tableView && 'selected'}/>
                         <TextButton content={t(['pageBase','tableView'])} onClick={() => {actions.setTableView(true)}} state={state.tableView && 'selected'}/>
                       </ButtonStack>
                     </div>
->>>>>>> feature/new_api
 
     return (
       <PageBase content={content} filters={filters} />
@@ -142,19 +93,7 @@ export class ReservationsPage extends Component {
   }
 }
 
-<<<<<<< HEAD
-
-export default connect(state => {
-  const { reservations } = state
-  return ({
-    state: reservations
-  })
-}, dispatch => ({
-  actions: bindActionCreators(reservationActions, dispatch)
-}))(ReservationsPage)
-=======
 export default connect(
   state    => ({ state: state.reservations }),
   dispatch => ({ actions: bindActionCreators(reservationActions, dispatch) })
 )(ReservationsPage)
->>>>>>> feature/new_api

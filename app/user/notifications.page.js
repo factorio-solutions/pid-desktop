@@ -4,11 +4,7 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
-<<<<<<< HEAD
-import Table            from '../_shared/components/Table/Table'
-=======
 import Table            from '../_shared/components/table/Table'
->>>>>>> feature/new_api
 import RoundButton      from '../_shared/components/buttons/RoundButton'
 import TextButton       from '../_shared/components/buttons/TextButton'
 import ButtonStack      from '../_shared/components/buttonStack/ButtonStack'

@@ -6,13 +6,9 @@ import Button   from './Button.js'
 // type = undefined => default black, 'action' => blue, 'confirm' => green, 'remove' => red
 // size ='big'
 // question = confirmation text for remove type button
-<<<<<<< HEAD
-export default function RoundButton ({ content, onClick, type, state, size, question})  {
-=======
 
 
 export default function RoundButton ({ content, onClick, type, state, size, question })  {
->>>>>>> feature/new_api
   let style = [ styles.button
               , styles[state]
               , styles[size]

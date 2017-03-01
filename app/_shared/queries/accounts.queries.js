@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// fetch all accounts
-export const GET_ACCOUNTS = '{current_user { id }, account_users { account_id, user_id, can_manage, account { name, id, created_at, user_count } }}'
-=======
 export const GET_ACCOUNTS = `query{
   accounts{
     id
@@ -18,4 +14,3 @@ export const GET_ACCOUNTS = `query{
   }
 }
 `
->>>>>>> feature/new_api

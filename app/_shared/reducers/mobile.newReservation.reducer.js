@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-import { MOBILE_NEW_RESERVATION_CLEAR_FORM, MOBILE_NEW_RESERVATION_SET_AUTOSELECT, MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS, MOBILE_NEW_RESERVATION_SET_FROM, MOBILE_NEW_RESERVATION_SET_TO, MOBILE_NEW_RESERVATION_SET_FROM_NOW, MOBILE_NEW_RESERVATION_SET_DURATION, MOBILE_NEW_RESERVATION_SET_PLACE_ID }  from '../actions/mobile.newReservation.actions'
-
-const defaultState =  { from: undefined
-                      , to: undefined
-
-                      , fromNow: true // marks if  from NOW is selected or not
-                      , duration: 2 // if undefined, then other is selected
-
-                      , availableFloors: undefined
-                      , autoselect: true
-                      , place_id: undefined // undefined means no available places
-                      }
-
-=======
 import {
   MOBILE_NEW_RESERVATION_CLEAR_FORM,
   MOBILE_NEW_RESERVATION_SET_AUTOSELECT,
@@ -36,7 +21,6 @@ const defaultState =  { from: undefined
                       }
 
 
->>>>>>> feature/new_api
 export default function mobileNewReservation (state = defaultState, action) {
   switch (action.type) {
 

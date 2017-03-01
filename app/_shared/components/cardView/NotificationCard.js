@@ -1,22 +1,12 @@
-<<<<<<< HEAD
-import React        from 'react'
-import styles       from './Card.scss'
-import moment       from 'moment'
-=======
 import React  from 'react'
 import moment from 'moment'
->>>>>>> feature/new_api
 
 import Card         from './Card'
 import RoundButton  from '../buttons/RoundButton'
 
-<<<<<<< HEAD
-import { t }       from '../../modules/localization/localization'
-=======
 import { t } from '../../modules/localization/localization'
 
 import styles from './Card.scss'
->>>>>>> feature/new_api
 
 
 // onClick and selected are expected to be set by CardViewLayout
@@ -28,25 +18,6 @@ export default function NotificationCard ({ notification, confirm, decline, stat
   }
 
   const message = <div>
-<<<<<<< HEAD
-    <span>{returnMessage()}</span> <br/>
-    {notification.custom_message && <span>{notification.creator.full_name} {t(['notifications','sais'])}: "{notification.custom_message}"</span>}
-    {notification.custom_message && <br/>}
-  </div>
-
-  const footer = <div className={styles.footerContainer}>
-            <span className={styles.footerInfo}>
-              {t(['notifications','created'])} {moment(notification.created_at).format('ddd DD.MM.YYYY HH:mm')} <br/>
-              {notification.confirmed != undefined && (notification.confirmed ?t(['notifications','NotificationAccepted']) : t(['notifications','NotificationDeclined'])) } {notification.confirmed != undefined && moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}
-            </span>
-            {notification.confirmed == undefined &&
-                <span className={styles.buttons}>
-                  {notification.notification_type.indexOf('No') != -1 && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={decline} type='remove' question={t(['notifications','declineQuestion'])} />}
-                  {notification.notification_type.indexOf('Yes') != -1 && <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={confirm} type='confirm' />}
-                </span>
-            }
-          </div>
-=======
                     <span>{returnMessage()}</span> <br/>
                     {notification.custom_message && <span>{notification.creator.full_name} {t(['notifications','sais'])}: "{notification.custom_message}"</span>}
                     {notification.custom_message && <br/>}
@@ -64,7 +35,6 @@ export default function NotificationCard ({ notification, confirm, decline, stat
                         </span>
                     }
                   </div>
->>>>>>> feature/new_api
 
   return (
     <Card

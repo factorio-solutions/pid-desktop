@@ -1,32 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 import { request } from '../_shared/helpers/request'
-<<<<<<< HEAD
-=======
 import { download } from '../_shared/helpers/download'
->>>>>>> feature/new_api
 
 import * as nav     from '../_shared/helpers/navigation'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
 
-<<<<<<< HEAD
-
-export default class ReleaseNotesPage extends Component {
-=======
 import Swiper from 'swiper'
 
 
 export default class ReleaseNotesPage extends Component {
 
->>>>>>> feature/new_api
   render() {
     const onBack = () => {
       nav.to('/reservations')
     }
 
-<<<<<<< HEAD
-    return (
-      <div style={{padding: "15px"}}>
-=======
     const onClick = () => {
       request((response)=>{console.log(response);}, "mutation GeneratPdf { pdf }")
     }
@@ -65,14 +53,11 @@ export default class ReleaseNotesPage extends Component {
         {/*<button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />*/}
         {/* <br/>*/}
         {/* <button onClick={onBraintreeReport}>Braintree report</button>*/}
->>>>>>> feature/new_api
 
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
 
-<<<<<<< HEAD
-=======
         <h3>r20170216a</h3>
         <ul>
           <li>Zprovoznění stránky pro zakládání a správu accountů</li>
@@ -128,16 +113,11 @@ export default class ReleaseNotesPage extends Component {
           <li>Na stránce "[url]/marketing/[short_name] (subdomény bude možné dělat až budeme mít vlastní doménu)" se vygeneruje marketingová stránka dané garáže s headerem PID, velkým carouselem (swipable myší nebo prstem), údaji zadnými do "New marketing" formuláře a mapou zobrazující lokaci určenou políčky Latitude a Longitude</li>
         </ul>
 
->>>>>>> feature/new_api
         <h3> r20161130a </h3>
         <ul>
           <li>Komponenta Table byla přepsána tak, aby byla méně náchylná na chyby kódu </li>
           <li>Přidáno logování budgů do heroku </li>
-<<<<<<< HEAD
-          <li>Změněn vzhed invitation emailu, zatím bez obrázků.</li>
-=======
           <li>Změněn vzhed invitation emailu, zatím bez obrázků </li>
->>>>>>> feature/new_api
         </ul>
         <ul>
           <li>Vytvořeny komponenty Card a CardViewLayout pro Card View, na stránkách "Garages", "Reservations" a "Notifications" přidány přepínače card a table view (pro každou stránku vytvořena zvláštní kartička zděděná od Card componenty)</li>
@@ -146,11 +126,7 @@ export default class ReleaseNotesPage extends Component {
         <h3> r20161125a </h3>
         <ul>
           <li>Na stránce "Users" Řádky tabulky zešediví, pokud je user pending</li>
-<<<<<<< HEAD
-          <li>Na stránce "Users" Přidáno tlačítko vedoucí na stránku invite User, kde uživatel může přizvat dalšího člověka do svého účtu, pokud uživatel ještě neexistuje, zašle se mu mail s odkazem na stránky s předvyplněným registračním formulářem. </li>
-=======
           <li>Na stránce "Users" Přidáno tlačítko vedoucí na stránku invite User, kde uživatel může přizvat dalšího člověka do svého účtu, pokud uživatel ještě neexistuje, zašle se mu mail s odkazem na stránky s předvyplněným registračním formulářem </li>
->>>>>>> feature/new_api
         </ul>
         <ul>
           <li>Na stránce "Occupacny" a "Notifications" nová filtrační menu v pravém horním rohu</li>
@@ -212,11 +188,7 @@ export default class ReleaseNotesPage extends Component {
           <li>Na stánce "Reservations > New Reservation" byly vloženy nové komponenty pro výběr data, byla upravena logika stránky tak, aby byla s kompatibilní s novými komponentami</li>
         </ul>
         <ul>
-<<<<<<< HEAD
-          <li>Na stánce "Garages () > Accounts" byly vloženy datepickery od, do. Umožňují vytvoření vazby AccountPlace na určitou dobu. To má vliv na dostupná místa při vytváření rezervace.</li>
-=======
           <li>Na stánce "Garages () > Accounts" byly vloženy datepickery od, do. Umožňují vytvoření vazby AccountPlace na určitou dobu. To má vliv na dostupná místa při vytváření rezervace</li>
->>>>>>> feature/new_api
         </ul>
 
         <h3> r20161109a </h3>

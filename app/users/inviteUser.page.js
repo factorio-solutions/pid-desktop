@@ -24,51 +24,12 @@ export class inviteUserPage extends Component {
   }
 
   componentDidMount () {
-<<<<<<< HEAD
-    this.props.actions.initAccounts()
-=======
     this.props.actions.initManagebles()
->>>>>>> feature/new_api
   }
 
   render() {
     const {state, actions} = this.props
 
-<<<<<<< HEAD
-    const submitForm = () => {
-      checkSubmitable() && actions.createNewAccountUser()
-    }
-
-    const goBack = () => {
-      nav.back()
-    }
-
-    const checkSubmitable = () => {
-      return state.email.valid && state.account_id != undefined
-    }
-
-    const emailChanged = (value, valid) => {
-      actions.setEmail({ value, valid })
-    }
-    const messageChanged = (value, valid) => {
-      actions.setMessage(value)
-    }
-    const nameChanged = (value, valid) => {
-      actions.setName(value)
-    }
-    const phoneChanged = (value, valid) => {
-      actions.setPhone(value)
-    }
-    const canManageClick          = () => {actions.setCanManage(!state.can_manage)}
-    const canCreateOwnClick       = () => {actions.setCanCreateOwn(!state.can_create_own)}
-    const canCreateInternalClick  = () => {actions.setCanCreateInternal(!state.can_create_internal)}
-    const isInternalClick         = () => {actions.setIsInternal(!state.is_internal)}
-    const internalClick           = () => {actions.setInternal()}
-    const secretaryClick          = () => {actions.setSecretary()}
-
-    const modalClick = () => {
-    actions.dismissModal()
-=======
     const submitForm      = () => { checkSubmitable() && actions.createNewManagebles() }
     const goBack          = () => { nav.back() }
     const emailChanged    = (value, valid) => { actions.setEmail({ value, valid }) }
@@ -86,7 +47,6 @@ export class inviteUserPage extends Component {
     const modalClick = () => {
       actions.dismissModal()
       goBack()
->>>>>>> feature/new_api
     }
 
     const successClick = () => {
@@ -94,17 +54,6 @@ export class inviteUserPage extends Component {
       goBack()
     }
 
-<<<<<<< HEAD
-    const accountDropdown = () => {
-      const accountSelected = (index) => {
-        actions.setAccount(state.accounts[index].id)
-      }
-      return state.accounts.map((account, index) => {return {label: account.name, onClick: accountSelected.bind(this, index) }})
-    }
-
-    const errorContent = <div className={styles.floatCenter}>
-                            {/*{t(['inviteUser', 'emailFail'])}: <br/>*/}
-=======
     const clientSelected = (index) => { actions.setClient(state.clients[index].id) }
     const clientDropdown = state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
 
@@ -115,25 +64,15 @@ export class inviteUserPage extends Component {
     const garageDropdown = state.garages.map((garage, index) => {return {label: garage.name, onClick: garageSelected.bind(this, index) }})
 
     const errorContent = <div className={styles.floatCenter}>
->>>>>>> feature/new_api
                             { state.error } <br/>
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
                          </div>
 
    const successContent = <div className={styles.floatCenter}>
-<<<<<<< HEAD
-                           {/*{t(['inviteUser', 'success'])}: <br/>*/}
-=======
->>>>>>> feature/new_api
                            { state.success } <br/>
                           <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={successClick} type='confirm'  />
                         </div>
 
-<<<<<<< HEAD
-    const content = <div>
-                      <Modal content={errorContent} show={state.error!=undefined} />
-                      <Modal content={successContent} show={state.success!=undefined} />
-=======
     const loadingContent = <div className={styles.floatCenter}>
                              {t(['inviteUser', 'sendingInvitation'])}: <br/>
                              { state.currentEmail }
@@ -143,17 +82,10 @@ export class inviteUserPage extends Component {
                       <Modal content={errorContent} show={state.error!=undefined} />
                       <Modal content={successContent} show={state.success!=undefined} />
                       <Modal content={loadingContent} show={state.currentEmail!=undefined} />
->>>>>>> feature/new_api
 
                       <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
                       <div className={styles.form}>
                         <div className={`${styles.formChild} ${styles.mainInfo}`}>
-<<<<<<< HEAD
-                          <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value={state.email.value} />
-                          <Dropdown label={t(['occupancy', 'selectClientAccount'])} content={accountDropdown()} style='light' selected={state.accounts.findIndex((account)=>{return account.id == state.account_id})}/>
-                          <PatternInput onEnter={submitForm} onChange={messageChanged} label={t(['inviteUser', 'inviteMessage'])} error={t(['inviteUser', 'wrongMessage'])} pattern="^(?!\s*$).+" value={state.message} />
-                        </div>
-=======
                           <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} />
                           {clientDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectClient'])} content={clientDropdown} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>}
                           {garageDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectGarage'])} content={garageDropdown} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>}
@@ -166,28 +98,11 @@ export class inviteUserPage extends Component {
                           </div>
                         </div>
 
->>>>>>> feature/new_api
                         <div className={`${styles.formChild} ${styles.additionalInfo}`}>
                           <h3>{t(['inviteUser', 'optionalSettings'])}</h3>
                           <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
                           <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
                           <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
-<<<<<<< HEAD
-                          <p className={styles.rights}>
-                            <span className={state.can_manage ? styles.boldText : styles.inactiveText}  onClick={canManageClick}>{t(['accountUsers','isAdmin'])}</span>|
-                            <span className={state.can_create_own ? styles.boldText : styles.inactiveText} onClick={canCreateOwnClick}>{t(['accountUsers','canCreateOwn'])}</span>|
-                            <span className={state.can_create_internal ? styles.boldText : styles.inactiveText} onClick={canCreateInternalClick}>{t(['accountUsers','canCreateInternal'])}</span>|
-                            <span className={state.is_internal ? styles.boldText : styles.inactiveText} onClick={isInternalClick}>{t(['accountUsers','isInternal'])}</span>
-                          </p>
-                          <div className={styles.presets}>
-                            {t(['accountUsers','presetAs']) }
-                            <span className={styles.clickable} onClick={internalClick}>{t(['accountUsers','internal'])}</span>|
-                            <span className={styles.clickable} onClick={secretaryClick}>{t(['accountUsers','secretary'])}</span>
-                          </div>
-                        </div>
-                      </div>
-
-=======
                           <h3>{t(['inviteUser', 'clientRights'])}</h3>
                           <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
                           <p className={styles.rights}>
@@ -210,7 +125,6 @@ export class inviteUserPage extends Component {
                           </p>
                         </div>
                       </div>
->>>>>>> feature/new_api
                       </Form>
                     </div>
 
