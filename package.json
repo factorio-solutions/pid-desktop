@@ -2,6 +2,7 @@
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
   "version": "0.10.0",
+<<<<<<< HEAD
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "main.js",
   "scripts": {
@@ -9,6 +10,15 @@
     "preinstall": "npm prune",
     "postinstall": "webpack -p --config ./webpack.config.my.js --progress",
     "start": "node ./src/app.js"
+=======
+  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.my.js --progress --colors",
+    "postinstall": "webpack -p --config ./webpack.config.my.js --progress",
+    "start": "node ./src/app.js",
+    "dev": "webpack-dev-server --config webpack.config.dev.js --progress --colors --open"
+>>>>>>> feature/new_api
   },
   "author": {
     "name": "T. Hrstka"
@@ -24,7 +34,10 @@
     "webpack-hot-middleware": "^2.12.2"
   },
   "dependencies": {
+<<<<<<< HEAD
     "auth0-js": "^7.6.0",
+=======
+>>>>>>> feature/new_api
     "babel-core": "^6.14.0",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.5",
@@ -53,9 +66,18 @@
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.0.19",
     "json-loader": "^0.5.4",
+<<<<<<< HEAD
     "lodash": "^4.16.4",
     "moment": "^2.15.1",
     "node-libs-browser": "^1.0.0",
+=======
+    "jssip": "^3.0.0",
+    "lodash": "^4.16.4",
+    "moment": "^2.15.1",
+    "node-libs-browser": "^1.0.0",
+    "node-sass": "^4.1.1",
+    "randomcolor": "^0.4.4",
+>>>>>>> feature/new_api
     "react": "^15.3.1",
     "react-addons-test-utils": "^15.3.1",
     "react-addons-update": "^15.3.0",
@@ -70,7 +92,10 @@
     "redux-reset": "^0.2.0",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^4.0.1",
+<<<<<<< HEAD
     "source-map": "^0.5.6",
+=======
+>>>>>>> feature/new_api
     "style-loader": "^0.13.1",
     "swiper": "^3.4.0",
     "webpack": "^1.13.2",

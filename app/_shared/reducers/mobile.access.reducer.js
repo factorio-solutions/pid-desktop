@@ -1,9 +1,22 @@
+<<<<<<< HEAD
 import { MOBILE_ACCESS_SET_OPENED ,MOBILE_ACCESS_SET_MESSAGE }  from '../actions/mobile.access.actions'
 
 const defaultState =  { opened: undefined,
                         message: undefined
                       }
 
+=======
+import {
+  MOBILE_ACCESS_SET_OPENED,
+  MOBILE_ACCESS_SET_MESSAGE
+}  from '../actions/mobile.access.actions'
+
+const defaultState =  { opened:   undefined
+                      , message:  undefined
+                      }
+
+
+>>>>>>> feature/new_api
 export default function mobileAccess (state = defaultState, action) {
   switch (action.type) {
 

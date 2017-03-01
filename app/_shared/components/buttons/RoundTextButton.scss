@@ -1,0 +1,50 @@
+@import '../../styles/app.components';
+@import './Button';
+
+$size-normal: 50px;
+$big:         1.4;
+
+
+.button{
+  width: 90%;
+  padding: 14px 8px;
+  margin-bottom: 10px;
+  @include border-radius(5px);
+  // font-size:  18px;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  transition: all 0.4s ease;
+
+  @include colorize($clickableColor);
+  color:   $white;
+  cursor:  pointer;
+}
+
+.action {
+  @include colorize($actionColor);
+}
+.confirm {
+  @include colorize($confirmColor);
+}
+.remove {
+  @include colorize($removeColor);
+}
+
+.selected {
+  background: $selectedColor;
+  color:      $black;
+  cursor:     default;
+}
+.disabled {
+  background: $lightGray;
+  color:      darken($lightGray, 10);
+  cursor:     default;
+}
+
+
+.big {
+  width:     $big * $size-normal;
+  height:    $big * $size-normal;
+  font-size: $big * 24px;
+}

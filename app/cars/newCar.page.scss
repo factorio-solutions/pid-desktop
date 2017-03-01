@@ -1,0 +1,31 @@
+.contentPadding{
+  padding: 25px 15px 0;
+}
+
+.inputWidth{
+  width: calc(100% - 120px);
+}
+
+.hidden{
+  display: none;
+}
+
+.inline{
+  display: flex;
+}
+
+.floatCenter{
+  text-align: center;
+}
+
+.inlineForm{
+  display: flex;
+
+  >div{
+    flex-grow: 1;
+  }
+}
+
+.middle{
+  padding: 0 5px;
+}

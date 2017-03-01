@@ -1,28 +1,143 @@
 import React, { Component, PropTypes } from 'react'
 import { request } from '../_shared/helpers/request'
+<<<<<<< HEAD
+=======
+import { download } from '../_shared/helpers/download'
+>>>>>>> feature/new_api
 
 import * as nav     from '../_shared/helpers/navigation'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
 
+<<<<<<< HEAD
 
 export default class ReleaseNotesPage extends Component {
+=======
+import Swiper from 'swiper'
+
+
+export default class ReleaseNotesPage extends Component {
+
+>>>>>>> feature/new_api
   render() {
     const onBack = () => {
       nav.to('/reservations')
     }
 
+<<<<<<< HEAD
     return (
       <div style={{padding: "15px"}}>
+=======
+    const onClick = () => {
+      request((response)=>{console.log(response);}, "mutation GeneratPdf { pdf }")
+    }
+
+    const downloadClick = () => {
+      download ('HelloKity.pdf', "download { invoice }")
+    }
+
+    const onSIPClick = () => {
+      request((response)=>{console.log(response);}, `mutation CallNumber{ gate(number: "${document.getElementById('tel').value}" ) }`)
+    }
+
+    const onBraintreeReport = () => {
+      request((response)=>{console.log(response);}, `mutation CallNumber{ transaction }`)
+    }
+
+    const generateClick = () => {
+      request((response)=>{console.log(response);}, "mutation GeneratInvoices { generate_invoices }")
+    }
+    const resetPasswordClick = () => {
+      request((response)=>{console.log(response);}, "query ($email:String!) { reset_password(email:$email) }", { email: 'notExisting@seznam.cz'})
+
+    }
+
+    return (
+      <div style={{padding: "15px"}}>
+        {/* Generate PDF button ================================================*/}
+        {/* <button onClick={onClick}>Generate PDF</button> */}
+        {/* <button onClick={downloadClick}>Download PDF</button> */}
+        <button onClick={generateClick}>Generate invoices</button>
+        <button onClick={resetPasswordClick}>Reset passeword</button>
+
+
+        {/* Release notes ======================================================*/}
+
+        {/*<button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />*/}
+        {/* <br/>*/}
+        {/* <button onClick={onBraintreeReport}>Braintree report</button>*/}
+>>>>>>> feature/new_api
 
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
 
+<<<<<<< HEAD
+=======
+        <h3>r20170216a</h3>
+        <ul>
+          <li>Zprovoznění stránky pro zakládání a správu accountů</li>
+          <li>Zprovoznění 'Add features' stránky</li>
+          <li>Zprovoznění Occupancy overview stránky</li>
+          <li>Upraveno vertikální menu, zobrazuje pouze položky, ke kterým má uživatel přístup</li>
+        </ul>
+
+        <h3>r20170213a</h3>
+        <ul>
+          <li><b>Pozměněná koncepce PID - nová specifikace a pojetí</b></li>
+          <li>Od základu předěláno API aplikace</li>
+        </ul>
+        <ul>
+          <li>Na stránce "Garages" předěláno vytváření nové garáže, přidána nová komponenta GarageLayout, zařazeny Gates do tvorby garáže</li>
+          <li>Na stránce "Garages" přidána vztváření a editace pricing (cena rezervace) a rent (cena nájmu místa)</li>
+          <li>Na stránce "Garages" předělána stránka managementu garáže, nová logika přidělování míst k clientům, rents, places a gates</li>
+        </ul>
+        <ul>
+          <li>Stránka "Clients" spojena s novým API</li>
+        </ul>
+        <ul>
+          <li>Stránka "Users" spojena s novým API</li>
+          <li>Stránka "Invite users" nyní slouží pro pozvání nových uživatelů do garáže, clienta nebo auta</li>
+        </ul>
+        <ul>
+          <li>Přibyla nová stránka "Cars" pro management aut uživatelů systému</li>
+        </ul>
+        <ul>
+          <li>Stránka "Reservations" spojena s novým API</li>
+          <li>Na stránce "New Reservations" přibyl modul placení a výběru klienta, po vybrání parametrů rezervace je uživatel poslán na stránku s přehledem rezervace, odkud je možné rezervaci zrovna zaplatit.</li>
+        </ul>
+
+        <h3> r20161221a </h3>
+        <ul>
+          <li>Vytvořen Selenium webdriver test pro zrychlení procesu testování stránky </li>
+          <li>Login uživatele nyní obsluhuje server server</li>
+        </ul>
+        <ul>
+          <li>Na stránce "Users > Invite new user" je nyní možné pozvat několik uživatelů najednou zadáním více emailů oddělených čárkou </li>
+        </ul>
+        <ul>
+          <li>Na stránce "Occupancy overview" se nyní v rezervaci zobrazuje jméno uživatele, kterému patří rezervace</li>
+        </ul>
+        <ul>
+          <li>Na stránce "Garages" přidána možnost přejití na marketing garáže</li>
+          <li>Na stránce "Garages > Edit Garage/Setup New Garage" pole GPS (kam se vyplňovalo "Lat: ..., Lng: ...") vyměněno za dvě pole Latitude a Longitude </li>
+          <li>Na stránce "Garages > Edit Garage/Setup New Garage" se po vyplnění adresy automaticky vyplní pole Latitude a Longitude (geocoding pro potřeby marketingu)</li>
+        </ul>
+        <ul>
+          <li>Na stránce "Garages > Marketing" existuje možnost vytvoření nového marketingu, editace/spuštění/pozastavení existujících marketingů</li>
+          <li>Na stránce "Garages > New marketing" byl vytvořen formulář pro zadání short_name, kontaktů, popisu garáže, vlastností garáže a vložení obrázků garáže </li>
+          <li>Na stránce "[url]/marketing/[short_name] (subdomény bude možné dělat až budeme mít vlastní doménu)" se vygeneruje marketingová stránka dané garáže s headerem PID, velkým carouselem (swipable myší nebo prstem), údaji zadnými do "New marketing" formuláře a mapou zobrazující lokaci určenou políčky Latitude a Longitude</li>
+        </ul>
+
+>>>>>>> feature/new_api
         <h3> r20161130a </h3>
         <ul>
           <li>Komponenta Table byla přepsána tak, aby byla méně náchylná na chyby kódu </li>
           <li>Přidáno logování budgů do heroku </li>
+<<<<<<< HEAD
           <li>Změněn vzhed invitation emailu, zatím bez obrázků.</li>
+=======
+          <li>Změněn vzhed invitation emailu, zatím bez obrázků </li>
+>>>>>>> feature/new_api
         </ul>
         <ul>
           <li>Vytvořeny komponenty Card a CardViewLayout pro Card View, na stránkách "Garages", "Reservations" a "Notifications" přidány přepínače card a table view (pro každou stránku vytvořena zvláštní kartička zděděná od Card componenty)</li>
@@ -31,7 +146,11 @@ export default class ReleaseNotesPage extends Component {
         <h3> r20161125a </h3>
         <ul>
           <li>Na stránce "Users" Řádky tabulky zešediví, pokud je user pending</li>
+<<<<<<< HEAD
           <li>Na stránce "Users" Přidáno tlačítko vedoucí na stránku invite User, kde uživatel může přizvat dalšího člověka do svého účtu, pokud uživatel ještě neexistuje, zašle se mu mail s odkazem na stránky s předvyplněným registračním formulářem. </li>
+=======
+          <li>Na stránce "Users" Přidáno tlačítko vedoucí na stránku invite User, kde uživatel může přizvat dalšího člověka do svého účtu, pokud uživatel ještě neexistuje, zašle se mu mail s odkazem na stránky s předvyplněným registračním formulářem </li>
+>>>>>>> feature/new_api
         </ul>
         <ul>
           <li>Na stránce "Occupacny" a "Notifications" nová filtrační menu v pravém horním rohu</li>
@@ -93,7 +212,11 @@ export default class ReleaseNotesPage extends Component {
           <li>Na stánce "Reservations > New Reservation" byly vloženy nové komponenty pro výběr data, byla upravena logika stránky tak, aby byla s kompatibilní s novými komponentami</li>
         </ul>
         <ul>
+<<<<<<< HEAD
           <li>Na stánce "Garages () > Accounts" byly vloženy datepickery od, do. Umožňují vytvoření vazby AccountPlace na určitou dobu. To má vliv na dostupná místa při vytváření rezervace.</li>
+=======
+          <li>Na stánce "Garages () > Accounts" byly vloženy datepickery od, do. Umožňují vytvoření vazby AccountPlace na určitou dobu. To má vliv na dostupná místa při vytváření rezervace</li>
+>>>>>>> feature/new_api
         </ul>
 
         <h3> r20161109a </h3>

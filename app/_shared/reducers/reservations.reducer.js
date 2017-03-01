@@ -1,7 +1,17 @@
+<<<<<<< HEAD
 import { SET_RESERVATIONS, SET_RESERVATIONS_TABLEVIEW }  from '../actions/reservations.actions'
 
 const defaultState =  { reservations: []
                       , tableView: true
+=======
+import {
+  SET_RESERVATIONS,
+  SET_RESERVATIONS_TABLEVIEW
+}  from '../actions/reservations.actions'
+
+const defaultState =  { reservations: []
+                      , tableView:    true
+>>>>>>> feature/new_api
                       }
 
 export default function reservations (state = defaultState, action) {

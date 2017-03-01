@@ -46,6 +46,15 @@
   background: $gray;
   top: 0;
   z-index: -1;
+<<<<<<< HEAD
+=======
+
+  color: $white;
+  font-weight: bold;
+  >span{
+    padding: 0 10px;
+  }
+>>>>>>> feature/new_api
 }
 .nowLine{
   position: absolute;
@@ -68,7 +77,12 @@
 }
 
 .placePadding{
+<<<<<<< HEAD
   padding-left: 10px;
+=======
+  padding: 0 10px;
+  width: 1%;
+>>>>>>> feature/new_api
   vertical-align: bottom;
   white-space: nowrap;
 }

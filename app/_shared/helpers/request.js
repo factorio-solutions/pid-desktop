@@ -10,7 +10,11 @@ import { setNotificationCount } from '../actions/notifications.actions'
 // request ((response) => { console.log(response) }, "{garages{name}}")
 export function request (onSuccess, query, variables = null, operationName = null ){
   var entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> feature/new_api
   var data = { query
              , operationName
              , variables
@@ -33,7 +37,11 @@ export function request (onSuccess, query, variables = null, operationName = nul
       }
     }
     if (xmlHttp.readyState == 4){
+<<<<<<< HEAD
       var response = JSON.parse(xmlHttp.responseText)
+=======
+      const response = JSON.parse(xmlHttp.responseText)
+>>>>>>> feature/new_api
       store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
       onSuccess({data: response.data})
     }

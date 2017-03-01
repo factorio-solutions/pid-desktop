@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 import { request } from '../helpers/request'
 
 import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION } from '../queries/reservations.queries'
+=======
+import { request }  from '../helpers/request'
+import { download } from '../helpers/download'
+
+import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION } from '../queries/reservations.queries'
+import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
+>>>>>>> feature/new_api
 
 export const SET_RESERVATIONS           = "SET_RESERVATIONS"
 export const SET_RESERVATIONS_TABLEVIEW = "SET_RESERVATIONS_TABLEVIEW"
@@ -36,3 +44,12 @@ export function destroyReservation (id){
     request(onSuccess, DESTROY_RESERVATION, {id: id})
   }
 }
+<<<<<<< HEAD
+=======
+
+export function downloadInvoice (id){
+  return (dispatch, getState) => {
+    download(`${id}.pdf`, DOWNLOAD_INVOICE, {id})
+  }
+}
+>>>>>>> feature/new_api

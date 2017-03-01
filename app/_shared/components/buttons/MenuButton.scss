@@ -59,6 +59,10 @@ $size-collapsed-width:  150px;
   @include colorize($removeColor);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/new_api
 // size
 .collapsed{
   width:    $size-normal-width;
@@ -88,7 +92,11 @@ $size-collapsed-width:  150px;
 .selected {
   background: $selectedColor;
   color:      $black;
+<<<<<<< HEAD
   cursor:     default;
+=======
+  // cursor:     default;
+>>>>>>> feature/new_api
 }
 .disabled {
   background: $lightGray;

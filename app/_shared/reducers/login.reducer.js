@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { RESET_LOGIN_FORM, LOGIN_SET_PASSWORD, LOGIN_SET_EMAIL, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE }  from '../actions/login.actions'
 
 const initialState = {
@@ -9,6 +10,27 @@ const initialState = {
 
 export default function login (state = initialState, action) {
   switch (action.type) {
+=======
+import {
+	RESET_LOGIN_FORM,
+	LOGIN_SET_PASSWORD,
+	LOGIN_SET_EMAIL,
+	LOGIN_REQUEST,
+	LOGIN_SUCCESS,
+	LOGIN_FAILURE
+}  from '../actions/login.actions'
+
+const initialState = 	{ fetching: false
+											,	error: 		undefined
+											,	email: 		{value:'', valid: false}
+											,	password: {value:'', valid: false}
+											}
+
+
+export default function login (state = initialState, action) {
+  switch (action.type) {
+
+>>>>>>> feature/new_api
     case LOGIN_REQUEST:
     	return  { ...state,
       	fetching: true,
@@ -37,7 +59,11 @@ export default function login (state = initialState, action) {
 
 	 case RESET_LOGIN_FORM:
 	 	return initialState
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> feature/new_api
     default:
       return state
   }

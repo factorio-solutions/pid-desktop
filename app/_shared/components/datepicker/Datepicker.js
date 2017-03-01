@@ -5,6 +5,10 @@ import { t }                            from '../../modules/localization/localiz
 
 import Month    from './Month'
 import Days     from './Days'
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/new_api
 import styles   from './Datepicker.scss'
 
 const INIT_STATE = { selected: moment()                   // selected date

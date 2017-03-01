@@ -17,6 +17,10 @@ export default class Input extends Component {
     readOnly:     PropTypes.bool,
     align:        PropTypes.string, // can be center or
     onChange:     PropTypes.func, // use if you want to pass value to parent
+<<<<<<< HEAD
+=======
+    onBlur:       PropTypes.func,
+>>>>>>> feature/new_api
     onEnter:      PropTypes.func, // called when enter pressed
     value:        PropTypes.oneOfType([
                     PropTypes.string,
@@ -61,7 +65,11 @@ export default class Input extends Component {
   }
 
   render(){
+<<<<<<< HEAD
     const { label, name, type, error, pattern, autocomplete, placeholder, align, onChange, onEnter, inlineMenu, style, min, step } = this.props
+=======
+    const { label, name, type, error, pattern, autocomplete, placeholder, align, onChange, onBlur, onEnter, inlineMenu, style, min, step } = this.props
+>>>>>>> feature/new_api
     var message = this.state.message;
 
     const handleChange = (event) => {
@@ -99,7 +107,11 @@ export default class Input extends Component {
 
     return(
       <div className={`${styles.customFormGroup} ${styles[align?align:'left']} ${style}`} >
+<<<<<<< HEAD
         <input pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange} autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter}/>
+=======
+        <input onBlur={onBlur} pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange} autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter}/>
+>>>>>>> feature/new_api
         <span className={styles.bar}></span>
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>

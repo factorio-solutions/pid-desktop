@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @import '../_styles/app.desktop.scss';
+=======
+@import '../_shared/styles/variables.scss';
+>>>>>>> feature/new_api
 
 .contentPadding{
   padding: 25px 15px 0;
@@ -50,3 +54,30 @@
 .presets{
   border-bottom: 1px solid $gray;
 }
+<<<<<<< HEAD
+=======
+
+.inactiveText {
+	color: $lightGray;
+	cursor: pointer;
+  margin: 0 5px;
+}
+
+.boldText {
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.clickable{
+	font-weight: bold;
+	cursor: pointer;
+	color: $blue;
+  margin: 0 10px;
+}
+
+.textArea{
+  width: 100%;
+  height: 100px;
+  resize: vertical;
+}
+>>>>>>> feature/new_api

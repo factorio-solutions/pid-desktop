@@ -4,7 +4,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
+<<<<<<< HEAD
   // devtool: 'source-map',
+=======
+>>>>>>> feature/new_api
 
   entry: ['./app/index'],
 
@@ -12,7 +15,10 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/public/'
+<<<<<<< HEAD
     // libraryTarget: 'commonjs2'
+=======
+>>>>>>> feature/new_api
   },
 
   resolve: {
@@ -36,9 +42,12 @@ module.exports = {
     })
   ],
 
+<<<<<<< HEAD
   externals: [
   ],
 
+=======
+>>>>>>> feature/new_api
   node: {
     fs: "empty"
   },
@@ -54,11 +63,14 @@ module.exports = {
             presets:['react']
           }
       },
+<<<<<<< HEAD
       // {
       //   test: /\.jsx?$/,
       //   loaders: 'babel-loader',
       //   exclude: /node_modules/
       // },
+=======
+>>>>>>> feature/new_api
       {
         test: /\.json$/,
         loader: 'json-loader'
