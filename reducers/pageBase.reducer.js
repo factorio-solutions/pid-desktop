@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { PAGE_BASE_SET_MENU_WIDTH, PAGE_BASE_SET_HINT, SET_VERTICAL_SELECTED, SET_HORIZONTAL_SELECTED, SET_HORIZONTAL_CONTENT, PAGE_BASE_SET_ERROR, PAGE_BASE_SET_CURRENT_USER }  from '../actions/pageBase.actions'
 
 const defaultState =  { verticalSelected: 0 // id of selected user reservation is for
@@ -9,6 +10,31 @@ const defaultState =  { verticalSelected: 0 // id of selected user reservation i
                       , menuWidth: 200
                       }
 
+=======
+import {
+  PAGE_BASE_SET_MENU_WIDTH,
+  PAGE_BASE_SET_HINT,
+  SET_VERTICAL_SELECTED,
+  SET_HORIZONTAL_SELECTED,
+  SET_HORIZONTAL_CONTENT,
+  PAGE_BASE_SET_ERROR,
+  PAGE_BASE_SET_NOTIFICATIONS_MODAL,
+  PAGE_BASE_SET_CURRENT_USER
+}  from '../actions/pageBase.actions'
+
+const defaultState =  { verticalSelected:   0 // id of selected user reservation is for
+                      , horizontalSelected: 0
+                      , horizontalContent:  []
+                      , error:              undefined
+                      , notificationsModal: false
+                      , current_user:       {}
+                      , hint:               undefined
+                      , hintVideo:          undefined
+                      , menuWidth:          200
+                      }
+
+
+>>>>>>> feature/new_api
 export default function pageBase (state = defaultState, action) {
   switch (action.type) {
 
@@ -32,6 +58,14 @@ export default function pageBase (state = defaultState, action) {
             , error: action.value
             }
 
+<<<<<<< HEAD
+=======
+    case PAGE_BASE_SET_NOTIFICATIONS_MODAL:
+    return  { ...state
+            , notificationsModal: action.value
+            }
+
+>>>>>>> feature/new_api
     case PAGE_BASE_SET_CURRENT_USER:
     return  { ...state
             , current_user: action.value
@@ -40,6 +74,10 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_HINT:
     return  { ...state
             , hint: action.value
+<<<<<<< HEAD
+=======
+            , hintVideo: action.video
+>>>>>>> feature/new_api
             }
 
     case PAGE_BASE_SET_MENU_WIDTH:
@@ -47,7 +85,10 @@ export default function pageBase (state = defaultState, action) {
             , menuWidth: action.value
             }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/new_api
     default:
       return state
   }

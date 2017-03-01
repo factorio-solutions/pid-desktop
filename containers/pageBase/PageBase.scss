@@ -1,4 +1,8 @@
 @import '../../styles/app.components';
+<<<<<<< HEAD
+=======
+@import '../../components/buttons/Button';
+>>>>>>> feature/new_api
 
 .absoluteSpan{
   position: absolute;
@@ -17,6 +21,10 @@
   text-align: center;
   color: $white;
   background: $gray;
+<<<<<<< HEAD
+=======
+  margin-top: 15px;
+>>>>>>> feature/new_api
 }
 
 .clickable{
@@ -27,10 +35,43 @@
   padding: 15px;
 }
 
+<<<<<<< HEAD
 .hint {
   background: $blue;
   color: $white;
   padding: 10px;
   text-align: center;
   margin-bottom: 24px;
+=======
+.hintContainer{
+  display: flex;
+  background: $blue;
+  color: $white;
+  margin-bottom: 24px;
+  >button {
+    margin: 10px;
+  }
+}
+
+.hint {
+  flex: 1 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.featureButton{
+  width: 90%;
+  padding: 14px 8px;
+  margin-bottom: 10px;
+  @include border-radius(5px);
+  font-size:  18px;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  transition: all 0.4s ease;
+
+  @include colorize($blue);
+  color:   $white;
+  cursor:  pointer;
+>>>>>>> feature/new_api
 }

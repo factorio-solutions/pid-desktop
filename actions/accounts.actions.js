@@ -1,4 +1,5 @@
 import { request } from '../helpers/request'
+<<<<<<< HEAD
 import _           from 'lodash'
 
 import { GET_ACCOUNTS } from '../queries/accounts.queries'
@@ -29,6 +30,27 @@ export function initAccounts (){
 
       dispatch( setAccounts( uniqueAccounts ) )
     }
+=======
+
+import { GET_ACCOUNTS } from '../queries/accounts.queries'
+
+
+export const ACCOUNTS_SET_ACCOUNTS = "ACCOUNTS_SET_ACCOUNTS"
+
+
+export function setAccounts (value) {
+  return { type: ACCOUNTS_SET_ACCOUNTS
+         , value
+         }
+}
+
+export function initAccounts () {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setAccounts(response.data.accounts))
+    }
+    
+>>>>>>> feature/new_api
     request(onSuccess, GET_ACCOUNTS)
   }
 }

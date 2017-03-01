@@ -1,6 +1,11 @@
 import React, { Component, PropTypes }  from 'react'
 import ReactDOM                         from 'react-dom'
+<<<<<<< HEAD
 import styles                           from './Dropdown.scss'
+=======
+
+import styles from './Dropdown.scss'
+>>>>>>> feature/new_api
 
 
 // label = button label if no item selected
@@ -9,6 +14,7 @@ import styles                           from './Dropdown.scss'
 // selected = index of select item in content
 // hover = toggle on hover?
 // fillParent = flag to indicate whenever or not to fill parent element widthvise
+<<<<<<< HEAD
 
 export default class Dropdown extends Component{
   static propTypes = {
@@ -23,6 +29,21 @@ export default class Dropdown extends Component{
   static defaultProps = {
     hover:       false,
     style:       'dark'
+=======
+export default class Dropdown extends Component {
+  static propTypes = {
+    label:    PropTypes.string.isRequired,
+    content:  PropTypes.array.isRequired,
+    style:    PropTypes.string,
+    selected: PropTypes.number,
+    hover:    PropTypes.bool,
+    onChange: PropTypes.func
+  }
+
+  static defaultProps = {
+    hover: false,
+    style: 'dark'
+>>>>>>> feature/new_api
   }
 
   constructor(props) {
@@ -38,7 +59,10 @@ export default class Dropdown extends Component{
     this.validateContent(this.props)
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/new_api
   validateContent(nextProps){
     if (nextProps.content.length == 1){ // if only one item, autoselect it
       this.setState({selected: 0})
@@ -89,7 +113,11 @@ export default class Dropdown extends Component{
         element.classList.remove(styles.display)
         element.classList.remove(styles.hidden)
         element.style.width = buttonPosition.width+"px"
+<<<<<<< HEAD
         element.style.top = (!hover)?buttonPosition.top+buttonPosition.height:buttonPosition.top+"px"
+=======
+        element.style.top = ((!hover)?(buttonPosition.bottom+document.body.scrollTop):(buttonPosition.top+document.body.scrollTop))+"px"
+>>>>>>> feature/new_api
         element.style.left = buttonPosition.left+"px"
       }
     }
@@ -120,9 +148,13 @@ export default class Dropdown extends Component{
           onMouseEnter={onMouseEnter}
           onBlur={onBlur}>
             <span className={styles.marginCorrection}> {this.state.selected==undefined||content[this.state.selected]==undefined ? label : content[this.state.selected].label} </span>
+<<<<<<< HEAD
 
             <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>
 
+=======
+            <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>
+>>>>>>> feature/new_api
         </button>
         <ul className={`${styles.drop} ${styles.hidden} ${styles.display}`} onMouseLeave={onMouseLeave}>
           {content.map(prepareContent)}

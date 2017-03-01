@@ -6,7 +6,16 @@ import styles                           from './MasterPage.scss'
 import * as pageBaseActions from '../../actions/pageBase.actions'
 
 
+<<<<<<< HEAD
 export class MasterPage extends Component{
+=======
+export class MasterPage extends Component {
+  constructor(props) {
+     super(props);
+     this.state = {menu: false}
+  }
+
+>>>>>>> feature/new_api
   static propTypes = {
     state:          PropTypes.object,
     actions:        PropTypes.object,
@@ -23,6 +32,7 @@ export class MasterPage extends Component{
     const { state, actions, logo, horizContent, vertTopContent, vertBotContent, bodyContent, filters } = this.props
     const { menuWidth } = state
 
+<<<<<<< HEAD
     const toggleClass = (element, className) => {
       if (element.className.split(' ').indexOf(className) == -1){
         element.classList.add(className)
@@ -37,6 +47,10 @@ export class MasterPage extends Component{
         toggleClass(document.getElementById(styles.layout), active);
         toggleClass(document.getElementById(styles.menu), active);
         toggleClass(document.getElementById('menuLink'), active);
+=======
+    const onClick = (e) => {
+      this.setState({ menu: !this.state.menu })
+>>>>>>> feature/new_api
     };
 
     // const onDrag = (event) => {
@@ -50,7 +64,11 @@ export class MasterPage extends Component{
     }
 
     return(
+<<<<<<< HEAD
       <div id={styles.layout} style={{paddingLeft: menuWidth+'px'}}>
+=======
+      <div className={this.state.menu && styles.active} id={styles.layout} style={{paddingLeft: menuWidth+'px'}}>
+>>>>>>> feature/new_api
         {/* horizontal menu */}
         <div className={styles.horizontalMenu}>
           <div className={styles.pidLogo} style={{width: menuWidth+'px'}}>
@@ -65,12 +83,21 @@ export class MasterPage extends Component{
         </div>
 
         {/* Menu icon when collapsed */}
+<<<<<<< HEAD
         <a onClick={onClick} id="menuLink" className={styles.menuLink}>
           <span></span>
         </a>
 
         {/* vertical menu */}
         <div id={styles.menu} style={{width: menuWidth+'px'}} onClick={menuOnClick}>
+=======
+        <a onClick={onClick} className={`${styles.menuLink} ${this.state.menu && styles.active}`}>
+          <i className="fa fa-bars" aria-hidden="true"></i>
+        </a>
+
+        {/* vertical menu */}
+        <div className={this.state.menu && styles.active} id={styles.menu} style={{width: menuWidth+'px'}} onClick={menuOnClick}>
+>>>>>>> feature/new_api
           <div>
             {vertTopContent}
           </div>
@@ -90,6 +117,7 @@ export class MasterPage extends Component{
 }
 
 
+<<<<<<< HEAD
 export default connect(state => {
   const { pageBase } = state
   return ({
@@ -98,3 +126,9 @@ export default connect(state => {
 }, dispatch => ({
   actions: bindActionCreators(pageBaseActions, dispatch)
 }))(MasterPage)
+=======
+export default connect(
+  state    => ({ state: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(pageBaseActions, dispatch) })
+)(MasterPage)
+>>>>>>> feature/new_api
