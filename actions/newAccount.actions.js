@@ -98,6 +98,10 @@ export function initAccount (id){
 
       dispatch(setName(account.name))
       dispatch(setMerchantId(account.merchant_id || ''))
+      dispatch(setIC(account.ic || ''))
+      dispatch(setDIC(account.dic || ''))
+      dispatch(setPublicKey(account.public_key || ''))
+      dispatch(setPrivateKey(account.private_key || ''))
       dispatch(setLine1(account.address.line_1))
       dispatch(setLine2(account.address.line_2 || ''))
       dispatch(setCity(account.address.city))
