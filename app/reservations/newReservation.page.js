@@ -133,7 +133,10 @@ export class NewReservationPage extends Component {
                       </div>
 
                       <div className={styles.rightCollumn}>
-                        {state.garage && <GarageLayout floors={state.garage.floors.map(highlightSelected)} onPlaceClick={handlePlaceClick} showEmptyFloors={false}/> }
+                        {state.loading ? <div className={styles.loading}>{t(['newReservation', 'loadingGarage'])}</div>
+                                       : state.garage && <GarageLayout floors={state.garage.floors.map(highlightSelected)} onPlaceClick={handlePlaceClick} showEmptyFloors={false}/>
+                        }
+
                       </div>
                     </div>
 

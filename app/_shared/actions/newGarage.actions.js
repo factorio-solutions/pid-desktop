@@ -155,7 +155,7 @@ export function changeFloorScheme(value, index, scan){
 
 export function changeGateLabel(value, index){  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'label',  value)))) } }
 export function changeGatePhone(value, index){  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'phone',  value)))) } }
-export function changeGatePlaces(value, index){ return (dispatch, getState) => { console.log(scanPlaces(value)); dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
+export function changeGatePlaces(value, index){ return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
 
 export function changeGateAddressLine1(value, index){ return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey( getState().newGarage.gates[index].address, 'line_1', value))))) } }
 export function changeGateAddressLat(value, index){   return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey( getState().newGarage.gates[index].address, 'lat',    value))))) } }
@@ -285,7 +285,6 @@ export function initAccountTarif (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setAvailableAccounts(response.data.accounts))
-      response.data.accounts.length == 1 && console.log('here');
       response.data.accounts.length == 1 && dispatch(setAccount(response.data.accounts[0].id))
       dispatch(setAvailableTarifs(response.data.tarifs))
     }
