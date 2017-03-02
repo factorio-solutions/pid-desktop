@@ -8,6 +8,7 @@ import {
   GET_AVAILABLE_GARAGES,
   GET_AVAILABLE_CLIENTS,
   GET_AVAILABLE_CARS,
+  GET_GARAGE_PRICINGS,
   GET_GARAGE_DETAILS,
   CREATE_RESERVATION,
   GET_BRAINTREE_TOKEN
@@ -25,6 +26,8 @@ export const NEW_RESERVATION_CAR_ID                 = "NEW_RESERVATION_CAR_ID"
 export const NEW_RESERVATION_CAR_LICENCE_PLATE      = "NEW_RESERVATION_CAR_LICENCE_PLATE"
 export const NEW_RESERVATION_SET_GARAGE_INDEX       = "NEW_RESERVATION_SET_GARAGE_INDEX"
 export const NEW_RESERVATION_SET_AVAILABLE_GARAGES  = "NEW_RESERVATION_SET_AVAILABLE_GARAGES"
+export const NEW_RESERVATION_SET_LOADING            = "NEW_RESERVATION_SET_LOADING"
+export const NEW_RESERVATION_SET_PRICINGS           = "NEW_RESERVATION_SET_PRICINGS"
 export const NEW_RESERVATION_SET_GARAGE             = "NEW_RESERVATION_SET_GARAGE"
 export const NEW_RESERVATION_SET_FROM               = "NEW_RESERVATION_SET_FROM"
 export const NEW_RESERVATION_SET_TO                 = "NEW_RESERVATION_SET_TO"
@@ -107,6 +110,18 @@ export function setGarageIndex (value){
 
 export function setAvailableGarages (value){
   return { type: NEW_RESERVATION_SET_AVAILABLE_GARAGES
+         , value
+         }
+}
+
+export function setLoading (value){
+  return { type: NEW_RESERVATION_SET_LOADING
+         , value
+         }
+}
+
+export function setPricings (value){
+  return { type: NEW_RESERVATION_SET_PRICINGS
          , value
          }
 }
@@ -342,11 +357,14 @@ export function getGarageDetails(){
   return (dispatch, getState) => {
     const state = getState().newReservation
     const onSuccess = (response) => {
+      const placePricings = getState().newReservation.pricings.floors.reduce((arr, floor) => { return arr.concat(floor.places) }, [])
       response.data.garage.floors.forEach((floor)=>{
         floor.places.map((place) => {
           place.available = floor.free_places.find(p=>p.id==place.id)!=undefined
+          place.pricings = placePricings.find((placePricing)=>{ return placePricing.id == place.id}).pricings
           if (place.available && place.pricings[0]) { // add tooltip to available places
             const pricing = place.pricings[0]
+            // const pricing = placePricings.find((placePricing)=>{ return placePricing.id == place.id}).pricings[0]
             const symbol = pricing.currency.symbol
             place.tooltip = <div>
                               <div>
@@ -365,10 +383,16 @@ export function getGarageDetails(){
         })
       })
       dispatch(setGarage(response.data.garage))
+      dispatch(setLoading(false))
       dispatch(autoSelectPlace())
     }
 
-    if (state.availableGarages[state.garageIndex]){
+    const onPricings = (response) => {
+      dispatch(setPricings(response.data.garage))
+      callGarageDetails()
+    }
+
+    const callGarageDetails = () => {
       request( onSuccess
              , GET_GARAGE_DETAILS
              , { id:        state.availableGarages[state.garageIndex].id
@@ -378,6 +402,15 @@ export function getGarageDetails(){
                , ends_at:   state.to
                }
              )
+    }
+
+    if (state.availableGarages[state.garageIndex]){
+      if (state.pricings==undefined || state.pricings.id !== state.availableGarages[state.garageIndex].id){
+        dispatch(setLoading(true))
+        request( onPricings, GET_GARAGE_PRICINGS, { id: state.availableGarages[state.garageIndex].id } )
+      } else {
+        callGarageDetails()
+      }
     }
   }
 }

@@ -38,7 +38,6 @@ export function resetForm (){
 export function initGates (id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      console.log(response);
       dispatch(setGates(response.data.garage.gates.map(gate=>{
         gate.place_count = gate.groups.length
         return gate
