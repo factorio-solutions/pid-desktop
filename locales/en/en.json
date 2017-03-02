@@ -154,7 +154,8 @@
 		"licencePlateInvalid": "Licence plate",
 		"licencePlatePlaceholder": "1A2 1234",
 		"price": "Price",
-		"onClientsExpenses":"On clients expenses."
+		"onClientsExpenses":"On clients expenses.",
+		"loadingGarage": "Loading garage layout ..."
 	},
 	"clients": {
 		"name": "name",
