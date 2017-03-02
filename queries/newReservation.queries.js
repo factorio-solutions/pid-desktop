@@ -35,17 +35,14 @@ export const GET_AVAILABLE_CARS = `query Query($user_id: Id) {
 }
 `
 
-// get floors of garage of specified id
-export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id) {
+// getGaragePricing
+export const GET_GARAGE_PRICINGS = `query ($id: Id!) {
   garage(id: $id) {
-    name
+    id
     floors {
       id
-      label
-      scheme
       places {
         id
-        label
         pricings{
           name
           flat_price
@@ -59,6 +56,22 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
           }
         }
       }
+    }
+  }
+}
+`
+// get floors of garage of specified id
+export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id) {
+  garage(id: $id) {
+    name
+    floors {
+      id
+      label
+      scheme
+      places {
+        id
+        label
+      }
       free_places(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id) {
         id
         label
@@ -67,6 +80,18 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
   }
 }
 `
+// pricings{
+//   name
+//   flat_price
+//   exponential_12h_price
+//   exponential_day_price
+//   exponential_week_price
+//   exponential_month_price
+//   weekend_price
+//   currency{
+//     symbol
+//   }
+// }
 
 // create reservation mutation
 export const CREATE_RESERVATION = `mutation createREservation($reservation: ReservationInput!, $user_id:Id!, $place_id:Id!) {

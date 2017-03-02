@@ -11,6 +11,8 @@ import {
 
   NEW_RESERVATION_SET_GARAGE_INDEX,
   NEW_RESERVATION_SET_AVAILABLE_GARAGES,
+  NEW_RESERVATION_SET_LOADING,
+  NEW_RESERVATION_SET_PRICINGS,
   NEW_RESERVATION_SET_GARAGE,
 
   NEW_RESERVATION_SET_FROM,
@@ -36,7 +38,9 @@ const defaultState =  { user_id:          undefined // id of selected user reser
                       , carLicencePlate:  '' // in case there are no available cars
 
                       , garageIndex:      undefined // index of currently selected garage
+                      , loading:          false
                       , availableGarages: [] // all available garages
+                      , pricings:         undefined // this stores pricings of garage
                       , garage:           undefined // garage object with details
 
                       , from:             ''
@@ -98,6 +102,16 @@ export default function newReservation (state = defaultState, action) {
     case NEW_RESERVATION_SET_AVAILABLE_GARAGES:
       return { ...state
              , availableGarages: action.value
+             }
+
+    case NEW_RESERVATION_SET_LOADING:
+      return { ...state
+             , loading: action.value
+             }
+
+    case NEW_RESERVATION_SET_PRICINGS:
+      return { ...state
+             , pricings: action.value
              }
 
     case NEW_RESERVATION_SET_GARAGE:
