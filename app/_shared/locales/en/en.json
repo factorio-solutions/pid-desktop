@@ -366,7 +366,9 @@
 		"current":"current",
 		"sais": "says",
 		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses.",
-		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpayed invoices to handle."
+		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpayed invoices to handle.",
+		"reservationAccepted": "Your reservation on \"%(arg1)s\"s place was accpeted.",
+		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined."
 	},
 	"settings": {
 		"hints": "I want to see hints on all pages of the application.",

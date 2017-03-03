@@ -1,6 +1,7 @@
 import { request } from '../helpers/request'
 import { t }       from '../modules/localization/localization'
 import moment      from 'moment'
+import _           from 'lodash'
 
 import { GARAGE_DETAILS_QUERY, OCCUPANCY_INIT } from '../queries/occupancy.queries'
 import { toOccupancy }            from './pageBase.actions'
@@ -74,7 +75,7 @@ export function initOccupancy () {
     const onSuccess = (response) => {
       // response.data.manageble_clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
       // dispatch(setClients(response.data.manageble_clients))
-      const garages = response.data.user_garages.map( (user_garage) => { return user_garage.garage } )
+      const garages = _.uniqWith(response.data.user_garages.map(function (user_garage) {return user_garage.garage}),  _.isEqual)
       dispatch(setGarages(garages))
 
       getState().occupancy.garage_id == undefined ? dispatch(setGarageId(garages[0] && garages[0].id)) : dispatch(setGarageId(getState().occupancy.garage_id))
