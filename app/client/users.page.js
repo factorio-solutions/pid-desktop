@@ -66,7 +66,7 @@ export class ClientUsersPage extends Component {
       const secretaryPresetClick  = () => { actions.setSecretary(this.props.params.id, client_user.user.id ) }
       const internalPresetClick   = () => { actions.setInternal(this.props.params.id, client_user.user.id ) }
 
-      const adminClick      = () => { /* actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"admin": !client_user.admin}) */}
+      const adminClick      = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"admin": !client_user.admin}) }
       const secretaryClick  = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"secretary": !client_user.secretary}) }
       const hostClick       = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"host": !client_user.host}) }
       const internalClick   = () => { actions.setClientUserRelation(this.props.params.id, client_user.user.id , {"internal": !client_user.internal}) }
