@@ -112,7 +112,7 @@ export class Page extends Component {
           <div className={styles.content}>
             <div>
               <div><b>{label}</b></div>
-              {!hide && <div><Dropdown label="Select garage" content={garageContent()} style='dark' selected={selectedGarage()}/></div>}
+              {!hide && <div><Dropdown label="Select garage" content={garageContent()} style='dark' selected={selectedGarage()} fixed={true}/></div>}
             </div>
           </div>
 
