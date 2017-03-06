@@ -1,0 +1,20 @@
+@import '../../styles/app.components';
+
+.submitButton{
+  margin-top: 35px;
+}
+
+.floatRight{
+  float: right;
+}
+
+.floatLeft{
+  float: left;
+}
+
+.mobileSubmitButton{
+  position: fixed;
+  bottom:   $mobileNavigationBottomOffset;
+  left:     $mobileNavigationSidesOffset;
+  right:    $mobileNavigationSidesOffset;
+}

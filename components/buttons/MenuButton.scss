@@ -1,0 +1,109 @@
+@import '../../styles/app.components';
+@import './Button';
+
+// button will fill its parent
+$size-normal-width:     100%;
+$size-collapsed-width:  150px;
+
+
+.button{
+  width:      $size-normal-width;
+  font-size:  16px;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  transition: all 0.4s ease;
+  padding:    18px 0 8px;
+
+  @include colorize($clickableColor);
+  color:   $white;
+  cursor:  pointer;
+}
+
+.count{
+  position: absolute;
+  font-weight: bold;
+  font-size: 18px;
+  // transform: translate(-140%, 10%);
+  // font-family: "Roboto Condensed", sans-serif;
+  transform: translate(-150%, 10%);
+
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.adjustPadding{
+  padding: 12px 0;
+}
+
+.content{
+  display:    block;
+}
+.icon{
+  font-size:  22px;
+}
+.label{
+  margin-top: 6px;
+}
+
+
+
+// types
+.action {
+  @include colorize($actionColor);
+}
+.confirm {
+  @include colorize($confirmColor);
+}
+.remove {
+  @include colorize($removeColor);
+}
+
+
+// size
+.collapsed{
+  width:    $size-normal-width;
+  padding:  8px 0;
+
+  .label{
+    display: none;
+  }
+}
+
+.small{
+  text-align: left;
+  padding: 8px 20px;
+
+  >div{
+    >span{
+      display: initial;
+
+      &.content{
+        margin: 0 5px ;
+      }
+    }
+  }
+}
+
+// states
+.selected {
+  background: $selectedColor;
+  color:      $black;
+  // cursor:     default;
+}
+.disabled {
+  background: $lightGray;
+  color:      $gray;
+  cursor:     default;
+}
+
+// Mobile menu button
+.centerInDiv{
+  position:  absolute;
+  top:       50%;
+  left:      50%;
+  transform: translate(-50%,-50%);
+  > .icon {
+    font-size: 36px;
+  }
+}
