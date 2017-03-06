@@ -55,3 +55,55 @@
   font-weight: bold;
   padding-top: 20px;
 }
+
+
+// for styling
+.mobileSubmitButton{
+  position: fixed;
+  bottom:   $mobileNavigationBottomOffset;
+  left:     $mobileNavigationSidesOffset;
+  right:    $mobileNavigationSidesOffset;
+}
+
+.floatRight{
+  float: right;
+}
+
+.floatLeft{
+  float: left;
+}
+
+// @import '../_shared/styles/app.components';
+@mixin colorize($color) {
+  background-color: $color;
+
+  &:not(.selected):not(.disabled):hover {
+    background-color: darken($color, 10%)
+  }
+}
+$size-normal: 50px;
+
+
+.submitButton{
+  @include border-radius(240px);
+
+  width:      $size-normal;
+  height:     $size-normal;
+  font-size:  24px;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  transition: all 0.4s ease;
+  margin:     5px;
+
+  @include colorize($clickableColor);
+  color:   $white;
+  cursor:  pointer;
+
+  @include colorize($confirmColor);
+}
+.disabled{
+  background: $lightGray;
+  color:      darken($lightGray, 10);
+  cursor:     default;
+}

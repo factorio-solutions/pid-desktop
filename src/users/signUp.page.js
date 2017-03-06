@@ -56,7 +56,7 @@ export class SignUpPage extends Component {
     const passwordChanged     = (value, valid) => { signUpActions.setPassword( value, valid ) }
     const confirmationChanged = (value, valid) => { signUpActions.setConfirmation( value, valid ) }
 
-    const isSubmitable        = () => { return state.name.valid && state.phone.valid && state.email.valid && state.password.valid && state.confirmation.valid }
+    const isSubmitable        = () => { return state.name.valid && state.phone.valid && state.email.valid && state.phone.valid && state.password.valid && state.confirmation.valid }
 
     return (
       <Page label="Sign up!" hide={true} margin={true}>
@@ -71,7 +71,7 @@ export class SignUpPage extends Component {
 
           <Form onSubmit={onSubmit} onBack={goBack} submitable={isSubmitable()} mobile={true}>
             <PatternInput onChange={nameChanged} label="your full name*" error="Invalid name" pattern="^(?!\s*$).+" value={state.name.value} />
-            <PatternInput onChange={phoneChanged} label="phone number" error="Invalid phone number" pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone.value} />
+            <PatternInput onChange={phoneChanged} label="phone number*" error="Invalid phone number" pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone.value} />
             <PatternInput onChange={emailChanged} label="e-mail *" error="Ivalid e-mail address" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value={state.email.value} />
             <PatternInput onChange={passwordChanged} label="password *" error={"Minimum length is "+MINIMUM_PASSWORD_LENGTH} type='password' pattern={`\\w{${MINIMUM_PASSWORD_LENGTH},}`} value={state.password.value} />
             <PatternInput onChange={confirmationChanged} label="password confirmation *" error="Not matching password."  type='password' pattern={state.password.value} value={state.confirmation.value} />

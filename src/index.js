@@ -23,6 +23,16 @@ const history = syncHistoryWithStore(hashHistory, store);
 // document.addEventListener("online", () => {store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: true})}, false);
 store.dispatch({ type: 'MOBIE_MENU_SET_DEVICE_ONLINE', value: true})
 
+// function checkConnection() {
+//     var networkState = navigator.connection;
+//     console.log('Connection type: ' + JSON.stringify(networkState));
+//     console.log('No connection: ' + networkState.type );
+//     console.log('No connection: ' + typeof networkState.type );
+//     console.log('No connection: ' + networkState.type  == 'none');
+// }
+// checkConnection();
+
+
 store.subscribe(() => { // continouous save to storage
   localStorage['store'] = JSON.stringify(store.getState())
 })

@@ -9,6 +9,9 @@ import Page        from '../_shared/containers/mobilePage/Page'
 import MobileTable from '../_shared/components/mobileTable/MobileTable'
 import Form        from '../_shared/components/form/Form'
 import Input       from '../_shared/components/input/Input'
+import Dropdown    from '../_shared/components/dropdown/Dropdown'
+import Braintree   from '../_shared/components/braintree/Braintree'
+import RoundButton from '../_shared/components/buttons/RoundButton'
 
 import * as paths                 from '../_resources/constants/RouterPaths'
 import * as newReservationActions from '../_shared/actions/mobile.newReservation.actions'
@@ -87,31 +90,127 @@ export class NewReservationPage extends Component {
       )
     }
 
-    const content = [
+    const clientDropdown = () => {
+      const clientSelected = (index) => { actions.setClientId(state.availableClients[index].id) }
+      let clients = state.availableClients.map((client, index) => {
+        return { label: client.name, onClick: clientSelected.bind(this, index) }
+      })
+      return clients
+    }
+
+    const carDropdown = () => {
+      const carSelected = (index) => { actions.setCarId(state.availableCars[index].id) }
+      return state.availableCars.map((car, index) => {
+        return { label: car.model, onClick: carSelected.bind(this, index) }
+      })
+    }
+
+    const carRow = () => {
+      return state.availableCars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label="Licence plate" error="Invalid licence plate" placeholder="1A2 3456" type='text' name='reservation[licence_plate]' align='center'/>
+                                           : <Dropdown label="Select car"    content={carDropdown()}    selected={state.availableCars.findIndex((car)=>{return car.id == state.car_id})} style='light'/>
+    }
+    const clientsRow = () =>{
+      return <Dropdown label="Select client" content={clientDropdown()} selected={state.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>
+    }
+
+    const price = () => {
+      var from = state.fromNow ? moment(moment()).set('minute', Math.floor(moment(moment()).minutes()/15)*15) : moment(state.from)
+      var to = state.duration ? moment(moment(from).add(state.duration, 'hours')) : moment(state.to)
+      from = from.unix()
+      to = to.unix()
+
+      let times = [from]
+      while (times[times.length-1] + 900 < to) { // 900 is 15 mins
+        times = times.concat(times[times.length-1] + 900)
+      }
+      times = times.concat(to)
+      times.shift()
+
+      if (state.availableFloors == undefined ){ return 0 }
+
+      const place = state.availableFloors.reduce((sum, floor)=> {
+        return sum.concat(floor.free_places)
+      }, []).find((place) => { return place.id == state.place_id})
+
+      if (place){
+        var price = place.pricings[0]
+      } else {
+        return 0
+      }
+
+      let ammount = times.reduce((sum, timestamp) => {
+        const date = moment(timestamp*1000)
+        switch (true) {
+          case price.weekend_price !== null && (date.isoWeekday() == 6 || date.isoWeekday() == 7):
+            sum += price.weekend_price*0.25
+            break
+          case price.flat_price !== null:
+            sum += price.flat_price*0.25
+            break
+          case price.exponential_12h_price !== null && state.duration<12:
+            sum += price.exponential_12h_price*0.25
+            break
+          case price.exponential_day_price !== null && state.duration<24:
+            sum += price.exponential_day_price*0.25
+            break
+          case price.exponential_week_price !== null && state.duration<168:
+            sum += price.exponential_week_price*0.25
+            break
+          case price.exponential_month_price !== null:
+            sum += price.exponential_month_price*0.25
+            break
+        }
+        return sum
+      }, 0)
+      return ammount + " "+ price.currency.symbol
+    }
+
+    let content = [
       {label: 'Begins', row: beginsRow()},
       {label: 'Ends',   row: endsRow()},
-      {label: 'Place',  row: placeRow()}
+      {label: 'Place',  row: placeRow()},
+      {label: 'Car',    row: carRow()}
     ]
+    state.availableClients.length>1 && content.push({label: 'Client',  row: clientsRow() })
+    content.push({label: 'Price',  row: state.client_id ? "On clients expenses" : price() })
 
     const isSubmitable = () => {
       if ((mobileHeader.garage_id == undefined)
       || (state.place_id == undefined)
       || (state.from == undefined && state.fromNow == false)
+      || ((state.carLicencePlate == undefined || state.carLicencePlate == '') && state.car_id == undefined)
       || (state.to== undefined && state.duration == undefined)){
         return false
       }
       return true
     }
 
-    const onSubmit = () => {
-      actions.submitReservation(back)
+    const formOnSubmit = (evt) => {
+      evt.preventDefault()
+      state.client_id && isSubmitable() && actions.submitReservation(undefined, back)
+      return false
+    }
+
+    const onPayment = (payload) => {
+      console.log(payload);
+      // isSubmitable() &&
+      actions.submitReservation(payload, back)
     }
 
     return (
       <Page label="New reservation" margin={true}>
-        <Form onSubmit={onSubmit} onBack={back} submitable={isSubmitable()} mobile={true}>
+        <form className={styles.form} onSubmit={formOnSubmit}>
           <MobileTable content={content} />
-        </Form>
+          {state.client_id==undefined && state.braintree_token && <Braintree token={state.braintree_token} onPayment={onPayment} paypal={false}/>}
+          <div className={styles.mobileSubmitButton }>
+            {back && <div className={styles.floatLeft}>
+              <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={back}/>
+            </div>}
+            <div className={back && styles.floatRight}>
+              <button className={`${styles.submitButton} ${isSubmitable() ? '' : styles.disabled }`} type="submit"> <span className='fa fa-check' aria-hidden="true"></span> </button>
+            </div>
+          </div>
+        </form>
       </Page>
     )
   }

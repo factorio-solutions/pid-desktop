@@ -52,7 +52,7 @@ export class ReservationPage extends Component {
     ]
 
     return (
-      <Page label="Reservation details" back={back} remove={remove} margin={true}>
+      <Page label="Reservation details" back={back} margin={true}> {/* remove={remove} */}
         <MobileTable content={content} />
       </Page>
     )

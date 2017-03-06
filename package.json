@@ -40,6 +40,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-runtime": "^6.9.2",
+    "braintree-web": "^2.30.0",
     "classnames": "^2.2.5",
     "counterpart": "^0.17.6",
     "cross-env": "^2.0.0",
