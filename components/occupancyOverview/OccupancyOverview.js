@@ -54,18 +54,19 @@ export default class OccupancyOverview extends Component{
 
         // reservation divs
         for (var j = 0; j < validReservations.length; j++) {
-          var reservationStart = (moment(validReservations[j].begins_at).diff(this.props.from)/intervalLength)*rowWidth
-          var reservationEnd = (moment(validReservations[j].ends_at).diff(this.props.from)/intervalLength)*rowWidth
+          const reservation = validReservations[j]
+          var reservationStart = (moment(reservation.begins_at).diff(this.props.from)/intervalLength)*rowWidth
+          var reservationEnd = (moment(reservation.ends_at).diff(this.props.from)/intervalLength)*rowWidth
           reservationStart = reservationStart < 0 ? 0 : reservationStart
           reservationEnd = reservationEnd > rowWidth ? rowWidth : reservationEnd
 
-          var reservation = document.createElement("DIV")
+          var reservationElement = document.createElement("DIV")
           var span = document.createElement("SPAN")
-          span.appendChild(document.createTextNode(validReservations[j].car.licence_plate +" - "+ validReservations[j].user.full_name))
-          reservation.appendChild(span)
-          reservation.className = styles.reservationDiv
-          reservation.setAttribute("style", `left: ${reservationStart}px; width: ${reservationEnd - reservationStart}px;`) // HACK: Dont forget to substract padding!
-          theRow.appendChild(reservation)
+          span.appendChild(document.createTextNode(reservation.car ? reservation.car.licence_plate +" - "+ reservation.user.full_name : reservation.user.full_name))
+          reservationElement.appendChild(span)
+          reservationElement.className = styles.reservationDiv
+          reservationElement.setAttribute("style", `left: ${reservationStart}px; width: ${reservationEnd - reservationStart}px;`) // HACK: Dont forget to substract padding!
+          theRow.appendChild(reservationElement)
         }
 
         //now line
@@ -94,7 +95,11 @@ export default class OccupancyOverview extends Component{
     }
 
     const prepareBody = () => {
-      return places.map((place) => {
+      const sorter = (a,b) => { // will sort place according to floors then labels
+        return a.floor < b.floor ? -1 : (a.floor > b.floor ? 1 : (a.label < b.label ? -1 : (a.label > b.label ? 1 : 0)))
+      }
+
+      return places.sort(sorter).map((place) => {
         const prepareRow = () => {
           var row = []
           const length = (this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS) * 2

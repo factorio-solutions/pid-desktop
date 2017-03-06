@@ -25,6 +25,7 @@ export const NEW_GARAGE_SET_ACCOUNT             = "NEW_GARAGE_SET_ACCOUNT"
 export const NEW_GARAGE_SET_AVAILABLE_TARIFS    = "NEW_GARAGE_SET_AVAILABLE_TARIFS"
 export const NEW_GARAGE_SET_TARIF               = "NEW_GARAGE_SET_TARIF"
 export const NEW_GARAGE_SET_ERROR               = "NEW_GARAGE_SET_ERROR"
+export const NEW_GARAGE_SET_FETCHING            = "NEW_GARAGE_SET_FETCHING"
 export const NEW_GARAGE_CLEAR_FORM              = "NEW_GARAGE_CLEAR_FORM"
 
 
@@ -115,6 +116,12 @@ export function setError (error){
           }
 }
 
+export function setFetching (bool){
+  return  { type: NEW_GARAGE_SET_FETCHING
+          , value: bool
+          }
+}
+
 export function clearForm (){
   return  { type: NEW_GARAGE_CLEAR_FORM }
 }
@@ -199,16 +206,16 @@ function updateKey(object, key, value){
 function scanPlaces(string){
   return string.split(',').reduce((arr, val)=>{
     if (val.indexOf('-') == -1){ // single value
-      arr.push(parseInt(val)+"")
+      arr.push(val.trim())
     } else { // range
       const range = val.split('-')
       const from = parseInt(range[0])
       const to = parseInt(range[1])
 
       if (from < to){
-        for (var i = from; i <= to; i++) { arr.push(i+"") }
+        for (var i = from; i <= to; i++) { arr.push(i) }
       } else {
-        for (var i = to; i <= from; i++) { arr.push(i+"") }
+        for (var i = to; i <= from; i++) { arr.push(i) }
       }
     }
     return arr
@@ -290,7 +297,7 @@ export function initAccountTarif (){
 export function initEditGarage(id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch(setAccount(response.data.garage.account_id))
+      response.data.garage.account_id && dispatch(setAccount(response.data.garage.account_id))
       dispatch(setTarif(response.data.garage.pid_tarif_id))
 
       dispatch(setId(response.data.garage.id))
@@ -318,7 +325,10 @@ export function initEditGarage(id){
       dispatch(setGates(response.data.garage.gates))
 
       dispatch(toGarages())
+      dispatch(setFetching(false))
     }
+
+    dispatch(setFetching(true))
     request(onSuccess, GET_GARAGE_DETAILS, {id: parseInt(id)})
   }
 }
@@ -347,17 +357,31 @@ export function submitGarage() {
       newGate.address.country = state.country
       newGate.address.lng = parseFloat(newGate.address.lng)
       newGate.address.lat = parseFloat(newGate.address.lat)
-      newGate.places = scanPlaces(newGate.places).filter((place)=>{return garagePlaces.indexOf(place) != -1}) // filter placeGates that have
+      const places = scanPlaces(newGate.places)
+      // newGate.places = scanPlaces(newGate.places).filter((place)=>{return garagePlaces.indexOf(place) != -1}) // filter placeGates that have
+      newGate.places = garagePlaces.filter((place)=>{
+        return places.find((label) => {
+          if (typeof label === 'string') {
+            return place === label
+          } else {
+            return label === parseInt(place.replace( /^\D+/g, ''))
+          }
+        }) !== undefined
+      })
       return newGate
     })
 
     const onSuccess = (response) => {
       if (state.error == undefined ){
-        nav.to('/garages')
-        dispatch(clearForm())
+        dispatch(setFetching(false))
+        if (placesHaveGate){
+          nav.to('/garages')
+          dispatch(clearForm())
+        }
       }
     }
 
+    dispatch(setFetching(true))
     if (state.id == undefined) { // new garage
       request( onSuccess
              , CREATE_NEW_GARAGE

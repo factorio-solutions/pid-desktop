@@ -13,6 +13,7 @@ export const GET_CARUSERS = `query ($id: Id!) {
     car {
       id
       licence_plate
+      model
     }
     admin
     pending

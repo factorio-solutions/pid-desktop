@@ -4,9 +4,11 @@ import SvgFromText from '../svgFromText/SvgFromText'
 import Tooltip     from '../tooltip/Tooltip'
 import ButtonStack from '../buttonStack/ButtonStack'
 import RoundButton from '../buttons/RoundButton'
+import RandomColor from 'randomcolor'
 
 import styles from './GarageLayout.scss'
 
+const COLOR_PALETE = ["#803E75", "#FF6800", "#A6BDD7", "#C10020", "#CEA262", "#817066", "#007D34", "#F6768E", "#00538A", "#FF7A5C", "#53377A", "#FF8E00","#B32851", "#7F180D", "#93AA00", "#593315", "#F13A13", "#232C16"]
 const INIT_STATE = { content: ''
                    , mouseX:  0
                    , mouseY:  0
@@ -18,7 +20,7 @@ const INIT_STATE = { content: ''
 //   { label: string...
 //     svg: string...
 //     places: [
-//       {label: string... , available: bool..., selected: bool... , tooltip: DOMelement... }
+//       {label: string... , available: bool..., selected: bool... , tooltip: DOMelement..., group: string/number... }
 //     ]
 //   }
 // ]
@@ -62,6 +64,12 @@ export default class GarageLayout extends Component {
     while (document.getElementsByClassName(styles.gvSelected).length >= 1) {
       document.getElementsByClassName(styles.gvSelected)[0].classList.remove(styles.gvSelected)
     }
+    while (document.getElementsByClassName('hasColorGroup').length >= 1) {
+      let element = document.getElementsByClassName('hasColorGroup')[0]
+      element.classList.remove('hasColorGroup')
+      element.removeAttribute("style")
+    }
+
 
 
     let { floors } = this.props
@@ -82,6 +90,32 @@ export default class GarageLayout extends Component {
         let placeRect = document.getElementById('Place'+place.label)
         placeRect && placeRect.classList.add(styles.gvFree)
       })
+
+    // color all with same group same color
+    let uniqueGroups = floors[floor] && floors[floor].places && floors[floor].places
+      .reduce((groups, place) => {
+        place.group && !groups.includes(place.group) && groups.push(place.group)
+        return groups
+      }, [])
+
+    if (uniqueGroups && uniqueGroups.length){
+      let colors = COLOR_PALETE.length>=uniqueGroups.length ? COLOR_PALETE.slice(0, uniqueGroups.length) : COLOR_PALETE.concat(RandomColor({count:uniqueGroups.length - COLOR_PALETE.length, luminosity: 'light', seed: 'as32d165q4'}))
+
+      let assignColors = uniqueGroups
+        .reduce((assign, group, index) => {
+          assign[group] = colors[index]
+          return assign
+        }, {})
+
+      floors[floor] && floors[floor].places && floors[floor].places
+        .filter((place) => { return place.group})
+        .forEach((place)=>{
+          let placeRect = document.getElementById('Place'+place.label)
+          placeRect && placeRect.classList.add('hasColorGroup')
+          placeRect && placeRect.setAttribute("style", `fill: ${assignColors[place.group]};`)
+        })
+
+    }
 
     // add tooltip event listeners
     floors[floor] && floors[floor].places && floors[floor].places
@@ -141,7 +175,7 @@ export default class GarageLayout extends Component {
     const prepareButtons = (floor, index, arr) => {
       const onFloorClick = () => { this.setState({...this.state, floor: index}), ()=>{ this.scanPlacesAddLabels() } }
       return(
-        <RoundButton key={index} content={floor.label} onClick={onFloorClick} state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places.findIndex((place)=>{return place.available == true}) === -1 && 'disabled')} />
+        <RoundButton key={index} content={floor.label} onClick={onFloorClick} state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex((place)=>{return place.available == true}) === -1 && 'disabled')} />
       )
     }
 

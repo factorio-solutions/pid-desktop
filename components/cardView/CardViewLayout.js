@@ -20,7 +20,7 @@ export default class CardViewLayout extends Component {
     const prepareChild = React.Children.map(children, (child, index) => {
       return React.cloneElement(child, {
         onClick: ()=>{this.setState({selected: index==this.state.selected ? undefined : index })},
-        selected: index==this.state.selected
+        selected: index==this.state.selected || children.length <= 5
       })
     })
 

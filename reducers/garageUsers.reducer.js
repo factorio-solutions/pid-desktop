@@ -6,7 +6,7 @@ import {
 
 const defaultState =  { users:          []
                       , pending_users:  []
-                      , garage:         {}
+                      , garage:         undefined
                       }
 
 

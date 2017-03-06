@@ -5,6 +5,7 @@ import {
   SET_HORIZONTAL_SELECTED,
   SET_HORIZONTAL_CONTENT,
   PAGE_BASE_SET_ERROR,
+  PAGE_BASE_SET_NOTIFICATIONS_MODAL,
   PAGE_BASE_SET_CURRENT_USER
 }  from '../actions/pageBase.actions'
 
@@ -12,8 +13,10 @@ const defaultState =  { verticalSelected:   0 // id of selected user reservation
                       , horizontalSelected: 0
                       , horizontalContent:  []
                       , error:              undefined
+                      , notificationsModal: false
                       , current_user:       {}
                       , hint:               undefined
+                      , hintVideo:          undefined
                       , menuWidth:          200
                       }
 
@@ -41,6 +44,11 @@ export default function pageBase (state = defaultState, action) {
             , error: action.value
             }
 
+    case PAGE_BASE_SET_NOTIFICATIONS_MODAL:
+    return  { ...state
+            , notificationsModal: action.value
+            }
+
     case PAGE_BASE_SET_CURRENT_USER:
     return  { ...state
             , current_user: action.value
@@ -49,6 +57,7 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_HINT:
     return  { ...state
             , hint: action.value
+            , hintVideo: action.video
             }
 
     case PAGE_BASE_SET_MENU_WIDTH:

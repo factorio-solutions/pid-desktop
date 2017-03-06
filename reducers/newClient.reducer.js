@@ -1,5 +1,7 @@
 import {
   SET_CLIENT_NAME,
+  SET_CLIENT_IC,
+  SET_CLIENT_DIC,
   SET_CLIENT_LINE1,
   SET_CLIENT_LINE2,
   SET_CLIENT_CITY,
@@ -9,7 +11,9 @@ import {
   CLEAR_CLIENT_FORM
 }  from '../actions/newClient.actions'
 
-const defaultState =  { name: ""
+const defaultState =  { name:        ""
+                      , ic:          ""
+                      , dic:         ""
                       , line_1:      ""
                       , line_2:      ""
                       , city:        ""
@@ -26,6 +30,16 @@ export default function newClient (appState = defaultState, action) {
     return  { ...appState
             , name: action.value
             }
+
+    case SET_CLIENT_IC :
+    return { ...appState
+           , ic: action.value
+           }
+
+    case SET_CLIENT_DIC :
+    return { ...appState
+           , dic: action.value
+           }
 
     case SET_CLIENT_LINE1:
     return { ...appState

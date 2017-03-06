@@ -34,6 +34,7 @@ export class PageBase extends Component {
   }
 
   componentDidMount(){
+    window.scrollTo(0, 0)
     this.props.actions.initialPageBase()
   }
 
@@ -93,12 +94,21 @@ export class PageBase extends Component {
     const modalClick = () => {
       actions.setError(undefined)
     }
+    
+    const notificationsModalClick = () => {
+      actions.setShowModal(false)
+    }
 
     const errorContent =  <div style={{"textAlign": "center"}}>
                             {t(['pageBase', 'error'])}: <br/>
                             { state.error } <br/>
                             <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
                           </div>
+
+    const notificationsModal = <div style={{"textAlign": "center"}}>
+                                {t(['pageBase', 'unredNotifications'], {count: notifications.count})}: <br/>
+                                <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={notificationsModalClick} type='confirm'  />
+                              </div>
 
     const garageRole  = state.current_user.garage_admin || state.current_user.receptionist || state.current_user.security
     const clientRole  = state.current_user.client_admin || state.current_user.secretary
@@ -132,6 +142,7 @@ export class PageBase extends Component {
     return (
       <div>
         <Modal content={errorContent} show={state.error!=undefined} />
+        <Modal content={notificationsModal} show={notifications.count>0 && state.notificationsModal } />
         <MasterPage
           logo={<Logo style='rect' />}
           horizContent={<HorizontalMenu labels={state.horizontalContent} selected={state.horizontalSelected} />}
@@ -139,7 +150,10 @@ export class PageBase extends Component {
           vertTopContent={<VerticalMenu labels={labels} selected={state.verticalSelected} size={VerticalMenuItemSize}/>}
           vertBotContent={bottomLabels}
           bodyContent={ <div>
-                          {(state.current_user && state.current_user.hint && state.hint) && <div className={styles.hint}> {state.hint} </div>}
+                          {(state.current_user && state.current_user.hint && state.hint) && <div className={styles.hintContainer}>
+                            {state.hintVideo && <RoundButton content={<i className="fa fa-info" aria-hidden="true"></i>} onClick={()=>{window.open(state.hintVideo)}} type='info'/>}
+                            <div className={styles.hint}>  {state.hint} </div>
+                          </div>}
                           {content}
                         </div> }
         />

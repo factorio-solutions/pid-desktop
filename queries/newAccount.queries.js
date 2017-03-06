@@ -15,6 +15,10 @@ export const UPDATE_ACCOUNT = `mutation updateAccount ($id:Id!, $account:Account
 export const INIT_ACCOUNT = `query ($id:Id){
   accounts(id: $id){
     name
+    ic
+    dic
+    public_key
+    private_key
     merchant_id
     address{
       line_1

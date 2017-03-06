@@ -30,8 +30,8 @@ export default function NotificationCard ({ notification, confirm, decline, stat
                     </span>
                     {notification.confirmed == undefined &&
                         <span className={styles.buttons}>
-                          {notification.notification_type.indexOf('No') != -1 && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={decline} type='remove' question={t(['notifications','declineQuestion'])} />}
-                          {notification.notification_type.indexOf('Yes') != -1 && <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={confirm} type='confirm' />}
+                          {notification.notification_type.indexOf('No') != -1 && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={decline()} type='remove' question={t(['notifications','declineQuestion'])} />}
+                          {notification.notification_type.indexOf('Yes') != -1 && <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={confirm()} type='confirm' />}
                         </span>
                     }
                   </div>

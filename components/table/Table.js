@@ -45,7 +45,8 @@ export default class Table extends Component {
     this.state = {
     	sortKey: this.props.schema.find((s) => s.sort).key,
     	sortType: this.props.schema.find((s) => s.sort).sort,
-    	spoilerId: -1
+    	spoilerId: -1,
+			search: ''
     }
   }
 
@@ -61,12 +62,70 @@ export default class Table extends Component {
 			const isSame = sortKey == schema[index].key
 
 			if(schema[index].comparator) {
-				this.setState({ sortKey: isSame ? sortKey : schema[index].key
+				this.setState({ ...this.state
+											, sortKey: isSame ? sortKey : schema[index].key
 											, sortType: isSame ? ( sortType=='asc' ? 'desc' : 'asc' ) : 'asc'
-											, spoilerId: -1
+											// , spoilerId: -1
 											})
 			}
 		}
+
+		const stringifyElement = (obj) => {
+			if (typeof obj === 'object'){
+				return obj && obj.props && obj.props.children ? (typeof obj.props.children ==='string' ? obj.props.children
+																																					 										 : obj.props.children.map((child)=>{return stringifyElement(child)}).join(' '))
+																								 			: ''
+			} else {
+				return obj
+			}
+		}
+
+		if (typeof comparator == 'function'){ // custom comparator
+			myComp = (aRow,bRow) => {
+				const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
+				const b = compareRepresentations ? representer(bRow) : bRow[sortKey]
+				return comparator(sortType, a, b)
+			}
+		} else { // predefined comparators
+			myComp = (aRow,bRow) => {
+				const a = compareRepresentations ? representer(aRow[sortKey]) : aRow[sortKey]
+				const b = compareRepresentations ? representer(bRow[sortKey]) : bRow[sortKey]
+
+				switch (comparator) {
+					case 'date':
+						return sortType=='asc' ? moment(a||'1970/1/1').diff(moment(b||'1970/1/1')) : moment(b||'1970/1/1').diff(moment(a||'1970/1/1'))
+						break
+					case 'string':
+						return a.toLowerCase()<b.toLowerCase() ? (sortType=='asc'?-1:1) : (a.toLowerCase()>b.toLowerCase() ? (sortType=='asc'?1:-1) : 0)
+						break
+					case 'number':
+						return sortType=='asc'? (parseFloat(a) || 0)-(parseFloat(b) || 0) : (parseFloat(b) || 0)-(parseFloat(a) || 0)
+						break
+					case 'boolean':
+						return sortType=='asc'? a-b : b-a
+						break
+
+					default:
+						return sortType=='asc' ? -1 : 1
+				}
+			}
+		}
+
+		const newData = data
+			.map((object, index) => {
+				object.key = index
+				return object
+			})
+			.filter((object) => {
+				if (this.state.search === ''){
+					return true
+				} else {
+					return schema.map((value, index)=>{ return value.representer ? value.representer(object[value.key]) : object[value.key] })
+											 .map((value) => { return stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim().toLowerCase().includes(this.state.search.toLowerCase()) })
+											 .includes(true)
+				}
+			}).sort(myComp)
+
 
 		const handleRowClick = (spoilerId) => {
 				const { onRowSelect } = this.props
@@ -75,44 +134,11 @@ export default class Table extends Component {
 					onRowSelect && onRowSelect(undefined, -1)
 		  	} else {
 		  		this.setState({ spoilerId })
-					onRowSelect && onRowSelect(this.props.data[spoilerId], spoilerId)
+					onRowSelect && onRowSelect(newData.find((obj)=>{return obj.key === spoilerId}), spoilerId)
 		  	}
 		  }
 
-			if (typeof comparator == 'function'){ // custom comparator
-				myComp = (aRow,bRow) => {
-					const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
-					const b = compareRepresentations ? representer(bRow) : bRow[sortKey]
-					return comparator(sortType, a, b)
-				}
-			} else { // predefined comparators
-				myComp = (aRow,bRow) => {
-					const a = compareRepresentations ? representer(aRow[sortKey]) : aRow[sortKey]
-					const b = compareRepresentations ? representer(bRow[sortKey]) : bRow[sortKey]
-
-					switch (comparator) {
-						case 'date':
-							return sortType=='asc' ? moment(a||'1970/1/1').diff(moment(b||'1970/1/1')) : moment(b||'1970/1/1').diff(moment(a||'1970/1/1'))
-							break
-						case 'string':
-							return a.toLowerCase()<b.toLowerCase() ? (sortType=='asc'?-1:1) : (a.toLowerCase()>b.toLowerCase() ? (sortType=='asc'?1:-1) : 0)
-							break
-						case 'number':
-							return sortType=='asc'? (parseFloat(a) || 0)-(parseFloat(b) || 0) : (parseFloat(b) || 0)-(parseFloat(a) || 0)
-							break
-						case 'boolean':
-							return sortType=='asc'? a-b : b-a
-							break
-
-						default:
-							return sortType=='asc' ? -1 : 1
-					}
-				}
-			}
-
-		data.sort(myComp)
-
-		const prepareHeader = (value,key)=>{
+		const prepareHeader = (value,key) => {
 			return (
 				<td key={key} onClick={()=>{handleHeadClick(key)}} className={styles.tdHeader}>
 					{value.title}
@@ -121,24 +147,32 @@ export default class Table extends Component {
 			)
 		}
 
-		const prepareBody = (value,key)=>{
+		const prepareBody = (value,key, arr)=>{
 			return [
-				<TableRow key={key} className={`${spoilerId == key && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(key)}} hover/>,
-				value.spoiler && spoilerId == key && <tr key={key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
+				<TableRow key={key} className={`${(spoilerId == value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(value.key)}} hover/>,
+				(arr.length <=5 || spoilerId == value.key) && value.spoiler && <tr key={value.key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
 			]
 		}
 
 		return (
-			<table className={styles.rtTable}>
-				<thead>
-					<tr>
-						{schema.map(prepareHeader)}
-					</tr>
-				</thead>
-				<tbody>
-					{data.map(prepareBody)}
-				</tbody>
-			</table>
+			<div>
+				<div className={styles.searchBox}>
+					<input type="search" onChange={(e)=>{this.setState( { ...this.state, search: e.target.value } )}} value={this.state.search}/>
+					<i className="fa fa-search" aria-hidden="true"></i>
+				</div>
+
+				<table className={styles.rtTable}>
+					<thead>
+						<tr>
+							{schema.map(prepareHeader)}
+						</tr>
+					</thead>
+					<tbody>
+						{newData.map(prepareBody)}
+					</tbody>
+				</table>
+			</div>
+
 		)
   }
 }

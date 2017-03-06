@@ -1,6 +1,11 @@
 // Will fetch all garages, their name, id and datetime of creation
 export const GET_GARAGES = `{
+  current_user{
+    id
+  }
   user_garages {
+    admin
+    user_id
     garage {
       lpg
       name

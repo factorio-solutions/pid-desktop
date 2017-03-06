@@ -26,14 +26,16 @@
 		"email": "E-mail",
 		"invalid-email": "Invalid email address",
 		"password": "Password",
-		"loginFailed": "Login failed"
+		"loginFailed": "Login failed",
+		"forgot": "Forgot password?",
+		"proceed": "Proceed here"
 	},
 	"signup_page": {
-		"name": "your full name*",
-		"phone": "phone number*",
-		"email": "E-mail *",
-		"password": "Password *",
-		"confirmation": "Password confirmation *",
+		"name": "your full name *",
+		"phone": "phone number *",
+		"email": "e-mail *",
+		"password": "password *",
+		"confirmation": "password confirmation *",
 		"nameInvalid": "Invalid name",
 		"phoneInvalid": "Invalid phone number",
 		"emailInvalid": "Invalid email address",
@@ -52,6 +54,10 @@
 		"EditClient": "Edit Client",
 		"New Reservation": "New Reservation",
 		"NewGarage": "Setup New Garage",
+		"newPricing": "New pricing",
+		"Pricings": "Edit pricing",
+		"newRent": "New rent",
+		"Rents": "Edit rent",
 		"Garages": "Garages",
 		"Cars": "Cars",
 		"Settings": "Profile settings",
@@ -118,7 +124,12 @@
 		"garageAddClientHint": "Here you can add client to garage managemat page. TODO: add client to management hint",
 		"garageGarageUsersHint": "Here you can manage who can manage your garage. TODO: Garage users management",
 		"addFeatures": "Add features",
-		"accounts":"Accounts"
+		"accounts":"Accounts",
+		"EditUserHint": "Here it is possible to change information about yourself.",
+		"unredNotifications":{
+			"one": "You have one unread notification",
+			"other": "You have %(count)s unread notifications"
+		}
 
 	},
 	"newReservation": {
@@ -143,7 +154,8 @@
 		"licencePlateInvalid": "Licence plate",
 		"licencePlatePlaceholder": "1A2 1234",
 		"price": "Price",
-		"onClientsExpenses":"On clients expenses."
+		"onClientsExpenses":"On clients expenses.",
+		"loadingGarage": "Loading garage layout ..."
 	},
 	"clients": {
 		"name": "name",
@@ -227,11 +239,12 @@
 		"places":"Places",
 		"newClientId":"Insert new client id",
 		"newClientIdInvalid":"Invalid id",
-		"newClientIdPlaceholder":"12354"
+		"newClientIdPlaceholder":"12354",
+		"clientNotFound": "No client with this id exists"
 	},
 	"newGarage": {
 		"newGarage": "New garage",
-		"name": "Garage name",
+		"name": "Garage name *",
 		"placeholder": "Office center",
 		"floorName": "Level",
 		"placeholderFloor": "%(index)s",
@@ -240,9 +253,9 @@
 		"removeFloorRowQuestion": "Are you sure you want to delete this floor?",
 		"removeGateRowQuestion": "Are you sure you want to delete this gate?",
 		"street": "Street and house number",
-		"city": "City",
-		"postalCode": "Postal code",
-		"country": "Country",
+		"city": "City *",
+		"postalCode": "Postal code *",
+		"country": "Country *",
 		"state": "State",
 		"invalidStreet": "Invalid street",
 		"invalidCity": "Invalid city",
@@ -269,7 +282,7 @@
 		"lngPlaceholder": "14.435",
 
 		"gateLabel":"Gate %(index)s",
-		"gatePhone":"Phone",
+		"gatePhone":"Gate module phone",
 		"invalidGateLabel":"Not valid label",
 		"invalidGatePhone":"Not valid phone",
 		"placeholderGateLabel":"Entrance gate",
@@ -281,13 +294,21 @@
 		"lpgAllowed": "LPG is allowed",
 
 		"placeNoGate": "Not all places were assigned to gate. This can be changed later in garage management.",
-		"selectTarif": "Select tarif",
-		"selectAccount": "Select account"
+		"selectTarif": "Select tarif *",
+		"selectAccount": "Select account",
+		"selectAccountMandatory": "Select account *",
+		"processing":"Processing"
 	},
 	"newClient": {
 		"name": "Client name",
 		"placeholder": "Company client",
-		"invalidName": "Invalid client name"
+		"invalidName": "Invalid client name",
+		"ICplaceholder": "12345678",
+		"DICplaceholder":"CZ12345678",
+		"IC": "IČ",
+		"invalidIC": "invalid IČ",
+		"DIC": "DIČ",
+		"invalidDIC": "invalid DIČ"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -310,7 +331,20 @@
 
 		"selectClient": "Select client",
 		"selectGarage": "Select garage",
-		"selectCar": "Select car"
+		"selectCar": "Select car",
+
+		"admin": "admin",
+		"secretary": "secretary",
+		"host": "host",
+		"internal": "internal",
+		"security": "security",
+		"receptionist": "receptionist",
+		"clientRights": "Client rights",
+		"clientRightsDesc": "These rights will be only valid if client is specified",
+		"GarageRights": "Garage rights",
+		"GarageRightsDesc": "These rights will be only valid if garage is specified",
+		"carRights": "Car rights",
+		"carRightsDesc": "These rights will be only valid if car is specified"
 	},
 	"notifications": {
 		"user": "user",
@@ -324,18 +358,22 @@
 		"garageInvitationMessage" : "You have been invited to '%(arg1)s' garage. Do you want to accept?",
 		"carInvitationMessage" : "You have been invited to use '%(arg1)s' car. Do you want to accept?",
 		"clientUserDestroyed": "You have been removed from clients account '%(arg1)s', all reservations associated to this clients account were canceled.",
-		"clientPlaceDestroyed": "Reservation of yours has been canceled due to owner removed the place from used clients account.",
+		"accountPlaceDestroyed": "Reservation of yours has been canceled due to owner removed the place from used clients account.",
 		"past": "Show past notifications",
 		"NotificationAccepted": "accepted on ",
 		"NotificationDeclined": "declined on ",
 		"past":"past",
 		"current":"current",
 		"sais": "says",
-		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses."
+		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses.",
+		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpayed invoices to handle.",
+		"reservationAccepted": "Your reservation on \"%(arg1)s\"s place was accpeted.",
+		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined."
 	},
 	"settings": {
 		"hints": "I want to see hints on all pages of the application.",
-		"language": "Choose language:"
+		"language": "Choose language:",
+		"editUser": "Edit my user profile"
 	},
 	"users": {
 		"username": "username",
@@ -550,9 +588,32 @@
 			"merchant": "Braintree merchant id",
 			"placeholderMerchant": "tdcbjgcfh6czjk3m",
 			"invalidMerchant": "Invalid merchant id",
+			"publicKey": "Braintree merchant id",
+			"placeholderPublicKey": "4jpxgcxp4svmxjsd",
+			"invalidPublicKey": "Invalid public key",
+			"privateKey": "Braintree merchant id",
+			"placeholderPrivateKey": "86974a3471f0e9e23d958cd2dd21f324",
+			"invalidPrivateKey": "Invalid private key",
 
 			"whatIsMerchant": "What is merchant id?",
 			"merchantDesc": "We use Braintree to take care of your money. If you want to accept money, you have to get Braintree accounts and provide us with your merhcant ID. Got to braintree.com and sign up for production! Once you are logged in, go to Account > My user. Under API Keys, Tokenization Keys, Encryption Keys, click View Authorizations. ",
 			"merchantDesc2": "If no API keys appear, click Generate New API Key. Click View under the Private Key column to see your public and private keys, merchant ID, and environment."
+	},
+	"invoices": {
+		"invoiceDate":"invoice date",
+		"dueDate":"due date",
+		"account":"account",
+		"client":"client",
+		"payed":"payed",
+		"ammount":"ammount",
+		"subject":"subject",
+		"pay":"Pay",
+		"invoicePayed": "Are you sure you want to mark this invoice as payed?"
+	},
+	"resetPassword": {
+		"send":"Password reseting email was sent to your email.",
+		"description":"Please, insert your email here and we will send you password reset process description",
+		"email": "e-mail",
+		"emailInvalid": "Invalid email"
 	}
 }

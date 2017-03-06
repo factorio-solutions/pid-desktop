@@ -11,14 +11,6 @@ export const GET_GARAGE_CLIENT = `query($id: Id!){
         label
       }
     }
-    gates{
-      id
-      label
-      groups{
-        id
-        place_id
-      }
-    }
     clients{
       id
       name
