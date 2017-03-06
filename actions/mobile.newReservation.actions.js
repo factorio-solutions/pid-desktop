@@ -219,7 +219,17 @@ export function checkGarageChange(garageId, nextGarageId){
 
 export function autoselectPlace(){
     return (dispatch, getState) => {
-      const freePlaces = [].concat.apply([], getState().mobileNewReservation.availableFloors.map(function(floor){return floor.free_places}))
+      const freePlaces = getState().mobileNewReservation.availableFloors.reduce((arr, floor)=> { // free places, 
+        arr.push(floor.freePlaces.filter((place)=>{
+          if (getState().mobileNewReservation.client_id == undefined) {
+            return place.pricings.length >= 1
+          } else {
+            return true
+          }
+        }))
+        return arr
+      }, [])
+
       dispatch(setPlace(freePlaces.length == 0 ? undefined : freePlaces[0].id))
       dispatch(setAutoselect(true))
     }
