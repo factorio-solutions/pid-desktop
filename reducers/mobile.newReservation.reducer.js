@@ -1,12 +1,18 @@
 import {
   MOBILE_NEW_RESERVATION_CLEAR_FORM,
   MOBILE_NEW_RESERVATION_SET_AUTOSELECT,
+  MOBILE_NEW_RESERVATION_SET_CLIENT_ID,
+  MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS,
+  MOBILE_NEW_RESERVATION_AVAILABLE_CARS,
+  MOBILE_NEW_RESERVATION_CAR_ID,
+  MOBILE_NEW_RESERVATION_CAR_LICENCE_PLATE,
   MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS,
   MOBILE_NEW_RESERVATION_SET_FROM,
   MOBILE_NEW_RESERVATION_SET_TO,
   MOBILE_NEW_RESERVATION_SET_FROM_NOW,
   MOBILE_NEW_RESERVATION_SET_DURATION,
-  MOBILE_NEW_RESERVATION_SET_PLACE_ID
+  MOBILE_NEW_RESERVATION_SET_PLACE_ID,
+  MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN
 }  from '../actions/mobile.newReservation.actions'
 
 const defaultState =  { from: undefined
@@ -15,9 +21,17 @@ const defaultState =  { from: undefined
                       , fromNow:  true // marks if  from NOW is selected or not
                       , duration: 2 // if undefined, then other is selected
 
+                      , availableClients: [] // available clients for this reservation
+                      , client_id:        undefined // currently selected client
+
+                      , availableCars:    [] // cars of currently selected user
+                      , car_id:           undefined // selected car id
+                      , carLicencePlate:  '' // in case there are no available cars
+
                       , availableFloors:  undefined
                       , autoselect:       true
                       , place_id:         undefined // undefined means no available places
+                      , braintree_token:  undefined
                       }
 
 
@@ -44,6 +58,32 @@ export default function mobileNewReservation (state = defaultState, action) {
               , duration: action.value
               }
 
+    case MOBILE_NEW_RESERVATION_SET_CLIENT_ID:
+      return { ...state
+             , client_id: action.value
+             }
+
+    case MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS:
+      return { ...state
+             , availableClients: action.value
+             }
+
+
+    case MOBILE_NEW_RESERVATION_AVAILABLE_CARS:
+      return { ...state
+             , availableCars: action.value
+             }
+
+    case MOBILE_NEW_RESERVATION_CAR_ID:
+      return { ...state
+             , car_id: action.value
+             }
+
+    case MOBILE_NEW_RESERVATION_CAR_LICENCE_PLATE:
+      return { ...state
+             , carLicencePlate: action.value
+             }
+
     case MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS:
       return  { ...state
               , availableFloors: action.value
@@ -57,6 +97,11 @@ export default function mobileNewReservation (state = defaultState, action) {
     case MOBILE_NEW_RESERVATION_SET_PLACE_ID:
       return  { ...state
               , place_id: action.value
+              }
+
+    case MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN:
+      return  { ...state
+              , braintree_token: action.value
               }
 
     case MOBILE_NEW_RESERVATION_CLEAR_FORM:

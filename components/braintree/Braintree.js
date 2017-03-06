@@ -20,7 +20,7 @@ export default class Braintree extends Component {
 
   render(){
     return(
-      <div ref="wrapper"></div>
+      <div ref="wrapper" style={{padding: '10px'}}></div>
     )
   }
 }
