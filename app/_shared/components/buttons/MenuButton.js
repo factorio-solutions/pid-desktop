@@ -1,6 +1,7 @@
 import React    from 'react'
 import styles   from './MenuButton.scss'
 import Button   from './Button.js'
+import browser from 'detect-browser'
 
 // extends Button.js
 // type = 'action', 'confirm', 'remove'
@@ -18,7 +19,7 @@ export default function MenuButton ({ icon, label, onClick, type, state, size, q
               ].join(' ')
 
   let content = <div>
-                  <span className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true"><span className={styles.count}>{count}</span></span>
+                  <span className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true"><span className={`${browser.name === 'safari' ? styles.safariCount : styles.chromeCount} ${styles.count}`}>{count}</span></span>
                   <span className={`${styles.label} ${styles.content}`}>{label}</span>
                 </div>
 
