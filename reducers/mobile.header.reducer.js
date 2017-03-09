@@ -9,7 +9,7 @@ const defaultState =  { garages:      []
                       , garage_id:    undefined
                       , current_user: undefined
                       , headerHeight: 101 //px
-                      , online:       false
+                      , online:       navigator.connection ? navigator.connection.type !== 'none' : true
                       , showMenu:     false
                       }
 

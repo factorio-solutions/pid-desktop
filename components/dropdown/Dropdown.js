@@ -89,7 +89,6 @@ export default class Dropdown extends Component {
         element.classList.remove(styles.display)
         element.classList.remove(styles.hidden)
         element.style.width = buttonPosition.width+"px"
-        console.log(fixed);
         if (fixed !== true) {element.style.top = ((!hover)?(buttonPosition.bottom+document.body.scrollTop):(buttonPosition.top+document.body.scrollTop))+"px"}
         element.style.left = buttonPosition.left+"px"
       }

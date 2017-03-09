@@ -51,34 +51,20 @@ export class Page extends Component {
     const selectedGarage = () => { return state.garages.findIndex(function(garage){return garage.id == state.garage_id}) }
     const toggleMenu     = () => { actions.toggleMenu() }
     const currentUser    = () => { console.log('TODO: current user profile') }
+    const logOut         = () => { this.context.router.push('/login'); actions.logout() }
     const sideMenuItems  = [ <MenuButton key='1' icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} /> ]
 
     const garageContent = () => {
       const garageSelected = (index) => { actions.setGarage(state.garages[index].id) }
+
       return state.garages.map(function(garage, index){
         return { label: garage.name, onClick: garageSelected.bind(this, index) }
       })
     }
 
-    const logOut = () => {
-      this.context.router.push('/login')
-      actions.logout()
-    }
-
 
     const divider = <div className={styles.divider}><div className={styles.line}> </div></div>
 
-    const header = <div className={styles.header}>
-                     <div className={styles.logo}>
-                       <Logo />
-                     </div>
-                     <div className={styles.content}>
-                       <div><b>{label}</b></div>
-                       { !hideDropdown && <div><Dropdown label="Select garage" content={garageContent()} style='dark' selected={selectedGarage()} fixed={true}/></div> }
-                     </div>
-                     { !hideHamburger && <button onClick={toggleMenu} className={styles.menuButton}> <i className="fa fa-bars" aria-hidden="true"></i> </button> }
-                     <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={toggleMenu}/>
-                   </div>
 
     const currentUserInfo = state.current_user && <div className={styles.currentUserInfo}> {/* currently singned in user information */}
                                <div className={styles.buttonContainer}>
@@ -99,19 +85,31 @@ export class Page extends Component {
                               </ButtonStack>
                             </div>
 
+    const header = <div className={styles.header}>
+                     <div className={styles.logo}>
+                       <Logo />
+                     </div>
+                     <div className={styles.content}>
+                       <div><b>{label}</b></div>
+                       { !hideDropdown && <div><Dropdown label="Select garage" content={garageContent()} style='dark' selected={selectedGarage()} fixed={true}/></div> }
+                     </div>
+                     { !hideHamburger && <button onClick={toggleMenu} className={styles.menuButton}> <i className="fa fa-bars" aria-hidden="true"></i> </button> }
+                     <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={toggleMenu}/>
+                   </div>
 
     return(
       <div className={margin && styles.app_page}>
+
         <div className={!hideHeader && styles.pageContent}>
-          {this.props.children}
+          { this.props.children }
         </div>
 
-        {back &&   <div className={styles.backButton}><RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={back}/></div>}
-        {add &&    <div className={styles.addButton}> <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>}         onClick={add}    type='action'  state={!state.online && 'disabled'}/></div>}
-        {ok &&     <div className={styles.okButton}>  <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}        onClick={ok}     type='confirm' state={!state.online && 'disabled'}/></div>}
-        {remove && <div className={styles.okButton}>  <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}        onClick={remove} type='remove'  state={!state.online && 'disabled'}/></div>}
+        { back   && <div className={styles.backButton}><RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={back}/></div> }
+        { add    && <div className={styles.addButton}> <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>}         onClick={add}    type='action'  state={!state.online && 'disabled'}/></div> }
+        { ok     && <div className={styles.okButton}>  <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}        onClick={ok}     type='confirm' state={!state.online && 'disabled'}/></div> }
+        { remove && <div className={styles.okButton}>  <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}        onClick={remove} type='remove'  state={!state.online && 'disabled'}/></div> }
 
-        {!hideHeader && header}
+        { !hideHeader && header }
       </div>
     )
   }
