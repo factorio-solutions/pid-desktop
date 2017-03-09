@@ -355,16 +355,18 @@ export function getAvailableCars () {
 
 export function getGarageDetails(){
   return (dispatch, getState) => {
+
     const state = getState().newReservation
     const onSuccess = (response) => {
-      const placePricings = getState().newReservation.pricings.floors.reduce((arr, floor) => { return arr.concat(floor.places) }, [])
       response.data.garage.floors.forEach((floor)=>{
         floor.places.map((place) => {
           place.available = floor.free_places.find(p=>p.id==place.id)!=undefined
-          place.pricings = placePricings.find((placePricing)=>{ return placePricing.id == place.id}).pricings
+          place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
+            pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
+            return arr
+          }, [])
           if (place.available && place.pricings[0]) { // add tooltip to available places
             const pricing = place.pricings[0]
-            // const pricing = placePricings.find((placePricing)=>{ return placePricing.id == place.id}).pricings[0]
             const symbol = pricing.currency.symbol
             place.tooltip = <div>
                               <div>
@@ -388,6 +390,7 @@ export function getGarageDetails(){
     }
 
     const onPricings = (response) => {
+      document.getElementById(Math.random()+'').child
       dispatch(setPricings(response.data.garage))
       callGarageDetails()
     }

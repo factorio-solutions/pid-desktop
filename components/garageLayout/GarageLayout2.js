@@ -5,7 +5,6 @@ import Tooltip     from '../tooltip/Tooltip'
 import ButtonStack from '../buttonStack/ButtonStack'
 import RoundButton from '../buttons/RoundButton'
 import RandomColor from 'randomcolor'
-import browser     from 'detect-browser'
 
 import styles from './GarageLayout.scss'
 
@@ -55,9 +54,11 @@ export default class GarageLayout extends Component {
     // add labels to all places
     let gControl = document.getElementById('Gcontrol')
 
+    const labelChildren = (child) => {
+        (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5))
+    }
 
-
-    gControl && (browser.name === 'safari' ? Array.prototype.slice.call(document.getElementById('Gcontrol').childNodes) : getElementById('Gcontrol').childNodes).forEach((child)=>{
+    gControl && Array.prototype.slice.call(document.getElementById('Gcontrol').childNodes).forEach((child)=>{ // convert childNodet to array cuz of Safari
         (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5))
     })
 
