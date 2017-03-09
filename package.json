@@ -41,6 +41,7 @@
     "chai": "^3.5.0",
     "counterpart": "^0.17.5",
     "css-loader": "^0.24.0",
+    "detect-browser": "^1.6.2",
     "eslint": "^3.3.1",
     "eslint-config-airbnb": "^10.0.1",
     "eslint-import-resolver-webpack": "^0.5.1",

@@ -1,4 +1,5 @@
-import * as ble from '../modules/ble/ble'
+import * as ble    from '../modules/ble/ble'
+import { request } from '../helpers/request'
 
 export const MOBILE_ACCESS_SET_OPENED  = "MOBILE_ACCESS_SET_OPENED"
 export const MOBILE_ACCESS_SET_MESSAGE = "MOBILE_ACCESS_SET_MESSAGE"
@@ -17,7 +18,19 @@ export function setMessage (message){
 }
 
 
-export function openGarage(){
+export function openGarage() {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+       if (response.data.open_gate != undefined) {
+         dispatch(setMessage('Request sucessfully send'))
+         dispatch(setOpened(true))
+       }
+    }
+    request(onSuccess, 'mutation OpenGate ($user_id:Id!) { open_gate(user_id: $user_id) }', {user_id: getState().mobileHeader.current_user.id})
+  }
+}
+
+export function openGarageBluetooth(){
   return (dispatch, getState) => {
     const name = "S721A08583" // change this according to reservations address
     const password = 'heslo'

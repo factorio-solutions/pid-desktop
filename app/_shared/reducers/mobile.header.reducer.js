@@ -1,7 +1,8 @@
 import {
   MOBILE_MENU_SET_GARAGES,
   MOBILE_MENU_SET_GARAGE,
-  MOBILE_MENU_SET_CURRENT_USER
+  MOBILE_MENU_SET_CURRENT_USER,
+  MOBILE_MENU_SET_SHOW_MENU
 }  from '../actions/mobile.header.actions'
 
 const defaultState =  { garages:      []
@@ -9,6 +10,7 @@ const defaultState =  { garages:      []
                       , current_user: undefined
                       , headerHeight: 101 //px
                       , online:       false
+                      , showMenu:     false
                       }
 
 
@@ -28,6 +30,11 @@ export default function mobileHeader (state = defaultState, action) {
     case MOBILE_MENU_SET_CURRENT_USER:
     return  { ...state
             , current_user: action.value
+            }
+
+    case MOBILE_MENU_SET_SHOW_MENU:
+    return  { ...state
+            , showMenu: action.value
             }
 
     case "MOBIE_MENU_SET_DEVICE_ONLINE":

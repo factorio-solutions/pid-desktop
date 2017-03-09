@@ -53,7 +53,12 @@ export default class GarageLayout extends Component {
   scanPlacesAddLabels(){
     // add labels to all places
     let gControl = document.getElementById('Gcontrol')
-    gControl && document.getElementById('Gcontrol').childNodes.forEach((child)=>{
+
+    const labelChildren = (child) => {
+        (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5))
+    }
+
+    gControl && Array.prototype.slice.call(document.getElementById('Gcontrol').childNodes).forEach((child)=>{ // convert childNodet to array cuz of Safari
         (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5))
     })
 

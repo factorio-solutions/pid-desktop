@@ -1,5 +1,6 @@
 import React, { Component, PropTypes }  from 'react'
 import ReactDOM                         from 'react-dom'
+import browser                          from 'detect-browser'
 
 import styles from './Dropdown.scss'
 
@@ -17,7 +18,8 @@ export default class Dropdown extends Component {
     style:    PropTypes.string,
     selected: PropTypes.number,
     hover:    PropTypes.bool,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    fixed:    PropTypes.bool
   }
 
   static defaultProps = {
@@ -48,13 +50,14 @@ export default class Dropdown extends Component {
   }
 
   render(){
-    const { label, content, selected, hover, style, onChange } = this.props
+    const { label, content, selected, hover, style, onChange, fixed } = this.props
 
     const prepareContent = (item, index, arr) => {
       const handleItemClick = () => {
         typeof item.onClick === 'function' && item.onClick()
         this.setState({selected: index})
         typeof onChange === "function" && onChange(index, true)// for form
+        browser.name === 'safari' && hide() // safari not handles onBlur well, so hide on select
       }
 
       return(
@@ -88,7 +91,7 @@ export default class Dropdown extends Component {
         element.classList.remove(styles.display)
         element.classList.remove(styles.hidden)
         element.style.width = buttonPosition.width+"px"
-        element.style.top = ((!hover)?(buttonPosition.bottom+document.body.scrollTop):(buttonPosition.top+document.body.scrollTop))+"px"
+        if (fixed !== true) {element.style.top = ((!hover)?(buttonPosition.bottom+document.body.scrollTop):(buttonPosition.top+document.body.scrollTop))+"px"}
         element.style.left = buttonPosition.left+"px"
       }
     }

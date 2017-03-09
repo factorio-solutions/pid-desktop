@@ -49,10 +49,13 @@ export class NewCarPage extends Component {
                         <Input onEnter={submitForm} onChange={actions.setModel}         label={t(['newCar', 'model'])}        error={t(['newCar', 'modelInvalid'])}        value={state.model}         name="client[model]"         placeholder={t(['newCar', 'modelPlaceholder'])}/>
                         <input type="checkbox" checked={state.lpg || false} onChange={actions.setLPG}/> {t(['newCar', 'lpg'])}
                         <div className={styles.inlineForm}>
-                          <Input onEnter={submitForm}                       onChange={actions.setWidth}  label={t(['newCar', 'width'])}  error={t(['newCar', 'widthInvalid'])}  value={state.width}  name="client[width]"  placeholder={t(['newCar', 'widthPlaceholder'])}  type="number"/>
-                          <Input onEnter={submitForm} style={styles.middle} onChange={actions.setHeight} label={t(['newCar', 'height'])} error={t(['newCar', 'heightInvalid'])} value={state.height} name="client[height]" placeholder={t(['newCar', 'heightPlaceholder'])} type="number"/>
-                          <Input onEnter={submitForm}                       onChange={actions.setLength} label={t(['newCar', 'length'])} error={t(['newCar', 'lengthInvalid'])} value={state.length} name="client[length]" placeholder={t(['newCar', 'lengthPlaceholder'])} type="number"/>
+                          <Input onEnter={submitForm}                       step="0.01" onChange={actions.setWidth}  label={t(['newCar', 'width'])}  error={t(['newCar', 'widthInvalid'])}  value={state.width}  name="client[width]"  placeholder={t(['newCar', 'widthPlaceholder'])}  type="number"/> 
+                          <Input onEnter={submitForm} style={styles.middle} step="0.01" onChange={actions.setHeight} label={t(['newCar', 'height'])} error={t(['newCar', 'heightInvalid'])} value={state.height} name="client[height]" placeholder={t(['newCar', 'heightPlaceholder'])} type="number"/>
+                          <Input onEnter={submitForm}                       step="0.01" onChange={actions.setLength} label={t(['newCar', 'length'])} error={t(['newCar', 'lengthInvalid'])} value={state.length} name="client[length]" placeholder={t(['newCar', 'lengthPlaceholder'])} type="number"/>
                         </div>
+                        <input onChange={(e)=>{
+                          console.log(e.target.value, e.target.checkValidity());
+                        }} type="number"/>
                       </Form>
                     </div>
 

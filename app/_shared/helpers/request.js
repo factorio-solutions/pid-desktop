@@ -8,13 +8,14 @@ import { setNotificationCount } from '../actions/notifications.actions'
 // import { request }  from '../_shared/helpers/request'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
-export function request (onSuccess, query, variables = null, operationName = null ){
-  var entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
+export function request (onSuccess, query, variables = null, operationName = null, onError ){
+  const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
+  // var entryPoint = 'https://park-it-direct.herokuapp.com/queries'
 
-  var data = { query
-             , operationName
-             , variables
-             }
+  const data = { query
+               , operationName
+               , variables
+               }
 
   var xmlHttp = new XMLHttpRequest()
 
@@ -33,9 +34,17 @@ export function request (onSuccess, query, variables = null, operationName = nul
       }
     }
     if (xmlHttp.readyState == 4){
-      const response = JSON.parse(xmlHttp.responseText)
-      store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
-      onSuccess({data: response.data})
+      try {
+        const response = JSON.parse(xmlHttp.responseText)
+        store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
+        onSuccess({data: response.data})
+      } catch (e) {
+        if (onError === undefined) {
+          throw(e)
+        } else {
+          onError()
+        }
+      }
     }
   }
 
