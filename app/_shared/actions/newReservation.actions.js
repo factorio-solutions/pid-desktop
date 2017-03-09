@@ -390,7 +390,6 @@ export function getGarageDetails(){
     }
 
     const onPricings = (response) => {
-      document.getElementById(Math.random()+'').child
       dispatch(setPricings(response.data.garage))
       callGarageDetails()
     }
