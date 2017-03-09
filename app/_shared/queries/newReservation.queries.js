@@ -39,27 +39,25 @@ export const GET_AVAILABLE_CARS = `query Query($user_id: Id) {
 export const GET_GARAGE_PRICINGS = `query ($id: Id!) {
   garage(id: $id) {
     id
-    floors {
-      id
-      places {
-        id
-        pricings{
-          name
-          flat_price
-          exponential_12h_price
-          exponential_day_price
-          exponential_week_price
-          exponential_month_price
-          weekend_price
-          currency{
-            symbol
-          }
-        }
+    pricings{
+      name
+      flat_price
+      exponential_12h_price
+      exponential_day_price
+      exponential_week_price
+      exponential_month_price
+      weekend_price
+      currency{
+        symbol
+      }
+      groups{
+        place_id
       }
     }
   }
 }
 `
+
 // get floors of garage of specified id
 export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id) {
   garage(id: $id) {

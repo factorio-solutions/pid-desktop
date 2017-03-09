@@ -13,11 +13,6 @@
       "plugins": [
         "babel-plugin-dev-expression"
       ]
-    },
-    "test": {
-      "plugins": [
-        ["webpack-loaders", { "config": "webpack.config.node.js", "verbose": false }]
-      ]
     }
   }
 }
