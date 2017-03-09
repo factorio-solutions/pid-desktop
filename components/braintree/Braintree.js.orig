@@ -20,7 +20,11 @@ export default class Braintree extends Component {
 
   render(){
     return(
+<<<<<<< HEAD
+      <div ref="wrapper"></div>
+=======
       <div ref="wrapper" style={{padding: '10px'}}></div>
+>>>>>>> 831346684a17fe751f93432612a5f1e7c697ea04
     )
   }
 }

@@ -82,6 +82,7 @@ export default class Input extends Component {
         }
       } else {
         this.setState({message: event.target.value});
+        console.log(event.target.value);
         if (typeof onChange === "function") {
           onChange(event.target.value, event.target.checkValidity()&&event.target.value!="")
         }
