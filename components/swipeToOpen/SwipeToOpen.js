@@ -10,11 +10,12 @@ export default class SwipeToOpen extends Component{
     success: PropTypes.bool, // set this only when onSwipe finishes
     message: PropTypes.string,
     size:    PropTypes.number,
-    state:   PropTypes.string // 'disabled' => gray text
+    state:   PropTypes.string, // 'disabled' => gray text
+    content: PropTypes.object // main page content
   }
 
   render(){
-    const { onSwipe, success, size, message, state } = this.props
+    const { onSwipe, success, size, message, state, content} = this.props
 
     const swipeOptions = {
       continuous: false,
@@ -30,6 +31,7 @@ export default class SwipeToOpen extends Component{
         <div className={`${styles.pane} ${state=='disabled' ? styles.disabledContent : styles.enabledContent}`} >
           <div style={{height: size+"px"}}>
             <div className={styles.paneContent}>
+              {content && content}
               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
               <br/>
               Swipe to open the gate
