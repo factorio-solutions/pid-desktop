@@ -66,6 +66,7 @@ export default class ReleaseNotesPage extends Component {
 
     return (
       <div style={{padding: "15px"}}>
+        <h3>Test zone</h3>
         {/* Generate PDF button ================================================*/}
         {/* <button onClick={onClick}>Generate PDF</button> */}
         {/* <button onClick={downloadClick}>Download PDF</button> */}
@@ -80,9 +81,18 @@ export default class ReleaseNotesPage extends Component {
         {/* <br/>*/}
         {/* <button onClick={onBraintreeReport}>Braintree report</button>*/}
 
+        <h2>Go back</h2>
         <div>
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
         </div>
+
+        <h2>Release notes</h2>
+        <h3>r20170310a</h3>
+        <ul>
+          <li>Oprava všemožných bugů na trellu</li>
+          <li>Optimalizace newReservation rychlosti načítání</li>
+          <li>Spojení s novým API dokončeno až na případné bugy, </li>
+        </ul>
 
         <h3>r20170216a</h3>
         <ul>

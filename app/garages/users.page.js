@@ -88,7 +88,7 @@ export class GarageUsersPage extends Component {
       )
     }
 
-    const data = state.users.map((garage_user) => {
+    const data = state.users.sort((a,b) => { return a.user.id - b.user.id }).map((garage_user) => { // sort - data order has to stay the same
       const { full_name, email, phone } = garage_user.user
       return { full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
     })

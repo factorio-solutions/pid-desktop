@@ -147,7 +147,7 @@ export default class Table extends Component {
 			)
 		}
 
-		const prepareBody = (value,key, arr)=>{
+		const prepareBody = (value, key, arr)=>{
 			return [
 				<TableRow key={key} className={`${(spoilerId == value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`} schema={schema} data={value} onClick={()=>{handleRowClick(value.key)}} hover/>,
 				(arr.length <=5 || spoilerId == value.key) && value.spoiler && <tr key={value.key+'-spoiler'} className={`${styles.tr} ${styles.spoiler}`}><td colSpan={schema.length}>{value.spoiler}</td></tr>
