@@ -190,6 +190,16 @@ export function getAvailableCars () {
 export function pickPlaces() {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
+      response.data.garage.floors.forEach((floor) => {
+        floor.free_places.map((place) => {
+          place.pricings = response.data.garage.pricings.reduce((arr, pricing)=>{
+                pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
+                return arr
+              }, [])
+          return place
+        })
+      })
+
       dispatch( setFloors(response.data.garage.floors) )
 
       if (response.data.garage.floors.find((floor)=> {return floor.free_places.find((place)=>{return place.id == getState().mobileNewReservation.place_id})}) == undefined){
@@ -219,16 +229,17 @@ export function checkGarageChange(garageId, nextGarageId){
 
 export function autoselectPlace(){
     return (dispatch, getState) => {
-      const freePlaces = getState().mobileNewReservation.availableFloors.reduce((arr, floor)=> { // free places, 
-        arr.push(floor.freePlaces.filter((place)=>{
+      const freePlaces = getState().mobileNewReservation.availableFloors.reduce((arr, floor)=> { // free places,
+        return arr.concat(floor.free_places.filter((place)=>{
           if (getState().mobileNewReservation.client_id == undefined) {
             return place.pricings.length >= 1
           } else {
             return true
           }
         }))
-        return arr
       }, [])
+
+      console.log(freePlaces);
 
       dispatch(setPlace(freePlaces.length == 0 ? undefined : freePlaces[0].id))
       dispatch(setAutoselect(true))

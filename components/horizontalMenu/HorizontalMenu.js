@@ -3,6 +3,8 @@ import React, { Component, PropTypes }  from 'react'
 import InlineButton from '../buttons/InlineButton'
 import ButtonStack  from '../buttonStack/ButtonStack'
 
+import styles from './HorizontalMenu.scss'
+
 
 export default function HorizontalMenu ({ labels = [], selected })  {
   const prepareContent = (item, index, arr) => {
@@ -10,8 +12,10 @@ export default function HorizontalMenu ({ labels = [], selected })  {
   }
 
   return(
-    <ButtonStack style='horizontal'>
-      {labels.map(prepareContent)}
-    </ButtonStack>
+    <div className={styles.horizontalMenu}>
+      <ButtonStack style='horizontal'>
+        {labels.map(prepareContent)}
+      </ButtonStack>
+    </div>
   )
 }

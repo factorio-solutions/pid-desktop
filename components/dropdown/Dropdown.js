@@ -1,5 +1,6 @@
 import React, { Component, PropTypes }  from 'react'
 import ReactDOM                         from 'react-dom'
+import browser                          from 'detect-browser'
 
 import styles from './Dropdown.scss'
 
@@ -56,6 +57,7 @@ export default class Dropdown extends Component {
         typeof item.onClick === 'function' && item.onClick()
         this.setState({selected: index})
         typeof onChange === "function" && onChange(index, true)// for form
+        browser.name === 'safari' && hide() // safari not handles onBlur well, so hide on select
       }
 
       return(
