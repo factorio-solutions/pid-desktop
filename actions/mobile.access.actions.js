@@ -2,10 +2,13 @@ import * as ble    from '../modules/ble/ble'
 import moment      from 'moment'
 import { request } from '../helpers/request'
 
+import { MOBILE_ACCESS_OPEN_GATE } from '../queries/mobile.access.queries'
+
+
 export const MOBILE_ACCESS_SET_OPENED               = "MOBILE_ACCESS_SET_OPENED"
 export const MOBILE_ACCESS_SET_MESSAGE              = "MOBILE_ACCESS_SET_MESSAGE"
-export const MOBILE_ACCESS_SET_RESERVATION          = "MOBILE_ACCESS_SET_RESERVATION"
 export const MOBILE_ACCESS_SET_SELECTED_RESERVATION = 'MOBILE_ACCESS_SET_SELECTED_RESERVATION'
+
 
 export function setOpened (opened){
   return  { type: MOBILE_ACCESS_SET_OPENED
@@ -19,18 +22,19 @@ export function setMessage (message){
           }
 }
 
-export function setReservations (arr){
-  return  { type: MOBILE_ACCESS_SET_RESERVATION
-          , value: arr
-          }
-}
-
 export function setSelected (index){
   return  { type: MOBILE_ACCESS_SET_SELECTED_RESERVATION
           , value: index
           }
 }
 
+
+// will return ongoing reservations
+export function getCurrentReservations() {
+  return (dispatch, getState) => {
+    return getState().reservations.reservations.filter(function(reservation){ return reservation.approved && moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) })
+  }
+}
 
 export function openGarage() {
   return (dispatch, getState) => {
@@ -44,13 +48,12 @@ export function openGarage() {
        }
     }
 
-    request(onSuccess, 'mutation OpenGate ($user_id:Id!, $reservation_id:Id!) { open_gate(user_id: $user_id, reservation_id: $reservation_id) }', {user_id: getState().mobileHeader.current_user.id, reservation_id: dispatch(getCurrentReservations())[getState().mobileAccess.selectedReservation].id})
-  }
-}
-
-export function getCurrentReservations() {
-  return (dispatch, getState) => {
-    return getState().reservations.reservations.filter(function(reservation){ return moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) })
+    request( onSuccess
+           , MOBILE_ACCESS_OPEN_GATE
+           , { user_id: getState().mobileHeader.current_user.id
+             , reservation_id: dispatch(getCurrentReservations())[getState().mobileAccess.selectedReservation].id
+             }
+           )
   }
 }
 

@@ -6,7 +6,7 @@ import moment from 'moment'
 export default function ReservationRow ({ reservation })  {
 
   return(
-    <table className={styles.table}>
+    <table className={`${styles.table} ${reservation.approved === false && styles.disabled}`}>
       <tbody>
         <tr>
           <td>

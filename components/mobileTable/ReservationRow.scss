@@ -1,3 +1,5 @@
+@import '../../styles/app.components';
+
 .table{
   width: 100%;
 }
@@ -10,4 +12,8 @@
 .place{
   font-weight: bold;
   font-size: 35px;
+}
+
+.disabled{
+  color: $lightGray
 }
