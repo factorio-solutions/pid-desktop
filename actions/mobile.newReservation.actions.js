@@ -239,8 +239,6 @@ export function autoselectPlace(){
         }))
       }, [])
 
-      console.log(freePlaces);
-
       dispatch(setPlace(freePlaces.length == 0 ? undefined : freePlaces[0].id))
       dispatch(setAutoselect(true))
     }

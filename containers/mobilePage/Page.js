@@ -38,7 +38,13 @@ export class Page extends Component {
     router: React.PropTypes.object
   }
 
+  logout(){ // private method
+    this.context.router.push('/login')
+    this.props.actions.logout()
+  }
+
   componentDidMount(){
+    window.addEventListener("unauthorizedAccess",  () => { localStorage['jwt'] && this.logout()  },  false) // 401 status, redirect to login
     const { actions, hideDropdown, hideHeader } = this.props
     !hideHeader && !hideDropdown && actions.initGarages()
   }
@@ -51,7 +57,7 @@ export class Page extends Component {
     const selectedGarage = () => { return state.garages.findIndex(function(garage){return garage.id == state.garage_id}) }
     const toggleMenu     = () => { actions.toggleMenu() }
     const currentUser    = () => { console.log('TODO: current user profile') }
-    const logOut         = () => { this.context.router.push('/login'); actions.logout() }
+    const logOut         = () => { this.logout() }
     const sideMenuItems  = [ <MenuButton key='1' icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} /> ]
 
     const garageContent = () => {
