@@ -32,7 +32,6 @@ export class NewReservationPage extends Component {
 
   render () {
     const { state, actions } = this.props
-    // console.log(state);
 
     const handleBack       = () => { nav.to('/reservations') }
     const toOverview       = () => { nav.to('/reservations/newReservation/overview') }
