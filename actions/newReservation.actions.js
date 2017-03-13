@@ -1,7 +1,8 @@
-import moment      from 'moment'
-import { request } from '../helpers/request'
-import { t }       from '../modules/localization/localization'
-import * as nav    from '../helpers/navigation'
+import moment             from 'moment'
+import { request }        from '../helpers/request'
+import { calculatePrice } from '../helpers/calculatePrice'
+import { t }              from '../modules/localization/localization'
+import * as nav           from '../helpers/navigation'
 
 import {
   GET_AVAILABLE_USERS,
@@ -45,13 +46,11 @@ export function setUserId (value){
              , value
              })
 
-    dispatch(getAvailableGarages()) // reload garages
     dispatch(setGarageIndex(undefined))
+    dispatch(getAvailableGarages()) // reload garages
     dispatch(setGarage(undefined))
-    dispatch(getAvailableClients()) // reload clients
     dispatch(setClientId(undefined))
     dispatch(getAvailableCars()) // reload car informations
-    dispatch(setCarId(undefined))
   }
 }
 
@@ -104,7 +103,7 @@ export function setGarageIndex (value){
              })
 
     dispatch(getAvailableClients())
-    dispatch(getGarageDetails())
+    value !== undefined && dispatch(getGarageDetails())
   }
 }
 
@@ -172,51 +171,10 @@ export function setDurationDate (value){
 export function setPrice (price){
   return (dispatch, getState) => {
     const state = getState().newReservation
-    const duration = dispatch(getDuration()) / 60 // in hours
+    const from = moment(state.from, MOMENT_DATETIME_FORMAT)
+    const to = moment(state.to, MOMENT_DATETIME_FORMAT)
 
-    const from = moment(state.from, MOMENT_DATETIME_FORMAT).unix()
-    const to = moment(state.to, MOMENT_DATETIME_FORMAT).unix()
-
-    let times = [from]
-    while (times[times.length-1] + 900 < to) { // 900 is 15 mins
-      times = times.concat(times[times.length-1] + 900)
-    }
-    times = times.concat(to)
-    times.shift()
-
-    // console.log(price);
-    let ammount = times.reduce((sum, timestamp) => {
-      const date = moment(timestamp*1000)
-      switch (true) {
-        case price.weekend_price !== null && (date.isoWeekday() == 6 || date.isoWeekday() == 7):
-          // console.log('weekend price detected');
-          sum += price.weekend_price*0.25
-          break
-        case price.flat_price !== null:
-          // console.log('flat price detected');
-          sum += price.flat_price*0.25
-          break
-        case price.exponential_12h_price !== null && duration<12:
-          // console.log('12h price detected');
-          sum += price.exponential_12h_price*0.25
-          break
-        case price.exponential_day_price !== null && duration<24:
-          // console.log('day price detected');
-          sum += price.exponential_day_price*0.25
-          break
-        case price.exponential_week_price !== null && duration<168:
-          // console.log('week price detected');
-          sum += price.exponential_week_price*0.25
-          break
-        case price.exponential_month_price !== null:
-          // console.log('month price detected');
-          sum += price.exponential_month_price*0.25
-          break
-      }
-      return sum
-    }, 0)
-
-    dispatch(setPriceValue(`${Math.round(ammount * 100) / 100} ${price.currency.symbol}`))
+    dispatch(setPriceValue(`${calculatePrice(price, from ,to)} ${price.currency.symbol}`))
   }
 }
 
@@ -358,35 +316,37 @@ export function getGarageDetails(){
 
     const state = getState().newReservation
     const onSuccess = (response) => {
-      response.data.garage.floors.forEach((floor)=>{
-        floor.places.map((place) => {
-          place.available = floor.free_places.find(p=>p.id==place.id)!=undefined
-          place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
-            pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
-            return arr
-          }, [])
-          if (place.available && place.pricings[0]) { // add tooltip to available places
-            const pricing = place.pricings[0]
-            const symbol = pricing.currency.symbol
-            place.tooltip = <div>
-                              <div>
-                                {pricing.flat_price ? <span><b>{t(['newPricing','flatPrice'])}:</b> {pricing.flat_price} {symbol}</span>
-                                                    : <span><b>{t(['newPricing','exponentialPrice'])}:</b>{pricing.exponential_12h_price} - {pricing.exponential_day_price} - {pricing.exponential_week_price} - {pricing.exponential_month_price} {symbol}</span>}
+      if (getState().newReservation.pricings !== undefined ) { // pricings can be deleted before response comes here
+        response.data.garage.floors.forEach((floor)=>{
+          floor.places.map((place) => {
+            place.available = floor.free_places.find(p=>p.id==place.id)!=undefined
+            place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
+              pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
+              return arr
+            }, [])
+            if (place.available && place.pricings[0]) { // add tooltip to available places
+              const pricing = place.pricings[0]
+              const symbol = pricing.currency.symbol
+              place.tooltip = <div>
+                                <div>
+                                  {pricing.flat_price ? <span><b>{t(['newPricing','flatPrice'])}:</b> {pricing.flat_price} {symbol}</span>
+                                                      : <span><b>{t(['newPricing','exponentialPrice'])}:</b>{pricing.exponential_12h_price} - {pricing.exponential_day_price} - {pricing.exponential_week_price} - {pricing.exponential_month_price} {symbol}</span>}
+                                </div>
+                                {pricing.weekend_price && <div>
+                                  <span>
+                                    <b>{t(['newPricing','weekendPrice'])}:</b> {pricing.weekend_price} {symbol}
+                                  </span>
+                                </div>}
                               </div>
-                              {pricing.weekend_price && <div>
-                                <span>
-                                  <b>{t(['newPricing','weekendPrice'])}:</b> {pricing.weekend_price} {symbol}
-                                </span>
-                              </div>}
-                            </div>
-          }
+            }
 
-          return place
+            return place
+          })
         })
-      })
-      dispatch(setGarage(response.data.garage))
-      dispatch(setLoading(false))
-      dispatch(autoSelectPlace())
+        dispatch(setGarage(response.data.garage))
+        dispatch(setLoading(false))
+        dispatch(autoSelectPlace())
+      }
     }
 
     const onPricings = (response) => {
@@ -413,6 +373,9 @@ export function getGarageDetails(){
       } else {
         callGarageDetails()
       }
+    } else { // garage not found, deselect any places
+      dispatch(setPricings(undefined))
+      dispatch(setPlace(undefined))
     }
   }
 }
