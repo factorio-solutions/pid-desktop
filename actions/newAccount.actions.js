@@ -17,6 +17,7 @@ export const SET_NEW_ACCOUNT_POSTAL_CODE  = "SET_NEW_ACCOUNT_POSTAL_CODE"
 export const SET_NEW_ACCOUNT_STATE        = "SET_NEW_ACCOUNT_STATE"
 export const SET_NEW_ACCOUNT_COUNTRY      = "SET_NEW_ACCOUNT_COUNTRY"
 export const CLEAR_NEW_ACCOUNT_FORM       = "CLEAR_NEW_ACCOUNT_FORM"
+export const SET_NEW_ACCOUNT_HIGHLIGHT    = "SET_NEW_ACCOUNT_HIGHLIGHT"
 
 
 export function setName (value){
@@ -85,6 +86,18 @@ export function setCountry (value){
   return { type: SET_NEW_ACCOUNT_COUNTRY
          , value
          }
+}
+
+export function setHighlight (value){
+  return { type: SET_NEW_ACCOUNT_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newAccount.highlight))
+  }
 }
 
 export function clearForm (value){

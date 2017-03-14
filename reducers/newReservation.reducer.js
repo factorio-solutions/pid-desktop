@@ -23,6 +23,7 @@ import {
   NEW_RESERVATION_SET_PRICE,
   NEW_RESERVATION_SET_ERROR,
   NEW_RESERVATION_SET_BRAINTREE_TOKEN,
+  NEW_RESERVATION_SET_HIGHLIGHT,
 
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
@@ -52,6 +53,7 @@ const defaultState =  { user_id:          undefined // id of selected user reser
                       , price:            undefined
                       , error:            undefined
                       , braintree_token:  undefined
+                      , hightlight:       false
                       }
 
 
@@ -152,6 +154,11 @@ export default function newReservation (state = defaultState, action) {
     case NEW_RESERVATION_SET_BRAINTREE_TOKEN:
       return { ...state
              , braintree_token: action.value
+             }
+
+    case NEW_RESERVATION_SET_HIGHLIGHT:
+      return { ...state
+             , highlight: action.value
              }
 
     case NEW_RESERVATION_CLEAR_FORM:

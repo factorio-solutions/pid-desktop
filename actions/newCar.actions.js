@@ -5,11 +5,12 @@ import { CREATE_NEW_CAR, EDIT_CAR_INIT, EDIT_CAR_MUTATION } from '../queries/new
 
 export const SET_CAR_LICENCE_PLATE = "SET_CAR_LICENCE_PLATE"
 export const SET_CAR_COLOR         = "SET_CAR_COLOR"
-export const SET_CAR_MODEL          = "SET_CAR_MODEL"
+export const SET_CAR_MODEL         = "SET_CAR_MODEL"
 export const SET_CAR_WIDTH         = "SET_CAR_WIDTH"
 export const SET_CAR_HEIGHT        = "SET_CAR_HEIGHT"
 export const SET_CAR_LENGTH        = "SET_CAR_LENGTH"
 export const SET_CAR_LPG           = "SET_CAR_LPG"
+export const SET_CAR_HIGHLIGHT     = "SET_CAR_HIGHLIGHT"
 export const CLEAR_CAR_FORM        = "CLEAR_CAR_FORM"
 
 
@@ -52,6 +53,20 @@ export function setLength (value){
 export function setLPG (){
   return { type: SET_CAR_LPG }
 }
+
+export function setHighlight (value){
+  return { type: SET_CAR_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    console.log('set to', !getState().newCar.highlight);
+    dispatch(setHighlight(!getState().newCar.highlight))
+  }
+}
+
 
 export function clearForm (){
   return { type: CLEAR_CAR_FORM }

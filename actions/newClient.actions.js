@@ -12,6 +12,7 @@ export const SET_CLIENT_CITY        = "SET_CLIENT_CITY"
 export const SET_CLIENT_POSTAL_CODE = "SET_CLIENT_POSTAL_CODE"
 export const SET_CLIENT_STATE       = "SET_CLIENT_STATE"
 export const SET_CLIENT_COUNTRY     = "SET_CLIENT_COUNTRY"
+export const SET_CLIENT_HIGHLIGHT   = "SET_CLIENT_HIGHLIGHT"
 export const CLEAR_CLIENT_FORM      = "CLEAR_CLIENT_FORM"
 
 
@@ -67,6 +68,18 @@ export function setCountry (value) {
   return { type: SET_CLIENT_COUNTRY
          , value
          }
+}
+
+export function setHighlight (value){
+  return { type: SET_CLIENT_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newClient.highlight))
+  }
 }
 
 export function clearForm (){

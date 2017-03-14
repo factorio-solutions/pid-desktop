@@ -15,7 +15,8 @@ export default class PatternInput extends Component {
     onEnter:      PropTypes.func, // called when enter pressed
     value:        PropTypes.string,
     type:         PropTypes.string,
-    inlineMenu:   PropTypes.object
+    inlineMenu:   PropTypes.object,
+    highlight:    PropTypes.bool
   }
 
   constructor(props) { // just to handle two way databinding
@@ -28,7 +29,7 @@ export default class PatternInput extends Component {
   }
 
   render(){
-    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type } = this.props
+    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, highlight } = this.props
 
     const handleChange = (event) => {
       this.setState({message: event.target.value});
@@ -45,9 +46,11 @@ export default class PatternInput extends Component {
       }
     }
 
+    const isEmpty = () => { return this.refs.input ? this.refs.input.value==='' : true }
+
     return(
-      <div className={`${styles.customFormGroup} ${styles.center}`} >
-        <input pattern={pattern} type={type?type:'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)}/>
+      <div className={`${styles.customFormGroup} ${styles.center} ${highlight && isEmpty() && styles.highlighted}`} >
+        <input pattern={pattern} type={type?type:'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} ref='input'/>
         <span className={styles.bar}></span>
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>

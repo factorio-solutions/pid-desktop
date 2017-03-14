@@ -9,7 +9,7 @@ import React    from 'react'
 // question = text of confirm window when type == 'remove'
 
 
-export default function Button ({ content, onClick, type, state, style, question })  {
+export default function Button ({ content, onClick, onDisabledClick, type, state, style, question })  {
 
   let handleClick = (e) => {
         e.stopPropagation()
@@ -21,6 +21,6 @@ export default function Button ({ content, onClick, type, state, style, question
       }
 
   return (
-    <button className={style} onClick={state!='disabled' && handleClick} type='button'>{content}</button>
+    <button className={style} onClick={state==='disabled' ? onDisabledClick : handleClick} type='button'>{content}</button>
   )
 }

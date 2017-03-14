@@ -14,6 +14,7 @@ import {
   NEW_GARAGE_SET_ACCOUNT,
   NEW_GARAGE_SET_AVAILABLE_TARIFS,
   NEW_GARAGE_SET_TARIF,
+  NEW_GARAGE_SET_HIGHLIGHT,
   NEW_GARAGE_SET_FETCHING,
   NEW_GARAGE_CLEAR_FORM
 }  from '../actions/newGarage.actions'
@@ -49,6 +50,7 @@ const defaultState =  { id:                undefined
                       , tarif_id:          undefined
                       , availableAccounts: []
                       , account_id:        undefined
+                      , hightlight:        false
 
                       , error:             undefined
                       , fetching:          false
@@ -123,6 +125,11 @@ export default function newGarage (reducerState = defaultState, action) {
     case NEW_GARAGE_SET_TARIF:
     return { ... reducerState
            , tarif_id: action.value
+           }
+
+    case NEW_GARAGE_SET_HIGHLIGHT:
+    return { ... reducerState
+           , highlight: action.value
            }
 
     case NEW_GARAGE_SET_ERROR:

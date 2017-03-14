@@ -13,13 +13,14 @@ import styles from './Dropdown.scss'
 // fillParent = flag to indicate whenever or not to fill parent element widthvise
 export default class Dropdown extends Component {
   static propTypes = {
-    label:    PropTypes.string.isRequired,
-    content:  PropTypes.array.isRequired,
-    style:    PropTypes.string,
-    selected: PropTypes.number,
-    hover:    PropTypes.bool,
-    onChange: PropTypes.func,
-    fixed:    PropTypes.bool
+    label:     PropTypes.string.isRequired,
+    content:   PropTypes.array.isRequired,
+    style:     PropTypes.string,
+    selected:  PropTypes.number,
+    hover:     PropTypes.bool,
+    onChange:  PropTypes.func,
+    fixed:     PropTypes.bool,
+    highlight: PropTypes.bool
   }
 
   static defaultProps = {
@@ -50,7 +51,7 @@ export default class Dropdown extends Component {
   }
 
   render(){
-    const { label, content, selected, hover, style, onChange, fixed } = this.props
+    const { label, content, selected, hover, style, onChange, fixed, highlight } = this.props
 
     const prepareContent = (item, index, arr) => {
       const handleItemClick = () => {
@@ -96,33 +97,20 @@ export default class Dropdown extends Component {
       }
     }
 
-
-    const onMouseEnter = function(){
-      if (hover){
-        unhide()
-      }
-    }
-
-    const onMouseLeave = function(){
-      if (hover){
-        hide()
-      }
-    }
-
-    const onBlur = function (e){
-      hide();
-    }
+    const onMouseEnter = ()  => { if (hover) unhide() }
+    const onMouseLeave = ()  => { if (hover) hide() }
+    const onBlur       = (e) => { hide() }
 
     return(
       <div>
         <button
           type='button'
-          className={`${styles.button} ${styles[style]}`}
+          className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted}`}
           onClick={toggleDropdown}
           onMouseEnter={onMouseEnter}
           onBlur={onBlur}>
             <span className={styles.marginCorrection}> {this.state.selected==undefined||content[this.state.selected]==undefined ? label : content[this.state.selected].label} </span>
-            <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>
+            {content.length > 1 && <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>}
         </button>
         <ul className={`${styles.drop} ${styles.hidden} ${styles.display}`} onMouseLeave={onMouseLeave}>
           {content.map(prepareContent)}

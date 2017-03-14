@@ -8,6 +8,7 @@ import {
   SET_CLIENT_POSTAL_CODE,
   SET_CLIENT_STATE,
   SET_CLIENT_COUNTRY,
+  SET_CLIENT_HIGHLIGHT,
   CLEAR_CLIENT_FORM
 }  from '../actions/newClient.actions'
 
@@ -20,6 +21,7 @@ const defaultState =  { name:        ""
                       , postal_code: ""
                       , state:       ""
                       , country:     ""
+                      , highlight:   false
                       }
 
 
@@ -69,6 +71,11 @@ export default function newClient (appState = defaultState, action) {
     case SET_CLIENT_COUNTRY:
     return { ...appState
            , country: action.value
+           }
+
+    case SET_CLIENT_HIGHLIGHT:
+    return { ...appState
+           , highlight: action.value
            }
 
     case CLEAR_CLIENT_FORM:

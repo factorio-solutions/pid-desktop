@@ -16,6 +16,7 @@ export const NEW_MARKETING_SET_IMAGES               = 'NEW_MARKETING_SET_IMAGES'
 export const NEW_MARKETING_SET_MODAL                = 'NEW_MARKETING_SET_MODAL'
 export const NEW_MARKETING_CLEAR_FORM               = 'NEW_MARKETING_CLEAR_FORM'
 export const NEW_MARKETING_SET_MODAL_ERROR          = 'NEW_MARKETING_SET_MODAL_ERROR'
+export const NEW_MARKETING_SET_HIGHLIGHT            = 'NEW_MARKETING_SET_HIGHLIGHT'
 export const NEW_MARKETING_SET_GARAGE               = 'NEW_MARKETING_SET_GARAGE'
 
 export const attributes = [ // informative attributes - same tags are on server side
@@ -107,6 +108,18 @@ export function setModalError (error){
   return  { type: NEW_MARKETING_SET_MODAL_ERROR
           , value: error
           }
+}
+
+export function setHighlight (value){
+  return { type: NEW_MARKETING_SET_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newMarketing.highlight))
+  }
 }
 
 export function clearForm (){

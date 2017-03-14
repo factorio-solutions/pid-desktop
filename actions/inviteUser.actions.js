@@ -20,6 +20,7 @@ export const INVITE_USER_SET_CARS                = "INVITE_USER_SET_CARS"
 export const INVITE_USER_SET_ERROR                = "INVITE_USER_SET_ERROR"
 export const INVITE_USER_SET_SUCCESS              = "INVITE_USER_SET_SUCCESS"
 export const INVITE_USER_RESET_FORM               = "INVITE_USER_RESET_FORM"
+export const INVITE_USER_SET_HIGHLIGHT            = "INVITE_USER_SET_HIGHLIGHT"
 export const INVITE_USER_SET_CURRENT_EMAIL        = "INVITE_USER_SET_CURRENT_EMAIL"
 
 
@@ -99,6 +100,19 @@ export function setCurrentEmail (email){
           , value: email
           }
 }
+
+export function setHighlight (value){
+  return { type: INVITE_USER_SET_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newAccount.highlight))
+  }
+}
+
 
 export function resetForm (){
   return  { type: INVITE_USER_RESET_FORM }

@@ -4,11 +4,12 @@ import { CREATE_RENT, UPDATE_RENT, GET_RENT_DETAILS } from '../queries/newRent.q
 
 import * as nav from '../helpers/navigation'
 
-export const NEW_RENT_SET_NAME = "NEW_RENT_SET_NAME"
-export const NEW_RENT_SET_PRICE = "NEW_RENT_SET_PRICE"
-export const NEW_RENT_SET_CURRENCIES = "NEW_RENT_SET_CURRENCIES"
+export const NEW_RENT_SET_NAME              = "NEW_RENT_SET_NAME"
+export const NEW_RENT_SET_PRICE             = "NEW_RENT_SET_PRICE"
+export const NEW_RENT_SET_CURRENCIES        = "NEW_RENT_SET_CURRENCIES"
 export const NEW_RENT_SET_SELECTED_CURRENCY = "NEW_RENT_SET_SELECTED_CURRENCY"
-export const NEW_RENT_CLEAR_CLIENT_FORM = "NEW_RENT_CLEAR_CLIENT_FORM"
+export const NEW_RENT_SET_HIGHLIGHT         = "NEW_RENT_SET_HIGHLIGHT"
+export const NEW_RENT_CLEAR_CLIENT_FORM     = "NEW_RENT_CLEAR_CLIENT_FORM"
 
 
 export function setName (name, valid) {
@@ -33,6 +34,18 @@ export function setCurrency (currency) {
   return { type: NEW_RENT_SET_SELECTED_CURRENCY
          , value: currency
          }
+}
+
+export function setHighlight (value){
+  return { type: NEW_RENT_SET_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newRent.highlight))
+  }
 }
 
 export function clearForm () {

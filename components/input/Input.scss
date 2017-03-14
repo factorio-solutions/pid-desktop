@@ -193,6 +193,12 @@ $placeholder-delay:       0.1s;
   }
 }
 
+.highlighted{
+  >input {
+    border-bottom: 1px solid $red;
+  }
+}
+
 /* Alignment definitions */
 .left>input{
   text-align: left;
