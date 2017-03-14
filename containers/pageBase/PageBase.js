@@ -94,7 +94,7 @@ export class PageBase extends Component {
     const modalClick = () => {
       actions.setError(undefined)
     }
-    
+
     const notificationsModalClick = () => {
       actions.setShowModal(false)
     }
@@ -135,7 +135,7 @@ export class PageBase extends Component {
 
     const bottomLabels =  <div className={styles.bottom}>
                             <RoundTextButton onClick={addFeaturesClic} content={t(['pageBase', 'addFeatures'])} type="action" />
-                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170216a </div>
+                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170310a </div>
                             <VerticalMenu labels={labelsBottom} revertDivider={true} size={VerticalMenuItemSize}/>
                           </div>
 
