@@ -24,6 +24,7 @@ export const NEW_GARAGE_SET_AVAILABLE_ACCOUNTS  = "NEW_GARAGE_SET_AVAILABLE_ACCO
 export const NEW_GARAGE_SET_ACCOUNT             = "NEW_GARAGE_SET_ACCOUNT"
 export const NEW_GARAGE_SET_AVAILABLE_TARIFS    = "NEW_GARAGE_SET_AVAILABLE_TARIFS"
 export const NEW_GARAGE_SET_TARIF               = "NEW_GARAGE_SET_TARIF"
+export const NEW_GARAGE_SET_HIGHLIGHT           = "NEW_GARAGE_SET_HIGHLIGHT"
 export const NEW_GARAGE_SET_ERROR               = "NEW_GARAGE_SET_ERROR"
 export const NEW_GARAGE_SET_FETCHING            = "NEW_GARAGE_SET_FETCHING"
 export const NEW_GARAGE_CLEAR_FORM              = "NEW_GARAGE_CLEAR_FORM"
@@ -110,6 +111,12 @@ export function setTarif (id){
           }
 }
 
+export function setHighlight (value){
+  return  { type: NEW_GARAGE_SET_HIGHLIGHT
+          , value
+          }
+}
+
 export function setError (error){
   return  { type: NEW_GARAGE_SET_ERROR
           , value: error
@@ -127,6 +134,7 @@ export function clearForm (){
 }
 
 
+export function toggleHighlight(){ return (dispatch, getState) => { dispatch(setHighlight(!getState().newGarage.highlight)) } }
 export function toggleLPG(){ return (dispatch, getState) => { dispatch(setLPG(!getState().newGarage.lpg)) } }
 
 export function removeFloor(index){ return (dispatch, getState) => { dispatch(setFloors(update(getState().newGarage.floors, {$splice: [[index, 1]]}))) } }

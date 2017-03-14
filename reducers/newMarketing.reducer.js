@@ -10,6 +10,7 @@ import {
   NEW_MARKETING_SET_IMAGES,
   NEW_MARKETING_SET_MODAL,
   NEW_MARKETING_SET_MODAL_ERROR,
+  NEW_MARKETING_SET_HIGHLIGHT,
   NEW_MARKETING_CLEAR_FORM
 }  from '../actions/newMarketing.actions'
 
@@ -21,6 +22,7 @@ var initialState =  { garage:               undefined
                     , descriptions:         {} // en: "description text... "
                     , images:               [{tag: undefined, img: '', file: ''}] // {tag: '', img: 'base64Code'}
 
+                    , highlight:    false
                     , modalContent: undefined
                     , modalError:   undefined
                     }
@@ -76,9 +78,9 @@ export default function newMarketing (state = addParameters(initialState, attrib
              , images: action.value
              }
 
-    case NEW_MARKETING_SET_MODAL:
+    case NEW_MARKETING_SET_HIGHLIGHT:
        return { ...state
-              , modalContent: action.value
+              , highlight: action.value
               }
 
     case NEW_MARKETING_SET_MODAL:

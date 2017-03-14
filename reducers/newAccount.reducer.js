@@ -11,6 +11,7 @@ import {
   SET_NEW_ACCOUNT_POSTAL_CODE,
   SET_NEW_ACCOUNT_STATE,
   SET_NEW_ACCOUNT_COUNTRY,
+  SET_NEW_ACCOUNT_HIGHLIGHT,
   CLEAR_NEW_ACCOUNT_FORM
 }  from '../actions/newAccount.actions'
 
@@ -26,6 +27,7 @@ const defaultState =  { name:        ""
                       , postal_code: ""
                       , state:       ""
                       , country:     ""
+                      , hightlight:  false
                       }
 
 
@@ -90,6 +92,11 @@ export default function newAccount (appState = defaultState, action) {
     case SET_NEW_ACCOUNT_COUNTRY:
       return { ...appState
              , country: action.value
+             }
+
+    case SET_NEW_ACCOUNT_HIGHLIGHT:
+      return { ...appState
+             , highlight: action.value
              }
 
     case CLEAR_NEW_ACCOUNT_FORM:

@@ -13,6 +13,7 @@ export const NEW_PRICING_SET_EXPONENTIAL_MONTH_PRICE = "NEW_PRICING_SET_EXPONENT
 export const NEW_PRICING_SET_WEEKEND_PRICE           = "NEW_PRICING_SET_WEEKEND_PRICE"
 export const NEW_PRICING_SET_CURRENCIES              = "NEW_PRICING_SET_CURRENCIES"
 export const NEW_PRICING_SET_SELECTED_CURRENCY       = "NEW_PRICING_SET_SELECTED_CURRENCY"
+export const NEW_PRICING_SET_HIGHLIGHT               = "NEW_PRICING_SET_HIGHLIGHT"
 export const NEW_PRICING_CLEAR_CLIENT_FORM           = "NEW_PRICING_CLEAR_CLIENT_FORM"
 
 
@@ -64,6 +65,18 @@ export function setSelectedCurrency (index){
   return  { type: NEW_PRICING_SET_SELECTED_CURRENCY
           , value: index
           }
+}
+
+export function setHighlight (value){
+  return { type: NEW_PRICING_SET_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newPricing.highlight))
+  }
 }
 
 export function clearForm (){

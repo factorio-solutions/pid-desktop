@@ -8,7 +8,7 @@ import Button   from './Button.js'
 // question = confirmation text for remove type button
 
 
-export default function RoundButton ({ content, onClick, type, state, size, question })  {
+export default function RoundButton ({ content, onClick, onDisabledClick, type, state, size, question })  {
   let style = [ styles.button
               , styles[state]
               , styles[size]
@@ -16,6 +16,6 @@ export default function RoundButton ({ content, onClick, type, state, size, ques
               ].join(' ')
 
   return (
-    <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} />
+    <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} onDisabledClick={onDisabledClick}/>
   )
 }
