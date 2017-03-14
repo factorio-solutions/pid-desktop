@@ -34,8 +34,9 @@ export class NewGaragePage extends Component {
 
     var allFloors = state.floors.filter((floor)=>{return floor.label.length > 0 && floor.scheme.length > 0 })
 
-    const submitForm = () => { actions.submitGarage() }
-    const goBack     = () => { nav.to('/garages') }
+    const submitForm       = () => { actions.submitGarage() }
+    const goBack           = () => { nav.to('/garages') }
+    const hightlightInputs = () => { actions.toggleHighlight() }
     const handleErrorClick = () => {
       actions.setError(undefined)
       actions.clearForm()
@@ -109,12 +110,12 @@ export class NewGaragePage extends Component {
       return (
         <div key={index}>
           <div className={styles.inline}>
-            <Input style={styles.gatePhoneInputWidth+" "+styles.rightMargin} onChange={handleGateLabelChange} label={t(['newGarage', 'gateLabel'], { index: index+1 }) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidGateLabel'])} value={gate.label} name={`gate${index}[label]`} placeholder={t(['newGarage', 'placeholderGateLabel'])}/>
+            <Input style={styles.gatePhoneInputWidth+" "+styles.rightMargin} onChange={handleGateLabelChange} label={t(['newGarage', 'gateLabel'], { index: index+1 }) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidGateLabel'])} value={gate.label} name={`gate${index}[label]`} placeholder={t(['newGarage', 'placeholderGateLabel'])} highlight={index!=arr.length-1 && state.highlight}/>
             <Input style={styles.gatePhoneInputWidth}                        onChange={handleGatePhoneChange} label={t(['newGarage', 'gatePhone'])} error={t(['newGarage', 'invalidGatePhone'])} value={gate.phone} name={`gate${index}[phone]`} placeholder={t(['newGarage', 'placeholderGatePhone'])} type="tel"/>
             {removeGateButton()}
           </div>
-          <Input onChange={handleGatePlacesChange} label={t(['newGarage', 'places']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidPlaces'])} value={gate.places} placeholder={t(['newGarage', 'placesPlaceholder'])} pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"/> {/*(\d+\s*)(\s*(,|-)\s*\d+)**/}
-          <Input onChange={handleGateAddressLine1Change} label={t(['newGarage', 'street']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidStreet'])} value={gate.address.line_1} placeholder={t(['newGarage', 'streetPlaceholder'])} onBlur={()=>{getGPSLocation(index)}}/>
+          <Input onChange={handleGatePlacesChange}       label={t(['newGarage', 'places']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidPlaces'])} value={gate.places}         placeholder={t(['newGarage', 'placesPlaceholder'])} highlight={index!=arr.length-1 && state.highlight} pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"/> {/*(\d+\s*)(\s*(,|-)\s*\d+)**/}
+          <Input onChange={handleGateAddressLine1Change} label={t(['newGarage', 'street']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidStreet'])} value={gate.address.line_1} placeholder={t(['newGarage', 'streetPlaceholder'])} highlight={index!=arr.length-1 && state.highlight} onBlur={()=>{getGPSLocation(index)}}/>
           <div className={styles.inline}>
             <Input style={styles.latLngInputWidth+" "+styles.rightMargin} onChange={handleGateAddressLat} label={t(['newGarage', 'lat'])} error={t(['newGarage', 'invalidLat'])} value={gate.address.lat} name="garage[lat]" placeholder={t(['newGarage', 'latPlaceholder'])}/>
             <Input style={styles.latLngInputWidth}                        onChange={handleGateAddressLng} label={t(['newGarage', 'lng'])} error={t(['newGarage', 'invalidLng'])} value={gate.address.lng} name="garage[lng]" placeholder={t(['newGarage', 'lngPlaceholder'])}/>
@@ -139,9 +140,9 @@ export class NewGaragePage extends Component {
       return(
         <div key={index}>
           <div className={styles.inline}>
-            <Input style={styles.smallInputWidth}                         onChange={handleFloorNameChange} label={t(['newGarage', 'floorName']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidFloorName'])} value={state.floors[index].label} name={`floor${index}[name]`} placeholder={t(['newGarage', 'placeholderFloor'], { index: index+1 })}/>
-            <Input style={styles.smallInputWidth+" "+styles.middleMargin} onChange={handleFloorFromChange} label={t(['newGarage', 'from']) + (index!=arr.length-1 ? ' *' : '')}      error={t(['newGarage', 'invalidFloorFrom'])} value={floor.from} name={`floor${index}[from]`} placeholder={t(['newGarage', 'placeholderFloorFrom'])} type="tel" />
-            <Input style={styles.smallInputWidth}                         onChange={handleFloorToChange}   label={t(['newGarage', 'to']) + (index!=arr.length-1 ? ' *' : '')}        error={t(['newGarage', 'invalidFloorTo'])}   value={floor.to} name={`floor${index}[to]`} placeholder={t(['newGarage', 'placeholderFloorTo'])} type="number" min={floor.from}/>
+            <Input style={styles.smallInputWidth}                         onChange={handleFloorNameChange} label={t(['newGarage', 'floorName']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidFloorName'])} value={state.floors[index].label} name={`floor${index}[name]`} placeholder={t(['newGarage', 'placeholderFloor'], { index: index+1 })} highlight={index!=arr.length-1 && state.highlight}/>
+            <Input style={styles.smallInputWidth+" "+styles.middleMargin} onChange={handleFloorFromChange} label={t(['newGarage', 'from']) + (index!=arr.length-1 ? ' *' : '')}      error={t(['newGarage', 'invalidFloorFrom'])} value={floor.from} name={`floor${index}[from]`} placeholder={t(['newGarage', 'placeholderFloorFrom'])} type="tel"                     highlight={index!=arr.length-1 && state.highlight}/>
+            <Input style={styles.smallInputWidth}                         onChange={handleFloorToChange}   label={t(['newGarage', 'to']) + (index!=arr.length-1 ? ' *' : '')}        error={t(['newGarage', 'invalidFloorTo'])}   value={floor.to} name={`floor${index}[to]`} placeholder={t(['newGarage', 'placeholderFloorTo'])} type="number" min={floor.from}       highlight={index!=arr.length-1 && state.highlight}/>
             <Input style={styles.hidden}                                  onChange={handleFileSelect}      label='file' type="file"  name={`floor${index}[file]`} />
             <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.floors[index].scheme==""?'action':'confirm'} />
             {deleteButton()}
@@ -166,15 +167,15 @@ export class NewGaragePage extends Component {
                       <Modal content={processingContent} show={state.fetching} />
 
                       <div className={styles.leftCollumn}>
-                        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
-                          <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})}/>
+                        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+                          <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})} highlight={state.highlight}/>
                           <Dropdown label={t(['newGarage', state.tarif_id===1?'selectAccount':'selectAccountMandatory'])} content={accountDropdown} style='light' selected={state.availableAccounts.findIndex((account)=>{return account.id == state.tarif_id})}/>
-                          <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])}/>
+                          <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])} highlight={state.highlight}/>
                           { /*<input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG}/> <span className={styles.pointer} onClick={actions.toggleLPG}> {t(['newGarage', 'lpgAllowed'])} </span> */}
-                          <Input onChange={actions.setCity}       onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])} />
-                          <Input onChange={actions.setPostalCode} onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} />
+                          <Input onChange={actions.setCity}       onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
+                          <Input onChange={actions.setPostalCode} onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} highlight={state.highlight}/>
                           <Input onChange={actions.setState}      onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'state'])}      error={t(['newGarage', 'invalidCountry'])}     value={state.state}       placeholder={t(['newGarage', 'statePlaceholder'])} />
-                          <Input onChange={actions.setCountry}    onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.country}     placeholder={t(['newGarage', 'countryPlaceholder'])} />
+                          <Input onChange={actions.setCountry}    onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.country}     placeholder={t(['newGarage', 'countryPlaceholder'])}    highlight={state.highlight}/>
 
                           {state.floors.map(prepareFloors)}
                           {state.gates.map(prepareGates)}

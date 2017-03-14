@@ -27,13 +27,9 @@ export class NewRentPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const submitForm = () => {
-      actions.submitNewRent(this.props.params.id)
-    }
-
-    const goBack = () => {
-      nav.to(`/garages`)
-    }
+    const submitForm       = () => { actions.submitNewRent(this.props.params.id) }
+    const goBack           = () => { nav.to(`/garages`) }
+    const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
       if (state.name.value == undefined || state.name.value == ''|| !state.name.valid) return false
@@ -49,14 +45,14 @@ export class NewRentPage extends Component {
       })
     }
 
-    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
                       <div>
-                        <PatternInput onChange={actions.setName} label={t(['newRent', 'name'])} error={t(['newRent', 'invalidName'])} placeholder={t(['newRent', 'namePlaceholder'])} value={state.name.value || ''}/>
-                        <Dropdown label={t(['newRent', 'selectCurrency'])} content={currencies()} style='light' selected={state.selectedCurrency}/>
+                        <PatternInput onChange={actions.setName} label={t(['newRent', 'name'])} error={t(['newRent', 'invalidName'])} placeholder={t(['newRent', 'namePlaceholder'])} value={state.name.value || ''} highlight={state.highlight}/>
+                        <Dropdown label={t(['newRent', 'selectCurrency'])} content={currencies()} style='light' selected={state.selectedCurrency} highlight={state.highlight}/>
                       </div>
                       <div>
                         <h2>{t(['newRent', 'price'])}</h2>
-                        <PatternInput onChange={actions.setPrice} label={t(['newRent', 'price'])} error={t(['newRent', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newRent', 'pricePlaceholder'])} value={state.price.value || ''}/>
+                        <PatternInput onChange={actions.setPrice} label={t(['newRent', 'price'])} error={t(['newRent', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newRent', 'pricePlaceholder'])} value={state.price.value || ''} highlight={state.highlight}/>
                       </div>
                     </Form>
 

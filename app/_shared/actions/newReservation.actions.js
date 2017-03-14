@@ -37,6 +37,7 @@ export const NEW_RESERVATION_SET_DURATION_DATE      = "NEW_RESERVATION_SET_DURAT
 export const NEW_RESERVATION_SET_ERROR              = "NEW_RESERVATION_SET_ERROR"
 export const NEW_RESERVATION_SET_PRICE              = "NEW_RESERVATION_SET_PRICE"
 export const NEW_RESERVATION_SET_BRAINTREE_TOKEN    = "NEW_RESERVATION_SET_BRAINTREE_TOKEN"
+export const NEW_RESERVATION_SET_HIGHLIGHT          = "NEW_RESERVATION_SET_HIGHLIGHT"
 export const NEW_RESERVATION_CLEAR_FORM             = "NEW_RESERVATION_CLEAR_FORM"
 
 
@@ -194,6 +195,19 @@ export function setBraintreeToken (value){
   return { type: NEW_RESERVATION_SET_BRAINTREE_TOKEN
          , value
          }
+}
+
+
+export function setHighlight (value){
+  return { type: NEW_RESERVATION_SET_HIGHLIGHT
+         , value
+         }
+}
+
+export function toggleHighlight (){
+  return (dispatch, getState) => {
+    dispatch(setHighlight(!getState().newReservation.highlight))
+  }
 }
 
 export function clearForm (){

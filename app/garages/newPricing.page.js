@@ -27,13 +27,9 @@ export class NewPricingPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const submitForm = () => {
-      actions.submitNewPricing(this.props.params.id)
-    }
-
-    const goBack = () => {
-      nav.to(`/garages`)
-    }
+    const submitForm       = () => { actions.submitNewPricing(this.props.params.id) }
+    const goBack           = () => { nav.to(`/garages`) }
+    const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
       if (state.name.value == undefined || state.name.value == ''|| !state.name.valid) return false
@@ -56,21 +52,21 @@ export class NewPricingPage extends Component {
       })
     }
 
-    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
                       <div>
-                        <PatternInput onChange={actions.setName} label={t(['newPricing', 'name'])} error={t(['newPricing', 'invalidName'])} placeholder={t(['newPricing', 'namePlaceholder'])} value={state.name.value || ''}/>
-                        <Dropdown label={t(['newPricing', 'selectCurrency'])} content={currencies()} style='light' selected={state.selectedCurrency}/>
+                        <PatternInput onChange={actions.setName} label={t(['newPricing', 'name'])} error={t(['newPricing', 'invalidName'])} placeholder={t(['newPricing', 'namePlaceholder'])} value={state.name.value || ''} highlight={state.highlight}/>
+                        <Dropdown label={t(['newPricing', 'selectCurrency'])} content={currencies()} style='light' selected={state.selectedCurrency} highlight={state.highlight}/>
                       </div>
                       <div>
                         <h2>{t(['newPricing', 'flatPrice'])}</h2>
-                        <PatternInput onChange={actions.setFlatPrice} label={t(['newPricing', 'flatPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.flat_price.value || ''}/>
+                        <PatternInput onChange={actions.setFlatPrice} label={t(['newPricing', 'flatPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.flat_price.value || ''} highlight={(state.exponential_12h_price.value=='' && state.exponential_day_price.value =='' && state.exponential_week_price.value =='' && state.exponential_month_price.value =='') && state.highlight}/>
                       </div>
                       <div>
                         <h2>{t(['newPricing', 'exponentialPrice'])}</h2>
-                        <PatternInput onChange={actions.setExponential12hPrice}   label={t(['newPricing', '12hPrice'])}   error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])}   value={state.exponential_12h_price.value || ''}/>
-                        <PatternInput onChange={actions.setExponentialDayPrice}   label={t(['newPricing', 'dayPrice'])}   error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])}   value={state.exponential_day_price.value || ''}/>
-                        <PatternInput onChange={actions.setExponentialWeekPrice}  label={t(['newPricing', 'weekPrice'])}  error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'minPlaceholder'])}   value={state.exponential_week_price.value || ''}/>
-                        <PatternInput onChange={actions.setExponentialMonthPrice} label={t(['newPricing', 'monthPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'decayPlaceholder'])} value={state.exponential_month_price.value || ''}/>
+                        <PatternInput onChange={actions.setExponential12hPrice}   label={t(['newPricing', '12hPrice'])}   error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])}   value={state.exponential_12h_price.value || ''}   highlight={state.flat_price.value == '' && state.highlight}/>
+                        <PatternInput onChange={actions.setExponentialDayPrice}   label={t(['newPricing', 'dayPrice'])}   error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])}   value={state.exponential_day_price.value || ''}   highlight={state.flat_price.value == '' && state.highlight}/>
+                        <PatternInput onChange={actions.setExponentialWeekPrice}  label={t(['newPricing', 'weekPrice'])}  error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'minPlaceholder'])}   value={state.exponential_week_price.value || ''}  highlight={state.flat_price.value == '' && state.highlight}/>
+                        <PatternInput onChange={actions.setExponentialMonthPrice} label={t(['newPricing', 'monthPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'decayPlaceholder'])} value={state.exponential_month_price.value || ''} highlight={state.flat_price.value == '' && state.highlight}/>
                       </div>
 
                       <div>

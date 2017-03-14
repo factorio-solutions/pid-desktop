@@ -37,6 +37,7 @@ export class NewReservationPage extends Component {
     const toOverview       = () => { nav.to('/reservations/newReservation/overview') }
     const handleDuration   = () => { actions.setDurationDate(true) }
     const handleDate       = () => { actions.setDurationDate(false) }
+    const hightlightInputs = () => { actions.toggleHighlight() }
     const handlePlaceClick = (place) => { actions.setPlace(place) }
     const handleTo         = (value, valid) => { valid && actions.setTo(value) }
     const handleFrom       = (value, valid) => { valid && actions.setFrom(value) }
@@ -115,12 +116,12 @@ export class NewReservationPage extends Component {
                       <Modal content={errorContent} show={state.error!=undefined} />
                       <div className={styles.leftCollumn}>
                         <div className={styles.padding}>
-                          <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()}>
-                            {state.availableUsers.length>1 && <Dropdown label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return user.id == state.user_id})}         style='light'/>}
-                            <Dropdown label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.garageIndex}                                                                 style='light'/>
+                          <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()} onHighlight={hightlightInputs}>
+                            {state.availableUsers.length>1 && <Dropdown label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return user.id == state.user_id})}         style='light' highlight={state.highlight}/> }
+                            <Dropdown label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.garageIndex} style='light' highlight={state.highlight}/>
                             {state.availableClients.length>1 &&<Dropdown label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>}
-                            {state.availableCars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center'/>
-                                                           : <Dropdown label={t(['newReservation', 'selectCar'])}    content={carDropdown()}    selected={state.availableCars.findIndex((car)=>{return car.id == state.car_id})}             style='light'/>}
+                            {state.availableCars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
+                                                           : <Dropdown label={t(['newReservation', 'selectCar'])}    content={carDropdown()}    selected={state.availableCars.findIndex((car)=>{return car.id == state.car_id})}             style='light' highlight={state.highlight}/>}
 
                             <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} inlineMenu={beginsInlineMenu}/>
                             {state.durationDate ? <Input         onChange={actions.durationChange} label={t(['newReservation', 'duration'])} error={t(['newReservation', 'invalidaValue'])} inlineMenu={endsInlineMenu} value={String(moment.duration(moment(state.to, 'DD.MM.YYYY HH:mm').diff(moment(state.from, 'DD.MM.YYYY HH:mm'))).asHours())} type="number" min={0.25} step={0.25} align="right" />

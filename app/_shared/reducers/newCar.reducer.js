@@ -6,6 +6,7 @@ import {
   SET_CAR_HEIGHT,
   SET_CAR_LENGTH,
   SET_CAR_LPG,
+  SET_CAR_HIGHLIGHT,
   CLEAR_CAR_FORM
 }  from '../actions/newCar.actions'
 
@@ -15,7 +16,7 @@ const defaultState =  { licence_plate: ''
                       , width:         ''
                       , height:        ''
                       , length:        ''
-
+                      , highlight:     false
                       , lpg:           false
                       }
 
@@ -56,6 +57,11 @@ export default function newCar (state = defaultState, action) {
     case SET_CAR_LPG:
       return { ... state
              , lpg: !state.lpg
+             }
+
+    case SET_CAR_HIGHLIGHT:
+      return { ... state
+             , highlight: action.value
              }
 
     case CLEAR_CAR_FORM:

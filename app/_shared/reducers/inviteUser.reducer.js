@@ -13,6 +13,7 @@ import {
   INVITE_USER_SET_SUCCESS,
   INVITE_USER_SET_ERROR,
   INVITE_USER_SET_CURRENT_EMAIL,
+  INVITE_USER_SET_HIGHLIGHT,
   INVITE_USER_RESET_FORM
 } from '../actions/inviteUser.actions'
 
@@ -24,6 +25,8 @@ const booleanAttributes = { client_admin:         false
                           , garage_receptionist:  false
                           , garage_security:      false
                           , car_admin:            false
+
+                          , highlight:            false
                           }
 
 const defaultState =  { ...booleanAttributes
@@ -110,6 +113,11 @@ export default function inviteUser (state = defaultState, action) {
     case INVITE_USER_SET_CURRENT_EMAIL:
     return  { ...state
             , currentEmail: action.value
+            }
+
+    case INVITE_USER_SET_HIGHLIGHT:
+    return  { ...state
+            , highlight: action.value
             }
 
     case INVITE_USER_RESET_FORM:

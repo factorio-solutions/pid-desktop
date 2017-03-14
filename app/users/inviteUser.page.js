@@ -30,12 +30,13 @@ export class inviteUserPage extends Component {
   render() {
     const {state, actions} = this.props
 
-    const submitForm      = () => { checkSubmitable() && actions.createNewManagebles() }
-    const goBack          = () => { nav.back() }
-    const emailChanged    = (value, valid) => { actions.setEmail({ value, valid }) }
-    const messageChanged  = (event) => { actions.setMessage(event.target.value) }
-    const nameChanged     = (value, valid) => { actions.setName(value) }
-    const phoneChanged    = (value, valid) => { actions.setPhone(value) }
+    const submitForm       = () => { checkSubmitable() && actions.createNewManagebles() }
+    const goBack           = () => { nav.back() }
+    const emailChanged     = (value, valid) => { actions.setEmail({ value, valid }) }
+    const messageChanged   = (event) => { actions.setMessage(event.target.value) }
+    const nameChanged      = (value, valid) => { actions.setName(value) }
+    const phoneChanged     = (value, valid) => { actions.setPhone(value) }
+    const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
       if (!state.email.valid) return false
@@ -83,10 +84,10 @@ export class inviteUserPage extends Component {
                       <Modal content={successContent} show={state.success!=undefined} />
                       <Modal content={loadingContent} show={state.currentEmail!=undefined} />
 
-                      <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+                      <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
                       <div className={styles.form}>
                         <div className={`${styles.formChild} ${styles.mainInfo}`}>
-                          <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} />
+                          <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} highlight={state.highlight}/>
                           {clientDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectClient'])} content={clientDropdown} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>}
                           {garageDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectGarage'])} content={garageDropdown} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>}
                           {carDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectCar'])}    content={carDropdown} style='light' selected={state.cars.findIndex((car)=>{return car.id == state.car_id})}/>}

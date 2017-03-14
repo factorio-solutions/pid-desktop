@@ -87,6 +87,11 @@ export default class ReleaseNotesPage extends Component {
         </div>
 
         <h2>Release notes</h2>
+        <h3>r20170314a</h3>
+        <ul>
+          <li>V každém formuláři přidána feature: při kliknutí na šedé OK tlačítko se zvýrazní nevyplněná pole formuláře.</li>
+        </ul>
+
         <h3>r20170310a</h3>
         <ul>
           <li>Oprava všemožných bugů na trellu</li>

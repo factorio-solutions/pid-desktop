@@ -26,36 +26,29 @@ export class NewCarPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const submitForm = () => {
-      checkSubmitable() && actions.submitNewCar(this.props.params.id)
-    }
-
-    const goBack = () => {
-      nav.to('/cars')
-    }
+    const submitForm       = () => { checkSubmitable() && actions.submitNewCar(this.props.params.id) }
+    const goBack           = () => { nav.to('/cars') }
+    const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
       if (state.licence_plate == "") return false
       if (state.color == "") return false
-      if (state.type == "") return false
+      if (state.model == "") return false
 
       return true
     }
 
     const content = <div>
-                      <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
-                        <Input onEnter={submitForm} onChange={actions.setLicencePlate}  label={t(['newCar', 'licencePlate'])} error={t(['newCar', 'licencePlateInvalid'])} value={state.licence_plate} name="client[licence_plate]" placeholder={t(['newCar', 'licencePlatePlaceholder'])}/>
-                        <Input onEnter={submitForm} onChange={actions.setColor}         label={t(['newCar', 'color'])}        error={t(['newCar', 'colorInvalid'])}        value={state.color}         name="client[color]"         placeholder={t(['newCar', 'colorPlaceholder'])}/>
-                        <Input onEnter={submitForm} onChange={actions.setModel}         label={t(['newCar', 'model'])}        error={t(['newCar', 'modelInvalid'])}        value={state.model}         name="client[model]"         placeholder={t(['newCar', 'modelPlaceholder'])}/>
+                      <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+                        <Input onEnter={submitForm} onChange={actions.setLicencePlate}  label={t(['newCar', 'licencePlate'])+' *'} error={t(['newCar', 'licencePlateInvalid'])} value={state.licence_plate} name="client[licence_plate]" placeholder={t(['newCar', 'licencePlatePlaceholder'])} highlight={state.highlight}/>
+                        <Input onEnter={submitForm} onChange={actions.setColor}         label={t(['newCar', 'color'])+' *'}        error={t(['newCar', 'colorInvalid'])}        value={state.color}         name="client[color]"         placeholder={t(['newCar', 'colorPlaceholder'])}        highlight={state.highlight}/>
+                        <Input onEnter={submitForm} onChange={actions.setModel}         label={t(['newCar', 'model'])+' *'}        error={t(['newCar', 'modelInvalid'])}        value={state.model}         name="client[model]"         placeholder={t(['newCar', 'modelPlaceholder'])}        highlight={state.highlight}/>
                         <input type="checkbox" checked={state.lpg || false} onChange={actions.setLPG}/> {t(['newCar', 'lpg'])}
                         <div className={styles.inlineForm}>
-                          <Input onEnter={submitForm}                       step="0.01" onChange={actions.setWidth}  label={t(['newCar', 'width'])}  error={t(['newCar', 'widthInvalid'])}  value={state.width}  name="client[width]"  placeholder={t(['newCar', 'widthPlaceholder'])}  type="number"/> 
+                          <Input onEnter={submitForm}                       step="0.01" onChange={actions.setWidth}  label={t(['newCar', 'width'])}  error={t(['newCar', 'widthInvalid'])}  value={state.width}  name="client[width]"  placeholder={t(['newCar', 'widthPlaceholder'])}  type="number"/>
                           <Input onEnter={submitForm} style={styles.middle} step="0.01" onChange={actions.setHeight} label={t(['newCar', 'height'])} error={t(['newCar', 'heightInvalid'])} value={state.height} name="client[height]" placeholder={t(['newCar', 'heightPlaceholder'])} type="number"/>
                           <Input onEnter={submitForm}                       step="0.01" onChange={actions.setLength} label={t(['newCar', 'length'])} error={t(['newCar', 'lengthInvalid'])} value={state.length} name="client[length]" placeholder={t(['newCar', 'lengthPlaceholder'])} type="number"/>
                         </div>
-                        <input onChange={(e)=>{
-                          console.log(e.target.value, e.target.checkValidity());
-                        }} type="number"/>
                       </Form>
                     </div>
 

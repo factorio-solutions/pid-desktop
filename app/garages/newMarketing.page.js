@@ -40,9 +40,8 @@ export class NewMarketingPage extends Component {
                                     : actions.submitGarageMarketing(this.props.params.id)
     }
 
-    const goBack = () => {
-      nav.to(`/garages/${this.props.params.id}/marketing`)
-    }
+    const goBack           = () => { nav.to(`/garages/${this.props.params.id}/marketing`) }
+    const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
       if (state.short_name.value == undefined || state.short_name.value == ''|| !state.short_name.valid) return false
@@ -59,7 +58,7 @@ export class NewMarketingPage extends Component {
       return <tr key={index}><td className={styles.attribute} onClick={attributeClick}><input type="checkbox" checked={state[attribute] || false} onChange={attributeClick}/> {t(['newMarketing', attribute])} </td></tr>
     }
 
-    const prepareImages = (image, index) => {
+    const prepareImages = (image, index, arr) => {
       const fileSelector = () => { document.getElementsByName(`image${index}`)[0].click() }
       const removeRow    = () => { actions.removeImage(index) }
       const tagSelected  = (i) => { actions.setTag(imageTags[i], index) }
@@ -75,9 +74,9 @@ export class NewMarketingPage extends Component {
       return(
         <div className={styles.imageRow} key={index}>
           <div className={styles.tag}>
-            <Dropdown label={t(['newMarketing', 'selectTag'])} content={imageTags.map(prepareTags)} style='light' selected={imageTags.findIndex((tag)=>{return tag == image.tag})}/>
+            <Dropdown label={t(['newMarketing', 'selectTag'])} content={imageTags.map(prepareTags)} style='light' selected={imageTags.findIndex((tag)=>{return tag == image.tag})} highlight={(index!=arr.length-1 || index==0) && state.highlight}/>
           </div>
-          <div className={styles.rowContent}>
+          <div className={`${styles.rowContent} ${state.highlight && state.images.length-1 != index && image.img == '' && styles.highlighted}`}>
             <input className={styles.hidden} type="file" accept="image/*" onChange={handleFileSelect} name={`image${index}`} />
             <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.images[index].img==''?'action':'confirm'} />
             {state.images.length-1 != index && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newGarage', 'removeFloorRowQuestion'])} />}
@@ -98,13 +97,13 @@ export class NewMarketingPage extends Component {
                          <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={()=>{actions.setModalError(undefined)}} type='confirm'  />
                        </div>
 
-    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
                       <Modal content={modalContent} show={state.modalContent!=undefined} />
                       <Modal content={modalError} show={state.modalError!=undefined} />
                       <div>
-                        <PatternInput onChange={actions.setShortName} label={t(['newMarketing', 'shortName'])} error={t(['newMarketing', 'invalidShortName'])} pattern="^[a-z-.]+$" placeholder={t(['newMarketing', 'shortNamePlaceholder'])} value={state.short_name.value || ''}/>
-                        <PatternInput onChange={actions.setPhone} label={t(['newMarketing', 'phone'])} error={t(['newMarketing', 'invalidPhone'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" placeholder={t(['newMarketing', 'phonePlaceholder'])} value={state.phone.value || ''}/>
-                        <PatternInput onChange={actions.setEmail} label={t(['newMarketing', 'email'])} error={t(['newMarketing', 'imvalidEmail'])} pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder={t(['newMarketing', 'mailPlaceholder'])} value={state.email.value || ''}/>
+                        <PatternInput onChange={actions.setShortName} label={t(['newMarketing', 'shortName'])+' *'} error={t(['newMarketing', 'invalidShortName'])} pattern="^[a-z-.]+$"                                 placeholder={t(['newMarketing', 'shortNamePlaceholder'])} value={state.short_name.value || ''} highlight={state.highlight}/>
+                        <PatternInput onChange={actions.setPhone}     label={t(['newMarketing', 'phone'])+' *'}     error={t(['newMarketing', 'invalidPhone'])}     pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}"                placeholder={t(['newMarketing', 'phonePlaceholder'])}     value={state.phone.value || ''}      highlight={state.highlight}/>
+                        <PatternInput onChange={actions.setEmail}     label={t(['newMarketing', 'email'])+' *'}     error={t(['newMarketing', 'imvalidEmail'])}     pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder={t(['newMarketing', 'mailPlaceholder'])}      value={state.email.value || ''}      highlight={state.highlight}/>
                       </div>
 
                       <h2>{t(['newMarketing', 'description'])}</h2>

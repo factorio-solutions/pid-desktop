@@ -25,13 +25,9 @@ export class NewAccountPage extends Component {
   render() {
     const {state, actions} = this.props
 
-    const submitForm = () => {
-      checkSubmitable() && actions.submitNewAccount(this.props.params.id)
-    }
-
-    const goBack = () => {
-      nav.to('/accounts')
-    }
+    const submitForm       = () => { checkSubmitable() && actions.submitNewAccount(this.props.params.id) }
+    const goBack           = () => { nav.to('/accounts') }
+    const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
       if (state.name == "") return false
@@ -45,19 +41,19 @@ export class NewAccountPage extends Component {
 
     const content = <div className={styles.flexBox}>
                       <div className={styles.flexChild}>
-                        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
-                          <Input onEnter={submitForm} onChange={actions.setName}       label={t(['newAccount', 'name'])}      error={t(['newAccount', 'invalidName'])}      value={state.name}        name="client[name]"       placeholder={t(['newAccount', 'placeholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setIC}         label={t(['newClient', 'IC'])}         error={t(['newClient', 'invalidIC'])}         value={state.ic}          name="client[ic]"         placeholder={t(['newClient', 'ICplaceholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setDIC}        label={t(['newClient', 'DIC'])}        error={t(['newClient', 'invalidDIC'])}        value={state.dic}         name="client[dic]"        placeholder={t(['newClient', 'DICplaceholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setMerchantId} label={t(['newAccount', 'merchant'])}  error={t(['newAccount', 'invalidMerchant'])}  value={state.merchant_id} name="client[merchant]"   placeholder={t(['newAccount', 'placeholderMerchant'])}/>
+                        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+                          <Input onEnter={submitForm} onChange={actions.setName}       label={t(['newAccount', 'name'])}       error={t(['newAccount', 'invalidName'])}        value={state.name}        name="client[name]"       placeholder={t(['newAccount', 'placeholder'])}          highlight={state.highlight}/>
+                          <Input onEnter={submitForm} onChange={actions.setIC}         label={t(['newClient', 'IC'])}          error={t(['newClient', 'invalidIC'])}           value={state.ic}          name="client[ic]"         placeholder={t(['newClient', 'ICplaceholder'])}/>
+                          <Input onEnter={submitForm} onChange={actions.setDIC}        label={t(['newClient', 'DIC'])}         error={t(['newClient', 'invalidDIC'])}          value={state.dic}         name="client[dic]"        placeholder={t(['newClient', 'DICplaceholder'])}/>
+                          <Input onEnter={submitForm} onChange={actions.setMerchantId} label={t(['newAccount', 'merchant'])}   error={t(['newAccount', 'invalidMerchant'])}    value={state.merchant_id} name="client[merchant]"   placeholder={t(['newAccount', 'placeholderMerchant'])}/>
                           <Input onEnter={submitForm} onChange={actions.setPrivateKey} label={t(['newAccount', 'privateKey'])} error={t(['newAccount', 'invalidPrivateKey'])}  value={state.private_key} name="client[privateKey]" placeholder={t(['newAccount', 'placeholderPrivateKey'])}/>
                           <Input onEnter={submitForm} onChange={actions.setPublicKey}  label={t(['newAccount', 'publicKey'])}  error={t(['newAccount', 'invalidPublicKey'])}   value={state.public_key}  name="client[publicKey]"  placeholder={t(['newAccount', 'placeholderPublicKey'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setLine1}      label={t(['addresses', 'line1'])}      error={t(['addresses', 'line1Invalid'])}      value={state.line_1}      name="client[line1]"      placeholder={t(['addresses', 'line1Placeholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setLine2}      label={t(['addresses', 'line2'])}      error={t(['addresses', 'line2Invalid'])}      value={state.line_2}      name="client[line2]"      placeholder={t(['addresses', 'line2Placeholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setCity}       label={t(['addresses', 'city'])}       error={t(['addresses', 'cityInvalid'])}       value={state.city}        name="client[city]"       placeholder={t(['addresses', 'cityPlaceholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setPostalCode} label={t(['addresses', 'postalCode'])} error={t(['addresses', 'postalCodeInvalid'])} value={state.postal_code} name="client[postalCode]" placeholder={t(['addresses', 'postalCodePlaceholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setState}      label={t(['addresses', 'state'])}      error={t(['addresses', 'stateInvalid'])}      value={state.state}       name="client[state]"      placeholder={t(['addresses', 'statePlaceholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setCountry}    label={t(['addresses', 'country'])}    error={t(['addresses', 'countryInvalid'])}    value={state.country}     name="client[country]"    placeholder={t(['addresses', 'countryPlaceholder'])}/>
+                          <Input onEnter={submitForm} onChange={actions.setLine1}      label={t(['addresses', 'line1'])}       error={t(['addresses', 'line1Invalid'])}        value={state.line_1}      name="client[line1]"      placeholder={t(['addresses', 'line1Placeholder'])}      highlight={state.highlight}/>
+                          <Input onEnter={submitForm} onChange={actions.setLine2}      label={t(['addresses', 'line2'])}       error={t(['addresses', 'line2Invalid'])}        value={state.line_2}      name="client[line2]"      placeholder={t(['addresses', 'line2Placeholder'])}/>
+                          <Input onEnter={submitForm} onChange={actions.setCity}       label={t(['addresses', 'city'])}        error={t(['addresses', 'cityInvalid'])}         value={state.city}        name="client[city]"       placeholder={t(['addresses', 'cityPlaceholder'])}       highlight={state.highlight}/>
+                          <Input onEnter={submitForm} onChange={actions.setPostalCode} label={t(['addresses', 'postalCode'])}  error={t(['addresses', 'postalCodeInvalid'])}   value={state.postal_code} name="client[postalCode]" placeholder={t(['addresses', 'postalCodePlaceholder'])} highlight={state.highlight}/>
+                          <Input onEnter={submitForm} onChange={actions.setState}      label={t(['addresses', 'state'])}       error={t(['addresses', 'stateInvalid'])}        value={state.state}       name="client[state]"      placeholder={t(['addresses', 'statePlaceholder'])}/>
+                          <Input onEnter={submitForm} onChange={actions.setCountry}    label={t(['addresses', 'country'])}     error={t(['addresses', 'countryInvalid'])}      value={state.country}     name="client[country]"    placeholder={t(['addresses', 'countryPlaceholder'])}    highlight={state.highlight}/>
                         </Form>
                       </div>
                       <div className={`${styles.flexChild} ${styles.hint}`}>
