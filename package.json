@@ -37,7 +37,6 @@
     "babel-preset-react-optimize": "^1.0.1",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.14.0",
-    "braintree-web": "^2.30.0",
     "chai": "^3.5.0",
     "counterpart": "^0.17.5",
     "css-loader": "^0.24.0",

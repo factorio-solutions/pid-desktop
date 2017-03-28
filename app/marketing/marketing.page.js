@@ -31,6 +31,62 @@ export class MarketingPage extends Component {
     const { state, actions } = this.props
     const { marketing }      = state
 
+    const properties = [ { icon: <div><i className="fa fa-compress" title='size_restriction'></i></div>
+                         , key:  'size_restriction'
+                         }
+                       , { icon: <div><i className="fa fa-repeat" title='non_stop_open'></i></div>
+                         , key:  'non_stop_open'
+                         }
+                       , { icon: <div><i className="fa fa-repeat" title='non_stop_reception'></i><i className="fa fa-female" title='non_stop_reception'></i></div>
+                         , key:  'non_stop_reception'
+                         }
+                       , { icon: <div><i className="fa fa-mobile" title='gate_opened_by_phone'></i><i className="fa fa-window-maximize" title='gate_opened_by_phone'></i></div>
+                         , key:  'gate_opened_by_phone'
+                         }
+                       , { icon: <div><i className="fa fa-female" title='gate_opened_by_receptionist'></i><i className="fa fa-window-maximize" title='gate_opened_by_receptionist'></i></div>
+                         , key:  'gate_opened_by_receptionist'
+                         }
+                       , { icon: <div><i className="fa fa-building" title='historical_center'></i></div>
+                         , key:  'historical_center'
+                         }
+                       , { icon: <div><i className="fa fa-building-o" title='city_center'></i></div>
+                         , key:  'city_center'
+                         }
+                       , { icon: <div>5m<i className="fa fa-building-o" title='five_minutes_from_center'></i></div>
+                         , key:  'five_minutes_from_center'
+                         }
+                       , { icon: <div>10m<i className="fa fa-building-o" title='ten_minutes_from_center'></i></div>
+                         , key:  'ten_minutes_from_center'
+                         }
+                       , { icon: <div>15m<i className="fa fa-building-o" title='fifteen_minutes_from_center'></i></div>
+                         , key:  'fifteen_minutes_from_center'
+                         }
+                       , { icon: <div><i className="fa fa-video-camera" title='cameras'></i></div>
+                         , key:  'cameras'
+                         }
+                       , { icon: <div><i className="fa fa-video-camera" title='camera_at_gate'></i><i className="fa fa-window-maximize" title='camera_at_gate'></i></div>
+                         , key:  'camera_at_gate'
+                         }
+                       , { icon: <div><i className="fa fa-train" title='tram_nearby'></i></div>
+                         , key:  'tram_nearby'
+                         }
+                       , { icon: <div><i className="fa fa-subway" title='subway_nearby'></i></div>
+                         , key:  'subway_nearby'
+                         }
+                       , { icon: <div><i className="fa fa-shower" title='wc'></i></div>
+                         , key:  'wc'
+                         }
+                       , { icon: <div>5m<i className="fa fa-subway" title='five_minutes_from_subway'></i></div>
+                         , key:  'five_minutes_from_subway'
+                         }
+                       , { icon: <div><i className="fa fa-video-camera" title='number_plate_recognition'></i><i className="fa fa-address-card-o" title='number_plate_recognition'></i></div>
+                         , key:  'number_plate_recognition'
+                         }
+                       , { icon: <div><i className="fa fa-bolt" title='charging_station'></i></div>
+                         , key:  'charging_station'
+                         }
+                       ]
+
     // download page first, make sure marketing is launched
     if (marketing == undefined || marketing.marketing_launched != true){
       return null
@@ -40,6 +96,10 @@ export class MarketingPage extends Component {
       return marketing.descriptions.map((desc)=> {return desc.language}).includes(lang)
     }
 
+    const filterProperties = (propertie) => {
+      return marketing[propertie.key]
+    }
+
     const prepareLanguages = (lang, index) => {
       const langClick = () => { this.context.router.push(`/${lang}${window.location.hash.substring(4)}`) }
       return <span key={index} className={window.location.hash.substring(2,4) == lang && styles.active} onClick={langClick}>{lang.toUpperCase()}</span>
@@ -47,8 +107,27 @@ export class MarketingPage extends Component {
 
     const prepareImages = (image) => {
       return image.img
-      // return 'data:image/' + image.file.substring(image.file.lastIndexOf(".")+1) + ';base64,'+image.img
     }
+
+    const prepareTableBody = (propertie, index, arr) => { // make pairs into tr
+      if (index % 2 === 0) {
+        return <tr>
+          <td className={styles.active}>
+            {arr[index].icon}
+            {t(['newMarketing', arr[index].key])}
+          </td>
+          {arr[index+1] !== undefined && <td className={styles.active}>
+            {arr[index+1].icon}
+            {t(['newMarketing', arr[index+1].key])}
+          </td>}
+        </tr>
+      } else {
+        return null
+      }
+    }
+
+
+
 
     return (
       <div className={styles.container}>
@@ -68,148 +147,14 @@ export class MarketingPage extends Component {
               <h1>{marketing.garage.name}</h1>
               <h3>{t(['marketing', 'description'])}</h3>
               <div className={styles.innerContent} dangerouslySetInnerHTML={{__html: marketing.descriptions.filter((desc) => {return desc.language == window.location.hash.substring(2,4)})[0].text}} />
+
               <h3>{t(['marketing', 'properties'])}</h3>
               <div className={styles.innerContent} >
                 <table className={styles.propertiesTtable}>
                   <tbody>
-                    <tr>
-                      <td className={marketing.size_restriction && styles.active}>
-                        <div>
-                          <i className="fa fa-compress" title='size_restriction'></i>
-                        </div>
-                        {t(['newMarketing', 'size_restriction'])}
-                      </td>
-                        <td className={marketing.non_stop_open && styles.active}>
-                        <div>
-                          <i className="fa fa-repeat" title='non_stop_open'></i>
-                        </div>
-                        {t(['newMarketing', 'non_stop_open'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.non_stop_reception && styles.active}>
-                        <div>
-                          <i className="fa fa-repeat" title='non_stop_reception'></i>
-                          <i className="fa fa-female" title='non_stop_reception'></i>
-                        </div>
-                        {t(['newMarketing', 'non_stop_reception'])}
-                      </td>
-                      <td className={marketing.gate_opened_by_phone && styles.active}>
-                        <div>
-                          <i className="fa fa-mobile" title='gate_opened_by_phone'></i>
-                          <i className="fa fa-window-maximize" title='gate_opened_by_phone'></i>
-                        </div>
-                        {t(['newMarketing', 'gate_opened_by_phone'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.gate_opened_by_receptionist && styles.active}>
-                        <div>
-                          <i className="fa fa-female" title='gate_opened_by_receptionist'></i>
-                          <i className="fa fa-window-maximize" title='gate_opened_by_receptionist'></i>
-                        </div>
-                        {t(['newMarketing', 'gate_opened_by_receptionist'])}
-                      </td>
-                      <td className={marketing.historical_center && styles.active}>
-                        <div>
-                          <i className="fa fa-building" title='historical_center'></i>
-                        </div>
-                        {t(['newMarketing', 'historical_center'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.city_center && styles.active}>
-                        <div>
-                          <i className="fa fa-building-o" title='city_center'></i>
-                        </div>
-                        {t(['newMarketing', 'city_center'])}
-                      </td>
-                      <td className={marketing.five_minutes_from_center && styles.active}>
-                        <div>
-                          5m
-                          <i className="fa fa-building-o" title='five_minutes_from_center'></i>
-                        </div>
-                        {t(['newMarketing', 'five_minutes_from_center'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.ten_minutes_from_center && styles.active}>
-                        <div>
-                          10m
-                          <i className="fa fa-building-o" title='ten_minutes_from_center'></i>
-                        </div>
-                        {t(['newMarketing', 'ten_minutes_from_center'])}
-                      </td>
-                      <td className={marketing.fifteen_minutes_from_center && styles.active}>
-                        <div>
-                          15m
-                          <i className="fa fa-building-o" title='fifteen_minutes_from_center'></i>
-                        </div>
-                        {t(['newMarketing', 'fifteen_minutes_from_center'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.cameras && styles.active}>
-                        <div>
-                          <i className="fa fa-video-camera" title='cameras'></i>
-                        </div>
-                        {t(['newMarketing', 'cameras'])}
-                      </td>
-                      <td className={marketing.camera_at_gate && styles.active}>
-                        <div>
-                          <i className="fa fa-video-camera" title='camera_at_gate'></i>
-                          <i className="fa fa-window-maximize" title='camera_at_gate'></i>
-                        </div>
-                        {t(['newMarketing', 'camera_at_gate'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.tram_nearby && styles.active}>
-                        <div>
-                          <i className="fa fa-train" title='tram_nearby'></i>
-                        </div>
-                        {t(['newMarketing', 'tram_nearby'])}
-                      </td>
-                      <td className={marketing.subway_nearby && styles.active}>
-                        <div>
-                          <i className="fa fa-subway" title='subway_nearby'></i>
-                        </div>
-                        {t(['newMarketing', 'subway_nearby'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.wc && styles.active}>
-                        <div>
-                          <i className="fa fa-shower" title='wc'></i>
-                        </div>
-                        {t(['newMarketing', 'wc'])}
-                      </td>
-                      <td className={marketing.five_minutes_from_subway && styles.active}>
-                        <div>
-                          5m
-                          <i className="fa fa-subway" title='five_minutes_from_subway'></i>
-                        </div>
-                        {t(['newMarketing', 'five_minutes_from_subway'])}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className={marketing.number_plate_recognition && styles.active}>
-                        <div>
-                          <i className="fa fa-video-camera" title='number_plate_recognition'></i>
-                          <i className="fa fa-address-card-o" title='number_plate_recognition'></i>
-                        </div>
-                        {t(['newMarketing', 'number_plate_recognition'])}
-                      </td>
-                      <td className={marketing.charging_station && styles.active}>
-                        <div>
-                          <i className="fa fa-bolt" title='charging_station'></i>
-                        </div>
-                        {t(['newMarketing', 'charging_station'])}
-                      </td>
-                    </tr>
+                    {properties.filter(filterProperties).map(prepareTableBody)}
                   </tbody>
                 </table>
-
               </div>
             </div>
 

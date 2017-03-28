@@ -55,10 +55,11 @@ export class ReservationsPage extends Component {
              , garage: reservation.place.floor.garage.name
              , place: { garagefloorName: reservation.place.floor.label, name: reservation.place.label }
              , spoiler: <div>
-                          {!reservation.approved && <div><b>{t(['reservations','reservationApproved'])}</b></div>}
+                          {!reservation.approved && <div><b>{ reservation.client===null ? t(['reservations','reservationNotPayed']) : t(['reservations','reservationApproved'])}</b></div>}
                           {`${reservation.creator.full_name}  |  ${reservation.creator.email}  |  ${moment(reservation.created_at).format('DD.MM. HH:mm')}`}
                           <span className={styles.floatRight}>
                             {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>*/}
+                            {!reservation.approved && reservation.client==null && <RoundButton content={t(['reservations','pay'])} onClick={()=>{actions.payReservation(reservation.payment_url)}} type='action'/>}
                             {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed && <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{downloadClick(reservation.invoice_item.invoice.id)}} type='action'/>}
                           </span>
                         </div>

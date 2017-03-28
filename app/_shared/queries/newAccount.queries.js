@@ -17,9 +17,6 @@ export const INIT_ACCOUNT = `query ($id:Id){
     name
     ic
     dic
-    public_key
-    private_key
-    merchant_id
     address{
       line_1
       line_2
@@ -30,3 +27,6 @@ export const INIT_ACCOUNT = `query ($id:Id){
     }
   }
 }`
+
+// Will retrieve permissions url
+export const GET_PERMISSION = `mutation PaypalGetPermission ($url:String!) { paypal_get_permissions(url: $url) }`

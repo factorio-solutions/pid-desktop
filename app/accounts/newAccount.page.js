@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase     from '../_shared/containers/pageBase/PageBase'
+import PageBase from '../_shared/containers/pageBase/PageBase'
 import Input    from '../_shared/components/input/Input'
 import Form     from '../_shared/components/form/Form'
 
@@ -10,6 +10,7 @@ import styles                     from './newAccount.page.scss'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t }                      from '../_shared/modules/localization/localization'
 import * as pageNewAccountActions from '../_shared/actions/newAccount.actions'
+import { setError }               from '../_shared/actions/pageBase.actions'
 
 
 export class NewAccountPage extends Component {
@@ -19,7 +20,27 @@ export class NewAccountPage extends Component {
   }
 
   componentDidMount(){
-    this.props.params.id && this.props.actions.initAccount(this.props.params.id)
+    const { actions, location, params } = this.props
+    actions.clearForm()
+
+    if (location.query.hasOwnProperty('request_token')){ // got request token => Permissions granted -> create account
+      actions.createAccount(location.query)
+    } else {
+      if (location.query.hasOwnProperty('name')){ // has parameters in URL => Permissions not granted -> prefill form
+        actions.setName(location.query.name)
+        actions.setIC(location.query.ic)
+        actions.setDIC(location.query.dic)
+        actions.setLine1(location.query.line_1)
+        actions.setLine2(location.query.line_2)
+        actions.setCity(location.query.city)
+        actions.setPostalCode(location.query.postal_code)
+        actions.setState(location.query.state)
+        actions.setCountry(location.query.country)
+        actions.setError(t(['newAccount', 'permissionNotGranted']))
+      } else { // no url parameters, if has id in propos.params, load info about account
+        params.id && actions.initAccount(params.id)
+      }
+    }
   }
 
   render() {
@@ -45,9 +66,6 @@ export class NewAccountPage extends Component {
                           <Input onEnter={submitForm} onChange={actions.setName}       label={t(['newAccount', 'name'])}       error={t(['newAccount', 'invalidName'])}        value={state.name}        name="client[name]"       placeholder={t(['newAccount', 'placeholder'])}          highlight={state.highlight}/>
                           <Input onEnter={submitForm} onChange={actions.setIC}         label={t(['newClient', 'IC'])}          error={t(['newClient', 'invalidIC'])}           value={state.ic}          name="client[ic]"         placeholder={t(['newClient', 'ICplaceholder'])}/>
                           <Input onEnter={submitForm} onChange={actions.setDIC}        label={t(['newClient', 'DIC'])}         error={t(['newClient', 'invalidDIC'])}          value={state.dic}         name="client[dic]"        placeholder={t(['newClient', 'DICplaceholder'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setMerchantId} label={t(['newAccount', 'merchant'])}   error={t(['newAccount', 'invalidMerchant'])}    value={state.merchant_id} name="client[merchant]"   placeholder={t(['newAccount', 'placeholderMerchant'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setPrivateKey} label={t(['newAccount', 'privateKey'])} error={t(['newAccount', 'invalidPrivateKey'])}  value={state.private_key} name="client[privateKey]" placeholder={t(['newAccount', 'placeholderPrivateKey'])}/>
-                          <Input onEnter={submitForm} onChange={actions.setPublicKey}  label={t(['newAccount', 'publicKey'])}  error={t(['newAccount', 'invalidPublicKey'])}   value={state.public_key}  name="client[publicKey]"  placeholder={t(['newAccount', 'placeholderPublicKey'])}/>
                           <Input onEnter={submitForm} onChange={actions.setLine1}      label={t(['addresses', 'line1'])}       error={t(['addresses', 'line1Invalid'])}        value={state.line_1}      name="client[line1]"      placeholder={t(['addresses', 'line1Placeholder'])}      highlight={state.highlight}/>
                           <Input onEnter={submitForm} onChange={actions.setLine2}      label={t(['addresses', 'line2'])}       error={t(['addresses', 'line2Invalid'])}        value={state.line_2}      name="client[line2]"      placeholder={t(['addresses', 'line2Placeholder'])}/>
                           <Input onEnter={submitForm} onChange={actions.setCity}       label={t(['addresses', 'city'])}        error={t(['addresses', 'cityInvalid'])}         value={state.city}        name="client[city]"       placeholder={t(['addresses', 'cityPlaceholder'])}       highlight={state.highlight}/>
@@ -56,13 +74,22 @@ export class NewAccountPage extends Component {
                           <Input onEnter={submitForm} onChange={actions.setCountry}    label={t(['addresses', 'country'])}     error={t(['addresses', 'countryInvalid'])}      value={state.country}     name="client[country]"    placeholder={t(['addresses', 'countryPlaceholder'])}    highlight={state.highlight}/>
                         </Form>
                       </div>
-                      <div className={`${styles.flexChild} ${styles.hint}`}>
-                        <h3>{t(['newAccount', 'whatIsMerchant'])}</h3>
-                        <div>{t(['newAccount', 'merchantDesc'])}</div>
-                        <div><img src="../../public/accountGuide/step1.png" /></div>
-                        <div>{t(['newAccount', 'merchantDesc2'])}</div>
-                        <div><img src="../../public/accountGuide/step2.png" /></div>
-                      </div>
+
+                      {this.props.params.id ?
+                        <div className={`${styles.flexChild} ${styles.hint}`}>
+                          <h3>{t(['newAccount', 'updateProcess'])}</h3>
+                          <div>{t(['newAccount', 'merchantUpdateDesc'])}</div>
+                          <div><img src="../../public/accountGuide/step2.png" /></div>
+                        </div>
+                        :
+                        <div className={`${styles.flexChild} ${styles.hint}`}>
+                          <h3>{t(['newAccount', 'whatIsMerchant'])}</h3>
+                          <div>{t(['newAccount', 'merchantDesc'])}</div>
+                          <div><img src="../../public/accountGuide/step1.png" /></div>
+                          <div>{t(['newAccount', 'merchantDesc2'])}</div>
+                          <div><img src="../../public/accountGuide/step2.png" /></div>
+                        </div>
+                      }
                     </div>
 
     return (
@@ -73,5 +100,5 @@ export class NewAccountPage extends Component {
 
 export default connect(
   state    => ({ state: state.newAccount }),
-  dispatch => ({ actions: bindActionCreators(pageNewAccountActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...pageNewAccountActions, setError}, dispatch) })
 )(NewAccountPage)

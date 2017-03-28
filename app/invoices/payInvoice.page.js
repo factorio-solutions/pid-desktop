@@ -3,11 +3,8 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import PageBase     from '../_shared/containers/pageBase/PageBase'
-import Braintree    from '../_shared/components/braintree/Braintree'
-import RoundButton  from '../_shared/components/buttons/RoundButton'
-// import ButtonStack  from '../_shared/components/buttonStack/ButtonStack'
-// import TextButton   from '../_shared/components/buttons/TextButton'
+import PageBase from '../_shared/containers/pageBase/PageBase'
+import Form     from '../_shared/components/form/Form'
 
 import styles               from './payInvoice.page.scss'
 import * as nav             from '../_shared/helpers/navigation'
@@ -22,14 +19,18 @@ export class PayInvoicePage extends Component {
   }
 
   constructor(props) {
-    props.state.invoices.find((invoice) => {
+    !props.location.query.hasOwnProperty('token') && props.state.invoices.find((invoice) => {
       return invoice.id == props.params.invoice_id
     }) === undefined && nav.back()
     super(props);
   }
 
   componentDidMount(){
-    this.props.actions.payInit()
+    const { location, actions, params } = this.props
+    if (location.query.hasOwnProperty('token')){
+      location.query.success === 'true' ? actions.payInvoiceFinish(location.query.token) : actions.paymentUnsucessfull()
+      params.client_id ? nav.to(`/clients/${params.client_id}/invoices`) : nav.to(`/accounts/${params.account_id}/invoices`)
+    }
   }
 
   render() {
@@ -39,18 +40,13 @@ export class PayInvoicePage extends Component {
       return invoice.id == this.props.params.invoice_id
     })
 
-    const formOnSubmit = (evt) => {
-      evt.preventDefault()
-      return false
-    }
-
-    const onPayment = (payload) => {
-      actions.payInvoice(this.props.params.invoice_id, payload)
+    const onPayment = () => {
+      actions.payInvoice(this.props.params.invoice_id)
     }
 
     const content = <div>
                       {invoice &&
-                        <div>
+                        <Form onSubmit={onPayment} onBack={()=>{nav.back()}} submitable={true}>
                         <table>
                           <tbody>
                             <tr>
@@ -67,18 +63,7 @@ export class PayInvoicePage extends Component {
                             </tr>
                           </tbody>
                         </table>
-
-                        <form className={styles.form} onSubmit={formOnSubmit}>
-                          {state.braintree_token ? <Braintree token={state.braintree_token} onPayment={onPayment}/> : <div className={styles.loading}>LOADING...</div>}
-                          <div className={styles.floatLeft}>
-                            <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={()=>{nav.back()}}/>
-                          </div>
-                          <div className={styles.floatRight}>
-                            <button className={`${styles.submitButton} ${state.braintree_token == undefined && styles.disabled}`} type="submit"> <span className='fa fa-check' aria-hidden="true"></span> </button>
-                          </div>
-                        </form>
-                        </div>
-                      }
+                        </Form> }
                     </div>
 
     return (

@@ -160,8 +160,6 @@ export class NewGaragePage extends Component {
                                 {t(['newGarage', 'processing'])}
                              </div>
 
-
-
     const content = <div className={styles.parent}>
                       <Modal content={errorContent} show={state.error!=undefined && !state.fetching} />
                       <Modal content={processingContent} show={state.fetching} />
@@ -169,7 +167,7 @@ export class NewGaragePage extends Component {
                       <div className={styles.leftCollumn}>
                         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
                           <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})} highlight={state.highlight}/>
-                          <Dropdown label={t(['newGarage', state.tarif_id===1?'selectAccount':'selectAccountMandatory'])} content={accountDropdown} style='light' selected={state.availableAccounts.findIndex((account)=>{return account.id == state.tarif_id})}/>
+                          <Dropdown label={t(['newGarage', state.tarif_id===1?'selectAccount':'selectAccountMandatory'])} content={accountDropdown} style='light' selected={state.availableAccounts.findIndex((account)=>{return account.id == state.account_id})}/>
                           <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])} highlight={state.highlight}/>
                           { /*<input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG}/> <span className={styles.pointer} onClick={actions.toggleLPG}> {t(['newGarage', 'lpgAllowed'])} </span> */}
                           <Input onChange={actions.setCity}       onBlur={()=>{getGPSLocation()}} label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>

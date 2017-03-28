@@ -39,29 +39,6 @@ export default class ReleaseNotesPage extends Component {
     }
     const callPaypal = () => {
       request((response)=>{console.log(response);}, "mutation PaypalReqiest { paypal_payment }")
-      // var entryPoint = 'https://svcs.sandbox.paypal.com/AdaptivePayments/Pay'
-      //
-      // var headers = new Headers({
-      //   'X-PAYPAL-SECURITY-USERID':      'tomas.hrstka-facilitator_api1.factorio.cz',
-      //   'X-PAYPAL-SECURITY-PASSWORD':    'THN4B2STZRG5MG74',
-      //   'X-PAYPAL-SECURITY-SIGNATURE':   'An5ns1Kso7MWUdW4ErQKJJJ4qi4-AWPs9U6ifzjHrWyTZyL5f5k4U0dV',
-      //   'X-PAYPAL-APPLICATION-ID':       'APP-80W284485P519543T',
-      //   'X-PAYPAL-REQUEST-DATA-FORMAT':  'JSON',
-      //   'X-PAYPAL-RESPONSE-DATA-FORMAT': 'JSON'
-      //   // 'Access-Control-Allow-Origin':   '*'
-      // });
-      //
-      // var request = new Request(entryPoint, {
-      //   headers,
-      //   method: 'POST',
-      //   mode:   'cors'
-      // });
-      //
-      // fetch(request).then(function(response) {
-      // 	console.log('response',response);
-      // }).catch(function(err) {
-      // 	console.log('err', err);
-      // });
     }
 
     return (
@@ -70,7 +47,7 @@ export default class ReleaseNotesPage extends Component {
         {/* Generate PDF button ================================================*/}
         {/* <button onClick={onClick}>Generate PDF</button> */}
         {/* <button onClick={downloadClick}>Download PDF</button> */}
-        {/* <button onClick={generateClick}>Generate invoices</button> */}
+        <button onClick={generateClick}>Generate invoices</button>
         {/* <button onClick={resetPasswordClick}>Reset passeword</button> */}
         <button onClick={callPaypal}>PayPal API call</button>
 

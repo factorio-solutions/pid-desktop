@@ -4,8 +4,7 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
-import RoundButton      from '../_shared/components/buttons/RoundButton'
-import Braintree        from '../_shared/components/braintree/Braintree'
+import Form             from '../_shared/components/form/Form'
 
 import * as nav                 from '../_shared/helpers/navigation'
 import { t }                    from '../_shared/modules/localization/localization'
@@ -21,7 +20,12 @@ export class NewReservationOverviewPage extends Component {
   }
 
   componentDidMount () {
-    this.props.actions.overviewInit()
+    const { location, actions } = this.props
+    if (location.query.hasOwnProperty('token')){
+      location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
+    } else {
+      actions.overviewInit()
+    }
   }
 
   render() {
@@ -29,15 +33,7 @@ export class NewReservationOverviewPage extends Component {
 
     const onBack = () => { nav.to('/reservations/newReservation') }
 
-    const formOnSubmit = (evt) => {
-      evt.preventDefault()
-      state.client_id && actions.submitReservation(undefined)
-      return false
-    }
-
-    const onPayment = (payload) => {
-      actions.submitReservation(payload)
-    }
+    const formOnSubmit = () => { actions.submitReservation() }
 
     const placeLabel = () => {
       const findPlace = (place) => {return place.id == state.place_id}
@@ -57,7 +53,7 @@ export class NewReservationOverviewPage extends Component {
       }
     }
 
-    const content = <div>
+    const content = <Form onSubmit={formOnSubmit} onBack={onBack} submitable={true}>
                       <h2>{t(['newReservationOverview', 'overview'])}</h2>
                       <div>
                         <h4>{t(['newReservationOverview', 'selectedPlace'])}</h4>
@@ -76,17 +72,7 @@ export class NewReservationOverviewPage extends Component {
                         <h4>{t(['newReservationOverview', 'price'])}</h4>
                         <div className={styles.label}>{ state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price }</div>
                       </div>
-                      <form className={styles.form} onSubmit={formOnSubmit}>
-                        {state.client_id==undefined && state.braintree_token && <Braintree token={state.braintree_token} onPayment={onPayment}/>}
-                        <div className={styles.floatLeft}>
-                          <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
-                        </div>
-                        <div className={styles.floatRight}>
-                          <button className={styles.submitButton} type="submit"> <span className='fa fa-check' aria-hidden="true"></span> </button>
-                        </div>
-                      </form>
-                    </div>
-
+                    </Form>
 
     return (
       <PageBase content={content}/>

@@ -1,13 +1,12 @@
 import { request } from '../helpers/request'
 import * as nav    from '../helpers/navigation'
+import {t}         from '../modules/localization/localization'
 
-import { INIT_ACCOUNT, CREATE_ACCOUNT, UPDATE_ACCOUNT } from '../queries/newAccount.queries'
+import { setCustomModal }                                               from './pageBase.actions'
+import { INIT_ACCOUNT, CREATE_ACCOUNT, UPDATE_ACCOUNT, GET_PERMISSION } from '../queries/newAccount.queries'
 
 
 export const SET_NEW_ACCOUNT_NAME         = "SET_NEW_ACCOUNT_NAME"
-export const SET_NEW_ACCOUNT_MERCHANT_ID  = "SET_NEW_ACCOUNT_MERCHANT_ID"
-export const SET_NEW_ACCOUNT_PRIVATE_KEY  = "SET_NEW_ACCOUNT_PRIVATE_KEY"
-export const SET_NEW_ACCOUNT_PUBLIC_KEY   = "SET_NEW_ACCOUNT_PUBLIC_KEY"
 export const SET_NEW_ACCOUNT_IC           = "SET_NEW_ACCOUNT_IC"
 export const SET_NEW_ACCOUNT_DIC          = "SET_NEW_ACCOUNT_DIC"
 export const SET_NEW_ACCOUNT_LINE1        = "SET_NEW_ACCOUNT_LINE1"
@@ -26,21 +25,6 @@ export function setName (value){
          }
 }
 
-export function setMerchantId (value){
-  return { type: SET_NEW_ACCOUNT_MERCHANT_ID
-         , value
-         }
-}
-export function setPrivateKey (value){
-  return { type: SET_NEW_ACCOUNT_PRIVATE_KEY
-         , value
-         }
-}
-export function setPublicKey (value){
-  return { type: SET_NEW_ACCOUNT_PUBLIC_KEY
-         , value
-         }
-}
 export function setIC (value){
   return { type: SET_NEW_ACCOUNT_IC
          , value
@@ -110,11 +94,8 @@ export function initAccount (id){
       const account = response.data.accounts[0]
 
       dispatch(setName(account.name))
-      dispatch(setMerchantId(account.merchant_id || ''))
       dispatch(setIC(account.ic || ''))
       dispatch(setDIC(account.dic || ''))
-      dispatch(setPublicKey(account.public_key || ''))
-      dispatch(setPrivateKey(account.private_key || ''))
       dispatch(setLine1(account.address.line_1))
       dispatch(setLine2(account.address.line_2 || ''))
       dispatch(setCity(account.address.city))
@@ -130,40 +111,68 @@ export function initAccount (id){
 export function submitNewAccount (id){
   return (dispatch, getState) => {
     const state = getState().newAccount
+    dispatch(setCustomModal(<div>{t(['newAccount', 'redirecting'])}</div>))
+
+    const onSuccess = (response) =>{
+      window.location.replace(response.data.paypal_get_permissions)
+    }
+
+    var parameters = id ? { ...generateAccount(state), id: +id} : generateAccount(state)
+
+    request( onSuccess
+           , GET_PERMISSION
+           , {url: `${window.location.href.split('?')[0]}?${encodeQueryData(parameters)}` }
+           )
+  }
+}
+
+export function createAccount(params){
+  return (dispatch, getState) => {
+    dispatch(setCustomModal(<div>{params.id ? t(['newAccount', 'updatingAccount']) : t(['newAccount', 'creatingAccount'])}</div>))
+
     const onSuccess = (response) =>{
       dispatch(clearForm())
       nav.to('/accounts')
+      dispatch(setCustomModal(undefined))
     }
 
-    if (id){
-      request(onSuccess
-             , UPDATE_ACCOUNT
-             , { id: +id
-               , account: generateAccount(state)
-               }
-             )
-    } else {
-      request(onSuccess
-             , CREATE_ACCOUNT
-             , { account: generateAccount(state) }
-             )
-    }
+    request(onSuccess
+           , params.id ? UPDATE_ACCOUNT : CREATE_ACCOUNT
+           , { id: +params.id || null
+             , account: { name:                            params.name
+                        , paypal_temporary_token:          params.request_token
+                        , paypal_temporary_token_verifier: params.verification_code
+                        , ic:                              params.ic || null
+                        , dic:                             params.dic || null
+                        , address:  { line_1:      params.line_1
+                                    , line_2:      params.line_2 || null
+                                    , city:        params.city
+                                    , postal_code: params.postal_code
+                                    , state:       params.state || null
+                                    , country:     params.country
+                                    }
+                        }
+             }
+           )
+
   }
+}
+
+function encodeQueryData(data) {
+   let ret = []
+   for (let d in data) data[d] && ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]))
+   return ret.join('&')
 }
 
 function generateAccount (state){
   return { name:        state.name
          , ic:          state.ic === "" ? undefined : state.ic
          , dic:         state.dic === "" ? undefined : state.dic
-         , merchant_id: state.merchant_id === "" ? undefined : state.merchant_id
-         , private_key: state.private_key === "" ? undefined : state.private_key
-         , public_key:  state.public_key === "" ? undefined : state.public_key
-         , address: { line_1:      state.line_1
-                    , line_2:      state.line_2 === "" ? undefined : state.line_2
-                    , city:        state.city
-                    , postal_code: state.postal_code
-                    , state:       state.state === "" ? undefined : state.state
-                    , country:     state.country
-                    }
+         , line_1:      state.line_1
+         , line_2:      state.line_2 === "" ? undefined : state.line_2
+         , city:        state.city
+         , postal_code: state.postal_code
+         , state:       state.state === "" ? undefined : state.state
+         , country:     state.country
          }
 }
