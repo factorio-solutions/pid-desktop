@@ -143,6 +143,7 @@ export class PageBase extends Component {
       <div>
         <Modal content={errorContent} show={state.error!=undefined} />
         <Modal content={notificationsModal} show={notifications.count>0 && state.notificationsModal } />
+        <Modal content={state.custom_modal} show={state.custom_modal!=undefined} />
         <MasterPage
           logo={<Logo style='rect' />}
           horizContent={<HorizontalMenu labels={state.horizontalContent} selected={state.horizontalSelected} />}

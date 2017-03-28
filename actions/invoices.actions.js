@@ -1,17 +1,16 @@
 import { request }  from '../helpers/request'
 import { download } from '../helpers/download'
+import { t }        from '../modules/localization/localization'
 import * as nav     from '../helpers/navigation'
 
-import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS, GET_CLIENT_DETAILS, DOWNLOAD_INVOICE } from '../queries/invoices.queries'
-import { GET_BRAINTREE_TOKEN } from '../queries/newReservation.queries'
-import { toAccounts, toClients } from './pageBase.actions'
+import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS, GET_CLIENT_DETAILS, DOWNLOAD_INVOICE, PAY_INVOICE } from '../queries/invoices.queries'
+import { toAccounts, toClients, setError, setCustomModal } from './pageBase.actions'
 
 
-export const INVOICES_SET_INVOICES        = "INVOICES_SET_INVOICES"
-export const INVOICES_SET_CLIENT          = "INVOICES_SET_CLIENT"
-export const INVOICES_SET_ACCOUNT         = "INVOICES_SET_ACCOUNT"
-export const INVOICES_SET_PAST            = "INVOICES_SET_PAST"
-export const INVOICES_SET_BRAINTREE_TOKEN = "INVOICES_SET_BRAINTREE_TOKEN"
+export const INVOICES_SET_INVOICES = "INVOICES_SET_INVOICES"
+export const INVOICES_SET_CLIENT   = "INVOICES_SET_CLIENT"
+export const INVOICES_SET_ACCOUNT  = "INVOICES_SET_ACCOUNT"
+export const INVOICES_SET_PAST     = "INVOICES_SET_PAST"
 
 
 export function setInvoices (value) {
@@ -38,11 +37,6 @@ export function setPast (value) {
          }
 }
 
-export function setBraintreeToken (value) {
-  return { type: INVOICES_SET_BRAINTREE_TOKEN
-         , value
-         }
-}
 
 export function initAccounts (client_id, account_id) {
   return (dispatch, getState) => {
@@ -74,26 +68,39 @@ export function initAccounts (client_id, account_id) {
   }
 }
 
-export function payInit () {
+export function payInvoice (id) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch(setBraintreeToken(response.data.current_user.braintree_token))
-    }
-    request( onSuccess, GET_BRAINTREE_TOKEN )
-  }
-}
-
-export function payInvoice (id, payload) {
-  return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      nav.back()
+      dispatch(setCustomModal(<div>{t(['invoices', 'redirecting'])}</div>))
+      window.location.replace(response.data.update_invoice.payment_url)
     }
 
+    dispatch(setCustomModal(<div>{t(['invoices', 'initializingPayment'])}</div>))
     request(onSuccess
            , UPDATE_INVOICE
            , { id:      +id
-             , invoice: { nonce: payload.nonce }
+             , invoice: { url: window.location.href.split('?')[0] }
              }
+           )
+  }
+}
+
+export function paymentUnsucessfull(){
+  return (dispatch, getState) => {
+    dispatch(setError(t(['invoices', 'paymentUnsucessfull'])))
+  }
+}
+
+export function payInvoiceFinish (token){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setCustomModal(undefined))
+    }
+
+    dispatch(setCustomModal(<div>{t(['invoices', 'payingReservation'])}</div>))
+    request( onSuccess
+           , PAY_INVOICE
+           , { token: token }
            )
   }
 }

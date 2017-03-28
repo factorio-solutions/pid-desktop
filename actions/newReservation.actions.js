@@ -1,8 +1,9 @@
-import moment             from 'moment'
-import { request }        from '../helpers/request'
-import { calculatePrice } from '../helpers/calculatePrice'
-import { t }              from '../modules/localization/localization'
-import * as nav           from '../helpers/navigation'
+import moment               from 'moment'
+import { request }          from '../helpers/request'
+import { calculatePrice }   from '../helpers/calculatePrice'
+import { t }                from '../modules/localization/localization'
+import * as nav             from '../helpers/navigation'
+import * as pageBaseActions from './pageBase.actions'
 
 import {
   GET_AVAILABLE_USERS,
@@ -12,7 +13,7 @@ import {
   GET_GARAGE_PRICINGS,
   GET_GARAGE_DETAILS,
   CREATE_RESERVATION,
-  GET_BRAINTREE_TOKEN
+  PAY_RESREVATION
 } from '../queries/newReservation.queries'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -36,7 +37,6 @@ export const NEW_RESERVATION_SET_PLACE_ID           = "NEW_RESERVATION_SET_PLACE
 export const NEW_RESERVATION_SET_DURATION_DATE      = "NEW_RESERVATION_SET_DURATION_DATE"
 export const NEW_RESERVATION_SET_ERROR              = "NEW_RESERVATION_SET_ERROR"
 export const NEW_RESERVATION_SET_PRICE              = "NEW_RESERVATION_SET_PRICE"
-export const NEW_RESERVATION_SET_BRAINTREE_TOKEN    = "NEW_RESERVATION_SET_BRAINTREE_TOKEN"
 export const NEW_RESERVATION_SET_HIGHLIGHT          = "NEW_RESERVATION_SET_HIGHLIGHT"
 export const NEW_RESERVATION_CLEAR_FORM             = "NEW_RESERVATION_CLEAR_FORM"
 
@@ -190,13 +190,6 @@ export function setError (value){
          , value
          }
 }
-
-export function setBraintreeToken (value){
-  return { type: NEW_RESERVATION_SET_BRAINTREE_TOKEN
-         , value
-         }
-}
-
 
 export function setHighlight (value){
   return { type: NEW_RESERVATION_SET_HIGHLIGHT
@@ -399,26 +392,28 @@ export function getGarageDetails(){
 export function overviewInit () {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    if (state.user_id != undefined && state.place_id != undefined && state.from != '' && state.to != ''){
-      const onSuccess = (response) => {
-        dispatch(setBraintreeToken(response.data.current_user.braintree_token))
-      }
-
-      request( onSuccess, GET_BRAINTREE_TOKEN )
-    } else {
+    if (state.user_id == undefined || state.place_id == undefined || state.from == '' || state.to == ''){
       nav.to('/reservations/newReservation')
     }
   }
 }
 
-export function submitReservation (payload) {
+export function submitReservation () {
   return (dispatch, getState) => {
       const state = getState().newReservation
 
       const onSuccess = (response) => {
-        nav.to('/reservations')
-        dispatch(clearForm())
+        if (response.data.create_reservation.payment_url){
+          dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', 'redirecting'])}</div>))
+          window.location.replace(response.data.create_reservation.payment_url)
+        } else {
+          dispatch(pageBaseActions.setCustomModal(undefined))
+          nav.to('/reservations')
+          dispatch(clearForm())
+        }
       }
+
+      dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', 'creatingReservation'])}</div>))
 
       request( onSuccess
              , CREATE_RESERVATION
@@ -427,12 +422,35 @@ export function submitReservation (payload) {
                , reservation: { client_id:     state.client_id
                               , car_id:        state.car_id
                               , licence_plate: state.carLicencePlate == '' ? undefined : state.carLicencePlate
-                              , nonce:         payload && payload.nonce
+                              , url:           window.location.href.split('?')[0]
                               , begins_at:     state.from
                               , ends_at:       state.to
                               }
                }
              , "reservationMutation"
              )
+  }
+}
+
+export function paymentUnsucessfull(){
+  return (dispatch, getState) => {
+    dispatch(pageBaseActions.setError(t(['newReservation', 'paymentUnsucessfull'])))
+    nav.to('/reservations')
+  }
+}
+
+export function payReservation (token){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      nav.to('/reservations')
+      dispatch(pageBaseActions.setCustomModal(undefined))
+      dispatch(clearForm())
+    }
+
+    dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', 'payingReservation'])}</div>))
+    request( onSuccess
+           , PAY_RESREVATION
+           , { token: token }
+           )
   }
 }

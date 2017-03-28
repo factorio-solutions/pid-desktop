@@ -92,16 +92,17 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
 // }
 
 // create reservation mutation
-export const CREATE_RESERVATION = `mutation createREservation($reservation: ReservationInput!, $user_id:Id!, $place_id:Id!) {
+export const CREATE_RESERVATION = `mutation createReservation($reservation: ReservationInput!, $user_id:Id!, $place_id:Id!) {
   create_reservation(reservation: $reservation, user_id: $user_id, place_id: $place_id) {
     id
+    payment_url
   }
 }
 `
 
-export const GET_BRAINTREE_TOKEN = `{
-  current_user {
-    braintree_token
-  }
-}
-`
+export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $id:Id) {
+	paypal_pay_reservation(token: $token, id: $id) {
+		id
+    approved
+	}
+}`

@@ -1,8 +1,5 @@
 import {
   SET_NEW_ACCOUNT_NAME,
-  SET_NEW_ACCOUNT_MERCHANT_ID,
-  SET_NEW_ACCOUNT_PRIVATE_KEY,
-  SET_NEW_ACCOUNT_PUBLIC_KEY,
   SET_NEW_ACCOUNT_IC,
   SET_NEW_ACCOUNT_DIC,
   SET_NEW_ACCOUNT_LINE1,
@@ -16,9 +13,6 @@ import {
 }  from '../actions/newAccount.actions'
 
 const defaultState =  { name:        ""
-                      , merchant_id: ""
-                      , private_key: ""
-                      , public_key:  ""
                       , ic:          ""
                       , dic:         ""
                       , line_1:      ""
@@ -37,21 +31,6 @@ export default function newAccount (appState = defaultState, action) {
     case SET_NEW_ACCOUNT_NAME:
       return { ...appState
              , name: action.value
-             }
-
-    case SET_NEW_ACCOUNT_MERCHANT_ID:
-      return { ...appState
-             , merchant_id: action.value
-             }
-
-    case SET_NEW_ACCOUNT_PRIVATE_KEY:
-      return { ...appState
-             , private_key: action.value
-             }
-
-    case SET_NEW_ACCOUNT_PUBLIC_KEY:
-      return { ...appState
-             , public_key: action.value
              }
 
     case SET_NEW_ACCOUNT_IC:

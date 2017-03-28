@@ -37,12 +37,14 @@ export const GET_CLIENT_DETAILS = `query GetClientDetails ($id: Id!) {
     id
     name
   }
-}`
+}
+`
 
 // will update invoice
 export const UPDATE_INVOICE = `mutation UpdatInvoice ($id: Id!, $invoice:InvoiceInput!){
   update_invoice(invoice: $invoice, id: $id){
     id
+    payment_url
   }
 }
 `
@@ -57,4 +59,13 @@ export const REMINDER_NOTIFICATION = `mutation CreateNotification ($notification
 
 export const DOWNLOAD_INVOICE = `download ($id:Id!) {
   download_invoice(id:$id)
-}`
+}
+`
+
+export const PAY_INVOICE = `mutation PaypalPayInvoice ($token:String) {
+	paypal_pay_invoice(token: $token) {
+		id
+    payed
+	}
+}
+`

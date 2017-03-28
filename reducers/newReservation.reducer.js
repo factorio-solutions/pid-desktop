@@ -22,7 +22,6 @@ import {
   NEW_RESERVATION_SET_DURATION_DATE,
   NEW_RESERVATION_SET_PRICE,
   NEW_RESERVATION_SET_ERROR,
-  NEW_RESERVATION_SET_BRAINTREE_TOKEN,
   NEW_RESERVATION_SET_HIGHLIGHT,
 
   NEW_RESERVATION_CLEAR_FORM
@@ -52,7 +51,6 @@ const defaultState =  { user_id:          undefined // id of selected user reser
                       , durationDate:     false // set duration or end of parking?
                       , price:            undefined
                       , error:            undefined
-                      , braintree_token:  undefined
                       , hightlight:       false
                       }
 
@@ -149,11 +147,6 @@ export default function newReservation (state = defaultState, action) {
     case NEW_RESERVATION_SET_ERROR:
       return { ...state
              , error: action.value
-             }
-
-    case NEW_RESERVATION_SET_BRAINTREE_TOKEN:
-      return { ...state
-             , braintree_token: action.value
              }
 
     case NEW_RESERVATION_SET_HIGHLIGHT:
