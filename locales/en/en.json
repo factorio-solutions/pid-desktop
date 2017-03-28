@@ -155,7 +155,11 @@
 		"licencePlatePlaceholder": "1A2 1234",
 		"price": "Price",
 		"onClientsExpenses":"On clients expenses.",
-		"loadingGarage": "Loading garage layout ..."
+		"loadingGarage": "Loading garage layout ...",
+		"creatingReservation":"Creating reservation ...",
+		"redirecting":"Redirecting ...",
+		"payingReservation":"Paying reservation ...",
+		"paymentUnsucessfull":"Payment was canceled and unsucessfull."
 	},
 	"clients": {
 		"name": "name",
@@ -188,7 +192,9 @@
 		"creator": "Creator",
 		"garage": "garage",
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
-		"reservationApproved":"Reservation was not approved yet."
+		"reservationApproved":"Reservation was not approved yet.",
+		"reservationNotPayed":"Reservation was not payed.",
+		"pay":"Pay"
 	},
 	"garages": {
 		"name": "garage name",
@@ -585,19 +591,17 @@
 			"name": "Account name *",
 			"placeholder": "Money account",
 			"invalidName": "Invalid accounts name",
-			"merchant": "Braintree merchant id",
-			"placeholderMerchant": "tdcbjgcfh6czjk3m",
-			"invalidMerchant": "Invalid merchant id",
-			"publicKey": "Braintree merchant id",
-			"placeholderPublicKey": "4jpxgcxp4svmxjsd",
-			"invalidPublicKey": "Invalid public key",
-			"privateKey": "Braintree merchant id",
-			"placeholderPrivateKey": "86974a3471f0e9e23d958cd2dd21f324",
-			"invalidPrivateKey": "Invalid private key",
+			"redirecting": "Redirecting ...",
+			"creatingAccount": "Creating account ...",
+			"updatingAccount": "Updating account ...",
+			"permissionNotGranted": "Paypals permission to process payment on your behalf was not granted. Try again.",
 
-			"whatIsMerchant": "What is merchant id?",
-			"merchantDesc": "We use Braintree to take care of your money. If you want to accept money, you have to get Braintree accounts and provide us with your merhcant ID. Got to braintree.com and sign up for production! Once you are logged in, go to Account > My user. Under API Keys, Tokenization Keys, Encryption Keys, click View Authorizations. ",
-			"merchantDesc2": "If no API keys appear, click Generate New API Key. Click View under the Private Key column to see your public and private keys, merchant ID, and environment."
+			"whatIsMerchant": "Process of creating account",
+			"merchantDesc": "We use Paypal to take care of your money. If you want to accept money, you have to your own Paypal business account and provide us permission to process payments for you. Got to paypal.com and sign up business account! Once you got your business Paypal account we can continue with this form.",
+			"merchantDesc2": "Fill the form and click OK. You will be automatically redirected to paypals website where you log in to paypal you want to use with this Park-it-direct account. Than just click \"Grant Permission\" button.",
+
+			"updateProcess": "Process of updating an account",
+			"merchantUpdateDesc": "After clicking OK, you will be redirected to the paypal. To change your current paypal account, simply log in with another paypal account and click the \"Grant Permission\" button."
 	},
 	"invoices": {
 		"invoiceDate":"invoice date",
@@ -608,7 +612,11 @@
 		"ammount":"ammount",
 		"subject":"subject",
 		"pay":"Pay",
-		"invoicePayed": "Are you sure you want to mark this invoice as payed?"
+		"invoicePayed": "Are you sure you want to mark this invoice as payed?",
+		"initializingPayment":"Initializing payment ...",
+		"redirecting":"Redirecting ...",
+		"paymentUnsucessfull":"Payment was canceled and unsucessfull.",
+		"payingReservation":"Paying reservation"
 	},
 	"resetPassword": {
 		"send":"Password reseting email was sent to your email.",

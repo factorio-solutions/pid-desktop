@@ -5,6 +5,7 @@ import {
   SET_HORIZONTAL_SELECTED,
   SET_HORIZONTAL_CONTENT,
   PAGE_BASE_SET_ERROR,
+  PAGE_BASE_SET_CUSTOM_MODAL,
   PAGE_BASE_SET_NOTIFICATIONS_MODAL,
   PAGE_BASE_SET_CURRENT_USER
 }  from '../actions/pageBase.actions'
@@ -13,6 +14,7 @@ const defaultState =  { verticalSelected:   0 // id of selected user reservation
                       , horizontalSelected: 0
                       , horizontalContent:  []
                       , error:              undefined
+                      , custom_modal:       undefined
                       , notificationsModal: false
                       , current_user:       {}
                       , hint:               undefined
@@ -42,6 +44,11 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_ERROR:
     return  { ...state
             , error: action.value
+            }
+
+    case PAGE_BASE_SET_CUSTOM_MODAL:
+    return  { ...state
+            , custom_modal: action.value
             }
 
     case PAGE_BASE_SET_NOTIFICATIONS_MODAL:

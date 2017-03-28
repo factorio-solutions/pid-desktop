@@ -6,6 +6,7 @@ export const SET_HORIZONTAL_CONTENT            = 'SET_VERTICAL_CONTENT'
 export const SET_HORIZONTAL_SELECTED           = 'SET_HORIZONTAL_SELECTED'
 export const SET_VERTICAL_SELECTED             = 'SET_VERTICAL_SELECTED'
 export const PAGE_BASE_SET_ERROR               = 'PAGE_BASE_SET_ERROR'
+export const PAGE_BASE_SET_CUSTOM_MODAL        = 'PAGE_BASE_SET_CUSTOM_MODAL'
 export const PAGE_BASE_SET_NOTIFICATIONS_MODAL = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
 export const PAGE_BASE_SET_CURRENT_USER        = 'PAGE_BASE_SET_CURRENT_USER'
 export const PAGE_BASE_SET_HINT                = 'PAGE_BASE_SET_HINT'
@@ -34,6 +35,12 @@ export function setVerticalSelected (index){
 export function setError (error){
   return  { type: PAGE_BASE_SET_ERROR
           , value: error
+          }
+}
+
+export function setCustomModal (content){
+  return  { type: PAGE_BASE_SET_CUSTOM_MODAL
+          , value: content
           }
 }
 
