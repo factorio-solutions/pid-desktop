@@ -45,3 +45,8 @@ export const DESTROY_RESERVATION = `mutation reservationMuation($id: Id!) {
   }
 }
 `
+
+// check reservations token validity
+export const CHECK_VALIDITY = `mutation PaypalPayReservation ($token:String) {
+	paypal_check_validity(token: $token)
+}`

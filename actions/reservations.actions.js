@@ -1,11 +1,12 @@
-import { request }        from '../helpers/request'
-import { download }       from '../helpers/download'
-import { setCustomModal } from './pageBase.actions'
-import { t }              from '../modules/localization/localization'
+import { request }                   from '../helpers/request'
+import { download }                  from '../helpers/download'
+import { setCustomModal, setError }  from './pageBase.actions'
+import { t }                         from '../modules/localization/localization'
+import { parseParameters }           from '../helpers/parseUrlParameters'
 
-import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION } from '../queries/reservations.queries'
-import { DOWNLOAD_INVOICE }                            from '../queries/invoices.queries'
-import { PAY_RESREVATION }                             from '../queries/newReservation.queries'
+import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY } from '../queries/reservations.queries'
+import { DOWNLOAD_INVOICE }                                            from '../queries/invoices.queries'
+import { PAY_RESREVATION }                                             from '../queries/newReservation.queries'
 
 
 export const SET_RESERVATIONS           = "SET_RESERVATIONS"
@@ -51,7 +52,18 @@ export function downloadInvoice (id){
 
 export function payReservation (url){
   return (dispatch, getState) => {
-    dispatch(setCustomModal(<div>{t(['newReservation', 'redirecting'])}</div>))
-    window.location.replace(url)
+    const onSuccess = (response) => {
+      dispatch(setCustomModal(undefined))
+      if (response.data.paypal_check_validity){
+        dispatch(setCustomModal(t(['newReservation', 'redirecting'])))
+        window.location.replace(url)
+      } else {
+        dispatch(setError(t(['newReservation', 'tokenInvalid'])))
+        dispatch(initReservations())
+      }
+    }
+
+    dispatch(setCustomModal(t(['newReservation', 'validtyCheck'])))
+    request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
   }
 }
