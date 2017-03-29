@@ -1,10 +1,12 @@
-import moment      from 'moment'
-import { request } from '../helpers/request'
+import moment                       from 'moment'
+import { request }                  from '../helpers/request'
+import { parseParameters }          from '../helpers/parseUrlParameters'
+import { setError, setCustomModal } from './mobile.header.actions'
 
 import { GET_AVAILABLE_FLOORS }                                                           from '../queries/mobile.newReservation.queries'
 import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, PAY_RESREVATION } from '../queries/newReservation.queries'
+import { CHECK_VALIDITY }                                                                 from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS }                                                            from '../../reservations/newReservation.page'
-import { setError, setCustomModal }                                                       from './mobile.header.actions'
 import { entryPoint }                                                                     from '../../index'
 
 export const MOBILE_NEW_RESERVATION_SET_FROM              = 'MOBILE_NEW_RESERVATION_SET_FROM'
@@ -257,6 +259,23 @@ export function submitReservation(callback){
     }
 }
 
+export function checkReservation (url, callback = ()=>{}) {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setCustomModal(undefined))
+      if (response.data.paypal_check_validity){
+        dispatch(payReservation (url, callback))
+      } else {
+        dispatch(setError('Token of payment is no longer valid, reservation will be deleted.'))
+        callback()
+      }
+    }
+
+    dispatch(setCustomModal('Checking token validity'))
+    request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
+  }
+}
+
 export function payReservation (url, callback = ()=>{}) {
   return (dispatch, getState) => {
     dispatch(setCustomModal('Redirecting ...'))
@@ -267,12 +286,7 @@ export function payReservation (url, callback = ()=>{}) {
       inAppBrowser.addEventListener('loadstart', (event)=>{
         if (!event.url.includes('paypal')) { // no paypal in name means redirected back
           inAppBrowser.close()
-
-          const parameters = event.url.split('?')[1].split('&').reduce((obj, parameter)=>{
-            obj[parameter.split('=')[0]] = parameter.split('=')[1]
-            return obj
-          }, {})
-
+          const parameters = parseParameters(event.url)
           parameters['success'] ? dispatch(finishReservation(parameters['token'], callback)) : dispatch(paymentUnsucessfull(callback))
         }
       })
