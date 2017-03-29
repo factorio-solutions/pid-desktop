@@ -9,8 +9,9 @@ import { setNotificationCount } from '../actions/notifications.actions'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
 export function request (onSuccess, query, variables = null, operationName = null, onError ){
-  const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
+  // const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
   // const entryPoint = 'https://park-it-direct.herokuapp.com/queries'
+  const entryPoint = 'https://park-it-direct-alpha.herokuapp.com/queries'
   // const entryPoint = 'http://localhost:3000/queries'
 
   const data = { query

@@ -9,6 +9,7 @@ import RoundButton     from '../../components/buttons/RoundButton'
 import MobileSlideMenu from '../../components/mobileSlideMenu/MobileSlideMenu'
 import ButtonStack     from '../../components/buttonStack/ButtonStack'
 import MenuButton      from '../../components/buttons/MenuButton'
+import Modal           from '../../components/modal/Modal'
 
 import styles from './Page.scss'
 
@@ -30,6 +31,7 @@ export class Page extends Component {
     // navigation functions
     back:          PropTypes.func,
     add:           PropTypes.func,
+    pay:           PropTypes.func,
     ok:            PropTypes.func,
     remove:        PropTypes.func
   }
@@ -47,17 +49,19 @@ export class Page extends Component {
     window.addEventListener("unauthorizedAccess",  () => { localStorage['jwt'] && this.logout()  },  false) // 401 status, redirect to login
     const { actions, hideDropdown, hideHeader } = this.props
     !hideHeader && !hideDropdown && actions.initGarages()
+    actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
   }
 
   render() {
     const { actions, state }                                         = this.props
     const { hideDropdown, hideHamburger, hideHeader, label, margin } = this.props
-    const { back, add, ok, remove }                                  = this.props
+    const { back, add, pay, ok, remove }                                  = this.props
 
     const selectedGarage = () => { return state.garages.findIndex(function(garage){return garage.id == state.garage_id}) }
     const toggleMenu     = () => { actions.toggleMenu() }
     const currentUser    = () => { console.log('TODO: current user profile') }
     const logOut         = () => { this.logout() }
+    const modalClick     = () => { actions.setError(undefined) }
     const sideMenuItems  = [ <MenuButton key='1' icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} /> ]
 
     const garageContent = () => {
@@ -103,8 +107,15 @@ export class Page extends Component {
                      <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={toggleMenu}/>
                    </div>
 
+     const errorContent =  <div style={{"textAlign": "center"}}>
+          { state.error } <br/>
+          <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
+        </div>
+
     return(
       <div className={margin && styles.app_page}>
+        <Modal content={errorContent} show={state.error!=undefined} />
+        <Modal content={state.custom_modal} show={state.custom_modal!=undefined} />
 
         <div className={!hideHeader && styles.pageContent}>
           { this.props.children }
@@ -112,6 +123,7 @@ export class Page extends Component {
 
         { back   && <div className={styles.backButton}><RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={back}/></div> }
         { add    && <div className={styles.addButton}> <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>}         onClick={add}    type='action'  state={!state.online && 'disabled'}/></div> }
+        { pay    && <div className={styles.addButton}> <RoundButton content={'Pay'}                                                           onClick={pay}    type='action'  state={!state.online && 'disabled'}/></div> }
         { ok     && <div className={styles.okButton}>  <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}        onClick={ok}     type='confirm' state={!state.online && 'disabled'}/></div> }
         { remove && <div className={styles.okButton}>  <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}        onClick={remove} type='remove'  state={!state.online && 'disabled'}/></div> }
 
