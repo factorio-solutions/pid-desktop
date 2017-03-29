@@ -114,8 +114,8 @@ export function submitNewAccount (id){
     dispatch(setCustomModal(<div>{t(['newAccount', 'redirecting'])}</div>))
 
     const onSuccess = (response) =>{
-      console.log(response.data.paypal_get_permissions);
-      // window.location.replace(response.data.paypal_get_permissions)
+      // console.log(response.data.paypal_get_permissions);
+      window.location.replace(response.data.paypal_get_permissions)
     }
 
     var parameters = id ? { ...generateAccount(state), id: +id} : generateAccount(state)
