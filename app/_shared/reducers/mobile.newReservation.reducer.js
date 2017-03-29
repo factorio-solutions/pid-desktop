@@ -11,8 +11,7 @@ import {
   MOBILE_NEW_RESERVATION_SET_TO,
   MOBILE_NEW_RESERVATION_SET_FROM_NOW,
   MOBILE_NEW_RESERVATION_SET_DURATION,
-  MOBILE_NEW_RESERVATION_SET_PLACE_ID,
-  MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN
+  MOBILE_NEW_RESERVATION_SET_PLACE_ID
 }  from '../actions/mobile.newReservation.actions'
 
 const defaultState =  { from: undefined
@@ -31,7 +30,6 @@ const defaultState =  { from: undefined
                       , availableFloors:  undefined
                       , autoselect:       true
                       , place_id:         undefined // undefined means no available places
-                      , braintree_token:  undefined
                       }
 
 
@@ -97,11 +95,6 @@ export default function mobileNewReservation (state = defaultState, action) {
     case MOBILE_NEW_RESERVATION_SET_PLACE_ID:
       return  { ...state
               , place_id: action.value
-              }
-
-    case MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN:
-      return  { ...state
-              , braintree_token: action.value
               }
 
     case MOBILE_NEW_RESERVATION_CLEAR_FORM:

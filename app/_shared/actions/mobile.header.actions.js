@@ -6,6 +6,10 @@ export const MOBILE_MENU_SET_GARAGES      = 'MOBILE_MENU_SET_GARAGES'
 export const MOBILE_MENU_SET_GARAGE       = 'MOBILE_MENU_SET_GARAGE'
 export const MOBILE_MENU_SET_CURRENT_USER = 'MOBILE_MENU_SET_CURRENT_USER'
 export const MOBILE_MENU_SET_SHOW_MENU    = 'MOBILE_MENU_SET_SHOW_MENU'
+export const MOBILE_MENU_SET_ERROR        = 'MOBILE_MENU_SET_ERROR'
+export const MOBILE_MENU_SET_CUSTOM_MODAL = 'MOBILE_MENU_SET_CUSTOM_MODAL'
+
+
 
 
 export function resetStore () {
@@ -36,6 +40,19 @@ export function setShowMenu (bool){
           , value: bool
           }
 }
+
+export function setError (text){
+  return  { type: MOBILE_MENU_SET_ERROR
+          , value: text
+          }
+}
+export function setCustomModal (content){
+  return  { type: MOBILE_MENU_SET_CUSTOM_MODAL
+          , value: content
+          }
+}
+
+
 
 
 export function initGarages (){

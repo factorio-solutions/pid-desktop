@@ -27,10 +27,6 @@ export default class ReleaseNotesPage extends Component {
       request((response)=>{console.log(response);}, `mutation CallNumber{ gate(number: "${document.getElementById('tel').value}" ) }`)
     }
 
-    const onBraintreeReport = () => {
-      request((response)=>{console.log(response);}, `mutation CallNumber{ transaction }`)
-    }
-
     const generateClick = () => {
       request((response)=>{console.log(response);}, "mutation GeneratInvoices { generate_invoices }")
     }
@@ -56,7 +52,6 @@ export default class ReleaseNotesPage extends Component {
 
         {/*<button onClick={onSIPClick}>Make a SIP call</button> <input type="tel" id="tel" />*/}
         {/* <br/>*/}
-        {/* <button onClick={onBraintreeReport}>Braintree report</button>*/}
 
         <h2>Go back</h2>
         <div>
