@@ -1,9 +1,10 @@
 import moment      from 'moment'
 import { request } from '../helpers/request'
 
-import { GET_AVAILABLE_FLOORS }                                                               from '../queries/mobile.newReservation.queries'
-import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, GET_BRAINTREE_TOKEN } from '../queries/newReservation.queries'
-import { AVAILABLE_DURATIONS }                                                                from '../../reservations/newReservation.page'
+import { GET_AVAILABLE_FLOORS }                                                           from '../queries/mobile.newReservation.queries'
+import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, PAY_RESREVATION } from '../queries/newReservation.queries'
+import { AVAILABLE_DURATIONS }                                                            from '../../reservations/newReservation.page'
+import { setError, setCustomModal }                                                       from './mobile.header.actions'
 
 export const MOBILE_NEW_RESERVATION_SET_FROM              = 'MOBILE_NEW_RESERVATION_SET_FROM'
 export const MOBILE_NEW_RESERVATION_SET_TO                = 'MOBILE_NEW_RESERVATION_SET_TO'
@@ -17,7 +18,6 @@ export const MOBILE_NEW_RESERVATION_CAR_LICENCE_PLATE     = "MOBILE_NEW_RESERVAT
 export const MOBILE_NEW_RESERVATION_SET_PLACE_ID          = 'MOBILE_NEW_RESERVATION_SET_PLACE_ID'
 export const MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS  = 'MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS'
 export const MOBILE_NEW_RESERVATION_SET_AUTOSELECT        = 'MOBILE_NEW_RESERVATION_SET_AUTOSELECT'
-export const MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN       = 'MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN'
 export const MOBILE_NEW_RESERVATION_CLEAR_FORM            = 'MOBILE_NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -126,13 +126,6 @@ export function setAutoselect (bool){
           }
 }
 
-export function setBraintreeToken (token){
-  return  { type: MOBILE_NEW_RESERVATION_BRAINTREE_TOKEN
-          , value: token
-          }
-}
-
-
 function clearForm(){
   return  { type: MOBILE_NEW_RESERVATION_CLEAR_FORM }
 }
@@ -146,19 +139,9 @@ export function initReservation (){
     return (dispatch, getState) => {
       dispatch(pickPlaces())
       dispatch(getAvailableCars())
-      dispatch(getBraintreeToken())
     }
 }
 
-export function getBraintreeToken () {
-  return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      dispatch(setBraintreeToken(response.data.current_user.braintree_token))
-    }
-
-    request( onSuccess, GET_BRAINTREE_TOKEN )
-  }
-}
 
 export function getAvailableClients () {
   return (dispatch, getState) => {
@@ -244,27 +227,24 @@ export function autoselectPlace(){
     }
 }
 
-export function submitReservation(payload, callback){
+export function submitReservation(callback){
     return (dispatch, getState) => {
       const onSuccess = (response) => {
-        console.log('success', response);
-        callback()
-        dispatch(clearForm())
+        dispatch(payReservation(response.data.create_reservation.payment_url, callback))
       }
-
-      console.log('here');
 
       var reservation = stateToVariables(getState)
       delete reservation["garage_id"]
 
+      dispatch(setCustomModal('Creating payment ...'))
       request( onSuccess
              , CREATE_RESERVATION
              , { place_id: reservation.place_id
                , user_id: getState().mobileHeader.current_user.id
                , reservation: { client_id:     reservation.client_id
                               , car_id:        reservation.car_id
-                              , licence_plate: reservation.licence_plate
-                              , nonce:         payload && payload.nonce
+                              , licence_plate: reservation.licence_plate=='' ? undefined :  reservation.licence_plate
+                              , url:           window.cordova === undefined ? window.location.href.split('?')[0] : 'https://closeparkitdirectinappbrowser/'  // development purposes
                               , begins_at:     reservation.begins_at
                               , ends_at:       reservation.ends_at
                               }
@@ -272,6 +252,54 @@ export function submitReservation(payload, callback){
              , "reservationMutation"
              )
     }
+}
+
+export function payReservation (url, callback = ()=>{}) {
+  return (dispatch, getState) => {
+    dispatch(setCustomModal('Redirecting ...'))
+    if (window.cordova === undefined){ // debuging in browser
+      window.location.replace(url)
+    } else {
+      let inAppBrowser = cordova.InAppBrowser.open(url, '_blank', 'location=no,zoom=no,toolbar=no')
+      inAppBrowser.addEventListener('loadstart', (event)=>{
+        if (!event.url.includes('paypal')) {
+          inAppBrowser.close()
+
+          const parameters = event.url.split('?')[1].split('&').reduce((obj, parameter)=>{
+            obj[parameter.split('=')[0]] = parameter.split('=')[1]
+            return obj
+          }, {})
+
+          parameters['success'] ? dispatch(finishReservation(parameters['token'], callback)) : dispatch(paymentUnsucessfull(callback))
+        }
+      })
+    }
+  }
+}
+
+export function paymentUnsucessfull(callback){
+  return (dispatch, getState) => {
+    dispatch(setCustomModal(undefined))
+    dispatch(setError('Payment was unsucessfull.'))
+    dispatch(clearForm())
+    callback()
+  }
+}
+
+export function finishReservation(token, callback){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(setCustomModal(undefined))
+      dispatch(clearForm())
+      callback()
+    }
+
+    dispatch(setCustomModal('Processing payment ...'))
+    request( onSuccess
+           , PAY_RESREVATION
+           , { token: token }
+           )
+  }
 }
 
 export function fromBeforeTo(from, to){

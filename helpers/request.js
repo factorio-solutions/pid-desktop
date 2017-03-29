@@ -1,6 +1,6 @@
-import * as nav                 from './navigation'
-import { store, mobile }        from '../../index'
-import { setNotificationCount } from '../actions/notifications.actions'
+import * as nav                      from './navigation'
+import { store, mobile, entryPoint } from '../../index'
+import { setNotificationCount }      from '../actions/notifications.actions'
 
 
 // helper request sender queries to the GraphQL API
@@ -9,11 +9,6 @@ import { setNotificationCount } from '../actions/notifications.actions'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
 export function request (onSuccess, query, variables = null, operationName = null, onError ){
-  const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000')+'/queries'
-  // const entryPoint = 'https://park-it-direct.herokuapp.com/queries'
-  // const entryPoint = 'https://park-it-direct-alpha.herokuapp.com/queries'
-  // const entryPoint = 'http://localhost:3000/queries'
-
   const data = { query
                , operationName
                , variables

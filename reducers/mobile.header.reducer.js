@@ -2,7 +2,9 @@ import {
   MOBILE_MENU_SET_GARAGES,
   MOBILE_MENU_SET_GARAGE,
   MOBILE_MENU_SET_CURRENT_USER,
-  MOBILE_MENU_SET_SHOW_MENU
+  MOBILE_MENU_SET_SHOW_MENU,
+  MOBILE_MENU_SET_ERROR,
+  MOBILE_MENU_SET_CUSTOM_MODAL
 }  from '../actions/mobile.header.actions'
 
 const defaultState =  { garages:      []
@@ -11,6 +13,8 @@ const defaultState =  { garages:      []
                       , headerHeight: 101 //px
                       , online:       navigator.connection ? navigator.connection.type !== 'none' : true
                       , showMenu:     false
+                      , error:        undefined
+                      , custom_modal: undefined
                       }
 
 
@@ -35,6 +39,14 @@ export default function mobileHeader (state = defaultState, action) {
     case MOBILE_MENU_SET_SHOW_MENU:
     return  { ...state
             , showMenu: action.value
+            }
+    case MOBILE_MENU_SET_ERROR:
+    return  { ...state
+            , error: action.value
+            }
+    case MOBILE_MENU_SET_CUSTOM_MODAL:
+    return  { ...state
+            , custom_modal: action.value
             }
 
     case "MOBIE_MENU_SET_DEVICE_ONLINE":
