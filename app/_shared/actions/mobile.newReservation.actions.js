@@ -5,6 +5,7 @@ import { GET_AVAILABLE_FLOORS }                                                 
 import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, PAY_RESREVATION } from '../queries/newReservation.queries'
 import { AVAILABLE_DURATIONS }                                                            from '../../reservations/newReservation.page'
 import { setError, setCustomModal }                                                       from './mobile.header.actions'
+import { entryPoint }                                                                     from '../../index'
 
 export const MOBILE_NEW_RESERVATION_SET_FROM              = 'MOBILE_NEW_RESERVATION_SET_FROM'
 export const MOBILE_NEW_RESERVATION_SET_TO                = 'MOBILE_NEW_RESERVATION_SET_TO'
@@ -244,7 +245,9 @@ export function submitReservation(callback){
                , reservation: { client_id:     reservation.client_id
                               , car_id:        reservation.car_id
                               , licence_plate: reservation.licence_plate=='' ? undefined :  reservation.licence_plate
-                              , url:           window.cordova === undefined ? window.location.href.split('?')[0] : 'https://closeparkitdirectinappbrowser/'  // development purposes
+                              , url:           window.cordova === undefined ? window.location.href.split('?')[0] // development purposes - browser debuging
+                                                                            : (entryPoint.includes('alpha') ? "https://pid-alpha.herokuapp.com/#/en/reservations/newReservation/overview/"
+                                                                                                            : "https://pid-beta.herokuapp.com/#/en/reservations/newReservation/overview/")
                               , begins_at:     reservation.begins_at
                               , ends_at:       reservation.ends_at
                               }
@@ -257,12 +260,12 @@ export function submitReservation(callback){
 export function payReservation (url, callback = ()=>{}) {
   return (dispatch, getState) => {
     dispatch(setCustomModal('Redirecting ...'))
-    if (window.cordova === undefined){ // debuging in browser
+    if (window.cordova === undefined){ // development purposes - browser debuging
       window.location.replace(url)
-    } else {
+    } else { // in mobile open InAppBrowser, when redirected back continue
       let inAppBrowser = cordova.InAppBrowser.open(url, '_blank', 'location=no,zoom=no,toolbar=no')
       inAppBrowser.addEventListener('loadstart', (event)=>{
-        if (!event.url.includes('paypal')) {
+        if (!event.url.includes('paypal')) { // no paypal in name means redirected back
           inAppBrowser.close()
 
           const parameters = event.url.split('?')[1].split('&').reduce((obj, parameter)=>{
