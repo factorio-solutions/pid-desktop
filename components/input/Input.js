@@ -13,6 +13,7 @@ export default class Input extends Component {
     error:        PropTypes.string, // error message if patern not met
     autocomplete: PropTypes.string,
     placeholder:  PropTypes.string,
+    accept:       PropTypes.string, // for file selector - file extention (expample '.pub')
     required:     PropTypes.bool,
     readOnly:     PropTypes.bool,
     align:        PropTypes.string, // can be center or
@@ -63,7 +64,7 @@ export default class Input extends Component {
   }
 
   render(){
-    const { label, name, type, error, pattern, autocomplete, placeholder, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight } = this.props
+    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight } = this.props
     var message = this.state.message;
 
     const handleChange = (event) => {
@@ -103,7 +104,7 @@ export default class Input extends Component {
 
     return(
       <div className={`${styles.customFormGroup} ${styles[align?align:'left']} ${style} ${highlight && isEmpty() && styles.highlighted}`} >
-        <input onBlur={onBlur} pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange} autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter} ref='input'/>
+        <input onBlur={onBlur} pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange} autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter} ref='input' accept={accept}/>
         <span className={styles.bar}></span>
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
