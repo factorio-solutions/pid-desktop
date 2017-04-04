@@ -439,12 +439,18 @@ export function paymentUnsucessfull(){
   }
 }
 
+export function paymentSucessfull(){
+  return (dispatch, getState) => {
+    nav.to('/reservations')
+    dispatch(pageBaseActions.setCustomModal(undefined))
+    dispatch(clearForm())
+  }
+}
+
 export function payReservation (token){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      nav.to('/reservations')
-      dispatch(pageBaseActions.setCustomModal(undefined))
-      dispatch(clearForm())
+      dispatch(paymentSucessfull())
     }
 
     dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', 'payingReservation'])}</div>))
