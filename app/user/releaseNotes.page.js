@@ -36,6 +36,9 @@ export default class ReleaseNotesPage extends Component {
     const callPaypal = () => {
       request((response)=>{console.log(response);}, "mutation PaypalReqiest { paypal_payment }")
     }
+    const callCSOB = () => {
+      request((response)=>{console.log(response);}, "mutation CSOBResquest { csob_api }")
+    }
 
     return (
       <div style={{padding: "15px"}}>
@@ -45,7 +48,8 @@ export default class ReleaseNotesPage extends Component {
         {/* <button onClick={downloadClick}>Download PDF</button> */}
         <button onClick={generateClick}>Generate invoices</button>
         {/* <button onClick={resetPasswordClick}>Reset passeword</button> */}
-        <button onClick={callPaypal}>PayPal API call</button>
+        {/* <button onClick={callPaypal}>PayPal API call</button> */}
+        <button onClick={callCSOB}>CSOB eAPI call</button>
 
 
         {/* Release notes ======================================================*/}

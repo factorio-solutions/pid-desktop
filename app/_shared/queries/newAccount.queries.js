@@ -17,6 +17,9 @@ export const INIT_ACCOUNT = `query ($id:Id){
     name
     ic
     dic
+    paypal_email
+    csob_merchant_id
+    csob_private_key
     address{
       line_1
       line_2

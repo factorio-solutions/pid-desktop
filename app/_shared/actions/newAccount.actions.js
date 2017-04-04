@@ -2,21 +2,24 @@ import { request } from '../helpers/request'
 import * as nav    from '../helpers/navigation'
 import {t}         from '../modules/localization/localization'
 
-import { setCustomModal }                                               from './pageBase.actions'
+import { setCustomModal, setError }                                     from './pageBase.actions'
 import { INIT_ACCOUNT, CREATE_ACCOUNT, UPDATE_ACCOUNT, GET_PERMISSION } from '../queries/newAccount.queries'
 
 
-export const SET_NEW_ACCOUNT_NAME         = "SET_NEW_ACCOUNT_NAME"
-export const SET_NEW_ACCOUNT_IC           = "SET_NEW_ACCOUNT_IC"
-export const SET_NEW_ACCOUNT_DIC          = "SET_NEW_ACCOUNT_DIC"
-export const SET_NEW_ACCOUNT_LINE1        = "SET_NEW_ACCOUNT_LINE1"
-export const SET_NEW_ACCOUNT_LINE2        = "SET_NEW_ACCOUNT_LINE2"
-export const SET_NEW_ACCOUNT_CITY         = "SET_NEW_ACCOUNT_CITY"
-export const SET_NEW_ACCOUNT_POSTAL_CODE  = "SET_NEW_ACCOUNT_POSTAL_CODE"
-export const SET_NEW_ACCOUNT_STATE        = "SET_NEW_ACCOUNT_STATE"
-export const SET_NEW_ACCOUNT_COUNTRY      = "SET_NEW_ACCOUNT_COUNTRY"
-export const CLEAR_NEW_ACCOUNT_FORM       = "CLEAR_NEW_ACCOUNT_FORM"
-export const SET_NEW_ACCOUNT_HIGHLIGHT    = "SET_NEW_ACCOUNT_HIGHLIGHT"
+export const SET_NEW_ACCOUNT_NAME             = "SET_NEW_ACCOUNT_NAME"
+export const SET_NEW_ACCOUNT_IC               = "SET_NEW_ACCOUNT_IC"
+export const SET_NEW_ACCOUNT_DIC              = "SET_NEW_ACCOUNT_DIC"
+export const SET_NEW_ACCOUNT_LINE1            = "SET_NEW_ACCOUNT_LINE1"
+export const SET_NEW_ACCOUNT_LINE2            = "SET_NEW_ACCOUNT_LINE2"
+export const SET_NEW_ACCOUNT_CITY             = "SET_NEW_ACCOUNT_CITY"
+export const SET_NEW_ACCOUNT_POSTAL_CODE      = "SET_NEW_ACCOUNT_POSTAL_CODE"
+export const SET_NEW_ACCOUNT_STATE            = "SET_NEW_ACCOUNT_STATE"
+export const SET_NEW_ACCOUNT_COUNTRY          = "SET_NEW_ACCOUNT_COUNTRY"
+export const CLEAR_NEW_ACCOUNT_FORM           = "CLEAR_NEW_ACCOUNT_FORM"
+export const SET_NEW_ACCOUNT_PAYMENT_PROCESS  = "SET_NEW_ACCOUNT_PAYMENT_PROCESS"
+export const SET_NEW_ACCOUNT_CSOB_MERCHANT_ID = "SET_NEW_ACCOUNT_CSOB_MERCHANT_ID"
+export const SET_NEW_ACCOUNT_CSOB_PRIVATE_KEY = "SET_NEW_ACCOUNT_CSOB_PRIVATE_KEY"
+export const SET_NEW_ACCOUNT_HIGHLIGHT        = "SET_NEW_ACCOUNT_HIGHLIGHT"
 
 
 export function setName (value){
@@ -72,6 +75,25 @@ export function setCountry (value){
          }
 }
 
+export function setPaymentProcess (value) {
+  return { type: SET_NEW_ACCOUNT_PAYMENT_PROCESS
+         , value
+         }
+}
+
+export function setCsobMerchantId (value) {
+  return { type: SET_NEW_ACCOUNT_CSOB_MERCHANT_ID
+         , value
+         }
+}
+
+export function setCsobPrivateKey (value) {
+  return { type: SET_NEW_ACCOUNT_CSOB_PRIVATE_KEY
+         , value
+         }
+}
+
+
 export function setHighlight (value){
   return { type: SET_NEW_ACCOUNT_HIGHLIGHT
          , value
@@ -94,6 +116,9 @@ export function initAccount (id){
       const account = response.data.accounts[0]
 
       dispatch(setName(account.name))
+      dispatch(setPaymentProcess(account.paypal_email?'paypal':'csob'))
+      dispatch(setCsobMerchantId(account.csob_merchant_id||''))
+      dispatch(setCsobPrivateKey(account.csob_private_key?'stored':''))
       dispatch(setIC(account.ic || ''))
       dispatch(setDIC(account.dic || ''))
       dispatch(setLine1(account.address.line_1))
@@ -111,19 +136,53 @@ export function initAccount (id){
 export function submitNewAccount (id){
   return (dispatch, getState) => {
     const state = getState().newAccount
-    dispatch(setCustomModal(<div>{t(['newAccount', 'redirecting'])}</div>))
+    switch (state.payments_process) {
+      case 'paypal':
+      const onPaypalSuccess = (response) =>{
+        window.location.replace(response.data.paypal_get_permissions)
+      }
 
-    const onSuccess = (response) =>{
-      // console.log(response.data.paypal_get_permissions);
-      window.location.replace(response.data.paypal_get_permissions)
+      dispatch(setCustomModal(<div>{t(['newAccount', 'redirecting'])}</div>))
+      var parameters = id ? { ...generateAccount(state), id: +id} : generateAccount(state)
+      request( onPaypalSuccess
+             , GET_PERMISSION
+             , {url: `${window.location.href.split('?')[0]}?${encodeQueryData(parameters)}` }
+             )
+        break
+      case 'csob':
+      dispatch(setCustomModal(<div>{t(['newAccount', 'CSOBcreating'])}</div>))
+
+      const onCsobSuccess = (response) =>{
+        if (response.data.create_account == null && response.data.update_account == null){
+          dispatch(setCustomModal(undefined))
+          dispatch(setError(t(['newAccount', 'CSOBnotValid'])))
+        } else {
+          dispatch(clearForm())
+          nav.to('/accounts')
+          dispatch(setCustomModal(undefined))
+        }
+      }
+
+      request(onCsobSuccess
+             , id ? UPDATE_ACCOUNT : CREATE_ACCOUNT
+             , { id: +id || null
+               , account: { name:                    state.name
+                          , csob_merchant_id:        state.csob_merchant_id
+                          , csob_private_key:        state.csob_private_key == 'stored' ? null : state.csob_private_key // update account, key unchanged => set to null
+                          , ic:                      state.ic || null
+                          , dic:                     state.dic || null
+                          , address:  { line_1:      state.line_1
+                                      , line_2:      state.line_2 || null
+                                      , city:        state.city
+                                      , postal_code: state.postal_code
+                                      , state:       state.state || null
+                                      , country:     state.country
+                                      }
+                          }
+               }
+             )
+        break
     }
-
-    var parameters = id ? { ...generateAccount(state), id: +id} : generateAccount(state)
-
-    request( onSuccess
-           , GET_PERMISSION
-           , {url: `${window.location.href.split('?')[0]}?${encodeQueryData(parameters)}` }
-           )
   }
 }
 
@@ -155,7 +214,6 @@ export function createAccount(params){
                         }
              }
            )
-
   }
 }
 

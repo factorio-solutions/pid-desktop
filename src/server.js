@@ -9,8 +9,7 @@ module.exports = {
 
     app.use('/public', publicPath)
     app.get('/', function (req, res) {
-      // Heroku https check
-      if(req.headers["x-forwarded-proto"] !== "https"){
+      if(req.headers["x-forwarded-proto"] !== "https"){ // Heroku https check
         res.redirect('https://'+req.hostname+req.url);
       };
       res.sendFile(indexPath)

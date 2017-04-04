@@ -596,14 +596,27 @@
 			"redirecting": "Redirecting ...",
 			"creatingAccount": "Creating account ...",
 			"updatingAccount": "Updating account ...",
+			"CSOBcreating": "Verifying information, creating account ...",
+			"CSOBnotValid": "Private key and Merchant id pair is not valid.",
 			"permissionNotGranted": "Paypals permission to process payment on your behalf was not granted. Try again.",
 
 			"whatIsMerchant": "Process of creating account",
+			"start":"Start by selecting what kind of payment method would you prefer. If you would like us to implement another payment method, please contact Park-it-direct support.",
 			"merchantDesc": "We use Paypal to take care of your money. If you want to accept money, you have to your own Paypal business account and provide us permission to process payments for you. Got to paypal.com and sign up business account! Once you got your business Paypal account we can continue with this form.",
 			"merchantDesc2": "Fill the form and click OK. You will be automatically redirected to paypals website where you log in to paypal you want to use with this Park-it-direct account. Than just click \"Grant Permission\" button.",
+			"csobMerchantDesc":"To use ČSOB payment gateway, you first have to visit your local ČSOB branch office, they will provide you with new merchant id identifier and private key. For more information contact ČSOB support.",
+			"csobMerchantDesc2":"If you already have your identifiers, please enter merchant id and upload your private key from *.pub file.",
 
 			"updateProcess": "Process of updating an account",
-			"merchantUpdateDesc": "After clicking OK, you will be redirected to the paypal. To change your current paypal account, simply log in with another paypal account and click the \"Grant Permission\" button."
+			"merchantUpdateDesc": "After clicking OK, you will be redirected to the paypal. To change your current paypal account, simply log in with another paypal account and click the \"Grant Permission\" button.",
+			"merchantUpdateCsobDesc": "To change your current ČSOB account, simply provide us with new merchant id and private key.",
+			"selectPaymentMethod": "Select payment method",
+			"csobPayment":"ČSOB payment information",
+			"paypalPayment":"Paypal selected - you will be redirected afther clicking OK.",
+			"csobMerchantID":"ČSOB merchant id",
+			"invalidMerchantId":"Merchant id invalid",
+			"csobMerchantIdplaceholder": "A2411K3nLj",
+			"SelectPrivateKey": "Select private key:"
 	},
 	"invoices": {
 		"invoiceDate":"invoice date",
