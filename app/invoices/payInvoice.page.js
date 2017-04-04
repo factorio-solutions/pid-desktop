@@ -19,7 +19,7 @@ export class PayInvoicePage extends Component {
   }
 
   constructor(props) {
-    !props.location.query.hasOwnProperty('token') && props.state.invoices.find((invoice) => {
+    !props.location.query.hasOwnProperty('token') && !props.location.query.hasOwnProperty('csob') && props.state.invoices.find((invoice) => {
       return invoice.id == props.params.invoice_id
     }) === undefined && nav.back()
     super(props);
@@ -29,6 +29,9 @@ export class PayInvoicePage extends Component {
     const { location, actions, params } = this.props
     if (location.query.hasOwnProperty('token')){
       location.query.success === 'true' ? actions.payInvoiceFinish(location.query.token) : actions.paymentUnsucessfull()
+      params.client_id ? nav.to(`/clients/${params.client_id}/invoices`) : nav.to(`/accounts/${params.account_id}/invoices`)
+    } else if (location.query.hasOwnProperty('csob')) {
+      location.query.success !== 'true' && actions.paymentUnsucessfull()
       params.client_id ? nav.to(`/clients/${params.client_id}/invoices`) : nav.to(`/accounts/${params.account_id}/invoices`)
     }
   }
