@@ -284,10 +284,14 @@ export function payReservation (url, callback = ()=>{}) {
     } else { // in mobile open InAppBrowser, when redirected back continue
       let inAppBrowser = cordova.InAppBrowser.open(url, '_blank', 'location=no,zoom=no,toolbar=no')
       inAppBrowser.addEventListener('loadstart', (event)=>{
-        if (!event.url.includes('paypal')) { // no paypal in name means redirected back
+        if (!event.url.includes('paypal') && !event.url.includes('csob.cz') && !event.url.includes('park-it-direct')) { // no paypal in name means redirected back
           inAppBrowser.close()
           const parameters = parseParameters(event.url)
-          parameters['success'] ? dispatch(finishReservation(parameters['token'], callback)) : dispatch(paymentUnsucessfull(callback))
+          if (parameters['csob'] === 'true') {
+            parameters['success'] === 'true' ? dispatch(paymentSucessfull(callback)) : dispatch(paymentUnsucessfull(callback)) // todo: here
+          }else {
+            parameters['success'] === 'true' ? dispatch(finishReservation(parameters['token'], callback)) : dispatch(paymentUnsucessfull(callback))
+          }
         }
       })
     }
@@ -302,13 +306,18 @@ export function paymentUnsucessfull(callback){
     callback()
   }
 }
+export function paymentSucessfull(callback){
+  return (dispatch, getState) => {
+    dispatch(setCustomModal(undefined))
+    dispatch(clearForm())
+    callback()
+  }
+}
 
 export function finishReservation(token, callback){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch(setCustomModal(undefined))
-      dispatch(clearForm())
-      callback()
+      dispatch(paymentSucessfull(callback))
     }
 
     dispatch(setCustomModal('Processing payment ...'))
