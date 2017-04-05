@@ -50,3 +50,8 @@ export const DESTROY_RESERVATION = `mutation reservationMuation($id: Id!) {
 export const CHECK_VALIDITY = `mutation PaypalPayReservation ($token:String) {
 	paypal_check_validity(token: $token)
 }`
+
+// check reservations token validity
+export const CREATE_CSOB_PAYMENT = `mutation CsobPayReservation ($id: Id!, $url: String) {
+	csob_pay_reservation(id: $id, url: $url)
+}`
