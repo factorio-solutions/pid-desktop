@@ -59,7 +59,7 @@ export class ReservationsPage extends Component {
                           {`${reservation.creator.full_name}  |  ${reservation.creator.email}  |  ${moment(reservation.created_at).format('DD.MM. HH:mm')}`}
                           <span className={styles.floatRight}>
                             {/*<RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>*/}
-                            {!reservation.approved && reservation.client==null && <RoundButton content={t(['reservations','pay'])} onClick={()=>{actions.payReservation(reservation.payment_url)}} type='action'/>}
+                            {!reservation.approved && reservation.client==null && <RoundButton content={t(['reservations','pay'])} onClick={()=>{actions.payReservation(reservation)}} type='action'/>}
                             {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed && <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{downloadClick(reservation.invoice_item.invoice.id)}} type='action'/>}
                           </span>
                         </div>
