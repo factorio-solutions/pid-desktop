@@ -160,8 +160,9 @@
 		"redirecting":"Redirecting ...",
 		"payingReservation":"Paying reservation ...",
 		"paymentUnsucessfull":"Payment was canceled and unsucessfull.",
-		"validtyCheck":"Performing validity check",
-		"tokenInvalid":"This transaction is no longer valid and reservation will be deleted."
+		"validtyCheck":"Performing validity check ...",
+		"tokenInvalid":"This transaction is no longer valid and reservation will be deleted.",
+		"creatingNewPayment":"Creating payment ..."
 	},
 	"clients": {
 		"name": "name",
