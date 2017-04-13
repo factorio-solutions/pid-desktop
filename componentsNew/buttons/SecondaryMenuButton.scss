@@ -1,0 +1,55 @@
+@import '../../styles/app.components';
+@import './Button';
+
+// button will fill its parent
+$size-collapsed-width:  150px;
+
+
+.button{
+  color:       $white;
+  font-size:   16px;
+  white-space: nowrap;
+  padding:     0;
+
+  @include colorize($gray);
+  width:         100%;
+  cursor:        pointer;
+  border:        none;
+  outline:       none;
+  transition:    all 0.3s ease;
+}
+
+.label{
+  text-align: left;
+  margin-top: 2px;
+  font-size:  15px;
+}
+
+.container{
+  padding:       24px 30px;
+  border-bottom: 1px solid $lightGray;
+}
+
+
+// types
+.action {
+  @include colorize($actionColor);
+}
+.confirm {
+  @include colorize($confirmColor);
+}
+.remove {
+  @include colorize($removeColor);
+}
+
+
+// states
+.selected {
+  background: $selectedColor;
+  color:      $black;
+}
+.disabled {
+  background: $lightGray;
+  color:      $gray;
+  cursor:     default;
+}
