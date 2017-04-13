@@ -75,10 +75,17 @@
     "style-loader": "^0.13.1",
     "swiper": "^3.4.0",
     "webpack": "^1.13.2",
-    "webpack-merge": "^0.14.1"
+    "webpack-merge": "^0.14.1",
+    "options": "0.0.6",
+    "ultron": "^1.1.0",
+    "ws": "^1.1.1"
   },
   "devEngines": {
     "node": "4.x || 5.x || 6.x",
     "npm": "2.x || 3.x"
+  },
+  "engines": {
+    "node": "6.9.2",
+    "npm": "3.x"
   }
 }
