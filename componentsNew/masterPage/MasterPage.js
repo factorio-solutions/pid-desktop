@@ -3,6 +3,7 @@ import React, { Component, PropTypes }  from 'react'
 import Logo                  from '../logo/Logo'
 import CallToActionButton    from '../buttons/CallToActionButton'
 import MenuButton            from '../buttons/MenuButton'
+import RoundButton           from '../buttons/RoundButton'
 import GarageSelector        from '../garageSelector/GarageSelector'
 import VerticalMenu          from '../verticalMenu/VerticalMenu'
 import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
@@ -23,25 +24,25 @@ export default class MasterPage extends Component {
 
   static propTypes = {
     name:         PropTypes.string,
-    // nameOnClick:  PropTypes.func,
     messageCount: PropTypes.oneOfType([ PropTypes.string
                                       , PropTypes.number
                                       ]),
-    messageonClick:       PropTypes.func,
     callToAction:         PropTypes.array, // [{label, state, onClick}, ... ]
 
     verticalMenu:         PropTypes.array, // [{label, key, icon, onClick}, ... ]
 
-    verticalSecondaryMenu:         PropTypes.array, // [{label, key, onClick}, ... ]
+    verticalSecondaryMenu: PropTypes.array, // [{label, key, onClick}, ... ]
 
     garageSelectorContent: PropTypes.array, // [{name, image }, ...]
     onGarageSelect:        PropTypes.func,
+
+    hint:                  PropTypes.object // {hint, href}
   }
 
   render(){
-    const { name, nameOnClick, messageCount, messageonClick, callToAction,
-      verticalMenu, verticalSecondaryMenu, verticalSecondaryMenuSelected,
-      garageSelectorContent, onGarageSelect,
+    const { name, messageCount, callToAction,
+      verticalMenu, verticalSecondaryMenu,
+      garageSelectorContent, onGarageSelect, hint,
       children } = this.props
 
     const onHamburgerClick = (e) => { this.setState({ menu: !this.state.menu }) }
@@ -85,12 +86,12 @@ export default class MasterPage extends Component {
               </div>
 
               <div className={styles.user}>
-                <div className={styles.messages} onClick={messageonClick}>
+                <div className={styles.messages}>
                   <i className={"fa fa-commenting-o"} aria-hidden="true"></i>
                   {messageCount > 0 && <div className={styles.count}>{messageCount}</div>}
                 </div>
 
-                <div className={styles.profile} onClick={nameOnClick}>
+                <div className={styles.profile}>
                   <i className={"fa fa-user"} aria-hidden="true"></i>
                   <span className={styles.name}>{name}</span>
                 </div>
@@ -111,7 +112,11 @@ export default class MasterPage extends Component {
 
           <div className={`${styles.content} ${this.state.showSecondaryMenu && styles.shift}`}>
             <Breadcrumbs/>
-            <div className={styles.children}>
+            {hint && <div className={styles.hint}>
+              {hint.href && <RoundButton content={<i className="fa fa-info" aria-hidden="true"></i>} onClick={()=>{window.open(hint.href)}} type='info'/>}
+              <div>{hint.hint}</div>
+            </div>}
+            <div className={`${styles.children} ${hint && styles.hashHint}`}>
               {children}
             </div>
           </div>

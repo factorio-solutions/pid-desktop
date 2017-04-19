@@ -30,7 +30,8 @@ export default function Breadcrumbs ()  {
     return accumulator
   }
 
-  return (<div className={styles.breadcrumbs}>
-            {path.reduce(createButtons, [])}
-          </div>)
+  return ( <div className={styles.breadcrumbs}>
+             {path.reduce(createButtons, [])}
+          </div>
+        )
 }

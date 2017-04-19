@@ -2,6 +2,7 @@
 
 $primaryMenuWidth: 160px;
 $secondaryMenuWidth: 200px;
+$hintWidth: 180px;
 
 .horizontalMenu{
   z-index: 9;
@@ -81,6 +82,14 @@ $secondaryMenuWidth: 200px;
   }
 
   >.content{
+    >.hint{
+      background-color: $blue;
+      color:            $white;
+      padding:          10px;
+      text-align:       center;
+
+    }
+
     >.children{
       padding: 10px;
     }
@@ -150,6 +159,23 @@ $secondaryMenuWidth: 200px;
 
       &.shift{
         transform: translate($secondaryMenuWidth,0);
+      }
+
+      >.children.hashHint{
+        margin-right: $hintWidth;
+      }
+
+      >.hint{
+        position:         fixed;
+        top:              60px;
+        bottom:           0;
+        right:            0;
+        width:            calc(#{$hintWidth} - 2 * 10px); // - 2x padding
+
+        >button{
+          display: block;
+          margin: 10px auto;
+        }
       }
     }
   }
@@ -227,6 +253,19 @@ $secondaryMenuWidth: 200px;
     >.content{
       position: absolute;
       width: 100%;
+
+      >.hint{
+        display: flex;
+        //
+        // >button{
+        //   // float: left;
+        // }
+        >div{
+          flex:  1 1;
+          text-align: center;
+          margin-right: 50px;
+        }
+      }
     }
   }
 }
