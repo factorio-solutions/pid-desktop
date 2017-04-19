@@ -13,7 +13,7 @@ export default function CallToActionButton ({ label, onClick, state})  {
               , styles[state]
               ].join(' ')
 
-  let content = <span className={`${styles.label} ${styles.content}`}>{label}</span>
+  let content = <span className={styles.label}>{label}</span>
 
   return (
     <Button content={content} onClick={onClick} state={state} style={style}/>

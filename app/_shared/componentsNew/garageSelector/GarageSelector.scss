@@ -2,6 +2,7 @@
 
 .img{
   width: 160px;
+  height: 80px;
   margin: 0 auto;
   background-repeat: no-repeat;
   @include background-size(cover);

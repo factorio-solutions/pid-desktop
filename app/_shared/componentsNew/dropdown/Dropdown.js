@@ -9,7 +9,6 @@ import styles from './Dropdown.scss'
 // content = dropdown content, structure: [{label: ..., onClick: ... }, ... ]
 // style = sets style, can be 'dark'/'light' (default is 'dark'), more can be created
 // selected = index of select item in content
-// hover = toggle on hover?
 // fillParent = flag to indicate whenever or not to fill parent element widthvise
 export default class Dropdown extends Component {
   static propTypes = {
@@ -17,7 +16,6 @@ export default class Dropdown extends Component {
     content:   PropTypes.array.isRequired,
     style:     PropTypes.string,
     selected:  PropTypes.number,
-    hover:     PropTypes.bool,
     onChange:  PropTypes.func,
     fixed:     PropTypes.bool,
     highlight: PropTypes.bool
@@ -30,7 +28,7 @@ export default class Dropdown extends Component {
 
   constructor(props) {
      super(props);
-     this.state = {selected: this.props.selected}
+     this.state = { selected: this.props.selected }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,7 +49,7 @@ export default class Dropdown extends Component {
   }
 
   render(){
-    const { label, content, selected, hover, style, onChange, fixed, highlight } = this.props
+    const { label, content, selected, style, onChange, fixed, highlight } = this.props
 
     const prepareContent = (item, index, arr) => {
       const handleItemClick = () => {
@@ -71,12 +69,14 @@ export default class Dropdown extends Component {
     }
 
     const toggleDropdown = () => {
-      var ul = ReactDOM.findDOMNode(this).children[1]
-      !hover && ul.classList.contains(styles.hidden) ? unhide() : hide()
+      const ul = ReactDOM.findDOMNode(this).children[1]
+      ul.classList.contains(styles.hidden) ? unhide() : hide()
     }
 
+    const onBlur = (e) => { hide() }
+
     const hide = ()=>{
-      var ul = ReactDOM.findDOMNode(this).children[1]
+      const ul = ReactDOM.findDOMNode(this).children[1]
 
       ul.classList.add(styles.hidden)
       setTimeout(function() {
@@ -86,20 +86,15 @@ export default class Dropdown extends Component {
 
     const unhide = () => {
       if (content.length > 1){
-        var element = ReactDOM.findDOMNode(this).children[1]
-          , buttonPosition = ReactDOM.findDOMNode(this).children[0].getBoundingClientRect()
+        const element = ReactDOM.findDOMNode(this).children[1]
+            , buttonPosition = ReactDOM.findDOMNode(this).children[0].getBoundingClientRect()
 
         element.classList.remove(styles.display)
         element.classList.remove(styles.hidden)
         element.style.width = buttonPosition.width+"px"
-        if (fixed !== true) {element.style.top = ((!hover)?(buttonPosition.bottom+document.body.scrollTop):(buttonPosition.top+document.body.scrollTop))+"px"}
-        element.style.left = buttonPosition.left+"px"
       }
     }
 
-    const onMouseEnter = ()  => { if (hover) unhide() }
-    const onMouseLeave = ()  => { if (hover) hide() }
-    const onBlur       = (e) => { hide() }
 
     return(
       <div>
@@ -107,12 +102,11 @@ export default class Dropdown extends Component {
           type='button'
           className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted}`}
           onClick={toggleDropdown}
-          onMouseEnter={onMouseEnter}
           onBlur={onBlur}>
             <span className={styles.marginCorrection}> {this.state.selected==undefined||content[this.state.selected]==undefined ? label : content[this.state.selected].label} </span>
             {content.length > 1 && <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>}
         </button>
-        <ul className={`${styles.drop} ${styles.hidden} ${styles.display}`} onMouseLeave={onMouseLeave}>
+        <ul className={`${styles.drop} ${styles.hidden} ${styles.display}`}>
           {content.map(prepareContent)}
         </ul>
       </div>

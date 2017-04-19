@@ -4,21 +4,18 @@ import { download } from '../_shared/helpers/download'
 
 import * as nav     from '../_shared/helpers/navigation'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
-import MasterPage  from '../_shared/componentsNew/masterPage/MasterPage'
+import MasterPage   from '../_shared/componentsNew/masterPage/MasterPage'
 
 import Swiper from 'swiper'
 
 
 export default class ReleaseNotesPage extends Component {
-  constructor(props) {
-     super(props);
-     this.state = { showSecondaryMenu: false
-                  , primarySelected: 'dashboard'
-                  , secondarySelected: undefined
-                  }
-  }
+  // constructor(props) {
+  //    super(props);
+  // }
 
   render() {
+
     const onBack = () => {
       nav.to('/reservations')
     }
@@ -48,48 +45,50 @@ export default class ReleaseNotesPage extends Component {
       request((response)=>{console.log(response);}, "mutation CSOBResquest { csob_api }")
     }
 
-    const vertical =  [{label: 'Dashboard',     key: "dashboard",     icon: 'ticket',onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:"dashboard", secondarySelected:undefined})} }
-                    ,  {label: 'Reservations',  key: "reservations",  icon: 'car',   onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:"reservations", secondarySelected:undefined})} }
-                    ,  {label: 'Occupancy',     key: "occupancy",     icon: 'eye',   onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:"occupancy", secondarySelected:undefined})} }
-                    ,  {label: 'Garage',        key: "garage",        icon: 'home',  onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:"garage", secondarySelected:undefined})} }
-                    ,  {label: 'Issues',        key: "issues",        icon: 'users', onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:"issues", secondarySelected:undefined})} }
-                    ,  {label: 'Admin',         key: "admin",         icon: 'money', onClick: ()=>{this.setState({...this.state, showSecondaryMenu:!this.state.showSecondaryMenu})} }
+    const vertical =  [{label: 'Dashboard',     key: "dashboard",     icon: 'ticket',onClick: ()=>{console.log('main menu click');} }
+                    ,  {label: 'Reservations',  key: "reservations",  icon: 'car',   onClick: ()=>{console.log('main menu click');} }
+                    ,  {label: 'Occupancy',     key: "occupancy",     icon: 'eye',   onClick: ()=>{console.log('main menu click');} }
+                    ,  {label: 'Garage',        key: "garage",        icon: 'home',  onClick: ()=>{console.log('main menu click');} }
+                    ,  {label: 'Issues',        key: "issues",        icon: 'users', onClick: ()=>{console.log('main menu click');} }
+                    ,  {label: 'Admin',         key: "admin",         icon: 'money', onClick: ()=>{console.log('main menu click');} }
                     ]
 
-    const verticalSecondary =  [ {label: 'Invoices',      key: "Invoices", onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Invoices"})} }
-                               , {label: 'Clients',       key: "Clients",  onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Clients"})} }
-                               , {label: 'Modules',       key: "Modules",  onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Modules"})} }
-                               , {label: 'Garage setup',  key: "Garage",   onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Garage"})} }
-                               , {label: 'Users',         key: "Users",    onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Users"})} }
-                               , {label: 'Finance',       key: "Finance",  onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Finance"})} }
-                               , {label: 'PID settings',  key: "PID",      onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"PID"})} }
-                               , {label: 'Activity log',  key: "Activity", onClick: ()=>{this.setState({showSecondaryMenu:false, primarySelected:'admin', secondarySelected:"Activity"})} }
+    const verticalSecondary =  [ {label: 'Invoices',      key: "invoices", onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'Clients',       key: "clients",  onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'Modules',       key: "modules",  onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'Garage setup',  key: "garage",   onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'Users',         key: "users",    onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'Finance',       key: "finance",  onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'PID settings',  key: "PID",      onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: 'Activity log',  key: "activity", onClick: ()=>{console.log('secondary menu click');} }
                                ]
+
+    const callToActionClick = [ {label: 'Create reservation', onClick: ()=>{console.log('call to action click')}}
+                              , {label: 'Create contract',    onClick: ()=>{console.log('call to action click')}}
+                              , {label: 'Add Features',       onClick: ()=>{console.log('call to action click')}}
+                              ]
 
     const garageSelector= [{name: 'Garage 1', image: '../../../public/temp/garage1.jpg'}
                           ,{name: 'Garage 2', image: '../../../public/temp/garage2.jpg'}]
+
 
     return (
       <div>
         <MasterPage
           name={'John Doe'}
-          messageCount={'24'}
-          callToAction={[{label:'Create reservation', onClick: ()=>{console.log('click')}},
-                        {label: 'Create contract', onClick: ()=>{console.log('click')}},
-                        {label: 'Add Features', onClick: ()=>{console.log('click')}}]}
-          messageCount={24}
+          messageCount={'22'}
+          callToAction={callToActionClick}
 
           verticalMenu={vertical}
-          verticalMenuSelected={this.state.primarySelected}
 
           verticalSecondaryMenu={verticalSecondary}
-          verticalSecondaryMenuSelected={this.state.secondarySelected}
-          showSecondaryMenu={this.state.showSecondaryMenu}
 
           garageSelectorContent={garageSelector}
           onGarageSelect={(garage)=> {console.log(garage);}}
         >
-          <div> content content</div>
+          <div>
+            content content
+          </div>
         </MasterPage>
       </div>
     );

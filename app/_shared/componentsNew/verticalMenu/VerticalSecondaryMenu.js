@@ -5,18 +5,15 @@ import SecondaryMenuButton from '../buttons/SecondaryMenuButton'
 import styles    from './VerticalSecondaryMenu.scss'
 
 
-export default function VerticalSecondaryMenu ({ content, selected, onClick })  {
+export default function VerticalSecondaryMenu ({ content, selected, onBack })  {
 
   const prepareMenuButton = (object,index) => {
-    const newOnClick = () => {
-      onClick()
-      object.onClick()
-    }
-    return <SecondaryMenuButton key={index} label={object.label} onClick={newOnClick} type={object.type} state={object.key===selected && 'selected'}/>
+    return <SecondaryMenuButton key={index} label={object.label} onClick={object.onClick} type={object.type} state={object.key===selected && 'selected'}/>
   }
 
   return (
     <div className={styles.menu}>
+      <SecondaryMenuButton label={'< Admin'} onClick={onBack} state={'back'}/>
       {content.map(prepareMenuButton)}
     </div>
   )

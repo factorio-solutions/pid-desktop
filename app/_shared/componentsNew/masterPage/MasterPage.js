@@ -6,6 +6,7 @@ import MenuButton            from '../buttons/MenuButton'
 import GarageSelector        from '../garageSelector/GarageSelector'
 import VerticalMenu          from '../verticalMenu/VerticalMenu'
 import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
+import Breadcrumbs           from '../breadcrumbs/Breadcrumbs'
 
 import styles from './MasterPage.scss'
 
@@ -13,12 +14,16 @@ import styles from './MasterPage.scss'
 export default class MasterPage extends Component {
   constructor(props) {
      super(props)
-     this.state = {menu: false}
+     this.state = { menu: false
+                  , showSecondaryMenu: false
+                  , primarySelected: props.verticalMenu[0].key
+                  , secondarySelected: undefined
+                  }
   }
 
   static propTypes = {
     name:         PropTypes.string,
-    nameOnClick:  PropTypes.func,
+    // nameOnClick:  PropTypes.func,
     messageCount: PropTypes.oneOfType([ PropTypes.string
                                       , PropTypes.number
                                       ]),
@@ -26,11 +31,8 @@ export default class MasterPage extends Component {
     callToAction:         PropTypes.array, // [{label, state, onClick}, ... ]
 
     verticalMenu:         PropTypes.array, // [{label, key, icon, onClick}, ... ]
-    verticalMenuSelected: PropTypes.string, // key of selected item
 
     verticalSecondaryMenu:         PropTypes.array, // [{label, key, onClick}, ... ]
-    verticalSecondaryMenuSelected: PropTypes.string, // key of selected item
-    showSecondaryMenu:             PropTypes.bool,
 
     garageSelectorContent: PropTypes.array, // [{name, image }, ...]
     onGarageSelect:        PropTypes.func,
@@ -38,10 +40,31 @@ export default class MasterPage extends Component {
 
   render(){
     const { name, nameOnClick, messageCount, messageonClick, callToAction,
-      verticalMenu, verticalMenuSelected, verticalSecondaryMenu, verticalSecondaryMenuSelected, showSecondaryMenu,
-      garageSelectorContent, onGarageSelect, children } = this.props
+      verticalMenu, verticalSecondaryMenu, verticalSecondaryMenuSelected,
+      garageSelectorContent, onGarageSelect,
+      children } = this.props
 
     const onHamburgerClick = (e) => { this.setState({ menu: !this.state.menu }) }
+
+    const verticalMenuOnClick = (o) => {
+      const newOnClick = () => {
+        if (o.key === 'admin'){
+          this.setState({...this.state, showSecondaryMenu: !this.state.showSecondaryMenu})
+        } else {
+          this.setState({...this.state, primarySelected: o.key, secondarySelected: undefined, showSecondaryMenu: false, menu: false})
+          o.onClick()
+        }
+      }
+      return {...o, onClick: newOnClick }
+    }
+
+    const secondaryVerticalMenuOnClick = (o) => {
+      const newOnClick = () => {
+        this.setState({...this.state, primarySelected: 'admin', secondarySelected: o.key, menu: false, showSecondaryMenu: false})
+        o.onClick()
+      }
+      return {...o, onClick: newOnClick }
+    }
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
 
@@ -69,7 +92,7 @@ export default class MasterPage extends Component {
 
                 <div className={styles.profile} onClick={nameOnClick}>
                   <i className={"fa fa-user"} aria-hidden="true"></i>
-                  {name}
+                  <span className={styles.name}>{name}</span>
                 </div>
               </div>
             </div>
@@ -77,18 +100,20 @@ export default class MasterPage extends Component {
         </div>
 
         <div className={styles.page}>
-          <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
+          <div className={`${styles.verticalMenu} ${this.state.showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
             <GarageSelector content={garageSelectorContent} onSelect={onGarageSelect} />
-            <VerticalMenu content={verticalMenu} selected={verticalMenuSelected} onClick={()=>{this.setState({menu: false})}}/>
-            {/*<MenuButton icon, label, onClick, type, state, size, question, count />*/}
+            <VerticalMenu content={verticalMenu.map(verticalMenuOnClick)} selected={this.state.primarySelected} onClick={()=>{this.setState({menu: false})}}/>
           </div>
 
-          <div className={`${styles.secondaryVerticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
-            <VerticalSecondaryMenu content={verticalSecondaryMenu} selected={verticalSecondaryMenuSelected} onClick={()=>{this.setState({menu: false})}}/>
+          <div className={`${styles.secondaryVerticalMenu} ${this.state.showSecondaryMenu && styles.shift} ${this.state.secondarySelected === undefined && styles.hideAdmin}`}>
+            <VerticalSecondaryMenu content={verticalSecondaryMenu.map(secondaryVerticalMenuOnClick)} selected={this.state.secondarySelected} onBack={()=>{this.setState({...this.state, menu: true, showSecondaryMenu: false})}}/>
           </div>
 
-          <div className={`${styles.content} ${showSecondaryMenu && styles.shift}`}>
-            {children}
+          <div className={`${styles.content} ${this.state.showSecondaryMenu && styles.shift}`}>
+            <Breadcrumbs/>
+            <div className={styles.children}>
+              {children}
+            </div>
           </div>
         </div>
       </div>
