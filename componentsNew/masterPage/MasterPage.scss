@@ -1,5 +1,8 @@
 @import '../../styles/app.components';
 
+$primaryMenuWidth: 160px;
+$secondaryMenuWidth: 200px;
+
 .horizontalMenu{
   z-index: 9;
   display: block;
@@ -76,6 +79,12 @@
       color:            $white;
       transition: all 0.3s ease;
   }
+
+  >.content{
+    >.children{
+      padding: 10px;
+    }
+  }
 }
 
 
@@ -84,7 +93,7 @@
 @media (min-width: $collapseWidth) {
   .horizontalMenu{
     display:  flex;
-    // height:   60px;
+    height:   60px;
 
     >.hamburger{
       display: none;
@@ -94,16 +103,17 @@
       flex: 1 1;
 
       >.theContent{
-        float: right;
+        // float: right;
         display: flex;
 
         >.user{
-          padding: 16px 30px 0 30px;
+          padding: 16px 30px 0 0;
         }
 
         >.callToAction{
+          margin: auto;
           >button{
-            margin: 16px 5px;
+            margin: 14px 5px;
           }
         }
       }
@@ -119,17 +129,18 @@
     top:      60px;
 
     >.verticalMenu{
-      width: 160px;
+      width: $primaryMenuWidth;
     }
 
     >.secondaryVerticalMenu{
-      width: 160px;
+      width: $secondaryMenuWidth;
       position: fixed;
       top: 60px;
       bottom: 0;
+      left: calc(#{$primaryMenuWidth} - #{$secondaryMenuWidth});
 
       &.shift{
-        transform: translate(100%,0);
+        transform: translate($secondaryMenuWidth,0);
       }
     }
 
@@ -138,12 +149,31 @@
       transition: all 0.3s ease;
 
       &.shift{
-        transform: translate(160px,0);
+        transform: translate($secondaryMenuWidth,0);
       }
     }
   }
 }
 
+@media (min-width: 1300px) {
+  .page{
+    >.secondaryVerticalMenu{
+      position: static;
+      &.shift{
+        display: inherit;
+        transform: none;
+      }
+      &.hideAdmin:not(.shift){
+        display: none;
+      }
+    }
+    >.content{
+      &.shift{
+        transform: none;
+      }
+    }
+  }
+}
 
 /* -- Only apply on small window -------------------------------------------- */
 @media (max-width: $collapseWidth) {
@@ -153,8 +183,15 @@
     >.horizontalMenuContent{
       >.theContent{
         >.user{
-          text-align: center;
-          padding: 8px;
+          position: fixed;
+          top: 8px;
+          right: 12px;
+
+          >.profile{
+            >.name{
+              display: none;
+            }
+          }
         }
 
         >.callToAction{
@@ -165,7 +202,6 @@
   }
 
   .page{
-
     >.verticalMenu{
       transition: all 0.3s ease;
       position: absolute;
@@ -175,13 +211,13 @@
       &.active:not(.shift){
         transform: translate(0,0);
       }
-
     }
 
     >.secondaryVerticalMenu{
       transition: all 0.3s ease;
       position: absolute;
       transform: translate(0,-100%);
+      width: 100%;
 
       &.shift{
         transform: translate(0,0);
@@ -190,9 +226,7 @@
 
     >.content{
       position: absolute;
-
-      &.shift{
-      }
+      width: 100%;
     }
   }
 }

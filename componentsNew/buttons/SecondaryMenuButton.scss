@@ -20,14 +20,13 @@ $size-collapsed-width:  150px;
 }
 
 .label{
-  text-align: left;
-  margin-top: 2px;
-  font-size:  15px;
+  font-size:  19px;
 }
 
 .container{
-  padding:       24px 30px;
+  margin-top:    -1px;
   border-bottom: 1px solid $lightGray;
+  border-top:    1px solid $lightGray;
 }
 
 
@@ -52,4 +51,38 @@ $size-collapsed-width:  150px;
   background: $lightGray;
   color:      $gray;
   cursor:     default;
+}
+
+
+// scalable content
+
+@media (min-width: $collapseWidth) {
+  .label{
+    text-align: left;
+  }
+  .container{
+    padding: 24px 30px;
+  }
+
+  @media (max-height: 650px) { // low height
+    .container{
+      padding: 14px 30px;
+    }
+  }
+
+  .back{ // state
+    display: none;
+  }
+}
+
+@media (max-width: $collapseWidth) {
+  .container{
+    padding: 16px;
+  }
+
+  .back{ // state
+    @include colorize($yellow);
+    color:       $black;
+    font-weight: bold;
+  }
 }
