@@ -63,21 +63,23 @@ export default class ReleaseNotesPage extends Component {
                                , {label: 'Activity log',  key: "activity", onClick: ()=>{console.log('secondary menu click');} }
                                ]
 
-    const callToActionClick = [ {label: 'Create reservation', onClick: ()=>{console.log('call to action click')}}
-                              , {label: 'Create contract',    onClick: ()=>{console.log('call to action click')}}
-                              , {label: 'Add Features',       onClick: ()=>{console.log('call to action click')}}
-                              ]
+    const callToAction = [ {label: 'Create reservation', onClick: ()=>{console.log('call to action click')}}
+                         , {label: 'Create contract',    onClick: ()=>{console.log('call to action click')}}
+                         , {label: 'Add Features',       onClick: ()=>{console.log('call to action click')}}
+                         ]
 
-    const garageSelector= [{name: 'Garage 1', image: '../../../public/temp/garage1.jpg'}
-                          ,{name: 'Garage 2', image: '../../../public/temp/garage2.jpg'}]
+    const garageSelector = [ {name: 'Garage 1', image: '../../../public/temp/garage1.jpg'}
+                           , {name: 'Garage 2', image: '../../../public/temp/garage2.jpg'}
+                           ]
 
+    const hint = {hint: 'Some hint comes here', href: 'https://youtube.com'}
 
     return (
       <div>
         <MasterPage
           name={'John Doe'}
           messageCount={'22'}
-          callToAction={callToActionClick}
+          callToAction={callToAction}
 
           verticalMenu={vertical}
 
@@ -85,6 +87,8 @@ export default class ReleaseNotesPage extends Component {
 
           garageSelectorContent={garageSelector}
           onGarageSelect={(garage)=> {console.log(garage);}}
+
+          hint={hint}
         >
           <div>
             content content
