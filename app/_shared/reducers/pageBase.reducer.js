@@ -1,76 +1,105 @@
 import {
-  PAGE_BASE_SET_MENU_WIDTH,
-  PAGE_BASE_SET_HINT,
-  SET_VERTICAL_SELECTED,
-  SET_HORIZONTAL_SELECTED,
-  SET_HORIZONTAL_CONTENT,
+  PAGE_BASE_SELECTED,
+  PAGE_BASE_SECONDARY_MENU,
+  PAGE_BASE_SECONDARY_MENU_SELECTED,
+  PAGE_BASE_SHOW_SECONDARY_MENU,
+  PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON,
+  PAGE_BASE_BREADCRUMBS,
   PAGE_BASE_SET_ERROR,
   PAGE_BASE_SET_CUSTOM_MODAL,
   PAGE_BASE_SET_NOTIFICATIONS_MODAL,
-  PAGE_BASE_SET_CURRENT_USER
+  PAGE_BASE_SET_CURRENT_USER,
+  PAGE_BASE_SET_HINT,
+  PAGE_BASE_SET_GARAGE,
 }  from '../actions/pageBase.actions'
 
-const defaultState =  { verticalSelected:   0 // id of selected user reservation is for
-                      , horizontalSelected: 0
-                      , horizontalContent:  []
+const defaultState =  { selected:                undefined // key selected in primary menu
+                      , secondaryMenu:           []        // secondary menu content
+                      , secondarySelected:       undefined // key selected in secondary menu
+                      , showSecondaryMenu:       false // key selected in secondary menu
+                      , secondaryMenuBackButton: undefined
+
+                      // breadcrumbs
+                      , breadcrumbs: [] // [{label, route}, ... ]
+
+                      // modal windows
                       , error:              undefined
                       , custom_modal:       undefined
                       , notificationsModal: false
-                      , current_user:       {}
-                      , hint:               undefined
-                      , hintVideo:          undefined
-                      , menuWidth:          200
+
+                      //current user
+                      , current_user: undefined
+
+                      // page hints
+                      , hint:      undefined // {hint, href}
+
+                      // selectedGarage
+                      , garage: undefined
                       }
 
 
 export default function pageBase (state = defaultState, action) {
   switch (action.type) {
 
-    case SET_VERTICAL_SELECTED:
-    return  { ...state
-            , verticalSelected: action.value
-            }
+    case PAGE_BASE_SELECTED:
+      return { ...state
+             , selected: action.value
+             }
 
-    case SET_HORIZONTAL_SELECTED:
-    return  { ...state
-            , horizontalSelected: action.value
-            }
+    case PAGE_BASE_SECONDARY_MENU:
+      return { ...state
+             , secondaryMenu: action.value
+             }
 
-    case SET_HORIZONTAL_CONTENT:
-    return  { ...state
-            , horizontalContent: action.value
-            }
+    case PAGE_BASE_SECONDARY_MENU_SELECTED:
+      return { ...state
+             , secondarySelected: action.value
+             }
+
+    case PAGE_BASE_SHOW_SECONDARY_MENU:
+      return { ...state
+             , showSecondaryMenu: action.value
+             }
+
+    case PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON:
+      return { ...state
+             , secondaryMenuBackButton: action.value
+             }
+
+    case PAGE_BASE_BREADCRUMBS:
+      return { ...state
+             , breadcrumbs: action.value
+             }
 
     case PAGE_BASE_SET_ERROR:
-    return  { ...state
-            , error: action.value
-            }
+      return { ...state
+             , error: action.value
+             }
 
     case PAGE_BASE_SET_CUSTOM_MODAL:
-    return  { ...state
-            , custom_modal: action.value
-            }
+      return { ...state
+             , custom_modal: action.value
+             }
 
     case PAGE_BASE_SET_NOTIFICATIONS_MODAL:
-    return  { ...state
-            , notificationsModal: action.value
-            }
+      return { ...state
+             , notificationsModal: action.value
+             }
 
     case PAGE_BASE_SET_CURRENT_USER:
-    return  { ...state
-            , current_user: action.value
-            }
+      return { ...state
+             , current_user: action.value
+             }
 
     case PAGE_BASE_SET_HINT:
-    return  { ...state
-            , hint: action.value
-            , hintVideo: action.video
-            }
+      return { ...state
+             , hint: action.value
+             }
 
-    case PAGE_BASE_SET_MENU_WIDTH:
-    return  { ...state
-            , menuWidth: action.value
-            }
+    case PAGE_BASE_SET_GARAGE:
+      return { ...state
+             , garage: action.value
+             }
 
     default:
       return state

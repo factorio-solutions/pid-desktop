@@ -35,8 +35,6 @@ export function initCarUsers (id){
       dispatch( setCarUsersUsers(response.data.user_cars.filter((carUser)=>{return carUser.pending == false}) ) )
       dispatch( setCarUsersCar({ ...response.data.user_cars[0].car, admin: response.data.user_cars.find((carUser)=>{return carUser.user.id == response.data.current_user.id}).admin}) )
       dispatch( setCarUsersPendingUsers(response.data.user_cars.filter((carUser)=>{return carUser.pending == true})) )
-
-      dispatch(toCars())
     }
     request(onSuccess, GET_CARUSERS, {id: parseInt(id)})
   }

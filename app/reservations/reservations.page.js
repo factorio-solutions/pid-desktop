@@ -3,11 +3,11 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import PageBase         from '../_shared/containers/pageBaseNew/PageBase'
+import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Table            from '../_shared/components/table/Table'
 import RoundButton      from '../_shared/components/buttons/RoundButton'
 import ButtonStack      from '../_shared/components/buttonStack/ButtonStack'
-import TextButton       from '../_shared/components/buttons/TextButton'
+// import TextButton       from '../_shared/components/buttons/TextButton'
 import CardViewLayout   from '../_shared/components/cardView/CardViewLayout'
 import ReservationCard  from '../_shared/components/cardView/ReservationCard'
 
@@ -70,26 +70,26 @@ export class ReservationsPage extends Component {
       return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} download={downloadClick} />
     }
 
-    const content = <div>
-                      {state.tableView ? <Table schema={schema} data={data} />
-                        : <CardViewLayout columns={3}>
-                            {state.reservations.map(prepareCards)}
-                          </CardViewLayout> }
-
-                      <div className={styles.centerDiv}>
-                        <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newReservation} type='action' size='big' />
-                      </div>
-                    </div>
-
-    const filters=  <div>
-                      <ButtonStack divider={<span>|</span>} style='horizontal' >
-                        <TextButton content={t(['pageBase','cardView'])} onClick={() => {actions.setTableView(false)}} state={!state.tableView && 'selected'}/>
-                        <TextButton content={t(['pageBase','tableView'])} onClick={() => {actions.setTableView(true)}} state={state.tableView && 'selected'}/>
-                      </ButtonStack>
-                    </div>
+    // const filters=  <div>
+    //                   <ButtonStack divider={<span>|</span>} style='horizontal' >
+    //                     <TextButton content={t(['pageBase','cardView'])} onClick={() => {actions.setTableView(false)}} state={!state.tableView && 'selected'}/>
+    //                     <TextButton content={t(['pageBase','tableView'])} onClick={() => {actions.setTableView(true)}} state={state.tableView && 'selected'}/>
+    //                   </ButtonStack>
+    //                 </div>
 
     return (
-      <PageBase content={content} filters={filters} />
+      <PageBase>
+        <div>
+          {state.tableView ? <Table schema={schema} data={data} />
+            : <CardViewLayout columns={3}>
+                {state.reservations.map(prepareCards)}
+              </CardViewLayout> }
+
+          <div className={styles.centerDiv}>
+            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newReservation} type='action' size='big' />
+          </div>
+        </div>
+      </PageBase>
     )
   }
 }

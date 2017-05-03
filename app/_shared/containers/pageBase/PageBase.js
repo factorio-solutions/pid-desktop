@@ -2,14 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import Logo            from '../../components/logo/Logo'
-import HorizontalMenu  from '../../components/horizontalMenu/HorizontalMenu'
-import VerticalMenu    from '../../components/verticalMenu/VerticalMenu'
-import MasterPage      from '../../components/masterPage/MasterPage'
-import ButtonStack     from '../../components/buttonStack/ButtonStack'
-import RoundButton     from '../../components/buttons/RoundButton'
-import RoundTextButton from '../../components/buttons/RoundTextButton'
-import Modal           from '../../components/modal/Modal'
+import MasterPage from '../../components/masterPage/MasterPage'
+import Modal      from '../../components/modal/Modal'
+import RoundButton from '../../components/buttons/RoundButton'
 
 import {t}      from '../../modules/localization/localization'
 import * as nav from '../../helpers/navigation'
@@ -19,18 +14,12 @@ import styles from './PageBase.scss'
 import * as pageBaseActions from '../../actions/pageBase.actions'
 import * as loginActions    from '../../actions/login.actions'
 
-const MENU_BUTTON_COLLAPSE_WIDTH  = 175
-const ITEM_NUMBER_TO_COLLAPSE     = 5
-
 
 export class PageBase extends Component {
   static propTypes = {
     state:         PropTypes.object,
     actions:       PropTypes.object,
-    notifications: PropTypes.object,
-
-    content:       PropTypes.object,
-    filters:       PropTypes.object
+    notifications: PropTypes.object
   }
 
   componentDidMount(){
@@ -39,57 +28,40 @@ export class PageBase extends Component {
   }
 
   render () {
-    const { state, actions, notifications, content, filters } = this.props
+    const { state, actions, notifications } = this.props
 
-    const notificationClick = () => {
-      actions.toNotifications()
-      nav.to('/notifications')
-    }
+    const vertical =  [{label: t(['pageBase','Dashboard']),     key: "dashboard",     icon: 'ticket',onClick: ()=>{nav.to(`/${state.garage}/dashboard`)} }
+                    ,  {label: t(['pageBase', 'Reservation']),  key: "reservations",  icon: 'car',   onClick: ()=>{nav.to('/reservations')} }
+                    ,  {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
+                    ,  {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
+                    ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'users', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
+                    ,  {label: t(['pageBase', 'Admin']),        key: "admin",         icon: 'money', onClick: ()=>{actions.adminClick()} }
+                    ]
 
-    const occupancyClick = () => {
-      actions.toOccupancy()
-      nav.to('/occupancy')
-    }
+    const verticalSecondary =  [ {label: t(['pageBase', 'Invoices']),      key: "invoices",    onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'Clients']),       key: "clients",     onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'Modules']),       key: "modules",     onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'Garage setup']),  key: "garageSetup", onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'Users']),         key: "users",       onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'Finance']),       key: "finance",     onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'PID settings']),  key: "PID",         onClick: ()=>{console.log('secondary menu click');} }
+                               , {label: t(['pageBase', 'Activity log']),  key: "activity",    onClick: ()=>{console.log('secondary menu click');} }
+                               ]
 
-    const reservationClick = () => {
-      actions.toReservations()
-      nav.to('/reservations')
-    }
+    const callToAction = [ {label: t(['pageBase', 'Create reservation']), onClick: ()=>{nav.to('/reservations/newReservation')}}
+                         , {label: t(['pageBase', 'Create contract']),    onClick: ()=>{console.log('call to action click')}}
+                         , {label: t(['pageBase', 'Add Features']),       onClick: ()=>{nav.to('/addFeatures')}}
+                         ]
 
-    const garageClick = () => {
-      actions.toGarages()
-      nav.to('/garages')
-    }
+    const garageSelector = [ {name: 'Fill', image: '../../../public/temp/garage1.jpg'}
+                           , {name: 'Garages', image: '../../../public/temp/garage2.jpg'}
+                           ]
 
-    const clientClick = () => {
-      actions.toClients()
-      nav.to('/clients')
-    }
+    const profikeDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="fa fa-user" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
+                            , <div className={styles.dropdownContent} onClick={()=>{actions.logout()}}><i className="fa fa-sign-out" aria-hidden="true"></i>{t(['pageBase', 'Logout'])}</div>
+                            ]
 
-    const accountClick = () => {
-      nav.to('/accounts')
-    }
-
-    const usersClick = () => {
-      actions.toUsers()
-      nav.to('/users')
-    }
-
-    const carsClick = () => {
-      nav.to('/cars')
-    }
-
-    const addFeaturesClic = () => {
-      nav.to('/addFeatures')
-    }
-
-    const settingClick = () => {
-      nav.to('/settings')
-    }
-
-    const logoutClick = () => {
-      actions.logout()
-    }
+    const hint = (state.current_user && state.current_user.hint && state.hint) ? {hint: state.hint, href: state.hintVideo} : undefined
 
     const modalClick = () => {
       actions.setError(undefined)
@@ -110,54 +82,30 @@ export class PageBase extends Component {
                                 <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={notificationsModalClick} type='confirm'  />
                               </div>
 
-    const garageRole  = state.current_user.garage_admin || state.current_user.receptionist || state.current_user.security
-    const clientRole  = state.current_user.client_admin || state.current_user.secretary
-    const accountRole = state.current_user.has_account
-    const hasClient   = state.current_user.has_client
-    const hasGarage   = state.current_user.has_garages
-
-    const labels =  [ {label: <span>{t(['pageBase', 'notifications'])}</span>, key:"notifications", icon: 'certificate',                      onClick: notificationClick, type:notifications.count>0 ?'action':null, count:notifications.count }
-                    , {label: t(['pageBase', 'Reservation']),                  key:"Reservation",   icon: 'ticket',                           onClick: reservationClick }
-                    , {label: t(['pageBase', 'Cars']),                         key:"Cars",          icon: 'car',                              onClick: carsClick }
-                    ]
-    garageRole  && labels.push({label: t(['pageBase', 'Occupancy']),      key: "Occupancy",      icon: 'eye',   onClick: occupancyClick })
-    hasGarage   && labels.push({label: t(['pageBase', 'Garages']),        key: "Garages",        icon: 'home',  onClick: garageClick })
-    hasClient   && labels.push({label: t(['pageBase', 'Client & Users']), key: "Client & Users", icon: 'users', onClick: clientClick })
-    accountRole && labels.push({label: t(['pageBase', 'accounts']),       key: "accounts",       icon: 'money', onClick: accountClick })
-    hasClient   && labels.push({label: t(['pageBase', 'Users']),          key: "Users",          icon: 'child', onClick: usersClick })
-
-
-    const  labelsBottom = [ {label: t(['pageBase', 'Logout']),                          icon: 'sign-out', onClick: logoutClick }
-                          , {label: state.current_user && state.current_user.full_name, icon: 'cog',      onClick: settingClick }
-                          ]
-
-    const VerticalMenuItemSize = state.menuWidth < 175 ? 'collapsed' : labels.length+labelsBottom.length > ITEM_NUMBER_TO_COLLAPSE ? 'small' : 'normal'
-
-    const bottomLabels =  <div className={styles.bottom}>
-                            <RoundTextButton onClick={addFeaturesClic} content={t(['pageBase', 'addFeatures'])} type="action" />
-                            <div  className={styles.clickable} onClick={()=>{nav.to('/releaseNotes')}}> r20170314a </div>
-                            <VerticalMenu labels={labelsBottom} revertDivider={true} size={VerticalMenuItemSize}/>
-                          </div>
-
     return (
       <div>
         <Modal content={errorContent} show={state.error!=undefined} />
         <Modal content={notificationsModal} show={notifications.count>0 && state.notificationsModal } />
         <Modal content={state.custom_modal} show={state.custom_modal!=undefined} />
         <MasterPage
-          logo={<Logo style='rect' />}
-          horizContent={<HorizontalMenu labels={state.horizontalContent} selected={state.horizontalSelected} />}
-          filters={filters}
-          vertTopContent={<VerticalMenu labels={labels} selected={state.verticalSelected} size={VerticalMenuItemSize}/>}
-          vertBotContent={bottomLabels}
-          bodyContent={ <div>
-                          {(state.current_user && state.current_user.hint && state.hint) && <div className={styles.hintContainer}>
-                            {state.hintVideo && <RoundButton content={<i className="fa fa-info" aria-hidden="true"></i>} onClick={()=>{window.open(state.hintVideo)}} type='info'/>}
-                            <div className={styles.hint}>  {state.hint} </div>
-                          </div>}
-                          {content}
-                        </div> }
-        />
+          name={state.current_user && state.current_user.full_name}
+          messageCount={notifications.count}
+          callToAction={callToAction}
+          verticalMenu={vertical}
+          verticalSelected={state.selected}
+          verticalSecondaryMenu={state.secondaryMenu}
+          verticalSecondarySelected={state.secondarySelected}
+          showSecondaryMenu={state.showSecondaryMenu}
+          garageSelectorContent={garageSelector}
+          onGarageSelect={(garage)=> {console.log(garage);}}
+          showHints={state.current_user && state.current_user.hint}
+          hint={state.hint}
+          breadcrumbs={state.breadcrumbs}
+          profileDropdown={profikeDropdown}
+          secondaryMenuBackButton={state.secondaryMenuBackButton}
+        >
+          {this.props.children}
+        </MasterPage>
       </div>
     )
   }

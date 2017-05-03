@@ -97,7 +97,7 @@ export function submitNewCar(id) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(clearForm())
-      nav.to('/cars')
+      nav.to('/profile')
     }
 
     if (id) { // then edit client

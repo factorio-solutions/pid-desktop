@@ -1,0 +1,76 @@
+@import '../../_shared/styles/variables.scss';
+
+.contentPadding{
+  padding: 25px 15px 0;
+}
+
+.inputWidth{
+  width: calc(100% - 120px);
+}
+
+.hidden{
+  display: none;
+}
+
+.inline{
+  display: flex;
+}
+
+.floatCenter{
+  text-align: center;
+}
+
+
+.form{
+  display: flex;
+}
+.formChild{
+  flex-grow: 1;
+  width: 50%;
+}
+.mainInfo{
+  padding-right: 15px;
+}
+.additionalInfo{
+  padding: 15px;
+  background: darken($white, 10%);
+}
+
+.rights{
+  border-bottom: 1px dashed $gray;
+
+  > :first-child {
+    margin-left: 0;
+  }
+  > :last-child {
+    margin-right: 0;
+  }
+}
+
+.presets{
+  border-bottom: 1px solid $gray;
+}
+
+.inactiveText {
+	color: $lightGray;
+	cursor: pointer;
+  margin: 0 5px;
+}
+
+.boldText {
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.clickable{
+	font-weight: bold;
+	cursor: pointer;
+	color: $blue;
+  margin: 0 10px;
+}
+
+.textArea{
+  width: 100%;
+  height: 100px;
+  resize: vertical;
+}
