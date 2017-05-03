@@ -2,73 +2,123 @@ import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
 
-export const SET_HORIZONTAL_CONTENT            = 'SET_VERTICAL_CONTENT'
-export const SET_HORIZONTAL_SELECTED           = 'SET_HORIZONTAL_SELECTED'
-export const SET_VERTICAL_SELECTED             = 'SET_VERTICAL_SELECTED'
-export const PAGE_BASE_SET_ERROR               = 'PAGE_BASE_SET_ERROR'
-export const PAGE_BASE_SET_CUSTOM_MODAL        = 'PAGE_BASE_SET_CUSTOM_MODAL'
-export const PAGE_BASE_SET_NOTIFICATIONS_MODAL = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
-export const PAGE_BASE_SET_CURRENT_USER        = 'PAGE_BASE_SET_CURRENT_USER'
-export const PAGE_BASE_SET_HINT                = 'PAGE_BASE_SET_HINT'
-export const PAGE_BASE_SET_MENU_WIDTH          = 'PAGE_BASE_SET_MENU_WIDTH'
-
 import { GET_CURRENT_USER, UPDATE_CURRENT_USER } from '../queries/pageBase.queries'
 
-export function setHorizontalContent (content){
-  return  { type: SET_HORIZONTAL_CONTENT
-          , value: content
-          }
+export const PAGE_BASE_SELECTED                       = 'PAGE_BASE_SELECTED'
+export const PAGE_BASE_SECONDARY_MENU                 = 'PAGE_BASE_SECONDARY_MENU'
+export const PAGE_BASE_SECONDARY_MENU_SELECTED        = 'PAGE_BASE_SECONDARY_MENU_SELECTED'
+export const PAGE_BASE_SHOW_SECONDARY_MENU            = 'PAGE_BASE_SHOW_SECONDARY_MENU'
+export const PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON = 'PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON'
+export const PAGE_BASE_BREADCRUMBS                    = 'PAGE_BASE_BREADCRUMBS'
+export const PAGE_BASE_SET_ERROR                      = 'PAGE_BASE_SET_ERROR'
+export const PAGE_BASE_SET_CUSTOM_MODAL               = 'PAGE_BASE_SET_CUSTOM_MODAL'
+export const PAGE_BASE_SET_NOTIFICATIONS_MODAL        = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
+export const PAGE_BASE_SET_CURRENT_USER               = 'PAGE_BASE_SET_CURRENT_USER'
+export const PAGE_BASE_SET_HINT                       = 'PAGE_BASE_SET_HINT'
+export const PAGE_BASE_SET_GARAGE                     = 'PAGE_BASE_SET_GARAGE'
+
+
+
+export function setSelected(value) {
+  return { type: PAGE_BASE_SELECTED
+         , value
+         }
 }
 
-export function setHorizontalSelected (index){
-  return  { type: SET_HORIZONTAL_SELECTED
-          , value: index
-          }
+export function setSecondaryMenu(value) {
+  return { type: PAGE_BASE_SECONDARY_MENU
+         , value
+         }
 }
 
-export function setVerticalSelected (index){
-  return  { type: SET_VERTICAL_SELECTED
-          , value: index
-          }
+export function setSecondaryMenuSelected(value) {
+  return { type: PAGE_BASE_SECONDARY_MENU_SELECTED
+         , value
+         }
 }
 
-export function setError (error){
-  return  { type: PAGE_BASE_SET_ERROR
-          , value: error
-          }
+export function setShowSecondaryMenu(value) {
+  return { type: PAGE_BASE_SHOW_SECONDARY_MENU
+         , value
+         }
 }
 
-export function setCustomModal (content){
-  return  { type: PAGE_BASE_SET_CUSTOM_MODAL
-          , value: content
-          }
+export function setSecondaryMenuBackButton(value) {
+  return { type: PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON
+         , value
+         }
 }
 
-export function setShowModal (bool){
-  return  { type: PAGE_BASE_SET_NOTIFICATIONS_MODAL
-          , value: bool
-          }
+export function setBreadcrumbs(value) {
+  return { type: PAGE_BASE_BREADCRUMBS
+         , value
+         }
 }
 
-export function setCurrentUser (currentUser){
-  return  { type: PAGE_BASE_SET_CURRENT_USER
-          , value: currentUser
-          }
+export function setError(value) {
+  return { type: PAGE_BASE_SET_ERROR
+         , value
+         }
 }
 
-export function setHint (hint, url){
-  return  { type: PAGE_BASE_SET_HINT
-          , value: hint
-          , video: url
-          }
+export function setCustomModal(value) {
+  return { type: PAGE_BASE_SET_CUSTOM_MODAL
+         , value
+         }
 }
 
-export function setMenuWidth (menuWidth){
-  return  { type: PAGE_BASE_SET_MENU_WIDTH
-          , value: menuWidth
-          }
+export function setShowModal(value) {
+  return { type: PAGE_BASE_SET_NOTIFICATIONS_MODAL
+         , value
+         }
 }
 
+export function setCurrentUser(value) {
+  return { type: PAGE_BASE_SET_CURRENT_USER
+         , value
+         }
+}
+
+export function setHint(hint, href) {
+  return { type: PAGE_BASE_SET_HINT
+        //  , value: hint ? { hint, href }: undefined
+         , value: { hint, href }
+         }
+}
+
+export function setGarage(value) {
+  return { type: PAGE_BASE_SET_GARAGE
+         , value
+         }
+}
+
+
+function prepareAdminSecondaryMenu() {
+  return (dispatch, getState) => {
+    const garage = getState().pageBase.garage
+    return [ {label: t(['pageBase', 'Invoices']),      key: "invoices", onClick: ()=>{nav.to(`/${garage}/admin/invoices`)} }
+           , {label: t(['pageBase', 'Clients']),       key: "clients",  onClick: ()=>{nav.to(`/${garage}/admin/clients`)} }
+           , {label: t(['pageBase', 'Modules']),       key: "modules",  onClick: ()=>{nav.to(`/${garage}/admin/modules`)} }
+           , {label: t(['pageBase', 'Garage setup']),  key: "garage",   onClick: ()=>{nav.to(`/${garage}/admin/garageSetup/general`)} }
+           , {label: t(['pageBase', 'Users']),         key: "users",    onClick: ()=>{nav.to(`/${garage}/admin/users`)} }
+           , {label: t(['pageBase', 'Finance']),       key: "finance",  onClick: ()=>{nav.to(`/${garage}/admin/finance`)} }
+           , {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
+           , {label: t(['pageBase', 'Activity log']),  key: "activity", onClick: ()=>{nav.to(`/${garage}/admin/activityLog`)} }
+           ]
+  }
+}
+
+export function adminClick() {
+  return (dispatch, getState) => {
+    dispatch(setSecondaryMenu(dispatch(prepareAdminSecondaryMenu())))
+    dispatch(setSecondaryMenuBackButton({label: `< ${t(['pageBase', 'Admin'])}`, onClick: ()=>{dispatch(setShowSecondaryMenu(false))}}))
+    dispatch(setShowSecondaryMenu(!getState().pageBase.showSecondaryMenu))
+  }
+}
+
+function contains (string, text) {
+  return string.indexOf(text) != -1
+}
 
 export function fetchCurrentUser(){
   return (dispatch, getState) => {
@@ -79,451 +129,302 @@ export function fetchCurrentUser(){
   }
 }
 
-export function changeHints() {
-  return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      dispatch( setCurrentUser( response.data.update_user ) )
-    }
-
-    const current_user = getState().pageBase.current_user
-    request(onSuccess, UPDATE_CURRENT_USER, {"user":{"hint": !current_user.hint},"id": current_user.id})
-  }
-}
 
 export function initialPageBase () {
   return (dispatch, getState) => {
-    var hash = window.location.hash
+    const hash = window.location.hash
+    dispatch(setShowSecondaryMenu(false))
 
-    switch (true) { // HorizontalMenus
-      case contains(hash, 'notifications'):
-        dispatch(toNotifications())
-        break;
-      case contains(hash, 'occupancy'):
-        dispatch(toOccupancy())
+    switch (true) { // MainMenu
+      case contains(hash, 'dashboard'):
+        dispatch(toDashboard())
         break;
       case contains(hash, 'reservations'):
         dispatch(toReservations())
         break;
-      case contains(hash, 'garages'):
-        dispatch(toGarages())
+      case contains(hash, 'occupancy'):
+        dispatch(toOccupancy())
         break;
-      case (contains(hash, 'clients') && !contains(hash, 'garages')):
-        dispatch(toClients())
+      case (contains(hash, 'garage') && !contains(hash, 'admin')):
+        dispatch(toGarage())
         break;
-      case contains(hash, 'accounts'):
-        dispatch(toAccounts())
+      case contains(hash, 'issues'):
+        dispatch(toIssues())
         break;
-      case contains(hash, 'cars'):
-        dispatch(toCars())
+      case contains(hash, 'analytics'):
+        dispatch(toAnalytics())
+        break;
+      case contains(hash, 'admin'):
+        dispatch(toAdmin())
         break;
       case contains(hash, 'addFeatures'):
         dispatch(toAddFeatures())
         break;
-      case contains(hash, 'settings'):
-        dispatch(toSettings())
-        break;
-      case contains(hash, 'users'):
-        dispatch(toUsers())
-        break;
-    }
-
-    switch (true) { // Hints
-      case contains(hash, 'editUser?'):
-        dispatch(setHint(t(['pageBase', 'EditUserHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'occupancy?'):
-        dispatch(setHint(t(['pageBase', 'OccupancyOverviewHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'addFeatures'):
-        dispatch(setHint(t(['pageBase', 'addFeaturesHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'overview'):
-        dispatch(setHint(t(['pageBase', 'newReservationOverviewHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'newReservation'):
-        dispatch(setHint(t(['pageBase', 'newReservationHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'reservations'):
-        dispatch(setHint(t(['pageBase', 'reservationsHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'garages/newGarage'):
-        dispatch(setHint(t(['pageBase', 'newGarageHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'newGarage'):
-        dispatch(setHint(t(['pageBase', 'EditGarageHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'clients'):
-        dispatch(setHint(t(['pageBase', 'garageClientsHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'marketing'):
-        dispatch(setHint(t(['pageBase', 'garageMarketingHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'newMarketing'):
-        dispatch(setHint(t(['pageBase', 'garageNewMarketingHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'marketing') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'garageEditMarketingHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'newPricing'):
-        dispatch(setHint(t(['pageBase', 'garageNewPricingHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'pricings') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'garageEditPricingHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'newRent'):
-        dispatch(setHint(t(['pageBase', 'garageNewRentHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'rents') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'garageEditRentHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'addClient'):
-        dispatch(setHint(t(['pageBase', 'garageAddClientHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'garageGarageUsersHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'garages?'):
-        dispatch(setHint(t(['pageBase', 'garagesHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'clients') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'clientUsersHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'clients') && contains(hash, 'newClient'):
-        dispatch(setHint(t(['pageBase', 'newClientHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'clients') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editClientHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'clients'):
-        dispatch(setHint(t(['pageBase', 'clientsHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'accounts') && contains(hash, 'newAccount'):
-        dispatch(setHint(t(['pageBase', 'newAccountHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'accounts') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editAccountHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'accounts'):
-        dispatch(setHint(t(['pageBase', 'accountsHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'cars') && contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'carUsersHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'cars') && contains(hash, 'newClient'):
-        dispatch(setHint(t(['pageBase', 'newCarHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'cars') && contains(hash, 'edit'):
-        dispatch(setHint(t(['pageBase', 'editCarHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'cars'):
-        dispatch(setHint(t(['pageBase', 'carsHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'users') && contains(hash, 'inviteUser'):
-        dispatch(setHint(t(['pageBase', 'newClientUsersHint']), 'https://www.youtube.com/'))
-        break;
-      case contains(hash, 'users'):
-        dispatch(setHint(t(['pageBase', 'usersHint']), 'https://www.youtube.com/'))
-        break;
-
-      case contains(hash, 'settings'):
-        dispatch(setHint(t(['pageBase', 'settingsHint']), 'https://www.youtube.com/'))
+      case contains(hash, 'profile'):
+        dispatch(toProfile())
         break;
       case contains(hash, 'notifications'):
-        dispatch(setHint(t(['pageBase', 'notificationsHint']), 'https://www.youtube.com/'))
+        dispatch(toNotifications())
         break;
-      default:
-        dispatch(setHint(undefined))
-        dispatch(setHint('NO HINT FOUND'), undefined)
     }
 
-    // if (getState().pageBase.current_user == undefined){ // if no information about current user
-    // }
-    dispatch(fetchCurrentUser())
+    //     dispatch(setHint(t(['pageBase', 'EditUserHint']), 'https://www.youtube.com/'))
+
+    if (getState().pageBase.current_user == undefined){ // if no information about current user
+      dispatch(fetchCurrentUser())
+    }
   }
 }
 
-
-function contains (string, text) {
-  return string.indexOf(text) != -1
+function setAll(selected, secondartMenu, secondarySelected, breadcrumbs, hint, href) {
+  return (dispatch, getState) => {
+    dispatch(setSelected(selected))
+    dispatch(setSecondaryMenu(secondartMenu))
+    dispatch(setSecondaryMenuSelected(secondarySelected))
+    dispatch(setBreadcrumbs(breadcrumbs))
+    dispatch(setHint(hint,href))
+  }
 }
 
-export function toNotifications(){
+export function toDashboard() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('notifications'))
-    dispatch(setHorizontalSelected(0))
-    dispatch(setHorizontalContent([{content: t(['pageBase', 'notifications']),  state: 'selected'}]))
+    dispatch(setAll('dashboard', [], undefined, [{label: t(['pageBase','Dashboard']), route: '/dashboard'}],  t(['pageBase','dashboardHint']), 'https://www.youtube.com/'))
+  }
+}
+
+export function toReservations() {
+  return (dispatch, getState) => {
+    const hash = window.location.hash
+    let breadcrumbs = [{label: t(['pageBase','Reservation']), route: '/reservations'}]
+
+    switch (true) { // MainMenu
+      case contains(hash, 'newReservations'):
+        breadcrumbs.push({label: t(['pageBase','New Reservation']), route: '/reservations/newReservations'})
+      case contains(hash, 'overview'):
+        breadcrumbs.push({label: t(['newReservationOverview','overview']), route: '/reservations/newReservations/overview'})
+      }
+
+    dispatch(setAll('reservations', [], undefined, breadcrumbs, t(['pageBase','reservationsHint']), 'https://www.youtube.com/'))
   }
 }
 
 export function toOccupancy() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('Occupancy'))
-    dispatch(setHorizontalSelected(0))
-    dispatch(setHorizontalContent([{content: t(['pageBase', 'OccupancyOverview']),  state: 'selected'}]))
+    dispatch(setAll('occupancy', [], undefined, [{label: t(['pageBase','Occupancy']), route: '/occupancy'}], t(['pageBase','OccupancyOverviewHint']), 'https://www.youtube.com/'))
   }
 }
 
-export function toReservations(){
+export function toGarage() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('Reservation'))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'newReservation')? 1 : 0))
-
-    if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHorizontalContent([ {content: t(['pageBase', 'Reservations']), state: 'selected'}]))
-    } else {
-      dispatch(setHorizontalContent(
-                      [ {content: t(['pageBase', 'Reservations']), state: 'disabled'}
-                      , {content: '>',  state: 'disabled'}
-                      , {content: t(['pageBase', 'New Reservation']),  state: 'selected'}
-                      ]))
-    }
+    dispatch(setAll('garage', [], undefined, [{label: t(['pageBase','Garage']), route: '/garage'}], t(['pageBase','garagesHint']), 'https://www.youtube.com/'))
   }
 }
 
-export function toGarages(){
+export function toIssues() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('Garages'))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'garages?') ? 0 : 1))
-
-    if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHorizontalContent([ {content: t(['pageBase', 'Garages']), state: 'selected'}]))
-    } else {
-      switch (true) { // HorizontalMenus
-        case contains(window.location.hash, 'garages/newGarage'):
-          dispatch(setHorizontalContent(
-            [ {content: t(['pageBase', 'Garages']), state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'NewGarage']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'newGarage'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().newGarage.name!="" ? "("+getState().newGarage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'EditGarage']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'clients'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageClients.garage ? "("+getState().garageClients.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Clients']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'users'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Users']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'newPricing'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'newPricing']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'pricings'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Pricings']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'newRent'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'newRent']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'rents'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageUsers.garage ? "("+getState().garageUsers.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Rents']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'newMarketing'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().newMarketing.garage ? "("+getState().newMarketing.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'newMarketing']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'marketing') && contains(window.location.hash, 'edit'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().newMarketing.garage ? "("+getState().newMarketing.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'editMarketing']),  state: 'selected'}
-          ]))
-          break;
-        case contains(window.location.hash, 'marketing'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Garages'])} ${getState().garageMarketing.garage ? "("+getState().garageMarketing.garage.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'marketing']),  state: 'selected'}
-          ]))
-          break;
-      }
-    }
+    dispatch(setAll('issues', [], undefined, [{label: t(['pageBase','Issues']), route: '/issues'}], t(['pageBase','issuesHint']), 'https://www.youtube.com/'))
   }
 }
 
-export function toClients(){
+export function toAnalytics() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('Client & Users'))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'clients/')? 1 : 0))
-
-    if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHorizontalContent([ {content: t(['pageBase', 'Client & Users']), state: 'selected'}]))
-    }
-    else {
-      switch (true) { // HorizontalMenus
-        case contains(window.location.hash, 'clients') && contains(window.location.hash, 'users'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'Client & Users'])} ${getState().clientUsers.client.name ? "("+getState().clientUsers.client.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Users']),  state: 'selected'}
-            ]))
-          break;
-        case contains(window.location.hash, 'clients/newClient'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'Client & Users'])}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'NewClient']),  state: 'selected'}
-            ]))
-          break
-        case contains(window.location.hash, 'clients') && contains(window.location.hash, 'edit'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'Client & Users'])}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'EditClient']),  state: 'selected'}
-            ]))
-          break
-        case contains(window.location.hash, 'clients') && contains(window.location.hash, 'invoices'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'Client & Users'])} ${getState().invoices.client ? "("+getState().invoices.client.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Invoices']),  state: 'selected'}
-            ]))
-          break
-      }
-    }
+    dispatch(setAll('analytics', [], undefined, [{label: t(['pageBase','Analytics']), route: '/analytics'}], t(['pageBase','analyticsHint']), 'https://www.youtube.com/'))
   }
 }
 
-export function toAccounts () {
+export function toAdmin() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('accounts'))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'accounts/')? 1 : 0))
+    const hash = window.location.hash
+    const garage = getState().pageBase.garage
+    let breadcrumbs = [{label: t(['pageBase','Admin']), route: `/${garage}/admin/invoices`}]
+    let secondarySelected = undefined
+    let hint = undefined
+    let hintVideo = undefined
 
-    if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHorizontalContent([ {content: t(['pageBase', 'accounts']), state: 'selected'}]))
+    switch (true) { // MainMenu
+      case contains(hash, 'invoices'):
+        breadcrumbs.push({label: t(['pageBase','Invoices']), route: `/${garage}/admin/invoices`})
+        secondarySelected = 'invoices'
+        hint = t(['pageBase','invoicesHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (contains(hash, 'clients/') && contains(hash, 'users')):
+        breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
+        breadcrumbs.push({label: t(['pageBase','Users']), route: `/${garage}/admin/clients`}) // users
+        secondarySelected = 'clients'
+        hint = t(['pageBase','clientUsersHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'clients/') && contains(hash, 'newClient')):
+        breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
+        breadcrumbs.push({label: t(['pageBase','NewClient']), route: `/${garage}/admin/clients/newClient`})
+        secondarySelected = 'clients'
+        hint = t(['pageBase','newClientHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'clients/') && contains(hash, 'newContract')):
+        breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
+        breadcrumbs.push({label: t(['pageBase','NewContract']), route: `/${garage}/admin/clients/newContract`})
+        secondarySelected = 'clients'
+        hint = t(['pageBase','newContractHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case contains(hash, 'clients'):
+        breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
+        secondarySelected = 'clients'
+        hint = t(['pageBase','clientsHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (contains(hash, 'modules/') && contains(hash, 'marketingSettings')):
+        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+        breadcrumbs.push({label: t(['pageBase','marketingSettings']), route: `/${garage}/admin/modules/marketingSettings`})
+        secondarySelected = 'modules'
+        hint = t(['pageBase','garageNewMarketingHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'reservationButton')):
+        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+        breadcrumbs.push({label: t(['pageBase','reservationButton']), route: `/${garage}/admin/modules/reservationButton`})
+        secondarySelected = 'modules'
+        hint = t(['pageBase','ReservationButtonHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'mrParkitIntegration')):
+        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+        breadcrumbs.push({label: t(['pageBase','mrParkitIntegration']), route: `/${garage}/admin/modules/mrParkitIntegration`})
+        secondarySelected = 'modules'
+        hint = t(['pageBase','mrParkitIntegrationHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'goPublic')):
+        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+        breadcrumbs.push({label: t(['pageBase','goPublic']), route: `/${garage}/admin/modules/goPublic`})
+        secondarySelected = 'modules'
+        hint = t(['pageBase','goPublicHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'modules')):
+        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+        secondarySelected = 'modules'
+        hint = t(['pageBase','garageMarketingHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
+        breadcrumbs.push({label: t(['pageBase','Garage setup']), route: `/${garage}/admin/garageSetup/general`})
+        secondarySelected = 'garageSetup'
+        hint = t(['pageBase','newGarageHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'general')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupFloors']), route: `/${garage}/admin/garageSetup/floors`})
+        secondarySelected = 'garageSetup'
+        hint = t(['pageBase','newGarageFloorsHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupGates']), route: `/${garage}/admin/garageSetup/gates`})
+        secondarySelected = 'garageSetup'
+        hint = t(['pageBase','newGarageGatesHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (!contains(hash, 'clients') && contains(hash, 'users') && contains(hash, 'invite')):
+        breadcrumbs.push({label: t(['pageBase','Users']), route: `/${garage}/admin/users`})
+        breadcrumbs.push({label: t(['pageBase','inviteUser']), route: `/${garage}/admin/users/invite`})
+        secondarySelected = 'users'
+        hint = t(['pageBase','inviteUsersHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (!contains(hash, 'clients') && contains(hash, 'users')):
+        breadcrumbs.push({label: t(['pageBase','Users']), route: `/${garage}/admin/users`})
+        secondarySelected = 'users'
+        hint = t(['pageBase','usersHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (contains(hash, 'finance') && contains(hash, 'paypal')):
+        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+        breadcrumbs.push({label: 'Paypal', route: `/${garage}/admin/finance/paypal`})
+        secondarySelected = 'finance'
+        hint = t(['pageBase','financePaypalHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'finance') && contains(hash, 'csob')):
+        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+        breadcrumbs.push({label: 'ČSOB', route: `/${garage}/admin/finance/csob`})
+        secondarySelected = 'finance'
+        hint = t(['pageBase','financeCSOBHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'finance')):
+        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+        secondarySelected = 'finance'
+        hint = t(['pageBase','financeHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (contains(hash, 'pidSettings')):
+        breadcrumbs.push({label: t(['pageBase','PID settings']), route: `/${garage}/admin/pidSettings`})
+        secondarySelected = 'PID'
+        hint = t(['pageBase','pidSettingsHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+
+      case (contains(hash, 'activityLog')):
+        breadcrumbs.push({label: t(['pageBase','Activity log']), route: `/${garage}/admin/activityLog`})
+        secondarySelected = 'activity'
+        hint = t(['pageBase','activityLogHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
     }
-    else {
-      switch (true) { // HorizontalMenus
-        case contains(window.location.hash, 'accounts/newAccount'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'accounts'])}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'newAccount']),  state: 'selected'}
-            ]))
-          break
-        case contains(window.location.hash, 'accounts') && contains(window.location.hash, 'edit'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'accounts'])}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'editAccount']),  state: 'selected'}
-            ]))
-          break
-        case contains(window.location.hash, 'accounts') && contains(window.location.hash, 'invoices'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'accounts'])} ${getState().invoices.account ? "("+getState().invoices.account.name+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Invoices']),  state: 'selected'}
-            ]))
-          break
-      }
-    }
+
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, breadcrumbs, hint, hintVideo))
   }
 }
 
-export function toUsers(){
+export function toAddFeatures() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('Users'))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'inviteUser')? 1 : 0))
-
-    if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHorizontalContent([ {content: t(['pageBase', 'allKnownUsers']), state: 'selected'}]))
-    } else {
-      dispatch(setHorizontalContent(
-        [ {content: t(['pageBase', 'allKnownUsers']), state: 'disabled'}
-        , {content: '>',  state: 'disabled'}
-        , {content: t(['pageBase', 'inviteUser']),  state: 'selected'}
-        ])
-      )
-    }
+    dispatch(setAll(undefined, [], undefined, [{label: t(['pageBase','Add Features']), route: '/addFeatures'}], t(['pageBase','addFeaturesHint']), 'https://www.youtube.com/'))
   }
 }
 
-export function toCars () {
+export function toProfile() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected('Cars'))
-    dispatch(setHorizontalSelected(contains(window.location.hash, 'cars/')? 1 : 0))
+    const hash = window.location.hash
+    let breadcrumbs = [{label: t(['pageBase','Profile']), route: '/profile'}]
+    // let secondarySelected = undefined
+    // let hint = undefined
+    // let hintVideo = undefined
 
-    if (getState().pageBase.horizontalSelected == 0) {
-      dispatch(setHorizontalContent([ {content: t(['pageBase', 'cars']), state: 'selected'}]))
+    switch (true) { // MainMenu
+      case (contains(hash, 'cars') && contains(hash, 'users')):
+        breadcrumbs.push({label: t(['pageBase','Cars']), route: `/profile`})
+        breadcrumbs.push({label: t(['pageBase','Users']), route: `/Profile`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','carUsersHint']), 'https://www.youtube.com/'))
+        break
+      case (contains(hash, 'cars') && contains(hash, 'newCar')):
+        breadcrumbs.push({label: t(['pageBase','Cars']), route: `/profile`})
+        breadcrumbs.push({label: t(['pageBase','newCar']), route: `/Profile`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newCarHint']), 'https://www.youtube.com/'))
+        break
+      case (contains(hash, 'cars') && contains(hash, 'edit')):
+        breadcrumbs.push({label: t(['pageBase','Cars']), route: `/profile`})
+        breadcrumbs.push({label: t(['pageBase','editCar']), route: `/Profile`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','editCarHint']), 'https://www.youtube.com/'))
+        break
+      default:
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','settingsHint']), 'https://www.youtube.com/'))
+        break
     }
-    else {
-      switch (true) { // HorizontalMenus
-        case contains(window.location.hash, 'cars') && contains(window.location.hash, 'users'):
-          dispatch(setHorizontalContent(
-            [ {content: `${t(['pageBase', 'cars'])} ${getState().carUsers.car.model ? "("+getState().carUsers.car.model+")" : ""}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'Users']),  state: 'selected'}
-            ]))
-          break;
-        case contains(window.location.hash, 'cars/newCar'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'cars'])}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'newCar']),  state: 'selected'}
-            ]))
-          break
-        case contains(window.location.hash, 'cars') && contains(window.location.hash, 'edit'):
-          dispatch(setHorizontalContent(
-             [ {content: `${t(['pageBase', 'cars'])}`, state: 'disabled'}
-            , {content: '>',  state: 'disabled'}
-            , {content: t(['pageBase', 'editCar']),  state: 'selected'}
-            ]))
-          break
-      }
-    }
+
   }
 }
 
-export function toAddFeatures () {
+export function toNotifications() {
   return (dispatch, getState) => {
-    dispatch(setVerticalSelected(undefined))
-    dispatch(setHorizontalSelected(0))
-    dispatch(setHorizontalContent([{content: t(['pageBase', 'addFeatures']),  state: 'selected'}]))
-  }
-}
-
-export function toSettings () {
-  return (dispatch, getState) => {
-    dispatch(setVerticalSelected(undefined))
-    dispatch(setHorizontalSelected(0))
-    dispatch(setHorizontalContent([{content: t(['pageBase', 'Settings']),  state: 'selected'}]))
+    dispatch(setAll(undefined, [], undefined, [{label: t(['pageBase','notifications']), route: '/notifications'}], t(['pageBase','notificationsHint']), 'https://www.youtube.com/'))
   }
 }

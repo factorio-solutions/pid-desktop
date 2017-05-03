@@ -6,18 +6,7 @@ import BreadcrumbsButton from '../buttons/BreadcrumbsButton'
 import styles from './Breadcrumbs.scss'
 
 
-export default function Breadcrumbs ()  {
-
-  const contains = text => window.location.hash.indexOf(text) != -1
-
-  // switch (true) { // fill path here
-  //   case expression:
-  //
-  //     break;
-  //   default:
-  // }
-
-  const path = [{label: 'reservations', route: '/reservations'}, {label: 'some', route: '/releaseNotes'}]
+export default function Breadcrumbs ({path})  {
 
   const createButtons = (accumulator, object, index, arr) => {
     if (arr.length-1 === index){

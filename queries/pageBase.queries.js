@@ -14,6 +14,7 @@ export const GET_CURRENT_USER = `{
     has_garages
     has_account
     has_client
+    created_at
   }
 }
 `

@@ -12,7 +12,7 @@
 }
 
 .drop{
-  position:   absolute;
+  position:   fixed; // was absolute
   z-index:    10;
   max-height: 200px;
   overflow-y: auto;
@@ -93,4 +93,10 @@
 
 .highlighted{
   border-bottom: 1px solid $red;
+}
+
+.garageSelector{
+  color: $yellow;
+  font-weight: bold;
+  background-color: rgba(0,0,0,0);
 }

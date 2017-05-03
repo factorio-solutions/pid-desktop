@@ -31,10 +31,16 @@ export function dismissModal () {
 
 export function sendPasswordReset(){
   return (dispatch, getState) => {
+    dispatch(resertPassword(getState().resetPassword.email.value))
+  }
+}
+
+export function resetPassword(email){
+  return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setModal(t(['resetPassword', 'send'])))
     }
 
-    request(onSuccess, RESET_PASSWORD, {email: getState().resetPassword.email.value})
+    request(onSuccess, RESET_PASSWORD, {email})
   }
 }

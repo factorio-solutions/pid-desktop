@@ -60,3 +60,32 @@
   color:   $white;
   cursor:  pointer;
 }
+
+.dropdownContent{
+  background: $menuGray;
+  color: $lightGray;
+  font-size: 15px;
+  cursor: pointer;
+
+  >i{
+    color: $white;
+    font-size: 32px;
+    vertical-align: middle;
+  }
+}
+
+@media (min-width: $collapseWidth) {
+  .dropdownContent{
+    padding: 6px 20px;
+
+    >i{
+      padding: 0 5px;
+    }
+  }
+}
+
+@media (max-width: $collapseWidth) {
+  .dropdownContent{
+    padding: 10px 0;
+  }
+}
