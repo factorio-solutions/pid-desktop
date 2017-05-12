@@ -2,6 +2,7 @@
 export const CREATE_NEW_GARAGE = `mutation garageMutations($garage: GarageInput!) {
   create_garage(garage: $garage) {
     id
+    payment_url
   }
 }
 `
@@ -57,9 +58,9 @@ export const GET_ACCOUNTS_TARIFS = `query{
       symbol
     }
   }
-  accounts{
-    id
-    name
-  }
 }
 `
+// accounts{
+//   id
+//   name
+// }

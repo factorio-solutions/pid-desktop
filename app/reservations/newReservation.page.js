@@ -27,14 +27,14 @@ export class NewReservationPage extends Component {
   }
 
   componentDidMount () {
-    this.props.actions.setInitialStore()
+    this.props.actions.setInitialStore(this.props.params.id)
   }
 
   render () {
     const { state, actions } = this.props
 
     const handleBack       = () => { nav.to('/reservations') }
-    const toOverview       = () => { nav.to('/reservations/newReservation/overview') }
+    const toOverview       = () => { this.props.params.id ? actions.submitReservation(+this.props.params.id) : nav.to('/reservations/newReservation/overview') }
     const handleDuration   = () => { actions.setDurationDate(true) }
     const handleDate       = () => { actions.setDurationDate(false) }
     const hightlightInputs = () => { actions.toggleHighlight() }
@@ -91,6 +91,7 @@ export class NewReservationPage extends Component {
 
     const highlightSelected = (floor) => {
       floor.places.map((place) => {
+        place.available = place.available || place.id === state.edit_place_id // set place of edited reservation as available
         place.selected = place.id == state.place_id
         return place
       })
@@ -112,36 +113,35 @@ export class NewReservationPage extends Component {
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
                          </div>
 
-    const content = <div className={styles.parent}>
-                      <Modal content={errorContent} show={state.error!=undefined} />
-                      <div className={styles.leftCollumn}>
-                        <div className={styles.padding}>
-                          <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()} onHighlight={hightlightInputs}>
-                            {state.availableUsers.length>1 && <Dropdown label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return user.id == state.user_id})}         style='light' highlight={state.highlight}/> }
-                            <Dropdown label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.garageIndex} style='light' highlight={state.highlight}/>
-                            {state.availableClients.length>1 &&<Dropdown label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>}
-                            {state.availableCars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
-                                                           : <Dropdown label={t(['newReservation', 'selectCar'])}    content={carDropdown()}    selected={state.availableCars.findIndex((car)=>{return car.id == state.car_id})}             style='light' highlight={state.highlight}/>}
-
-                            <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} inlineMenu={beginsInlineMenu}/>
-                            {state.durationDate ? <Input         onChange={actions.durationChange} label={t(['newReservation', 'duration'])} error={t(['newReservation', 'invalidaValue'])} inlineMenu={endsInlineMenu} value={String(moment.duration(moment(state.to, 'DD.MM.YYYY HH:mm').diff(moment(state.from, 'DD.MM.YYYY HH:mm'))).asHours())} type="number" min={0.25} step={0.25} align="right" />
-                                                : <DatetimeInput onChange={handleTo}               label={t(['newReservation', 'ends'])}     error={t(['newReservation', 'invalidaDate'])}  inlineMenu={endsInlineMenu} value={state.to} />}
-                            <Input value={placeLabel()} label={t(['newReservation', 'place'])} error={t(['newReservation', 'invalidPlace'])} type='text' name='reservation[place]' align='right' readOnly={true} inlineMenu={placeInlineMenu}/>
-                            <Input value={state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price || ''}  label={t(['newReservation', 'price'])} type='text' name='reservation[price]' align='right' readOnly={true}/>
-                          </Form>
-                        </div>
-                      </div>
-
-                      <div className={styles.rightCollumn}>
-                        {state.loading ? <div className={styles.loading}>{t(['newReservation', 'loadingGarage'])}</div>
-                                       : state.garage && <GarageLayout floors={state.garage.floors.map(highlightSelected)} onPlaceClick={handlePlaceClick} showEmptyFloors={false}/>
-                        }
-
-                      </div>
-                    </div>
-
     return (
-      <PageBase content={content} />
+      <PageBase>
+        <div className={styles.parent}>
+          <Modal content={errorContent} show={state.error!=undefined} />
+
+          <div className={styles.leftCollumn}>
+            <div className={styles.padding}>
+              <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()} onHighlight={hightlightInputs}>
+                {state.availableUsers.length>1 && <Dropdown label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return user.id == state.user_id})}         style='light' highlight={state.highlight}/> }
+                <Dropdown label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.garageIndex} style='light' highlight={state.highlight}/>
+                {state.availableClients.length>1 &&<Dropdown label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>}
+                {state.availableCars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
+                                               : <Dropdown label={t(['newReservation', 'selectCar'])}    content={carDropdown()}    selected={state.availableCars.findIndex((car)=>{return car.id == state.car_id})}             style='light' highlight={state.highlight}/>}
+
+                <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} inlineMenu={beginsInlineMenu}/>
+                {state.durationDate ? <Input         onChange={actions.durationChange} label={t(['newReservation', 'duration'])} error={t(['newReservation', 'invalidaValue'])} inlineMenu={endsInlineMenu} value={String(moment.duration(moment(state.to, 'DD.MM.YYYY HH:mm').diff(moment(state.from, 'DD.MM.YYYY HH:mm'))).asHours())} type="number" min={0.25} step={0.25} align="right" />
+                                    : <DatetimeInput onChange={handleTo}               label={t(['newReservation', 'ends'])}     error={t(['newReservation', 'invalidaDate'])}  inlineMenu={endsInlineMenu} value={state.to} />}
+                <Input value={placeLabel()} label={t(['newReservation', 'place'])} error={t(['newReservation', 'invalidPlace'])} type='text' name='reservation[place]' align='right' readOnly={true} inlineMenu={placeInlineMenu}/>
+                <Input value={state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price || ''}  label={t(['newReservation', 'price'])} type='text' name='reservation[price]' align='right' readOnly={true}/>
+              </Form>
+            </div>
+          </div>
+
+          <div className={styles.rightCollumn}>
+            {state.loading ? <div className={styles.loading}>{t(['newReservation', 'loadingGarage'])}</div>
+                           : state.garage && <GarageLayout floors={state.garage.floors.map(highlightSelected)} onPlaceClick={handlePlaceClick} showEmptyFloors={false}/> }
+          </div>
+        </div>
+      </PageBase>
     )
   }
 }

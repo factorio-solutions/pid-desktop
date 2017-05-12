@@ -55,29 +55,29 @@ export class NewReservationOverviewPage extends Component {
       }
     }
 
-    const content = <Form onSubmit={formOnSubmit} onBack={onBack} submitable={true}>
-                      <h2>{t(['newReservationOverview', 'overview'])}</h2>
-                      <div>
-                        <h4>{t(['newReservationOverview', 'selectedPlace'])}</h4>
-                        <div>{placeLabel()}</div>
-                      </div>
-                      <div>
-                        <h4>{t(['newReservationOverview', 'duration'])}</h4>
-                        <div>
-                          <span className={styles.label}>{t(['newReservationOverview', 'from'])}: </span>
-                          <span>{state.from}</span>
-                          <span className={styles.label}>{t(['newReservationOverview', 'to'])}: </span>
-                          <span>{state.to}</span>
-                        </div>
-                      </div>
-                      <div>
-                        <h4>{t(['newReservationOverview', 'price'])}</h4>
-                        <div className={styles.label}>{ state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price }</div>
-                      </div>
-                    </Form>
-
     return (
-      <PageBase content={content}/>
+      <PageBase>
+        <Form onSubmit={formOnSubmit} onBack={onBack} submitable={true}>
+          <h2>{t(['newReservationOverview', 'overview'])}</h2>
+          <div>
+            <h4>{t(['newReservationOverview', 'selectedPlace'])}</h4>
+            <div>{placeLabel()}</div>
+          </div>
+          <div>
+            <h4>{t(['newReservationOverview', 'duration'])}</h4>
+            <div>
+              <span className={styles.label}>{t(['newReservationOverview', 'from'])}: </span>
+              <span>{state.from}</span>
+              <span className={styles.label}>{t(['newReservationOverview', 'to'])}: </span>
+              <span>{state.to}</span>
+            </div>
+          </div>
+          <div>
+            <h4>{t(['newReservationOverview', 'price'])}</h4>
+            <div className={styles.label}>{ state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price }</div>
+          </div>
+        </Form>
+      </PageBase>
     )
   }
 }

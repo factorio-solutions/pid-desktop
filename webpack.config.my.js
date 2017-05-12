@@ -40,6 +40,10 @@ module.exports = {
 
   module: {
     loaders: [
+      // {
+      //   test: /\.svg$/,
+      //   loader: 'url-loader'
+      // },
       {
         test: /\.jsx?$/,         // Match both .js and .jsx files
         exclude: /node_modules/,

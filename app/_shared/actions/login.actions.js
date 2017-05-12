@@ -51,7 +51,7 @@ export function login(email, password, redirect = false, callback = ()=>{}) {
         callback(result)
         dispatch(resetLoginForm())
         if(redirect) {
-          const path = localStorage['redirect'] || '/reservations'
+          const path = localStorage['redirect'] || '/dashboard'
           delete localStorage['redirect']
           nav.to(path)
         }

@@ -57,9 +57,11 @@ import MrParkitIntegrationPage    from './admin/modules/mrParkitIntegration.page
 import GoPublicPage               from './admin/modules/goPublic.page'
 
 // garageSetup
-import GarageSetupGeneralPage     from './admin/garageSetup/garageSetupGeneral.page'
-import GarageSetupFloorsPage      from './admin/garageSetup/garageSetupFloors.page'
-import GarageSetupGatesPage       from './admin/garageSetup/garageSetupGates.page'
+import GarageSetupGeneralPage      from './admin/garageSetup/garageSetupGeneral.page'
+import GarageSetupFloorsPage       from './admin/garageSetup/garageSetupFloors.page'
+import GarageSetupGatesPage        from './admin/garageSetup/garageSetupGates.page'
+import GarageSetupOrderPage        from './admin/garageSetup/garageSetupOrder.page'
+import GarageSetupSubscribtionPage from './admin/garageSetup/garageSetupSubscribtion.page'
 
 // users
 import UsersPage                  from './admin/users/users.page'
@@ -134,10 +136,11 @@ export default function createRoutes() {
       <Route path="profile/cars/:id/edit"                 component={NewCarPage}/>
       <Route path="notifications"                         component={NotificationsPage}/>
 
-      <Route path=":id/dashboard"                         component={DashboardPage}/>
+      <Route path="dashboard"                         component={DashboardPage}/>
 
       <Route path="reservations"                          component={ReservationsPage}/>
-      <Route path="reservations/newReservations"          component={NewReservationPage}/>
+      <Route path="reservations/newReservation"           component={NewReservationPage}/>
+      <Route path="reservations/:id/edit"                 component={NewReservationPage}/>
       <Route path="reservations/newReservation/overview"  component={NewReservationOverviewPage}/>
 
       <Route path=":id/occupancy"                         component={OccupancyPage}/>
@@ -148,7 +151,7 @@ export default function createRoutes() {
 
       <Route path=":id/analytics"                         component={AnalyticsPage}/>
 
-      <Route path="addFeatures"                           component={AnalyticsPage}/>
+      <Route path="addFeatures"                           component={AddFeaturesPage}/>
 
       <Route path=":id/admin/invoices"                    component={InvoicesPage}/>
 
@@ -163,9 +166,16 @@ export default function createRoutes() {
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage}/>
       <Route path=":id/admin/modules/goPublic"            component={GoPublicPage}/>
 
+      <Route path="addFeatures/garageSetup/general"       component={GarageSetupGeneralPage}/>
+      <Route path="addFeatures/garageSetup/floors"        component={GarageSetupFloorsPage}/>
+      <Route path="addFeatures/garageSetup/gates"         component={GarageSetupGatesPage}/>
+      <Route path="addFeatures/garageSetup/order"         component={GarageSetupOrderPage}/>
+      <Route path="addFeatures/garageSetup/subscribtion"  component={GarageSetupSubscribtionPage}/>
       <Route path=":id/admin/garageSetup/general"         component={GarageSetupGeneralPage}/>
       <Route path=":id/admin/garageSetup/floors"          component={GarageSetupFloorsPage}/>
       <Route path=":id/admin/garageSetup/gates"           component={GarageSetupGatesPage}/>
+      <Route path=":id/admin/garageSetup/order"           component={GarageSetupOrderPage}/>
+      <Route path=":id/admin/garageSetup/subscribtion"    component={GarageSetupSubscribtionPage}/>
 
       <Route path=":id/admin/users"                       component={UsersPage}/>
       <Route path=":id/admin/users/invite"                component={InviteUserPage}/>

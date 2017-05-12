@@ -92,10 +92,18 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
 // }
 
 // create reservation mutation
-export const CREATE_RESERVATION = `mutation createReservation($reservation: ReservationInput!, $user_id:Id!, $place_id:Id!) {
-  create_reservation(reservation: $reservation, user_id: $user_id, place_id: $place_id) {
+export const CREATE_RESERVATION = `mutation createReservation($reservation: ReservationInput!) {
+  create_reservation(reservation: $reservation) {
     id
     payment_url
+  }
+}
+`
+
+// create reservation mutation
+export const UPDATE_RESERVATION = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
+  update_reservation(reservation: $reservation, id: $id) {
+    id
   }
 }
 `
@@ -106,3 +114,42 @@ export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $i
     approved
 	}
 }`
+
+
+// get reservation details
+export const GET_RESERVATION = `query getReservation($id: Id!) {
+  reservation(id: $id) {
+    id
+    user_id
+    car {
+      id
+      licence_plate
+    }
+    client_id
+    place{
+      id
+      pricings{
+        name
+        flat_price
+        exponential_12h_price
+        exponential_day_price
+        exponential_week_price
+        exponential_month_price
+        weekend_price
+        currency{
+          symbol
+        }
+      }
+
+      floor{
+        id
+        garage{
+          id
+        }
+      }
+    }
+    begins_at
+    ends_at
+  }
+}
+`

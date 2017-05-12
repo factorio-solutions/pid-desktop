@@ -83,13 +83,6 @@ export class NotificationsPage extends Component {
       return <NotificationCard key={index} notification={notification} confirm={confirm} decline={decline}/>
     }
 
-    const content = <div>
-      {state.tableView ? <Table schema={schema} data={data} />
-                       : <CardViewLayout columns={2}>
-                           {state.notifications.map(prepareCards)}
-                         </CardViewLayout>
-      }
-    </div>
 
 
 
@@ -105,7 +98,15 @@ export class NotificationsPage extends Component {
     //       </div>
 
     return (
-      <PageBase content={content}/>
+      <PageBase>
+        <div>
+          {state.tableView ? <Table schema={schema} data={data} />
+                           : <CardViewLayout columns={2}>
+                               {state.notifications.map(prepareCards)}
+                             </CardViewLayout>
+          }
+        </div>
+      </PageBase>
     );
   }
 }

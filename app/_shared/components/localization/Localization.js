@@ -1,4 +1,4 @@
-import React, { Component, PropTypes }  from 'react';
+import React, { Component, PropTypes }  from 'react'
 import RoundButton                      from '../buttons/RoundButton'
 import { AVAILABLE_LANGUAGES }          from '../../../routes.js'
 
@@ -10,7 +10,7 @@ export default class Localization extends Component {
 
   render() {
     const prepareButtons = (language, i) => {
-      const langClick = () => {this.context.router.push(`/${language}/settings`)}
+      const langClick = () => {this.context.router.push(`/${language}/profile`)}
       return <RoundButton key={i} content={language.toUpperCase()} onClick={langClick} type="action" />
     }
 

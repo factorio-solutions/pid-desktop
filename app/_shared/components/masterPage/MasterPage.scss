@@ -13,7 +13,7 @@ $hintWidth: 180px;
 
   >.hamburger{
     color: $white;
-    position: fixed;
+    position: absolute;
     top: 8px;
     left: 12px;
     cursor: pointer;
@@ -92,11 +92,12 @@ $hintWidth: 180px;
       color:            $white;
       padding:          10px;
       text-align:       center;
+      height:           100%;
 
     }
 
     >.children{
-      padding: 10px;
+      padding: 0 20px;
     }
   }
 }
@@ -166,8 +167,13 @@ $hintWidth: 180px;
         transform: translate($secondaryMenuWidth,0);
       }
 
-      >.children.hashHint{
-        margin-right: $hintWidth;
+      >.children{
+        overflow: auto;
+        height: calc(100% - 60px);
+
+        &.hashHint{
+          margin-right: $hintWidth;
+        }
       }
 
       >.hint{
@@ -214,7 +220,7 @@ $hintWidth: 180px;
     >.horizontalMenuContent{
       >.theContent{
         >.user{
-          position: fixed;
+          position: absolute;
           top: 8px;
           right: 12px;
         }

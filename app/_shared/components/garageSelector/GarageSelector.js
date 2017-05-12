@@ -34,7 +34,7 @@ export default class GarageSelector extends Component {
         <div className={styles.img} >
           <img src={content[this.state.selected].image}/>
         </div>
-        <Dropdown label={'t(selectGarage)'} content={dropdownContent} selected={this.state.selected} style={'garageSelector'}/>
+        <Dropdown label={'t(selectGarage)'} content={dropdownContent} selected={this.state.selected} style={'garageSelector'} position='fixed'/>
       </div>
     )
   }

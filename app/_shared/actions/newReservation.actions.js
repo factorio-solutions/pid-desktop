@@ -13,7 +13,9 @@ import {
   GET_GARAGE_PRICINGS,
   GET_GARAGE_DETAILS,
   CREATE_RESERVATION,
-  PAY_RESREVATION
+  PAY_RESREVATION,
+  GET_RESERVATION,
+  UPDATE_RESERVATION
 } from '../queries/newReservation.queries'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -34,6 +36,7 @@ export const NEW_RESERVATION_SET_GARAGE             = "NEW_RESERVATION_SET_GARAG
 export const NEW_RESERVATION_SET_FROM               = "NEW_RESERVATION_SET_FROM"
 export const NEW_RESERVATION_SET_TO                 = "NEW_RESERVATION_SET_TO"
 export const NEW_RESERVATION_SET_PLACE_ID           = "NEW_RESERVATION_SET_PLACE_ID"
+export const NEW_RESERVATION_SET_EDIT_PLACE_ID      = "NEW_RESERVATION_SET_EDIT_PLACE_ID"
 export const NEW_RESERVATION_SET_DURATION_DATE      = "NEW_RESERVATION_SET_DURATION_DATE"
 export const NEW_RESERVATION_SET_ERROR              = "NEW_RESERVATION_SET_ERROR"
 export const NEW_RESERVATION_SET_PRICE              = "NEW_RESERVATION_SET_PRICE"
@@ -104,6 +107,7 @@ export function setGarageIndex (value){
              })
 
     dispatch(getAvailableClients())
+    dispatch(setPlace(undefined))
     value !== undefined && dispatch(getGarageDetails())
   }
 }
@@ -161,6 +165,12 @@ export function setPlace (place){
 
     place && place.pricings[0] ? dispatch(setPrice(place.pricings[0])) : dispatch(setPriceValue(undefined))
   }
+}
+
+export function setEditPlace (place_id){
+  return { type: NEW_RESERVATION_SET_EDIT_PLACE_ID
+         , value: place_id
+         }
 }
 
 export function setDurationDate (value){
@@ -257,43 +267,76 @@ export function autoSelectPlace (){
 }
 
 
-export function setInitialStore() {
+export function setInitialStore(id) {
   return (dispatch, getState) => {
-    dispatch(getAvailableUsers())
-    dispatch(getAvailableGarages())
-    dispatch(getAvailableClients())
-    dispatch(getAvailableCars())
+    let finishedCounter = 0
+    const onFinish = () => {
+      finishedCounter ++
+
+      if (id && finishedCounter === 4) { // after all functions called onFinish
+        dispatch(reservationDetails(+id))
+      }
+    }
+
+    dispatch(getAvailableUsers(onFinish))
+    dispatch(getAvailableGarages(onFinish))
+    dispatch(getAvailableClients(onFinish))
+    dispatch(getAvailableCars(onFinish))
   }
 }
 
-export function getAvailableUsers () {
+export function reservationDetails(id){
+  return (dispatch, getState) => {
+    const onSucess = (response) => {
+      dispatch(setTo(moment(response.data.reservation.ends_at).format(MOMENT_DATETIME_FORMAT)))
+      dispatch(setFrom(moment(response.data.reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
+      dispatch(setClientId(response.data.reservation.client_id))
+      dispatch(setUserId(response.data.reservation.user_id))
+      dispatch(setGarageIndex(getState().newReservation.availableGarages.findIndex(garage => garage.id === response.data.reservation.place.floor.garage.id)))
+      dispatch(setPlace(response.data.reservation.place))
+      dispatch(setEditPlace(response.data.reservation.place.id))
+
+      getState().newReservation.availableCars.find(car => car.id === response.data.reservation.car.id)===undefined ? dispatch(setCarLicencePlate(response.data.reservation.car.licence_plate)) : dispatch(setCarId(response.data.reservation.car.id))
+    }
+
+    request(onSucess, GET_RESERVATION, {id: id})
+  }
+}
+
+export function getAvailableUsers (callback) {
   return (dispatch, getState) => {
     const onUsers = (response) => {
       dispatch(setAvailableUsers(response.data.reservable_users))
       if (response.data.reservable_users.length==1) dispatch(setUserId(response.data.reservable_users[0].id))
+
+      callback && callback()
     }
 
     request(onUsers, GET_AVAILABLE_USERS)
   }
 }
 
-export function getAvailableGarages () {
+export function getAvailableGarages (callback) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const onGarages = (response) => {
       dispatch(setAvailableGarages(response.data.reservable_garages))
       if (response.data.reservable_garages.length==1) dispatch(setGarageIndex(0))
+
+      callback && callback()
     }
 
     request(onGarages, GET_AVAILABLE_GARAGES, {user_id: state.user_id})
   }
 }
 
-export function getAvailableClients () {
+export function getAvailableClients (callback) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const onClients = (response) => {
       dispatch(setAvailableClients(response.data.reservable_clients))
+
+      callback && callback()
     }
 
     request(onClients
@@ -305,13 +348,15 @@ export function getAvailableClients () {
   }
 }
 
-export function getAvailableCars () {
+export function getAvailableCars (callback) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const onCars = (response) => {
       dispatch(setAvailableCars(response.data.reservable_cars))
       response.data.reservable_cars.length==1 ? dispatch(setCarId(response.data.reservable_cars[0].id))
                                               : dispatch(setCarId(undefined))
+
+      callback && callback()
     }
 
     request(onCars, GET_AVAILABLE_CARS, {user_id: state.user_id})
@@ -326,7 +371,7 @@ export function getGarageDetails(){
       if (getState().newReservation.pricings !== undefined ) { // pricings can be deleted before response comes here
         response.data.garage.floors.forEach((floor)=>{
           floor.places.map((place) => {
-            place.available = floor.free_places.find(p=>p.id==place.id)!=undefined
+            place.available = floor.free_places.find(p=>p.id==place.id)!=undefined //|| place.id === state.edit_place_id
             place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
               pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
               return arr
@@ -352,7 +397,7 @@ export function getGarageDetails(){
         })
         dispatch(setGarage(response.data.garage))
         dispatch(setLoading(false))
-        dispatch(autoSelectPlace())
+        getState().newReservation.place_id=== undefined && dispatch(autoSelectPlace())
       }
     }
 
@@ -398,12 +443,12 @@ export function overviewInit () {
   }
 }
 
-export function submitReservation () {
+export function submitReservation (id) {
   return (dispatch, getState) => {
       const state = getState().newReservation
 
       const onSuccess = (response) => {
-        if (response.data.create_reservation.payment_url){
+        if (response.data.create_reservation && response.data.create_reservation.payment_url){
           dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', 'redirecting'])}</div>))
           window.location.replace(response.data.create_reservation.payment_url)
         } else {
@@ -413,19 +458,20 @@ export function submitReservation () {
         }
       }
 
-      dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', 'creatingReservation'])}</div>))
+      dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', id?'updatingReservation':'creatingReservation'])}</div>))
 
       request( onSuccess
-             , CREATE_RESERVATION
-             , { user_id: state.user_id
-               , place_id: state.place_id
-               , reservation: { client_id:     state.client_id
+             , id ? UPDATE_RESERVATION : CREATE_RESERVATION
+             , { reservation: { user_id:       state.user_id
+                              , place_id:      state.place_id
+                              , client_id:     state.client_id
                               , car_id:        state.car_id
                               , licence_plate: state.carLicencePlate == '' ? undefined : state.carLicencePlate
                               , url:           window.location.href.split('?')[0]
                               , begins_at:     state.from
                               , ends_at:       state.to
                               }
+               , id: id
                }
              , "reservationMutation"
              )

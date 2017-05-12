@@ -16,3 +16,19 @@
 .place{
   font-size: 25px;
 }
+
+.green{
+  color: $green;
+}
+
+
+.spoiler{
+
+  >.flex{
+    display: flex;
+
+    >div{
+      flex: 1 1;
+    }
+  }
+}
