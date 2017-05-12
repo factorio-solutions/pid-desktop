@@ -145,7 +145,7 @@ export function initialPageBase () {
       case contains(hash, 'occupancy'):
         dispatch(toOccupancy())
         break;
-      case (contains(hash, 'garage') && !contains(hash, 'admin')):
+      case (contains(hash, 'garage') && !contains(hash, 'admin') && !contains(hash, 'garageSetup')):
         dispatch(toGarage())
         break;
       case contains(hash, 'issues'):
@@ -312,22 +312,34 @@ export function toAdmin() {
         hintVideo = 'https://www.youtube.com/'
         break
 
-      case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
+      case (contains(hash, 'garageSetup') && contains(hash, 'general')):
         breadcrumbs.push({label: t(['pageBase','Garage setup']), route: `/${garage}/admin/garageSetup/general`})
         secondarySelected = 'garageSetup'
         hint = t(['pageBase','newGarageHint'])
         hintVideo = 'https://www.youtube.com/'
         break
-      case (contains(hash, 'garageSetup') && contains(hash, 'general')):
+      case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
         breadcrumbs.push({label: t(['pageBase','garageSetupFloors']), route: `/${garage}/admin/garageSetup/floors`})
         secondarySelected = 'garageSetup'
         hint = t(['pageBase','newGarageFloorsHint'])
         hintVideo = 'https://www.youtube.com/'
         break
-      case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
+      case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
         breadcrumbs.push({label: t(['pageBase','garageSetupGates']), route: `/${garage}/admin/garageSetup/gates`})
         secondarySelected = 'garageSetup'
         hint = t(['pageBase','newGarageGatesHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'order')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupOrder']), route: `/${garage}/admin/garageSetup/gates`})
+        secondarySelected = 'garageSetup'
+        hint = t(['pageBase','newGarageOrderHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'subscribtion')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/${garage}/admin/garageSetup/gates`})
+        secondarySelected = 'garageSetup'
+        hint = t(['pageBase','newGarageSubscribtionHint'])
         hintVideo = 'https://www.youtube.com/'
         break
 
@@ -387,7 +399,34 @@ export function toAdmin() {
 
 export function toAddFeatures() {
   return (dispatch, getState) => {
-    dispatch(setAll(undefined, [], undefined, [{label: t(['pageBase','Add Features']), route: '/addFeatures'}], t(['pageBase','addFeaturesHint']), 'https://www.youtube.com/'))
+    const hash = window.location.hash
+    let breadcrumbs = [{label: t(['pageBase','Add Features']), route: '/addFeatures'}]
+
+    switch (true) { // MainMenu
+      case (contains(hash, 'garageSetup') && contains(hash, 'general')):
+        breadcrumbs.push({label: t(['pageBase','Garage setup']), route: `/addFeatures/garageSetup/general`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newGarageHint']), 'https://www.youtube.com/'))
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupFloors']), route: `/addFeatures/garageSetup/floors`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newGarageFloorsHint']), 'https://www.youtube.com/'))
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupGates']), route: `/addFeatures/garageSetup/gates`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newGarageGatesHint']), 'https://www.youtube.com/'))
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'order')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupOrder']), route: `/addFeatures/garageSetup/order`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newGarageOrderHint']), 'https://www.youtube.com/'))
+        break
+      case (contains(hash, 'garageSetup') && contains(hash, 'subscribtion')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/addFeatures/garageSetup/subscribtion`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newGarageSubscribtionHint']), 'https://www.youtube.com/'))
+        break
+      default:
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','addFeaturesHint']), 'https://www.youtube.com/'))
+        break
+    }
   }
 }
 

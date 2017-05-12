@@ -19,6 +19,8 @@ export const GET_RESERVATIONS_QUERY = `{
     }
     user {
       full_name
+      email
+      phone
     }
     place {
       label
@@ -30,10 +32,15 @@ export const GET_RESERVATIONS_QUERY = `{
         }
       }
     }
+    car{
+      licence_plate
+    }
     begins_at
     ends_at
     approved
     payment_url
+    created_at
+    updated_at
   }
 }
 `

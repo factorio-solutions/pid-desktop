@@ -30,7 +30,7 @@ export class PageBase extends Component {
   render () {
     const { state, actions, notifications } = this.props
 
-    const vertical =  [{label: t(['pageBase','Dashboard']),     key: "dashboard",     icon: 'ticket',onClick: ()=>{nav.to(`/${state.garage}/dashboard`)} }
+    const vertical =  [{label: t(['pageBase','Dashboard']),     key: "dashboard",     icon: 'ticket',onClick: ()=>{nav.to(`/dashboard`)} }
                     ,  {label: t(['pageBase', 'Reservation']),  key: "reservations",  icon: 'car',   onClick: ()=>{nav.to('/reservations')} }
                     ,  {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
                     ,  {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }

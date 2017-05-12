@@ -10,6 +10,8 @@ import styles from './Dropdown.scss'
 // style = sets style, can be 'dark'/'light' (default is 'dark'), more can be created
 // selected = index of select item in content
 // fillParent = flag to indicate whenever or not to fill parent element widthvise
+// position 'fixed' / 'absolute' => default: 'absolute'
+
 export default class Dropdown extends Component {
   static propTypes = {
     label:     PropTypes.string.isRequired,
@@ -18,7 +20,8 @@ export default class Dropdown extends Component {
     selected:  PropTypes.number,
     onChange:  PropTypes.func,
     fixed:     PropTypes.bool,
-    highlight: PropTypes.bool
+    highlight: PropTypes.bool,
+    position:  PropTypes.string,
   }
 
   static defaultProps = {
@@ -49,7 +52,7 @@ export default class Dropdown extends Component {
   }
 
   render(){
-    const { label, content, selected, style, onChange, fixed, highlight } = this.props
+    const { label, content, selected, style, onChange, fixed, highlight, position } = this.props
 
     const prepareContent = (item, index, arr) => {
       const handleItemClick = () => {
@@ -106,7 +109,7 @@ export default class Dropdown extends Component {
             <span className={styles.marginCorrection}> {this.state.selected==undefined||content[this.state.selected]==undefined ? label : content[this.state.selected].label} </span>
             {content.length > 1 && <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>}
         </button>
-        <ul className={`${styles.drop} ${styles.hidden} ${styles.display}`}>
+        <ul className={`${styles.drop} ${styles.hidden} ${styles.display} ${position==='fixed' ? styles.fixed : styles.absolute}`}>
           {content.map(prepareContent)}
         </ul>
       </div>
