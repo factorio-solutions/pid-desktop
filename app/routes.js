@@ -38,6 +38,7 @@ import AnalyticsPage              from './analytics/analytics.page'
 
 // Add features page
 import AddFeaturesPage            from './addFeatures/addFeatures.page'
+import GateModuleOrderPage        from './addFeatures/gateModuleOrder.page'
 
 // ADMIN
 // invoices
@@ -152,6 +153,7 @@ export default function createRoutes() {
       <Route path=":id/analytics"                         component={AnalyticsPage}/>
 
       <Route path="addFeatures"                           component={AddFeaturesPage}/>
+      <Route path="addFeatures/gateModuleOrder"           component={GateModuleOrderPage}/>
 
       <Route path=":id/admin/invoices"                    component={InvoicesPage}/>
 

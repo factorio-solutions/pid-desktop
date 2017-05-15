@@ -6,10 +6,11 @@ import PageBase        from '../_shared/containers/pageBase/PageBase'
 // import RoundTextButton from '../_shared/components/buttons/RoundTextButton'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
 
-import styles               from './addFeatures.page.scss'
-import * as nav             from '../_shared/helpers/navigation'
-import { t }                from '../_shared/modules/localization/localization'
-import * as addFeaturesActions from '../_shared/actions/addFeatures.actions'
+import styles                                            from './addFeatures.page.scss'
+import * as nav                                          from '../_shared/helpers/navigation'
+import { t }                                             from '../_shared/modules/localization/localization'
+import * as addFeaturesActions                           from '../_shared/actions/addFeatures.actions'
+import { gsmModulePrice, layoutPrice, bookingPagePrice } from '../_shared/reducers/garageSetup.reducer'
 
 
 export class AddFeaturesPage extends Component {
@@ -30,7 +31,7 @@ export class AddFeaturesPage extends Component {
     const integrationClick  = () => { actions.tarifSelected(3) }
     const customClick       = () => { location.href='mailto:support@park-it-direct.com' }
     const bookingPageClick  = () => { console.log('bookingClick');}
-    const gateModuleClick   = () => { console.log('gateClick');}
+    const gateModuleClick   = () => { nav.to('/addFeatures/gateModuleOrder') }
     const accountClick      = () => { nav.to('/accounts/newAccount') }
     const clientClick       = () => { nav.to('/clients/newClient') }
 
@@ -99,15 +100,15 @@ export class AddFeaturesPage extends Component {
 
         <h2>{t(['addFeatures', 'additionalGoods'])}</h2>
         <div className={styles.pricings}>
-          <div className={styles.pricing} onClick={bookingPageClick}>
+          {/*<div className={styles.pricing} onClick={bookingPageClick}>
             <h3>{t(['addFeatures', 'bookingPage'])}</h3>
             <ul className={styles.points}>
               <li>{t(['addFeatures', 'advertisement'])}</li>
             </ul>
             <div className={styles.button}>
-              <CallToActionButton onClick={bookingPageClick} label={<span>2100 Kč {t(['addFeatures', 'perMonth'])}</span>} type="disabled" />
+              <CallToActionButton onClick={bookingPageClick} label={<span>{bookingPagePrice} Kč {t(['addFeatures', 'perMonth'])}</span>} type="disabled" />
             </div>
-          </div>
+          </div>*/}
 
           <div className={styles.pricing} onClick={gateModuleClick}>
             <h3>{t(['addFeatures', 'gateModule'])}</h3>
@@ -115,13 +116,13 @@ export class AddFeaturesPage extends Component {
               <li>{t(['addFeatures', 'openGate'])}</li>
             </ul>
             <div className={styles.button}>
-              <CallToActionButton onClick={gateModuleClick} label={<span>4600 Kč</span>} type="disabled" />
+              <CallToActionButton onClick={gateModuleClick} label={<span>{gsmModulePrice} Kč</span>} type="disabled" />
             </div>
           </div>
         </div>
 
 
-        <h2>{t(['addFeatures', 'IdontHaveAccout'])}</h2>
+        {/*<h2>{t(['addFeatures', 'IdontHaveAccout'])}</h2>
         <div className={styles.pricings}>
           <div className={styles.pricing} onClick={accountClick}>
             <h3>{t(['addFeatures', 'createAccount'])}</h3>
@@ -130,7 +131,7 @@ export class AddFeaturesPage extends Component {
               <CallToActionButton onClick={accountClick} label={t(['addFeatures', 'createAccount'])} type="action" />
             </div>
           </div>
-        </div>
+        </div>*/}
 
 
         <h2>{t(['addFeatures', 'IamGarageClient'])}</h2>

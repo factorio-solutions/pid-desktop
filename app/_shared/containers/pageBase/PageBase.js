@@ -59,8 +59,11 @@ export class PageBase extends Component {
 
     const hint = (state.current_user && state.current_user.hint && state.hint) ? {hint: state.hint, href: state.hintVideo} : undefined
 
-    const modalClick = () => {
+    const errorClick = () => {
       actions.setError(undefined)
+    }
+    const successClick = () => {
+      actions.setSuccess(undefined)
     }
 
     const notificationsModalClick = () => {
@@ -70,7 +73,13 @@ export class PageBase extends Component {
     const errorContent =  <div style={{"textAlign": "center"}}>
                             {t(['pageBase', 'error'])}: <br/>
                             { state.error } <br/>
-                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
+                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={errorClick} type='confirm'  />
+                          </div>
+
+    const successContent =  <div style={{"textAlign": "center"}}>
+                            {t(['pageBase', 'success'])}: <br/>
+                            { state.success } <br/>
+                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={successClick} type='confirm'  />
                           </div>
 
     const notificationsModal = <div style={{"textAlign": "center"}}>
@@ -81,6 +90,7 @@ export class PageBase extends Component {
     return (
       <div>
         <Modal content={errorContent} show={state.error!=undefined} />
+        <Modal content={successContent} show={state.success!=undefined} />
         <Modal content={notificationsModal} show={notifications.count>0 && state.notificationsModal } />
         <Modal content={state.custom_modal} show={state.custom_modal!=undefined} />
         <MasterPage

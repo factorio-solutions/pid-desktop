@@ -6,6 +6,7 @@ import {
   PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON,
   PAGE_BASE_BREADCRUMBS,
   PAGE_BASE_SET_ERROR,
+  PAGE_BASE_SET_SUCCESS,
   PAGE_BASE_SET_CUSTOM_MODAL,
   PAGE_BASE_SET_NOTIFICATIONS_MODAL,
   PAGE_BASE_SET_CURRENT_USER,
@@ -25,6 +26,7 @@ const defaultState =  { selected:                undefined // key selected in pr
 
                       // modal windows
                       , error:              undefined
+                      , success:              undefined
                       , custom_modal:       undefined
                       , notificationsModal: false
 
@@ -76,6 +78,11 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_ERROR:
       return { ...state
              , error: action.value
+             }
+
+    case PAGE_BASE_SET_SUCCESS:
+      return { ...state
+             , success: action.value
              }
 
     case PAGE_BASE_SET_CUSTOM_MODAL:

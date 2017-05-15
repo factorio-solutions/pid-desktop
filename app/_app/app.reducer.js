@@ -9,6 +9,7 @@ import resetPassword    from '../_shared/reducers/resetPassword.reducer'
 // import editUser         from '../_shared/reducers/editUser.reducer'
 
 import addFeatures      from '../_shared/reducers/addFeatures.reducer'
+import gateModuleOrder  from '../_shared/reducers/gateModuleOrder.reducer'
 import notifications    from '../_shared/reducers/notifications.reducer'
 
 import newReservation   from '../_shared/reducers/newReservation.reducer'
@@ -60,6 +61,7 @@ const rootReducer = combineReducers({ routing
 
                                     , pageBase
                                     , addFeatures
+                                    , gateModuleOrder
                                     , notifications
 
                                     , newReservation
