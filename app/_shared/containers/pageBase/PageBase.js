@@ -53,10 +53,6 @@ export class PageBase extends Component {
                          , {label: t(['pageBase', 'Add Features']),       onClick: ()=>{nav.to('/addFeatures')}}
                          ]
 
-    const garageSelector = [ {name: 'Fill', image: '../../../public/temp/garage1.jpg'}
-                           , {name: 'Garages', image: '../../../public/temp/garage2.jpg'}
-                           ]
-
     const profikeDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="fa fa-user" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
                             , <div className={styles.dropdownContent} onClick={()=>{actions.logout()}}><i className="fa fa-sign-out" aria-hidden="true"></i>{t(['pageBase', 'Logout'])}</div>
                             ]
@@ -96,8 +92,6 @@ export class PageBase extends Component {
           verticalSecondaryMenu={state.secondaryMenu}
           verticalSecondarySelected={state.secondarySelected}
           showSecondaryMenu={state.showSecondaryMenu}
-          garageSelectorContent={garageSelector}
-          onGarageSelect={(garage)=> {console.log(garage);}}
           showHints={state.current_user && state.current_user.hint}
           hint={state.hint}
           breadcrumbs={state.breadcrumbs}

@@ -2,7 +2,7 @@ import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
 
-import { GET_CURRENT_USER, UPDATE_CURRENT_USER } from '../queries/pageBase.queries'
+import { GET_CURRENT_USER, UPDATE_CURRENT_USER, GET_GARAGES } from '../queries/pageBase.queries'
 
 export const PAGE_BASE_SELECTED                       = 'PAGE_BASE_SELECTED'
 export const PAGE_BASE_SECONDARY_MENU                 = 'PAGE_BASE_SECONDARY_MENU'
@@ -15,8 +15,8 @@ export const PAGE_BASE_SET_CUSTOM_MODAL               = 'PAGE_BASE_SET_CUSTOM_MO
 export const PAGE_BASE_SET_NOTIFICATIONS_MODAL        = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
 export const PAGE_BASE_SET_CURRENT_USER               = 'PAGE_BASE_SET_CURRENT_USER'
 export const PAGE_BASE_SET_HINT                       = 'PAGE_BASE_SET_HINT'
+export const PAGE_BASE_SET_GARAGES                     = 'PAGE_BASE_SET_GARAGES'
 export const PAGE_BASE_SET_GARAGE                     = 'PAGE_BASE_SET_GARAGE'
-
 
 
 export function setSelected(value) {
@@ -86,6 +86,12 @@ export function setHint(hint, href) {
          }
 }
 
+export function setGarages(value) {
+  return { type: PAGE_BASE_SET_GARAGES
+         , value
+         }
+}
+
 export function setGarage(value) {
   return { type: PAGE_BASE_SET_GARAGE
          , value
@@ -126,6 +132,18 @@ export function fetchCurrentUser(){
       dispatch( setCurrentUser( response.data.current_user ) )
     }
     request(onSuccess, GET_CURRENT_USER)
+  }
+}
+
+export function fetchGarages(){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch( setGarages( response.data.user_garages ) )
+
+      const id = parseInt(window.location.hash.substring(5).split('/')[0])
+      response.data.user_garages.find(user_garage => user_garage.garage.id === id) !== undefined ? dispatch( setGarage( id )) : dispatch( setGarage( response.data.user_garages.length > 0 && response.data.user_garages[0].garage.id ))
+    }
+    request(onSuccess, GET_GARAGES)
   }
 }
 
@@ -172,6 +190,9 @@ export function initialPageBase () {
 
     if (getState().pageBase.current_user == undefined){ // if no information about current user
       dispatch(fetchCurrentUser())
+    }
+    if (getState().pageBase.garages.length === 0){ // if no garages
+      dispatch(fetchGarages())
     }
   }
 }

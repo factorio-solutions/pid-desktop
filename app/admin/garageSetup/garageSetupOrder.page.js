@@ -32,8 +32,14 @@ export class GarageSetupOrderPage extends Component {
   }
 
   componentDidMount(){
-    if (this.props.state.gates.length === 0){
-      this.goBack()
+    const { state, params, actions} = this.props
+    state.availableTarifs.length === 0 && actions.initTarif()
+    if (params.id){
+      actions.intiEditGarageOrder(params.id)
+    } else {
+      if (state.gates.length === 0){
+        this.goBack()
+      }
     }
   }
 
@@ -55,8 +61,7 @@ export class GarageSetupOrderPage extends Component {
 
     const submitForm = () => {
       if (this.props.params.id) {
-        // TODO: save changes
-        nav.to(`/${this.props.params.id}/admin/garageSetup/subscribtion`)
+        actions.updateGarageOrder(this.props.params.id)
       } else {
         nav.to( '/addFeatures/garageSetup/subscribtion' )
       }

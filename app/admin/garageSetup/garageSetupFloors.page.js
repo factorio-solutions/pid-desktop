@@ -32,9 +32,14 @@ export class GarageSetupFloorsPage extends Component {
   }
 
   componentDidMount(){ // uncoment later
-    const { state } = this.props
-    if (state.tarif_id == undefined || state.name == "" || state.city == "" || state.line_1 == "" || state.postal_code == "" || state.country == ""){
-      this.goBack()
+    const { state, params, actions} = this.props
+    state.availableTarifs.length === 0 && actions.initTarif()
+    if (params.id) {
+      actions.intiEditGarageFloors(params.id)
+    } else {
+      if (state.tarif_id == undefined || state.name == "" || state.city == "" || state.line_1 == "" || state.postal_code == "" || state.country == ""){
+        this.goBack()
+      }
     }
   }
 
@@ -47,8 +52,7 @@ export class GarageSetupFloorsPage extends Component {
 
     const submitForm = () => {
       if (this.props.params.id) {
-        // TODO: save changes
-        nav.to(`/${this.props.params.id}/admin/garageSetup/gates`)
+        actions.updateGarageFloors(this.props.params.id, window.location.href)
       } else {
         nav.to( '/addFeatures/garageSetup/gates' )
       }
@@ -103,10 +107,6 @@ export class GarageSetupFloorsPage extends Component {
               </div>
               <div className={styles.line}>
                 <div onClick={()=>{actions.addTemplate('/public/garages/garage3.svg', '3')}}><img src='./public/garages/garage3.svg'/></div>
-                <div className={styles.orderLayout}>
-                  {t(['newGarage', 'orderOwnLayout'])}
-                  <div className={styles.checkbox}><input type="checkbox" checked={state.orderLayout} onChange={actions.toggleOrderLayout}/> <span onClick={actions.toggleOrderLayout}> {t(['newGarage', 'orderLayout'])} </span></div>
-                </div>
               </div>
 
               <h2>{t(['newGarage', 'maximumVehicleDimensions'])}</h2>

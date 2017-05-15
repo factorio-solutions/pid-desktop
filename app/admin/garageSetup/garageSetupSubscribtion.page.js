@@ -35,13 +35,6 @@ export class GarageSetupSubscribtionPage extends Component {
 
     if (state.gates.length === 0 || state.tarif_id === undefined){
       this.goBack()
-    } else {
-      state.gsm_line_1 === ''      && actions.setGsmLine1(state.line_1)
-      state.gsm_line_2 === ''      && actions.setGsmLine2(state.line_2)
-      state.gsm_city === ''        && actions.setGsmCity(state.city)
-      state.gsm_postal_code === '' && actions.setGsmPostalCode(state.postal_code)
-      state.gsm_state === ''       && actions.setGsmState(state.state)
-      state.gsm_country === ''     && actions.setGsmCountry(state.country)
     }
   }
 
@@ -68,22 +61,9 @@ export class GarageSetupSubscribtionPage extends Component {
       return tarifSelected ? (tarifSelected.price * countPlaces() + (state.bookingPage? bookingPagePrice : 0 )) : 0
     }
 
-    const countNowPrice = () => {
-      return (state.gsmModules * gsmModulePrice) + (state.orderLayout  ? layoutPrice * state.floors.length : 0)
-    }
-
-    const checkSubmitable = () => {
-      if(state.gsmModules < 1) return true // no modules, no address needed
-      if (state.gsm_name === '' || state.gsm_name === undefined) return false
-      if (state.gsm_line_1 === '' || state.gsm_line_1 === undefined) return false
-      if (state.gsm_city === '' || state.gsm_city === undefined) return false
-      if (state.gsm_postal_code === '' || state.gsm_postal_code === undefined) return false
-      if (state.gsm_country === '' || state.gsm_country === undefined) return false
-    }
-
     return (
       <GarageSetupPage>
-        <Form onSubmit={submitForm} submitable={checkSubmitable} onBack={goBack} onHighlight={hightlightInputs}>
+        <Form onSubmit={submitForm} submitable={true} onBack={goBack} onHighlight={hightlightInputs}>
           <div className={styles.subscribtion}>
             <h2>{t(['newGarage', 'subscribtion'])}</h2>
             <div className={styles.row}>
@@ -95,34 +75,13 @@ export class GarageSetupSubscribtionPage extends Component {
               <div>{countPlaces()}</div>
             </div>
             <div className={styles.row}>
-              <div>{state.gsmModules} {t(['newGarage', 'gsmModulesCount'], {count: state.gsmModules})}:</div>
-              <div className={styles.checkbox}>{state.gsmModules * gsmModulePrice} {tarifSelected && tarifSelected.currency.symbol}</div>
-            </div>
-            <div className={styles.row}>
-              <div>{t(['newGarage', 'customLayout'])}</div>
-              <div className={styles.checkbox}><input type="checkbox" checked={state.orderLayout} onChange={actions.toggleOrderLayout}/> <span onClick={actions.toggleOrderLayout}> {layoutPrice} {tarifSelected && tarifSelected.currency.symbol} {t(['newGarage', 'perLevel'])}</span></div>
-            </div>
-            <div className={styles.row}>
               <div>{t(['newGarage', 'bookingPage'])}</div>
               <div className={styles.checkbox}><input type="checkbox" checked={state.bookingPage} onChange={actions.toggleBookingPage}/> <span onClick={actions.toggleBookingPage}> {bookingPagePrice} {tarifSelected && tarifSelected.currency.symbol} {t(['newGarage', 'perMonth'])}</span></div>
             </div>
-            { state.gsmModules > 0 && <div className={styles.row}>
-              <div>{t(['newGarage', 'gsmModuleShippingAddress'])}</div>
-              <div>
-                <Input onChange={actions.setGsmName}       label={t(['newGarage', 'gsmName'])}    error={t(['newGarage', 'gsmNameInvalid'])}     value={state.gsm_name}        placeholder={t(['newGarage', 'gsmNamePlaceholder'])}    highlight={state.highlight}/>
-                <Input onChange={actions.setGsmLine1}      label={t(['newGarage', 'street'])}     error={t(['newGarage', 'invalidStreet'])}      value={state.gsm_line_1}      placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
-                <Input onChange={actions.setGsmLine2}      label={t(['addresses', 'line2'])}      error={t(['addresses', 'line2Invalid'])}       value={state.gsm_line_2}      placeholder={t(['addresses', 'line2Placeholder'])}/>
-                <Input onChange={actions.setGsmCity}       label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.gsm_city}        placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
-                <Input onChange={actions.setGsmPostalCode} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.gsm_postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} highlight={state.highlight}/>
-                <Input onChange={actions.setGsmState}      label={t(['newGarage', 'state'])}      error={t(['newGarage', 'invalidCountry'])}     value={state.gsm_state}       placeholder={t(['newGarage', 'statePlaceholder'])} />
-                <Input onChange={actions.setGsmCountry}    label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.gsm_country}     placeholder={t(['newGarage', 'countryPlaceholder'])}    highlight={state.highlight}/>
-              </div>
-            </div>}
             <div className={styles.row}>
               <div>{t(['newGarage', 'price'])}</div>
               <div>
                 {countMonthlyPrice()} {tarifSelected && tarifSelected.currency.symbol} {t(['newGarage', 'perMonth'])}
-                { countNowPrice()!=0 && ` + ${countNowPrice()} ${tarifSelected && tarifSelected.currency.symbol} ${t(['newGarage', 'now'])}`}
               </div>
             </div>
             {state.tarif_id === 1 && <p className={styles.marketing}>

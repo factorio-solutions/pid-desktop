@@ -11,6 +11,7 @@ export const CREATE_NEW_GARAGE = `mutation garageMutations($garage: GarageInput!
 export const UPDATE_GARAGE = `mutation UpdateGarage($garage: GarageInput!, $id: Id!) {
   update_garage(garage: $garage, id: $id) {
     id
+    payment_url
   }
 }
 `
@@ -19,21 +20,30 @@ export const UPDATE_GARAGE = `mutation UpdateGarage($garage: GarageInput!, $id: 
 export const GET_GARAGE_DETAILS = `query ($id: Id!) {
   garage(id: $id) {
     id
-    account_id
     pid_tarif_id
     name
+    img
     lpg
+    length
+    height
+    width
+    weight
+    address {
+      line_1
+      line_2
+      city
+      postal_code
+      state
+      country
+      lat
+      lng
+    }
     gates {
       id
       label
       phone
       address {
         line_1
-        line_2
-        city
-        postal_code
-        state
-        country
         lat
         lng
       }
@@ -48,6 +58,94 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!) {
   }
 }
 `
+
+export const GET_GARAGE_DETAILS_GENERAL =`query ($id: Id!) {
+  garage(id: $id) {
+    id
+    pid_tarif_id
+    name
+    img
+    lpg
+    address {
+      line_1
+      line_2
+      city
+      postal_code
+      state
+      country
+      lat
+      lng
+    }
+  }
+}`
+
+export const GET_GARAGE_DETAILS_FLOORS =`query ($id: Id!) {
+  garage(id: $id) {
+    id
+    length
+    height
+    width
+    weight
+    floors {
+      label
+      scheme
+    }
+  }
+}`
+
+export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
+  garage(id: $id) {
+    id
+    pid_tarif_id
+    address {
+      line_1
+      line_2
+      city
+      postal_code
+      state
+      country
+      lat
+      lng
+    }
+
+    floors {
+      label
+      scheme
+      places {
+        label
+      }
+    }
+    gates {
+      id
+      label
+      phone
+      address {
+        line_1
+        lat
+        lng
+      }
+      places{
+        label
+      }
+    }
+  }
+}`
+
+export const GET_GARAGE_DETAILS_ORDER = `query ($id: Id!) {
+  garage(id: $id) {
+    id
+    floors {
+      label
+      scheme
+      places {
+        id
+        label
+        priority
+      }
+    }
+  }
+}`
+
 
 export const GET_ACCOUNTS_TARIFS = `query{
   tarifs{

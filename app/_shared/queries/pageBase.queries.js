@@ -38,3 +38,17 @@ export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: 
   }
 }
 `
+
+// get user available garages
+export const GET_GARAGES = `{
+  user_garages {
+    admin
+    user_id
+    garage {
+      id
+      name
+      img
+    }
+  }
+}
+`

@@ -33,18 +33,26 @@ export class GarageSetupGatesPage extends Component {
   }
 
   componentDidMount(){
-    const firstFloor = this.props.state.floors[0] // uncoment later
-    if (firstFloor.label === '' || firstFloor.scheme===''){
-      this.goBack()
+    const { state, params, actions} = this.props
+    state.availableTarifs.length === 0 && actions.initTarif()
+    if (params.id){
+      actions.intiEditGarageGates(params.id)
     } else {
-      this.props.state.gates.length === 0 && this.props.actions.addGate() // will add gate with
+      const firstFloor = this.props.state.floors[0] // uncoment later
+      if (firstFloor.label === '' || firstFloor.scheme===''){
+        this.goBack()
+      } else {
+        this.props.state.gates.length === 0 && this.props.actions.addGate() // will add gate with
+      }
     }
   }
 
   render() {
     const { state, actions } = this.props
 
+    console.log(state.floors);
     const allFloors = state.floors.filter((floor)=>{
+      console.log(floor);
       floor.places.map(place => {
         place.available = false
         return place
@@ -56,7 +64,7 @@ export class GarageSetupGatesPage extends Component {
 
     const submitForm = () => {
       if (this.props.params.id) {
-        // TODO: save changes
+        actions.updateGarageGates(this.props.params.id)
         nav.to(`/${this.props.params.id}/admin/garageSetup/order`)
       } else {
         nav.to( '/addFeatures/garageSetup/order' )
@@ -123,14 +131,6 @@ export class GarageSetupGatesPage extends Component {
               <h2>{t(['newGarage', 'garageGates'])}</h2>
               {state.gates.map(prepareGates)}
               <CallToActionButton label={t(['newGarage', 'addGate'])} onClick={actions.addGate} />
-              <h2>{t(['newGarage', 'garageGates'])}</h2>
-              <p>{t(['newGarage', 'gsmModulesDescription'], { price: `${gsmModulePrice} ${state.availableTarifs.length && state.availableTarifs[0].currency.symbol}` })}</p>
-              <div className={styles.orderLayout}>
-                <span>{t(['newGarage', 'order'])}</span>
-                <span><Input style={styles.gsmCount} onChange={actions.setGsmModule} error={t(['newGarage', 'invalidNumber'])} value={state.gsmModules} placeholder={t(['newGarage', 'countPlaceholder'])} type="number" min="0"/></span>
-                <span>{t(['newGarage', 'gsmModulesCount'], {count: state.gsmModules})}</span>
-
-              </div>
             </div>
             <div className={styles.garageLayout}>
               <GarageLayout2
