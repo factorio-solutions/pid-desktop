@@ -1,7 +1,7 @@
 import { request } from '../helpers/request'
 import * as nav    from '../helpers/navigation'
 
-import { setTarif }   from './garageSetup.actions'
+import { setTarif, clearForm }   from './garageSetup.actions'
 import { GET_TARIFS } from '../queries/addFeatures.queries'
 
 
@@ -28,6 +28,7 @@ export function initTarifs(){
 export function tarifSelected (id){
   return (dispatch, getState) => {
     dispatch(setTarif(id))
+    getState().garageSetup.id && dispatch(clearForm())
     nav.to('/addFeatures/garageSetup/general')
   }
 }

@@ -18,7 +18,6 @@ import {
   GARAGE_SETUP_SET_LNG,
   GARAGE_SETUP_SET_FLOORS,
   GARAGE_SETUP_SET_LPG,
-  GARAGE_SETUP_SET_ORDER_LAYOUT,
   GARAGE_SETUP_SET_LENGTH,
   GARAGE_SETUP_SET_HEIGHT,
   GARAGE_SETUP_SET_WIDTH,
@@ -26,14 +25,6 @@ import {
   GARAGE_SETUP_SET_GATES,
   GARAGE_SETUP_SET_ORDER,
   GARAGE_SETUP_SET_BOOKING_PAGE,
-  GARAGE_SETUP_SET_GMS_MODULE,
-  GARAGE_SETUP_SET_GSM_NAME,
-  GARAGE_SETUP_SET_GSM_LINE_1,
-  GARAGE_SETUP_SET_GSM_LINE_2,
-  GARAGE_SETUP_SET_GSM_CITY,
-  GARAGE_SETUP_SET_GSM_POSTAL_CODE,
-  GARAGE_SETUP_SET_GSM_STATE,
-  GARAGE_SETUP_SET_GSM_COUNTRY,
   GARAGE_SETUP_CLEAR_FORM
 }  from '../actions/garageSetup.actions'
 
@@ -83,7 +74,6 @@ const defaultState =  { id:                undefined
                       // floors
                       , floors:            [ emptyFloor ]
                       , lpg:               false
-                      , orderLayout:       true
                       , length:            undefined
                       , height:            undefined
                       , width:             undefined
@@ -97,14 +87,6 @@ const defaultState =  { id:                undefined
 
                       // subscribe
                       , bookingPage:       false
-                      , gsmModules:        0
-                      , gsm_name:          ""
-                      , gsm_line_1:        ""
-                      , gsm_line_2:        ""
-                      , gsm_city:          ""
-                      , gsm_postal_code:   ""
-                      , gsm_state:         ""
-                      , gsm_country:       ""
                       }
 
 
@@ -206,11 +188,6 @@ export default function garageSetup (reducerState = defaultState, action) {
              , lpg: action.value
              }
 
-    case GARAGE_SETUP_SET_ORDER_LAYOUT:
-      return { ... reducerState
-             , orderLayout: action.value
-             }
-
     case GARAGE_SETUP_SET_LENGTH:
       return { ... reducerState
              , length: action.value
@@ -245,47 +222,6 @@ export default function garageSetup (reducerState = defaultState, action) {
       return { ... reducerState
              , bookingPage: action.value
              }
-
-    case GARAGE_SETUP_SET_GMS_MODULE:
-      return { ... reducerState
-             , gsmModules: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_NAME:
-      return { ...reducerState
-             , gsm_name: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_LINE_1:
-      return { ...reducerState
-             , gsm_line_1: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_LINE_2:
-      return { ...reducerState
-             , gsm_line_2: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_CITY:
-      return { ...reducerState
-             , gsm_city: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_POSTAL_CODE:
-      return { ...reducerState
-             , gsm_postal_code: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_STATE:
-      return { ...reducerState
-             , gsm_state: action.value
-             }
-
-    case GARAGE_SETUP_SET_GSM_COUNTRY:
-      return { ...reducerState
-             , gsm_country: action.value
-             }
-
 
     case GARAGE_SETUP_CLEAR_FORM:
       return defaultState

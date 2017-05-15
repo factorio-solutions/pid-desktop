@@ -333,14 +333,7 @@
 		"bookingPage": "My own booking page:",
 		"price": "Price:",
 		"subscribe": "Subscribe",
-		"gsmModuleShippingAddress":"GSM modules shipping address",
-		"gsmModules":"GSM modules",
-		"gsmModulesCount":{
-			"one": "GSM module",
-			"other": "GSM modules"
-		},
 
-		"order":"I would like to order",
 		"count":"count",
 		"invalidNumber":"Invalid number",
 		"countPlaceholder":"1",

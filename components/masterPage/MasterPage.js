@@ -36,9 +36,6 @@ export default class MasterPage extends Component {
     showSecondaryMenu:         PropTypes.bool,
     secondaryMenuBackButton:   PropTypes.object, // {label, onClick}
 
-    garageSelectorContent: PropTypes.array, // [{name, image }, ... ]
-    onGarageSelect:        PropTypes.func,
-
     showHints: PropTypes.bool,
     hint:      PropTypes.object, // {hint, href}
 
@@ -49,7 +46,7 @@ export default class MasterPage extends Component {
   render(){
     const { name, messageCount, callToAction,
       verticalMenu, verticalSelected, verticalSecondaryMenu, verticalSecondarySelected,showSecondaryMenu, secondaryMenuBackButton,
-      garageSelectorContent, onGarageSelect, showHints, hint, breadcrumbs, profileDropdown,
+      showHints, hint, breadcrumbs, profileDropdown,
       children } = this.props
 
     const onHamburgerClick = (e) => { this.setState({ menu: !this.state.menu }) }
@@ -91,7 +88,7 @@ export default class MasterPage extends Component {
 
         <div className={styles.page}>
           <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
-            <GarageSelector content={garageSelectorContent} onSelect={onGarageSelect} />
+            <GarageSelector />
             <VerticalMenu content={verticalMenu} selected={verticalSelected} onClick={()=>{this.setState({menu: false})}}/>
           </div>
 

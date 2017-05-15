@@ -10,6 +10,7 @@ import {
   PAGE_BASE_SET_NOTIFICATIONS_MODAL,
   PAGE_BASE_SET_CURRENT_USER,
   PAGE_BASE_SET_HINT,
+  PAGE_BASE_SET_GARAGES,
   PAGE_BASE_SET_GARAGE,
 }  from '../actions/pageBase.actions'
 
@@ -34,6 +35,7 @@ const defaultState =  { selected:                undefined // key selected in pr
                       , hint:      undefined // {hint, href}
 
                       // selectedGarage
+                      , garages: []
                       , garage: undefined
                       }
 
@@ -94,6 +96,11 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_HINT:
       return { ...state
              , hint: action.value
+             }
+
+    case PAGE_BASE_SET_GARAGES:
+      return { ...state
+             , garages: action.value
              }
 
     case PAGE_BASE_SET_GARAGE:
