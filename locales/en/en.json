@@ -1,18 +1,21 @@
 {
 	"PID-RELEASE": "r20161130a",
 	"addresses":{
+		"name": "Name *",
 		"line1": "Line 1 *",
 		"line2": "Line 2",
 		"city": "City *",
 		"postalCode": "Postal code *",
 		"state": "State",
 		"country": "Country *",
+		"nameInvalid": "Name invalid",
 		"line1Invalid": "Line 1 invalid",
 		"line2Invalid": "Line 2 invalid",
 		"cityInvalid": "City invalid",
 		"postalCodeInvalid": "Postal code invalid",
 		"stateInvalid": "State invalid",
 		"countryInvalid": "Country invalid",
+		"namePlaceholder": "John Doe",
 		"line1Placeholder": "Martense Avenue 526",
 		"line2Placeholder": "Flat 13",
 		"cityPlaceholder": "New Jersey",
@@ -86,6 +89,7 @@
 		"Logout": "Logout",
 		"notifications": "Notifications",
 		"error": "Error",
+		"success": "Success",
 		"inviteUser": "Invite new user",
 
 		"dashboardHint": "TODO: Dashboard hint",
@@ -296,6 +300,19 @@
 		"newClientIdInvalid":"Invalid id",
 		"newClientIdPlaceholder":"12354",
 		"clientNotFound": "No client with this id exists"
+	},
+	"orderGarageModule":{
+		"garageModule": "Garage module",
+		"garageModuleDescription": "Garage modules will allow you to automatically open garage gate for your customers.",
+		"shippingAddress": "Shipping address",
+		"invoiceAddress": "Invoice address",
+		"equalAddresses": "Invoice address is equal to shipping address",
+		"amount": "Amount",
+		"amountInvalid": "Amount invalid",
+		"amountPlaceholder": "1",
+		"placingOrder": "Creating order ...",
+		"orderSuccessfull": "Order was sucessfully finished",
+		"orderFailed": "Payment failed, try again later."
 	},
 	"newGarage": {
 		"garage": "Garage",

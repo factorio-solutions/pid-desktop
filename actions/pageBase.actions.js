@@ -11,6 +11,7 @@ export const PAGE_BASE_SHOW_SECONDARY_MENU            = 'PAGE_BASE_SHOW_SECONDAR
 export const PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON = 'PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON'
 export const PAGE_BASE_BREADCRUMBS                    = 'PAGE_BASE_BREADCRUMBS'
 export const PAGE_BASE_SET_ERROR                      = 'PAGE_BASE_SET_ERROR'
+export const PAGE_BASE_SET_SUCCESS                    = 'PAGE_BASE_SET_SUCCESS'
 export const PAGE_BASE_SET_CUSTOM_MODAL               = 'PAGE_BASE_SET_CUSTOM_MODAL'
 export const PAGE_BASE_SET_NOTIFICATIONS_MODAL        = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
 export const PAGE_BASE_SET_CURRENT_USER               = 'PAGE_BASE_SET_CURRENT_USER'
@@ -57,6 +58,12 @@ export function setBreadcrumbs(value) {
 
 export function setError(value) {
   return { type: PAGE_BASE_SET_ERROR
+         , value
+         }
+}
+
+export function setSuccess(value) {
+  return { type: PAGE_BASE_SET_SUCCESS
          , value
          }
 }
