@@ -25,7 +25,7 @@ export default class Timepicker extends Component{
   currentTime(time){
     const minuteString = time ? time.substring(3) : moment().format("mm")
     const hourString =time ? time.substring(0, 2) : moment().format("HH")
-    const minute = Math.ceil(minuteString/15)*15
+    const minute = Math.floor(minuteString/15)*15
     return hourString+":"+ ((String(minute).length == 1 ? "0"+minute : minute)) // dont care about date, take only time
   }
 

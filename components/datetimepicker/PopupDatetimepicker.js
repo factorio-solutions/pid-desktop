@@ -13,14 +13,15 @@ export default class PopupDatetimepicker extends Component{
     onSelect: PropTypes.func,
     okClick:  PropTypes.func,
     datetime: PropTypes.string, //moment compatible format
-    show:     PropTypes.bool
+    show:     PropTypes.bool,
+    flip:     PropTypes.bool, // will apear to left side of page
   }
 
   render(){
-    const { onSelect, datetime, show, okClick } = this.props
+    const { onSelect, datetime, show, okClick, flip } = this.props
 
     return(
-      <div className={`${styles.popup} ${show ? "" : styles.hidden}`}>
+      <div className={`${styles.popup} ${show ? "" : styles.hidden} ${flip && styles.flip}`}>
         <Datetimepicker onSelect={onSelect} datetime={datetime}/>
         <div className={styles.buttonContainer}>
           <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={okClick} type='confirm'/>
