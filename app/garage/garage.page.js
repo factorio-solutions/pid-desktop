@@ -1,12 +1,17 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import moment                          from 'moment'
 
-import PageBase from '../_shared/containers/pageBase/PageBase'
+import PageBase            from '../_shared/containers/pageBase/PageBase'
+import TabMenu             from '../_shared/components/tabMenu/TabMenu'
+import TabButton           from '../_shared/components/buttons/TabButton'
+import PopupDatetimepicker from '../_shared/components/datetimepicker/PopupDatetimepicker'
+import GarageLayout        from '../_shared/components/garageLayout/GarageLayout2'
 
-import * as nav                 from '../_shared/helpers/navigation'
-import { t }                    from '../_shared/modules/localization/localization'
-// import * as dashboardActions  from '../_shared/actions/dashboard.actions'
+import * as nav           from '../_shared/helpers/navigation'
+import { t }              from '../_shared/modules/localization/localization'
+import * as garageActions from '../_shared/actions/garage.actions'
 
 import styles from './garage.page.scss'
 
@@ -17,18 +22,90 @@ export class GaragePage extends Component {
     actions:  PropTypes.object
   }
 
+  componentDidMount () {
+    this.props.pageBase.garage && this.props.actions.initGarage()
+  }
+
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initGarage()
+  }
+
   render() {
     const { state, actions } = this.props
 
+    const left = [ <TabButton label={t(['garages', 'clients'])}      onClick={() => {actions.setSelected("clients")}}      state={state.selected=="clients" && 'selected'}/>
+                 , <TabButton label={t(['garages', 'contracts'])}    onClick={() => {actions.setSelected("contracts")}}    state={state.selected=="contracts" && 'selected'}/>
+                 , <TabButton label={t(['garages', 'reservations'])} onClick={() => {actions.setSelected("reservations")}} state={state.selected=="reservations" && 'selected'}/>
+                 , <TabButton label={t(['garages', 'prices'])}       onClick={() => {actions.setSelected("prices")}}       state={state.selected=="prices" && 'selected'}/>
+                 , <TabButton label={t(['garages', 'cars'])}         onClick={() => {actions.setSelected("cars")}}         state={state.selected=="cars" && 'selected'}/>
+                 ]
+
+    const right = [ <TabButton label={t(['garages', 'now'])} onClick={actions.setTimeToNow} state={state.now && 'selected'}/>
+                  , <div style={{display:'inline-block'}}>
+                      <TabButton label={t(['garages', 'setDate'])} onClick={() => {actions.setSelector(true)}} state={!state.now && 'selected'}/>
+                      <PopupDatetimepicker onSelect={actions.setTimeTo}  show={state.showSelector} flip={true} okClick={() => {actions.setSelector(false)}} datetime={state.time}/>
+                    </div>
+                  ]
+
+    const preparePlaces = (floor) => {
+      floor.places.map((place) => {
+        const client = state.garage.clients.find((client) => { return client.places.find(p => p.id === place.id) !== undefined })
+        const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
+        switch (state.selected) {
+          case 'clients':
+          case 'contracts':
+            if (client) {
+              place.group = client.name
+            } else {
+              place.group = undefined
+            }
+            break;
+
+          case 'prices':
+            place.group = place.rents[0] && place.rents[0].id+'rent' || place.pricings[0] && place.pricings[0].id+'price'
+            break;
+
+          case 'cars':
+          case 'reservations':
+            if (reservation) {
+              place.group = reservation.id
+            } else {
+              place.group = undefined
+            }
+            break;
+        }
+        place.tooltip = <table className={styles.tooltip}><tbody>
+          <tr><td>{t(['garages','client'])}</td><td>{client && client.name}</td></tr>
+          <tr><td>{t(['garages','contract'])}</td><td>{client && client.name}</td></tr>
+          <tr><td>{t(['garages','priceType'])}</td><td>{place.rents[0] ? t(['garages','longterm']) : place.pricings[0] ? t(['garages','shortterm']) : ""}</td></tr>
+          <tr><td>{t(['garages','pricePerSpot'])}</td><td>{place.rents[0] ? place.rents[0].price+' '+place.rents[0].currency.symbol : ""}</td></tr>
+          <tr><td>{t(['garages','12HourPrice'])}</td><td>{place.pricings[0]  && place.pricings[0].exponential_12h_price   ? place.pricings[0].exponential_12h_price+' '+place.pricings[0].currency.symbol   : ""}</td></tr>
+          <tr><td>{t(['garages','dayPrice'])}</td><td>{place.pricings[0]     && place.pricings[0].exponential_day_price   ? place.pricings[0].exponential_day_price+' '+place.pricings[0].currency.symbol   : ""}</td></tr>
+          <tr><td>{t(['garages','weekPrice'])}</td><td>{place.pricings[0]    && place.pricings[0].exponential_week_price  ? place.pricings[0].exponential_week_price+' '+place.pricings[0].currency.symbol  : ""}</td></tr>
+          <tr><td>{t(['garages','monthPrice'])}</td><td>{place.pricings[0]   && place.pricings[0].exponential_month_price ? place.pricings[0].exponential_month_price+' '+place.pricings[0].currency.symbol : ""}</td></tr>
+          <tr><td>{t(['garages','weekendPrice'])}</td><td>{place.pricings[0] && place.pricings[0].weekend_price           ? place.pricings[0].weekend_price+' '+place.pricings[0].currency.symbol           : ""}</td></tr>
+          <tr><td>{t(['garages','flatPrice'])}</td><td>{place.pricings[0]    && place.pricings[0].flat_price              ? place.pricings[0].flat_price+' '+place.pricings[0].currency.symbol              : ""}</td></tr>
+          <tr><td>{t(['garages','reservationId'])}</td><td>{reservation && reservation.id}</td></tr>
+          <tr><td>{t(['garages','driver'])}</td><td>{reservation && reservation.user.full_name}</td></tr>
+          <tr><td>{t(['garages','type'])}</td><td>{reservation && (reservation.client ? t(['reservations','host']) : t(['reservations','visitor']))}</td></tr>
+          <tr><td>{t(['garages','period'])}</td><td>{reservation && moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')+' - '+moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
+          <tr><td>{t(['garages','licencePlate'])}</td><td>{reservation && reservation.car.licence_plate}</td></tr>
+        </tbody></table>
+        return place
+      })
+      return floor
+    }
+
     return (
       <PageBase>
-        Garage page
+        <TabMenu left={left} right={right} />
+        <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors={true}/>
       </PageBase>
     )
   }
 }
 
 export default connect(
-  state    => ({ state: {} }), //{ state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators({}, dispatch) }) //{ actions: bindActionCreators(dashboardActions, dispatch) }
+  state    => ({ state: state.garage, pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(garageActions, dispatch) })
 )(GaragePage)

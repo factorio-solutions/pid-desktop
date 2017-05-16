@@ -3,7 +3,7 @@ import moment                          from 'moment'
 
 import PopupDatepicker from '../datepicker/PopupDatepicker'
 
-import styles                          from './Input.scss'
+import styles from './Input.scss'
 
 
 export default class DatetimeInput extends Component {

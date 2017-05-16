@@ -5,6 +5,18 @@ import DayNames from './DayNames'
 
 import styles   from './Datepicker.scss'
 
+// 16.5.2017 10:50
+// Uncaught RangeError: Invalid array length
+//     at createWeeks (eval at <anonymous> (bundle.js:4381), <anonymous>:41:16)
+//     at Days (eval at <anonymous> (bundle.js:4381), <anonymous>:74:47)
+//     at StatelessComponent.render (eval at <anonymous> (bundle.js:1765), <anonymous>:44:17)
+//     at eval (eval at <anonymous> (bundle.js:1765), <anonymous>:796:21)
+//     at measureLifeCyclePerf (eval at <anonymous> (bundle.js:1765), <anonymous>:75:12)
+//     at ReactCompositeComponentWrapper._renderValidatedComponentWithoutOwnerOrContext (eval at <anonymous> (bundle.js:1765), <anonymous>:795:25)
+//     at ReactCompositeComponentWrapper._renderValidatedComponent (eval at <anonymous> (bundle.js:1765), <anonymous>:822:32)
+//     at ReactCompositeComponentWrapper._updateRenderedComponent (eval at <anonymous> (bundle.js:1765), <anonymous>:746:36)
+//     at ReactCompositeComponentWrapper._performComponentUpdate (eval at <anonymous> (bundle.js:1765), <anonymous>:724:10)
+//     at ReactCompositeComponentWrapper.updateComponent (eval at <anonymous> (bundle.js:1765), <anonymous>:645:12)
 
 export default function Days ({ month, selected, onClick })  {
   const createWeeks = () => {
