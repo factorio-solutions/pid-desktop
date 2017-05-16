@@ -247,7 +247,9 @@
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
 		"reservationApproved":"Reservation was not approved yet.",
 		"reservationNotPayed":"Reservation was not payed.",
-		"pay":"Pay"
+		"pay":"Pay",
+		"host": "Host",
+		"visitor": "Visitor"
 	},
 	"garages": {
 		"name": "garage name",
@@ -265,7 +267,7 @@
 		"packages": "packages"
 	},
 	"occupancy": {
-		"selectClientAccount": "Select client account",
+		"selectClientClient": "Select client",
 		"allClients": "All clients",
 		"dayShortcut": "D",
 		"weekShortcut": "W",
@@ -274,7 +276,13 @@
 		"selectGarage": "Select garage",
 		"day": "day",
 		"week":"week",
-		"month":"month"
+		"month":"month",
+		"reservationsId": "Reservations id:",
+		"driver": "Driver:",
+		"client": "Client:",
+		"type": "Type:",
+		"period": "Period:",
+		"licencePlate": "Licence plact:"
 	},
 	"garageUsers": {
 		"selectClient": "select client client",

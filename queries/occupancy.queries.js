@@ -4,15 +4,17 @@
 //   id
 //   created_at
 // }
-export const OCCUPANCY_INIT = `{
-  user_garages {
-    garage {
-      name
-      id
-    }
-  }
-}
-`
+// export const OCCUPANCY_INIT = `{
+//   user_garages {
+//     garage {
+//       clients{
+//         name
+//         id
+//       }
+//     }
+//   }
+// }
+// `
 
 // Get details about garage id: $id
 // client {
@@ -29,6 +31,10 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         id
         label
         reservations {
+          id
+          client{
+            name
+          }
           car{
             licence_plate
           }
@@ -46,6 +52,10 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
           }
         }
       }
+    }
+    clients{
+      name
+      id
     }
   }
 }
