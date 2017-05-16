@@ -17,11 +17,13 @@
 }
 
 .occupacny{
-  overflow: auto;
+  // overflow: auto;
 
   > table {
+    width: 100%;
+    table-layout: fixed;
     margin-top: 20px;
-    width: calc(100% - 1px);
+    // width: calc(100% - 1px);
     border-collapse: collapse;
   }
 }
@@ -40,15 +42,31 @@
   border-right: 1px solid $black;
 }
 
+.weekend{
+  background: $lightGray;
+}
+
 .reservationDiv{
   position: absolute;
   height: 100%;
-  background: $gray;
   top: 0;
-  z-index: -1;
+  z-index: 10;
+  overflow: hidden;
 
   color: $white;
   font-weight: bold;
+
+
+  &.future{
+    background: $blue;
+  }
+  &.ongoing{
+    background: $black;
+  }
+  &.fulfilled{
+    background: $gray;
+  }
+
   >span{
     padding: 0 10px;
   }
@@ -74,8 +92,26 @@
 }
 
 .placePadding{
-  padding: 0 10px;
-  width: 1%;
+  padding: 0 5px;
+  // width: 1%;
   vertical-align: bottom;
   white-space: nowrap;
+}
+
+// ============================================================================
+// TOOLTIP TABLE STYLING
+.tooltipTable{
+  >tbody{
+    >tr{
+      >td{
+        &:first-child{
+          padding-right: 5px;
+        }
+
+        &:last-child{
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }

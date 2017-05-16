@@ -10,6 +10,8 @@ import PageBase               from '../_shared/containers/pageBase/PageBase'
 import RoundButton            from '../_shared/components/buttons/RoundButton'
 import Dropdown               from '../_shared/components/dropdown/Dropdown'
 import OccupancyOverview      from '../_shared/components/occupancyOverview/OccupancyOverview'
+import TabMenu                from '../_shared/components/tabMenu/TabMenu'
+import TabButton              from '../_shared/components/buttons/TabButton'
 // import TextButton             from '../_shared/components/buttons/TextButton'
 import ButtonStack            from '../_shared/components/buttonStack/ButtonStack'
 
@@ -19,11 +21,17 @@ import styles from './occupancy.page.scss'
 export class OccupancyPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
+    pageBase:     PropTypes.object,
     actions:      PropTypes.object
   }
 
   componentDidMount () {
-    this.props.actions.initOccupancy()
+    this.props.pageBase.garage && this.props.actions.initOccupancy()
+  }
+
+  componentWillReceiveProps(nextProps){
+    // load garage if id changed
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.loadGarage()
   }
 
   render() {
@@ -35,45 +43,50 @@ export class OccupancyPage extends Component {
       return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
     }
 
-    const garageDropdown = () => {
-      const garageSelected = (index) => { actions.setGarageId(state.garages[index].id) }
-      return state.garages.map((garage, index) => {return {label: garage.name, onClick: garageSelected.bind(this, index) }})
-    }
-
     const preparePlaces = (places, floor) => {
       return places.concat(floor.places.map((place)=>{
         return { ...place
                , floor: floor.label
-               , reservations: state.client_id ? place.reservations.filter((reservation) => {return state.client_id == reservation.client.id}) : place.reservations
+               , reservations: state.client_id ? place.reservations.filter((reservation) => {return reservation.client && state.client_id == reservation.client.id}) : place.reservations
                }
       }))
     }
 
+
+    const filters = [ <TabButton label={t(['occupancy', 'day'])}   onClick={() => {actions.dayClick()}}   state={state.duration=="day" && 'selected'}/>
+                    , <TabButton label={t(['occupancy', 'week'])}  onClick={() => {actions.weekClick()}}  state={state.duration=="week" && 'selected'}/>
+                    , <TabButton label={t(['occupancy', 'month'])} onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>
+                    ]
+
+    const clientSelector = <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
     // const filters = <div>
     //                   <ButtonStack divider={<span>|</span>} style='horizontal' >
-    //                     <TextButton content={t(['occupancy', 'day'])} onClick={() => {actions.dayClick()}} state={state.duration=="day" && 'selected'}/>
-    //                     <TextButton content={t(['occupancy', 'week'])} onClick={() => {actions.weekClick()}} state={state.duration=="week" && 'selected'}/>
-    //                     <TextButton content={t(['occupancy', 'month'])} onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>
+    //                     <TextButton content={t(['occupancy', 'day'])}    onClick={() => {actions.dayClick()}} state={state.duration=="day" && 'selected'}/>
+    //                     <TextButton content={t(['occupancy', 'week'])}   onClick={() => {actions.weekClick()}} state={state.duration=="week" && 'selected'}/>
+    //                     <TextButton content={t(['occupancy', 'month'])}  onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>
     //                   </ButtonStack>
     //                 </div>
 
-    const content = <div>
-                      <div> <Dropdown label={t(['occupancy', 'selectGarage'])} content={garageDropdown()} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/> </div>
-                      {/* <div className={styles.dropdownContainer}>
-                        <Dropdown label={t(['occupancy', 'selectGarage'])} content={garageDropdown()} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>
-                        <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
-                      </div> */}
-                      <OccupancyOverview places={garage ? garage.floors.reduce(preparePlaces, []) : []} from={state.from} duration={state.duration}
-                          leftClick={actions.subtractDay} rightClick={actions.addDay} dayClick={actions.dayClick} weekClick={actions.weekClick} monthClick={actions.monthClick}/>
-                    </div>
-
     return (
-      <PageBase content={content} filters={filters} />
+      <PageBase>
+        <div>
+          <TabMenu right={filters} left={clientSelector}/>
+           <OccupancyOverview
+              places={garage ? garage.floors.reduce(preparePlaces, []) : []}
+              from={state.from}
+              duration={state.duration}
+              leftClick={actions.subtractDay}
+              rightClick={actions.addDay}
+              dayClick={actions.dayClick}
+              weekClick={actions.weekClick}
+              monthClick={actions.monthClick}/>
+         </div>
+      </PageBase>
     )
   }
 }
 
 export default connect(
-  state    => ({ state: state.occupancy }),
+  state    => ({ state: state.occupancy, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(OccupancyActions, dispatch) })
 )(OccupancyPage)

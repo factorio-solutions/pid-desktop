@@ -57,7 +57,7 @@ export class ReservationsPage extends Component {
              , client: reservation.client && reservation.client.name
              , licence_plate: reservation.car.licence_plate
              , state: reservation.approved
-             , type: reservation.client ? 'host' : 'visitor'
+             , type: reservation.client ? t(['reservations','host']) : t(['reservations','visitor'])
              , from: reservation.begins_at
              , to: reservation.ends_at
             //  , disabled: !reservation.approved

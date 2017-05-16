@@ -1,7 +1,8 @@
 import React, { Component, PropTypes }  from 'react'
 import moment                           from 'moment'
 
-import RoundButton                      from '../buttons/RoundButton'
+import RoundButton from '../buttons/RoundButton'
+import Tooltip     from '../tooltip/Tooltip'
 
 import { t }                            from '../../modules/localization/localization'
 
@@ -10,6 +11,12 @@ import styles                           from './OccupancyOverview.scss'
 const DAY         = 1
 const WEEK_DAYS   = 7
 const MONTH_DAYS  = 30
+const INIT_STATE = { content: ''
+                   , mouseX:  0
+                   , mouseY:  0
+                   , visible: false
+                   , floor:   0 // index of selected floor
+                   }
 
 
 export default class OccupancyOverview extends Component{
@@ -23,6 +30,11 @@ export default class OccupancyOverview extends Component{
     monthClick: PropTypes.func
   }
 
+  constructor(props) {
+     super(props)
+     this.state = INIT_STATE
+  }
+
   onWindowResize(){
     console.log('Resize OccupancyOverview.js');
     this.forceUpdate()
@@ -31,6 +43,7 @@ export default class OccupancyOverview extends Component{
   componentDidMount () {
     window.addEventListener('resize', this.onWindowResize.bind(this), true);
   }
+
   componentWillUnmount () {
     window.removeEventListener('resize', this.onWindowResize.bind(this), true);
   }
@@ -60,12 +73,31 @@ export default class OccupancyOverview extends Component{
           reservationStart = reservationStart < 0 ? 0 : reservationStart
           reservationEnd = reservationEnd > rowWidth ? rowWidth : reservationEnd
 
+          moment().isBefore(moment(reservation.begins_at)) ? styles.future : ''
+          moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ? styles.ongoing: ''
+          moment().isAfter(moment(reservation.ends_at)) ? styles.fulfilled : ''
+
           var reservationElement = document.createElement("DIV")
           var span = document.createElement("SPAN")
           span.appendChild(document.createTextNode(reservation.car ? reservation.car.licence_plate +" - "+ reservation.user.full_name : reservation.user.full_name))
           reservationElement.appendChild(span)
-          reservationElement.className = styles.reservationDiv
+          reservationElement.className = [ styles.reservationDiv
+                                         , moment().isBefore(moment(reservation.begins_at)) ? styles.future : ''
+                                         , moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ? styles.ongoing: ''
+                                         , moment().isAfter(moment(reservation.ends_at)) ? styles.fulfilled : '' ].join(' ')
           reservationElement.setAttribute("style", `left: ${reservationStart}px; width: ${reservationEnd - reservationStart}px;`) // HACK: Dont forget to substract padding!
+
+          reservationElement.onmouseenter = () => { this.setState({ ...this.state, visible: true, content: <table className={styles.tooltipTable}><tbody>
+              <tr><td>{t(['occupancy', 'reservationsId'])}</td><td>{reservation.id}</td></tr>
+              <tr><td>{t(['occupancy', 'driver'])}</td><td>{reservation.user.full_name}</td></tr>
+              {reservation.client && <tr><td>{t(['occupancy', 'client'])}</td><td>{reservation.client.name}</td></tr>}
+              <tr><td>{t(['occupancy', 'type'])}</td><td>{reservation.client ? t(['reservations','host']) : t(['reservations','visitor'])}</td></tr>
+              <tr><td>{t(['occupancy', 'period'])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
+              <tr><td>{t(['occupancy', 'licencePlate'])}</td><td>{reservation.car.licence_plate}</td></tr>
+            </tbody></table> }) }
+          reservationElement.onmouseleave = () => { this.setState({ ...this.state, visible: false }) }
+          reservationElement.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX, mouseY: event.clientY }) }
+
           theRow.appendChild(reservationElement)
         }
 
@@ -104,7 +136,9 @@ export default class OccupancyOverview extends Component{
           var row = []
           const length = (this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
           for (var i = 0; i < length; i++) {
+            const weekday = moment(this.props.from).add(Math.floor(i/2),'days').weekday()
             var tdStyles = [
+              weekday === 0 || weekday === 6 ? styles.weekend : '',
               (i) % (2) == 1 ? styles.rightBorder : '',
               (i) % (2) == 0 ? styles.rightBorderDotted : ''
             ]
@@ -146,6 +180,7 @@ export default class OccupancyOverview extends Component{
           </div>
           <div className={`${styles.flex} ${styles.right}`}> <RoundButton content={<span className='fa fa-chevron-right' aria-hidden="true"></span>} onClick={rightClick} /> </div>
         </div>
+        {Tooltip(this.state)}
       </div>
     )
   }
