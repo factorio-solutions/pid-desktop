@@ -38,15 +38,15 @@ export class PageBase extends Component {
                     ,  {label: t(['pageBase', 'Admin']),        key: "admin",         icon: 'money', onClick: ()=>{actions.adminClick()} }
                     ]
 
-    const verticalSecondary =  [ {label: t(['pageBase', 'Invoices']),      key: "invoices",    onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'Clients']),       key: "clients",     onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'Modules']),       key: "modules",     onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'Garage setup']),  key: "garageSetup", onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'Users']),         key: "users",       onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'Finance']),       key: "finance",     onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'PID settings']),  key: "PID",         onClick: ()=>{console.log('secondary menu click');} }
-                               , {label: t(['pageBase', 'Activity log']),  key: "activity",    onClick: ()=>{console.log('secondary menu click');} }
-                               ]
+    // const verticalSecondary =  [ {label: t(['pageBase', 'Invoices']),      key: "invoices",    onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'Clients']),       key: "clients",     onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'Modules']),       key: "modules",     onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'Garage setup']),  key: "garageSetup", onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'Users']),         key: "users",       onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'Finance']),       key: "finance",     onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'PID settings']),  key: "PID",         onClick: ()=>{console.log('secondary menu click');} }
+    //                            , {label: t(['pageBase', 'Activity log']),  key: "activity",    onClick: ()=>{console.log('secondary menu click');} }
+    //                            ]
 
     const callToAction = [ {label: t(['pageBase', 'Create reservation']), onClick: ()=>{nav.to('/reservations/newReservation')}}
                          , {label: t(['pageBase', 'Create contract']),    onClick: ()=>{console.log('call to action click')}}

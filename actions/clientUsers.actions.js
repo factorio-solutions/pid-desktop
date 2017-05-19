@@ -3,10 +3,10 @@ import {t}          from '../modules/localization/localization'
 import { setError } from './pageBase.actions'
 
 import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS } from '../queries/clientUsers.queries'
-import { toClients } from './pageBase.actions'
+// import { toClients } from './pageBase.actions'
 
 export const SET_CLIENT_USERS          = 'SET_CLIENT_USERS'
-export const SET_CLIENT_USER_CLIENT   = 'SET_CLIENT_USER_CLIENT'
+export const SET_CLIENT_USER_CLIENT    = 'SET_CLIENT_USER_CLIENT'
 export const SET_CLIENT_PENDING_USERS  = 'SET_CLIENT_PENDING_USERS'
 
 export function setClientUsersUsers (users){
@@ -35,7 +35,7 @@ export function initClientUsers (client_id){
       response.data.client_users[0] && dispatch( setClientUsersClient(response.data.client_users[0].client) )
       dispatch( setClientUsersPendingUsers(response.data.client_users.filter((clientUser)=>{return clientUser.pending == true})) )
 
-      dispatch(toClients())
+      // dispatch(toClients())
     }
     request(onSuccess, GET_CLIENTUSERS, {id: parseInt(client_id)})
   }

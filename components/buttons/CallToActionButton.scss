@@ -31,3 +31,8 @@
   color:            $gray;
   cursor:           default;
 }
+
+.inverted{
+    @include colorize($white);
+    color:   $black;
+}
