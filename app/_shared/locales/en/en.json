@@ -618,7 +618,8 @@
 		"decayPlaceholder":"0.80",
 		"invalidName": "Invalid pricing name",
 		"invalidPrice": "Invalid price",
-		"selectCurrency": "Select currency"
+		"selectCurrency": "Select currency",
+		"selectPlace": "Start by selecting a place"
 	},
 
 	"newRent":{
@@ -780,5 +781,16 @@
 		"description":"Please, insert your email here and we will send you password reset process description",
 		"email": "e-mail",
 		"emailInvalid": "Invalid email"
+	},
+
+	"modules": {
+		"marketingPage": "Marketing page",
+		"connectWithMrParkit": "Connect with Mr. Parkit",
+		"reservationForm": "Reservation form",
+		"goPublic": "Go public",
+		"goPublicDescription": "Offer short term parking to PiD community",
+		"setting": "Settings",
+		"Preview": "Preview",
+		"startingMarketing": "Upgrading your billing plan. Redirecting..."
 	}
 }

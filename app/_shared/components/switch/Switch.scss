@@ -1,0 +1,55 @@
+@import '../../styles/app.components';
+
+$height: 29px;
+$width: 60px;
+$switch: 25px;
+
+.switchContainer{
+  position: relative;
+  top: 8px;
+  cursor: pointer;
+  // display: inline-block;
+  // margin: 3px;
+  background-color: $white;
+  border: 1px solid $gray;
+  // height: $height;
+  width:  $width;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+
+  // &.on{
+  //   background-color: lighten($green, 30%)
+  // }
+  //
+  // &.off{
+  //   background-color: lighten($red, 30%)
+  // }
+
+  &.disabled{
+    background-color: $lightGray;
+  }
+}
+
+.switch{
+  border: 2px solid $gray;
+  height: $switch;
+  width:  $switch;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+
+  &.on{
+    background-color: $green;
+    border: 2px solid darken($green, 20%);
+  }
+
+  &.off{
+    background-color: $red;
+    border: 2px solid darken($red, 20%);
+    transform: translate(18px);
+  }
+
+  &.disabled{
+    background-color: $lightGray;
+    border: 2px solid $gray;
+  }
+}

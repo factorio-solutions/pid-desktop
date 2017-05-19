@@ -45,11 +45,14 @@ import carUsers         from '../_shared/reducers/carUsers.reducer'
 import users            from '../_shared/reducers/users.reducer'
 import inviteUser       from '../_shared/reducers/inviteUser.reducer'
 
-import analytics  from '../_shared/reducers/analytics.reducer'
-import dashboard  from '../_shared/reducers/dashboard.reducer'
-import garage     from '../_shared/reducers/garage.reducer'
-import issues     from '../_shared/reducers/issues.reducer'
-import profile    from '../_shared/reducers/profile.reducer'
+import analytics        from '../_shared/reducers/analytics.reducer'
+import dashboard        from '../_shared/reducers/dashboard.reducer'
+import garage           from '../_shared/reducers/garage.reducer'
+import issues           from '../_shared/reducers/issues.reducer'
+import profile          from '../_shared/reducers/profile.reducer'
+
+import adminModules     from '../_shared/reducers/admin.modules.reducer'
+import adminGoPublic    from '../_shared/reducers/admin.goPublic.reducer'
 
 
 const rootReducer = combineReducers({ routing
@@ -102,6 +105,9 @@ const rootReducer = combineReducers({ routing
                                     , garage
                                     , issues
                                     , profile
+
+                                    , adminModules
+                                    , adminGoPublic
                                     })
 
 export default rootReducer

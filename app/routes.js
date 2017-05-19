@@ -137,7 +137,7 @@ export default function createRoutes() {
       <Route path="profile/cars/:id/edit"                 component={NewCarPage}/>
       <Route path="notifications"                         component={NotificationsPage}/>
 
-      <Route path="dashboard"                         component={DashboardPage}/>
+      <Route path="dashboard"                             component={DashboardPage}/>
 
       <Route path="reservations"                          component={ReservationsPage}/>
       <Route path="reservations/newReservation"           component={NewReservationPage}/>
@@ -157,10 +157,12 @@ export default function createRoutes() {
 
       <Route path=":id/admin/invoices"                    component={InvoicesPage}/>
 
-      <Route path=":id/admin/clients"                     component={ClientsPage}/>
-      <Route path=":id/admin/clients/:client_id/users"    component={ClientUsersPage}/>
-      <Route path=":id/admin/clients/newClient"           component={NewClientPage}/>
-      <Route path=":id/admin/clients/newContract"         component={NewContractPage}/>
+      <Route path=":id/admin/clients"                         component={ClientsPage}/>
+      <Route path=":id/admin/clients/:client_id/users"        component={ClientUsersPage}/>
+      <Route path=":id/admin/clients/newClient"               component={NewClientPage}/>
+      <Route path=":id/admin/clients/:client_id/edit"         component={NewClientPage}/>
+      <Route path=":id/admin/clients/newContract"             component={NewContractPage}/>
+      <Route path=":id/admin/clients/:client_id/editContract" component={NewContractPage}/>
 
       <Route path=":id/admin/modules"                     component={ModulesPage}/>
       <Route path=":id/admin/modules/marketingSettings"   component={MarketingSettingsPage}/>

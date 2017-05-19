@@ -96,24 +96,25 @@ export class ClientUsersPage extends Component {
       return { full_name, email, phone, created_at: client_user.created_at, spoiler: renderSpoiler(client_user) }
     })
 
-    const content = <div>
-                      <Table schema={schema} data={data} />
-
-                      { state.pending_users.length > 0 && <div>
-                        <h2>{t(['clientUsers','pendingUsers'])}</h2>
-                        <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
-                      </div> }
-
-                      <div className={styles.addButton}>
-                        <div style={{float: "left"}}>
-                          <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={onBack} />
-                        </div>
-                        <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClientUserClick} type='action' size='big' state={isClientAdmin && "disabled"}/>
-                      </div>
-                    </div>
 
     return (
-      <PageBase content={content} />
+      <PageBase>
+        <div>
+          <Table schema={schema} data={data} />
+
+          { state.pending_users.length > 0 && <div>
+            <h2>{t(['clientUsers','pendingUsers'])}</h2>
+            <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
+          </div> }
+
+          <div className={styles.addButton}>
+            <div style={{float: "left"}}>
+              <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={onBack} />
+            </div>
+            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClientUserClick} type='action' size='big' state={isClientAdmin && "disabled"}/>
+          </div>
+        </div>
+      </PageBase>
     )
   }
 }

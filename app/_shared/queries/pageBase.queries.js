@@ -46,6 +46,7 @@ export const GET_GARAGES = `{
     user_id
     garage {
       id
+      active_pid_tarif_id
       name
       img
     }
