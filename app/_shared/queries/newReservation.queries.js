@@ -40,18 +40,15 @@ export const GET_GARAGE_PRICINGS = `query ($id: Id!) {
   garage(id: $id) {
     id
     pricings{
-      name
       flat_price
       exponential_12h_price
       exponential_day_price
       exponential_week_price
       exponential_month_price
       weekend_price
+      place_id
       currency{
         symbol
-      }
-      groups{
-        place_id
       }
     }
   }
@@ -69,6 +66,18 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       places {
         id
         label
+        pricing{
+          flat_price
+          exponential_12h_price
+          exponential_day_price
+          exponential_week_price
+          exponential_month_price
+          weekend_price
+          place_id
+          currency{
+            symbol
+          }
+        }
       }
       free_places(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id) {
         id

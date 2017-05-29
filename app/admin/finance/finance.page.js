@@ -6,6 +6,8 @@ import update                          from 'react-addons-update'
 import PageBase    from '../../_shared/containers/pageBase/PageBase'
 import Table       from '../../_shared/components/table/Table'
 import RoundButton from '../../_shared/components/buttons/RoundButton'
+import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
+import Switch             from '../../_shared/components/switch/Switch'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -22,7 +24,11 @@ export class FinancePage extends Component {
   }
 
   componentDidMount () {
+    if (this.props.location.query.hasOwnProperty('request_token')){ // got request token => Permissions granted -> update account
+      this.props.actions.upadteAccount(this.props.location.query)
+    }
     this.props.actions.initRents()
+    this.props.actions.initFinance(this.props.params.id)
   }
 
   render() {
@@ -46,6 +52,9 @@ export class FinancePage extends Component {
       return update(rent, {spoiler:{$set: spoiler}, price: {$set: `${rent.price} ${rent.currency.symbol}`}, place_count: {$set: rent.place_count+''}})
     }
 
+    const toPaypalSettings = () => {actions.paypalClick()}
+    const toCsobSettings = () => {}
+
     return (
       <PageBase>
       {pageBase.current_user && pageBase.current_user.garage_admin &&
@@ -57,6 +66,22 @@ export class FinancePage extends Component {
           </div>
         </div>
       }
+
+      <div className={styles.module}>
+        {t(['finance','paypal'])}
+        <div className={styles.settings}>
+          <CallToActionButton label={t(['modules','setting'])} state={state.paypal ? 'disabled': 'inverted'} onClick={toPaypalSettings} />
+          <Switch on={state.paypal} onClick={toPaypalSettings}/>
+        </div>
+      </div>
+
+      <div className={styles.module}>
+        {t(['finance','csob'])}
+        <div className={styles.settings}>
+          <CallToActionButton label={t(['modules','setting'])} state={state.csob ? 'disabled': 'inverted'} onClick={toCsobSettings} />
+          <Switch on={state.csob} onClick={toCsobSettings}/>
+        </div>
+      </div>
       </PageBase>
     )
   }

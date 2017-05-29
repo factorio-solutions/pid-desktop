@@ -8,3 +8,19 @@
 .floatRight{
   float: right;
 }
+
+.module{
+  flex: 1 1;
+  background-color: $blue;
+  color: white;
+  border: 1px solid $gray;
+  border-radius: 5px;
+  padding: 20px;
+  color: white;
+  
+  .settings{
+    float: right;
+    top: -15px;
+    position: relative;
+  }
+}
