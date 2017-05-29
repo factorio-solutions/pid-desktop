@@ -18,6 +18,7 @@ export const GET_GARAGE_PAYMENT_METHOD = `query ($id:Id!){
       id
       paypal_email
       csob_merchant_id
+      csob_private_key
     }
   }
 }

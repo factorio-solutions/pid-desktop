@@ -817,6 +817,8 @@
 
 	"finance": {
 		"paypal": "Paypal",
-		"csob": "ČSOB"
+		"csob": "ČSOB",
+		"csobPayment": "ČSOB Payments",
+		"SelectPrivateKey" : "Select private key"
 	}
 }
