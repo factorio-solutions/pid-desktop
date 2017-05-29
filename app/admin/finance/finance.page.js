@@ -53,7 +53,7 @@ export class FinancePage extends Component {
     }
 
     const toPaypalSettings = () => {actions.paypalClick()}
-    const toCsobSettings = () => {}
+    const toCsobSettings = () => {nav.to(`/${pageBase.garage}/admin/finance/csob`)}
 
     return (
       <PageBase>
@@ -70,7 +70,7 @@ export class FinancePage extends Component {
       <div className={styles.module}>
         {t(['finance','paypal'])}
         <div className={styles.settings}>
-          <CallToActionButton label={t(['modules','setting'])} state={state.paypal ? 'disabled': 'inverted'} onClick={toPaypalSettings} />
+          <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toPaypalSettings} />
           <Switch on={state.paypal} onClick={toPaypalSettings}/>
         </div>
       </div>
@@ -78,7 +78,7 @@ export class FinancePage extends Component {
       <div className={styles.module}>
         {t(['finance','csob'])}
         <div className={styles.settings}>
-          <CallToActionButton label={t(['modules','setting'])} state={state.csob ? 'disabled': 'inverted'} onClick={toCsobSettings} />
+          <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toCsobSettings} />
           <Switch on={state.csob} onClick={toCsobSettings}/>
         </div>
       </div>
