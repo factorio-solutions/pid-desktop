@@ -70,6 +70,7 @@ import InviteUserPage             from './admin/users/inviteUser.page'
 
 // finance
 import FinancePage                from './admin/finance/finance.page'
+import NewRentPage                from './admin/finance/newRent.page'
 import PayPalPage                 from './admin/finance/paypal.page'
 import CsobPage                   from './admin/finance/csob.page'
 
@@ -162,7 +163,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/newClient"               component={NewClientPage}/>
       <Route path=":id/admin/clients/:client_id/edit"         component={NewClientPage}/>
       <Route path=":id/admin/clients/newContract"             component={NewContractPage}/>
-      <Route path=":id/admin/clients/:client_id/editContract" component={NewContractPage}/>
+      <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage}/>
 
       <Route path=":id/admin/modules"                     component={ModulesPage}/>
       <Route path=":id/admin/modules/marketingSettings"   component={MarketingSettingsPage}/>
@@ -185,6 +186,8 @@ export default function createRoutes() {
       <Route path=":id/admin/users/invite"                component={InviteUserPage}/>
 
       <Route path=":id/admin/finance"                     component={FinancePage}/>
+      <Route path=":id/admin/finance/newRent"             component={NewRentPage}/>
+      <Route path=":id/admin/finance/:rent_id/editRent"   component={NewRentPage}/>
       <Route path=":id/admin/finance/paypal"              component={PayPalPage}/>
       <Route path=":id/admin/finance/csob"                component={CsobPage}/>
 

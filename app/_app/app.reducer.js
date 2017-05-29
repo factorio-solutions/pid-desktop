@@ -22,7 +22,7 @@ import garageSetup      from '../_shared/reducers/garageSetup.reducer'
 // import garageMarketing  from '../_shared/reducers/garageMarketing.reducer'
 import newMarketing     from '../_shared/reducers/newMarketing.reducer'
 // import newPricing       from '../_shared/reducers/newPricing.reducer'
-// import newRent          from '../_shared/reducers/newRent.reducer'
+import newRent          from '../_shared/reducers/newRent.reducer'
 // import garageUsers      from '../_shared/reducers/garageUsers.reducer'
 
 import marketing        from '../_shared/reducers/marketing.reducer'
@@ -31,6 +31,7 @@ import occupancy        from '../_shared/reducers/occupancy.reducer'
 
 import clients          from '../_shared/reducers/clients.reducer'
 import newClient        from '../_shared/reducers/newClient.reducer'
+import newContract      from '../_shared/reducers/newContract.reducer'
 import clientUsers      from '../_shared/reducers/clientUsers.reducer'
 
 // import accounts         from '../_shared/reducers/accounts.reducer'
@@ -53,6 +54,7 @@ import profile          from '../_shared/reducers/profile.reducer'
 
 import adminModules     from '../_shared/reducers/admin.modules.reducer'
 import adminGoPublic    from '../_shared/reducers/admin.goPublic.reducer'
+import adminFinance     from '../_shared/reducers/admin.finance.reducer'
 
 
 const rootReducer = combineReducers({ routing
@@ -77,7 +79,7 @@ const rootReducer = combineReducers({ routing
                                     // , garageMarketing
                                     , newMarketing
                                     // , newPricing
-                                    // , newRent
+                                    , newRent
                                     // , garageUsers
 
                                     , marketing
@@ -86,6 +88,7 @@ const rootReducer = combineReducers({ routing
 
                                     , clients
                                     , newClient
+                                    , newContract
                                     , clientUsers
 
                                     // , accounts
@@ -108,6 +111,7 @@ const rootReducer = combineReducers({ routing
 
                                     , adminModules
                                     , adminGoPublic
+                                    , adminFinance
                                     })
 
 export default rootReducer

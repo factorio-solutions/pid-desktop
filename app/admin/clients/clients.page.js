@@ -9,6 +9,7 @@ import RoundButton from '../../_shared/components/buttons/RoundButton'
 import PageBase    from '../../_shared/containers/pageBase/PageBase'
 
 import * as clientActions  from '../../_shared/actions/clients.actions'
+import { setClient }       from '../../_shared/actions/newContract.actions'
 import { t }               from '../../_shared/modules/localization/localization'
 import * as nav            from '../../_shared/helpers/navigation'
 
@@ -27,27 +28,40 @@ export class ClientsPage extends Component {
   }
 
   render() {
-    const { state, pageBase } = this.props
+    const { actions, state, pageBase } = this.props
 
     const schema = [ { key: 'name',        title: t(['clients','name']),  comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
+                   , { key: 'token',       title: t(['clients','token']), comparator: 'string', }
                    , { key: 'id',          title: t(['clients','id']),    comparator: 'number', }
                    , { key: 'user_count',  title: t(['clients','users']), comparator: 'number', }
                    ]
 
     const addClient    = () => {nav.to(`/${pageBase.garage}/admin/clients/newClient`)}
-    // {nav.to(`/${pageBase.garage}/admin/clients/newContract`)}
-    // {nav.to(`/${pageBase.garage}/admin/clients/:client_id/editContract`)}
+    const addContract    = () => {nav.to(`/${pageBase.garage}/admin/clients/newContract`)}
 
     const addSpoiler = (client, index)=>{
       const toClient     = () => {nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)}
       const toEditClient = () => {nav.to(`/${pageBase.garage}/admin/clients/${client.id}/edit`)}
       const toInvoices = () => { nav.to(`/clients/${client.id}/invoices`) }
+      const toNewContract = () => { nav.to(`/${pageBase.garage}/admin/clients/newContract`)
+        actions.setClient(client.id)
+      }
+      const prepareContractButton = (contract) =>{
+        const onContractClick = () =>{ nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`) }
+        return <div className={styles.contract} onClick={onContractClick}>{contract.name}</div>
+      }
 
-      var spoiler = <span className={styles.floatRight}>
-                      <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.admin ? "" : "disabled" }/>
-                      <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type='action'/>
-                      <RoundButton content={<span className='fa fa-file' aria-hidden="true"></span>} onClick={toInvoices} type='action' state={client.admin ? "" : "disabled" }/>
-                    </span>
+      var spoiler = <div className={styles.spoiler}>
+        <div>
+          {client.contracts.map(prepareContractButton)}
+        </div>
+        <div>
+          <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={toNewContract} type='action'/>
+          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.admin ? "" : "disabled" }/>
+          <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type='action'/>
+          <RoundButton content={<span className='fa fa-file' aria-hidden="true"></span>} onClick={toInvoices} type='action' state={client.admin ? "" : "disabled" }/>
+        </div>
+      </div>
       return update(client, {spoiler:{$set: spoiler}})
     }
 
@@ -57,6 +71,7 @@ export class ClientsPage extends Component {
           <Table schema={schema} data={state.clients.map(addSpoiler)}/>
           <div className={styles.addButton}>
             <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClient} type='action' size='big'/>
+            <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={addContract} type='action' size='big'/>
           </div>
         </div>
       </PageBase>
@@ -66,5 +81,5 @@ export class ClientsPage extends Component {
 
 export default connect(
   state    => ({ state: state.clients, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(clientActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators({...clientActions, setClient}, dispatch) })
 )(ClientsPage)

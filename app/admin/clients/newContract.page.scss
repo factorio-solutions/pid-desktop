@@ -1,0 +1,27 @@
+
+.flex{
+  display: flex;;
+
+
+  .half{
+    flex: 1 1;
+
+    &:first-child {
+      position: relative;
+      padding-right: 10px;
+    }
+  }
+}
+
+.oneButton {
+  >div{
+    width: calc(100% - 60px);
+    display: inline-block;
+  }
+}
+.twoButtons {
+  >div{
+    width: calc(100% - 120px);
+    display: inline-block;
+  }
+}

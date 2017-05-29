@@ -9,6 +9,15 @@
 	text-align: center;
 }
 
-.floatRight{
-  float: right;
+
+.spoiler{
+	display: flex;
+	>div:first-child{
+		flex: 1 1;
+	}
+}
+
+.contract{
+	font-weight: bold;
+	cursor: pointer;
 }

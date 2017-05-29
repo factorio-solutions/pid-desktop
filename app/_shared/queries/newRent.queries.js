@@ -21,3 +21,11 @@ export const GET_RENT_DETAILS = `query($rent_id:Id!){
   }
 }
 `
+
+export const GET_CURRENCIES=`query{
+  currencies{
+    id
+    code
+    symbol
+  }
+}`

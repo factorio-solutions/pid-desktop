@@ -31,7 +31,7 @@ export class GoPublicPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state, actions, pageBase } = this.props
 
     const preparePlaces = floor => {
       return {... floor, places: floor.places.map(place => { return { ...place, available: true, selected: place.id === state.place}})}
