@@ -12,6 +12,7 @@ export function get (url){
     }
 
     xmlHttp.open('GET', url, true)
+    xmlHttp.setRequestHeader('Content-type', 'application/json')
     xmlHttp.send()
   });
 }

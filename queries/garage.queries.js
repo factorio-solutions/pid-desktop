@@ -24,7 +24,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
             phone
           }
         }
-        pricings{
+        pricing{
           id
           exponential_12h_price
           exponential_day_price
@@ -37,19 +37,24 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
             symbol
           }
         }
-        rents{
-          id
-          price
-          currency{
-            code
-            symbol
+        contracts{
+          rent{
+            id
+            price
+            currency{
+              code
+              symbol
+            }
           }
         }
       }
     }
-    clients{
-      name
+    contracts{
       id
+      client{
+        name
+        id
+      }
       places{
         id
       }

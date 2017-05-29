@@ -2,6 +2,7 @@ import update      from 'react-addons-update'
 import _           from 'lodash'
 import { request } from '../helpers/request'
 import { t }       from '../modules/localization/localization'
+import * as nav       from '../helpers/navigation'
 
 import { GET_GARAGE, CREATE_PRICING, UPDATE_PRICING }from '../queries/admin.goPublic.queries.js'
 
@@ -164,7 +165,7 @@ export function submitPricings() {
         }
       });
     })).then(values => { // resolved
-      console.log(values);
+       nav.to(`/${getState().pageBase.garage}/admin/modules`)
     });
 
     // request( onSuccess

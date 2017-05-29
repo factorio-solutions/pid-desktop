@@ -213,7 +213,8 @@
 		"id": "id",
 		"from": "from",
 		"created": "Created",
-		"users": "users"
+		"users": "users",
+		"token": "client token"
 	},
 	"clientUsers": {
 		"name": "username",
@@ -275,7 +276,12 @@
 		"period":"Period:",
 		"licencePlate":"Licence plate:",
 		"longterm":"Longterm",
-		"shortterm":"Shortterm"
+		"shortterm":"Shortterm",
+
+		"placeRent" : "Rents",
+		"rentName" : "Rent name",
+		"price" : "Price",
+		"places" : "Places"
 	},
 	"occupancy": {
 		"selectClientClient": "Select client",
@@ -317,8 +323,7 @@
 		"places":"Places",
 		"newClientId":"Insert new client id",
 		"newClientIdInvalid":"Invalid id",
-		"newClientIdPlaceholder":"12354",
-		"clientNotFound": "No client with this id exists"
+		"newClientIdPlaceholder":"12354"
 	},
 	"orderGarageModule":{
 		"garageModule": "Garage module",
@@ -792,5 +797,21 @@
 		"setting": "Settings",
 		"Preview": "Preview",
 		"startingMarketing": "Upgrading your billing plan. Redirecting..."
+	},
+
+	"newContract": {
+		"description": "New contract in ",
+		"selectClient": "Select client",
+		"invalidToken": "Token invalid",
+		"tokenPlaceholder": "gaZJBS",
+		"clientNotFound": "No client with this token exists",
+		"selectedPlaces": "Selected places",
+		"noSelectedPlaces": "No selected places",
+		"selectRent": "Select rent",
+		"contractPrice": "Enter new specific contract price",
+		"priceInvalid": "Price invalid",
+		"pricePlaceholder": "10000",
+		"selectCurrency": "Select currency"
+
 	}
 }
