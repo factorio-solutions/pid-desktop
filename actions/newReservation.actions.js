@@ -163,7 +163,7 @@ export function setPlace (place){
              , value: place ? place.id : undefined
              })
 
-    place && place.pricings[0] ? dispatch(setPrice(place.pricings[0])) : dispatch(setPriceValue(undefined))
+    place && place.pricing ? dispatch(setPrice(place.pricing)) : dispatch(setPriceValue(undefined))
   }
 }
 
@@ -368,16 +368,16 @@ export function getGarageDetails(){
 
     const state = getState().newReservation
     const onSuccess = (response) => {
-      if (getState().newReservation.pricings !== undefined ) { // pricings can be deleted before response comes here
+      // if (getState().newReservation.pricings !== undefined ) { // pricings can be deleted before response comes here
         response.data.garage.floors.forEach((floor)=>{
           floor.places.map((place) => {
             place.available = floor.free_places.find(p=>p.id==place.id)!=undefined //|| place.id === state.edit_place_id
-            place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
-              pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
-              return arr
-            }, [])
-            if (place.available && place.pricings[0]) { // add tooltip to available places
-              const pricing = place.pricings[0]
+            // place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
+            //   pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
+            //   return arr
+            // }, [])
+            if (place.available && place.pricing) { // add tooltip to available places
+              const pricing = place.pricing
               const symbol = pricing.currency.symbol
               place.tooltip = <div>
                                 <div>
@@ -397,14 +397,16 @@ export function getGarageDetails(){
         })
         dispatch(setGarage(response.data.garage))
         dispatch(setLoading(false))
-        getState().newReservation.place_id=== undefined && dispatch(autoSelectPlace())
-      }
+
+        // getState().newReservation.place_id=== undefined &&
+        dispatch(autoSelectPlace())
+      // }
     }
 
-    const onPricings = (response) => {
-      dispatch(setPricings(response.data.garage))
-      callGarageDetails()
-    }
+    // const onPricings = (response) => {
+    //   dispatch(setPricings(response.data.garage))
+    //   callGarageDetails()
+    // }
 
     const callGarageDetails = () => {
       request( onSuccess
@@ -419,14 +421,14 @@ export function getGarageDetails(){
     }
 
     if (state.availableGarages[state.garageIndex]){
-      if (state.pricings==undefined || state.pricings.id !== state.availableGarages[state.garageIndex].id){
-        dispatch(setLoading(true))
-        request( onPricings, GET_GARAGE_PRICINGS, { id: state.availableGarages[state.garageIndex].id } )
-      } else {
-        callGarageDetails()
-      }
+      // if (state.pricings==undefined || state.pricings.id !== state.availableGarages[state.garageIndex].id){
+      //   dispatch(setLoading(true))
+      //   request( onPricings, GET_GARAGE_PRICINGS, { id: state.availableGarages[state.garageIndex].id } )
+      // } else {
+      // }
+      callGarageDetails()
     } else { // garage not found, deselect any places
-      dispatch(setPricings(undefined))
+      // dispatch(setPricings(undefined))
       dispatch(setPlace(undefined))
     }
   }

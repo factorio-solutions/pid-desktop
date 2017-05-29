@@ -813,5 +813,10 @@
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Select currency"
 
+	},
+
+	"finance": {
+		"paypal": "Paypal",
+		"csob": "ČSOB"
 	}
 }
