@@ -129,7 +129,7 @@ export default function createRoutes() {
   const subRoutes = (
     <Route>
       <IndexRoute                                         component={LoginPage} />
-      <Route path="signUp"                                component={SignUpPage}/>
+      <Route path="signUpPage"                            component={SignUpPage}/>
       <Route path="resetPassword"                         component={ResetPasswordPage}/>
 
       <Route path="profile"                               component={ProfilePage}/>
