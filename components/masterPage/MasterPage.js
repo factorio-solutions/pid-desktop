@@ -97,7 +97,7 @@ export default class MasterPage extends Component {
           </div>
 
           <div className={`${styles.content} ${showSecondaryMenu && styles.shift}`}>
-            <Breadcrumbs path={breadcrumbs}/>
+            {/*<Breadcrumbs path={breadcrumbs}/>*/}
             {showHints && hint && <div className={styles.hint}>
               {hint.href && <RoundButton content={<i className="fa fa-info" aria-hidden="true"></i>} onClick={()=>{window.open(hint.href)}} type='info'/>}
               <div>{hint.hint}</div>
