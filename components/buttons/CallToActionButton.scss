@@ -1,0 +1,38 @@
+@import '../../styles/app.components';
+@import './Button';
+
+.button{
+  display:    inline-block;
+  @include    colorize($blue);
+  color:      $white;
+  border:     none;
+  outline:    none;
+  text-align: center;
+  cursor:     pointer;
+  transition: all 0.3s ease;
+
+  border-radius:  3px;
+  margin:         5px;
+  padding:        5px 10px;
+}
+
+.label{
+  font-size: 18px;
+}
+
+// states
+.selected {
+  background-color: $yellow;
+  color:            $black;
+}
+
+.disabled {
+  background-color: $lightGray;
+  color:            $gray;
+  cursor:           default;
+}
+
+.inverted{
+    @include colorize($white);
+    color:   $black;
+}

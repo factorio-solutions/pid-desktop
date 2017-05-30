@@ -3,14 +3,12 @@ import { t }       from '../modules/localization/localization'
 import moment      from 'moment'
 import _           from 'lodash'
 
-import { GARAGE_DETAILS_QUERY, OCCUPANCY_INIT } from '../queries/occupancy.queries'
+import { GARAGE_DETAILS_QUERY } from '../queries/occupancy.queries'
 import { toOccupancy }            from './pageBase.actions'
 
 export const OCCUPANCY_SET_GARAGE     = 'OCCUPANCY_SET_GARAGE'
-export const OCCUPANCY_SET_GARAGES    = 'OCCUPANCY_SET_GARAGES'
-export const OCCUPANCY_SET_GARAGE_ID  = 'OCCUPANCY_SET_GARAGE_ID'
-export const OCCUPANCY_SET_CLIENTS   = 'OCCUPANCY_SET_CLIENTS'
-export const OCCUPANCY_SET_CLIENT_ID = 'OCCUPANCY_SET_CLIENT_ID'
+export const OCCUPANCY_SET_CLIENTS    = 'OCCUPANCY_SET_CLIENTS'
+export const OCCUPANCY_SET_CLIENT_ID  = 'OCCUPANCY_SET_CLIENT_ID'
 export const OCCUPANCY_SET_DURATION   = 'OCCUPANCY_SET_DURATION'
 export const OCCUPANCY_SET_FROM       = 'OCCUPANCY_SET_FROM'
 
@@ -19,22 +17,6 @@ export function setGarage (garage){
   return  { type: OCCUPANCY_SET_GARAGE
           , value: garage
           }
-}
-
-export function setGarages (garages){
-  return  { type: OCCUPANCY_SET_GARAGES
-          , value: garages
-          }
-}
-
-export function setGarageId (id){
-  return (dispatch, getState) => {
-    dispatch({ type: OCCUPANCY_SET_GARAGE_ID
-             , value: id
-             })
-
-    dispatch(loadGarage())
-  }
 }
 
 export function setClients (clients){
@@ -63,25 +45,25 @@ export function setFrom (from){
 export function loadGarage(){
   return (dispatch, getState) => {
     const onGarageSuccess = (response) => {
+      response.data.garage.clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
+      dispatch(setClients(response.data.garage.clients))
       dispatch(setGarage(response.data.garage))
     }
 
-    getState().occupancy.garage_id && request(onGarageSuccess, GARAGE_DETAILS_QUERY, {id: getState().occupancy.garage_id})
+    getState().pageBase.garage && request(onGarageSuccess, GARAGE_DETAILS_QUERY, {id: getState().pageBase.garage})
   }
 }
 
 export function initOccupancy () {
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      // response.data.manageble_clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
-      // dispatch(setClients(response.data.manageble_clients))
-      const garages = _.uniqWith(response.data.user_garages.map(function (user_garage) {return user_garage.garage}),  _.isEqual)
-      dispatch(setGarages(garages))
-
-      getState().occupancy.garage_id == undefined ? dispatch(setGarageId(garages[0] && garages[0].id)) : dispatch(setGarageId(getState().occupancy.garage_id))
-    }
-
-    request(onSuccess, OCCUPANCY_INIT)
+    // const onSuccess = (response) => {
+    //   console.log(response);
+    //   response.data.manageble_clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
+    //   dispatch(setClients(response.data.manageble_clients))
+    // }
+    //
+    // request(onSuccess, OCCUPANCY_INIT) // download clients
+    dispatch(loadGarage())
   }
 }
 

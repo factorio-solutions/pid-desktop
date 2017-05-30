@@ -1,7 +1,8 @@
 import { request } from '../helpers/request'
+import { get }     from '../helpers/get'
 import * as nav    from '../helpers/navigation'
 
-import { CREATE_NEW_CLIENT, EDIT_CLIENT_INIT, EDIT_CLIENT_MUTATION } from '../queries/newClient.queries'
+import { CREATE_NEW_CLIENT, EDIT_CLIENT_INIT, EDIT_CLIENT_MUTATION, LOAD_INFO_FROM_IC } from '../queries/newClient.queries'
 
 export const SET_CLIENT_NAME        = "SET_CLIENT_NAME"
 export const SET_CLIENT_IC          = "SET_CLIENT_IC"
@@ -109,11 +110,36 @@ export function initClient(id) {
   }
 }
 
+export function loadFromIc(){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      try {
+        const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
+
+        dispatch(setName(res.OF))
+        dispatch(setLine1(res.AD.UC))
+        dispatch(setCity(res.AA.N ))
+        dispatch(setPostalCode(res.AA.PSC))
+        dispatch(setCountry(res.AA.NS))
+        dispatch(setDIC(res.DIC))
+      } catch (e) {
+        console.log('not able to parse info from ICO', e);
+      }
+    }
+
+    request( onSuccess
+           , LOAD_INFO_FROM_IC
+           , { ic: getState().newClient.ic }
+           )
+
+  }
+}
+
 export function submitNewClient(id) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(clearForm())
-      nav.to('/clients')
+      nav.to(`/${getState().pageBase.garage}/admin/clients`)
     }
 
     if (id) { // then edit client

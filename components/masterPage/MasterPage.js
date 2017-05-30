@@ -1,89 +1,113 @@
 import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
-import styles                           from './MasterPage.scss'
 
-import * as pageBaseActions from '../../actions/pageBase.actions'
+import Logo                  from '../logo/Logo'
+import CallToActionButton    from '../buttons/CallToActionButton'
+import MenuButton            from '../buttons/MenuButton'
+import RoundButton           from '../buttons/RoundButton'
+import GarageSelector        from '../garageSelector/GarageSelector'
+import VerticalMenu          from '../verticalMenu/VerticalMenu'
+import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
+import Breadcrumbs           from '../breadcrumbs/Breadcrumbs'
+import DropdownContent       from '../dropdown/DropdownContent'
+
+import * as nav from '../../helpers/navigation'
+
+import styles from './MasterPage.scss'
 
 
-export class MasterPage extends Component {
+export default class MasterPage extends Component {
   constructor(props) {
-     super(props);
-     this.state = {menu: false}
+     super(props)
+     this.state = { menu: false }
   }
 
   static propTypes = {
-    state:          PropTypes.object,
-    actions:        PropTypes.object,
+    name:         PropTypes.string,
+    messageCount: PropTypes.oneOfType([ PropTypes.string
+                                      , PropTypes.number
+                                      ]),
+    callToAction: PropTypes.array, // [{label, state, onClick}, ... ]
 
-    logo:           PropTypes.object,
-    horizContent:   PropTypes.object,
-    vertTopContent: PropTypes.object,
-    vertBotContent: PropTypes.object,
-    bodyContent:    PropTypes.object,
-    filters:        PropTypes.object
+    verticalMenu:     PropTypes.array, // [{label, key, icon, onClick}, ... ]
+    verticalSelected: PropTypes.string,
+
+    verticalSecondaryMenu:     PropTypes.array, // [{label, key, onClick}, ... ]
+    verticalSecondarySelected: PropTypes.string,
+    showSecondaryMenu:         PropTypes.bool,
+    secondaryMenuBackButton:   PropTypes.object, // {label, onClick}
+
+    showHints: PropTypes.bool,
+    hint:      PropTypes.object, // {hint, href}
+
+    breadcrumbs:     PropTypes.object, // [{label, route}, ... ]
+    profileDropdown: PropTypes.object // [ DOMelement, ... ]
   }
 
   render(){
-    const { state, actions, logo, horizContent, vertTopContent, vertBotContent, bodyContent, filters } = this.props
-    const { menuWidth } = state
+    const { name, messageCount, callToAction,
+      verticalMenu, verticalSelected, verticalSecondaryMenu, verticalSecondarySelected,showSecondaryMenu, secondaryMenuBackButton,
+      showHints, hint, breadcrumbs, profileDropdown,
+      children } = this.props
 
-    const onClick = (e) => {
-      this.setState({ menu: !this.state.menu })
-    };
+    const onHamburgerClick = (e) => { this.setState({ menu: !this.state.menu }) }
 
-    // const onDrag = (event) => {
-    //   if (event.clientX != 0){
-    //     actions.setMenuWidth(event.clientX)
-    //   }
-    // }
-
-    const menuOnClick = () => {
-      actions.setMenuWidth(menuWidth == 200 ? 90 : 200)
-    }
+    const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
 
     return(
-      <div className={this.state.menu && styles.active} id={styles.layout} style={{paddingLeft: menuWidth+'px'}}>
-        {/* horizontal menu */}
+      <div>
         <div className={styles.horizontalMenu}>
-          <div className={styles.pidLogo} style={{width: menuWidth+'px'}}>
-            {logo}
+          <a onClick={onHamburgerClick} className={styles.hamburger}>
+            <i className="fa fa-bars" aria-hidden="true"></i>
+          </a>
+          <div className={styles.logoContainer}>
+            <Logo style='rect' />
           </div>
+
           <div className={styles.horizontalMenuContent}>
-            {horizContent}
-          </div>
-          <div className={styles.filters}>
-            {filters}
+            <div className={styles.theContent}>
+              <div className={styles.callToAction}>
+                {callToAction.map(createCallToActionButton)}
+              </div>
+
+              <div className={styles.user}>
+                <div className={styles.messages} onClick={()=>{nav.to('/notifications')}}>
+                  <i className={"fa fa-commenting-o"} aria-hidden="true"></i>
+                  {messageCount > 0 && <div className={styles.count}>{messageCount}</div>}
+                </div>
+
+                <DropdownContent content={profileDropdown}>
+                  <div className={styles.profile} > {/*onClick={()=>{nav.to('/profile')}}*/}
+                    <i className={"fa fa-user"} aria-hidden="true"></i>
+                    <span className={styles.name}>{name}</span>
+                  </div>
+                </DropdownContent>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Menu icon when collapsed */}
-        <a onClick={onClick} className={`${styles.menuLink} ${this.state.menu && styles.active}`}>
-          <i className="fa fa-bars" aria-hidden="true"></i>
-        </a>
-
-        {/* vertical menu */}
-        <div className={this.state.menu && styles.active} id={styles.menu} style={{width: menuWidth+'px'}} onClick={menuOnClick}>
-          <div>
-            {vertTopContent}
+        <div className={styles.page}>
+          <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
+            <GarageSelector />
+            <VerticalMenu content={verticalMenu} selected={verticalSelected} onClick={()=>{this.setState({menu: false})}}/>
           </div>
-          <div className={styles.bottom} style={{width: menuWidth+'px'}}>
-            {vertBotContent}
-          </div>
-        </div>
-        {/* <div className={styles.resizeLine} onDrag={onDrag} style={{left: menuWidth+'px'}}> </div> */}
 
-        {/* Body of page */}
-        <div className={styles.content}>
-          {bodyContent}
+          <div className={`${styles.secondaryVerticalMenu} ${showSecondaryMenu && styles.shift} ${verticalSecondarySelected === undefined && styles.hideAdmin}`}>
+            <VerticalSecondaryMenu content={verticalSecondaryMenu} selected={verticalSecondarySelected} backContent={{...secondaryMenuBackButton, onClick: ()=>{this.setState({menu: true}); secondaryMenuBackButton.onClick()}}}/>
+          </div>
+
+          <div className={`${styles.content} ${showSecondaryMenu && styles.shift}`}>
+            <Breadcrumbs path={breadcrumbs}/>
+            {showHints && hint && <div className={styles.hint}>
+              {hint.href && <RoundButton content={<i className="fa fa-info" aria-hidden="true"></i>} onClick={()=>{window.open(hint.href)}} type='info'/>}
+              <div>{hint.hint}</div>
+            </div>}
+            <div className={`${styles.children} ${showHints && hint && styles.hashHint}`}>
+              {children}
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 }
-
-
-export default connect(
-  state    => ({ state: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(pageBaseActions, dispatch) })
-)(MasterPage)

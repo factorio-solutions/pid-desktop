@@ -34,3 +34,8 @@ export const EDIT_CLIENT_MUTATION = `mutation RenameClient($client: ClientInput!
   }
 }
 `
+
+export const LOAD_INFO_FROM_IC = `query IcToInfo($ic:String){
+  ares(ic:$ic)
+}
+`

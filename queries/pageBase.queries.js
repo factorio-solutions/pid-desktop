@@ -14,6 +14,7 @@ export const GET_CURRENT_USER = `{
     has_garages
     has_account
     has_client
+    created_at
   }
 }
 `
@@ -34,6 +35,21 @@ export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: 
     has_garages
     has_account
     has_client
+  }
+}
+`
+
+// get user available garages
+export const GET_GARAGES = `{
+  user_garages {
+    admin
+    user_id
+    garage {
+      id
+      active_pid_tarif_id
+      name
+      img
+    }
   }
 }
 `

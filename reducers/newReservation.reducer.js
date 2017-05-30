@@ -18,6 +18,7 @@ import {
   NEW_RESERVATION_SET_FROM,
   NEW_RESERVATION_SET_TO,
   NEW_RESERVATION_SET_PLACE_ID,
+  NEW_RESERVATION_SET_EDIT_PLACE_ID,
 
   NEW_RESERVATION_SET_DURATION_DATE,
   NEW_RESERVATION_SET_PRICE,
@@ -46,6 +47,7 @@ const defaultState =  { user_id:          undefined // id of selected user reser
                       , from:             ''
                       , to:               ''
                       , place_id:         undefined // if of selected place
+                      , edit_place_id:    undefined // place of reservation that needs to be added to free places
 
 
                       , durationDate:     false // set duration or end of parking?
@@ -132,6 +134,11 @@ export default function newReservation (state = defaultState, action) {
     case NEW_RESERVATION_SET_PLACE_ID:
       return { ...state
              , place_id: action.value
+             }
+
+    case NEW_RESERVATION_SET_EDIT_PLACE_ID:
+      return { ...state
+             , edit_place_id: action.value
              }
 
     case NEW_RESERVATION_SET_DURATION_DATE:

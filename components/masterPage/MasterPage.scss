@@ -1,177 +1,288 @@
 @import '../../styles/app.components';
 
-$horizontal-menu-height: 50px;
-$horizontal-menu-height-collapsed: 100px;
+$primaryMenuWidth: 160px;
+$secondaryMenuWidth: 200px;
+$hintWidth: 180px;
 
-#layout.active #menu {
-    display: initial;
-}
-
-
-#menu {
-    background: $gray;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    position: fixed;
-    left: 0;
-    z-index: 5;
-    top: 0;
-}
-
-
-/* -- Dynamic Button For Responsive Menu -------------------------------------*/
-.menuLink {
-    position: fixed;
-    display: block;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-
-    width: 2em;
-    height: auto;
-    font-size: 10px;
-    padding: 15px 15px;
-    color: $white;
-    font-size: large;
-}
-
-/* -- MyStyles ---------------------------------------------------------------*/
 .horizontalMenu{
-  background-color: $white;
-  position: fixed;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  width: 100%;
-  color: white;
-}
-.horizontalMenu>*{
-  text-align: center;
-}
+  z-index: 9;
+  display: block;
 
-.verticalMenu{
-  background-color: $gray;
-  color: white;
-  position: fixed;
-  left: 0px;
-}
-.pidLogo{
   background-color: $black;
-}
-.pidLogo>img{
-  width: 100%;
-  height: 100%;
-}
-.horizontalMenuContent{
-  color: $black;
-  flex-grow: 1;
-  text-align: left;
-}
-.filters{
-  color: $black;
-  padding: 10px 25px;
+  color:            $yellow;
+
+  >.hamburger{
+    color: $white;
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    cursor: pointer;
+    font-size: 26px;
+  }
+
+  >.logoContainer{
+    margin: auto;
+      width: 160px;
+  }
 }
 
-.resizeLine{
-  -webkit-user-drag: element;
-  -khtml-user-drag: element;
+.user{
+  >div{
+    display: inline-block;
+  }
 
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: transparent;
-  left: 198px;
-  z-index: 15;
-  cursor: ew-resize;
+  >.messages{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-right: 20px;
+
+    >.count{
+      color:          white;
+      background:     $red;
+      border-radius:  50%;
+      padding:        3px 5px;
+      border:         3px solid $black;
+
+      position:   absolute;
+      top:        -10px;
+      right:      -12px;
+      font-size:  13px;
+    }
+
+    >i{
+      font-size:      32px;
+      vertical-align: middle;
+      padding:        0 5px;
+      color:          white;
+    }
+  }
+
 }
+
+.profile{
+  cursor: pointer;
+  display: inline-block;
+
+  >i{
+    font-size:      32px;
+    vertical-align: middle;
+    padding:        0 5px;
+    color:          white;
+  }
+}
+
+.page{
+  >.verticalMenu{
+    z-index: 8;
+    background-color: $menuGray;
+    color:            $white;
+  }
+
+  >.secondaryVerticalMenu{
+      z-index: 7;
+      background-color: $gray;
+      color:            $white;
+      transition: all 0.3s ease;
+  }
+
+  >.content{
+    // width: 100%;
+
+    >.hint{
+      background-color: $blue;
+      color:            $white;
+      padding:          10px;
+      text-align:       center;
+      height:           100%;
+
+    }
+
+    >.children{
+      padding: 0 20px;
+    }
+  }
+}
+
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 /* -- Only apply on big window ---------------------------------------------- */
 @media (min-width: $collapseWidth) {
-  .bottom{
-    position: fixed;
-    bottom: 0;
-    width: 200px;
-  }
-
   .horizontalMenu{
-    display: flex;
-    height: $horizontal-menu-height;
-  }
-  .content{
-    padding: 25px;
-    margin-top: $horizontal-menu-height;
-  }
-  .pidLogo{
-    display: inline-block;
-    height: 100%;
-    width: 200px;
-  }
-  .horizontalMenuContent{
-    display: inline-block;
-    height: 100%;
-    padding: 0 25px;
-  }
+    display:  flex;
+    height:   60px;
 
-  .verticalMenu{
-    width: 200px;
-    top: $horizontal-menu-height;
-    bottom: 0px;
-  }
-
-  #layout {
-      padding-left: 200px;
-  }
-
-  #menu {
-      /*left: 200px;*/
-      width: 200px;
-      margin-top: $horizontal-menu-height;
-      bottom: 0;
-  }
-
-  .menuLink {
+    >.hamburger{
       display: none;
+    }
+
+    >.horizontalMenuContent{
+      flex: 1 1;
+
+      >.theContent{
+        // float: right;
+        display: flex;
+
+        >.user{
+          padding: 16px 30px 0 0;
+        }
+
+        >.callToAction{
+          margin: auto;
+          >button{
+            margin: 14px 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .page{
+    display:  flex;
+    position: fixed;
+    bottom:   0;
+    left:     0;
+    right:    0;
+    top:      60px;
+
+    >.verticalMenu{
+      width: $primaryMenuWidth;
+    }
+
+    >.secondaryVerticalMenu{
+      width: $secondaryMenuWidth;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: calc(#{$primaryMenuWidth} - #{$secondaryMenuWidth});
+
+      &.shift{
+        transform: translate($secondaryMenuWidth,0);
+      }
+    }
+
+    >.content{
+      flex: 1 1;
+      transition: all 0.3s ease;
+
+      // &.hashHint{
+      //   width: calc(100% - $hintWidth);
+      // }
+
+      &.shift{
+        transform: translate($secondaryMenuWidth,0);
+      }
+
+      >.children{
+        overflow: auto;
+        height: calc(100% - 60px);
+
+        &.hashHint{
+          margin-right: $hintWidth;
+        }
+      }
+
+      >.hint{
+        position:         fixed;
+        top:              60px;
+        bottom:           0;
+        right:            0;
+        width:            calc(#{$hintWidth} - 2 * 10px); // - 2x padding
+
+        >button{
+          display: block;
+          margin: 10px auto;
+        }
+      }
+    }
   }
 }
 
+@media (min-width: 1300px) {
+  .page{
+    >.secondaryVerticalMenu{
+      position: static;
+      &.shift{
+        display: inherit;
+        transform: none;
+      }
+      &.hideAdmin:not(.shift){
+        display: none;
+      }
+    }
+    >.content{
+      &.shift{
+        transform: none;
+      }
+    }
+  }
+}
 
 /* -- Only apply on small window -------------------------------------------- */
 @media (max-width: $collapseWidth) {
-  #layout{
-    padding: 5px !important;
-  }
-
   .horizontalMenu{
-    height: $horizontal-menu-height-collapsed;
-  }
-  .content{
-    margin-top: $horizontal-menu-height-collapsed;
-  }
-  .pidLogo{
-    display: block;
-    height: 50%;
-    width: 100% !important;
-    border-bottom: 1px solid $yellow;
-  }
-  .horizontalMenuContent{
-    display: block;
-    height: 50%;
-    text-align: center;
-  }
+    position: relative;
 
-  #menu {
-      width: 100% !important;
-      margin-top: $horizontal-menu-height-collapsed;
-      display: none;
-      > .bottom{
-        width: 100% !important;
+    >.horizontalMenuContent{
+      >.theContent{
+        >.user{
+          position: absolute;
+          top: 8px;
+          right: 12px;
+        }
+
+        >.callToAction{
+          text-align: center;
+        }
       }
+    }
   }
 
-  .filters, .resizeLine{
-    display: none;
+  .profile{
+    >.name{
+      display: none;
+    }
   }
 
+  .page{
+    >.verticalMenu{
+      transition: all 0.3s ease;
+      position: absolute;
+      width: 100%;
+      transform: translate(0,-100%);
+
+      &.active:not(.shift){
+        transform: translate(0,0);
+      }
+    }
+
+    >.secondaryVerticalMenu{
+      transition: all 0.3s ease;
+      position: absolute;
+      transform: translate(0,-100%);
+      width: 100%;
+
+      &.shift{
+        transform: translate(0,0);
+      }
+    }
+
+    >.content{
+      position: absolute;
+      width: 100%;
+
+      >.hint{
+        display: flex;
+        //
+        // >button{
+        //   // float: left;
+        // }
+        >div{
+          flex:  1 1;
+          text-align: center;
+          margin-right: 50px;
+        }
+      }
+    }
+  }
 }

@@ -1,6 +1,5 @@
-import { request }                                    from '../helpers/request'
-import { GET_CURRENCIES }                             from '../queries/newPricing.queries'
-import { CREATE_RENT, UPDATE_RENT, GET_RENT_DETAILS } from '../queries/newRent.queries'
+import { request }                                                    from '../helpers/request'
+import { CREATE_RENT, UPDATE_RENT, GET_RENT_DETAILS, GET_CURRENCIES } from '../queries/newRent.queries'
 
 import * as nav from '../helpers/navigation'
 
@@ -80,7 +79,7 @@ export function submitNewRent(id) {
     const state = getState().newRent
 
     const onSuccess = (response) => {
-      nav.to('/garages')
+      nav.to(`/${getState().pageBase.garage}/admin/finance`)
       dispatch(clearForm)
     }
 

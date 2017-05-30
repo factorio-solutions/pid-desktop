@@ -15,7 +15,7 @@ export default function Form ({ children, onSubmit, onHighlight, onBack, submita
                         {back && <div className={styles.floatLeft}>
                           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
                         </div>}
-                        <div className={back && styles.floatRight}>
+                        <div className={back && styles.floatRight}> 
                           <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={sendReservation} type='confirm' state={!submitable && 'disabled'} onDisabledClick={highlightInputs}/>
                         </div>
                       </div>

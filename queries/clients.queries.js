@@ -9,9 +9,14 @@ export const GET_CLIENTS = `{
     admin
     client {
       name
+      token
       id
       created_at
       user_count
+      contracts{
+        name
+        id
+      }
     }
   }
 }
