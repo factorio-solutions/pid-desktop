@@ -43,6 +43,8 @@ export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: 
 export const GET_GARAGES = `{
   user_garages {
     admin
+    receptionist
+    security
     user_id
     garage {
       id

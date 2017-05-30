@@ -95,7 +95,6 @@ export default class OccupancyOverview extends Component{
               <tr><td>{t(['occupancy', 'period'])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
               <tr><td>{t(['occupancy', 'licencePlate'])}</td><td>{reservation.car.licence_plate}</td></tr>
             </tbody></table> }) }
-          reservationElement.onmouseleave = () => { this.setState({ ...this.state, visible: false }) }
           reservationElement.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX, mouseY: event.clientY }) }
 
           theRow.appendChild(reservationElement)
@@ -158,7 +157,7 @@ export default class OccupancyOverview extends Component{
       <div>
 
         <div className={styles.occupacny}>
-          <table>
+          <table onMouseMove={()=>{this.setState({ ...this.state, visible: false })}}>
             <thead>
               <tr className={styles.bottomBorder}>
                 <td className={styles.placePadding}>{t(['occupancy', 'places'])}</td>

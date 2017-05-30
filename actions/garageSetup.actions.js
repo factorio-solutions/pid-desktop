@@ -761,10 +761,10 @@ function floorsForRequest(state) {
     floor.places = floor.places.map(place => {
       return { label:     place.label
              , priority:  state.order.length - state.order.findIndex((obj) => obj === place.label)
-             , length:    state.length || null
-             , height:    state.height || null
-             , width:     state.width || null
-             , weight:    state.weight || null
+             , length:    +state.length || null
+             , height:    +state.height || null
+             , width:     +state.width || null
+             , weight:    +state.weight || null
              }
     })
     return _.omit(floor, ['from', 'to']);

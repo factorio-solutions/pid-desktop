@@ -13,6 +13,9 @@ import {
   PAGE_BASE_SET_HINT,
   PAGE_BASE_SET_GARAGES,
   PAGE_BASE_SET_GARAGE,
+  PAGE_BASE_SET_IS_GARAGE_ADMIN,
+  PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
+  PAGE_BASE_SET_IS_GARAGE_SECURITY
 }  from '../actions/pageBase.actions'
 
 const defaultState =  { selected:                undefined // key selected in primary menu
@@ -37,8 +40,11 @@ const defaultState =  { selected:                undefined // key selected in pr
                       , hint:      undefined // {hint, href}
 
                       // selectedGarage
-                      , garages: []
-                      , garage: undefined
+                      , garages:              []
+                      , isGarageAdmin:        false // is admin of currently selected garage?
+                      , isGarageReceptionist: false // is receptionist of currently selected garage?
+                      , isGarageSecurity:     false // is security of currently selected garage?
+                      , garage:               undefined
                       }
 
 
@@ -113,6 +119,21 @@ export default function pageBase (state = defaultState, action) {
     case PAGE_BASE_SET_GARAGE:
       return { ...state
              , garage: action.value
+             }
+
+    case PAGE_BASE_SET_IS_GARAGE_ADMIN:
+      return { ...state
+             , isGarageAdmin: action.value
+             }
+
+    case PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST:
+      return { ...state
+             , isGarageReceptionist: action.value
+             }
+
+    case PAGE_BASE_SET_IS_GARAGE_SECURITY:
+      return { ...state
+             , isGarageSecurity: action.value
              }
 
     default:

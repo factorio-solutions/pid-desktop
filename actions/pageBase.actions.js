@@ -16,8 +16,11 @@ export const PAGE_BASE_SET_CUSTOM_MODAL               = 'PAGE_BASE_SET_CUSTOM_MO
 export const PAGE_BASE_SET_NOTIFICATIONS_MODAL        = 'PAGE_BASE_SET_NOTIFICATIONS_MODAL'
 export const PAGE_BASE_SET_CURRENT_USER               = 'PAGE_BASE_SET_CURRENT_USER'
 export const PAGE_BASE_SET_HINT                       = 'PAGE_BASE_SET_HINT'
-export const PAGE_BASE_SET_GARAGES                     = 'PAGE_BASE_SET_GARAGES'
+export const PAGE_BASE_SET_GARAGES                    = 'PAGE_BASE_SET_GARAGES'
 export const PAGE_BASE_SET_GARAGE                     = 'PAGE_BASE_SET_GARAGE'
+export const PAGE_BASE_SET_IS_GARAGE_ADMIN            = 'PAGE_BASE_SET_IS_GARAGE_ADMIN'
+export const PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST     = 'PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST'
+export const PAGE_BASE_SET_IS_GARAGE_SECURITY         = 'PAGE_BASE_SET_IS_GARAGE_SECURITY'
 
 
 export function setSelected(value) {
@@ -94,13 +97,49 @@ export function setHint(hint, href) {
 }
 
 export function setGarages(value) {
-  return { type: PAGE_BASE_SET_GARAGES
+  return (dispatch, getState) => {
+    dispatch({ type: PAGE_BASE_SET_GARAGES
+             , value
+             })
+
+    const selectedGarage = value.find(user_garage => user_garage.garage.id === getState().pageBase.garage)
+    if(selectedGarage){
+      dispatch(setIsGarageAdmin(selectedGarage.admin))
+      dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
+      dispatch(setIsGarageSecurity(selectedGarage.security))
+    }
+  }
+}
+
+export function setGarage(value) {
+  return (dispatch, getState) => {
+    dispatch({ type: PAGE_BASE_SET_GARAGE
+             , value
+             })
+
+    const selectedGarage = getState().pageBase.garages.find(user_garage => user_garage.garage.id === value)
+    if(selectedGarage){
+      dispatch(setIsGarageAdmin(selectedGarage.admin))
+      dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
+      dispatch(setIsGarageSecurity(selectedGarage.security))
+    }
+  }
+}
+
+export function setIsGarageAdmin(value) {
+  return { type: PAGE_BASE_SET_IS_GARAGE_ADMIN
          , value
          }
 }
 
-export function setGarage(value) {
-  return { type: PAGE_BASE_SET_GARAGE
+export function setIsGarageReceptionist(value) {
+  return { type: PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST
+         , value
+         }
+}
+
+export function setIsGarageSecurity(value) {
+  return { type: PAGE_BASE_SET_IS_GARAGE_SECURITY
          , value
          }
 }
