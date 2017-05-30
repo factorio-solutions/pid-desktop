@@ -38,7 +38,7 @@ export class UsersPage extends Component {
                    ]
 
     const createClientLink = (client, index, arr) => {
-      const onClick = () => {nav.to(`/clients/${client.id}/users`)}
+      const onClick = () => {nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)}
       var name = arr.length-1 == index ? client.name : client.name +", "
       return <span key={index} className={styles.clickable} onClick={onClick}> {name} </span>
     }

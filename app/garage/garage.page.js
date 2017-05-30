@@ -91,7 +91,6 @@ export class GaragePage extends Component {
           <tr><td>{t(['garages','period'])}</td><td>{reservation && moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')+' - '+moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
           <tr><td>{t(['garages','licencePlate'])}</td><td>{reservation && reservation.car.licence_plate}</td></tr>
         </tbody></table>
-        console.log(place);
         return place
       })
       return floor

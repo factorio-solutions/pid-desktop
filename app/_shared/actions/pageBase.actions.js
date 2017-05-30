@@ -148,15 +148,16 @@ export function setIsGarageSecurity(value) {
 function prepareAdminSecondaryMenu() {
   return (dispatch, getState) => {
     const garage = getState().pageBase.garage
+    const state = getState().pageBase
     return [ {label: t(['pageBase', 'Invoices']),      key: "invoices", onClick: ()=>{nav.to(`/${garage}/admin/invoices`)} }
            , {label: t(['pageBase', 'Clients']),       key: "clients",  onClick: ()=>{nav.to(`/${garage}/admin/clients`)} }
-           , {label: t(['pageBase', 'Modules']),       key: "modules",  onClick: ()=>{nav.to(`/${garage}/admin/modules`)} }
-           , {label: t(['pageBase', 'Garage setup']),  key: "garage",   onClick: ()=>{nav.to(`/${garage}/admin/garageSetup/general`)} }
+           , state.isGarageAdmin && {label: t(['pageBase', 'Modules']),       key: "modules",  onClick: ()=>{nav.to(`/${garage}/admin/modules`)} }
+           , state.isGarageAdmin && {label: t(['pageBase', 'Garage setup']),  key: "garage",   onClick: ()=>{nav.to(`/${garage}/admin/garageSetup/general`)} }
            , {label: t(['pageBase', 'Users']),         key: "users",    onClick: ()=>{nav.to(`/${garage}/admin/users`)} }
-           , {label: t(['pageBase', 'Finance']),       key: "finance",  onClick: ()=>{nav.to(`/${garage}/admin/finance`)} }
-           , {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
-           , {label: t(['pageBase', 'Activity log']),  key: "activity", onClick: ()=>{nav.to(`/${garage}/admin/activityLog`)} }
-           ]
+           , state.isGarageAdmin && {label: t(['pageBase', 'Finance']),       key: "finance",  onClick: ()=>{nav.to(`/${garage}/admin/finance`)} }
+           , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
+           , state.isGarageAdmin && {label: t(['pageBase', 'Activity log']),  key: "activity", onClick: ()=>{nav.to(`/${garage}/admin/activityLog`)} }
+           ].filter(field => field !== false)
   }
 }
 
@@ -184,7 +185,7 @@ export function fetchCurrentUser(){
 export function fetchGarages(){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch( setGarages( response.data.user_garages ) )
+      dispatch( setGarages( response.data.user_garages.filter(user_garage => user_garage.user_id === response.data.current_user.id) ) )
 
       const id = parseInt(window.location.hash.substring(5).split('/')[0])
       response.data.user_garages.find(user_garage => user_garage.garage.id === id) !== undefined ? dispatch( setGarage( id )) : dispatch( setGarage( response.data.user_garages.length > 0 && response.data.user_garages[0].garage.id ))
