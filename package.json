@@ -6,7 +6,6 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.my.js --progress --colors",
-    "postinstall": "webpack -p --config ./webpack.config.my.js --progress",
     "start": "node ./src/app.js",
     "dev": "webpack-dev-server --config webpack.config.dev.js --progress --colors --open"
   },
