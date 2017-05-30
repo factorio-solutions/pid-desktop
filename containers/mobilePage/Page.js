@@ -3,13 +3,13 @@ import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
 import * as onsen                      from 'react-onsenui' // important - handles mobile layout
 
-import Logo            from '../../components/logo/Logo'
-import Dropdown        from '../../components/dropdown/Dropdown'
-import RoundButton     from '../../components/buttons/RoundButton'
-import MobileSlideMenu from '../../components/mobileSlideMenu/MobileSlideMenu'
-import ButtonStack     from '../../components/buttonStack/ButtonStack'
-import MenuButton      from '../../components/buttons/MenuButton'
-import Modal           from '../../components/modal/Modal'
+import Logo             from '../../components/logo/Logo'
+import Dropdown         from '../../components/dropdown/Dropdown'
+import RoundButton      from '../../components/buttons/RoundButton'
+import MobileSlideMenu  from '../../components/mobileSlideMenu/MobileSlideMenu'
+import ButtonStack      from '../../components/buttonStack/ButtonStack'
+import MobileMenuButton from '../../components/buttons/MobileMenuButton'
+import Modal            from '../../components/modal/Modal'
 
 import styles from './Page.scss'
 
@@ -62,7 +62,7 @@ export class Page extends Component {
     const currentUser    = () => { console.log('TODO: current user profile') }
     const logOut         = () => { this.logout() }
     const modalClick     = () => { actions.setError(undefined) }
-    const sideMenuItems  = [ <MenuButton key='1' icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} /> ]
+    const sideMenuItems  = [ <MobileMenuButton key='1' icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]
 
     const garageContent = () => {
       const garageSelected = (index) => { actions.setGarage(state.garages[index].id) }

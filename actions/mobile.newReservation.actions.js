@@ -5,7 +5,7 @@ import { setError, setCustomModal } from './mobile.header.actions'
 
 import { GET_AVAILABLE_FLOORS }                                                           from '../queries/mobile.newReservation.queries'
 import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, PAY_RESREVATION } from '../queries/newReservation.queries'
-import { CHECK_VALIDITY }                                                                 from '../queries/reservations.queries'
+import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT }                                            from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS }                                                            from '../../reservations/newReservation.page'
 import { entryPoint }                                                                     from '../../index'
 
@@ -176,16 +176,6 @@ export function getAvailableCars () {
 export function pickPlaces() {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      response.data.garage.floors.forEach((floor) => {
-        floor.free_places.map((place) => {
-          place.pricings = response.data.garage.pricings.reduce((arr, pricing)=>{
-                pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
-                return arr
-              }, [])
-          return place
-        })
-      })
-
       dispatch( setFloors(response.data.garage.floors) )
 
       if (response.data.garage.floors.find((floor)=> {return floor.free_places.find((place)=>{return place.id == getState().mobileNewReservation.place_id})}) == undefined){
@@ -218,7 +208,7 @@ export function autoselectPlace(){
       const freePlaces = getState().mobileNewReservation.availableFloors.reduce((arr, floor)=> { // free places,
         return arr.concat(floor.free_places.filter((place)=>{
           if (getState().mobileNewReservation.client_id == undefined) {
-            return place.pricings.length >= 1
+            return place.pricing != undefined
           } else {
             return true
           }
@@ -242,9 +232,9 @@ export function submitReservation(callback){
       dispatch(setCustomModal('Creating payment ...'))
       request( onSuccess
              , CREATE_RESERVATION
-             , { place_id: reservation.place_id
-               , user_id: getState().mobileHeader.current_user.id
-               , reservation: { client_id:     reservation.client_id
+             , { reservation: { user_id:       getState().mobileHeader.current_user.id
+                              , place_id:      reservation.place_id
+                              , client_id:     reservation.client_id
                               , car_id:        reservation.car_id
                               , licence_plate: reservation.licence_plate=='' ? undefined :  reservation.licence_plate
                               , url:           window.cordova === undefined ? window.location.href.split('?')[0] // development purposes - browser debuging
@@ -259,20 +249,30 @@ export function submitReservation(callback){
     }
 }
 
-export function checkReservation (url, callback = ()=>{}) {
+export function checkReservation (reservation, callback = ()=>{}) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setCustomModal(undefined))
       if (response.data.paypal_check_validity){
-        dispatch(payReservation (url, callback))
+        dispatch(payReservation (reservation.payment_url, callback))
       } else {
         dispatch(setError('Token of payment is no longer valid, reservation will be deleted.'))
         callback()
       }
     }
 
-    dispatch(setCustomModal('Checking token validity'))
-    request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
+    const onCSOBSuccess = (response) => {
+      dispatch(setCustomModal(undefined))
+      dispatch(payReservation(response.data.csob_pay_reservation, callback))
+    }
+
+    if (reservation.payment_url.includes('csob.cz')) {
+      dispatch(setCustomModal('Creating payment'))
+      request(onCSOBSuccess, CREATE_CSOB_PAYMENT, { id: reservation.id, url: window.location.href.split('?')[0] })
+    } else {
+      dispatch(setCustomModal('Checking token validity'))
+      request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
+    }
   }
 }
 
@@ -284,10 +284,14 @@ export function payReservation (url, callback = ()=>{}) {
     } else { // in mobile open InAppBrowser, when redirected back continue
       let inAppBrowser = cordova.InAppBrowser.open(url, '_blank', 'location=no,zoom=no,toolbar=no')
       inAppBrowser.addEventListener('loadstart', (event)=>{
-        if (!event.url.includes('paypal')) { // no paypal in name means redirected back
+        if (!event.url.includes('paypal') && !event.url.includes('csob.cz') && !event.url.includes('park-it-direct')) { // no paypal in name means redirected back
           inAppBrowser.close()
           const parameters = parseParameters(event.url)
-          parameters['success'] ? dispatch(finishReservation(parameters['token'], callback)) : dispatch(paymentUnsucessfull(callback))
+          if (parameters['csob'] === 'true') {
+            parameters['success'] === 'true' ? dispatch(paymentSucessfull(callback)) : dispatch(paymentUnsucessfull(callback)) // todo: here
+          }else {
+            parameters['success'] === 'true' ? dispatch(finishReservation(parameters['token'], callback)) : dispatch(paymentUnsucessfull(callback))
+          }
         }
       })
     }
@@ -302,13 +306,18 @@ export function paymentUnsucessfull(callback){
     callback()
   }
 }
+export function paymentSucessfull(callback){
+  return (dispatch, getState) => {
+    dispatch(setCustomModal(undefined))
+    dispatch(clearForm())
+    callback()
+  }
+}
 
 export function finishReservation(token, callback){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch(setCustomModal(undefined))
-      dispatch(clearForm())
-      callback()
+      dispatch(paymentSucessfull(callback))
     }
 
     dispatch(setCustomModal('Processing payment ...'))
