@@ -19,6 +19,7 @@ import styles from './users.page.scss'
 export class UsersPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
+    pageBase:     PropTypes.object,
     actions:      PropTypes.object
   }
 
@@ -27,7 +28,7 @@ export class UsersPage extends Component {
   }
 
   render() {
-    const {state, actions} = this.props
+    const {state, pageBase, actions} = this.props
 
     const schema = [ { key: 'full_name',    title: t(['users','username']),     comparator: 'string', representer: o => <strong> {o} </strong>, sort: 'asc' }
                    , { key: 'email',        title: t(['users','email']),        comparator: 'string' }
@@ -53,27 +54,28 @@ export class UsersPage extends Component {
     })
 
     const toInviteUser = () => {
-      nav.to('/users/inviteUser')
+      nav.to(`/${pageBase.garage}/admin/users/invite`)
     }
 
-    const content = <div>
-      <Table schema={schema} data={usersData} />
-      <div className={styles.addButton}>
-        <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={toInviteUser} type='action' size='big'/>
-      </div>
-    </div>
+    // const content = <div>
+    //   <Table schema={schema} data={usersData} />
+    //   <div className={styles.addButton}>
+    //     <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={toInviteUser} type='action' size='big'/>
+    //   </div>
+    // </div>
 
     return (
-      <PageBase content={content} />
+      <PageBase>
+        <Table schema={schema} data={usersData} />
+        <div className={styles.addButton}>
+          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={toInviteUser} type='action' size='big'/>
+        </div>
+      </PageBase>
     );
   }
 }
 
-export default connect(state => {
-  const { users } = state
-  return ({
-    state: users
-  })
-}, dispatch => ({
-  actions: bindActionCreators(usersActions, dispatch)
-}))(UsersPage)
+export default connect(
+  state    => ({ state: state.users, pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(usersActions, dispatch) })
+)(UsersPage)

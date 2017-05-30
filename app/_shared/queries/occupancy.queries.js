@@ -34,6 +34,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
           id
           client{
             name
+            id
           }
           car{
             licence_plate
@@ -53,9 +54,11 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         }
       }
     }
-    clients{
-      name
-      id
+    contracts{
+      client{
+        name
+        id
+      }
     }
   }
 }

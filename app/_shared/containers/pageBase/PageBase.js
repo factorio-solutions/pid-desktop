@@ -34,7 +34,7 @@ export class PageBase extends Component {
                     ,  {label: t(['pageBase', 'Reservation']),  key: "reservations",  icon: 'car',   onClick: ()=>{nav.to('/reservations')} }
                     ,  {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
                     ,  {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
-                    ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'users', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
+                    // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'users', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
                     ,  {label: t(['pageBase', 'Admin']),        key: "admin",         icon: 'money', onClick: ()=>{actions.adminClick()} }
                     ]
 
@@ -49,7 +49,7 @@ export class PageBase extends Component {
     //                            ]
 
     const callToAction = [ {label: t(['pageBase', 'Create reservation']), onClick: ()=>{nav.to('/reservations/newReservation')}}
-                         , {label: t(['pageBase', 'Create contract']),    onClick: ()=>{console.log('call to action click')}}
+                         , {label: t(['pageBase', 'Create contract']),    onClick: ()=>{nav.to(`/${state.garage}/admin/clients/newContract`)}}
                          , {label: t(['pageBase', 'Add Features']),       onClick: ()=>{nav.to('/addFeatures')}}
                          ]
 

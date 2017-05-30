@@ -79,58 +79,56 @@ export class inviteUserPage extends Component {
                              { state.currentEmail }
                            </div>
 
-    const content = <div>
-                      <Modal content={errorContent} show={state.error!=undefined} />
-                      <Modal content={successContent} show={state.success!=undefined} />
-                      <Modal content={loadingContent} show={state.currentEmail!=undefined} />
-
-                      <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
-                      <div className={styles.form}>
-                        <div className={`${styles.formChild} ${styles.mainInfo}`}>
-                          <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} highlight={state.highlight}/>
-                          {clientDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectClient'])} content={clientDropdown} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>}
-                          {garageDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectGarage'])} content={garageDropdown} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>}
-                          {carDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectCar'])}    content={carDropdown} style='light' selected={state.cars.findIndex((car)=>{return car.id == state.car_id})}/>}
-                          <div>
-                            <label>{t(['inviteUser', 'inviteMessage'])}</label>
-                          </div>
-                          <div>
-                            <textarea className={styles.textArea} onChange={messageChanged} value={state.message} />
-                          </div>
-                        </div>
-
-                        <div className={`${styles.formChild} ${styles.additionalInfo}`}>
-                          <h3>{t(['inviteUser', 'optionalSettings'])}</h3>
-                          <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
-                          <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
-                          <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
-                          <h3>{t(['inviteUser', 'clientRights'])}</h3>
-                          <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
-                          <p className={styles.rights}>
-                            <span className={state.client_admin ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('client_admin', !state.client_admin)}}>         {t(['inviteUser','admin'])}</span>|
-                            <span className={state.client_secretary ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('client_secretary', !state.client_secretary)}}> {t(['inviteUser','secretary'])}</span>|
-                            <span className={state.client_host ? styles.boldText : styles.inactiveText}      onClick={()=>{actions.setBooleanAttr('client_host', !state.client_host)}}>           {t(['inviteUser','host'])}</span>|
-                            <span className={state.client_internal ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('client_internal', !state.client_internal)}}>   {t(['inviteUser','internal'])}</span>
-                          </p>
-                          <h3>{t(['inviteUser', 'GarageRights'])}</h3>
-                          <p>{t(['inviteUser', 'GarageRightsDesc'])}</p>
-                          <p className={styles.rights}>
-                            <span className={state.garage_admin ? styles.boldText : styles.inactiveText}        onClick={()=>{actions.setBooleanAttr('garage_admin', !state.garage_admin)}}>               {t(['inviteUser','admin'])}</span>|
-                            <span className={state.garage_receptionist ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('garage_receptionist', !state.garage_receptionist)}}> {t(['inviteUser','receptionist'])}</span>|
-                            <span className={state.garage_security ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('garage_security', !state.garage_security)}}>         {t(['inviteUser','security'])}</span>
-                          </p>
-                          <h3>{t(['inviteUser', 'carRights'])}</h3>
-                          <p>{t(['inviteUser', 'carRightsDesc'])}</p>
-                          <p className={styles.rights}>
-                            <span className={state.car_admin ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('car_admin', !state.car_admin)}}>   {t(['inviteUser','admin'])}</span>
-                          </p>
-                        </div>
-                      </div>
-                      </Form>
-                    </div>
-
     return (
-      <PageBase content={content}/>
+      <PageBase>
+        <Modal content={errorContent} show={state.error!=undefined} />
+        <Modal content={successContent} show={state.success!=undefined} />
+        <Modal content={loadingContent} show={state.currentEmail!=undefined} />
+
+        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+        <div className={styles.form}>
+          <div className={`${styles.formChild} ${styles.mainInfo}`}>
+            <PatternInput onEnter={submitForm} onChange={emailChanged} label={t(['inviteUser', 'selectUser'])} error={t(['signup_page', 'emailInvalid'])} pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$" value={state.email.value} highlight={state.highlight}/>
+            {clientDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectClient'])} content={clientDropdown} style='light' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>}
+            {garageDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectGarage'])} content={garageDropdown} style='light' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>}
+            {carDropdown.length > 1 && <Dropdown label={t(['inviteUser', 'selectCar'])}    content={carDropdown} style='light' selected={state.cars.findIndex((car)=>{return car.id == state.car_id})}/>}
+            <div>
+              <label>{t(['inviteUser', 'inviteMessage'])}</label>
+            </div>
+            <div>
+              <textarea className={styles.textArea} onChange={messageChanged} value={state.message} />
+            </div>
+          </div>
+
+          <div className={`${styles.formChild} ${styles.additionalInfo}`}>
+            <h3>{t(['inviteUser', 'optionalSettings'])}</h3>
+            <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
+            <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
+            <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
+            <h3>{t(['inviteUser', 'clientRights'])}</h3>
+            <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
+            <p className={styles.rights}>
+              <span className={state.client_admin ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('client_admin', !state.client_admin)}}>         {t(['inviteUser','admin'])}</span>|
+              <span className={state.client_secretary ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('client_secretary', !state.client_secretary)}}> {t(['inviteUser','secretary'])}</span>|
+              <span className={state.client_host ? styles.boldText : styles.inactiveText}      onClick={()=>{actions.setBooleanAttr('client_host', !state.client_host)}}>           {t(['inviteUser','host'])}</span>|
+              <span className={state.client_internal ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('client_internal', !state.client_internal)}}>   {t(['inviteUser','internal'])}</span>
+            </p>
+            <h3>{t(['inviteUser', 'GarageRights'])}</h3>
+            <p>{t(['inviteUser', 'GarageRightsDesc'])}</p>
+            <p className={styles.rights}>
+              <span className={state.garage_admin ? styles.boldText : styles.inactiveText}        onClick={()=>{actions.setBooleanAttr('garage_admin', !state.garage_admin)}}>               {t(['inviteUser','admin'])}</span>|
+              <span className={state.garage_receptionist ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('garage_receptionist', !state.garage_receptionist)}}> {t(['inviteUser','receptionist'])}</span>|
+              <span className={state.garage_security ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('garage_security', !state.garage_security)}}>         {t(['inviteUser','security'])}</span>
+            </p>
+            <h3>{t(['inviteUser', 'carRights'])}</h3>
+            <p>{t(['inviteUser', 'carRightsDesc'])}</p>
+            <p className={styles.rights}>
+              <span className={state.car_admin ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('car_admin', !state.car_admin)}}>   {t(['inviteUser','admin'])}</span>
+            </p>
+          </div>
+        </div>
+        </Form>
+      </PageBase>
     )
   }
 }

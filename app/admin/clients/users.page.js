@@ -44,7 +44,7 @@ export class ClientUsersPage extends Component {
 
     const addClientUserClick = () => {
       actions.setClient(this.props.params.client_id)
-      nav.to(`/users/inviteUser`)
+      nav.to(`/${pageBase.garage}/admin/users/invite`)
     }
 
     const onBack = () => {
