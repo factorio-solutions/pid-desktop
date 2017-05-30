@@ -5,7 +5,7 @@ import { setError, setCustomModal } from './mobile.header.actions'
 
 import { GET_AVAILABLE_FLOORS }                                                           from '../queries/mobile.newReservation.queries'
 import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, PAY_RESREVATION } from '../queries/newReservation.queries'
-import { CHECK_VALIDITY }                                                                 from '../queries/reservations.queries'
+import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT }                                            from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS }                                                            from '../../reservations/newReservation.page'
 import { entryPoint }                                                                     from '../../index'
 
@@ -259,20 +259,30 @@ export function submitReservation(callback){
     }
 }
 
-export function checkReservation (url, callback = ()=>{}) {
+export function checkReservation (reservation, callback = ()=>{}) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setCustomModal(undefined))
       if (response.data.paypal_check_validity){
-        dispatch(payReservation (url, callback))
+        dispatch(payReservation (reservation.payment_url, callback))
       } else {
         dispatch(setError('Token of payment is no longer valid, reservation will be deleted.'))
         callback()
       }
     }
 
-    dispatch(setCustomModal('Checking token validity'))
-    request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
+    const onCSOBSuccess = (response) => {
+      dispatch(setCustomModal(undefined))
+      dispatch(payReservation(response.data.csob_pay_reservation, callback))
+    }
+
+    if (reservation.payment_url.includes('csob.cz')) {
+      dispatch(setCustomModal('Creating payment'))
+      request(onCSOBSuccess, CREATE_CSOB_PAYMENT, { id: reservation.id, url: window.location.href.split('?')[0] })
+    } else {
+      dispatch(setCustomModal('Checking token validity'))
+      request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
+    }
   }
 }
 
