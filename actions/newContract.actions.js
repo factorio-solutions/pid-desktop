@@ -118,10 +118,7 @@ export function eraseForm () {
 
 export function initContract(id){
   return (dispatch, getState) => {
-    console.log(id);
-
     const onSuccess = (response) => {
-      console.log(response.data.garage.contracts);
       response.data.garage.floors = response.data.garage.floors.map(floor => {
         floor.places = floor.places.map((place) => {
           place.noContract = response.data.garage.contracts
@@ -145,11 +142,15 @@ export function initContract(id){
     }
 
     const onClientsSuccess = (response) => {
-      dispatch(setClients(response.data.client_users.map(cu => cu.client)))
-      if (response.data.client_users.length == 1) {
-          dispatch(setClient(response.data.client_users[0].client.id))
+      const clients = response.data.client_users.reduce((arr, client_user) => {
+        if (arr.find(client => client.id === client_user.client_id) === undefined) {
+          arr.push(client_user.client)
+        }
+        return arr
+      }, []) // will find unique clients
 
-      }
+      dispatch(setClients(clients))
+      if (clients.length == 1) { dispatch(setClient(clients[0].id)) }
     }
 
     const onDetailsSuccess = (response) => {

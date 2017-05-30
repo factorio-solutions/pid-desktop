@@ -32,26 +32,16 @@ export class PageBase extends Component {
 
     const vertical =  [{label: t(['pageBase','Dashboard']),     key: "dashboard",     icon: 'ticket',onClick: ()=>{nav.to(`/dashboard`)} }
                     ,  {label: t(['pageBase', 'Reservation']),  key: "reservations",  icon: 'car',   onClick: ()=>{nav.to('/reservations')} }
-                    ,  {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
-                    ,  {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
+                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
+                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
                     // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'users', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
                     ,  {label: t(['pageBase', 'Admin']),        key: "admin",         icon: 'money', onClick: ()=>{actions.adminClick()} }
-                    ]
-
-    // const verticalSecondary =  [ {label: t(['pageBase', 'Invoices']),      key: "invoices",    onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'Clients']),       key: "clients",     onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'Modules']),       key: "modules",     onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'Garage setup']),  key: "garageSetup", onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'Users']),         key: "users",       onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'Finance']),       key: "finance",     onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'PID settings']),  key: "PID",         onClick: ()=>{console.log('secondary menu click');} }
-    //                            , {label: t(['pageBase', 'Activity log']),  key: "activity",    onClick: ()=>{console.log('secondary menu click');} }
-    //                            ]
+                    ].filter(field => field !== false)
 
     const callToAction = [ {label: t(['pageBase', 'Create reservation']), onClick: ()=>{nav.to('/reservations/newReservation')}}
-                         , {label: t(['pageBase', 'Create contract']),    onClick: ()=>{nav.to(`/${state.garage}/admin/clients/newContract`)}}
+                         , state.isGarageAdmin &&  {label: t(['pageBase', 'Create contract']),    onClick: ()=>{nav.to(`/${state.garage}/admin/clients/newContract`)}}
                          , {label: t(['pageBase', 'Add Features']),       onClick: ()=>{nav.to('/addFeatures')}}
-                         ]
+                         ].filter(field => field !== false)
 
     const profikeDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="fa fa-user" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
                             , <div className={styles.dropdownContent} onClick={()=>{actions.logout()}}><i className="fa fa-sign-out" aria-hidden="true"></i>{t(['pageBase', 'Logout'])}</div>
