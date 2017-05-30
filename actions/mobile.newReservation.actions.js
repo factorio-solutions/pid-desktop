@@ -176,16 +176,6 @@ export function getAvailableCars () {
 export function pickPlaces() {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      response.data.garage.floors.forEach((floor) => {
-        floor.free_places.map((place) => {
-          place.pricings = response.data.garage.pricings.reduce((arr, pricing)=>{
-                pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
-                return arr
-              }, [])
-          return place
-        })
-      })
-
       dispatch( setFloors(response.data.garage.floors) )
 
       if (response.data.garage.floors.find((floor)=> {return floor.free_places.find((place)=>{return place.id == getState().mobileNewReservation.place_id})}) == undefined){
@@ -218,7 +208,7 @@ export function autoselectPlace(){
       const freePlaces = getState().mobileNewReservation.availableFloors.reduce((arr, floor)=> { // free places,
         return arr.concat(floor.free_places.filter((place)=>{
           if (getState().mobileNewReservation.client_id == undefined) {
-            return place.pricings.length >= 1
+            return place.pricing != undefined
           } else {
             return true
           }
@@ -242,9 +232,9 @@ export function submitReservation(callback){
       dispatch(setCustomModal('Creating payment ...'))
       request( onSuccess
              , CREATE_RESERVATION
-             , { place_id: reservation.place_id
-               , user_id: getState().mobileHeader.current_user.id
-               , reservation: { client_id:     reservation.client_id
+             , { reservation: { user_id:       getState().mobileHeader.current_user.id
+                              , place_id:      reservation.place_id
+                              , client_id:     reservation.client_id
                               , car_id:        reservation.car_id
                               , licence_plate: reservation.licence_plate=='' ? undefined :  reservation.licence_plate
                               , url:           window.cordova === undefined ? window.location.href.split('?')[0] // development purposes - browser debuging
