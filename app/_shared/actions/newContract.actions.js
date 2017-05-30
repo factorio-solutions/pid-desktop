@@ -118,7 +118,10 @@ export function eraseForm () {
 
 export function initContract(id){
   return (dispatch, getState) => {
+    console.log(id);
+
     const onSuccess = (response) => {
+      console.log(response.data.garage.contracts);
       response.data.garage.floors = response.data.garage.floors.map(floor => {
         floor.places = floor.places.map((place) => {
           place.noContract = response.data.garage.contracts
@@ -136,10 +139,17 @@ export function initContract(id){
 
     const onRentsSuccess = (response) => {
       dispatch(setRents(response.data.rents))
+      if (response.data.rents.length == 1) {
+        dispatch(setRent(response.data.rents[0].id))
+      }
     }
 
     const onClientsSuccess = (response) => {
       dispatch(setClients(response.data.client_users.map(cu => cu.client)))
+      if (response.data.client_users.length == 1) {
+          dispatch(setClient(response.data.client_users[0].client.id))
+
+      }
     }
 
     const onDetailsSuccess = (response) => {
