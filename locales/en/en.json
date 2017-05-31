@@ -142,6 +142,7 @@
 		"newCar":"New car",
 		"editCar":"Edit car",
 
+
 		"OccupancyOverview": "Occupancy overview",
 		"OccupancyOverviewHint": "TODO: Occupancy overview hint",
 
@@ -172,9 +173,21 @@
 		"unredNotifications":{
 			"one": "You have one unread notification",
 			"other": "You have %(count)s unread notifications"
-		}
+		},
 
+		"analytics": "Analytics",
+		"garageTurnover": "Garage turnover",
+		"reservations": "Reservations",
+		"places": "Places",
+		"payments": "Payments",
+		"gates": "Gates",
+		"analyticsGarageTurnoverHint": "TODO: GarageTurnover Hint",
+		"analyticsreservationsHint": "TODO: reservations Hint",
+		"analyticsplacesHint": "TODO: places Hint",
+		"analyticspaymentsHint": "TODO: payments Hint",
+		"analyticsgatesHint": "TODO: gates Hint"
 	},
+	
 	"newReservation": {
 		"selectGarage": "Select garage *",
 		"selectUser": "Select user *",

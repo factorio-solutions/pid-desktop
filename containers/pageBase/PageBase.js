@@ -34,6 +34,7 @@ export class PageBase extends Component {
                     ,  {label: t(['pageBase', 'Reservation']),  key: "reservations",  icon: 'car',   onClick: ()=>{nav.to('/reservations')} }
                     ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
                     ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
+                    ,  (state.isGarageAdmin) && {label: t(['pageBase', 'analytics']),       key: "analytics",        icon: 'pie-chart',  onClick: ()=>{actions.analyticsClick()} }
                     // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'users', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
                     ,  {label: t(['pageBase', 'Admin']),        key: "admin",         icon: 'money', onClick: ()=>{actions.adminClick()} }
                     ].filter(field => field !== false)
