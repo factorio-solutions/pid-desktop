@@ -9,7 +9,7 @@ import { t }          from '../modules/localization/localization'
 import { CREATE_NEW_GARAGE, GET_GARAGE_DETAILS, UPDATE_GARAGE, GET_ACCOUNTS_TARIFS,
   GET_GARAGE_DETAILS_GENERAL, GET_GARAGE_DETAILS_FLOORS, GET_GARAGE_DETAILS_GATES, GET_GARAGE_DETAILS_ORDER } from '../queries/garageSetup.queries'
 import { emptyGate, emptyFloor, defaultImage }                                       from '../reducers/garageSetup.reducer'
-import { setGarage }                                                                 from './pageBase.actions'
+import { setGarage, fetchGarages }                                                   from './pageBase.actions'
 
 
 export const GARAGE_SETUP_SET_ID               = 'GARAGE_SETUP_SET_ID'
@@ -637,9 +637,10 @@ export function submitGarage() {
       if (response.data.create_garage.payment_url ){ // recurring payment redirect needed
         window.location.replace(response.data.create_garage.payment_url)
       } else {
+        dispatch(fetchGarages())
+        dispatch(setGarage(response.data.create_garage.id))
+        dispatch(clearForm())
         nav.to('/dashboard')
-        dispatch(setGarage)
-        dispatch(clearForm(response.data.create_garage.id))
       }
       // if (state.error == undefined ){
       //   dispatch(setFetching(false))

@@ -187,8 +187,9 @@ export function fetchGarages(){
     const onSuccess = (response) => {
       dispatch( setGarages( response.data.user_garages.filter(user_garage => user_garage.user_id === response.data.current_user.id) ) )
 
-      const id = parseInt(window.location.hash.substring(5).split('/')[0])
-      response.data.user_garages.find(user_garage => user_garage.garage.id === id) !== undefined ? dispatch( setGarage( id )) : dispatch( setGarage( response.data.user_garages.length > 0 && response.data.user_garages[0].garage.id ))
+      if (getState().pageBase.garage === undefined || response.data.user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined) {
+          response.data.user_garages.length > 0 && dispatch( setGarage( response.data.user_garages[0].garage.id ))
+      }
     }
     request(onSuccess, GET_GARAGES)
   }

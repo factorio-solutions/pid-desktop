@@ -137,8 +137,7 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     client_id
     place{
       id
-      pricings{
-        name
+      pricing{
         flat_price
         exponential_12h_price
         exponential_day_price

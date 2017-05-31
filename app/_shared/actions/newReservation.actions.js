@@ -288,6 +288,7 @@ export function setInitialStore(id) {
 export function reservationDetails(id){
   return (dispatch, getState) => {
     const onSucess = (response) => {
+      console.log(response);
       dispatch(setTo(moment(response.data.reservation.ends_at).format(MOMENT_DATETIME_FORMAT)))
       dispatch(setFrom(moment(response.data.reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
       dispatch(setClientId(response.data.reservation.client_id))
