@@ -839,6 +839,7 @@
 		"turnover": "turnover",
 		"average": "average",
 		"reservations": "reservations",
-		"average": "average"
+		"average": "average",
+		"noData": "No data to be rendered"
 	}
 }
