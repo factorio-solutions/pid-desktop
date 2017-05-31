@@ -187,7 +187,7 @@
 		"analyticspaymentsHint": "TODO: payments Hint",
 		"analyticsgatesHint": "TODO: gates Hint"
 	},
-	
+
 	"newReservation": {
 		"selectGarage": "Select garage *",
 		"selectUser": "Select user *",
@@ -825,7 +825,6 @@
 		"priceInvalid": "Price invalid",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Select currency"
-
 	},
 
 	"finance": {
@@ -833,5 +832,13 @@
 		"csob": "ČSOB",
 		"csobPayment": "ČSOB Payments",
 		"SelectPrivateKey" : "Select private key"
+	},
+	"analytics": {
+		"week": "week",
+		"month": "month",
+		"turnover": "turnover",
+		"average": "average",
+		"reservations": "reservations",
+		"average": "average"
 	}
 }
