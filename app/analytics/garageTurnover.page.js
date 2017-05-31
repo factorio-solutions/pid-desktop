@@ -89,11 +89,15 @@ export class GarageTurnoverPage extends Component {
                         , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
                         ]
 
+      console.log(chartDataArray.length == 1);
+
 
 
     return (
       <PageBase>
         <TabMenu left={filters} right={datePickers}/>
+        {chartDataArray.length == 1 ?
+        <h3>{t(['analytics', 'noData'])}</h3> :
         <Chart
           chartType="ComboChart"
           data={chartDataArray}
@@ -106,7 +110,7 @@ export class GarageTurnoverPage extends Component {
           graph_id="ComboChart"
           width="100%"
           height="400px"
-        />
+        />}
       </PageBase>
     )
   }
