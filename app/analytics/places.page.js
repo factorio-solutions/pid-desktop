@@ -6,12 +6,12 @@ import PageBase from '../_shared/containers/pageBase/PageBase'
 
 import * as nav                 from '../_shared/helpers/navigation'
 import { t }                    from '../_shared/modules/localization/localization'
-// import * as dashboardActions  from '../_shared/actions/dashboard.actions'
+import * as analyticsActions    from '../_shared/actions/analytics.actions'
 
-import styles from './analytics.page.scss'
+import styles from './places.page.scss'
 
 
-export class AnalyticsPage extends Component {
+export class PlacesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object
@@ -22,13 +22,13 @@ export class AnalyticsPage extends Component {
 
     return (
       <PageBase>
-        AnalyticsPage page
+        PlacesPage page
       </PageBase>
     )
   }
 }
 
 export default connect(
-  state    => ({ state: {} }), //{ state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators({}, dispatch) }) //{ actions: bindActionCreators(dashboardActions, dispatch) }
-)(AnalyticsPage)
+  state    => ({ state: state.analytics, pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(analyticsActions, dispatch) })
+)(PlacesPage)

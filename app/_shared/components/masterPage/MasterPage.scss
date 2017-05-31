@@ -175,7 +175,8 @@ $hintWidth: 180px;
 
       >.children{
         overflow: auto;
-        height: calc(100% - 60px);
+        // height: calc(100% - 60px);
+        height: calc(100%);
 
         &.hashHint{
           margin-right: $hintWidth;

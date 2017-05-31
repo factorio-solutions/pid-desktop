@@ -34,7 +34,11 @@ import GaragePage                 from './garage/garage.page'
 import IssuesPage                 from './issues/issues.page'
 
 // analytics
-import AnalyticsPage              from './analytics/analytics.page'
+import GarageTurnoverPage         from './analytics/garageTurnover.page'
+import ReservationsAnalyticsPage  from './analytics/reservations.page'
+import PlacesPage                 from './analytics/places.page'
+import PaymentsPage               from './analytics/payments.page'
+import GatesPage                  from './analytics/gates.page'
 
 // Add features page
 import AddFeaturesPage            from './addFeatures/addFeatures.page'
@@ -151,18 +155,22 @@ export default function createRoutes() {
 
       <Route path=":id/issues"                            component={IssuesPage}/>
 
-      <Route path=":id/analytics"                         component={AnalyticsPage}/>
+      <Route path=":id/analytics/garageTurnover"          component={GarageTurnoverPage}/>
+      <Route path=":id/analytics/reservationsAnalytics"   component={ReservationsAnalyticsPage}/>
+      <Route path=":id/analytics/placesAnalytics"         component={PlacesPage}/>
+      <Route path=":id/analytics/paymentsAnalytics"       component={PaymentsPage}/>
+      <Route path=":id/analytics/gatesAnalytics"          component={GatesPage}/>
 
       <Route path="addFeatures"                           component={AddFeaturesPage}/>
       <Route path="addFeatures/gateModuleOrder"           component={GateModuleOrderPage}/>
 
       <Route path=":id/admin/invoices"                    component={InvoicesPage}/>
 
-      <Route path=":id/admin/clients"                         component={ClientsPage}/>
-      <Route path=":id/admin/clients/:client_id/users"        component={ClientUsersPage}/>
-      <Route path=":id/admin/clients/newClient"               component={NewClientPage}/>
-      <Route path=":id/admin/clients/:client_id/edit"         component={NewClientPage}/>
-      <Route path=":id/admin/clients/newContract"             component={NewContractPage}/>
+      <Route path=":id/admin/clients"                           component={ClientsPage}/>
+      <Route path=":id/admin/clients/:client_id/users"          component={ClientUsersPage}/>
+      <Route path=":id/admin/clients/newClient"                 component={NewClientPage}/>
+      <Route path=":id/admin/clients/:client_id/edit"           component={NewClientPage}/>
+      <Route path=":id/admin/clients/newContract"               component={NewContractPage}/>
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage}/>
 
       <Route path=":id/admin/modules"                     component={ModulesPage}/>
