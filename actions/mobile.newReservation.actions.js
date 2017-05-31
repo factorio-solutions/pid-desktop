@@ -223,13 +223,19 @@ export function autoselectPlace(){
 export function submitReservation(callback){
     return (dispatch, getState) => {
       const onSuccess = (response) => {
-        dispatch(payReservation(response.data.create_reservation.payment_url, callback))
+        console.log(response);
+        if (response.data.create_reservation.payment_url){
+          dispatch(payReservation(response.data.create_reservation.payment_url, callback))
+        } else {
+          dispatch(setCustomModal())
+          callback()
+        }
       }
 
       var reservation = stateToVariables(getState)
       delete reservation["garage_id"]
 
-      dispatch(setCustomModal('Creating payment ...'))
+      dispatch(setCustomModal(reservation.client_id ? 'Creating reservation' : 'Creating payment ...'))
       request( onSuccess
              , CREATE_RESERVATION
              , { reservation: { user_id:       getState().mobileHeader.current_user.id
