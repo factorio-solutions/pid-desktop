@@ -30,7 +30,6 @@ export class SettingsPage extends Component {
 
   componentDidMount(){
     this.props.actions.initUser()
-    this.props.actions.initCars()
   }
 
   render() {

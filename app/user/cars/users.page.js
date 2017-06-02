@@ -43,7 +43,7 @@ export class CarUsersPage extends Component {
     const addCarUserClick = () => {
       // todo set car in invite user form
       actions.setCar(this.props.params.id)
-      nav.to(`/users/inviteUser`)
+      nav.to(`/${pageBase.garage}/admin/users/invite`)
     }
 
     const onBack = () => {

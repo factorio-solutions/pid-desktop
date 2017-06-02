@@ -7,7 +7,6 @@ import { Chart }                       from 'react-google-charts';
 import PageBase   from '../_shared/containers/pageBase/PageBase'
 import TabMenu    from '../_shared/components/tabMenu/TabMenu'
 import TabButton  from '../_shared/components/buttons/TabButton'
-import Input      from '../_shared/components/input/Input'
 
 import * as nav                 from '../_shared/helpers/navigation'
 import { t }                    from '../_shared/modules/localization/localization'

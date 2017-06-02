@@ -12,7 +12,7 @@ import { setClient }            from '../../_shared/actions/inviteUser.actions'
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
 
-import styles                          from './users.page.scss'
+import styles from './users.page.scss'
 
 
 export class ClientUsersPage extends Component {
@@ -40,10 +40,10 @@ export class ClientUsersPage extends Component {
                           , { key: 'phone', title: t(['clientUsers','phone']), comparator: 'number' }
                           ]
 
-    const isClientAdmin = state.users.filter((user) => {return user.admin}).findIndex((user)=>{return pageBase.current_user ? user.user.id == pageBase.current_user.id : false}) == -1
+    const currentClientUser = state.users.find((user)=>{return pageBase.current_user ? user.user.id == pageBase.current_user.id : false})
 
     const addClientUserClick = () => {
-      actions.setClient(this.props.params.client_id)
+      actions.setClient(+this.props.params.client_id)
       nav.to(`/${pageBase.garage}/admin/users/invite`)
     }
 
@@ -84,7 +84,7 @@ export class ClientUsersPage extends Component {
             <span className={styles.clickable} onClick={secretaryPresetClick}>{t(['clientUsers','secretary'])}</span>
 
             <div className={styles.float}>
-              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && isClientAdmin) || client_user.admin) && 'disabled'}/>
+              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && currentClientUser && currentClientUser.admin) || client_user.admin) && 'disabled'}/>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ export class ClientUsersPage extends Component {
             <div style={{float: "left"}}>
               <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={onBack} />
             </div>
-            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClientUserClick} type='action' size='big' state={isClientAdmin && "disabled"}/>
+            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClientUserClick} type='action' size='big' state={currentClientUser ? (currentClientUser.admin || currentClientUser.secretary || currentClientUser.internal) ? "" : "disabled" : "disabled"}/>
           </div>
         </div>
       </PageBase>

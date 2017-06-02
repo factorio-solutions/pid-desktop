@@ -547,9 +547,24 @@
 		"username": "username",
 		"email": "e-mail",
 		"phone": "phone",
-		"memberSince": "member since",
+		"memberSince": "since",
 		"active": "active",
-		"pending": "Pending"
+		"pending": "Pending",
+		"allKnownUsers": "All known users",
+		"pendingInvitations": "Pending invitations",
+		"memberOfClients": "Member of clients:",
+		"memberOfCars": "Member of cars:",
+		"memberOfGarages": "Member of garages:",
+		"admin" : "admin",
+		"secretary" : "secretary",
+		"internal" : "internal",
+		"host" : "host",
+		"security" : "security",
+		"receptionist" : "receptionist",
+
+		"invitedToClient":"Invited %(date)s to be member of client: ",
+		"invitedToGarage":"Invited %(date)s to be member of garage: ",
+		"invitedToCar":"Invited %(date)s to be member of car: "
 	},
 
 	"datetimepicker":{

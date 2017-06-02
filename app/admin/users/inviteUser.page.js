@@ -57,6 +57,7 @@ export class inviteUserPage extends Component {
 
     const clientSelected = (index) => { actions.setClient(state.clients[index].id) }
     const clientDropdown = state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
+    const currentClient = state.clients.find(client => client.id !== undefined && client.id === state.client_id)
 
     const carSelected = (index) => { actions.setCar(state.cars[index].id) }
     const carDropdown = state.cars.map((car, index) => {return {label: car.model, onClick: carSelected.bind(this, index) }})
@@ -105,26 +106,48 @@ export class inviteUserPage extends Component {
             <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
             <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
             <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
-            <h3>{t(['inviteUser', 'clientRights'])}</h3>
-            <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
-            <p className={styles.rights}>
-              <span className={state.client_admin ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('client_admin', !state.client_admin)}}>         {t(['inviteUser','admin'])}</span>|
-              <span className={state.client_secretary ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('client_secretary', !state.client_secretary)}}> {t(['inviteUser','secretary'])}</span>|
-              <span className={state.client_host ? styles.boldText : styles.inactiveText}      onClick={()=>{actions.setBooleanAttr('client_host', !state.client_host)}}>           {t(['inviteUser','host'])}</span>|
-              <span className={state.client_internal ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('client_internal', !state.client_internal)}}>   {t(['inviteUser','internal'])}</span>
-            </p>
-            <h3>{t(['inviteUser', 'GarageRights'])}</h3>
-            <p>{t(['inviteUser', 'GarageRightsDesc'])}</p>
-            <p className={styles.rights}>
-              <span className={state.garage_admin ? styles.boldText : styles.inactiveText}        onClick={()=>{actions.setBooleanAttr('garage_admin', !state.garage_admin)}}>               {t(['inviteUser','admin'])}</span>|
-              <span className={state.garage_receptionist ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('garage_receptionist', !state.garage_receptionist)}}> {t(['inviteUser','receptionist'])}</span>|
-              <span className={state.garage_security ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('garage_security', !state.garage_security)}}>         {t(['inviteUser','security'])}</span>
-            </p>
-            <h3>{t(['inviteUser', 'carRights'])}</h3>
-            <p>{t(['inviteUser', 'carRightsDesc'])}</p>
-            <p className={styles.rights}>
-              <span className={state.car_admin ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('car_admin', !state.car_admin)}}>   {t(['inviteUser','admin'])}</span>
-            </p>
+            {state.client_id && <div>
+              <h3>{t(['inviteUser', 'clientRights'])}</h3>
+              <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
+              {currentClient && <p className={styles.rights}>
+                {currentClient.admin &&
+                  [ <span className={state.client_admin ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('client_admin', !state.client_admin)}}>         {t(['inviteUser','admin'])}</span>
+                  , <span>|</span>
+                  ]
+                }
+                {currentClient.admin &&
+                  [ <span className={state.client_secretary ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('client_secretary', !state.client_secretary)}}> {t(['inviteUser','secretary'])}</span>
+                  , <span>|</span>
+                  ]
+                }
+                {(currentClient.admin || currentClient.secretary) &&
+                  [ <span className={state.client_host ? styles.boldText : styles.inactiveText}      onClick={()=>{actions.setBooleanAttr('client_host', !state.client_host)}}>           {t(['inviteUser','host'])}</span>
+                  , <span>|</span>
+                  ]
+                }
+                {(currentClient.admin || currentClient.secretary || currentClient.internal) &&
+                  <span className={state.client_internal ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('client_internal', !state.client_internal)}}>   {t(['inviteUser','internal'])}</span>
+                }
+              </p>}
+            </div>}
+
+            {state.garage_id && <div>
+              <h3>{t(['inviteUser', 'GarageRights'])}</h3>
+              <p>{t(['inviteUser', 'GarageRightsDesc'])}</p>
+              <p className={styles.rights}>
+                <span className={state.garage_admin ? styles.boldText : styles.inactiveText}        onClick={()=>{actions.setBooleanAttr('garage_admin', !state.garage_admin)}}>               {t(['inviteUser','admin'])}</span>|
+                <span className={state.garage_receptionist ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('garage_receptionist', !state.garage_receptionist)}}> {t(['inviteUser','receptionist'])}</span>|
+                <span className={state.garage_security ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('garage_security', !state.garage_security)}}>         {t(['inviteUser','security'])}</span>
+              </p>
+            </div>}
+
+            {state.car_id && <div>
+              <h3>{t(['inviteUser', 'carRights'])}</h3>
+              <p>{t(['inviteUser', 'carRightsDesc'])}</p>
+              <p className={styles.rights}>
+                <span className={state.car_admin ? styles.boldText : styles.inactiveText}  onClick={()=>{actions.setBooleanAttr('car_admin', !state.car_admin)}}>   {t(['inviteUser','admin'])}</span>
+              </p>
+            </div>}
           </div>
         </div>
         </Form>

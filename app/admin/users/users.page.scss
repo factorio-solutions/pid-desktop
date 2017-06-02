@@ -8,3 +8,44 @@
 	margin-top:  $addButtonMargin ;
 	text-align: center;
 }
+
+.green{
+  color: $green;
+}
+
+.yellow{
+  color: darken($yellow, 5%);
+}
+
+
+.spoiler{
+  display: flex;
+
+  >div{
+    flex: 1 1;
+  }
+
+  ul{
+    list-style-type: none;
+    margin: 4px;
+    padding-left: 6px;
+
+    li>span {
+      color: $gray;
+      margin-left: 4px;
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+}
+
+.rights{
+  color: $gray;
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.pointer{
+  cursor: pointer
+}
