@@ -757,7 +757,9 @@
 		"IdontHaveAccout":"I don't have a account",
 		"createAccount":"CREATE ACCOUNT",
 		"IamGarageClient":"I am client of garage",
-		"createClient":"CREATE CLIENT"
+		"createClient":"CREATE CLIENT",
+		"selected": "Selected",
+		"loading": "Loading..."
 	},
 
 	"accounts": {

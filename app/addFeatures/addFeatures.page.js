@@ -26,7 +26,7 @@ export class AddFeaturesPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initTarifs()
+    this.props.state.tarifs.length === 0 && this.props.actions.initTarifs()
   }
 
   render() {

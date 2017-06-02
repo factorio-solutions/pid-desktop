@@ -34,3 +34,16 @@
   left: 0;
   right: 0;
 }
+
+.selected{
+  background-color: $blue;
+  color: $white;
+
+  >ul{
+    border-bottom: 1px solid $white;
+    
+    >li{
+      border-top: 1px solid $white;
+    }
+  }
+}
