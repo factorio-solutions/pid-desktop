@@ -122,8 +122,11 @@ export function resetForm (){
 export function initManagebles () {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-
-      const clients = response.data.manageble_clients.map((client) => {return client.client})
+      const clients = response.data.client_users.filter(cu => {
+        return cu.user_id === response.data.current_user.id && (cu.admin || cu.secretary || cu.internal)
+      }).map(cu => {
+        return {...cu.client, admin: cu.admin, secretary: cu.secretary, internal: cu.internal}
+      })
       const garages = response.data.manageble_garages.map((garage) => {return garage.garage})
       const cars    = response.data.manageble_cars.map((car) => {return car.car})
 

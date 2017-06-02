@@ -22,12 +22,20 @@ export const ADD_MANAGEBLES = `mutation UserCarMutation($user_id:Id!, $client_us
 
 // get manageble clients
 export const INIT_MANAGEBLES = `{
-  manageble_clients {
-    client{
-      id
+  current_user {
+    id
+  }
+  client_users {
+    user_id
+    admin
+    secretary
+    internal
+    client {
       name
+      id
     }
   }
+
   manageble_cars{
     car{
       id

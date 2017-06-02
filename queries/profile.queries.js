@@ -1,7 +1,9 @@
 // fetch all clients
-export const GET_CARS = `query { user_cars {
+export const GET_CARS = `query ($user_id: Id) {
+  user_cars(user_id: $user_id) {
+    user_id
     admin
-		car{
+    car {
       id
       color
       model

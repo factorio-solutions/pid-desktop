@@ -29,19 +29,20 @@ export function setCars (value) {
          }
 }
 
-export function initCars(){
+export function initCars(id){
   return (dispatch, getState) => {
     const onCarsSuccess = (response) => {
       dispatch(setCars(response.data.user_cars.map((userCar) => { return { ...userCar.car, admin: userCar.admin } })))
     }
 
-    request(onCarsSuccess, GET_CARS)
+    request(onCarsSuccess, GET_CARS, {user_id: id})
   }
 }
 
 export function initUser () {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
+      dispatch(initCars(response.data.current_user.id))
       dispatch(setName(response.data.current_user.full_name, true))
       // dispatch(setEmail(response.data.current_user.email, true))
       dispatch(setPhone(response.data.current_user.phone, true))
