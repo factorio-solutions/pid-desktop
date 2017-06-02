@@ -55,6 +55,8 @@ import profile          from '../_shared/reducers/profile.reducer'
 import adminModules     from '../_shared/reducers/admin.modules.reducer'
 import adminGoPublic    from '../_shared/reducers/admin.goPublic.reducer'
 import adminFinance     from '../_shared/reducers/admin.finance.reducer'
+import adminActivityLog from '../_shared/reducers/admin.activityLog.reducer'
+
 
 
 const rootReducer = combineReducers({ routing
@@ -112,6 +114,7 @@ const rootReducer = combineReducers({ routing
                                     , adminModules
                                     , adminGoPublic
                                     , adminFinance
+                                    , adminActivityLog
                                     })
 
 export default rootReducer

@@ -858,5 +858,12 @@
 		"reservations": "reservations",
 		"average": "average",
 		"noData": "No data to be rendered"
+	},
+	"activityLog":{
+		"name": "user",
+		"email": "email",
+		"subject": "subject",
+		"action": "action",
+		"createdAt": "time"
 	}
 }
