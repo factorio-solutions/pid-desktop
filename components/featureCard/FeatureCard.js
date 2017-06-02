@@ -10,13 +10,13 @@ export default function FeatureCard ({ title, items=[], buttonLabel, onClick, st
   const createLi = (item) => <li>{item}</li>
 
   return (
-    <div className={styles.pricing} onClick={onClick}>
+    <div className={`${styles.pricing} ${styles[state]}`} onClick={onClick}>
       <h3>{title}</h3>
       <ul className={styles.points}>
         {items.map(createLi)}
       </ul>
       <div className={styles.button}>
-        <CallToActionButton onClick={onClick} label={buttonLabel} type="action" />
+        <CallToActionButton onClick={onClick} label={buttonLabel} type="action" state={state==='selected' && 'inverted'}/>
       </div>
     </div>
   )
