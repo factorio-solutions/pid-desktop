@@ -4,6 +4,7 @@ export const GET_GARAGE_MODULES = `query GetGarage($id: Id!){
     is_public
     marketing{
       id
+      short_name
       active_marketing_launched
     }
   }

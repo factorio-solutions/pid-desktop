@@ -34,6 +34,7 @@ export class ModulesPage extends Component {
 
     const toGoPublicSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/goPublic`)}
     const toMarketingSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/marketingSettings`)}
+    const toMarketingPreview = () => {window.open('#/'+nav.path(`/marketing/${state.short_name}`))}
     const toReservationFormSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/reservationButton`)}
     const toMrParkitConnectionSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/mrParkitIntegration`)}
 
@@ -53,6 +54,7 @@ export class ModulesPage extends Component {
         <div className={styles.module}>
           {t(['modules','marketingPage'])}
           <div className={styles.settings}>
+            <CallToActionButton label={t(['modules','Preview'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingPreview} />
             <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingSettings} />
             <Switch on={state.marketing && state.marketing.active_marketing_launched} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleMarketing}/>
           </div>

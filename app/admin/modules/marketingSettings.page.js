@@ -22,25 +22,22 @@ import styles from './marketingSettings.page.scss'
 export class MarketingSettingsPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
+    pageBase:     PropTypes.object,
     actions:      PropTypes.object
   }
 
   componentDidMount(){
-    this.props.actions.initMarketingPage(this.props.params.id)
-    if (this.props.params.marketingId){ // if marketing editing
-      this.props.actions.initMarketing(this.props.params.marketingId)
-    }
+    this.props.actions.initMarketing(this.props.params.id)
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state, pageBase, actions } = this.props
 
     const submitForm = () => {
-      this.props.params.marketingId ? actions.editGarageMarketing(this.props.params.marketingId, this.props.params.id)
-                                    : actions.submitGarageMarketing(this.props.params.id)
+      actions.editGarageMarketing()
     }
 
-    const goBack           = () => { nav.to(`/garages/${this.props.params.id}/marketing`) }
+    const goBack           = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
     const hightlightInputs = () => { actions.toggleHighlight() }
 
     const checkSubmitable = () => {
@@ -97,42 +94,42 @@ export class MarketingSettingsPage extends Component {
                          <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={()=>{actions.setModalError(undefined)}} type='confirm'  />
                        </div>
 
-    const content = <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
-                      <Modal content={modalContent} show={state.modalContent!=undefined} />
-                      <Modal content={modalError} show={state.modalError!=undefined} />
-                      <div>
-                        <PatternInput onChange={actions.setShortName} label={t(['newMarketing', 'shortName'])+' *'} error={t(['newMarketing', 'invalidShortName'])} pattern="^[a-z-.]+$"                                 placeholder={t(['newMarketing', 'shortNamePlaceholder'])} value={state.short_name.value || ''} highlight={state.highlight}/>
-                        <PatternInput onChange={actions.setPhone}     label={t(['newMarketing', 'phone'])+' *'}     error={t(['newMarketing', 'invalidPhone'])}     pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}"                placeholder={t(['newMarketing', 'phonePlaceholder'])}     value={state.phone.value || ''}      highlight={state.highlight}/>
-                        <PatternInput onChange={actions.setEmail}     label={t(['newMarketing', 'email'])+' *'}     error={t(['newMarketing', 'imvalidEmail'])}     pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder={t(['newMarketing', 'mailPlaceholder'])}      value={state.email.value || ''}      highlight={state.highlight}/>
-                      </div>
-
-                      <h2>{t(['newMarketing', 'description'])}</h2>
-                      <div className={styles.descriptionContainer}>
-                        <div className={styles.description}>
-                          <Wysiwyg content={state.descriptions[state.descriptionLanguage]} onChange={actions.descriptionChange} onLangClick={actions.setLanguage} activeLang={state.descriptionLanguage} max={500}/>
-                        </div>
-
-                        <div className={styles.parameters}>
-                          <table className={styles.attributesTable}>
-                            <tbody>
-                              {attributes.map(prepareAttributes)}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      <div className={styles.images}>
-                        <h2>{t(['newMarketing', 'images'])}</h2>
-                        {state.images.map(prepareImages)}
-                      </div>
-                    </Form>
-
     return (
-      <PageBase content={content} />
+      <PageBase>
+        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+          <Modal content={modalContent} show={state.modalContent!=undefined} />
+          <Modal content={modalError} show={state.modalError!=undefined} />
+          <div>
+            <PatternInput onChange={actions.setShortName} label={t(['newMarketing', 'shortName'])+' *'} error={t(['newMarketing', 'invalidShortName'])} pattern="^[a-z-.]+$"                                 placeholder={t(['newMarketing', 'shortNamePlaceholder'])} value={state.short_name.value || ''} highlight={state.highlight}/>
+            <PatternInput onChange={actions.setPhone}     label={t(['newMarketing', 'phone'])+' *'}     error={t(['newMarketing', 'invalidPhone'])}     pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}"                placeholder={t(['newMarketing', 'phonePlaceholder'])}     value={state.phone.value || ''}      highlight={state.highlight}/>
+            <PatternInput onChange={actions.setEmail}     label={t(['newMarketing', 'email'])+' *'}     error={t(['newMarketing', 'imvalidEmail'])}     pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder={t(['newMarketing', 'mailPlaceholder'])}      value={state.email.value || ''}      highlight={state.highlight}/>
+          </div>
+
+          <h2>{t(['newMarketing', 'description'])}</h2>
+          <div className={styles.descriptionContainer}>
+            <div className={styles.description}>
+              <Wysiwyg content={state.descriptions[state.descriptionLanguage]} onChange={actions.descriptionChange} onLangClick={actions.setLanguage} activeLang={state.descriptionLanguage} max={500}/>
+            </div>
+
+            <div className={styles.parameters}>
+              <table className={styles.attributesTable}>
+                <tbody>
+                  {attributes.map(prepareAttributes)}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className={styles.images}>
+            <h2>{t(['newMarketing', 'images'])}</h2>
+            {state.images.map(prepareImages)}
+          </div>
+        </Form>
+      </PageBase>
     )
   }
 }
 
 export default connect(
-  state    => ({ state: state.newMarketing }),
+  state    => ({ state: state.newMarketing, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(newMarketingActions, dispatch) })
 )(MarketingSettingsPage)

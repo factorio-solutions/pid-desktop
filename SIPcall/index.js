@@ -75,6 +75,7 @@ var resolve = function(rs){
 
     case rs.status >= 300:
       console.log('call failed with status ' + rs.status);
+      process.exit(1); // kill the process
       break;
 
     case rs.status < 200:

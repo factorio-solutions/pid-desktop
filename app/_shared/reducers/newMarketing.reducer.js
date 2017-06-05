@@ -1,6 +1,7 @@
 import {
   attributes,
   NEW_MARKETING_SET_GARAGE,
+  NEW_MARKETING_SET_MARKETING_ID,
   NEW_MARKETING_SET_DESCRIPTIONS,
   NEW_MARKETING_SET_PARAMETER,
   NEW_MARKETING_SET_DESCRIPTION_LANGUAGE,
@@ -15,6 +16,7 @@ import {
 }  from '../actions/newMarketing.actions'
 
 var initialState =  { garage:               undefined
+                    , marketing_id:         undefined
                     , short_name:           {value: undefined, valid: false}
                     , phone:                {value: undefined, valid: false}
                     , email:                {value: undefined, valid: false}
@@ -41,6 +43,11 @@ export default function newMarketing (state = addParameters(initialState, attrib
     case NEW_MARKETING_SET_GARAGE:
       return { ...state
              , garage: action.value
+             }
+
+    case NEW_MARKETING_SET_MARKETING_ID:
+      return { ...state
+             , marketing_id: action.value
              }
 
     case NEW_MARKETING_SET_DESCRIPTIONS:
