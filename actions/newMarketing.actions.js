@@ -4,8 +4,10 @@ import * as nav       from '../helpers/navigation'
 import { t }          from '../modules/localization/localization'
 import { toGarages }  from './pageBase.actions'
 
-import { GET_GARAGE_NAME, CREATE_NEW_MARKTETING, INIT_MARKETING, EDIT_MARKETING } from '../queries/newMarketing.queries'
+import { GET_MARKETING, EDIT_MARKETING } from '../queries/newMarketing.queries'
 
+export const NEW_MARKETING_SET_GARAGE               = 'NEW_MARKETING_SET_GARAGE'
+export const NEW_MARKETING_SET_MARKETING_ID         = 'NEW_MARKETING_SET_MARKETING_ID'
 export const NEW_MARKETING_SET_DESCRIPTIONS         = 'NEW_MARKETING_SET_DESCRIPTIONS'
 export const NEW_MARKETING_SET_PARAMETER            = 'NEW_MARKETING_SET_PARAMETER'
 export const NEW_MARKETING_SET_DESCRIPTION_LANGUAGE = 'NEW_MARKETING_SET_DESCRIPTION_LANGUAGE'
@@ -17,7 +19,6 @@ export const NEW_MARKETING_SET_MODAL                = 'NEW_MARKETING_SET_MODAL'
 export const NEW_MARKETING_CLEAR_FORM               = 'NEW_MARKETING_CLEAR_FORM'
 export const NEW_MARKETING_SET_MODAL_ERROR          = 'NEW_MARKETING_SET_MODAL_ERROR'
 export const NEW_MARKETING_SET_HIGHLIGHT            = 'NEW_MARKETING_SET_HIGHLIGHT'
-export const NEW_MARKETING_SET_GARAGE               = 'NEW_MARKETING_SET_GARAGE'
 
 export const attributes = [ // informative attributes - same tags are on server side
   'size_restriction',
@@ -52,6 +53,12 @@ export const imageTags = [ // image tags
 export function setGarage (garage){
   return  { type: NEW_MARKETING_SET_GARAGE
           , value: garage
+          }
+}
+
+export function setMarketingId (id){
+  return  { type: NEW_MARKETING_SET_MARKETING_ID
+          , value: id
           }
 }
 
@@ -127,37 +134,47 @@ export function clearForm (){
 }
 
 
-export function initMarketingPage (garageId){
+export function initMarketing (garageId){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch(setGarage(response.data.garage))
-      dispatch(toGarages())
-    }
-
-    dispatch(clearForm())
-    request(onSuccess, GET_GARAGE_NAME, {id: parseInt(garageId)} )
-  }
-}
-
-export function initMarketing(id) {
-  return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      dispatch(setShortName (response.data.marketing[0].short_name, true))
-      dispatch(setPhone (response.data.marketing[0].phone, true))
-      dispatch(setEmail (response.data.marketing[0].email, true))
+      dispatch(setGarage (response.data.garage))
+      dispatch(setMarketingId (response.data.garage.marketing.id))
+      dispatch(setShortName (response.data.garage.marketing.short_name, true))
+      dispatch(setPhone (response.data.garage.marketing.phone, true))
+      dispatch(setEmail (response.data.garage.marketing.email, true))
       attributes.forEach((attr) => {
-        dispatch(setParameter (attr, response.data.marketing[0][attr]))
+        dispatch(setParameter (attr, response.data.garage.marketing[attr]))
       })
-      dispatch(setDescription(response.data.marketing[0].descriptions.reduce((descriptions, desc) => {
+      dispatch(setDescription(response.data.garage.marketing.descriptions.reduce((descriptions, desc) => {
         descriptions[desc.language] = desc.text
         return descriptions
       }, {})))
-      dispatch(setImages(insertEmptyRow(response.data.marketing[0].images)))
+      dispatch(setImages(insertEmptyRow(response.data.garage.marketing.images)))
     }
 
-    request(onSuccess, INIT_MARKETING, {id: parseInt(id)})
+    request(onSuccess, GET_MARKETING, {id: parseInt(garageId)} )
   }
 }
+
+// export function initMarketing(id) {
+//   return (dispatch, getState) => {
+//     const onSuccess = (response) => {
+//       dispatch(setShortName (response.data.marketing[0].short_name, true))
+//       dispatch(setPhone (response.data.marketing[0].phone, true))
+//       dispatch(setEmail (response.data.marketing[0].email, true))
+//       attributes.forEach((attr) => {
+//         dispatch(setParameter (attr, response.data.marketing[0][attr]))
+//       })
+//       dispatch(setDescription(response.data.marketing[0].descriptions.reduce((descriptions, desc) => {
+//         descriptions[desc.language] = desc.text
+//         return descriptions
+//       }, {})))
+//       dispatch(setImages(insertEmptyRow(response.data.marketing[0].images)))
+//     }
+//
+//     request(onSuccess, INIT_MARKETING, {id: parseInt(id)})
+//   }
+// }
 
 export function descriptionChange(value){
   return (dispatch, getState) => {
@@ -208,33 +225,7 @@ function insertEmptyRow(data){
   return data
 }
 
-export function submitGarageMarketing (garageId) {
-  return (dispatch, getState) => {
-    const state = getState().newMarketing
-
-    const onSuccess = (response) => {
-      if (response.data.create_marketing == null || !('id' in response.data.create_marketing)){
-        // not created
-        dispatch(setModal(undefined))
-        dispatch(setModalError(t(['newMarketing', 'notCreated'])))
-      } else{
-        // created
-        dispatch(setModal(undefined))
-        dispatch(clearForm())
-        nav.to(`/garages/${garageId}/marketing`)
-      }
-    }
-
-    dispatch(setModal(t(['newMarketing', 'uploading'])))
-    request(onSuccess, CREATE_NEW_MARKTETING,
-      { "garage_id": parseInt(garageId)
-      , "marketing": marketingObject(state)
-      }
-    )
-  }
-}
-
-export function editGarageMarketing (marketingId, garageId) {
+export function editGarageMarketing () {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       if (response.data.update_marketing == null) {
@@ -245,12 +236,13 @@ export function editGarageMarketing (marketingId, garageId) {
         // marketing updated
         dispatch(setModal(undefined))
         dispatch(clearForm())
-        nav.to(`/garages/${garageId}/marketing`)
+
+        nav.to(`/${getState().pageBase.garage}/admin/modules`)
       }
     }
 
     request(onSuccess, EDIT_MARKETING,
-      { "id": parseInt(marketingId)
+      { "id": getState().newMarketing.marketing_id
       , "marketing": marketingObject(getState().newMarketing)
       }
     )
