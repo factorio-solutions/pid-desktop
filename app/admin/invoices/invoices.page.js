@@ -55,16 +55,6 @@ export class InvoicesPage extends Component {
        return invoice
      })
 
-
-    const content = <div>
-                      <Table schema={schema} data={invoiceData} />
-                      <div className={styles.addButton}>
-                        <div className={styles.floatLeft}>
-                          <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={onBack} />
-                        </div>
-                      </div>
-                    </div>
-
     // const filters= <div>
     //       <ButtonStack divider={<span>|</span>} style='horizontal' >
     //         <TextButton content={t(['notifications','past'])}    onClick={() => {actions.setPast(true); this.props.actions.initAccounts(this.props.params.client_id, this.props.params.account_id)}} state={state.past && 'selected'}/>
@@ -73,7 +63,16 @@ export class InvoicesPage extends Component {
     //   </div>
 
     return (
-      <PageBase content={content}/>
+      <PageBase>
+        <div>
+          <Table schema={schema} data={invoiceData} />
+          <div className={styles.addButton}>
+            <div className={styles.floatLeft}>
+              <RoundButton content={<span className='fa fa-chevron-left' aria-hidden="true"></span>} onClick={onBack} />
+            </div>
+          </div>
+        </div>
+      </PageBase>
     )
   }
 }

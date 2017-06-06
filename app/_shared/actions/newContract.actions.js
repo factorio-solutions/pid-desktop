@@ -154,18 +154,16 @@ export function initContract(id){
     }
 
     const onDetailsSuccess = (response) => {
-      console.log(response);
+      request(onSuccess, GET_GARAGE_CLIENT, { id: response.data.contract.garage.id })
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent.id))
       dispatch(setPlaces(response.data.contract.places))
     }
 
-    request(onSuccess, GET_GARAGE_CLIENT, { id: getState().pageBase.garage })
+    if (!id) request(onSuccess, GET_GARAGE_CLIENT, { id: getState().pageBase.garage }) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
     request(onClientsSuccess, GET_CLIENTS)
-  // id && init Contract
     if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, {id: +id})
-
   }
 }
 

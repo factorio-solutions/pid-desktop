@@ -34,8 +34,8 @@ export class ReservationsPage extends Component {
     const schema = [ { key: 'name',          title: t(['reservations','name']),         comparator: 'string', sort: 'asc' }
                    , { key: 'client',        title: t(['reservations','client']),       comparator: 'string' }
                    , { key: 'licence_plate', title: t(['reservations','licencePlate']), comparator: 'string' }
-                   , { key: 'type',          title: t(['reservations','type']),         comparator: 'string',  representer: o => <i className={`fa ${o==='host' ? 'fa-suitcase' : 'fa-credit-card'}`} aria-hidden="true"></i> }
-                   , { key: 'state',         title: t(['reservations','state']),        comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-hourglass-half'} ${o && styles.green}`} aria-hidden="true"></i> }
+                   , { key: 'type',          title: t(['reservations','type']),         comparator: 'string',  representer: o => <i className={`fa ${o==='visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true"></i> }
+                   , { key: 'state',         title: t(['reservations','state']),        comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-question-circle'} ${o ? styles.green : styles.yellow}`} aria-hidden="true"></i> }
                    , { key: 'garage',        title: t(['reservations','garage']),       comparator: 'string' }
                    , { key: 'place',         title: t(['reservations','place']),
                        comparator: (type, aRow, bRow) => {
@@ -57,7 +57,7 @@ export class ReservationsPage extends Component {
              , client: reservation.client && reservation.client.name
              , licence_plate: reservation.car.licence_plate
              , state: reservation.approved
-             , type: reservation.client ? t(['reservations','host']) : t(['reservations','visitor'])
+             , type: reservation.case
              , from: reservation.begins_at
              , to: reservation.ends_at
             //  , disabled: !reservation.approved

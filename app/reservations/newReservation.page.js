@@ -48,38 +48,38 @@ export class NewReservationPage extends Component {
     }
 
     const userDropdown = () => {
-      const userSelected = (index) => { actions.setUserId(state.availableUsers[index].id) }
+      const userSelected = (index, a) => { actions.downloadUser(state.availableUsers[index].id) }
       return state.availableUsers.map((user, index) => {
         return { label: user.full_name, onClick: userSelected.bind(this, index) }
-      })
+      }) || []
     }
 
     const garageDropdown = () => {
-      const garageSelected = (index) => { actions.setGarageIndex(index) }
-      return state.availableGarages.map((garage, index) => {
+      const garageSelected = (index) => { actions.downloadGarage(state.user.availableGarages[index].id) }
+      return state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => {
         return { label: garage.name, onClick: garageSelected.bind(this, index) }
-      })
+      }) || []
     }
 
     const clientDropdown = () => {
-      const clientSelected = (index) => { actions.setClientId(state.availableClients[index].id) }
-      let clients = state.availableClients.map((client, index) => {
+      const clientSelected = (index) => { actions.setClientId(state.user.availableClients[index].id) }
+      let clients = state.user.availableClients.map((client, index) => {
         return { label: client.name, onClick: clientSelected.bind(this, index) }
-      })
+      }) || []
       return clients
     }
 
     const carDropdown = () => {
-      const carSelected = (index) => { actions.setCarId(state.availableCars[index].id) }
-      return state.availableCars.map((car, index) => {
+      const carSelected = (index) => { actions.setCarId(state.user.reservable_cars[index].id) }
+      return state.user && state.user.reservable_cars && state.user.reservable_cars.map((car, index) => {
         return { label: car.model, onClick: carSelected.bind(this, index) }
-      })
+      }) || []
     }
 
     const isSubmitable = () => {
       if (state.car_id == undefined && state.carLicencePlate=='') return false
       if (state.from == '' || state.to == '') return false
-      if (state.user_id && state.place_id) return true
+      if (state.user && state.place_id) return true
     }
 
     const placeLabel = () => {
@@ -113,6 +113,7 @@ export class NewReservationPage extends Component {
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
                          </div>
 
+    // console.log(state);
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -121,11 +122,11 @@ export class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()} onHighlight={hightlightInputs}>
-                {state.availableUsers.length>1 && <Dropdown label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return user.id == state.user_id})}         style='light' highlight={state.highlight}/> }
-                <Dropdown label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.garageIndex} style='light' highlight={state.highlight}/>
-                {state.availableClients.length>1 &&<Dropdown label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>}
-                {state.availableCars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
-                                               : <Dropdown label={t(['newReservation', 'selectCar'])}    content={carDropdown()}    selected={state.availableCars.findIndex((car)=>{return car.id == state.car_id})}             style='light' highlight={state.highlight}/>}
+                {state.availableUsers.length>1 && <Dropdown label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return state.user && user.id == state.user.id})}         style='light' highlight={state.highlight}/> }
+                {state.user && <Dropdown label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.user.availableGarages.findIndex((garage) => {return state.garage && garage.id === state.garage.id})} style='light' highlight={state.highlight}/>}
+                {state.user && state.user.availableClients && state.user.availableClients.length>1 && <Dropdown label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.user.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>}
+                {state.user && (state.user.reservable_cars && state.user.reservable_cars.length==0 ? <Input onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
+                                               : <Dropdown label={t(['newReservation', 'selectCar'])}    content={carDropdown()}    selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndex((car)=>{return car.id == state.car_id})}             style='light' highlight={state.highlight}/>)}
 
                 <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} inlineMenu={beginsInlineMenu}/>
                 {state.durationDate ? <Input         onChange={actions.durationChange} label={t(['newReservation', 'duration'])} error={t(['newReservation', 'invalidaValue'])} inlineMenu={endsInlineMenu} value={String(moment.duration(moment(state.to, 'DD.MM.YYYY HH:mm').diff(moment(state.from, 'DD.MM.YYYY HH:mm'))).asHours())} type="number" min={0.25} step={0.25} align="right" />
