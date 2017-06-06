@@ -26,31 +26,14 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
 }
 `
 
-export const GET_AVAILABLE_CARS = `query Query($user_id: Id) {
-  reservable_cars(user_id: $user_id) {
-    id
-    model
-    licence_plate
-  }
-}
-`
-
-// getGaragePricing
-export const GET_GARAGE_PRICINGS = `query ($id: Id!) {
-  garage(id: $id) {
-    id
-    pricings{
-      flat_price
-      exponential_12h_price
-      exponential_day_price
-      exponential_week_price
-      exponential_month_price
-      weekend_price
-      place_id
-      currency{
-        symbol
-      }
+export const GET_USER =`query Query($id: Id!) {
+  user(id: $id) {
+    reservable_cars{
+      id
+      model
+      licence_plate
     }
+    id
   }
 }
 `
@@ -58,6 +41,7 @@ export const GET_GARAGE_PRICINGS = `query ($id: Id!) {
 // get floors of garage of specified id
 export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id) {
   garage(id: $id) {
+    id
     name
     floors {
       id
@@ -66,6 +50,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       places {
         id
         label
+        priority
         pricing{
           flat_price
           exponential_12h_price
@@ -87,18 +72,6 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
   }
 }
 `
-// pricings{
-//   name
-//   flat_price
-//   exponential_12h_price
-//   exponential_day_price
-//   exponential_week_price
-//   exponential_month_price
-//   weekend_price
-//   currency{
-//     symbol
-//   }
-// }
 
 // create reservation mutation
 export const CREATE_RESERVATION = `mutation createReservation($reservation: ReservationInput!) {
@@ -133,22 +106,11 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     car {
       id
       licence_plate
+      temporary
     }
     client_id
     place{
       id
-      pricing{
-        flat_price
-        exponential_12h_price
-        exponential_day_price
-        exponential_week_price
-        exponential_month_price
-        weekend_price
-        currency{
-          symbol
-        }
-      }
-
       floor{
         id
         garage{

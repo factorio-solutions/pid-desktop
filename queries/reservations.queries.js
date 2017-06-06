@@ -2,6 +2,7 @@
 export const GET_RESERVATIONS_QUERY = `{
   reservations {
     id
+    case
     invoice_item{
       id
       invoice{
