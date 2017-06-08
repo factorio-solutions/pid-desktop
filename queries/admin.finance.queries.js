@@ -14,6 +14,9 @@ export const GET_RENTS = `{
 
 export const GET_GARAGE_PAYMENT_METHOD = `query ($id:Id!){
   garage(id:$id){
+    vat
+    invoice_row
+    simplyfied_invoice_row
     account{
       id
       paypal_email

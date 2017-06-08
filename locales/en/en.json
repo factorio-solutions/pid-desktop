@@ -848,7 +848,15 @@
 		"paypal": "Paypal",
 		"csob": "ČSOB",
 		"csobPayment": "ČSOB Payments",
-		"SelectPrivateKey" : "Select private key"
+		"SelectPrivateKey" : "Select private key",
+		"finanaceSettings":"Finanace settings",
+		"vat" : "Value added tax",
+		"invoiceRow" : "Regular invoice row",
+		"simplyfiedInvoiceRow" : "Simplyfied invoice row",
+		"invalidVat" : "Invalid VAT",
+		"invalidRow" : "Invalid number",
+		"changeSuccess": "Values were changed sucessfully.",
+		"changeFailed": "Error occured, values were not changed."
 	},
 	"analytics": {
 		"week": "week",
