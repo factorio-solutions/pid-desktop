@@ -8,7 +8,8 @@
     "build": "webpack --config webpack.config.my.js --progress --colors",
     "_comment_postinstall": "webpack -p --config ./webpack.config.my.js --progress",
     "start": "node ./src/app.js",
-    "dev": "webpack-dev-server --config webpack.config.dev.js --progress --colors --open"
+    "dev": "webpack-dev-server --config webpack.config.dev.js --progress --colors --open",
+    "export_languages": "node app/_shared/modules/localization/export.js /home/hrstka/Documents/pid-desktop/app/_shared/locales/"
   },
   "author": {
     "name": "T. Hrstka"

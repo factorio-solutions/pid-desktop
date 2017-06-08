@@ -119,6 +119,7 @@ export function setFrom(value){
              , value: fromValue.format(MOMENT_DATETIME_FORMAT)
              })
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    dispatch(setPrice())
   }
 }
 
@@ -135,6 +136,7 @@ export function setTo(value){
               , value: toValue.format(MOMENT_DATETIME_FORMAT)
               })
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    dispatch(setPrice())
   }
 }
 
@@ -143,7 +145,8 @@ export function setPlace (place){
     dispatch({ type: NEW_RESERVATION_SET_PLACE_ID
              , value: place ? place.id : undefined
              })
-    place && place.pricing ? dispatch(setPrice(place.pricing)) : dispatch(setPrice(undefined))
+
+    dispatch(setPrice())
   }
 }
 
@@ -153,14 +156,19 @@ export function setEditPlaceId(value){
          }
 }
 
-export function setPrice(pricing){
+export function setPrice(){
   return (dispatch, getState) => {
     const state = getState().newReservation
     const from = moment(state.from, MOMENT_DATETIME_FORMAT)
     const to = moment(state.to, MOMENT_DATETIME_FORMAT)
+    const selectedPlace = state.garage && state.garage.floors.reduce((acc, floor)=> {
+      return floor.places.reduce((acc, place) => {
+        return place.id === state.place_id ? place : acc
+      }, acc)
+    }, undefined)
 
     dispatch({ type: NEW_RESERVATION_SET_PRICE
-             , value: pricing ? `${calculatePrice(pricing, from ,to)} ${pricing.currency.symbol}` : undefined
+             , value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from ,to)} ${selectedPlace.pricing.currency.symbol}` : undefined
              })
   }
 }

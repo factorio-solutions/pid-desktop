@@ -3,11 +3,13 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import update                          from 'react-addons-update'
 
-import PageBase    from '../../_shared/containers/pageBase/PageBase'
-import Table       from '../../_shared/components/table/Table'
-import RoundButton from '../../_shared/components/buttons/RoundButton'
+import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import Table              from '../../_shared/components/table/Table'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import Switch             from '../../_shared/components/switch/Switch'
+import Input              from '../../_shared/components/input/Input'
+import Form               from '../../_shared/components/form/Form'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -54,9 +56,29 @@ export class FinancePage extends Component {
 
     const toPaypalSettings = () => {actions.paypalClick()}
     const toCsobSettings = () => {nav.to(`/${pageBase.garage}/admin/finance/csob`)}
+    const submitForm = ()=>{ checkSubmitable() && actions.submitGarage(this.props.params.id) }
+
+    const checkSubmitable = () => {
+      if (state.vat === undefined || state.vat === '') return false
+      if (state.invoiceRow === undefined || state.invoiceRow === '') return false
+      if (state.simplyfiedInvoiceRow === undefined || state.simplyfiedInvoiceRow === '') return false
+
+      return true
+    }
+
 
     return (
       <PageBase>
+        <div>
+          <h2>{t(['finance','finanaceSettings'])}</h2>
+          <Form onSubmit={submitForm} submitable={checkSubmitable()} onHighlight={actions.toggleHighlight}>
+            <Input onChange={actions.setVat}                  onEnter={submitForm} label={t(['finance', 'vat'])}                  error={t(['finance', 'invalidVat'])} value={state.vat}                  type="number" min={0} step={0.01} highlight={state.highlight} />
+            <Input onChange={actions.setInvoiceRow}           onEnter={submitForm} label={t(['finance', 'invoiceRow'])}           error={t(['finance', 'invalidRow'])} value={state.invoiceRow}           type="number" min={0} step={1}    highlight={state.highlight}/>
+            <Input onChange={actions.setSimplyfiedInvoiceRow} onEnter={submitForm} label={t(['finance', 'simplyfiedInvoiceRow'])} error={t(['finance', 'invalidRow'])} value={state.simplyfiedInvoiceRow} type="number" min={0} step={1}    highlight={state.highlight}/>
+          </Form>
+        </div>
+
+
       {pageBase.current_user && pageBase.current_user.garage_admin &&
         <div>
           <h2>{t(['garages','placeRent'])}</h2>
