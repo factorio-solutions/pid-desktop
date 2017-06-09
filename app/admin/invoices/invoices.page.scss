@@ -12,3 +12,18 @@
 	margin-top: $addButtonMargin;
 	text-align: center;
 }
+
+.dropdownsContainer{
+  >div{
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+
+.green{
+  color: $green;
+}
+
+.red{
+  color: $red;
+}

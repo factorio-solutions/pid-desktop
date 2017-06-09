@@ -38,6 +38,7 @@ import clientUsers      from '../_shared/reducers/clientUsers.reducer'
 // import newAccount       from '../_shared/reducers/newAccount.reducer'
 
 import invoices         from '../_shared/reducers/invoices.reducer'
+import editInvoice      from '../_shared/reducers/editInvoice.reducer'
 
 // import cars             from '../_shared/reducers/cars.reducer'
 import newCar           from '../_shared/reducers/newCar.reducer'
@@ -97,6 +98,7 @@ const rootReducer = combineReducers({ routing
                                     // , newAccount
 
                                     , invoices
+                                    , editInvoice
 
                                     // , cars
                                     , newCar

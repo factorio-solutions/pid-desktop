@@ -47,6 +47,7 @@ import GateModuleOrderPage        from './addFeatures/gateModuleOrder.page'
 // ADMIN
 // invoices
 import InvoicesPage               from './admin/invoices/invoices.page'
+import EditInvoicePage            from './admin/invoices/editInvoice.page'
 
 // clients
 import ClientsPage                from './admin/clients/clients.page'
@@ -165,6 +166,7 @@ export default function createRoutes() {
       <Route path="addFeatures/gateModuleOrder"           component={GateModuleOrderPage}/>
 
       <Route path=":id/admin/invoices"                    component={InvoicesPage}/>
+      <Route path=":id/admin/invoices/:invoice_id/edit"   component={EditInvoicePage}/>
 
       <Route path=":id/admin/clients"                           component={ClientsPage}/>
       <Route path=":id/admin/clients/:client_id/users"          component={ClientUsersPage}/>

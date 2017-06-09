@@ -1,20 +1,31 @@
 // fetch invoices
-export const GET_INVOICES = `query ($client_id: Id, $account_id: Id, $past: Boolean){
-  invoices(client_id: $client_id, account_id: $account_id, past: $past ){
+export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
+  invoices (past:$past, garage_id:$garage_id){
     id
+    invoice_number
+    longterm_rent
     invoice_date
     due_date
     payed
     ammount
     subject
+    canceled
+    is_storno_invoice
    	currency{
       symbol
     }
     account{
-      name
+      garage{
+        name
+        id
+        is_admin
+      }
     }
     client{
+      is_admin
+      is_secretary
       name
+      id
       admins{
         id
       }
@@ -23,22 +34,22 @@ export const GET_INVOICES = `query ($client_id: Id, $account_id: Id, $past: Bool
 }
 `
 // Get account details
-export const GET_ACCOUNT_DETAILS = `query GetAccountDetails ($id: Id!) {
-  accounts(id:$id){
-    id
-    name
-  }
-}
-`
+// export const GET_ACCOUNT_DETAILS = `query GetAccountDetails ($id: Id!) {
+//   accounts(id:$id){
+//     id
+//     name
+//   }
+// }
+// `
 
 // Get client details
-export const GET_CLIENT_DETAILS = `query GetClientDetails ($id: Id!) {
-  client(id:$id){
-    id
-    name
-  }
-}
-`
+// export const GET_CLIENT_DETAILS = `query GetClientDetails ($id: Id!) {
+//   client(id:$id){
+//     id
+//     name
+//   }
+// }
+// `
 
 // will update invoice
 export const UPDATE_INVOICE = `mutation UpdatInvoice ($id: Id!, $invoice:InvoiceInput!){

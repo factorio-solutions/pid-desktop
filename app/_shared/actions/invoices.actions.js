@@ -7,10 +7,13 @@ import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS
 import { toAccounts, toClients, setError, setCustomModal } from './pageBase.actions'
 
 
-export const INVOICES_SET_INVOICES = "INVOICES_SET_INVOICES"
-export const INVOICES_SET_CLIENT   = "INVOICES_SET_CLIENT"
-export const INVOICES_SET_ACCOUNT  = "INVOICES_SET_ACCOUNT"
-export const INVOICES_SET_PAST     = "INVOICES_SET_PAST"
+export const INVOICES_SET_INVOICES  = 'INVOICES_SET_INVOICES'
+export const INVOICES_SET_CLIENTS   = 'INVOICES_SET_CLIENTS'
+export const INVOICES_SET_CLIENT_ID = 'INVOICES_SET_CLIENT_ID'
+export const INVOICES_SET_GARAGES   = 'INVOICES_SET_GARAGES'
+export const INVOICES_SET_GARAGE_ID = 'INVOICES_SET_GARAGE_ID'
+export const INVOICES_SET_PAST      = 'INVOICES_SET_PAST'
+export const INVOICES_SET_REASON    = 'INVOICES_SET_REASON'
 
 
 export function setInvoices (value) {
@@ -19,52 +22,82 @@ export function setInvoices (value) {
          }
 }
 
-export function setClient (value) {
-  return { type: INVOICES_SET_CLIENT
+export function setClients (value) {
+  return { type: INVOICES_SET_CLIENTS
          , value
          }
 }
 
-export function setAccount (value) {
-  return { type: INVOICES_SET_ACCOUNT
+export function setClientId (value) {
+  return { type: INVOICES_SET_CLIENT_ID
          , value
          }
 }
 
-export function setPast (value) {
-  return { type: INVOICES_SET_PAST
+export function setGarages (value) {
+  return { type: INVOICES_SET_GARAGES
+         , value
+         }
+}
+
+export function setGarageId (value) {
+  return { type: INVOICES_SET_GARAGE_ID
+         , value
+         }
+}
+
+export function setPast (value, garage_id) {
+  return (dispatch, getState) => {
+    dispatch ({ type: INVOICES_SET_PAST
+              , value
+              })
+    dispatch(initInvoices (garage_id))
+  }
+}
+
+export function setReason (value) {
+  return { type: INVOICES_SET_REASON
          , value
          }
 }
 
 
-export function initAccounts (client_id, account_id) {
+export function initInvoices (garage_id) {
   return (dispatch, getState) => {
     const state = getState().invoices
 
     const onSuccess = (response) => {
       dispatch(setInvoices(response.data.invoices))
-    }
 
-    const onClient = (response) => {
-      dispatch(setClient(response.data.client))
-      dispatch(toClients())
-    }
+      const garagesClients = response.data.invoices.reduce((acc, invoice)=> {
+        acc.garages[invoice.account.garage.id] = invoice.account.garage
+        acc.clients[invoice.client.id] = invoice.client
+        return acc
+      }, {clients:{}, garages: {}})
 
-    const onAccount = (response) => {
-      dispatch(setAccount(response.data.accounts[0]))
-      dispatch(toAccounts())
+      let garages = [{name: t(['invoices', 'selectGarage']), id: undefined}]
+      for (var key in garagesClients.garages) {
+        if (garagesClients.garages.hasOwnProperty(key)) {
+          garages.push(garagesClients.garages[key])
+        }
+      }
+      dispatch(setGarages(garages))
+
+      let clients = [{name: t(['invoices', 'selectClient']), id: undefined}]
+      for (var key in garagesClients.clients) {
+        if (garagesClients.clients.hasOwnProperty(key)) {
+          clients.push(garagesClients.clients[key])
+        }
+      }
+      dispatch(setClients(clients))
     }
 
     request(onSuccess
            , GET_INVOICES
-           , { client_id:   +client_id
-             , account_id:  +account_id
+           , { garage_id:   garage_id && +garage_id
              , past:        state.past
              }
            )
-
-     client_id ? request( onClient, GET_CLIENT_DETAILS, { id: +client_id }) : request( onAccount, GET_ACCOUNT_DETAILS, { id: +account_id })
   }
 }
 
@@ -105,19 +138,38 @@ export function payInvoiceFinish (token){
   }
 }
 
-export function invoicePayed (id) {
+export function invoicePayed (id, garage_id) {
   return (dispatch, getState) => {
     const state = getState().invoices
     const onSuccess = (response) => {
-      dispatch(initAccounts(state.client&&state.client.id, state.account&&state.account.id))
+      dispatch(initInvoices(garage_id))
     }
 
-    request(onSuccess
+    request( onSuccess
            , UPDATE_INVOICE
            , { id:      +id
              , invoice: { payed: true }
              }
            )
+  }
+}
+
+export function stornoInvoice (id, garage_id) {
+  return (dispatch, getState) => {
+    const state = getState().invoices
+    const onSuccess = (response) => {
+      dispatch(initInvoices(garage_id))
+    }
+
+    dispatch(setCustomModal(undefined))
+    if (state.reason !== undefined && state.reason !== '') {
+      request( onSuccess
+        , UPDATE_INVOICE
+        , { id:      +id
+          , invoice: { canceled: true, reason: state.reason }
+        }
+      )
+    }
   }
 }
 
@@ -137,11 +189,11 @@ export function reminder(id){
 
     const invoice = state.invoices.find((invoice) => {return invoice.id === id})
     invoice.client != null && invoice.client.admins.forEach((admin)=>{
-      request(onSuccess
+      request( onSuccess
              , REMINDER_NOTIFICATION
-             , { notification:{ user_id:admin.id
+             , { notification:{ user_id:           admin.id
                               , notification_type: 'Yes'
-                              , message: 'invoiceReminder;'+state.account.name
+                              , message:           'invoiceReminder;'+invoice.account.garage.name
                               }
                }
              )
