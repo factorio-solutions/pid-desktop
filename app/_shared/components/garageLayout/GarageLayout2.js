@@ -33,7 +33,8 @@ export default class GarageLayout extends Component {
   static propTypes = {
     floors:          PropTypes.array.isRequired, // array of all floors
     onPlaceClick:    PropTypes.func, // handling click on svg
-    showEmptyFloors: PropTypes.bool
+    showEmptyFloors: PropTypes.bool,
+    unfold:          PropTypes.bool
   }
 
   constructor(props) {
@@ -52,92 +53,97 @@ export default class GarageLayout extends Component {
 
   scanPlacesAddLabels(){
     // add labels to all places
-    let gControl = document.getElementById('Gcontrol')
+    let elements = document.getElementsByTagName('svg'); // go trough all svgs - can be multiple on page
 
-    const labelChildren = (child) => {
-        (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5))
-    }
+    for (let i = 0; i < elements.length; i++) {
+      let currentSvg = elements[i]
+      let gControl = currentSvg.getElementById('Gcontrol')
 
-    gControl && Array.prototype.slice.call(document.getElementById('Gcontrol').childNodes).forEach((child)=>{ // convert childNodet to array cuz of Safari
-        (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5))
-    })
+      const labelChildren = (child) => {
+          (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5), currentSvg)
+      }
 
-    // remove free and selected classes
-    while (document.getElementsByClassName(styles.gvFree).length >= 1) {
-      document.getElementsByClassName(styles.gvFree)[0].classList.remove(styles.gvFree)
-    }
-    while (document.getElementsByClassName(styles.gvSelected).length >= 1) {
-      document.getElementsByClassName(styles.gvSelected)[0].classList.remove(styles.gvSelected)
-    }
-    while (document.getElementsByClassName('hasColorGroup').length >= 1) {
-      let element = document.getElementsByClassName('hasColorGroup')[0]
-      element.classList.remove('hasColorGroup')
-      element.removeAttribute("style")
-    }
-
-
-
-    let { floors } = this.props
-    let { floor } = this.state
-
-    // color all selected Yellow
-    floors[floor] && floors[floor].places && floors[floor].places
-      .filter((place) => { return place.selected})
-      .forEach((place)=>{
-        let placeRect = document.getElementById('Place'+place.label)
-        placeRect && placeRect.classList.add(styles.gvSelected)
+      gControl && Array.prototype.slice.call(currentSvg.getElementById('Gcontrol').childNodes).forEach((child)=>{ // convert childNodet to array cuz of Safari
+          (child.id || '').substring(0,5) == 'Place' && this.addLabel(child, child.id.substring(5), currentSvg)
       })
 
-    // color all available blue
-    floors[floor] && floors[floor].places && floors[floor].places
-      .filter((place) => { return place.available && !place.selected})
-      .forEach((place)=>{
-        let placeRect = document.getElementById('Place'+place.label)
-        placeRect && placeRect.classList.add(styles.gvFree)
-      })
+      // remove free and selected classes
+      while (currentSvg.getElementsByClassName(styles.gvFree).length >= 1) {
+        currentSvg.getElementsByClassName(styles.gvFree)[0].classList.remove(styles.gvFree)
+      }
+      while (currentSvg.getElementsByClassName(styles.gvSelected).length >= 1) {
+        currentSvg.getElementsByClassName(styles.gvSelected)[0].classList.remove(styles.gvSelected)
+      }
+      while (currentSvg.getElementsByClassName('hasColorGroup').length >= 1) {
+        let element = currentSvg.getElementsByClassName('hasColorGroup')[0]
+        element.classList.remove('hasColorGroup')
+        element.removeAttribute("style")
+      }
 
-    // color all with same group same color
-    let uniqueGroups = floors[floor] && floors[floor].places && floors[floor].places
-      .reduce((groups, place) => {
-        place.group && !groups.includes(place.group) && groups.push(place.group)
-        return groups
-      }, [])
 
-    if (uniqueGroups && uniqueGroups.length){
-      let colors = COLOR_PALETE.length>=uniqueGroups.length ? COLOR_PALETE.slice(0, uniqueGroups.length) : COLOR_PALETE.concat(RandomColor({count:uniqueGroups.length - COLOR_PALETE.length, luminosity: 'light', seed: 'as32d165q4'}))
 
-      let assignColors = uniqueGroups
-        .reduce((assign, group, index) => {
-          assign[group] = colors[index]
-          return assign
-        }, {})
+      let { floors } = this.props
+      let { floor } = this.state
 
+      // color all selected Yellow
       floors[floor] && floors[floor].places && floors[floor].places
-        .filter((place) => { return place.group})
+        .filter((place) => { return place.selected})
         .forEach((place)=>{
-          let placeRect = document.getElementById('Place'+place.label)
-          placeRect && placeRect.classList.add('hasColorGroup')
-          placeRect && placeRect.setAttribute("style", `fill: ${assignColors[place.group]};`)
+          let placeRect = currentSvg.getElementById('Place'+place.label)
+          placeRect && placeRect.classList.add(styles.gvSelected)
         })
 
+      // color all available blue
+      floors[floor] && floors[floor].places && floors[floor].places
+        .filter((place) => { return place.available && !place.selected})
+        .forEach((place)=>{
+          let placeRect = currentSvg.getElementById('Place'+place.label)
+          placeRect && placeRect.classList.add(styles.gvFree)
+        })
+
+      // color all with same group same color
+      let uniqueGroups = floors[floor] && floors[floor].places && floors[floor].places
+        .reduce((groups, place) => {
+          place.group && !groups.includes(place.group) && groups.push(place.group)
+          return groups
+        }, [])
+
+      if (uniqueGroups && uniqueGroups.length){
+        let colors = COLOR_PALETE.length>=uniqueGroups.length ? COLOR_PALETE.slice(0, uniqueGroups.length) : COLOR_PALETE.concat(RandomColor({count:uniqueGroups.length - COLOR_PALETE.length, luminosity: 'light', seed: 'as32d165q4'}))
+
+        let assignColors = uniqueGroups
+          .reduce((assign, group, index) => {
+            assign[group] = colors[index]
+            return assign
+          }, {})
+
+        floors[floor] && floors[floor].places && floors[floor].places
+          .filter((place) => { return place.group})
+          .forEach((place)=>{
+            let placeRect = currentSvg.getElementById('Place'+place.label)
+            placeRect && placeRect.classList.add('hasColorGroup')
+            placeRect && placeRect.setAttribute("style", `fill: ${assignColors[place.group]};`)
+          })
+
+      }
+
+      // add tooltip event listeners
+      floors[floor] && floors[floor].places && floors[floor].places
+        .filter((place) => { return place.tooltip })
+        .forEach((place) =>{
+          let placeRect = currentSvg.getElementById('Place'+place.label)
+          if (placeRect) {
+            placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
+            placeRect.onmouseleave = () => { this.setState({ ...this.state, visible:false }) }
+            placeRect.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX, mouseY: event.clientY }) }
+          }
+
+        })
     }
-
-    // add tooltip event listeners
-    floors[floor] && floors[floor].places && floors[floor].places
-      .filter((place) => { return place.tooltip })
-      .forEach((place) =>{
-        let placeRect = document.getElementById('Place'+place.label)
-        if (placeRect) {
-          placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
-          placeRect.onmouseleave = () => { this.setState({ ...this.state, visible:false }) }
-          placeRect.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX, mouseY: event.clientY }) }
-        }
-
-      })
   }
 
-  addLabel(place, label){
-    if (!document.getElementById('Text'+label)){ // if label doenst exist yet
+  addLabel(place, label, el){
+    if (!el.getElementById('Text'+label)){ // if label doenst exist yet
       let x = 0, y = 0
       switch (place.tagName) {
         case 'polygon':
@@ -174,7 +180,7 @@ export default class GarageLayout extends Component {
 
   render(){
     const divider = <span> </span>
-    let { floors, onPlaceClick, showEmptyFloors } = this.props
+    let { floors, onPlaceClick, showEmptyFloors, unfold } = this.props
     let { floor } = this.state
 
     const prepareButtons = (floor, index, arr) => {
@@ -192,7 +198,13 @@ export default class GarageLayout extends Component {
       }
     }
 
+    const prepareFloors = floor => <SvgFromText svg={floor.scheme || ''} svgClick={handleSVGClick} />
+
+
     return(
+      unfold === true ? <div>
+        {floors.map(prepareFloors)}
+      </div> :
       <div className={styles.widthContainer}>
         <div className={`${styles.width78} ${styles.svgContainer}`}>
           <SvgFromText svg={floors[floor] && floors[floor].scheme || ''} svgClick={handleSVGClick} />

@@ -1,0 +1,34 @@
+.container{
+  display: flex;
+
+  >div{
+    flex: 1 1;
+  }
+}
+
+.news{
+  >span{
+    float: right;
+  }
+}
+
+.title{
+  position: relative;
+
+  >h2{
+    display: inline-block;
+  }
+  >span{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.right{
+  float: right;
+}
+
+.pointer{
+  cursor: pointer;
+}

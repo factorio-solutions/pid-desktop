@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
-import { Chart }                       from 'react-google-charts';
+import { Chart }                       from 'react-google-charts'
 
 import PageBase   from '../_shared/containers/pageBase/PageBase'
 import TabMenu    from '../_shared/components/tabMenu/TabMenu'
@@ -87,10 +87,6 @@ export class GarageTurnoverPage extends Component {
                         , <span><b>-</b></span>
                         , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
                         ]
-
-      console.log(chartDataArray.length == 1);
-
-
 
     return (
       <PageBase>

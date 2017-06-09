@@ -890,5 +890,16 @@
 		"subject": "subject",
 		"action": "action",
 		"createdAt": "time"
+	},
+	"dashboard": {
+		"news": "PID news",
+		"latestActivity": "Latest activity",
+		"currentState": "Current state",
+		"financeOverview": "Finance overview",
+		"occupiedTotal": "occupied/total",
+		"longterm": "Longterm",
+		"visitors": "Visitors",
+		"free": "free",
+		"total": "Total"
 	}
 }
