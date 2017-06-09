@@ -10,6 +10,7 @@ import PatternInput       from '../../_shared/components/input/PatternInput'
 import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
+import DatetimeInput      from '../../_shared/components/input/DatetimeInput'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -68,9 +69,12 @@ export class NewContractPage extends Component {
       return floor
     }
 
+    const handleFrom = (value, valid) => { valid && actions.setFrom(value) }
+    const handleTo   = (value, valid) => { valid && actions.setTo(value) }
 
     const checkSubmitable = () => {
       if (state.client_id === undefined) return false
+      if (state.from === undefined||state.from === '') return false
       if (state.places.length == 0) return false
       if (!state.newRent && state.rent_id === undefined) return false
       if (state.newRent && (state.price === undefined || state.price <= 0 || state.currency_id === undefined)) return false
@@ -109,6 +113,8 @@ export class NewContractPage extends Component {
                     <Dropdown label={t(['newContract', 'selectRent'])} content={state.rents.map(prepareRents)} style='light' selected={selectedRent}/>
                     <RoundButton content={<i className='fa fa-plus' aria-hidden="true"></i>} onClick={actions.toggleNewRent} type='action'/>
                   </div>}
+                  <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} />
+                  <DatetimeInput onChange={handleTo}   label={t(['newReservation', 'ends'])}   value={state.to} />
               {/*<div>
                 <h2>{t(['newPricing', 'flatPrice'])}</h2>
                 <PatternInput onChange={actions.setFlatPrice} label={t(['newPricing', 'flatPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={pricing ? pricing.flat_price||'' : ''}/>

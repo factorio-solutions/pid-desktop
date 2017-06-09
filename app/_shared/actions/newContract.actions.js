@@ -1,5 +1,6 @@
-import update from 'react-addons-update'
-import * as nav    from '../helpers/navigation'
+import update   from 'react-addons-update'
+import * as nav from '../helpers/navigation'
+import moment   from 'moment'
 
 import { request }  from '../helpers/request'
 import {t}          from '../modules/localization/localization'
@@ -9,6 +10,7 @@ import { GET_RENTS }                     from '../queries/admin.finance.queries.
 import { GET_CLIENTS }                   from '../queries/clients.queries.js'
 import { GET_GARAGE_CLIENT, ADD_CLIENT, GET_CURRENCIES, CREATE_CONTRACT, GET_CONTRACT_DETAILS, UPDATE_CONTRACT } from '../queries/newContract.queries.js'
 
+const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS        = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT'
@@ -89,13 +91,13 @@ export function setCurrency (value) {
 
 export function setFrom (value) {
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM
-         , value
+         , value: moment(value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT)
          }
 }
 
 export function setTo (value) {
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
-         , value
+         , value: value ==='' ? '' : moment(value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT)
          }
 }
 
@@ -154,6 +156,8 @@ export function initContract(id){
     }
 
     const onDetailsSuccess = (response) => {
+      dispatch(setFrom(moment(response.data.contract.from).format(MOMENT_DATETIME_FORMAT)))
+      dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
       request(onSuccess, GET_GARAGE_CLIENT, { id: response.data.contract.garage.id })
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent.id))
@@ -227,6 +231,8 @@ export function submitNewContract (id){
     const client = state.clients.find(cli => cli.id === state.client_id)
     let variables = { contract: { client_id: client.id
                                 , contract_places: state.places.map(place => {return {place_id: place.id}})
+                                , from: state.from
+                                , to: state.to
                                 }
                     }
 
