@@ -1,14 +1,20 @@
 import {
   INVOICES_SET_INVOICES,
-  INVOICES_SET_CLIENT,
-  INVOICES_SET_ACCOUNT,
-  INVOICES_SET_PAST
+  INVOICES_SET_CLIENTS,
+  INVOICES_SET_CLIENT_ID,
+  INVOICES_SET_GARAGES,
+  INVOICES_SET_GARAGE_ID,
+  INVOICES_SET_PAST,
+  INVOICES_SET_REASON
 }  from '../actions/invoices.actions'
 
-const defaultState =  { invoices:        []
-                      , client:          undefined
-                      , account:         undefined
-                      , past:            false
+const defaultState =  { invoices:  []
+                      , clients:   []
+                      , client_id: undefined
+                      , garages:   []
+                      , garage_id: undefined
+                      , past:      false
+                      , reason:    '' // reason for cancelling invoice
                       }
 
 
@@ -20,21 +26,34 @@ export default function invoices (state = defaultState, action) {
             , invoices: action.value
             }
 
-    case INVOICES_SET_CLIENT:
+    case INVOICES_SET_CLIENTS:
     return  { ...state
-            , client:  action.value
-            , account: undefined
+            , clients:  action.value
             }
 
-    case INVOICES_SET_ACCOUNT:
+    case INVOICES_SET_CLIENT_ID:
     return  { ...state
-            , account: action.value
-            , client:  undefined
+            , client_id: action.value
+            }
+
+    case INVOICES_SET_GARAGES:
+    return  { ...state
+            , garages:  action.value
+            }
+
+    case INVOICES_SET_GARAGE_ID:
+    return  { ...state
+            , garage_id: action.value
             }
 
     case INVOICES_SET_PAST:
     return  { ...state
             , past: action.value
+            }
+
+    case INVOICES_SET_REASON:
+    return  { ...state
+            , reason: action.value
             }
 
     default:
