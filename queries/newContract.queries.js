@@ -59,6 +59,8 @@ export const UPDATE_CONTRACT = `mutation UpdateConctact($id:Id!, $contract:Contr
 export const GET_CONTRACT_DETAILS = `query ($id:Id!) {
   contract(id:$id){
     id
+    from
+    to
     garage{
       id
       name
