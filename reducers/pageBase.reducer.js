@@ -29,15 +29,15 @@ const defaultState =  { selected:                undefined // key selected in pr
 
                       // modal windows
                       , error:              undefined
-                      , success:              undefined
+                      , success:            undefined
                       , custom_modal:       undefined
-                      , notificationsModal: false
+                      , notificationsModal: true
 
                       //current user
                       , current_user: undefined
 
                       // page hints
-                      , hint:      undefined // {hint, href}
+                      , hint: undefined // {hint, href}
 
                       // selectedGarage
                       , garages:              []

@@ -10,7 +10,7 @@ const defaultState =  { goPublic: false
                       , marketing: false
                       , short_name: undefined
                       , reservationForm: false
-                      , mrParkitConntection: false
+                      , mrParkitConnection: false
                       }
 
 
@@ -39,7 +39,7 @@ export default function adminModules (state = defaultState, action) {
 
     case ADMIN_MODULES_SET_MR_PARKIT_CONNECTION:
       return  { ...state
-              , mrParkitConntection: action.value
+              , mrParkitConnection: action.value
               }
 
     default:

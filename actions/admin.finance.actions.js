@@ -60,7 +60,7 @@ export function setCsobPrivateKey (value) {
 
 export function setVat (value) {
   return { type: ADMIN_FINANCE_SET_VAT
-         , value: parseFloat(value)
+         , value: parseFloat(value) || 0
          }
 }
 

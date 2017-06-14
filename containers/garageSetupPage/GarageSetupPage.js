@@ -37,6 +37,7 @@ export class GarageSetupPage extends Component {
                  , {label: t(['newGarage', 'order']),        onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/order`) },        state: createState('garageSetup/order')}
                  ]
     !window.location.hash.includes('admin') && tabs.push({label: t(['newGarage', 'subscribtion']), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/subscribtion`) }, state: createState('garageSetup/subscribtion')})
+    window.location.hash.includes('admin') && tabs.push({label: t(['newGarage', 'users']), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/users`) }, state: createState('garageSetup/users')})
 
 
      const handleErrorClick = () => {

@@ -1,7 +1,7 @@
 import { request } from '../helpers/request'
 import { t }       from '../modules/localization/localization'
 
-import { setCustomModal } from './pageBase.actions'
+import { setCustomModal, setError } from './pageBase.actions'
 import { GET_GARAGE_MODULES, UPDATE_MARKETING, UPDATE_GARAGE }from '../queries/admin.modules.queries.js'
 
 
@@ -79,15 +79,20 @@ export function toggleMarketing () {
 export function toggleGoPublic () {
   return (dispatch, getState) => {
     const state =  getState().adminModules
+    const value = !state.goPublic
 
     const onSuccess = (response) => {
-      dispatch(initModules())
+      if (response.data.update_garage.is_public !== value) {
+        dispatch(setError(t(['modules', 'cannotBeChanged'])))
+      }
+      dispatch(setGoPublic(response.data.update_garage.is_public))
+      // dispatch(initModules())
     }
 
     request(onSuccess
            , UPDATE_GARAGE
            , { id: getState().pageBase.garage
-             , "garage": { "is_public": !state.goPublic }
+             , "garage": { "is_public": value }
              }
            )
   }

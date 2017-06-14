@@ -26,6 +26,7 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM           = 'ADMIN_CLIENTS_NEW_
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_TO             = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_TO'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES'
+export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT   = 'ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM         = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
 
 
@@ -90,15 +91,47 @@ export function setCurrency (value) {
 }
 
 export function setFrom (value) {
-  return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM
-         , value: moment(value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT)
-         }
+  return (dispatch, getState) => {
+    let fromValue = moment(value, MOMENT_DATETIME_FORMAT).startOf('day')
+    const now = moment(moment()).startOf('day')
+
+    if (fromValue.diff(now, 'minutes') < 0){ // cannot create reservations in the past
+      fromValue = now
+    }
+
+    if (moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).isValid() &&
+        moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < 0) {
+      dispatch(setTo(fromValue.clone().endOf('day').format(MOMENT_DATETIME_FORMAT)))
+    }
+
+    dispatch({ type: ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM
+             , value: fromValue.format(MOMENT_DATETIME_FORMAT)
+             })
+  }
 }
 
 export function setTo (value) {
-  return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
-         , value: value ==='' ? '' : moment(value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT)
-         }
+  return (dispatch, getState) => {
+    if (value === ''){ // can be empty value
+      dispatch({ type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
+               , value
+               })
+    } else {
+      let toValue = moment(value, MOMENT_DATETIME_FORMAT).endOf('day')
+      let fromValue = moment(getState().newContract.from, MOMENT_DATETIME_FORMAT)
+
+      if (toValue.diff(fromValue, 'minutes') <= 0) {
+        toValue = fromValue.endOf('day')
+      }
+
+      dispatch ({ type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
+                , value: toValue.format(MOMENT_DATETIME_FORMAT)
+                })
+      // return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
+      //   , value: value ==='' ? '' : moment(value, MOMENT_DATETIME_FORMAT).endOf('day').format(MOMENT_DATETIME_FORMAT)
+      // }
+    }
+  }
 }
 
 export function setGarage (value) {
@@ -111,6 +144,10 @@ export function setPlaces (value) {
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES
          , value
          }
+}
+
+export function toggleHighlight () {
+  return { type: ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT }
 }
 
 export function eraseForm () {
@@ -214,7 +251,11 @@ export function addClient(){
 
 export function selectPlace (place){
   return (dispatch, getState) => {
-    dispatch(setPlaces(update(getState().newContract.places, {$push: [place]} )))
+    if (place.selected){
+      dispatch(removePlace(getState().newContract.places.findIndex(p => p.id === place.id)))
+    } else {
+      dispatch(setPlaces(update(getState().newContract.places, {$push: [place]} )))
+    }
   }
 }
 

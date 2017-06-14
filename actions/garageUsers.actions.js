@@ -34,8 +34,6 @@ export function initGarageUsers (garage_id){
       dispatch( setGarageUsersUsers( response.data.user_garages.filter((garageUser)=>{return garageUser.pending == false}) ) )
       dispatch( setGarageUsersPendingUsers(response.data.user_garages.filter((garageUser)=>{return garageUser.pending == true})) )
       dispatch( setGarageUsersGarage(response.data.garage) )
-
-      dispatch( toGarages() )
     }
     request(onSuccess, GET_GARAGEUSERS, {id: +garage_id })
   }

@@ -8,7 +8,7 @@ import { GET_GARAGE, CREATE_PRICING, UPDATE_PRICING }from '../queries/admin.goPu
 
 
 export const ADMIN_GO_PUBLIC_SET_GARAGE     = 'ADMIN_GO_PUBLIC_SET_GARAGE'
-export const ADMIN_GO_PUBLIC_SET_PLACE      = 'ADMIN_GO_PUBLIC_SET_PLACE'
+export const ADMIN_GO_PUBLIC_SET_PLACES      = 'ADMIN_GO_PUBLIC_SET_PLACES'
 export const ADMIN_GO_PUBLIC_SET_CURRENCIES = 'ADMIN_GO_PUBLIC_SET_CURRENCIES'
 
 
@@ -18,8 +18,8 @@ export function setGarage (value) {
          }
 }
 
-export function setPlace (value) {
-  return { type: ADMIN_GO_PUBLIC_SET_PLACE
+export function setPlaces (value) {
+  return { type: ADMIN_GO_PUBLIC_SET_PLACES
          , value
          }
 }
@@ -28,6 +28,18 @@ export function setCurrencies (value) {
   return { type: ADMIN_GO_PUBLIC_SET_CURRENCIES
          , value
          }
+}
+
+export function togglePlace (id) {
+  return (dispatch, getState) => {
+    const places = getState().adminGoPublic.places
+    const index = places.findIndex(place => place === id)
+    if (index >= 0) {
+      dispatch(setPlaces( places.slice(0,index).concat(places.slice(index + 1)) ))
+    } else {
+      dispatch(setPlaces(update(places, {$push: [id]} )))
+    }
+  }
 }
 
 
@@ -57,46 +69,58 @@ export function setSelectedCurrency(currency){ // set currencies to all places
 export function setFlatPrice(value, valid){
   return (dispatch, getState) => {
     const state = getState().adminGoPublic
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'flat_price', parseFloat(value)))))
+    state.places.forEach(id => {
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'flat_price', parseFloat(value)))))
 
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_12h_price'))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_day_price'))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_week_price'))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_month_price'))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_12h_price'))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_day_price'))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_week_price'))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_month_price'))))
+    })
   }
 }
 export function setExponential12hPrice(value, valid){
   return (dispatch, getState) => {
     const state = getState().adminGoPublic
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_12h_price', parseFloat(value)))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'flat_price'))))
+    state.places.forEach(id => {
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_12h_price', parseFloat(value)))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'flat_price'))))
+    })
   }
 }
 export function setExponentialDayPrice(value, valid){
   return (dispatch, getState) => {
     const state = getState().adminGoPublic
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_day_price', parseFloat(value)))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'flat_price'))))
+    state.places.forEach(id => {
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_day_price', parseFloat(value)))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'flat_price'))))
+    })
   }
 }
 export function setExponentialWeekPrice(value, valid){
   return (dispatch, getState) => {
     const state = getState().adminGoPublic
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_week_price', parseFloat(value)))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'flat_price'))))
+    state.places.forEach(id => {
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_week_price', parseFloat(value)))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'flat_price'))))
+    })
   }
 }
 export function setExponentialMonthPrice(value, valid){
   return (dispatch, getState) => {
     const state = getState().adminGoPublic
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'exponential_month_price', parseFloat(value)))))
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'flat_price'))))
+    state.places.forEach(id => {
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'exponential_month_price', parseFloat(value)))))
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'flat_price'))))
+    })
   }
 }
 export function setWeekendPricing(value, valid){
   return (dispatch, getState) => {
     const state = getState().adminGoPublic
-    dispatch(setGarage(dispatch(updatePlacePricing(state.place, 'weekend_price', parseFloat(value)))))
+    state.places.forEach(id => {
+      dispatch(setGarage(dispatch(updatePlacePricing(id, 'weekend_price', parseFloat(value)))))
+    })
   }
 }
 
