@@ -55,7 +55,7 @@ export class ReservationsPage extends Component {
     const data = state.reservations.map(function (reservation) {
       return { name: reservation.user.full_name
              , client: reservation.client && reservation.client.name
-             , licence_plate: reservation.car.licence_plate
+             , licence_plate: reservation.car && reservation.car.licence_plate
              , state: reservation.approved
              , type: reservation.case
              , from: reservation.begins_at
