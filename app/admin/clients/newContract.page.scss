@@ -1,3 +1,5 @@
+@import '../../_styles/variables.desktop.scss';
+@import '../../_shared/styles/variables.scss';
 
 .flex{
   display: flex;;
@@ -24,4 +26,8 @@
     width: calc(100% - 120px);
     display: inline-block;
   }
+}
+
+.red{
+  color: $red;
 }

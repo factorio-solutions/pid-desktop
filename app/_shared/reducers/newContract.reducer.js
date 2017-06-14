@@ -15,6 +15,7 @@ import {
     ADMIN_CLIENTS_NEW_CONTRACT_SET_TO,
     ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE,
     ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES,
+    ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT,
     ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM
 } from '../actions/newContract.actions'
 
@@ -28,10 +29,11 @@ const defaultState =  { clients:      []
                       , price:        undefined
                       , currencies:   []
                       , currency_id:  undefined
-                      , from:         moment()
+                      , from:         moment().startOf('day')
                       , to:           undefined
                       , garage:       undefined
                       , places:       []
+                      , highlight:    false
                       }
 
 
@@ -106,6 +108,11 @@ export default function newContract (state = defaultState, action) {
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES:
       return { ...state
              , places: action.value
+             }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT:
+      return { ...state
+             , highlight: !state.highlight
              }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM:

@@ -80,9 +80,9 @@ export class SettingsPage extends Component {
             <label>{t(['profile', 'createdAt'])}</label>
             {pageBase.current_user && moment(pageBase.current_user.created_at).format("D. M. YYYY H:mm")}
           </div>
-          <Form onSubmit={submitForm} submitable={checkSubmitable()}>
-            <PatternInput onEnter={submitForm} onChange={actions.setName}  label={t(['signup_page', 'name'])}  error={t(['signup_page', 'nameInvalid'])}  pattern="^(?!\s*$).+"                 value={state.name.value} />
-            <PatternInput onEnter={submitForm} onChange={actions.setPhone} label={t(['signup_page', 'phone'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone.value} />
+          <Form onSubmit={submitForm} submitable={checkSubmitable()} onHighlight={actions.toggleHighlight}>
+            <PatternInput onEnter={submitForm} onChange={actions.setName}  label={t(['signup_page', 'name'])}  error={t(['signup_page', 'nameInvalid'])}  pattern="^(?!\s*$).+"                 value={state.name.value}  highlight={state.highlight} />
+            <PatternInput onEnter={submitForm} onChange={actions.setPhone} label={t(['signup_page', 'phone'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone.value} highlight={state.highlight} />
           </Form>
 
           <div>

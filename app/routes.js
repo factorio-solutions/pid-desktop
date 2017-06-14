@@ -68,6 +68,7 @@ import GarageSetupFloorsPage       from './admin/garageSetup/garageSetupFloors.p
 import GarageSetupGatesPage        from './admin/garageSetup/garageSetupGates.page'
 import GarageSetupOrderPage        from './admin/garageSetup/garageSetupOrder.page'
 import GarageSetupSubscribtionPage from './admin/garageSetup/garageSetupSubscribtion.page'
+import GarageUsersPage             from './admin/garageSetup/users.page'
 
 // users
 import UsersPage                  from './admin/users/users.page'
@@ -191,6 +192,7 @@ export default function createRoutes() {
       <Route path=":id/admin/garageSetup/gates"           component={GarageSetupGatesPage}/>
       <Route path=":id/admin/garageSetup/order"           component={GarageSetupOrderPage}/>
       <Route path=":id/admin/garageSetup/subscribtion"    component={GarageSetupSubscribtionPage}/>
+      <Route path=":id/admin/garageSetup/users"           component={GarageUsersPage}/>
 
       <Route path=":id/admin/users"                       component={UsersPage}/>
       <Route path=":id/admin/users/invite"                component={InviteUserPage}/>

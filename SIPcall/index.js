@@ -2,6 +2,9 @@ var sip = require('./sip')
 var digest = require('./digest')
 var os = require('os')
 
+var attempt = 0
+var tryingAgainInProgress = false
+
 var rstring = function () { return Math.floor(Math.random()*1e6).toString() }
 
 var network = os.networkInterfaces().eth0 || os.networkInterfaces().enp0s31f6
@@ -45,22 +48,39 @@ var invite_template = { method: 'INVITE'
                           'a=sendrecv\r\n'
                       }
 
-// Init SIP ////////////////////////////////////////////////////////////////
-sip.start(start_config, function(rq) {
-  console.log('start function: ', rq)
-})
+var start = function () {
+  attempt++
+  console.log(attempt+'. attempt');
 
-// SIP INVITE //////////////////////////////////////////////////////////////
-sip.send(invite_template,
-function(rs) {
-  resolve(rs)
-})
+  if (attempt > 3) { // too many attempts
+    process.exit(1); // kill the process
+  } else {
+    // Init SIP ////////////////////////////////////////////////////////////////
+    sip.start(start_config, function(rq) {
+      console.log('start function: ', rq)
+    })
+
+    // SIP INVITE //////////////////////////////////////////////////////////////
+    sip.send(invite_template,
+    function(rs) {
+      resolve(rs)
+    })
+  }
+}
 
 var resolve = function(rs){
   switch (true) {
     case rs.status == 486:// "busy here" status // UnRegister SIP //
       console.log('caller busy: 486');
       process.exit(0);
+
+    case rs.status == 403: // "refusing to fullfill" status
+      console.log('caller busy: 403, trying again');
+      if (!tryingAgainInProgress){ // start it only once
+        tryingAgainInProgress = true
+        sip.stop() // kill old instance of sip
+        start()
+      }
 
     case rs.status == 401 || rs.status == 407 : // new authenticate
       console.log('response', rs.status, 'authentication in progress');
@@ -79,6 +99,7 @@ var resolve = function(rs){
       break;
 
     case rs.status < 200:
+      tryingAgainInProgress = false
       console.log('call progress status ' + rs.status);
       break;
 
@@ -97,3 +118,5 @@ var resolve = function(rs){
       sip.send(ack_template);
   }
 }
+
+start()

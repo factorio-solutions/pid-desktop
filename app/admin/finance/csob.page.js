@@ -21,7 +21,7 @@ export class CsobPage extends Component {
   }
 
   componentDidMount() {
-    // if (this.props.state.account_id == undefined) nav.to(`/${this.props.pageBase.garage}/admin/finance`)
+    this.props.actions.initFinance(this.props.params.id)
   }
 
   render() {
@@ -38,10 +38,10 @@ export class CsobPage extends Component {
 
     return (
       <PageBase>
-        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={actions.toggleHighlight}>
           <h2>{t(['finance', 'csobPayment'])}</h2>
-          <Input onEnter={submitForm} onChange={actions.setCsobMerchantId} label={t(['newAccount', 'csobMerchantID'])} error={t(['newAccount', 'invalidMerchantId'])} value={state.csob_merchant_id} name="client[merchantId]" placeholder={t(['newAccount', 'csobMerchantIdplaceholder'])}/>
-          <label>{t(['finance', 'SelectPrivateKey'])}</label>
+          <Input onEnter={submitForm} onChange={actions.setCsobMerchantId} label={t(['newAccount', 'csobMerchantID'])} error={t(['newAccount', 'invalidMerchantId'])} value={state.csob_merchant_id} name="client[merchantId]" placeholder={t(['newAccount', 'csobMerchantIdplaceholder'])} highlight={state.highlight}/>
+          <label className={state.highlight && styles.red}>{t(['finance', 'SelectPrivateKey'])}</label>
           <Input style={styles.hidden} onChange={actions.setCsobPrivateKey} label='file' type="file" name={`newAccountPrivateKey`} accept=".key" />
           <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={() => { document.getElementsByName(`newAccountPrivateKey`)[0].click() }} type={state.csob_private_key===""?'action':'confirm'} />
         </Form>

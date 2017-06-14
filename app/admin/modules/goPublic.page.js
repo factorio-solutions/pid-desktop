@@ -34,7 +34,7 @@ export class GoPublicPage extends Component {
     const { state, actions, pageBase } = this.props
 
     const preparePlaces = floor => {
-      return {... floor, places: floor.places.map(place => { return { ...place, available: true, selected: place.id === state.place}})}
+      return {... floor, places: floor.places.map(place => { return { ...place, available: true, selected: state.places.includes(place.id)}})}
     }
 
     const currencies = () => {
@@ -43,12 +43,12 @@ export class GoPublicPage extends Component {
       })
     }
 
-    const submitForm       = () => { actions.submitPricings() }
-    const goBack           = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
+    const submitForm = () => { actions.submitPricings() }
+    const goBack     = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
 
     const place = state.garage ? state.garage.floors.reduce((acc,floor) => {
       return [...acc, ...floor.places]
-    }, []).find(place => place.id === state.place) : undefined //.find(place => {place.id === state.place})
+    }, []).find(place => state.places.includes(place.id)) : undefined //.find(place => {place.id === state.place})
 
     const pricing = place && place.pricing
     const selectedCurrency = pricing ? state.currencies.findIndex(c => pricing.currency_id === c.id) : -1
@@ -58,7 +58,7 @@ export class GoPublicPage extends Component {
         <div className={styles.flex}>
           <div className={styles.half}>
             <Form onSubmit={submitForm} submitable={true} onBack={goBack}>
-              {place === undefined && <div className={styles.dimmer}>{t(['newPricing', 'selectPlace'])}</div>}
+              {state.places.length === 0 && <div className={styles.dimmer}>{t(['newPricing', 'selectPlace'])}</div>}
               <div>
                 <Dropdown label={t(['newPricing', 'selectCurrency'])} content={currencies()} style='light' selected={selectedCurrency}/>
               </div>
@@ -82,7 +82,7 @@ export class GoPublicPage extends Component {
           </div>
 
           <div className={styles.half}>
-            <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors={true} onPlaceClick={(place) => { actions.setPlace(place.id) }}/>
+            <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors={true} onPlaceClick={(place) => { actions.togglePlace(place.id) }}/>
           </div>
         </div>
       </PageBase>

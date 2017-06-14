@@ -1,0 +1,67 @@
+@import '../../_styles/variables.desktop.scss';
+@import '../../_shared/styles/variables.scss';
+
+.page {
+	padding: 10px;
+}
+
+.addButton {
+	margin-top: $addButtonMargin;
+	text-align: center;
+}
+
+.inactiveText {
+	color: $lightGray;
+	cursor: pointer;
+  margin: 0 5px;
+}
+
+.boldText {
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.clickable{
+	font-weight: bold;
+	cursor: pointer;
+	color: $blue;
+  margin: 0 10px;
+}
+
+.devider {
+	border-bottom: 1px dashed $gray;
+	> * {
+		margin: 0 5px;
+	}
+
+	> :first-child {
+		margin-left: 0;
+	}
+
+	> :last-child {
+		margin-right: 0;
+	}
+
+	+ div {
+		span {
+			margin: 0 10px;
+		}
+	}
+}
+
+.spoiler {
+	> div {
+		padding: 5px 0;
+	}
+}
+
+.float {
+	float: right;
+	> * {
+		margin: 0 5px;
+	}
+}
+
+.clear {
+	clear: both;
+}

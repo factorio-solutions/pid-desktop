@@ -63,7 +63,8 @@ export class NewContractPage extends Component {
 
     const placeSelected = (floor) => {
       floor.places.map((place) => {
-        place.available = place.noContract && (state.places.find(selectedPlace => selectedPlace.id === place.id) === undefined)
+        place.available = place.noContract
+        place.selected = (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined)
         return place
       })
       return floor
@@ -86,34 +87,34 @@ export class NewContractPage extends Component {
       <PageBase>
         <div className={styles.flex}>
           <div className={styles.half}>
-            <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack}>
+            <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={actions.toggleHighlight}>
               <h2>{state.garage && `${t(['newContract', 'description'])} ${state.garage.name}`}</h2>
               {state.addClient ?
                 <div className={styles.twoButtons}>
-                  <PatternInput onChange={actions.setClientToken} label={t(['newContract', 'selectClient'])} error={t(['newContract', 'invalidToken'])} type='text' placeholder={t(['newContract', 'tokenPlaceholder'])} value={state.client_token ? state.client_token : ''}/>
+                  <PatternInput onChange={actions.setClientToken} label={t(['newContract', 'selectClient'])} error={t(['newContract', 'invalidToken'])} type='text' placeholder={t(['newContract', 'tokenPlaceholder'])} value={state.client_token ? state.client_token : ''} highlight={state.highlight}/>
                   <RoundButton content={<i className='fa fa-check' aria-hidden="true"></i>} onClick={actions.addClient} type='confirm'/>
                   <RoundButton content={<i className='fa fa-times' aria-hidden="true"></i>} onClick={actions.toggleAddClient} type='remove'/>
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t(['newContract', 'selectClient'])} content={state.clients.map(prepareClients)} style='light' selected={selectedClient}/>
+                  <Dropdown label={t(['newContract', 'selectClient'])} content={state.clients.map(prepareClients)} style='light' selected={selectedClient} highlight={state.highlight}/>
                   <RoundButton content={<i className='fa fa-plus' aria-hidden="true"></i>} onClick={actions.toggleAddClient} type='action'/>
                 </div> }
                 <div>
                   <div>{t(['newContract', 'selectedPlaces'])}</div>
-                  {state.places.length ? state.places.map(makeButton) : t(['newContract', 'noSelectedPlaces'])}
+                  {state.places.length ? state.places.map(makeButton) : <b className={state.highlight && styles.red}>{t(['newContract', 'noSelectedPlaces'])}</b>}
                 </div>
 
                 { state.newRent ?
                   <div className={styles.oneButton}>
-                    <Input onChange={actions.setContractPrice} label={t(['newContract', 'contractPrice'])} error={t(['newContract', 'priceInvalid'])} type='number' placeholder={t(['newContract', 'pricePlaceholder'])} value={state.price ? state.price : ''} min={0}/>
-                    <Dropdown label={t(['newContract', 'selectCurrency'])} content={state.currencies.map(prepareCurrencies)} style='light' selected={selectedCurrency}/>
+                    <Input onChange={actions.setContractPrice} label={t(['newContract', 'contractPrice'])} error={t(['newContract', 'priceInvalid'])} type='number' placeholder={t(['newContract', 'pricePlaceholder'])} value={state.price ? state.price : ''} min={0} highlight={state.highlight}/>
+                    <Dropdown label={t(['newContract', 'selectCurrency'])} content={state.currencies.map(prepareCurrencies)} style='light' selected={selectedCurrency} highlight={state.highlight}/>
                     <RoundButton content={<i className='fa fa-times' aria-hidden="true"></i>} onClick={actions.toggleNewRent} type='remove'/>
                   </div> :
                   <div className={styles.oneButton}>
-                    <Dropdown label={t(['newContract', 'selectRent'])} content={state.rents.map(prepareRents)} style='light' selected={selectedRent}/>
+                    <Dropdown label={t(['newContract', 'selectRent'])} content={state.rents.map(prepareRents)} style='light' selected={selectedRent} highlight={state.highlight}/>
                     <RoundButton content={<i className='fa fa-plus' aria-hidden="true"></i>} onClick={actions.toggleNewRent} type='action'/>
                   </div>}
-                  <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} />
+                  <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} highlight={state.highlight}/>
                   <DatetimeInput onChange={handleTo}   label={t(['newReservation', 'ends'])}   value={state.to} />
               {/*<div>
                 <h2>{t(['newPricing', 'flatPrice'])}</h2>

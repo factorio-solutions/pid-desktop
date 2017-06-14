@@ -60,7 +60,7 @@ export class ModulesPage extends Component {
           </div>
         </div>
 
-        <div className={styles.module}>
+        {/*<div className={styles.module}>
           {t(['modules','reservationForm'])}
           <div className={styles.settings}>
             <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toReservationFormSettings} />
@@ -72,9 +72,9 @@ export class ModulesPage extends Component {
           {t(['modules','connectWithMrParkit'])}
           <div className={styles.settings}>
             <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMrParkitConnectionSettings} />
-            <Switch on={state.mrParkitConntection} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 3) && 'disabled'}/>
+            <Switch on={state.mrParkitConnection} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 3) && 'disabled'}/>
           </div>
-        </div>
+        </div>*/}
       </PageBase>
     )
   }

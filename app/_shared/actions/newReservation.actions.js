@@ -354,6 +354,9 @@ export function downloadUser(id){
       if (getState().newReservation.reservation){ // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
       }
+      if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
+        dispatch(downloadGarage(values[1].reservable_garages[0].id))
+      }
 
       dispatch(setLoading(false))
     }).catch(error => {

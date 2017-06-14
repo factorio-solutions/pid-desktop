@@ -439,7 +439,8 @@
 		"selectTarif": "Select tarif *",
 		"selectAccount": "Select account",
 		"selectAccountMandatory": "Select account *",
-		"processing": "Processing"
+		"processing": "Processing",
+		"users": "Users"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -789,7 +790,8 @@
 		"goPublicDescription": "Offer short term parking to PiD community",
 		"setting": "Settings",
 		"Preview": "Preview",
-		"startingMarketing": "Upgrading your billing plan. Redirecting..."
+		"startingMarketing": "Upgrading your billing plan. Redirecting...",
+		"cannotBeChanged": "You cannot go public until you set payment method. To do this go to Admin/Finance."
 	},
 	"newContract": {
 		"description": "New contract in ",

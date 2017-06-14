@@ -2,7 +2,7 @@ import { request } from '../helpers/request'
 // import * as nav    from '../helpers/navigation'
 import { t }       from '../modules/localization/localization'
 
-import { USER_AVAILABLE, ADD_MANAGEBLES, INIT_MANAGEBLES } from '../queries/inviteUser.queries'
+import { USER_AVAILABLE, ADD_CLIENT_USER, ADD_GARAGE_USER, ADD_CAR_USER, INIT_MANAGEBLES } from '../queries/inviteUser.queries'
 
 export const INVITE_USER_BOOLEAN_ATTR             = "INVITE_USER_BOOLEAN_ATTR"
 export const INVITE_USER_SET_EMAIL                = "INVITE_USER_SET_EMAIL"
@@ -109,7 +109,7 @@ export function setHighlight (value){
 
 export function toggleHighlight (){
   return (dispatch, getState) => {
-    dispatch(setHighlight(!getState().newAccount.highlight))
+    dispatch(setHighlight(!getState().inviteUser.highlight))
   }
 }
 
@@ -178,32 +178,104 @@ export function createNewManagebles () {
           unsucessfull.push(email)
           onSuccess(undefined)
         }else{
+          const clientUserPromise = new Promise(function(resolve, reject) {
+            if (state.client_id){
+              const onClientSuccess = (response) => {
+                resolve(response.data)
+              }
 
-          request( onSuccess
-                 , ADD_MANAGEBLES
-                 , { user_id: response.data.user_by_email.id
-                   , client_user: { client_id: +state.client_id
-                                  , admin: state.client_admin
-                                  , secretary: state.client_secretary
-                                  , host: state.client_host
-                                  , internal: state.client_internal
-                                  , message: ["clientInvitationMessage", state.clients.find((client)=>{return client.id == state.client_id}).name].join(';')
-                                  , custom_message: state.message
-                                  }
-                   , user_garage: { garage_id: +state.garage_id
-                                  , admin: state.garage_admin
-                                  , receptionist: state.garage_receptionist
-                                  , security: state.garage_security
-                                  , message: ["garageInvitationMessage", state.garages.find((garage)=>{return garage.id == state.garage_id}).name].join(';')
-                                  , custom_message: state.message
-                                  }
-                   , user_car: { car_id: +state.car_id
-                               , admin: state.car_admin
-                               , message: ["carInvitationMessage", state.cars.find((car)=>{return  car.id == state.car_id}).model].join(';')
-                               , custom_message: state.message
-                               }
-                   }
-                 )
+              request( onClientSuccess
+                     , ADD_CLIENT_USER
+                     , { user_id: response.data.user_by_email.id
+                       , client_user: { client_id: +state.client_id
+                                      , admin: state.client_admin
+                                      , secretary: state.client_secretary
+                                      , host: state.client_host
+                                      , internal: state.client_internal
+                                      , message: ["clientInvitationMessage", state.clients.find((client)=>{return client.id == state.client_id}).name].join(';')
+                                      , custom_message: state.message
+                                      }
+                       }
+                     )
+            } else {
+              resolve(undefined)
+            }
+          })
+
+          const userGaragePromise = new Promise(function(resolve, reject) {
+            if (state.garage_id){
+              const onGarageSuccess = (response) => {
+                resolve(response.data)
+              }
+
+              request( onGarageSuccess
+                     , ADD_GARAGE_USER
+                     , { user_id: response.data.user_by_email.id
+                       , user_garage: { garage_id: +state.garage_id
+                                      , admin: state.garage_admin
+                                      , receptionist: state.garage_receptionist
+                                      , security: state.garage_security
+                                      , message: ["garageInvitationMessage", state.garages.find((garage)=>{return garage.id == state.garage_id}).name].join(';')
+                                      , custom_message: state.message
+                                      }
+                       }
+                     )
+            } else {
+              resolve(undefined)
+            }
+          })
+
+          const userCarPromise = new Promise(function(resolve, reject) {
+            if (state.car_id){
+              const onCarSuccess = (response) => {
+                resolve(response.data)
+              }
+
+              request( onCarSuccess
+                     , ADD_CAR_USER
+                     , { user_id: response.data.user_by_email.id
+                       , user_car: { car_id: +state.car_id
+                                   , admin: state.car_admin
+                                   , message: ["carInvitationMessage", state.cars.find((car)=>{return  car.id == state.car_id}).model].join(';')
+                                   , custom_message: state.message
+                                   }
+                       }
+                    )
+            } else {
+              resolve(undefined)
+            }
+          })
+
+          Promise.all([clientUserPromise, userGaragePromise, userCarPromise]).then((value)=>{
+            console.log(value);
+            onSuccess(undefined)
+          })
+
+          // request( onSuccess
+          //        , ADD_MANAGEBLES
+          //        , { user_id: response.data.user_by_email.id
+          //          , client_user: { client_id: +state.client_id
+          //                         , admin: state.client_admin
+          //                         , secretary: state.client_secretary
+          //                         , host: state.client_host
+          //                         , internal: state.client_internal
+          //                         , message: ["clientInvitationMessage", state.clients.find((client)=>{return client.id == state.client_id}).name].join(';')
+          //                         , custom_message: state.message
+          //                         }
+          //          , user_garage: { garage_id: +state.garage_id
+          //                         , admin: state.garage_admin
+          //                         , receptionist: state.garage_receptionist
+          //                         , security: state.garage_security
+          //                         , message: ["garageInvitationMessage", state.garages.find((garage)=>{return garage.id == state.garage_id}).name].join(';')
+          //                         , custom_message: state.message
+          //                         }
+          //          , user_car: { car_id: +state.car_id
+          //                      , admin: state.car_admin
+          //                      , message: ["carInvitationMessage", state.cars.find((car)=>{return  car.id == state.car_id}).model].join(';')
+          //                      , custom_message: state.message
+          //                      }
+          //          }
+          //        )
         }
       }
 

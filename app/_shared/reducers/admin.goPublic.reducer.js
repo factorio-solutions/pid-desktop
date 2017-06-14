@@ -1,11 +1,11 @@
 import {
   ADMIN_GO_PUBLIC_SET_GARAGE,
-  ADMIN_GO_PUBLIC_SET_PLACE,
+  ADMIN_GO_PUBLIC_SET_PLACES,
   ADMIN_GO_PUBLIC_SET_CURRENCIES
 }  from '../actions/admin.goPublic.actions'
 
-const defaultState =  { garage: undefined
-                      , place:  undefined // stores id of place
+const defaultState =  { garage:     undefined
+                      , places:     [] // stores ids of places
                       , currencies: []
                       }
 
@@ -18,9 +18,9 @@ export default function adminGoPublic (state = defaultState, action) {
               , garage: action.value
               }
 
-    case ADMIN_GO_PUBLIC_SET_PLACE:
+    case ADMIN_GO_PUBLIC_SET_PLACES:
       return  { ...state
-              , place: action.value
+              , places: action.value
               }
 
     case ADMIN_GO_PUBLIC_SET_CURRENCIES:

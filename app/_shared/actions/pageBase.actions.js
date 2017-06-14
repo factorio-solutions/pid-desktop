@@ -217,9 +217,11 @@ export function fetchGarages(){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch( setGarages( response.data.user_garages.filter(user_garage => user_garage.user_id === response.data.current_user.id) ) )
+      dispatch( setGarage( parseInt(window.location.hash.substring(5).split('/')[0]) || undefined ) ) // parse current garage from  URL
 
       if (getState().pageBase.garage === undefined || response.data.user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined) {
-          response.data.user_garages.length > 0 && dispatch( setGarage( response.data.user_garages[0].garage.id ))
+        nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
+        response.data.user_garages.length > 0 && dispatch( setGarage( response.data.user_garages[0].garage.id ))
       }
     }
     request(onSuccess, GET_GARAGES)
@@ -478,8 +480,14 @@ export function toAdmin() {
         hint = t(['pageBase','newGarageSubscribtionHint'])
         hintVideo = 'https://www.youtube.com/'
         break
+      case (contains(hash, 'garageSetup') && contains(hash, 'users')):
+        breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/${garage}/admin/garageSetup/gates`})
+        secondarySelected = 'garageSetup'
+        hint = t(['pageBase','garageGarageUsersHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
 
-      case (!contains(hash, 'clients') && contains(hash, 'users') && contains(hash, 'invite')):
+      case (!contains(hash, 'clients') && !contains(hash, 'garageSetup') && contains(hash, 'users') && contains(hash, 'invite')):
         breadcrumbs.push({label: t(['pageBase','Users']), route: `/${garage}/admin/users`})
         breadcrumbs.push({label: t(['pageBase','inviteUser']), route: `/${garage}/admin/users/invite`})
         secondarySelected = 'users'

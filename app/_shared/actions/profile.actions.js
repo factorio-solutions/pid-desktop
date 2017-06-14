@@ -7,9 +7,10 @@ import { setCurrentUser, setCustomModal } from './pageBase.actions'
 import { resetPassword }  from './resetPassword.actions'
 
 
-export const PROFILE_EDIT_USER_SET_NAME =  "PROFILE_EDIT_USER_SET_NAME"
-export const PROFILE_EDIT_USER_SET_PHONE = "PROFILE_EDIT_USER_SET_PHONE"
-export const PROFILE_SET_CARS = 'PROFILE_SET_CARS'
+export const PROFILE_EDIT_USER_SET_NAME =  'PROFILE_EDIT_USER_SET_NAME'
+export const PROFILE_EDIT_USER_SET_PHONE = 'PROFILE_EDIT_USER_SET_PHONE'
+export const PROFILE_SET_CARS =            'PROFILE_SET_CARS'
+export const PROFILE_TOGGLE_HIGHLIGHT =    'PROFILE_TOGGLE_HIGHLIGHT'
 
 
 export function setName (value,valid) {
@@ -23,10 +24,15 @@ export function setPhone (value,valid) {
          , value: {value, valid}
          }
 }
+
 export function setCars (value) {
   return { type: PROFILE_SET_CARS
          , value
          }
+}
+
+export function toggleHighlight(){
+  return { type: PROFILE_TOGGLE_HIGHLIGHT }
 }
 
 export function initCars(id){

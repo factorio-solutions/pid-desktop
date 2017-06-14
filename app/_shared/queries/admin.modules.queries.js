@@ -23,6 +23,7 @@ export const UPDATE_MARKETING = `mutation UpdateMarketing($id: Id!, $marketing: 
 export const UPDATE_GARAGE = `mutation UpdateGarage($id: Id!, $garage: GarageInput!) {
   update_garage(id: $id, garage: $garage) {
     id
+    is_public
   }
 }
 `

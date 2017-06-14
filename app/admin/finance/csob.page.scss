@@ -1,3 +1,9 @@
+@import '../../_styles/app.desktop';
+
 .hidden{
   display: none;
+}
+
+.red{
+  border-bottom: 1px solid $red;
 }
