@@ -5,6 +5,15 @@
   background-color: $lightGray;
 }
 
+.grayBackground{ /*for dashboard*/ 
+  background-color: $lightGray;
+  margin: 20px 20px 20px 0;
+
+  >div>svg{
+    max-width: 100%;
+  }
+}
+
 .width18{
   display: inline-block;
   width: 60px;
