@@ -57,6 +57,25 @@ export default class GarageLayout extends Component {
 
     for (let i = 0; i < elements.length; i++) {
       let currentSvg = elements[i]
+
+      // scan styles and prefix them
+      if (elements.length > 1){ // dont do if there is only one svg
+        for (let styleTag of currentSvg.getElementsByTagName('style')) {
+          styleTag.innerHTML.split('{')
+          .reduce((acc, str) => { return [...acc, ...str.split('}')] }, [])
+          .filter((obj, index) => index%2 === 0 && obj.length > 0 && obj[0]==='.' && !obj.includes('SVG_')) // is odd not zero-length class selector that doenst begin with SVG_
+          .forEach((selector) => {
+            const newName = selector[0] + 'SVG_' + i + '_' + selector.substring(1)
+            const className = selector.substring(1)
+            while (currentSvg.getElementsByClassName(className)[0] !== undefined) {
+              currentSvg.getElementsByClassName(className)[0].classList.add(newName.substring(1))
+              currentSvg.getElementsByClassName(className)[0].classList.remove(className)
+            }
+            styleTag.innerHTML = styleTag.innerHTML.replace(selector, newName)
+          })
+        }
+      }
+
       let gControl = currentSvg.getElementById('Gcontrol')
 
       const labelChildren = (child) => {
@@ -202,10 +221,10 @@ export default class GarageLayout extends Component {
 
 
     return(
-      unfold === true ? <div>
+      unfold === true ? <div className={styles.grayBackground}>
         {floors.map(prepareFloors)}
       </div> :
-      <div className={styles.widthContainer}>
+      <div className={`${styles.widthContainer}`}>
         <div className={`${styles.width78} ${styles.svgContainer}`}>
           <SvgFromText svg={floors[floor] && floors[floor].scheme || ''} svgClick={handleSVGClick} />
         </div>
