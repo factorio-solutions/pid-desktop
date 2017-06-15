@@ -61,12 +61,12 @@ import adminActivityLog from '../_shared/reducers/admin.activityLog.reducer'
 
 
 const appReducer = combineReducers({ routing
+                                   , pageBase
 
                                    , login
                                    , signUp
                                    , resetPassword
 
-                                   , pageBase
                                    , addFeatures
                                    , gateModuleOrder
                                    , notifications
