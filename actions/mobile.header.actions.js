@@ -1,6 +1,7 @@
 import { request } from '../helpers/request'
 
 import { GET_CURRENT_USER, GET_RESERVABLE_GARAGES } from '../queries/mobile.header.queries'
+import { REVOKE_TOKEN } from '../queries/login.queries'
 
 export const MOBILE_MENU_SET_GARAGES      = 'MOBILE_MENU_SET_GARAGES'
 export const MOBILE_MENU_SET_GARAGE       = 'MOBILE_MENU_SET_GARAGE'
@@ -53,8 +54,6 @@ export function setCustomModal (content){
 }
 
 
-
-
 export function initGarages (){
   return (dispatch, getState) => {
     const onGarageSuccess = (response) => {
@@ -77,10 +76,16 @@ export function toggleMenu (){
   }
 }
 
-export function logout () { // delete JWToken and current store
+export function logout (revoke, callback) { // delete JWToken and current store
   return (dispatch, getState) => {
-    delete localStorage["jwt"]
-    delete localStorage["store"]
-    dispatch(resetStore())
+    const onSuccess = (response) => {
+      delete localStorage["jwt"]
+      revoke && delete localStorage["store"]
+      revoke && delete localStorage["refresh_token"]
+      revoke && dispatch(resetStore())
+      callback()
+    }
+
+    revoke ? request(onSuccess, REVOKE_TOKEN, {refresh_token: localStorage["refresh_token"]}) : onSuccess()
   }
 }

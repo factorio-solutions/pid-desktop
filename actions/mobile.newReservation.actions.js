@@ -4,7 +4,7 @@ import { parseParameters }          from '../helpers/parseUrlParameters'
 import { setError, setCustomModal } from './mobile.header.actions'
 
 import { GET_AVAILABLE_FLOORS }                                                           from '../queries/mobile.newReservation.queries'
-import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_AVAILABLE_CARS, PAY_RESREVATION } from '../queries/newReservation.queries'
+import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION } from '../queries/newReservation.queries'
 import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT }                                            from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS }                                                            from '../../reservations/newReservation.page'
 import { entryPoint }                                                                     from '../../index'
@@ -148,8 +148,11 @@ export function initReservation (){
 
 export function getAvailableClients () {
   return (dispatch, getState) => {
-    const state = getState().newReservation
+    const state = getState().mobileNewReservation
     const onClients = (response) => {
+      if (response.data.reservable_clients.find(cl => cl.id === state.client_id) === undefined){
+        state.client_id !== undefined && dispatch(setClientId(undefined))
+      }
       dispatch(setAvailableClients(response.data.reservable_clients))
     }
 
@@ -162,14 +165,14 @@ export function getAvailableClients () {
 
 export function getAvailableCars () {
   return (dispatch, getState) => {
-    const state = getState().newReservation
+    const user_id = getState().mobileHeader.current_user.id
     const onCars = (response) => {
-      dispatch(setAvailableCars(response.data.reservable_cars))
-      getState().mobileNewReservation.car_id==undefined && (response.data.reservable_cars.length==1 ? dispatch(setCarId(response.data.reservable_cars[0].id))
-                                                                                                   : dispatch(setCarId(undefined)))
+      dispatch(setAvailableCars(response.data.user.reservable_cars))
+      getState().mobileNewReservation.car_id==undefined && (response.data.user.reservable_cars.length==1 ? dispatch(setCarId(response.data.user.reservable_cars[0].id))
+                                                                                                         : dispatch(setCarId(undefined)))
     }
 
-    request(onCars, GET_AVAILABLE_CARS)
+    request(onCars, GET_USER, {id: user_id})
   }
 }
 
@@ -222,6 +225,7 @@ export function autoselectPlace(){
 
 export function submitReservation(callback){
     return (dispatch, getState) => {
+      // const state = getState().mobileNewReservation
       const onSuccess = (response) => {
         console.log(response);
         if (response.data.create_reservation.payment_url){
@@ -236,11 +240,12 @@ export function submitReservation(callback){
       delete reservation["garage_id"]
 
       dispatch(setCustomModal(reservation.client_id ? 'Creating reservation' : 'Creating payment ...'))
+
       request( onSuccess
              , CREATE_RESERVATION
              , { reservation: { user_id:       getState().mobileHeader.current_user.id
                               , place_id:      reservation.place_id
-                              , client_id:     reservation.client_id
+                              , client_id:     reservation.client_id //state.availableClients.find(cl => cl.id === reservation.client_id) === undefined ? null : reservation.client_id
                               , car_id:        reservation.car_id
                               , licence_plate: reservation.licence_plate=='' ? undefined :  reservation.licence_plate
                               , url:           window.cordova === undefined ? window.location.href.split('?')[0] // development purposes - browser debuging

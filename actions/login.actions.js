@@ -46,6 +46,7 @@ export function login(email, password, redirect = false, callback = ()=>{}) {
       const result = JSON.parse(response.data.login)
       if ('id_token' in result) {
         localStorage['jwt'] = result.id_token
+        localStorage['refresh_token'] = result.refresh_token
         dispatch({ type: LOGIN_SUCCESS })
 
         callback(result)
@@ -69,10 +70,34 @@ export function login(email, password, redirect = false, callback = ()=>{}) {
   }
 }
 
+export function refresh_login(refresh_token, callback){
+  return (dispatch, getState) => {
+    const success = (response) => {
+      const result = JSON.parse(response.data.login)
+      if ('id_token' in result) {
+        localStorage['jwt'] = result.id_token
+        dispatch({ type: LOGIN_SUCCESS })
+        callback(result)
+        dispatch(resetLoginForm())
+      } else {
+        delete localStorage['refresh_token']
+      }
+    }
+
+    const onError = () => {
+      console.log('Error while refreshing token');
+    }
+
+    console.log('Sending refreshing token');
+    request(success, LOGIN_USER, {refresh_token: localStorage['refresh_token']}, null, onError)
+  }
+}
+
 export function logout(){
   return (dispatch, getState) => {
     dispatch({ type: 'RESET' })
     delete localStorage['jwt']
+    // delete localStorage['refresh_token']
     nav.to('/')
   }
 }
