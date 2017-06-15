@@ -62,7 +62,19 @@ module.exports = {
           'style-loader',
           'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
         ]
-      }
+      },
+      // {
+      //   test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: 'url?limit=10000&minetype=application/font-woff'
+      // },
+      // {
+      //   test: /\.(eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: 'file'
+      // },
+      // {
+      //   test: /\.(ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      //   loader: 'url?limit=100000'
+      // }
     ]
   }
 }

@@ -30,21 +30,21 @@ export class PageBase extends Component {
   render () {
     const { state, actions, notifications } = this.props
 
-    const vertical =  [{label: t(['pageBase','Dashboard']),     key: "dashboard",     icon: 'ticket',onClick: ()=>{nav.to(`/dashboard`)} }
-                    ,  {label: t(['pageBase', 'Reservation']),  key: "reservations",  icon: 'car',   onClick: ()=>{nav.to('/reservations')} }
-                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']),    key: "occupancy",     icon: 'eye',   onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
-                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),       key: "garage",        icon: 'home',  onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
-                    ,  (state.isGarageAdmin) && {label: t(['pageBase', 'analytics']),       key: "analytics",        icon: 'pie-chart',  onClick: ()=>{actions.analyticsClick()} }
-                    // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'users', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
-                    ,  {label: t(['pageBase', 'Admin']),        key: "admin",         icon: 'money', onClick: ()=>{actions.adminClick()} }
+    const vertical =  [{label: t(['pageBase','Dashboard']),    key: "dashboard",    icon: 'icon-dashboard',    onClick: ()=>{nav.to(`/dashboard`)} }
+                    ,  {label: t(['pageBase', 'Reservation']), key: "reservations", icon: 'icon-reservations', onClick: ()=>{nav.to('/reservations')} }
+                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']), key: "occupancy", icon: 'icon-occupancy', onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
+                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),    key: "garage",    icon: 'icon-garage',    onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
+                    ,  (state.isGarageAdmin) && {label: t(['pageBase', 'analytics']), key: "analytics", icon: 'icon-invoices', onClick: ()=>{actions.analyticsClick()} }
+                    // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'icon-issues', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
+                    ,  {label: t(['pageBase', 'Admin']), key: "admin", icon: 'icon-admin', onClick: ()=>{actions.adminClick()} }
                     ].filter(field => field !== false)
 
-    const callToAction = [ {label: t(['pageBase', 'Create reservation']), onClick: ()=>{nav.to('/reservations/newReservation')}}
-                         , state.isGarageAdmin &&  {label: t(['pageBase', 'Create contract']),    onClick: ()=>{nav.to(`/${state.garage}/admin/clients/newContract`)}}
-                         , {label: t(['pageBase', 'Add Features']),       onClick: ()=>{nav.to('/addFeatures')}}
+    const callToAction = [ {label: t(['pageBase', 'Create reservation']),                      onClick: ()=>{nav.to('/reservations/newReservation')}}
+                         , state.isGarageAdmin &&  {label: t(['pageBase', 'Create contract']), onClick: ()=>{nav.to(`/${state.garage}/admin/clients/newContract`)}}
+                         , {label: t(['pageBase', 'Add Features']),                            onClick: ()=>{nav.to('/addFeatures')}}
                          ].filter(field => field !== false)
 
-    const profikeDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="fa fa-user" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
+    const profikeDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="icon-profile" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
                             , <div className={styles.dropdownContent} onClick={()=>{actions.logout()}}><i className="fa fa-sign-out" aria-hidden="true"></i>{t(['pageBase', 'Logout'])}</div>
                             ]
 

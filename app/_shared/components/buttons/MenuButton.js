@@ -13,7 +13,7 @@ export default function MenuButton ({ icon, label, onClick, type, state })  {
               ].join(' ')
 
   let content = <div>
-                  <i className={`fa fa-${icon} ${styles.icon}`} aria-hidden="true"></i>
+                  <i className={`${icon} ${styles.icon}`} aria-hidden="true"></i>
                   <div className={`${styles.label}`}>{label}</div>
                 </div>
 
