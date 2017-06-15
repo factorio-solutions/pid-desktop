@@ -59,7 +59,8 @@ export default class Dropdown extends Component {
         typeof item.onClick === 'function' && item.onClick()
         this.setState({selected: index})
         typeof onChange === "function" && onChange(index, true)// for form
-        browser.name === 'safari' && hide() // safari not handles onBlur well, so hide on select
+        // browser.name === 'safari' && hide() // safari not handles onBlur well, so hide on select
+        hide()
       }
 
       return(
@@ -76,7 +77,7 @@ export default class Dropdown extends Component {
       ul.classList.contains(styles.hidden) ? unhide() : hide()
     }
 
-    const onBlur = (e) => { hide() }
+    const onBlur = (e) => { console.log('Blur'); hide() }
 
     const hide = ()=>{
       const ul = ReactDOM.findDOMNode(this).children[1]

@@ -14,11 +14,13 @@ import Modal            from '../../components/modal/Modal'
 import styles from './Page.scss'
 
 import * as headerActions from '../../actions/mobile.header.actions'
+import * as loginActions  from '../../actions/login.actions'
 
 
 export class Page extends Component {
   static propTypes = {
     actions:       PropTypes.object,
+    loginActions:  PropTypes.object,
     state:         PropTypes.object,
 
     // header looks
@@ -40,13 +42,14 @@ export class Page extends Component {
     router: React.PropTypes.object
   }
 
-  logout(){ // private method
-    this.context.router.push('/login')
-    this.props.actions.logout()
+  logout(revoke){ // private method
+    this.props.actions.logout(revoke, ()=>{this.context.router.push('/login')})
   }
 
   componentDidMount(){
-    window.addEventListener("unauthorizedAccess",  () => { localStorage['jwt'] && this.logout()  },  false) // 401 status, redirect to login
+    window.addEventListener("unauthorizedAccess",  () => {
+      localStorage['jwt'] && this.logout(false)
+    },  false) // 401 status, redirect to login
     const { actions, hideDropdown, hideHeader } = this.props
     !hideHeader && !hideDropdown && actions.initGarages()
     actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
@@ -55,12 +58,12 @@ export class Page extends Component {
   render() {
     const { actions, state }                                         = this.props
     const { hideDropdown, hideHamburger, hideHeader, label, margin } = this.props
-    const { back, add, pay, ok, remove }                                  = this.props
+    const { back, add, pay, ok, remove }                             = this.props
 
     const selectedGarage = () => { return state.garages.findIndex(function(garage){return garage.id == state.garage_id}) }
     const toggleMenu     = () => { actions.toggleMenu() }
     const currentUser    = () => { console.log('TODO: current user profile') }
-    const logOut         = () => { this.logout() }
+    const logOut         = () => { this.logout(true) }
     const modalClick     = () => { actions.setError(undefined) }
     const sideMenuItems  = [ <MobileMenuButton key='1' icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]
 
@@ -135,5 +138,5 @@ export class Page extends Component {
 
 export default connect(
   state    => ({ state: state.mobileHeader }),
-  dispatch => ({ actions: bindActionCreators(headerActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators(headerActions, dispatch), loginActions: bindActionCreators(loginActions, dispatch) })
 )(Page)
