@@ -2,7 +2,6 @@ import React, { Component, PropTypes }  from 'react'
 
 import Logo                  from '../logo/Logo'
 import CallToActionButton    from '../buttons/CallToActionButton'
-import MenuButton            from '../buttons/MenuButton'
 import RoundButton           from '../buttons/RoundButton'
 import GarageSelector        from '../garageSelector/GarageSelector'
 import VerticalMenu          from '../verticalMenu/VerticalMenu'
@@ -71,13 +70,13 @@ export default class MasterPage extends Component {
 
               <div className={styles.user}>
                 <div className={styles.messages} onClick={()=>{nav.to('/notifications')}}>
-                  <i className={"fa fa-commenting-o"} aria-hidden="true"></i>
+                  <i className={"icon-message"} aria-hidden="true"></i>
                   {messageCount > 0 && <div className={styles.count}>{messageCount}</div>}
                 </div>
 
                 <DropdownContent content={profileDropdown}>
                   <div className={styles.profile} > {/*onClick={()=>{nav.to('/profile')}}*/}
-                    <i className={"fa fa-user"} aria-hidden="true"></i>
+                    <i className={"icon-profile"} aria-hidden="true"></i>
                     <span className={styles.name}>{name}</span>
                   </div>
                 </DropdownContent>
