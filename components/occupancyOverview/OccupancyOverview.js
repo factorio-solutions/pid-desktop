@@ -127,7 +127,13 @@ export default class OccupancyOverview extends Component{
 
     const prepareBody = () => {
       const sorter = (a,b) => { // will sort place according to floors then labels
-        return a.floor < b.floor ? -1 : (a.floor > b.floor ? 1 : (a.label < b.label ? -1 : (a.label > b.label ? 1 : 0)))
+        if(a.floor < b.floor) return -1;
+        if(a.floor > b.floor) return 1;
+        if(parseInt(a.label) < parseInt(b.label)) return -1;
+        if(parseInt(a.label) > parseInt(b.label)) return 1;
+        if(a.label < b.label) return -1;
+        if(a.label > b.label) return 1;
+        return 0;
       }
 
       return places.sort(sorter).map((place) => {
