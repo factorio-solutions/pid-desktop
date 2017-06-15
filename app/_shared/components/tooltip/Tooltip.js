@@ -9,10 +9,6 @@ export default function Tooltip ( { content, visible, mouseX, mouseY, refs } ){
                 , opacity:  visible ? '1' : '0'
                 }
 
-                console.log(mouseY);
-
-
-
   return(
       <div className={`${styles.body} ${window.innerHeight*3/4 < mouseY && styles.originOnBottom} ${window.innerHeight/4 > mouseY && styles.originOnTop}`} style={style}>
         {content}
