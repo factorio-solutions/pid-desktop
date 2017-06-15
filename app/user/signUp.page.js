@@ -41,7 +41,6 @@ export class SignUpPage extends Component {
                                         && state.email.valid
                                         && state.phone.valid
                                         && state.password.valid
-                                        && state.confirmation.valid
                                         && state.password.value == state.confirmation.value}
     const goBack       = () => { nav.to('/') }
 
