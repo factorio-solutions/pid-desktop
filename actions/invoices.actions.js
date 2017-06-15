@@ -10,8 +10,6 @@ import { toAccounts, toClients, setError, setCustomModal } from './pageBase.acti
 export const INVOICES_SET_INVOICES  = 'INVOICES_SET_INVOICES'
 export const INVOICES_SET_CLIENTS   = 'INVOICES_SET_CLIENTS'
 export const INVOICES_SET_CLIENT_ID = 'INVOICES_SET_CLIENT_ID'
-export const INVOICES_SET_GARAGES   = 'INVOICES_SET_GARAGES'
-export const INVOICES_SET_GARAGE_ID = 'INVOICES_SET_GARAGE_ID'
 export const INVOICES_SET_PAST      = 'INVOICES_SET_PAST'
 export const INVOICES_SET_REASON    = 'INVOICES_SET_REASON'
 
@@ -30,18 +28,6 @@ export function setClients (value) {
 
 export function setClientId (value) {
   return { type: INVOICES_SET_CLIENT_ID
-         , value
-         }
-}
-
-export function setGarages (value) {
-  return { type: INVOICES_SET_GARAGES
-         , value
-         }
-}
-
-export function setGarageId (value) {
-  return { type: INVOICES_SET_GARAGE_ID
          , value
          }
 }
@@ -74,14 +60,6 @@ export function initInvoices (garage_id) {
         acc.clients[invoice.client.id] = invoice.client
         return acc
       }, {clients:{}, garages: {}})
-
-      let garages = [{name: t(['invoices', 'selectGarage']), id: undefined}]
-      for (var key in garagesClients.garages) {
-        if (garagesClients.garages.hasOwnProperty(key)) {
-          garages.push(garagesClients.garages[key])
-        }
-      }
-      dispatch(setGarages(garages))
 
       let clients = [{name: t(['invoices', 'selectClient']), id: undefined}]
       for (var key in garagesClients.clients) {
