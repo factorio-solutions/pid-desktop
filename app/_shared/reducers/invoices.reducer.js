@@ -11,8 +11,6 @@ import {
 const defaultState =  { invoices:  []
                       , clients:   []
                       , client_id: undefined
-                      , garages:   []
-                      , garage_id: undefined
                       , past:      false
                       , reason:    '' // reason for cancelling invoice
                       }
@@ -34,16 +32,6 @@ export default function invoices (state = defaultState, action) {
     case INVOICES_SET_CLIENT_ID:
     return  { ...state
             , client_id: action.value
-            }
-
-    case INVOICES_SET_GARAGES:
-    return  { ...state
-            , garages:  action.value
-            }
-
-    case INVOICES_SET_GARAGE_ID:
-    return  { ...state
-            , garage_id: action.value
             }
 
     case INVOICES_SET_PAST:

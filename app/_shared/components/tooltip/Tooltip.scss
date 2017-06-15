@@ -12,5 +12,14 @@
   pointer-events:   none;
 
   transition:       opacity 0.2s ease;
-  transform:        translateX(-50%);
+  // transform:        translateX(-50%);
+  transform:        translateY(-50%);
+}
+
+.originOnBottom{
+  transform:        translateY(-100%);
+}
+
+.originOnTop{
+    transform:        translateY(0%);
 }

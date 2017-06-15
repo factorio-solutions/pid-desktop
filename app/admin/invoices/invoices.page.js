@@ -45,7 +45,7 @@ export class InvoicesPage extends Component {
                    ]
 
 
-     const invoiceData = state.invoices.filter(invoice => (state.garage_id===undefined && state.client_id===undefined) || invoice.account.garage.id === state.garage_id || invoice.client.id === state.client_id )
+     const invoiceData = state.invoices.filter(invoice => invoice.account.garage.id === pageBase.garage ).filter(invoice => state.client_id === undefined ? true : invoice.client.id === state.client_id)
      .map((invoice) => {
        const customModal = <div>
          <Form submitable={true} onSubmit={()=>{actions.stornoInvoice(invoice.id, this.props.params.id)}} onBack={()=>{actions.setCustomModal(undefined)}} >
@@ -90,17 +90,11 @@ export class InvoicesPage extends Component {
       return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
     }
 
-    const garageDropdown = () => {
-      const garageSelected = (index) => { actions.setGarageId(state.garages[index].id) }
-      return state.garages.map((garage, index) => {return {label: garage.name, onClick: garageSelected.bind(this, index) }})
-    }
-
     const clientSelector = <Dropdown label={t(['invoices', 'selectClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
-    const garageSelector = <Dropdown label={t(['invoices', 'selectGarage'])} content={garageDropdown()} style='tabDropdown' selected={state.garages.findIndex((garage)=>{return garage.id == state.garage_id})}/>
 
     return (
       <PageBase>
-        <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector} {garageSelector}</div>} right={filters}/>
+        <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters}/>
         <Table schema={schema} data={invoiceData} />
       </PageBase>
     )
