@@ -68,12 +68,12 @@ export class ClientsPage extends Component {
 
     return (
       <PageBase>
-        <div>
+        <div className={styles.tableContainer}>
           <Table schema={schema} data={state.clients.map(addSpoiler)}/>
-          <div className={styles.addButton}>
-            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClient} type='action' size='big'/>
-            <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={addContract} type='action' size='big'/>
-          </div>
+        </div>
+        <div className={styles.addButton}>
+          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClient} type='action' size='big'/>
+          <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={addContract} type='action' size='big'/>
         </div>
       </PageBase>
     )

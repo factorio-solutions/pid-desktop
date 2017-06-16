@@ -45,7 +45,12 @@ export function setFrom (from){
 export function loadGarage(){
   return (dispatch, getState) => {
     const onGarageSuccess = (response) => {
-      response.data.garage.clients = response.data.garage.contracts.map(contract => contract.client)
+      // response.data.garage.contracts.filter((contract) => {
+      //   return moment(contract.from).isSameOrBefore(getState().occupancy.from) && getState().occupancy.from.isBefore(moment(contract.to))
+      // })
+      response.data.garage.clients = response.data.garage.contracts.map(contract => {
+        return {...contract.client, contract: contract}
+      })
       response.data.garage.clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
       dispatch(setClients(response.data.garage.clients))
       dispatch(setGarage(response.data.garage))

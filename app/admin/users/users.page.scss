@@ -4,10 +4,8 @@
   cursor: pointer;
   font-weight: bold;
 }
-.addButton {
-	margin-top:  $addButtonMargin ;
-	text-align: center;
-}
+
+
 
 .green{
   color: $green;
@@ -48,4 +46,18 @@
 
 .pointer{
   cursor: pointer
+}
+
+.tableContainer{
+  // margin-bottom: 140px;
+}
+
+.addButton {
+  margin-top:    $addButtonMargin ;
+  text-align:    center;
+  // position: 		 fixed;
+  // bottom: 			 0;
+  // margin-bottom: 40px;
+  // left: 0;
+  // right: 0;
 }

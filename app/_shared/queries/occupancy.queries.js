@@ -32,11 +32,11 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         label
         reservations {
           id
-          client{
+          client {
             name
             id
           }
-          car{
+          car {
             licence_plate
           }
           begins_at
@@ -54,12 +54,18 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         }
       }
     }
-    contracts{
-      client{
+    contracts {
+      from
+      to
+      places{
+        id
+      }
+      client {
         name
         id
       }
     }
   }
 }
+
 `

@@ -5,8 +5,12 @@
 }
 
 .addButton {
-	margin-top:  $addButtonMargin ;
-	text-align: center;
+	margin-top:  	 $addButtonMargin ;
+	text-align: 	 center;
+	// position: 		 fixed;
+	// bottom: 			 0;
+	// right: 				 50%;
+	// margin-bottom: 40px;
 }
 
 
@@ -20,4 +24,8 @@
 .contract{
 	font-weight: bold;
 	cursor: pointer;
+}
+
+.tableContainer{
+	// margin-bottom: 140px;
 }

@@ -118,7 +118,9 @@ export class UsersPage extends Component {
     return (
       <PageBase>
         <TabMenu left={filters}/>
-        <Table schema={schema} data={usersData} />
+        <div className={styles.tableContainer}>
+          <Table schema={schema} data={usersData} />
+        </div>
         <div className={styles.addButton}>
           <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={toInviteUser} type='action' size='big'/>
         </div>

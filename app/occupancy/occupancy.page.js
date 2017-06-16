@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import moment                          from 'moment'
 
 import * as nav               from '../_shared/helpers/navigation'
 import * as OccupancyActions  from '../_shared/actions/occupancy.actions' // TODO:delete init Garage
@@ -40,17 +41,43 @@ export class OccupancyPage extends Component {
 
     const clientDropdown = () => {
       const clientSelected = (index) => { actions.setClientId(state.clients[index].id) }
-      return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
+      return state.clients.
+      filter((client, i) => { // filter currently active
+        if (i === 0) return true
+        return moment(client.contract.from).isSameOrBefore(state.from) && state.from.isBefore(moment(client.contract.to))
+      }).filter((client, i, arr) => { // take only first one
+        return arr.findIndex(cl => cl.id === client.id) === i
+      })
+      .map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
     }
 
     const preparePlaces = (places, floor) => {
-      return places.concat(floor.places.map((place)=>{
+      return places.concat(floor.places
+        .filter((place) => { // filter places of selected contract if client selected
+          if (state.client_id === undefined) {
+            return true
+          } else { // find places in currently selected client contracts
+            const currentClients = state.clients.filter((client) => client.id === state.client_id).filter((client) => moment(client.contract.from).isSameOrBefore(state.from) && state.from.isBefore(moment(client.contract.to)))
+            if (currentClients.length === 0) return true // if no current contracts, return all
+            return currentClients.reduce((places, client)=>{ // places with current contract
+              return places.concat(client.contract.places)
+            }, []).find(p => p.id === place.id) !== undefined
+          }
+        })
+        .map((place)=>{
         return { ...place
                , floor: floor.label
                , reservations: state.client_id ? place.reservations.filter((reservation) => {return reservation.client && state.client_id == reservation.client.id}) : place.reservations
                }
       }))
     }
+
+    // garage && console.log(garage.floors.reduce(preparePlaces, []));
+    //
+    // // const filterClientPlaces = (place) => {
+    // //   return true
+    // // }
+    // console.log(state);
 
 
     const filters = [ <TabButton label={t(['occupancy', 'day'])}   onClick={() => {actions.dayClick()}}   state={state.duration=="day" && 'selected'}/>
@@ -59,13 +86,6 @@ export class OccupancyPage extends Component {
                     ]
 
     const clientSelector = <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
-    // const filters = <div>
-    //                   <ButtonStack divider={<span>|</span>} style='horizontal' >
-    //                     <TextButton content={t(['occupancy', 'day'])}    onClick={() => {actions.dayClick()}} state={state.duration=="day" && 'selected'}/>
-    //                     <TextButton content={t(['occupancy', 'week'])}   onClick={() => {actions.weekClick()}} state={state.duration=="week" && 'selected'}/>
-    //                     <TextButton content={t(['occupancy', 'month'])}  onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>
-    //                   </ButtonStack>
-    //                 </div>
 
     return (
       <PageBase>

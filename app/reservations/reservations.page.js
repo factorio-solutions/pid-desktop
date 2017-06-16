@@ -91,24 +91,17 @@ export class ReservationsPage extends Component {
       return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} download={downloadClick} />
     }
 
-    // const filters=  <div>
-    //                   <ButtonStack divider={<span>|</span>} style='horizontal' >
-    //                     <TextButton content={t(['pageBase','cardView'])} onClick={() => {actions.setTableView(false)}} state={!state.tableView && 'selected'}/>
-    //                     <TextButton content={t(['pageBase','tableView'])} onClick={() => {actions.setTableView(true)}} state={state.tableView && 'selected'}/>
-    //                   </ButtonStack>
-    //                 </div>
-
     return (
       <PageBase>
-        <div>
+        <div className={styles.tableContainer}>
           {state.tableView ? <Table schema={schema} data={data} />
             : <CardViewLayout columns={3}>
                 {state.reservations.map(prepareCards)}
               </CardViewLayout> }
 
-          <div className={styles.centerDiv}>
-            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newReservation} type='action' size='big' />
-          </div>
+        </div>
+        <div className={styles.centerDiv}>
+          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newReservation} type='action' size='big' />
         </div>
       </PageBase>
     )
