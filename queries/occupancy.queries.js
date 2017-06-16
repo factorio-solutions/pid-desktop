@@ -17,7 +17,7 @@
 // `
 
 // Get details about garage id: $id
-// client {
+// client { 
 //   name
 //   id
 // }
