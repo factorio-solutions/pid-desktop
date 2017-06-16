@@ -162,13 +162,13 @@ export function submitNewClient(id) {
 
 function generateClient(state){
   return { name: state.name
-         , ic:   state.ic === "" ? undefined : state.ic
-         , dic:  state.dic === "" ? undefined : state.dic
+         , ic:   state.ic === "" ? null : state.ic
+         , dic:  state.dic === "" ? null : state.dic
          , address: { line_1:      state.line_1
-                    , line_2:      state.line_2 === "" ? undefined : state.line_2
+                    , line_2:      state.line_2 === "" ? null : state.line_2
                     , city:        state.city
                     , postal_code: state.postal_code
-                    , state:       state.state === "" ? undefined : state.state
+                    , state:       state.state === "" ? null : state.state
                     , country:     state.country
                     }
          }

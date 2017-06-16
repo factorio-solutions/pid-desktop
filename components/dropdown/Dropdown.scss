@@ -9,6 +9,7 @@
   cursor:   pointer;
   border:   none;
   outline:  none;
+  overflow: hidden;
 }
 
 .drop{
@@ -55,7 +56,7 @@
 }
 
 .float{
-  float:        right;
+  // float:        right;
   font-size:    16px;
 }
 
@@ -68,7 +69,8 @@
 
 .marginCorrection{
   // correct the width of awesomefont icon
-  margin-left: 9px;
+  // margin-left: 9px;
+
 }
 
 
