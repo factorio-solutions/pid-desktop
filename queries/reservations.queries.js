@@ -19,6 +19,7 @@ export const GET_RESERVATIONS_QUERY = `{
       email
     }
     user {
+      id
       full_name
       email
       phone
