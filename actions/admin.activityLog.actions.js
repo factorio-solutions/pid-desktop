@@ -19,6 +19,6 @@ export function initLogs() {
       dispatch(setLogs(response.data.logs.map(log => ({...log, full_name: log.user.full_name, email: log.user.email}))))
     }
 
-    request(onSuccess, GET_LOGS, {garage_id: getState().pageBase.garage})
+    getState().pageBase.garage && request(onSuccess, GET_LOGS, {garage_id: getState().pageBase.garage})
   }
 }

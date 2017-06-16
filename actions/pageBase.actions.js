@@ -219,7 +219,9 @@ export function fetchGarages(){
       dispatch( setGarages( response.data.user_garages.filter(user_garage => user_garage.user_id === response.data.current_user.id) ) )
       dispatch( setGarage( parseInt(window.location.hash.substring(5).split('/')[0]) || undefined ) ) // parse current garage from  URL
 
-      if (getState().pageBase.garage === undefined || response.data.user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined) {
+      console.log(response);
+      if (response.data.user_garages.length > 0 && (getState().pageBase.garage === undefined || response.data.user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined)) {
+        console.log('navigate to dashboard');
         nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
         response.data.user_garages.length > 0 && dispatch( setGarage( response.data.user_garages[0].garage.id ))
       }
