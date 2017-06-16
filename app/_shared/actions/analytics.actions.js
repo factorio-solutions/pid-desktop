@@ -95,14 +95,15 @@ export function initGarageTurnover (){
       momentTo = momentTo.add(1, 'month'); // also include this month
 
       const onSuccess = (response) => {
+        console.log(response);
         dispatch(setReservations(response.data.reservation_analytics))
         dispatch(setContracts(response.data.contract_analytics))
       }
 
-      request(onSuccess, GARAGE_TURNOVER, { from: momentFrom.format(MOMENT_DATETIME_FORMAT)
-                                          , to: momentTo.format(MOMENT_DATETIME_FORMAT)
-                                          , id: getState().pageBase.garage
-                                          }
+      getState().pageBase.garage && request(onSuccess, GARAGE_TURNOVER, { from: momentFrom.format(MOMENT_DATETIME_FORMAT)
+                                                                        , to: momentTo.format(MOMENT_DATETIME_FORMAT)
+                                                                        , id: getState().pageBase.garage
+                                                                        }
       )
     }
   }
