@@ -32,7 +32,9 @@ export function setSelected (index){
 // will return ongoing reservations
 export function getCurrentReservations() {
   return (dispatch, getState) => {
-    return getState().reservations.reservations.filter(function(reservation){ return reservation.approved && moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) })
+    return getState().reservations.reservations
+      .filter(function(reservation){ return reservation.approved && moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) }) //  only current reservations
+      .filter((reservation) => {return reservation.user.id === getState().mobileHeader.current_user.id}) // only current users reservations
   }
 }
 
