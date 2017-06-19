@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 // const BabiliPlugin = require('babili-webpack-plugin')
 const WebpackBundleAnalyzer = require('webpack-bundle-analyzer')
-const BabelPolyfill = require("babel-polyfill");
+const BabelPolyfill = require("babel-polyfill")
 
 module.exports = {
   // devtool: 'cheap-module-eval-source-map',

@@ -22,6 +22,7 @@ import styles from './addFeatures.page.scss'
 export class AddFeaturesPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
+    pageBase:     PropTypes.object,
     actions:      PropTypes.object
   }
 
@@ -30,7 +31,7 @@ export class AddFeaturesPage extends Component {
   }
 
   render() {
-    const {state, actions} = this.props
+    const {state, pageBase, actions} = this.props
 
     const longtermClick     = () => { actions.tarifSelected(1) }
     const automationClick   = () => { actions.tarifSelected(2) }
@@ -39,7 +40,8 @@ export class AddFeaturesPage extends Component {
     const bookingPageClick  = () => { console.log('bookingClick');}
     const gateModuleClick   = () => { nav.to('/addFeatures/gateModuleOrder') }
     const accountClick      = () => { nav.to('/accounts/newAccount') }
-    const clientClick       = () => { nav.to('/clients/newClient') }
+    const clientClick       = () => { nav.to(`/${pageBase.garage}/admin/clients/newClient`) }
+
 
     const automationTarif = state.tarifs.find((tarif)=>{return tarif.name == 'Automation'})
     const integrationTarif = state.tarifs.find((tarif)=>{return tarif.name == 'Integration'})
@@ -103,6 +105,6 @@ export class AddFeaturesPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.addFeatures }),
+  state    => ({ state: state.addFeatures, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(addFeaturesActions, dispatch) })
 )(AddFeaturesPage)
