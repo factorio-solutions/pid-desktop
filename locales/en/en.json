@@ -106,8 +106,7 @@
 		"activityLogHint": "TODO: activityLog Hint",
 		"reservationsHint": "Here you have a list of all reservations within your client account.",
 		"newReservationHint": "You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.",
-		"newReservationOverviewHint": "TODO: New reservation overview hint",
-		"garagesHint": "Here is a list of all garages registered within your client account. When selected you can edit details or manage which parking places of the garage are assigned to which client account.",
+		"garagesHint": "TODO: garage hint.",
 		"newGarageHint": "Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.",
 		"newGarageFloorsHint": "TODO: New garage floors Hint",
 		"newGarageOrderHint": "TODO: New garage order Hint",
@@ -159,6 +158,13 @@
 		"garageAddClientHint": "Here you can add client to garage management page. TODO: add client to management hint",
 		"garageGarageUsersHint": "Here you can manage who can manage your garage. TODO: Garage users management",
 		"EditUserHint": "Here it is possible to change information about yourself.",
+
+		"orderGarageModuleHint":"TODO: order Garage Module hint: Here you can order a garage module.",
+		"reservationOverviewHint":"TODO: new reservation overview hint: Here you can double check if evetything is ok.",
+		"editInvoiceHint":"TODO: edit invoice hint: Afther clicking OK, new incoice will be created with corrected data.",
+		"editClientHint": "TODO: edit client hint: Here it is possible to change information about this client.",
+		"editContractHint":" TODO: edit contract hint: Here you can edit selected contract. Change places or duration or price.",
+
 		"unredNotifications": {
 			"one": "You have one unread notification",
 			"other": "You have %(count)s unread notifications"

@@ -299,15 +299,21 @@ export function toReservations() {
   return (dispatch, getState) => {
     const hash = window.location.hash
     let breadcrumbs = [{label: t(['pageBase','Reservation']), route: '/reservations'}]
+    let hint = t(['pageBase','reservationsHint'])
 
     switch (true) { // MainMenu
-      case contains(hash, 'newReservations'):
-        breadcrumbs.push({label: t(['pageBase','New Reservation']), route: '/reservations/newReservations'})
+      case contains(hash, 'newReservation'):
+        breadcrumbs.push({label: t(['pageBase','New Reservation']), route: '/reservations/newReservation'})
+        hint = t(['pageBase','newReservationHint'])
+        break
+
       case contains(hash, 'overview'):
-        breadcrumbs.push({label: t(['newReservationOverview','overview']), route: '/reservations/newReservations/overview'})
+        breadcrumbs.push({label: t(['newReservationOverview','overview']), route: '/reservations/newReservation/overview'})
+        hint = t(['pageBase','reservationOverviewHint'])
+        break
       }
 
-    dispatch(setAll('reservations', [], undefined, breadcrumbs, t(['pageBase','reservationsHint']), 'https://www.youtube.com/'))
+    dispatch(setAll('reservations', [], undefined, breadcrumbs, hint, 'https://www.youtube.com/'))
   }
 }
 
@@ -382,6 +388,13 @@ export function toAdmin() {
     let hintVideo = undefined
 
     switch (true) { // MainMenu
+      case contains(hash, 'invoices') && contains(hash, 'edit'):
+        breadcrumbs.push({label: t(['pageBase','Invoices']), route: `/${garage}/admin/invoices`})
+        breadcrumbs.push({label: t(['pageBase','editInvoice']), route: `/${garage}/admin/invoices`})
+        secondarySelected = 'invoices'
+        hint = t(['pageBase','editInvoiceHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
       case contains(hash, 'invoices'):
         breadcrumbs.push({label: t(['pageBase','Invoices']), route: `/${garage}/admin/invoices`})
         secondarySelected = 'invoices'
@@ -403,11 +416,25 @@ export function toAdmin() {
         hint = t(['pageBase','newClientHint'])
         hintVideo = 'https://www.youtube.com/'
         break
+      case (contains(hash, 'clients/') && contains(hash, 'edit') && !contains(hash, 'editContract')):
+        breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
+        breadcrumbs.push({label: t(['pageBase','editClient']), route: `/${garage}/admin/clients/edit`})
+        secondarySelected = 'clients'
+        hint = t(['pageBase','editClientHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
       case (contains(hash, 'clients/') && contains(hash, 'newContract')):
         breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
         breadcrumbs.push({label: t(['pageBase','NewContract']), route: `/${garage}/admin/clients/newContract`})
         secondarySelected = 'clients'
         hint = t(['pageBase','newContractHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'clients/') && contains(hash, 'editContract')):
+        breadcrumbs.push({label: t(['pageBase','Clients']), route: `/${garage}/admin/clients`})
+        breadcrumbs.push({label: t(['pageBase','EditContract']), route: `/${garage}/admin/clients/editContract`})
+        secondarySelected = 'clients'
+        hint = t(['pageBase','editContractHint'])
         hintVideo = 'https://www.youtube.com/'
         break
       case contains(hash, 'clients'):
@@ -517,6 +544,20 @@ export function toAdmin() {
         hint = t(['pageBase','financeCSOBHint'])
         hintVideo = 'https://www.youtube.com/'
         break
+      case (contains(hash, 'finance') && contains(hash, 'newRent')):
+        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+        breadcrumbs.push({label: 'New rent', route: `/${garage}/admin/finance/newRent`})
+        secondarySelected = 'finance'
+        hint = t(['pageBase','garageNewRentHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'finance') && contains(hash, 'editRent')):
+        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+        breadcrumbs.push({label: 'Edit rent', route: `/${garage}/admin/finance/newRent`})
+        secondarySelected = 'finance'
+        hint = t(['pageBase','garageEditRentHint'])
+        hintVideo = 'https://www.youtube.com/'
+        break
       case (contains(hash, 'finance')):
         breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
         secondarySelected = 'finance'
@@ -549,6 +590,10 @@ export function toAddFeatures() {
     let breadcrumbs = [{label: t(['pageBase','Add Features']), route: '/addFeatures'}]
 
     switch (true) { // MainMenu
+      case (contains(hash, 'gateModuleOrder')):
+        breadcrumbs.push({label: t(['pageBase','Order gate module']), route: `/addFeatures/gateModuleOrder`})
+        dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','orderGarageModuleHint']), 'https://www.youtube.com/'))
+        break
       case (contains(hash, 'garageSetup') && contains(hash, 'general')):
         breadcrumbs.push({label: t(['pageBase','Garage setup']), route: `/addFeatures/garageSetup/general`})
         dispatch(setAll(undefined, [], undefined, breadcrumbs, t(['pageBase','newGarageHint']), 'https://www.youtube.com/'))
