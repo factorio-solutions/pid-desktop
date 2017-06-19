@@ -51,6 +51,9 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
     }
     contracts{
       id
+      from
+      to
+      name
       client{
         name
         id
