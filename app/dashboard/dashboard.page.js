@@ -92,11 +92,15 @@ export class DashboardPage extends Component {
     const occupied = garage.garage ? garage.garage.floors.reduce((acc, floor)=> {
       return floor.places.reduce((acc, place)=>{
         const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
-        if (place.contracts.length > 0) { // than place has contract
+        const contract = garage.garage.contracts
+          .filter(contract => moment().isBetween(moment(contract.from), moment(contract.to)))
+          .find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
+
+        if (contract) { // than place has contract
           acc.longterm ++
           reservation !== undefined && acc.longtermOccupied++
         } else {
-          place.pricing && acc.visitor ++
+          place.pricing && acc.visitor ++ // needs to have a pricing to be for visitors
           place.pricing && reservation !== undefined && acc.visitorOccupied++
         }
         reservation === undefined && acc.free++
