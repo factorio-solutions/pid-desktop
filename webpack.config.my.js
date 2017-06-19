@@ -1,21 +1,38 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+// const BabiliPlugin = require('babili-webpack-plugin')
+const WebpackBundleAnalyzer = require('webpack-bundle-analyzer')
+const BabelPolyfill = require("babel-polyfill");
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  // devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
 
-  entry: ['./app/index'],
+  // entry: ['./app/index'], // WP1
+  entry: ['babel-polyfill', './app/index'],
 
+  // output: { // WP1
+  //   path: path.join(__dirname, 'public'),
+  //   filename: 'bundle.js',
+  //   publicPath: '/public/'
+  // },
   output: {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
+    // libraryTarget: 'commonjs2' // can be commented
     publicPath: '/public/'
   },
 
+  // resolve: { // WP1
+  //   extensions: ['.js', '.jsx', '.json'],
+  //   mainFields: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+  // },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    packageMains: ['webpack', 'browser', 'web', 'browserify', ['jam', 'main'], 'main']
+    extensions: ['.js', '.jsx', '.json'],
+    modules: [
+      path.join(__dirname, 'public'),
+      'node_modules',
+    ],
   },
 
   plugins: [
@@ -33,57 +50,114 @@ module.exports = {
       }
     })
   ],
+  plugins: [
+    // new BabiliPlugin(),
+
+    new WebpackBundleAnalyzer.BundleAnalyzerPlugin({
+      analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+    }),
+
+    /**
+     * Create global constants which can be configured at compile time.
+     *
+     * Useful for allowing different behaviour between development builds and
+     * release builds
+     *
+     * NODE_ENV should be production so that modules do not perform certain
+     * development checks
+     */
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false')
+    })
+  ],
 
   node: {
+    __dirname: false,
+    __filename: false,
     fs: "empty"
   },
 
   module: {
-    loaders: [
-      // {
-      //   test: /\.svg$/,
-      //   loader: 'url-loader'
-      // },
+    rules: [
       {
-        test: /\.jsx?$/,         // Match both .js and .jsx files
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: "babel",
-        query:
-          {
-            presets:['react']
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
           }
+        }
       },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
+      // { // from WP2 this should work by default
+      //   test: /\.json$/,
+      //   use: 'json-loader'
+      //   // loader: 'json-loader'
+      // },
+      // {
+      //   test: /\.scss$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader'
+      //     },
+      //     {
+      //       loader: 'css-loader?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]'
+      //     },
+      //     {
+      //       loader: 'sass-loader?sourceMap'
+      //     }
+      //   ]
+      // },
       {
         test: /\.scss$/,
-        loaders: [
-          'style',
-          'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-          'sass?sourceMap'
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'sass-loader'
+          }
         ]
       },
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader'
+      //     },
+      //     {
+      //       loader: 'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+      //     }
+      //   ]
+      // },
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              importLoaders: 1,
+              localIdentName: '[name]__[local]__[hash:base64:5]',
+            },
+          }
         ]
-      },
-      // {
-      //   test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      //   loader: 'url?limit=10000&minetype=application/font-woff'
-      // },
-      // {
-      //   test: /\.(eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      //   loader: 'file'
-      // },
-      // {
-      //   test: /\.(ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      //   loader: 'url?limit=100000'
-      // }
+      }
     ]
   }
 }
