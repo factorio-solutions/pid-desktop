@@ -35,21 +35,22 @@ module.exports = {
     ],
   },
 
-  plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-        'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT)
-      }
-    })
-  ],
+  // plugins: [
+  //   new webpack.optimize.DedupePlugin(),
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     minimize: true,
+  //     compress: {
+  //       warnings: false
+  //     }
+  //   }),
+  //   new webpack.DefinePlugin({
+  //     'process.env': {
+  //       'NODE_ENV': JSON.stringify('production'),
+  //       // 'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT)
+  //       'API_ENTRYPOINT': JSON.stringify('http://localhost:3000')
+  //     }
+  //   })
+  // ],
   plugins: [
     // new BabiliPlugin(),
 
@@ -58,18 +59,11 @@ module.exports = {
       openAnalyzer: process.env.OPEN_ANALYZER === 'true'
     }),
 
-    /**
-     * Create global constants which can be configured at compile time.
-     *
-     * Useful for allowing different behaviour between development builds and
-     * release builds
-     *
-     * NODE_ENV should be production so that modules do not perform certain
-     * development checks
-     */
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false')
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production'),
+        'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
+      }
     })
   ],
 
