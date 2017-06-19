@@ -49,10 +49,19 @@ export class GaragePage extends Component {
 
     const preparePlaces = (floor) => {
       floor.places.map((place) => {
-        const contract = state.garage.contracts.find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
+        const contract = state.garage.contracts
+          .filter(contract => moment(state.time).isBetween(moment(contract.from), moment(contract.to)))
+          .find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
+        console.log(contract);
         const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
         switch (state.selected) {
           case 'clients':
+            if (contract) {
+              place.group = contract.client.id
+            } else {
+              place.group = undefined
+            }
+            break;
           case 'contracts':
             if (contract) {
               place.group = contract.id
