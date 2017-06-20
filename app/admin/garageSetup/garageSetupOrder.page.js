@@ -51,7 +51,6 @@ export class GarageSetupOrderPage extends Component {
     const addPlaceToOrder  = (place) => { actions.addToOrder(place.label) }
     const makeButton       = (label, index) => <CallToActionButton label={label} onClick={() => {actions.removeFromOrder(index)}}/>
 
-    console.log(state.order);
     const allFloors = state.floors.filter((floor)=>{
       floor.places.map(place => {
         place.available = !state.order.includes(place.label)

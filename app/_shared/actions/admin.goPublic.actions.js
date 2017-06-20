@@ -59,7 +59,6 @@ export function setSelectedCurrency(currency){ // set currencies to all places
     const state = getState().adminGoPublic
     state.garage.floors.forEach(floor =>
       floor.places.forEach(place => {
-        console.log(place);
         dispatch(setGarage(dispatch(updatePlacePricing(place.id, 'currency_id', currency.id))))
       })
     )

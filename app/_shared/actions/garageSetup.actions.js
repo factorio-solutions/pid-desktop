@@ -616,7 +616,6 @@ export function updateGarageOrder(id) {
     }
 
     const garage = { id: +id , garage: { floors: floorsForRequest(state) } }
-    console.log(garage);
     dispatch(setFetching(true))
     request( onSuccess, UPDATE_GARAGE, garage , "garageMutations" )
   }

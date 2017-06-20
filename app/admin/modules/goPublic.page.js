@@ -43,8 +43,22 @@ export class GoPublicPage extends Component {
       })
     }
 
-    const submitForm = () => { actions.submitPricings() }
-    const goBack     = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
+    const submitForm   = () => { actions.submitPricings() }
+    const goBack       = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
+    const isSubmitable = () => {
+      return state.garage && state.garage.floors.reduce((atLeastOnePricing, floor) => { // at least one pricing has to be complete to submit
+        return floor.places.reduce((atLeastOnePricing, place) => {
+          return atLeastOnePricing || (place.pricing !== null &&
+            place.pricing.currency_id !== undefined &&
+            ((place.pricing.flat_price !== undefined && place.pricing.flat_price !== '') ||
+            (place.pricing.exponential_12h_price !== undefined && place.pricing.exponential_12h_price !== '' &&
+            place.pricing.exponential_day_price !== undefined && place.pricing.exponential_day_price !== '' &&
+            place.pricing.exponential_week_price !== undefined && place.pricing.exponential_week_price !== '' &&
+            place.pricing.exponential_month_price !== undefined && place.pricing.exponential_month_price !== ''))
+          )
+        }, atLeastOnePricing)
+      }, false)
+    }
 
     const place = state.garage ? state.garage.floors.reduce((acc,floor) => {
       return [...acc, ...floor.places]
@@ -57,7 +71,7 @@ export class GoPublicPage extends Component {
       <PageBase>
         <div className={styles.flex}>
           <div className={styles.half}>
-            <Form onSubmit={submitForm} submitable={true} onBack={goBack}>
+            <Form onSubmit={submitForm} submitable={isSubmitable()} onBack={goBack}>
               {state.places.length === 0 && <div className={styles.dimmer}>{t(['newPricing', 'selectPlace'])}</div>}
               <div>
                 <Dropdown label={t(['newPricing', 'selectCurrency'])} content={currencies()} style='light' selected={selectedCurrency}/>
