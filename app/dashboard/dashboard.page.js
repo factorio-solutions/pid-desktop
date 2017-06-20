@@ -8,8 +8,9 @@ import PageBase     from '../_shared/containers/pageBase/PageBase'
 import GarageLayout from '../_shared/components/garageLayout/GarageLayout2'
 import Table        from '../_shared/components/table/Table'
 
-import * as nav              from '../_shared/helpers/navigation'
-import { t }                 from '../_shared/modules/localization/localization'
+import * as nav from '../_shared/helpers/navigation'
+import { t, getLanguage }    from '../_shared/modules/localization/localization'
+
 import * as dashboardActions         from '../_shared/actions/dashboard.actions'
 import * as garageActions            from '../_shared/actions/garage.actions'
 import * as analyticsActions         from '../_shared/actions/analytics.actions'
@@ -148,47 +149,49 @@ export class DashboardPage extends Component {
 
     return (
       <PageBase>
-        <div className={styles.container}>
-          <div>
-            <GarageLayout floors={garage.garage ? garage.garage.floors.map(preparePlaces) : []} showEmptyFloors={true} unfold={true}/>
-          </div>
-          <div>
-            {state.news.length > 0 && [<h2>{t(['dashboard','news'])}</h2>,
-            <div>{state.news.map(prepareNews)}</div>]}
-
-            {logs.logs.length > 0 && [<h2 className={styles.pointer} onClick={()=>{nav.to(`/${pageBase.garage}/admin/activityLog`)}}>{t(['dashboard','latestActivity'])}</h2>,
-            <Table schema={logScheme} data={logs.logs.filter((log, index) => index < 5 )} />]}
-
-            <div className={styles.title}>
-              <h2>{t(['dashboard','currentState'])}</h2>
-              <span>{t(['dashboard','occupiedTotal'])}</span>
+        {pageBase.garages.length === 0 ?
+          <iframe scrolling='no' className={styles.iframe} src={`http://gama.park-it-direct.com/${getLanguage()}/pid-dashboard`}/> :
+          <div className={styles.container}>
+            <div>
+              <GarageLayout floors={garage.garage ? garage.garage.floors.map(preparePlaces) : []} showEmptyFloors={true} unfold={true}/>
             </div>
             <div>
-              <div>{t(['dashboard','longterm'])}<span className={styles.right}>{occupied.longtermOccupied}/{occupied.longterm}</span></div>
-              <div>{t(['dashboard','visitors'])}<span className={styles.right}>{occupied.visitorOccupied}/{occupied.visitor}</span></div>
-              <div>{t(['dashboard','free'])}<span className={styles.right}>{occupied.free}</span></div>
-              <div>{t(['dashboard','total'])}<span className={styles.right}>{occupied.total}</span></div>
+              {state.news.length > 0 && [<h2>{t(['dashboard','news'])}</h2>,
+              <div>{state.news.map(prepareNews)}</div>]}
+
+              {logs.logs.length > 0 && [<h2 className={styles.pointer} onClick={()=>{nav.to(`/${pageBase.garage}/admin/activityLog`)}}>{t(['dashboard','latestActivity'])}</h2>,
+              <Table schema={logScheme} data={logs.logs.filter((log, index) => index < 5 )} />]}
+
+              <div className={styles.title}>
+                <h2>{t(['dashboard','currentState'])}</h2>
+                <span>{t(['dashboard','occupiedTotal'])}</span>
+              </div>
+              <div>
+                <div>{t(['dashboard','longterm'])}<span className={styles.right}>{occupied.longtermOccupied}/{occupied.longterm}</span></div>
+                <div>{t(['dashboard','visitors'])}<span className={styles.right}>{occupied.visitorOccupied}/{occupied.visitor}</span></div>
+                <div>{t(['dashboard','free'])}<span className={styles.right}>{occupied.free}</span></div>
+                <div>{t(['dashboard','total'])}<span className={styles.right}>{occupied.total}</span></div>
+              </div>
+
+              <h2 className={styles.pointer} onClick={()=>{pageBaseActions.analyticsClick()}}>{t(['dashboard','financeOverview'])}</h2>
+              {chartDataArray.length == 1 ?
+              <h3>{t(['analytics', 'noData'])}</h3> :
+              <Chart
+                chartType="ComboChart"
+                data={chartDataArray}
+                options={{
+                  vAxis: {title: analytics.reservations.length ? analytics.reservations[0].currency.symbol : ""},
+                  hAxis: {title: analytics.period === 'month'? t(['analytics', 'month']) : t(['analytics', 'week'])},
+                  seriesType: 'bars',
+                  series: {1: {type: 'line'}}
+                }}
+                graph_id="ComboChart"
+                width="100%"
+                height="400px"
+              />}
             </div>
-
-            <h2 className={styles.pointer} onClick={()=>{pageBaseActions.analyticsClick()}}>{t(['dashboard','financeOverview'])}</h2>
-            {chartDataArray.length == 1 ?
-            <h3>{t(['analytics', 'noData'])}</h3> :
-            <Chart
-              chartType="ComboChart"
-              data={chartDataArray}
-              options={{
-                vAxis: {title: analytics.reservations.length ? analytics.reservations[0].currency.symbol : ""},
-                hAxis: {title: analytics.period === 'month'? t(['analytics', 'month']) : t(['analytics', 'week'])},
-                seriesType: 'bars',
-                series: {1: {type: 'line'}}
-              }}
-              graph_id="ComboChart"
-              width="100%"
-              height="400px"
-            />}
           </div>
-        </div>
-
+        }
       </PageBase>
     )
   }

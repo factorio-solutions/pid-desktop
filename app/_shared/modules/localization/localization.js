@@ -36,6 +36,10 @@ export function changeLanguage (language) {
   translate.setLocale(language)
 }
 
+export function getLanguage() {
+  return translate.getLocale()
+}
+
 // This function copies structure and content of default language ('en')
 export function create(dest, lang) {
   if (!fs.existsSync(path.join(dest, lang))) {
