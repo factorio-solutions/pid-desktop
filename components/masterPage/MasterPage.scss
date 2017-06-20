@@ -168,10 +168,8 @@ $hintWidth: 180px;
     >.content{
       flex: 1 1;
       transition: all 0.3s ease;
+      transform: translate(0,0); // this is changing how stuff behave
 
-      // &.hashHint{
-      //   width: calc(100% - $hintWidth);
-      // }
 
       &.shift{
         transform: translate($secondaryMenuWidth,0);
@@ -190,7 +188,7 @@ $hintWidth: 180px;
 
       >.hint{
         position:         fixed;
-        top:              60px;
+        top:              0;
         bottom:           0;
         right:            0;
         width:            calc(#{$hintWidth} - 2 * 10px); // - 2x padding
@@ -204,25 +202,25 @@ $hintWidth: 180px;
   }
 }
 
-@media (min-width: 1300px) {
-  .page{
-    >.secondaryVerticalMenu{
-      position: static;
-      &.shift{
-        display: inherit;
-        transform: none;
-      }
-      &.hideAdmin:not(.shift){
-        display: none;
-      }
-    }
-    >.content{
-      &.shift{
-        transform: none;
-      }
-    }
-  }
-}
+// @media (min-width: 1300px) {
+//   .page{
+//     >.secondaryVerticalMenu{
+//       position: static;
+//       &.shift{
+//         display: inherit;
+//         transform: none;
+//       }
+//       &.hideAdmin:not(.shift){
+//         display: none;
+//       }
+//     }
+//     >.content{
+//       &.shift{
+//         transform: none;
+//       }
+//     }
+//   }
+// }
 
 /* -- Only apply on small window -------------------------------------------- */
 @media (max-width: $collapseWidth) {
