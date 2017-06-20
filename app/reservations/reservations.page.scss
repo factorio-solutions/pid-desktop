@@ -7,13 +7,23 @@
 .centerDiv{
   padding:    $addButtonMargin 0;
   text-align: center;
-  // position:   fixed;
-  // bottom:     0px;
-  // right:      50%;
+  position:   fixed;
+  bottom:     0px;
+  right:      50%;
+}
+@media (min-width: $collapseWidth) {
+  .centerDiv{
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: $collapseWidth) {
+  .centerDiv{
+    transform: translateX(50%);
+  }
 }
 
 .tableContainer{
-  // margin-bottom: 140px;
+  margin-bottom: 140px;
 }
 
 .floatRight{

@@ -48,16 +48,33 @@
   cursor: pointer
 }
 
-.tableContainer{
-  // margin-bottom: 140px;
+// .tableContainer{
+//   // margin-bottom: 140px;
+// }
+//
+// .addButton {
+//   margin-top:    $addButtonMargin ;
+//   text-align:    center;
+//   // position: 		 fixed;
+//   // bottom: 			 0;
+//   // margin-bottom: 40px;
+//   // left: 0;
+//   // right: 0;
+// }
+
+.addButton{
+  padding:    $addButtonMargin 0;
+  text-align: center;
+  position:   fixed;
+  bottom:     0px;
+  right:      50%;
+}
+@media (max-width: $collapseWidth) {
+  .addButton{
+    transform: translateX(50%);
+  }
 }
 
-.addButton {
-  margin-top:    $addButtonMargin ;
-  text-align:    center;
-  // position: 		 fixed;
-  // bottom: 			 0;
-  // margin-bottom: 40px;
-  // left: 0;
-  // right: 0;
+.tableContainer{
+  margin-bottom: 140px;
 }

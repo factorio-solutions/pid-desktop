@@ -4,14 +4,6 @@
 	padding: 25px;
 }
 
-.addButton {
-	margin-top:  	 $addButtonMargin ;
-	text-align: 	 center;
-	// position: 		 fixed;
-	// bottom: 			 0;
-	// right: 				 50%;
-	// margin-bottom: 40px;
-}
 
 
 .spoiler{
@@ -26,6 +18,27 @@
 	cursor: pointer;
 }
 
+// .addButton {
+// 	margin-top:  	 $addButtonMargin ;
+// 	text-align: 	 center;
+// 	// position: 		 fixed;
+// 	// bottom: 			 0;
+// 	// right: 				 50%;
+// 	// margin-bottom: 40px;
+// }
+.addButton{
+  padding:    $addButtonMargin 0;
+  text-align: center;
+  position:   fixed;
+  bottom:     0px;
+  right:      50%;
+}
+@media (max-width: $collapseWidth) {
+  .addButton{
+    transform: translateX(50%);
+  }
+}
+
 .tableContainer{
-	// margin-bottom: 140px;
+  margin-bottom: 140px;
 }
