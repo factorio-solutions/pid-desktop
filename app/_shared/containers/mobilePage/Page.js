@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
-import * as onsen                      from 'react-onsenui' // important - handles mobile layout
+import _                               from 'lodash'
 
 import Logo             from '../../components/logo/Logo'
 import Dropdown         from '../../components/dropdown/Dropdown'
@@ -15,6 +15,8 @@ import styles from './Page.scss'
 
 import * as headerActions from '../../actions/mobile.header.actions'
 import * as loginActions  from '../../actions/login.actions'
+
+
 
 
 export class Page extends Component {
