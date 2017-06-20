@@ -161,7 +161,7 @@
 		"EditUserHint": "Tutaj możesz zmienić swoje dane.",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
-			"other": "Masz %(count) nieprzeczytanych wiadomości."
+			"other": "Masz %(count)s nieprzeczytanych wiadomości."
 		},
 		"analytics": "Analiza",
 		"garageTurnover": "Obroty garażu",

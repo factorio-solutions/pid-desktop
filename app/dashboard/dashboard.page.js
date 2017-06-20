@@ -150,7 +150,7 @@ export class DashboardPage extends Component {
     return (
       <PageBase>
         {pageBase.garages.length === 0 ?
-          <iframe scrolling='no' className={styles.iframe} src={`http://gama.park-it-direct.com/${getLanguage()}/pid-dashboard`}/> :
+          <iframe scrolling='auto' className={styles.iframe} src={`http://gama.park-it-direct.com/${getLanguage()}/pid-dashboard`}/> :
           <div className={styles.container}>
             <div>
               <GarageLayout floors={garage.garage ? garage.garage.floors.map(preparePlaces) : []} showEmptyFloors={true} unfold={true}/>

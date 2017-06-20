@@ -34,7 +34,8 @@
 }
 
 .iframe{
-  width: 100%;
+  width: calc(100% + 54px);
   border: none;
   height: 100%;
+  margin-left: -20px;
 }
