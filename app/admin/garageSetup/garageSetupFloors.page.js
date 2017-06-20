@@ -111,12 +111,12 @@ export class GarageSetupFloorsPage extends Component {
 
               <h2>{t(['newGarage', 'maximumVehicleDimensions'])}</h2>
               <div className={styles.line}>
-                <Input onChange={actions.setLength} label={t(['newGarage', 'length'])} error={t(['newGarage', 'invalidLength'])} value={state.length} placeholder={t(['newGarage', 'lengthPlaceholder'])}/>
-                <Input onChange={actions.setHeight} label={t(['newGarage', 'height'])} error={t(['newGarage', 'invalidHeight'])} value={state.height} placeholder={t(['newGarage', 'heightPlaceholder'])}/>
+                <Input onChange={actions.setLength} label={t(['newGarage', 'length'])} error={t(['newGarage', 'invalidLength'])} value={state.length} placeholder={t(['newGarage', 'lengthPlaceholder'])} type={'number'} step={0.1} min={0}/>
+                <Input onChange={actions.setHeight} label={t(['newGarage', 'height'])} error={t(['newGarage', 'invalidHeight'])} value={state.height} placeholder={t(['newGarage', 'heightPlaceholder'])} type={'number'} step={0.1} min={0}/>
               </div>
               <div className={styles.line}>
-                <Input onChange={actions.setWidth}  label={t(['newGarage', 'width'])}  error={t(['newGarage', 'invalidWidth'])}  value={state.width}  placeholder={t(['newGarage', 'widthPlaceholder'])}/>
-                <Input onChange={actions.setWeight} label={t(['newGarage', 'weight'])} error={t(['newGarage', 'invalidWeight'])} value={state.weight} placeholder={t(['newGarage', 'weightPlaceholder'])}/>
+                <Input onChange={actions.setWidth}  label={t(['newGarage', 'width'])}  error={t(['newGarage', 'invalidWidth'])}  value={state.width}  placeholder={t(['newGarage', 'widthPlaceholder'])}  type={'number'} step={0.1} min={0}/>
+                <Input onChange={actions.setWeight} label={t(['newGarage', 'weight'])} error={t(['newGarage', 'invalidWeight'])} value={state.weight} placeholder={t(['newGarage', 'weightPlaceholder'])}  type={'number'} step={1} min={0}/>
               </div>
             </div>
             <div className={styles.garageLayout}>
