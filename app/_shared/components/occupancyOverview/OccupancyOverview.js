@@ -4,13 +4,13 @@ import moment                           from 'moment'
 import RoundButton from '../buttons/RoundButton'
 import Tooltip     from '../tooltip/Tooltip'
 
-import { t }                            from '../../modules/localization/localization'
+import { t } from '../../modules/localization/localization'
 
-import styles                           from './OccupancyOverview.scss'
+import styles from './OccupancyOverview.scss'
 
-const DAY         = 1
-const WEEK_DAYS   = 7
-const MONTH_DAYS  = 30
+const DAY        = 1
+const WEEK_DAYS  = 7
+const MONTH_DAYS = 30
 const INIT_STATE = { content: ''
                    , mouseX:  0
                    , mouseY:  0
