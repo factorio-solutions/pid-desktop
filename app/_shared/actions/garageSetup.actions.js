@@ -616,7 +616,7 @@ export function updateGarageOrder(id) {
     }
 
     const garage = { id: +id , garage: { floors: floorsForRequest(state) } }
-
+    console.log(garage);
     dispatch(setFetching(true))
     request( onSuccess, UPDATE_GARAGE, garage , "garageMutations" )
   }
@@ -760,8 +760,9 @@ function prepareLayoutOrder() {
 function floorsForRequest(state) {
   return state.floors.map((floor) => {
     floor.places = floor.places.map(place => {
+      const priority = state.order.findIndex((obj) => obj === place.label)
       return { label:     place.label
-             , priority:  state.order.length - state.order.findIndex((obj) => obj === place.label)
+             , priority:  priority === -1 ? 0 : state.order.length - state.order.findIndex((obj) => obj === place.label)
              , length:    +state.length || null
              , height:    +state.height || null
              , width:     +state.width || null
