@@ -50,7 +50,7 @@ export function setTimeToNow () {
 
 export function setTimeTo (time) {
   return (dispatch, getState) => {
-    dispatch(setNow(false))
+    dispatch(setNow(moment().isBetween(moment(time), moment(time).add(15, 'minutes'))))
     dispatch(setTime(moment(time)))
   }
 }
