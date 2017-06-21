@@ -61,6 +61,7 @@ export class ClientUsersPage extends Component {
     }
 
     const renderSpoiler = (client_user) => {
+      console.log(client_user);
       const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, client_user.user.id ) }
 
       const secretaryPresetClick  = () => { actions.setSecretary(this.props.params.client_id, client_user.user.id ) }
@@ -84,7 +85,7 @@ export class ClientUsersPage extends Component {
             <span className={styles.clickable} onClick={secretaryPresetClick}>{t(['clientUsers','secretary'])}</span>
 
             <div className={styles.float}>
-              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && currentClientUser && currentClientUser.admin) || client_user.admin) && 'disabled'}/>
+              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && currentClientUser && !currentClientUser.admin) || client_user.admin) && 'disabled'}/>
             </div>
           </div>
         </div>
