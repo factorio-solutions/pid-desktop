@@ -32,5 +32,8 @@ export const GET_PERMISSION = `mutation PaypalGetPermission ($url:String!) { pay
 export const UPDATE_ACCOUNT = `mutation updateAccount ($id:Id!, $account:AccountInput!){
   update_account(id:$id, account: $account){
     id
+    paypal_email
+    csob_merchant_id
+    csob_private_key
   }
 }`
