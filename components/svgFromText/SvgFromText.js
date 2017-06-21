@@ -1,10 +1,20 @@
 import React, { Component, PropTypes } from 'react'
 
-import styles                          from './SvgFromText.scss'
+import styles from './SvgFromText.scss'
 
 
-export default function SvgFromText ({ svg, svgClick })  {
+export default function SvgFromText ({ svg, svgClick, rotate })  {
+  const setSvgWidth = (containerDiv) => {
+    if (containerDiv){
+      if (rotate){
+        containerDiv.children[0].style.height = `${containerDiv.getBoundingClientRect().width}px`
+      } else {
+        containerDiv.children[0] && containerDiv.children[0].removeAttribute("style")
+      }
+    }
+  }
+
   return(
-    <div className={styles.matchWidth}  onClick={svgClick} dangerouslySetInnerHTML={{__html: svg}} />
+    <div ref={setSvgWidth} className={`${styles.matchWidth} ${rotate && styles.rotate}`} onClick={svgClick} dangerouslySetInnerHTML={{__html: svg}} />
   )
 }
