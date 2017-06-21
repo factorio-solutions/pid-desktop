@@ -139,6 +139,8 @@ export function upadteAccount (params){
   return (dispatch, getState) => {
     const onSuccess = (response) =>{
       dispatch(setCustomModal(undefined))
+      dispatch(setCSOB(response.data.update_account.csob_merchant_id !== null))
+      dispatch(setPaypal(response.data.update_account.paypal_email!== null))
       console.log(response);
     }
 
