@@ -156,7 +156,7 @@ export default class GarageLayout extends Component {
             placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
             placeRect.onmouseleave = () => { this.setState({ ...this.state, visible:false }) }
             placeRect.onmousemove = (event) => {
-              const rect = this.refs.containerDiv.getBoundingClientRect()
+              const rect = this.refs.containerDiv ? this.refs.containerDiv.getBoundingClientRect() : {left: 0, top: 0}
               this.setState({ ...this.state, mouseX: event.clientX - rect.left + 20, mouseY: event.clientY - rect.top + 60 - 10})
             }
           }
