@@ -19,7 +19,7 @@ const MINIMUM_PASSWORD_LENGTH = 4
 
 
 const NAME_REGEX  = `^(?!\\s*$).+`
-const PHONE_REGEX = `\\+?\\(?\\d{2,4}\\)?[\\d\\s-]{3,}`
+const PHONE_REGEX = `\\+?[\\d]{3,}`
 const EMAIL_REGEX = `[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$`
 
 
