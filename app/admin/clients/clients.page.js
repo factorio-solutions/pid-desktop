@@ -25,11 +25,15 @@ export class ClientsPage extends Component {
 
   componentDidMount () {
     this.props.actions.initClients()
+    this.props.pageBase.garage && this.props.actions.initGarageContracts()
+  }
+
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initGarageContracts()
   }
 
   render() {
     const { actions, state, pageBase } = this.props
-    console.log(pageBase);
 
     const schema = [ { key: 'name',        title: t(['clients','name']),  comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
                    , { key: 'token',       title: t(['clients','token']), comparator: 'string', }
@@ -59,17 +63,19 @@ export class ClientsPage extends Component {
         <div>
           <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={toNewContract} type='action' state={!pageBase.isGarageAdmin && 'disabled'}/>
           <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.admin ? "" : "disabled" }/>
-          <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type='action'/>
+          <RoundButton content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type={client.userOfClient ? 'action' : 'disabled'}/>
           {/*<RoundButton content={<span className='fa fa-file' aria-hidden="true"></span>} onClick={toInvoices} type='action' state={client.admin ? "" : "disabled" }/>*/}
         </div>
       </div>
       return update(client, {spoiler:{$set: spoiler}})
     }
 
+    const filterPresent = (client) => state.clients.find(c => c.id === client.id ) === undefined // filter out client already present in state.clients
+
     return (
       <PageBase>
         <div className={styles.tableContainer}>
-          <Table schema={schema} data={state.clients.map(addSpoiler)}/>
+          <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(addSpoiler)}/>
         </div>
         <div className={styles.addButton}>
           <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClient} type='action' size='big'/>

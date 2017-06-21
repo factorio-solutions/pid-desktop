@@ -11,7 +11,6 @@ export const GET_CLIENTS = `{
       name
       token
       id
-      created_at
       user_count
       contracts{
         name
@@ -21,3 +20,18 @@ export const GET_CLIENTS = `{
   }
 }
 `
+
+export const GARAGE_CONTRACTS = `query GargeContracts($id: Id!){
+  garage(id: $id){
+    contracts{
+      name
+      id
+      client{
+        name
+        token
+        id
+        user_count
+      }
+    }
+  }
+}`

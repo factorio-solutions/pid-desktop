@@ -3,11 +3,11 @@ import * as nav from '../helpers/navigation'
 import moment   from 'moment'
 
 import { request }  from '../helpers/request'
-import {t}          from '../modules/localization/localization'
+import { t }        from '../modules/localization/localization'
 import { setError } from './pageBase.actions'
 
 import { GET_RENTS }                     from '../queries/admin.finance.queries.js'
-import { GET_CLIENTS }                   from '../queries/clients.queries.js'
+import { GARAGE_CONTRACTS }              from '../queries/clients.queries.js'
 import { GET_GARAGE_CLIENT, ADD_CLIENT, GET_CURRENCIES, CREATE_CONTRACT, GET_CONTRACT_DETAILS, UPDATE_CONTRACT } from '../queries/newContract.queries.js'
 
 const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
@@ -181,9 +181,9 @@ export function initContract(id){
     }
 
     const onClientsSuccess = (response) => {
-      const clients = response.data.client_users.reduce((arr, client_user) => {
-        if (arr.find(client => client.id === client_user.client_id) === undefined) {
-          arr.push(client_user.client)
+      const clients = response.data.garage.contracts.reduce((arr, contracts) => {
+        if (arr.find(client => client.id === contracts.client.id) === undefined) {
+          arr.push(contracts.client)
         }
         return arr
       }, []) // will find unique clients
@@ -203,7 +203,7 @@ export function initContract(id){
 
     if (!id) request(onSuccess, GET_GARAGE_CLIENT, { id: getState().pageBase.garage }) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
-    request(onClientsSuccess, GET_CLIENTS)
+    request(onClientsSuccess, GARAGE_CONTRACTS, {id: getState().pageBase.garage})
     if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, {id: +id})
   }
 }
