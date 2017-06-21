@@ -20,3 +20,11 @@
 //  	float: left;
 //  	mar­gin-top: 100%;
 // }
+
+.rotate{
+	>svg{
+		transform-origin: 0% 0%;
+		transform: rotate(-90deg) translate(-100%, 0%);
+    width: inherit;
+	}
+}

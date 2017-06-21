@@ -14,6 +14,7 @@ const INIT_STATE = { content: ''
                    , mouseY:  0
                    , visible: false
                    , floor:   0 // index of selected floor
+                   , rotate:  false
                    }
 
 // floors:[
@@ -154,7 +155,10 @@ export default class GarageLayout extends Component {
           if (placeRect) {
             placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
             placeRect.onmouseleave = () => { this.setState({ ...this.state, visible:false }) }
-            placeRect.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX, mouseY: event.clientY }) }
+            placeRect.onmousemove = (event) => {
+              const rect = this.refs.containerDiv.getBoundingClientRect()
+              this.setState({ ...this.state, mouseX: event.clientX - rect.left + 20, mouseY: event.clientY - rect.top + 60 - 10})
+            }
           }
 
         })
@@ -224,14 +228,17 @@ export default class GarageLayout extends Component {
       unfold === true ? <div className={styles.grayBackground}>
         {floors.map(prepareFloors)}
       </div> :
-      <div className={`${styles.widthContainer}`}>
+      <div className={`${styles.widthContainer}`} ref={'containerDiv'}>
         <div className={`${styles.width78} ${styles.svgContainer}`}>
-          <SvgFromText svg={floors[floor] && floors[floor].scheme || ''} svgClick={handleSVGClick} />
+          <SvgFromText svg={floors[floor] && floors[floor].scheme || ''} svgClick={handleSVGClick} rotate={this.state.rotate}/>
         </div>
         <div className={styles.width18}>
           <ButtonStack divider={divider}>
             {floors.map(prepareButtons)}
           </ButtonStack>
+          <div className={styles.rotateButton}>
+            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true"></i>} onClick={()=>{this.setState({...this.state, rotate: !this.state.rotate})}} state={'action'} />
+          </div>
 
           {Tooltip(this.state)}
         </div>
