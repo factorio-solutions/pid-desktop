@@ -211,12 +211,17 @@ $hintWidth: 180px;
         transform: none;
       }
       &.hideAdmin:not(.shift){
-        // display: none;
+        display: none;
       }
     }
     >.content{
       &.shift{
-        transform: none;
+        // transform: none;
+        transform: translate(0, 0);
+
+        // >.hint{
+        //   margin-top: 60px;
+        // }
       }
     }
   }
