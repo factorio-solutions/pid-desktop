@@ -22,7 +22,7 @@ export class PageBase extends Component {
     notifications: PropTypes.object
   }
 
-  componentDidMount(){
+  componentDidMount () {
     window.scrollTo(0, 0)
     this.props.actions.initialPageBase()
   }
