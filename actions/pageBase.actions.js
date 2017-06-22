@@ -280,7 +280,8 @@ export function initialPageBase () {
     if (getState().pageBase.garages.length === 0){ // if no garages
       dispatch(fetchGarages())
     }
-
+    
+    dispatch(setSecondaryMenu(dispatch(prepareAdminSecondaryMenu())))
   }
 }
 
