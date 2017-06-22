@@ -225,6 +225,10 @@ export function fetchGarages(){
         nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
         response.data.user_garages.length > 0 && dispatch( setGarage( response.data.user_garages[0].garage.id ))
       }
+
+      // dispatch(adminClick())
+      // dispatch(setShowSecondaryMenu(false))
+      dispatch(setSecondaryMenu(dispatch(prepareAdminSecondaryMenu())))
     }
     request(onSuccess, GET_GARAGES)
   }
@@ -276,6 +280,7 @@ export function initialPageBase () {
     if (getState().pageBase.garages.length === 0){ // if no garages
       dispatch(fetchGarages())
     }
+
   }
 }
 
