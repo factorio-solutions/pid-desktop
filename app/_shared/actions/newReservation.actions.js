@@ -356,6 +356,9 @@ export function downloadUser(id){
       if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
         dispatch(downloadGarage(values[1].reservable_garages[0].id))
       }
+      if (values[0].user.reservable_cars.length === 1) { // if only one car available
+        dispatch(setCarId(values[0].user.reservable_cars[0].id))
+      }
 
       dispatch(setLoading(false))
     }).catch(error => {

@@ -79,7 +79,7 @@ export class NewReservationPage extends Component {
     const isSubmitable = () => {
       if (state.car_id == undefined && state.carLicencePlate=='') return false
       if (state.from == '' || state.to == '') return false
-      if (state.user && state.place_id) return true
+      return state.user && state.place_id
     }
 
     const placeLabel = () => {
