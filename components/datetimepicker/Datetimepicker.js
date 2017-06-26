@@ -28,7 +28,6 @@ export default class Datetimepicker extends Component{
 
     const onDaySelect = (day) => {
       var datetime = moment(day+" "+this.state.datetime.format('HH:mm'))
-      console.log(datetime.format('YYYY-MM-DD HH:mm'));
       onSelect(datetime.format('YYYY-MM-DD HH:mm'))
       this.setState(
         { datetime: moment(day+" "+this.state.datetime.format('HH:mm')) }
@@ -37,8 +36,6 @@ export default class Datetimepicker extends Component{
 
     const onTimeSelect = (time) => {
       var datetime = moment(this.state.datetime.format('YYYY-MM-DD') + " "+ time)
-      console.log(time);
-      console.log(datetime.format('YYYY-MM-DD HH:mm'));
       onSelect(datetime.format('YYYY-MM-DD HH:mm'))
       this.setState(
         { datetime: moment(this.state.datetime.format('YYYY-MM-DD') + " "+ time) }

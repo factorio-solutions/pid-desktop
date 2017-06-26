@@ -143,7 +143,6 @@ export function submitOrder() {
     const state = getState().gateModuleOrder
 
     const onSuccess = (response) => {
-      console.log(response);
       window.location.replace(response.data.create_module_order.payment_url)
       // dispatch(setCustomModal( undefined ))
     }

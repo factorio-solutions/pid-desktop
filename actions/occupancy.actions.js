@@ -62,13 +62,6 @@ export function loadGarage(){
 
 export function initOccupancy () {
   return (dispatch, getState) => {
-    // const onSuccess = (response) => {
-    //   console.log(response);
-    //   response.data.manageble_clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
-    //   dispatch(setClients(response.data.manageble_clients))
-    // }
-    //
-    // request(onSuccess, OCCUPANCY_INIT) // download clients
     dispatch(loadGarage())
   }
 }

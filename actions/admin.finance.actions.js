@@ -141,7 +141,6 @@ export function upadteAccount (params){
       dispatch(setCustomModal(undefined))
       dispatch(setCSOB(response.data.update_account.csob_merchant_id !== null))
       dispatch(setPaypal(response.data.update_account.paypal_email!== null))
-      console.log(response);
     }
 
     request(onSuccess
@@ -159,7 +158,6 @@ export function updateCsobAccount () {
   return (dispatch, getState) => {
     const state = getState().adminFinance
     const onSuccess = (response) =>{
-      console.log(response);
       nav.to(`/${getState().pageBase.garage}/admin/finance`)
     }
 
@@ -185,7 +183,6 @@ export function submitGarage(id) {
     const state = getState().adminFinance
     const onSuccess = (response) =>{
       dispatch(response.data ? setSuccess(t(['finance', 'changeSuccess'])) : setError(t(['finance', 'changeFailed'])))
-      console.log(response);
     }
 
     request(onSuccess

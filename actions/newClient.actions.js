@@ -91,7 +91,6 @@ export function clearForm (){
 export function initClient(id) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      console.log(response);
       dispatch(setName(response.data.client_users[0].client.name))
       dispatch(setLine1(response.data.client_users[0].client.address.line_1))
       dispatch(setLine2(response.data.client_users[0].client.address.line_2))

@@ -236,7 +236,6 @@ export function addFloor(){
 }
 export function addGate(){
   return (dispatch, getState) => {
-    console.log(getState().garageSetup);
     dispatch(setGates(insertEmptyGate(getState().garageSetup.gates, getState().garageSetup.line_1, getState().garageSetup.lat, getState().garageSetup.lng)))
   }
 }
@@ -492,47 +491,6 @@ export function intiEditGarageOrder(id) {
     request(onSuccess, GET_GARAGE_DETAILS_ORDER, {id: parseInt(id)})
   }
 }
-
-// export function initEditGarage(id){
-//   return (dispatch, getState) => {
-//     const onSuccess = (response) => {
-//       console.log(response);
-//       dispatch(setTarif(response.data.garage.pid_tarif_id))
-//       dispatch(setId(response.data.garage.id))
-//       dispatch(setFloors(response.data.garage.floors))
-//       getState().garageSetup.floors.forEach((floor, index) => {dispatch(scanSVG (floor.scheme, index))})
-//
-//       response.data.garage.img && dispatch(setImage(response.data.garage.img))
-//       dispatch(setName(response.data.garage.name))
-//       dispatch(setLine1(response.data.garage.address.line_1))
-//       dispatch(setLine2(response.data.garage.address.line_2))
-//       dispatch(setCity(response.data.garage.address.city))
-//       dispatch(setPostalCode(response.data.garage.address.postal_code))
-//       dispatch(setState(response.data.garage.address.state))
-//       dispatch(setCountry(response.data.garage.address.country))
-//       dispatch(setLat(response.data.garage.address.lat))
-//       dispatch(setLng(response.data.garage.address.lng))
-//       dispatch(setLPG(response.data.garage.lpg))
-//       dispatch(setLength(response.data.garage.length))
-//       dispatch(setHeight(response.data.garage.height))
-//       dispatch(setWidth(response.data.garage.width))
-//       dispatch(setWeight(response.data.garage.weight))
-//
-//       response.data.garage.gates.forEach((gate)=>{
-//         gate.places = gate.places.reduce((arr, place)=> {
-//           arr.push(place.label)
-//           return arr
-//         }, []).join(', ')
-//       })
-//       dispatch(setGates(response.data.garage.gates))
-//
-//       dispatch(setFetching(false))
-//     }
-//
-//     dispatch(setFetching(true))
-//     request(onSuccess, GET_GARAGE_DETAILS, {id: parseInt(id)})
-//   }
-// }
 
 export function updateGarageGeneral(id, backUrl) {
   return (dispatch, getState) => {

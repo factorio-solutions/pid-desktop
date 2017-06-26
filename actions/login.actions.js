@@ -88,7 +88,6 @@ export function refresh_login(refresh_token, callback){
       console.log('Error while refreshing token');
     }
 
-    console.log('Sending refreshing token');
     request(success, LOGIN_USER, {refresh_token: localStorage['refresh_token']}, null, onError)
   }
 }

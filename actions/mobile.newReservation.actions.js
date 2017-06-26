@@ -227,7 +227,6 @@ export function submitReservation(callback){
     return (dispatch, getState) => {
       // const state = getState().mobileNewReservation
       const onSuccess = (response) => {
-        console.log(response);
         if (response.data.create_reservation.payment_url){
           dispatch(payReservation(response.data.create_reservation.payment_url, callback))
         } else {

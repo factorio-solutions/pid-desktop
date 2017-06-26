@@ -56,7 +56,6 @@ export function initRent(id){
   return (dispatch, getState) => {
 
     const onDetails = (response) => {
-      console.log(response);
       dispatch(setName(response.data.rents[0].name, true))
       dispatch(setPrice(response.data.rents[0].price, true))
       dispatch(setCurrency(getState().newRent.currencies.findIndex((curr)=>{return curr.id == response.data.rents[0].currency_id})))
