@@ -161,9 +161,7 @@ export function downloadInvoice(id){
 export function reminder(id){
   return (dispatch, getState) => {
     const state = getState().invoices
-    const onSuccess = (response) => {
-      console.log(response);
-    }
+    const onSuccess = (response) => {}
 
     const invoice = state.invoices.find((invoice) => {return invoice.id === id})
     invoice.client != null && invoice.client.admins.forEach((admin)=>{

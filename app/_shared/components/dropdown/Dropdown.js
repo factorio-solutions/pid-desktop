@@ -77,7 +77,7 @@ export default class Dropdown extends Component {
       ul.classList.contains(styles.hidden) ? unhide() : hide()
     }
 
-    const onBlur = (e) => { console.log('Blur'); hide() }
+    const onBlur = (e) => { hide() }
 
     const hide = ()=>{
       const ul = ReactDOM.findDOMNode(this).children[1]

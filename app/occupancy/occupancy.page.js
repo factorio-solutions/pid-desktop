@@ -72,14 +72,6 @@ export class OccupancyPage extends Component {
       }))
     }
 
-    // garage && console.log(garage.floors.reduce(preparePlaces, []));
-    //
-    // // const filterClientPlaces = (place) => {
-    // //   return true
-    // // }
-    // console.log(state);
-
-
     const filters = [ <TabButton label={t(['occupancy', 'day'])}   onClick={() => {actions.dayClick()}}   state={state.duration=="day" && 'selected'}/>
                     , <TabButton label={t(['occupancy', 'week'])}  onClick={() => {actions.weekClick()}}  state={state.duration=="week" && 'selected'}/>
                     , <TabButton label={t(['occupancy', 'month'])} onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>

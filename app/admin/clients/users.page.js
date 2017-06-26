@@ -61,7 +61,6 @@ export class ClientUsersPage extends Component {
     }
 
     const renderSpoiler = (client_user) => {
-      console.log(client_user);
       const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, client_user.user.id ) }
 
       const secretaryPresetClick  = () => { actions.setSecretary(this.props.params.client_id, client_user.user.id ) }

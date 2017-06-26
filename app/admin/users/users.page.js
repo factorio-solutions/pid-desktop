@@ -69,7 +69,6 @@ export class UsersPage extends Component {
 
     const usersData = (state.filter == 'all' ? state.users : state.pending ).map((user) => {
       // user.memberSince = user.clients.length == 0 ? null : user.clients.reduce((max, client)=> { return moment(client.created_at).diff(max) < 0 ? moment(client.created_at) : max}, moment(moment()))
-      console.log(user);
       user.spoiler = state.filter == 'all'? <div className={styles.spoiler}>
         <div>
           {t(['users','memberOfClients'])}

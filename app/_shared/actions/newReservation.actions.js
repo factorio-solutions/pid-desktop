@@ -285,7 +285,6 @@ export function setInitialStore(id) {
     })
 
     Promise.all([availableUsersPromise, editReservationPromise]).then( (values) => { // resolve
-      console.log(values);
       const users = values[0].reservable_users
       dispatch(setAvailableUsers(users))
       dispatch(setLoading(false))

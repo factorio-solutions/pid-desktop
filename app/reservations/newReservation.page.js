@@ -113,7 +113,6 @@ export class NewReservationPage extends Component {
                            <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={modalClick} type='confirm'  />
                          </div>
 
-    // console.log(state);
     return (
       <PageBase>
         <div className={styles.parent}>

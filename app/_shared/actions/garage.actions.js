@@ -58,7 +58,6 @@ export function setTimeTo (time) {
 export function initGarage () {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      console.log(response);
       dispatch(setGarage(response.data.garage))
     }
 

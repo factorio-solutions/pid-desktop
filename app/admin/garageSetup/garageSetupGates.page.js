@@ -50,9 +50,7 @@ export class GarageSetupGatesPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    console.log(state.floors);
     const allFloors = state.floors.filter((floor)=>{
-      console.log(floor);
       floor.places.map(place => {
         place.available = false
         return place
@@ -91,7 +89,6 @@ export class GarageSetupGatesPage extends Component {
 
       const getGateGPS = () => {
         var geocoder = new google.maps.Geocoder()
-        console.log(`${gate.address.line_1}, ${state.city}, ${state.postal_code}, ${state.country}`);
         geocoder.geocode({ address:`${gate.address.line_1}, ${state.city}, ${state.postal_code}, ${state.country}` }, (results, status) => {
           if (status === 'OK') {
             actions.changeGateAddressLat( results[0].geometry.location.lat(), index )

@@ -44,8 +44,8 @@ export class InvoicesPage extends Component {
                    , { key: 'payed',          title: t(['invoices','paid']),          comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true"></i> }
                    ]
 
-
-     const invoiceData = state.invoices.filter(invoice => invoice.account.garage.id === pageBase.garage ).filter(invoice => state.client_id === undefined ? true : invoice.client.id === state.client_id)
+     const invoiceData = state.invoices.filter(invoice => invoice.account.garage.id === pageBase.garage || pageBase.garages.find(garage => garage.garage.id === invoice.account.garage.id) === undefined) // display Invoices of selected garage and Invoices of my clients (those would otherwise be filtered by selected garage)
+     .filter(invoice => state.client_id === undefined ? true : invoice.client.id === state.client_id)
      .map((invoice) => {
        const customModal = <div>
          <Form submitable={true} onSubmit={()=>{actions.stornoInvoice(invoice.id, this.props.params.id)}} onBack={()=>{actions.setCustomModal(undefined)}} >

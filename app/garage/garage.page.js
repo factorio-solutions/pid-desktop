@@ -52,7 +52,6 @@ export class GaragePage extends Component {
         const contract = state.garage.contracts
           .filter(contract => moment(state.time).isBetween(moment(contract.from), moment(contract.to)))
           .find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
-        console.log(contract);
         const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
         switch (state.selected) {
           case 'clients':

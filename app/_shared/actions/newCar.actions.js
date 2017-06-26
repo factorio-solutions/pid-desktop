@@ -62,7 +62,6 @@ export function setHighlight (value){
 
 export function toggleHighlight (){
   return (dispatch, getState) => {
-    console.log('set to', !getState().newCar.highlight);
     dispatch(setHighlight(!getState().newCar.highlight))
   }
 }

@@ -247,7 +247,6 @@ export function createNewManagebles () {
           })
 
           Promise.all([clientUserPromise, userGaragePromise, userCarPromise]).then((value)=>{
-            console.log(value);
             onSuccess(undefined)
           })
 
