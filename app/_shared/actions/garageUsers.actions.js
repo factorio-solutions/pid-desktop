@@ -3,7 +3,7 @@ import {t}          from '../modules/localization/localization'
 import { setError } from './pageBase.actions'
 
 import { GET_GARAGEUSERS, UPDATE_GARAGEUSERS, DESTROY_GARAGEUSERS } from '../queries/garageUsers.queries'
-import { toGarages } from './pageBase.actions'
+import { fetchGarages } from './pageBase.actions'
 
 export const SET_GARAGE_USERS         = 'SET_GARAGE_USERS'
 export const SET_GARAGE_PENDING_USERS = 'SET_GARAGE_PENDING_USERS'
@@ -46,6 +46,7 @@ export function destroyGarageUser(garage_id, user_id){
         dispatch(setError( t(['garageUsers', 'noRights']) ))
       } else {
         dispatch( initGarageUsers(response.data.destroy_user_garage.garage_id) )
+        dispatch( fetchGarages() )
       }
     }
     request(onSuccess, DESTROY_GARAGEUSERS, {
@@ -62,6 +63,7 @@ export function setGarageUserRelation (garage_id, user_id, relation){
         dispatch(setError( t(['garageUsers', 'noRights']) ))
       } else {
         dispatch( initGarageUsers(response.data.update_user_garage.garage_id) )
+        dispatch( fetchGarages() )
       }
     }
     request(onSuccess, UPDATE_GARAGEUSERS, {

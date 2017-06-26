@@ -48,6 +48,7 @@ export const GET_GARAGES = `{
     admin
     receptionist
     security
+    pending
     user_id
     garage {
       id
