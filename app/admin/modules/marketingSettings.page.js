@@ -26,8 +26,16 @@ export class MarketingSettingsPage extends Component {
     actions:      PropTypes.object
   }
 
+  // componentDidMount(){
+  //   this.props.actions.initMarketing(this.props.params.id)
+  // }
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    console.log(this.props);
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initMarketing()
+  }
+
   componentDidMount(){
-    this.props.actions.initMarketing(this.props.params.id)
+    this.props.pageBase.garage && this.props.actions.initMarketing()
   }
 
   render() {

@@ -134,7 +134,7 @@ export function clearForm (){
 }
 
 
-export function initMarketing (garageId){
+export function initMarketing (){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setGarage (response.data.garage))
@@ -152,7 +152,7 @@ export function initMarketing (garageId){
       dispatch(setImages(insertEmptyRow(response.data.garage.marketing.images)))
     }
 
-    request(onSuccess, GET_MARKETING, {id: parseInt(garageId)} )
+    request(onSuccess, GET_MARKETING, {id: getState().pageBase.garage} )
   }
 }
 
