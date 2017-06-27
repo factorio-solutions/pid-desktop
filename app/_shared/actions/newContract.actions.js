@@ -186,7 +186,7 @@ export function initContract(id){
           arr.push(contracts.client)
         }
         return arr
-      }, []) // will find unique clients
+      }, getState().clients.clients || []) // will find unique clients, start with clients from clients page
 
       dispatch(setClients(clients))
       if (clients.length == 1) { dispatch(setClient(clients[0].id)) }
@@ -201,6 +201,7 @@ export function initContract(id){
       dispatch(setPlaces(response.data.contract.places))
     }
 
+    console.log(getState());
     if (!id) request(onSuccess, GET_GARAGE_CLIENT, { id: getState().pageBase.garage }) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
     request(onClientsSuccess, GARAGE_CONTRACTS, {id: getState().pageBase.garage})

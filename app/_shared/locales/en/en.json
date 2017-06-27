@@ -519,7 +519,7 @@
 		"hints": "I want to see hints:",
 		"language": "Choose language:",
 		"resetPassword": "Change password",
-		"emailSent": "You will receive an email with instructions how to reset email",
+		"emailSent": "You will receive an email with instructions how to reset password",
 		"editUser": "Edit my user profile",
 		"email": "Email:",
 		"createdAt": "Profile created:",
