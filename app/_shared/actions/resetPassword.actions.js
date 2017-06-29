@@ -31,7 +31,7 @@ export function dismissModal () {
 
 export function sendPasswordReset(){
   return (dispatch, getState) => {
-    dispatch(resertPassword(getState().resetPassword.email.value))
+    dispatch(resetPassword(getState().resetPassword.email.value))
   }
 }
 

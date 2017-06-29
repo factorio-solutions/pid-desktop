@@ -58,7 +58,7 @@ export class ClientsPage extends Component {
 
       var spoiler = <div className={styles.spoiler}>
         <div>
-          {client.contracts.map(prepareContractButton)}
+          {client.contracts && client.contracts.map(prepareContractButton)}
         </div>
         <div>
           <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={toNewContract} type='action' state={!pageBase.isGarageAdmin && 'disabled'}/>
