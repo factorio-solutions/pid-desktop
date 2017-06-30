@@ -1,5 +1,4 @@
 import update         from 'react-addons-update'
-import _              from 'lodash'
 
 import { request }    from '../helpers/request'
 import { get }        from '../helpers/get'
@@ -726,8 +725,14 @@ function floorsForRequest(state) {
              , weight:    +state.weight || null
              }
     })
-    return _.omit(floor, ['from', 'to']);
+    return removeKeys(floor, ['from', 'to']);
   })
+}
+
+function removeKeys(object, keys){
+  return Object.keys(object)
+               .filter((key) => keys.indexOf(key) < 0)
+               .reduce((newObj, key) => ({...newObj, [key]: object[key]}), {})
 }
 
 function gatesForRequest(state) {

@@ -1,7 +1,6 @@
 import { request } from '../helpers/request'
 import { t }       from '../modules/localization/localization'
 import moment      from 'moment'
-import _           from 'lodash'
 
 import { GARAGE_DETAILS_QUERY } from '../queries/occupancy.queries'
 import { toOccupancy }            from './pageBase.actions'
