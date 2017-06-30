@@ -26,11 +26,7 @@ export class MarketingSettingsPage extends Component {
     actions:      PropTypes.object
   }
 
-  // componentDidMount(){
-  //   this.props.actions.initMarketing(this.props.params.id)
-  // }
   componentWillReceiveProps(nextProps){ // load garage if id changed
-    console.log(this.props);
     nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initMarketing()
   }
 
@@ -41,10 +37,7 @@ export class MarketingSettingsPage extends Component {
   render() {
     const { state, pageBase, actions } = this.props
 
-    const submitForm = () => {
-      actions.editGarageMarketing()
-    }
-
+    const submitForm       = () => { actions.editGarageMarketing() }
     const goBack           = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
     const hightlightInputs = () => { actions.toggleHighlight() }
 
@@ -60,7 +53,7 @@ export class MarketingSettingsPage extends Component {
 
     const prepareAttributes = (attribute, index) => {
       const attributeClick = () => { actions.setParameter(attribute, !state[attribute]) }
-      return <tr key={index}><td className={styles.attribute} onClick={attributeClick}><input type="checkbox" checked={state[attribute] || false} onChange={attributeClick}/> {t(['newMarketing', attribute])} </td></tr>
+      return <tr key={index}><td className={styles.attribute} onClick={attributeClick}><input type="checkbox" checked={state[attribute] || false} onChange={attributeClick}/><span>{t(['newMarketing', attribute])}</span></td></tr>
     }
 
     const prepareImages = (image, index, arr) => {
@@ -94,11 +87,13 @@ export class MarketingSettingsPage extends Component {
     }
 
     const modalContent = <div className={styles.floatCenter}>
-                           { state.modalContent } <br/>
+                           { state.modalContent }
                          </div>
 
     const modalError = <div className={styles.floatCenter}>
-                         { state.modalError } <br/>
+                         <div>
+                          { state.modalError }
+                         </div>
                          <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={()=>{actions.setModalError(undefined)}} type='confirm'  />
                        </div>
 
