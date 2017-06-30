@@ -39,10 +39,18 @@ $big:         1.4;
   color: $blue;
 }
 
+
 .selected {
   background: $selectedColor;
   color:      $black;
   cursor:     default;
+}
+.loading{
+  background: lighten($confirmColor, 20%);
+  cursor: default;
+  // &:hover{
+  //   background: lighten($confirmColor, 20%);
+  // }
 }
 .disabled {
   background: $lightGray;
