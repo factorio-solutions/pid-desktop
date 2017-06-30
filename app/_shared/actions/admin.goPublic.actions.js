@@ -1,5 +1,4 @@
 import update      from 'react-addons-update'
-import _           from 'lodash'
 import { request } from '../helpers/request'
 import { t }       from '../modules/localization/localization'
 import * as nav       from '../helpers/navigation'
@@ -157,7 +156,9 @@ function updateKey(object, key, value){
 }
 
 function removeKey(object, key){
-  return _.omit(object, key)
+  return Object.keys(object)
+               .filter((currentKey) => currentKey !== key)
+               .reduce((newObj, key) => ({...newObj, [key]: object[key]}), {})
 }
 
 export function submitPricings() {
@@ -182,7 +183,7 @@ export function submitPricings() {
         const onSuccess = (response) => { resolve(response) }
 
         if (place.pricing.id){
-          request( onSuccess, UPDATE_PRICING, { id: place.pricing.id, pricing: _.omit(place.pricing, 'id') } )
+          request( onSuccess, UPDATE_PRICING, { id: place.pricing.id, pricing: removeKey(place.pricing, 'id') } )
         } else {
           request( onSuccess, CREATE_PRICING, { pricing: {...place.pricing, place_id: place.id}} )
         }

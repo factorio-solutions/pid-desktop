@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
-import _                               from 'lodash'
 
 import Logo             from '../../components/logo/Logo'
 import Dropdown         from '../../components/dropdown/Dropdown'
