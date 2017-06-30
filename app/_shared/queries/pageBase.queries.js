@@ -6,6 +6,7 @@ export const GET_CURRENT_USER = `{
     email
     phone
     hint
+    intercom_user_hash
     garage_admin
     receptionist
     security
