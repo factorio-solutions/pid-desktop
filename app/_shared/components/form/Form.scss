@@ -20,3 +20,7 @@
   left:     $mobileNavigationSidesOffset;
   right:    $mobileNavigationSidesOffset;
 }
+
+.rotating{
+    @include rotating(2s);
+}
