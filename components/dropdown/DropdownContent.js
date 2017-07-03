@@ -1,6 +1,5 @@
 import React, { Component, PropTypes }  from 'react'
 import ReactDOM                         from 'react-dom'
-import browser                          from 'detect-browser'
 
 import styles from './Dropdown.scss'
 
