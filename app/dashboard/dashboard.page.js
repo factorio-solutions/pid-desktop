@@ -13,7 +13,7 @@ import { t, getLanguage }    from '../_shared/modules/localization/localization'
 
 import * as dashboardActions         from '../_shared/actions/dashboard.actions'
 import * as garageActions            from '../_shared/actions/garage.actions'
-import * as analyticsActions         from '../_shared/actions/analytics.actions'
+import * as analyticsActions         from '../_shared/actions/analytics.garage.actions'
 import * as adminActivityLogsActions from '../_shared/actions/admin.activityLog.actions'
 import * as pageBaseActions          from'../_shared/actions/pageBase.actions'
 
@@ -112,40 +112,7 @@ export class DashboardPage extends Component {
     }, emptyOccupied) : emptyOccupied
 
     // GARAGE TURNOVER
-    const getProperty = (created_at) => {
-      return `${analytics.period === 'month' ? moment(created_at).month()+1 : moment(created_at).week()}/${moment(created_at).year()}`
-    }
-
-    const addProperty = (acc, property) => {
-      if (!acc.hasOwnProperty(property)) {
-        acc[property] = {reservations: [], contracts: []}
-      }
-      return acc
-    }
-
-    let chartData = analytics.reservations.reduce((acc, reservation) => {
-      const property = getProperty(reservation.created_at)
-      acc = addProperty(acc, property)
-      acc[property].reservations.push(reservation)
-
-      return acc
-    }, {})
-
-    let chartDataArray = []
-    for (var key in chartData) {
-      if (chartData.hasOwnProperty(key)) {
-        chartDataArray.push({...chartData[key], date:key})
-      }
-    }
-
-    const average = chartDataArray.reduce((sum, interval) => {
-      return sum + interval.reservations.reduce((sum, res) => sum + res.price, 0)
-    }, 0) / chartDataArray.length
-
-    chartDataArray = chartDataArray.sort((a,b)=>a.date > b.date).reduce((arr, interval) => {
-      arr.push([interval.date, interval.reservations.reduce((sum, res) => sum + res.price, 0), average])
-      return arr
-    }, [[analytics.period === 'month'? t(['analytics', 'month']) : t(['analytics', 'week']), t(['analytics', 'reservations']), t(['analytics', 'average'])]])
+    const { chartData } = analyticsActions.dataToArray( analyticsActions.stateToData())
 
     return (
       <PageBase>
@@ -174,13 +141,13 @@ export class DashboardPage extends Component {
               </div>
 
               <h2 className={styles.pointer} onClick={()=>{pageBaseActions.analyticsClick()}}>{t(['dashboard','financeOverview'])}</h2>
-              {chartDataArray.length == 1 ?
+              {chartData.length == 1 ?
               <h3>{t(['analytics', 'noData'])}</h3> :
               <Chart
                 chartType="ComboChart"
-                data={chartDataArray}
+                data={chartData}
                 options={{
-                  vAxis: {title: analytics.reservations.length ? analytics.reservations[0].currency.symbol : ""},
+                  vAxis: {title: analyticsActions.currency()},
                   hAxis: {title: analytics.period === 'month'? t(['analytics', 'month']) : t(['analytics', 'week'])},
                   seriesType: 'bars',
                   series: {1: {type: 'line'}}
@@ -198,7 +165,7 @@ export class DashboardPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.dashboard, pageBase:state.pageBase, analytics: state.analytics, garage: state.garage, logs: state.adminActivityLog }),
+  state    => ({ state: state.dashboard, pageBase:state.pageBase, analytics: state.analyticsGarage, garage: state.garage, logs: state.adminActivityLog }),
   dispatch => ({ actions: bindActionCreators(dashboardActions, dispatch)
                , garageActions: bindActionCreators(garageActions, dispatch)
                , analyticsActions: bindActionCreators(analyticsActions, dispatch)

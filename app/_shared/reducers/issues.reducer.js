@@ -1,4 +1,4 @@
-import { TEST_ACTION }  from '../actions/analytics.actions'
+import { TEST_ACTION }  from '../actions/issues.actions'
 
 const defaultState =  { test: [] }
 

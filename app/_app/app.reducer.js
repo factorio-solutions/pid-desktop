@@ -38,7 +38,12 @@ import carUsers         from '../_shared/reducers/carUsers.reducer'
 import users            from '../_shared/reducers/users.reducer'
 import inviteUser       from '../_shared/reducers/inviteUser.reducer'
 
-import analytics        from '../_shared/reducers/analytics.reducer'
+import analyticsGarage       from '../_shared/reducers/analytics.garage.reducer'
+import analyticsGates        from '../_shared/reducers/analytics.gates.reducer'
+import analyticsPayments     from '../_shared/reducers/analytics.payments.reducer'
+import analyticsPlaces       from '../_shared/reducers/analytics.places.reducer'
+import analyticsReservations from '../_shared/reducers/analytics.reservations.reducer'
+
 import dashboard        from '../_shared/reducers/dashboard.reducer'
 import garage           from '../_shared/reducers/garage.reducer'
 import issues           from '../_shared/reducers/issues.reducer'
@@ -98,7 +103,12 @@ const appReducer = combineReducers({ routing
                                    , users
                                    , inviteUser
 
-                                   , analytics
+                                   , analyticsGarage
+                                   , analyticsGates
+                                   , analyticsPayments
+                                   , analyticsPlaces
+                                   , analyticsReservations
+                                   
                                    , dashboard
                                    , garage
                                    , issues

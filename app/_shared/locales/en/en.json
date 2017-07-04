@@ -833,7 +833,9 @@
 		"turnover": "turnover",
 		"average": "average",
 		"reservations": "reservations",
-		"noData": "No data to be rendered"
+		"noData": "No data to be rendered",
+		"placeTurnover": "Place Turnover",
+		"period": "Period"
 	},
 	"activityLog": {
 		"name": "user",

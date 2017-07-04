@@ -6,7 +6,7 @@ import PageBase from '../_shared/containers/pageBase/PageBase'
 
 import * as nav                 from '../_shared/helpers/navigation'
 import { t }                    from '../_shared/modules/localization/localization'
-import * as analyticsActions    from '../_shared/actions/analytics.actions'
+import * as analyticsPlacesActions    from '../_shared/actions/analytics.places.actions'
 
 import styles from './places.page.scss'
 
@@ -29,6 +29,6 @@ export class PlacesPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.analytics, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(analyticsActions, dispatch) })
+  state    => ({ state: state.analyticsPlaces, pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(analyticsPlacesActions, dispatch) })
 )(PlacesPage)
