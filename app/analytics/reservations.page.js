@@ -3,7 +3,11 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import { Chart }                       from 'react-google-charts'
 
-import PageBase from '../_shared/containers/pageBase/PageBase'
+import PageBase      from '../_shared/containers/pageBase/PageBase'
+import TabMenu       from '../_shared/components/tabMenu/TabMenu'
+import TabButton     from '../_shared/components/buttons/TabButton'
+import Table         from '../_shared/components/table/Table'
+import DateInput from '../_shared/components/input/DateInput'
 
 import * as nav                          from '../_shared/helpers/navigation'
 import { t }                             from '../_shared/modules/localization/localization'
@@ -18,9 +22,21 @@ export class ReservationsAnalyticsPage extends Component {
     actions:  PropTypes.object
   }
 
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initReservationsAnalytics()
+  }
+
+  componentDidMount(){
+    this.props.pageBase.garage && this.props.actions.initReservationsAnalytics()
+  }
 
   render() {
     const { state, actions } = this.props
+
+    const handleFrom = (value, valid) => {valid && actions.setFrom(value) }
+    const handleTo   = (value, valid) => {valid && actions.setTo(value) }
+
+    console.log(actions.reservationsToData());
 
     const data = [
       ['x', 'turnover', 'reservations'],
@@ -40,10 +56,14 @@ export class ReservationsAnalyticsPage extends Component {
       ["N", 1000, 1]
     ]
 
+    const datePickers = [ <DateInput onChange={handleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
+                        , <span className={styles.dash}><b>-</b></span>
+                        , <DateInput onChange={handleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
+                        ]
 
     return (
       <PageBase>
-        ReservationsAnalyticsPage page
+        <TabMenu right={datePickers} style={styles.tabMenuHeight}/>
         <Chart
           chartType="ComboChart"
           data={data}

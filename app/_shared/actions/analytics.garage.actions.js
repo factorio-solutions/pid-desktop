@@ -5,6 +5,7 @@ import { request } from '../helpers/request'
 
 import { GARAGE_TURNOVER } from '../queries/analytics.garage.queries'
 
+
 export const ANALYTICS_SET_RESERVATIONS = 'ANALYTICS_SET_RESERVATIONS'
 export const ANALYTICS_SET_CONSTRACTS   = 'ANALYTICS_SET_CONSTRACTS'
 export const ANALYTICS_SET_FROM         = 'ANALYTICS_SET_FROM'
