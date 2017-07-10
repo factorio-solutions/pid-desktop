@@ -835,7 +835,12 @@
 		"reservations": "reservations",
 		"noData": "No data to be rendered",
 		"placeTurnover": "Place Turnover",
-		"period": "Period"
+		"period": "Period",
+		"reservationCount": "reservation count",
+		"contractCount": "contract count",
+		"date": "date",
+		"shortterm":"Short term",
+		"longterm":"Long term"
 	},
 	"activityLog": {
 		"name": "user",

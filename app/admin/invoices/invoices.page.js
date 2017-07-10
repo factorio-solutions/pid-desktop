@@ -12,12 +12,13 @@ import TabMenu      from '../../_shared/components/tabMenu/TabMenu'
 import Dropdown     from '../../_shared/components/dropdown/Dropdown'
 import Input        from '../../_shared/components/input/Input'
 import Form         from '../../_shared/components/form/Form'
+import Modal        from '../../_shared/components/modal/Modal'
 
 import styles               from './invoices.page.scss'
 import * as nav             from '../../_shared/helpers/navigation'
 import { t }                from '../../_shared/modules/localization/localization'
 import * as invoicesActions from '../../_shared/actions/invoices.actions'
-import {  setCustomModal }  from '../../_shared/actions/pageBase.actions'
+// import {  setCustomModal }  from '../../_shared/actions/pageBase.actions'
 
 
 export class InvoicesPage extends Component {
@@ -47,12 +48,6 @@ export class InvoicesPage extends Component {
      const invoiceData = state.invoices.filter(invoice => invoice.account.garage.id === pageBase.garage || pageBase.garages.find(garage => garage.garage.id === invoice.account.garage.id) === undefined) // display Invoices of selected garage and Invoices of my clients (those would otherwise be filtered by selected garage)
      .filter(invoice => state.client_id === undefined ? true : invoice.client.id === state.client_id)
      .map((invoice) => {
-       const customModal = <div>
-         <Form submitable={true} onSubmit={()=>{actions.stornoInvoice(invoice.id, this.props.params.id)}} onBack={()=>{actions.setCustomModal(undefined)}} >
-           {t(['invoices', 'cancelReason'])}
-           <Input onChange={actions.setReason} label={t(['invoices', 'reason'])} error={t(['invoices', 'reasonInvalid'])} placeholder={t(['invoices', 'reasonPlaceholder'])} value={state.reason} type="text" />
-         </Form>
-       </div>
        invoice.garage_name = invoice.account && invoice.account.garage.name
        invoice.client_name = invoice.client && invoice.client.name
        invoice.price = invoice.ammount + ' ' + invoice.currency.symbol
@@ -74,7 +69,7 @@ export class InvoicesPage extends Component {
                               {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin||invoice.client.is_secretary) && <RoundButton content={<span>{t(['invoices','pay'])}</span>}                      onClick={()=>{}}                                                                type='action'/>}
                               {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-bell-o' aria-hidden="true"></span>} onClick={()=>{actions.reminder(invoice.id)}}                                    type='action'/>}
                               {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}  onClick={()=>{actions.invoicePayed(invoice.id, this.props.params.id)}}          type='remove' question={t(['invoices','invoicePayed'])}/>}
-                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}  onClick={()=>{actions.setCustomModal(customModal)}}                             type='remove' question={t(['invoices','stornoInvoice'])}/>}
+                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}  onClick={()=>{actions.toggleReason()}}                             type='remove' question={t(['invoices','stornoInvoice'])}/>}
                             </span>
                           </div>}
                       </div>
@@ -91,9 +86,16 @@ export class InvoicesPage extends Component {
     }
 
     const clientSelector = <Dropdown label={t(['invoices', 'selectClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
+    const customModal = <div>
+      <Form submitable={state.reason !== '' && state.reason !== undefined} onSubmit={()=>{actions.stornoInvoice(invoice.id, this.props.params.id)}} onBack={()=>{actions.toggleReason()}} >
+        {t(['invoices', 'cancelReason'])}
+        <Input onChange={actions.setReason} label={t(['invoices', 'reason'])} error={t(['invoices', 'reasonInvalid'])} placeholder={t(['invoices', 'reasonPlaceholder'])} value={state.reason} type="text" />
+      </Form>
+    </div>
 
     return (
       <PageBase>
+        <Modal content={customModal} show={state.showModal}/>
         <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters}/>
         <Table schema={schema} data={invoiceData} />
       </PageBase>
@@ -103,5 +105,5 @@ export class InvoicesPage extends Component {
 
 export default connect(
   state    => ({ state: state.invoices, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({...invoicesActions, setCustomModal}, dispatch) })
+  dispatch => ({ actions: bindActionCreators(invoicesActions, dispatch) })
 )(InvoicesPage)

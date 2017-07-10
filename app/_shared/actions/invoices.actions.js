@@ -7,11 +7,12 @@ import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS
 import { toAccounts, toClients, setError, setCustomModal } from './pageBase.actions'
 
 
-export const INVOICES_SET_INVOICES  = 'INVOICES_SET_INVOICES'
-export const INVOICES_SET_CLIENTS   = 'INVOICES_SET_CLIENTS'
-export const INVOICES_SET_CLIENT_ID = 'INVOICES_SET_CLIENT_ID'
-export const INVOICES_SET_PAST      = 'INVOICES_SET_PAST'
-export const INVOICES_SET_REASON    = 'INVOICES_SET_REASON'
+export const INVOICES_SET_INVOICES        = 'INVOICES_SET_INVOICES'
+export const INVOICES_SET_CLIENTS         = 'INVOICES_SET_CLIENTS'
+export const INVOICES_SET_CLIENT_ID       = 'INVOICES_SET_CLIENT_ID'
+export const INVOICES_SET_PAST            = 'INVOICES_SET_PAST'
+export const INVOICES_SET_REASON          = 'INVOICES_SET_REASON'
+export const INVOICES_TOGGLE_REASON_MODAL = 'INVOICES_TOGGLE_REASON_MODAL'
 
 
 export function setInvoices (value) {
@@ -45,6 +46,10 @@ export function setReason (value) {
   return { type: INVOICES_SET_REASON
          , value
          }
+}
+
+export function toggleReason () {
+  return { type: INVOICES_TOGGLE_REASON_MODAL }
 }
 
 
