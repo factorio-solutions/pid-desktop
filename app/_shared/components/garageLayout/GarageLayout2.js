@@ -99,6 +99,11 @@ export default class GarageLayout extends Component {
         element.classList.remove('hasColorGroup')
         element.removeAttribute("style")
       }
+      while (currentSvg.getElementsByClassName('hasHeatGroup').length >= 1) {
+        let element = currentSvg.getElementsByClassName('hasHeatGroup')[0]
+        element.classList.remove('hasHeatGroup')
+        element.removeAttribute("style")
+      }
 
 
 
@@ -144,7 +149,26 @@ export default class GarageLayout extends Component {
             placeRect && placeRect.classList.add('hasColorGroup')
             placeRect && placeRect.setAttribute("style", `fill: ${assignColors[place.group]};`)
           })
+      }
 
+      let heatGroups = floors[floor] && floors[floor].places && floors[floor].places
+        .reduce((groups, place) => place.heat !== undefined ? [...groups, place.heat] : groups, [])
+
+      if (heatGroups && heatGroups.length){
+        const min = Math.min(...heatGroups)
+        const max = Math.max(...heatGroups)
+        const mapValue = (min, max, toMin, toMax, value) => {
+          return (value - min) * (toMax - toMin) / (max - min) + toMin;
+        }
+
+        floors[floor] && floors[floor].places && floors[floor].places
+          .filter((place) => { return place.heat !== undefined})
+          .forEach((place)=>{
+            const yellow = Math.round(mapValue(min, max, 255 , 0, place.heat))
+            let placeRect = currentSvg.getElementById('Place'+place.label)
+            placeRect && placeRect.classList.add('hasHeatGroup')
+            placeRect && placeRect.setAttribute("style", `fill: rgb(255, ${yellow}, 70);`)
+          })
       }
 
       // add tooltip event listeners

@@ -6,7 +6,7 @@ import {
   ANALYTICS_SET_FROM,
   ANALYTICS_SET_TO,
   ANALYTICS_SET_PERIOD
-}  from '../actions/analytics.actions'
+}  from '../actions/analytics.garage.actions'
 
 
 const defaultState =  { reservations: []
@@ -17,7 +17,7 @@ const defaultState =  { reservations: []
                       }
 
 
-export default function analytics (state = defaultState, action) {
+export default function analyticsGarage (state = defaultState, action) {
   switch (action.type) {
 
     case ANALYTICS_SET_RESERVATIONS:
