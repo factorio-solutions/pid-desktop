@@ -1,4 +1,4 @@
-import update   from 'react-addons-update'
+import update   from 'immutability-helper'
 import * as nav from '../helpers/navigation'
 import moment   from 'moment'
 

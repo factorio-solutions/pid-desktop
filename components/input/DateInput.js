@@ -6,7 +6,7 @@ import PopupDatepicker from '../datepicker/PopupDatepicker'
 import styles from './Input.scss'
 
 
-export default class DatetimeInput extends Component {
+export default class DateInput extends Component {
   static propTypes = {
     label:        PropTypes.string.isRequired, // is the placeholder
     error:        PropTypes.string, // error message if patern not met
@@ -17,6 +17,7 @@ export default class DatetimeInput extends Component {
     value:        PropTypes.string,
     inlineMenu:   PropTypes.object,
     showInf:      PropTypes.bool,
+    flip:         PropTypes.bool,
   }
 
   constructor(props) { // just to handle two way databinding
@@ -29,7 +30,7 @@ export default class DatetimeInput extends Component {
   }
 
   render(){
-    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, style, showInf} = this.props
+    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, style, showInf, flip} = this.props
 
     const handleChange = (event) => {
       this.setState({... this.state, message: event.target.value});
@@ -72,7 +73,7 @@ export default class DatetimeInput extends Component {
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
         <label className={`${styles.customFormGroup}  ${styles.error}`} style={{opacity: this.state.message==undefined || this.state.message == "" || moment(this.state.message, 'DD.MM.YYYY').isValid()? 0 : 1}}>{error}</label>
         <label  className={`${styles.customFormGroup}  ${styles.callendar}`} onClick={showDatepicker}><i className="fa fa-calendar" aria-hidden="true"></i></label>
-        <PopupDatepicker showInf={showInf} onSelect={handlePick} date={moment(this.state.message, 'DD.MM.YYYY').isValid() ? moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD') : undefined} show={this.state.focus} okClick={hideDatepicker}/>
+        <PopupDatepicker showInf={showInf} onSelect={handlePick} date={moment(this.state.message, 'DD.MM.YYYY').isValid() ? moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD') : undefined} show={this.state.focus} flip={flip} okClick={hideDatepicker}/>
       </div>
     )
   }

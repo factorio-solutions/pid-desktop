@@ -30,11 +30,13 @@ export class PageBase extends Component {
   render () {
     const { state, actions, notifications } = this.props
 
+    // console.log(state);
+
     const vertical =  [{label: t(['pageBase','Dashboard']),    key: "dashboard",    icon: 'icon-dashboard',    onClick: ()=>{nav.to(`/dashboard`)} }
                     ,  {label: t(['pageBase', 'Reservation']), key: "reservations", icon: 'icon-reservations', onClick: ()=>{nav.to('/reservations')} }
                     ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']), key: "occupancy", icon: 'icon-occupancy', onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
                     ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),    key: "garage",    icon: 'icon-garage',    onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
-                    ,  (state.isGarageAdmin) && {label: t(['pageBase', 'analytics']), key: "analytics", icon: 'icon-invoices', onClick: ()=>{actions.analyticsClick()} }
+                    ,  (state.isGarageAdmin && state.pid_tarif >= 2) && {label: t(['pageBase', 'analytics']), key: "analytics", icon: 'icon-invoices', onClick: ()=>{actions.analyticsClick()} }
                     // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'icon-issues', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
                     ,  {label: t(['pageBase', 'Admin']), key: "admin", icon: 'icon-admin', onClick: ()=>{actions.adminClick()} }
                     ].filter(field => field !== false)

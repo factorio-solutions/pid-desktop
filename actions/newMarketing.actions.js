@@ -1,4 +1,4 @@
-import update         from 'react-addons-update'
+import update         from 'immutability-helper'
 import { request }    from '../helpers/request'
 import * as nav       from '../helpers/navigation'
 import { t }          from '../modules/localization/localization'

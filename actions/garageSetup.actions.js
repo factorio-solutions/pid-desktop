@@ -1,4 +1,4 @@
-import update         from 'react-addons-update'
+import update         from 'immutability-helper'
 
 import { request }    from '../helpers/request'
 import { get }        from '../helpers/get'
