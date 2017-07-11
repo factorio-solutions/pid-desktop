@@ -1,36 +1,41 @@
 import moment from 'moment'
 
 import {
-  ANALYTICS_SET_RESERVATIONS,
-  ANALYTICS_SET_CONSTRACTS,
-  ANALYTICS_SET_FROM,
-  ANALYTICS_SET_TO,
-  ANALYTICS_SET_PERIOD
+  ANALYTICS_PLACES_SET_GARAGE,
+  ANALYTICS_PLACES_SET_FROM,
+  ANALYTICS_PLACES_SET_TO,
+  ANALYTICS_PLACES_SET_DISPLAY
 }  from '../actions/analytics.places.actions'
 
 
-const defaultState =  { reservations: []
-                      , from:         moment().subtract(1, 'months').format('M/YYYY')
-                      , to:           moment().format('M/YYYY')
+const defaultState =  { garage:  undefined
+                      , from:    moment().subtract(1, 'months').format('M/YYYY')
+                      , to:      moment().format('M/YYYY')
+                      , display: 'graph'
                       }
 
 
 export default function analyticsPlaces (state = defaultState, action) {
   switch (action.type) {
 
-    case ANALYTICS_SET_RESERVATIONS:
+    case ANALYTICS_PLACES_SET_GARAGE:
       return {...state
-             , reservations: action.value
+             , garage: action.value
              }
 
-    case ANALYTICS_SET_FROM:
+    case ANALYTICS_PLACES_SET_FROM:
       return {...state
              , from: action.value
              }
 
-    case ANALYTICS_SET_TO:
+    case ANALYTICS_PLACES_SET_TO:
       return {...state
              , to: action.value
+             }
+
+    case ANALYTICS_PLACES_SET_DISPLAY:
+      return {...state
+             , display: action.value
              }
 
     default:

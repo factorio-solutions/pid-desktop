@@ -59,25 +59,25 @@ export class ReservationsAnalyticsPage extends Component {
     return (
       <PageBase>
         <TabMenu left={filters} right={datePickers}/>
-          <Chart
-            chartType="ComboChart"
-            data={actions.dataToArray(tableData)}
-            options={{
-              vAxes: {
-                0:{title: actions.currency(), format: `# ${actions.currency()}`},
-                1:{title:t(['analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount'])}
-              },
-              hAxis: {title: t(['analytics', 'date']) },
-              seriesType: 'bars',
-              series: {
-                0:{targetAxisIndex:0},
-                1:{targetAxisIndex:1, type:'line'},
-              }
-            }}
-            graph_id="ComboChart"
-            width="100%"
-            height="400px"
-          />
+        <Chart
+          chartType="ComboChart"
+          data={actions.dataToArray(tableData)}
+          options={{
+            vAxes: {
+              0:{title: actions.currency(), format: `# ${actions.currency()}`},
+              1:{title:t(['analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount'])}
+            },
+            hAxis: {title: t(['analytics', 'date']) },
+            seriesType: 'bars',
+            series: {
+              0:{targetAxisIndex:0},
+              1:{targetAxisIndex:1, type:'line'},
+            }
+          }}
+          graph_id="ComboChart"
+          width="100%"
+          height="400px"
+        />
         <Table schema={schema} data={data} />
       </PageBase>
     )

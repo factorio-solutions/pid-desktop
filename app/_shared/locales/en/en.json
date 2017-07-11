@@ -840,7 +840,13 @@
 		"contractCount": "contract count",
 		"date": "date",
 		"shortterm":"Short term",
-		"longterm":"Long term"
+		"longterm":"Long term",
+		"graph": "Graph",
+		"heatmap": "Heatmap",
+		"avgTurnover": "Average turnover",
+		"avgRevenue": "Avg revenue",
+		"minRevenue": "Min revenue",
+		"maxRevenue": "Max revenue"
 	},
 	"activityLog": {
 		"name": "user",

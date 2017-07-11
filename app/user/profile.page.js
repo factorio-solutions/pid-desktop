@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { request }                     from '../_shared/helpers/request'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import update                          from 'react-addons-update'
+import update                          from 'immutability-helper'
 import moment                          from 'moment'
 
 import PageBase            from '../_shared/containers/pageBase/PageBase'

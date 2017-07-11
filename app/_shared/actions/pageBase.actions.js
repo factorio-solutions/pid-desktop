@@ -18,6 +18,7 @@ export const PAGE_BASE_SET_CURRENT_USER               = 'PAGE_BASE_SET_CURRENT_U
 export const PAGE_BASE_SET_HINT                       = 'PAGE_BASE_SET_HINT'
 export const PAGE_BASE_SET_GARAGES                    = 'PAGE_BASE_SET_GARAGES'
 export const PAGE_BASE_SET_GARAGE                     = 'PAGE_BASE_SET_GARAGE'
+export const PAGE_BASE_SET_PID_TARIF                  = 'PAGE_BASE_SET_PID_TARIF'
 export const PAGE_BASE_SET_IS_GARAGE_ADMIN            = 'PAGE_BASE_SET_IS_GARAGE_ADMIN'
 export const PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST     = 'PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST'
 export const PAGE_BASE_SET_IS_GARAGE_SECURITY         = 'PAGE_BASE_SET_IS_GARAGE_SECURITY'
@@ -104,6 +105,7 @@ export function setGarages(value) {
 
     const selectedGarage = value.find(user_garage => user_garage.garage.id === getState().pageBase.garage)
     if(selectedGarage){
+      dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
       dispatch(setIsGarageAdmin(selectedGarage.admin))
       dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
       dispatch(setIsGarageSecurity(selectedGarage.security))
@@ -119,6 +121,7 @@ export function setGarage(value) {
 
     const selectedGarage = getState().pageBase.garages.find(user_garage => user_garage.garage.id === value)
     if(selectedGarage){
+      dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
       dispatch(setIsGarageAdmin(selectedGarage.admin))
       dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
       dispatch(setIsGarageSecurity(selectedGarage.security))
@@ -140,6 +143,12 @@ export function setIsGarageAdmin(value) {
       dispatch(analyticsClick())
     }
   }
+}
+
+export function setGaragePidTarif(value){
+  return { type: PAGE_BASE_SET_PID_TARIF
+         , value
+         }
 }
 
 export function setIsGarageReceptionist(value) {
@@ -178,8 +187,8 @@ function prepareAnalyticsSecondaryMenu() {
     return [ state.isGarageAdmin && {label: t(['pageBase', 'garageTurnover']), key: "garageTurnover",         onClick: ()=>{nav.to(`/${garage}/analytics/garageTurnover`)} }
            , state.isGarageAdmin && {label: t(['pageBase', 'reservations']),   key: "reservationsAnalytics",  onClick: ()=>{nav.to(`/${garage}/analytics/reservationsAnalytics`)} }
            , state.isGarageAdmin && {label: t(['pageBase', 'places']),         key: "placesAnalytics",        onClick: ()=>{nav.to(`/${garage}/analytics/placesAnalytics`)} }
-           , state.isGarageAdmin && {label: t(['pageBase', 'payments']),       key: "paymentsAnalytics",      onClick: ()=>{nav.to(`/${garage}/analytics/paymentsAnalytics`)} }
-           , state.isGarageAdmin && {label: t(['pageBase', 'gates']),          key: "gatesAnalytics",         onClick: ()=>{nav.to(`/${garage}/analytics/gatesAnalytics`)} }
+          //  , state.isGarageAdmin && {label: t(['pageBase', 'payments']),       key: "paymentsAnalytics",      onClick: ()=>{nav.to(`/${garage}/analytics/paymentsAnalytics`)} }
+          //  , state.isGarageAdmin && {label: t(['pageBase', 'gates']),          key: "gatesAnalytics",         onClick: ()=>{nav.to(`/${garage}/analytics/gatesAnalytics`)} }
            ].filter(field => field !== false)
   }
 }

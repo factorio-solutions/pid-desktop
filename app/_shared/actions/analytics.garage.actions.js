@@ -51,7 +51,7 @@ export function setPeriod(value){
          }
 }
 
-function formatDate(value){
+export function formatDate(value){
   const split = value.split('/')
   if (split.length == 2 && split[0] !== "" && split[1] !== ""){
     let month = parseInt(split[0])
@@ -79,15 +79,15 @@ export function monthClick (){
   }
 }
 
+export function dateToMoment(value){
+  const monthYear = value.split('/')
+  return moment({ y: monthYear[1], M: monthYear[0]-1})
+}
 
 export function initGarageTurnover (){
   return (dispatch, getState) => {
-    const from = getState().analyticsGarage.from.split('/')
-    const to = getState().analyticsGarage.to.split('/')
-
-    // 31.05.2017 15:30
-    let momentFrom = moment({ y: from[1], M: from[0]-1})
-    let momentTo = moment({ y: to[1], M: to[0]-1})
+    let momentFrom = dateToMoment(getState().analyticsGarage.from)
+    let momentTo = dateToMoment(getState().analyticsGarage.to)
     if (momentFrom.isValid() && momentTo.isValid()){
       if (momentFrom.isAfter(momentTo)) { // switch of order is wrong
         const temp = momentFrom

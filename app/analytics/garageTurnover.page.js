@@ -70,7 +70,7 @@ export class GarageTurnoverPage extends Component {
           chartType="ComboChart"
           data={chartData}
           options={{
-            vAxis: {title: actions.currency()},
+            vAxis: {title: actions.currency(), format: `# ${actions.currency()}`},
             hAxis: {title: state.period === 'month'? t(['analytics', 'month']) : t(['analytics', 'week'])},
             seriesType: 'bars',
             series: {1: {type: 'line'}}

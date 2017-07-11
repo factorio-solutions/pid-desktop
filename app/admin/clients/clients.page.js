@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import update                          from 'react-addons-update'
+import update                          from 'immutability-helper'
 import moment                          from 'moment'
 
 import Table       from '../../_shared/components/table/Table'
