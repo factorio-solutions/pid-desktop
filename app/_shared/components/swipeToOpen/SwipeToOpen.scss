@@ -1,0 +1,54 @@
+@import '../../styles/app.components';
+
+
+.pane{
+  text-align:       center;
+  transition:       all 0.4s ease !important;
+}
+
+.disabled{
+  pointer-events: none;
+}
+
+.enabledContent{
+  background-color: $blue;
+  color:            $white
+}
+
+.disabledContent{
+  background-color: $white;
+
+  > div{
+    > .paneContent{
+      color: $lightGray;
+
+      > .comment{
+        color: $black;
+      }
+    }
+  }
+}
+
+.paneContent{
+  position:  absolute;
+  top:       50%;
+  left:      50%;
+  width:     100%;
+  transform: translate(-50%,-50%);
+
+  > i {
+    font-size: 60px;
+  }
+}
+
+.success{
+  background-color: $green;
+  color: $white;
+  font-weight: bold;
+}
+
+.failure{
+  background-color: $red;
+  color: $white;
+  font-weight: bold;
+}

@@ -1,0 +1,88 @@
+@import '../../styles/app.components';
+@import './Button';
+
+// button will fill its parent
+$size-collapsed-width:  150px;
+
+
+.button{
+  color:       $white;
+  font-size:   16px;
+  white-space: nowrap;
+  padding:     0;
+
+  @include colorize($gray);
+  width:         100%;
+  cursor:        pointer;
+  border:        none;
+  outline:       none;
+  transition:    all 0.3s ease;
+}
+
+.label{
+  font-size:  19px;
+}
+
+.container{
+  margin-top:    -1px;
+  border-bottom: 1px solid $lightGray;
+  border-top:    1px solid $lightGray;
+}
+
+
+// types
+.action {
+  @include colorize($actionColor);
+}
+.confirm {
+  @include colorize($confirmColor);
+}
+.remove {
+  @include colorize($removeColor);
+}
+
+
+// states
+.selected {
+  background: $selectedColor;
+  color:      $black;
+}
+.disabled {
+  background: $lightGray;
+  color:      $gray;
+  cursor:     default;
+}
+
+
+// scalable content
+
+@media (min-width: $collapseWidth) {
+  .label{
+    text-align: left;
+  }
+  .container{
+    padding: 24px 30px;
+  }
+
+  @media (max-height: 650px) { // low height
+    .container{
+      padding: 14px 30px;
+    }
+  }
+
+  .back{ // state
+    display: none;
+  }
+}
+
+@media (max-width: $collapseWidth) {
+  .container{
+    padding: 16px;
+  }
+
+  .back{ // state
+    @include colorize($yellow);
+    color:       $black;
+    font-weight: bold;
+  }
+}

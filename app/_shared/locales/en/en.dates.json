@@ -1,0 +1,32 @@
+{
+  "formats":{
+    "date": {
+      "default":  "%a, %e %b %Y",
+      "long":       "%A, %B %o, %Y",
+      "short":      "%b %e"
+    },
+
+    "time": {
+      "default":  "%H:%M",
+      "long":       "%H:%M:%S %z",
+      "short":      "%H:%M"
+    },
+
+    "datetime": {
+      "default":  "%a, %e %b %Y %H:%M",
+      "long":       "%A, %B %o, %Y %H:%M:%S %z",
+      "short":      "%e %b %H:%M"
+    }
+  },
+
+  "names":{
+    "__locale": "en",
+    "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    "abbreviated_days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    "abbreviated_months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "am": "AM",
+    "pm": "PM"
+  }
+
+}

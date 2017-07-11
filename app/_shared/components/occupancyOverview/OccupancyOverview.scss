@@ -1,0 +1,120 @@
+@import '../../styles/app.components';
+
+.controlls{
+  display: flex;
+
+  .flex{
+    flex-grow: 1;
+  }
+}
+
+.center{
+  text-align: center;
+}
+
+.right{
+  text-align: right;
+}
+
+.occupacny{
+  // overflow: auto;
+
+  > table {
+    width: 100%;
+    table-layout: fixed;
+    margin-top: 20px;
+    border-collapse: collapse;
+
+    td:first-child{
+      width: 65px;
+    }
+  }
+}
+
+// ============================================================================
+// TABLE STYLING
+.bottomBorder{
+  border-bottom: 1px solid $black;
+}
+
+.rightBorderDotted{
+  border-right: 1px dotted $black;
+  position: relative; // here to help with reservations
+}
+.rightBorder{
+  border-right: 1px solid $black;
+}
+
+.weekend{
+  background: $lightGray;
+}
+
+.reservationDiv{
+  position: absolute;
+  height: 100%;
+  top: 0;
+  z-index: 9;
+  overflow: hidden;
+
+  color: $white;
+  font-weight: bold;
+
+
+  &.future{
+    background: $blue;
+  }
+  &.ongoing{
+    background: $black;
+  }
+  &.fulfilled{
+    background: $gray;
+  }
+
+  >span{
+    padding: 0 10px;
+  }
+}
+.nowLine{
+  position: absolute;
+  height: 100%;
+  background: $red;
+  top: 0;
+  width: 2px
+}
+
+.date{
+  font-weight: bold;
+}
+
+.reservation{
+  background-color: $gray;
+}
+
+.now{
+  border-right: 2px solid $red;
+}
+
+.placePadding{
+  padding: 0 5px;
+  // width: 1%;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+// ============================================================================
+// TOOLTIP TABLE STYLING
+.tooltipTable{
+  >tbody{
+    >tr{
+      >td{
+        &:first-child{
+          padding-right: 5px;
+        }
+
+        &:last-child{
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

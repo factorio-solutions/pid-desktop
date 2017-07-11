@@ -1,0 +1,26 @@
+@import '../../styles/app.components';
+
+.submitButton{
+  margin-top: 35px;
+  // height: 60px;
+  // text-align: right;
+}
+
+.floatRight{
+  float: right;
+}
+
+.floatLeft{
+  float: left;
+}
+
+.mobileSubmitButton{
+  position: fixed;
+  bottom:   $mobileNavigationBottomOffset;
+  left:     $mobileNavigationSidesOffset;
+  right:    $mobileNavigationSidesOffset;
+}
+
+.rotating{
+    @include rotating(2s);
+}
