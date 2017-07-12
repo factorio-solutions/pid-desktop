@@ -91,7 +91,7 @@ export class NewReservationPage extends Component {
 
     const highlightSelected = (floor) => {
       floor.places.map((place) => {
-        place.available = place.available || place.id === state.edit_place_id // set place of edited reservation as available
+        place.available = place.available // set place of edited reservation as available
         place.selected = place.id == state.place_id
         return place
       })

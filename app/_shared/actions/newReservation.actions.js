@@ -30,7 +30,6 @@ export const NEW_RESERVATION_SET_GARAGE           = 'NEW_RESERVATION_SET_GARAGE'
 export const NEW_RESERVATION_SET_FROM             = 'NEW_RESERVATION_SET_FROM'
 export const NEW_RESERVATION_SET_TO               = 'NEW_RESERVATION_SET_TO'
 export const NEW_RESERVATION_SET_PLACE_ID         = 'NEW_RESERVATION_SET_PLACE_ID'
-export const NEW_RESERVATION_SET_EDIT_PLACE_ID    = 'NEW_RESERVATION_SET_EDIT_PLACE_ID'
 export const NEW_RESERVATION_SET_PRICE            = 'NEW_RESERVATION_SET_PRICE'
 export const NEW_RESERVATION_SET_DURATION_DATE    = 'NEW_RESERVATION_SET_DURATION_DATE'
 export const NEW_RESERVATION_SET_LOADING          = 'NEW_RESERVATION_SET_LOADING'
@@ -148,12 +147,6 @@ export function setPlace (place){
 
     dispatch(setPrice())
   }
-}
-
-export function setEditPlaceId(value){
-  return { type: NEW_RESERVATION_SET_EDIT_PLACE_ID
-         , value
-         }
 }
 
 export function setPrice(){
@@ -275,11 +268,9 @@ export function setInitialStore(id) {
         values[1].reservation.car.temporary ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate)) : dispatch(setCarId(values[1].reservation.car.id))
         dispatch(setFrom(moment(values[1].reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
         dispatch(setTo(moment(values[1].reservation.ends_at).format(MOMENT_DATETIME_FORMAT)))
-        dispatch(setEditPlaceId(values[1].reservation.place.id))
         dispatch(setPlace(values[1].reservation.place))
       } else {
         dispatch(setReservation(undefined))
-        dispatch(setEditPlaceId(undefined))
         if (users.length === 1){
           dispatch(downloadUser(users[0].id))
         }
@@ -377,17 +368,18 @@ export function downloadGarage (id) {
 
       request( onSuccess
         , GET_GARAGE_DETAILS
-        , { id:        id || state.garage.id
-          , user_id:   state.user.id
-          , client_id: state.client_id
-          , begins_at: state.from
-          , ends_at:   state.to
+        , { id:             id || state.garage.id
+          , user_id:        state.user.id
+          , client_id:      state.client_id
+          , begins_at:      state.from
+          , ends_at:        state.to
+          , reservation_id: state.reservation ? state.reservation.id : null
         }
       )
     }).then(value => {
       value.garage.floors.forEach((floor)=>{
         floor.places.map((place) => {
-          place.available = floor.free_places.find(p=>p.id === place.id || p.id === state.edit_place_id) !== undefined // set avilability
+          place.available = floor.free_places.find(p=>p.id === place.id) !== undefined // set avilability
           if (place.available && place.pricing) { // add tooltip to available places
             const pricing = place.pricing
             const symbol = pricing.currency.symbol
