@@ -18,7 +18,7 @@ import {
 } from '../queries/newReservation.queries'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
+const MOMENT_DATETIME_FORMAT   = "DD.MM.YYYY HH:mm"
 
 export const NEW_RESERVATION_SET_USER             = 'NEW_RESERVATION_SET_USER'
 export const NEW_RESERVATION_SET_AVAILABLE_USERS  = 'NEW_RESERVATION_SET_AVAILABLE_USERS'
@@ -227,27 +227,6 @@ export function roundTime(time){
   return moment(time, MOMENT_DATETIME_FORMAT).set('minute', Math.floor(moment(time, MOMENT_DATETIME_FORMAT).minutes()/15)*15).format(MOMENT_DATETIME_FORMAT)
 }
 
-// export function checkMinDuration(){
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const diff = dispatch(getDuration())
-//
-//     if (diff < MIN_RESERVATION_DURATION){
-//       dispatch(setTo(moment(state.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
-//     } else { // if min duration is OK, then get garage details
-//       dispatch(getGarageDetails())
-//     }
-//   }
-// }
-//
-// export function getDuration(){ // in minutes
-//   return (dispatch, getState) => {
-//     const { from, to } = getState().newReservation
-//     return moment.duration(moment(to, MOMENT_DATETIME_FORMAT).diff(moment(from, MOMENT_DATETIME_FORMAT))).asMinutes()
-//   }
-// }
-
-
 
 export function setInitialStore(id) {
   return (dispatch, getState) => {
@@ -299,6 +278,8 @@ export function setInitialStore(id) {
         dispatch(setEditPlaceId(values[1].reservation.place.id))
         dispatch(setPlace(values[1].reservation.place))
       } else {
+        dispatch(setReservation(undefined))
+        dispatch(setEditPlaceId(undefined))
         if (users.length === 1){
           dispatch(downloadUser(users[0].id))
         }
@@ -404,7 +385,6 @@ export function downloadGarage (id) {
         }
       )
     }).then(value => {
-
       value.garage.floors.forEach((floor)=>{
         floor.places.map((place) => {
           place.available = floor.free_places.find(p=>p.id === place.id || p.id === state.edit_place_id) !== undefined // set avilability
@@ -453,232 +433,6 @@ export function autoSelectPlace() {
     }
   }
 }
-
-// export function setAvailableClients (value){
-//   value.unshift({name: t(['newReservation', 'selectClient']), id: undefined})
-//   return { type: NEW_RESERVATION_SET_AVAILABLE_CLIENTS
-//          , value
-//          }
-// }
-//
-// export function setFrom (value){
-//   return (dispatch, getState) => {
-//     moment(value, MOMENT_DATETIME_FORMAT).isBefore(moment().subtract(1, 'minute')) ? dispatch(beginsToNow())
-//                                                              : dispatch({ type: NEW_RESERVATION_SET_FROM
-//                                                                         , value: roundTime(value).format(MOMENT_DATETIME_FORMAT)
-//                                                                         })
-//
-//     dispatch(checkMinDuration())
-//   }
-// }
-//
-// export function setTo (value){
-//   return (dispatch, getState) => {
-//     dispatch({ type: NEW_RESERVATION_SET_TO
-//              , value: roundTime(value).format(MOMENT_DATETIME_FORMAT)
-//              })
-//
-//     dispatch(checkMinDuration())
-//   }
-// }
-
-
-
-// export function setPrice (price){
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const from = moment(state.from, MOMENT_DATETIME_FORMAT)
-//     const to = moment(state.to, MOMENT_DATETIME_FORMAT)
-//
-//     dispatch(setPriceValue(`${calculatePrice(price, from ,to)} ${price.currency.symbol}`))
-//   }
-// }
-//
-
-
-
-// export function checkMinDuration(){
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const diff = dispatch(getDuration())
-//
-//     if (diff < MIN_RESERVATION_DURATION){
-//       dispatch(setTo(moment(state.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
-//     } else { // if min duration is OK, then get garage details
-//       dispatch(getGarageDetails())
-//     }
-//   }
-// }
-
-// export function getDuration(){ // in minutes
-//     return (dispatch, getState) => {
-//       const { from, to } = getState().newReservation
-//       return moment.duration(moment(to, MOMENT_DATETIME_FORMAT).diff(moment(from, MOMENT_DATETIME_FORMAT))).asMinutes()
-//     }
-// }
-
-// export function autoSelectPlace (){
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const firstAvailablePlace = state.garage.floors.reduce((obj, floor)=>{
-//       if (obj == undefined) obj = floor.places.find((place) => {return place.available})
-//       return obj
-//     }, undefined)
-//
-//     dispatch(setPlace(firstAvailablePlace))
-//   }
-// }
-
-
-
-// export function reservationDetails(id){
-//   return (dispatch, getState) => {
-//     const onSucess = (response) => {
-//       dispatch(setTo(moment(response.data.reservation.ends_at).format(MOMENT_DATETIME_FORMAT)))
-//       dispatch(setFrom(moment(response.data.reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
-//       dispatch(setClientId(response.data.reservation.client_id))
-//       dispatch(setUserId(response.data.reservation.user_id))
-//       dispatch(setGarageIndex(getState().newReservation.availableGarages.findIndex(garage => garage.id === response.data.reservation.place.floor.garage.id)))
-//       dispatch(setPlace(response.data.reservation.place))
-//       dispatch(setEditPlace(response.data.reservation.place.id))
-//
-//       getState().newReservation.availableCars.find(car => car.id === response.data.reservation.car.id)===undefined ? dispatch(setCarLicencePlate(response.data.reservation.car.licence_plate)) : dispatch(setCarId(response.data.reservation.car.id))
-//     }
-//
-//     request(onSucess, GET_RESERVATION, {id: id})
-//   }
-// }
-
-// export function getAvailableUsers (callback) {
-//   return (dispatch, getState) => {
-//     const onUsers = (response) => {
-//       dispatch(setAvailableUsers(response.data.reservable_users))
-//       if (response.data.reservable_users.length==1) dispatch(setUserId(response.data.reservable_users[0].id))
-//
-//       callback && callback()
-//     }
-//
-//     request(onUsers, GET_AVAILABLE_USERS)
-//   }
-// }
-
-// export function getAvailableGarages (callback) {
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const onGarages = (response) => {
-//       dispatch(setAvailableGarages(response.data.reservable_garages))
-//       if (response.data.reservable_garages.length==1) dispatch(setGarageIndex(0))
-//
-//       callback && callback()
-//     }
-//
-//     request(onGarages, GET_AVAILABLE_GARAGES, {user_id: state.user_id})
-//   }
-// }
-
-// export function getAvailableClients (callback) {
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const onClients = (response) => {
-//       dispatch(setAvailableClients(response.data.reservable_clients))
-//
-//       callback && callback()
-//     }
-//
-//     request(onClients
-//            , GET_AVAILABLE_CLIENTS
-//            , { user_id:   state.user_id
-//              , garage_id: state.availableGarages[state.garageIndex] && state.availableGarages[state.garageIndex].id
-//              }
-//            )
-//   }
-// }
-
-// export function getAvailableCars (callback) {
-//   return (dispatch, getState) => {
-//     const state = getState().newReservation
-//     const onCars = (response) => {
-//       dispatch(setAvailableCars(response.data.reservable_cars))
-//       response.data.reservable_cars.length==1 ? dispatch(setCarId(response.data.reservable_cars[0].id))
-//                                               : dispatch(setCarId(undefined))
-//
-//       callback && callback()
-//     }
-//
-//     request(onCars, GET_AVAILABLE_CARS, {user_id: state.user_id})
-//   }
-// }
-
-// export function getGarageDetails(){
-//   return (dispatch, getState) => {
-//
-//     const state = getState().newReservation
-//     const onSuccess = (response) => {
-//       // if (getState().newReservation.pricings !== undefined ) { // pricings can be deleted before response comes here
-//         response.data.garage.floors.forEach((floor)=>{
-//           floor.places.map((place) => {
-//             place.available = floor.free_places.find(p=>p.id==place.id)!=undefined //|| place.id === state.edit_place_id
-//             // place.pricings = getState().newReservation.pricings.pricings.reduce((arr, pricing)=>{
-//             //   pricing.groups.find((group)=>{return group.place_id === place.id}) != undefined && arr.push(pricing)
-//             //   return arr
-//             // }, [])
-//             if (place.available && place.pricing) { // add tooltip to available places
-//               const pricing = place.pricing
-//               const symbol = pricing.currency.symbol
-//               place.tooltip = <div>
-//                                 <div>
-//                                   {pricing.flat_price ? <span><b>{t(['newPricing','flatPrice'])}:</b> {pricing.flat_price} {symbol}</span>
-//                                                       : <span><b>{t(['newPricing','exponentialPrice'])}:</b>{pricing.exponential_12h_price} - {pricing.exponential_day_price} - {pricing.exponential_week_price} - {pricing.exponential_month_price} {symbol}</span>}
-//                                 </div>
-//                                 {pricing.weekend_price && <div>
-//                                   <span>
-//                                     <b>{t(['newPricing','weekendPrice'])}:</b> {pricing.weekend_price} {symbol}
-//                                   </span>
-//                                 </div>}
-//                               </div>
-//             }
-//
-//             return place
-//           })
-//         })
-//         dispatch(setGarage(response.data.garage))
-//         dispatch(setLoading(false))
-//
-//         // getState().newReservation.place_id=== undefined &&
-//         dispatch(autoSelectPlace())
-//       // }
-//     }
-//
-//     // const onPricings = (response) => {
-//     //   dispatch(setPricings(response.data.garage))
-//     //   callGarageDetails()
-//     // }
-//
-//     const callGarageDetails = () => {
-//       request( onSuccess
-//              , GET_GARAGE_DETAILS
-//              , { id:        state.availableGarages[state.garageIndex].id
-//                , user_id:   state.user_id
-//                , client_id: state.client_id
-//                , begins_at: state.from
-//                , ends_at:   state.to
-//                }
-//              )
-//     }
-//
-//     if (state.availableGarages[state.garageIndex]){
-//       // if (state.pricings==undefined || state.pricings.id !== state.availableGarages[state.garageIndex].id){
-//       //   dispatch(setLoading(true))
-//       //   request( onPricings, GET_GARAGE_PRICINGS, { id: state.availableGarages[state.garageIndex].id } )
-//       // } else {
-//       // }
-//       callGarageDetails()
-//     } else { // garage not found, deselect any places
-//       // dispatch(setPricings(undefined))
-//       dispatch(setPlace(undefined))
-//     }
-//   }
-// }
 
 
 // Reservation overview ///////////////////////////////////////////////////////
