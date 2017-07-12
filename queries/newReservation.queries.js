@@ -39,7 +39,7 @@ export const GET_USER =`query Query($id: Id!) {
 `
 
 // get floors of garage of specified id
-export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id) {
+export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id, $reservation_id: Id) {
   garage(id: $id) {
     id
     name
@@ -64,7 +64,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
           }
         }
       }
-      free_places(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id) {
+      free_places(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id) {
         id
         label
       }
