@@ -225,12 +225,16 @@ export function fetchCurrentUser(){
 export function fetchGarages(){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
-      dispatch( setGarages( response.data.user_garages.filter(user_garage => user_garage.user_id === response.data.current_user.id).filter(user_garage => !user_garage.pending) ) )
+      const user_garages = response.data.user_garages
+        .filter(user_garage => user_garage.user_id === response.data.current_user.id) // find garages of current user
+        .filter(user_garage => !user_garage.pending) // find only garages that are not pending
+
+      dispatch( setGarages( user_garages ) )
       dispatch( setGarage( parseInt(window.location.hash.substring(5).split('/')[0]) || undefined ) ) // parse current garage from  URL
 
-      if (response.data.user_garages.length > 0 && (getState().pageBase.garage === undefined || response.data.user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined)) {
+      if (user_garages.length > 0 && (getState().pageBase.garage === undefined || user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined)) {
         nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
-        response.data.user_garages.length > 0 && dispatch( setGarage( response.data.user_garages[0].garage.id ))
+        user_garages.length > 0 && dispatch( setGarage( user_garages[0].garage.id ))
       }
     }
     request(onSuccess, GET_GARAGES)
