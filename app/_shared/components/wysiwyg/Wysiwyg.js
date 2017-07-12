@@ -45,11 +45,13 @@ export default class Wysiwyg extends Component {
 
     return (
       <div>
-      { AVAILABLE_LANGUAGES.map(prepareLanguages) }
+        { AVAILABLE_LANGUAGES.map(prepareLanguages) }
+
         <ReactQuill value={content} onChange={onChange}>
           <ReactQuill.Toolbar key="toolbar" ref="toolbar" items={menu} />
           <div className={`quill-contents ${styles.editor}`} key="editor" ref="editor" onKeyDown={charCount}/>
         </ReactQuill>
+        
         Max {max} characters.
       </div>
     )
