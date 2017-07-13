@@ -12,7 +12,6 @@ import * as nav from '../_shared/helpers/navigation'
 import { t, getLanguage }    from '../_shared/modules/localization/localization'
 
 import * as dashboardActions         from '../_shared/actions/dashboard.actions'
-import * as garageActions            from '../_shared/actions/garage.actions'
 import * as analyticsActions         from '../_shared/actions/analytics.garage.actions'
 import * as adminActivityLogsActions from '../_shared/actions/admin.activityLog.actions'
 import * as pageBaseActions          from'../_shared/actions/pageBase.actions'
@@ -26,10 +25,8 @@ export class DashboardPage extends Component {
     state:            PropTypes.object,
     pageBase:         PropTypes.object,
     analytics:        PropTypes.object,
-    garage:           PropTypes.object,
-    logs:           PropTypes.object,
+    logs:             PropTypes.object,
     actions:          PropTypes.object,
-    garageActions:    PropTypes.object,
     analyticsActions: PropTypes.object,
     logsActions:      PropTypes.object,
     pageBaseActions:  PropTypes.object
@@ -47,39 +44,33 @@ export class DashboardPage extends Component {
   componentDidMount () {
     window.addEventListener('resize', this.onWindowResize.bind(this), true);
     this.props.actions.initDashboard()
-    this.props.pageBase.garage && this.props.garageActions.initGarage()
+    this.props.pageBase.garage && this.props.actions.initGarage()
     this.props.pageBase.garage && this.props.analyticsActions.initGarageTurnover()
     this.props.pageBase.garage && this.props.logsActions.initLogs()
   }
 
   componentWillReceiveProps(nextProps){ // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.garageActions.initGarage()
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initGarage()
     nextProps.pageBase.garage != this.props.pageBase.garage && this.props.analyticsActions.initGarageTurnover()
     nextProps.pageBase.garage != this.props.pageBase.garage && this.props.logsActions.initLogs()
   }
 
   render() {
-    const { state, pageBase, analytics, garage, logs, actions, garageActions, analyticsActions, logsActions, pageBaseActions } = this.props
+    const { state, pageBase, analytics, logs, actions, analyticsActions, logsActions, pageBaseActions } = this.props
 
-    const preparePlaces = (floor) => {
-      floor.places.map((place) => {
-        const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
-        if (reservation) {
-          place.group = reservation.id
-        } else {
-          place.group = undefined
-        }
-        place.tooltip = <table className={styles.tooltip}><tbody>
-          <tr><td>{t(['garages','reservationId'])}</td><td>{reservation && reservation.id}</td></tr>
-          <tr><td>{t(['garages','driver'])}</td><td>{reservation && reservation.user.full_name}</td></tr>
-          <tr><td>{t(['garages','type'])}</td><td>{reservation && (reservation.client ? t(['reservations','host']) : t(['reservations','visitor']))}</td></tr>
-          <tr><td>{t(['garages','period'])}</td><td>{reservation && moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')+' - '+moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
-          <tr><td>{t(['garages','licencePlate'])}</td><td>{reservation && reservation.car.licence_plate}</td></tr>
-        </tbody></table>
-        return place
-      })
-      return floor
-    }
+    // const preparePlaces = (floor) => {
+    //   floor.places.map((place) => {
+    //     place.tooltip = <table className={styles.tooltip}><tbody>
+    //       <tr><td>{t(['garages','reservationId'])}</td><td>{reservation && reservation.id}</td></tr>
+    //       <tr><td>{t(['garages','driver'])}</td><td>{reservation && reservation.user.full_name}</td></tr>
+    //       <tr><td>{t(['garages','type'])}</td><td>{reservation && (reservation.client ? t(['reservations','host']) : t(['reservations','visitor']))}</td></tr>
+    //       <tr><td>{t(['garages','period'])}</td><td>{reservation && moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')+' - '+moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
+    //       <tr><td>{t(['garages','licencePlate'])}</td><td>{reservation && reservation.car.licence_plate}</td></tr>
+    //     </tbody></table>
+    //     return place
+    //   })
+    //   return floor
+    // }
 
     const prepareNews = news => <div className={styles.news} href={news.url}>{news.label} <span>{moment(news.created_at).format("DD.MM. HH:mm")}</span></div>
 
@@ -90,10 +81,10 @@ export class DashboardPage extends Component {
                       ]
 
     const emptyOccupied = {total:0, free:0, visitor:0, visitorOccupied: 0, longterm:0, longtermOccupied:0}
-    const occupied = garage.garage ? garage.garage.floors.reduce((acc, floor)=> {
+    const occupied = state.garage ? state.garage.floors.reduce((acc, floor)=> {
       return floor.places.reduce((acc, place)=>{
-        const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
-        const contract = garage.garage.contracts
+        const reservation = place.group
+        const contract = state.garage.contracts
           .filter(contract => moment().isBetween(moment(contract.from), moment(contract.to)))
           .find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
 
@@ -120,7 +111,7 @@ export class DashboardPage extends Component {
           <iframe scrolling='auto' className={styles.iframe} src={`https://gama.park-it-direct.com/${getLanguage()}/pid-dashboard`}/> :
           <div className={styles.container}>
             <div>
-              <GarageLayout floors={garage.garage ? garage.garage.floors.map(preparePlaces) : []} showEmptyFloors={true} unfold={true}/>
+              <GarageLayout floors={state.garage ? state.garage.floors : []} showEmptyFloors={true} unfold={true}/>
             </div>
             <div>
               {state.news.length > 0 && [<h2>{t(['dashboard','news'])}</h2>,
@@ -165,9 +156,8 @@ export class DashboardPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.dashboard, pageBase:state.pageBase, analytics: state.analyticsGarage, garage: state.garage, logs: state.adminActivityLog }),
+  state    => ({ state: state.dashboard, pageBase:state.pageBase, analytics: state.analyticsGarage, logs: state.adminActivityLog }),
   dispatch => ({ actions: bindActionCreators(dashboardActions, dispatch)
-               , garageActions: bindActionCreators(garageActions, dispatch)
                , analyticsActions: bindActionCreators(analyticsActions, dispatch)
                , logsActions: bindActionCreators(adminActivityLogsActions, dispatch)
                , pageBaseActions: bindActionCreators(pageBaseActions, dispatch)

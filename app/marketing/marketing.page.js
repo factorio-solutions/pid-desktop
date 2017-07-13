@@ -9,6 +9,7 @@ import Carousel from '../_shared/components/carousel/Carousel'
 import * as marketingActions   from '../_shared/actions/marketing.actions'
 import { AVAILABLE_LANGUAGES } from '../routes'
 import { t }                   from '../_shared/modules/localization/localization'
+import { entryPoint }          from '../index'
 
 import styles from './marketing.page.scss'
 
@@ -128,12 +129,11 @@ export class MarketingPage extends Component {
 
 
 
-
     return (
       <div className={styles.container}>
 
         <div className={styles.pidHeader}>
-          <a href='https://www.pid-alpha.herokuapp.com'>
+          <a href={`https://${process.env.CLIENT_DOMAIN || 'localhost:8080'}/`}>
             <Logo />
           </a>
           <div className={styles.languages}> {AVAILABLE_LANGUAGES.filter(filterLanguages).map(prepareLanguages)} </div>

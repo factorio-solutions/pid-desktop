@@ -4,11 +4,13 @@ import { t }       from '../modules/localization/localization'
 
 import { GARAGE_DETAILS_QUERY } from '../queries/garage.queries.js'
 
+
 export const GARAGE_SET_SELECTED      = 'GARAGE_SET_SELECTED'
 export const GARAGE_SET_GARAGE        = 'GARAGE_SET_GARAGE'
 export const GARAGE_SET_NOW           = 'GARAGE_SET_NOW'
 export const GARAGE_SET_SHOW_SELECTOR = 'GARAGE_SET_SHOW_SELECTOR'
 export const GARAGE_SET_TIME          = 'GARAGE_SET_TIME'
+
 
 export function setSelected (value){
   return { type: GARAGE_SET_SELECTED
