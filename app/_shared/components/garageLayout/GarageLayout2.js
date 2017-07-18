@@ -1,4 +1,5 @@
 import React, { Component, PropTypes }  from 'react'
+import { connect }                      from 'react-redux'
 
 import SvgFromText from '../svgFromText/SvgFromText'
 import Tooltip     from '../tooltip/Tooltip'
@@ -30,12 +31,13 @@ const INIT_STATE = { content: ''
 // showEmptyFloors: bool... - floor with no available places will not be clickable
 
 
-export default class GarageLayout extends Component {
+export class GarageLayout extends Component {
   static propTypes = {
-    floors:          PropTypes.array.isRequired, // array of all floors
-    onPlaceClick:    PropTypes.func, // handling click on svg
-    showEmptyFloors: PropTypes.bool,
-    unfold:          PropTypes.bool
+    floors:            PropTypes.array.isRequired, // array of all floors
+    onPlaceClick:      PropTypes.func, // handling click on svg
+    showEmptyFloors:   PropTypes.bool,
+    unfold:            PropTypes.bool,
+    showSecondaryMenu: PropTypes.bool
   }
 
   constructor(props) {
@@ -181,7 +183,7 @@ export default class GarageLayout extends Component {
             placeRect.onmouseleave = () => { this.setState({ ...this.state, visible:false }) }
             placeRect.onmousemove = (event) => {
               const rect = this.refs.containerDiv ? this.refs.containerDiv.getBoundingClientRect() : {left: 0, top: 0}
-              this.setState({ ...this.state, mouseX: event.clientX - rect.left + 20, mouseY: event.clientY - rect.top + 60 - 10})
+              this.setState({ ...this.state, mouseX: event.clientX - 160 - (this.props.showSecondaryMenu? 200 : 0) + 20, mouseY: event.clientY - 60})
             }
           }
 
@@ -227,7 +229,7 @@ export default class GarageLayout extends Component {
 
   render(){
     const divider = <span> </span>
-    let { floors, onPlaceClick, showEmptyFloors, unfold } = this.props
+    let { floors, onPlaceClick, showEmptyFloors, unfold} = this.props
     let { floor } = this.state
 
     const prepareButtons = (floor, index, arr) => {
@@ -246,7 +248,6 @@ export default class GarageLayout extends Component {
     }
 
     const prepareFloors = floor => <SvgFromText svg={floor.scheme || ''} svgClick={handleSVGClick} />
-
 
     return(
       unfold === true ? <div className={styles.grayBackground}>
@@ -270,3 +271,9 @@ export default class GarageLayout extends Component {
     )
   }
 }
+
+
+export default connect(
+  state    => ({ showSecondaryMenu: state.pageBase.showSecondaryMenu }),
+  dispatch => ({ actions: {} })
+)(GarageLayout)
