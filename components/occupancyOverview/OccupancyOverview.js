@@ -1,4 +1,5 @@
 import React, { Component, PropTypes }  from 'react'
+import { connect }                      from 'react-redux'
 import moment                           from 'moment'
 
 import RoundButton from '../buttons/RoundButton'
@@ -19,7 +20,7 @@ const INIT_STATE = { content: ''
                    }
 
 
-export default class OccupancyOverview extends Component{
+export class OccupancyOverview extends Component{
   static propTypes = {
     places:     PropTypes.array.isRequired,
     from:       PropTypes.object,
@@ -95,7 +96,7 @@ export default class OccupancyOverview extends Component{
               <tr><td>{t(['occupancy', 'period'])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
               <tr><td>{t(['occupancy', 'licencePlate'])}</td><td>{reservation.car.licence_plate}</td></tr>
             </tbody></table> }) }
-          reservationElement.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX, mouseY: event.clientY }) }
+          reservationElement.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX - 160 - (this.props.showSecondaryMenu ? 200 : 0), mouseY: event.clientY - 60 }) }
 
           theRow.appendChild(reservationElement)
         }
@@ -190,3 +191,8 @@ export default class OccupancyOverview extends Component{
     )
   }
 }
+
+export default connect(
+  state    => ({ showSecondaryMenu: state.pageBase.showSecondaryMenu }),
+  dispatch => ({ actions: {} })
+)(OccupancyOverview)
