@@ -5,7 +5,7 @@ git remote add pid-shared https://github.com/factorio-solutions/pid-shared.git
 git subtree add --prefix=app/_shared/ pid-shared master
 ```
 
-or if you are using
+or if you are using shh key
 
 ```git
 git remote add pid-shared git@github.com:factorio-solutions/pid-shared.git
