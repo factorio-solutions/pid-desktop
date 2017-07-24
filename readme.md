@@ -5,6 +5,14 @@ git remote add pid-shared https://github.com/factorio-solutions/pid-shared.git
 git subtree add --prefix=app/_shared/ pid-shared master
 ```
 
+or if you are using
+
+```git
+git remote add pid-shared git@github.com:factorio-solutions/pid-shared.git
+git subtree add --prefix=app/_shared/ pid-shared master
+```
+
+
 ### How to push changes to the subtree?
 ```git
 git subtree push --prefix=app/_shared/ pid-shared master
