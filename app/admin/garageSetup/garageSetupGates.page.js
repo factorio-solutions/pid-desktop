@@ -71,7 +71,7 @@ export class GarageSetupGatesPage extends Component {
 
     const checkSubmitable = () => {
       // return true // TODO: <--- delete this
-      if (!state.gates.reduce((acc, gate) => {return acc && (gate.phone === '' || /^\+?[\d]{3,}$/.test(gate.phone)) }, true)) return false
+      if (!state.gates.reduce((acc, gate) => {return acc && (gate.phone === '' || /^\+?[\d,A-Z]{3,}$/.test(gate.phone)) }, true)) return false
       if (state.gates.find((gate) => {return gate.label == "" || gate.address.line_1 == ""}) != undefined) return false
 
       return true
@@ -107,7 +107,7 @@ export class GarageSetupGatesPage extends Component {
         <div key={index}>
           <div className={styles.inline}>
             <Input style={styles.gatePhoneInputWidth+" "+styles.rightMargin} onChange={handleGateLabelChange} label={t(['newGarage', 'gateLabel'], { index: index+1 }) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidGateLabel'])} value={gate.label} name={`gate${index}[label]`} placeholder={t(['newGarage', 'placeholderGateLabel'])} highlight={state.highlight}/>
-            <Input style={styles.gatePhoneInputWidth}                        onChange={handleGatePhoneChange} label={t(['newGarage', 'gatePhone'])} error={t(['newGarage', 'invalidGatePhone'])} value={gate.phone} name={`gate${index}[phone]`} placeholder={t(['newGarage', 'placeholderGatePhone'])} type="tel" pattern="\+?[\d]{3,}"/>
+            <Input style={styles.gatePhoneInputWidth}                        onChange={handleGatePhoneChange} label={t(['newGarage', 'gatePhone'])} error={t(['newGarage', 'invalidGatePhone'])} value={gate.phone} name={`gate${index}[phone]`} placeholder={t(['newGarage', 'placeholderGatePhone'])} type="tel" pattern="\+?[\d,A-Z]{3,}"/>
             {removeGateButton()}
           </div>
           <Input onChange={handleGatePlacesChange}       label={t(['newGarage', 'places']) + (index!=arr.length-1 ? ' *' : '')} error={t(['newGarage', 'invalidPlaces'])} value={gate.places}         placeholder={t(['newGarage', 'placesPlaceholder'])} highlight={state.highlight} pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"/> {/*(\d+\s*)(\s*(,|-)\s*\d+)**/}

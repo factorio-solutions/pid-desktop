@@ -433,7 +433,7 @@
 		"invalidLng": "Not valid number",
 		"lngPlaceholder": "14.435",
 		"gateLabel": "Gate %(index)s",
-		"gatePhone": "Gate module phone",
+		"gatePhone": "Gate module phone or id",
 		"invalidGateLabel": "Not valid label",
 		"invalidGatePhone": "Not valid phone",
 		"placeholderGateLabel": "Entrance gate",
