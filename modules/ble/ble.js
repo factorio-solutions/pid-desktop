@@ -100,6 +100,11 @@ export function discover(address, discoverSuccess, discoverError){
   }, (result) => {
     console.log('discover did not succeed', result);
     discoverError(result)
+    close(address, (succ)=>{ // device will stay discovecerd until close => close
+      console.log('closing afther discover error', succ);
+    }, (err)=>{
+      console.log('error while closing afther discover error', err);
+    })
   }, params);
 }
 

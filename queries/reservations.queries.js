@@ -33,6 +33,11 @@ export const GET_RESERVATIONS_QUERY = `{
           id
         }
       }
+      gates{
+        id
+        label
+        phone
+      }
     }
     car{
       licence_plate
