@@ -262,6 +262,7 @@ export function setInitialStore(id) {
       dispatch(setLoading(false))
 
       if (values[1] !== undefined) { // if reservation edit set details
+        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(setReservation(values[1].reservation))
         dispatch(downloadUser(values[1].reservation.user_id))
         dispatch(setClientId(values[1].reservation.client_id))
@@ -379,7 +380,12 @@ export function downloadGarage (id) {
     }).then(value => {
       value.garage.floors.forEach((floor)=>{
         floor.places.map((place) => {
-          place.available = floor.free_places.find(p=>p.id === place.id) !== undefined // set avilability
+          if (state.reservation && state.reservation.ongoing){ // if ongoing reservation - only selected place might be available
+            place.available = floor.free_places.find(p=>p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
+          } else {
+            place.available = floor.free_places.find(p=>p.id === place.id) !== undefined // set avilability
+          }
+
           if (place.available && place.pricing) { // add tooltip to available places
             const pricing = place.pricing
             const symbol = pricing.currency.symbol
@@ -440,6 +446,7 @@ export function overviewInit () {
 export function submitReservation (id) {
   return (dispatch, getState) => {
       const state = getState().newReservation
+      const ongoing = state.reservation && state.reservation.ongoing
 
       const onSuccess = (response) => {
         if (response.data.create_reservation && response.data.create_reservation.payment_url){
@@ -456,13 +463,13 @@ export function submitReservation (id) {
 
       request( onSuccess
              , id ? UPDATE_RESERVATION : CREATE_RESERVATION
-             , { reservation: { user_id:       state.user.id
-                              , place_id:      state.place_id
-                              , client_id:     state.client_id
-                              , car_id:        state.car_id
-                              , licence_plate: state.carLicencePlate == '' ? undefined : state.carLicencePlate
-                              , url:           window.location.href.split('?')[0]
-                              , begins_at:     state.from
+             , { reservation: { user_id:       ongoing ? undefined : state.user.id
+                              , place_id:      ongoing ? undefined : state.place_id
+                              , client_id:     ongoing ? undefined : state.client_id
+                              , car_id:        ongoing ? undefined : state.car_id
+                              , licence_plate: ongoing ? undefined : state.carLicencePlate == '' ? undefined : state.carLicencePlate
+                              , url:           ongoing ? undefined : window.location.href.split('?')[0]
+                              , begins_at:     ongoing ? undefined : state.from
                               , ends_at:       state.to
                               }
                , id: id

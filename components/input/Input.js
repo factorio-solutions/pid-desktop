@@ -42,15 +42,15 @@ export default class Input extends Component {
      this.state = { message: props.value || '' }
   }
 
-  componentDidMount(){
-    const { required, readOnly } = this.props
-    if (required) {
-      ReactDOM.findDOMNode(this).children[0].required = true
-    }
-    if (readOnly){
-      ReactDOM.findDOMNode(this).children[0].readOnly = true
-    }
-  }
+  // componentDidMount(){
+  //   const { required, readOnly } = this.props
+  //   if (required) {
+  //     ReactDOM.findDOMNode(this).children[0].required = true
+  //   }
+  //   if (readOnly){
+  //     ReactDOM.findDOMNode(this).children[0].readOnly = true
+  //   }
+  // }
 
   componentWillReceiveProps (newProps) {
     newProps.value != undefined && this.setState({message: newProps.value});
@@ -64,7 +64,7 @@ export default class Input extends Component {
   }
 
   render(){
-    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight } = this.props
+    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight, readOnly, required } = this.props
     var message = this.state.message;
 
     const handleChange = (event) => {
@@ -88,7 +88,6 @@ export default class Input extends Component {
           onChange(event.target.value, event.target.checkValidity()&&event.target.value!="")
         }
       }
-
     }
 
     const preventEnter = function(event){
@@ -103,8 +102,11 @@ export default class Input extends Component {
     const isEmpty = () => { return this.refs.input ? this.refs.input.value==='' : true }
 
     return(
-      <div className={`${styles.customFormGroup} ${styles[align?align:'left']} ${style} ${highlight && isEmpty() && styles.highlighted}`} >
-        <input onBlur={onBlur} pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange} autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter} ref='input' accept={accept}/>
+      <div className={`${styles.customFormGroup} ${styles[align?align:'left']} ${style} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+        <input onBlur={onBlur} pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange}
+          autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter} ref='input' accept={accept}
+          readOnly={readOnly} required={required}
+        />
         <span className={styles.bar}></span>
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
