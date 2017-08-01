@@ -76,7 +76,7 @@ export class ReservationsPage extends Component {
                           </div>
                           <div>
                             <span className={styles.floatRight}>
-                              {reservation.client && moment(reservation.begins_at).isAfter(moment()) && <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(reservation)}} type='action'/>}
+                              {reservation.client && moment(reservation.ends_at).isAfter(moment()) && <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editClick(reservation)}} type='action'/>}
                               {!reservation.approved && reservation.client==null && <RoundButton content={t(['reservations','pay'])} onClick={()=>{actions.payReservation(reservation)}} type='action'/>}
                               {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed && <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{downloadClick(reservation.invoice_item.invoice.id)}} type='action'/>}
                               {moment(reservation.begins_at).isAfter(moment()) && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={()=>{destroyClick(reservation)}} type='remove' question={t(['reservations','removeReservationQuestion'])}/>}
