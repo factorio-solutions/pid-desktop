@@ -111,16 +111,20 @@ export function openGarageViaBluetooth(name){
 
     const writeOpen = () =>{
       // 5. read/subscribe/write and read/write descriptors
-      console.log("write open garage, address: ", address,"servicies: ", services);
-      const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
-      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
+      setTimeout(() => {
+        console.log("write open garage, address: ", address,"servicies: ", services);
+        const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
+        ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
+      }, 3000);
     }
 
     const writeBlinking = () =>{
       // 5. read/subscribe/write and read/write descriptors
-      console.log("write blinking garage, address: ", address,"servicies: ", services);
-      const values = ['0xFF'] // packet is send like ['0xFE', '0xFF', '0x20']
-      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeOpen, logError)
+      setTimeout(() => {
+        console.log("write blinking garage, address: ", address,"servicies: ", services);
+        const values = ['0xFF'] // packet is send like ['0xFE', '0xFF', '0x20']
+        ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeOpen, logError)
+      }, 3000);
     }
 
     const writePassword = () => {
@@ -136,10 +140,10 @@ export function openGarageViaBluetooth(name){
       const serviceObject = services.find(serv => serv.uuid === service)
       if (serviceObject) {
         const passwordCharacteristicsObject = serviceObject.characteristics.find(char => char.uuid === passwordCharacteristics)
-        // if (passwordCharacteristicsObject){ // password characteristics found
-        //   writePassword()
-        // } else { // no password characteristics - skip it
-        // }
+        if (passwordCharacteristicsObject){ // password characteristics found
+          writePassword()
+        } else { // no password characteristics - skip it
+        }
         writeBlinking()
       } else { // expected service not found, disconect
         console.log('this device does not have expected service - disconecting (probably not gate unit?)')
