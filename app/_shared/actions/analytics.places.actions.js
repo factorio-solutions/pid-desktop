@@ -10,6 +10,7 @@ export const ANALYTICS_PLACES_SET_GARAGE  = 'ANALYTICS_PLACES_SET_GARAGE'
 export const ANALYTICS_PLACES_SET_FROM    = 'ANALYTICS_PLACES_SET_FROM'
 export const ANALYTICS_PLACES_SET_TO      = 'ANALYTICS_PLACES_SET_TO'
 export const ANALYTICS_PLACES_SET_DISPLAY = 'ANALYTICS_PLACES_SET_DISPLAY'
+export const ANALYTICS_PLACES_SET_LOADING = 'ANALYTICS_PLACES_SET_LOADING'
 
 const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
@@ -44,6 +45,12 @@ export function setDisplay(value){
          }
 }
 
+export function setLoading(value){
+  return { type: ANALYTICS_PLACES_SET_LOADING
+         , value
+         }
+}
+
 
 export function graphClick() {
   return (dispatch, getState) => {
@@ -59,6 +66,7 @@ export function heatmapClick() {
 
 export function initPlacesAnalytics() {
   return (dispatch, getState) => {
+    dispatch(setLoading(true))
     const state = getState().analyticsPlaces
 
     let momentFrom = dateToMoment(state.from)
@@ -156,6 +164,7 @@ export function initPlacesAnalytics() {
         dispatch(setGarage({ ...response.data.garage
                            , statistics
                            }))
+        dispatch(setLoading(false))
       }
 
       getState().pageBase.garage && request(onSuccess, PLACES_TURNOVER, { from: momentFrom.format(MOMENT_DATETIME_FORMAT)

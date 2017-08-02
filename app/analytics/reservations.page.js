@@ -7,7 +7,8 @@ import PageBase      from '../_shared/containers/pageBase/PageBase'
 import TabMenu       from '../_shared/components/tabMenu/TabMenu'
 import TabButton     from '../_shared/components/buttons/TabButton'
 import Table         from '../_shared/components/table/Table'
-import DateInput from '../_shared/components/input/DateInput'
+import DateInput     from '../_shared/components/input/DateInput'
+import Loading       from '../_shared/components/loading/Loading'
 
 import * as nav                          from '../_shared/helpers/navigation'
 import { t }                             from '../_shared/modules/localization/localization'
@@ -51,7 +52,8 @@ export class ReservationsAnalyticsPage extends Component {
                     , <TabButton label={t(['analytics', 'longterm'])}  onClick={() => {actions.longTermClick()}}  state={state.filter=="longterm" && 'selected'}/>
                     ]
 
-    const datePickers = [ <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
+    const datePickers = [ <Loading show={state.loading} />
+                        , <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
                         , <span className={styles.dash}><b>-</b></span>
                         , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
                         ]

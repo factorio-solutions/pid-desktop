@@ -8,6 +8,7 @@ import TabMenu      from '../_shared/components/tabMenu/TabMenu'
 import TabButton    from '../_shared/components/buttons/TabButton'
 import Table        from '../_shared/components/table/Table'
 import GarageLayout from '../_shared/components/garageLayout/GarageLayout2'
+import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav                    from '../_shared/helpers/navigation'
 import { t }                       from '../_shared/modules/localization/localization'
@@ -82,7 +83,8 @@ export class PlacesPage extends Component {
                     , <TabButton label={t(['analytics', 'heatmap'])} onClick={() => {actions.heatmapClick()}} state={state.display=="heatmap" && 'selected'}/>
                     ]
 
-    const datePickers = [ <input type='text' className={garageStyles.dateSelector} value={state.from} onChange={fromHandler}/>
+    const datePickers = [ <Loading show={state.loading} />
+                        , <input type='text' className={garageStyles.dateSelector} value={state.from} onChange={fromHandler}/>
                         , <span><b>-</b></span>
                         , <input type='text' className={garageStyles.dateSelector} value={state.to} onChange={toHandler}/>
                         ]

@@ -8,6 +8,7 @@ import PageBase  from '../_shared/containers/pageBase/PageBase'
 import TabMenu   from '../_shared/components/tabMenu/TabMenu'
 import TabButton from '../_shared/components/buttons/TabButton'
 import Table     from '../_shared/components/table/Table'
+import Loading   from '../_shared/components/loading/Loading'
 
 import * as nav                    from '../_shared/helpers/navigation'
 import { t }                       from '../_shared/modules/localization/localization'
@@ -56,7 +57,8 @@ export class GarageTurnoverPage extends Component {
                     , <TabButton label={t(['occupancy', 'week'])}  onClick={() => {actions.weekClick()}}  state={state.period=="week" && 'selected'}/>
                     ]
 
-    const datePickers = [ <input type='text' className={styles.dateSelector} value={state.from} onChange={fromHandler}/>
+    const datePickers = [ <Loading show={state.loading} /> 
+                        , <input type='text' className={styles.dateSelector} value={state.from} onChange={fromHandler}/>
                         , <span><b>-</b></span>
                         , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
                         ]
