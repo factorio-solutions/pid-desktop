@@ -11,6 +11,7 @@ export const ANALYTICS_SET_CONSTRACTS   = 'ANALYTICS_SET_CONSTRACTS'
 export const ANALYTICS_SET_FROM         = 'ANALYTICS_SET_FROM'
 export const ANALYTICS_SET_TO           = 'ANALYTICS_SET_TO'
 export const ANALYTICS_SET_PERIOD       = 'ANALYTICS_SET_PERIOD'
+export const ANALYTICS_SET_LOADING      = 'ANALYTICS_SET_LOADING'
 
 const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
@@ -51,6 +52,12 @@ export function setPeriod(value){
          }
 }
 
+export function setLoading(value){
+  return { type: ANALYTICS_SET_LOADING
+         , value
+         }
+}
+
 export function formatDate(value){
   const split = value.split('/')
   if (split.length == 2 && split[0] !== "" && split[1] !== ""){
@@ -86,6 +93,7 @@ export function dateToMoment(value){
 
 export function initGarageTurnover (){
   return (dispatch, getState) => {
+    dispatch(setLoading(true))
     let momentFrom = dateToMoment(getState().analyticsGarage.from)
     let momentTo = dateToMoment(getState().analyticsGarage.to)
     if (momentFrom.isValid() && momentTo.isValid()){
@@ -99,6 +107,7 @@ export function initGarageTurnover (){
       const onSuccess = (response) => {
         dispatch(setReservations(response.data.reservation_analytics))
         dispatch(setContracts(response.data.contract_analytics))
+        dispatch(setLoading(false))
       }
 
       getState().pageBase.garage && request(onSuccess, GARAGE_TURNOVER, { from: momentFrom.format(MOMENT_DATETIME_FORMAT)

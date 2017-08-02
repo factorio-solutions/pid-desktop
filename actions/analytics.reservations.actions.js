@@ -11,6 +11,7 @@ export const ANALYTICS_RESERVATIONS_SET_CONTRACTS     = 'ANALYTICS_RESERVATIONS_
 export const ANALYTICS_RESERVATIONS_SET_FROM          = 'ANALYTICS_RESERVATIONS_SET_FROM'
 export const ANALYTICS_RESERVATIONS_SET_TO            = 'ANALYTICS_RESERVATIONS_SET_TO'
 export const ANALYTICS_RESERVATIONS_SET_FILTER        = 'ANALYTICS_RESERVATIONS_SET_FILTER'
+export const ANALYTICS_RESERVATIONS_SET_LOADING       = 'ANALYTICS_RESERVATIONS_SET_LOADING'
 
 const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
@@ -54,9 +55,16 @@ export function setFilter(value){
   }
 }
 
+export function setLoading(value){
+  return { type: ANALYTICS_RESERVATIONS_SET_LOADING
+         , value
+         }
+}
+
 
 export function initReservationsAnalytics () {
   return (dispatch, getState) => {
+    dispatch(setLoading(true))
     const state = getState().analyticsReservations
     let from = moment(state.from, 'DD. MM. YYYY')
     let to   = moment(state.to, 'DD. MM. YYYY')
@@ -72,6 +80,7 @@ export function initReservationsAnalytics () {
       if (state.filter === 'shortterm'){
         const onSuccess = (response) => {
           dispatch(setReservations(response.data.reservation_analytics))
+          dispatch(setLoading(false))
         }
 
         getState().pageBase.garage && request(onSuccess, INIT_RESERVATIONS, { from: from.format(MOMENT_DATETIME_FORMAT)

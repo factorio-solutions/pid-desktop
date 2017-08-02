@@ -4,7 +4,8 @@ import {
   ANALYTICS_PLACES_SET_GARAGE,
   ANALYTICS_PLACES_SET_FROM,
   ANALYTICS_PLACES_SET_TO,
-  ANALYTICS_PLACES_SET_DISPLAY
+  ANALYTICS_PLACES_SET_DISPLAY,
+  ANALYTICS_PLACES_SET_LOADING
 }  from '../actions/analytics.places.actions'
 
 
@@ -12,6 +13,7 @@ const defaultState =  { garage:  undefined
                       , from:    moment().subtract(1, 'months').format('M/YYYY')
                       , to:      moment().format('M/YYYY')
                       , display: 'graph'
+                      , loading: false
                       }
 
 
@@ -36,6 +38,11 @@ export default function analyticsPlaces (state = defaultState, action) {
     case ANALYTICS_PLACES_SET_DISPLAY:
       return {...state
              , display: action.value
+             }
+
+    case ANALYTICS_PLACES_SET_LOADING:
+      return {...state
+             , loading: action.value
              }
 
     default:

@@ -5,7 +5,8 @@ import {
   ANALYTICS_SET_CONSTRACTS,
   ANALYTICS_SET_FROM,
   ANALYTICS_SET_TO,
-  ANALYTICS_SET_PERIOD
+  ANALYTICS_SET_PERIOD,
+  ANALYTICS_SET_LOADING
 }  from '../actions/analytics.garage.actions'
 
 
@@ -14,6 +15,7 @@ const defaultState =  { reservations: []
                       , from:         moment().subtract(1, 'months').format('M/YYYY')
                       , to:           moment().format('M/YYYY')
                       , period:       'month' // or 'week'
+                      , loading:      false
                       }
 
 
@@ -43,6 +45,11 @@ export default function analyticsGarage (state = defaultState, action) {
     case ANALYTICS_SET_PERIOD:
       return {...state
              , period: action.value
+             }
+
+    case ANALYTICS_SET_LOADING:
+      return {...state
+             , loading: action.value
              }
 
     default:
