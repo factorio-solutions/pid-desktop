@@ -31,7 +31,7 @@ export function setContracts(value){
 export function setFrom(value){
   return (dispatch, getState) => {
     dispatch({ type: ANALYTICS_SET_FROM
-             , value: formatDate(value)
+             , value
              })
     dispatch(initGarageTurnover())
   }
@@ -40,7 +40,7 @@ export function setFrom(value){
 export function setTo(value){
   return (dispatch, getState) => {
     dispatch({ type: ANALYTICS_SET_TO
-             , value: formatDate(value)
+             , value
              })
     dispatch(initGarageTurnover())
   }
@@ -58,20 +58,20 @@ export function setLoading(value){
          }
 }
 
-export function formatDate(value){
-  const split = value.split('/')
-  if (split.length == 2 && split[0] !== "" && split[1] !== ""){
-    let month = parseInt(split[0])
-    let year = parseInt(split[1])
-
-    if (isNaN(year)) year=parseInt(moment().format('YYYY'))
-    if (isNaN(month)) month=1
-
-    return `${month > 12 ? 12 : month}/${year > parseInt(moment().format('YYYY')) ? parseInt(moment().format('YYYY')) : year}`
-  } else {
-    return value
-  }
-}
+// export function formatDate(value){
+//   const split = value.split('/')
+//   if (split.length == 2 && split[0] !== "" && split[1] !== ""){
+//     let month = parseInt(split[0])
+//     let year = parseInt(split[1])
+//
+//     if (isNaN(year)) year=parseInt(moment().format('YYYY'))
+//     if (isNaN(month)) month=1
+//
+//     return `${month > 12 ? 12 : month}/${year > parseInt(moment().format('YYYY')) ? parseInt(moment().format('YYYY')) : year}`
+//   } else {
+//     return value
+//   }
+// }
 
 
 export function weekClick (){
@@ -87,16 +87,15 @@ export function monthClick (){
 }
 
 export function dateToMoment(value){
-  const monthYear = value.split('/')
-  return moment({ y: monthYear[1], M: monthYear[0]-1})
+  return moment(value, 'DD.MM.YYYY').startOf('month')
 }
 
 export function initGarageTurnover (){
   return (dispatch, getState) => {
-    dispatch(setLoading(true))
     let momentFrom = dateToMoment(getState().analyticsGarage.from)
     let momentTo = dateToMoment(getState().analyticsGarage.to)
     if (momentFrom.isValid() && momentTo.isValid()){
+      dispatch(setLoading(true))
       if (momentFrom.isAfter(momentTo)) { // switch of order is wrong
         const temp = momentFrom
         momentFrom = momentTo
@@ -105,6 +104,7 @@ export function initGarageTurnover (){
       momentTo = momentTo.add(1, 'month'); // also include this month
 
       const onSuccess = (response) => {
+        console.log(response);
         dispatch(setReservations(response.data.reservation_analytics))
         dispatch(setContracts(response.data.contract_analytics))
         dispatch(setLoading(false))
