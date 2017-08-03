@@ -87,8 +87,8 @@ export class OccupancyPage extends Component {
               places={garage ? garage.floors.reduce(preparePlaces, []) : []}
               from={state.from}
               duration={state.duration}
-              leftClick={actions.subtractDay}
-              rightClick={actions.addDay}
+              leftClick={actions.subtract}
+              rightClick={actions.add}
               dayClick={actions.dayClick}
               weekClick={actions.weekClick}
               monthClick={actions.monthClick}/>
