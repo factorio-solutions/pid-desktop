@@ -67,15 +67,17 @@ export function initOccupancy () {
 
 // =============================================================================
 // occupancy actions
-export function subtractDay () {
+export function subtract () {
   return (dispatch, getState) => {
-    dispatch(setFrom( moment(getState().occupancy.from).subtract(1,'day') ))
+    const duration = getState().occupancy.duration
+    dispatch(setFrom( moment(getState().occupancy.from).subtract(1, duration) ))
   }
 }
 
-export function addDay () {
+export function add () {
   return (dispatch, getState) => {
-    dispatch(setFrom( moment(getState().occupancy.from).add(1,'day') ))
+    const duration = getState().occupancy.duration
+    dispatch(setFrom( moment(getState().occupancy.from).add(1, duration) ))
   }
 }
 
