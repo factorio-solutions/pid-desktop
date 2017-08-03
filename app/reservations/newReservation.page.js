@@ -23,6 +23,7 @@ import styles from './newReservation.page.scss'
 export class NewReservationPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
+    pageBase:        PropTypes.object,
     actions:      PropTypes.object
   }
 
@@ -31,7 +32,7 @@ export class NewReservationPage extends Component {
   }
 
   render () {
-    const { state, actions } = this.props
+    const { state, actions, pageBase } = this.props
 
     const ongoing          = state.reservation !== undefined && state.reservation.ongoing
     const handleBack       = () => { nav.to('/reservations') }
@@ -122,7 +123,7 @@ export class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()} onHighlight={hightlightInputs}>
-                {state.availableUsers.length>1 && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return state.user && user.id == state.user.id})}         style='light' highlight={state.highlight}/> }
+                {((state.user && pageBase.current_user && state.user.id !==  pageBase.current_user.id) || state.availableUsers.length>1) && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return state.user && user.id == state.user.id})}         style='light' highlight={state.highlight}/> }
                 {state.user && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.user.availableGarages.findIndex((garage) => {return state.garage && garage.id === state.garage.id})} style='light' highlight={state.highlight}/>}
                 {state.user && state.user.availableClients && state.user.availableClients.length>1 && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.user.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='light'/>}
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length==0 ? <Input readOnly={ongoing} onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
@@ -148,6 +149,6 @@ export class NewReservationPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.newReservation }),
+  state    => ({ state: state.newReservation, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
 )(NewReservationPage)
