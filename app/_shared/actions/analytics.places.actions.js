@@ -144,7 +144,7 @@ export function initPlacesAnalytics() {
           const shorttermTurnover = reservationsOfInterval.reduce((acc, res) => {return acc + res.price}, 0)
           const longtermTurnover  = contractsOfInterval.reduce((acc, contr) => {return acc + contr.price}, 0)
 
-          statistics.push({ date:      currentDate.format('MM. YYYY')
+          statistics.push({ date:      currentDate.format('M/YYYY')
                           , shortterm: { turnover:    shorttermTurnover
                                        , avgTurnover: Math.round(shorttermTurnover/placeCount)
                                        , minRevenue:  Math.min(...reservationsOfInterval.map(res => res.price))

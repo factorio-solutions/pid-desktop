@@ -66,7 +66,7 @@ export class ReservationsAnalyticsPage extends Component {
           data={actions.dataToArray(tableData)}
           options={{
             vAxes: {
-              0:{title: actions.currency(), format: `# ${actions.currency()}`},
+              0:{title: t(['analytics', 'turnover']), format: `# ${actions.currency()}`},
               1:{title:t(['analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount'])}
             },
             hAxis: {title: t(['analytics', 'date']) },

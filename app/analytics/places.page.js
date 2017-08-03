@@ -98,7 +98,8 @@ export class PlacesPage extends Component {
             chartType="ComboChart"
             data={chartData}
             options={{
-              vAxis: {title: actions.currency(), format: `# ${actions.currency()}`},
+              vAxis: {title: t(['analytics', 'turnover']), format: `# ${actions.currency()}`},
+              hAxis: {title: t(['analytics', 'month'])},
               seriesType: 'bars'
             }}
             graph_id="ComboChart"

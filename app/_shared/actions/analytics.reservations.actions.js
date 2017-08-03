@@ -91,6 +91,7 @@ export function initReservationsAnalytics () {
       } else { // longterm reservations (contracts) init
         const onSuccess = (response) => {
           dispatch(setContracts(response.data.contract_analytics))
+          dispatch(setLoading(false))
         }
 
         getState().pageBase.garage && request(onSuccess, INIT_CONTRACTS, { from: from.startOf('month').format(MOMENT_DATETIME_FORMAT)
@@ -128,7 +129,8 @@ export function currency () {
 
 export function dateRemoveYear (date) {
   return (dispatch, getState) => {
-    return date.split('.').slice(0,2).join('.')+'.'
+    return moment(date, 'DD. MM. YYYY').format('D. M.')
+    // return date.split('.').slice(0,2).join('.')+'.'
   }
 }
 

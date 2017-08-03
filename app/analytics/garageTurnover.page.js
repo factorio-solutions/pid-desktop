@@ -57,7 +57,7 @@ export class GarageTurnoverPage extends Component {
                     , <TabButton label={t(['occupancy', 'week'])}  onClick={() => {actions.weekClick()}}  state={state.period=="week" && 'selected'}/>
                     ]
 
-    const datePickers = [ <Loading show={state.loading} /> 
+    const datePickers = [ <Loading show={state.loading} />
                         , <input type='text' className={styles.dateSelector} value={state.from} onChange={fromHandler}/>
                         , <span><b>-</b></span>
                         , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
@@ -72,7 +72,7 @@ export class GarageTurnoverPage extends Component {
           chartType="ComboChart"
           data={chartData}
           options={{
-            vAxis: {title: actions.currency(), format: `# ${actions.currency()}`},
+            vAxis: {title: t(['analytics', 'turnover']), format: `# ${actions.currency()}`},
             hAxis: {title: state.period === 'month'? t(['analytics', 'month']) : t(['analytics', 'week'])},
             seriesType: 'bars',
             series: {1: {type: 'line'}}
