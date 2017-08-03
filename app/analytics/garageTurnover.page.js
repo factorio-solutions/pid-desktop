@@ -9,6 +9,7 @@ import TabMenu   from '../_shared/components/tabMenu/TabMenu'
 import TabButton from '../_shared/components/buttons/TabButton'
 import Table     from '../_shared/components/table/Table'
 import Loading   from '../_shared/components/loading/Loading'
+import DateInput from '../_shared/components/input/DateInput'
 
 import * as nav                    from '../_shared/helpers/navigation'
 import { t }                       from '../_shared/modules/localization/localization'
@@ -34,8 +35,10 @@ export class GarageTurnoverPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const fromHandler = (event) => { actions.setFrom(event.target.value) }
-    const toHandler   = (event) => { actions.setTo(event.target.value) }
+    // const fromHandler = (event) => { actions.setFrom(event.target.value) }
+    // const toHandler   = (event) => { actions.setTo(event.target.value) }
+    const shorttermHandleFrom = (value, valid) => {valid && actions.setFrom(value) }
+    const shorttermHandleTo   = (value, valid) => {valid && actions.setTo(value) }
 
     const getProperty = (created_at) => {
       return `${state.period === 'month' ? moment(created_at).month()+1 : moment(created_at).week()}/${moment(created_at).year()}`
@@ -58,9 +61,12 @@ export class GarageTurnoverPage extends Component {
                     ]
 
     const datePickers = [ <Loading show={state.loading} />
-                        , <input type='text' className={styles.dateSelector} value={state.from} onChange={fromHandler}/>
-                        , <span><b>-</b></span>
-                        , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
+                        // , <input type='text' className={styles.dateSelector} value={state.from} onChange={fromHandler}/>
+                        // , <span><b>-</b></span>
+                        // , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
+                        , <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
+                        , <span className={styles.dash}><b>-</b></span>
+                        , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
                         ]
 
     return (

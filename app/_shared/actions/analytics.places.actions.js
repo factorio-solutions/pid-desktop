@@ -24,7 +24,7 @@ export function setGarage(value){
 export function setFrom(value){
   return (dispatch, getState) => {
     dispatch({ type: ANALYTICS_PLACES_SET_FROM
-             , value: formatDate(value)
+             , value
              })
     dispatch(initPlacesAnalytics())
   }
@@ -33,7 +33,7 @@ export function setFrom(value){
 export function setTo(value){
   return (dispatch, getState) => {
     dispatch({ type: ANALYTICS_PLACES_SET_TO
-             , value: formatDate(value)
+             , value
              })
     dispatch(initPlacesAnalytics())
   }

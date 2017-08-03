@@ -9,6 +9,7 @@ import TabButton    from '../_shared/components/buttons/TabButton'
 import Table        from '../_shared/components/table/Table'
 import GarageLayout from '../_shared/components/garageLayout/GarageLayout2'
 import Loading      from '../_shared/components/loading/Loading'
+import DateInput    from '../_shared/components/input/DateInput'
 
 import * as nav                    from '../_shared/helpers/navigation'
 import { t }                       from '../_shared/modules/localization/localization'
@@ -35,8 +36,10 @@ export class PlacesPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const fromHandler = (event) => { actions.setFrom(event.target.value) }
-    const toHandler   = (event) => { actions.setTo(event.target.value) }
+    // const fromHandler = (event) => { actions.setFrom(event.target.value) }
+    // const toHandler   = (event) => { actions.setTo(event.target.value) }
+    const shorttermHandleFrom = (value, valid) => {valid && actions.setFrom(value) }
+    const shorttermHandleTo   = (value, valid) => {valid && actions.setTo(value) }
 
     let data = [[t(['analytics','turnover'])], [t(['analytics','avgTurnover'])], [t(['analytics','minRevenue'])], [t(['analytics','maxRevenue'])]]
     let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'desc', representer: o => <strong>{o}</strong> } ]
@@ -84,9 +87,12 @@ export class PlacesPage extends Component {
                     ]
 
     const datePickers = [ <Loading show={state.loading} />
-                        , <input type='text' className={garageStyles.dateSelector} value={state.from} onChange={fromHandler}/>
-                        , <span><b>-</b></span>
-                        , <input type='text' className={garageStyles.dateSelector} value={state.to} onChange={toHandler}/>
+                        // , <input type='text' className={garageStyles.dateSelector} value={state.from} onChange={fromHandler}/>
+                        // , <span><b>-</b></span>
+                        // , <input type='text' className={garageStyles.dateSelector} value={state.to} onChange={toHandler}/>
+                        , <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
+                        , <span className={styles.dash}><b>-</b></span>
+                        , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
                         ]
 
 

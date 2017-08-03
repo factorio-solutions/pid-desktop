@@ -20,12 +20,13 @@ export default class App extends Component {
 
   componentDidMount(){
     const { store } = this.context
+    const state = store.getState().pageBase
     window.addEventListener('error', (e) => {
       if (e.message != this.state.lastError) { // block error cycle
-        this.setState({lastError: e.message})
-        console.log("Error occured at " + window.location.hash + " / " + e.message);
-        const log = "Error occured at " + window.location.hash + " / " + e.message + " / " + JSON.stringify(store.getState())
+        const log = "Error occured at " + window.location.hash + " / " + e.message + " / user:" + state.current_user && state.current_user.email
+        console.log(log);
         request((response)=>{}, 'mutation ErrorSend ($error: String!) { error(error: $error) }', {error: log})
+        this.setState({lastError: e.message})
       }
     });
   }
