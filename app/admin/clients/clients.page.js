@@ -79,7 +79,7 @@ export class ClientsPage extends Component {
         </div>
         <div className={styles.addButton}>
           <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClient} type='action' size='big'/>
-          <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={addContract} type='action' size='big'/>
+          {pageBase.isGarageAdmin && <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={addContract} type='action' size='big'/>}
         </div>
       </PageBase>
     )
