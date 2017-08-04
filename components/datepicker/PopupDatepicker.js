@@ -17,11 +17,21 @@ export default class PopupDatepicker extends Component {
     flip:     PropTypes.bool
   }
 
+  componentDidUpdate(prevProps){
+    if (!prevProps.show && this.props.show){
+      this.container.focus();
+    }
+  }
+
   render(){
     const { onSelect, date, show, okClick, showInf, flip } = this.props
 
     return(
-      <div className={`${styles.popup} ${show ? "" : styles.hidden}  ${flip && styles.flip}`}>
+      <div className={`${styles.popup} ${show ? "" : styles.hidden}  ${flip && styles.flip}`}
+        ref={(div) => { this.container = div }}
+        onBlur={okClick}
+        tabIndex={0}
+      >
         <Datepicker onSelect={onSelect} date={date} showInf={showInf}/>
         <div className={styles.buttonContainer}>
           <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={okClick} type='confirm'/>
