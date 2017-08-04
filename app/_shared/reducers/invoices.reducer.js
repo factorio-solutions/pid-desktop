@@ -6,15 +6,17 @@ import {
   INVOICES_SET_GARAGE_ID,
   INVOICES_SET_PAST,
   INVOICES_SET_REASON,
+  INVOICES_SET_INVOICE_ID,
   INVOICES_TOGGLE_REASON_MODAL
 }  from '../actions/invoices.actions'
 
-const defaultState =  { invoices:  []
-                      , clients:   []
-                      , client_id: undefined
-                      , past:      false
-                      , reason:    '' // reason for cancelling invoice
-                      , showModal: false
+const defaultState =  { invoices:   []
+                      , clients:    []
+                      , client_id:  undefined
+                      , past:       false
+                      , reason:     '' // reason for cancelling invoice
+                      , invoice_id: undefined // currently canceling invoice
+                      , showModal:  false
                       }
 
 
@@ -48,7 +50,8 @@ export default function invoices (state = defaultState, action) {
 
     case INVOICES_TOGGLE_REASON_MODAL:
       return  { ...state
-              , showModal: !state.showModal
+              , showModal:  !state.showModal
+              , invoice_id: !state.showModal ? action.value : undefined
               }
 
     default:

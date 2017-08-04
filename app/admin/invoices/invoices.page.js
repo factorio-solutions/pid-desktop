@@ -69,7 +69,7 @@ export class InvoicesPage extends Component {
                               {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin||invoice.client.is_secretary) && <RoundButton content={<span>{t(['invoices','pay'])}</span>}                      onClick={()=>{}}                                                                type='action'/>}
                               {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-bell-o' aria-hidden="true"></span>} onClick={()=>{actions.reminder(invoice.id)}}                                    type='action'/>}
                               {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}  onClick={()=>{actions.invoicePayed(invoice.id, this.props.params.id)}}          type='remove' question={t(['invoices','invoicePayed'])}/>}
-                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}  onClick={()=>{actions.toggleReason()}}                             type='remove' question={t(['invoices','stornoInvoice'])}/>}
+                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}  onClick={()=>{actions.toggleReason(invoice.id)}}                             type='remove' question={t(['invoices','stornoInvoice'])}/>}
                             </span>
                           </div>}
                       </div>
@@ -87,7 +87,7 @@ export class InvoicesPage extends Component {
 
     const clientSelector = <Dropdown label={t(['invoices', 'selectClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
     const customModal = <div>
-      <Form submitable={state.reason !== '' && state.reason !== undefined} onSubmit={()=>{actions.stornoInvoice(invoice.id, this.props.params.id)}} onBack={()=>{actions.toggleReason()}} >
+      <Form submitable={state.reason !== '' && state.reason !== undefined} onSubmit={()=>{actions.stornoInvoice(state.invoice_id, this.props.params.id)}} onBack={()=>{actions.toggleReason()}} >
         {t(['invoices', 'cancelReason'])}
         <Input onChange={actions.setReason} label={t(['invoices', 'reason'])} error={t(['invoices', 'reasonInvalid'])} placeholder={t(['invoices', 'reasonPlaceholder'])} value={state.reason} type="text" />
       </Form>

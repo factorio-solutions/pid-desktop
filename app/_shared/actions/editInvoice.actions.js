@@ -4,11 +4,10 @@ import { request }  from '../helpers/request'
 import { download } from '../helpers/download'
 import { t }        from '../modules/localization/localization'
 import * as nav     from '../helpers/navigation'
+import { MOMENT_DATETIME_FORMAT, timeToUTC} from '../helpers/time'
 
 import { DOWNLOAD_INVOICE, REGENERATE_INVOICE } from '../queries/editInvoice.queries'
 
-
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
 export const EDIT_INVOICE_SET_AMOUNT         = 'EDIT_INVOICE_SET_AMOUNT'
 export const EDIT_INVOICE_SET_VAT            = 'EDIT_INVOICE_SET_VAT'
@@ -104,8 +103,8 @@ export function submitInvoice () {
              , invoice: { ammount:      parseFloat(state.ammount)
                         , vat:          parseFloat(state.vat)
                         , subject:      state.subject
-                        , invoice_date: state.invoice_date
-                        , due_date:     state.due_date
+                        , invoice_date: timeToUTC(state.invoice_date)
+                        , due_date:     timeToUTC(state.due_date)
                         }
              }
            )

@@ -1,7 +1,8 @@
 import moment from 'moment'
 
-import { t }       from '../modules/localization/localization'
-import { request } from '../helpers/request'
+import { t }                                 from '../modules/localization/localization'
+import { request }                           from '../helpers/request'
+import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 
 import { GARAGE_TURNOVER } from '../queries/analytics.garage.queries'
 
@@ -12,8 +13,6 @@ export const ANALYTICS_SET_FROM         = 'ANALYTICS_SET_FROM'
 export const ANALYTICS_SET_TO           = 'ANALYTICS_SET_TO'
 export const ANALYTICS_SET_PERIOD       = 'ANALYTICS_SET_PERIOD'
 export const ANALYTICS_SET_LOADING      = 'ANALYTICS_SET_LOADING'
-
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
 
 export function setReservations(value){
@@ -104,14 +103,13 @@ export function initGarageTurnover (){
       momentTo = momentTo.add(1, 'month'); // also include this month
 
       const onSuccess = (response) => {
-        console.log(response);
         dispatch(setReservations(response.data.reservation_analytics))
         dispatch(setContracts(response.data.contract_analytics))
         dispatch(setLoading(false))
       }
 
-      getState().pageBase.garage && request(onSuccess, GARAGE_TURNOVER, { from: momentFrom.format(MOMENT_DATETIME_FORMAT)
-                                                                        , to: momentTo.format(MOMENT_DATETIME_FORMAT)
+      getState().pageBase.garage && request(onSuccess, GARAGE_TURNOVER, { from: timeToUTC(momentFrom.format(MOMENT_DATETIME_FORMAT))
+                                                                        , to: timeToUTC(momentTo.format(MOMENT_DATETIME_FORMAT))
                                                                         , id: getState().pageBase.garage
                                                                         }
       )

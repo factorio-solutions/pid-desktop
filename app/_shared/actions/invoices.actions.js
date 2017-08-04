@@ -12,6 +12,7 @@ export const INVOICES_SET_CLIENTS         = 'INVOICES_SET_CLIENTS'
 export const INVOICES_SET_CLIENT_ID       = 'INVOICES_SET_CLIENT_ID'
 export const INVOICES_SET_PAST            = 'INVOICES_SET_PAST'
 export const INVOICES_SET_REASON          = 'INVOICES_SET_REASON'
+export const INVOICES_SET_INVOICE_ID      = 'INVOICES_SET_INVOICE_ID'
 export const INVOICES_TOGGLE_REASON_MODAL = 'INVOICES_TOGGLE_REASON_MODAL'
 
 
@@ -48,8 +49,10 @@ export function setReason (value) {
          }
 }
 
-export function toggleReason () {
-  return { type: INVOICES_TOGGLE_REASON_MODAL }
+export function toggleReason (id) {
+  return { type:  INVOICES_TOGGLE_REASON_MODAL
+         , value: id
+         }
 }
 
 
@@ -144,7 +147,7 @@ export function stornoInvoice (id, garage_id) {
       dispatch(initInvoices(garage_id))
     }
 
-    dispatch(setCustomModal(undefined))
+    dispatch(toggleReason())
     if (state.reason !== undefined && state.reason !== '') {
       request( onSuccess
         , UPDATE_INVOICE

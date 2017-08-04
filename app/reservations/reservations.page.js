@@ -11,9 +11,10 @@ import ButtonStack      from '../_shared/components/buttonStack/ButtonStack'
 import CardViewLayout   from '../_shared/components/cardView/CardViewLayout'
 import ReservationCard  from '../_shared/components/cardView/ReservationCard'
 
-import * as nav                 from '../_shared/helpers/navigation'
-import { t }                    from '../_shared/modules/localization/localization'
-import * as reservationActions  from '../_shared/actions/reservations.actions'
+import * as nav                   from '../_shared/helpers/navigation'
+import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
+import { t }                      from '../_shared/modules/localization/localization'
+import * as reservationActions    from '../_shared/actions/reservations.actions'
 
 import styles from './reservations.page.scss'
 
@@ -71,8 +72,8 @@ export class ReservationsPage extends Component {
                             <div>{reservation.user.phone}</div>
                           </div>
                           <div>
-                          <div>{t(['reservations','createdAt'])} {reservation.created_at}</div>
-                          <div>{t(['reservations','updatedAt'])} {reservation.updated_at}</div>
+                          <div>{t(['reservations','createdAt'])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)}</div>
+                          <div>{t(['reservations','updatedAt'])} {moment(reservation.updated_at).format(MOMENT_DATETIME_FORMAT)}</div>
                           </div>
                           <div>
                             <span className={styles.floatRight}>
