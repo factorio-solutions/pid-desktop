@@ -263,7 +263,6 @@ export function initialPageBase () {
     const hash = window.location.hash
 
     if (!contains(hash, 'admin') && !contains(hash, 'analytics')){
-      console.log('closing menu');
       dispatch(setShowSecondaryMenu(false))
     }
 

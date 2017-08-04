@@ -1,9 +1,10 @@
-import moment               from 'moment'
-import { request }          from '../helpers/request'
-import { calculatePrice }   from '../helpers/calculatePrice'
-import { t }                from '../modules/localization/localization'
-import * as nav             from '../helpers/navigation'
-import * as pageBaseActions from './pageBase.actions'
+import moment                                from 'moment'
+import { request }                           from '../helpers/request'
+import { calculatePrice }                    from '../helpers/calculatePrice'
+import { t }                                 from '../modules/localization/localization'
+import * as nav                              from '../helpers/navigation'
+import * as pageBaseActions                  from './pageBase.actions'
+import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 
 import {
   GET_AVAILABLE_USERS,
@@ -18,7 +19,7 @@ import {
 } from '../queries/newReservation.queries'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
-const MOMENT_DATETIME_FORMAT   = "DD.MM.YYYY HH:mm"
+
 
 export const NEW_RESERVATION_SET_USER             = 'NEW_RESERVATION_SET_USER'
 export const NEW_RESERVATION_SET_AVAILABLE_USERS  = 'NEW_RESERVATION_SET_AVAILABLE_USERS'
@@ -469,8 +470,9 @@ export function submitReservation (id) {
                               , car_id:        ongoing ? undefined : state.car_id
                               , licence_plate: ongoing ? undefined : state.carLicencePlate == '' ? undefined : state.carLicencePlate
                               , url:           ongoing ? undefined : window.location.href.split('?')[0]
-                              , begins_at:     ongoing ? undefined : state.from
-                              , ends_at:       state.to
+                              , begins_at:     ongoing ? undefined : timeToUTC(state.from)
+                              , ends_at:       timeToUTC(state.to)
+
                               }
                , id: id
                }

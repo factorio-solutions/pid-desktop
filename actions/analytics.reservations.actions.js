@@ -1,7 +1,8 @@
 import moment from 'moment'
 
-import { t }       from '../modules/localization/localization'
-import { request } from '../helpers/request'
+import { t }                                 from '../modules/localization/localization'
+import { request }                           from '../helpers/request'
+import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 
 import { INIT_RESERVATIONS, INIT_CONTRACTS } from '../queries/analytics.reservations.queries'
 
@@ -12,8 +13,6 @@ export const ANALYTICS_RESERVATIONS_SET_FROM          = 'ANALYTICS_RESERVATIONS_
 export const ANALYTICS_RESERVATIONS_SET_TO            = 'ANALYTICS_RESERVATIONS_SET_TO'
 export const ANALYTICS_RESERVATIONS_SET_FILTER        = 'ANALYTICS_RESERVATIONS_SET_FILTER'
 export const ANALYTICS_RESERVATIONS_SET_LOADING       = 'ANALYTICS_RESERVATIONS_SET_LOADING'
-
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
 
 export function setReservations(value){
@@ -83,8 +82,8 @@ export function initReservationsAnalytics () {
           dispatch(setLoading(false))
         }
 
-        getState().pageBase.garage && request(onSuccess, INIT_RESERVATIONS, { from: from.format(MOMENT_DATETIME_FORMAT)
-                                                                            , to:   to.format(MOMENT_DATETIME_FORMAT)
+        getState().pageBase.garage && request(onSuccess, INIT_RESERVATIONS, { from: timeToUTC(from.format(MOMENT_DATETIME_FORMAT))
+                                                                            , to:   timeToUTC(to.format(MOMENT_DATETIME_FORMAT))
                                                                             , id:   getState().pageBase.garage
                                                                             }
         )
@@ -94,8 +93,8 @@ export function initReservationsAnalytics () {
           dispatch(setLoading(false))
         }
 
-        getState().pageBase.garage && request(onSuccess, INIT_CONTRACTS, { from: from.startOf('month').format(MOMENT_DATETIME_FORMAT)
-                                                                         , to:   to.endOf('month').format(MOMENT_DATETIME_FORMAT)
+        getState().pageBase.garage && request(onSuccess, INIT_CONTRACTS, { from: timeToUTC(from.startOf('month').format(MOMENT_DATETIME_FORMAT))
+                                                                         , to:   timeToUTC(to.endOf('month').format(MOMENT_DATETIME_FORMAT))
                                                                          , id:   getState().pageBase.garage
                                                                          }
         )

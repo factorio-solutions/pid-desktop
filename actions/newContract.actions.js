@@ -2,15 +2,15 @@ import update   from 'immutability-helper'
 import * as nav from '../helpers/navigation'
 import moment   from 'moment'
 
-import { request }  from '../helpers/request'
-import { t }        from '../modules/localization/localization'
-import { setError } from './pageBase.actions'
+import { request }                           from '../helpers/request'
+import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
+import { t }                                 from '../modules/localization/localization'
+import { setError }                          from './pageBase.actions'
 
 import { GET_RENTS }                     from '../queries/admin.finance.queries.js'
 import { GARAGE_CONTRACTS }              from '../queries/clients.queries.js'
 import { GET_GARAGE_CLIENT, ADD_CLIENT, GET_CURRENCIES, CREATE_CONTRACT, GET_CONTRACT_DETAILS, UPDATE_CONTRACT } from '../queries/newContract.queries.js'
 
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS        = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT'
@@ -201,7 +201,6 @@ export function initContract(id){
       dispatch(setPlaces(response.data.contract.places))
     }
 
-    console.log(getState());
     if (!id) request(onSuccess, GET_GARAGE_CLIENT, { id: getState().pageBase.garage }) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
     request(onClientsSuccess, GARAGE_CONTRACTS, {id: getState().pageBase.garage})
@@ -273,8 +272,8 @@ export function submitNewContract (id){
     const client = state.clients.find(cli => cli.id === state.client_id)
     let variables = { contract: { client_id: client.id
                                 , contract_places: state.places.map(place => {return {place_id: place.id}})
-                                , from: state.from
-                                , to: state.to
+                                , from: timeToUTC(state.from)
+                                , to:   timeToUTC(state.to)
                                 }
                     }
 
