@@ -195,17 +195,33 @@ function prepareAnalyticsSecondaryMenu() {
 
 export function adminClick() {
   return (dispatch, getState) => {
-    dispatch(setSecondaryMenu(dispatch(prepareAdminSecondaryMenu())))
+    const state = getState().pageBase
+    const secondaryMenu = dispatch(prepareAdminSecondaryMenu())
+    const wasAdminMenuSelected = secondaryMenu.map(o => o.key).includes(state.secondarySelected)
+
+    dispatch(setSecondaryMenu(secondaryMenu))
     dispatch(setSecondaryMenuBackButton({label: `< ${t(['pageBase', 'Admin'])}`, onClick: ()=>{dispatch(setShowSecondaryMenu(false))}}))
-    dispatch(setShowSecondaryMenu(!getState().pageBase.showSecondaryMenu))
+    dispatch(setShowSecondaryMenu(!state.showSecondaryMenu || !wasAdminMenuSelected))
+    if (!wasAdminMenuSelected){
+      dispatch(setSecondaryMenuSelected('invoices'))
+      nav.to(`/${state.garage}/admin/invoices`)
+    }
   }
 }
 
 export function analyticsClick() {
   return (dispatch, getState) => {
-    dispatch(setSecondaryMenu(dispatch(prepareAnalyticsSecondaryMenu())))
+    const state = getState().pageBase
+    const secondaryMenu = dispatch(prepareAnalyticsSecondaryMenu())
+    const wasAnalyticsMenuSelected = secondaryMenu.map(o => o.key).includes(state.secondarySelected)
+
+    dispatch(setSecondaryMenu(secondaryMenu))
     dispatch(setSecondaryMenuBackButton({label: `< ${t(['pageBase', 'analytics'])}`, onClick: ()=>{dispatch(setShowSecondaryMenu(false))}}))
-    dispatch(setShowSecondaryMenu(!getState().pageBase.showSecondaryMenu))
+    dispatch(setShowSecondaryMenu(!state.showSecondaryMenu || !wasAnalyticsMenuSelected)) // if was previously selected, then hide
+    if (!wasAnalyticsMenuSelected){
+      dispatch(setSecondaryMenuSelected('garageTurnover'))
+      nav.to(`/${state.garage}/analytics/garageTurnover`)
+    }
   }
 }
 
@@ -246,7 +262,10 @@ export function initialPageBase () {
   return (dispatch, getState) => {
     const hash = window.location.hash
 
-    dispatch(setShowSecondaryMenu(false))
+    if (!contains(hash, 'admin') && !contains(hash, 'analytics')){
+      console.log('closing menu');
+      dispatch(setShowSecondaryMenu(false))
+    }
 
     switch (true) { // MainMenu
       case contains(hash, 'dashboard'):
