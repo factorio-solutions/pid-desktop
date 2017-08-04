@@ -53,7 +53,7 @@ export class GarageTurnoverPage extends Component {
 
     const {chartData, tableData, schema} = actions.dataToArray( actions.stateToData()
                                                               , [[t(['analytics','turnover'])], [t(['analytics','reservations'])]]
-                                                              , [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'desc', representer: o => <strong>{o}</strong> } ]
+                                                              , [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> } ]
                                                               )
 
     const filters = [ <TabButton label={t(['occupancy', 'month'])} onClick={() => {actions.monthClick()}} state={state.period=="month" && 'selected'}/>
@@ -66,7 +66,7 @@ export class GarageTurnoverPage extends Component {
                         // , <input type='text' className={styles.dateSelector} value={state.to} onChange={toHandler}/>
                         , <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
                         , <span className={styles.dash}><b>-</b></span>
-                        , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
+                        , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true} />
                         ]
 
     return (
@@ -87,7 +87,7 @@ export class GarageTurnoverPage extends Component {
           width="100%"
           height="400px"
         />}
-        <Table schema={schema} data={tableData} />
+        <Table schema={schema} data={tableData} searchBox={false} />
       </PageBase>
     )
   }

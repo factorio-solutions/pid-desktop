@@ -41,8 +41,8 @@ export class PlacesPage extends Component {
     const shorttermHandleFrom = (value, valid) => {valid && actions.setFrom(value) }
     const shorttermHandleTo   = (value, valid) => {valid && actions.setTo(value) }
 
-    let data = [[t(['analytics','turnover'])], [t(['analytics','avgTurnover'])], [t(['analytics','minRevenue'])], [t(['analytics','maxRevenue'])]]
-    let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'desc', representer: o => <strong>{o}</strong> } ]
+    let data = [[t(['analytics','avgRevenue'])], [t(['analytics','avgTurnover'])], [t(['analytics','minRevenue'])], [t(['analytics','maxRevenue'])]]
+    let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> } ]
     let chartData = [ [t(['analytics','date']), t(['analytics','shortterm']), t(['analytics','average']), t(['analytics','longterm'])] ]
 
     state.garage && state.garage.statistics.forEach((obj) => {
@@ -112,7 +112,7 @@ export class PlacesPage extends Component {
             width="100%"
             height="400px"
           />
-          <Table schema={schema} data={data} />
+          <Table schema={schema} data={data} searchBox={false} />
         </div> : <div>
           <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors={true}/>
         </div>}

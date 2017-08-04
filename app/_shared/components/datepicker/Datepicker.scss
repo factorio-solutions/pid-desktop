@@ -67,8 +67,10 @@
   display:    block;
   text-align: center;
   margin-top: 5px;
-  > button{
+  > span{
     margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
   }
 }
 
@@ -82,13 +84,3 @@
     }
   }
 }
-// .buttonStyle{
-//   border:         none;
-//   border-radius:  3px;
-//   padding:        3px 12px;
-//   outline:        none;
-//   text-align:     center;
-//   transition:     all 0.4s ease;
-//   margin:         5px;
-//   cursor:         pointer;
-// }

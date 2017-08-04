@@ -33,7 +33,12 @@ export default class Table extends Component {
 		schema: 			PropTypes.array.isRequired,
 	  data: 				PropTypes.array.isRequired,   // Source data to fill the table
 		onRowSelect: 	PropTypes.func, // will be called on select, gives it parameters (data, index) or (undefined, -1) on deselect
-		deselect: 		PropTypes.bool // if set to true, will reset selected item
+		deselect: 		PropTypes.bool, // if set to true, will reset selected item
+		searchBox:		PropTypes.bool
+	}
+
+	static defaultProps = {
+		searchBox: true
 	}
 
 	componentWillUpdate(nextProps){
@@ -51,7 +56,7 @@ export default class Table extends Component {
   }
 
   render() {
-		const { schema, data } = this.props
+		const { schema, data, searchBox } = this.props
 		const { sortKey, sortType, spoilerId } = this.state
 		const { compareRepresentations, comparator, representer } = schema.find((s)=>s.key==sortKey)
 		var myComp = undefined // comparator to be used
@@ -156,10 +161,10 @@ export default class Table extends Component {
 
 		return (
 			<div>
-				<div className={styles.searchBox}>
+				{searchBox && <div className={styles.searchBox}>
 					<input type="search" onChange={(e)=>{this.setState( { ...this.state, search: e.target.value } )}} value={this.state.search}/>
 					<i className="fa fa-search" aria-hidden="true"></i>
-				</div>
+				</div>}
 
 				<table className={styles.rtTable}>
 					<thead>

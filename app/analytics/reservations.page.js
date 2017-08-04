@@ -38,7 +38,7 @@ export class ReservationsAnalyticsPage extends Component {
     const shorttermHandleTo   = (value, valid) => {valid && actions.setTo(value) }
 
     let data = [[t(['analytics','turnover'])], [t(['analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount'])]]
-    let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'desc', representer: o => <strong>{o}</strong> } ]
+    let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> } ]
 
     const tableData = state.filter === 'shortterm' ? actions.reservationsToData() : actions.contractsToData()
 
@@ -80,7 +80,7 @@ export class ReservationsAnalyticsPage extends Component {
           width="100%"
           height="400px"
         />
-        <Table schema={schema} data={data} />
+        <Table schema={schema} data={data} searchBox={false} />
       </PageBase>
     )
   }

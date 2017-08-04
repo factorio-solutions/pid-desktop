@@ -62,7 +62,7 @@ export default class Timepicker extends Component{
           <Minutes time={this.state.selected} onClick={minutesClicked} />
         </div>
         <div className={styles.buttonContainer}>
-          <button className={styles.pickerButtonStyle} onClick={nowClick} type={"button"}>Now</button>
+          <span onClick={nowClick}>Now</span>
         </div>
       </div>
     )
