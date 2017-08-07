@@ -120,12 +120,10 @@ export function setGarage(value) {
              })
 
     const selectedGarage = getState().pageBase.garages.find(user_garage => user_garage.garage.id === value)
-    if(selectedGarage){
-      dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
-      dispatch(setIsGarageAdmin(selectedGarage.admin))
-      dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
-      dispatch(setIsGarageSecurity(selectedGarage.security))
-    }
+    dispatch(setGaragePidTarif(selectedGarage ? selectedGarage.garage.active_pid_tarif_id : false))
+    dispatch(setIsGarageAdmin(selectedGarage ? selectedGarage.admin : false))
+    dispatch(setIsGarageReceptionist(selectedGarage ? selectedGarage.receptionist : false))
+    dispatch(setIsGarageSecurity(selectedGarage ? selectedGarage.security : false))
   }
 }
 
