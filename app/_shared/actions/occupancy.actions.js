@@ -54,7 +54,7 @@ export function loadGarage(){
         return acc
       }, [])
 
-      clients.unshift({name:t(['occupancy', 'reservations']), id: undefined})
+      clients.unshift({name:t(['occupancy', 'allReservations']), id: undefined})
       dispatch(setClients(clients))
       dispatch(setGarage(response.data.garage))
     }
