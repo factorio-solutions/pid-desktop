@@ -10,6 +10,7 @@ export const CREATE_NEW_CAR = `mutation cartMutations($car: CarInput!) {
 export const EDIT_CAR_INIT = `query ($id: Id!) {
   user_cars(car_id: $id) {
 		car{
+      name
       color
       model
       licence_plate

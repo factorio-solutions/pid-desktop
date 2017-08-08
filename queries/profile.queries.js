@@ -7,6 +7,7 @@ export const GET_CARS = `query ($user_id: Id) {
       id
       color
       model
+      name
       licence_plate
     }
   }

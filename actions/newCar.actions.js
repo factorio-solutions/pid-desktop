@@ -6,6 +6,7 @@ import { CREATE_NEW_CAR, EDIT_CAR_INIT, EDIT_CAR_MUTATION } from '../queries/new
 export const SET_CAR_LICENCE_PLATE = "SET_CAR_LICENCE_PLATE"
 export const SET_CAR_COLOR         = "SET_CAR_COLOR"
 export const SET_CAR_MODEL         = "SET_CAR_MODEL"
+export const SET_CAR_NAME          = "SET_CAR_NAME"
 export const SET_CAR_WIDTH         = "SET_CAR_WIDTH"
 export const SET_CAR_HEIGHT        = "SET_CAR_HEIGHT"
 export const SET_CAR_LENGTH        = "SET_CAR_LENGTH"
@@ -28,6 +29,12 @@ export function setColor (value){
 
 export function setModel (value){
   return { type: SET_CAR_MODEL
+         , value
+         }
+}
+
+export function setName (value){
+  return { type: SET_CAR_NAME
          , value
          }
 }
@@ -79,6 +86,7 @@ export function initCar(id) {
       dispatch(setLicencePlate(response.data.user_cars[0].car.licence_plate))
       dispatch(setColor(response.data.user_cars[0].car.color))
       dispatch(setModel(response.data.user_cars[0].car.model))
+      dispatch(setName(response.data.user_cars[0].car.name))
       dispatch(setWidth(response.data.user_cars[0].car.width))
       dispatch(setHeight(response.data.user_cars[0].car.height))
       dispatch(setLength(response.data.user_cars[0].car.length))
@@ -121,6 +129,7 @@ function generateCar(state){
   return { licence_plate: state.licence_plate
          , color:         state.color
          , model:         state.model
+         , name:          state.name
          , width:         state.width != '' ? parseFloat(state.width) : undefined
          , height:        state.height != '' ? parseFloat(state.height) : undefined
          , length:        state.length != '' ? parseFloat(state.length) : undefined
