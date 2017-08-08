@@ -30,7 +30,7 @@ export const GET_USER =`query Query($id: Id!) {
   user(id: $id) {
     reservable_cars{
       id
-      model
+      name
       licence_plate
     }
     id

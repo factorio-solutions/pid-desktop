@@ -74,7 +74,7 @@ export class NewReservationPage extends Component {
     const carDropdown = () => {
       const carSelected = (index) => { actions.setCarId(state.user.reservable_cars[index].id) }
       return state.user && state.user.reservable_cars && state.user.reservable_cars.map((car, index) => {
-        return { label: car.model, onClick: carSelected.bind(this, index) }
+        return { label: car.name, onClick: carSelected.bind(this, index) }
       }) || []
     }
 

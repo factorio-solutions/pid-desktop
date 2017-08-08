@@ -43,9 +43,10 @@ export class SettingsPage extends Component {
       return state.name.valid && state.phone.valid // && state.email.valid
     }
 
-    const schema = [ { key: 'licence_plate', title: t(['cars','licencePlate']), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
-                   , { key: 'model',         title: t(['cars','model']),        comparator: 'string', }
-                   , { key: 'color',         title: t(['cars','color']),        comparator: 'string', }
+    const schema = [ { key: 'name',          title: t(['newCar','name']),       comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
+                   , { key: 'licence_plate', title: t(['cars','licencePlate']), comparator: 'string', representer: o => <strong>{o}</strong> }
+                   , { key: 'model',         title: t(['cars','model']),        comparator: 'string' }
+                   , { key: 'color',         title: t(['cars','color']),        comparator: 'string' }
                    ]
 
     const addCar    = () => { nav.to('/profile/cars/newCar') }
