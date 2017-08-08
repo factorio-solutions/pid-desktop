@@ -41,14 +41,12 @@ export class OccupancyPage extends Component {
 
     const clientDropdown = () => {
       const clientSelected = (index) => { actions.setClientId(state.clients[index].id) }
-      return state.clients.
-      filter((client, i) => { // filter currently active
-        if (i === 0) return true
-        return moment(client.contract.from).isSameOrBefore(state.from) && state.from.isBefore(moment(client.contract.to))
-      }).filter((client, i, arr) => { // take only first one
-        return arr.findIndex(cl => cl.id === client.id) === i
-      })
-      .map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
+      return state.clients
+        .filter((client, i) => { // filter currently active
+          if (i === 0) return true
+          return client.contracts.find(contract => moment(contract.from).isSameOrBefore(state.from) && state.from.isBefore(moment(contract.to))) !== undefined
+        })
+        .map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
     }
 
     const preparePlaces = (places, floor) => {
@@ -57,10 +55,12 @@ export class OccupancyPage extends Component {
           if (state.client_id === undefined) {
             return true
           } else { // find places in currently selected client contracts
-            const currentClients = state.clients.filter((client) => client.id === state.client_id).filter((client) => moment(client.contract.from).isSameOrBefore(state.from) && state.from.isBefore(moment(client.contract.to)))
-            if (currentClients.length === 0) return true // if no current contracts, return all
-            return currentClients.reduce((places, client)=>{ // places with current contract
-              return places.concat(client.contract.places)
+            const currentContracts = state.clients
+              .find(client => client.id === state.client_id).contracts
+              .filter((contract) => moment(contract.from).isSameOrBefore(state.from) && state.from.isBefore(moment(contract.to)))
+            if (currentContracts.length === 0) return true // if no current contracts, return all
+            return currentContracts.reduce((places, contract)=>{ // places with current contract
+              return places.concat(contract.places)
             }, []).find(p => p.id === place.id) !== undefined
           }
         })

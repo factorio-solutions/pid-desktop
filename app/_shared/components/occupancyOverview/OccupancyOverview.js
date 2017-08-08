@@ -85,7 +85,8 @@ export class OccupancyOverview extends Component{
           reservationElement.className = [ styles.reservationDiv
                                          , moment().isBefore(moment(reservation.begins_at)) ? styles.future : ''
                                          , moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ? styles.ongoing: ''
-                                         , moment().isAfter(moment(reservation.ends_at)) ? styles.fulfilled : '' ].join(' ')
+                                         , moment().isAfter(moment(reservation.ends_at)) ? styles.fulfilled : ''
+                                         ].join(' ')
           reservationElement.setAttribute("style", `left: ${reservationStart}px; width: ${reservationEnd - reservationStart}px;`) // HACK: Dont forget to substract padding!
 
           reservationElement.onmouseenter = () => { this.setState({ ...this.state, visible: true, content: <table className={styles.tooltipTable}><tbody>
