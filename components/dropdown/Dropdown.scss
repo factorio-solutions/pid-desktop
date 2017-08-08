@@ -93,6 +93,11 @@
   border-bottom:    1px solid $black;
 }
 
+.reservation{
+  @extend .light;
+  height: 50px;
+}
+
 .transparent{
   color:            $white;
   background-color: rgba(0,0,0,0);
