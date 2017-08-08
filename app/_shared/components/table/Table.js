@@ -77,8 +77,8 @@ export default class Table extends Component {
 
 		const stringifyElement = (obj) => {
 			if (typeof obj === 'object'){
-				return obj && obj.props && obj.props.children ? (typeof obj.props.children ==='string' ? obj.props.children
-																																					 										 : obj.props.children.map((child)=>{return stringifyElement(child)}).join(' '))
+				return obj && obj.props && obj.props.children ? (['number', 'string'].includes(typeof obj.props.children) ? obj.props.children
+																																					 										 										: obj.props.children.map((child)=>{return stringifyElement(child)}).join(' '))
 																								 			: ''
 			} else {
 				return obj
