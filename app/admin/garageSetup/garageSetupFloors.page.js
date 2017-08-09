@@ -102,11 +102,9 @@ export class GarageSetupFloorsPage extends Component {
 
               <h2>{t(['newGarage', 'garageTemlates'])}</h2>
               <div className={styles.line}>
-                <div onClick={()=>{actions.addTemplate('/public/garages/garage1.svg', '1')}}><img src='./public/garages/garage1.svg'/></div>
-                <div onClick={()=>{actions.addTemplate('/public/garages/garage2.svg', '2')}}><img src='./public/garages/garage2.svg'/></div>
-              </div>
-              <div className={styles.line}>
-                <div onClick={()=>{actions.addTemplate('/public/garages/garage3.svg', '3')}}><img src='./public/garages/garage3.svg'/></div>
+                <div className={styles.layout} onClick={()=>{actions.addTemplate('/public/garages/garage1.svg', '1')}}><img src='./public/garages/garage1.svg'/></div>
+                <div className={styles.layout} onClick={()=>{actions.addTemplate('/public/garages/garage2.svg', '2')}}><img src='./public/garages/garage2.svg'/></div>
+                <div className={styles.layout} onClick={()=>{actions.addTemplate('/public/garages/garage3.svg', '3')}}><img src='./public/garages/garage3.svg'/></div>
               </div>
 
               <h2>{t(['newGarage', 'maximumVehicleDimensions'])}</h2>
