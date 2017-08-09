@@ -92,6 +92,7 @@ export function openGarageViaBluetooth(name){
     const service =                 '68F60000-FE41-D5EC-5BED-CD853CA1FDBC' //services[2].uuid
     const passwordCharacteristics = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
     const openGateCharacteristics = '68F6000B-FE41-D5EC-5BED-CD853CA1FDBC'
+    let repeater = false // if repeater was found instead of unit
     var address = undefined // will be filled in afther scan
     var services = []
 
@@ -106,26 +107,25 @@ export function openGarageViaBluetooth(name){
       dispatch(setOpened(true))
       // 6. disconect
       // 7. close
-      ble.close(address, closeSuccessfull, logError)
+      setTimeout(()=> {
+        ble.close(address, closeSuccessfull, logError)
+      }, repeater ? 200 : 0); //give repeater time to send data
     }
 
     const writeOpen = () =>{
       // 5. read/subscribe/write and read/write descriptors
-      console.log("write open garage, address: ", address,"servicies: ", services);
-      const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
-      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
-    }
-
-    const writeBlinking = () =>{
-      // 5. read/subscribe/write and read/write descriptors
-      console.log("write blinking garage, address: ", address,"servicies: ", services);
-      const values = ['0xFF'] // packet is send like ['0xFE', '0xFF', '0x20']
-      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeOpen, logError)
+      setTimeout(()=> {
+        console.log("write open garage, address: ", address,"servicies: ", services);
+        const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
+        ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
+      }, repeater ? 3000 : 0);
     }
 
     const writePassword = () => {
-      console.log('send in password');
-      ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
+      setTimeout(()=> {
+        console.log('send in password');
+        ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
+      }, repeater ? 1000 : 0);
     }
 
     const discoverSuccess = (result) => {
@@ -139,7 +139,7 @@ export function openGarageViaBluetooth(name){
         if (passwordCharacteristicsObject){ // password characteristics found
           writePassword()
         } else { // no password characteristics - skip it
-          writeBlinking()
+          writeOpen()
         }
       } else { // expected service not found, disconect
         console.log('this device does not have expected service - disconecting (probably not gate unit?)')
@@ -153,8 +153,8 @@ export function openGarageViaBluetooth(name){
     const connecionEstablished = (result) =>{
       console.log('connection established');
       dispatch(setMessage('Connection established'))
-      console.log(result);
       if (result.status == "connected"){
+        console.log(result);
         // 4. discover device (or services/characteristics/descriptors in iOS)
         dispatch(setMessage('Discovering services'))
         console.log('discovering servicess: ', address);
@@ -180,8 +180,9 @@ export function openGarageViaBluetooth(name){
     const scanStarted = (result) => {
       console.log('scan successfull');
       console.log(result);
-      // if (result.name && ( result.name === 'r'+name)){ // result.name.indexOf(name) != -1
-      if (result.name && (result.name === name || result.name === 'r'+name)){ // result.name.indexOf(name) != -1
+      // if (result.name && ( result.name === 'r'+name)){
+      if (result.name && (result.name === name || result.name === 'r'+name)){
+        if (result.name === 'r'+name) repeater = true // Found repeater, add waits
         console.log('grage found, stop scanning');
         console.log('found garage:', result);
         dispatch(setMessage('Garage found'))
