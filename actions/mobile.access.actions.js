@@ -111,20 +111,16 @@ export function openGarageViaBluetooth(name){
 
     const writeOpen = () =>{
       // 5. read/subscribe/write and read/write descriptors
-      setTimeout(() => {
-        console.log("write open garage, address: ", address,"servicies: ", services);
-        const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
-        ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
-      }, 3000);
+      console.log("write open garage, address: ", address,"servicies: ", services);
+      const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
+      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
     }
 
     const writeBlinking = () =>{
       // 5. read/subscribe/write and read/write descriptors
-      setTimeout(() => {
-        console.log("write blinking garage, address: ", address,"servicies: ", services);
-        const values = ['0xFF'] // packet is send like ['0xFE', '0xFF', '0x20']
-        ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeOpen, logError)
-      }, 3000);
+      console.log("write blinking garage, address: ", address,"servicies: ", services);
+      const values = ['0xFF'] // packet is send like ['0xFE', '0xFF', '0x20']
+      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeOpen, logError)
     }
 
     const writePassword = () => {
