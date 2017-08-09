@@ -63,7 +63,6 @@ export class NewContractPage extends Component {
 
     const placeSelected = (floor) => {
       floor.places.map((place) => {
-        place.available = place.noContract
         place.selected = (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined)
         return place
       })
