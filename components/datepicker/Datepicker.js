@@ -68,8 +68,8 @@ export default class Datepicker extends Component{
         <Month date={this.state.view} leftClick={decreaseMonth} rightClick={increaseMonth}/>
         <Days month={this.state.view} selected={this.state.selected} onClick={onDayClick} />
         <div className={styles.buttonContainer}>
-          <button className={styles.pickerButtonStyle} onClick={todayClick} type={"button"}>{t(['datetimepicker', 'today'])}</button>
-          {showInf && <button className={styles.pickerButtonStyle} onClick={infClick} type={"button"}>{t(['datetimepicker', 'inf'])}</button>}
+          <span onClick={todayClick}>{t(['datetimepicker', 'today'])}</span>
+          {showInf && <span onClick={infClick}>{t(['datetimepicker', 'inf'])}</span>}
         </div>
       </div>
     )

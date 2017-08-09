@@ -1,8 +1,11 @@
 import moment from 'moment'
 
-import { t }                        from '../modules/localization/localization'
-import { request }                  from '../helpers/request'
+import { t }                                 from '../modules/localization/localization'
+import { request }                           from '../helpers/request'
+import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
+
 import { formatDate, dateToMoment } from './analytics.garage.actions'
+
 import { PLACES_TURNOVER }          from '../queries/analytics.places.queries'
 
 
@@ -11,8 +14,6 @@ export const ANALYTICS_PLACES_SET_FROM    = 'ANALYTICS_PLACES_SET_FROM'
 export const ANALYTICS_PLACES_SET_TO      = 'ANALYTICS_PLACES_SET_TO'
 export const ANALYTICS_PLACES_SET_DISPLAY = 'ANALYTICS_PLACES_SET_DISPLAY'
 export const ANALYTICS_PLACES_SET_LOADING = 'ANALYTICS_PLACES_SET_LOADING'
-
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
 
 export function setGarage(value){
@@ -24,7 +25,7 @@ export function setGarage(value){
 export function setFrom(value){
   return (dispatch, getState) => {
     dispatch({ type: ANALYTICS_PLACES_SET_FROM
-             , value: formatDate(value)
+             , value
              })
     dispatch(initPlacesAnalytics())
   }
@@ -33,7 +34,7 @@ export function setFrom(value){
 export function setTo(value){
   return (dispatch, getState) => {
     dispatch({ type: ANALYTICS_PLACES_SET_TO
-             , value: formatDate(value)
+             , value
              })
     dispatch(initPlacesAnalytics())
   }
@@ -144,7 +145,7 @@ export function initPlacesAnalytics() {
           const shorttermTurnover = reservationsOfInterval.reduce((acc, res) => {return acc + res.price}, 0)
           const longtermTurnover  = contractsOfInterval.reduce((acc, contr) => {return acc + contr.price}, 0)
 
-          statistics.push({ date:      currentDate.format('MM. YYYY')
+          statistics.push({ date:      currentDate.format('M/YYYY')
                           , shortterm: { turnover:    shorttermTurnover
                                        , avgTurnover: Math.round(shorttermTurnover/placeCount)
                                        , minRevenue:  Math.min(...reservationsOfInterval.map(res => res.price))
@@ -167,8 +168,8 @@ export function initPlacesAnalytics() {
         dispatch(setLoading(false))
       }
 
-      getState().pageBase.garage && request(onSuccess, PLACES_TURNOVER, { from: momentFrom.format(MOMENT_DATETIME_FORMAT)
-                                                                        , to: momentTo.endOf('month').format(MOMENT_DATETIME_FORMAT)
+      getState().pageBase.garage && request(onSuccess, PLACES_TURNOVER, { from: timeToUTC(momentFrom.format(MOMENT_DATETIME_FORMAT))
+                                                                        , to: timeToUTC(momentTo.endOf('month').format(MOMENT_DATETIME_FORMAT))
                                                                         , id: getState().pageBase.garage
                                                                         })
     }

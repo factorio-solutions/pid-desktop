@@ -12,8 +12,8 @@ import {
 
 const defaultState =  { reservations: []
                       , contracts:    []
-                      , from:         moment().subtract(1, 'months').format('M/YYYY')
-                      , to:           moment().format('M/YYYY')
+                      , from:         moment().subtract(1, 'months').startOf('month').format('DD.MM.YYYY')
+                      , to:           moment().startOf('month').format('DD.MM.YYYY')
                       , period:       'month' // or 'week'
                       , loading:      false
                       }

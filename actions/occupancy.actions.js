@@ -44,14 +44,18 @@ export function setFrom (from){
 export function loadGarage(){
   return (dispatch, getState) => {
     const onGarageSuccess = (response) => {
-      // response.data.garage.contracts.filter((contract) => {
-      //   return moment(contract.from).isSameOrBefore(getState().occupancy.from) && getState().occupancy.from.isBefore(moment(contract.to))
-      // })
-      response.data.garage.clients = response.data.garage.contracts.map(contract => {
-        return {...contract.client, contract: contract}
-      })
-      response.data.garage.clients.unshift({name:t(['occupancy', 'allClients']), id: undefined})
-      dispatch(setClients(response.data.garage.clients))
+      let clients = response.data.garage.contracts.reduce((acc, contract)=>{
+        const currentClient = acc.find(client => client.id === contract.client.id)
+        if (currentClient) {
+          currentClient.contracts.push(contract)
+        } else {
+          acc.push({...contract.client, contracts: [contract]})
+        }
+        return acc
+      }, [])
+
+      clients.unshift({name:t(['occupancy', 'allReservations']), id: undefined})
+      dispatch(setClients(clients))
       dispatch(setGarage(response.data.garage))
     }
 
@@ -67,15 +71,17 @@ export function initOccupancy () {
 
 // =============================================================================
 // occupancy actions
-export function subtractDay () {
+export function subtract () {
   return (dispatch, getState) => {
-    dispatch(setFrom( moment(getState().occupancy.from).subtract(1,'day') ))
+    const duration = getState().occupancy.duration
+    dispatch(setFrom( moment(getState().occupancy.from).subtract(1, duration) ))
   }
 }
 
-export function addDay () {
+export function add () {
   return (dispatch, getState) => {
-    dispatch(setFrom( moment(getState().occupancy.from).add(1,'day') ))
+    const duration = getState().occupancy.duration
+    dispatch(setFrom( moment(getState().occupancy.from).add(1, duration) ))
   }
 }
 

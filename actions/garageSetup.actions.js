@@ -20,6 +20,8 @@ export const GARAGE_SETUP_SET_AVAILABLE_TARIFS = 'GARAGE_SETUP_SET_AVAILABLE_TAR
 export const GARAGE_SETUP_SET_TARIF_ID         = 'GARAGE_SETUP_SET_TARIF_ID'
 export const GARAGE_SETUP_SET_IMG              = 'GARAGE_SETUP_SET_IMG'
 export const GARAGE_SETUP_SET_NAME             = 'GARAGE_SETUP_SET_NAME'
+export const GARAGE_SETUP_SET_IC               = 'GARAGE_SETUP_SET_IC'
+export const GARAGE_SETUP_SET_DIC              = 'GARAGE_SETUP_SET_DIC'
 export const GARAGE_SETUP_SET_LINE_1           = 'GARAGE_SETUP_SET_LINE_1'
 export const GARAGE_SETUP_SET_LINE_2           = 'GARAGE_SETUP_SET_LINE_2'
 export const GARAGE_SETUP_SET_CITY             = 'GARAGE_SETUP_SET_CITY'
@@ -90,6 +92,18 @@ export function setImage(value) {
 
 export function setName(value) {
   return { type: GARAGE_SETUP_SET_NAME
+         , value
+         }
+}
+
+export function setIc(value) {
+  return { type: GARAGE_SETUP_SET_IC
+         , value
+         }
+}
+
+export function setDic(value) {
+  return { type: GARAGE_SETUP_SET_DIC
          , value
          }
 }
@@ -409,6 +423,8 @@ export function intiEditGarageGeneral(id) {
       response.data.garage.img && dispatch(setImage(response.data.garage.img))
 
       dispatch(setName(response.data.garage.name))
+      dispatch(setIc(response.data.garage.ic))
+      dispatch(setDic(response.data.garage.dic))
       dispatch(setLPG(response.data.garage.lpg))
       dispatch(setLine1(response.data.garage.address.line_1))
       dispatch(setLine2(response.data.garage.address.line_2))
@@ -506,6 +522,8 @@ export function updateGarageGeneral(id, backUrl) {
 
     const garage = { id: +id
                    , garage: { name:         state.name
+                             , ic:           state.ic
+                             , dic:          state.dic
                              , lpg:          state.lpg
                              , img:          state.img === defaultImage ? null : state.img
                              , pid_tarif_id: state.tarif_id
@@ -612,6 +630,8 @@ export function submitGarage() {
       request( onSuccess
              , CREATE_NEW_GARAGE
              , { garage: { name:         state.name
+                         , ic:           state.ic
+                         , dic:          state.dic
                          , lpg:          state.lpg
                          , img:          state.img === defaultImage ? null : state.img
                          , floors:       newFloors
@@ -637,6 +657,8 @@ export function submitGarage() {
              , UPDATE_GARAGE
              , { id: state.id
                , garage: { name:         state.name
+                         , ic:           state.ic
+                         , dic:          state.dic
                          , lpg:          state.lpg
                          , img:          state.img === defaultImage ? null : state.img
                          , floors:       newFloors

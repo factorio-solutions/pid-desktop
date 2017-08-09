@@ -66,6 +66,7 @@ export class GarageLayout extends Component {
         for (let styleTag of currentSvg.getElementsByTagName('style')) {
           styleTag.innerHTML.split('{')
           .reduce((acc, str) => { return [...acc, ...str.split('}')] }, [])
+          .map(str => str.trim())
           .filter((obj, index) => index%2 === 0 && obj.length > 0 && obj[0]==='.' && !obj.includes('SVG_')) // is odd not zero-length class selector that doenst begin with SVG_
           .forEach((selector) => {
             const newName = selector[0] + 'SVG_' + i + '_' + selector.substring(1)

@@ -2,6 +2,7 @@ import {
   SET_CAR_LICENCE_PLATE,
   SET_CAR_COLOR,
   SET_CAR_MODEL,
+  SET_CAR_NAME,
   SET_CAR_WIDTH,
   SET_CAR_HEIGHT,
   SET_CAR_LENGTH,
@@ -13,6 +14,7 @@ import {
 const defaultState =  { licence_plate: ''
                       , color:         ''
                       , model:         ''
+                      , name:          ''
                       , width:         ''
                       , height:        ''
                       , length:        ''
@@ -37,6 +39,11 @@ export default function newCar (state = defaultState, action) {
     case SET_CAR_MODEL:
       return { ... state
              , model: action.value
+             }
+
+    case SET_CAR_NAME:
+      return { ... state
+             , name: action.value
              }
 
     case SET_CAR_WIDTH:

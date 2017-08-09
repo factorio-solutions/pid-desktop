@@ -2,16 +2,17 @@ import update   from 'immutability-helper'
 import * as nav from '../helpers/navigation'
 import moment   from 'moment'
 
-import { request }  from '../helpers/request'
-import { t }        from '../modules/localization/localization'
-import { setError } from './pageBase.actions'
+import { request }                           from '../helpers/request'
+import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
+import { t }                                 from '../modules/localization/localization'
+import { setError }                          from './pageBase.actions'
 
 import { GET_RENTS }                     from '../queries/admin.finance.queries.js'
 import { GARAGE_CONTRACTS }              from '../queries/clients.queries.js'
 import { GET_GARAGE_CLIENT, ADD_CLIENT, GET_CURRENCIES, CREATE_CONTRACT, GET_CONTRACT_DETAILS, UPDATE_CONTRACT } from '../queries/newContract.queries.js'
 
-const MOMENT_DATETIME_FORMAT = "DD.MM.YYYY HH:mm"
 
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID    = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS        = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ADD_CLIENT     = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_ADD_CLIENT'
@@ -29,6 +30,12 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES         = 'ADMIN_CLIENTS_NEW_
 export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT   = 'ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM         = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
 
+
+export function setContractId (value) {
+  return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID
+         , value
+         }
+}
 
 export function setClients (value) {
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS
@@ -107,6 +114,8 @@ export function setFrom (value) {
     dispatch({ type: ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM
              , value: fromValue.format(MOMENT_DATETIME_FORMAT)
              })
+
+    getState().newContract.garage && dispatch(getGarage(getState().newContract.garage.id, getState().newContract.contract_id))
   }
 }
 
@@ -127,10 +136,9 @@ export function setTo (value) {
       dispatch ({ type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
                 , value: toValue.format(MOMENT_DATETIME_FORMAT)
                 })
-      // return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO
-      //   , value: value ==='' ? '' : moment(value, MOMENT_DATETIME_FORMAT).endOf('day').format(MOMENT_DATETIME_FORMAT)
-      // }
     }
+
+    getState().newContract.garage && dispatch(getGarage(getState().newContract.garage.id, getState().newContract.contract_id))
   }
 }
 
@@ -157,21 +165,7 @@ export function eraseForm () {
 
 export function initContract(id){
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      response.data.garage.floors = response.data.garage.floors.map(floor => {
-        floor.places = floor.places.map((place) => {
-          place.noContract = response.data.garage.contracts
-          .filter(contract => contract.id !== +id) // not current contract
-          .find(contract => {
-            return contract.places.find((contractPlace) => contractPlace.id === place.id) !== undefined
-          }) === undefined
-          return place
-        })
-        return floor
-      })
-
-      dispatch(setGarage(response.data.garage))
-    }
+    dispatch(setContractId(id))
 
     const onRentsSuccess = (response) => {
       dispatch(setRents(response.data.rents))
@@ -195,17 +189,42 @@ export function initContract(id){
     const onDetailsSuccess = (response) => {
       dispatch(setFrom(moment(response.data.contract.from).format(MOMENT_DATETIME_FORMAT)))
       dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
-      request(onSuccess, GET_GARAGE_CLIENT, { id: response.data.contract.garage.id })
+      dispatch(getGarage(response.data.contract.garage.id, id))
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent.id))
       dispatch(setPlaces(response.data.contract.places))
     }
 
-    console.log(getState());
-    if (!id) request(onSuccess, GET_GARAGE_CLIENT, { id: getState().pageBase.garage }) // if id, then i have to download garage from contract, not this one
+    if (!id) dispatch(getGarage(getState().pageBase.garage)) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
     request(onClientsSuccess, GARAGE_CONTRACTS, {id: getState().pageBase.garage})
     if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, {id: +id})
+  }
+}
+
+export function getGarage (garage_id, contract_id) {
+  return (dispatch, getState) => {
+    const state = getState().newContract
+
+    const onSuccess = (response) => {
+      response.data.garage.floors = response.data.garage.floors.map(floor => {
+        floor.places = floor.places.map((place) => {
+          return {...place, available: floor.contractable_places.find(p=>p.id === place.id) !== undefined }
+        })
+        return floor
+      })
+
+      dispatch(setGarage(response.data.garage))
+    }
+
+    request( onSuccess
+           , GET_GARAGE_CLIENT
+           , { garage_id
+             , from: timeToUTC(state.from)
+             , to :  timeToUTC(state.to)
+             , contract_id
+             }
+           )
   }
 }
 
@@ -273,8 +292,8 @@ export function submitNewContract (id){
     const client = state.clients.find(cli => cli.id === state.client_id)
     let variables = { contract: { client_id: client.id
                                 , contract_places: state.places.map(place => {return {place_id: place.id}})
-                                , from: state.from
-                                , to: state.to
+                                , from: timeToUTC(state.from)
+                                , to:   timeToUTC(state.to)
                                 }
                     }
 

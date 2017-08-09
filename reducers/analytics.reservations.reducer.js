@@ -13,7 +13,7 @@ import {
 const defaultState =  { reservations: []
                       , contracts :   []
                       , from:         moment().startOf('week').format('DD.MM.YYYY')
-                      , to:           moment().endOf('week').format('DD.MM.YYYY')
+                      , to:           moment().add(7, 'days').endOf('week').format('DD.MM.YYYY')
                       , filter:       'shortterm'
                       , loading:      false
                       }
@@ -37,7 +37,7 @@ export default function analyticsReservations (state = defaultState, action) {
       return {...state
              , from: action.value
              , to: differenceFrom > 30 ? moment(action.value, 'DD.MM.YYYY').add(30, 'days').format('DD.MM.YYYY')
-                 : differenceFrom < 0  ? moment(action.value, 'DD.MM.YYYY').add(7, 'days').format('DD.MM.YYYY')
+                 : differenceFrom < 0  ? moment(action.value, 'DD.MM.YYYY').add(14, 'days').format('DD.MM.YYYY')
                                        : state.to
              }
 
@@ -46,7 +46,7 @@ export default function analyticsReservations (state = defaultState, action) {
       return {...state
              , to: action.value
              , from: differenceTo > 30 ? moment(action.value, 'DD.MM.YYYY').subtract(30, 'days').format('DD.MM.YYYY')
-                   : differenceTo < 0  ? moment(action.value, 'DD.MM.YYYY').subtract(7, 'days').format('DD.MM.YYYY')
+                   : differenceTo < 0  ? moment(action.value, 'DD.MM.YYYY').subtract(14, 'days').format('DD.MM.YYYY')
                                        : state.from
              }
 

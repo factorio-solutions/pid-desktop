@@ -1,25 +1,16 @@
-export const GET_GARAGE_CLIENT = `query($id: Id!){
-  garage(id: $id){
+export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $from: Datetime!, $to: Datetime!, $contract_id: Id) {
+  garage(id: $garage_id) {
     id
     name
-    floors{
+    floors {
       label
       scheme
+      contractable_places(from: $from, to: $to, contract_id: $contract_id) {
+        id
+      }
       places{
         id
         label
-      }
-    }
-    contracts{
-      id
-      from
-      to
-      name
-      client{
-        id
-      }
-      places{
-        id
       }
     }
   }

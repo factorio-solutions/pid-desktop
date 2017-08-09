@@ -10,8 +10,8 @@ import {
 
 
 const defaultState =  { garage:  undefined
-                      , from:    moment().subtract(1, 'months').format('M/YYYY')
-                      , to:      moment().format('M/YYYY')
+                      , from:    moment().subtract(1, 'months').startOf('month').format('DD.MM.YYYY')
+                      , to:      moment().startOf('month').format('DD.MM.YYYY')
                       , display: 'graph'
                       , loading: false
                       }
