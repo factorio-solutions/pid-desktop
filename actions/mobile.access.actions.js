@@ -125,7 +125,7 @@ export function openGarageViaBluetooth(name){
 
     const writePassword = () => {
       console.log('send in password');
-      ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeBlinking, logError)
+      ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
     }
 
     const discoverSuccess = (result) => {
@@ -139,8 +139,8 @@ export function openGarageViaBluetooth(name){
         if (passwordCharacteristicsObject){ // password characteristics found
           writePassword()
         } else { // no password characteristics - skip it
+          writeBlinking()
         }
-        writeBlinking()
       } else { // expected service not found, disconect
         console.log('this device does not have expected service - disconecting (probably not gate unit?)')
         dispatch(setMessage('Expected service missing'))
@@ -180,7 +180,8 @@ export function openGarageViaBluetooth(name){
     const scanStarted = (result) => {
       console.log('scan successfull');
       console.log(result);
-      if (result.name && (result.name === 'r'+name)){ // result.name.indexOf(name) != -1
+      // if (result.name && ( result.name === 'r'+name)){ // result.name.indexOf(name) != -1
+      if (result.name && (result.name === name || result.name === 'r'+name)){ // result.name.indexOf(name) != -1
         console.log('grage found, stop scanning');
         console.log('found garage:', result);
         dispatch(setMessage('Garage found'))
