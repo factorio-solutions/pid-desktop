@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { MOMENT_DATETIME_FORMAT } from '../helpers/time'
 
 import {
   ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID,
@@ -26,12 +27,12 @@ const defaultState =  { contract_id:  undefined // id is editing
                       , addClient:    false
                       , client_token: ''
                       , rents:        []
-                      , rent_id:      undefined
+                      , rent:         undefined
                       , newRent:      false
                       , price:        undefined
                       , currencies:   []
                       , currency_id:  undefined
-                      , from:         moment().startOf('day')
+                      , from:         moment().startOf('day').format(MOMENT_DATETIME_FORMAT)
                       , to:           undefined
                       , garage:       undefined
                       , places:       []
@@ -74,7 +75,7 @@ export default function newContract (state = defaultState, action) {
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_RENT:
       return { ...state
-             , rent_id: action.value
+             , rent: action.value
              }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_NEW_RENT:
