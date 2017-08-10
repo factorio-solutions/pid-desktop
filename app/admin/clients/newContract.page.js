@@ -88,7 +88,7 @@ export class NewContractPage extends Component {
         <div className={styles.flex}>
           <div className={styles.half}>
             <Form onSubmit={state.garage && state.garage.is_admin ? submitForm : goBack} submitable={checkSubmitable()} onBack={goBack} onHighlight={actions.toggleHighlight}>
-              <h2>{state.garage && `${t(['newContract', 'description'])} ${state.garage.name}`}</h2>
+              <h2>{state.garage && `${state.garage.is_admin ? t(['newContract', 'description']) : t(['newContract', 'yourContract'])} ${state.garage.name}`}</h2>
               { state.garage && state.garage.is_admin && (state.addClient ?
                 <div className={styles.twoButtons}>
                   <PatternInput onChange={actions.setClientToken} label={t(['newContract', 'selectClient'])} error={t(['newContract', 'invalidToken'])} type='text' placeholder={t(['newContract', 'tokenPlaceholder'])} value={state.client_token ? state.client_token : ''} highlight={state.highlight}/>
