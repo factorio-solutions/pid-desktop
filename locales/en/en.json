@@ -804,6 +804,7 @@
 	},
 	"newContract": {
 		"description": "New contract in ",
+		"yourContract": "Your contract in ",
 		"selectClient": "Select client",
 		"invalidToken": "Token invalid",
 		"tokenPlaceholder": "gaZJBS",
