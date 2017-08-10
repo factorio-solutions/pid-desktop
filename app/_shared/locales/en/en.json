@@ -814,7 +814,8 @@
 		"contractPrice": "Enter new specific contract price",
 		"priceInvalid": "Price invalid",
 		"pricePlaceholder": "10000",
-		"selectCurrency": "Select currency"
+		"selectCurrency": "Select currency",
+		"placePrice": "Price per place per month"
 	},
 	"finance": {
 		"paypal": "Paypal",
