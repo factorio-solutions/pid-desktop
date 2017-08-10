@@ -46,7 +46,6 @@ export default class Dropdown extends Component {
   validateContent(nextProps){
     if (nextProps.content.length == 1){ // if only one item, autoselect it
       this.setState({selected: 0})
-      ReactDOM.findDOMNode(this).children[0].classList.add(styles.singleItem)
     } else {
       this.setState({selected: nextProps.selected})
     }
