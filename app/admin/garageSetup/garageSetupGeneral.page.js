@@ -58,6 +58,7 @@ export class GarageSetupGeneralPage extends Component {
 
     const checkSubmitable = () => {
       // return true // todo: delete this
+      if (state.dic && !state.ic) return false
       if (state.tarif_id == undefined) return false
       if (state.name == "") return false
       if (state.city == "") return false
@@ -100,7 +101,7 @@ export class GarageSetupGeneralPage extends Component {
               <h2>{t(['newGarage', 'garageAddress'])}</h2>
               <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})} highlight={state.highlight}/>
               <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])} highlight={state.highlight}/>
-              <Input onChange={actions.setIc}         label={t(['newClient', 'IC'])}         error={t(['newClient', 'invalidIC'])}          value={state.ic}          placeholder={t(['newClient', 'ICplaceholder'])} />
+              <Input onChange={actions.setIc}         label={t(['newClient', 'IC'])}         error={t(['newClient', 'invalidIC'])}          value={state.ic}          placeholder={t(['newClient', 'ICplaceholder'])} highlight={state.dic && state.highlight} />
               <Input onChange={actions.setDic}        label={t(['newClient', 'DIC'])}        error={t(['newClient', 'invalidDIC'])}         value={state.dic}         placeholder={t(['newClient', 'DICplaceholder'])} />
               <div className={styles.checkbox}><input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG}/> <span onClick={actions.toggleLPG}> {t(['newGarage', 'lpgAllowed'])} </span></div>
               <Input onChange={actions.setLine1}      onBlur={()=>{geocode()}} label={t(['newGarage', 'street'])}     error={t(['newGarage', 'invalidStreet'])}      value={state.line_1}      placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
