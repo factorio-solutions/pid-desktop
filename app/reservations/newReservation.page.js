@@ -5,6 +5,7 @@ import moment                           from 'moment'
 
 import PageBase      from '../_shared/containers/pageBase/PageBase'
 import Input         from '../_shared/components/input/Input'
+import Uneditable    from '../_shared/components/input/Uneditable'
 import DatetimeInput from '../_shared/components/input/DatetimeInput'
 import ButtonStack   from '../_shared/components/buttonStack/ButtonStack'
 import RoundButton   from '../_shared/components/buttons/RoundButton'
@@ -132,8 +133,8 @@ export class NewReservationPage extends Component {
                 <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} inlineMenu={beginsInlineMenu} editable={!ongoing}/>
                 {state.durationDate ? <Input         onChange={actions.durationChange} label={t(['newReservation', 'duration'])} error={t(['newReservation', 'invalidaValue'])} inlineMenu={endsInlineMenu} value={String(moment.duration(moment(state.to, 'DD.MM.YYYY HH:mm').diff(moment(state.from, 'DD.MM.YYYY HH:mm'))).asHours())} type="number" min={0.25} step={0.25} align="right" />
                                     : <DatetimeInput onChange={handleTo}               label={t(['newReservation', 'ends'])}     error={t(['newReservation', 'invalidaDate'])}  inlineMenu={endsInlineMenu} value={state.to} />}
-                <Input value={placeLabel()} label={t(['newReservation', 'place'])} error={t(['newReservation', 'invalidPlace'])} type='text' name='reservation[place]' align='right' readOnly={ongoing} inlineMenu={placeInlineMenu}/>
-                <Input value={state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price || ''}  label={t(['newReservation', 'price'])} type='text' name='reservation[price]' align='right' />
+                <Uneditable label={t(['newReservation', 'place'])} value={placeLabel()} />
+                <Uneditable label={t(['newReservation', 'price'])} value={state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price || ''} />
               </Form>
             </div>
           </div>
