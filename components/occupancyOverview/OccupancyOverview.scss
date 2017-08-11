@@ -17,7 +17,23 @@
 }
 
 .occupacny{
+  // position: relative;
   // overflow: auto;
+
+  tbody {
+    display:block;
+    max-height:550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+  }
+  thead {
+    width: calc( 100% - 1em )
+  }
 
   > table {
     width: 100%;
@@ -27,6 +43,14 @@
 
     td:first-child{
       width: 65px;
+    }
+
+    &.freezeHeader{
+      margin-top: 0px;
+      position: fixed;
+      background-color: $white;
+      top: 0;
+      z-index: 10;
     }
   }
 }
