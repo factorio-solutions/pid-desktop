@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20160607a",
+	"PID-RELEASE": "r20160814a",
 	"addresses": {
 		"name": "Name",
 		"line1": "Adresszeile 1",
@@ -34,17 +34,17 @@
 		"proceed": "Hier fortfahren"
 	},
 	"signup_page": {
-		"name": "Vor- und Nachname  *",
-		"phone": "Telefonnummer  *",
-		"email": "E-Mail  *",
-		"password": "Passwort  *",
-		"confirmation": "Passwort Bestätigen  *",
+		"name": "Vor- und Nachname *",
+		"phone": "Telefonnummer *",
+		"email": "E-Mail *",
+		"password": "Passwort *",
+		"confirmation": "Passwort Bestätigen *",
 		"nameInvalid": "Name ungültig",
 		"phoneInvalid": "Telefonnummer ungültig",
 		"emailInvalid": "Ungültige E-mail",
 		"loginFailed": "Anmeldung fehlgeschlagen",
-		"minimumLength": "Mindestlänge ist ",
-		"noMatching": "Passwort und Bestätigung stimmen nicht überein. ",
+		"minimumLength": "Mindestlänge ist",
+		"noMatching": "Passwort und Bestätigung stimmen nicht überein.",
 		"userNotCreated": "Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon.",
 		"loading": "Laden"
 	},
@@ -104,11 +104,10 @@
 		"financeCSOBHint": "DE: pageBase.financeCSOBHint",
 		"pidSettingsHint": "DE: pageBase.pidSettingsHint",
 		"activityLogHint": "DE: pageBase.activityLogHint",
-		"reservationsHint": "DE: Here you have list of all reservations within your account.",
-		"newReservationHint": "DE: You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.",
-		"newReservationOverviewHint": "DE: pageBase.newReservationOverviewHint",
+		"reservationsHint": "DE: pageBase.reservationsHint",
+		"newReservationHint": "DE: pageBase.newReservationHint",
 		"garagesHint": "DE: pageBase.garagesHint",
-		"newGarageHint": "DE: Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.",
+		"newGarageHint": "DE: pageBase.newGarageHint",
 		"newGarageFloorsHint": "DE: pageBase.newGarageFloorsHint",
 		"newGarageOrderHint": "DE: pageBase.newGarageOrderHint",
 		"newGarageSubscribtionHint": "DE: pageBase.newGarageSubscribtionHint",
@@ -118,16 +117,16 @@
 		"newClientHint": "DE: pageBase.newClientHint",
 		"clientUsersHint": "DE: pageBase.clientUsersHint",
 		"settingsHint": "Einstellungen",
-		"usersHint": "DE: Here you have a list of all known users. Select a user to see Client accounts membership.",
+		"usersHint": "DE: pageBase.usersHint",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"editClientHint": "DE: pageBase.editClientHint",
 		"notificationsHint": "DE: pageBase.notificationsHint",
 		"inviteUsersHint": "DE: pageBase.inviteUsersHint",
 		"addFeaturesHint": "DE: pageBase.addFeaturesHint",
 		"addFeatures": "DE: pageBase.addFeatures",
-		"newAccountHint": "DE: Here you are creating a new Client account. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. You will be able to set these in corresponding sections of the system.",
+		"newAccountHint": "DE: pageBase.newAccountHint",
 		"editAccountHint": "DE: pageBase.editAccountHint",
-		"accountsHint": "DE: In this section you can manage Client accounts. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. Select an account to show action buttons for \"edit\" and \"manage users\"",
+		"accountsHint": "DE: pageBase.accountsHint",
 		"accounts": "DE: pageBase.accounts",
 		"newAccount": "DE: pageBase.newAccount",
 		"editAccount": "DE: pageBase.editAccount",
@@ -159,6 +158,10 @@
 		"garageAddClientHint": "DE: pageBase.garageAddClientHint",
 		"garageGarageUsersHint": "DE: pageBase.garageGarageUsersHint",
 		"EditUserHint": "DE: pageBase.EditUserHint",
+		"orderGarageModuleHint": "DE: pageBase.orderGarageModuleHint",
+		"reservationOverviewHint": "DE: pageBase.reservationOverviewHint",
+		"editInvoiceHint": "DE: pageBase.editInvoiceHint",
+		"editContractHint": "DE: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "DE: pageBase.unredNotifications.one",
 			"other": "DE: pageBase.unredNotifications.other"
@@ -173,17 +176,13 @@
 		"analyticsreservationsHint": "DE: pageBase.analyticsreservationsHint",
 		"analyticsplacesHint": "DE: pageBase.analyticsplacesHint",
 		"analyticspaymentsHint": "DE: pageBase.analyticspaymentsHint",
-		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
-		"orderGarageModuleHint": "DE: pageBase.orderGarageModuleHint",
-		"reservationOverviewHint": "DE: pageBase.reservationOverviewHint",
-		"editInvoiceHint": "DE: pageBase.editInvoiceHint",
-		"editContractHint": "DE: pageBase.editContractHint"
+		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint"
 	},
 	"newReservation": {
 		"selectGarage": "Wählen Sie eine Garage *",
 		"selectUser": "Wählen Sie einen Benutzer aus *",
-		"selectClient": "Wählen Sie einen Klient  *",
-		"selectCar": "Wählen sie einf Fahrzeug  *",
+		"selectClient": "Wählen Sie einen Klient *",
+		"selectCar": "Wählen sie einf Fahrzeug *",
 		"begins": "Beginnt",
 		"invalidaDate": "Ungültiges Datum",
 		"invalidPlace": "Ungültiger Platz",
@@ -218,20 +217,32 @@
 		"from": "DE: clients.from",
 		"created": "DE: clients.created",
 		"users": "DE: clients.users",
-		"token": "DE: clients.token"
+		"token": "DE: clients.token",
+		"contactPerson": "DE: clients.contactPerson",
+		"createdAt": "DE: clients.createdAt",
+		"createAgreement": "DE: clients.createAgreement",
+		"editClient": "DE: clients.editClient",
+		"goToUsers": "DE: clients.goToUsers",
+		"goToInvoices": "DE: clients.goToInvoices",
+		"places": "DE: clients.places",
+		"contract": "DE: clients.contract",
+		"monthlyTotal": "DE: clients.monthlyTotal",
+		"invoices": "DE: clients.invoices"
 	},
 	"clientUsers": {
 		"name": "Benutzername",
 		"email": "E-Mail",
 		"memberSince": "Mitglied seit",
 		"phone": "Telefon",
+		"contact_person": "DE: clientUsers.contact_person",
 		"admin": "ist Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "Intern",
 		"host": "ist Gast",
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie wirklich diesen Benutzer entfernen?",
-		"pendingUsers": "Offene Einladungen"
+		"pendingUsers": "Offene Einladungen",
+		"removeUser": "DE: clientUsers.removeUser"
 	},
 	"reservations": {
 		"name": "Name",
@@ -251,7 +262,11 @@
 		"reservationNotPayed": "Reservierung ist noch nicht bezahlt worden.",
 		"pay": "Zahlung",
 		"host": "Gast",
-		"visitor": "Besucher"
+		"visitor": "Besucher",
+		"editReservation": "DE: reservations.editReservation",
+		"payReservation": "DE: reservations.payReservation",
+		"downloadInvoice": "DE: reservations.downloadInvoice",
+		"destroyRservation": "DE: reservations.destroyRservation"
 	},
 	"garages": {
 		"clients": "Klienten",
@@ -281,7 +296,8 @@
 		"placeRent": "Mieten",
 		"rentName": "Name der Miete",
 		"price": "Preis",
-		"places": "Plätze"
+		"places": "Plätze",
+		"editRent": "DE: garages.editRent"
 	},
 	"occupancy": {
 		"selectClientClient": "Klienten wählen",
@@ -311,7 +327,8 @@
 		"name": "Benutzername",
 		"email": "E-Mail",
 		"memberSince": "Mitglied seit",
-		"phone": "Telefon"
+		"phone": "Telefon",
+		"removeUser": "DE: garageUsers.removeUser"
 	},
 	"garageManagement": {
 		"garageManagement": "Garage-Management",
@@ -397,7 +414,7 @@
 		"gsmNameInvalid": "DE: newGarage.gsmNameInvalid",
 		"gsmNamePlaceholder": "DE: newGarage.gsmNamePlaceholder",
 		"gsmModulesDescription": "DE: newGarage.gsmModulesDescription",
-		"floorName": "DE: Level",
+		"floorName": "DE: newGarage.floorName",
 		"placeholderFloor": "1",
 		"invalidFloorName": "Ungültiger Name",
 		"invalidName": "Ungültiger Garagename",
@@ -413,8 +430,8 @@
 		"invalidPostalCode": "DE: newGarage.invalidPostalCode",
 		"invalidCountry": "DE: newGarage.invalidCountry",
 		"invalidState": "DE: newGarage.invalidState",
-		"from": "DE: newGarage.from *",
-		"to": "DE: newGarage.to *",
+		"from": "DE: newGarage.from",
+		"to": "DE: newGarage.to",
 		"invalidFloorFrom": "DE: newGarage.invalidFloorFrom",
 		"invalidFloorTo": "DE: newGarage.invalidFloorTo",
 		"placeholderFloorFrom": "3",
@@ -444,7 +461,10 @@
 		"selectAccount": "DE: newGarage.selectAccount",
 		"selectAccountMandatory": "DE: newGarage.selectAccountMandatory",
 		"processing": "DE: newGarage.processing",
-		"users": "DE: newGarage.users"
+		"users": "DE: newGarage.users",
+		"addProfilePicture": "DE: newGarage.addProfilePicture",
+		"removeFloor": "DE: newGarage.removeFloor",
+		"uploadSvg": "DE: newGarage.uploadSvg"
 	},
 	"newClient": {
 		"name": "DE: newClient.name",
@@ -588,7 +608,11 @@
 		"images": "DE: newMarketing.images",
 		"uploading": "DE: newMarketing.uploading",
 		"notCreated": "DE: newMarketing.notCreated",
-		"notUpdated": "DE: newMarketing.notUpdated"
+		"notUpdated": "DE: newMarketing.notUpdated",
+		"addImage": "DE: newMarketing.addImage",
+		"editImage": "DE: newMarketing.editImage",
+		"removeImage": "DE: newMarketing.removeImage",
+		"removeImageQuestion": "DE: newMarketing.removeImageQuestion"
 	},
 	"garageMarketing": {
 		"id": "DE: garageMarketing.id",
@@ -758,15 +782,36 @@
 		"dueDate": "DE: invoices.dueDate",
 		"account": "DE: invoices.account",
 		"client": "DE: invoices.client",
-		"payed": "DE: invoices.payed",
+		"type": "DE: invoices.type",
+		"invoiceText": "DE: invoices.invoiceText",
+		"paid": "DE: invoices.paid",
 		"ammount": "DE: invoices.ammount",
 		"subject": "DE: invoices.subject",
 		"pay": "DE: invoices.pay",
-		"invoicePayed": "DE: invoices.invoicePayed",
+		"invoicePaid": "DE: invoices.invoicePaid",
 		"initializingPayment": "DE: invoices.initializingPayment",
 		"redirecting": "DE: invoices.redirecting",
 		"paymentUnsucessfull": "DE: invoices.paymentUnsucessfull",
-		"payingReservation": "DE: invoices.payingReservation"
+		"payingReservation": "DE: invoices.payingReservation",
+		"selectClient": "DE: invoices.selectClient",
+		"selectGarage": "DE: invoices.selectGarage",
+		"invoiceNumber": "DE: invoices.invoiceNumber",
+		"stornoInvoice": "DE: invoices.stornoInvoice",
+		"invoiceCanceled": "DE: invoices.invoiceCanceled",
+		"cancelReason": "DE: invoices.cancelReason",
+		"reason": "DE: invoices.reason",
+		"reasonInvalid": "DE: invoices.reasonInvalid",
+		"reasonPlaceholder": "DE: invoices.reasonPlaceholder",
+		"inoiceDate": "DE: invoices.inoiceDate",
+		"invalidaDate": "DE: invoices.invalidaDate",
+		"invalidValue": "DE: invoices.invalidValue",
+		"amount": "DE: invoices.amount",
+		"downloadInvoice": "DE: invoices.downloadInvoice",
+		"editInvoice": "DE: invoices.editInvoice",
+		"payInvoice": "DE: invoices.payInvoice",
+		"sendReminder": "DE: invoices.sendReminder",
+		"invoicePaidLabel": "DE: invoices.invoicePaidLabel",
+		"invoiceIncorect": "DE: invoices.invoiceIncorect"
 	},
 	"resetPassword": {
 		"send": "DE: resetPassword.send",
@@ -813,7 +858,8 @@
 		"invalidVat": "DE: finance.invalidVat",
 		"invalidRow": "DE: finance.invalidRow",
 		"changeSuccess": "DE: finance.changeSuccess",
-		"changeFailed": "DE: finance.changeFailed"
+		"changeFailed": "DE: finance.changeFailed",
+		"uploadKey": "DE: finance.uploadKey"
 	},
 	"analytics": {
 		"week": "DE: analytics.week",
@@ -853,6 +899,5 @@
 		"visitors": "DE: dashboard.visitors",
 		"free": "DE: dashboard.free",
 		"total": "DE: dashboard.total"
-	},
-	"APP": "DE: APP"
+	}
 }
