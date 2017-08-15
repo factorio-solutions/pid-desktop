@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20161130a",
+	"PID-RELEASE": "r20160814a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -220,16 +220,27 @@
 		"from": "from",
 		"created": "Created",
 		"users": "users",
-		"token": "client token"
+		"token": "client token",
+		"contactPerson": "Contact person",
+		"createdAt": "Created at",
+		"createAgreement":"Create agreement",
+		"editClient":"Edit client",
+		"goToUsers":"Go to users",
+		"goToInvoices":"Go to invoices",
+		"places": "places",
+		"contract": "contract",
+		"monthlyTotal": "monthly total",
+		"invoices":"invoices"
 	},
 	"clientUsers": {
 		"name": "username",
 		"email": "e-mail",
 		"memberSince": "member since",
 		"phone": "phone",
+		"contact_person" : "contact person",
 		"admin": "is admin",
-		"secretary": "Secretary",
-		"internal": "Internal",
+		"secretary": "secretary",
+		"internal": "internal",
 		"host": "is host",
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
@@ -372,7 +383,7 @@
 		"invalidWidth": "Invalid width",
 		"invalidWeight": "Invalid weight",
 		"lengthPlaceholder": "5",
-		"heightPlaceholder": "2,8",
+		"heightPlaceholder": "2.8",
 		"widthPlaceholder": "3",
 		"weightPlaceholder": "5000",
 		"tarif": "Tarif:",
@@ -793,7 +804,7 @@
 	},
 	"modules": {
 		"marketingPage": "Marketing page",
-		"connectWithMrParkit": "Connect with Mr. Parkit",
+		"connectWithMrParkit": "Connect with MR.PARKIT",
 		"reservationForm": "Reservation form",
 		"goPublic": "Go public",
 		"goPublicDescription": "Offer short term parking to PiD community",
@@ -803,7 +814,8 @@
 		"cannotBeChanged": "You cannot go public until you set payment method. To do this go to Admin/Finance."
 	},
 	"newContract": {
-		"description": "New contract in ",
+		"description": "New Agreement in",
+		"yourContract": "Your contract in ",
 		"selectClient": "Select client",
 		"invalidToken": "Token invalid",
 		"tokenPlaceholder": "gaZJBS",
@@ -811,10 +823,11 @@
 		"selectedPlaces": "Selected places",
 		"noSelectedPlaces": "No selected places",
 		"selectRent": "Select rent",
-		"contractPrice": "Enter new specific contract price",
+		"contractPrice": "Enter new specific Agreement price",
 		"priceInvalid": "Price invalid",
 		"pricePlaceholder": "10000",
-		"selectCurrency": "Select currency"
+		"selectCurrency": "Select currency",
+		"placePrice": "Price per place per month"
 	},
 	"finance": {
 		"paypal": "Paypal",

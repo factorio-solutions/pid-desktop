@@ -16,6 +16,7 @@ export const GET_CLIENTUSERS = `query ($id: Id!) {
     secretary
     pending
     internal
+    contact_person
     created_at
   }
 }

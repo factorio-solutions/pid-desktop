@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "161110",
+	"PID-RELEASE": "r20160607a",
 	"addresses": {
 		"name": "Jméno *",
 		"line1": "Řádek 1",
@@ -34,11 +34,11 @@
 		"proceed": "Pokračujte zde"
 	},
 	"signup_page": {
-		"name": "Vaše celé jméno *",
-		"phone": "Telefonní číslo *",
-		"email": "E-mail *",
-		"password": "Heslo *",
-		"confirmation": "Potvrzení hesla *",
+		"name": "Vaše celé jméno  *",
+		"phone": "Telefonní číslo  *",
+		"email": "E-mail  *",
+		"password": "Heslo  *",
+		"confirmation": "Potvrzení hesla  *",
 		"nameInvalid": "Neplatné jméno",
 		"phoneInvalid": "Neplatné telefonní číslo",
 		"emailInvalid": "Neplatná e-mailová adresa",
@@ -107,7 +107,7 @@
 		"reservationsHint": "Zde najdete všechny rezervace pro Váš účet.",
 		"newReservationHint": "Zde můžete vytvořit novou rezervaci. Nejprve prosím vyberte uživatele a garáž, poté datum a eventuelně parkovací místo. Voilá.",
 		"newReservationOverviewHint": "CS: pageBase.newReservationOverviewHint",
-		"garagesHint": "Zde najdete seznam Vašich garáží. Po vybrání garáže můžete upravovat, která parkovací místa patří ke kterému uživatelskému účtu.",
+		"garagesHint": "CS: pageBase.garagesHint",
 		"newGarageHint": "Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.",
 		"newGarageFloorsHint": "CS: pageBase.newGarageFloorsHint",
 		"newGarageOrderHint": "CS: pageBase.newGarageOrderHint",
@@ -120,7 +120,7 @@
 		"settingsHint": "Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.",
 		"usersHint": "Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí jeho členství v zákaznických účtech",
 		"allKnownUsers": "Všichni známí uživatelé",
-		"editClientHint": "Zde můžete upravit údaje o klientském účtu a jeho název",
+		"editClientHint": "CS: pageBase.editClientHint",
 		"notificationsHint": "Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.",
 		"inviteUsersHint": "CS: pageBase.inviteUsersHint",
 		"addFeaturesHint": "Zde můžete přidat funkce do tvého systému.",
@@ -166,14 +166,18 @@
 		"analytics": "Analýza",
 		"garageTurnover": "Obrat garáže",
 		"reservations": "Rezervace",
-		"places": "Místa",
+		"places": "Obrat míst",
 		"payments": "Platby",
 		"gates": "Brány",
 		"analyticsGarageTurnoverHint": "CS: pageBase.analyticsGarageTurnoverHint",
 		"analyticsreservationsHint": "CS: pageBase.analyticsreservationsHint",
 		"analyticsplacesHint": "CS: pageBase.analyticsplacesHint",
 		"analyticspaymentsHint": "CS: pageBase.analyticspaymentsHint",
-		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint"
+		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
+		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
+		"reservationOverviewHint": "CS: pageBase.reservationOverviewHint",
+		"editInvoiceHint": "CS: pageBase.editInvoiceHint",
+		"editContractHint": "CS: pageBase.editContractHint"
 	},
 	"newReservation": {
 		"selectGarage": "Vyberte garáž *",
@@ -192,7 +196,7 @@
 		"Auto": "Automaticky",
 		"now": "nyní",
 		"fail": "Chyba při vytváření rezervace",
-		"noAvailableGarages": "Momentálně nejsou dostupné žádné garáže, kde můžete vytvořteit novou rezervaci.",
+		"noAvailableGarages": "Momentálně nejsou dostupné žádné garáže, kde můžete vytvořtit novou rezervaci.",
 		"licencePlate": "SPZ",
 		"licencePlateInvalid": "SPZ",
 		"licencePlatePlaceholder": "1A2 1234",
@@ -281,7 +285,7 @@
 	},
 	"occupancy": {
 		"selectClientClient": "Vybrat klienta",
-		"allClients": "Všichni klienti",
+		"allReservations": "Všechny rezervace",
 		"dayShortcut": "D",
 		"weekShortcut": "T",
 		"monthShortcut": "M",
@@ -366,7 +370,7 @@
 		"invalidWidth": "Neplatná šířka",
 		"invalidWeight": "Neplatná váha",
 		"lengthPlaceholder": "5",
-		"heightPlaceholder": "2,8",
+		"heightPlaceholder": "2.8",
 		"widthPlaceholder": "3",
 		"weightPlaceholder": "5000",
 		"tarif": "Tarif:",
@@ -427,7 +431,7 @@
 		"invalidLng": "Neplatné číslo",
 		"lngPlaceholder": "14.435",
 		"gateLabel": "Brána %(index)s",
-		"gatePhone": "Telefon modulu brány",
+		"gatePhone": "CS: newGarage.gatePhone",
 		"invalidGateLabel": "CS: newGarage.invalidGateLabel",
 		"invalidGatePhone": "Neplatný telefon",
 		"placeholderGateLabel": "Vstupní brána",
@@ -439,7 +443,8 @@
 		"selectTarif": "Vyberte tarif *",
 		"selectAccount": "Vyberte účet",
 		"selectAccountMandatory": "Vyberte účet *",
-		"processing": "Zpracovávám"
+		"processing": "Zpracovávám",
+		"users": "CS: newGarage.users"
 	},
 	"newClient": {
 		"name": "Jméno klienta",
@@ -641,18 +646,21 @@
 		"licencePlate": "SPZ",
 		"color": "Barva",
 		"model": "model",
+		"name": "Jméno",
 		"width": "Šířka [m]",
 		"height": "Výška [m]",
 		"length": "Délka [m]",
 		"licencePlatePlaceholder": "1A2 3456",
 		"colorPlaceholder": "Černá",
 		"modelPlaceholder": "Porsche 911",
-		"widthPlaceholder": "1.8.2017",
-		"heightPlaceholder": "1.3.2017",
+		"namePlaceholder": "Můj Poršák",
+		"widthPlaceholder": "1.8",
+		"heightPlaceholder": "1.3",
 		"lengthPlaceholder": "4.37",
 		"licencePlateInvalid": "Neplatná SPZ",
 		"colorInvalid": "Neplatná barva",
 		"modelInvalid": "Neplatný model",
+		"nameInvalid": "Nesprávné jméno",
 		"widthInvalid": "Neplatná šířka",
 		"heightInvalid": "Neplatná výška",
 		"lengthInvalid": "Neplatná délka",
@@ -746,13 +754,11 @@
 		"SelectPrivateKey": "Vyberte vlastní klíč:"
 	},
 	"invoices": {
-		"invoiceDate": "Vystavení faktury",
-		"dueDate": "Datum splatnosti",
-		"account": "Účet",
-		"client": "Klient",
-		"type": "Typ",
-		"invoiceText": "CS: invoices.invoiceText",
-		"paid": "zaplaceno",
+		"invoiceDate": "datum faktury",
+		"dueDate": "datum splatnosti",
+		"account": "účet",
+		"client": "klient",
+		"payed": "zaplaceno",
 		"ammount": "částka",
 		"subject": "předmět",
 		"pay": "Platit",
@@ -760,20 +766,7 @@
 		"initializingPayment": "Inicializuji platby ...",
 		"redirecting": "Přesměrovávám ...",
 		"paymentUnsucessfull": "Platba byla zrušena a neúspěšná.",
-		"payingReservation": "Placení rezervace",
-		"selectClient": "CS: invoices.selectClient",
-		"selectGarage": "CS: invoices.selectGarage",
-		"invoiceNumber": "CS: invoices.invoiceNumber",
-		"stornoInvoice": "CS: invoices.stornoInvoice",
-		"invoiceCanceled": "CS: invoices.invoiceCanceled",
-		"cancelReason": "CS: invoices.cancelReason",
-		"reason": "CS: invoices.reason",
-		"reasonInvalid": "CS: invoices.reasonInvalid",
-		"reasonPlaceholder": "CS: invoices.reasonPlaceholder",
-		"inoiceDate": "CS: invoices.inoiceDate",
-		"invalidaDate": "CS: invoices.invalidaDate",
-		"invalidValue": "CS: invoices.invalidValue",
-		"amount": "CS: invoices.amount"
+		"payingReservation": "Placení rezervace"
 	},
 	"resetPassword": {
 		"send": "Obnova hesla byla odeslána na Váš e-mail.",
@@ -789,10 +782,12 @@
 		"goPublicDescription": "Nabídněte krátkodobé parkování pro komunitu PiD",
 		"setting": "Nastavení",
 		"Preview": "Náhled",
-		"startingMarketing": "Aktualizuji Váš plán fakturace. Přesměrovávám ..."
+		"startingMarketing": "Aktualizuji Váš plán fakturace. Přesměrovávám ...",
+		"cannotBeChanged": "Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance."
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
+		"yourContract": "Vaše dohoda v ",
 		"selectClient": "Vyberte klienta",
 		"invalidToken": "CS: newContract.invalidToken",
 		"tokenPlaceholder": "gaZJBS",
@@ -803,7 +798,8 @@
 		"contractPrice": "Zadej novou konkrétní smluvní cenu",
 		"priceInvalid": "Cena je neplatná",
 		"pricePlaceholder": "10000",
-		"selectCurrency": "Zvolte měnu"
+		"selectCurrency": "Zvolte měnu",
+		"placePrice": "Cena za místo za měsíc"
 	},
 	"finance": {
 		"paypal": "Paypal",
@@ -825,7 +821,20 @@
 		"turnover": "obrat",
 		"average": "průměrný",
 		"reservations": "rezervace",
-		"noData": "Žádná data k poskytnutí"
+		"noData": "Žádná data k poskytnutí",
+		"placeTurnover": "CS: analytics.placeTurnover",
+		"period": "CS: analytics.period",
+		"reservationCount": "CS: analytics.reservationCount",
+		"contractCount": "CS: analytics.contractCount",
+		"date": "CS: analytics.date",
+		"shortterm": "CS: analytics.shortterm",
+		"longterm": "CS: analytics.longterm",
+		"graph": "CS: analytics.graph",
+		"heatmap": "CS: analytics.heatmap",
+		"avgTurnover": "CS: analytics.avgTurnover",
+		"avgRevenue": "CS: analytics.avgRevenue",
+		"minRevenue": "CS: analytics.minRevenue",
+		"maxRevenue": "CS: analytics.maxRevenue"
 	},
 	"activityLog": {
 		"name": "uživatel",
@@ -844,5 +853,6 @@
 		"visitors": "CS: dashboard.visitors",
 		"free": "CS: dashboard.free",
 		"total": "CS: dashboard.total"
-	}
+	},
+	"APP": "CS: APP"
 }

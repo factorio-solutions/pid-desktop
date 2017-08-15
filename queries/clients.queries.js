@@ -12,9 +12,24 @@ export const GET_CLIENTS = `{
       token
       id
       user_count
+      place_count
+      all_invoices_paid
+      created_at
       contracts{
+        from
+        to
+        place_count
         name
         id
+        rent{
+          price
+          currency{
+            symbol
+          }
+        }
+      }
+      contact_persons{
+        full_name
       }
     }
   }
@@ -26,11 +41,25 @@ export const GARAGE_CONTRACTS = `query GargeContracts($id: Id!){
     contracts{
       name
       id
+      from
+      to
+      place_count
+      rent{
+        price
+        currency{
+          symbol
+        }
+      }
       client{
         name
         token
         id
         user_count
+        place_count
+        all_invoices_paid
+        contact_persons{
+          full_name
+        }
       }
     }
   }

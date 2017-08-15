@@ -12,11 +12,11 @@ import styles from './OccupancyOverview.scss'
 const DAY        = 1
 const WEEK_DAYS  = 7
 const MONTH_DAYS = 30
-const INIT_STATE = { content: ''
-                   , mouseX:  0
-                   , mouseY:  0
-                   , visible: false
-                   , floor:   0 // index of selected floor
+const INIT_STATE = { content:       ''
+                   , mouseX:        0
+                   , mouseY:        0
+                   , visible:       false
+                   , floor:         0 // index of selected floor
                    }
 
 
@@ -98,6 +98,7 @@ export class OccupancyOverview extends Component{
               <tr><td>{t(['occupancy', 'licencePlate'])}</td><td>{reservation.car.licence_plate}</td></tr>
             </tbody></table> }) }
           reservationElement.onmousemove = (event) => { this.setState({ ...this.state, mouseX: event.clientX - 160 - (this.props.showSecondaryMenu ? 200 : 0), mouseY: event.clientY - 60 }) }
+          reservationElement.onmouseleave = (event) => { this.setState({ ...this.state, visible: false }) }
 
           theRow.appendChild(reservationElement)
         }
@@ -163,9 +164,8 @@ export class OccupancyOverview extends Component{
 
     return(
       <div>
-
-        <div className={styles.occupacny}>
-          <table onMouseMove={()=>{this.setState({ ...this.state, visible: false })}}>
+        <div className={styles.occupacny}  ref={(div) => { this.container = div }}>
+          <table onMouseMove={()=>{this.setState({...this.state, visible:false})}}>
             <thead>
               <tr className={styles.bottomBorder}>
                 <td className={styles.placePadding}>{t(['occupancy', 'places'])}</td>

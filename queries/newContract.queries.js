@@ -1,6 +1,7 @@
 export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $from: Datetime!, $to: Datetime!, $contract_id: Id) {
   garage(id: $garage_id) {
     id
+    is_admin
     name
     floors {
       label
@@ -65,6 +66,10 @@ export const GET_CONTRACT_DETAILS = `query ($id:Id!) {
     }
     rent{
       id
+      price
+      currency{
+        symbol
+      }
     }
   }
 }

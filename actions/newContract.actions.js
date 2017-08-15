@@ -68,6 +68,7 @@ export function setRents (value) {
 }
 
 export function setRent (value) {
+  console.log(value);
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_RENT
          , value
          }
@@ -170,7 +171,7 @@ export function initContract(id){
     const onRentsSuccess = (response) => {
       dispatch(setRents(response.data.rents))
       if (response.data.rents.length == 1) {
-        dispatch(setRent(response.data.rents[0].id))
+        dispatch(setRent(response.data.rents[0]))
       }
     }
 
@@ -191,13 +192,14 @@ export function initContract(id){
       dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
       dispatch(getGarage(response.data.contract.garage.id, id))
       dispatch(setClient(response.data.contract.client.id))
-      dispatch(setRent(response.data.contract.rent.id))
+      dispatch(setRent(response.data.contract.rent))
       dispatch(setPlaces(response.data.contract.places))
     }
 
-    if (!id) dispatch(getGarage(getState().pageBase.garage)) // if id, then i have to download garage from contract, not this one
+    const garage_id = getState().pageBase.garage
+    if (!id) dispatch(getGarage(garage_id)) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
-    request(onClientsSuccess, GARAGE_CONTRACTS, {id: getState().pageBase.garage})
+    garage_id && request(onClientsSuccess, GARAGE_CONTRACTS, {id: garage_id})
     if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, {id: +id})
   }
 }
@@ -221,8 +223,8 @@ export function getGarage (garage_id, contract_id) {
            , GET_GARAGE_CLIENT
            , { garage_id
              , from: timeToUTC(state.from)
-             , to :  timeToUTC(state.to)
-             , contract_id
+             , to :  timeToUTC(state.to ? state.to : moment(state.from).endOf('day'))
+             , contract_id: +contract_id
              }
            )
   }
@@ -305,7 +307,7 @@ export function submitNewContract (id){
                            }
     } else {
       variables.contract = { ...variables.contract
-                           , rent_id: state.rent_id
+                           , rent_id: state.rent.id
                            }
     }
 
