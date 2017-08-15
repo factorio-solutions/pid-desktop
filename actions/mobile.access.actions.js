@@ -8,6 +8,7 @@ import { MOBILE_ACCESS_OPEN_GATE } from '../queries/mobile.access.queries'
 export const MOBILE_ACCESS_SET_OPENED               = "MOBILE_ACCESS_SET_OPENED"
 export const MOBILE_ACCESS_SET_MESSAGE              = "MOBILE_ACCESS_SET_MESSAGE"
 export const MOBILE_ACCESS_SET_SELECTED_RESERVATION = 'MOBILE_ACCESS_SET_SELECTED_RESERVATION'
+export const MOBILE_ACCESS_SET_SELECTED_GATE        = 'MOBILE_ACCESS_SET_SELECTED_GATE'
 
 
 export function setOpened (opened){
@@ -22,8 +23,14 @@ export function setMessage (message){
           }
 }
 
-export function setSelected (index){
+export function setSelectedReservation (index){
   return  { type: MOBILE_ACCESS_SET_SELECTED_RESERVATION
+          , value: index
+          }
+}
+
+export function setSelectedGate (index){
+  return  { type: MOBILE_ACCESS_SET_SELECTED_GATE
           , value: index
           }
 }
@@ -38,7 +45,24 @@ export function getCurrentReservations() {
   }
 }
 
+export function filterGates (gate) {
+  return gate.phone !== undefined
+}
+
 export function openGarage() {
+  return (dispatch, getState) => {
+    const state = getState().mobileAccess
+    const gate = dispatch(getCurrentReservations())[state.selectedReservation].place.gates.filter(filterGates)[state.selectedGate]
+    if (gate.phone.match(/[A-Z]/i)) {
+      dispatch(openGarageViaBluetooth(gate.phone))
+    } else {
+      dispatch(openGarageViaPhone(gate.id))
+    }
+  }
+}
+
+
+export function openGarageViaPhone(id){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
        if (response.data.open_gate != null) {
@@ -52,21 +76,23 @@ export function openGarage() {
 
     request( onSuccess
            , MOBILE_ACCESS_OPEN_GATE
-           , { user_id: getState().mobileHeader.current_user.id
+           , { user_id:        getState().mobileHeader.current_user.id
              , reservation_id: dispatch(getCurrentReservations())[getState().mobileAccess.selectedReservation].id
+             , gate_id:        id
              }
            )
   }
 }
 
 // name = serial number of BLE unit (not repeater)
-export function openGarageBluetooth(name){
+export function openGarageViaBluetooth(name){
   return (dispatch, getState) => {
-    const name =                    name || 'S760A00666' // change this according to reservations address
+    // const name =                    name // change this according to reservations address
     const password =                'heslo'
     const service =                 '68F60000-FE41-D5EC-5BED-CD853CA1FDBC' //services[2].uuid
     const passwordCharacteristics = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
     const openGateCharacteristics = '68F6000B-FE41-D5EC-5BED-CD853CA1FDBC'
+    let repeater = false // if repeater was found instead of unit
     var address = undefined // will be filled in afther scan
     var services = []
 
@@ -81,7 +107,9 @@ export function openGarageBluetooth(name){
       dispatch(setOpened(true))
       // 6. disconect
       // 7. close
-      ble.close(address, closeSuccessfull, logError)
+      setTimeout(()=> {
+        ble.close(address, closeSuccessfull, logError)
+      }, repeater ? 10000 : 0); //give repeater time to send data
     }
 
     const writeOpen = () =>{
@@ -91,16 +119,9 @@ export function openGarageBluetooth(name){
       ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
     }
 
-    const writeBlinking = () =>{
-      // 5. read/subscribe/write and read/write descriptors
-      console.log("write blinking garage, address: ", address,"servicies: ", services);
-      const values = ['0xFF'] // packet is send like ['0xFE', '0xFF', '0x20']
-      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeOpen, logError)
-    }
-
     const writePassword = () => {
       console.log('send in password');
-      ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeBlinking, logError)
+      ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
     }
 
     const discoverSuccess = (result) => {
@@ -114,7 +135,7 @@ export function openGarageBluetooth(name){
         if (passwordCharacteristicsObject){ // password characteristics found
           writePassword()
         } else { // no password characteristics - skip it
-          writeBlinking()
+          writeOpen()
         }
       } else { // expected service not found, disconect
         console.log('this device does not have expected service - disconecting (probably not gate unit?)')
@@ -128,8 +149,8 @@ export function openGarageBluetooth(name){
     const connecionEstablished = (result) =>{
       console.log('connection established');
       dispatch(setMessage('Connection established'))
-      console.log(result);
       if (result.status == "connected"){
+        console.log(result);
         // 4. discover device (or services/characteristics/descriptors in iOS)
         dispatch(setMessage('Discovering services'))
         console.log('discovering servicess: ', address);
@@ -155,7 +176,9 @@ export function openGarageBluetooth(name){
     const scanStarted = (result) => {
       console.log('scan successfull');
       console.log(result);
-      if (result.name && (result.name === name || result.name === 'r'+name)){ // result.name.indexOf(name) != -1
+      // if (result.name && ( result.name === 'r'+name)){
+      if (result.name && (result.name === name || result.name === 'r'+name)){
+        if (result.name === 'r'+name) repeater = true // Found repeater, add waits
         console.log('grage found, stop scanning');
         console.log('found garage:', result);
         dispatch(setMessage('Garage found'))
@@ -164,6 +187,8 @@ export function openGarageBluetooth(name){
         }, (message)=>{
           console.log('garage found, but scan stop unsucessfull', message);
         })
+      } else {
+        console.log('but i am looking for ', name);
       }
     }
 

@@ -85,21 +85,39 @@ export function reconnect(address, reconnectSuccess, reconnectError) {
     "address": address
   }
   console.log('recconecting to device: ', address);
-  bluetoothle.reconnect(reconnectSuccess, reconnectError, params);
+  bluetoothle.reconnect(reconnectSuccess, (err) => {
+    if (err.error === 'isNotDisconnected'){
+      console.log('err device is not disconected, disconecting and trying again');
+      close(address, (response)=>{
+        console.log('closed sucessfully, trying to reconect.');
+        reconnect(address, reconnectSuccess, reconnectError)
+      }, reconnectError)
+    } else if (err.error === 'neverConnected') {
+      connect(address, reconnectSuccess, reconnectError)
+    } else {
+      reconnectError(err)
+    }
+  }, params);
 }
 
 export function discover(address, discoverSuccess, discoverError){
   var params = {
-    address: address
+    address,
+    // clearCache: true // not clearing cache causes problems
   }
 
-  console.log('discover called');
+  console.log('discover called with params: ', params);
   bluetoothle.discover((result)=>{
     console.log('discover successfull', result);
     discoverSuccess(result)
   }, (result) => {
     console.log('discover did not succeed', result);
     discoverError(result)
+    close(address, (succ)=>{ // device will stay discovecerd until close => close
+      console.log('closing afther discover error', succ);
+    }, (err)=>{
+      console.log('error while closing afther discover error', err);
+    })
   }, params);
 }
 

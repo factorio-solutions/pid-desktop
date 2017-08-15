@@ -1,7 +1,8 @@
-import moment                       from 'moment'
-import { request }                  from '../helpers/request'
-import { parseParameters }          from '../helpers/parseUrlParameters'
-import { setError, setCustomModal } from './mobile.header.actions'
+import moment                                             from 'moment'
+import { request }                                        from '../helpers/request'
+import { parseParameters }                                from '../helpers/parseUrlParameters'
+import { setError, setCustomModal }                       from './mobile.header.actions'
+import { MOMENT_DATETIME_FORMAT_MOBILE, MOMENT_UTC_DATETIME_FORMAT, timeToUTCmobile } from '../helpers/time'
 
 import { GET_AVAILABLE_FLOORS }                                                           from '../queries/mobile.newReservation.queries'
 import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION } from '../queries/newReservation.queries'
@@ -134,7 +135,7 @@ function clearForm(){
 }
 
 export function roundTime(time){
-  return moment(time).set('minute', Math.floor(moment(time).minutes()/15)*15).format('YYYY-MM-DDTHH:mm') //.format(MOMENT_DATETIME_FORMAT)
+  return moment(time).set('minute', Math.floor(moment(time).minutes()/15)*15).format(MOMENT_DATETIME_FORMAT_MOBILE) //.format(MOMENT_DATETIME_FORMAT)
 }
 
 
@@ -345,9 +346,8 @@ export function fromBeforeTo(from, to){
 
 function stateToVariables(getState){
   const state = getState().mobileNewReservation
-
-  const from = state.fromNow ? roundTime(moment()).replace("T", " ") : state.from.replace("T", " ")
-  const to = state.duration ? moment(moment(from).add(state.duration, 'hours')).format('YYYY-MM-DD HH:mm') : state.to.replace("T", " ")
+  const from = state.fromNow ? timeToUTCmobile(roundTime(moment())) : timeToUTCmobile(state.from)
+  const to = state.duration ? timeToUTCmobile(roundTime(moment(from, MOMENT_UTC_DATETIME_FORMAT).add(state.duration, 'hours'))) : timeToUTCmobile(state.to)
   const garage_id = getState().mobileHeader.garage_id
 
   return ({ place_id:  state.place_id

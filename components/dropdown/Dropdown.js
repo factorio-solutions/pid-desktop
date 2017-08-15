@@ -108,7 +108,7 @@ export default class Dropdown extends Component {
           onClick={editable && toggleDropdown}
           onBlur={onBlur}>
             <span className={styles.marginCorrection}> {this.state.selected==undefined||content[this.state.selected]==undefined ? label : content[this.state.selected].label} </span>
-            {content.length > 1 && <i className={`fa fa-caret-down ${styles.float}`} aria-hidden="true"></i>}
+            <i className={`fa fa-caret-down ${styles.float} ${content.length>1 && styles.visible}`} aria-hidden="true"></i>
         </button>
         <ul className={`${styles.drop} ${styles.hidden} ${styles.display} ${position==='fixed' ? styles.fixed : styles.absolute}`}>
           {content.map(prepareContent)}
