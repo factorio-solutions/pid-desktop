@@ -3,16 +3,16 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import PageBase     from '../../_shared/containers/pageBase/PageBase'
-import Table        from '../../_shared/components/table/Table'
-import RoundButton  from '../../_shared/components/buttons/RoundButton'
-import ButtonStack  from '../../_shared/components/buttonStack/ButtonStack'
-import TabButton    from '../../_shared/components/buttons/TabButton'
-import TabMenu      from '../../_shared/components/tabMenu/TabMenu'
-import Dropdown     from '../../_shared/components/dropdown/Dropdown'
-import Input        from '../../_shared/components/input/Input'
-import Form         from '../../_shared/components/form/Form'
-import Modal        from '../../_shared/components/modal/Modal'
+import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import Table              from '../../_shared/components/table/Table'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
+import ButtonStack        from '../../_shared/components/buttonStack/ButtonStack'
+import TabButton          from '../../_shared/components/buttons/TabButton'
+import TabMenu            from '../../_shared/components/tabMenu/TabMenu'
+import Dropdown           from '../../_shared/components/dropdown/Dropdown'
+import Input              from '../../_shared/components/input/Input'
+import Form               from '../../_shared/components/form/Form'
+import Modal              from '../../_shared/components/modal/Modal'
 
 import styles               from './invoices.page.scss'
 import * as nav             from '../../_shared/helpers/navigation'
@@ -57,19 +57,19 @@ export class InvoicesPage extends Component {
                             <b>{t(['invoices','invoiceCanceled'])} </b>
                             {invoice.subject}
                             <span className={styles.floatRight}>
-                              <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{actions.downloadInvoice(invoice.id)}} type='action'/>
-                              <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{nav.to(`/${pageBase.garage}/admin/invoices/${invoice.id}/edit`)}} type='action'/>
+                              <LabeledRoundButton label={t(['invoices','downloadInvoice'])} content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{actions.downloadInvoice(invoice.id)}} type='action'/>
+                              <LabeledRoundButton label={t(['invoices','editInvoice'])} content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{nav.to(`/${pageBase.garage}/admin/invoices/${invoice.id}/edit`)}} type='action'/>
                             </span>
                           </div> :
                           <div>
                             {t(['invoices','subject'])}:
                             {invoice.subject}
                             <span className={styles.floatRight}>
-                              <RoundButton content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{actions.downloadInvoice(invoice.id)}} type='action'/>
-                              {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin||invoice.client.is_secretary) && <RoundButton content={<span>{t(['invoices','pay'])}</span>}                      onClick={()=>{}}                                                                type='action'/>}
-                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-bell-o' aria-hidden="true"></span>} onClick={()=>{actions.reminder(invoice.id)}}                                    type='action'/>}
-                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>}  onClick={()=>{actions.invoicePayed(invoice.id, this.props.params.id)}}          type='remove' question={t(['invoices','invoicePayed'])}/>}
-                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>}  onClick={()=>{actions.toggleReason(invoice.id)}}                             type='remove' question={t(['invoices','stornoInvoice'])}/>}
+                              <LabeledRoundButton label={t(['invoices','downloadInvoice'])} content={<span className='fa fa-download' aria-hidden="true"></span>} onClick={()=>{actions.downloadInvoice(invoice.id)}} type='action'/>
+                              {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin||invoice.client.is_secretary) && <LabeledRoundButton label={t(['invoices','payInvoice'])} content={<span>{t(['invoices','pay'])}</span>}                      onClick={()=>{}}                                                                type='action'/>}
+                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <LabeledRoundButton label={t(['invoices','sendReminder'])} content={<span className='fa fa-bell-o' aria-hidden="true"></span>} onClick={()=>{actions.reminder(invoice.id)}}                                    type='action'/>}
+                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <LabeledRoundButton label={t(['invoices','invoicePaidLabel'])} content={<span className='fa fa-check' aria-hidden="true"></span>}  onClick={()=>{actions.invoicePayed(invoice.id, this.props.params.id)}}          type='remove' question={t(['invoices','invoicePaid'])}/>}
+                              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&                        <LabeledRoundButton label={t(['invoices','invoiceIncorect'])} content={<span className='fa fa-times' aria-hidden="true"></span>}  onClick={()=>{actions.toggleReason(invoice.id)}}                             type='remove' question={t(['invoices','stornoInvoice'])}/>}
                             </span>
                           </div>}
                       </div>

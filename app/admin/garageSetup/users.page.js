@@ -3,9 +3,10 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import GarageSetupPage from '../../_shared/containers/garageSetupPage/GarageSetupPage'
-import Table           from '../../_shared/components/table/Table'
-import RoundButton     from '../../_shared/components/buttons/RoundButton'
+import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import Table              from '../../_shared/components/table/Table'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
 import * as garageUsersActions  from '../../_shared/actions/garageUsers.actions'
 import { setGarage }            from '../../_shared/actions/inviteUser.actions'
@@ -51,7 +52,7 @@ export class GarageUsersPage extends Component {
       let returnable = user.user
       const destroyClick = () => { actions.destroyGarageUser(this.props.params.id, user.user.id ) }
       returnable.spoiler = <div className={styles.float}>
-        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])}/>
+        <LabeledRoundButton label={t(['garageUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])}/>
       </div>
       return returnable
     }
@@ -78,7 +79,7 @@ export class GarageUsersPage extends Component {
             <span className={`${garage_user.security ? styles.boldText : styles.inactiveText}`}     onClick={securityClick}>{t(['garageUsers','security'])}</span>
           </div>
           <div className={styles.float}>
-            <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'}/>
+            <LabeledRoundButton label={t(['garageUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'}/>
           </div>
         </div>
       )

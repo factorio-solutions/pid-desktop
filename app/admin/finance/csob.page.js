@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase    from '../../_shared/containers/pageBase/PageBase'
-import Input       from '../../_shared/components/input/Input'
-import Form        from '../../_shared/components/form/Form'
-import RoundButton from '../../_shared/components/buttons/RoundButton'
+import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import Input              from '../../_shared/components/input/Input'
+import Form               from '../../_shared/components/form/Form'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -41,9 +41,9 @@ export class CsobPage extends Component {
         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={actions.toggleHighlight}>
           <h2>{t(['finance', 'csobPayment'])}</h2>
           <Input onEnter={submitForm} onChange={actions.setCsobMerchantId} label={t(['newAccount', 'csobMerchantID'])} error={t(['newAccount', 'invalidMerchantId'])} value={state.csob_merchant_id} name="client[merchantId]" placeholder={t(['newAccount', 'csobMerchantIdplaceholder'])} highlight={state.highlight}/>
-          <label className={state.highlight && styles.red}>{t(['finance', 'SelectPrivateKey'])}</label>
+          <label className={state.highlight && styles.red}>{t(['finance', 'SelectPrivateKey'])}: </label>
           <Input style={styles.hidden} onChange={actions.setCsobPrivateKey} label='file' type="file" name={`newAccountPrivateKey`} accept=".key" />
-          <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={() => { document.getElementsByName(`newAccountPrivateKey`)[0].click() }} type={state.csob_private_key===""?'action':'confirm'} />
+          <LabeledRoundButton label={t(['finance', 'uploadKey'])} content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={() => { document.getElementsByName(`newAccountPrivateKey`)[0].click() }} type={state.csob_private_key===""?'action':'confirm'} />
         </Form>
       </PageBase>
     )

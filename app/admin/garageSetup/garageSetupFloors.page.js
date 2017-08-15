@@ -5,7 +5,7 @@ import { bindActionCreators }          from 'redux'
 import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Form               from '../../_shared/components/form/Form'
 import Input              from '../../_shared/components/input/Input'
-import RoundButton        from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import GarageLayout2      from '../../_shared/components/garageLayout/GarageLayout2'
 
@@ -74,7 +74,7 @@ export class GarageSetupFloorsPage extends Component {
       const removeRow             = () => { actions.removeFloor(index) }
 
       const deleteButton = () => {
-        return arr.length <= 1 ? null : <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newGarage', 'removeFloorRowQuestion'])} />
+        return arr.length <= 1 ? null : <LabeledRoundButton label={t(['newGarage', 'removeFloor'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newGarage', 'removeFloorRowQuestion'])} />
       }
 
       return(
@@ -84,7 +84,7 @@ export class GarageSetupFloorsPage extends Component {
             <Input style={styles.smallInputWidth+" "+styles.middleMargin} onChange={handleFloorFromChange} label={t(['newGarage', 'from'])}      error={t(['newGarage', 'invalidFloorFrom'])} value={floor.from} name={`floor${index}[from]`} placeholder={t(['newGarage', 'placeholderFloorFrom'])} type="tel"                     highlight={state.highlight}/>
             <Input style={styles.smallInputWidth}                         onChange={handleFloorToChange}   label={t(['newGarage', 'to'])}        error={t(['newGarage', 'invalidFloorTo'])}   value={floor.to} name={`floor${index}[to]`} placeholder={t(['newGarage', 'placeholderFloorTo'])} type="number" min={floor.from}       highlight={state.highlight}/>
             <Input style={styles.hidden}                                  onChange={handleFileSelect}      label='file' type="file"  name={`floor${index}[file]`} accept='.svg' value=''/> { /*has to have empty value attribute, then onChange will fire on same file selected*/ }
-            <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.floors[index].scheme==""?'action':'confirm'} />
+            <LabeledRoundButton label={t(['newGarage', 'uploadSvg'])} content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.floors[index].scheme==""?'action':'confirm'} />
             {deleteButton()}
           </div>
         </div>

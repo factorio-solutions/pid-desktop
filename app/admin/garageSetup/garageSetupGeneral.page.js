@@ -4,7 +4,7 @@ import { bindActionCreators }          from 'redux'
 
 import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
-import RoundButton        from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 import Form               from '../../_shared/components/form/Form'
 import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import Input              from '../../_shared/components/input/Input'
@@ -120,7 +120,7 @@ export class GarageSetupGeneralPage extends Component {
               <img src={state.img}/>
               <div>
                 <input type='file' ref='fileSelector' onChange={handleFileSelect}/>
-                <RoundButton content={<span className='fa fa-file-text-o' aria-hidden="true"></span>} onClick={()=>{this.refs.fileSelector.click()}} type={state.img===defaultImage ? 'action' : 'confirm'} />
+                <LabeledRoundButton label={t(['newGarage', 'addProfilePicture'])} content={<span className='fa fa-file-text-o' aria-hidden="true"></span>} onClick={()=>{this.refs.fileSelector.click()}} type={state.img===defaultImage ? 'action' : 'confirm'} />
                 {/*<CallToActionButton label={t(['newGarage', 'selectImage'])} onClick={()=>{this.refs.fileSelector.click()}} />*/}
               </div>
             </div>

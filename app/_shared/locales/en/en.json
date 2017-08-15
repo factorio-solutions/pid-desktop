@@ -119,7 +119,7 @@
 		"settingsHint": "In this Settings section you are able to set your own preferences. Set your desired language. Switch on and off visbility of these blue boxes with help thru all application.",
 		"usersHint": "Here you have a list of all known users. Select a user to see Client accounts membership.",
 		"allKnownUsers": "All known users",
-		"editClientHint": "Here you can edit Client account details and its name.",
+		"editClientHint": "TODO: edit client hint: Here it is possible to change information about this client.",
 		"notificationsHint": "Here are displayed all notifications that need to be resolved.",
 		"inviteUsersHint": "Invite new user to connect with selected Client Account. Please provide E-mail and send the invitation. After user accepts the invitation, he or she becomes automatically member of the selected Client Account.",
 		"addFeaturesHint": "Here you can add functionality to your system. TODO: add features hint",
@@ -158,13 +158,10 @@
 		"garageAddClientHint": "Here you can add client to garage management page. TODO: add client to management hint",
 		"garageGarageUsersHint": "Here you can manage who can manage your garage. TODO: Garage users management",
 		"EditUserHint": "Here it is possible to change information about yourself.",
-
-		"orderGarageModuleHint":"TODO: order Garage Module hint: Here you can order a garage module.",
-		"reservationOverviewHint":"TODO: new reservation overview hint: Here you can double check if evetything is ok.",
-		"editInvoiceHint":"TODO: edit invoice hint: Afther clicking OK, new incoice will be created with corrected data.",
-		"editClientHint": "TODO: edit client hint: Here it is possible to change information about this client.",
-		"editContractHint":" TODO: edit contract hint: Here you can edit selected contract. Change places or duration or price.",
-
+		"orderGarageModuleHint": "TODO: order Garage Module hint: Here you can order a garage module.",
+		"reservationOverviewHint": "TODO: new reservation overview hint: Here you can double check if evetything is ok.",
+		"editInvoiceHint": "TODO: edit invoice hint: Afther clicking OK, new incoice will be created with corrected data.",
+		"editContractHint": "TODO: edit contract hint: Here you can edit selected contract. Change places or duration or price.",
 		"unredNotifications": {
 			"one": "You have one unread notification",
 			"other": "You have %(count)s unread notifications"
@@ -223,28 +220,29 @@
 		"token": "client token",
 		"contactPerson": "Contact person",
 		"createdAt": "Created at",
-		"createAgreement":"Create agreement",
-		"editClient":"Edit client",
-		"goToUsers":"Go to users",
-		"goToInvoices":"Go to invoices",
+		"createAgreement": "Create agreement",
+		"editClient": "Edit client",
+		"goToUsers": "Go to users",
+		"goToInvoices": "Go to invoices",
 		"places": "places",
 		"contract": "contract",
 		"monthlyTotal": "monthly total",
-		"invoices":"invoices"
+		"invoices": "invoices"
 	},
 	"clientUsers": {
 		"name": "username",
 		"email": "e-mail",
 		"memberSince": "member since",
 		"phone": "phone",
-		"contact_person" : "contact person",
+		"contact_person": "contact person",
 		"admin": "is admin",
 		"secretary": "secretary",
 		"internal": "internal",
 		"host": "is host",
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
-		"pendingUsers": "Pending invitations"
+		"pendingUsers": "Pending invitations",
+		"removeUser": "Remove user"
 	},
 	"reservations": {
 		"name": "User",
@@ -261,10 +259,14 @@
 		"updatedAt": "updated at:",
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
 		"reservationApproved": "Reservation was not approved yet.",
-		"reservationNotPayed": "Reservation was not payed.",
+		"reservationNotPayed": "Reservation was not paid.",
 		"pay": "Pay",
 		"host": "Host",
-		"visitor": "Visitor"
+		"visitor": "Visitor",
+		"editReservation": "Edit reserv.",
+		"payReservation": "Pay reserv.",
+		"downloadInvoice": "Donwload invoice",
+		"destroyRservation": "Destroy reserv."
 	},
 	"garages": {
 		"clients": "Clients",
@@ -294,7 +296,8 @@
 		"placeRent": "Rents",
 		"rentName": "Rent name",
 		"price": "Price",
-		"places": "Places"
+		"places": "Places",
+		"editRent": "Edit rent"
 	},
 	"occupancy": {
 		"selectClientClient": "Select client",
@@ -324,7 +327,8 @@
 		"name": "username",
 		"email": "e-mail",
 		"memberSince": "member since",
-		"phone": "phone"
+		"phone": "phone",
+		"removeUser": "Remove user"
 	},
 	"garageManagement": {
 		"garageManagement": "Garage management",
@@ -457,7 +461,10 @@
 		"selectAccount": "Select account",
 		"selectAccountMandatory": "Select account *",
 		"processing": "Processing",
-		"users": "Users"
+		"users": "Users",
+		"addProfilePicture": "Add profile picture",
+		"removeFloor": "Remove floor",
+		"uploadSvg": "Upload SVG"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -521,7 +528,7 @@
 		"current": "current",
 		"sais": "says",
 		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses.",
-		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpayed invoices to handle.",
+		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to handle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s place was accpeted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined."
 	},
@@ -601,7 +608,11 @@
 		"images": "Garage images",
 		"uploading": "Uploading...",
 		"notCreated": "Marketing was not created, selected short name is allready taken.",
-		"notUpdated": "Marketing was not updated, selected short name is allready taken."
+		"notUpdated": "Marketing was not updated, selected short name is allready taken.",
+		"addImage": "Add image",
+		"editImage": "Edit image",
+		"removeImage": "Remove image",
+		"removeImageQuestion": "Are you sure you want to remove this image?"
 	},
 	"garageMarketing": {
 		"id": "id",
@@ -777,7 +788,7 @@
 		"ammount": "Amount",
 		"subject": "Subject",
 		"pay": "Pay",
-		"invoicePayed": "Are you sure you want to mark this invoice as payed?",
+		"invoicePaid": "Are you sure you want to mark this invoice as paid?",
 		"initializingPayment": "Initializing payment ...",
 		"redirecting": "Redirecting ...",
 		"paymentUnsucessfull": "Payment was canceled and unsucessfull.",
@@ -794,7 +805,13 @@
 		"inoiceDate": "Invoice date",
 		"invalidaDate": "Invalid date",
 		"invalidValue": "Invalid value",
-		"amount": "Price"
+		"amount": "Price",
+		"downloadInvoice": "Download invoice",
+		"editInvoice": "Edit invoice",
+		"payInvoice": "Pay invoice",
+		"sendReminder": "Send reminder",
+		"invoicePaidLabel": "Invoice paid",
+		"invoiceIncorect": "Invoice incorrect"
 	},
 	"resetPassword": {
 		"send": "Password reseting email was sent to your email.",
@@ -815,7 +832,7 @@
 	},
 	"newContract": {
 		"description": "New Agreement in",
-		"yourContract": "Your contract in ",
+		"yourContract": "Your contract in",
 		"selectClient": "Select client",
 		"invalidToken": "Token invalid",
 		"tokenPlaceholder": "gaZJBS",
@@ -841,7 +858,8 @@
 		"invalidVat": "Invalid VAT",
 		"invalidRow": "Invalid number",
 		"changeSuccess": "Values were changed sucessfully.",
-		"changeFailed": "Error occured, values were not changed."
+		"changeFailed": "Error occured, values were not changed.",
+		"uploadKey": "Upload RSA key"
 	},
 	"analytics": {
 		"week": "week",
@@ -855,8 +873,8 @@
 		"reservationCount": "reservation count",
 		"contractCount": "contract count",
 		"date": "date",
-		"shortterm":"Short term",
-		"longterm":"Long term",
+		"shortterm": "Short term",
+		"longterm": "Long term",
 		"graph": "Graph",
 		"heatmap": "Heatmap",
 		"avgTurnover": "Total turnover",

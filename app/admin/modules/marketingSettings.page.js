@@ -2,14 +2,15 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase       from '../../_shared/containers/pageBase/PageBase'
-import Table          from '../../_shared/components/table/Table'
-import Form           from '../../_shared/components/form/Form'
-import Wysiwyg        from '../../_shared/components/wysiwyg/Wysiwyg'
-import RoundButton    from '../../_shared/components/buttons/RoundButton'
-import PatternInput   from '../../_shared/components/input/PatternInput'
-import Dropdown       from '../../_shared/components/dropdown/Dropdown'
-import Modal          from '../../_shared/components/modal/Modal'
+import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import Table              from '../../_shared/components/table/Table'
+import Form               from '../../_shared/components/form/Form'
+import Wysiwyg            from '../../_shared/components/wysiwyg/Wysiwyg'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
+import PatternInput       from '../../_shared/components/input/PatternInput'
+import Dropdown           from '../../_shared/components/dropdown/Dropdown'
+import Modal              from '../../_shared/components/modal/Modal'
 
 import * as newMarketingActions   from '../../_shared/actions/newMarketing.actions'
 import * as nav                   from '../../_shared/helpers/navigation'
@@ -76,8 +77,8 @@ export class MarketingSettingsPage extends Component {
           </div>
           <div className={`${styles.rowContent} ${state.highlight && state.images.length-1 != index && image.img == '' && styles.highlighted}`}>
             <input className={styles.hidden} type="file" accept="image/*" onChange={handleFileSelect} name={`image${index}`} />
-            <RoundButton content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.images[index].img==''?'action':'confirm'} />
-            {state.images.length-1 != index && <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newGarage', 'removeFloorRowQuestion'])} />}
+            <LabeledRoundButton label={t(['newMarketing', state.images[index].img=='' ? 'addImage' : 'editImage'])} content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.images[index].img==''?'action':'confirm'} />
+            {state.images.length-1 != index && <LabeledRoundButton label={t(['newMarketing', 'removeImage'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newMarketing', 'removeImageQuestion'])} />}
           </div>
           <div className={styles.imgPreview}>
             {image.img != '' && <img src={image.img}/>}

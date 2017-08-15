@@ -6,6 +6,7 @@ import update                          from 'immutability-helper'
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import Table              from '../../_shared/components/table/Table'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import Switch             from '../../_shared/components/switch/Switch'
 import Input              from '../../_shared/components/input/Input'
@@ -47,11 +48,11 @@ export class FinancePage extends Component {
     const prepareRent = (rent, index) => {
       let spoiler = <div>
         <span className={styles.floatRight}>
-          <RoundButton content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editRent(rent.id)}} type='action'/>
+          <LabeledRoundButton label={t(['garages','editRent'])} content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={()=>{editRent(rent.id)}} type='action'/>
         </span>
       </div>
 
-      return update(rent, {spoiler:{$set: spoiler}, price: {$set: `${rent.price} ${rent.currency.symbol}`}, place_count: {$set: rent.place_count+''}})
+      return update(rent, {spoiler:{$set: spoiler}, price: {$set: `${Math.round(rent.price*10)/10} ${rent.currency.symbol}`}, place_count: {$set: rent.place_count+''}})
     }
 
     const toPaypalSettings = () => {actions.paypalClick()}
@@ -69,6 +70,32 @@ export class FinancePage extends Component {
 
     return (
       <PageBase>
+        <div className={styles.module}>
+          {t(['finance','paypal'])}
+          <div className={styles.settings}>
+            <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toPaypalSettings} />
+            <Switch on={state.paypal} onClick={toPaypalSettings}/>
+          </div>
+        </div>
+
+        <div className={styles.module}>
+          {t(['finance','csob'])}
+          <div className={styles.settings}>
+            <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toCsobSettings} />
+            <Switch on={state.csob} onClick={toCsobSettings}/>
+          </div>
+        </div>
+
+        {pageBase.current_user && pageBase.current_user.garage_admin &&
+          <div>
+            <h2>{t(['garages','placeRent'])}</h2>
+            <Table schema={rentSchema} data={state.rents.map(prepareRent)} />
+            <div className={styles.centerDiv}>
+              <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newRentClick} type='action' size='big' />
+            </div>
+          </div>
+        }
+
         <div>
           <h2>{t(['finance','finanaceSettings'])}</h2>
           <Form onSubmit={submitForm} submitable={checkSubmitable()} onHighlight={actions.toggleHighlight}>
@@ -78,32 +105,6 @@ export class FinancePage extends Component {
           </Form>
         </div>
 
-
-      {pageBase.current_user && pageBase.current_user.garage_admin &&
-        <div>
-          <h2>{t(['garages','placeRent'])}</h2>
-          <Table schema={rentSchema} data={state.rents.map(prepareRent)} />
-          <div className={styles.centerDiv}>
-            <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newRentClick} type='action' size='big' />
-          </div>
-        </div>
-      }
-
-      <div className={styles.module}>
-        {t(['finance','paypal'])}
-        <div className={styles.settings}>
-          <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toPaypalSettings} />
-          <Switch on={state.paypal} onClick={toPaypalSettings}/>
-        </div>
-      </div>
-
-      <div className={styles.module}>
-        {t(['finance','csob'])}
-        <div className={styles.settings}>
-          <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toCsobSettings} />
-          <Switch on={state.csob} onClick={toCsobSettings}/>
-        </div>
-      </div>
       </PageBase>
     )
   }

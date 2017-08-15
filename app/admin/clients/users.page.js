@@ -3,9 +3,10 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import PageBase     from '../../_shared/containers/pageBase/PageBase'
-import Table        from '../../_shared/components/table/Table'
-import RoundButton  from '../../_shared/components/buttons/RoundButton'
+import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import Table              from '../../_shared/components/table/Table'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
 import * as clientUserActions   from '../../_shared/actions/clientUsers.actions'
 import { setClient }            from '../../_shared/actions/inviteUser.actions'
@@ -55,7 +56,7 @@ export class ClientUsersPage extends Component {
       let returnable = user.user
       const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, user.user.id ) }
       returnable.spoiler = <div className={styles.float}>
-        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} />
+        <LabeledRoundButton label={t(['clientUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} />
       </div>
       return returnable
     }
@@ -86,7 +87,7 @@ export class ClientUsersPage extends Component {
             <span className={styles.clickable} onClick={secretaryPresetClick}>{t(['clientUsers','secretary'])}</span>
 
             <div className={styles.float}>
-              <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && currentClientUser && !currentClientUser.admin) || client_user.admin) && 'disabled'}/>
+              <LabeledRoundButton label={t(['clientUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && currentClientUser && !currentClientUser.admin) || client_user.admin) && 'disabled'}/>
             </div>
           </div>
         </div>
