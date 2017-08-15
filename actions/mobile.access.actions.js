@@ -87,7 +87,7 @@ export function openGarageViaPhone(id){
 // name = serial number of BLE unit (not repeater)
 export function openGarageViaBluetooth(name){
   return (dispatch, getState) => {
-    const name =                    name || 'S760A00666' // change this according to reservations address
+    // const name =                    name // change this according to reservations address
     const password =                'heslo'
     const service =                 '68F60000-FE41-D5EC-5BED-CD853CA1FDBC' //services[2].uuid
     const passwordCharacteristics = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
@@ -109,23 +109,19 @@ export function openGarageViaBluetooth(name){
       // 7. close
       setTimeout(()=> {
         ble.close(address, closeSuccessfull, logError)
-      }, repeater ? 200 : 0); //give repeater time to send data
+      }, repeater ? 10000 : 0); //give repeater time to send data
     }
 
     const writeOpen = () =>{
       // 5. read/subscribe/write and read/write descriptors
-      setTimeout(()=> {
-        console.log("write open garage, address: ", address,"servicies: ", services);
-        const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
-        ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
-      }, repeater ? 3000 : 0);
+      console.log("write open garage, address: ", address,"servicies: ", services);
+      const values = ['0xFE', '0xFF', '0x20'] // packet is send like ['0xFE', '0xFF', '0x20']
+      ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
     }
 
     const writePassword = () => {
-      setTimeout(()=> {
-        console.log('send in password');
-        ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
-      }, repeater ? 1000 : 0);
+      console.log('send in password');
+      ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
     }
 
     const discoverSuccess = (result) => {
@@ -191,6 +187,8 @@ export function openGarageViaBluetooth(name){
         }, (message)=>{
           console.log('garage found, but scan stop unsucessfull', message);
         })
+      } else {
+        console.log('but i am looking for ', name);
       }
     }
 
