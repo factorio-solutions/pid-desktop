@@ -16,6 +16,7 @@
 .contract{
 	font-weight: bold;
 	cursor: pointer;
+	color: $blue;
 }
 
 // .addButton {
@@ -41,4 +42,12 @@
 
 .tableContainer{
   margin-bottom: 140px;
+}
+
+.green{
+	color: $green;
+}
+
+.red{
+	color: $red;
 }

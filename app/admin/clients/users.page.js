@@ -66,14 +66,16 @@ export class ClientUsersPage extends Component {
       const secretaryPresetClick  = () => { actions.setSecretary(this.props.params.client_id, client_user.user.id ) }
       const internalPresetClick   = () => { actions.setInternal(this.props.params.client_id, client_user.user.id ) }
 
-      const adminClick      = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"admin": !client_user.admin}) }
-      const secretaryClick  = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"secretary": !client_user.secretary}) }
-      const hostClick       = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"host": !client_user.host}) }
-      const internalClick   = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"internal": !client_user.internal}) }
+      const adminClick         = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"admin": !client_user.admin}) }
+      const contactPersonClick = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"contact_person": !client_user.contact_person}) }
+      const secretaryClick     = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"secretary": !client_user.secretary}) }
+      const hostClick          = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"host": !client_user.host}) }
+      const internalClick      = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id , {"internal": !client_user.internal}) }
 
       return(<div className={styles.spoiler}>
           <div className={styles.devider}>
             <span className={client_user.admin ? styles.boldText : styles.inactiveText}  onClick={adminClick}>{t(['clientUsers','admin'])}</span>|
+            <span className={`${client_user.contact_person ? styles.boldText : styles.inactiveText}`} onClick={contactPersonClick}>{t(['clientUsers','contact_person'])}</span>|
             <span className={`${client_user.secretary ? styles.boldText : styles.inactiveText}`} onClick={secretaryClick}>{t(['clientUsers','secretary'])}</span>|
             <span className={`${client_user.host ? styles.boldText : styles.inactiveText}`} onClick={hostClick}>{t(['clientUsers','host'])}</span>|
             <span className={`${client_user.internal ? styles.boldText : styles.inactiveText}`} onClick={internalClick}>{t(['clientUsers','internal'])}</span>

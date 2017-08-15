@@ -23,7 +23,7 @@ export default class App extends Component {
     const state = store.getState().pageBase
     window.addEventListener('error', (e) => {
       if (e.message != this.state.lastError) { // block error cycle
-        const log = "Error occured at " + window.location.hash + " / " + e.message + " / user:" + state.current_user && state.current_user.email
+        const log = "Error occured at " + window.location.hash + " / " + e.message + " / user:" + state.current_user ? state.current_user.email : 'UserNotLoaded'
         console.log(log);
         request((response)=>{}, 'mutation ErrorSend ($error: String!) { error(error: $error) }', {error: log})
         this.setState({lastError: e.message})
