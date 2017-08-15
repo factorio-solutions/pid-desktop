@@ -49,7 +49,7 @@ export function initGarageContracts (){
     const onSuccess = (response) => {
       const uniqueClients = response.data.garage.contracts.reduce((acc, contract) => {
         if (!acc.hasOwnProperty(contract.client.id)) acc[contract.client.id] = {...contract.client, userOfClient: false, admin: false, contracts: [] }
-        acc[contract.client.id].contracts.push({id: contract.id, name: contract.name})
+        acc[contract.client.id].contracts.push(contract)
         return acc
       }, [])
 
