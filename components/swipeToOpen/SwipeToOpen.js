@@ -28,14 +28,15 @@ export default class SwipeToOpen extends Component{
     return(
       <ReactSwipe className={`swipeToOpenComponent ${styles.container} ${styles[state]}`} swipeOptions={swipeOptions}>
 
-        <div className={`${styles.pane} ${state=='disabled' ? styles.disabledContent : styles.enabledContent}`} >
+        <div className={`${styles.pane} ${state ? styles.disabledContent : styles.enabledContent}`} >
           <div style={{height: size+"px"}}>
             <div className={styles.paneContent}>
               {content && content}
               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
               <br/>
               Swipe to open the gate
-              {state=='disabled' && <div className={styles.comment}>No reservation</div>}
+              {state === 'disabled' && <div className={styles.comment}>No reservation</div>}
+              {state === 'noGates' && <div className={styles.comment}>No gates are available</div>}
             </div>
           </div>
         </div>
