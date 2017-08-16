@@ -67,6 +67,7 @@ export class ClientsPage extends Component {
         if (arr.length-1 !== index) acc.push(<span>, </span>)
         return acc
       }
+      const currentContracts = contract => moment().isBetween(moment(contract.from), moment(contract.to))
       const contractSum = (sum, contract) => {
         const startOfMonth = moment(contract.from) < moment().startOf('month') ? moment().startOf('month') : moment(contract.from)
         const endOfMonth = moment().endOf('month') < moment(contract.to) ? moment().endOf('month') : moment(contract.to)
@@ -92,8 +93,8 @@ export class ClientsPage extends Component {
 
       return { ...client
              , spoiler
-             , hasContract: client.contracts && client.contracts.length > 0
-             , monthly_total: client.contracts ? client.contracts.reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
+             , hasContract: client.contracts && client.contracts.filter(currentContracts).length > 0
+             , monthly_total: client.contracts ? client.contracts.filter(currentContracts).reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
              }
     }
 
