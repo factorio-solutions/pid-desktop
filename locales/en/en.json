@@ -811,7 +811,9 @@
 		"payInvoice": "Pay invoice",
 		"sendReminder": "Send reminder",
 		"invoicePaidLabel": "Invoice paid",
-		"invoiceIncorect": "Invoice incorrect"
+		"invoiceIncorect": "Invoice incorrect",
+		"donwloadExcel": "Download excel",
+		"donwloadInvoices": "Download invoices"
 	},
 	"resetPassword": {
 		"send": "Password reseting email was sent to your email.",
@@ -831,7 +833,8 @@
 		"cannotBeChanged": "You cannot go public until you set payment method. To do this go to Admin/Finance."
 	},
 	"newContract": {
-		"description": "New Agreement in",
+		"description": "New agreement in",
+		"edit": "Editing agreement in",
 		"yourContract": "Your contract in",
 		"selectClient": "Select client",
 		"invalidToken": "Token invalid",

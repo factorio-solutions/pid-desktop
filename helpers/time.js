@@ -12,3 +12,7 @@ export function timeToUTC (value){
 export function timeToUTCmobile (value){
   return moment(value, MOMENT_DATETIME_FORMAT_MOBILE).format(MOMENT_UTC_DATETIME_FORMAT)
 }
+
+export function formatTime (time) {
+  return moment(time).format(MOMENT_DATETIME_FORMAT)
+}
