@@ -38,9 +38,9 @@ export class InvoicesPage extends Component {
     const schema = [ { key: 'invoice_number', title: t(['invoices','invoiceNumber']), comparator: 'integer', representer: o => <b>{o}</b>, sort: 'asc' }
                    , { key: 'invoice_date',   title: t(['invoices','invoiceDate']),   comparator: 'date',    representer: o => o ? moment(o).format('DD. MM. YYYY') : null }
                    , { key: 'due_date',       title: t(['invoices','dueDate']),       comparator: 'date',    representer: o => o ? moment(o).format('DD. MM. YYYY') : null }
-                   , { key: 'garage_name',    title: t(['invoices','account']),       comparator: 'string',  representer: o => <b>{o}</b>}
                    , { key: 'client_name',    title: t(['invoices','client']),        comparator: 'string',  representer: o => <b>{o}</b>}
                    , { key: 'longterm_rent',  title: t(['invoices','type']),          comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-home' : 'fa-clock-o'}`} aria-hidden="true"></i>}
+                   , { key: 'subject',        title: t(['invoices','subject']),       comparator: 'string',  representer: o => o.length>20 ? o.substring(0,20)+'...' : o }
                    , { key: 'price',          title: t(['invoices','ammount']),       comparator: 'string'}
                    , { key: 'payed',          title: t(['invoices','paid']),          comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true"></i> }
                    ]
@@ -96,8 +96,12 @@ export class InvoicesPage extends Component {
     return (
       <PageBase>
         <Modal content={customModal} show={state.showModal}/>
-        <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters}/>
-        <Table schema={schema} data={invoiceData} />
+        <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters} />
+        <Table schema={schema} data={invoiceData} returnFiltered={actions.setFilteredInvoices} />
+        <div className={styles.actionButtons}>
+          <LabeledRoundButton label={t(['invoices','donwloadExcel'])} content={<span className='fa fa-file-excel-o' aria-hidden="true"></span>} onClick={actions.generateExcel} type='action'/>
+          <LabeledRoundButton label={t(['invoices','donwloadInvoices'])} content={<span className='fa fa-files-o' aria-hidden="true"></span>} onClick={actions.downloadZip} type='action'/>
+        </div>
       </PageBase>
     )
   }

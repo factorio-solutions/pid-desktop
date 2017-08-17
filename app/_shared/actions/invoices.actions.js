@@ -1,5 +1,7 @@
 import { request }  from '../helpers/request'
-import { download } from '../helpers/download'
+import { download, downloadMultiple } from '../helpers/download'
+import { downloadCSV } from '../helpers/downloadCSV'
+import { formatTime } from '../helpers/time'
 import { t }        from '../modules/localization/localization'
 import * as nav     from '../helpers/navigation'
 
@@ -7,13 +9,14 @@ import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION,GET_ACCOUNT_DETAILS
 import { toAccounts, toClients, setError, setCustomModal } from './pageBase.actions'
 
 
-export const INVOICES_SET_INVOICES        = 'INVOICES_SET_INVOICES'
-export const INVOICES_SET_CLIENTS         = 'INVOICES_SET_CLIENTS'
-export const INVOICES_SET_CLIENT_ID       = 'INVOICES_SET_CLIENT_ID'
-export const INVOICES_SET_PAST            = 'INVOICES_SET_PAST'
-export const INVOICES_SET_REASON          = 'INVOICES_SET_REASON'
-export const INVOICES_SET_INVOICE_ID      = 'INVOICES_SET_INVOICE_ID'
-export const INVOICES_TOGGLE_REASON_MODAL = 'INVOICES_TOGGLE_REASON_MODAL'
+export const INVOICES_SET_INVOICES          = 'INVOICES_SET_INVOICES'
+export const INVOICES_SET_CLIENTS           = 'INVOICES_SET_CLIENTS'
+export const INVOICES_SET_CLIENT_ID         = 'INVOICES_SET_CLIENT_ID'
+export const INVOICES_SET_PAST              = 'INVOICES_SET_PAST'
+export const INVOICES_SET_REASON            = 'INVOICES_SET_REASON'
+export const INVOICES_SET_INVOICE_ID        = 'INVOICES_SET_INVOICE_ID'
+export const INVOICES_TOGGLE_REASON_MODAL   = 'INVOICES_TOGGLE_REASON_MODAL'
+export const INVOICSE_SET_FILTERED_INVOICES = 'INVOICSE_SET_FILTERED_INVOICES'
 
 
 export function setInvoices (value) {
@@ -52,6 +55,12 @@ export function setReason (value) {
 export function toggleReason (id) {
   return { type:  INVOICES_TOGGLE_REASON_MODAL
          , value: id
+         }
+}
+
+export function setFilteredInvoices (value) {
+  return { type:  INVOICSE_SET_FILTERED_INVOICES
+         , value
          }
 }
 
@@ -182,5 +191,49 @@ export function reminder(id){
                }
              )
     })
+  }
+}
+
+
+export function generateExcel () {
+  return (dispatch, getState) => {
+    const invoices = getState().invoices.filteredInvoices
+
+    const header = [ [ t(['invoices', 'invoiceNumber'])
+                     , 'id'
+                     , t(['invoices', 'client'])
+                     , t(['invoices', 'invoiceDate'])
+                     , t(['invoices', 'dueDate'])
+                     , t(['invoices', 'type'])
+                     , t(['invoices', 'subject'])
+                     , t(['invoices', 'ammount'])
+                     , t(['invoices', 'paid'])
+                     , t(['invoices', 'invoiceCanceled'])
+                     ]
+                   ]
+
+    const data = invoices.reduce((acc, invoice) => {
+      return [...acc, [ invoice.invoice_number
+        , invoice.id
+        , invoice.client_name
+        , formatTime(invoice.invoice_date)
+        , formatTime(invoice.due_date)
+        , invoice.longterm_rent ? t(['garages', 'longterm']) : t(['garages', 'shortterm'])
+        , invoice.subject
+        , invoice.price
+        , invoice.payed ? 'YES' : 'NO'
+        , invoice.canceled ? 'YES' : 'NO'
+      ]]
+    }, header)
+
+    downloadCSV(data)
+  }
+}
+
+
+export function downloadZip () {
+  return (dispatch, getState) => {
+    const invoices = getState().invoices.filteredInvoices
+    downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, invoices.map(invoice => invoice.id))
   }
 }
