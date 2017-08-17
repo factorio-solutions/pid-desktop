@@ -34,7 +34,8 @@ export default class Table extends Component {
 	  data: 				PropTypes.array.isRequired,   // Source data to fill the table
 		onRowSelect: 	PropTypes.func, // will be called on select, gives it parameters (data, index) or (undefined, -1) on deselect
 		deselect: 		PropTypes.bool, // if set to true, will reset selected item
-		searchBox:		PropTypes.bool
+		searchBox:		PropTypes.bool,
+		returnFiltered: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -55,8 +56,33 @@ export default class Table extends Component {
     }
   }
 
+	filterData(data){
+		const { schema } = this.props
+
+		const stringifyElement = (obj) => {
+			if (typeof obj === 'object'){
+				return obj && obj.props && obj.props.children ? (['number', 'string'].includes(typeof obj.props.children) ? obj.props.children
+																																																									: obj.props.children.map((child)=>{return stringifyElement(child)}).join(' '))
+																											: ''
+			} else {
+				return obj
+			}
+		}
+
+		return data.map((object, index) => ({...object, key: index}))
+		.filter((object) => {
+			if (this.state.search === ''){
+				return true
+			} else {
+				return schema.map((value, index)=>{ return value.representer ? value.representer(object[value.key]) : object[value.key] })
+										 .map((value) => { return stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim().toLowerCase().includes(this.state.search.toLowerCase()) })
+										 .includes(true)
+			}
+		})
+	}
+
   render() {
-		const { schema, data, searchBox } = this.props
+		const { schema, data, searchBox, returnFiltered } = this.props
 		const { sortKey, sortType, spoilerId } = this.state
 		const { compareRepresentations, comparator, representer } = schema.find((s)=>s.key==sortKey)
 		var myComp = undefined // comparator to be used
@@ -75,15 +101,7 @@ export default class Table extends Component {
 			}
 		}
 
-		const stringifyElement = (obj) => {
-			if (typeof obj === 'object'){
-				return obj && obj.props && obj.props.children ? (['number', 'string'].includes(typeof obj.props.children) ? obj.props.children
-																																					 										 										: obj.props.children.map((child)=>{return stringifyElement(child)}).join(' '))
-																								 			: ''
-			} else {
-				return obj
-			}
-		}
+
 
 		if (typeof comparator == 'function'){ // custom comparator
 			myComp = (aRow,bRow) => {
@@ -116,21 +134,7 @@ export default class Table extends Component {
 			}
 		}
 
-		const newData = data
-			.map((object, index) => {
-				object.key = index
-				return object
-			})
-			.filter((object) => {
-				if (this.state.search === ''){
-					return true
-				} else {
-					return schema.map((value, index)=>{ return value.representer ? value.representer(object[value.key]) : object[value.key] })
-											 .map((value) => { return stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim().toLowerCase().includes(this.state.search.toLowerCase()) })
-											 .includes(true)
-				}
-			}).sort(myComp)
-
+		const newData = this.filterData(data).sort(myComp)
 
 		const handleRowClick = (spoilerId) => {
 				const { onRowSelect } = this.props
@@ -159,10 +163,17 @@ export default class Table extends Component {
 			]
 		}
 
+		const onFilterChange = (e) => {
+			this.setState( { ...this.state, search: e.target.value }, ()=>{
+				// return filtered data back to parent on change
+				returnFiltered && returnFiltered(this.filterData(data))
+			})
+		}
+
 		return (
 			<div>
 				{searchBox && <div className={styles.searchBox}>
-					<input type="search" onChange={(e)=>{this.setState( { ...this.state, search: e.target.value } )}} value={this.state.search}/>
+					<input type="search" onChange={onFilterChange} value={this.state.search}/>
 					<i className="fa fa-search" aria-hidden="true"></i>
 				</div>}
 
