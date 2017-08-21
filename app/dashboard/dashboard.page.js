@@ -95,7 +95,7 @@ export class DashboardPage extends Component {
           place.pricing && acc.visitor ++ // needs to have a pricing to be for visitors
           place.pricing && reservation !== undefined && acc.visitorOccupied++
         }
-        reservation === undefined && acc.free++
+        reservation === undefined && contract === undefined && acc.free++
         acc.total++
 
         return acc
