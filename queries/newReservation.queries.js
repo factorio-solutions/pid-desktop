@@ -43,6 +43,8 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
   garage(id: $id) {
     id
     name
+    vat
+    dic
     floors {
       id
       label

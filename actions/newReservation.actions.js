@@ -1,8 +1,8 @@
 import moment                                from 'moment'
 import { request }                           from '../helpers/request'
-import { calculatePrice }                    from '../helpers/calculatePrice'
-import { t }                                 from '../modules/localization/localization'
+import { calculatePrice, valueAddedTax }     from '../helpers/calculatePrice'
 import * as nav                              from '../helpers/navigation'
+import { t }                                 from '../modules/localization/localization'
 import * as pageBaseActions                  from './pageBase.actions'
 import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 
@@ -162,7 +162,7 @@ export function setPrice(){
     }, undefined)
 
     dispatch({ type: NEW_RESERVATION_SET_PRICE
-             , value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from ,to)} ${selectedPlace.pricing.currency.symbol}` : undefined
+             , value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from ,to, state.garage.dic ? state.garage.vat : 0 )} ${selectedPlace.pricing.currency.symbol}` : undefined
              })
   }
 }
@@ -373,8 +373,8 @@ export function downloadGarage (id) {
         , { id:             id || state.garage.id
           , user_id:        state.user.id
           , client_id:      state.client_id
-          , begins_at:      state.from
-          , ends_at:        state.to
+          , begins_at:      timeToUTC(state.from)
+          , ends_at:        timeToUTC(state.to)
           , reservation_id: state.reservation ? state.reservation.id : null
         }
       )
@@ -390,10 +390,20 @@ export function downloadGarage (id) {
           if (place.available && place.pricing) { // add tooltip to available places
             const pricing = place.pricing
             const symbol = pricing.currency.symbol
+            const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
+            const pricePerHour = price => valueAddedTax(price, value.garage.dic ? value.garage.vat : 0)
+
             place.tooltip = <div>
                               <div>
-                                {pricing.flat_price ? <span><b>{t(['newPricing','flatPrice'])}:</b> {pricing.flat_price} {symbol}</span>
-                                                    : <span><b>{t(['newPricing','exponentialPrice'])}:</b>{pricing.exponential_12h_price} - {pricing.exponential_day_price} - {pricing.exponential_week_price} - {pricing.exponential_month_price} {symbol}</span>}
+                              <span>
+                                <b>{t(['newReservation','price'])}: </b>
+                                { pricing.flat_price ? pricePerHour(pricing.flat_price) :
+                                  duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
+                                  duration < 24 ? pricePerHour(pricing.exponential_day_price) :
+                                  duration < 168 ? pricePerHour(pricing.exponential_week_price) :
+                                  pricePerHour(pricing.exponential_month_price)
+                                } {symbol}
+                              </span>
                               </div>
                               {pricing.weekend_price && <div>
                                 <span>
@@ -472,7 +482,6 @@ export function submitReservation (id) {
                               , url:           ongoing ? undefined : window.location.href.split('?')[0]
                               , begins_at:     ongoing ? undefined : timeToUTC(state.from)
                               , ends_at:       timeToUTC(state.to)
-
                               }
                , id: id
                }
