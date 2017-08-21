@@ -18,6 +18,7 @@ import styles               from './invoices.page.scss'
 import * as nav             from '../../_shared/helpers/navigation'
 import { t }                from '../../_shared/modules/localization/localization'
 import * as invoicesActions from '../../_shared/actions/invoices.actions'
+import { valueAddedTax }    from '../../_shared/helpers/calculatePrice'
 // import {  setCustomModal }  from '../../_shared/actions/pageBase.actions'
 
 
@@ -50,7 +51,7 @@ export class InvoicesPage extends Component {
      .map((invoice) => {
        invoice.garage_name = invoice.account && invoice.account.garage.name
        invoice.client_name = invoice.client && invoice.client.name
-       invoice.price = invoice.ammount + ' ' + invoice.currency.symbol
+       invoice.price = valueAddedTax(invoice.ammount, invoice.vat) + ' ' + invoice.currency.symbol
        invoice.disabled = invoice.canceled
        invoice.spoiler = <div>
                           {invoice.canceled ? <div>

@@ -2,6 +2,8 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
   garage(id: $id) {
     id
     name
+    dic
+    vat
     floors {
       label
       scheme

@@ -12,6 +12,7 @@ import GarageLayout        from '../_shared/components/garageLayout/GarageLayout
 import * as nav           from '../_shared/helpers/navigation'
 import { t }              from '../_shared/modules/localization/localization'
 import * as garageActions from '../_shared/actions/garage.actions'
+import { valueAddedTax }  from '../_shared/helpers/calculatePrice'
 
 import styles from './garage.page.scss'
 
@@ -53,6 +54,8 @@ export class GaragePage extends Component {
           .filter(contract => moment(state.time).isBetween(moment(contract.from), moment(contract.to)))
           .find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
         const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
+        const calculatePrice = price => valueAddedTax(price, state.garage.dic ? state.garage.vat : 0)
+
         switch (state.selected) {
           case 'clients':
             if (contract) {
@@ -86,13 +89,13 @@ export class GaragePage extends Component {
           <tr><td>{t(['garages','client'])}</td><td>{contract && contract.client.name}</td></tr>
           <tr><td>{t(['garages','contract'])}</td><td>{contract && contract.name}</td></tr>
           <tr><td>{t(['garages','priceType'])}</td><td>{place.contracts[0] ? t(['garages','longterm']) : place.pricing ? t(['garages','shortterm']) : ""}</td></tr>
-          <tr><td>{t(['garages','pricePerSpot'])}</td><td>{place.contracts[0] && place.contracts[0].rent ? place.contracts[0].rent.price+' '+place.contracts[0].rent.currency.symbol : ""}</td></tr>
-          <tr><td>{t(['garages','12HourPrice'])}</td><td>{place.pricing  && place.pricing.exponential_12h_price   ? place.pricing.exponential_12h_price+' '+place.pricing.currency.symbol   : ""}</td></tr>
-          <tr><td>{t(['garages','dayPrice'])}</td><td>{place.pricing     && place.pricing.exponential_day_price   ? place.pricing.exponential_day_price+' '+place.pricing.currency.symbol   : ""}</td></tr>
-          <tr><td>{t(['garages','weekPrice'])}</td><td>{place.pricing    && place.pricing.exponential_week_price  ? place.pricing.exponential_week_price+' '+place.pricing.currency.symbol  : ""}</td></tr>
-          <tr><td>{t(['garages','monthPrice'])}</td><td>{place.pricing   && place.pricing.exponential_month_price ? place.pricing.exponential_month_price+' '+place.pricing.currency.symbol : ""}</td></tr>
-          <tr><td>{t(['garages','weekendPrice'])}</td><td>{place.pricing && place.pricing.weekend_price           ? place.pricing.weekend_price+' '+place.pricing.currency.symbol           : ""}</td></tr>
-          <tr><td>{t(['garages','flatPrice'])}</td><td>{place.pricing    && place.pricing.flat_price              ? place.pricing.flat_price+' '+place.pricing.currency.symbol              : ""}</td></tr>
+          <tr><td>{t(['garages','pricePerSpot'])}</td><td>{place.contracts[0] && place.contracts[0].rent ? calculatePrice(place.contracts[0].rent.price)+' '+place.contracts[0].rent.currency.symbol : ""}</td></tr>
+          <tr><td>{t(['garages','flatPrice'])}</td><td>{place.pricing    && place.pricing.flat_price              ? calculatePrice(place.pricing.flat_price)+' '+place.pricing.currency.symbol              : ""}</td></tr>
+          <tr><td>{t(['garages','12HourPrice'])}</td><td>{place.pricing  && place.pricing.exponential_12h_price   ? calculatePrice(place.pricing.exponential_12h_price)+' '+place.pricing.currency.symbol   : ""}</td></tr>
+          <tr><td>{t(['garages','dayPrice'])}</td><td>{place.pricing     && place.pricing.exponential_day_price   ? calculatePrice(place.pricing.exponential_day_price)+' '+place.pricing.currency.symbol   : ""}</td></tr>
+          <tr><td>{t(['garages','weekPrice'])}</td><td>{place.pricing    && place.pricing.exponential_week_price  ? calculatePrice(place.pricing.exponential_week_price)+' '+place.pricing.currency.symbol  : ""}</td></tr>
+          <tr><td>{t(['garages','monthPrice'])}</td><td>{place.pricing   && place.pricing.exponential_month_price ? calculatePrice(place.pricing.exponential_month_price)+' '+place.pricing.currency.symbol : ""}</td></tr>
+          <tr><td>{t(['garages','weekendPrice'])}</td><td>{place.pricing && place.pricing.weekend_price           ? calculatePrice(place.pricing.weekend_price)+' '+place.pricing.currency.symbol           : ""}</td></tr>
           <tr><td>{t(['garages','reservationId'])}</td><td>{reservation && reservation.id}</td></tr>
           <tr><td>{t(['garages','driver'])}</td><td>{reservation && reservation.user.full_name}</td></tr>
           <tr><td>{t(['garages','type'])}</td><td>{reservation && (reservation.client ? t(['reservations','host']) : t(['reservations','visitor']))}</td></tr>
