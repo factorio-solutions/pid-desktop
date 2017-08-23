@@ -27,6 +27,10 @@ export class PageBase extends Component {
     this.props.actions.initialPageBase()
   }
 
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    nextProps.state.garage != this.props.state.garage && this.props.actions.initialPageBase()
+  }
+
   render () {
     const { state, actions, notifications } = this.props
 
@@ -34,9 +38,9 @@ export class PageBase extends Component {
 
     const vertical =  [{label: t(['pageBase','Dashboard']),    key: "dashboard",    icon: 'icon-dashboard',    onClick: ()=>{nav.to(`/dashboard`)} }
                     ,  {label: t(['pageBase', 'Reservation']), key: "reservations", icon: 'icon-reservations', onClick: ()=>{nav.to('/reservations')} }
-                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']), key: "occupancy", icon: 'icon-occupancy', onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} }
-                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),    key: "garage",    icon: 'icon-garage',    onClick: ()=>{nav.to(`/${state.garage}/garage`)} }
-                    ,  (state.isGarageAdmin && state.pid_tarif >= 2) && {label: t(['pageBase', 'analytics']), key: "analytics", icon: 'icon-invoices', onClick: ()=>{actions.analyticsClick()} }
+                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Occupancy']), key: "occupancy", icon: 'icon-occupancy', onClick: ()=>{nav.to(`/${state.garage}/occupancy`)} } // edit preferences in pageBase.action too
+                    ,  (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) && {label: t(['pageBase', 'Garage']),    key: "garage",    icon: 'icon-garage',    onClick: ()=>{nav.to(`/${state.garage}/garage`)} } // edit preferences in pageBase.action too
+                    ,  (state.isGarageAdmin && state.pid_tarif >= 2) && {label: t(['pageBase', 'analytics']), key: "analytics", icon: 'icon-invoices', onClick: ()=>{actions.analyticsClick()} } // edit preferences in pageBase.action too
                     // ,  {label: t(['pageBase', 'Issues']),       key: "issues",        icon: 'icon-issues', onClick: ()=>{nav.to(`/${state.garage}/issues`)} }
                     ,  {label: t(['pageBase', 'Admin']), key: "admin", icon: 'icon-admin', onClick: ()=>{actions.adminClick()} }
                     ].filter(field => field !== false)
@@ -46,7 +50,7 @@ export class PageBase extends Component {
                          , {label: t(['pageBase', 'Add Features']),                            onClick: ()=>{nav.to('/addFeatures')}}
                          ].filter(field => field !== false)
 
-    const profikeDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="icon-profile" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
+    const profileDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="icon-profile" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>
                             , <div className={styles.dropdownContent} onClick={()=>{actions.logout()}}><i className="fa fa-sign-out" aria-hidden="true"></i>{t(['pageBase', 'Logout'])}</div>
                             ]
 
@@ -98,7 +102,7 @@ export class PageBase extends Component {
           showHints={state.current_user && state.current_user.hint}
           hint={state.hint}
           breadcrumbs={state.breadcrumbs}
-          profileDropdown={profikeDropdown}
+          profileDropdown={profileDropdown}
           secondaryMenuBackButton={state.secondaryMenuBackButton}
         >
           {this.props.children}

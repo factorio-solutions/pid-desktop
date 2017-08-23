@@ -58,20 +58,6 @@ export class DashboardPage extends Component {
   render() {
     const { state, pageBase, analytics, logs, actions, analyticsActions, logsActions, pageBaseActions } = this.props
 
-    // const preparePlaces = (floor) => {
-    //   floor.places.map((place) => {
-    //     place.tooltip = <table className={styles.tooltip}><tbody>
-    //       <tr><td>{t(['garages','reservationId'])}</td><td>{reservation && reservation.id}</td></tr>
-    //       <tr><td>{t(['garages','driver'])}</td><td>{reservation && reservation.user.full_name}</td></tr>
-    //       <tr><td>{t(['garages','type'])}</td><td>{reservation && (reservation.client ? t(['reservations','host']) : t(['reservations','visitor']))}</td></tr>
-    //       <tr><td>{t(['garages','period'])}</td><td>{reservation && moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')+' - '+moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
-    //       <tr><td>{t(['garages','licencePlate'])}</td><td>{reservation && reservation.car.licence_plate}</td></tr>
-    //     </tbody></table>
-    //     return place
-    //   })
-    //   return floor
-    // }
-
     const prepareNews = news => <div className={styles.news} href={news.url}>{news.label} <span>{moment(news.created_at).format("DD.MM. HH:mm")}</span></div>
 
     const logScheme = [ { key: 'full_name',  title: t(['activityLog', 'name']),      comparator: 'string', sort: 'asc' }

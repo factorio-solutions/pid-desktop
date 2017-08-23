@@ -25,7 +25,6 @@ export class GarageSelector extends Component {
     if (content === undefined || content.length === 0 || selectedIndex === -1) return null
 
     const selected = (object) => {
-      nav.to('/dashboard')
       actions.setGarage(object.id)
     }
 

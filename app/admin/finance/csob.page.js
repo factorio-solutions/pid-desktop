@@ -24,6 +24,12 @@ export class CsobPage extends Component {
     this.props.actions.initFinance(this.props.params.id)
   }
 
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    if (nextProps.pageBase.garage != this.props.pageBase.garage){
+      this.props.actions.initFinance(nextProps.pageBase.garage)
+    }
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
 

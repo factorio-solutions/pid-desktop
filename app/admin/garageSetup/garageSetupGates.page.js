@@ -47,6 +47,14 @@ export class GarageSetupGatesPage extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){ // load garage if id changed
+    if (nextProps.pageBase.garage != this.props.pageBase.garage){
+      const { state, actions} = this.props
+      state.availableTarifs.length === 0 && actions.initTarif()
+      nextProps.pageBase.garage && actions.intiEditGarageGates(nextProps.pageBase.garage)
+    }
+  }
+
   render() {
     const { state, actions } = this.props
 
@@ -145,6 +153,6 @@ export class GarageSetupGatesPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.garageSetup }), //{ state: state.dashboard }
+  state    => ({ state: state.garageSetup, pageBase: state.pageBase }), //{ state: state.dashboard }
   dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) }) //{ actions: bindActionCreators(dashboardActions, dispatch) }
 )(GarageSetupGatesPage)

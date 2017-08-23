@@ -133,13 +133,13 @@ export function setIsGarageAdmin(value) {
              , value
              })
 
-    const hash = window.location.hash
-    if (contains(hash, 'admin')){
-      dispatch(adminClick())
-    }
-    if (contains(hash, 'analytics')){
-      dispatch(analyticsClick())
-    }
+    // const hash = window.location.hash
+    // if (contains(hash, 'admin')){
+    //   dispatch(adminClick())
+    // }
+    // if (contains(hash, 'analytics')){
+    //   dispatch(analyticsClick())
+    // }
   }
 }
 
@@ -168,8 +168,8 @@ function prepareAdminSecondaryMenu() {
     const state = getState().pageBase
     return [ {label: t(['pageBase', 'Invoices']),      key: "invoices", onClick: ()=>{nav.to(`/${garage}/admin/invoices`)} }
            , {label: t(['pageBase', 'Clients']),       key: "clients",  onClick: ()=>{nav.to(`/${garage}/admin/clients`)} }
-           , state.isGarageAdmin && {label: t(['pageBase', 'Modules']),       key: "modules",  onClick: ()=>{nav.to(`/${garage}/admin/modules`)} }
-           , state.isGarageAdmin && {label: t(['pageBase', 'Garage setup']),  key: "garageSetup",   onClick: ()=>{nav.to(`/${garage}/admin/garageSetup/general`)} }
+           , state.isGarageAdmin && {label: t(['pageBase', 'Modules']),       key: "modules",     onClick: ()=>{nav.to(`/${garage}/admin/modules`)} }
+           , state.isGarageAdmin && {label: t(['pageBase', 'Garage setup']),  key: "garageSetup", onClick: ()=>{nav.to(`/${garage}/admin/garageSetup/general`)} }
            , {label: t(['pageBase', 'Users']),         key: "users",    onClick: ()=>{nav.to(`/${garage}/admin/users`)} }
            , state.isGarageAdmin && {label: t(['pageBase', 'Finance']),       key: "finance",  onClick: ()=>{nav.to(`/${garage}/admin/finance`)} }
            , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
@@ -346,13 +346,23 @@ export function toReservations() {
 
 export function toOccupancy() {
   return (dispatch, getState) => {
-    dispatch(setAll('occupancy', [], undefined, [{label: t(['pageBase','Occupancy']), route: '/occupancy'}], t(['pageBase','OccupancyOverviewHint']), 'https://www.youtube.com/'))
+    const state = getState().pageBase
+    if (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity){
+      dispatch(setAll('occupancy', [], undefined, [{label: t(['pageBase','Occupancy']), route: '/occupancy'}], t(['pageBase','OccupancyOverviewHint']), 'https://www.youtube.com/'))
+    } else {
+      nav.to('/dashboard')
+    }
   }
 }
 
 export function toGarage() {
   return (dispatch, getState) => {
-    dispatch(setAll('garage', [], undefined, [{label: t(['pageBase','Garage']), route: '/garage'}], t(['pageBase','garagesHint']), 'https://www.youtube.com/'))
+    const state = getState().pageBase
+    if (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity){
+      dispatch(setAll('garage', [], undefined, [{label: t(['pageBase','Garage']), route: '/garage'}], t(['pageBase','garagesHint']), 'https://www.youtube.com/'))
+    } else {
+      nav.to('/dashboard')
+    }
   }
 }
 
@@ -364,37 +374,40 @@ export function toIssues() {
 
 export function toAnalytics() {
   return (dispatch, getState) => {
-    const hash = window.location.hash
-    let secondarySelected = undefined
-    let hint = undefined
-    let hintVideo = undefined
+    const state = getState().pageBase
+    if (state.isGarageAdmin && state.pid_tarif >= 2) {
+      const hash = window.location.hash
+      let secondarySelected = undefined
+      let hint = undefined
+      let hintVideo = undefined
 
-    switch (true) { // MainMenu
-      case contains(hash, 'garageTurnover'):
+
+      switch (true) { // MainMenu
+        case contains(hash, 'garageTurnover'):
         secondarySelected = 'garageTurnover'
         hint = t(['pageBase','analyticsGarageTurnoverHint'])
         hintVideo = 'https://www.youtube.com/'
         break
 
-      case contains(hash, 'reservationsAnalytics'):
+        case contains(hash, 'reservationsAnalytics'):
         secondarySelected = 'reservationsAnalytics'
         hint = t(['pageBase','analyticsreservationsHint'])
         hintVideo = 'https://www.youtube.com/'
         break
 
-      case contains(hash, 'placesAnalytics'):
+        case contains(hash, 'placesAnalytics'):
         secondarySelected = 'placesAnalytics'
         hint = t(['pageBase','analyticsplacesHint'])
         hintVideo = 'https://www.youtube.com/'
         break
 
-      case contains(hash, 'paymentsAnalytics'):
+        case contains(hash, 'paymentsAnalytics'):
         secondarySelected = 'paymentsAnalytics'
         hint = t(['pageBase','analyticspaymentsHint'])
         hintVideo = 'https://www.youtube.com/'
         break
 
-      case contains(hash, 'gatesAnalytics'):
+        case contains(hash, 'gatesAnalytics'):
         secondarySelected = 'gatesAnalytics'
         hint = t(['pageBase','analyticsgatesHint'])
         hintVideo = 'https://www.youtube.com/'
@@ -402,11 +415,15 @@ export function toAnalytics() {
       }
 
       dispatch(setAll('analytics', dispatch(prepareAnalyticsSecondaryMenu()), secondarySelected, undefined, hint, hintVideo))
+    } else {
+      nav.to('/dashboard') // not accessible for this user
+    }
   }
 }
 
 export function toAdmin() {
   return (dispatch, getState) => {
+    const state = getState().pageBase
     const hash = window.location.hash
     const garage = getState().pageBase.garage
     let breadcrumbs = [{label: t(['pageBase','Admin']), route: `/${garage}/admin/invoices`}]
@@ -472,75 +489,119 @@ export function toAdmin() {
         break
 
       case (contains(hash, 'modules/') && contains(hash, 'marketingSettings')):
-        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
-        breadcrumbs.push({label: t(['pageBase','marketingSettings']), route: `/${garage}/admin/modules/marketingSettings`})
-        secondarySelected = 'modules'
-        hint = t(['pageBase','garageNewMarketingHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          breadcrumbs.push({label: t(['pageBase','marketingSettings']), route: `/${garage}/admin/modules/marketingSettings`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','garageNewMarketingHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'modules/') && contains(hash, 'reservationButton')):
-        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
-        breadcrumbs.push({label: t(['pageBase','reservationButton']), route: `/${garage}/admin/modules/reservationButton`})
-        secondarySelected = 'modules'
-        hint = t(['pageBase','ReservationButtonHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          breadcrumbs.push({label: t(['pageBase','reservationButton']), route: `/${garage}/admin/modules/reservationButton`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','ReservationButtonHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'modules/') && contains(hash, 'mrParkitIntegration')):
-        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
-        breadcrumbs.push({label: t(['pageBase','mrParkitIntegration']), route: `/${garage}/admin/modules/mrParkitIntegration`})
-        secondarySelected = 'modules'
-        hint = t(['pageBase','mrParkitIntegrationHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          breadcrumbs.push({label: t(['pageBase','mrParkitIntegration']), route: `/${garage}/admin/modules/mrParkitIntegration`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','mrParkitIntegrationHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'modules/') && contains(hash, 'goPublic')):
-        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
-        breadcrumbs.push({label: t(['pageBase','goPublic']), route: `/${garage}/admin/modules/goPublic`})
-        secondarySelected = 'modules'
-        hint = t(['pageBase','goPublicHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          breadcrumbs.push({label: t(['pageBase','goPublic']), route: `/${garage}/admin/modules/goPublic`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','goPublicHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'modules')):
-        breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
-        secondarySelected = 'modules'
-        hint = t(['pageBase','garageMarketingHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','garageMarketingHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
 
       case (contains(hash, 'garageSetup') && contains(hash, 'general')):
-        breadcrumbs.push({label: t(['pageBase','Garage setup']), route: `/${garage}/admin/garageSetup/general`})
-        secondarySelected = 'garageSetup'
-        hint = t(['pageBase','newGarageHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Garage setup']), route: `/${garage}/admin/garageSetup/general`})
+          secondarySelected = 'garageSetup'
+          hint = t(['pageBase','newGarageHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
-        breadcrumbs.push({label: t(['pageBase','garageSetupFloors']), route: `/${garage}/admin/garageSetup/floors`})
-        secondarySelected = 'garageSetup'
-        hint = t(['pageBase','newGarageFloorsHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','garageSetupFloors']), route: `/${garage}/admin/garageSetup/floors`})
+          secondarySelected = 'garageSetup'
+          hint = t(['pageBase','newGarageFloorsHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
-        breadcrumbs.push({label: t(['pageBase','garageSetupGates']), route: `/${garage}/admin/garageSetup/gates`})
-        secondarySelected = 'garageSetup'
-        hint = t(['pageBase','newGarageGatesHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','garageSetupGates']), route: `/${garage}/admin/garageSetup/gates`})
+          secondarySelected = 'garageSetup'
+          hint = t(['pageBase','newGarageGatesHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'order')):
-        breadcrumbs.push({label: t(['pageBase','garageSetupOrder']), route: `/${garage}/admin/garageSetup/gates`})
-        secondarySelected = 'garageSetup'
-        hint = t(['pageBase','newGarageOrderHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','garageSetupOrder']), route: `/${garage}/admin/garageSetup/gates`})
+          secondarySelected = 'garageSetup'
+          hint = t(['pageBase','newGarageOrderHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'subscribtion')):
-        breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/${garage}/admin/garageSetup/gates`})
-        secondarySelected = 'garageSetup'
-        hint = t(['pageBase','newGarageSubscribtionHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/${garage}/admin/garageSetup/gates`})
+          secondarySelected = 'garageSetup'
+          hint = t(['pageBase','newGarageSubscribtionHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'users')):
-        breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/${garage}/admin/garageSetup/gates`})
-        secondarySelected = 'garageSetup'
-        hint = t(['pageBase','garageGarageUsersHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','garageSetupSubscribtion']), route: `/${garage}/admin/garageSetup/gates`})
+          secondarySelected = 'garageSetup'
+          hint = t(['pageBase','garageGarageUsersHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
 
       case (!contains(hash, 'clients') && !contains(hash, 'garageSetup') && contains(hash, 'users') && contains(hash, 'invite')):
@@ -558,52 +619,80 @@ export function toAdmin() {
         break
 
       case (contains(hash, 'finance') && contains(hash, 'paypal')):
-        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
-        breadcrumbs.push({label: 'Paypal', route: `/${garage}/admin/finance/paypal`})
-        secondarySelected = 'finance'
-        hint = t(['pageBase','financePaypalHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+          breadcrumbs.push({label: 'Paypal', route: `/${garage}/admin/finance/paypal`})
+          secondarySelected = 'finance'
+          hint = t(['pageBase','financePaypalHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'finance') && contains(hash, 'csob')):
-        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
-        breadcrumbs.push({label: 'ČSOB', route: `/${garage}/admin/finance/csob`})
-        secondarySelected = 'finance'
-        hint = t(['pageBase','financeCSOBHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+          breadcrumbs.push({label: 'ČSOB', route: `/${garage}/admin/finance/csob`})
+          secondarySelected = 'finance'
+          hint = t(['pageBase','financeCSOBHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'finance') && contains(hash, 'newRent')):
-        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
-        breadcrumbs.push({label: 'New rent', route: `/${garage}/admin/finance/newRent`})
-        secondarySelected = 'finance'
-        hint = t(['pageBase','garageNewRentHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+          breadcrumbs.push({label: 'New rent', route: `/${garage}/admin/finance/newRent`})
+          secondarySelected = 'finance'
+          hint = t(['pageBase','garageNewRentHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'finance') && contains(hash, 'editRent')):
-        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
-        breadcrumbs.push({label: 'Edit rent', route: `/${garage}/admin/finance/newRent`})
-        secondarySelected = 'finance'
-        hint = t(['pageBase','garageEditRentHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+          breadcrumbs.push({label: 'Edit rent', route: `/${garage}/admin/finance/newRent`})
+          secondarySelected = 'finance'
+          hint = t(['pageBase','garageEditRentHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
       case (contains(hash, 'finance')):
-        breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
-        secondarySelected = 'finance'
-        hint = t(['pageBase','financeHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Finance']), route: `/${garage}/admin/finance`})
+          secondarySelected = 'finance'
+          hint = t(['pageBase','financeHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
 
       case (contains(hash, 'pidSettings')):
-        breadcrumbs.push({label: t(['pageBase','PID settings']), route: `/${garage}/admin/pidSettings`})
-        secondarySelected = 'PID'
-        hint = t(['pageBase','pidSettingsHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','PID settings']), route: `/${garage}/admin/pidSettings`})
+          secondarySelected = 'PID'
+          hint = t(['pageBase','pidSettingsHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
 
       case (contains(hash, 'activityLog')):
-        breadcrumbs.push({label: t(['pageBase','Activity log']), route: `/${garage}/admin/activityLog`})
-        secondarySelected = 'activity'
-        hint = t(['pageBase','activityLogHint'])
-        hintVideo = 'https://www.youtube.com/'
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Activity log']), route: `/${garage}/admin/activityLog`})
+          secondarySelected = 'activity'
+          hint = t(['pageBase','activityLogHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
         break
     }
 

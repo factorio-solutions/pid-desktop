@@ -28,6 +28,7 @@ export class NewContractPage extends Component {
   }
 
   componentWillReceiveProps(nextProps){ // load garage if id changed
+    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.eraseForm()
     nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initContract( this.props.params.contract_id )
   }
 
@@ -77,7 +78,7 @@ export class NewContractPage extends Component {
       if (state.client_id === undefined) return false
       if (state.from === undefined||state.from === '') return false
       if (state.places.length == 0) return false
-      if (!state.newRent && state.rent.id === undefined) return false
+      if (!state.newRent && state.rent && state.rent.id === undefined) return false
       if (state.newRent && (state.price === undefined || state.price <= 0 || state.currency_id === undefined)) return false
 
       return true
