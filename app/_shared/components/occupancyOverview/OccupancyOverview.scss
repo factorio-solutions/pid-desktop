@@ -25,6 +25,12 @@
     max-height:550px;
     overflow-y: auto;
     overflow-x: hidden;
+
+    tr:hover{
+      border-top: 1px solid $blue;
+      border-bottom: 1px solid $blue;
+      background-color: lighten($blue, 50%);
+    }
   }
   thead, tbody tr {
     display:table;
@@ -124,6 +130,7 @@
   vertical-align: bottom;
   white-space: nowrap;
 }
+
 
 // ============================================================================
 // TOOLTIP TABLE STYLING
