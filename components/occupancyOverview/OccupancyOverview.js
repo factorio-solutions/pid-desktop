@@ -122,8 +122,21 @@ export class OccupancyOverview extends Component{
       const length = this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS
       var days = []
       for (var i = 0; i < length; i++) {
+        // if (this.props.duration === 'month'){
+        //   if (i%3 === 0) {
+        //     const curr_date = moment(this.props.from).add(i,'days')
+        //     days.push(<td key={i} className={`${styles.center} ${styles.date}`} colSpan={6}> {curr_date.format('ddd')} <br/> {curr_date.format('DD.MM.')} </td>)
+        //   }
+        // }else{
+        //   const curr_date = moment(this.props.from).add(i,'days')
+        //   days.push(<td key={i} className={`${styles.center} ${styles.date}`} colSpan={2}> {curr_date.format('ddd')} <br/> {curr_date.format('DD.MM.')} </td>)
+        // }
         const curr_date = moment(this.props.from).add(i,'days')
-        days.push(<td key={i} className={`${styles.center} ${styles.date}`} colSpan={2}> {curr_date.format('ddd')} <br/> {curr_date.format('DD.MM.')} </td>)
+        if (this.props.duration === 'month'){
+          days.push(<td key={i} className={`${styles.center} ${styles.date}`} colSpan={2}> {curr_date.format('DD.')} <br/> {curr_date.format('MM.')} </td>)
+        } else {
+          days.push(<td key={i} className={`${styles.center} ${styles.date}`} colSpan={2}> {curr_date.format('ddd')} <br/> {curr_date.format('DD.MM.')} </td>)
+        }
       }
       return days
     }
@@ -155,7 +168,7 @@ export class OccupancyOverview extends Component{
           return row
         }
 
-        return (<tr className={`${styles.bottomBorder} ${styles.rightBorder}`} key={place.id} ref={place.id}>
+        return (<tr className={`${styles.bottomBorder} ${styles.rightBorder} ${styles.hover}`} key={place.id} ref={place.id}>
             <td className={`${styles.date} ${styles.rightBorder} ${styles.placePadding}`}>{place.floor + " / " + place.label}</td>
             {prepareRow()}
           </tr>)
