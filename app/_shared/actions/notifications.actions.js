@@ -53,7 +53,7 @@ export function accept(notification){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(initNotifications())
-      if (!mobile) {
+      if (mobile) {
         dispatch(initGarages())
       } else {
         dispatch(fetchGarages())
