@@ -103,7 +103,7 @@ export function openGarageViaBluetooth(name){
 
     const writeSuccess = (result) => {
       console.log('write was successfull', result);
-      dispatch(setMessage('Request sucessfully send'))
+      dispatch(setMessage('Request sucessfully send' + (repeater?' (repeater)':' (gate unit)')))
       dispatch(setOpened(true))
       // 6. disconect
       // 7. close
@@ -127,7 +127,7 @@ export function openGarageViaBluetooth(name){
     const discoverSuccess = (result) => {
       console.log("discovered :", result);
       services = result.services
-      dispatch(setMessage('Sending request to open'))
+      dispatch(setMessage('Sending request to open' + (repeater?' (repeater)':' (gate unit)')))
 
       const serviceObject = services.find(serv => serv.uuid === service)
       if (serviceObject) {
@@ -148,11 +148,11 @@ export function openGarageViaBluetooth(name){
 
     const connecionEstablished = (result) =>{
       console.log('connection established');
-      dispatch(setMessage('Connection established'))
+      dispatch(setMessage('Connection established' + (repeater?' (repeater)':' (gate unit)')))
       if (result.status == "connected"){
         console.log(result);
         // 4. discover device (or services/characteristics/descriptors in iOS)
-        dispatch(setMessage('Discovering services'))
+        dispatch(setMessage('Discovering services' + (repeater?' (repeater)':' (gate unit)')))
         console.log('discovering servicess: ', address);
         ble.discover(address, discoverSuccess, logError)
       } else {
@@ -168,7 +168,7 @@ export function openGarageViaBluetooth(name){
     const scanSuccessfull = (garageBle) => {
       // 3. connect to device
       console.log('trying to connect to ', garageBle);
-      dispatch(setMessage('Connecting to garage'))
+      dispatch(setMessage('Connecting to garage' + (repeater?' (repeater)':' (gate unit)')))
       address = garageBle.address
       ble.connect(garageBle.address, connecionEstablished, connectionFailed)
     }
@@ -181,7 +181,7 @@ export function openGarageViaBluetooth(name){
         if (result.name === 'r'+name) repeater = true // Found repeater, add waits
         console.log('grage found, stop scanning');
         console.log('found garage:', result);
-        dispatch(setMessage('Garage found'))
+        dispatch(setMessage('Garage found' + (repeater?' (repeater)':' (gate unit)')))
         ble.stopScan((message)=>{
           scanSuccessfull(result)
         }, (message)=>{

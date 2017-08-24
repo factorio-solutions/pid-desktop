@@ -1,5 +1,7 @@
 import { request } from '../helpers/request'
 import { fetchGarages } from './pageBase.actions.js'
+import { initGarages } from './mobile.header.actions.js'
+import { mobile } from '../../index'
 
 import { GET_NOTIFICATIONS_DETAILS, ACCEPT_NOTIFICATION, DECLINE_NOTIFICATION } from '../queries/notifications.queries'
 
@@ -51,7 +53,11 @@ export function accept(notification){
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(initNotifications())
-      dispatch(fetchGarages())
+      if (!mobile) {
+        dispatch(initGarages())
+      } else {
+        dispatch(fetchGarages())
+      }
     }
     request(onSuccess, ACCEPT_NOTIFICATION, {id: notification.id, "notification": {"confirmed": true}})
   }
