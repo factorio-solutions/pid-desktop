@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20160607a",
+	"PID-RELEASE": "r20160814a",
 	"addresses": {
 		"name": "Jméno *",
 		"line1": "Řádek 1",
@@ -34,11 +34,11 @@
 		"proceed": "Pokračujte zde"
 	},
 	"signup_page": {
-		"name": "Vaše celé jméno  *",
-		"phone": "Telefonní číslo  *",
-		"email": "E-mail  *",
-		"password": "Heslo  *",
-		"confirmation": "Potvrzení hesla  *",
+		"name": "Vaše celé jméno *",
+		"phone": "Telefonní číslo *",
+		"email": "E-mail *",
+		"password": "Heslo *",
+		"confirmation": "Potvrzení hesla *",
 		"nameInvalid": "Neplatné jméno",
 		"phoneInvalid": "Neplatné telefonní číslo",
 		"emailInvalid": "Neplatná e-mailová adresa",
@@ -106,7 +106,6 @@
 		"activityLogHint": "CS: pageBase.activityLogHint",
 		"reservationsHint": "Zde najdete všechny rezervace pro Váš účet.",
 		"newReservationHint": "Zde můžete vytvořit novou rezervaci. Nejprve prosím vyberte uživatele a garáž, poté datum a eventuelně parkovací místo. Voilá.",
-		"newReservationOverviewHint": "CS: pageBase.newReservationOverviewHint",
 		"garagesHint": "CS: pageBase.garagesHint",
 		"newGarageHint": "Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.",
 		"newGarageFloorsHint": "CS: pageBase.newGarageFloorsHint",
@@ -137,7 +136,7 @@
 		"carsHint": "Toto je seznam všech aut, která jsou k Vám přiřazena.",
 		"cars": "Auta",
 		"newCar": "Nové auto",
-		"editCar": "Upravit auto ",
+		"editCar": "Upravit auto",
 		"OccupancyOverview": "Přehled obsazenosti",
 		"OccupancyOverviewHint": "CS: pageBase.OccupancyOverviewHint",
 		"EditGarage": "Upravit garáž",
@@ -159,6 +158,10 @@
 		"garageAddClientHint": "Zde můžete přidat klienta na stránky se správou garáží",
 		"garageGarageUsersHint": "Zde můžete řídit, kdo může spravovat tvoji garáž.",
 		"EditUserHint": "Zde můžete změnit svoje údaje.",
+		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
+		"reservationOverviewHint": "CS: pageBase.reservationOverviewHint",
+		"editInvoiceHint": "CS: pageBase.editInvoiceHint",
+		"editContractHint": "CS: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "Máte jedno nepřečtené upozornění",
 			"other": "Máte %(count)s nepřečtených upozornění"
@@ -173,11 +176,7 @@
 		"analyticsreservationsHint": "CS: pageBase.analyticsreservationsHint",
 		"analyticsplacesHint": "CS: pageBase.analyticsplacesHint",
 		"analyticspaymentsHint": "CS: pageBase.analyticspaymentsHint",
-		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
-		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
-		"reservationOverviewHint": "CS: pageBase.reservationOverviewHint",
-		"editInvoiceHint": "CS: pageBase.editInvoiceHint",
-		"editContractHint": "CS: pageBase.editContractHint"
+		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint"
 	},
 	"newReservation": {
 		"selectGarage": "Vyberte garáž *",
@@ -218,20 +217,32 @@
 		"from": "od",
 		"created": "vytvořeno",
 		"users": "uživatelé",
-		"token": "CS: clients.token"
+		"token": "CS: clients.token",
+		"contactPerson": "CS: clients.contactPerson",
+		"createdAt": "CS: clients.createdAt",
+		"createAgreement": "CS: clients.createAgreement",
+		"editClient": "CS: clients.editClient",
+		"goToUsers": "CS: clients.goToUsers",
+		"goToInvoices": "CS: clients.goToInvoices",
+		"places": "CS: clients.places",
+		"contract": "CS: clients.contract",
+		"monthlyTotal": "CS: clients.monthlyTotal",
+		"invoices": "CS: clients.invoices"
 	},
 	"clientUsers": {
 		"name": "uživatelské jméno",
 		"email": "e-mail",
 		"memberSince": "členem od",
 		"phone": "telefon",
+		"contact_person": "CS: clientUsers.contact_person",
 		"admin": "je admin",
 		"secretary": "Sekretář/ka",
 		"internal": "Interní",
 		"host": "je host",
 		"presetAs": "Nastavit jako",
 		"removeClientUser": "Určitě chcete odstranit tohoto uživatele?",
-		"pendingUsers": "Nevyřízené pozvánky"
+		"pendingUsers": "Nevyřízené pozvánky",
+		"removeUser": "CS: clientUsers.removeUser"
 	},
 	"reservations": {
 		"name": "jméno",
@@ -251,7 +262,11 @@
 		"reservationNotPayed": "Rezervace nebyla zaplacena.",
 		"pay": "Platba",
 		"host": "Host",
-		"visitor": "Návštěvník"
+		"visitor": "Návštěvník",
+		"editReservation": "CS: reservations.editReservation",
+		"payReservation": "CS: reservations.payReservation",
+		"downloadInvoice": "CS: reservations.downloadInvoice",
+		"destroyRservation": "CS: reservations.destroyRservation"
 	},
 	"garages": {
 		"clients": "Klienti",
@@ -281,7 +296,8 @@
 		"placeRent": "Nájmy",
 		"rentName": "Jméno nájmu",
 		"price": "Cena",
-		"places": "Místa"
+		"places": "Místa",
+		"editRent": "CS: garages.editRent"
 	},
 	"occupancy": {
 		"selectClientClient": "Vybrat klienta",
@@ -311,7 +327,8 @@
 		"name": "uživatelské jméno",
 		"email": "e-mail",
 		"memberSince": "členem od",
-		"phone": "telefon"
+		"phone": "telefon",
+		"removeUser": "CS: garageUsers.removeUser"
 	},
 	"garageManagement": {
 		"garageManagement": "Správa garáže",
@@ -444,7 +461,10 @@
 		"selectAccount": "Vyberte účet",
 		"selectAccountMandatory": "Vyberte účet *",
 		"processing": "Zpracovávám",
-		"users": "CS: newGarage.users"
+		"users": "CS: newGarage.users",
+		"addProfilePicture": "CS: newGarage.addProfilePicture",
+		"removeFloor": "CS: newGarage.removeFloor",
+		"uploadSvg": "CS: newGarage.uploadSvg"
 	},
 	"newClient": {
 		"name": "Jméno klienta",
@@ -588,7 +608,11 @@
 		"images": "Garážové snímky",
 		"uploading": "Nahrávám ...",
 		"notCreated": "Marketing nebyl vytvořen, vybrané zkrácené jméno už bylo provedeno.",
-		"notUpdated": "Marketing nebyl aktualizován, vybrané krátké jméno je již použito."
+		"notUpdated": "Marketing nebyl aktualizován, vybrané krátké jméno je již použito.",
+		"addImage": "CS: newMarketing.addImage",
+		"editImage": "CS: newMarketing.editImage",
+		"removeImage": "CS: newMarketing.removeImage",
+		"removeImageQuestion": "CS: newMarketing.removeImageQuestion"
 	},
 	"garageMarketing": {
 		"id": "id",
@@ -758,15 +782,36 @@
 		"dueDate": "datum splatnosti",
 		"account": "účet",
 		"client": "klient",
-		"payed": "zaplaceno",
+		"type": "CS: invoices.type",
+		"invoiceText": "CS: invoices.invoiceText",
+		"paid": "CS: invoices.paid",
 		"ammount": "částka",
 		"subject": "předmět",
 		"pay": "Platit",
-		"invoicePayed": "Opravdu chcete označit tuto fakturu za zaplacenou?",
+		"invoicePaid": "Opravdu chcete označit tuto fakturu za zaplacenou?",
 		"initializingPayment": "Inicializuji platby ...",
 		"redirecting": "Přesměrovávám ...",
 		"paymentUnsucessfull": "Platba byla zrušena a neúspěšná.",
-		"payingReservation": "Placení rezervace"
+		"payingReservation": "Placení rezervace",
+		"selectClient": "CS: invoices.selectClient",
+		"selectGarage": "CS: invoices.selectGarage",
+		"invoiceNumber": "CS: invoices.invoiceNumber",
+		"stornoInvoice": "CS: invoices.stornoInvoice",
+		"invoiceCanceled": "CS: invoices.invoiceCanceled",
+		"cancelReason": "CS: invoices.cancelReason",
+		"reason": "CS: invoices.reason",
+		"reasonInvalid": "CS: invoices.reasonInvalid",
+		"reasonPlaceholder": "CS: invoices.reasonPlaceholder",
+		"inoiceDate": "CS: invoices.inoiceDate",
+		"invalidaDate": "CS: invoices.invalidaDate",
+		"invalidValue": "CS: invoices.invalidValue",
+		"amount": "CS: invoices.amount",
+		"downloadInvoice": "CS: invoices.downloadInvoice",
+		"editInvoice": "CS: invoices.editInvoice",
+		"payInvoice": "CS: invoices.payInvoice",
+		"sendReminder": "CS: invoices.sendReminder",
+		"invoicePaidLabel": "CS: invoices.invoicePaidLabel",
+		"invoiceIncorect": "CS: invoices.invoiceIncorect"
 	},
 	"resetPassword": {
 		"send": "Obnova hesla byla odeslána na Váš e-mail.",
@@ -787,7 +832,7 @@
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
-		"yourContract": "Vaše dohoda v ",
+		"yourContract": "Vaše dohoda v",
 		"selectClient": "Vyberte klienta",
 		"invalidToken": "CS: newContract.invalidToken",
 		"tokenPlaceholder": "gaZJBS",
@@ -813,7 +858,8 @@
 		"invalidVat": "Neplatné DPH",
 		"invalidRow": "Neplatné číslo",
 		"changeSuccess": "Hodnoty byly úspěšně změněny.",
-		"changeFailed": "Došlo k chybě, hodnoty se nezměnily."
+		"changeFailed": "Došlo k chybě, hodnoty se nezměnily.",
+		"uploadKey": "CS: finance.uploadKey"
 	},
 	"analytics": {
 		"week": "týden",
@@ -853,6 +899,5 @@
 		"visitors": "CS: dashboard.visitors",
 		"free": "CS: dashboard.free",
 		"total": "CS: dashboard.total"
-	},
-	"APP": "CS: APP"
+	}
 }

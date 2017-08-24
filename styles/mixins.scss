@@ -50,3 +50,9 @@
     transform: rotate(360deg);
   }
 }
+
+@mixin border-inside {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}

@@ -15,14 +15,14 @@ import moment from 'moment'
 // from = time in moment.js format
 // to = time in moment.js format
 
-export function calculatePrice (pricing, from, to){
+export function calculatePrice (pricing, from, to, vat = 0){
   const duration = to.diff(from) / (1000*60*60)
   let dates = [from]
   while (dates[dates.length-1].clone().add(1, 'day').startOf('day').isBefore(to)) {
     dates.push(dates[dates.length-1].clone().add(1, 'day').startOf('day'))
   }
 
-  return dates.reduce((sum, date, index, arr) => {
+  return valueAddedTax(dates.reduce((sum, date, index, arr) => {
     let price = pricing.flat_price
     if (pricing.exponential_month_price !== null)                                             price = pricing.exponential_month_price
     if (pricing.exponential_week_price !== null && duration <= 168)                           price = pricing.exponential_week_price
@@ -31,5 +31,9 @@ export function calculatePrice (pricing, from, to){
     if (pricing.weekend_price !== null && (date.isoWeekday() == 6 || date.isoWeekday() == 7)) price = pricing.weekend_price
 
     return sum + ((arr[index + 1] || to).diff(date) / (1000*60*60)) * price // sum + hoursBetweenDates * hourPrice (1000*60*60 = hour)
-  }, 0)
+  }, 0), vat)
+}
+
+export function valueAddedTax (price, vat = 0) {
+  return Math.round((price) * (1 + vat))
 }

@@ -11,6 +11,7 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
     subject
     canceled
     is_storno_invoice
+    vat
    	currency{
       symbol
     }

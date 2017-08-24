@@ -33,7 +33,7 @@ const defaultState =  { contract_id:  undefined // id is editing
                       , currencies:   []
                       , currency_id:  undefined
                       , from:         moment().startOf('day').format(MOMENT_DATETIME_FORMAT)
-                      , to:           undefined
+                      , to:           moment().endOf('day').format(MOMENT_DATETIME_FORMAT)
                       , garage:       undefined
                       , places:       []
                       , highlight:    false

@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20160607a",
+	"PID-RELEASE": "r20160814a",
 	"addresses": {
 		"name": "Imię i nazwisko",
 		"line1": "Adres",
@@ -34,11 +34,11 @@
 		"proceed": "Przejdź dalej"
 	},
 	"signup_page": {
-		"name": "Imię i nazwisko  *",
-		"phone": "Numer telefonu  *",
-		"email": "E-mail  *",
-		"password": "Hasło  *",
-		"confirmation": "Potwierdź hasło  *",
+		"name": "Imię i nazwisko *",
+		"phone": "Numer telefonu *",
+		"email": "E-mail *",
+		"password": "Hasło *",
+		"confirmation": "Potwierdź hasło *",
 		"nameInvalid": "Niepoprawne imię lub nazwisko",
 		"phoneInvalid": "Niepoprawny numer telefonu",
 		"emailInvalid": "Niepoprawny adres e-mail",
@@ -106,7 +106,6 @@
 		"activityLogHint": "PL: pageBase.activityLogHint",
 		"reservationsHint": "Tutaj znajdziesz wszystkie swoje rezerwacje.",
 		"newReservationHint": "Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!",
-		"newReservationOverviewHint": "PL: pageBase.newReservationOverviewHint",
 		"garagesHint": "PL: pageBase.garagesHint",
 		"newGarageHint": "Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",
 		"newGarageFloorsHint": "PL: pageBase.newGarageFloorsHint",
@@ -159,6 +158,10 @@
 		"garageAddClientHint": "Tutaj możesz dodać klienta do strony zarządzania garażem.",
 		"garageGarageUsersHint": "Tutaj możesz wybrać, kto może zarządzać twoim garażem.",
 		"EditUserHint": "Tutaj możesz zmienić swoje dane.",
+		"orderGarageModuleHint": "PL: pageBase.orderGarageModuleHint",
+		"reservationOverviewHint": "PL: pageBase.reservationOverviewHint",
+		"editInvoiceHint": "PL: pageBase.editInvoiceHint",
+		"editContractHint": "PL: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
 			"other": "Masz %(count)s nieprzeczytanych wiadomości."
@@ -173,11 +176,7 @@
 		"analyticsreservationsHint": "PL: pageBase.analyticsreservationsHint",
 		"analyticsplacesHint": "PL: pageBase.analyticsplacesHint",
 		"analyticspaymentsHint": "PL: pageBase.analyticspaymentsHint",
-		"analyticsgatesHint": "PL: pageBase.analyticsgatesHint",
-		"orderGarageModuleHint": "PL: pageBase.orderGarageModuleHint",
-		"reservationOverviewHint": "PL: pageBase.reservationOverviewHint",
-		"editInvoiceHint": "PL: pageBase.editInvoiceHint",
-		"editContractHint": "PL: pageBase.editContractHint"
+		"analyticsgatesHint": "PL: pageBase.analyticsgatesHint"
 	},
 	"newReservation": {
 		"selectGarage": "Wybierz garaż *",
@@ -218,20 +217,32 @@
 		"from": "od",
 		"created": "utworzone",
 		"users": "użytkownicy",
-		"token": "PL: clients.token"
+		"token": "PL: clients.token",
+		"contactPerson": "PL: clients.contactPerson",
+		"createdAt": "PL: clients.createdAt",
+		"createAgreement": "PL: clients.createAgreement",
+		"editClient": "PL: clients.editClient",
+		"goToUsers": "PL: clients.goToUsers",
+		"goToInvoices": "PL: clients.goToInvoices",
+		"places": "PL: clients.places",
+		"contract": "PL: clients.contract",
+		"monthlyTotal": "PL: clients.monthlyTotal",
+		"invoices": "PL: clients.invoices"
 	},
 	"clientUsers": {
 		"name": "nazwa użytkownika",
 		"email": "e-mail",
 		"memberSince": "członek od",
 		"phone": "telefon",
+		"contact_person": "PL: clientUsers.contact_person",
 		"admin": "jest adminem",
 		"secretary": "Sekretarz/Sekretarka",
 		"internal": "Wewnętrzny",
 		"host": "jest gościem",
 		"presetAs": "Ustaw jako",
 		"removeClientUser": "Czy na pewno chcesz usunąć użytkownika?",
-		"pendingUsers": "Zaproszenia czekające na odpowiedź"
+		"pendingUsers": "Zaproszenia czekające na odpowiedź",
+		"removeUser": "PL: clientUsers.removeUser"
 	},
 	"reservations": {
 		"name": "Użytkownik",
@@ -251,7 +262,11 @@
 		"reservationNotPayed": "Rezerwacja nie została opłacona.",
 		"pay": "Płatność",
 		"host": "Gość",
-		"visitor": "Odwiedzający"
+		"visitor": "Odwiedzający",
+		"editReservation": "PL: reservations.editReservation",
+		"payReservation": "PL: reservations.payReservation",
+		"downloadInvoice": "PL: reservations.downloadInvoice",
+		"destroyRservation": "PL: reservations.destroyRservation"
 	},
 	"garages": {
 		"clients": "Klienci",
@@ -281,7 +296,8 @@
 		"placeRent": "Wynajmy",
 		"rentName": "Nazwa wynajmu",
 		"price": "Cena",
-		"places": "Miejsca"
+		"places": "Miejsca",
+		"editRent": "PL: garages.editRent"
 	},
 	"occupancy": {
 		"selectClientClient": "Wybrać klienta",
@@ -311,7 +327,8 @@
 		"name": "nazwa użytkownika",
 		"email": "e-mail",
 		"memberSince": "członek od",
-		"phone": "telefon"
+		"phone": "telefon",
+		"removeUser": "PL: garageUsers.removeUser"
 	},
 	"garageManagement": {
 		"garageManagement": "Zarząd garażu",
@@ -444,7 +461,10 @@
 		"selectAccount": "Wybierz konto",
 		"selectAccountMandatory": "Wybierz konto",
 		"processing": "Przetwarzam",
-		"users": "Użytkownicy"
+		"users": "Użytkownicy",
+		"addProfilePicture": "PL: newGarage.addProfilePicture",
+		"removeFloor": "PL: newGarage.removeFloor",
+		"uploadSvg": "PL: newGarage.uploadSvg"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
@@ -588,7 +608,11 @@
 		"images": "Zdjęcia garażu",
 		"uploading": "Wgrywam...",
 		"notCreated": "Nie można było utworzyć marketingu, ponieważ wybrana nazwa jest już zajęta.",
-		"notUpdated": "Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta."
+		"notUpdated": "Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta.",
+		"addImage": "PL: newMarketing.addImage",
+		"editImage": "PL: newMarketing.editImage",
+		"removeImage": "PL: newMarketing.removeImage",
+		"removeImageQuestion": "PL: newMarketing.removeImageQuestion"
 	},
 	"garageMarketing": {
 		"id": "id",
@@ -758,15 +782,36 @@
 		"dueDate": "termin spłaty",
 		"account": "konto",
 		"client": "klient",
-		"payed": "zapłacone",
+		"type": "PL: invoices.type",
+		"invoiceText": "PL: invoices.invoiceText",
+		"paid": "PL: invoices.paid",
 		"ammount": "kwota",
 		"subject": "temat",
 		"pay": "Zapłacić",
-		"invoicePayed": "Czy naprawdę chcesz oznaczyć tę fakturę jako zapłaconą?",
+		"invoicePaid": "Czy naprawdę chcesz oznaczyć tę fakturę jako zapłaconą?",
 		"initializingPayment": "Inicjalizuję płatności...",
 		"redirecting": "Przekierowuję...",
 		"paymentUnsucessfull": "Płatność została anulowana. Nie powiodła się.",
-		"payingReservation": "Opłata rezerwacji"
+		"payingReservation": "Opłata rezerwacji",
+		"selectClient": "PL: invoices.selectClient",
+		"selectGarage": "PL: invoices.selectGarage",
+		"invoiceNumber": "PL: invoices.invoiceNumber",
+		"stornoInvoice": "PL: invoices.stornoInvoice",
+		"invoiceCanceled": "PL: invoices.invoiceCanceled",
+		"cancelReason": "PL: invoices.cancelReason",
+		"reason": "PL: invoices.reason",
+		"reasonInvalid": "PL: invoices.reasonInvalid",
+		"reasonPlaceholder": "PL: invoices.reasonPlaceholder",
+		"inoiceDate": "PL: invoices.inoiceDate",
+		"invalidaDate": "PL: invoices.invalidaDate",
+		"invalidValue": "PL: invoices.invalidValue",
+		"amount": "PL: invoices.amount",
+		"downloadInvoice": "PL: invoices.downloadInvoice",
+		"editInvoice": "PL: invoices.editInvoice",
+		"payInvoice": "PL: invoices.payInvoice",
+		"sendReminder": "PL: invoices.sendReminder",
+		"invoicePaidLabel": "PL: invoices.invoicePaidLabel",
+		"invoiceIncorect": "PL: invoices.invoiceIncorect"
 	},
 	"resetPassword": {
 		"send": "Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.",
@@ -813,7 +858,8 @@
 		"invalidVat": "Niepoprawny VAT",
 		"invalidRow": "Niepoprawny numer",
 		"changeSuccess": "Wartości zostały zmienione.",
-		"changeFailed": "Wystąpił błąd, wartości nie zostały zmienione."
+		"changeFailed": "Wystąpił błąd, wartości nie zostały zmienione.",
+		"uploadKey": "PL: finance.uploadKey"
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -853,6 +899,5 @@
 		"visitors": "Odwiedzający",
 		"free": "wolnych",
 		"total": "Ogółem"
-	},
-	"APP": "PL: APP"
+	}
 }

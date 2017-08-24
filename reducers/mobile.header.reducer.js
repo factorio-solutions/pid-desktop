@@ -5,54 +5,62 @@ import {
   MOBILE_MENU_SET_SHOW_MENU,
   MOBILE_MENU_SET_ERROR,
   MOBILE_MENU_SET_CUSTOM_MODAL
-}  from '../actions/mobile.header.actions'
+} from '../actions/mobile.header.actions'
 
-const defaultState =  { garages:      []
-                      , garage_id:    undefined
-                      , current_user: undefined
-                      , headerHeight: 101 //px
-                      , online:       navigator.connection ? navigator.connection.type !== 'none' : true
-                      , showMenu:     false
-                      , error:        undefined
-                      , custom_modal: undefined
-                      }
+import { SET_NOTIFICATIONS_COUNT } from '../actions/notifications.actions'
+
+const defaultState = { garages: []
+                     , garage_id: undefined
+                     , current_user: undefined
+                     , headerHeight: 101 // px
+                     , online: navigator.connection ? navigator.connection.type !== 'none' : true
+                     , showMenu: false
+                     , error: undefined
+                     , custom_modal: undefined
+                     , notificationsCount: 0
+                     }
 
 
-export default function mobileHeader (state = defaultState, action) {
+export default function mobileHeader(state = defaultState, action) {
   switch (action.type) {
 
     case MOBILE_MENU_SET_GARAGES:
-    return  { ...state
-            , garages: action.value
-            }
+      return { ...state
+             , garages: action.value
+             }
 
     case MOBILE_MENU_SET_GARAGE:
-    return  { ...state
-            , garage_id: action.value
-            }
+      return { ...state
+             , garage_id: action.value
+             }
 
     case MOBILE_MENU_SET_CURRENT_USER:
-    return  { ...state
-            , current_user: action.value
-            }
+      return { ...state
+             , current_user: action.value
+             }
 
     case MOBILE_MENU_SET_SHOW_MENU:
-    return  { ...state
-            , showMenu: action.value
-            }
+      return { ...state
+             , showMenu: action.value
+             }
     case MOBILE_MENU_SET_ERROR:
-    return  { ...state
-            , error: action.value
-            }
+      return { ...state
+             , error: action.value
+             }
     case MOBILE_MENU_SET_CUSTOM_MODAL:
-    return  { ...state
-            , custom_modal: action.value
-            }
+      return { ...state
+             , custom_modal: action.value
+             }
 
-    case "MOBIE_MENU_SET_DEVICE_ONLINE":
-    return  { ...state
-            , online: action.value
-            }
+    case SET_NOTIFICATIONS_COUNT:
+      return { ...state
+             , notificationsCount: action.value
+             }
+
+    case 'MOBIE_MENU_SET_DEVICE_ONLINE':
+      return { ...state
+             , online: action.value
+             }
 
     default:
       return state

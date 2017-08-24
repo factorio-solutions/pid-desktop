@@ -68,7 +68,6 @@ export function setRents (value) {
 }
 
 export function setRent (value) {
-  console.log(value);
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_RENT
          , value
          }
@@ -103,7 +102,7 @@ export function setFrom (value) {
     let fromValue = moment(value, MOMENT_DATETIME_FORMAT).startOf('day')
     const now = moment(moment()).startOf('day')
 
-    if (fromValue.diff(now, 'minutes') < 0){ // cannot create reservations in the past
+    if (getState().newContract.contract_id === undefined && fromValue.diff(now, 'minutes') < 0){ // cannot create reservations in the past
       fromValue = now
     }
 
