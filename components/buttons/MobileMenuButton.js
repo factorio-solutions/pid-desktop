@@ -1,6 +1,6 @@
-import React    from 'react'
-import styles   from './MobileMenuButton.scss'
-import Button   from './Button.js'
+import React from 'react'
+import styles from './MobileMenuButton.scss'
+import Button from './Button.js'
 
 // extends Button.js
 // type = 'action', 'confirm', 'remove'
@@ -9,19 +9,18 @@ import Button   from './Button.js'
 // question = confirmation text for remove type button
 
 
-export default function MobileMenuButton ({ icon, label, onClick, type, state, size, question })  {
+export default function MobileMenuButton({ icon, label, onClick, type, state, size, question }) {
   let style = [ styles.button
               , styles[type]
               , styles[state]
               , !icon && styles.adjustPadding
               ].join(' ')
 
-  let content = <div style={{height: (size-26)+"px", position: "relative"}}>
-                  <div className={styles.centerInDiv}>
-                    <span className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true"></span>
-                    <span className={`${styles.label} ${styles.content}`}>{label}</span>
-                  </div>
-                </div>
+// style={{height: (size-26) + "px", position: "relative"}}
+  let content = (<div className={styles.centerInDiv} >
+    <span className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true"></span>
+    <span className={`${styles.label} ${styles.content}`}>{label}</span>
+  </div>)
 
   return (
     <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} />
