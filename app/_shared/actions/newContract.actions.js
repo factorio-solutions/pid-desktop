@@ -28,6 +28,7 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_TO             = 'ADMIN_CLIENTS_NEW_
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES         = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES'
 export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT   = 'ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY    = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM         = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
 
 
@@ -154,8 +155,21 @@ export function setPlaces (value) {
          }
 }
 
+
 export function toggleHighlight () {
   return { type: ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT }
+}
+
+export function setIndefinitly (value) {
+  return { type: ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY
+    , value
+  }
+}
+
+export function toggleIndefinitly () {
+  return (dispatch, getState) => {
+    dispatch(setIndefinitly(!getState().newContract.indefinitly))
+  }
 }
 
 export function eraseForm () {
@@ -187,8 +201,15 @@ export function initContract(id){
     }
 
     const onDetailsSuccess = (response) => {
+      const to = moment(response.data.contract.to)
       dispatch(setFrom(moment(response.data.contract.from).format(MOMENT_DATETIME_FORMAT)))
-      dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
+      if (to.year() === 9999) { // then is infinite
+        dispatch(setIndefinitly(true))
+        // dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
+      } else {
+        dispatch(setIndefinitly(false))
+        dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
+      }
       dispatch(getGarage(response.data.contract.garage.id, id))
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent))
@@ -294,7 +315,7 @@ export function submitNewContract (id){
     let variables = { contract: { client_id: client.id
                                 , contract_places: state.places.map(place => {return {place_id: place.id}})
                                 , from: timeToUTC(state.from)
-                                , to:   timeToUTC(state.to)
+                                , to:   state.indefinitly ? null : timeToUTC(state.to)
                                 }
                     }
 

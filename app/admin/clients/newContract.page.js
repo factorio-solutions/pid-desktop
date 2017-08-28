@@ -78,7 +78,7 @@ export class NewContractPage extends Component {
       if (state.client_id === undefined) return false
       if (state.from === undefined||state.from === '') return false
       if (state.places.length == 0) return false
-      if (!state.newRent && state.rent && state.rent.id === undefined) return false
+      if ((!state.newRent && state.rent === undefined) || (state.rent && state.rent.id === undefined)) return false
       if (state.newRent && (state.price === undefined || state.price <= 0 || state.currency_id === undefined)) return false
 
       return true
@@ -121,11 +121,15 @@ export class NewContractPage extends Component {
               }
               {state.garage && state.garage.is_admin ?
                 [ <DatetimeInput onChange={handleFrom} label={t(['newReservation', 'begins'])} error={t(['newReservation', 'invalidaDate'])} value={state.from} highlight={state.highlight} />
-                , <DatetimeInput onChange={handleTo}   label={t(['newReservation', 'ends'])}   value={state.to} />
+                , state.indefinitly ? null : <DatetimeInput onChange={handleTo}   label={t(['newReservation', 'ends'])}   value={state.to} />
+                , <div onClick={actions.toggleIndefinitly} className={styles.checkbox}>
+                  <input type="checkbox" checked={state.indefinitly} onChange={actions.toggleIndefinitly} />
+                  <span>{t(['newContract', 'indefinitContract'])}</span>
+                </div>
                 ] :
                 <div>
                   <p>{t(['newReservation', 'begins'])}: {state.from}</p>
-                  <p>{t(['newReservation', 'ends'])}: {state.to}</p>
+                  <p>{t(['newReservation', 'ends'])}: {state.indefinitly ? t(['newContract', 'indefinite']) : state.to}</p>
                 </div>
               }
             </Form>

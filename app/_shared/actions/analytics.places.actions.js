@@ -112,7 +112,7 @@ export function initPlacesAnalytics() {
 
         let currentDate = momentFrom.clone().startOf('month') // holder of current month of iteration
           , statistics = []
-        while (currentDate.isBefore(momentTo)) { // calculate prices for all selected months
+        while (currentDate.isBefore(momentTo) && currentDate.isBefore(moment(state.to, 'DD. MM. YYYY'))) { // calculate prices for all selected months
 
           const reservationsOfInterval = response.data.garage.floors.reduce((acc,floor) => {
             return floor.places.reduce((acc, place) => {

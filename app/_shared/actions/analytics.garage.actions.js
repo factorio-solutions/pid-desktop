@@ -149,7 +149,7 @@ export function stateToData() {
 
     return state.contracts.reduce((acc, contract) => {
       let currentDate = moment(contract.from);
-      while (currentDate.isBefore(moment(contract.to))) {
+      while (currentDate.isBefore(moment(contract.to)) && currentDate.isBefore(moment(state.to, 'DD. MM. YYYY'))) { // stop it as soon as possible
         if (currentDate.isAfter(moment(state.from, "M/YYYY")) && currentDate.isBefore(moment(state.to, "M/YYYY").add(1, 'month'))) {
           const property = getProperty(currentDate, state.period)
           acc = addProperty(acc, property)
