@@ -847,7 +847,9 @@
 		"priceInvalid": "Price invalid",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Select currency",
-		"placePrice": "Price per place per month"
+		"placePrice": "Price per place per month",
+		"indefinitContract": "Conclude this contract for an indefinite period.",
+		"indefinite": "Indefinite"
 	},
 	"finance": {
 		"paypal": "Paypal",

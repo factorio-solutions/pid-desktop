@@ -18,6 +18,7 @@ import {
   ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES,
   ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY,
   ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM
 } from '../actions/newContract.actions'
 
@@ -37,6 +38,7 @@ const defaultState =  { contract_id:  undefined // id is editing
                       , garage:       undefined
                       , places:       []
                       , highlight:    false
+                      , indefinitly:  false
                       }
 
 
@@ -121,6 +123,11 @@ export default function newContract (state = defaultState, action) {
     case ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT:
       return { ...state
              , highlight: !state.highlight
+             }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY:
+      return { ...state
+             , indefinitly: action.value
              }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM:
