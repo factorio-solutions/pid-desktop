@@ -12,118 +12,111 @@ addresses.line1Invalid,Line 1 invalid,Řádek 1 neplatný,Niepoprawny adres,Adre
 addresses.line2Invalid,Line 2 invalid,Řádek 2 neplatný,Niepoprawny adres,Adresszeile 2 ungültig
 addresses.cityInvalid,City invalid,Neplatné město,Niepoprawna nazwa miasta,Stadt ungültig
 addresses.postalCodeInvalid,Postal code invalid,Poštovní směrovací číslo *,Kod pocztowy,Postleitzahl
-addresses.stateInvalid,State invalid,Neplatný stát,Niepoprawna nazwa państwa,Bundesstaat ungültig
+addresses.stateInvalid,State invalid,Neplatný stát,Niepoprawna nazwa państwa,Staat ungültig
 addresses.countryInvalid,Country invalid,Neplatná země,Niepoprawna nazwa kraju,Land ungültig
 addresses.namePlaceholder,John Doe,Jan Novák,Jan Kowalski,Wolfgang Müller
 addresses.line1Placeholder,Martense Avenue 526,Pražská 125,Główna 25,Alexanderstraße 1
 addresses.line2Placeholder,Flat 13,Byt 13,Mieszkanie nr 13,Wohnung Nr. 13
 addresses.cityPlaceholder,New Jersey,Praha,Warszawa,Berlin
 addresses.postalCodePlaceholder,7666,11000,00-001,10178
-addresses.statePlaceholder,Pennsylvania,-,,
+addresses.statePlaceholder,Pennsylvania,,,
 addresses.countryPlaceholder,USA,Česká republika,Polska,Deutschland
-login_page.please,"Please, log-in or","Prosím, přihlaste se, nebo si",Zaloguj się lub,Melden Sie sich bitte an oder
-login_page.Sign-Up,Sign-Up,vytvořte účet,Załóż konto,registrieren Sie sich
-login_page.email,E-mail,Zadejte e-mail,E-mail,E-Mail-Adresse
-login_page.invalid-email,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
+login_page.please,"Please, log-in or","Prosím, přihlaste se, nebo si",Zaloguj się lub,"Melden Sie sich bitte an, oder"
+login_page.Sign-Up,Sign-Up,Vytvořte účet,Załóż konto,Registrieren Sie sich
+login_page.email,E-mail,Zadejte e-mail,E-mail,E-Mail
+login_page.invalid-email,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail
 login_page.password,Password,Heslo,Hasło,Passwort
 login_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalogować,Anmeldung fehlgeschlagen
 login_page.forgot,Forgot password?,Zapomenuté heslo?,Nie pamiętasz hasła?,Passwort vergessen?
 login_page.proceed,Proceed here,Pokračujte zde,Przejdź dalej,Hier fortfahren
 signup_page.name,your full name *,Vaše celé jméno *,Imię i nazwisko *,Vor- und Nachname *
 signup_page.phone,phone number *,Telefonní číslo *,Numer telefonu *,Telefonnummer *
-signup_page.email,e-mail *,E-mail *,E-mail *,E-Mail-Adresse *
+signup_page.email,e-mail *,E-mail *,E-mail *,E-Mail *
 signup_page.password,password *,Heslo *,Hasło *,Passwort *
-signup_page.confirmation,password confirmation *,Potvrzení hesla *,Potwierdź hasło *,Passwort bestätigen *
+signup_page.confirmation,password confirmation *,Potvrzení hesla *,Potwierdź hasło *,Passwort Bestätigen *
 signup_page.nameInvalid,Invalid name,Neplatné jméno,Niepoprawne imię lub nazwisko,Name ungültig
 signup_page.phoneInvalid,Invalid phone number,Neplatné telefonní číslo,Niepoprawny numer telefonu,Telefonnummer ungültig
-signup_page.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
+signup_page.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-mail
 signup_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalogować,Anmeldung fehlgeschlagen
 signup_page.minimumLength,Minimum length is,Minimální délka je,Długość minimum,Mindestlänge ist
-signup_page.noMatching,Not matching password.,Heslo se neshoduje,Hasło się nie zgadza,Passwort und Bestätigungspasswort stimmen nicht überein.
-signup_page.userNotCreated,"User was not created, it might exist already.","Uživatel nebyl vytvořen, možná již existuje","Nie udało się wytworzyć konta, być może już istnieje","Der Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon."
+signup_page.noMatching,Not matching password.,Heslo se neshoduje,Hasło się nie zgadza,Passwort und Bestätigung stimmen nicht überein.
+signup_page.userNotCreated,"User was not created, it might exist already.","Uživatel nebyl vytvořen, možná již existuje","Nie udało się wytworzyć konta, być może już istnieje","Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon."
 signup_page.loading,Loading,Načítám,Ładowanie,Laden
 pageBase.Dashboard,Dashboard,Nástěnka,Tablica,Pinnwand
-pageBase.Issues,Issues,Problémy,Problemy,Probleme
+pageBase.Issues,Issues,Problémy,Problemy,
 pageBase.Admin,Admin,Admin,Admin,Administrator
 pageBase.Modules,Modules,Moduly,Moduły,Module
 pageBase.marketingSettings,Marketing Settings,Marketingové nastavení,Ustawienia marketingowe,Marketing-Einstellungen
-pageBase.reservationButton,Reservation Button,Tlačitko rezervace,Przycisk rezerwacji,Reservierungsschaltfläche
-pageBase.mrParkitIntegration,Mr. Parkit Integration,Integrace MR.PARKIT,Integracja MR.PARKIT,MR. PARKIT-Integration
+pageBase.reservationButton,Reservation Button,Tlačitko rezervace,Przycisk rezerwacji,Reservierungstaste
+pageBase.mrParkitIntegration,Mr. Parkit Integration,Integrace MR.PARKIT,Integracja MR.PARKIT,MR.PARKIT Integration
 pageBase.goPublic,Go Public,Nabídnout veřejnosti,Zaoferować publicznie,Öffentlich anbieten
-pageBase.Garage setup,Garage setup,Nastavení garáže,Ustawienia garażu,Garageneinstellungen
+pageBase.Garage setup,Garage setup,Nastavení garáže,Ustawienia garażu,Garage-Einstellungen
 pageBase.garageSetupFloors,Garage floors,Patra garáže,Piętra garażu,Garagenetagen
 pageBase.garageSetupGates,Garage gates,Brány garáže,Bramy garażu,Garagentore
-pageBase.garageSetupOrder,Garage order,Pořadí obsazování,Kolejność zajmowania miejsc,Reihenfolge der Belegung
+pageBase.garageSetupOrder,Garage order,Pořadí obsazování,Kolejność zajmowania miejsc,Reihenfolge der Besetzung
 pageBase.garageSetupSubscribtion,Garage subscribtion,Předplatné garáže,Abonament,Abonnement
 pageBase.Finance,Finance,Finance,Finanse,Finanzen
 pageBase.PID settings,PID settings,Nastavení PID,Ustawienia PID,PID-Einstellungen
 pageBase.Activity log,Activity log,Záznam aktivit,Dziennik aktywności,Aktivitätsprotokoll
 pageBase.Create reservation,Create reservation,Vytvořte rezervaci,Wytworzyć rezerwację,Buchung erstellen
-pageBase.Create contract,Create agreement,Vytvořte dohodu,Wytworzyć umowę,Vereinbarung erstellen
+pageBase.Create contract,Create agreement,Vytvořte dohodu,Wytworzyć umowę,Deal erstellen
 pageBase.Add Features,Add Features,Přidat funkce,Dodać funkcje,Funktionen hinzufügen
 pageBase.Reservation,Reservation,Rezervace,Rezerwacja,Reservierung
 pageBase.Reservations,Reservations,Rezervace,Rezerwacje,Reservierungen
-pageBase.Clients,Clients,Klienti,Klienci,Kunden
-pageBase.Client & Users,Client accounts,Klientské účty,Konta klientów,Kundenkonten
-pageBase.NewClient,New Client,Nový klient,Nowy klient,Neuer Kunde
+pageBase.Clients,Clients,Klienti,Klienci,Klienten
+pageBase.Client & Users,Client accounts,Klientské účty,Konta klientów,Klientenkonten
+pageBase.NewClient,New Client,Nový klient,Nowy klient,Ne
 pageBase.NewContract,New agreement,Nová dohoda,Nowa umowa,Neue Vereinbarung
-pageBase.EditClient,Edit Client,Upravit klienta,Edytować klienta,Kunden bearbeiten
+pageBase.EditClient,Edit Client,Upravit klienta,Edytować klienta,Klienten bearbeiten
 pageBase.New Reservation,New Reservation,Nová rezervace,Nowa rezerwacja,Neue Reservierung
-pageBase.NewGarage,Setup New Garage,Vytvoření nové garáže,Utworzyć nowy garaż,Neue Garage einrichten
+pageBase.NewGarage,Setup New Garage,Vytvoření nové garáže,Utworzyć nowy garaż,
 pageBase.newPricing,New pricing,Nový ceník,Nowy cennik,Neue Preisliste
 pageBase.Pricings,Edit pricing,Upravit ceník,Edytować cennik,Preisliste bearbeiten
 pageBase.newRent,New rent,Nový pronájem,Nowy najem,Neue Miete
 pageBase.Rents,Edit rent,Upravit pronájem,Edytować najem,Miete bearbeiten
 pageBase.Garages,Garages,Garáže,Garaże,Garagen
-pageBase.Garage,Garage,Garáže,Garaż,Garage
+pageBase.Garage,Garage,Garáže,Garaż,Garagen
 pageBase.Cars,Cars,Auta,Samochody,Fahrzeuge
 pageBase.Profile,Profile,Profil,Profil,Profil
 pageBase.Users,Users,Uživatelé,Użytkownicy,Benutzer
-pageBase.Logout,Logout,Odhlášení,Wyloguj się,Abmelden
+pageBase.Logout,Logout,Odhlášení,Wyloguj się,Ausloggen
 pageBase.notifications,Notifications,Upozornění,Powiadomienia,Mitteilungen
 pageBase.error,Error,Chyba,Błąd,Fehler
 pageBase.success,Success,Úspěch,Sukces,Erfolg
 pageBase.inviteUser,Invite new user,Pozvat nového uživatele,Zaprosić nowego użytkownika,Neuen Benutzer einladen
-pageBase.dashboardHint,Here you can see a summary/ an overview of all important informations about your account.,Zde vidíte přehled všech důležitých informací o Vašem účtu.,Tutaj widzisz podsumowanie wszystkich ważnych informacji o swoim koncie.,Hier sehen Sie eine Zusammenfassung/einen Überblick über alle wichtigen Kontoinformationen.
+pageBase.dashboardHint,Here you can see a summary/ an overview of all important informations about your account.,Zde vidíte přehled všech důležitých informací o Vašem účtu.,Tutaj widzisz podsumowanie wszystkich ważnych informacji o swoim koncie.,
 pageBase.issuesHint,TODO: Issues hint,,,
-pageBase.analyticsHint,Here you can check various statistics.,Zde se můžete podívat na různé statistiky.,Tutaj możesz sprawdzić różne statystyki.,Hier können Sie verschiedene Statistiken überprüfen.
-pageBase.invoicesHint,"Here is a list of issued invoices. You can see the value, if they are paid or overdue, and much more.","Zde je seznam vystavených faktur. Na první pohled vidíte hodnotu, zda je faktura uhrazená či po splatnosti, a mnohem víc.","Tutaj znajduje się lista wystawionych faktur. Możesz sprawdzić ich wartość, stan płatności i o wiele więcej.","Hier finden Sie eine Liste der ausgestellten Rechnungen. Sie sehen den Rechnungsbetrag, ob sie beglichen wurden oder nicht u.v.a.m."
-pageBase.newContractHint,"Here you can create a new deal. Pick a client from the dropdown, or add a new one by entering his unique client id. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose currency. Now assign parking places and that's it! :)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!","Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie eine Vermietung aus der Dropdown-Liste aus oder erstellen Sie eine neue Vermietung, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)"
+pageBase.analyticsHint,Here you can check various statistics.,Zde se můžete podívat na různé statistiky.,Tutaj możesz sprawdzić różne statystyki.,
+pageBase.invoicesHint,"Here is a list of issued invoices. You can see the value, if they are paid or overdue, and much more.","Zde je seznam vystavených faktur. Na první pohled vidíte hodnotu, zda je faktura uhrazená či po splatnosti, a mnohem víc.","Tutaj znajduje się lista wystawionych faktur. Możesz sprawdzić ich wartość, stan płatności i o wiele więcej.",
+pageBase.newContractHint,"Here you can create a new deal. Pick a client from the dropdown, or add a new one by entering his unique client id. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose currency. Now assign parking places and that's it! :)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!",
 pageBase.ReservationButtonHint,TODO: reservation button hint,,,
 pageBase.mrParkitIntegrationHint,TODO: mrParkitIntegration hint,,,
-pageBase.goPublicHint,TODO: goPublic hint,"Zde můžete vybrat parkovací místa, která chcete nabídnout veřejnosti. U míst zde i nastavíte cenu a vyberete si ze tří možných výpočtů ceny parkovného.
-
-Způsoby výpočtu ceny jsou následující:
-Fixní hodinová sazba
-Exponenciální výpočet ceny (nastavíte různou hodinovou cenu v určených intervalech)
-Víkendová cena (funguje pouze v kombinaci s fixní hodinovou sazbou, umožňuje na víkend nastavit jinou cenu)
-
-Místa vyberete na plánku garáže, dostupnájsou modrá, označená jsou žlutá. Poté v horní části formuláře nastavíte měnu a vyberete si jeden z možných způsobů výpočtu ceny a zadáte cenu.",,
+pageBase.goPublicHint,TODO: goPublic hint,,,
 pageBase.financeHint,TODO: finance hint,,,
 pageBase.financePaypalHint,TODO: Paypal hint,,,
 pageBase.financeCSOBHint,TODO: CSOB hint,,,
 pageBase.pidSettingsHint,TODO: pidSettings Hint,,,
 pageBase.activityLogHint,TODO: activityLog Hint,,,
-pageBase.reservationsHint,Here you have a list of all your reservations - those you made as well as those others made for your garages.,"Zde najdete všechny Vaše rezervace - jak Vámi vytvořené, tak rezervace ostatních do Vašich garáží.",Tutaj znajdziesz wszystkie swoje rezerwacje.,"Hier finden Sie eine Liste aller Reservierungen – Ihre eigenen Reservierungen und die Reservierungen, die andere Personen für Ihre Garage vorgenommen haben."
-pageBase.newReservationHint,"You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilà.","Zde můžete vytvořit novou rezervaci. Nejprve prosím vyberte uživatele a garáž, poté datum a eventuelně parkovací místo. Voilà.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!","Hier können Sie eine neue Reservierung erstellen. Wählen Sie zuerst den Benutzer und die Garage aus, anschließend die Daten und schließlich den Stellplatz. Voilà."
+pageBase.reservationsHint,Here you have a list of all reservations within your client account.,Zde najdete všechny rezervace pro Váš účet.,Tutaj znajdziesz wszystkie swoje rezerwacje.,
+pageBase.newReservationHint,"You can make a new reservation here. Please, first select user and the garage, then dates and eventually pick parking place. Voilá.","Zde můžete vytvořit novou rezervaci. Nejprve prosím vyberte uživatele a garáž, poté datum a eventuelně parkovací místo. Voilá.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!",
 pageBase.garagesHint,TODO: garage hint.,,,
-pageBase.newGarageHint,"Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.","Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.","Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",Erstellen Sie eine neue Garage. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.
+pageBase.newGarageHint,"Create new garage. Set the name and details, then follow by defining the floors and Parking places. Two input options are available. You can load each floorplan in form of SVG image with information about Parking places. (We can help you to create this floorplan - see our website for more information) Second option is to define range of number for each level.","Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.","Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",
 pageBase.newGarageFloorsHint,TODO: New garage floors Hint,,,
 pageBase.newGarageOrderHint,TODO: New garage order Hint,,,
 pageBase.newGarageSubscribtionHint,TODO: New garage subscribtion Hint,,,
 pageBase.newGarageGatesHint,TODO: New garage gates Hint,,,
-pageBase.garageClientsHint,Here you can manage which Parking places are assigned to which Client account within selected garage. Just select Client account to see the plan of the garage and available places. Be aware garage might have more levels. Select desired level by the buttons on the right side.,,"Tutaj możesz zarządzać przypidaniem miejsc parkingowych do konkretnego klienta w ramach określonego garażu. Wybierz konto klienta, aby zobaczyć plan garażu oraz dostępne ceny. Pamiętaj, że garaż może mieć więcej pięter. Wybierz odpowiednie piętro za pomocą przycisku po prawej stronie.","Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten in der ausgewählten Garage zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Garagengrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass die Garage mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etwage mit den Schaltflächen links aus."
-pageBase.clientsHint,"In this section you can manage Client accounts. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. Select an account to show action buttons for ""edit"" and ""manage users""",,"W tej sekcji możesz zarządzać kontami klienta. W koncie klienta znajdują się informacje na temat klienta, jego użytkowników oraz miejsc parkingowych, z których mogą korzystać. Wybierz konto, aby mieć dostęp do opcji ""Edytuj"" i ""Zarządzaj użytkownikami"".","In diesem Abschnitt können Sie die Kundenkonten verwalten. Ein Kundenkonto ist eine Einheit, die Informationen über die Kunden, dessen Benutzer, die zugewiesenen Stellplätze usw. versammelt. Wählen Sie ein Konto aus, um Schaltflächen zur Bearbeitung und Verwaltung von Benutzern anzuzeigen."
-pageBase.newClientHint,"Here you are creating a new Client account. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. You will be able to set these in corresponding sections of the system.",,"Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.","Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben."
-pageBase.clientUsersHint,"This section allows for management of users of a particular Client account. By selecting a user you can see and setup user rights. You can as well invite new users to this selected Client account. Sent invitations, that are waiting for the confirmation are shown in the ""Pending invitations"" Section below",,"Ta sekcja umożliwia zarządzanie użytkownikami poszczególnego konta klienta. Wybierając użytkownika możesz zobaczyć i ustawić uprawnienia użytkownika. Możesz również zaprosić nowych użytkowników do wybranego konta klienta. Wysłane zaproszenia, które czekają na odpowiedź znajdziesz w sekcji ""Czekające zaproszenia"".","In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt."
-pageBase.settingsHint,In this Settings section you are able to set your own preferences. Set your desired language. Switch on and off visibility of these blue boxes with help thru all application.,Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.,Tutaj możesz ustawić język aplikacji oraz włączyć lub wyłączyć okna pomocy w całej aplikacji.,In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.
-pageBase.usersHint,Here you have a list of all known users. Select a user to see Client accounts membership.,Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí jeho členství v zákaznických účtech,"Tutaj znajdziesz listę wszystkich użytkowników. Wybierz użytkownika, aby zobaczyć jego członkowstwo w kontach klienta.","Hier sehen Sie eine Liste aller bekannten Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört."
+pageBase.garageClientsHint,Here you can manage which Parking places are assigned to which Client account within selected garage. Just select Client account to see the plan of the garage and available places. Be aware garage might have more levels. Select desired level by the buttons on the right side.,,"Tutaj możesz zarządzać przypidaniem miejsc parkingowych do konkretnego klienta w ramach określonego garażu. Wybierz konto klienta, aby zobaczyć plan garażu oraz dostępne ceny. Pamiętaj, że garaż może mieć więcej pięter. Wybierz odpowiednie piętro za pomocą przycisku po prawej stronie.",
+pageBase.clientsHint,"In this section you can manage Client accounts. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. Select an account to show action buttons for ""edit"" and ""manage users""",,"W tej sekcji możesz zarządzać kontami klienta. W koncie klienta znajdują się informacje na temat klienta, jego użytkowników oraz miejsc parkingowych, z których mogą korzystać. Wybierz konto, aby mieć dostęp do opcji ""Edytuj"" i ""Zarządzaj użytkownikami"".",
+pageBase.newClientHint,"Here you are creating a new Client account. Client account is a unit that gathers information about the client, its users, parking places they are allowed to use and such. You will be able to set these in corresponding sections of the system.",,"Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.",
+pageBase.clientUsersHint,"This section allows for management of users of a particular Client account. By selecting a user you can see and setup user rights. You can as well invite new users to this selected Client account. Sent invitations, that are waiting for the confirmation are shown in the ""Pending invitations"" Section below",,"Ta sekcja umożliwia zarządzanie użytkownikami poszczególnego konta klienta. Wybierając użytkownika możesz zobaczyć i ustawić uprawnienia użytkownika. Możesz również zaprosić nowych użytkowników do wybranego konta klienta. Wysłane zaproszenia, które czekają na odpowiedź znajdziesz w sekcji ""Czekające zaproszenia"".",
+pageBase.settingsHint,In this Settings section you are able to set your own preferences. Set your desired language. Switch on and off visbility of these blue boxes with help thru all application.,Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.,Tutaj możesz ustawić język aplikacji oraz włączyć lub wyłączyć okna pomocy w całej aplikacji.,Einstellungen
+pageBase.usersHint,Here you have a list of all known users. Select a user to see Client accounts membership.,Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí jeho členství v zákaznických účtech,"Tutaj znajdziesz listę wszystkich użytkowników. Wybierz użytkownika, aby zobaczyć jego członkowstwo w kontach klienta.",
 pageBase.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani użytkownicy,Alle bekannten Benutzer
 pageBase.editClientHint,TODO: edit client hint: Here it is possible to change information about this client.,,,
-pageBase.notificationsHint,Here are displayed all notifications that need to be resolved.,"Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.","Tutaj ukazują się wszystkie wiadomości, na które musisz odpowiedzieć.","Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen."
-pageBase.inviteUsersHint,"Invite new user to connect with selected Client Account. Please provide E-mail and send the invitation. After user accepts the invitation, he or she becomes automatically member of the selected Client Account.",,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.","Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. sie automatisch Mitglied des ausgewählten Kundenkontos."
-pageBase.addFeaturesHint,Here you can add functionality to your system. TODO: add features hint,Zde můžete přidat funkce do tvého systému.,Tutaj możesz dodaj funkcje do swojego systemu.,Hier können Sie Funktionen zum System hinzufügen.
-pageBase.addFeatures,Add features,Přidat funkce,Dodać funkcje,Funktionen hinzufügen
+pageBase.notificationsHint,Here are displayed all notifications that need to be resolved.,"Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.","Tutaj ukazują się wszystkie wiadomości, na które musisz odpowiedzieć.",
+pageBase.inviteUsersHint,"Invite new user to connect with selected Client Account. Please provide E-mail and send the invitation. After user accepts the invitation, he or she becomes automatically member of the selected Client Account.",,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.",
+pageBase.addFeaturesHint,Here you can add functionality to your system. TODO: add features hint,Zde můžete přidat funkce do tvého systému.,Tutaj możesz dodaj funkcje do swojego systemu.,
+pageBase.addFeatures,Add features,Přidat funkce,Dodać funkcje,
 pageBase.newAccountHint,Here you can create new account that will store your money. TODO: new account hint,"Zde můžete vytvářet zákaznické účty. Ty v sobě obsahují informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Toto vše lze nastavit v patřičné sekci systému.","Tutaj utworzyć możesz konto klienta. Konto zawiera informacje o kliencie, użytkownikach, przyporządkowanych im miejscach parkingowych itp. Ustawienia znajdziesz w odpowiedniej sekcji systemu.",
 pageBase.editAccountHint,Account properties editation. TODO: edit account hint,Zde můžete změnit údaje a název Klientského účtu.,Tutaj możesz zmienić dane i nazwę Konta klienta.,
 pageBase.accountsHint,Here you can see all your account. TODO: accounts hint,"V této sekci můžete spravovat zákaznické účty. V zákaznickém účtu naleznete informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Po zvolení účtu se zobrazí tlačítka pro editaci a správu uživatelů.","W tej sekcji możesz zarządzać kontami klienta. Znajdziesz w nich informacje o kliencie, użytkownikach, przyporządkowanych do nich miejscach parkingowych itp. Po wybraniu konta pojawią się przyciski umożliwiające edytowanie i zarządzanie użytkownikami.",
@@ -134,40 +127,21 @@ pageBase.carUsersHint,Here you can manage people using the cars. TODO: user car 
 pageBase.newCarHint,Here you can create new car. Creating new reservation will be easier than. TODO: new car hint,Zde můžete vytvořit nové auto. Vytvoření nové rezervace bude poté jednodušší.,Tutaj możesz wytworzyć nowe auto. Dzięki temu dokonanie nowej rezerwacji będzie łatwiejsze.,
 pageBase.editCarHint,Here you can edit car properties. TODO: edit car hint,Zde můžete upravit vlastnosti auta.,Tutaj możesz edytować właściwości auta.,
 pageBase.carsHint,This is list of all cars assigned to you.+ TODO: cars hint,"Toto je seznam všech aut, která jsou k Vám přiřazena.",Lista wszystkich przypisanych do Ciebie aut,
-pageBase.cars,Cars,Auta,Auta,Fahrzeuge
-pageBase.newCar,New car,Nové auto,Nowe auto,Neues Fahrzeug
-pageBase.editCar,Edit car,Upravit auto,Edytować auto,Fahrzeug bearbeiten
-pageBase.OccupancyOverview,Occupancy overview,Přehled obsazenosti,Przegląd stanu garażu,Belegungsübersicht
-pageBase.OccupancyOverviewHint,TODO: Occupancy overview hint,"Zde vidíte přehled všech rezervací v čase. V pravém horním rohu lze nastavit zobrazené období, v levém horním rohu lze výběr filtrovat podle klientů.
-Šedá barva = rezervace již proběhla
-Černá = rezervace právě probíhá
-Modrá = rezervace ještě nezačala",,
-pageBase.EditGarage,Edit garage,Upravit garáž,Edytować garaż,Garage bearbeiten
-pageBase.EditGarageHint,"Here you can find visual overview of your garage. You can select various modes in the upper left corner.
-
-Clients: individual clients are distinguished by colour.
-Agreements: individual agreements are distinguished by colour.
-Rezervations: individual agreements are distinguished by colour.
-Prices: individual price settings are distinguished by colour.
-Cars: individual cars are distinguished by colour.
-
-In the upper right corner you can choose either current situation, or situation on specific date.","Zde najdete vizuální přehledy Vaší garáže. Možná zobrazení si vyberete v levém horním rohu.
-
-Klienti: jednotliví klienti jsou odlišeni barvou.
-Agreementy: jednotlivé agreementy jsou odlišeny barvou
-Rezervace: jednotlivé rezervace jsou odlišeny barvou
-Ceny: jednotlivá nastavení ceny jsou odlišena barvou
-Auta: jednotlivá auta jsou odlišena barvou
-
-V pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",,
-pageBase.Occupancy,Occupancy,Obsazenost,Stan garażu,Belegung
+pageBase.cars,Cars,Auta,Auta,
+pageBase.newCar,New car,Nové auto,Nowe auto,
+pageBase.editCar,Edit car,Upravit auto,Edytować auto,
+pageBase.OccupancyOverview,Occupancy overview,Přehled obsazenosti,Przegląd stanu garażu,
+pageBase.OccupancyOverviewHint,TODO: Occupancy overview hint,,,
+pageBase.EditGarage,Edit garage,Upravit garáž,Edytować garaż,
+pageBase.EditGarageHint,TODO: Edit garage hint,,,
+pageBase.Occupancy,Occupancy,Obsazenost,Stan garażu,
 pageBase.Invoices,Invoices,Faktury,Faktury,
 pageBase.tableView,table view,Náhled tabulky,Widok tabelki,
 pageBase.cardView,card view,Náhled karty,Widok karty,
 pageBase.marketing,Marketing,Marketing,Marketing,
 pageBase.newMarketing,New marketing,Nový marketing,Nowy marketing,
 pageBase.editMarketing,Edit marketing,Upravit marketing,Edytować marketing,
-pageBase.garageMarketingHint,Here you can activate/deactivate and change settings for each module,Zde můžete aktivovat/deaktivovat a spravovat jednotlivé moduly.,Tutaj możesz zarządzać marketingiem swojego garażu.,
+pageBase.garageMarketingHint,Here you can manage marketing for your garage. TODO: Change this,Zde můžete spravovat marketing pro tvoji garáž.,Tutaj możesz zarządzać marketingiem swojego garażu.,
 pageBase.garageNewMarketingHint,Here you can setup new marketing. TODO: Change this,Zde můžete nastavit nový marketing.,Tutaj możesz ustawić nowy marketing.,
 pageBase.garageEditMarketingHint,Here you can manage edit marketing. TODO: Change this,Zde můžete spravovat úpravu marketingu.,Tutaj możesz zarządzać edycją marketingu.,
 pageBase.garageNewPricingHint,Here you can set up new reservations pricing. TODO: New pricing Hint,Zde můžete nastavit novou cenu rezervace,Tutaj możesz ustawić nową cenę rezerwacji.,
@@ -189,24 +163,15 @@ pageBase.reservations,Reservations,Rezervace,Rezerwacje,
 pageBase.places,Places,Obrat míst,Miejsca,
 pageBase.payments,Payments,Platby,Płatności,
 pageBase.gates,Gates,Brány,Bramy,
-pageBase.analyticsGarageTurnoverHint,"Here you can see the garage turnover and number of reservations for the selected period. In the spreadsheet below the graph you can see the number of reservation and total turnover of the garage.
-In the upper left corner you can select monthly or weekly overview. In the upper right corner you can select exact period you want to view.","Zde můžete vidět obrat garáže a počet rezervací během vybraného období. V tabulce pod grafem můžete vidět počet rezervací a celkový obrat garáže.
-
-V levém horním rohu lze vybrat měsíční nebo týdenní zobrazení. V pravém horním rohu lze nastavit přesné rozpětí zobrazeného období.",,
-pageBase.analyticsreservationsHint,"Here you can see total turnover for the garage within the selected term. In the spreadsheet below the graph you can see reservation count per day and total turnover of the garage.
-
-In the upper left corner you can choose between short-term reservations and long term rents. In the upper right corner you can select exact period you want to view.","Zde můžete vidět objem rezervací v garáži během vybraného období.  V tabulce pod grafem můžete vidět počet rezervací v jednotlivých dnech a celkový obrat garáže.
-
-V levém horním rohu lze vybrat mezi zobrazením krátkodobých rezervací nebo dlouhodobých nájmů. V pravém horním rohu lze nastavit přesné rozpětí zobrazeného období.",,
-pageBase.analyticsplacesHint,"Here you can see turnover statistics for parking places - average, maximal, minimal and total turnover, all of that displayed separately for short term and long term reservations. In the upper left corner you can select to show heatmap, which displays the (žlutě jsou nejnižší hodnoty, červeně nejvyšší).
-In the upper right corner you can select exact period you want to view.","Zde můžete vidět statistiky obratu míst - průměrný, maximální, minimální a celkový obrat, to vše rozděleno podle toho, zda je místo pronajímáno dlouhodobě či krátkodobě. V levém horním rohu si lze vybrat zobrazení na heatmapě, kde jsou hodnoty zobrazeny v barevném spektru (žlutě jsou nejnižší hodnoty, červeně nejvyšší).
-V pravém horním rohu lze nastavit přesné rozpětí zobrazeného období.",,
+pageBase.analyticsGarageTurnoverHint,TODO: GarageTurnover Hint,,,
+pageBase.analyticsreservationsHint,TODO: reservations Hint,,,
+pageBase.analyticsplacesHint,TODO: places Hint,,,
 pageBase.analyticspaymentsHint,TODO: payments Hint,,,
 pageBase.analyticsgatesHint,TODO: gates Hint,,,
 newReservation.selectGarage,Select garage *,Vyberte garáž *,Wybierz garaż *,Wählen Sie eine Garage *
 newReservation.selectUser,Select user *,Vyberte uživatele *,Wybierz użytkownika *,Wählen Sie einen Benutzer aus *
-newReservation.selectClient,Select client,Vyberte klienta,Wybierz klienta,Wählen Sie einen Kunden aus *
-newReservation.selectCar,Select car *,Vyberte auto *,Wybierz auto,Wählen sie ein Fahrzeug aus *
+newReservation.selectClient,Select client,Vyberte klienta,Wybierz klienta,Wählen Sie einen Klient *
+newReservation.selectCar,Select car *,Vyberte auto *,Wybierz auto,Wählen sie einf Fahrzeug *
 newReservation.begins,Begins,Začíná,Od,Beginnt
 newReservation.invalidaDate,Invalid date,Neplatné datum,Niepoprawna data,Ungültiges Datum
 newReservation.invalidPlace,Invalid place,Neplatné místo,Niepoprawne miejsce,Ungültiger Platz
@@ -240,21 +205,21 @@ clients.from,from,od,od,
 clients.created,Created,vytvořeno,utworzone,
 clients.users,users,uživatelé,użytkownicy,
 clients.token,client token,,,
-clients.contactPerson,Contact person,Kontaktní osoba,,
+clients.contactPerson,Contact person,,,
 clients.createdAt,Created at,,,
 clients.createAgreement,Create agreement,,,
-clients.editClient,Edit client,Upravit klienta,,
-clients.goToUsers,Go to users,Uživatelé,,
-clients.goToInvoices,Go to invoices,Faktury,,
-clients.places,places,místa,,
-clients.contract,contract,kontrakt,,
-clients.monthlyTotal,monthly total,celkem za měsíc,,
-clients.invoices,invoices,faktury,,
+clients.editClient,Edit client,,,
+clients.goToUsers,Go to users,,,
+clients.goToInvoices,Go to invoices,,,
+clients.places,places,,,
+clients.contract,contract,,,
+clients.monthlyTotal,monthly total,,,
+clients.invoices,invoices,,,
 clientUsers.name,username,uživatelské jméno,nazwa użytkownika,Benutzername
 clientUsers.email,e-mail,e-mail,e-mail,E-Mail
 clientUsers.memberSince,member since,členem od,członek od,Mitglied seit
 clientUsers.phone,phone,telefon,telefon,Telefon
-clientUsers.contact_person,contact person,kontaktní osoba,,
+clientUsers.contact_person,contact person,,,
 clientUsers.admin,is admin,je admin,jest adminem,ist Administrator
 clientUsers.secretary,secretary,Sekretář/ka,Sekretarz/Sekretarka,Sekretär/in
 clientUsers.internal,internal,Interní,Wewnętrzny,Intern
@@ -262,13 +227,13 @@ clientUsers.host,is host,je host,jest gościem,ist Gast
 clientUsers.presetAs,Preset as,Nastavit jako,Ustaw jako,Einstellen als
 clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć użytkownika?,Möchten Sie wirklich diesen Benutzer entfernen?
 clientUsers.pendingUsers,Pending invitations,Nevyřízené pozvánky,Zaproszenia czekające na odpowiedź,Offene Einladungen
-clientUsers.removeUser,Remove user,Odstranit uživatele,,
+clientUsers.removeUser,Remove user,,,
 reservations.name,User,jméno,Użytkownik,Name
 reservations.from,from,od,od,Von
 reservations.to,to,do,do,Nach
 reservations.place,place,místo,Miejsce,Ort
-reservations.client,Client,Klient,Klient,Kunde
-reservations.licencePlate,licence plate,poznávací značka,Numer rejestracyjny,
+reservations.client,Client,Klient,Klient,Klient
+reservations.licencePlate,licence plate,,Numer rejestracyjny,
 reservations.state,state,stát,Państwo,Staat
 reservations.type,type,typ,Typ,Typ
 reservations.creator,Creator,Založil,utworzył,erstellt von
@@ -281,19 +246,19 @@ reservations.reservationNotPayed,Reservation was not paid.,Rezervace nebyla zapl
 reservations.pay,Pay,Platba,Płatność,Zahlung
 reservations.host,Host,Host,Gość,Gast
 reservations.visitor,Visitor,Návštěvník,Odwiedzający,Besucher
-reservations.editReservation,Edit reserv.,Upravit rezervaci,,
-reservations.payReservation,Pay reserv.,Zaplatit rezervaci,,
-reservations.downloadInvoice,Donwload invoice,Stáhnout fakturu,,
-reservations.destroyRservation,Destroy reserv.,Zrušit rezervaci,,
-garages.clients,Clients,Klienti,Klienci,Kunden
+reservations.editReservation,Edit reserv.,,,
+reservations.payReservation,Pay reserv.,,,
+reservations.downloadInvoice,Donwload invoice,,,
+reservations.destroyRservation,Destroy reserv.,,,
+garages.clients,Clients,Klienti,Klienci,Klienten
 garages.contracts,Agreements,Dohody,Umowy,
 garages.reservations,Reservations,Rezervace,Rezerwacje,Reservierung
 garages.prices,Prices,Ceny,Ceny,Preise
 garages.cars,Cars,Auta,Auta,Fahrzeuge
 garages.now,Now,Nyní,Teraz,Jetzt
 garages.setDate,Set date,Nastavit datum,Ustawić datę,Datum einstellen
-garages.client,Client:,Klient:,Klient:,Kunde:
-garages.contract,Agreement:,Dohoda:,Umowa:,Vereinbarung:
+garages.client,Client:,Klient:,Klient:,Klient
+garages.contract,Agreement:,Dohoda:,Umowa:,
 garages.priceType,Price type:,Typ ceny:,Typ ceny:,Preistyp:
 garages.pricePerSpot,Price per spot:,Cena za místo:,Cena za miejsce:,Preis für Platz:
 garages.12HourPrice,12 hour price:,Cena za 12 hodin:,Cena za 12 godzin:,Preis für 12 Stunden:
@@ -313,8 +278,8 @@ garages.placeRent,Rents,Nájmy,Wynajmy,Mieten
 garages.rentName,Rent name,Jméno nájmu,Nazwa wynajmu,Name der Miete
 garages.price,Price,Cena,Cena,Preis
 garages.places,Places,Místa,Miejsca,Plätze
-garages.editRent,Edit rent,Upravit pronájem,,
-occupancy.selectClientClient,Select client,Vybrat klienta,Wybrać klienta,Kunden wählen
+garages.editRent,Edit rent,,,
+occupancy.selectClientClient,Select client,Vybrat klienta,Wybrać klienta,Klienten wählen
 occupancy.allReservations,All reservations,Všechny rezervace,Wszystkie rezerwacje,Alle Buchungen
 occupancy.dayShortcut,D,D,D,T
 occupancy.weekShortcut,W,T,T,W
@@ -326,7 +291,7 @@ occupancy.week,week,týden,tydzień,Woche
 occupancy.month,month,měsíc,miesiąc,Monat
 occupancy.reservationsId,Reservations id:,Id rezervací:,ID rezerwacji:,Reservierungsnummer:
 occupancy.driver,Driver:,Řidič:,Kierowca:,Fahrer
-occupancy.client,Client:,Klient:,Klient:,Kunde:
+occupancy.client,Client:,Klient:,Klient:,Klient
 occupancy.type,Type:,Typ:,Typ:,Typ
 occupancy.period,Period:,Období:,Okres:,Termin
 occupancy.licencePlate,Licence plate:,SPZ:,Nr rejestracyjny:,Kennzeichen
@@ -340,16 +305,16 @@ garageUsers.name,username,uživatelské jméno,nazwa użytkownika,Benutzername
 garageUsers.email,e-mail,e-mail,e-mail,E-Mail
 garageUsers.memberSince,member since,členem od,członek od,Mitglied seit
 garageUsers.phone,phone,telefon,telefon,Telefon
-garageUsers.removeUser,Remove user,Odstranit uživatele,,
+garageUsers.removeUser,Remove user,,,
 garageManagement.garageManagement,Garage management,Správa garáže,Zarząd garażu,Garage-Management
 garageManagement.begins,from,od,od,Ab
 garageManagement.ends,to,do,do,Bis
 garageManagement.invalidaDate,"Wrong date, format: 20.5.2016","Špatné datum, formát: 20.5.2016","Nieproprawna data, format: 20.5.2016","Falsches Datum, Format: 20.05.2017"
-garageManagement.clients,Clients,Klienti,Klienci,Kunden
+garageManagement.clients,Clients,Klienti,Klienci,Klienten
 garageManagement.gates,Gates,Brány,Bramy,Tore
 garageManagement.pricing,Pricing,Stanovení ceny,Cennik,Preislisten
 garageManagement.rent,Rent,Pronájem,Wynajem,Miete
-garageManagement.selectClient,Select clients,Vyberte klienta,Wybierz klienta,Wählen Sie einen Kunden aus
+garageManagement.selectClient,Select clients,Vyberte klienta,Wybierz klienta,Wählen Sie den Klienten
 garageManagement.selectGate,Select gates,Vyberte bránu,Wybierz bramę,Wählen Sie das Tor
 garageManagement.selectPricing,Select pricing,Vyberte stanovení ceny,Wybierz cennik,Wählen Sie die Preisliste
 garageManagement.selectRent,Select rent,Vyberte pronájem,Wybierz wynajem,Wählen Sie die Miete
@@ -454,8 +419,8 @@ newGarage.lng,Longitude,Zeměpisná délka,Długość geograficzna,
 newGarage.invalidLng,Not valid number,Neplatné číslo,Niepoprawna wartość,
 newGarage.lngPlaceholder,14.435,14.435,14.435,
 newGarage.gateLabel,Gate %(index)s,Brána %(index)s,Brama %(index)s,
-newGarage.gatePhone,Gate module phone or id,Tel. číslo nebo ID modulu brány,Numer modułu GSM lub ID,
-newGarage.invalidGateLabel,Not valid label,Neplatné označení,Niepoprawna wartość,
+newGarage.gatePhone,Gate module phone or id,,Numer modułu GSM lub ID,
+newGarage.invalidGateLabel,Not valid label,,Niepoprawna wartość,
 newGarage.invalidGatePhone,Not valid phone,Neplatný telefon,Niepoprawny numer telefonu,
 newGarage.placeholderGateLabel,Entrance gate,Vstupní brána,Brama wjazdowa,
 newGarage.placeholderGatePhone,489234798,489234798,489234798,
@@ -467,10 +432,10 @@ newGarage.selectTarif,Select tarif *,Vyberte tarif *,Wybierz taryfę,
 newGarage.selectAccount,Select account,Vyberte účet,Wybierz konto,
 newGarage.selectAccountMandatory,Select account *,Vyberte účet *,Wybierz konto,
 newGarage.processing,Processing,Zpracovávám,Przetwarzam,
-newGarage.users,Users,Uživatelé,Użytkownicy,
-newGarage.addProfilePicture,Add profile picture,Přidat profilový obrázek,,
-newGarage.removeFloor,Remove floor,Odstranit patro,,
-newGarage.uploadSvg,Upload SVG,Nahrát SVG,,
+newGarage.users,Users,,Użytkownicy,
+newGarage.addProfilePicture,Add profile picture,,,
+newGarage.removeFloor,Remove floor,,,
+newGarage.uploadSvg,Upload SVG,,,
 newClient.name,Client name,Jméno klienta,Nazwisko klienta,
 newClient.placeholder,Company client,Klient společnosti,Klient firmy,
 newClient.invalidName,Invalid client name,Neplatné jméno klienta,Niepoprawne nazwisko klienta,
@@ -590,7 +555,7 @@ newMarketing.shortName,URL short name,URL krátký název,Krótka nazwa URL,
 newMarketing.shortNamePlaceholder,st-patricks-garage,St-patricks-garáž,st-patricks-garaż,
 newMarketing.invalidShortName,This has to be one lowercase word,Toto musí být jedno slovo,Musi to być jedno słowo.,
 newMarketing.phone,Emergency phone,Nouzový telefon,Telefon alarmowy,
-newMarketing.phonePlaceholder,#ERROR!,#ERROR!,#ERROR!,
+newMarketing.phonePlaceholder,+420 420 765 126,+420 420 765 127,+420 420 765 126,
 newMarketing.invalidPhone,Phone invalid,Neplatný telefon,Niepoprawny numer telefonu,
 newMarketing.email,Emergency email,Pohotovostní e-mail,E-mail alarmowy,
 newMarketing.imvalidEmail,Email invalid,Neplatný email,Niepoprawny e-mail,
@@ -601,10 +566,10 @@ newMarketing.images,Garage images,Garážové snímky,Zdjęcia garażu,
 newMarketing.uploading,Uploading...,Nahrávám ...,Wgrywam...,
 newMarketing.notCreated,"Marketing was not created, selected short name is allready taken.","Marketing nebyl vytvořen, vybrané zkrácené jméno už bylo provedeno.","Nie można było utworzyć marketingu, ponieważ wybrana nazwa jest już zajęta.",
 newMarketing.notUpdated,"Marketing was not updated, selected short name is allready taken.","Marketing nebyl aktualizován, vybrané krátké jméno je již použito.","Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta.",
-newMarketing.addImage,Add image,Přidat obrázek,,
-newMarketing.editImage,Edit image,Upravit obrázek,,
-newMarketing.removeImage,Remove image,Odstranit obrázek,,
-newMarketing.removeImageQuestion,Are you sure you want to remove this image?,Opravdu chcete obrázek odstranit?,,
+newMarketing.addImage,Add image,,,
+newMarketing.editImage,Edit image,,,
+newMarketing.removeImage,Remove image,,,
+newMarketing.removeImageQuestion,Are you sure you want to remove this image?,,,
 garageMarketing.id,id,id,id,
 garageMarketing.email,email,email,e-mail,
 garageMarketing.short_name,short_name,zkrácené_jméno,krótka_nazwa,
@@ -621,9 +586,9 @@ marketing.properties,Properties,Vlastnosti,Właściwości,
 marketing.lat,Latitude,Zeměpisná šířka,Szerokość geograficzna,
 marketing.lng,Longitude,Zeměpisná délka,Długość geograficzna,
 newPricing.name,Name,Název,Nazwa,
-newPricing.flatPrice,"Flat price (per hour, not including VAT)","Cena za místo (za hodinu, bez DPH)",,
-newPricing.exponentialPrice,"Exponential price (per hour, not including VAT)","Proměnlivá cena (za hodinu, bez DPH)",,
-newPricing.weekendPrice,"Weekend price (per hour, not including VAT)","Cena o víkendu (za hodinu, bez DPH)",,
+newPricing.flatPrice,Flat price (per hour),Cena za místo (za hodinu),Cena za miejsce (na godzinę),
+newPricing.exponentialPrice,Exponential price (per hour),Proměnlivá cena (za hodinu),Zmienna cena (na godzinę),
+newPricing.weekendPrice,Weekend price (per hour),Cena o víkendu (za hodinu),Cena weekendowa (na godzinę),
 newPricing.12hPrice,Reservations to 12 hours,Rezervace do 12 hodin,Rezerwacja do 12 godzin,
 newPricing.dayPrice,Reservations from 12 hours to 1 day,Rezervace od 12 hodin do 1 dne,Rezerwacja od 12 godzin do 1 dnia,
 newPricing.weekPrice,Reservations from 1 day to 1 week,Rezervace od 1 dne do 1 týdne,Rezerwacja od 1 dnia do 1 tygodnia,
@@ -639,7 +604,7 @@ newPricing.selectPlace,Start by selecting a place,Začněte výběrem místa,Zac
 newRent.name,Name,Název,Nazwa,
 newRent.namePlaceholder,Place rent,Nájemné místa,,
 newRent.invalidName,Invalid rent name,Neplatně zadaný název nájemného,,
-newRent.price,Price (not including VAT),Cena (bez DPH),,
+newRent.price,Price,Cena,Cena,
 newRent.pricePlaceholder,500,500,500,
 newRent.invalidPrice,Invalid price,Neplatná cena,Niepoprawna cena,
 newRent.selectCurrency,Select currency,Vyberte měnu,Wybierz walutę,
@@ -657,7 +622,7 @@ newCar.length,Length [m],Délka [m],Długość [m],
 newCar.licencePlatePlaceholder,1A2 3456,1A2 3456,1A2 3456,
 newCar.colorPlaceholder,Black,Černá,Czarny,
 newCar.modelPlaceholder,Porsche 911,Porsche 911,Porsche 911,
-newCar.namePlaceholder,My Porsche,Můj Poršák,Moje Porsche,
+newCar.namePlaceholder,My Porsch,Můj Poršák,Moje Porsche,
 newCar.widthPlaceholder,1.8,1.8,1.8,
 newCar.heightPlaceholder,1.3,1.3,1.3,
 newCar.lengthPlaceholder,4.37,4.37,4.37,
@@ -750,9 +715,9 @@ invoices.invoiceDate,Issued,datum faktury,data wystawienia faktury,
 invoices.dueDate,Due date,datum splatnosti,termin spłaty,
 invoices.account,Account,účet,konto,
 invoices.client,Client,klient,klient,
-invoices.type,Type,druh,,
-invoices.invoiceText,Invoice text,Text faktury,,
-invoices.paid,Paid,uhrazeno,,
+invoices.type,Type,,,
+invoices.invoiceText,Invoice text,,,
+invoices.paid,Paid,,,
 invoices.ammount,Amount,částka,kwota,
 invoices.subject,Subject,předmět,temat,
 invoices.pay,Pay,Platit,Zapłacić,
@@ -761,27 +726,25 @@ invoices.initializingPayment,Initializing payment ...,Inicializuji platby ...,In
 invoices.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,
 invoices.paymentUnsucessfull,Payment was canceled and unsucessfull.,Platba byla zrušena a neúspěšná.,Płatność została anulowana. Nie powiodła się.,
 invoices.payingReservation,Paying reservation,Placení rezervace,Opłata rezerwacji,
-invoices.selectClient,Select client,Vyberte klienta,,
-invoices.selectGarage,Select garage,Vyberte garáž,,
-invoices.invoiceNumber,Invoice Nr.,Faktura č.,,
-invoices.stornoInvoice,Do you realy want to storno this invoice?,Opravdu chcete tuto fakturu stornovat?,,
-invoices.invoiceCanceled,This invoice was canceled.,Faktura byla stornována,,
-invoices.cancelReason,"Please, enter reason for cancelling this invoice:","Prosím, uviďte důvod storna faktury:",,
-invoices.reason,Reason,Důvod,,
-invoices.reasonInvalid,Reason invalid,Neplatný důvod,,
-invoices.reasonPlaceholder,Calculated price is wrong,Vypočtená cena je špatně,,
-invoices.inoiceDate,Invoice date,Datum faktury,,
-invoices.invalidaDate,Invalid date,Neplatné datum,,
-invoices.invalidValue,Invalid value,Neplatná hodnota,,
-invoices.amount,Price,CEna,,
-invoices.downloadInvoice,Download invoice,Stáhnout fakturu,,
-invoices.editInvoice,Edit invoice,Upravit fakturu,,
-invoices.payInvoice,Pay invoice,Uhradit fakturu,,
-invoices.sendReminder,Send reminder,Odeslat upomínku,,
-invoices.invoicePaidLabel,Invoice paid,Faktura uhrazena,,
+invoices.selectClient,Select client,,,
+invoices.selectGarage,Select garage,,,
+invoices.invoiceNumber,Invoice Nr.,,,
+invoices.stornoInvoice,Do you realy want to storno this invoice?,,,
+invoices.invoiceCanceled,This invoice was canceled.,,,
+invoices.cancelReason,"Please, enter reason for cancelling this invoice:",,,
+invoices.reason,Reason,,,
+invoices.reasonInvalid,Reason invalid,,,
+invoices.reasonPlaceholder,Calculated price is wrong,,,
+invoices.inoiceDate,Invoice date,,,
+invoices.invalidaDate,Invalid date,,,
+invoices.invalidValue,Invalid value,,,
+invoices.amount,Price,,,
+invoices.downloadInvoice,Download invoice,,,
+invoices.editInvoice,Edit invoice,,,
+invoices.payInvoice,Pay invoice,,,
+invoices.sendReminder,Send reminder,,,
+invoices.invoicePaidLabel,Invoice paid,,,
 invoices.invoiceIncorect,Invoice incorrect,,,
-invoices.donwloadExcel,Download excel,Stáhnout excel,,
-invoices.donwloadInvoices,Download invoices,Stáhnout faktury,,
 resetPassword.send,Password reseting email was sent to your email.,Obnova hesla byla odeslána na Váš e-mail.,Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.,
 resetPassword.description,"Please, insert your email here and we will send you password reset process description",Zde vložte svůj e-mail a my Vám zašleme popis procesu obnovení hesla,"Wpisz tutaj swój adres e-mail, a my prześlemy Ci instrukcje dotyczące odnowienia hasła.",
 resetPassword.email,e-mail,e-mail,e-mail,
@@ -796,7 +759,6 @@ modules.Preview,Preview,Náhled,Podgląd,
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,
 modules.cannotBeChanged,You cannot go public until you set payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.",
 newContract.description,New Agreement in,Nová dohoda v,Nowa umowa w,
-newContract.edit,Editing agreement in,Úprava dohody v,,
 newContract.yourContract,Your contract in,Vaše dohoda v,Twoja umowa w,
 newContract.selectClient,Select client,Vyberte klienta,Wybierz klienta,
 newContract.invalidToken,Token invalid,,Niepoprawny token,
@@ -810,8 +772,6 @@ newContract.priceInvalid,Price invalid,Cena je neplatná,Kwota jest niepoprawna,
 newContract.pricePlaceholder,10000,10000,10000,
 newContract.selectCurrency,Select currency,Zvolte měnu,Wybierz walutę,
 newContract.placePrice,Price per place per month,Cena za místo za měsíc,Cena za miejsce na miesiąc,
-newContract.indefinitContract,Conclude this contract for an indefinite period.,Uzavřít dohodu na dobu neurčitou.,,
-newContract.indefinite,Indefinite,Na dobu neurčitou,,
 finance.paypal,Paypal,Paypal,PayPal,
 finance.csob,ČSOB,ČSOB,ČSOB,
 finance.csobPayment,ČSOB Payments,ČSOB Platby,Płatności ČSOB,
@@ -824,37 +784,37 @@ finance.invalidVat,Invalid VAT,Neplatné DPH,Niepoprawny VAT,
 finance.invalidRow,Invalid number,Neplatné číslo,Niepoprawny numer,
 finance.changeSuccess,Values were changed sucessfully.,Hodnoty byly úspěšně změněny.,Wartości zostały zmienione.,
 finance.changeFailed,"Error occured, values were not changed.","Došlo k chybě, hodnoty se nezměnily.","Wystąpił błąd, wartości nie zostały zmienione.",
-finance.uploadKey,Upload RSA key,Nahrát RSA klíč,,
+finance.uploadKey,Upload RSA key,,,
 analytics.week,week,týden,tydzień,
 analytics.month,month,měsíc,miesiąc,
 analytics.turnover,turnover,obrat,obrót,
 analytics.average,Average,průměrný,średnio,
 analytics.reservations,reservations,rezervace,rezerwacja,
 analytics.noData,No data to be rendered,Žádná data k poskytnutí,Nie istnieją żadne dane,
-analytics.placeTurnover,Place Turnover,Obrat místa,Rotacja miejsca,
-analytics.period,Period,Období,Okres,
-analytics.reservationCount,reservation count,počet rezervací,Liczba rezerwacji,
-analytics.contractCount,contract count,počet kontraktů,Liczba umów,
-analytics.date,date,datum,Data,
-analytics.shortterm,Short term,Krátkodobé,Termin,
-analytics.longterm,Long term,Dlouhodobé,Termin,
-analytics.graph,Graph,Graf,Graf,
-analytics.heatmap,Heatmap,Teplotní mapa,Mapa cieplna,
-analytics.avgTurnover,Total turnover,Celkový obrat,Średnia rotacja,
-analytics.avgRevenue,Avg revenue,Průměrný příjem,Średni dochód,
-analytics.minRevenue,Min revenue,Minimální příjem,Min. dochód,
-analytics.maxRevenue,Max revenue,Maximální příjem,Maks. dochód,
+analytics.placeTurnover,Place Turnover,,Rotacja miejsca,
+analytics.period,Period,,Okres,
+analytics.reservationCount,reservation count,,Liczba rezerwacji,
+analytics.contractCount,contract count,,Liczba umów,
+analytics.date,date,,Data,
+analytics.shortterm,Short term,,Termin,
+analytics.longterm,Long term,,Termin,
+analytics.graph,Graph,,Graf,
+analytics.heatmap,Heatmap,,Mapa cieplna,
+analytics.avgTurnover,Total turnover,,Średnia rotacja,
+analytics.avgRevenue,Avg revenue,,Średni dochód,
+analytics.minRevenue,Min revenue,,Min. dochód,
+analytics.maxRevenue,Max revenue,,Maks. dochód,
 activityLog.name,user,uživatel,użytkownik,
 activityLog.email,email,e-mailem,e-mail,
 activityLog.subject,subject,předmět,temat,
 activityLog.action,action,akce,akcja,
 activityLog.createdAt,time,čas,godzina,
-dashboard.news,PID news,Novinky,Nowości PiD,
-dashboard.latestActivity,Latest activity,Poslední aktivita,Niedawne aktywności,
-dashboard.currentState,Current state,Aktuální stav,Stan obecny,
-dashboard.financeOverview,Finance overview,Finanční přehled,Przegląd finansów,
-dashboard.occupiedTotal,occupied/total,obsazeno/celkem,zajęte/ogółem,
-dashboard.longterm,Longterm,Dlouhodobé,Długoterminowo,
-dashboard.visitors,Visitors,Návštěvníci,Odwiedzający,
-dashboard.free,Available,K dispozici,Wolnych,
-dashboard.total,Total,Celkem,Ogółem,
+dashboard.news,PID news,,Nowości PiD,
+dashboard.latestActivity,Latest activity,,Niedawne aktywności,
+dashboard.currentState,Current state,,Stan obecny,
+dashboard.financeOverview,Finance overview,,Przegląd finansów,
+dashboard.occupiedTotal,occupied/total,,zajęte/ogółem,
+dashboard.longterm,Longterm,,Długoterminowo,
+dashboard.visitors,Visitors,,Odwiedzający,
+dashboard.free,free,,wolnych,
+dashboard.total,Total,,Ogółem,

@@ -598,7 +598,7 @@
 		"shortNamePlaceholder": "st-patricks-garaż",
 		"invalidShortName": "Musi to być jedno słowo.",
 		"phone": "Telefon alarmowy",
-		"phonePlaceholder": "+420 420 765 126",
+		"phonePlaceholder": "#ERROR!",
 		"invalidPhone": "Niepoprawny numer telefonu",
 		"email": "E-mail alarmowy",
 		"imvalidEmail": "Niepoprawny e-mail",
@@ -635,9 +635,9 @@
 	},
 	"newPricing": {
 		"name": "Nazwa",
-		"flatPrice": "Cena za miejsce (na godzinę)",
-		"exponentialPrice": "Zmienna cena (na godzinę)",
-		"weekendPrice": "Cena weekendowa (na godzinę)",
+		"flatPrice": "PL: newPricing.flatPrice",
+		"exponentialPrice": "PL: newPricing.exponentialPrice",
+		"weekendPrice": "PL: newPricing.weekendPrice",
 		"12hPrice": "Rezerwacja do 12 godzin",
 		"dayPrice": "Rezerwacja od 12 godzin do 1 dnia",
 		"weekPrice": "Rezerwacja od 1 dnia do 1 tygodnia",
@@ -655,7 +655,7 @@
 		"name": "Nazwa",
 		"namePlaceholder": "PL: newRent.namePlaceholder",
 		"invalidName": "PL: newRent.invalidName",
-		"price": "Cena",
+		"price": "PL: newRent.price",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Niepoprawna cena",
 		"selectCurrency": "Wybierz walutę"
@@ -811,7 +811,9 @@
 		"payInvoice": "PL: invoices.payInvoice",
 		"sendReminder": "PL: invoices.sendReminder",
 		"invoicePaidLabel": "PL: invoices.invoicePaidLabel",
-		"invoiceIncorect": "PL: invoices.invoiceIncorect"
+		"invoiceIncorect": "PL: invoices.invoiceIncorect",
+		"donwloadExcel": "PL: invoices.donwloadExcel",
+		"donwloadInvoices": "PL: invoices.donwloadInvoices"
 	},
 	"resetPassword": {
 		"send": "Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.",
@@ -832,6 +834,7 @@
 	},
 	"newContract": {
 		"description": "Nowa umowa w",
+		"edit": "PL: newContract.edit",
 		"yourContract": "Twoja umowa w",
 		"selectClient": "Wybierz klienta",
 		"invalidToken": "Niepoprawny token",
@@ -844,7 +847,9 @@
 		"priceInvalid": "Kwota jest niepoprawna",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Wybierz walutę",
-		"placePrice": "Cena za miejsce na miesiąc"
+		"placePrice": "Cena za miejsce na miesiąc",
+		"indefinitContract": "PL: newContract.indefinitContract",
+		"indefinite": "PL: newContract.indefinite"
 	},
 	"finance": {
 		"paypal": "PayPal",
@@ -897,7 +902,7 @@
 		"occupiedTotal": "zajęte/ogółem",
 		"longterm": "Długoterminowo",
 		"visitors": "Odwiedzający",
-		"free": "wolnych",
+		"free": "Wolnych",
 		"total": "Ogółem"
 	}
 }
