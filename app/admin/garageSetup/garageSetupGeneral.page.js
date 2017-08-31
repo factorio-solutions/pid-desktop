@@ -26,7 +26,7 @@ export class GarageSetupGeneralPage extends Component {
   componentDidMount () {
     const { state, pageBase, actions} = this.props
     state.availableTarifs.length === 0 && actions.initTarif()
-    pageBase.garage && actions.intiEditGarageGeneral(pageBase.garage)
+    this.props.params.id && pageBase.garage && actions.intiEditGarageGeneral(pageBase.garage)
   }
 
   componentWillReceiveProps(nextProps){ // load garage if id changed
