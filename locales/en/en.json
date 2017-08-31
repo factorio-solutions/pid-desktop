@@ -49,6 +49,8 @@
 		"loading": "Loading"
 	},
 	"pageBase": {
+		"noFileSelected": "No file selected",
+		"couldNotUpload":"Upload was unsucessfull",
 		"Dashboard": "Dashboard",
 		"Issues": "Issues",
 		"Admin": "Admin",
