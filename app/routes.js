@@ -89,6 +89,8 @@ import ActivityLogPage            from './admin/activityLog/activityLog.page'
 // Marketing page
 import MarketingPage              from './marketing/marketing.page'
 
+import TestingPage                from './testing/testing.page'
+
 // import GaragesPage                from './garages/garages.page'
 // import GarageClientsPage          from './garages/clients.page'
 // import GarageGatesPage            from './garages/gates.page'
@@ -208,61 +210,6 @@ export default function createRoutes() {
       <Route path=":id/admin/activityLog"                 component={ActivityLogPage}/>
 
       <Route path="marketing/:short_name"                 component={MarketingPage}/>
-
-
-      {/*<IndexRoute component={LoginPage} />
-
-      <Route path="signUpPage"    component={SignUpPage}/>
-      <Route path="resetPassword" component={ResetPasswordPage}/>
-      <Route path="editUser"      component={EditUserPage}/>
-      <Route path="settings"      component={SettingsPage}/>
-      <Route path="addFeatures"   component={AddFeaturesPage}/>
-      <Route path="notifications" component={NotificationsPage}/>
-
-      <Route path="reservations"                          component={ReservationsPage}/>
-      <Route path="reservations/newReservation"           component={NewReservationPage}/>
-      <Route path="reservations/newReservation/overview"  component={NewReservationOverviewPage}/>
-
-      <Route path="garages"                                 component={GaragesPage}/>
-      <Route path="garages/:id/clients"                     component={GarageClientsPage}/>
-      <Route path="garages/:id/gates"                       component={GarageGatesPage}/>
-      <Route path="garages/newGarage"                       component={NewGaragePage}/>
-      <Route path="garages/:id/newGarage"                   component={NewGaragePage}/>
-      <Route path="garages/:id/marketing"                   component={GarageMarketingPage}/>
-      <Route path="garages/:id/marketing/newMarketing"      component={NewMarketingPage}/>
-      <Route path="garages/:id/marketing/:marketingId/edit" component={NewMarketingPage}/>
-      <Route path="garages/pricings/newPricing"             component={NewPricingPage}/>
-      <Route path="garages/pricings/:id/edit"               component={NewPricingPage}/>
-      <Route path="garages/rents/newRent"                   component={NewRentPage}/>
-      <Route path="garages/rents/:id/edit"                  component={NewRentPage}/>
-      <Route path="garages/:id/clients/addClient"           component={AddClientPage}/>
-      <Route path="garages/:id/users"                       component={GarageUsersPage}/>
-
-      <Route path="marketing/:short_name" component={MarketingPage}/>
-
-      <Route path="occupancy" component={Occupancy}/>
-
-      <Route path="clients"                                     component={ClientsPage}/>
-      <Route path="clients/:id/users"                           component={ClientUsersPage}/>
-      <Route path="clients/newClient"                           component={NewClientPage}/>
-      <Route path="clients/:id/edit"                            component={NewClientPage}/>
-      <Route path="clients/:client_id/invoices"                 component={InvoicesPage}/>
-      <Route path="clients/:client_id/invoices/:invoice_id/pay" component={PayInvoicePage}/>
-
-      <Route path="accounts"                      component={AccountsPage}/>
-      <Route path="accounts/newAccount"           component={NewAccountPage}/>
-      <Route path="accounts/:id/edit"             component={NewAccountPage}/>
-      <Route path="accounts/:account_id/invoices" component={InvoicesPage}/>
-
-      <Route path="cars"            component={CarsPage}/>
-      <Route path="cars/:id/users"  component={CarUsersPage}/>
-      <Route path="cars/newCar"     component={NewCarPage}/>
-      <Route path="cars/:id/edit"   component={NewCarPage}/>
-
-      <Route path="users"            component={UsersPage}/>
-      <Route path="users/inviteUser" component={inviteUserPage}/>
-
-      <Route path="releaseNotes" component={ReleaseNotesPage}/> */}
     </Route>
   );
 
@@ -274,6 +221,7 @@ export default function createRoutes() {
           {subRoutes}
         </Route>
       ))}
+      <Route path={'/testing'} component={TestingPage} />
     </Route>
   );
 }

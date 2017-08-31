@@ -5,6 +5,7 @@ import { bindActionCreators }          from 'redux'
 import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
+import UploadButton       from '../../_shared/components/buttons/UploadButton'
 import Form               from '../../_shared/components/form/Form'
 import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import Input              from '../../_shared/components/input/Input'
@@ -127,9 +128,13 @@ export class GarageSetupGeneralPage extends Component {
               <h2>{t(['newGarage', 'garagePicture'])}</h2>
               <img src={state.img}/>
               <div>
-                <input type='file' ref='fileSelector' onChange={handleFileSelect}/>
-                <LabeledRoundButton label={t(['newGarage', 'addProfilePicture'])} content={<span className='fa fa-file-text-o' aria-hidden="true"></span>} onClick={()=>{this.refs.fileSelector.click()}} type={state.img===defaultImage ? 'action' : 'confirm'} />
-                {/*<CallToActionButton label={t(['newGarage', 'selectImage'])} onClick={()=>{this.refs.fileSelector.click()}} />*/}
+                <UploadButton label={t(['newGarage', 'addProfilePicture'])}
+                  type={state.img===defaultImage ? 'action' : 'confirm'}
+                  onUpload={(url) => {actions.setImage(url); console.log(url);}}
+                  query={`query UploadFile{
+                      upload_garage_image
+                    }`}
+                />
               </div>
             </div>
           </div>
