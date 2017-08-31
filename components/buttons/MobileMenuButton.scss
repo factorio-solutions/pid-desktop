@@ -16,6 +16,7 @@ $size-collapsed-width:  150px;
   padding:    18px 0 8px;
   position:   relative;
   flex:       1 1;
+  min-height: 100px;
 
   @include colorize($clickableColor);
   color:   $white;
