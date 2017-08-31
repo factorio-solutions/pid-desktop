@@ -516,6 +516,7 @@ export function updateGarageGeneral(id, backUrl) {
         window.location.replace(response.data.update_garage.payment_url)
       } else {
         dispatch(setFetching(false))
+        dispatch(fetchGarages())
         nav.to(`/${id}/admin/garageSetup/floors`)
       }
     }

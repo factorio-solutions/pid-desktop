@@ -2,10 +2,12 @@ const MAX_SCANNING_DURATION = 15000 // ms
 
 export function init(callback) {
   const params = {
-    "request": true,
-    "restoreKey" : "park-it-direct-bluetoothLE"
+    request: true
+    // , restoreKey: 'park-it-direct-bluetoothLE'
+    , statusReceiver: true
   }
 
+  console.log('Initializing ble');
   bluetoothle.initialize(callback, params)
 }
 
@@ -52,8 +54,14 @@ export function scan(successCallback, errorCallback) {
     }
   }
 
-  // has to have this permision, or no new devices will be found
-  bluetoothle.hasPermission(hasPermissionSuccess)
+  if (cordova.platformId === 'android') {
+    // has to have this permision, or no new devices will be found
+    console.log('android');
+    bluetoothle.hasPermission(hasPermissionSuccess)
+  } else {
+    console.log('ios');
+    requestPermissionSuccess()
+  }
 }
 
 export function stopScan (successCallback, errorCallback) {
