@@ -1,3 +1,7 @@
+export const PRESIGNE_GARAGE_IMAGE_QUERY = `query UploadFile{
+  upload_garage_image
+}
+`
 // Create new garage
 export const CREATE_NEW_GARAGE = `mutation garageMutations($garage: GarageInput!) {
   create_garage(garage: $garage) {
