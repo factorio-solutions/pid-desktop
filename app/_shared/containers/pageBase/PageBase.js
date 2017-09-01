@@ -47,7 +47,7 @@ export class PageBase extends Component {
 
     const callToAction = [ {label: t(['pageBase', 'Create reservation']),                      onClick: ()=>{nav.to('/reservations/newReservation')}}
                          , state.isGarageAdmin &&  {label: t(['pageBase', 'Create contract']), onClick: ()=>{nav.to(`/${state.garage}/admin/clients/newContract`)}}
-                         , {label: t(['pageBase', 'Add Features']),                            onClick: ()=>{nav.to('/addFeatures')}}
+                        //  , {label: t(['pageBase', 'Add Features']),                            onClick: ()=>{nav.to('/addFeatures')}}
                          ].filter(field => field !== false)
 
     const profileDropdown = [ <div className={styles.dropdownContent} onClick={()=>{nav.to('/profile')}}><i className="icon-profile" aria-hidden="true"></i>{t(['pageBase', 'Profile'])}</div>

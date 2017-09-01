@@ -172,7 +172,7 @@ function prepareAdminSecondaryMenu() {
            , state.isGarageAdmin && {label: t(['pageBase', 'Garage setup']),  key: "garageSetup", onClick: ()=>{nav.to(`/${garage}/admin/garageSetup/general`)} }
            , {label: t(['pageBase', 'Users']),         key: "users",    onClick: ()=>{nav.to(`/${garage}/admin/users`)} }
            , state.isGarageAdmin && {label: t(['pageBase', 'Finance']),       key: "finance",  onClick: ()=>{nav.to(`/${garage}/admin/finance`)} }
-           , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
+          //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
            , state.isGarageAdmin && {label: t(['pageBase', 'Activity log']),  key: "activity", onClick: ()=>{nav.to(`/${garage}/admin/activityLog`)} }
            ].filter(field => field !== false)
   }
