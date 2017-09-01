@@ -195,12 +195,6 @@ export function setTag(value, index){
   }
 }
 
-export function setFile(value, index){
-  return (dispatch, getState) => {
-    dispatch(changeImages("file", value, index))
-  }
-}
-
 export function setImage(value, index){
   return (dispatch, getState) => {
     dispatch(changeImages("img", value, index))

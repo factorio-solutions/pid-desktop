@@ -22,7 +22,7 @@ var initialState =  { garage:               undefined
                     , email:                {value: undefined, valid: false}
                     , descriptionLanguage:  'en' // current language
                     , descriptions:         {} // en: "description text... "
-                    , images:               [{tag: undefined, img: '', file: ''}] // {tag: '', img: 'base64Code'}
+                    , images:               [{tag: undefined, img: ''}] // {tag: '', img: url}
 
                     , highlight:    false
                     , modalContent: undefined
