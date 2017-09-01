@@ -1,4 +1,4 @@
-import React                                 from 'react'
+// import React                                 from 'react'
 import { Route, IndexRoute, IndexRedirect  } from 'react-router'
 
 import * as localization from './_shared/modules/localization/localization'
@@ -89,7 +89,7 @@ import ActivityLogPage            from './admin/activityLog/activityLog.page'
 // Marketing page
 import MarketingPage              from './marketing/marketing.page'
 
-// import TestingPage                from './testing/testing.page'
+import TestingPage                from './testing/testing.page'
 
 
 export const AVAILABLE_LANGUAGES = ['en', 'cs', 'pl', 'de']
@@ -189,6 +189,6 @@ export default function createRoutes() {
         </Route>
       ))}
     </Route>
-  );
+  )
   // <Route path={'/testing'} component={TestingPage} />
 }

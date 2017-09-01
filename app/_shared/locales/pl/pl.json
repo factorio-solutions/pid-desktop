@@ -49,6 +49,8 @@
 		"loading": "Ładowanie"
 	},
 	"pageBase": {
+		"noFileSelected": "PL: pageBase.noFileSelected",
+		"couldNotUpload": "PL: pageBase.couldNotUpload",
 		"Dashboard": "Tablica",
 		"Issues": "Problemy",
 		"Admin": "Admin",
