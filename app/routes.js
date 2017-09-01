@@ -89,40 +89,7 @@ import ActivityLogPage            from './admin/activityLog/activityLog.page'
 // Marketing page
 import MarketingPage              from './marketing/marketing.page'
 
-import TestingPage                from './testing/testing.page'
-
-// import GaragesPage                from './garages/garages.page'
-// import GarageClientsPage          from './garages/clients.page'
-// import GarageGatesPage            from './garages/gates.page'
-// import NewGaragePage              from './garages/newGarage.page'
-// import GarageMarketingPage        from './garages/garageMarketing.page'
-// import NewMarketingPage           from './garages/newMarketing.page'
-// import NewPricingPage             from './garages/newPricing.page'
-// import NewRentPage                from './garages/newRent.page'
-// import AddClientPage              from './garages/addClient.page'
-// import GarageUsersPage            from './garages/users.page'
-
-// import MarketingPage              from './marketing/marketing.page'
-
-// import ClientsPage                from './client/clients.page'
-// import NewClientPage              from './client/newClient.page'
-// import ClientUsersPage            from './client/users.page'
-//
-// import AccountsPage               from './accounts/accounts.page'
-// import NewAccountPage             from './accounts/newAccount.page'
-//
-// import InvoicesPage               from './invoices/invoices.page'
-// import PayInvoicePage             from './invoices/payInvoice.page'
-//
-// import CarsPage                   from './cars/cars.page'
-// import NewCarPage                 from './cars/newCar.page'
-// import CarUsersPage               from './cars/users.page'
-//
-// import inviteUserPage             from './users/inviteUser.page'
-//
-// import UsersPage                  from './users/users.page'
-//
-// import ReleaseNotesPage           from './user/releaseNotes.page'
+// import TestingPage                from './testing/testing.page'
 
 
 export const AVAILABLE_LANGUAGES = ['en', 'cs', 'pl', 'de']
@@ -221,7 +188,7 @@ export default function createRoutes() {
           {subRoutes}
         </Route>
       ))}
-      <Route path={'/testing'} component={TestingPage} />
     </Route>
   );
+  // <Route path={'/testing'} component={TestingPage} />
 }

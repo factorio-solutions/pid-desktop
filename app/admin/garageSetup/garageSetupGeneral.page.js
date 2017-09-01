@@ -10,10 +10,11 @@ import Form               from '../../_shared/components/form/Form'
 import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import Input              from '../../_shared/components/input/Input'
 
-import * as nav                 from '../../_shared/helpers/navigation'
-import { t }                    from '../../_shared/modules/localization/localization'
-import * as garageSetupActions  from '../../_shared/actions/garageSetup.actions'
-import { defaultImage }         from '../../_shared/reducers/garageSetup.reducer'
+import * as nav                        from '../../_shared/helpers/navigation'
+import { t }                           from '../../_shared/modules/localization/localization'
+import * as garageSetupActions         from '../../_shared/actions/garageSetup.actions'
+import { defaultImage }                from '../../_shared/reducers/garageSetup.reducer'
+import { PRESIGNE_GARAGE_IMAGE_QUERY } from '../../_shared/queries/garageSetup.queries'
 
 import styles from './garageSetupGeneral.page.scss'
 
@@ -101,7 +102,6 @@ export class GarageSetupGeneralPage extends Component {
     const tarifSelected = (index) => { actions.setTarif(state.availableTarifs[index].id) }
     const tarifDropdown = state.availableTarifs.map((tarif, index) => {return {label: `${t(['addFeatures',tarif.name])} - ${tarif.price} ${tarif.currency.symbol}`, onClick: tarifSelected.bind(this, index) }})
 
-
     return (
       <GarageSetupPage>
         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
@@ -130,10 +130,8 @@ export class GarageSetupGeneralPage extends Component {
               <div>
                 <UploadButton label={t(['newGarage', 'addProfilePicture'])}
                   type={state.img===defaultImage ? 'action' : 'confirm'}
-                  onUpload={(url) => {actions.setImage(url); console.log(url);}}
-                  query={`query UploadFile{
-                      upload_garage_image
-                    }`}
+                  onUpload={actions.setImage}
+                  query={ PRESIGNE_GARAGE_IMAGE_QUERY }
                 />
               </div>
             </div>
