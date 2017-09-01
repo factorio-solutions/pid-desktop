@@ -6,8 +6,7 @@ export default function upload(onSuccess, event, query, variables = null) {
   if(file == null) return alert(t(['pageBase', 'noFileSelected']))
 
   const onPresignedSuccess = response => {
-    const parsedResponse = JSON.parse(response.data.upload_garage_image)
-    console.log(parsedResponse);
+    const parsedResponse = JSON.parse(response.data[Object.keys(response.data)[0]]) // select first key
     uploadFile(file, parsedResponse.signedRequest, parsedResponse.url)
   }
 
@@ -17,7 +16,6 @@ export default function upload(onSuccess, event, query, variables = null) {
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4){
         if(xhr.status === 200){
-          console.log('here', url);
           onSuccess(url)
         }
         else{

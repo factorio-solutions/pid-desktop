@@ -8,6 +8,7 @@ import Form               from '../../_shared/components/form/Form'
 import Wysiwyg            from '../../_shared/components/wysiwyg/Wysiwyg'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
+import UploadButton       from '../../_shared/components/buttons/UploadButton'
 import PatternInput       from '../../_shared/components/input/PatternInput'
 import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import Modal              from '../../_shared/components/modal/Modal'
@@ -16,6 +17,7 @@ import * as newMarketingActions   from '../../_shared/actions/newMarketing.actio
 import * as nav                   from '../../_shared/helpers/navigation'
 import { t }                      from '../../_shared/modules/localization/localization'
 import { attributes, imageTags }  from '../../_shared/actions/newMarketing.actions'
+import { PRESIGNE_MARKETING_IMAGE_QUERY } from '../../_shared/queries/newMarketing.queries'
 
 import styles from './marketingSettings.page.scss'
 
@@ -37,6 +39,7 @@ export class MarketingSettingsPage extends Component {
 
   render() {
     const { state, pageBase, actions } = this.props
+    console.log(state);
 
     const submitForm       = () => { actions.editGarageMarketing() }
     const goBack           = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
@@ -58,17 +61,9 @@ export class MarketingSettingsPage extends Component {
     }
 
     const prepareImages = (image, index, arr) => {
-      const fileSelector = () => { document.getElementsByName(`image${index}`)[0].click() }
       const removeRow    = () => { actions.removeImage(index) }
       const tagSelected  = (i) => { actions.setTag(imageTags[i], index) }
       const prepareTags  = (tag, i) => { return {label: t(['newMarketing', tag]), onClick: tagSelected.bind(this, i) } }
-
-      const handleFileSelect = (event)=>{
-        var reader = new FileReader()
-        reader.onload = (e) => { actions.setImage(e.target.result, index) }
-        reader.readAsDataURL(event.target.files[0])
-        actions.setFile(event.target.files[0].name, index)
-      }
 
       return(
         <div className={styles.imageRow} key={index}>
@@ -76,8 +71,12 @@ export class MarketingSettingsPage extends Component {
             <Dropdown label={t(['newMarketing', 'selectTag'])} content={imageTags.map(prepareTags)} style='light' selected={imageTags.findIndex((tag)=>{return tag == image.tag})} highlight={(index!=arr.length-1 || index==0) && state.highlight}/>
           </div>
           <div className={`${styles.rowContent} ${state.highlight && state.images.length-1 != index && image.img == '' && styles.highlighted}`}>
-            <input className={styles.hidden} type="file" accept="image/*" onChange={handleFileSelect} name={`image${index}`} />
-            <LabeledRoundButton label={t(['newMarketing', state.images[index].img=='' ? 'addImage' : 'editImage'])} content={<span className='fa fa-file-code-o' aria-hidden="true"></span>} onClick={fileSelector} type={state.images[index].img==''?'action':'confirm'} />
+            <UploadButton label={t(['newMarketing', state.images[index].img=='' ? 'addImage' : 'editImage'])}
+              type={state.images[index].img==''?'action':'confirm'}
+              onUpload={(url) => { actions.setImage(url, index) }}
+              query={ PRESIGNE_MARKETING_IMAGE_QUERY }
+              variables={{ garage_id: pageBase.garage }}
+            />
             {state.images.length-1 != index && <LabeledRoundButton label={t(['newMarketing', 'removeImage'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={removeRow} type='remove' question={t(['newMarketing', 'removeImageQuestion'])} />}
           </div>
           <div className={styles.imgPreview}>
