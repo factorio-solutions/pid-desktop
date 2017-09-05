@@ -48,7 +48,7 @@ export class OccupancyPage extends Component {
       return places.concat(floor.places.map((place)=>{
         return { ...place
                , floor: floor.label
-               , reservations: state.client_id ? place.reservations.filter((reservation) => {return reservation.client && state.client_id == reservation.client.id}) : place.reservations
+               , reservations: state.client_id ? place.reservations_in_interval.filter((reservation) => {return reservation.client && state.client_id == reservation.client.id}) : place.reservations_in_interval
                }
       }))
     }

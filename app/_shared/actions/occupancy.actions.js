@@ -1,4 +1,5 @@
 import { request } from '../helpers/request'
+import { timeToUTC } from '../helpers/time'
 import { t }       from '../modules/localization/localization'
 import moment      from 'moment'
 
@@ -31,14 +32,26 @@ export function setClientId (id){
 }
 
 export function setDuration (duration){
-  return  { type: OCCUPANCY_SET_DURATION
-          , value: duration
-          }
+  return (dispatch, getState) => {
+    dispatch({ type: OCCUPANCY_SET_DURATION
+             , value: duration
+             })
+    dispatch(loadGarage())
+  }
+  // return  { type: OCCUPANCY_SET_DURATION
+  //         , value: duration
+  //         }
 }
 export function setFrom (from){
-  return  { type: OCCUPANCY_SET_FROM
-          , value: from
-          }
+  return (dispatch, getState) => {
+    dispatch({ type: OCCUPANCY_SET_FROM
+             , value: from
+             })
+    dispatch(loadGarage())
+  }
+  // return  { type: OCCUPANCY_SET_FROM
+  //         , value: from
+  //         }
 }
 
 export function loadGarage(){
@@ -59,7 +72,16 @@ export function loadGarage(){
       dispatch(setGarage(response.data.garage))
     }
 
-    getState().pageBase.garage && request(onGarageSuccess, GARAGE_DETAILS_QUERY, {id: getState().pageBase.garage})
+    const garage = getState().pageBase.garage
+    const state = getState().occupancy
+
+    garage && request(onGarageSuccess
+      , GARAGE_DETAILS_QUERY
+      , { id: garage
+        , from: timeToUTC(state.from)
+        , to: timeToUTC(state.from.clone().add(1, state.duration))
+        }
+      )
   }
 }
 
