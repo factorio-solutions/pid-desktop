@@ -24,7 +24,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.RAILS_ENV || 'develop'), // Heroku will have RAILS_ENV variable for Rails server
+        'NODE_ENV': JSON.stringify(process.env.RAILS_ENV || 'production'), // Heroku will have RAILS_ENV variable for Rails server
         'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
     })
