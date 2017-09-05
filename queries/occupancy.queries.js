@@ -17,11 +17,11 @@
 // `
 
 // Get details about garage id: $id
-// client { 
+// client {
 //   name
 //   id
 // }
-export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
+export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $from: Datetime!, $to: Datetime!) {
   garage(id: $id) {
     id
     name
@@ -30,7 +30,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
       places {
         id
         label
-        reservations {
+        reservations_in_interval(from: $from, to: $to) {
           id
           client {
             name
@@ -57,7 +57,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
     contracts {
       from
       to
-      places{
+      places {
         id
       }
       client {
