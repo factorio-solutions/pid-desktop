@@ -32,17 +32,22 @@ export class DashboardPage extends Component {
     pageBaseActions:  PropTypes.object
   }
 
+  constructor(props) {
+     super(props)
+     this.onWindowResize = this.onWindowResize.bind(this)
+  }
+
+
   onWindowResize(){
-    console.log('Resize dashboard');
     this.forceUpdate()
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.onWindowResize.bind(this), true);
+    window.removeEventListener('resize', this.onWindowResize, true);
   }
 
   componentDidMount () {
-    window.addEventListener('resize', this.onWindowResize.bind(this), true);
+    window.addEventListener('resize', this.onWindowResize, true);
     this.props.actions.initDashboard()
     this.props.pageBase.garage && this.props.actions.initGarage()
     this.props.pageBase.garage && this.props.analyticsActions.initGarageTurnover()
