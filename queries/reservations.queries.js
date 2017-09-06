@@ -1,11 +1,11 @@
 // get all reservations
-export const GET_RESERVATIONS_QUERY = `{
-  reservations {
+export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
+  reservations(past: $past) {
     id
     case
-    invoice_item{
+    invoice_item {
       id
-      invoice{
+      invoice {
         id
         payed
       }
@@ -33,13 +33,13 @@ export const GET_RESERVATIONS_QUERY = `{
           id
         }
       }
-      gates{
+      gates {
         id
         label
         phone
       }
     }
-    car{
+    car {
       licence_plate
     }
     begins_at

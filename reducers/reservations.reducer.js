@@ -1,10 +1,10 @@
 import {
   SET_RESERVATIONS,
-  SET_RESERVATIONS_TABLEVIEW
+  TOGGLE_RESERVATIONS_PAST
 }  from '../actions/reservations.actions'
 
 const defaultState =  { reservations: []
-                      , tableView:    true
+                      , past:         false
                       }
 
 export default function reservations (state = defaultState, action) {
@@ -15,9 +15,9 @@ export default function reservations (state = defaultState, action) {
             , reservations: action.value
             }
 
-    case SET_RESERVATIONS_TABLEVIEW:
+    case TOGGLE_RESERVATIONS_PAST:
     return  { ...state
-            , tableView: action.value
+            , past: !state.past
             }
 
     default:
