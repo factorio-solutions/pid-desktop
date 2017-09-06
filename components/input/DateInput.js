@@ -36,12 +36,6 @@ export default class DateInput extends Component {
       this.setState({... this.state, message: event.target.value});
     }
 
-    const onBlur = () => {
-      if (typeof onChange === "function") {
-        onChange(this.state.message, moment(this.state.message, 'DD.MM.YYYY').isValid())
-      }
-    }
-
     const handlePick = (date) => {
       this.setState({... this.state, message: date=="" ? "" : moment(date).format('DD.MM.YYYY')});
       if (typeof onChange === "function") {
@@ -66,7 +60,7 @@ export default class DateInput extends Component {
     }
 
     return(
-      <div className={`${styles.customFormGroup} ${styles.center} ${style}`} onBlur={onBlur} >
+      <div className={`${styles.customFormGroup} ${styles.center} ${style}`} >
         <input type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4})"/>
         <span className={styles.bar}></span>
         <label className={styles.label}>{label}</label>
