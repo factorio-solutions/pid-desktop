@@ -16,7 +16,7 @@ const INIT_STATE = { content:       ''
                    , mouseX:        0
                    , mouseY:        0
                    , visible:       false
-                   , floor:         0 // index of selected floor
+                  //  , floor:         0 // index of selected floor
                    }
 
 
@@ -34,19 +34,19 @@ export class OccupancyOverview extends Component{
   constructor(props) {
      super(props)
      this.state = INIT_STATE
+     this.onWindowResize = this.onWindowResize.bind(this)
   }
 
   onWindowResize(){
-    console.log('Resize OccupancyOverview.js');
     this.forceUpdate()
   }
 
   componentDidMount () {
-    window.addEventListener('resize', this.onWindowResize.bind(this), true);
+    window.addEventListener('resize', this.onWindowResize, true);
   }
 
   componentWillUnmount () {
-    window.removeEventListener('resize', this.onWindowResize.bind(this), true);
+    window.removeEventListener('resize', this.onWindowResize, true);
   }
 
   componentDidUpdate(prevProps){
