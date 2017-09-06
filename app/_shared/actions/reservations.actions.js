@@ -10,19 +10,21 @@ import { PAY_RESREVATION }                                             from '../
 
 
 export const SET_RESERVATIONS           = "SET_RESERVATIONS"
-export const SET_RESERVATIONS_TABLEVIEW = "SET_RESERVATIONS_TABLEVIEW"
+export const TOGGLE_RESERVATIONS_PAST   = "TOGGLE_RESERVATIONS_PAST"
 
 
-export function setReservations (reservations){
+export function setReservations(reservations) {
   return  { type: SET_RESERVATIONS
           , value: reservations
           }
 }
 
-export function setTableView (bool){
-  return  { type: SET_RESERVATIONS_TABLEVIEW
-          , value: bool
-          }
+export function togglePast() {
+  return(dispatch, getState) => {
+    dispatch({ type: TOGGLE_RESERVATIONS_PAST })
+    dispatch(initReservations())
+  }
+  // return { type: TOGGLE_RESERVATIONS_PAST }
 }
 
 
@@ -31,7 +33,7 @@ export function initReservations (){
     const onSuccess = (respoonse) => {
       dispatch( setReservations(respoonse.data.reservations) )
     }
-    request(onSuccess, GET_RESERVATIONS_QUERY)
+    request(onSuccess, GET_RESERVATIONS_QUERY, { past: getState().reservations.past })
   }
 }
 

@@ -53,9 +53,9 @@ export class OccupancyPage extends Component {
       }))
     }
 
-    const filters = [ <TabButton label={t(['occupancy', 'day'])}   onClick={() => {actions.dayClick()}}   state={state.duration=="day" && 'selected'}/>
-                    , <TabButton label={t(['occupancy', 'week'])}  onClick={() => {actions.weekClick()}}  state={state.duration=="week" && 'selected'}/>
-                    , <TabButton label={t(['occupancy', 'month'])} onClick={() => {actions.monthClick()}} state={state.duration=="month" && 'selected'}/>
+    const filters = [ <TabButton label={t(['occupancy', 'day'])}   onClick={actions.dayClick}   state={state.duration === "day" && 'selected'}/>
+                    , <TabButton label={t(['occupancy', 'week'])}  onClick={actions.weekClick}  state={state.duration === "week" && 'selected'}/>
+                    , <TabButton label={t(['occupancy', 'month'])} onClick={actions.monthClick} state={state.duration === "month" && 'selected'}/>
                     ]
 
     const clientSelector = <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>

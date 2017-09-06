@@ -7,10 +7,12 @@ import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Table            from '../_shared/components/table/Table'
 import RoundButton      from '../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../_shared/components/buttons/LabeledRoundButton'
-import ButtonStack      from '../_shared/components/buttonStack/ButtonStack'
+// import ButtonStack      from '../_shared/components/buttonStack/ButtonStack'
 // import TextButton       from '../_shared/components/buttons/TextButton'
-import CardViewLayout   from '../_shared/components/cardView/CardViewLayout'
-import ReservationCard  from '../_shared/components/cardView/ReservationCard'
+// import CardViewLayout   from '../_shared/components/cardView/CardViewLayout'
+// import ReservationCard  from '../_shared/components/cardView/ReservationCard'
+import TabMenu          from '../_shared/components/tabMenu/TabMenu'
+import TabButton        from '../_shared/components/buttons/TabButton'
 
 import * as nav                   from '../_shared/helpers/navigation'
 import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
@@ -93,14 +95,15 @@ export class ReservationsPage extends Component {
       return <ReservationCard key={index} reservation={reservation} destroy={()=>{destroyClick(reservation)}} download={downloadClick} />
     }
 
+    const filters = [ <TabButton label={t(['notifications', 'current'])} onClick={actions.togglePast} state={!state.past && 'selected'}/>
+                    , <TabButton label={t(['notifications', 'past'])}    onClick={actions.togglePast} state={state.past && 'selected'}/>
+                    ]
+
     return (
       <PageBase>
+        <TabMenu left={filters} />
         <div className={styles.tableContainer}>
-          {state.tableView ? <Table schema={schema} data={data} />
-            : <CardViewLayout columns={3}>
-                {state.reservations.map(prepareCards)}
-              </CardViewLayout> }
-
+          <Table schema={schema} data={data} />
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={newReservation} type='action' size='big' />
