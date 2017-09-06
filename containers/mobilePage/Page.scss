@@ -5,6 +5,8 @@
   display:          block;
   position:         fixed;
   top:              0;
+  left:             0;
+  right:            0;
 
   .logo{
     height:        35px;
@@ -15,6 +17,7 @@
       height: 100%
     }
   }
+  
   .content{
     padding:    5px 0;
     color:      $white;
@@ -83,4 +86,9 @@
     padding-bottom: 15px;
 
   }
+}
+
+
+.errorContent{
+  text-align: center;
 }
