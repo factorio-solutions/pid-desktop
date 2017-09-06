@@ -39,15 +39,6 @@ export default class DatetimeInput extends Component {
 
     const handleChange = (event) => {
       editable && this.setState({... this.state, message: event.target.value});
-      // if (typeof onChange === "function") {
-      //   onChange(event.target.value, event.target.checkValidity()&&event.target.value!=""&&moment(event.target.value, 'DD.MM.YYYY HH:mm').isValid())
-      // }
-    }
-
-    const onBlur = () => {
-      if (typeof onChange === "function") {
-        onChange(this.state.message, moment(this.state.message, 'DD.MM.YYYY HH:mm').isValid())
-      }
     }
 
     const handlePick = (date) => {
@@ -74,7 +65,7 @@ export default class DatetimeInput extends Component {
     }
 
     return(
-      <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} onBlur={onBlur} >
+      <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} >
         <input type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4}) (\d{1,2}):(\d{2})"/>
         <span className={styles.bar}></span>
         <label className={styles.label}>{label}</label>
