@@ -10,23 +10,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
       places {
         id
         label
-        reservations {
-          id
-          client{
-            name
-          }
-          car{
-            licence_plate
-          }
-          begins_at
-          ends_at
-          user {
-            full_name
-            email
-            phone
-          }
-        }
-        pricing{
+        pricing {
           id
           exponential_12h_price
           exponential_day_price
@@ -34,16 +18,16 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
           exponential_week_price
           flat_price
           weekend_price
-          currency{
+          currency {
             code
             symbol
           }
         }
-        contracts{
-          rent{
+        contracts {
+          rent {
             id
             price
-            currency{
+            currency {
               code
               symbol
             }
@@ -51,19 +35,56 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
         }
       }
     }
-    contracts{
+    contracts {
       id
       from
       to
       name
-      client{
+      client {
         name
         id
       }
-      places{
+      places {
         id
       }
     }
   }
 }
+`
+
+export const GARAGE_RESERVATIONS = `
+query GarageReservations($id: Id!, $datetime: Datetime!) {
+  garage(id: $id) {
+    places {
+      id
+      contracts_in_time(datetime: $datetime) {
+        rent {
+          id
+          price
+          currency {
+            code
+            symbol
+          }
+        }
+      }
+      reservations_in_time(datetime: $datetime) {
+        id
+        client {
+          name
+        }
+        car {
+          licence_plate
+        }
+        begins_at
+        ends_at
+        user {
+          full_name
+          email
+          phone
+        }
+      }
+    }
+  }
+}
+
 `

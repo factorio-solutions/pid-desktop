@@ -33,9 +33,9 @@ export default class Datepicker extends Component{
                   })
   }
 
-  componentDidMount(){
-    this.props.onSelect(this.state.selected.format('YYYY-MM-DD'))
-  }
+  // componentDidMount(){
+  //   this.props.onSelect(this.state.selected.format('YYYY-MM-DD'))
+  // }
 
   render(){
     const { onSelect, showInf } = this.props

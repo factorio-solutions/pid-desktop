@@ -41,10 +41,10 @@ export class GaragePage extends Component {
                  , <TabButton label={t(['garages', 'cars'])}         onClick={() => {actions.setSelected("cars")}}         state={state.selected=="cars" && 'selected'}/>
                  ]
 
-    const right = [ <TabButton label={t(['garages', 'now'])} onClick={actions.setTimeToNow} state={state.now && 'selected'}/>
+    const right = [ <TabButton label={t(['garages', 'now'])} onClick={actions.setNow} state={state.now && 'selected'}/>
                   , <div style={{display:'inline-block'}}>
                       <TabButton label={t(['garages', 'setDate'])} onClick={() => {actions.setSelector(true)}} state={!state.now && 'selected'}/>
-                      <PopupDatetimepicker onSelect={actions.setTimeTo}  show={state.showSelector} flip={true} okClick={() => {actions.setSelector(false)}} datetime={state.time}/>
+                      <PopupDatetimepicker onSelect={actions.setTime}  show={state.showSelector} flip={true} okClick={() => {actions.setSelector(false)}} datetime={state.time}/>
                     </div>
                   ]
 
@@ -58,18 +58,11 @@ export class GaragePage extends Component {
 
         switch (state.selected) {
           case 'clients':
-            if (contract) {
-              place.group = contract.client.id
-            } else {
-              place.group = undefined
-            }
+            place.group = contract ? contract.client.id : undefined
             break;
+
           case 'contracts':
-            if (contract) {
-              place.group = contract.id
-            } else {
-              place.group = undefined
-            }
+            place.group = contract ? contract.id : undefined
             break;
 
           case 'prices':
@@ -78,11 +71,7 @@ export class GaragePage extends Component {
 
           case 'cars':
           case 'reservations':
-            if (reservation) {
-              place.group = reservation.id
-            } else {
-              place.group = undefined
-            }
+            place.group = reservation ? reservation.id : undefined
             break;
         }
         place.tooltip = <table className={styles.tooltip}><tbody>

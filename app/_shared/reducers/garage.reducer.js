@@ -30,7 +30,8 @@ export default function garage (state = defaultState, action) {
 
     case GARAGE_SET_NOW:
       return  { ...state
-              , now: action.value
+              , time: moment()
+              , now: true
               }
 
     case GARAGE_SET_SHOW_SELECTOR:
@@ -41,6 +42,7 @@ export default function garage (state = defaultState, action) {
     case GARAGE_SET_TIME:
       return  { ...state
               , time: action.value
+              , now: moment().isBetween(moment(action.value), moment(action.value).add(15, 'minutes'))
               }
 
     default:
