@@ -1,8 +1,9 @@
 import moment      from 'moment'
 import { request } from '../helpers/request'
+import { timeToUTC } from '../helpers/time'
 import { t }       from '../modules/localization/localization'
 
-import { GARAGE_DETAILS_QUERY } from '../queries/garage.queries.js'
+import { GARAGE_DETAILS_QUERY, GARAGE_RESERVATIONS } from '../queries/garage.queries.js'
 
 
 export const GARAGE_SET_SELECTED      = 'GARAGE_SET_SELECTED'
@@ -24,10 +25,12 @@ export function setGarage (value){
          }
 }
 
-export function setNow (value){
-  return { type: GARAGE_SET_NOW
-         , value
-         }
+export function setNow (){
+  return(dispatch, getState) => {
+    dispatch({ type: GARAGE_SET_NOW })
+    dispatch(updateReservations())
+  }
+  // return { type: GARAGE_SET_NOW }
 }
 
 export function setSelector (value){
@@ -36,33 +39,77 @@ export function setSelector (value){
          }
 }
 
-export function setTime (value){
-  return { type: GARAGE_SET_TIME
-         , value
-         }
-}
-
-
-export function setTimeToNow () {
-  return (dispatch, getState) => {
-    dispatch(setNow(true))
-    dispatch(setTime(moment()))
+export function setTime (time){
+  return(dispatch, getState) => {
+    dispatch({ type: GARAGE_SET_TIME
+             , value: moment(time)
+             })
+    dispatch(updateReservations())
   }
+  // return { type: GARAGE_SET_TIME
+  //        , value: moment(time)
+  //        }
 }
 
-export function setTimeTo (time) {
-  return (dispatch, getState) => {
-    dispatch(setNow(moment().isBetween(moment(time), moment(time).add(15, 'minutes'))))
-    dispatch(setTime(moment(time)))
-  }
-}
 
 export function initGarage () {
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      dispatch(setGarage(response.data.garage))
-    }
+    const garagePromise = createPromise(getState, (onSuccess)=>{
+      request(onSuccess, GARAGE_DETAILS_QUERY, {id: getState().pageBase.garage})
+    })
 
-    getState().pageBase.garage && request(onSuccess, GARAGE_DETAILS_QUERY, {id: getState().pageBase.garage})
+    const reservationsPromise = createPromise(getState, (onSuccess)=>{
+      request(onSuccess, GARAGE_RESERVATIONS, {id: getState().pageBase.garage, datetime: timeToUTC(getState().garage.time)})
+    })
+
+    Promise.all([garagePromise, reservationsPromise]).then((data)=>{
+      dispatch(setGarage(updateGaragesPlaces(data[0].garage, data[1])))
+    }).catch((error) => {
+      console.error(error)
+    })
   }
+}
+
+export function updateReservations() {
+  return (dispatch, getState) => {
+    createPromise(getState, (onSuccess)=>{
+      request(onSuccess, GARAGE_RESERVATIONS, {id: getState().pageBase.garage, datetime: timeToUTC(getState().garage.time)})
+    }).then((data) => {
+      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, data)))
+    }).catch((error) => {
+      console.error(error)
+    })
+  }
+}
+
+function updateGaragesPlaces(garage, data) {
+  return { ...garage
+    , floors: garage.floors.map(floor => {
+      return { ...floor
+             , places: floor.places.map( place => {
+                 const reservationContractPlace = data.garage.places.find(p => p.id === place.id)
+                 return { ...place
+                        , reservations: reservationContractPlace ? reservationContractPlace.reservations_in_time : []
+                        , contracts: reservationContractPlace ? reservationContractPlace.contracts_in_time : []
+                        }
+               })
+             }
+    })
+  }
+}
+
+function onPromiseSuccess(resolve, reject) {
+  return (response) => {
+    response.data ? resolve(response.data) : reject(response)
+  }
+}
+
+function createPromise(getState, perform) {
+  return new Promise(function(resolve, reject) {
+    if (getState().pageBase.garage) {
+      perform(onPromiseSuccess(resolve, reject))
+    } else {
+      reject('no garage in pageBase')
+    }
+  })
 }

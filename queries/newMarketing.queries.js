@@ -1,3 +1,8 @@
+export const PRESIGNE_MARKETING_IMAGE_QUERY = `query UploadFile($garage_id: Id!) {
+  upload_marketing_image(garage_id: $garage_id)
+}
+`
+
 // get garage details
 export const GET_MARKETING = `query ($id: Id!) {
   garage(id: $id) {
@@ -28,7 +33,6 @@ export const GET_MARKETING = `query ($id: Id!) {
       tram_nearby
       wc
       images {
-        file
         tag
         img
       }

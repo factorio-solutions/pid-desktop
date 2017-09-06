@@ -29,9 +29,9 @@ export default class Timepicker extends Component{
     return hourString+":"+ ((String(minute).length == 1 ? "0"+minute : minute)) // dont care about date, take only time
   }
 
-  componentDidMount(){
-    this.props.onSelect(this.state.selected)
-  }
+  // componentDidMount(){
+  //   this.props.onSelect(this.state.selected)
+  // }
 
   render(){
     const { onSelect } = this.props

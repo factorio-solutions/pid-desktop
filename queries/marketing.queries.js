@@ -25,7 +25,6 @@ export const GET_GARAGE_MARKETING_DETAILS = `query ($short_name: String!) { mark
     tram_nearby
     wc
     images {
-      file
       tag
       img
     }

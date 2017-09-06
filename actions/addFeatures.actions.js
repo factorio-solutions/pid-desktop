@@ -30,8 +30,9 @@ export function initTarifs(){
 
 export function tarifSelected (id){
   return (dispatch, getState) => {
+    // getState().garageSetup.id && 
+    dispatch(clearForm())
     dispatch(setTarif(id))
-    getState().garageSetup.id && dispatch(clearForm())
     nav.to('/addFeatures/garageSetup/general')
   }
 }
