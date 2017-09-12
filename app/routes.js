@@ -190,5 +190,5 @@ export default function createRoutes() {
       ))}
     </Route>
   )
-  // <Route path={'/testing'} component={TestingPage} />
+  // <Route path="/testing" component={TestingPage}/>
 }
