@@ -1,84 +1,79 @@
-import * as ble    from '../modules/ble/ble'
-import moment      from 'moment'
+import * as ble from '../modules/ble/ble'
+import moment from 'moment'
 import { request } from '../helpers/request'
 
 import { MOBILE_ACCESS_OPEN_GATE } from '../queries/mobile.access.queries'
 
 
-export const MOBILE_ACCESS_SET_OPENED               = "MOBILE_ACCESS_SET_OPENED"
-export const MOBILE_ACCESS_SET_MESSAGE              = "MOBILE_ACCESS_SET_MESSAGE"
-export const MOBILE_ACCESS_SET_SELECTED_RESERVATION = 'MOBILE_ACCESS_SET_SELECTED_RESERVATION'
-export const MOBILE_ACCESS_SET_SELECTED_GATE        = 'MOBILE_ACCESS_SET_SELECTED_GATE'
+export const MOBILE_ACCESS_SET_EMPTY_GATES = 'MOBILE_ACCESS_SET_EMPTY_GATES'
+export const MOBILE_ACCESS_SET_OPENED = 'MOBILE_ACCESS_SET_OPENED'
+export const MOBILE_ACCESS_SET_MESSAGE = 'MOBILE_ACCESS_SET_MESSAGE'
 
 
-export function setOpened (opened){
-  return  { type: MOBILE_ACCESS_SET_OPENED
-          , value: opened
-          }
+export function setEmptyGates(value) {
+  return { type: MOBILE_ACCESS_SET_EMPTY_GATES
+         , value
+         }
 }
 
-export function setMessage (message){
-  return  { type: MOBILE_ACCESS_SET_MESSAGE
-          , value: message
-          }
+export function setOpened(opened, index) {
+  return { type: MOBILE_ACCESS_SET_OPENED
+         , value: opened
+         , index
+         }
 }
 
-export function setSelectedReservation (index){
-  return  { type: MOBILE_ACCESS_SET_SELECTED_RESERVATION
-          , value: index
-          }
-}
-
-export function setSelectedGate (index){
-  return  { type: MOBILE_ACCESS_SET_SELECTED_GATE
-          , value: index
-          }
+export function setMessage(message, index) {
+  return { type: MOBILE_ACCESS_SET_MESSAGE
+         , value: message
+         , index
+         }
 }
 
 
 // will return ongoing reservations
-export function getCurrentReservations() {
+export function getCurrentReservationsGates() {
   return (dispatch, getState) => {
-    return getState().reservations.reservations
-      .filter(function(reservation){ return reservation.approved && moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) }) //  only current reservations
-      .filter((reservation) => {return reservation.user.id === getState().mobileHeader.current_user.id}) // only current users reservations
+    dispatch(setEmptyGates(
+      getState().reservations.reservations
+      .filter(reservation => {
+        const header = getState().mobileHeader
+
+        return (header.garage_id ? reservation.place.floor.garage.id === header.garage_id : true) // reservations of garage selected in header
+        && reservation.user.id === header.current_user.id // only current users reservations
+        && reservation.approved // only approved reservations
+        && moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) // only current reservations
+      })
+      .reduce((acc, reservation) => { // create gates from available reservations
+        return [ ...acc, ...reservation.place.gates.reduce((acc2, gate) => {
+          return [ ...acc2, { ...gate, reservation } ]
+        }, acc) ]
+      }, [])
+    ))
   }
 }
 
-export function filterGates (gate) {
+export function filterGates(gate) {
   return gate.phone !== undefined
 }
 
-export function openGarage() {
+export function openGarageViaPhone(id) {
   return (dispatch, getState) => {
-    const state = getState().mobileAccess
-    const gate = dispatch(getCurrentReservations())[state.selectedReservation].place.gates.filter(filterGates)[state.selectedGate]
-    if (gate.phone.match(/[A-Z]/i)) {
-      dispatch(openGarageViaBluetooth(gate.phone))
-    } else {
-      dispatch(openGarageViaPhone(gate.id))
-    }
-  }
-}
-
-
-export function openGarageViaPhone(id){
-  return (dispatch, getState) => {
-    const onSuccess = (response) => {
-       if (response.data.open_gate != null) {
-         dispatch(setMessage('Request sucessfully send'))
-         dispatch(setOpened(true))
-       } else {
-         dispatch(setMessage('No reservation found'))
-         dispatch(setOpened(false))
-       }
+    const onSuccess = response => {
+      if (response.data.open_gate != null) {
+        dispatch(setMessage('Request sucessfully send'))
+        dispatch(setOpened(true))
+      } else {
+        dispatch(setMessage('No reservation found'))
+        dispatch(setOpened(false))
+      }
     }
 
-    request( onSuccess
+    request(onSuccess
            , MOBILE_ACCESS_OPEN_GATE
-           , { user_id:        getState().mobileHeader.current_user.id
+           , { user_id: getState().mobileHeader.current_user.id
              , reservation_id: dispatch(getCurrentReservations())[getState().mobileAccess.selectedReservation].id
-             , gate_id:        id
+             , gate_id: id
              }
            )
   }
@@ -218,5 +213,15 @@ export function openGarageViaBluetooth(name){
     // 1. init bluetooth
     console.log('init called');
     ble.init(initCallback)
+  }
+}
+
+export function openGarage(gate, index) {
+  return (dispatch, getState) => {
+    if (gate.phone.match(/[A-Z]/i)) {
+      dispatch(openGarageViaBluetooth(gate.phone))
+    } else {
+      dispatch(openGarageViaPhone(gate.id))
+    }
   }
 }

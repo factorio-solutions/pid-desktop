@@ -20,7 +20,9 @@ export class Page extends Component {
   static propTypes = { actions: PropTypes.object
     , loginActions: PropTypes.object
     , state: PropTypes.object
-    , children: PropTypes.object
+    , children: PropTypes.oneOfType([ PropTypes.object
+                                    , PropTypes.array
+                                    ])
 
     // header looks
     , hideHeader: PropTypes.bool
@@ -41,11 +43,25 @@ export class Page extends Component {
     router: React.PropTypes.object
   }
 
+  constructor(props) {
+    super(props)
+
+    this.unauthorizedHandler = this.unauthorizedHandler.bind(this)
+  }
+
   componentDidMount() {
-    window.addEventListener('unauthorizedAccess', () => { localStorage.jwt && this.logout(false) }, false) // 401 status, redirect to login
+    window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
     const { actions, hideDropdown, hideHeader } = this.props
     actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
     !hideHeader && !hideDropdown && actions.initGarages()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
+  }
+
+  unauthorizedHandler() {
+    this.logout(false)
   }
 
   logout(revoke) { // private method
@@ -68,7 +84,7 @@ export class Page extends Component {
 
     const divider = <div className={styles.divider}><div className={styles.line}> </div></div>
 
-    const currentUserInfo = (<div className={styles.currentUserInfo}> {/* currently singned in user information */}
+    const currentUserInfo = (state.current_user && <div className={styles.currentUserInfo}> {/* currently singned in user information */}
       <div className={styles.buttonContainer}>
         <RoundButton content={<span className="fa fa-user" aria-hidden="true"></span>} onClick={currentUser} type="action" />
       </div>
