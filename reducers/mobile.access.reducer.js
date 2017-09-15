@@ -1,11 +1,14 @@
 import {
   MOBILE_ACCESS_SET_OPENED,
   MOBILE_ACCESS_SET_MESSAGE,
-  MOBILE_ACCESS_SET_EMPTY_GATES
+  MOBILE_ACCESS_SET_EMPTY_GATES,
+  MOBILE_ACCESS_SET_BLE_DEVICES,
+  MOBILE_ACCESS_RESET_STORE
 } from '../actions/mobile.access.actions'
 
 
 function setKeyOnIndex(object, index, key, value) {
+  if (index === undefined || key === undefined || value === undefined) return object
   const newObject = { ...object[index] }
   newObject[key] = value
   return [ ...object.slice(0, index)
@@ -14,7 +17,8 @@ function setKeyOnIndex(object, index, key, value) {
          ]
 }
 
-const defaultState = { gates: [] // [{gate: { ... }, message: " ... ", opened: undefined}, { ... }]
+const defaultState = { gates: undefined // [{gate: { ... }, message: " ... ", opened: undefined}, { ... }]
+                     , bleDevices: {} // {name: { address, name, rssi, advertisement }, ... }
                      }
 
 
@@ -35,6 +39,16 @@ export default function mobileAccess(state = defaultState, action) {
       return { ...state
              , gates: setKeyOnIndex(state.gates, action.index, 'message', action.value)
              }
+
+    case MOBILE_ACCESS_SET_BLE_DEVICES:
+      return { ...state
+             , bleDevices: { ...state.bleDevices
+                           , [action.value.name]: action.value
+                           }
+             }
+
+    case MOBILE_ACCESS_RESET_STORE:
+      return defaultState
 
     default:
       return state

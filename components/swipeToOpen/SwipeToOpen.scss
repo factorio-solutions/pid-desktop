@@ -56,6 +56,9 @@
 
 .swiper{
   flex: 1 1;
+  &:not(:last-child){
+    border-bottom: 1px solid $white
+  }
 }
 
 .noPointerEvents{
@@ -72,4 +75,20 @@
       height: 100%;
     }
   }
+}
+
+.message{
+  text-align: center;
+
+  >div{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translate(0,-50%);
+  }
+}
+
+.rotating{
+  @include rotating(2s);
 }
