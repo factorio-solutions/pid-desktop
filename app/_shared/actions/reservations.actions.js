@@ -28,10 +28,11 @@ export function togglePast() {
 }
 
 
-export function initReservations (){
+export function initReservations (callback){ // callback used by mobile access page
   return (dispatch, getState) => {
     const onSuccess = (respoonse) => {
       dispatch( setReservations(respoonse.data.reservations) )
+      callback && callback(respoonse.data.reservations)
     }
     request(onSuccess, GET_RESERVATIONS_QUERY, { past: getState().reservations.past })
   }
