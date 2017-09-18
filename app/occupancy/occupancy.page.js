@@ -62,18 +62,17 @@ export class OccupancyPage extends Component {
 
     return (
       <PageBase>
-        <div>
-          <TabMenu right={filters} left={clientSelector}/>
-           <OccupancyOverview
-              places={garage ? garage.floors.reduce(preparePlaces, []) : []}
-              from={state.from}
-              duration={state.duration}
-              leftClick={actions.subtract}
-              rightClick={actions.add}
-              dayClick={actions.dayClick}
-              weekClick={actions.weekClick}
-              monthClick={actions.monthClick}/>
-         </div>
+        <TabMenu right={filters} left={clientSelector}/>
+        <OccupancyOverview
+          places={garage ? garage.floors.reduce(preparePlaces, []) : []}
+          from={state.from}
+          duration={state.duration}
+          leftClick={actions.subtract}
+          rightClick={actions.add}
+          dayClick={actions.dayClick}
+          weekClick={actions.weekClick}
+          monthClick={actions.monthClick}
+        />
       </PageBase>
     )
   }

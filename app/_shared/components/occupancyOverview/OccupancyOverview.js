@@ -16,7 +16,7 @@ const INIT_STATE = { content:       ''
                    , mouseX:        0
                    , mouseY:        0
                    , visible:       false
-                  //  , floor:         0 // index of selected floor
+                   , height:        '500px'
                    }
 
 
@@ -38,11 +38,13 @@ export class OccupancyOverview extends Component{
   }
 
   onWindowResize(){
+    this.tbody.style['max-height'] = (Math.max(document.documentElement.clientHeight, window.innerHeight || 780) - 230) + 'px'
     this.forceUpdate()
   }
 
   componentDidMount () {
     window.addEventListener('resize', this.onWindowResize, true);
+    this.onWindowResize()
   }
 
   componentWillUnmount () {
@@ -52,7 +54,7 @@ export class OccupancyOverview extends Component{
   componentDidUpdate(prevProps){
     if (this.props.places.length > 0){
       const intervalLength = moment(this.props.from).add(1, this.props.duration).diff( moment(this.props.from))
-      const rowWidth = this.refs.tableBody.childNodes[0].getBoundingClientRect().width - this.refs.tableBody.childNodes[0].childNodes[0].getBoundingClientRect().width
+      const rowWidth = this.tbody.childNodes[0].getBoundingClientRect().width - this.tbody.childNodes[0].childNodes[0].getBoundingClientRect().width
 
       for (var i = 0; i < this.props.places.length; i++) {
         var validReservations = this.props.places[i].reservations.filter((reservation) => {
@@ -61,7 +63,7 @@ export class OccupancyOverview extends Component{
               || moment(reservation.begins_at).isBefore(this.props.from) &&  moment(reservation.ends_at).isAfter(moment(this.props.from).add(1, this.props.duration))
         })
 
-        const theRow = this.refs.tableBody.childNodes[i].childNodes[1]
+        const theRow = this.tbody.childNodes[i].childNodes[1]
         while (theRow.firstChild) { // clear reservation divs
           theRow.removeChild(theRow.firstChild);
         }
@@ -185,7 +187,7 @@ export class OccupancyOverview extends Component{
                 {prepareDates()}
               </tr>
             </thead>
-            <tbody ref="tableBody">
+            <tbody ref={tbody => {this.tbody = tbody}}>
               {prepareBody()}
             </tbody>
           </table>
