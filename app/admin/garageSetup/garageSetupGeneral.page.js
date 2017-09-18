@@ -14,6 +14,7 @@ import * as nav                        from '../../_shared/helpers/navigation'
 import { t }                           from '../../_shared/modules/localization/localization'
 import * as garageSetupActions         from '../../_shared/actions/garageSetup.actions'
 import { defaultImage }                from '../../_shared/reducers/garageSetup.reducer'
+import geocoder                        from '../../_shared/helpers/geocode'
 import { PRESIGNE_GARAGE_IMAGE_QUERY } from '../../_shared/queries/garageSetup.queries'
 
 import styles from './garageSetupGeneral.page.scss'
@@ -88,15 +89,11 @@ export class GarageSetupGeneralPage extends Component {
     }
 
     const geocode = () => {
-      var geocoder = new google.maps.Geocoder()
-      geocoder.geocode({ address:`${state.line_1}, ${state.city}, ${state.postal_code}, ${state.country}` }, (results, status) => {
-        if (status === 'OK') {
-          actions.setLat( results[0].geometry.location.lat() )
-          actions.setLng( results[0].geometry.location.lng() )
-        } else {
-          console.log(`Geocode was not successful on ${state.line_1}, ${state.city}, ${state.postal_code}, ${state.country} for the following reason: ` + status);
-        }
-      })
+      const onCoordinatesFound = (lat, lng) => {
+        actions.setLat( lat )
+        actions.setLng( lng )
+      }
+      geocoder(onCoordinatesFound, state.line_1, state.city, state.postal_code, state.country)
     }
 
     const tarifSelected = (index) => { actions.setTarif(state.availableTarifs[index].id) }
@@ -110,15 +107,15 @@ export class GarageSetupGeneralPage extends Component {
               <h2>{t(['newGarage', 'garageAddress'])}</h2>
               <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})} highlight={state.highlight}/>
               <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])} highlight={state.highlight}/>
-              <Input onChange={actions.setIc}         label={t(['newClient', 'IC'])}         error={t(['newClient', 'invalidIC'])}          value={state.ic}          placeholder={t(['newClient', 'ICplaceholder'])} highlight={state.dic && state.highlight} />
+              <Input onChange={actions.setIc}         label={t(['newClient', 'IC'])}         error={t(['newClient', 'invalidIC'])}          value={state.ic}          placeholder={t(['newClient', 'ICplaceholder'])} highlight={state.dic && state.highlight} onBlur={actions.loadAddressFromIc} />
               <Input onChange={actions.setDic}        label={t(['newClient', 'DIC'])}        error={t(['newClient', 'invalidDIC'])}         value={state.dic}         placeholder={t(['newClient', 'DICplaceholder'])} />
               <div className={styles.checkbox}><input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG}/> <span onClick={actions.toggleLPG}> {t(['newGarage', 'lpgAllowed'])} </span></div>
-              <Input onChange={actions.setLine1}      onBlur={()=>{geocode()}} label={t(['newGarage', 'street'])}     error={t(['newGarage', 'invalidStreet'])}      value={state.line_1}      placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
-              <Input onChange={actions.setLine2}      onBlur={()=>{geocode()}} label={t(['addresses', 'line2'])}      error={t(['addresses', 'line2Invalid'])}       value={state.line_2}      placeholder={t(['addresses', 'line2Placeholder'])}/>
-              <Input onChange={actions.setCity}       onBlur={()=>{geocode()}} label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
-              <Input onChange={actions.setPostalCode} onBlur={()=>{geocode()}} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} highlight={state.highlight}/>
-              <Input onChange={actions.setState}      onBlur={()=>{geocode()}} label={t(['newGarage', 'state'])}      error={t(['newGarage', 'invalidCountry'])}     value={state.state}       placeholder={t(['newGarage', 'statePlaceholder'])} />
-              <Input onChange={actions.setCountry}    onBlur={()=>{geocode()}} label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.country}     placeholder={t(['newGarage', 'countryPlaceholder'])}    highlight={state.highlight}/>
+              <Input onChange={actions.setLine1}      onBlur={geocode} label={t(['newGarage', 'street'])}     error={t(['newGarage', 'invalidStreet'])}      value={state.line_1}      placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
+              <Input onChange={actions.setLine2}      onBlur={geocode} label={t(['addresses', 'line2'])}      error={t(['addresses', 'line2Invalid'])}       value={state.line_2}      placeholder={t(['addresses', 'line2Placeholder'])}/>
+              <Input onChange={actions.setCity}       onBlur={geocode} label={t(['newGarage', 'city'])}       error={t(['newGarage', 'invalidCity'])}        value={state.city}        placeholder={t(['newGarage', 'cityPlaceholder'])}       highlight={state.highlight}/>
+              <Input onChange={actions.setPostalCode} onBlur={geocode} label={t(['newGarage', 'postalCode'])} error={t(['newGarage', 'invalidPostalCode'])}  value={state.postal_code} placeholder={t(['newGarage', 'postalCodePlaceholder'])} highlight={state.highlight}/>
+              <Input onChange={actions.setState}      onBlur={geocode} label={t(['newGarage', 'state'])}      error={t(['newGarage', 'invalidCountry'])}     value={state.state}       placeholder={t(['newGarage', 'statePlaceholder'])} />
+              <Input onChange={actions.setCountry}    onBlur={geocode} label={t(['newGarage', 'country'])}    error={t(['newGarage', 'invalidState'])}       value={state.country}     placeholder={t(['newGarage', 'countryPlaceholder'])}    highlight={state.highlight}/>
               <div className={styles.inline}>
                 <Input style={styles.latLngInputWidth+" "+styles.rightMargin} onChange={actions.setLat} label={t(['newGarage', 'lat'])} error={t(['newGarage', 'invalidLat'])} value={state.lat} placeholder={t(['newGarage', 'latPlaceholder'])} />
                 <Input style={styles.latLngInputWidth}                        onChange={actions.setLng} label={t(['newGarage', 'lng'])} error={t(['newGarage', 'invalidLng'])} value={state.lng} placeholder={t(['newGarage', 'lngPlaceholder'])} />

@@ -4,9 +4,11 @@ import { request }    from '../helpers/request'
 import { get }        from '../helpers/get'
 import * as nav       from '../helpers/navigation'
 import { t }          from '../modules/localization/localization'
+import geocode        from '../helpers/geocode'
 
 import { CREATE_NEW_GARAGE, GET_GARAGE_DETAILS, UPDATE_GARAGE, GET_ACCOUNTS_TARIFS,
   GET_GARAGE_DETAILS_GENERAL, GET_GARAGE_DETAILS_FLOORS, GET_GARAGE_DETAILS_GATES, GET_GARAGE_DETAILS_ORDER } from '../queries/garageSetup.queries'
+import { LOAD_INFO_FROM_IC } from '../queries/newClient.queries'
 import { emptyGate, emptyFloor, defaultImage }                                       from '../reducers/garageSetup.reducer'
 import { setGarage, fetchGarages }                                                   from './pageBase.actions'
 
@@ -310,6 +312,38 @@ function updateValue(type, index, key, value){
 
 function updateKey(object, key, value){
   return update(object, {[key]: {$set: value}})
+}
+
+export function loadAddressFromIc() {
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      try {
+        const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
+
+        dispatch(setLine1(res.AD.UC))
+        dispatch(setLine2(''))
+        dispatch(setCity(res.AA.N ))
+        dispatch(setPostalCode(res.AA.PSC))
+        dispatch(setState(''))
+        dispatch(setCountry(res.AA.NS))
+        dispatch(setDic(res.DIC))
+
+        const onCoordinatesFound = (lat, lng) => {
+          dispatch(setLat( lat ))
+          dispatch(setLng( lng ))
+        }
+        geocode(onCoordinatesFound, res.AD.UC, res.AA.N, res.AA.PSC, res.AA.NS)
+      } catch (e) {
+        console.log('not able to parse info from ICO', e);
+      }
+    }
+
+    request( onSuccess
+           , LOAD_INFO_FROM_IC
+           , { ic: getState().garageSetup.ic }
+           )
+
+  }
 }
 
 
