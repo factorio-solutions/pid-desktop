@@ -81,8 +81,8 @@
 
 .reservationDiv{
   position: absolute;
-  height: 100%;
-  top: -1px;
+  height: calc(100% - 4px);
+  top: 1px;
   z-index: 9;
   overflow: hidden;
 
@@ -109,7 +109,8 @@
   height: 100%;
   background: $red;
   top: 0;
-  width: 2px
+  width: 2px;
+  z-index: 9;
 }
 
 .date{
