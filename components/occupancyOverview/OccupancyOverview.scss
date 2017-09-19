@@ -87,7 +87,9 @@
   overflow: hidden;
 
   color: $white;
-  font-weight: bold;
+  // font-weight: bold;
+  vertical-align: middle;
+  font-size: 14px;
   border: 1px solid $black;
 
   &.future{
