@@ -73,8 +73,8 @@ export class OccupancyOverview extends Component{
           const reservation = validReservations[j]
           var reservationStart = (moment(reservation.begins_at).diff(this.props.from)/intervalLength)*rowWidth
           var reservationEnd = (moment(reservation.ends_at).diff(this.props.from)/intervalLength)*rowWidth
-          reservationStart = reservationStart < 0 ? 0 : reservationStart
-          reservationEnd = reservationEnd > rowWidth ? rowWidth : reservationEnd
+          reservationStart = reservationStart < 0 ? 0 : (reservationStart - 2)
+          reservationEnd = reservationEnd > rowWidth ? rowWidth : (reservationEnd - 4)
 
           moment().isBefore(moment(reservation.begins_at)) ? styles.future : ''
           moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ? styles.ongoing: ''
