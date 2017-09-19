@@ -39,6 +39,8 @@ export class OccupancyPage extends Component {
     const {state, actions} = this.props
     const garage = state.garage
 
+    const setNow = () => {actions.setFrom(moment().startOf('day'))}
+
     const clientDropdown = () => {
       const clientSelected = (index) => { actions.setClientId(state.clients[index].id) }
       return state.clients.map((client, index) => {return {label: client.name, onClick: clientSelected.bind(this, index) }})
@@ -53,9 +55,10 @@ export class OccupancyPage extends Component {
       }))
     }
 
-    const filters = [ <TabButton label={t(['occupancy', 'day'])}   onClick={actions.dayClick}   state={state.duration === "day" && 'selected'}/>
-                    , <TabButton label={t(['occupancy', 'week'])}  onClick={actions.weekClick}  state={state.duration === "week" && 'selected'}/>
-                    , <TabButton label={t(['occupancy', 'month'])} onClick={actions.monthClick} state={state.duration === "month" && 'selected'}/>
+    const filters = [ <TabButton label={t(['newReservation', 'now'])} onClick={setNow} />
+                    , <TabButton label={t(['occupancy', 'day'])}   onClick={actions.dayClick}   state={state.duration === "day" && 'selected'} />
+                    , <TabButton label={t(['occupancy', 'week'])}  onClick={actions.weekClick}  state={state.duration === "week" && 'selected'} />
+                    , <TabButton label={t(['occupancy', 'month'])} onClick={actions.monthClick} state={state.duration === "month" && 'selected'} />
                     ]
 
     const clientSelector = <Dropdown label={t(['occupancy', 'selectClientClient'])} content={clientDropdown()} style='tabDropdown' selected={state.clients.findIndex((client)=>{return client.id == state.client_id})}/>
