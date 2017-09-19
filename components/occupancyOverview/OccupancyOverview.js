@@ -54,7 +54,7 @@ export class OccupancyOverview extends Component{
   componentDidUpdate(prevProps){
     if (this.props.places.length > 0){
       const intervalLength = moment(this.props.from).add(1, this.props.duration).diff( moment(this.props.from))
-      const rowWidth = this.tbody.childNodes[0].getBoundingClientRect().width - this.tbody.childNodes[0].childNodes[0].getBoundingClientRect().width - (this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS)
+      const rowWidth = this.tbody.childNodes[0].getBoundingClientRect().width - this.tbody.childNodes[0].childNodes[0].getBoundingClientRect().width
 
       for (var i = 0; i < this.props.places.length; i++) {
         var validReservations = this.props.places[i].reservations.filter((reservation) => {
@@ -74,7 +74,7 @@ export class OccupancyOverview extends Component{
           var reservationStart = (moment(reservation.begins_at).diff(this.props.from)/intervalLength)*rowWidth
           var reservationEnd = (moment(reservation.ends_at).diff(this.props.from)/intervalLength)*rowWidth
           reservationStart = reservationStart < 0 ? 0 : (reservationStart - 1.5)
-          reservationEnd = reservationEnd > rowWidth ? rowWidth+30 : (reservationEnd - 2)
+          reservationEnd = reservationEnd > rowWidth ? rowWidth : (reservationEnd - 4)
 
           moment().isBefore(moment(reservation.begins_at)) ? styles.future : ''
           moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ? styles.ongoing: ''
