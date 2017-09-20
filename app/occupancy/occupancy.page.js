@@ -38,6 +38,7 @@ export class OccupancyPage extends Component {
   render() {
     const {state, actions} = this.props
     const garage = state.garage
+    const to = state.from.clone().add(state.duration === 'day' ? 1 : state.duration === 'week' ? 7 : 30, 'days') // state.to
 
     const setNow = () => {actions.setFrom(moment().startOf('day'))}
 
@@ -47,7 +48,16 @@ export class OccupancyPage extends Component {
     }
 
     const preparePlaces = (places, floor) => {
-      return places.concat(floor.places.map((place)=>{
+      return places.concat(floor.places
+        .filter( place => {
+          if (!state.client_id) return true
+          return place.contracts.find(contract => {
+            return contract.client_id === state.client_id &&
+            !moment(contract.to).isBefore(state.from) &&
+            !moment(contract.from).isAfter(to)
+          }) !== undefined
+        })
+        .map((place)=>{
         return { ...place
                , floor: floor.label
                , reservations: state.client_id ? place.reservations_in_interval.filter((reservation) => {return reservation.client && state.client_id == reservation.client.id}) : place.reservations_in_interval

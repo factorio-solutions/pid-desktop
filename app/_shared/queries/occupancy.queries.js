@@ -30,6 +30,11 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $from: Datetime!, $t
       places {
         id
         label
+        contracts{
+          from
+          to
+          client_id
+        }
         reservations_in_interval(from: $from, to: $to) {
           id
           client {
