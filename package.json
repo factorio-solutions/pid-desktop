@@ -48,6 +48,7 @@
     "css-loader": "^0.28.4",
     "detect-browser": "^1.6.2",
     "express": "^4.14.0",
+    "fingerprintjs2": "^1.5.1",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.0.19",
     "immutability-helper": "^2.2.3",

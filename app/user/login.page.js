@@ -2,6 +2,7 @@ import React, { Component, PropTypes }  from 'react'
 import { connect }                      from 'react-redux'
 import { bindActionCreators }           from 'redux'
 import { Link }                         from 'react-router'
+import Fingerprint2                     from 'fingerprintjs2'
 
 import MasterPage   from '../_shared/components/masterLoginPage/MasterPage'
 import Logo         from '../_shared/components/logo/Logo'
@@ -21,6 +22,10 @@ export class LoginPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object
+  }
+
+  componentDidMount() {
+    new Fingerprint2().get(this.props.actions.setDeviceFingerprint)
   }
 
   render() {

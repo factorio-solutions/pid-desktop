@@ -532,7 +532,8 @@
 		"accpetReservationNotification": "Host %(arg2)s would like to create a reservation on %(arg1)s expenses.",
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to handle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s place was accepted.",
-		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined."
+		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
+ 		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent verification email to \"%(arg1)s\". Next logins will fail until your email is verified."
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -906,5 +907,10 @@
 		"visitors": "Visitors",
 		"free": "Available",
 		"total": "Total"
+	},
+	"loginVerification": {
+		"description":"Multifactor authorization was triggered. We will now send you code to email %(email)s",
+		"code":"code",
+		"emailCode":"Code invalid"
 	}
 }

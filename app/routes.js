@@ -7,6 +7,7 @@ import App from './_app/App'
 
 // login pages
 import LoginPage                  from './user/login.page'
+import CodeVerificationPage       from './user/codeVerification.page'
 import SignUpPage                 from './user/signUp.page'
 import ResetPasswordPage          from './user/resetPassword.page'
 
@@ -104,6 +105,7 @@ export default function createRoutes() {
   const subRoutes = (
     <Route>
       <IndexRoute                                         component={LoginPage} />
+      <Route path="codeVerification"                      component={CodeVerificationPage}/>
       <Route path="signUpPage"                            component={SignUpPage}/>
       <Route path="resetPassword"                         component={ResetPasswordPage}/>
 

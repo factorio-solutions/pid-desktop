@@ -1,5 +1,7 @@
-var sip = require('./sip')
-var digest = require('./digest')
+var sip = require('sip')
+var digest = require('sip/digest');
+// var sip = require('./sip')
+// var digest = require('./digest');
 var os = require('os')
 
 var attempt = 0
@@ -21,13 +23,15 @@ var credentials = { user: '910800031'
 
 var pararmeters = { callee: process.argv[2]
                   , provider: 'sip.802.cz'
+                  , callId: rstring()
+                  , fromTag: rstring()
                   }
 
 var invite_template = { method: 'INVITE'
                       , uri: `sip:${pararmeters.callee}@${pararmeters.provider}`
                       , headers: { to: {uri: `sip:${pararmeters.callee}@${pararmeters.provider}`, params: {transport: 'UDP'}}
-                                 , from: {uri: `sip:${credentials.user}@${pararmeters.provider}`, params: {tag: rstring()}}
-                                 , 'call-id': rstring()
+                                 , from: {uri: `sip:${credentials.user}@${pararmeters.provider}`, params: {tag: pararmeters.fromTag}}
+                                 , 'call-id': pararmeters.callId
                                  , cseq: {method: 'INVITE', seq: 1}
                                  , 'content-type': 'application/sdp'
                                  , contact: [{uri: `sip:${credentials.user}@${start_config.publicAddress}`}]
@@ -48,6 +52,21 @@ var invite_template = { method: 'INVITE'
                           'a=sendrecv\r\n'
                       }
 
+var cancel_template = { method: 'CANCEL'
+                      , uri: `sip:${pararmeters.callee}@${pararmeters.provider}`
+                      , headers: { to: {uri: `sip:${pararmeters.callee}@${pararmeters.provider}`, params: {transport: 'UDP'}}
+                                 , from: {uri: `sip:${credentials.user}@${pararmeters.provider}`, params: {tag: pararmeters.fromTag}}
+                                 , 'call-id': pararmeters.callId
+                                 , cseq: {method: 'CANCEL', seq: 2}
+                                 , 'max-forwards': 68
+                                //  , via: []
+                                // , route
+                                 }
+                      }
+
+var via = undefined
+var authorization = undefined
+
 var start = function () {
   attempt++
   console.log(attempt+'. attempt');
@@ -61,14 +80,15 @@ var start = function () {
     })
 
     // SIP INVITE //////////////////////////////////////////////////////////////
-    sip.send(invite_template,
-    function(rs) {
-      resolve(rs)
-    })
+    sip.send(invite_template, resolve)
   }
 }
 
 var resolve = function(rs){
+  if (via === undefined){ // only fill if undefined
+    via = rs.headers.via
+  }
+
   switch (true) {
     case rs.status == 486:// "busy here" status // UnRegister SIP //
       console.log('caller busy: 486');
@@ -87,14 +107,44 @@ var resolve = function(rs){
 
       digest.signRequest({}, invite_template, rs, credentials)
 
+      if (authorization === undefined){ // only fill if undefined
+        authorization = invite_template.headers['proxy-authorization']
+      }
+
+      console.log('acknowledge');
+      console.log(invite_template);
+
       sip.send(invite_template, (resp) => {
         console.log(`Authorized invite send, reponse: ${resp.status}`)
         resolve(resp)
       })
-      break;
+      break
+
+    case rs.status == 180: // ringing status - wait for a bit and CANCEL
+      setTimeout(function(){
+        console.log('CANCELing the call')
+        // delete via.params.received
+        // delete via.params.rport
+        cancel_template.headers.via = via.map(function(object) {
+          delete object.params.received
+          object.params.rport = undefined
+          return object
+        })
+        cancel_template.headers['proxy-authorization'] = authorization
+        // via.map(function(object) {
+        //   delete object.params.received
+        //   object.params.rport = undefined
+        //   return object
+        // })
+        console.log(cancel_template);
+
+        sip.send(cancel_template, resolve)
+      }, 3000)
+      break
 
     case rs.status >= 300:
       console.log('call failed with status ' + rs.status);
+      console.log(JSON.stringify(rs));
       process.exit(1); // kill the process
       break;
 
@@ -114,7 +164,6 @@ var resolve = function(rs){
                                     , via: []
                                     }
                          }
-
       sip.send(ack_template);
   }
 }
