@@ -49,14 +49,7 @@ export class OccupancyPage extends Component {
 
     const preparePlaces = (places, floor) => {
       return places.concat(floor.places
-        .filter( place => {
-          if (!state.client_id) return true
-          return place.contracts.find(contract => {
-            return contract.client_id === state.client_id &&
-            !moment(contract.to).isBefore(state.from) &&
-            !moment(contract.from).isAfter(to)
-          }) !== undefined
-        })
+        .filter(place => !state.client_id || place.contracts_in_interval.length)
         .map((place)=>{
         return { ...place
                , floor: floor.label
@@ -85,6 +78,8 @@ export class OccupancyPage extends Component {
           dayClick={actions.dayClick}
           weekClick={actions.weekClick}
           monthClick={actions.monthClick}
+          resetClientClick={actions.resetClientClick}
+          loading={!state.garage || state.loading}
         />
       </PageBase>
     )

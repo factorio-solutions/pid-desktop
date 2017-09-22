@@ -134,6 +134,13 @@
   white-space: nowrap;
 }
 
+.resetClient{
+  text-align: center;
+  >div{
+    margin: 20px;
+  }
+}
+
 
 // ============================================================================
 // TOOLTIP TABLE STYLING

@@ -3,7 +3,7 @@ import { timeToUTC } from '../helpers/time'
 import { t }       from '../modules/localization/localization'
 import moment      from 'moment'
 
-import { GARAGE_DETAILS_QUERY } from '../queries/occupancy.queries'
+import { GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
 import { toOccupancy }            from './pageBase.actions'
 
 export const OCCUPANCY_SET_GARAGE     = 'OCCUPANCY_SET_GARAGE'
@@ -11,6 +11,7 @@ export const OCCUPANCY_SET_CLIENTS    = 'OCCUPANCY_SET_CLIENTS'
 export const OCCUPANCY_SET_CLIENT_ID  = 'OCCUPANCY_SET_CLIENT_ID'
 export const OCCUPANCY_SET_DURATION   = 'OCCUPANCY_SET_DURATION'
 export const OCCUPANCY_SET_FROM       = 'OCCUPANCY_SET_FROM'
+export const OCCUPANCY_SET_LOADING    = 'OCCUPANCY_SET_LOADING'
 
 
 export function setGarage (garage){
@@ -26,9 +27,15 @@ export function setClients (clients){
 }
 
 export function setClientId (id){
-  return  { type: OCCUPANCY_SET_CLIENT_ID
-          , value: id
-          }
+  return (dispatch, getState) => {
+    dispatch({ type: OCCUPANCY_SET_CLIENT_ID
+             , value: id
+             })
+    dispatch(loadGarage())
+  }
+  // return  { type: OCCUPANCY_SET_CLIENT_ID
+  //         , value: id
+  //         }
 }
 
 export function setDuration (duration){
@@ -42,6 +49,7 @@ export function setDuration (duration){
   //         , value: duration
   //         }
 }
+
 export function setFrom (from){
   return (dispatch, getState) => {
     dispatch({ type: OCCUPANCY_SET_FROM
@@ -54,22 +62,18 @@ export function setFrom (from){
   //         }
 }
 
+export function setLoading(value) {
+  return  { type: OCCUPANCY_SET_LOADING
+          , value
+          }
+}
+
+
 export function loadGarage(){
   return (dispatch, getState) => {
     const onGarageSuccess = (response) => {
-      let clients = response.data.garage.contracts.reduce((acc, contract)=>{
-        const currentClient = acc.find(client => client.id === contract.client.id)
-        if (currentClient) {
-          currentClient.contracts.push(contract)
-        } else {
-          acc.push({...contract.client, contracts: [contract]})
-        }
-        return acc
-      }, [])
-
-      clients.unshift({name:t(['occupancy', 'allReservations']), id: undefined})
-      dispatch(setClients(clients))
       dispatch(setGarage(response.data.garage))
+      dispatch(setLoading(false))
     }
 
     const garage = getState().pageBase.garage
@@ -80,13 +84,31 @@ export function loadGarage(){
       , { id: garage
         , from: timeToUTC(state.from)
         , to: timeToUTC(state.from.clone().add(1, state.duration))
+        , client_id: state.client_id ? state.client_id : null
         }
       )
   }
 }
 
+export function loadClients() {
+  return (dispatch, getState) => {
+    const onClientsSuccess = response => {
+      response.data.garage.clients.unshift({name:t(['occupancy', 'allReservations']), id: undefined})
+      dispatch(setClients(response.data.garage.clients))
+    }
+
+    const garage = getState().pageBase.garage
+    garage && request(onClientsSuccess
+      , GARAGE_CLIENTS_QUERY
+      , { id: garage }
+    )
+
+  }
+}
+
 export function initOccupancy () {
   return (dispatch, getState) => {
+    dispatch(loadClients())
     dispatch(loadGarage())
   }
 }
@@ -122,5 +144,11 @@ export function weekClick () {
 export function monthClick () {
   return (dispatch, getState) => {
     dispatch(setDuration( 'month' ))
+  }
+}
+
+export function resetClientClick() {
+  return (dispatch, getState) => {
+    dispatch(setClientId()) // to undefined
   }
 }
