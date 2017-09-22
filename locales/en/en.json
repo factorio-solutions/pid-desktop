@@ -317,7 +317,9 @@
 		"client": "Client:",
 		"type": "Type:",
 		"period": "Period:",
-		"licencePlate": "Licence plate:"
+		"licencePlate": "Licence plate:",
+		"noClientPlaces": "Selected client does not have any rented places in current time interval.",
+		"resetFilter": "Reset filter"
 	},
 	"garageUsers": {
 		"noRights": "You don't have rights to do that.",

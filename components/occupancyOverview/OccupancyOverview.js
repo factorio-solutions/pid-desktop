@@ -2,8 +2,10 @@ import React, { Component, PropTypes }  from 'react'
 import { connect }                      from 'react-redux'
 import moment                           from 'moment'
 
-import RoundButton from '../buttons/RoundButton'
-import Tooltip     from '../tooltip/Tooltip'
+import RoundButton        from '../buttons/RoundButton'
+import CallToActionButton from '../buttons/CallToActionButton'
+import Tooltip            from '../tooltip/Tooltip'
+import Loading            from '../loading/Loading'
 
 import { t } from '../../modules/localization/localization'
 
@@ -22,13 +24,15 @@ const INIT_STATE = { content:       ''
 
 export class OccupancyOverview extends Component{
   static propTypes = {
-    places:     PropTypes.array.isRequired,
-    from:       PropTypes.object,
-    duration:   PropTypes.string,
-    leftClick:  PropTypes.func,
-    rightClick: PropTypes.func,
-    weekClick:  PropTypes.func,
-    monthClick: PropTypes.func
+    places:           PropTypes.array.isRequired,
+    from:             PropTypes.object,
+    duration:         PropTypes.string,
+    leftClick:        PropTypes.func,
+    rightClick:       PropTypes.func,
+    weekClick:        PropTypes.func,
+    monthClick:       PropTypes.func,
+    resetClientClick: PropTypes.func,
+    loading:          PropTypes.bool,
   }
 
   constructor(props) {
@@ -118,7 +122,7 @@ export class OccupancyOverview extends Component{
   }
 
   render(){
-    const { places, leftClick, rightClick, dayClick, weekClick, monthClick } = this.props
+    const { places, leftClick, rightClick, dayClick, weekClick, monthClick, resetClientClick, loading } = this.props
 
     const prepareDates = () => {
       const length = this.props.duration === "day" ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS
@@ -152,6 +156,28 @@ export class OccupancyOverview extends Component{
         if(a.label < b.label) return -1;
         if(a.label > b.label) return 1;
         return 0;
+      }
+
+      if (places.length === 0 && loading){
+        return <tr>
+          <td colSpan="100%" className={styles.resetClient}>
+            <div>
+              <Loading show={loading}/>
+            </div>
+          </td>
+        </tr>
+      }
+      if (places.length === 0 ){
+        return <tr>
+          <td colSpan="100%" className={styles.resetClient}>
+            <div>
+              {t(['occupancy', 'noClientPlaces'])}
+            </div>
+            <div>
+              <CallToActionButton onClick={resetClientClick} label={t(['occupancy', 'resetFilter'])} />
+            </div>
+          </td>
+        </tr>
       }
 
       return places.sort(sorter).map((place) => {

@@ -4,7 +4,8 @@ import {
   OCCUPANCY_SET_CLIENTS,
   OCCUPANCY_SET_CLIENT_ID,
   OCCUPANCY_SET_DURATION,
-  OCCUPANCY_SET_FROM
+  OCCUPANCY_SET_FROM,
+  OCCUPANCY_SET_LOADING
 }  from '../actions/occupancy.actions'
 
 const defaultState =  { garage:     undefined // current one
@@ -12,6 +13,7 @@ const defaultState =  { garage:     undefined // current one
                       , client_id:  undefined
                       , duration:   "week"
                       , from:       moment().startOf('day')
+                      , loading:    false
                       }
 
 
@@ -31,16 +33,24 @@ export default function occupancy (state = defaultState, action) {
     case OCCUPANCY_SET_CLIENT_ID:
     return  { ...state
             , client_id: action.value
+            , loading: true
             }
 
     case OCCUPANCY_SET_DURATION:
     return  { ...state
             , duration: action.value
+            , loading: true
             }
 
     case OCCUPANCY_SET_FROM:
     return  { ...state
             , from: action.value
+            , loading: true
+            }
+
+    case OCCUPANCY_SET_LOADING:
+    return  { ...state
+            , loading: action.value
             }
 
     default:
