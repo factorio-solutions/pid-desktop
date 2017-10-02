@@ -40,7 +40,7 @@ export class ModulesPage extends Component {
 
     return (
       <PageBase>
-        <div className={styles.module}>
+        <div className={`${styles.module} ${(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && styles.disabled}`}>
           <div className={styles.goPublic}>
             {t(['modules','goPublic'])}
           </div>
@@ -51,7 +51,7 @@ export class ModulesPage extends Component {
           </div>
         </div>
 
-        <div className={styles.module}>
+        <div className={`${styles.module} ${(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && styles.disabled}`}>
           {t(['modules','marketingPage'])}
           <div className={styles.settings}>
             <CallToActionButton label={t(['modules','Preview'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingPreview} />

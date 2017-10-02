@@ -13,6 +13,7 @@
   border-radius: 5px;
   padding: 20px;
   color: white;
+  margin-top: 10px;
 
 
   .goPublic{
@@ -25,6 +26,12 @@
     float: right;
     top: -15px;
     position: relative;
+  }
+
+  &.disabled {
+    color: white;
+    background-color: $lightLightGray;
+    border: 1px solid $gray;
   }
 }
 
