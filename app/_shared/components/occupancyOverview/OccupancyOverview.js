@@ -159,7 +159,7 @@ export class OccupancyOverview extends Component{
       }
 
       if (places.length === 0 && loading){
-        return <tr>
+        return <tr className={styles.noHighlight}>
           <td colSpan="100%" className={styles.resetClient}>
             <div>
               <Loading show={loading}/>
@@ -168,7 +168,7 @@ export class OccupancyOverview extends Component{
         </tr>
       }
       if (places.length === 0 ){
-        return <tr>
+        return <tr className={styles.noHighlight}>
           <td colSpan="100%" className={styles.resetClient}>
             <div>
               {t(['occupancy', 'noClientPlaces'])}
