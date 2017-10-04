@@ -8,4 +8,4 @@ export const REVOKE_TOKEN = `query RevokeToken($refresh_token: String) {
 `
 
 // will verify email sent code against Auth0
-export const LOGIN_VERIFICATION = `query	LoginVerifyQuery($email:String, $code:String){ login_verification(email: $email, code: $code) }`
+export const LOGIN_VERIFICATION = `query	LoginVerifyQuery($email:String, $code:String, $device_fingerprint: String){ login_verification(email: $email, code: $code, device_fingerprint: $device_fingerprint) }`

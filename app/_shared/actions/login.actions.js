@@ -119,7 +119,15 @@ export function verifyCode(email, code, redirect = true, callback = ()=>{}) {
       dispatch(setError('No response'))
     }
 
-    request(success, LOGIN_VERIFICATION, {email, code}, null, onError)
+    request( success
+           , LOGIN_VERIFICATION
+           , { email
+             , code
+             , device_fingerprint: getState().login.deviceFingerprint
+             }
+           , null
+           , onError
+           )
   }
 }
 
