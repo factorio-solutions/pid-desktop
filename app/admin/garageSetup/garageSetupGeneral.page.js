@@ -105,7 +105,7 @@ export class GarageSetupGeneralPage extends Component {
           <div className={styles.general}>
             <div className={styles.address}>
               <h2>{t(['newGarage', 'garageAddress'])}</h2>
-              <Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})} highlight={state.highlight}/>
+              {/*<Dropdown label={t(['newGarage', 'selectTarif'])} content={tarifDropdown} style='light' selected={state.availableTarifs.findIndex((tarif)=>{return tarif.id == state.tarif_id})} highlight={state.highlight}/>*/}
               <Input onChange={actions.setName}       label={t(['newGarage', 'name'])}       error={t(['newGarage', 'invalidName'])}        value={state.name}        placeholder={t(['newGarage', 'placeholder'])} highlight={state.highlight}/>
               <Input onChange={actions.setIc}         label={t(['newClient', 'IC'])}         error={t(['newClient', 'invalidIC'])}          value={state.ic}          placeholder={t(['newClient', 'ICplaceholder'])} highlight={state.dic && state.highlight} onBlur={actions.loadAddressFromIc} />
               <Input onChange={actions.setDic}        label={t(['newClient', 'DIC'])}        error={t(['newClient', 'invalidDIC'])}         value={state.dic}         placeholder={t(['newClient', 'DICplaceholder'])} />
