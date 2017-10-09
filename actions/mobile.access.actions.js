@@ -46,6 +46,8 @@ export function resetAccessStore() {
 // will return ongoing reservations
 export function getCurrentReservationsGates() {
   return (dispatch, getState) => {
+    dispatch(resetAccessStore())
+
     const gates = getState().reservations.reservations
       .filter(reservation => {
         const header = getState().mobileHeader
@@ -103,126 +105,6 @@ function logErrorFactory(index) {
   }
 }
 
-
-// name = serial number of BLE unit (not repeater)
-// export function openGarageViaBluetooth(name, index) {
-//   return dispatch => {
-//     // const name =                    name // change this according to reservations address
-//     const password = 'heslo'
-//     const service = '68F60000-FE41-D5EC-5BED-CD853CA1FDBC' // services[2].uuid
-//     const passwordCharacteristics = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
-//     const openGateCharacteristics = '68F6000B-FE41-D5EC-5BED-CD853CA1FDBC'
-//     let repeater = false // if repeater was found instead of unit
-//     let address = undefined // will be filled in afther scan
-//     let services = []
-//
-//     const logError = dispatch(logErrorFactory(index))
-//
-//     const closeSuccessfull = result => {
-//       console.log('close successfull', result, 'sequence finished')
-//     }
-//
-//     const writeSuccess = result => {
-//       console.log('write was successfull', result)
-//       dispatch(setMessage('Request sucessfully send' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
-//       dispatch(setOpened(true, index))
-//       setTimeout(() => {
-//         ble.close(address, closeSuccessfull, logError) // 6. disconect and 7. close
-//       }, repeater ? 10000 : 0) // give repeater time to send data
-//     }
-//
-//     const writeOpen = () => { // 5. read/subscribe/write and read/write descriptors
-//       console.log('write open garage, address: ', address, 'servicies: ', services)
-//       const values = [ '0xFE', '0xFF', '0x20' ] // packet is send like ['0xFE', '0xFF', '0x20']
-//       ble.write(address, service, openGateCharacteristics, ble.PacketToEncodedString(values), writeSuccess, logError)
-//     }
-//
-//     const writePassword = () => {
-//       console.log('send in password')
-//       ble.write(address, service, passwordCharacteristics, ble.stringToEncodedString(password), writeOpen, logError)
-//     }
-//
-//     const discoverSuccess = result => {
-//       console.log('discovered :', result)
-//       services = result.services
-//       dispatch(setMessage('Sending request to open' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
-//
-//       const serviceObject = services.find(serv => serv.uuid === service)
-//       if (serviceObject) {
-//         const passwordCharacteristicsObject = serviceObject.characteristics.find(char => char.uuid === passwordCharacteristics)
-//         if (passwordCharacteristicsObject) { // password characteristics found
-//           writePassword()
-//         } else { // no password characteristics - skip it
-//           writeOpen()
-//         }
-//       } else { // expected service not found, disconect
-//         console.log('this device does not have expected service - disconecting (probably not gate unit?)')
-//         dispatch(setMessage('Expected service missing', index))
-//         dispatch(setOpened(false, index))
-//         // 6. disconect, 7. close
-//         ble.close(address, closeSuccessfull, logError)
-//       }
-//     }
-//
-//     const connecionEstablished = result => {
-//       console.log('connection established')
-//       dispatch(setMessage('Connection established' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
-//       if (result.status === 'connected') {
-//         console.log(result)
-//         // 4. discover device (or services/characteristics/descriptors in iOS)
-//         dispatch(setMessage('Discovering services' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
-//         console.log('discovering servicess: ', address)
-//         ble.discover(address, discoverSuccess, logError)
-//       } else {
-//         logError('Device unexpectedly disconnected')
-//       }
-//     }
-//
-//     const connectionFailed = result => {
-//       console.log('connection unsuccessfull, trying to recconect', result)
-//       ble.reconnect(address, connecionEstablished, logError)
-//     }
-//
-//     const scanSuccessfull = garageBle => {
-//       // 3. connect to device
-//       console.log('trying to connect to ', garageBle)
-//       dispatch(setMessage('Connecting to garage' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
-//       address = garageBle.address
-//       ble.connect(garageBle.address, connecionEstablished, connectionFailed)
-//     }
-//
-//     const onStopScanSuccess = result => scanSuccessfull(result)
-//     const onStopScanFail = message => console.log('garage found, but scan stop unsucessfull', message)
-//
-//     const scanStarted = result => {
-//       console.log('scan successfull', result)
-//       // if (result.name && ( result.name === 'r'+name)){
-//       if (result.name && (result.name === name || result.name === 'r' + name)) {
-//         if (result.name === 'r' + name) repeater = true // Found repeater, add waits
-//         console.log('stop scanning found garage:', result)
-//         dispatch(setMessage('Garage found' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
-//         ble.stopScan(onStopScanSuccess(result), onStopScanFail)
-//       } else {
-//         console.log('but i am looking for ', name)
-//       }
-//     }
-//
-//
-//     const initCallback = result => {
-//       if (result.status === 'enabled') {
-//         console.log('bluetooth enabled, scaning devices')
-//         dispatch(setMessage('Bluetooth enabled.', index))
-//         ble.scan(scanStarted, logError) // 2. scan devices
-//       } else {
-//         console.log('bluetooth initialization failed', result) // init failed
-//         dispatch(logError('Bluetooth initialization failed'))
-//       }
-//     }
-//
-//     console.log('initializing bluetooth')
-//     ble.init(initCallback) // 1. init bluetooth
-//   }
-// }
 
 export function openGarageViaBluetooth(name, index) {
   return (dispatch, getState) => {
