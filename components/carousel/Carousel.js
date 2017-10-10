@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Swiper                          from 'swiper'
+import Swiper from 'swiper'
 
 import styles from './Carousel.scss'
 
@@ -11,18 +11,17 @@ export default class ReleaseNotesPage extends Component {
     height: PropTypes.string
   }
 
-  componentDidMount(){
-    var mySwiper = new Swiper ('.swiper-container', {
-      // Optional parameters
-      direction: 'horizontal',
-      loop: true,
-      grabCursor: true,
+  componentDidMount() {
+    new Swiper('.swiper-container', {
+      direction:           'horizontal',
+      loop:                true,
+      grabCursor:          true,
       // turn on pagination
-      pagination: '.swiper-pagination',
+      pagination:          '.swiper-pagination',
       paginationClickable: true,
       // turn on butotns
-      nextButton: '.swiper-button-next',
-      prevButton: '.swiper-button-prev'
+      nextButton:          '.swiper-button-next',
+      prevButton:          '.swiper-button-prev'
     })
   }
 
@@ -31,23 +30,21 @@ export default class ReleaseNotesPage extends Component {
 
     const prepareImages = (img, index) => {
       return (
-        <div key={index} className='swiper-slide'>
+        <div key={index} className="swiper-slide">
           <div className={styles.img} >
-            <img src={img}/>
+            <img src={img} alt={`slide n. ${index}`} />
           </div>
         </div>
       )
     }
 
-    return (
-      <div className="swiper-container" style={{width: width, height: height}}>
-        <div className="swiper-wrapper">
-          {images.map(prepareImages)}
-        </div>
-        <div className="swiper-button-prev"></div>
-        <div className="swiper-button-next"></div>
-        <div className="swiper-pagination"></div>
+    return (<div className="swiper-container" style={{ width, height }}>
+      <div className="swiper-wrapper">
+        {images.map(prepareImages)}
       </div>
-    )
+      <div className="swiper-button-prev" />
+      <div className="swiper-button-next" />
+      <div className="swiper-pagination" />
+    </div>)
   }
 }

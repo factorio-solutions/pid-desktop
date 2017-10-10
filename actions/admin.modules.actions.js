@@ -7,7 +7,7 @@ import { GET_GARAGE_MODULES, UPDATE_MARKETING, UPDATE_GARAGE }from '../queries/a
 
 export const ADMIN_MODULES_SET_GO_PUBLIC            = 'ADMIN_MODULES_SET_GO_PUBLIC'
 export const ADMIN_MODULES_SET_MARKETING_PAGE       = 'ADMIN_MODULES_SET_MARKETING_PAGE'
-export const ADMIN_MODULES_SET_MARKETING_SHORT_NAME       = 'ADMIN_MODULES_SET_MARKETING_SHORT_NAME'
+export const ADMIN_MODULES_SET_MARKETING_SHORT_NAME = 'ADMIN_MODULES_SET_MARKETING_SHORT_NAME'
 export const ADMIN_MODULES_SET_RESERVATION_FORM     = 'ADMIN_MODULES_SET_RESERVATION_FORM'
 export const ADMIN_MODULES_SET_MR_PARKIT_CONNECTION = 'ADMIN_MODULES_SET_MR_PARKIT_CONNECTION'
 
@@ -95,5 +95,11 @@ export function toggleGoPublic () {
              , "garage": { "is_public": value }
              }
            )
+  }
+}
+
+export function toggleFlexiPlace() {
+  return (dispatch, getState) => {
+
   }
 }
