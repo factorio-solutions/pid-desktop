@@ -105,7 +105,7 @@ export class FinancePage extends Component {
         }
 
         <div>
-          <h2>{t(['finance','finanaceSettings'])}</h2>
+          <h2>{t(['finance','financeSettings'])}</h2>
           <Form onSubmit={submitForm} submitable={checkSubmitable()} onHighlight={actions.toggleHighlight}>
             <Input onChange={actions.setVat}                  onEnter={submitForm} label={t(['finance', 'vat'])}                  error={t(['finance', 'invalidVat'])} value={state.vat}                  type="number" min={0} step={0.01} highlight={state.highlight} />
             <Input onChange={actions.setInvoiceRow}           onEnter={submitForm} label={t(['finance', 'invoiceRow'])}           error={t(['finance', 'invalidRow'])} value={state.invoiceRow}           type="number" min={0} step={1}    highlight={state.highlight}/>
