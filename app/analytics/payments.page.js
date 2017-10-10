@@ -11,7 +11,7 @@ import * as analyticsPaymentsActions    from '../_shared/actions/analytics.payme
 import styles from './payments.page.scss'
 
 
-export class PaymentsPage extends Component {
+class PaymentsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

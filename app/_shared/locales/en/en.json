@@ -835,7 +835,9 @@
 		"setting": "Settings",
 		"Preview": "Preview",
 		"startingMarketing": "Upgrading your billing plan. Redirecting...",
-		"cannotBeChanged": "You cannot go public until you set payment method. To do this go to Admin/Finance."
+		"cannotBeChanged": "You cannot go public until you set payment method. To do this go to Admin/Finance.",
+		"flexiplace": "Flexi place",
+		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins; reservations will be regrouped to maximize usage of parking places."
 	},
 	"newContract": {
 		"description": "New Agreement in",

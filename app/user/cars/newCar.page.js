@@ -13,7 +13,7 @@ import * as newCarActions from '../../_shared/actions/newCar.actions'
 import styles from './newCar.page.scss'
 
 
-export class NewCarPage extends Component {
+class NewCarPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object

@@ -19,7 +19,7 @@ import garageStyles from './garageTurnover.page.scss'
 import styles       from './places.page.scss'
 
 
-export class PlacesPage extends Component {
+class PlacesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

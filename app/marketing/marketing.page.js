@@ -14,7 +14,7 @@ import { entryPoint }          from '../index'
 import styles from './marketing.page.scss'
 
 
-export class MarketingPage extends Component {
+class MarketingPage extends Component {
   static propTypes = {
     state:   PropTypes.object,
     actions: PropTypes.object

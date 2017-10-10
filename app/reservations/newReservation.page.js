@@ -21,7 +21,7 @@ import { t }                      from '../_shared/modules/localization/localiza
 import styles from './newReservation.page.scss'
 
 
-export class NewReservationPage extends Component {
+class NewReservationPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:        PropTypes.object,

@@ -22,7 +22,7 @@ import { PRESIGNE_MARKETING_IMAGE_QUERY } from '../../_shared/queries/newMarketi
 import styles from './marketingSettings.page.scss'
 
 
-export class MarketingSettingsPage extends Component {
+class MarketingSettingsPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

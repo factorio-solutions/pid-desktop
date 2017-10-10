@@ -21,7 +21,7 @@ import styles from './notifications.page.scss'
 import * as notificationsActions from '../_shared/actions/notifications.actions'
 
 
-export class NotificationsPage extends Component {
+class NotificationsPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object

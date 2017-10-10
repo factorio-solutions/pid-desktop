@@ -18,7 +18,7 @@ import * as analyticsGarageActions from '../_shared/actions/analytics.garage.act
 import styles from './garageTurnover.page.scss'
 
 
-export class GarageTurnoverPage extends Component {
+class GarageTurnoverPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

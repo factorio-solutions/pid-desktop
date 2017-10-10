@@ -17,7 +17,7 @@ import * as analyticsReservationsActions from '../_shared/actions/analytics.rese
 import styles from './reservations.page.scss'
 
 
-export class ReservationsAnalyticsPage extends Component {
+class ReservationsAnalyticsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

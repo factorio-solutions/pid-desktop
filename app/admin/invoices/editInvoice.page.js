@@ -14,7 +14,7 @@ import { t }                   from '../../_shared/modules/localization/localiza
 import * as editInvoiceActions from '../../_shared/actions/editInvoice.actions'
 
 
-export class EditInvoicePage extends Component {
+class EditInvoicePage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

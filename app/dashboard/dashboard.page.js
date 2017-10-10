@@ -20,7 +20,7 @@ import * as pageBaseActions          from'../_shared/actions/pageBase.actions'
 import styles from './dashboard.page.scss'
 
 
-export class DashboardPage extends Component {
+class DashboardPage extends Component {
   static propTypes = {
     state:            PropTypes.object,
     pageBase:         PropTypes.object,

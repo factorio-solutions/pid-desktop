@@ -11,7 +11,7 @@ import * as analyticsGatesActions from '../_shared/actions/analytics.gates.actio
 import styles from './gates.page.scss'
 
 
-export class GatesPage extends Component {
+class GatesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

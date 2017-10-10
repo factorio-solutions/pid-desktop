@@ -16,7 +16,7 @@ import * as loginActions from '../_shared/actions/login.actions'
 import styles from './signUp.page.scss'
 
 
-export class CodeVerificationPage extends Component {
+class CodeVerificationPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

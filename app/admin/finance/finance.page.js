@@ -19,7 +19,7 @@ import * as financeActions      from '../../_shared/actions/admin.finance.action
 import styles from './finance.page.scss'
 
 
-export class FinancePage extends Component {
+class FinancePage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,

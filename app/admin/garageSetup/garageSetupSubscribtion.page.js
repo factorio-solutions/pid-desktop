@@ -15,7 +15,7 @@ import {gsmModulePrice, layoutPrice, bookingPagePrice} from '../../_shared/reduc
 import styles from './garageSetupGeneral.page.scss'
 
 
-export class GarageSetupSubscribtionPage extends Component {
+class GarageSetupSubscribtionPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

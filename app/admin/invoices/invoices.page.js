@@ -22,7 +22,7 @@ import { valueAddedTax }    from '../../_shared/helpers/calculatePrice'
 // import {  setCustomModal }  from '../../_shared/actions/pageBase.actions'
 
 
-export class InvoicesPage extends Component {
+class InvoicesPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

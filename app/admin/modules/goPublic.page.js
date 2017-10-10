@@ -15,7 +15,7 @@ import * as goPublicActions from '../../_shared/actions/admin.goPublic.actions'
 import styles from './goPublic.page.scss'
 
 
-export class GoPublicPage extends Component {
+class GoPublicPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,

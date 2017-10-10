@@ -17,7 +17,7 @@ import { gsmModulePrice }       from '../../_shared/reducers/garageSetup.reducer
 import styles from './garageSetupGeneral.page.scss'
 
 
-export class GarageSetupGatesPage extends Component {
+class GarageSetupGatesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

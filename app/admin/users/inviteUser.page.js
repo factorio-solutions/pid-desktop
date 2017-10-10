@@ -17,7 +17,7 @@ import * as inviteUserActions from '../../_shared/actions/inviteUser.actions'
 import styles from './inviteUser.page.scss'
 
 
-export class inviteUserPage extends Component {
+class inviteUserPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object

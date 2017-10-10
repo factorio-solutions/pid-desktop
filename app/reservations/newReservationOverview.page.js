@@ -13,7 +13,7 @@ import * as newReservationActions  from '../_shared/actions/newReservation.actio
 import styles from './newReservationOverview.page.scss'
 
 
-export class NewReservationOverviewPage extends Component {
+class NewReservationOverviewPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object

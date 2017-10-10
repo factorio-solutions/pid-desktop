@@ -14,7 +14,7 @@ import * as financeActions      from '../../_shared/actions/admin.finance.action
 import styles from './csob.page.scss'
 
 
-export class CsobPage extends Component {
+class CsobPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

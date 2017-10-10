@@ -13,7 +13,7 @@ import * as adminActivityLogsActions from '../../_shared/actions/admin.activityL
 import styles from './activityLog.page.scss'
 
 
-export class ActivityLogPage extends Component {
+class ActivityLogPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

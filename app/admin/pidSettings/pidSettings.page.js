@@ -14,7 +14,7 @@ import styles from './pidSettings.page.scss'
 
 
 
-export class PidSettingsPage extends Component {
+class PidSettingsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,

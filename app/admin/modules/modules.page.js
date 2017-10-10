@@ -5,6 +5,7 @@ import { bindActionCreators }          from 'redux'
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import Switch             from '../../_shared/components/switch/Switch'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
+import Module             from '../../_shared/components/module/Module'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -13,7 +14,7 @@ import * as adminModulesActions from '../../_shared/actions/admin.modules.action
 import styles from './modules.page.scss'
 
 
-export class ModulesPage extends Component {
+class ModulesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object
@@ -37,28 +38,28 @@ export class ModulesPage extends Component {
     const toMarketingPreview = () => {window.open('#/'+nav.path(`/marketing/${state.short_name}`))}
     const toReservationFormSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/reservationButton`)}
     const toMrParkitConnectionSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/mrParkitIntegration`)}
+    const toGoFlexiPlaceSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/flexiplace`)}
+
+    const goPublicActions = [
+      <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toGoPublicSettings} />,
+      <Switch on={state.goPublic} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleGoPublic}/>
+    ]
+    const flexiplaceActions = [
+      <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toGoFlexiPlaceSettings} />,
+      <Switch on={state.goPublic} onClick={actions.toggleFlexiPlace}/>
+    ]
+    const marketingActions = [
+      <CallToActionButton label={t(['modules','Preview'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingPreview} />,
+      <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingSettings} />,
+      <Switch on={state.marketing && state.marketing.active_marketing_launched} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleMarketing}/>
+    ]
+
 
     return (
       <PageBase>
-        <div className={`${styles.module} ${(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && styles.disabled}`}>
-          <div className={styles.goPublic}>
-            {t(['modules','goPublic'])}
-          </div>
-          {t(['modules','goPublicDescription'])}
-          <div className={styles.settings}>
-            <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toGoPublicSettings} />
-            <Switch on={state.goPublic} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleGoPublic}/>
-          </div>
-        </div>
-
-        <div className={`${styles.module} ${(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && styles.disabled}`}>
-          {t(['modules','marketingPage'])}
-          <div className={styles.settings}>
-            <CallToActionButton label={t(['modules','Preview'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingPreview} />
-            <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingSettings} />
-            <Switch on={state.marketing && state.marketing.active_marketing_launched} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleMarketing}/>
-          </div>
-        </div>
+        <Module name={t(['modules','goPublic'])} description={t(['modules','goPublicDescription'])} disabled={userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2} actions={goPublicActions} />
+        <Module name={t(['modules','flexiplace'])} description={t(['modules','flexiplaceDescription'])} actions={flexiplaceActions} />
+        <Module name={t(['modules','marketingPage'])} disabled={userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2} actions={marketingActions} />
 
         {/*<div className={styles.module}>
           {t(['modules','reservationForm'])}

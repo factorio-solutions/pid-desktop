@@ -16,7 +16,7 @@ import * as resetPasswordactions from '../_shared/actions/resetPassword.actions'
 import styles from './signUp.page.scss'
 
 
-export class ResetPasswordPage extends Component {
+class ResetPasswordPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

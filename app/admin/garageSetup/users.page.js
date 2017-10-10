@@ -16,7 +16,7 @@ import { t }                    from '../../_shared/modules/localization/localiz
 import styles from './users.page.scss'
 
 
-export class GarageUsersPage extends Component {
+class GarageUsersPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

@@ -17,7 +17,7 @@ import { valueAddedTax }  from '../_shared/helpers/calculatePrice'
 import styles from './garage.page.scss'
 
 
-export class GaragePage extends Component {
+class GaragePage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object
