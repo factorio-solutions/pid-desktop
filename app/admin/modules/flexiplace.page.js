@@ -50,16 +50,53 @@ class FlexiplacePage extends Component {
           <div>
             <Dropdown label={t(['newPricing', 'selectCurrency'])} content={currencies} style="light" selected={state.currencies.findIndexById(state.pricing.currency_id)} />
           </div>
+
           <div>
             <h2>{t(['newPricing', 'flatPrice'])}</h2>
-            <PatternInput onChange={actions.setFlatPrice} label={t(['newPricing', 'flatPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.pricing.flat_price || ''} />
+            <PatternInput
+              onChange={actions.setFlatPrice}
+              label={t(['newPricing', 'flatPrice'])}
+              error={t(['newPricing', 'invalidPrice'])}
+              pattern="^[+]?\d+([,.]\d+)?$"
+              placeholder={t(['newPricing', 'maxPlaceholder'])}
+              value={state.pricing.flat_price || ''}
+            />
           </div>
+
           <div>
             <h2>{t(['newPricing', 'exponentialPrice'])}</h2>
-            <PatternInput onChange={actions.setExponential12hPrice} label={t(['newPricing', '12hPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.pricing.exponential_12h_price || ''} />
-            <PatternInput onChange={actions.setExponentialDayPrice} label={t(['newPricing', 'dayPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.pricing.exponential_day_price || ''} />
-            <PatternInput onChange={actions.setExponentialWeekPrice} label={t(['newPricing', 'weekPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'minPlaceholder'])} value={state.pricing.exponential_week_price || ''} />
-            <PatternInput onChange={actions.setExponentialMonthPrice} label={t(['newPricing', 'monthPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'decayPlaceholder'])} value={state.pricing.exponential_month_price || ''} />
+            <PatternInput
+              onChange={actions.setExponential12hPrice}
+              label={t(['newPricing', '12hPrice'])}
+              error={t(['newPricing', 'invalidPrice'])}
+              pattern="^[+]?\d+([,.]\d+)?$"
+              placeholder={t(['newPricing', 'maxPlaceholder'])}
+              value={state.pricing.exponential_12h_price || ''}
+            />
+            <PatternInput
+              onChange={actions.setExponentialDayPrice}
+              label={t(['newPricing', 'dayPrice'])}
+              error={t(['newPricing', 'invalidPrice'])}
+              pattern="^[+]?\d+([,.]\d+)?$"
+              placeholder={t(['newPricing', 'maxPlaceholder'])}
+              value={state.pricing.exponential_day_price || ''}
+            />
+            <PatternInput
+              onChange={actions.setExponentialWeekPrice}
+              label={t(['newPricing', 'weekPrice'])}
+              error={t(['newPricing', 'invalidPrice'])}
+              pattern="^[+]?\d+([,.]\d+)?$"
+              placeholder={t(['newPricing', 'minPlaceholder'])}
+              value={state.pricing.exponential_week_price || ''}
+            />
+            <PatternInput
+              onChange={actions.setExponentialMonthPrice}
+              label={t(['newPricing', 'monthPrice'])}
+              error={t(['newPricing', 'invalidPrice'])}
+              pattern="^[+]?\d+([,.]\d+)?$"
+              placeholder={t(['newPricing', 'decayPlaceholder'])}
+              value={state.pricing.exponential_month_price || ''}
+            />
           </div>
 
           <div>
@@ -73,6 +110,6 @@ class FlexiplacePage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.adminModules, pageBase: state.pageBase }),
+  state => ({ state: state.adminFlexiplace, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(flexiplaceActions, dispatch) })
 )(FlexiplacePage)
