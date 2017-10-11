@@ -33,11 +33,31 @@ export default function adminFlexiplace(state = defaultState, action) {
       }
 
     case ADMIN_FLEXIPLACE_SET_PRICING:
-      return { ...state,
-        pricing: { ...state.pricing,
-          [action.key]: action.value
+      if (action.key === 'flat_price') { // seting flat price? remove exponential
+        return { ...state,
+          pricing: { ...state.pricing,
+            [action.key]:            action.value,
+            exponential_12h_price:   undefined,
+            exponential_day_price:   undefined,
+            exponential_week_price:  undefined,
+            exponential_month_price: undefined
+          }
+        }
+      } else if (action.key.includes('exponential')) { // setting exponential price? remove flat
+        return { ...state,
+          pricing: { ...state.pricing,
+            [action.key]: action.value,
+            flat_price:   undefined
+          }
+        }
+      } else {
+        return { ...state,
+          pricing: { ...state.pricing,
+            [action.key]: action.value
+          }
         }
       }
+
 
     default:
       return state

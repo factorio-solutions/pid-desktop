@@ -178,7 +178,8 @@
 		"analyticsreservationsHint": "Here you can see total turnover for the garage within the selected term. In the spreadsheet below the graph you can see reservation count per day and total turnover of the garage.\n\nIn the upper left corner you can choose between short-term reservations and long term rents. In the upper right corner you can select exact period you want to view.",
 		"analyticsplacesHint": "Here you can see turnover statistics for parking places - average, maximal, minimal and total turnover, all of that displayed separately for short term and long term reservations. In the upper left corner you can select to show heatmap, which displays the (žlutě jsou nejnižší hodnoty, červeně nejvyšší).\nIn the upper right corner you can select exact period you want to view.",
 		"analyticspaymentsHint": "TODO: payments Hint",
-		"analyticsgatesHint": "TODO: gates Hint"
+		"analyticsgatesHint": "TODO: gates Hint",
+		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for."
 	},
 	"newReservation": {
 		"selectGarage": "Select garage *",

@@ -44,7 +44,8 @@ export function setWeekendPricing(value) { return setPricing('weekend_price', pa
 export function initPricings() {
   return (dispatch, getState) => {
     getState().pageBase.garage && request(INIT_GARAGE_PRICINGS, { id: getState().pageBase.garage }).then(data => {
-      console.log(data)
+      dispatch(setCurrencies(data.currencies))
+      dispatch(setPricings(data.garage.pricings))
     })
   }
 }

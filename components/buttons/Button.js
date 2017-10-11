@@ -12,7 +12,7 @@ import React from 'react'
 export default function Button({ content, onClick, onDisabledClick, type, state, style, question }) {
   const handleClick = e => {
     e.stopPropagation()
-    if (typeof onCl1ick === 'function') { // if no fuction, do nothing
+    if (typeof onClick === 'function') { // if no fuction, do nothing
       if (type === 'remove') {
         confirm(question || 'Are you sure?') && onClick()
       } else {
