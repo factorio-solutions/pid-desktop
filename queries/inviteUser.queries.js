@@ -1,6 +1,6 @@
 // get available users for ClientUsers
-export const USER_AVAILABLE = `query UserByEmail($user: UserInput!) {
-  user_by_email(user: $user) {
+export const USER_AVAILABLE = `query UserByEmail($user: UserInput!, $user_car: UserCarInput, $user_garage: UserGarageInput, $client_user: ClientUserInput) {
+  user_by_email(user: $user, user_car: $user_car, user_garage: $user_garage, client_user: $client_user) {
     id
   }
 }

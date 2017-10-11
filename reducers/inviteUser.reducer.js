@@ -17,16 +17,17 @@ import {
   INVITE_USER_RESET_FORM
 } from '../actions/inviteUser.actions'
 
-const booleanAttributes = { client_admin:         false
-                          , client_secretary:     false
-                          , client_host:          false
-                          , client_internal:      false
-                          , garage_admin:         false
-                          , garage_receptionist:  false
-                          , garage_security:      false
-                          , car_admin:            false
+const booleanAttributes = { client_admin:          false
+                          , client_secretary:      false
+                          , client_host:           false
+                          , client_internal:       false
+                          , client_contact_person: false
+                          , garage_admin:          false
+                          , garage_receptionist:   false
+                          , garage_security:       false
+                          , car_admin:             false
 
-                          , highlight:            false
+                          , highlight:             false
                           }
 
 const defaultState =  { ...booleanAttributes

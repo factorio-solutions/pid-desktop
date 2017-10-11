@@ -511,7 +511,8 @@
 		"GarageRights": "Garage rights",
 		"GarageRightsDesc": "These rights will be only valid if garage is specified",
 		"carRights": "Car rights",
-		"carRightsDesc": "These rights will be only valid if car is specified"
+		"carRightsDesc": "These rights will be only valid if car is specified",
+		"contactPerson": "contact person"
 	},
 	"notifications": {
 		"user": "user",
