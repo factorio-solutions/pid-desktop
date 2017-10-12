@@ -915,6 +915,6 @@
 	"loginVerification": {
 		"description":"Multifactor authorization was triggered. We will now send you code to email %(email)s",
 		"code":"code",
-		"emailCode":"Code invalid"
+		"codeInvalid":"Code invalid"
 	}
 }
