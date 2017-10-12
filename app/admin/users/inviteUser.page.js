@@ -116,6 +116,11 @@ class inviteUserPage extends Component {
                   ]
                 }
                 {currentClient.admin &&
+                  [ <span className={state.client_contact_person ? styles.boldText : styles.inactiveText}     onClick={()=>{actions.setBooleanAttr('client_contact_person', !state.client_contact_person)}}> {t(['inviteUser','contactPerson'])}</span>
+                  , <span>|</span>
+                  ]
+                }
+                {currentClient.admin &&
                   [ <span className={state.client_secretary ? styles.boldText : styles.inactiveText} onClick={()=>{actions.setBooleanAttr('client_secretary', !state.client_secretary)}}> {t(['inviteUser','secretary'])}</span>
                   , <span>|</span>
                   ]
