@@ -189,6 +189,7 @@ export function createNewManagebles () {
                      , { user_id: response.data.user_by_email.id
                        , client_user: { client_id: +state.client_id
                                       , admin: state.client_admin
+                                      , contact_person: state.client_contact_person
                                       , secretary: state.client_secretary
                                       , host: state.client_host
                                       , internal: state.client_internal
@@ -249,45 +250,33 @@ export function createNewManagebles () {
           Promise.all([clientUserPromise, userGaragePromise, userCarPromise]).then((value)=>{
             onSuccess(undefined)
           })
-
-          // request( onSuccess
-          //        , ADD_MANAGEBLES
-          //        , { user_id: response.data.user_by_email.id
-          //          , client_user: { client_id: +state.client_id
-          //                         , admin: state.client_admin
-          //                         , secretary: state.client_secretary
-          //                         , host: state.client_host
-          //                         , internal: state.client_internal
-          //                         , message: ["clientInvitationMessage", state.clients.find((client)=>{return client.id == state.client_id}).name].join(';')
-          //                         , custom_message: state.message
-          //                         }
-          //          , user_garage: { garage_id: +state.garage_id
-          //                         , admin: state.garage_admin
-          //                         , receptionist: state.garage_receptionist
-          //                         , security: state.garage_security
-          //                         , message: ["garageInvitationMessage", state.garages.find((garage)=>{return garage.id == state.garage_id}).name].join(';')
-          //                         , custom_message: state.message
-          //                         }
-          //          , user_car: { car_id: +state.car_id
-          //                      , admin: state.car_admin
-          //                      , message: ["carInvitationMessage", state.cars.find((car)=>{return  car.id == state.car_id}).model].join(';')
-          //                      , custom_message: state.message
-          //                      }
-          //          }
-          //        )
         }
       }
 
       dispatch(setCurrentEmail(email))
       request (onUserExists
               , USER_AVAILABLE
-              , {user: { email:     email.toLowerCase()
-                       , full_name: state.full_name
-                       , phone:     state.phone
-                       , message:   state.message
-                       }
-                }
-              )
+              , { user: { email:     email.toLowerCase()
+                        , full_name: state.full_name
+                        , phone:     state.phone
+                        , message:   state.message
+                        }
+              , user_car: state.car_id ? { car_id: +state.car_id
+                                         , admin: state.car_admin
+                                         } : null
+              , user_garage: state.garage_id ? { garage_id: +state.garage_id
+                                               , admin: state.garage_admin
+                                               , receptionist: state.garage_receptionist
+                                               , security: state.garage_security
+                                               } : null
+              , client_user: state.client_id ? { client_id: +state.client_id
+                                               , admin: state.client_admin
+                                               , contact_person: state.client_contact_person
+                                               , secretary: state.client_secretary
+                                               , host: state.client_host
+                                               , internal: state.client_internal
+                                               } : null
+              })
     })
   }
 }

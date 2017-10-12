@@ -512,7 +512,8 @@
 		"GarageRights": "Garage rights",
 		"GarageRightsDesc": "These rights will be only valid if garage is specified",
 		"carRights": "Car rights",
-		"carRightsDesc": "These rights will be only valid if car is specified"
+		"carRightsDesc": "These rights will be only valid if car is specified",
+		"contactPerson": "contact person"
 	},
 	"notifications": {
 		"user": "user",
@@ -536,6 +537,7 @@
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to handle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s place was accepted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
+		"newReservationForYou": "%(arg1)s (%(arg2)s) has created new reservation for you. ",
  		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent verification email to \"%(arg1)s\". Next logins will fail until your email is verified."
 	},
 	"profile": {
@@ -864,7 +866,7 @@
 		"csob": "ČSOB",
 		"csobPayment": "ČSOB Payments",
 		"SelectPrivateKey": "Select private key",
-		"finanaceSettings": "Finance settings",
+		"financeSettings": "Finance settings",
 		"vat": "Value added tax",
 		"invoiceRow": "Regular invoice row",
 		"simplyfiedInvoiceRow": "Simplyfied invoice row",
