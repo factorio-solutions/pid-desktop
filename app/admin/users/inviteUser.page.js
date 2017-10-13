@@ -105,7 +105,7 @@ export class inviteUserPage extends Component {
             <h3>{t(['inviteUser', 'optionalSettings'])}</h3>
             <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
             <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
-            <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}" value={state.phone} />
+            <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?[\d]{3,}" value={state.phone} />
             {state.client_id && <div>
               <h3>{t(['inviteUser', 'clientRights'])}</h3>
               <p>{t(['inviteUser', 'clientRightsDesc'])}</p>
