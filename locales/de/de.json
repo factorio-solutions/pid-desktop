@@ -81,8 +81,8 @@
 		"NewGarage": "Neues Parkhaus einrichten",
 		"newPricing": "Neue Preisliste",
 		"Pricings": "Preisliste bearbeiten",
-		"newRent": "Neue Miete",
-		"Rents": "Miete bearbeiten",
+		"newRent": "Neues Mietverhältnis",
+		"Rents": "Mietverhältnis bearbeiten",
 		"Garages": "Parkhäuser",
 		"Garage": "Parkhaus",
 		"Cars": "Fahrzeuge",
@@ -93,33 +93,33 @@
 		"error": "Fehler",
 		"success": "Erfolg",
 		"inviteUser": "Neuen Benutzer einladen",
-		"dashboardHint": "Hier sehen Sie eine Zusammenfassung/einen Überblick über alle wichtigen Kontoinformationen.",
+		"dashboardHint": "Hier sehen Sie einen Überblick über alle wichtigen Kontoinformationen.\nAuf dem Parkhausplan sehen Sie, ob die einzelnen Stellplätze langfristig vermietet oder gerade reserviert sind.\nIn den Neuigkeiten sehen Sie Aktuelles aus der Welt von Park-it-direct.\nUnter „Letzte Aktivität“ sehen Sie die letzten Anpassungen des Parkhauses und Details zum Urheber und zum Änderungsdatum.\nUnter „Aktueller Zustand“ sehen Sie eine kurze Statistik zu den freien und belegten Stellplätzen.\nIn der Finanzübersicht sehen Sie aktuelle Finanzstatistiken.\n",
 		"issuesHint": "DE: pageBase.issuesHint",
 		"analyticsHint": "Hier können Sie verschiedene Statistiken überprüfen.",
-		"invoicesHint": "Hier finden Sie eine Liste der ausgestellten Rechnungen. Sie sehen den Rechnungsbetrag, ob sie beglichen wurden oder nicht u.v.a.m.",
-		"newContractHint": "Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie eine Vermietung aus der Dropdown-Liste aus oder erstellen Sie eine neue Vermietung, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)",
+		"invoicesHint": "Hier finden Sie eine Liste der ausgestellten Rechnungen. \n\nLinks oben können Sie die Rechnungen nach Kunden filtern. Rechts oben können Sie zwischen der Anzeige aktueller Rechnungen und dem gesamten Verlauf umschalten.",
+		"newContractHint": "Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)",
 		"ReservationButtonHint": "DE: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "DE: pageBase.mrParkitIntegrationHint",
 		"goPublicHint": "DE: pageBase.goPublicHint",
-		"financeHint": "DE: pageBase.financeHint",
+		"financeHint": "Im oberen Bereich können Sie aktivieren und einrichten, wie Ihre Kunden für die Parkhausnutzung zahlen können.\n\nIm Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen langfristigen Mietverhältnisse, ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.\n\nIm Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.\n",
 		"financePaypalHint": "DE: pageBase.financePaypalHint",
 		"financeCSOBHint": "DE: pageBase.financeCSOBHint",
 		"pidSettingsHint": "DE: pageBase.pidSettingsHint",
-		"activityLogHint": "DE: pageBase.activityLogHint",
+		"activityLogHint": "Hier finden Sie ein Verzeichnis aller Aktivitäten im Park-it-direct-System mit Angaben zum Charakter der Aktion, zum Urheber und zum Zeitpunkt.",
 		"reservationsHint": "Hier finden Sie eine Liste aller Reservierungen – Ihre eigenen Reservierungen und die Reservierungen, die andere Personen für Ihr Parkhaus vorgenommen haben.",
 		"newReservationHint": "Hier können Sie eine neue Reservierung erstellen. Wählen Sie zuerst den Benutzer und das Parkhaus aus, anschließend die Daten und schließlich den Stellplatz. Voilà.",
-		"garagesHint": "DE: pageBase.garagesHint",
+		"garagesHint": "Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.\nLinks oben können Sie auswählen, welcher Wert dargestellt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder für das aktuelle Datum angezeigt werden soll.",
 		"newGarageHint": "Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.",
 		"newGarageFloorsHint": "DE: pageBase.newGarageFloorsHint",
 		"newGarageOrderHint": "DE: pageBase.newGarageOrderHint",
 		"newGarageSubscribtionHint": "DE: pageBase.newGarageSubscribtionHint",
 		"newGarageGatesHint": "DE: pageBase.newGarageGatesHint",
 		"garageClientsHint": "Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten im ausgewählten Parkhaus zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Parkhausgrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass das Parkhaus mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etage mit den Schaltflächen links aus.",
-		"clientsHint": "In diesem Abschnitt können Sie die Kundenkonten verwalten. Ein Kundenkonto ist eine Einheit, die Informationen über die Kunden, dessen Benutzer, die zugewiesenen Stellplätze usw. versammelt. Wählen Sie ein Konto aus, um Schaltflächen zur Bearbeitung und Verwaltung von Benutzern anzuzeigen.",
+		"clientsHint": "Hier finden Sie eine Liste der Kunden, mit denen Sie in Kontakt stehen.\n\nIn der Spalte „Kunden-Token“ wird eine einzigartige ID angezeigt, mit der Sie den Kunden bei der Erstellung neuer Verträge einfach und schnell auswählen können.\n\nIn der Spalte „Vertrag“ wird durch eine grüne Markierung angezeigt, wenn der Kunde einen Vertrag abgeschlossen hat. Ein rotes Ausrufezeichen gibt an, dass kein Vertrag vorliegt.\n\nIn der Spalte „Stellplätze“ wird die Gesamtanzahl der dem Kunden zugewiesenen Stellplätze angezeigt.\n\nIn der Spalte „Pro Monat insgesamt“ werden die monatlichen Parkhausgebühren des Kunden insgesamt angezeigt.\n\nIn der Spalte „Rechnungen“ wird der Rechnungsstatus angezeigt – wenn alle Rechnungen beglichen sind = grün; wenn eine Rechnung überfällig ist = rot.\n\nKlicken Sie auf einen Kunden, um weitere Details (z.B Kontaktperson oder eine Liste der abgeschlossenen Verträge) anzuzeigen. Mit den Schaltflächen rechts können Sie neue Verträge erstellen, Rechnungen kontrollieren, die Kundendaten anpassen oder alle Benutzer anzeigen, die zum Kunden gehören. In dieser Darstellung können Sie auch auf die einzelnen Verträge klicken und diese anpassen.",
 		"newClientHint": "Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben.",
 		"clientUsersHint": "In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt.",
 		"settingsHint": "In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.",
-		"usersHint": "Hier sehen Sie eine Liste aller bekannten Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört.",
+		"usersHint": "Hier sehen Sie eine Liste aller Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat.",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"editClientHint": "DE: pageBase.editClientHint",
 		"notificationsHint": "Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen.",
@@ -140,7 +140,7 @@
 		"newCar": "Neues Fahrzeug",
 		"editCar": "Fahrzeug bearbeiten",
 		"OccupancyOverview": "Belegungsübersicht",
-		"OccupancyOverviewHint": "Hier wird ein Überblick über alle Reservierungen angezeigt. Rechts oben kann der Zeitraum eingestellt werden, links oben kann nach Kunden gefiltert werden.\nGrau = Reservierung liegt in der Vergangenheit\nSchwarz = Reservierung ist gerade aktiv\nBlau = Reservierung hat noch nicht begonnen",
+		"OccupancyOverviewHint": "Hier wird ein Überblick über alle Reservierungen angezeigt. Rechts oben kann der Zeitraum eingestellt werden, links oben kann nach Kunden gefiltert werden.\n\nGrau = Reservierung liegt in der Vergangenheit\nSchwarz = Reservierung ist gerade aktiv\nBlau = Reservierung hat noch nicht begonnen",
 		"EditGarage": "Parkhaus bearbeiten",
 		"EditGarageHint": "Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.\n\nKunden: Die einzelnen Kunden werden in verschiedenen Farben dargestellt.\nVereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.\nReservierungen: Die einzelnen Reservierungen werden in verschiedenen Farben dargestellt.\nPreise: Die einzelnen Preiseinstellungen werden in verschiedenen Farben dargestellt.\nFahrzeuge: Die einzelnen Fahrzeuge werden sind in verschiedenen Farben dargestellt.\n\nRechts oben kann ausgewählt werden, ob der aktuelle Zeitraum oder ein bestimmtes Datum angezeigt werden soll.",
 		"Occupancy": "Belegung",
@@ -150,12 +150,12 @@
 		"marketing": "Marketing",
 		"newMarketing": "Neues Marketing",
 		"editMarketing": "Marketing ändern",
-		"garageMarketingHint": "Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten.",
+		"garageMarketingHint": "Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten. Klicken Sie auf „Einstellungen“ bei den einzelnen Modulen, um weitere Informationen anzuzeigen.",
 		"garageNewMarketingHint": "Hier können Sie ein neues Marketing einrichten.",
 		"garageEditMarketingHint": "Hier können Sie Marketing bearbeiten.",
 		"garageNewPricingHint": "Hier können Sie neue Reservierungspreise einstellen.",
 		"garageEditPricingHint": "Hier können Sie Preiseigenschaften einstellen.",
-		"garageNewRentHint": "Hier können Sie eine neue Miete einrichten.",
+		"garageNewRentHint": "Hier können Sie ein neues Mietverhältnis einrichten.",
 		"garageEditRentHint": "Hier können Sie die Mieteigenschaften bearbeiten.",
 		"garageAddClientHint": "Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.",
 		"garageGarageUsersHint": "Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann.",
@@ -178,7 +178,8 @@
 		"analyticsreservationsHint": "Hier wird der Gesamtumsatz für das Parkhaus im ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Reservierungen pro Tag und der Gesamtumsatz des Parkhauses angezeigt.\n\nOben links können Sie zwischen kurzfristigen Reservierungen und Langzeitvermietungen auswählen. Oben rechts kann der genaue Anzeigezeitraum eingestellt werden.",
 		"analyticsplacesHint": "Hier werden die Umsatzstatistiken für Stellplätze angezeigt – Durchschnitt, maximaler, minimaler und Gesamtumsatz, jeweils für kurzfristige und Langzeitvermietungen. Oben links kann eine Heatmap angezeigt werden, in der die Werte farbig dargestellt werden (niedrigste Werte in Gelb, höchste Werte in Rot).\nOben rechts kann der gewünschte Anzeigezeitraum eingestellt werden.",
 		"analyticspaymentsHint": "DE: pageBase.analyticspaymentsHint",
-		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint"
+		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
+		"flexiplaceHint": "DE: pageBase.flexiplaceHint"
 	},
 	"newReservation": {
 		"selectGarage": "Wählen Sie ein Parkhaus aus *",
@@ -295,11 +296,11 @@
 		"licencePlate": "Kennzeichen",
 		"longterm": "Langfristig",
 		"shortterm": "Kurzfristig",
-		"placeRent": "Mieten",
-		"rentName": "Name der Miete",
+		"placeRent": "Mietverhältnisse",
+		"rentName": "Name des Mietverhältnisses",
 		"price": "Preis",
 		"places": "Plätze",
-		"editRent": "Miete bearbeiten"
+		"editRent": "Mietverhältnis bearbeiten"
 	},
 	"occupancy": {
 		"selectClientClient": "Kunden auswählen",
@@ -317,7 +318,9 @@
 		"client": "Kunde:",
 		"type": "Typ:",
 		"period": "Termin:",
-		"licencePlate": "Kennzeichen:"
+		"licencePlate": "Kennzeichen:",
+		"noClientPlaces": "DE: occupancy.noClientPlaces",
+		"resetFilter": "DE: occupancy.resetFilter"
 	},
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
@@ -340,11 +343,11 @@
 		"clients": "Kunden",
 		"gates": "Tore",
 		"pricing": "Preislisten",
-		"rent": "Miete",
+		"rent": "Mietverhältnis",
 		"selectClient": "Wählen Sie einen Kunden aus",
 		"selectGate": "Wählen Sie Tore aus",
 		"selectPricing": "Wählen Sie die Preisliste aus",
-		"selectRent": "Wählen Sie die Miete aus",
+		"selectRent": "Wählen Sie das Mietverhältnis aus",
 		"places": "Plätze",
 		"newClientId": "Neue Kunden-ID einfügen",
 		"newClientIdInvalid": "ID nicht gültig",
@@ -509,7 +512,8 @@
 		"GarageRights": "Parkhausrechte",
 		"GarageRightsDesc": "Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird.",
 		"carRights": "Fahrzeugrechte",
-		"carRightsDesc": "Diese Rechte sind nur gültig, wenn ein Fahrzeug angegeben wird."
+		"carRightsDesc": "Diese Rechte sind nur gültig, wenn ein Fahrzeug angegeben wird.",
+		"contactPerson": "DE: inviteUser.contactPerson"
 	},
 	"notifications": {
 		"user": "Benutzer",
@@ -532,7 +536,8 @@
 		"accpetReservationNotification": "Gast %(arg2)s möchte eine Reservierung auf Kosten von %(arg1)s erstellen.",
 		"invoiceReminder": "Konto %(arg1)s möchten Sie darüber informieren, dass Rechnungen noch nicht beglichen wurden.",
 		"reservationAccepted": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
-		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt."
+		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
+		"verifyYourEmail": "DE: notifications.verifyYourEmail"
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -656,7 +661,7 @@
 	"newRent": {
 		"name": "Bezeichnung",
 		"namePlaceholder": "Gemieteter Stellplatz",
-		"invalidName": "Eingegebene Bezeichnung für Miete ungültig",
+		"invalidName": "Eingegebene Bezeichnung für Mietverhältnis ungültig",
 		"price": "Preis (zzgl. MwSt.)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Ungültiger Preis",
@@ -832,7 +837,9 @@
 		"setting": "Einstellungen",
 		"Preview": "Vorschau",
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
-		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen)."
+		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
+		"flexiplace": "DE: modules.flexiplace",
+		"flexiplaceDescription": "DE: modules.flexiplaceDescription"
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -844,7 +851,7 @@
 		"clientNotFound": "Es gibt keinen Kunden mit diesem Token.",
 		"selectedPlaces": "Ausgewählte Stellplätze",
 		"noSelectedPlaces": "Keine Stellplätze ausgewählt",
-		"selectRent": "Miete auswählen",
+		"selectRent": "Mietverhältnis auswählen",
 		"contractPrice": "Neuen konkreten vereinbarten Preis auswählen",
 		"priceInvalid": "Ungültiger Preis",
 		"pricePlaceholder": "10000",
@@ -906,5 +913,10 @@
 		"visitors": "Besucher",
 		"free": "Verfügbar",
 		"total": "Insgesamt"
+	},
+	"loginVerification": {
+		"description": "DE: loginVerification.description",
+		"code": "DE: loginVerification.code",
+		"codeInvalid": "DE: loginVerification.codeInvalid"
 	}
 }
