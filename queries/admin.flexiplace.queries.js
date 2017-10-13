@@ -2,7 +2,6 @@
 export const INIT_GARAGE_PRICINGS = `query ($id: Id!) {
   garage(id: $id) {
     pricings {
-      id
       currency_id
       flat_price
       exponential_12h_price
@@ -19,4 +18,12 @@ export const INIT_GARAGE_PRICINGS = `query ($id: Id!) {
   }
 }
 
+`
+
+// will create the same pricing for every place
+export const CREATE_UNIFORM_PRICING = `mutation CreateUniformPricing($garage_id: Id!, $pricing: PricingInput!) {
+  create_uniform_pricing(garage_id: $garage_id, pricing: $pricing) {
+    id
+  }
+}
 `

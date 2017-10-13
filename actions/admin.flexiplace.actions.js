@@ -1,16 +1,17 @@
 import request from '../helpers/requestPromise'
+import * as nav from '../helpers/navigation'
 
-import { INIT_GARAGE_PRICINGS } from '../queries/admin.flexiplace.queries'
+import { INIT_GARAGE_PRICINGS, CREATE_UNIFORM_PRICING } from '../queries/admin.flexiplace.queries'
 
 
-export const ADMIN_FLEXIPLACE_SET_PRICINGS = 'ADMIN_FLEXIPLACE_SET_PRICINGS'
+export const ADMIN_FLEXIPLACE_PRESET_PRICING = 'ADMIN_FLEXIPLACE_PRESET_PRICING'
 export const ADMIN_FLEXIPLACE_SET_CURRENCIES = 'ADMIN_FLEXIPLACE_SET_CURRENCIES'
 export const ADMIN_FLEXIPLACE_SET_PRICING = 'ADMIN_FLEXIPLACE_SET_PRICING'
 
 
-export function setPricings(value) {
+export function presetPricings(value) {
   return {
-    type: ADMIN_FLEXIPLACE_SET_PRICINGS,
+    type: ADMIN_FLEXIPLACE_PRESET_PRICING,
     value
   }
 }
@@ -45,13 +46,18 @@ export function initPricings() {
   return (dispatch, getState) => {
     getState().pageBase.garage && request(INIT_GARAGE_PRICINGS, { id: getState().pageBase.garage }).then(data => {
       dispatch(setCurrencies(data.currencies))
-      dispatch(setPricings(data.garage.pricings))
+      dispatch(presetPricings(data.garage.pricings[0]))
     })
   }
 }
 
 export function sumbitFlexi() {
   return (dipatch, getState) => {
-    console.log('TODO: send method ')
+    const state = getState().adminFlexiplace
+    const garageId = getState().pageBase.garage
+
+    getState().pageBase.garage && request(CREATE_UNIFORM_PRICING, { garage_id: garageId, pricing: state.pricing }).then(() => {
+      nav.to(`/${garageId}/admin/modules`)
+    })
   }
 }
