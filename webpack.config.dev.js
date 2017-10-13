@@ -23,6 +23,10 @@ module.exports = {
     ],
   },
 
+  devServer: { // synch history with redux and react-router
+    historyApiFallback: true
+  },
+
   plugins: [
     new WebpackBundleAnalyzer.BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
