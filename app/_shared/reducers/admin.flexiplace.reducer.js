@@ -1,11 +1,11 @@
 import {
-  ADMIN_FLEXIPLACE_SET_PRICINGS,
+  ADMIN_FLEXIPLACE_PRESET_PRICING,
   ADMIN_FLEXIPLACE_SET_CURRENCIES,
   ADMIN_FLEXIPLACE_SET_PRICING
 } from '../actions/admin.flexiplace.actions'
 
 const defaultState = {
-  pricings:   [],
+  // pricings:   [],
   currencies: [],
   pricing:    { // new pricing
     currency_id:             undefined, // selected currency
@@ -22,9 +22,9 @@ const defaultState = {
 export default function adminFlexiplace(state = defaultState, action) {
   switch (action.type) {
 
-    case ADMIN_FLEXIPLACE_SET_PRICINGS:
+    case ADMIN_FLEXIPLACE_PRESET_PRICING:
       return { ...state,
-        pricings: action.value
+        pricing: action.value
       }
 
     case ADMIN_FLEXIPLACE_SET_CURRENCIES:

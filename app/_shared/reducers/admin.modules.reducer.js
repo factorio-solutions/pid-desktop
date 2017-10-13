@@ -1,5 +1,6 @@
 import {
   ADMIN_MODULES_SET_GO_PUBLIC,
+  ADMIN_MODULES_SET_FLEXIPLACE,
   ADMIN_MODULES_SET_MARKETING_PAGE,
   ADMIN_MODULES_SET_MARKETING_SHORT_NAME,
   ADMIN_MODULES_SET_RESERVATION_FORM,
@@ -7,6 +8,7 @@ import {
  }  from '../actions/admin.modules.actions'
 
 const defaultState =  { goPublic: false
+                      , flexiplace: false
                       , marketing: false
                       , short_name: undefined
                       , reservationForm: false
@@ -20,6 +22,11 @@ export default function adminModules (state = defaultState, action) {
     case ADMIN_MODULES_SET_GO_PUBLIC:
       return  { ...state
               , goPublic: action.value
+              }
+
+    case ADMIN_MODULES_SET_FLEXIPLACE:
+      return  { ...state
+              , flexiplace: action.value
               }
 
     case ADMIN_MODULES_SET_MARKETING_PAGE:

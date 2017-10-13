@@ -39,14 +39,17 @@ class ModulesPage extends Component {
     const toReservationFormSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/reservationButton`)}
     const toMrParkitConnectionSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/mrParkitIntegration`)}
     const toGoFlexiPlaceSettings = () => {nav.to(`/${pageBase.garage}/admin/modules/flexiplace`)}
+    const toggleFLexiplace = () => {
+      state.flexiplace ? actions.disableFlexiplace() : toGoFlexiPlaceSettings()
+    }
 
     const goPublicActions = [
-      <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toGoPublicSettings} />,
-      <Switch on={state.goPublic} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleGoPublic}/>
+      <CallToActionButton label={t(['modules','setting'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2 || state.flexiplace) ? 'disabled' : 'inverted'} onClick={toGoPublicSettings} />,
+      <Switch on={state.goPublic} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleGoPublic} />
     ]
     const flexiplaceActions = [
       <CallToActionButton label={t(['modules','setting'])} state={'inverted'} onClick={toGoFlexiPlaceSettings} />,
-      <Switch on={state.goPublic} onClick={actions.toggleFlexiPlace}/>
+      <Switch on={state.flexiplace} onClick={toggleFLexiplace} />
     ]
     const marketingActions = [
       <CallToActionButton label={t(['modules','Preview'])} state={(userGarage===undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled': 'inverted'} onClick={toMarketingPreview} />,
