@@ -8,7 +8,7 @@
     "build": "webpack -p",
     "postinstall": "webpack -p",
     "start": "node ./src/app.js",
-    "dev": "OPEN_ANALYZER=true webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
+    "dev": "OPEN_ANALYZER=false webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
     "export_languages": "node app/_shared/modules/localization/export.js /home/hrstktom/Documents/pid-desktop/app/_shared/locales/",
     "import_languages": "node app/_shared/modules/localization/import.js /home/hrstktom/Documents/pid-desktop/app/_shared/locales/"
   },

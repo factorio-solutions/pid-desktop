@@ -59,8 +59,20 @@ module.exports = {
           }
         }
       },
+      { // css files not included in modules correctly
+        test: /.*(swiper.min).*\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+        ]
+      },
       {
         test: /\.(scss|css)$/,
+        exclude: /.*(swiper.min).*/,
         use: [
           {
             loader: 'style-loader'

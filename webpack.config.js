@@ -1,6 +1,17 @@
 const path = require('path')
 const webpack = require('webpack')
+/**
+* Babel polyfill adds all needed function used in modern javascript.
+* We don't need to care about browser features anymore.
+**/
 const BabelPolyfill = require("babel-polyfill")
+/**
+* By separating css into separate file (loading it in HTML header) with ExtractTextPlugin, it loads css in parallel to js.
+* By the time js is loaded css is already applied.
+* It also allows to cache css separate to js, further improving loading times.
+* This makes imposible to hot reload modules, but we dont need that in production.
+* It also adds compilation time, which is a good trade for better loading times.
+**/
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 
@@ -30,7 +41,11 @@ module.exports = {
         'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
     }),
-    new ExtractTextPlugin("styles.css")
+    new ExtractTextPlugin("styles.css"),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "shared",
+      filename: "shared.js"
+    })
   ],
 
   node: {
@@ -51,12 +66,21 @@ module.exports = {
           }
         }
       },
+      { // css files not included in modules correctly
+        test: /.*(swiper.min).*\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+        ]
+      },
       {
         test: /\.(scss|css)$/,
+        exclude: /.*(swiper.min).*/,
         use: ExtractTextPlugin.extract([
-          // {
-          //   loader: 'style-loader'
-          // },
           {
             loader: 'css-loader',
             options: {
