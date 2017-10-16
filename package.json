@@ -28,6 +28,7 @@
     "eslint-plugin-import": "^2.6.1",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "extract-text-webpack-plugin": "^3.0.1",
     "redux-logger": "^3.0.6",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-middleware": "^1.6.1",
@@ -73,7 +74,7 @@
     "sip": "0.0.4",
     "style-loader": "^0.18.2",
     "swiper": "^3.4.0",
-    "webpack": "^3.0.0",
+    "webpack": "^3.7.1",
     "ws": "^3.0.0"
   },
   "devEngines": {

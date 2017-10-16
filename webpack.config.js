@@ -1,6 +1,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const BabelPolyfill = require("babel-polyfill")
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
   devtool: 'source-map',
@@ -27,7 +29,8 @@ module.exports = {
         'NODE_ENV': JSON.stringify(process.env.RAILS_ENV || 'production'), // Heroku will have RAILS_ENV variable for Rails server
         'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
-    })
+    }),
+    new ExtractTextPlugin("styles.css")
   ],
 
   node: {
@@ -50,10 +53,10 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
+        use: ExtractTextPlugin.extract([
+          // {
+          //   loader: 'style-loader'
+          // },
           {
             loader: 'css-loader',
             options: {
@@ -66,7 +69,7 @@ module.exports = {
           {
             loader: 'sass-loader'
           }
-        ]
+        ])
       }
     ]
   }
