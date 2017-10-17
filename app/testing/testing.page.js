@@ -2,56 +2,23 @@ import React, { Component, PropTypes } from 'react'
 import { get }                     from '../_shared/helpers/get'
 import { request } from '../_shared/helpers/request'
 
+import MobileDateTimePicker from '../_shared/components/mobileDateTimePicker/MobileDateTimePicker'
+
 export default class TestingPage extends Component {
+  render() {
+    const onDateSelect = date => {
+      console.log(date)
+    }
 
-    render() {
-      const downloadPricings = () => {
-        const onSuccess = (response) => {
-          console.log(response);
-        }
-
-        request(onSuccess, `query Query{
-          invoices (past: true, garage_id: 4){
-            id
-            invoice_number
-            longterm_rent
-            invoice_date
-            due_date
-            payed
-            ammount
-            subject
-            canceled
-            is_storno_invoice
-            vat
-           	currency{
-              symbol
-            }
-            account{
-              garage{
-                name
-                id
-                is_admin
-              }
-            }
-            client{
-              is_admin
-              is_secretary
-              name
-              id
-              admins{
-                id
-              }
-            }
-          }
-        }`)
-      }
+    const actions = [{ label: '2H', onClick: () => {console.log('2H click') } }, { label: '4H', onClick: () => {console.log('4H click') } }]
 
     return (
       <div>
         <h1>Testing page</h1>
-        <img src={'https://s3-eu-west-1.amazonaws.com/park-it-direct-alpha/floors/Strazni.svg'} />
-        <button onClick={downloadPricings}>GET</button>
+        <div style={{width: '300px', height: '150px'}}>
+          <MobileDateTimePicker onClick={onDateSelect} actions={actions} />
+        </div>
       </div>
-    );
+    )
   }
 }

@@ -16,3 +16,7 @@ export function timeToUTCmobile (value){
 export function formatTime (time) {
   return moment(time).format(MOMENT_DATETIME_FORMAT)
 }
+
+export function toFifteenMinuteStep(minutes) {
+  return Math.floor(parseInt(minutes) / 15) * 15
+}

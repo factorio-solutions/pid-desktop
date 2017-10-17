@@ -190,7 +190,9 @@ export default function createRoutes() {
           {subRoutes}
         </Route>
       ))}
+
+      {/* Testing page for not production environments*/}
+      {process.env.NODE_ENV !== 'production' && <Route path="/testing" component={TestingPage} />}
     </Route>
   )
-  // <Route path="/testing" component={TestingPage}/>
 }
