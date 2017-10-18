@@ -31,13 +31,9 @@
     "default-case": 0,
     "semi":  [2, "never"],
     "linebreak-style": 0,
+    "no-unused-expressions": ["error", { "allowShortCircuit": true }],
+    "array-bracket-spacing": ["error", "always"],
     "react/require-default-props": 0,
     "key-spacing": ["error", { "align": "value" }],
-    "no-unused-expressions": ["error", { "allowShortCircuit": true }]
-  },
-  "not-used": {
-    "comma-style": ["error", "first"],
-    "array-bracket-spacing": ["error", "always"],
-    "no-multi-spaces": ["error", { "exceptions": { "VariableDeclarator": true, "ImportDeclaration": true } }]
   }
 }
