@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react'
-import Swiper from 'swiper'
+import Swiper from 'swiper/dist/js/swiper.min.js'
 import moment from 'moment'
+import 'swiper/dist/css/swiper.min.css'
 
 import RoundButton from '../buttons/RoundButton'
 import CallToActionButton from '../buttons/CallToActionButton'
 
-import { formatTime, MOMENT_DATETIME_FORMAT, toFifteenMinuteStep } from '../../helpers/time'
+import { formatTime, MOMENT_DATETIME_FORMAT, toFifteenMinuteStep, isBeforeFormated } from '../../helpers/time'
 
 import styles from './MobileDateTimePicker.scss'
-import '../../../../node_modules/swiper/dist/css/swiper.min.css'
 
 
-const HOURS = Array.from(Array(24).keys())
-const MINUTES = [0, 15, 30, 45]
+const HOURS = Array.from(Array(24).keys()).map(o => o % 24)
+const MINUTES = Array.from(Array(4 * 6).keys()).map(o => (o % 4) * 15) // HACK: array repeated 6x to be less likely to fail transition
 const RENDER_DAYS = 41 // odd number please
 const MIMIMUM_NUMBER_OF_SLIDES_LEFT = 16 // if less slides than this, add slides
 const PRESENTED_DATE_FORMAT = 'ddd, DD. MMM YYYY'
@@ -21,16 +21,18 @@ const middleSlide = (RENDER_DAYS - 1) / 2
 
 export default class MobileDateTimePicker extends Component {
   static propTypes = {
-    dateTime: PropTypes.string,
-    label:    PropTypes.string,
-    onClick:  PropTypes.func.isRequired,
-    actions:  PropTypes.array // [{label: '...', onClick: () => {...} }, ... ]
+    dateTime:     PropTypes.string,
+    notLowerThan: PropTypes.string, // should not render dates lower than this date
+    label:        PropTypes.string,
+    onClick:      PropTypes.func.isRequired,
+    actions:      PropTypes.array // [{label: '...', onClick: () => {...} }, ... ]
   }
 
   static defaultProps = {
-    dateTime: formatTime(moment()),
-    label:    'Select date',
-    actions:  []
+    dateTime:     formatTime(moment()),
+    label:        'Select date',
+    actions:      [],
+    notLowerThan: formatTime(moment())
   }
 
 
@@ -41,7 +43,14 @@ export default class MobileDateTimePicker extends Component {
       slidesPerView:  3,
       centeredSlides: true,
       height:         150,
-      direction:      'vertical'
+      direction:      'vertical',
+      lazyLoading:    true
+    }
+
+    const hourMinutesSharedSettings = {
+      ...sharedSettings,
+      loop:                 true,
+      loopAdditionalSlides: 24
     }
 
     this.dateSwiper = new Swiper(`.${styles.dates}`, {
@@ -61,13 +70,11 @@ export default class MobileDateTimePicker extends Component {
       }
     })
     this.hoursSwiper = new Swiper(`.${styles.hours}`, {
-      ...sharedSettings,
-      loop:         true,
+      ...hourMinutesSharedSettings,
       initialSlide: HOURS.indexOf(parseInt(formatedDateTime.format('HH'), 10))
     })
     this.minutesSwiper = new Swiper(`.${styles.minutes}`, {
-      ...sharedSettings,
-      loop:         true,
+      ...hourMinutesSharedSettings,
       initialSlide: MINUTES.indexOf(toFifteenMinuteStep(formatedDateTime.format('mm')))
     })
   }
@@ -75,13 +82,13 @@ export default class MobileDateTimePicker extends Component {
   render() {
     const { dateTime, label, onClick, actions } = this.props
 
-    const toSlide = object => <div className="swiper-slide"> {object} </div>
+    const toSlide = key => (object, i) => <div key={`${key}${i}`} className="swiper-slide"> {object} </div>
 
-    const toActionButton = action => <CallToActionButton {...action} />
+    const toActionButton = action => <CallToActionButton key={action.label} {...action} />
 
     const days = Array.from(new Array(RENDER_DAYS), (val, index) =>
       moment(dateTime, MOMENT_DATETIME_FORMAT).subtract(index - middleSlide, 'days').format(PRESENTED_DATE_FORMAT)
-    ).reverse().map(toSlide)
+    ).reverse().map(toSlide('day'))
 
     const setDate = () => {
       onClick(
@@ -108,27 +115,26 @@ export default class MobileDateTimePicker extends Component {
 
           <div className={styles.hours}>
             <div className="swiper-wrapper">
-              {HOURS.map(toSlide)}
+              {HOURS.map(toSlide('hour'))}
             </div>
           </div>
 
           <div className={styles.minutes}>
             <div className="swiper-wrapper">
-              {MINUTES.map(toSlide)}
+              {MINUTES.map(toSlide('minute'))}
             </div>
           </div>
         </div>
 
         <div className={styles.actions}>
           <div>
-            { actions.map(toActionButton) }
+            {actions.map(toActionButton)}
           </div>
           <div>
             <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={setDate} type="confirm" />
           </div>
         </div>
       </div>
-
     )
   }
 }

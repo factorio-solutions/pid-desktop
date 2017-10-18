@@ -2,6 +2,7 @@
   position: relative;
   display: flex;
   height: 150px;
+  min-width: 250px;
   overflow: hidden;
 }
 
@@ -34,6 +35,7 @@
     >div{ // slides
       line-height: 50px;
       text-align: center;
+      white-space: nowrap;
     }
   }
 }
@@ -48,5 +50,6 @@
   >div:first-child {
     flex: 1 1;
     line-height: 60px;
+    text-align: left;
   }
 }
