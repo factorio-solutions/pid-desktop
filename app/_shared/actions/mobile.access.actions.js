@@ -3,6 +3,7 @@ import moment from 'moment'
 import { request } from '../helpers/request'
 
 import { MOBILE_ACCESS_OPEN_GATE } from '../queries/mobile.access.queries'
+import { setError } from './mobile.header.actions'
 
 
 export const MOBILE_ACCESS_SET_EMPTY_GATES = 'MOBILE_ACCESS_SET_EMPTY_GATES'
@@ -267,6 +268,7 @@ export function startScanning(back) {
       } else {
         console.log('bluetooth initialization failed', result) // init failed
         back()
+        dispatch(setError(result.message))
       }
     }
 
