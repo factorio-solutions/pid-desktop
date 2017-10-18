@@ -4,63 +4,13 @@ import ReactSwipe from 'react-swipe'
 import styles from './SwipeToOpen.scss'
 
 
-// export default class SwipeToOpen extends Component{
-//   static propTypes = {
-//     onSwipe: PropTypes.func, // triggers on swipe
-//     success: PropTypes.bool, // set this only when onSwipe finishes
-//     message: PropTypes.string,
-//     size:    PropTypes.number,
-//     state:   PropTypes.string, // 'disabled' => gray text
-//     content: PropTypes.object // main page content
-//   }
-//
-//   render(){
-//     const { onSwipe, success, size, message, state, content} = this.props
-//
-//     const swipeOptions = {
-//       continuous: false,
-//       callback:() => {
-//         document.getElementsByClassName("swipeToOpenComponent")[0].style.pointerEvents='none';
-//         typeof onSwipe === "function" && onSwipe()
-//       }
-//     }
-//
-//     return(
-//       <ReactSwipe className={`swipeToOpenComponent ${styles.container} ${styles[state]}`} swipeOptions={swipeOptions}>
-//
-//         <div className={`${styles.pane} ${state ? styles.disabledContent : styles.enabledContent}`} >
-//           <div style={{height: size+"px"}}>
-//             <div className={styles.paneContent}>
-//               {content && content}
-//               <i className="fa fa-long-arrow-left" aria-hidden="true"></i>
-//               <br/>
-//               Swipe to open the gate
-//               {state === 'disabled' && <div className={styles.comment}>No reservation</div>}
-//               {state === 'noGates' && <div className={styles.comment}>No gates are available</div>}
-//             </div>
-//           </div>
-//         </div>
-//
-//         <div className={`${styles.pane} ${success!=undefined ? (success ? styles.success : styles.failure) : null}`} style={{height: size+"px"}}>
-//           <div style={{height: size+"px"}}>
-//             <div className={styles.paneContent}>
-//               {message}
-//             </div>
-//           </div>
-//         </div>
-//
-//       </ReactSwipe>
-//     )
-//   }
-// }
-
 const INITIAL_STATE = { swept: false }
 
 export default class SwipeToOpen extends Component {
-  static propTypes = { onSwipe: PropTypes.func // triggers on swipe
-    , success: PropTypes.bool // set this only when onSwipe finishes
-    , message: PropTypes.string
-    , content: PropTypes.object // main page content
+  static propTypes = { onSwipe: PropTypes.func, // triggers on swipe
+    success: PropTypes.bool, // set this only when onSwipe finishes
+    message: PropTypes.string,
+    content: PropTypes.object // main page content
   }
 
   constructor(props) {
@@ -70,9 +20,10 @@ export default class SwipeToOpen extends Component {
 
   render() {
     const { onSwipe, success, message, content } = this.props
-    const swipeOptions = { continuous: false
-                         , callback: () => this.setState({ swept: true }, onSwipe)
-                         }
+    const swipeOptions = {
+      continuous: false,
+      callback:   () => this.setState({ swept: true }, onSwipe)
+    }
 
     return (
       <div className={styles.swiper}>

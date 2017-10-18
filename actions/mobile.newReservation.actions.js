@@ -97,7 +97,7 @@ export function setClientId(value) {
 }
 
 export function setAvailableClients(value) {
-  value.unshift({ name: 'Select client', id: undefined })
+  value.unshift({ name: 'Me', id: undefined })
   return {
     type: MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS,
     value
@@ -177,6 +177,7 @@ export function getAvailableClients() {
     const onClients = response => {
       if (response.data.reservable_clients.find(cl => cl.id === state.client_id) === undefined) {
         state.client_id !== undefined && dispatch(setClientId(undefined))
+        // response.data.reservable_clients[0] ? response.data.reservable_clients[0].id : undefined
       }
       dispatch(setAvailableClients(response.data.reservable_clients))
     }
