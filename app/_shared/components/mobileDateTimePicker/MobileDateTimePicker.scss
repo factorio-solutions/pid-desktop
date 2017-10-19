@@ -1,0 +1,55 @@
+.datetimepicker{
+  position: relative;
+  display: flex;
+  height: 150px;
+  min-width: 250px;
+  overflow: hidden;
+}
+
+.dimmer{
+  background: -moz-linear-gradient(top, rgba(white,1) 0%, rgba(white,0) 50%, rgba(white,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(white,1) 0%,rgba(white,0) 50%,rgba(white,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(white,1) 0%,rgba(white,0) 50%,rgba(white,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.dates{
+  flex: 2 2;
+}
+.hours, .minutes{
+  flex: 1 1;
+}
+
+.dates, .hours, .minutes { // sliders
+  height: 100%;
+
+  >div{ // swiper-wrapper
+
+    >div{ // slides
+      line-height: 50px;
+      text-align: center;
+      white-space: nowrap;
+    }
+  }
+}
+
+.separator{
+  line-height: 150px;
+}
+
+.actions{
+  display: flex;
+
+  >div:first-child {
+    flex: 1 1;
+    line-height: 60px;
+    text-align: left;
+  }
+}
