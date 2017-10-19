@@ -7,6 +7,7 @@ import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import Table              from '../../_shared/components/table/Table'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
+import InvitationReminderButton from '../../_shared/components/buttons/InvitationReminderButton'
 
 import * as clientUserActions   from '../../_shared/actions/clientUsers.actions'
 import { setClient }            from '../../_shared/actions/inviteUser.actions'
@@ -55,14 +56,16 @@ export class ClientUsersPage extends Component {
     const renderPendingSpoiler = (user) => {
       let returnable = user.user
       const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, user.user.id ) }
+      const resendClick = () => { actions.resendInvitation(this.props.params.client_id, user.user.id) }
       returnable.spoiler = <div className={styles.float}>
+        <InvitationReminderButton userId={user.user.id} clientId={parseInt(this.props.params.client_id, 10)} />
         <LabeledRoundButton label={t(['clientUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} />
       </div>
       return returnable
     }
 
     const renderSpoiler = (client_user) => {
-      const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, client_user.user.id ) }
+      const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, client_user.user.id) }
 
       const secretaryPresetClick  = () => { actions.setSecretary(this.props.params.client_id, client_user.user.id ) }
       const internalPresetClick   = () => { actions.setInternal(this.props.params.client_id, client_user.user.id ) }

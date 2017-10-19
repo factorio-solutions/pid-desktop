@@ -1,8 +1,8 @@
 import { request }  from '../helpers/request'
 import {t}          from '../modules/localization/localization'
-import { setError } from './pageBase.actions'
+import { setError, setSuccess } from './pageBase.actions'
 
-import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS } from '../queries/clientUsers.queries'
+import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS, RESEND_INVITATION } from '../queries/clientUsers.queries'
 // import { toClients } from './pageBase.actions'
 
 export const SET_CLIENT_USERS          = 'SET_CLIENT_USERS'
@@ -54,6 +54,22 @@ export function destroyClientUser(client_id, user_id){
           "user_id": user_id,
           "client_id": parseInt(client_id)
         })
+  }
+}
+
+export function resendInvitation(client_id, user_id) {
+  return dispatch => {
+    const onSuccess = response => {
+      if (response.data.resend_invitation === null) {
+        dispatch(setError(t([ 'clientUsers', 'userNotFound' ])))
+      } else {
+        dispatch(setSuccess(t([ 'clientUsers', 'resendSuccessfull' ])))
+      }
+    }
+    request(onSuccess, RESEND_INVITATION, {
+      user_id,
+      client_id: parseInt(client_id, 10)
+    })
   }
 }
 
