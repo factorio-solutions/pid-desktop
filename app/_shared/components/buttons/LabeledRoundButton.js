@@ -17,7 +17,7 @@ import RounButton                      from './RoundButton.js'
 //   )
 // }
 
-export class LabeledRoundButton extends Component {
+class LabeledRoundButton extends Component {
   static propTypes = {
     hint:            PropTypes.object.isRequired,
     label:           PropTypes.string.isRequired,
