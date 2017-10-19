@@ -245,7 +245,10 @@
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
 		"pendingUsers": "Pending invitations",
-		"removeUser": "Remove user"
+		"removeUser": "Remove user",
+		"resendInvitation": "Resend email",
+		"resendSuccessfull": "Email was sucessfully send.",
+		"userNotFound": "Could not find this user."
 	},
 	"reservations": {
 		"name": "name",
