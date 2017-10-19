@@ -55,7 +55,6 @@ export function dismissModal () {
 
 export function loginSuccess(result, redirect, callback) {
   return (dispatch, getState) => {
-    console.log(result);
     if ('id_token' in result) {
       localStorage['jwt'] = result.id_token
       localStorage['refresh_token'] = result.refresh_token
