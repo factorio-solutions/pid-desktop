@@ -76,7 +76,7 @@ export function openGarageViaPhone(gateId, reservationId, index) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       if (response.data.open_gate != null) {
-        dispatch(setMessage('Request sucessfully send', index))
+        dispatch(setMessage('Request sucessfully sent', index))
         dispatch(setOpened(true, index))
       } else {
         dispatch(setMessage('No reservation found', index))
@@ -126,7 +126,7 @@ export function openGarageViaBluetooth(name, index) {
 
     const writeSuccess = result => {
       console.log('write was successfull', result)
-      dispatch(setMessage('Request sucessfully send' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
+      dispatch(setMessage('Request sucessfully sent' + (repeater ? ' (repeater)' : ' (gate unit)'), index))
       dispatch(setOpened(true, index))
       setTimeout(() => {
         ble.close(address, closeSuccessfull, logError) // 6. disconect and 7. close
