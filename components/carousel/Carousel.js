@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Swiper                          from 'swiper'
+import Swiper from 'swiper/dist/js/swiper.min.js'
 
 import styles from './Carousel.scss'
 import '../../../../node_modules/swiper/dist/css/swiper.min.css'
