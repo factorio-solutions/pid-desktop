@@ -2,9 +2,8 @@ const MAX_SCANNING_DURATION = 15000 // ms
 
 export function init(callback) {
   const params = {
-    request: true
-    // , restoreKey: 'park-it-direct-bluetoothLE'
-    , statusReceiver: true
+    request:        true,
+    statusReceiver: true
   }
 
   console.log('Initializing ble')
@@ -17,11 +16,12 @@ export function stopScan(successCallback, errorCallback) {
 }
 
 export function scan(successCallback, errorCallback, unlimited) {
-  const params = { allowDuplicates: true // iOS
-    , scanMode: bluetoothle.SCAN_MODE_BALANCED
-    , matchMode: bluetoothle.MATCH_MODE_STICKY
-    , matchNum: bluetoothle.MATCH_NUM_ONE_ADVERTISEMENT
-    , callbackType: bluetoothle.CALLBACK_TYPE_ALL_MATCHES
+  const params = {
+    allowDuplicates: true, // iOS
+    scanMode:        bluetoothle.SCAN_MODE_BALANCED,
+    matchMode:       bluetoothle.MATCH_MODE_STICKY,
+    matchNum:        bluetoothle.MATCH_NUM_ONE_ADVERTISEMENT,
+    callbackType:    bluetoothle.CALLBACK_TYPE_ALL_MATCHES
     // , services: ['180D', '180F']
   }
 
@@ -137,11 +137,12 @@ export function discover(address, discoverSuccess, discoverError) {
 }
 
 export function write(address, service, characteristic, value, writeSuccess, writeError) {
-  const params = { address
-                 , service
-                 , characteristic
-                 , value
-                 }
+  const params = {
+    address,
+    service,
+    characteristic,
+    value
+  }
   console.log('writing to BLE device', params)
   bluetoothle.write(writeSuccess, writeError, params)
 }
