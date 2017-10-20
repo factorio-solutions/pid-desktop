@@ -76,8 +76,13 @@ export function connect(address, successCallback, errorCallback) {
   bluetoothle.connect(connectSuccessfull, errorCallback, params)
 
   setTimeout(() => {
-    console.log('connected: ', connected)
-    if (!connected) errorCallback('Connection with garage was not established')
+    console.log('Connection timeout: is device connected: ', connected)
+    // if (!connected) errorCallback('Connection with garage was not established')
+    if (!connected) {
+      const onSuccess = res => console.log('Close successfull afther connection not established', res)
+      const onError = res => console.log('Close UNsuccessfull afther connection not established', res)
+      bluetoothle.close(onSuccess, onError, params)
+    }
   }, MAX_SCANNING_DURATION)
 }
 
