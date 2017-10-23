@@ -82,7 +82,7 @@ export function openGarageViaPhone(reservationId, gateId) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       if (response.data.open_gate != null) {
-        dispatch(setMessage('Request sucessfully sent', reservationId, gateId))
+        dispatch(setMessage('Request successfully sent', reservationId, gateId))
         dispatch(setOpened(true, reservationId, gateId))
       } else {
         dispatch(setMessage('No reservation found', reservationId, gateId))
