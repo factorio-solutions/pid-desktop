@@ -252,6 +252,7 @@ export function submitReservation(callback) {
         dispatch(payReservation(response.data.create_reservation.payment_url, callback))
       } else {
         dispatch(setCustomModal())
+        dispatch(clearForm())
         callback()
       }
     }

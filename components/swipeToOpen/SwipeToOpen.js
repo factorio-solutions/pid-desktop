@@ -26,20 +26,18 @@ export default class SwipeToOpen extends Component {
     }
 
     return (
-      <div className={styles.swiper}>
-        <ReactSwipe className={`${this.state.swept && styles.noPointerEvents} ${styles.container}`} swipeOptions={swipeOptions}>
-          <div>
-            {content}
-          </div>
+      <ReactSwipe className={`${this.state.swept && styles.noPointerEvents} ${styles.container}`} swipeOptions={swipeOptions}>
+        <div>
+          {content}
+        </div>
 
-          <div className={`${styles.message} ${success !== undefined ? (success ? styles.success : styles.failure) : null}`} >
-            <div>
-              {success === undefined && <div><span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true"></span></div>}
-              <div>{message}</div>
-            </div>
+        <div className={`${styles.message} ${success !== undefined ? (success ? styles.success : styles.failure) : null}`} >
+          <div>
+            {success === undefined && <div><span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true"></span></div>}
+            <div>{message}</div>
           </div>
-        </ReactSwipe>
-      </div>
+        </div>
+      </ReactSwipe>
     )
   }
 }
