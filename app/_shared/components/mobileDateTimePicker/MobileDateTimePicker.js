@@ -103,7 +103,7 @@ export default class MobileDateTimePicker extends Component {
 
     return (
       <div>
-        {label && <h2>{label}</h2>}
+        {label && <h2 className={styles.title}>{label}</h2>}
 
         <div className={styles.datetimepicker}>
           <div className={styles.dimmer} />
