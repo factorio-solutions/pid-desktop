@@ -8,6 +8,7 @@ import Modal        from '../_shared/components/modal/Modal'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
 import PatternInput from  '../_shared/components/input/PatternInput'
 import Form         from '../_shared/components/form/Form'
+import Localization from '../_shared/components/localization/Localization'
 
 import * as nav           from '../_shared/helpers/navigation'
 import { t }              from '../_shared/modules/localization/localization'
@@ -54,6 +55,7 @@ export class SignUpPage extends Component {
 
     const content = <div>
                       <Logo style='round'/>
+                      <Localization />
 
                       <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching||state.error!=undefined} />
                       <div className={styles.signUpPage}>
@@ -65,6 +67,7 @@ export class SignUpPage extends Component {
                           <PatternInput onEnter={onSubmit} onChange={actions.setConfirmation} label={t(['signup_page', 'confirmation'])}  error={t(['signup_page', 'noMatching'])}                                type='password' pattern={state.password.value}                        value={state.confirmation.value} />
                         </Form>
                       </div>
+
                     </div>
 
     return (
