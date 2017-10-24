@@ -4,6 +4,7 @@ import { bindActionCreators }          from 'redux'
 
 import * as nav                        from '../../_shared/helpers/navigation'
 import { t }                           from '../../_shared/modules/localization/localization'
+import { AVAILABLE_LANGUAGES }         from '../../routes'
 
 import PageBase     from '../../_shared/containers/pageBase/PageBase'
 import Dropdown     from '../../_shared/components/dropdown/Dropdown'
@@ -80,6 +81,10 @@ export class inviteUserPage extends Component {
                              { state.currentEmail }
                            </div>
 
+   const renderLanguage = lang => <span className={state.language === lang ? styles.boldText : styles.inactiveText} onClick={() => { actions.setLanguage(lang) }}>{t(['languages', lang])}</span>
+   const separator = <span>|</span>
+   const addSeparator = (acc, lang, index, array) => array.length-1 !== index ? [ ...acc, lang, separator ] : [ ...acc, lang ]
+
     return (
       <PageBase>
         <Modal content={errorContent} show={state.error!=undefined} />
@@ -106,6 +111,10 @@ export class inviteUserPage extends Component {
             <p>{t(['inviteUser', 'optionalSettingsText'])}</p>
             <PatternInput onEnter={submitForm} onChange={nameChanged} label={t(['inviteUser', 'nameLabel'])} error={t(['signup_page', 'nameInvalid'])} pattern="^(?!\s*$).+" value={state.full_name} />
             <PatternInput onEnter={submitForm} onChange={phoneChanged} label={t(['inviteUser', 'phoneLabel'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+?[\d]{3,}" value={state.phone} />
+            <div>
+              <h3>{t(['languages', 'language'])}</h3>
+              {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
+            </div>
             {state.client_id && <div>
               <h3>{t(['inviteUser', 'clientRights'])}</h3>
               <p>{t(['inviteUser', 'clientRightsDesc'])}</p>

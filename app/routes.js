@@ -2,6 +2,7 @@
 import { Route, IndexRoute, IndexRedirect  } from 'react-router'
 
 import * as localization from './_shared/modules/localization/localization'
+import * as nav from './_shared/helpers/navigation'
 
 import App from './_app/App'
 
@@ -104,7 +105,7 @@ export default function createRoutes() {
 
   const subRoutes = (
     <Route>
-      <IndexRoute                                         component={LoginPage} />
+      <IndexRoute                                         component={LoginPage}/>
       <Route path="codeVerification"                      component={CodeVerificationPage}/>
       <Route path="signUpPage"                            component={SignUpPage}/>
       <Route path="resetPassword"                         component={ResetPasswordPage}/>
@@ -184,7 +185,7 @@ export default function createRoutes() {
 
   return (
     <Route path="/" component={App}>
-      <IndexRedirect to={AVAILABLE_LANGUAGES[0]+'/'} />
+      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${localStorage.jwt ? 'dashboard/' : ''}`}/>
       {AVAILABLE_LANGUAGES.map(lang => (
         <Route key={lang} path={lang} onEnter={() => {localization.changeLanguage(lang)}}>
           {subRoutes}
