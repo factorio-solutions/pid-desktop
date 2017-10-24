@@ -152,6 +152,7 @@ export function stateToData() {
 
     const chartData = state.reservations.reduce((acc, reservation) => {
       const property = getProperty(reservation.created_at, state.period)
+      addProperty(acc, property)
       acc[property].reservations.push(reservation)
 
       return acc
