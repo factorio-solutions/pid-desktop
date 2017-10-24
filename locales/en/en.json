@@ -921,5 +921,12 @@
 		"description": "Multifactor authorization has been triggered. We will now send you a code by email %(email)s",
 		"code": "code",
 		"codeInvalid": "Code invalid"
+	},
+	"languages":{
+		"language": "Language",
+		"en": "English",
+		"cs": "Česky",
+		"de": "Deutsch",
+		"pl": "Polski"
 	}
 }

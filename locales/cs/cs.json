@@ -166,6 +166,7 @@
 		"editContractHint": "CS: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "Máte jedno nepřečtené upozornění",
+			"few": "Máte %(count)s nepřečtená upozornění",
 			"other": "Máte %(count)s nepřečtených upozornění"
 		},
 		"analytics": "Analýza",

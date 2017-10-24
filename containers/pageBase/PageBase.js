@@ -80,9 +80,11 @@ export class PageBase extends Component {
                           </div>
 
     const notificationsModal = <div style={{"textAlign": "center"}}>
-                                {t(['pageBase', 'unredNotifications'], {count: notifications.count})}: <br/>
+                                {t(['pageBase', 'unredNotifications'], {count: notifications.count})}. <br/>
                                 <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={notificationsModalClick} type='confirm'  />
                               </div>
+
+                              console.log(notifications, t(['pageBase', 'unredNotifications'], {count: notifications.count}));
 
     return (
       <div>

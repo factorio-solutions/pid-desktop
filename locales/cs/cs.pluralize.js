@@ -17,6 +17,6 @@ module.exports = function(entry, count) {
   if (count % 1 != 0){ // ma desetinne misto
     return entry['many']
   }
-  return entry['other']
 
-};
+  return entry['other']
+}
