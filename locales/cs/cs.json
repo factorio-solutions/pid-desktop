@@ -167,6 +167,7 @@
 		"unredNotifications": {
 			"one": "Máte jedno nepřečtené upozornění",
 			"few": "Máte %(count)s nepřečtená upozornění",
+			"many": "Máte %(count)s nepřečteného upozornění",
 			"other": "Máte %(count)s nepřečtených upozornění"
 		},
 		"analytics": "Analýza",
