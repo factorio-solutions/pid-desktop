@@ -166,6 +166,8 @@
 		"editContractHint": "DE: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "Sie haben eine ungelesene Nachricht.",
+			"few": "DE: pageBase.unredNotifications.few",
+			"many": "DE: pageBase.unredNotifications.many",
 			"other": "Sie haben %(count)s ungelesene Nachrichten."
 		},
 		"analytics": "Analyse",
@@ -212,7 +214,12 @@
 		"paymentUnsucessfull": "Die Zahlung wurde unterbrochen und nicht erfolgreich abgeschlossen.",
 		"validtyCheck": "Validierung läuft …",
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
-		"creatingNewPayment": "Zahlung wird erstellt …"
+		"creatingNewPayment": "Zahlung wird erstellt …",
+		"newHost": "DE: newReservation.newHost",
+		"hostsName": "DE: newReservation.hostsName",
+		"hostsPhone": "DE: newReservation.hostsPhone",
+		"hostsEmail": "DE: newReservation.hostsEmail",
+		"selectedUser": "DE: newReservation.selectedUser"
 	},
 	"clients": {
 		"name": "Name",
@@ -245,7 +252,10 @@
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
 		"pendingUsers": "Offene Einladungen",
-		"removeUser": "Benutzer löschen"
+		"removeUser": "Benutzer entfernen",
+		"resendInvitation": "DE: clientUsers.resendInvitation",
+		"resendSuccessfull": "DE: clientUsers.resendSuccessfull",
+		"userNotFound": "DE: clientUsers.userNotFound"
 	},
 	"reservations": {
 		"name": "Name",
@@ -507,7 +517,7 @@
 		"internal": "intern",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
-		"clientRights": "Kundenrechte",
+		"clientRights": "Benutzerrechte",
 		"clientRightsDesc": "Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird.",
 		"GarageRights": "Parkhausrechte",
 		"GarageRightsDesc": "Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird.",
@@ -537,7 +547,8 @@
 		"invoiceReminder": "Konto %(arg1)s möchten Sie darüber informieren, dass Rechnungen noch nicht beglichen wurden.",
 		"reservationAccepted": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
 		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
-		"verifyYourEmail": "DE: notifications.verifyYourEmail"
+		"verifyYourEmail": "DE: notifications.verifyYourEmail",
+		"newReservationForYou": "DE: notifications.newReservationForYou"
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -918,5 +929,90 @@
 		"description": "DE: loginVerification.description",
 		"code": "DE: loginVerification.code",
 		"codeInvalid": "DE: loginVerification.codeInvalid"
+	},
+	"languages":{
+		"language": "DE: languages.language",
+		"en": "English",
+		"cs": "Česky",
+		"de": "Deutsch",
+		"pl": "Polski"
+	},
+	"auth0Emails": {
+		"securityReasons": "DE: auth0Emails.securityReasons",
+		"easyAsClickingButton": "DE: auth0Emails.easyAsClickingButton",
+		"confirmAccount": "DE: auth0Emails.confirmAccount",
+		"enjoy": "DE: auth0Emails.enjoy",
+		"bestRegards": "DE: auth0Emails.bestRegards",
+		"PidTeam": "DE: auth0Emails.PidTeam",
+		"welcome": "DE: auth0Emails.welcome",
+		"thankYou": "DE: auth0Emails.thankYou",
+		"howToStart": "DE: auth0Emails.howToStart",
+		"pleasantExperience": "DE: auth0Emails.pleasantExperience",
+		"helpForHelp": "DE: auth0Emails.helpForHelp",
+		"garageSetup": "DE: auth0Emails.garageSetup",
+		"getInTouch": "DE: auth0Emails.getInTouch",
+		"website": "DE: auth0Emails.website",
+		"passwordResetSubmited": "DE: auth0Emails.passwordResetSubmited",
+		"pwdResetDescr": "DE: auth0Emails.pwdResetDescr",
+		"confirmPwdReset": "DE: auth0Emails.confirmPwdReset",
+		"troubleWithAccount": "DE: auth0Emails.troubleWithAccount",
+		"verificationCode": "DE: auth0Emails.verificationCode"
+	},
+	"railsEmails": {
+		"footer": {
+			"enjoy": "DE: railsEmails.footer.enjoy",
+			"regards": "DE: railsEmails.footer.regards",
+			"team": "DE: railsEmails.footer.team"
+		},
+		"invitation_mail": {
+			"hello": "DE: railsEmails.invitation_mail.hello",
+			"invitation": "DE: railsEmails.invitation_mail.invitation",
+			"invited_you": "DE: railsEmails.invitation_mail.invited_you",
+			"says": "DE: railsEmails.invitation_mail.says",
+			"admin": "DE: railsEmails.invitation_mail.admin",
+			"secretary": "DE: railsEmails.invitation_mail.secretary",
+			"host": "DE: railsEmails.invitation_mail.host",
+			"internal": "DE: railsEmails.invitation_mail.internal",
+			"contact_person": "DE: railsEmails.invitation_mail.contact_person",
+			"receptionist": "DE: railsEmails.invitation_mail.receptionist",
+			"security": "DE: railsEmails.invitation_mail.security",
+			"invited_to": "DE: railsEmails.invitation_mail.invited_to",
+			"as": "DE: railsEmails.invitation_mail.as",
+			"issue": "DE: railsEmails.invitation_mail.issue",
+			"let_us_know": "DE: railsEmails.invitation_mail.let_us_know",
+			"we_will_help": "DE: railsEmails.invitation_mail.we_will_help"
+		},
+		"new_reservation_mail": {
+			"new_reservation": "DE: railsEmails.new_reservation_mail.new_reservation",
+			"reservation_for_you": "DE: railsEmails.new_reservation_mail.reservation_for_you",
+			"more_details": "DE: railsEmails.new_reservation_mail.more_details",
+			"to_pid": "DE: railsEmails.new_reservation_mail.to_pid"
+		},
+		"resend_invitation_mail": {
+			"hello": "DE: railsEmails.resend_invitation_mail.hello",
+			"invitation_reminder": "DE: railsEmails.resend_invitation_mail.invitation_reminder",
+			"remind_you": "DE: railsEmails.resend_invitation_mail.remind_you",
+			"admin": "DE: railsEmails.resend_invitation_mail.admin",
+			"secretary": "DE: railsEmails.resend_invitation_mail.secretary",
+			"host": "DE: railsEmails.resend_invitation_mail.host",
+			"internal": "DE: railsEmails.resend_invitation_mail.internal",
+			"contact_person": "DE: railsEmails.resend_invitation_mail.contact_person",
+			"receptionist": "DE: railsEmails.resend_invitation_mail.receptionist",
+			"security": "DE: railsEmails.resend_invitation_mail.security",
+			"invited_to": "DE: railsEmails.resend_invitation_mail.invited_to",
+			"as": "DE: railsEmails.resend_invitation_mail.as",
+			"to_sign_up": "DE: railsEmails.resend_invitation_mail.to_sign_up",
+			"to_pid": "DE: railsEmails.resend_invitation_mail.to_pid",
+			"issue": "DE: railsEmails.resend_invitation_mail.issue",
+			"let_us_know": "DE: railsEmails.resend_invitation_mail.let_us_know",
+			"we_will_help": "DE: railsEmails.resend_invitation_mail.we_will_help"
+		},
+		"reservation_confirmed": {
+			"reservation_confirmed": "DE: railsEmails.reservation_confirmed.reservation_confirmed",
+			"garage": "DE: railsEmails.reservation_confirmed.garage",
+			"place": "DE: railsEmails.reservation_confirmed.place",
+			"from": "DE: railsEmails.reservation_confirmed.from",
+			"to": "DE: railsEmails.reservation_confirmed.to"
+		}
 	}
 }
