@@ -3,6 +3,10 @@ import {
   NEW_RESERVATION_SET_AVAILABLE_USERS,
   NEW_RESERVATION_SET_RESERVATION,
 
+  NEW_RESERVATION_SET_HOST_NAME,
+  NEW_RESERVATION_SET_HOST_PHONE,
+  NEW_RESERVATION_SET_HOST_EMAIL,
+
   NEW_RESERVATION_SET_CLIENT_ID,
 
   NEW_RESERVATION_CAR_ID,
@@ -26,6 +30,10 @@ import {
 const defaultState =  { user:             undefined // id of selected user reservation is for
                       , availableUsers:   [] // array of other available users
                       , reservation:      undefined // object with reservation to be edited
+
+                      , name:             { value: '', valid: false }
+                      , phone:            { value: '', valid: false }
+                      , email:            { value: '', valid: false }
 
                       , client_id:        undefined // currently selected client
 
@@ -64,6 +72,21 @@ export default function newReservation (state = defaultState, action) {
              , reservation: action.value
              }
 
+
+    case NEW_RESERVATION_SET_HOST_NAME:
+      return { ...state
+             , name: action.value
+             }
+
+    case NEW_RESERVATION_SET_HOST_PHONE:
+      return { ...state
+             , phone: action.value
+             }
+
+    case NEW_RESERVATION_SET_HOST_EMAIL:
+      return { ...state
+             , email: action.value
+             }
 
     case NEW_RESERVATION_SET_CLIENT_ID:
       return { ...state

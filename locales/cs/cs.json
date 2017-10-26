@@ -539,7 +539,7 @@
 		"invoiceReminder": "Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.",
 		"reservationAccepted": "Vaše rezervace na \"%(arg1)s místo byla akceptována.",
 		"reservationDeclined": "Vaše rezervace na \"%(arg1)s místo byla zrušena.",
-		"verifyYourEmail": "Vítejte v Park-it-direct! Na adresu \\\"%(arg1)s\\\"s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen."
+		"verifyYourEmail": "Vítejte v Park-it-direct! Na adresu \"%(arg1)s\"s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen."
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",

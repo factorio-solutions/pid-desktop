@@ -214,7 +214,12 @@
 		"paymentUnsucessfull": "Payment was canceled and not completed.",
 		"validtyCheck": "Performing validity check ...",
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
-		"creatingNewPayment": "Creating payment ..."
+		"creatingNewPayment": "Creating payment ...",
+		"newHost": "New host",
+		"hostsName": "Hosts name",
+		"hostsPhone": "Hosts phone",
+		"hostsEmail": "Hosts email",
+		"selectedUser": "User"
 	},
 	"clients": {
 		"name": "name",
@@ -542,7 +547,8 @@
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to settle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s spot was accepted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
-		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \\\"%(arg1)s\\\". You will not be able to log in again until your email is verified."
+		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \"%(arg1)s\". You will not be able to log in again until your email is verified.",
+		"newReservationForYou": "%(arg1)s (%(arg2)s) just created new reservation for you."
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
