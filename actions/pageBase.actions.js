@@ -1,3 +1,4 @@
+import translate from 'counterpart'
 import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
@@ -227,10 +228,11 @@ function contains (string, text) {
   return string.indexOf(text) != -1
 }
 
-export function fetchCurrentUser(){
+export function fetchCurrentUser() {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch( setCurrentUser( response.data.current_user ) )
+      if (response.data.current_user.language !== translate.getLocale()) nav.changeLanguage(response.data.current_user.language)
     }
     request(onSuccess, GET_CURRENT_USER)
   }

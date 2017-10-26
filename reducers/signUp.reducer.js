@@ -14,7 +14,7 @@ const initialState = 	{ fetching: false
 											,	error: 		undefined
 
 											,	name: 				{value:'', valid: false}
-											,	phone: 				{value:'', valid: true}
+											,	phone: 				{value:'', valid: false}
 											,	email: 				{value:'', valid: false}
 											,	password: 		{value:'', valid: false}
 											,	confirmation: {value:'', valid: false}
@@ -24,7 +24,7 @@ const initialState = 	{ fetching: false
 
 export default function signUp (state = initialState, action) {
   switch (action.type) {
-		
+
     case REGISTER_REQUEST:
     	return  { ...state
 							, fetching: true

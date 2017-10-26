@@ -1,6 +1,7 @@
 import {
   INVITE_USER_BOOLEAN_ATTR,
   INVITE_USER_SET_PHONE,
+  INVITE_USER_SET_LANGUAGE,
   INVITE_USER_SET_NAME,
   INVITE_USER_SET_MESSAGE,
   INVITE_USER_SET_EMAIL,
@@ -35,6 +36,7 @@ const defaultState =  { ...booleanAttributes
                       , message:      ""
                       , full_name:    ""
                       , phone:        ""
+                      , language:     'en'
 
                       , clients:      []
                       , client_id:    undefined
@@ -74,6 +76,10 @@ export default function inviteUser (state = defaultState, action) {
     case INVITE_USER_SET_PHONE:
     return  { ...state
             , phone: action.value
+            }
+    case INVITE_USER_SET_LANGUAGE:
+    return  { ...state
+            , language: action.value
             }
 
     case INVITE_USER_SET_CLIENTS:

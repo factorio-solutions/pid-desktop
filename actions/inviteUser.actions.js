@@ -9,6 +9,7 @@ export const INVITE_USER_SET_EMAIL                = "INVITE_USER_SET_EMAIL"
 export const INVITE_USER_SET_MESSAGE              = "INVITE_USER_SET_MESSAGE"
 export const INVITE_USER_SET_NAME                 = "INVITE_USER_SET_NAME"
 export const INVITE_USER_SET_PHONE                = "INVITE_USER_SET_PHONE"
+export const INVITE_USER_SET_LANGUAGE             = "INVITE_USER_SET_LANGUAGE"
 
 export const INVITE_USER_SET_CLIENT              = "INVITE_USER_SET_CLIENT"
 export const INVITE_USER_SET_CLIENTS             = "INVITE_USER_SET_CLIENTS"
@@ -49,6 +50,11 @@ export function setName (name){
 export function setPhone (phone){
   return  { type: INVITE_USER_SET_PHONE
           , value: phone
+          }
+}
+export function setLanguage (lang){
+  return  { type: INVITE_USER_SET_LANGUAGE
+          , value: lang
           }
 }
 
@@ -139,7 +145,10 @@ export function initManagebles () {
       dispatch(setCars(cars))
     }
 
-    request (onSuccess, INIT_MANAGEBLES)
+    const currentUser = getState().pageBase.current_user
+    currentUser && dispatch(setLanguage(currentUser.language))
+
+    request(onSuccess, INIT_MANAGEBLES)
   }
 }
 
@@ -260,6 +269,7 @@ export function createNewManagebles () {
                         , full_name: state.full_name
                         , phone:     state.phone
                         , message:   state.message
+                        , language:  state.language
                         }
               , user_car: state.car_id ? { car_id: +state.car_id
                                          , admin: state.car_admin
