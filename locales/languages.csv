@@ -74,10 +74,10 @@ pageBase.New Reservation,New reservation,Nová rezervace,Nowa rezerwacja,Neue Re
 pageBase.NewGarage,Set up new garage,Vytvoření nové garáže,Utworzyć nowy garaż,Neues Parkhaus einrichten
 pageBase.newPricing,New pricing,Nový ceník,Nowy cennik,Neue Preisliste
 pageBase.Pricings,Edit pricing,Upravit ceník,Edytować cennik,Preisliste bearbeiten
-pageBase.newRent,New rent,Nový pronájem,Nowy najem,Neues Mietverhältnis
-pageBase.Rents,Edit rent,Upravit pronájem,Edytować najem,Mietverhältnis bearbeiten
+pageBase.newRent,New rent,Nový nájem,Nowy najem,Neues Mietverhältnis
+pageBase.Rents,Edit rent,Upravit nájem,Edytować najem,Mietverhältnis bearbeiten
 pageBase.Garages,Garages,Garáže,Garaże,Parkhäuser
-pageBase.Garage,Garage,Garáže,Garaż,Parkhaus
+pageBase.Garage,Garage,Garáž,Garaż,Parkhaus
 pageBase.Cars,Cars,Auta,Samochody,Fahrzeuge
 pageBase.Profile,Profile,Profil,Profil,Profil
 pageBase.Users,Users,Uživatelé,Użytkownicy,Benutzer
@@ -228,13 +228,13 @@ In der Spalte „Rechnungen“ wird der Rechnungsstatus angezeigt – wenn alle 
 
 Klicken Sie auf einen Kunden, um weitere Details (z.B Kontaktperson oder eine Liste der abgeschlossenen Verträge) anzuzeigen. Mit den Schaltflächen rechts können Sie neue Verträge erstellen, Rechnungen kontrollieren, die Kundendaten anpassen oder alle Benutzer anzeigen, die zum Kunden gehören. In dieser Darstellung können Sie auch auf die einzelnen Verträge klicken und diese anpassen."
 pageBase.newClientHint,"Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",,"Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.","Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben."
-pageBase.clientUsersHint,"This section lets you manage users of a particular client account. Select a user to view and set up user rights. You can also invite new users to this selected client account. Invitations sent and waiting for confirmation are shown in the ""Pending invitations"" section below.",,"Ta sekcja umożliwia zarządzanie użytkownikami poszczególnego konta klienta. Wybierając użytkownika możesz zobaczyć i ustawić uprawnienia użytkownika. Możesz również zaprosić nowych użytkowników do wybranego konta klienta. Wysłane zaproszenia, które czekają na odpowiedź znajdziesz w sekcji ""Czekające zaproszenia"".","In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt."
+pageBase.clientUsersHint,"This section lets you manage users of a particular client account. Select a user to view and set up user rights. You can also invite new users to this selected client account. Invitations sent and waiting for confirmation are shown in the ""Pending invitations"" section below.","Zde můžete spravovat uživatele konkrétního klientského účtu a také zvát k tomuto účtu nové uživatele. U každéhu uživatele můžete zobrazit a nastavit jeho práva. Pozvánky, které jste zaslali a čekají na potvrzení jsou uvedeny v části ""Čekající pozvánky"" v záložce ""Uživatelé"".","Ta sekcja umożliwia zarządzanie użytkownikami poszczególnego konta klienta. Wybierając użytkownika możesz zobaczyć i ustawić uprawnienia użytkownika. Możesz również zaprosić nowych użytkowników do wybranego konta klienta. Wysłane zaproszenia, które czekają na odpowiedź znajdziesz w sekcji ""Czekające zaproszenia"".","In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt."
 pageBase.settingsHint,In this section you can set your desired language and switch on and off these help boxes throughout the application.,Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.,Tutaj możesz ustawić język aplikacji oraz włączyć lub wyłączyć okna pomocy w całej aplikacji.,In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.
 pageBase.usersHint,"Here you have a list of all known users. Select a user to see client accounts membership and their role therein. The detailed view also shows which vehicles are assigned to that user, which garages they have access to, and their role therein.","Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí, ve kterých klientských účtech je členem a jaké v nich má role. Dále se v detailu zobrazí, jaká má přiřazená auta, kterých garáží je členem a jaké v nich má role.","Tutaj znajdziesz listę wszystkich użytkowników. Po wybraniu użytkownika zobaczysz, członkiem których kont klienta jest oraz jakie ma w nich role. W szczegółach ukażą się również przyporządkowane do niego auta, garaże których jest członkiem oraz jego rola w nich. ","Hier sehen Sie eine Liste aller Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat."
 pageBase.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani użytkownicy,Alle bekannten Benutzer
 pageBase.editClientHint,TODO: edit client hint: Here you can change information about this client.,,,
 pageBase.notificationsHint,This section displays all notifications that need to be resolved.,"Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.","Tutaj ukazują się wszystkie wiadomości, na które musisz odpowiedzieć.","Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen."
-pageBase.inviteUsersHint,"Invite a new user to connect with the selected Client Account. Please provide an email address and send the invitation. After the user accepts the invitation, he or she automatically becomes a member of the selected Client Account.",,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.","Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. sie automatisch Mitglied des ausgewählten Kundenkontos."
+pageBase.inviteUsersHint,"Invite a new user to connect with the selected Client Account. Please provide an email address and send the invitation. After the user accepts the invitation, he or she automatically becomes a member of the selected Client Account.",Pozvěte do klientského účtu nového uživatele. Zadejte jeho e-mailovou adresu a odešlete pozvánku. Po přijetí pozvánky se uživatel automaticky připojí k vybranému klientskému účtu.,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.","Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. sie automatisch Mitglied des ausgewählten Kundenkontos."
 pageBase.addFeaturesHint,Here you can add functionality to your system. TODO: add features hint,Zde můžete přidat funkce do tvého systému.,Tutaj możesz dodaj funkcje do swojego systemu.,Hier können Sie Funktionen zum System hinzufügen.
 pageBase.addFeatures,Add features,Přidat funkce,Dodać funkcje,Funktionen hinzufügen
 pageBase.newAccountHint,"Here you can create customer accounts, which contain information about the customer, users, parking spots assigned, etc. You can change these settings in the relevant section.","Zde můžete vytvářet zákaznické účty. Ty v sobě obsahují informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Toto vše lze nastavit v patřičné sekci systému.","Tutaj utworzyć możesz konto klienta. Konto zawiera informacje o kliencie, użytkownikach, przyporządkowanych im miejscach parkingowych itp. Ustawienia znajdziesz w odpowiedniej sekcji systemu.","Hier können Sie die Kundenkonten verwalten. Das Kundenkonto enthält Informationen zum Kunden, seinen Benutzern, den zugewiesenen Stellplätzen usw. Wenn ein Konto ausgewählt wird, werden Schaltflächen zum Bearbeiten und Verwalten von Benutzern angezeigt. "
@@ -327,8 +327,8 @@ Vedle pole s popisem si můžete vybrat libovolný počet parametrů, které se 
 V části ""Fotky garáže"" můžete nahrát fotky, které se poté zobrazí na webových stránkách. Doporučuje fotografie do velikosti 1Mb ve formátu .jpg.",Tutaj możesz zarządzać edycją marketingu.,Hier können Sie Marketing bearbeiten.
 pageBase.garageNewPricingHint,Here you can set up new reservation pricing. TODO: New pricing Hint,Zde můžete nastavit novou cenu rezervace,Tutaj możesz ustawić nową cenę rezerwacji.,Hier können Sie neue Reservierungspreise einstellen.
 pageBase.garageEditPricingHint,Here you can edit pricing properties. TODO: Edit pricing hint,Zde můžete upravit vlastnosti ceny,Tutaj możesz edytować właściwości ceny.,Hier können Sie Preiseigenschaften einstellen.
-pageBase.garageNewRentHint,Here you can set up new rent for your parking spots. TODO: New rent hint,Zde můžete nastavit nový pronájem za svoje místa,Tutaj możesz ustawić nowy wynajem swoich miejsc.,Hier können Sie ein neues Mietverhältnis einrichten.
-pageBase.garageEditRentHint,Now you can edit rent properties. TODO: Edit rent hint,Zde můžete upravit vlastnosti pronájmu,Tutaj możesz edytować właściwości wynajmu.,Hier können Sie die Mieteigenschaften bearbeiten.
+pageBase.garageNewRentHint,Here you can set up new rent for your parking spots. TODO: New rent hint,Zde můžete nastavit nový nájem za svoje místa,Tutaj możesz ustawić nowy wynajem swoich miejsc.,Hier können Sie ein neues Mietverhältnis einrichten.
+pageBase.garageEditRentHint,Now you can edit rent properties. TODO: Edit rent hint,Zde můžete upravit vlastnosti nájmu,Tutaj możesz edytować właściwości wynajmu.,Hier können Sie die Mieteigenschaften bearbeiten.
 pageBase.garageAddClientHint,Here you can add a client to the garage management page. TODO: add client to management hint,Zde můžete přidat klienta na stránky se správou garáží,Tutaj możesz dodać klienta do strony zarządzania garażem.,Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.
 pageBase.garageGarageUsersHint,Here you can manage who can use your garage and what rights they have. TODO: Garage users management,Zde můžete spravovat uživatele garáže a jejich práva.,"Tutaj możesz wybrać, kto może zarządzać twoim garażem.","Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann."
 pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete změnit svoje údaje.,Tutaj możesz zmienić swoje dane.,Hier können Sie die eigenen Angaben ändern.
@@ -337,6 +337,8 @@ pageBase.reservationOverviewHint,TODO: new reservation overview hint: Here you c
 pageBase.editInvoiceHint,"TODO: edit invoice hint: Afther clicking OK, a new invoice will be created with corrected data.",,,
 pageBase.editContractHint,"TODO: edit contract hint: Here you can select a contract and edit it to change parking spots, duration or price.",,,
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht.
+pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,,
+pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,,
 pageBase.unredNotifications.other,You have %(count)s unread notifications,Máte %(count)s nepřečtených upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesene Nachrichten.
 pageBase.analytics,Analytics,Analýza,Analiza,Analyse
 pageBase.garageTurnover,Garage turnover,Obrat garáže,Obroty garażu,Parkhausumsatz
@@ -405,6 +407,11 @@ newReservation.paymentUnsucessfull,Payment was canceled and not completed.,Platb
 newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu platnosti ...,Kontroluję płatność...,Validierung läuft …
 newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
+newReservation.newHost,New guest,Nový host,,
+newReservation.hostsName,Guest name,Jméno hosta,,
+newReservation.hostsPhone,Guest phone,Hostův telefon,,
+newReservation.hostsEmail,Guest email,Hostův email,,
+newReservation.selectedUser,User,Uživatel,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -412,7 +419,7 @@ clients.created,created,vytvořeno,utworzone,Erstellungsdatum
 clients.users,users,uživatelé,użytkownicy,Benutzer
 clients.token,client token,token klienta,,Kunden-Token
 clients.contactPerson,Contact person,Kontaktní osoba,,Ansprechpartner
-clients.createdAt,Created at,,,Erstellungsort
+clients.createdAt,Created at,Klient vytvořen,,Erstellungsort
 clients.createAgreement,Create contract,Vytvořit smlouvu,,Vereinbarung erstellen
 clients.editClient,Edit client,Upravit klienta,,Kunden bearbeiten
 clients.goToUsers,Go to users,Uživatelé,,Benutzer
@@ -433,7 +440,10 @@ clientUsers.host,is a guest,je host,jest gościem,ist Gast
 clientUsers.presetAs,Preset as,Nastavit jako,Ustaw jako,Einstellen als
 clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć użytkownika?,Möchten Sie diesen Benutzer wirklich entfernen?
 clientUsers.pendingUsers,Pending invitations,Nevyřízené pozvánky,Zaproszenia czekające na odpowiedź,Offene Einladungen
-clientUsers.removeUser,Remove user,Odstranit uživatele,,Benutzer löschen
+clientUsers.removeUser,Remove user,Odstranit uživatele,,Benutzer entfernen
+clientUsers.resendInvitation,Resend email,Znovu odeslat,,
+clientUsers.resendSuccessfull,Email was sucessfully send.,Email úspěšně odeslán.,,
+clientUsers.userNotFound,Could not find this user.,Uživatel nenalezen.,,
 reservations.name,name,jméno,Użytkownik,Name
 reservations.from,from,od,od,von
 reservations.to,to,do,do,bis
@@ -484,7 +494,7 @@ garages.placeRent,Rents,Nájmy,Wynajmy,Mietverhältnisse
 garages.rentName,Rent name,Název nájmu,Nazwa wynajmu,Name des Mietverhältnisses
 garages.price,Price,Cena,Cena,Preis
 garages.places,Places,Místa,Miejsca,Plätze
-garages.editRent,Edit rent,Upravit pronájem,,Mietverhältnis bearbeiten
+garages.editRent,Edit rent,Upravit nájem,,Mietverhältnis bearbeiten
 occupancy.selectClientClient,Select client,Vybrat klienta,Wybrać klienta,Kunden auswählen
 occupancy.allReservations,All reservations,Všechny rezervace,Wszystkie rezerwacje,Alle Reservierungen
 occupancy.dayShortcut,D,D,D,T
@@ -521,11 +531,11 @@ garageManagement.invalidaDate,"Wrong date, format: 20.5.2016","Špatné datum, f
 garageManagement.clients,Clients,Klienti,Klienci,Kunden
 garageManagement.gates,Gates,Brány,Bramy,Tore
 garageManagement.pricing,Pricing,Stanovení ceny,Cennik,Preislisten
-garageManagement.rent,Rent,Pronájem,Wynajem,Mietverhältnis
+garageManagement.rent,Rent,Nájem,Wynajem,Mietverhältnis
 garageManagement.selectClient,Select client,Vyberte klienta,Wybierz klienta,Wählen Sie einen Kunden aus
 garageManagement.selectGate,Select gate,Vyberte bránu,Wybierz bramę,Wählen Sie Tore aus
 garageManagement.selectPricing,Select pricing,Vyberte stanovení ceny,Wybierz cennik,Wählen Sie die Preisliste aus
-garageManagement.selectRent,Select rent,Vyberte pronájem,Wybierz wynajem,Wählen Sie das Mietverhältnis aus
+garageManagement.selectRent,Select rent,Vyberte nájem,Wybierz wynajem,Wählen Sie das Mietverhältnis aus
 garageManagement.places,Spots,Místa,Miejsca,Plätze
 garageManagement.newClientId,Insert new client ID,Vlož id nového klienta,Wklej ID nowego klienta,Neue Kunden-ID einfügen
 garageManagement.newClientIdInvalid,Invalid ID,Neplatné id,Niepoprawne ID,ID nicht gültig
@@ -657,7 +667,7 @@ newClient.invalidDIC,invalid DIČ,neplatné DIČ,niepoprawny DIČ,USt.-ID ist un
 inviteUser.selectUser,User email(s),Email(y) uživatele,E-mail(e) użytkownika,E-Mail-Adresse(n) des Benutzers
 inviteUser.connectionExists,This user is already in this client account.,Tento uživatel již je v tomto klientském účtu.,Użytkownik znajduje się już na tym koncie klienta.,Dieser Benutzer ist in diesem Kundenkonto bereits vorhanden.
 inviteUser.sendingInvitation,"Loading, inviting user","Načítám, zvu uživatele","Przetwarzam, zapraszam użytkownika.","Ladevorgang läuft, Benutzer wird eingeladen."
-inviteUser.notificationSend,Success: Notification has been send to this user. Wait for the user to accept.,"Hotovo: Upozornění bylo odesláno tomuto uživateli. Počkejte prosím, až ho potvrdí.",Gotowe: Wiadomość została wysłana do użytkownika. Poczekaj na jego potwierdzenie!,"Erfolg: Der Benutzer hat eine Benachrichtigung erhalten, warte auf Antwort."
+inviteUser.notificationSend,Success: Notification has been sent to this user. Wait for the user to accept.,"Hotovo: Upozornění bylo odesláno tomuto uživateli. Počkejte prosím, až ho potvrdí.",Gotowe: Wiadomość została wysłana do użytkownika. Poczekaj na jego potwierdzenie!,"Erfolg: Der Benutzer hat eine Benachrichtigung erhalten, warte auf Antwort."
 inviteUser.message,You have been invited to use the '%(client)s'! client account,Byl jste pozván k použití klientského účtu '%(client)s'!,Zostałeś(-aś) zaproszony(-a) do używania konta klienta '%(client)s'!,Sie wurden zur Benutzung des Kundenkontos „%(client)s“ eingeladen!
 inviteUser.noRights,You do not have the right to do that.,Na toto nemáte práva.,Nie masz odpowiednich uprawnień.,Sie haben dazu keine Berechtigung.
 inviteUser.inviteMessage,Invitation message,Pozvánka,Zaproszenie,Einladung
@@ -676,9 +686,9 @@ inviteUser.admin,admin,admin,admin,Administrator
 inviteUser.secretary,secretary,sekretář/ka,Sekretarz/sekretarka,Sekretär/in
 inviteUser.host,guest,host,gość,Gast
 inviteUser.internal,internal,interní,wewnętrzny,intern
-inviteUser.security,security,zabezpečení,zabezpieczenie,Wachdienst
+inviteUser.security,security,ostraha,zabezpieczenie,Wachdienst
 inviteUser.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
-inviteUser.clientRights,Client rights,Klientova práva,Prawa klienta,Kundenrechte
+inviteUser.clientRights,User rights,Práva uživatele,Prawa klienta,Benutzerrechte
 inviteUser.clientRightsDesc,These rights will be only valid if the client is specified.,Tato práva budou platná pouze pokud bude klient specifikován.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy klient zostanie określony.","Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird."
 inviteUser.GarageRights,Garage rights,Práva garáže,Prawa garażu,Parkhausrechte
 inviteUser.GarageRightsDesc,These rights will be valid only if the garage is specified.,Tato práva budou platná pouze pokud bude garáž specifikována.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy garaż zostanie określony.","Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird."
@@ -707,6 +717,7 @@ notifications.invoiceReminder,Account %(arg1)s would like to inform you that you
 notifications.reservationAccepted,"Your reservation on ""%(arg1)s""s spot was accepted.","Vaše rezervace na ""%(arg1)s místo byla akceptována.","Twoja rezerwacja na miejsce ""%(arg1)s"" została zaakceptowana.",Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.
 notifications.reservationDeclined,"Your reservation on ""%(arg1)s""s place was declined.","Vaše rezervace na ""%(arg1)s místo byla zrušena.","Twoja rezerwacja na miejsce ""%(arg1)s"" została odrzucona.",Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.
 notifications.verifyYourEmail,"Welcome to Park-it-direct! You have been sent a verification email to \""%(arg1)s\"". You will not be able to log in again until your email is verified.","Vítejte v Park-it-direct! Na adresu \""%(arg1)s\""s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.",,
+notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created new reservation for you.,%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.,,
 profile.profileSettings,Profile settings,Nastavení profilu,Ustawienia profilu,Profileinstellungen
 profile.hints,I want to see hints:,Chci vidět tipy:,Chcę zobaczyć rady:,Ich möchte Tipps sehen
 profile.language,Choose language:,Vyberte jazyk:,Wybierz język:,Sprache auswählen:
@@ -977,12 +988,12 @@ newContract.description,New Agreement in,Nová dohoda v,Nowa umowa w,Neue Verein
 newContract.edit,Editing agreement in,Úprava dohody v,,Vereinbarung bearbeiten in
 newContract.yourContract,Your contract in,Vaše dohoda v,Twoja umowa w,Ihr Vertrag in
 newContract.selectClient,Select client,Vyberte klienta,Wybierz klienta,Kunden auswählen
-newContract.invalidToken,Token invalid,,Niepoprawny token,Token ungültig
+newContract.invalidToken,Token invalid,Neplatný token,Niepoprawny token,Token ungültig
 newContract.tokenPlaceholder,gaZJBS,gaZJBS,gaZJBS,gaZJBS
 newContract.clientNotFound,No client with this token exists,Žádný klient s tímto tokenem neexistuje,Nie istnieje klient z takim tokenem.,Es gibt keinen Kunden mit diesem Token.
 newContract.selectedPlaces,Selected spots,Vybraná místa,Wybrane miejsca,Ausgewählte Stellplätze
 newContract.noSelectedPlaces,No selected spots,Žádná vybraná místa,Nie ma żadnych wybranych miejsc,Keine Stellplätze ausgewählt
-newContract.selectRent,Select rent,Vyberte pronájem,Wybierz najem,Mietverhältnis auswählen
+newContract.selectRent,Select rent,Vyberte nájem,Wybierz najem,Mietverhältnis auswählen
 newContract.contractPrice,Enter new specific contract price,Zadej novou konkrétní smluvní cenu,Wpisz konkretną kwotę umowy,Neuen konkreten vereinbarten Preis auswählen
 newContract.priceInvalid,Price invalid,Cena je neplatná,Kwota jest niepoprawna,Ungültiger Preis
 newContract.pricePlaceholder,10000,10000,10000,10000
@@ -1039,3 +1050,67 @@ dashboard.total,Total,Celkem,Ogółem,Insgesamt
 loginVerification.description,Multifactor authorization has been triggered. We will now send you a code by email %(email)s,Spuštěna vícefázová autorizace. Na email %(email)s vám zašleme ověřovací kód.,,
 loginVerification.code,code,kód,,
 loginVerification.codeInvalid,Code invalid,Špatný kód,,
+auth0Emails.securityReasons,For security reasons we need you to verify your email,Z bezpečnostních důvodů potřebujeme ověřit váš email,,
+auth0Emails.easyAsClickingButton,It's as easy as clicking the link below:,Jednoduše klikněte na toto tlačítko:,,
+auth0Emails.confirmAccount,Confirm my account!,Ověřit účet!,,
+auth0Emails.enjoy,Enjoy your Park-it-direct experience!,Užijte si Park-it-direct!,,
+auth0Emails.bestRegards,"Best Regards,","S pozdravem,",,
+auth0Emails.PidTeam,Park-it-direct team,tým Park-it-direct,,
+auth0Emails.welcome,Welcome to Park-it-direct!,Vítejte v Park-it-direct,,
+auth0Emails.thankYou,Thank you for using our management tool. Let’s take a look how can Park-it-direct help you with management of your parking.,"Děkujeme, že používáte náš nástroj pro správu. Pojďme se podívat, jak může Park-it-direct pomoci při správe vašeho parkování",,
+auth0Emails.howToStart, How to start with PID?,Jak začít s PID?,,
+auth0Emails.pleasantExperience,Are you searching for a pleasant parking experience? Or you want to organize parking in your company? Or perhaps providing parking for others is your business?,Hledáte příjemné parkování? Nebo chcete organizovat parkování vaší firmy? Nebo se živíte pronájmem parkovacích míst?,,
+auth0Emails.helpForHelp,There is a blue help window on the top or right side of each screen which explains the content. You can turn this help on/off anytime in your account setting.,"Na každé stránce najdete modrý pruh s nápovědou, ten vysvětluje obsah stránky. Nápovědu můžete kdykoliv vypnout/zapnout v nastavení vašeho účtu.",,
+auth0Emails.garageSetup,"Would you like to setup your garage? We will gladly help you - just let us know and we will give you a call! Together we can go through all settings and make sure you benefit from using Park-it-direct as much as possible, while saving your valuable time.","Chtěli byste založit garáž? S tím Vám rádi pomůžeme, dejte nám vědět a my Vám zavoláme! Spolu projdeme všechna nastavení a ujistíme se, že Vám Park-it-direct zajistí maximální prospěch a úsporu času.",,
+auth0Emails.getInTouch, Need to get in touch with us?,Chcete nás kontaktovat?,,
+auth0Emails.website,"We are always here for you. You can find contact details on our <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">website</a> or you can use chat button on our website and in the app.","Jsme tu pro vás pořád. Kontakt najdete na <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.",,
+auth0Emails.passwordResetSubmited,You have submitted a password change request!,Požádali jste o změnu hesla!,,
+auth0Emails.pwdResetDescr,"If it wasn't you please disregard this email and make sure you can still login to your account. If it was you, then ","Pokud jste o změnu hesla nepožádali, můžete tuto zprávu ignorovat. Pokud jste to byli vy, pak ",,
+auth0Emails.confirmPwdReset,Confirm the password change,Dokončit změnu hesla,,
+auth0Emails.troubleWithAccount,"If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.","Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.",,
+auth0Emails.verificationCode,Below you can find your verification code for Park-it-direct!,Níže najdete Váš ověřovací kód pro Park-it-direct!,,
+railsEmails.footer.enjoy,Enjoy your Park-it-direct experience!,Užijte si Park-it-direct!,,
+railsEmails.footer.regards,"Best Regards,","S pozdravem,",,
+railsEmails.footer.team,Park-it-direct team,tým Park-it-direct,,
+railsEmails.invitation_mail.hello,"Hello,","Dobrý den,",,
+railsEmails.invitation_mail.invitation,You have been invited to Park-it-direct!,Právě jste byli pozváni do Park-it-direct!,,
+railsEmails.invitation_mail.invited_you,just invited you to start using Park-it-direct.,Vás pozval k používání Park-it-direct.,,
+railsEmails.invitation_mail.says,says:,vzkazuje:,,
+railsEmails.invitation_mail.admin,admin,administrátor,,
+railsEmails.invitation_mail.secretary,secretary,sekretář/ka,,
+railsEmails.invitation_mail.host,guest,host,,
+railsEmails.invitation_mail.internal,internal,interní,,
+railsEmails.invitation_mail.contact_person,contact person,kontaktní osoba,,
+railsEmails.invitation_mail.receptionist,receptionist,recepční,,
+railsEmails.invitation_mail.security,security,ochranka,,
+railsEmails.invitation_mail.invited_to,just invited you to join client account,Vás pozval do klienta,,
+railsEmails.invitation_mail.as,as,jako,,
+railsEmails.invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",,
+railsEmails.invitation_mail.let_us_know,let us know,kontaktujte mailem,,
+railsEmails.invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,,
+railsEmails.new_reservation_mail.new_reservation,You have new reservation on Park-it-direct!,Máte novou rezervaci v Park-it-direct!,,
+railsEmails.new_reservation_mail.reservation_for_you,has created new reservation for you.,pro Vás vytvořil novou rezervaci.,,
+railsEmails.new_reservation_mail.more_details,For more details go to Park-it-direct:,Více informací najdete v Park-it-direct:,,
+railsEmails.new_reservation_mail.to_pid,To Park-it-direct!,Do Park-it-direct!,,
+railsEmails.resend_invitation_mail.hello,"Hello,","Dobrý den,",,
+railsEmails.resend_invitation_mail.invitation_reminder,This is invitation reminder to Park-it-direct!,Toto je připomínkový email od Park-it-direct!,,
+railsEmails.resend_invitation_mail.remind_you,would like to remind you your invitation to Park-it-direct.,by Vám rád připoměl pozvánku do Park-it-direct.,,
+railsEmails.resend_invitation_mail.admin,admin,administrátor,,
+railsEmails.resend_invitation_mail.secretary,secretary,sekretář/ka,,
+railsEmails.resend_invitation_mail.host,guest,host,,
+railsEmails.resend_invitation_mail.internal,internal,interní,,
+railsEmails.resend_invitation_mail.contact_person,contact person,kontaktní osoba,,
+railsEmails.resend_invitation_mail.receptionist,receptionist,recepční,,
+railsEmails.resend_invitation_mail.security,security,ochranka,,
+railsEmails.resend_invitation_mail.invited_to,invited you to join client account,Vás pozval do klienta,,
+railsEmails.resend_invitation_mail.as,as,jako,,
+railsEmails.resend_invitation_mail.to_sign_up,Sign me up!,Registrovat se!,,
+railsEmails.resend_invitation_mail.to_pid,To Park-it-direct!,Do Park-it-direct!,,
+railsEmails.resend_invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",,
+railsEmails.resend_invitation_mail.let_us_know,let us know,kontaktujte mailem,,
+railsEmails.resend_invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,,
+railsEmails.reservation_confirmed.reservation_confirmed,Reservation you asked for was confimed!,"Rezervace, o kterou jste požádali, byla schválena!",,
+railsEmails.reservation_confirmed.garage,Garage:,Garáž:,,
+railsEmails.reservation_confirmed.place,Place:,Místo:,,
+railsEmails.reservation_confirmed.from,From:,Od:,,
+railsEmails.reservation_confirmed.to,To:,Do:,,
