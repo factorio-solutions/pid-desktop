@@ -1,5 +1,6 @@
 import moment                                from 'moment'
 import { request }                           from '../helpers/request'
+import requestPromise                        from '../helpers/requestPromise'
 import { calculatePrice, valueAddedTax }     from '../helpers/calculatePrice'
 import * as nav                              from '../helpers/navigation'
 import { t }                                 from '../modules/localization/localization'
@@ -18,12 +19,20 @@ import {
   GET_RESERVATION
 } from '../queries/newReservation.queries'
 
+import {
+  USER_AVAILABLE,
+  ADD_CLIENT_USER
+} from '../queries/inviteUser.queries'
+
 const MIN_RESERVATION_DURATION = 30 // minutes
 
 
 export const NEW_RESERVATION_SET_USER             = 'NEW_RESERVATION_SET_USER'
 export const NEW_RESERVATION_SET_AVAILABLE_USERS  = 'NEW_RESERVATION_SET_AVAILABLE_USERS'
 export const NEW_RESERVATION_SET_RESERVATION      = 'NEW_RESERVATION_SET_RESERVATION'
+export const NEW_RESERVATION_SET_HOST_NAME        = 'NEW_RESERVATION_SET_HOST_NAME'
+export const NEW_RESERVATION_SET_HOST_PHONE       = 'NEW_RESERVATION_SET_HOST_PHONE'
+export const NEW_RESERVATION_SET_HOST_EMAIL       = 'NEW_RESERVATION_SET_HOST_EMAIL'
 export const NEW_RESERVATION_SET_CLIENT_ID        = 'NEW_RESERVATION_SET_CLIENT_ID'
 export const NEW_RESERVATION_CAR_ID               = 'NEW_RESERVATION_CAR_ID'
 export const NEW_RESERVATION_CAR_LICENCE_PLATE    = 'NEW_RESERVATION_CAR_LICENCE_PLATE'
@@ -60,6 +69,24 @@ export function setAvailableUsers(value){
 export function setReservation(value){
   return { type: NEW_RESERVATION_SET_RESERVATION
          , value
+         }
+}
+
+export function setHostName(value, valid) {
+  return { type: NEW_RESERVATION_SET_HOST_NAME
+         , value: { value, valid }
+         }
+}
+
+export function setHostPhone(value, valid) {
+  return { type: NEW_RESERVATION_SET_HOST_PHONE
+         , value: { value, valid }
+         }
+}
+
+export function setHostEmail(value, valid) {
+  return { type: NEW_RESERVATION_SET_HOST_EMAIL
+         , value: { value, valid }
          }
 }
 
@@ -259,6 +286,12 @@ export function setInitialStore(id) {
 
     Promise.all([availableUsersPromise, editReservationPromise]).then( (values) => { // resolve
       const users = values[0].reservable_users
+      if (getState().pageBase.current_user && getState().pageBase.current_user.secretary) { // if is secretary then can create new host
+        users.unshift({
+          full_name: t([ 'newReservation', 'newHost' ]),
+          id:        -1
+        })
+      }
       dispatch(setAvailableUsers(users))
       dispatch(setLoading(false))
 
@@ -320,7 +353,7 @@ export function downloadUser(id){
 
     Promise.all([userPromise, availableGaragesPromise, availableClientsPromise]).then(values => {
       values[2].reservable_clients.unshift({name: t(['newReservation', 'selectClient']), id: undefined})
-      dispatch(setUser({ ...values[0].user
+      dispatch(setUser({ ...values[0].user || { id: -1, reservable_cars: [] }
                        , availableGarages: values[1].reservable_garages
                        , availableClients: values[2].reservable_clients
                        }))
@@ -330,7 +363,7 @@ export function downloadUser(id){
       if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
         dispatch(downloadGarage(values[1].reservable_garages[0].id))
       }
-      if (values[0].user.reservable_cars.length === 1) { // if only one car available
+      if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
       }
 
@@ -472,9 +505,10 @@ export function submitReservation (id) {
 
       dispatch(pageBaseActions.setCustomModal(<div>{t(['newReservation', id?'updatingReservation':'creatingReservation'])}</div>))
 
+    const createTheReservation = user_id => {
       request( onSuccess
              , id ? UPDATE_RESERVATION : CREATE_RESERVATION
-             , { reservation: { user_id:       ongoing ? undefined : state.user.id
+             , { reservation: { user_id:       ongoing ? undefined : user_id
                               , place_id:      ongoing ? undefined : state.place_id
                               , client_id:     ongoing ? undefined : state.client_id
                               , car_id:        ongoing ? undefined : state.car_id
@@ -487,6 +521,46 @@ export function submitReservation (id) {
                }
              , "reservationMutation"
              )
+    }
+
+    if (state.user && state.user.id === -1) { // if  new Host being created during new reservation
+      requestPromise(USER_AVAILABLE, {
+        user: {
+          email:     state.email.value.toLowerCase(),
+          full_name: state.name.value,
+          phone:     state.phone.value,
+          language:  getState().pageBase.current_user.language
+        },
+        client_user: state.client_id ? {
+          client_id: +state.client_id,
+          host:      true,
+          message: ["clientInvitationMessage", state.user.availableClients.findById(state.client_id).name].join(';')
+        } : null
+      }).then(data => {
+        if (data.user_by_email !== null) { // if the user exists
+          // invite to client
+          if (state.client_id) { // if client is selected then invite as host
+            requestPromise(ADD_CLIENT_USER, {
+              user_id:     data.user_by_email.id,
+              client_user: {
+                client_id: +state.client_id,
+                host:      true,
+                message: ["clientInvitationMessage", state.user.availableClients.findById(state.client_id).name].join(';')
+              }
+            }).then(response => {
+              console.log('client successfully created', response)
+              createTheReservation(data.user_by_email.id)
+            })
+          } else { // no client selected, create reservation
+            createTheReservation(data.user_by_email.id)
+          }
+        } else { // user is current user
+          createTheReservation()
+        }
+      })
+    } else { // create reservation as normal
+      createTheReservation(state.user.id)
+    }
   }
 }
 

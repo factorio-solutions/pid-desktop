@@ -5,6 +5,7 @@ import moment                           from 'moment'
 
 import PageBase      from '../_shared/containers/pageBase/PageBase'
 import Input         from '../_shared/components/input/Input'
+import PatternInput  from '../_shared/components/input/PatternInput'
 import Uneditable    from '../_shared/components/input/Uneditable'
 import DatetimeInput from '../_shared/components/input/DatetimeInput'
 import ButtonStack   from '../_shared/components/buttonStack/ButtonStack'
@@ -80,6 +81,7 @@ export class NewReservationPage extends Component {
     }
 
     const isSubmitable = () => {
+      if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if (state.car_id == undefined && state.carLicencePlate=='') return false
       if (state.from == '' || state.to == '') return false
       return state.user && state.place_id
@@ -125,6 +127,10 @@ export class NewReservationPage extends Component {
             <div className={styles.padding}>
               <Form onSubmit={toOverview} onBack={handleBack} submitable={isSubmitable()} onHighlight={hightlightInputs}>
                 {((state.user && pageBase.current_user && state.user.id !==  pageBase.current_user.id) || state.availableUsers.length>1) && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectUser'])}   content={userDropdown()}   selected={state.availableUsers.findIndex((user)=>{return state.user && user.id == state.user.id})} style='reservation' highlight={state.highlight}/> }
+                {state.user && state.user.id === -1 && <PatternInput onChange={actions.setHostName}  label={t(['newReservation', 'hostsName'])}  error={t(['signup_page', 'nameInvalid'])}  pattern="^(?!\s*$).+"                                value={state.name.value}  highlight={state.highlight} />}
+                {state.user && state.user.id === -1 && <PatternInput onChange={actions.setHostPhone} label={t(['newReservation', 'hostsPhone'])} error={t(['signup_page', 'phoneInvalid'])} pattern="\+[\d]{2,4}[\d]{3,}"                        value={state.phone.value} highlight={state.highlight} />}
+                {state.user && state.user.id === -1 && <PatternInput onChange={actions.setHostEmail} label={t(['newReservation', 'hostsEmail'])} error={t(['signup_page', 'emailInvalid'])} pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" value={state.email.value} highlight={state.highlight} />}
+
                 {state.user && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectGarage'])} content={garageDropdown()} selected={state.user.availableGarages.findIndex((garage) => {return state.garage && garage.id === state.garage.id})} style='reservation' highlight={state.highlight}/>}
                 {state.user && state.user.availableClients && state.user.availableClients.length>1 && <Dropdown editable={!ongoing} label={t(['newReservation', 'selectClient'])} content={clientDropdown()} selected={state.user.availableClients.findIndex((client)=>{return client.id == state.client_id})} style='reservation'/>}
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length==0 ? <Input readOnly={ongoing} onChange={actions.setCarLicencePlate} value={state.carLicencePlate} label={t(['newReservation', 'licencePlate'])} error={t(['newReservation', 'licencePlateInvalid'])} placeholder={t(['newReservation', 'licencePlatePlaceholder'])} type='text' name='reservation[licence_plate]' align='center' highlight={state.highlight}/>
