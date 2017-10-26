@@ -140,7 +140,7 @@ export function openGarageViaBluetooth(name, reservationId, gateId) {
       opened(true)
       setTimeout(() => {
         ble.close(address, closeSuccessfull, logError) // 6. disconect and 7. close
-      }, repeater ? 10000 : 0) // give repeater time to send data
+      }, repeater ? 5000 : 1000) // give repeater time to send data
     }
 
     const writeOpen = () => { // 5. read/subscribe/write and read/write descriptors
