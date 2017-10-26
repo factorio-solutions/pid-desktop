@@ -84,8 +84,6 @@ export class PageBase extends Component {
                                 <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={notificationsModalClick} type='confirm'  />
                               </div>
 
-                              console.log(notifications, t(['pageBase', 'unredNotifications'], {count: notifications.count}));
-
     return (
       <div>
         <Modal content={errorContent} show={state.error!=undefined} />
