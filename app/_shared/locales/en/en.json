@@ -166,6 +166,8 @@
 		"editContractHint": "TODO: edit contract hint: Here you can select a contract and edit it to change parking spots, duration or price.",
 		"unredNotifications": {
 			"one": "You have one unread notification",
+			"few": "",
+			"many": "",
 			"other": "You have %(count)s unread notifications"
 		},
 		"analytics": "Analytics",
