@@ -2,6 +2,7 @@ import { request } from '../helpers/request'
 
 import { GET_CURRENT_USER, GET_RESERVABLE_GARAGES } from '../queries/mobile.header.queries'
 import { REVOKE_TOKEN } from '../queries/login.queries'
+import { t } from '../modules/localization/localization'
 
 
 export const MOBILE_MENU_SET_GARAGES = 'MOBILE_MENU_SET_GARAGES'
@@ -71,7 +72,7 @@ export function initGarages() {
   return dispatch => {
     const onGarageSuccess = response => {
       const garages = response.data.reservable_garages
-      garages.unshift({ id: undefined, name: 'All garages' })
+      garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]) })
       dispatch(setGarages(garages))
     }
 

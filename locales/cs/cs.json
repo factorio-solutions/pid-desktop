@@ -937,6 +937,93 @@
 		"de": "Deutsch",
 		"pl": "Polski"
 	},
+	"mobileApp": {
+		"page":{
+			"userInfoUnavailable": "Informace o uživateli jsou nedostupné",
+			"logOut": "odhlásit",
+			"selectGarage": "Zvolte garáž",
+			"allGarages": "Všechny garáže"
+		},
+		"login": {
+			"loading": "Načítám ...",
+			"loginFailed": "Špatné příhlášení:",
+			"login": "Prosím, přihlaste se, nebo si",
+			"signup": "vytvořte účet",
+			"email": "Zadejte e-mail",
+			"emailPlaceholder": "Mr@park.it",
+			"emailInvalid": "Neplatná e-mailová adresa",
+			"password": "Heslo"
+		},
+		"signUp": {
+			"signUp": "Registrace!",
+			"niceToMeetYou": "Ahoj, jsme rádi, že jste tady.",
+			"fillDetails": "Prosím, vyplňte detaily:",
+			"name": "Vaše celé jméno *",
+			"nameInvalid": "Neplatné jméno",
+			"phone": "Telefoní číslo *",
+			"phoneInvalid": "Neplatné telefonní číslo",
+			"email": "E-mail *",
+			"emailInvalid": "Neplatná e-mailová adresa",
+			"password": "Heslo *",
+			"passwordInvalid": "Minimální délka je ",
+			"passwordConfirm": "Potvrzení hesla *",
+			"passwordConfirmInvalid": "Heslo se neshoduje",
+			"agreeWith": "Registrací souhlasíte s našimi ",
+			"terms": "podmínkami o poskytování služeb"
+		},
+		"terms": {
+			"termsOfServices": "Podmínkami o poskytování služeb",
+			"content": "Ano ano, máme hodně podmínek. Tuny a tuny."
+		},
+		"menu": {
+			"newNotifications": "Nová upozornění",
+			"access": "Přístup",
+			"myReservations": "Moje rezervace",
+			"welcome": "Vítejte"
+		},
+		"access": {
+			"swipeToOpen": "Swipnutím otevřete bránu",
+			"noOngoingReservations": "Žádné probíhající rezervace",
+			"inSelectedGarage": "ve zvolené garáži"
+		},
+		"reservation": {
+			"details": "Detaily rezervace",
+			"garage": "Garáž",
+			"place": "Místo",
+			"begins": "Začíná",
+			"ends": "Končí"
+		},
+		"newReservation": {
+			"begins":"Začíná",
+			"ends":"Končí",
+			"place":"Místo",
+			"car":"Auto",
+			"price":"Cena",
+			"paidBy":"Kdo platí",
+			"newReservation":"Nová rezervace",
+			"pickPlace":"Zvolte místo",
+			"licencePlate":"SPZ",
+			"licencePlateInvalid":"Neplatná SPZ",
+			"licencePlatePlaceholder":"1A2 1234",
+			"selectCar":"Zvolte auto",
+			"noAvailablePlaces": "Žádná místa nejsou dostupná",
+			"selectGarage": "Začněte volbou garáže",
+			"auto": "AUTO",
+			"now": "TEĎ",
+			"pick": "ZVOLIT",
+			"other": "JINDY",
+			"later": "POZDĚJI",
+			"hourShortcut": "h",
+			"me": "Já",
+			"creatingReservation": "Vytvářím rezervaci",
+			"creatingPayment": "Vytvářím platbu ...",
+			"tokenNoLongerValid": "Identifikátor platby už není platný, rezervace bude odstraněna.",
+			"checkingToken": "Kontroluji identifikátor platby.",
+			"redirecting": "Přesměrovávám ...",
+			"paymentUnsucessfull": "Platba byla neúspěšná.",
+			"processingPayment": "Zpracovávám platbu ..."
+		}
+	},
 	"auth0Emails": {
 		"securityReasons": "Z bezpečnostních důvodů potřebujeme ověřit váš email",
 		"easyAsClickingButton": "Jednoduše klikněte na toto tlačítko:",

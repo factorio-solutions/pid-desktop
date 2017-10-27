@@ -9,34 +9,38 @@ import MobileSlideMenu from '../../components/mobileSlideMenu/MobileSlideMenu'
 import ButtonStack from '../../components/buttonStack/ButtonStack'
 import MobileMenuButton from '../../components/buttons/MobileMenuButton'
 import Modal from '../../components/modal/Modal'
+import Localization from '../../components/localization/Localization'
 
 import styles from './Page.scss'
 
 import * as headerActions from '../../actions/mobile.header.actions'
 import * as loginActions from '../../actions/login.actions'
+import { t } from '../../modules/localization/localization'
 
 
 export class Page extends Component {
-  static propTypes = { actions: PropTypes.object
-    , loginActions: PropTypes.object
-    , state: PropTypes.object
-    , children: PropTypes.oneOfType([ PropTypes.object
-                                    , PropTypes.array
-                                    ])
+  static propTypes = {
+    actions:      PropTypes.object,
+    loginActions: PropTypes.object,
+    state:        PropTypes.object,
+    children:     PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
 
     // header looks
-    , hideHeader: PropTypes.bool
-    , hideDropdown: PropTypes.bool
-    , hideHamburger: PropTypes.bool
-    , label: PropTypes.string // header content
-    , margin: PropTypes.bool // will give page 10px margin to offset content
+    hideHeader:    PropTypes.bool,
+    hideDropdown:  PropTypes.bool,
+    hideHamburger: PropTypes.bool,
+    label:         PropTypes.string, // header content
+    margin:        PropTypes.bool, // will give page 10px margin to offset content
 
     // navigation functions
-    , back: PropTypes.func
-    , add: PropTypes.func
-    , pay: PropTypes.func
-    , ok: PropTypes.func
-    , remove: PropTypes.func
+    back:   PropTypes.func,
+    add:    PropTypes.func,
+    pay:    PropTypes.func,
+    ok:     PropTypes.func,
+    remove: PropTypes.func
   }
 
   static contextTypes = {
@@ -82,7 +86,7 @@ export class Page extends Component {
       return { label: garage.name, onClick: garageSelected }
     }
 
-    const divider = <div className={styles.divider}><div className={styles.line}> </div></div>
+    const divider = <div className={styles.divider}><div className={styles.line} /></div>
 
     const currentUserInfo = (state.current_user && <div className={styles.currentUserInfo}> {/* currently singned in user information */}
       <div className={styles.buttonContainer}>
@@ -96,18 +100,22 @@ export class Page extends Component {
     </div>)
 
     const sideMenuContent = (<div>
-      {state.current_user ? currentUserInfo : <div>User info unavailable.</div>}
+      {state.current_user ? currentUserInfo : <div>{t([ 'mobileApp', 'page', 'userInfoUnavailable' ])}</div>}
       {divider}
       <ButtonStack divider={divider}>
-        {[ <MobileMenuButton key="sign-out" icon="sign-out" label="log out" onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]}
+        {[ <MobileMenuButton key="sign-out" icon="sign-out" label={t([ 'mobileApp', 'page', 'logOut' ])} onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]}
       </ButtonStack>
+
+      <div className={styles.bottom}>
+        <Localization />
+      </div>
     </div>)
 
     const header = (<div className={styles.header}>
       <div className={styles.logo}><Logo /></div>
       <div className={styles.content}>
         <div><b> {label} </b></div>
-      {!hideDropdown && <div><Dropdown label="Select garage" content={state.garages.map(garageDropdown)} style="dark" selected={selectedGarage()} fixed /></div>}
+      {!hideDropdown && <div><Dropdown label={t([ 'mobileApp', 'page', 'selectGarage' ])} content={state.garages.map(garageDropdown)} style="dark" selected={selectedGarage()} fixed /></div>}
       </div>
       {!hideHamburger && <button onClick={actions.toggleMenu} className={styles.menuButton}> <i className="fa fa-bars" aria-hidden="true"></i> </button>}
       <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={actions.toggleMenu} />

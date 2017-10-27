@@ -9,6 +9,7 @@ import { CREATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION } 
 import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT } from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
 import { entryPoint } from '../../index'
+import { t } from '../modules/localization/localization'
 
 export const MOBILE_NEW_RESERVATION_SET_FROM = 'MOBILE_NEW_RESERVATION_SET_FROM'
 export const MOBILE_NEW_RESERVATION_SET_TO = 'MOBILE_NEW_RESERVATION_SET_TO'
@@ -97,7 +98,7 @@ export function setClientId(value) {
 }
 
 export function setAvailableClients(value) {
-  value.unshift({ name: 'Me', id: undefined })
+  value.unshift({ name: t([ 'mobileApp', 'newReservation', 'me' ]), id: undefined })
   return {
     type: MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS,
     value
@@ -260,7 +261,7 @@ export function submitReservation(callback) {
     let reservation = stateToVariables(getState)
     delete reservation.garage_id
 
-    dispatch(setCustomModal(reservation.client_id ? 'Creating reservation' : 'Creating payment ...'))
+    dispatch(setCustomModal(reservation.client_id ? t([ 'mobileApp', 'newReservation', 'creatingReservation' ]) : t([ 'mobileApp', 'newReservation', 'creatingPayment' ])))
 
     request(onSuccess, CREATE_RESERVATION, {
       reservation: {
@@ -286,7 +287,7 @@ export function checkReservation(reservation, callback = () => {}) {
       if (response.data.paypal_check_validity) {
         dispatch(payReservation(reservation.payment_url, callback))
       } else {
-        dispatch(setError('Token of payment is no longer valid, reservation will be deleted.'))
+        dispatch(setError(t([ 'mobileApp', 'newReservation', 'tokenNoLongerValid' ])))
         callback()
       }
     }
@@ -297,10 +298,10 @@ export function checkReservation(reservation, callback = () => {}) {
     }
 
     if (reservation.payment_url.includes('csob.cz')) {
-      dispatch(setCustomModal('Creating payment'))
+      dispatch(setCustomModal(t([ 'mobileApp', 'newReservation', 'creatingPayment' ])))
       request(onCSOBSuccess, CREATE_CSOB_PAYMENT, { id: reservation.id, url: window.location.href.split('?')[0] })
     } else {
-      dispatch(setCustomModal('Checking token validity'))
+      dispatch(setCustomModal(t([ 'mobileApp', 'newReservation', 'checkingToken' ])))
       request(onSuccess, CHECK_VALIDITY, { token: parseParameters(url).token })
     }
   }
@@ -308,7 +309,7 @@ export function checkReservation(reservation, callback = () => {}) {
 
 export function payReservation(url, callback = () => {}) {
   return dispatch => {
-    dispatch(setCustomModal('Redirecting ...'))
+    dispatch(setCustomModal(t([ 'mobileApp', 'newReservation', 'redirecting' ])))
     if (window.cordova === undefined) { // development purposes - browser debuging
       window.location.replace(url)
     } else { // in mobile open InAppBrowser, when redirected back continue
@@ -331,7 +332,7 @@ export function payReservation(url, callback = () => {}) {
 export function paymentUnsucessfull(callback) {
   return dispatch => {
     dispatch(setCustomModal(undefined))
-    dispatch(setError('Payment was unsucessfull.'))
+    dispatch(setError(t([ 'mobileApp', 'newReservation', 'paymentUnsucessfull' ])))
     dispatch(clearForm())
     callback()
   }
@@ -351,7 +352,7 @@ export function finishReservation(token, callback) {
       dispatch(paymentSucessfull(callback))
     }
 
-    dispatch(setCustomModal('Processing payment ...'))
+    dispatch(setCustomModal(t([ 'mobileApp', 'newReservation', 'processingPayment' ])))
     request(
       onSuccess,
       PAY_RESREVATION,
