@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react'
-import translate from 'counterpart'
 import { connect } from 'react-redux'
 
 import RoundButton from '../buttons/RoundButton'
 
-import { changeLanguage } from '../../helpers/navigation'
+import * as nav from '../../helpers/navigation'
+import { changeLanguage } from '../../modules/localization/localization'
 import request from '../../helpers/requestPromise'
-import { AVAILABLE_LANGUAGES } from '../../../routes.js'
+import { AVAILABLE_LANGUAGES } from '../../../routes'
+import { mobile } from '../../../index'
 
 
 const CHANGE_USERS_LANGUAGE = `mutation UpdateUserLanguage($user_id: Id!, $language: String!) {
@@ -27,10 +28,11 @@ class Localization extends Component {
 
     const prepareButtons = (language, i) => {
       const langClick = () => {
-        changeLanguage(language) // change route
+        mobile ? changeLanguage(language) : nav.changeLanguage(language)
+
         user && request(CHANGE_USERS_LANGUAGE, { // if user exists then update language on server
-          language: translate.getLocale(),
-          user_id:  user.id
+          language,
+          user_id: user.id
         }).then(response => console.log(response))
       }
 
@@ -46,6 +48,6 @@ class Localization extends Component {
 }
 
 export default connect(
-  state => ({ user: state.pageBase.current_user }),
+  state => ({ user: state[mobile ? 'mobileHeader' : 'pageBase'].current_user }),
   {}
 )(Localization)

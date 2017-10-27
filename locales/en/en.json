@@ -547,7 +547,7 @@
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to settle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s spot was accepted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
-		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \\\"%(arg1)s\\\". You will not be able to log in again until your email is verified.",
+		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \"%(arg1)s\". You will not be able to log in again until your email is verified.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) just created new reservation for you."
 	},
 	"profile": {
@@ -930,12 +930,99 @@
 		"code": "code",
 		"codeInvalid": "Code invalid"
 	},
-	"languages":{
+	"languages": {
 		"language": "Language",
 		"en": "English",
 		"cs": "Česky",
 		"de": "Deutsch",
 		"pl": "Polski"
+	},
+	"mobileApp": {
+		"page":{
+			"userInfoUnavailable": "User info unavailable.",
+			"logOut": "log out",
+			"selectGarage": "Select garage",
+			"allGarages": "All garages"
+		},
+		"login": {
+			"loading": "Loading ...",
+			"loginFailed": "Login failed:",
+			"login": "Please, log-in or",
+			"signup": "Sign-Up",
+			"email": "Email",
+			"emailPlaceholder": "Mr@park.it",
+			"emailInvalid": "Invalid email address",
+			"password": "Password"
+		},
+		"signUp": {
+			"signUp": "Sign up!",
+			"niceToMeetYou": "Hi, nice to meet you.",
+			"fillDetails": "Please, fill-in some details:",
+			"name": "your full name *",
+			"nameInvalid": "Invalid name",
+			"phone": "phone number *",
+			"phoneInvalid": "Invalid phone number",
+			"email": "e-mail *",
+			"emailInvalid": "Ivalid e-mail address",
+			"password": "password *",
+			"passwordInvalid": "Minimum length is ",
+			"passwordConfirm": "password confirmation *",
+			"passwordConfirmInvalid": "Not matching password.",
+			"agreeWith": "By creating a profile you agree with our",
+			"terms": "Terms of Services"
+		},
+		"terms": {
+			"termsOfServices": "Terms of services",
+			"content": "Yes, we have terms of services. Tons of them."
+		},
+		"menu": {
+			"newNotifications": "New notifications",
+			"access": "Access",
+			"myReservations": "My reservations",
+			"welcome": "Welcome"
+		},
+		"access": {
+			"swipeToOpen": "Swipe to open the gate",
+			"noOngoingReservations": "No ongoing reservations",
+			"inSelectedGarage": "in selected garage"
+		},
+		"reservation": {
+			"details": "Reservation details",
+			"garage": "Garage",
+			"place": "Place",
+			"begins": "Begins",
+			"ends": "Ends"
+		},
+		"newReservation": {
+			"begins":"Begins",
+			"ends":"Ends",
+			"place":"Place",
+			"car":"Car",
+			"price":"Price",
+			"paidBy":"Paid by",
+			"newReservation":"New reservation",
+			"pickPlace":"Pick place",
+			"licencePlate":"Licence plate",
+			"licencePlateInvalid":"Invalid licence plate",
+			"licencePlatePlaceholder":"1A2 3456",
+			"selectCar":"Select car",
+			"noAvailablePlaces": "No available places",
+			"selectGarage": "Select garage first",
+			"auto": "AUTO",
+			"now": "NOW",
+			"pick": "PICK",
+			"other": "OTHER",
+			"later": "LATER",
+			"hourShortcut": "h",
+			"me": "Me",
+			"creatingReservation": "Creating reservatin",
+			"creatingPayment": "Creating payment ...",
+			"tokenNoLongerValid": "Token of payment is no longer valid, reservation will be deleted.",
+			"checkingToken": "Checking token validity.",
+			"redirecting": "Redirecting ...",
+			"paymentUnsucessfull": "Payment was unsucessfull.",
+			"processingPayment": "Processing payment ..."
+		}
 	},
 	"auth0Emails": {
 		"securityReasons": "For security reasons we need you to verify your email",
