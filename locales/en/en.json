@@ -166,8 +166,8 @@
 		"editContractHint": "TODO: edit contract hint: Here you can select a contract and edit it to change parking spots, duration or price.",
 		"unredNotifications": {
 			"one": "You have one unread notification",
-			"few": "",
-			"many": "",
+			"few": "EN: pageBase.unredNotifications.few",
+			"many": "EN: pageBase.unredNotifications.many",
 			"other": "You have %(count)s unread notifications"
 		},
 		"analytics": "Analytics",
@@ -215,10 +215,10 @@
 		"validtyCheck": "Performing validity check ...",
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
-		"newHost": "New host",
-		"hostsName": "Hosts name",
-		"hostsPhone": "Hosts phone",
-		"hostsEmail": "Hosts email",
+		"newHost": "New guest",
+		"hostsName": "Guest name",
+		"hostsPhone": "Guest phone",
+		"hostsEmail": "Guest email",
 		"selectedUser": "User"
 	},
 	"clients": {
@@ -496,7 +496,7 @@
 		"selectUser": "User email(s)",
 		"connectionExists": "This user is already in this client account.",
 		"sendingInvitation": "Loading, inviting user",
-		"notificationSend": "Success: Notification has been send to this user. Wait for the user to accept.",
+		"notificationSend": "Success: Notification has been sent to this user. Wait for the user to accept.",
 		"message": "You have been invited to use the '%(client)s'! client account",
 		"noRights": "You do not have the right to do that.",
 		"inviteMessage": "Invitation message",
@@ -517,7 +517,7 @@
 		"internal": "internal",
 		"security": "security",
 		"receptionist": "receptionist",
-		"clientRights": "Client rights",
+		"clientRights": "User rights",
 		"clientRightsDesc": "These rights will be only valid if the client is specified.",
 		"GarageRights": "Garage rights",
 		"GarageRightsDesc": "These rights will be valid only if the garage is specified.",
@@ -547,7 +547,7 @@
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to settle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s spot was accepted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
-		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \"%(arg1)s\". You will not be able to log in again until your email is verified.",
+		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \\\"%(arg1)s\\\". You will not be able to log in again until your email is verified.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) just created new reservation for you."
 	},
 	"profile": {
@@ -936,5 +936,83 @@
 		"cs": "Česky",
 		"de": "Deutsch",
 		"pl": "Polski"
+	},
+	"auth0Emails": {
+		"securityReasons": "For security reasons we need you to verify your email",
+		"easyAsClickingButton": "It's as easy as clicking the link below:",
+		"confirmAccount": "Confirm my account!",
+		"enjoy": "Enjoy your Park-it-direct experience!",
+		"bestRegards": "Best Regards,",
+		"PidTeam": "Park-it-direct team",
+		"welcome": "Welcome to Park-it-direct!",
+		"thankYou": "Thank you for using our management tool. Let’s take a look how can Park-it-direct help you with management of your parking.",
+		"howToStart": " How to start with PID?",
+		"pleasantExperience": "Are you searching for a pleasant parking experience? Or you want to organize parking in your company? Or perhaps providing parking for others is your business?",
+		"helpForHelp": "There is a blue help window on the top or right side of each screen which explains the content. You can turn this help on/off anytime in your account setting.",
+		"garageSetup": "Would you like to setup your garage? We will gladly help you - just let us know and we will give you a call! Together we can go through all settings and make sure you benefit from using Park-it-direct as much as possible, while saving your valuable time.",
+		"getInTouch": " Need to get in touch with us?",
+		"website": "We are always here for you. You can find contact details on our <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">website</a> or you can use chat button on our website and in the app.",
+		"passwordResetSubmited": "You have submitted a password change request!",
+		"pwdResetDescr": "If it wasn't you please disregard this email and make sure you can still login to your account. If it was you, then ",
+		"confirmPwdReset": "Confirm the password change",
+		"troubleWithAccount": "If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.",
+		"verificationCode": "Below you can find your verification code for Park-it-direct!"
+	},
+	"railsEmails": {
+		"footer": {
+			"enjoy": "Enjoy your Park-it-direct experience!",
+			"regards": "Best Regards,",
+			"team": "Park-it-direct team"
+		},
+		"invitation_mail": {
+			"hello": "Hello,",
+			"invitation": "You have been invited to Park-it-direct!",
+			"invited_you": "just invited you to start using Park-it-direct.",
+			"says": "says:",
+			"admin": "admin",
+			"secretary": "secretary",
+			"host": "guest",
+			"internal": "internal",
+			"contact_person": "contact person",
+			"receptionist": "receptionist",
+			"security": "security",
+			"invited_to": "just invited you to join client account",
+			"as": "as",
+			"issue": "In case of any issues, please",
+			"let_us_know": "let us know",
+			"we_will_help": "and we will help you with your account activation."
+		},
+		"new_reservation_mail": {
+			"new_reservation": "You have new reservation on Park-it-direct!",
+			"reservation_for_you": "has created new reservation for you.",
+			"more_details": "For more details go to Park-it-direct:",
+			"to_pid": "To Park-it-direct!"
+		},
+		"resend_invitation_mail": {
+			"hello": "Hello,",
+			"invitation_reminder": "This is invitation reminder to Park-it-direct!",
+			"remind_you": "would like to remind you your invitation to Park-it-direct.",
+			"admin": "admin",
+			"secretary": "secretary",
+			"host": "guest",
+			"internal": "internal",
+			"contact_person": "contact person",
+			"receptionist": "receptionist",
+			"security": "security",
+			"invited_to": "invited you to join client account",
+			"as": "as",
+			"to_sign_up": "Sign me up!",
+			"to_pid": "To Park-it-direct!",
+			"issue": "In case of any issues, please",
+			"let_us_know": "let us know",
+			"we_will_help": "and we will help you with your account activation."
+		},
+		"reservation_confirmed": {
+			"reservation_confirmed": "Reservation you asked for was confimed!",
+			"garage": "Garage:",
+			"place": "Place:",
+			"from": "From:",
+			"to": "To:"
+		}
 	}
 }

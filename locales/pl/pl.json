@@ -166,6 +166,8 @@
 		"editContractHint": "PL: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
+			"few": "PL: pageBase.unredNotifications.few",
+			"many": "PL: pageBase.unredNotifications.many",
 			"other": "Masz %(count)s nieprzeczytanych wiadomości."
 		},
 		"analytics": "Analiza",
@@ -212,7 +214,12 @@
 		"paymentUnsucessfull": "Płatność została anulowana.",
 		"validtyCheck": "Kontroluję płatność...",
 		"tokenInvalid": "Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.",
-		"creatingNewPayment": "Wytwarzam płatność..."
+		"creatingNewPayment": "Wytwarzam płatność...",
+		"newHost": "PL: newReservation.newHost",
+		"hostsName": "PL: newReservation.hostsName",
+		"hostsPhone": "PL: newReservation.hostsPhone",
+		"hostsEmail": "PL: newReservation.hostsEmail",
+		"selectedUser": "PL: newReservation.selectedUser"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -245,7 +252,10 @@
 		"presetAs": "Ustaw jako",
 		"removeClientUser": "Czy na pewno chcesz usunąć użytkownika?",
 		"pendingUsers": "Zaproszenia czekające na odpowiedź",
-		"removeUser": "PL: clientUsers.removeUser"
+		"removeUser": "PL: clientUsers.removeUser",
+		"resendInvitation": "PL: clientUsers.resendInvitation",
+		"resendSuccessfull": "PL: clientUsers.resendSuccessfull",
+		"userNotFound": "PL: clientUsers.userNotFound"
 	},
 	"reservations": {
 		"name": "Użytkownik",
@@ -537,7 +547,8 @@
 		"invoiceReminder": "Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.",
 		"reservationAccepted": "Twoja rezerwacja na miejsce \"%(arg1)s\" została zaakceptowana.",
 		"reservationDeclined": "Twoja rezerwacja na miejsce \"%(arg1)s\" została odrzucona.",
-		"verifyYourEmail": "PL: notifications.verifyYourEmail"
+		"verifyYourEmail": "PL: notifications.verifyYourEmail",
+		"newReservationForYou": "PL: notifications.newReservationForYou"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -918,5 +929,90 @@
 		"description": "PL: loginVerification.description",
 		"code": "PL: loginVerification.code",
 		"codeInvalid": "PL: loginVerification.codeInvalid"
+	},
+	"languages":{
+		"language": "PL: languages.language",
+		"en": "English",
+		"cs": "Česky",
+		"de": "Deutsch",
+		"pl": "Polski"
+	},
+	"auth0Emails": {
+		"securityReasons": "PL: auth0Emails.securityReasons",
+		"easyAsClickingButton": "PL: auth0Emails.easyAsClickingButton",
+		"confirmAccount": "PL: auth0Emails.confirmAccount",
+		"enjoy": "PL: auth0Emails.enjoy",
+		"bestRegards": "PL: auth0Emails.bestRegards",
+		"PidTeam": "PL: auth0Emails.PidTeam",
+		"welcome": "PL: auth0Emails.welcome",
+		"thankYou": "PL: auth0Emails.thankYou",
+		"howToStart": "PL: auth0Emails.howToStart",
+		"pleasantExperience": "PL: auth0Emails.pleasantExperience",
+		"helpForHelp": "PL: auth0Emails.helpForHelp",
+		"garageSetup": "PL: auth0Emails.garageSetup",
+		"getInTouch": "PL: auth0Emails.getInTouch",
+		"website": "PL: auth0Emails.website",
+		"passwordResetSubmited": "PL: auth0Emails.passwordResetSubmited",
+		"pwdResetDescr": "PL: auth0Emails.pwdResetDescr",
+		"confirmPwdReset": "PL: auth0Emails.confirmPwdReset",
+		"troubleWithAccount": "PL: auth0Emails.troubleWithAccount",
+		"verificationCode": "PL: auth0Emails.verificationCode"
+	},
+	"railsEmails": {
+		"footer": {
+			"enjoy": "PL: railsEmails.footer.enjoy",
+			"regards": "PL: railsEmails.footer.regards",
+			"team": "PL: railsEmails.footer.team"
+		},
+		"invitation_mail": {
+			"hello": "PL: railsEmails.invitation_mail.hello",
+			"invitation": "PL: railsEmails.invitation_mail.invitation",
+			"invited_you": "PL: railsEmails.invitation_mail.invited_you",
+			"says": "PL: railsEmails.invitation_mail.says",
+			"admin": "PL: railsEmails.invitation_mail.admin",
+			"secretary": "PL: railsEmails.invitation_mail.secretary",
+			"host": "PL: railsEmails.invitation_mail.host",
+			"internal": "PL: railsEmails.invitation_mail.internal",
+			"contact_person": "PL: railsEmails.invitation_mail.contact_person",
+			"receptionist": "PL: railsEmails.invitation_mail.receptionist",
+			"security": "PL: railsEmails.invitation_mail.security",
+			"invited_to": "PL: railsEmails.invitation_mail.invited_to",
+			"as": "PL: railsEmails.invitation_mail.as",
+			"issue": "PL: railsEmails.invitation_mail.issue",
+			"let_us_know": "PL: railsEmails.invitation_mail.let_us_know",
+			"we_will_help": "PL: railsEmails.invitation_mail.we_will_help"
+		},
+		"new_reservation_mail": {
+			"new_reservation": "PL: railsEmails.new_reservation_mail.new_reservation",
+			"reservation_for_you": "PL: railsEmails.new_reservation_mail.reservation_for_you",
+			"more_details": "PL: railsEmails.new_reservation_mail.more_details",
+			"to_pid": "PL: railsEmails.new_reservation_mail.to_pid"
+		},
+		"resend_invitation_mail": {
+			"hello": "PL: railsEmails.resend_invitation_mail.hello",
+			"invitation_reminder": "PL: railsEmails.resend_invitation_mail.invitation_reminder",
+			"remind_you": "PL: railsEmails.resend_invitation_mail.remind_you",
+			"admin": "PL: railsEmails.resend_invitation_mail.admin",
+			"secretary": "PL: railsEmails.resend_invitation_mail.secretary",
+			"host": "PL: railsEmails.resend_invitation_mail.host",
+			"internal": "PL: railsEmails.resend_invitation_mail.internal",
+			"contact_person": "PL: railsEmails.resend_invitation_mail.contact_person",
+			"receptionist": "PL: railsEmails.resend_invitation_mail.receptionist",
+			"security": "PL: railsEmails.resend_invitation_mail.security",
+			"invited_to": "PL: railsEmails.resend_invitation_mail.invited_to",
+			"as": "PL: railsEmails.resend_invitation_mail.as",
+			"to_sign_up": "PL: railsEmails.resend_invitation_mail.to_sign_up",
+			"to_pid": "PL: railsEmails.resend_invitation_mail.to_pid",
+			"issue": "PL: railsEmails.resend_invitation_mail.issue",
+			"let_us_know": "PL: railsEmails.resend_invitation_mail.let_us_know",
+			"we_will_help": "PL: railsEmails.resend_invitation_mail.we_will_help"
+		},
+		"reservation_confirmed": {
+			"reservation_confirmed": "PL: railsEmails.reservation_confirmed.reservation_confirmed",
+			"garage": "PL: railsEmails.reservation_confirmed.garage",
+			"place": "PL: railsEmails.reservation_confirmed.place",
+			"from": "PL: railsEmails.reservation_confirmed.from",
+			"to": "PL: railsEmails.reservation_confirmed.to"
+		}
 	}
 }
