@@ -30,7 +30,7 @@ export class GarageUsersPage extends Component {
 
 
   componentWillReceiveProps(nextProps){ // load garage if id changed
-    if (nextProps.pageBase.garage != this.props.pageBase.garage){
+    if (nextProps.pageBase.garage !== this.props.pageBase.garage) {
       nextProps.pageBase.garage && this.props.actions.initGarageUsers(nextProps.pageBase.garage)
     }
   }
@@ -52,15 +52,15 @@ export class GarageUsersPage extends Component {
     const isGarageAdmin = state.users.filter((user) => {return user.admin}).findIndex((user)=>{return pageBase.current_user ? user.user.id == pageBase.current_user.id : false}) == -1
 
     const addGarageUserClick = () => {
-      actions.setGarage(this.props.params.id)
+      actions.setGarage(pageBase.garage)
       nav.to(`/${pageBase.garage}/admin/users/invite`)
     }
 
     const renderPendingSpoiler = (user) => {
       let returnable = user.user
-      const destroyClick = () => { actions.destroyGarageUser(this.props.params.id, user.user.id ) }
+      const destroyClick = () => { actions.destroyGarageUser(pageBase.garage, user.user.id ) }
       returnable.spoiler = <div className={styles.float}>
-        <InvitationReminderButton userId={user.user.id} garageId={parseInt(this.props.params.id, 10)} />
+        <InvitationReminderButton userId={user.user.id} garageId={parseInt(pageBase.garage, 10)} />
         <LabeledRoundButton label={t(['garageUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])}/>
       </div>
       return returnable
@@ -68,17 +68,17 @@ export class GarageUsersPage extends Component {
 
     const renderSpoiler = (garage_user) => {
       const destroyClick = () => {
-        actions.destroyGarageUser(this.props.params.id, garage_user.user.id )
+        actions.destroyGarageUser(pageBase.garage, garage_user.user.id )
       }
 
       const adminClick = () => {
-        actions.setGarageUserRelation(this.props.params.id, garage_user.user.id , {"admin": !garage_user.admin})
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id , {"admin": !garage_user.admin})
       }
       const receptionistClick = () => {
-        actions.setGarageUserRelation(this.props.params.id, garage_user.user.id , {"receptionist": !garage_user.receptionist})
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id , {"receptionist": !garage_user.receptionist})
       }
       const securityClick = () => {
-        actions.setGarageUserRelation(this.props.params.id, garage_user.user.id , {"security": !garage_user.security})
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id , {"security": !garage_user.security})
       }
 
       return(<div className={styles.spoiler}>

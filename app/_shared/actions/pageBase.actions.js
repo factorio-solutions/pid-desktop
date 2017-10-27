@@ -116,6 +116,13 @@ export function setGarages(value) {
 
 export function setGarage(value) {
   return (dispatch, getState) => {
+    // console.log(getState().pageBase.garage, value);
+    // console.log(window.location);
+    //
+    if (window.location.hash.includes(`/${getState().pageBase.garage}/`)){
+      nav.to(`/${value}/` + window.location.hash.split(`/${getState().pageBase.garage}/`)[1].split('?')[0])
+    }
+
     dispatch({ type: PAGE_BASE_SET_GARAGE
              , value
              })
