@@ -506,8 +506,13 @@
 		"nameLabel": "Jméno uživatele (volitelné)",
 		"phoneLabel": "Telefonní číslo uživatele (volitelné)",
 		"noClients": "V současné době nemáte žádné klienty, na kterých máte práva administrátora.",
-		"sucessfullyInvited": "%(success)s pozvánky byly úspěšně odeslány, %(failed)s se nezdařilo.",
-		"zero": "ne",
+		"sucessfullyInvited": {
+			"one": "Pozvánka byla úspěšně odeslána.",
+			"few": "%(count)s pozváneky byly úspěšně odeslány.",
+			"many": "%(count)s pozvánek bylo úspěšně odesláno.",
+			"other": "%(count)s pozvánky bylo úspěšně odesláno."
+		},
+		"unSucessfullyInvited": "Pozvánky těmto uživatelům se nepodařilo odeslat: %(emails)s.",
 		"selectClient": "Vyberte klienta",
 		"selectGarage": "Vyberte garáž",
 		"selectCar": "Vyberte auto",

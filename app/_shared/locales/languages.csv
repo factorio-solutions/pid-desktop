@@ -677,8 +677,11 @@ inviteUser.optionalSettingsText,Here you can set advanced options and prefill in
 inviteUser.nameLabel,User's full name (optional),Jméno uživatele (volitelné),Nazwa użytkownika (opcjonalnie),Vor- und Nachname des Benutzers (optional)
 inviteUser.phoneLabel,User's phone number (optional),Telefonní číslo uživatele (volitelné),Numer telefonu użytkownika (opcjonalnie),Telefonnummer des Benutzers (optional)
 inviteUser.noClients,You have currently no admin rights to any clients.,"V současné době nemáte žádné klienty, na kterých máte práva administrátora.","W obecnej chwili nie masz żadnych klientów, co do których masz uprawnienia administratora.","Es gibt derzeit keine Kunden, für die Sie Administratorrechte haben."
-inviteUser.sucessfullyInvited,"%(success)s invitations were sucessfully sent, %(failed)s failed.","%(success)s pozvánky byly úspěšně odeslány, %(failed)s se nezdařilo.","%(success)s zaproszeń odesłano z powodzeniem, %(failed)s się nie udało.","%(success)s Einladungen erfolgreich gesendet, %(failed)s fehlgeschlagen."
-inviteUser.zero,no,ne,nie,nein
+inviteUser.sucessfullyInvited.one,Invitation sucessfully sent.,Pozvánka byla úspěšně odeslána.,,
+inviteUser.sucessfullyInvited.few,%(count)s invitations were sucessfully sent.,%(count)s pozváneky byly úspěšně odeslány.,,
+inviteUser.sucessfullyInvited.many,%(count)s invitations were sucessfully sent.,%(count)s pozvánek bylo úspěšně odesláno.,,
+inviteUser.sucessfullyInvited.other,%(count)s invitations were sucessfully sent.,%(count)s pozvánky bylo úspěšně odesláno.,,
+inviteUser.unSucessfullyInvited,We were not able to invite these users: %(emails)s.,Pozvánky těmto uživatelům se nepodařilo odeslat: %(emails)s.,,
 inviteUser.selectClient,Select client,Vyberte klienta,Wybierz klienta,Kunden auswählen
 inviteUser.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Parkhaus auswählen
 inviteUser.selectCar,Select car,Vyberte auto,Wybierz auto,Fahrzeug auswählen
