@@ -506,8 +506,13 @@
 		"nameLabel": "User's full name (optional)",
 		"phoneLabel": "User's phone number (optional)",
 		"noClients": "You have currently no admin rights to any clients.",
-		"sucessfullyInvited": "%(success)s invitations were sucessfully sent, %(failed)s failed.",
-		"zero": "no",
+		"sucessfullyInvited": {
+			"one": "Invitation sucessfully sent.",
+			"few": "%(count)s invitations were sucessfully sent.",
+			"many": "%(count)s invitations were sucessfully sent.",
+			"other": "%(count)s invitations were sucessfully sent."
+		},
+		"unSucessfullyInvited": "We were not able to invite these users: %(emails)s.",
 		"selectClient": "Select client",
 		"selectGarage": "Select garage",
 		"selectCar": "Select car",
