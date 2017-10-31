@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 
-import RoundButton  from '../buttons/RoundButton'
+import RoundButton from '../buttons/RoundButton'
 
-import styles       from './Form.scss'
+import styles from './Form.scss'
 
 
 export default class Form extends Component {
@@ -11,23 +11,27 @@ export default class Form extends Component {
     onHighlight: PropTypes.func,
     onBack:      PropTypes.func,
     submitable:  PropTypes.bool,
-    mobile:      PropTypes.bool
+    mobile:      PropTypes.bool,
+    margin:      PropTypes.bool // margin on the bottom
+  }
+
+  static defaultProps = {
+    marginBot: true
   }
 
   constructor(props) {
-     super(props);
-     this.state = { submited: false }
+    super(props)
+    this.state = { submited: false }
   }
 
-  componentWillReceiveProps(nextProps){
-
+  componentWillReceiveProps() {
     this.setState({ submited: false })
   }
 
-  render(){
-    const { children, onSubmit, onHighlight, onBack, submitable, mobile } = this.props
+  render() {
+    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin } = this.props
     const sendReservation = () => {
-      if (submitable){
+      if (submitable) {
         this.setState({ submited: true })
         onSubmit()
       }
@@ -35,7 +39,7 @@ export default class Form extends Component {
     const highlightInputs = () => { onHighlight && onHighlight() }
     const back = typeof onBack === "function"
 
-    var submitButton =  <div className={ mobile ? styles.mobileSubmitButton : styles.submitButton }>
+    var submitButton =  <div className={`${mobile ? styles.mobileSubmitButton : styles.submitBtn} ${margin && styles.marginBot}`}>
                           {back && <div className={styles.floatLeft}>
                             <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
                           </div>}
@@ -45,7 +49,7 @@ export default class Form extends Component {
                           </div>
                         </div>
 
-    return(
+    return (
       <form onSubmit={sendReservation} >
         { children }
         { submitButton }
