@@ -277,6 +277,7 @@
 		"host": "Guest",
 		"visitor": "Visitor",
 		"editReservation": "Edit reservation",
+		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
 		"destroyRservation": "Cancel reservation"
@@ -934,6 +935,11 @@
 		"description": "Multifactor authorization has been triggered. We will now send you a code by email %(email)s",
 		"code": "code",
 		"codeInvalid": "Code invalid"
+	},
+	"reservationInteruption":{
+		"describtion": "Interupt reservation",
+		"from":"Interupt from",
+		"to":"Interupt to"
 	},
 	"languages": {
 		"language": "Language",

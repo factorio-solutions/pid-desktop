@@ -17,8 +17,13 @@ export function formatTime(time) {
   return moment(time).format(MOMENT_DATETIME_FORMAT)
 }
 
+
 export function toFifteenMinuteStep(minutes) {
   return Math.floor(parseInt(minutes, 10) / 15) * 15
+}
+
+export function floorTime(time) {
+  return moment(time).set('minute', toFifteenMinuteStep(moment(time).minutes()))
 }
 
 export function readFormatedTime(time) {
