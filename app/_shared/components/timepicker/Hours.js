@@ -1,6 +1,8 @@
 import React    from 'react'
 import moment   from 'moment'
 import styles   from './Timepicker.scss'
+import { t } from '../../modules/localization/localization'
+
 
 
 export default function Hours ({ time, onClick }) {
@@ -33,7 +35,7 @@ export default function Hours ({ time, onClick }) {
       <table className={styles.hoursTable}>
         <thead>
           <tr>
-            <td colSpan="6">Hour</td>
+            <td colSpan="6">{t([ 'datetimepicker', 'hour' ])}</td>
           </tr>
         </thead>
         <tbody>
