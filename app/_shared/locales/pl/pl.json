@@ -277,6 +277,7 @@
 		"host": "Gość",
 		"visitor": "Odwiedzający",
 		"editReservation": "PL: reservations.editReservation",
+		"interuptReservation": "PL: reservations.interuptReservation",
 		"payReservation": "PL: reservations.payReservation",
 		"downloadInvoice": "PL: reservations.downloadInvoice",
 		"destroyRservation": "PL: reservations.destroyRservation"
@@ -506,8 +507,13 @@
 		"nameLabel": "Nazwa użytkownika (opcjonalnie)",
 		"phoneLabel": "Numer telefonu użytkownika (opcjonalnie)",
 		"noClients": "W obecnej chwili nie masz żadnych klientów, co do których masz uprawnienia administratora.",
-		"sucessfullyInvited": "%(success)s zaproszeń odesłano z powodzeniem, %(failed)s się nie udało.",
-		"zero": "nie",
+		"sucessfullyInvited": {
+			"one": "PL: inviteUser.sucessfullyInvited.one",
+			"few": "PL: inviteUser.sucessfullyInvited.few",
+			"many": "PL: inviteUser.sucessfullyInvited.many",
+			"other": "PL: inviteUser.sucessfullyInvited.other"
+		},
+		"unSucessfullyInvited": "PL: inviteUser.unSucessfullyInvited",
 		"selectClient": "Wybierz klienta",
 		"selectGarage": "Wybierz garaż",
 		"selectCar": "Wybierz auto",
@@ -586,7 +592,9 @@
 	"datetimepicker": {
 		"today": "Dzisiaj",
 		"now": "Teraz",
-		"inf": "Nieskończoność"
+		"inf": "Nieskończoność",
+		"hour": "PL: datetimepicker.hour",
+		"minute": "PL: datetimepicker.minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Ograniczony rozmiar pojazdu",
@@ -692,7 +700,7 @@
 		"width": "Szerokość [m]",
 		"height": "Wysokość [m]",
 		"length": "Długość [m]",
-		"licencePlatePlaceholder": "1A2 3456",
+		"licencePlatePlaceholder": "ERA 87TL",
 		"colorPlaceholder": "Czarny",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "Moje Porsche",
@@ -930,12 +938,104 @@
 		"code": "PL: loginVerification.code",
 		"codeInvalid": "PL: loginVerification.codeInvalid"
 	},
-	"languages":{
+	"reservationInteruption": {
+		"describtion": "PL: reservationInteruption.describtion",
+		"from": "PL: reservationInteruption.from",
+		"to": "PL: reservationInteruption.to"
+	},
+	"languages": {
 		"language": "PL: languages.language",
 		"en": "English",
 		"cs": "Česky",
 		"de": "Deutsch",
 		"pl": "Polski"
+	},
+	"mobileApp": {
+		"page": {
+			"userInfoUnavailable": "PL: mobileApp.page.userInfoUnavailable",
+			"logOut": "PL: mobileApp.page.logOut",
+			"selectGarage": "PL: mobileApp.page.selectGarage",
+			"allGarages": "PL: mobileApp.page.allGarages"
+		},
+		"login": {
+			"loading": "PL: mobileApp.login.loading",
+			"loginFailed": "PL: mobileApp.login.loginFailed",
+			"login": "PL: mobileApp.login.login",
+			"signup": "PL: mobileApp.login.signup",
+			"email": "PL: mobileApp.login.email",
+			"emailPlaceholder": "PL: mobileApp.login.emailPlaceholder",
+			"emailInvalid": "PL: mobileApp.login.emailInvalid",
+			"password": "PL: mobileApp.login.password"
+		},
+		"signUp": {
+			"signUp": "PL: mobileApp.signUp.signUp",
+			"niceToMeetYou": "PL: mobileApp.signUp.niceToMeetYou",
+			"fillDetails": "PL: mobileApp.signUp.fillDetails",
+			"name": "PL: mobileApp.signUp.name",
+			"nameInvalid": "PL: mobileApp.signUp.nameInvalid",
+			"phone": "PL: mobileApp.signUp.phone",
+			"phoneInvalid": "PL: mobileApp.signUp.phoneInvalid",
+			"email": "PL: mobileApp.signUp.email",
+			"emailInvalid": "PL: mobileApp.signUp.emailInvalid",
+			"password": "PL: mobileApp.signUp.password",
+			"passwordInvalid": "PL: mobileApp.signUp.passwordInvalid",
+			"passwordConfirm": "PL: mobileApp.signUp.passwordConfirm",
+			"passwordConfirmInvalid": "PL: mobileApp.signUp.passwordConfirmInvalid",
+			"agreeWith": "PL: mobileApp.signUp.agreeWith",
+			"terms": "PL: mobileApp.signUp.terms"
+		},
+		"terms": {
+			"termsOfServices": "PL: mobileApp.terms.termsOfServices",
+			"content": "PL: mobileApp.terms.content"
+		},
+		"menu": {
+			"newNotifications": "PL: mobileApp.menu.newNotifications",
+			"access": "PL: mobileApp.menu.access",
+			"myReservations": "PL: mobileApp.menu.myReservations",
+			"welcome": "PL: mobileApp.menu.welcome"
+		},
+		"access": {
+			"swipeToOpen": "PL: mobileApp.access.swipeToOpen",
+			"noOngoingReservations": "PL: mobileApp.access.noOngoingReservations",
+			"inSelectedGarage": "PL: mobileApp.access.inSelectedGarage"
+		},
+		"reservation": {
+			"details": "PL: mobileApp.reservation.details",
+			"garage": "PL: mobileApp.reservation.garage",
+			"place": "PL: mobileApp.reservation.place",
+			"begins": "PL: mobileApp.reservation.begins",
+			"ends": "PL: mobileApp.reservation.ends"
+		},
+		"newReservation": {
+			"begins": "PL: mobileApp.newReservation.begins",
+			"ends": "PL: mobileApp.newReservation.ends",
+			"place": "PL: mobileApp.newReservation.place",
+			"car": "PL: mobileApp.newReservation.car",
+			"price": "PL: mobileApp.newReservation.price",
+			"paidBy": "PL: mobileApp.newReservation.paidBy",
+			"newReservation": "PL: mobileApp.newReservation.newReservation",
+			"pickPlace": "PL: mobileApp.newReservation.pickPlace",
+			"licencePlate": "PL: mobileApp.newReservation.licencePlate",
+			"licencePlateInvalid": "PL: mobileApp.newReservation.licencePlateInvalid",
+			"licencePlatePlaceholder": "PL: mobileApp.newReservation.licencePlatePlaceholder",
+			"selectCar": "PL: mobileApp.newReservation.selectCar",
+			"noAvailablePlaces": "PL: mobileApp.newReservation.noAvailablePlaces",
+			"selectGarage": "PL: mobileApp.newReservation.selectGarage",
+			"auto": "PL: mobileApp.newReservation.auto",
+			"now": "PL: mobileApp.newReservation.now",
+			"pick": "PL: mobileApp.newReservation.pick",
+			"other": "PL: mobileApp.newReservation.other",
+			"later": "PL: mobileApp.newReservation.later",
+			"hourShortcut": "PL: mobileApp.newReservation.hourShortcut",
+			"me": "PL: mobileApp.newReservation.me",
+			"creatingReservation": "PL: mobileApp.newReservation.creatingReservation",
+			"creatingPayment": "PL: mobileApp.newReservation.creatingPayment",
+			"tokenNoLongerValid": "PL: mobileApp.newReservation.tokenNoLongerValid",
+			"checkingToken": "PL: mobileApp.newReservation.checkingToken",
+			"redirecting": "PL: mobileApp.newReservation.redirecting",
+			"paymentUnsucessfull": "PL: mobileApp.newReservation.paymentUnsucessfull",
+			"processingPayment": "PL: mobileApp.newReservation.processingPayment"
+		}
 	},
 	"auth0Emails": {
 		"securityReasons": "PL: auth0Emails.securityReasons",

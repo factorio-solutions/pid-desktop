@@ -593,8 +593,8 @@
 		"today": "Today",
 		"now": "Now",
 		"inf": "Infinity",
-		"hour":"Hour",
-		"minute":"Minute"
+		"hour": "Hour",
+		"minute": "Minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Limited vehicle size",
@@ -681,7 +681,7 @@
 		"name": "Name",
 		"namePlaceholder": "Parking spot rent",
 		"invalidName": "Invalid rent name",
-		"price": "Price (not including VAT)",
+		"price": "Price per place pet month (not including VAT)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency"
@@ -700,7 +700,7 @@
 		"width": "Width [m]",
 		"height": "Height [m]",
 		"length": "Length [m]",
-		"licencePlatePlaceholder": "1A2 3456",
+		"licencePlatePlaceholder": "LD07 WCL",
 		"colorPlaceholder": "Black",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "My Porsche",
@@ -938,10 +938,10 @@
 		"code": "code",
 		"codeInvalid": "Code invalid"
 	},
-	"reservationInteruption":{
+	"reservationInteruption": {
 		"describtion": "Interupt reservation",
-		"from":"Interupt from",
-		"to":"Interupt to"
+		"from": "Interupt from",
+		"to": "Interupt to"
 	},
 	"languages": {
 		"language": "Language",
@@ -951,7 +951,7 @@
 		"pl": "Polski"
 	},
 	"mobileApp": {
-		"page":{
+		"page": {
 			"userInfoUnavailable": "User info unavailable.",
 			"logOut": "log out",
 			"selectGarage": "Select garage",
@@ -978,7 +978,7 @@
 			"email": "e-mail *",
 			"emailInvalid": "Ivalid e-mail address",
 			"password": "password *",
-			"passwordInvalid": "Minimum length is ",
+			"passwordInvalid": "Minimum length is",
 			"passwordConfirm": "password confirmation *",
 			"passwordConfirmInvalid": "Not matching password.",
 			"agreeWith": "By creating a profile you agree with our",
@@ -1007,18 +1007,18 @@
 			"ends": "Ends"
 		},
 		"newReservation": {
-			"begins":"Begins",
-			"ends":"Ends",
-			"place":"Place",
-			"car":"Car",
-			"price":"Price",
-			"paidBy":"Paid by",
-			"newReservation":"New reservation",
-			"pickPlace":"Pick place",
-			"licencePlate":"Licence plate",
-			"licencePlateInvalid":"Invalid licence plate",
-			"licencePlatePlaceholder":"1A2 3456",
-			"selectCar":"Select car",
+			"begins": "Begins",
+			"ends": "Ends",
+			"place": "Place",
+			"car": "Car",
+			"price": "Price",
+			"paidBy": "Paid by",
+			"newReservation": "New reservation",
+			"pickPlace": "Pick place",
+			"licencePlate": "Licence plate",
+			"licencePlateInvalid": "Invalid licence plate",
+			"licencePlatePlaceholder": "1A2 3456",
+			"selectCar": "Select car",
 			"noAvailablePlaces": "No available places",
 			"selectGarage": "Select garage first",
 			"auto": "AUTO",
@@ -1028,7 +1028,7 @@
 			"later": "LATER",
 			"hourShortcut": "h",
 			"me": "Me",
-			"creatingReservation": "Creating reservatin",
+			"creatingReservation": "Creating reservation",
 			"creatingPayment": "Creating payment ...",
 			"tokenNoLongerValid": "Token of payment is no longer valid, reservation will be deleted.",
 			"checkingToken": "Checking token validity.",

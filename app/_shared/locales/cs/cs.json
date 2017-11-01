@@ -230,7 +230,7 @@
 		"token": "token klienta",
 		"contactPerson": "Kontaktní osoba",
 		"createdAt": "Klient vytvořen",
-		"createAgreement": "Vytvořit smlouvu",
+		"createAgreement": "Vytvořit dohodu",
 		"editClient": "Upravit klienta",
 		"goToUsers": "Uživatelé",
 		"goToInvoices": "Faktury",
@@ -277,6 +277,7 @@
 		"host": "Host",
 		"visitor": "Návštěvník",
 		"editReservation": "Upravit rezervaci",
+		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
 		"destroyRservation": "Zrušit rezervaci"
@@ -380,7 +381,7 @@
 		"garage": "Garáž",
 		"places": "Místa",
 		"gates": "Brány",
-		"order": "Objednávka",
+		"order": "Pořadí",
 		"subscribtion": "Předplatné",
 		"selectImage": "Vyberte obrázek garáže",
 		"garagePicture": "Fotka garáže",
@@ -552,7 +553,7 @@
 		"invoiceReminder": "Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.",
 		"reservationAccepted": "Vaše rezervace na \"%(arg1)s místo byla akceptována.",
 		"reservationDeclined": "Vaše rezervace na \"%(arg1)s místo byla zrušena.",
-		"verifyYourEmail": "Vítejte v Park-it-direct! Na adresu \\\"%(arg1)s\\\"s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.",
+		"verifyYourEmail": "Vítejte v Park-it-direct! Na adresu \"%(arg1)s\"s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci."
 	},
 	"profile": {
@@ -584,14 +585,16 @@
 		"host": "host",
 		"security": "ostraha",
 		"receptionist": "recepční",
-		"invitedToClient": "Pozván %(datum)s aby byl členem klienta:",
-		"invitedToGarage": "Pozván %(datum)s aby byl členem garáže:",
-		"invitedToCar": "Pozván %(datum)s aby byl členem auta"
+		"invitedToClient": "Pozván %(date)s aby byl členem klienta:",
+		"invitedToGarage": "Pozván %(date)s aby byl členem garáže:",
+		"invitedToCar": "Pozván %(date)s aby byl členem auta"
 	},
 	"datetimepicker": {
 		"today": "Dnes",
 		"now": "Nyní",
-		"inf": "Nekonečno"
+		"inf": "Nekonečno",
+		"hour": "Hodina",
+		"minute": "Minuta"
 	},
 	"newMarketing": {
 		"size_restriction": "Omezená velikost vozidla",
@@ -678,7 +681,7 @@
 		"name": "Název",
 		"namePlaceholder": "Nájemné místa",
 		"invalidName": "Neplatně zadaný název nájemného",
-		"price": "Cena (bez DPH)",
+		"price": "Cena za místo za měsíc (bez DPH)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Neplatná cena",
 		"selectCurrency": "Vyberte měnu"
@@ -935,7 +938,12 @@
 		"code": "kód",
 		"codeInvalid": "Špatný kód"
 	},
-	"languages":{
+	"reservationInteruption": {
+		"describtion": "Přerušení rezrevace",
+		"from": "Přerušit od",
+		"to": "Přerušit do"
+	},
+	"languages": {
 		"language": "Jazyk",
 		"en": "English",
 		"cs": "Česky",
@@ -943,7 +951,7 @@
 		"pl": "Polski"
 	},
 	"mobileApp": {
-		"page":{
+		"page": {
 			"userInfoUnavailable": "Informace o uživateli jsou nedostupné",
 			"logOut": "odhlásit",
 			"selectGarage": "Zvolte garáž",
@@ -970,10 +978,10 @@
 			"email": "E-mail *",
 			"emailInvalid": "Neplatná e-mailová adresa",
 			"password": "Heslo *",
-			"passwordInvalid": "Minimální délka je ",
+			"passwordInvalid": "Minimální délka je",
 			"passwordConfirm": "Potvrzení hesla *",
 			"passwordConfirmInvalid": "Heslo se neshoduje",
-			"agreeWith": "Registrací souhlasíte s našimi ",
+			"agreeWith": "Registrací souhlasíte s našimi",
 			"terms": "podmínkami o poskytování služeb"
 		},
 		"terms": {
@@ -999,18 +1007,18 @@
 			"ends": "Končí"
 		},
 		"newReservation": {
-			"begins":"Začíná",
-			"ends":"Končí",
-			"place":"Místo",
-			"car":"Auto",
-			"price":"Cena",
-			"paidBy":"Kdo platí",
-			"newReservation":"Nová rezervace",
-			"pickPlace":"Zvolte místo",
-			"licencePlate":"SPZ",
-			"licencePlateInvalid":"Neplatná SPZ",
-			"licencePlatePlaceholder":"1A2 1234",
-			"selectCar":"Zvolte auto",
+			"begins": "Začíná",
+			"ends": "Končí",
+			"place": "Místo",
+			"car": "Auto",
+			"price": "Cena",
+			"paidBy": "Kdo platí",
+			"newReservation": "Nová rezervace",
+			"pickPlace": "Zvolte místo",
+			"licencePlate": "SPZ",
+			"licencePlateInvalid": "Neplatná SPZ",
+			"licencePlatePlaceholder": "1A2 1234",
+			"selectCar": "Zvolte auto",
 			"noAvailablePlaces": "Žádná místa nejsou dostupná",
 			"selectGarage": "Začněte volbou garáže",
 			"auto": "AUTO",
