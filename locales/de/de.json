@@ -277,6 +277,7 @@
 		"host": "Gast",
 		"visitor": "Besucher",
 		"editReservation": "Reservierung bearbeiten",
+		"interuptReservation": "DE: reservations.interuptReservation",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
 		"destroyRservation": "Reservierung stornieren"
@@ -380,7 +381,7 @@
 		"garage": "Parkhaus",
 		"places": "Plätze",
 		"gates": "Tore",
-		"order": "Bestellung",
+		"order": "Reihenfolge",
 		"subscribtion": "Abonnement",
 		"selectImage": "Parkhausbild auswählen",
 		"garagePicture": "Parkhausfoto",
@@ -506,8 +507,13 @@
 		"nameLabel": "Vor- und Nachname des Benutzers (optional)",
 		"phoneLabel": "Telefonnummer des Benutzers (optional)",
 		"noClients": "Es gibt derzeit keine Kunden, für die Sie Administratorrechte haben.",
-		"sucessfullyInvited": "%(success)s Einladungen erfolgreich gesendet, %(failed)s fehlgeschlagen.",
-		"zero": "nein",
+		"sucessfullyInvited": {
+			"one": "DE: inviteUser.sucessfullyInvited.one",
+			"few": "DE: inviteUser.sucessfullyInvited.few",
+			"many": "DE: inviteUser.sucessfullyInvited.many",
+			"other": "DE: inviteUser.sucessfullyInvited.other"
+		},
+		"unSucessfullyInvited": "DE: inviteUser.unSucessfullyInvited",
 		"selectClient": "Kunden auswählen",
 		"selectGarage": "Parkhaus auswählen",
 		"selectCar": "Fahrzeug auswählen",
@@ -586,7 +592,9 @@
 	"datetimepicker": {
 		"today": "Heute",
 		"now": "Jetzt",
-		"inf": "Unendlich"
+		"inf": "Unendlich",
+		"hour": "DE: datetimepicker.hour",
+		"minute": "DE: datetimepicker.minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Eingeschränkte Fahrzeuggröße",
@@ -673,7 +681,7 @@
 		"name": "Bezeichnung",
 		"namePlaceholder": "Gemieteter Stellplatz",
 		"invalidName": "Eingegebene Bezeichnung für Mietverhältnis ungültig",
-		"price": "Preis (zzgl. MwSt.)",
+		"price": "Preis pro Platz pro Monat (zzgl. MwSt.)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Ungültiger Preis",
 		"selectCurrency": "Währung auswählen"
@@ -692,7 +700,7 @@
 		"width": "Breite [m]",
 		"height": "Höhe [m]",
 		"length": "Länge [m]",
-		"licencePlatePlaceholder": "1A2 3456",
+		"licencePlatePlaceholder": "M BB 7679",
 		"colorPlaceholder": "Schwarz",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "Mein Porsche",
@@ -843,7 +851,7 @@
 		"marketingPage": "Marketing-Seite",
 		"connectWithMrParkit": "Mit MR. PARKIT verbinden",
 		"reservationForm": "Reservierungsformular",
-		"goPublic": "Für Öffentlichkeit öffnen",
+		"goPublic": "go Public",
 		"goPublicDescription": "Kurzfristige Parkplätze für die PiD-Community anbieten",
 		"setting": "Einstellungen",
 		"Preview": "Vorschau",
@@ -878,10 +886,10 @@
 		"SelectPrivateKey": "Privaten Schlüssel auswählen",
 		"financeSettings": "Finanzeinstellungen",
 		"vat": "Mehrwertsteuer",
-		"invoiceRow": "Normale Rechnungszeilen",
-		"simplyfiedInvoiceRow": "Einfache Rechnungszeilen",
+		"invoiceRow": "Fortlaufende Rechnungsnummer",
+		"simplyfiedInvoiceRow": "Fortlaufende Kassenbonnummer",
 		"invalidVat": "Ungültige Mehrwertsteuer",
-		"invalidRow": "Ungültige Anzahl",
+		"invalidRow": "Ungültige Nummer",
 		"changeSuccess": "Die Werte wurden erfolgreich geändert.",
 		"changeFailed": "Ein Fehler ist aufgetreten. Die Werte wurden nicht geändert.",
 		"uploadKey": "RSA-Schlüssel hochladen"
@@ -927,30 +935,122 @@
 	},
 	"loginVerification": {
 		"description": "DE: loginVerification.description",
-		"code": "DE: loginVerification.code",
-		"codeInvalid": "DE: loginVerification.codeInvalid"
+		"code": "Code",
+		"codeInvalid": "Code ungültig"
 	},
-	"languages":{
-		"language": "DE: languages.language",
+	"reservationInteruption": {
+		"describtion": "Reservierung unterbrechen",
+		"from": "Unterbrechen ab",
+		"to": "Unterbrechen bis"
+	},
+	"languages": {
+		"language": "Sprache",
 		"en": "English",
 		"cs": "Česky",
 		"de": "Deutsch",
 		"pl": "Polski"
 	},
+	"mobileApp": {
+		"page": {
+			"userInfoUnavailable": "DE: mobileApp.page.userInfoUnavailable",
+			"logOut": "abmelden",
+			"selectGarage": "Garage auswählen",
+			"allGarages": "Alle Garagen"
+		},
+		"login": {
+			"loading": "Laden...",
+			"loginFailed": "Anmelden fehlgeschlagen:",
+			"login": "Melden Sie sich bitte an oder",
+			"signup": "registrieren Sie sich",
+			"email": "E-Mail-Adresse",
+			"emailPlaceholder": "DE: mobileApp.login.emailPlaceholder",
+			"emailInvalid": "Ungültige E-Mail-Adresse",
+			"password": "Passwort"
+		},
+		"signUp": {
+			"signUp": "Registriert!",
+			"niceToMeetYou": "DE: mobileApp.signUp.niceToMeetYou",
+			"fillDetails": "DE: mobileApp.signUp.fillDetails",
+			"name": "Vor- und Nachname *",
+			"nameInvalid": "Name ungültig",
+			"phone": "Telefonnummer *",
+			"phoneInvalid": "Telefonnummer ungültig",
+			"email": "E-Mail-Adresse *",
+			"emailInvalid": "Ungültige E-Mail-Adresse",
+			"password": "Passwort *",
+			"passwordInvalid": "Mindestlänge ist",
+			"passwordConfirm": "Passwort bestätigen *",
+			"passwordConfirmInvalid": "Passwort und Bestätigungspasswort stimmen nicht überein.",
+			"agreeWith": "Durch Registrierung stimmen Sie unseren",
+			"terms": "Nutzungsbedingungen zu"
+		},
+		"terms": {
+			"termsOfServices": "Nutzungsbedingungen",
+			"content": "Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage"
+		},
+		"menu": {
+			"newNotifications": "Neue Benachrichtigungen",
+			"access": "Zugang",
+			"myReservations": "Meine Reservierungen",
+			"welcome": "Willkommen"
+		},
+		"access": {
+			"swipeToOpen": "Öffnen Sie das Tor mit einem Swipe",
+			"noOngoingReservations": "Keine gültige Reservierung",
+			"inSelectedGarage": "in gewählten Garage"
+		},
+		"reservation": {
+			"details": "Reservierungsdetail",
+			"garage": "Garage",
+			"place": "Platznummer",
+			"begins": "Beginnt",
+			"ends": "Endet"
+		},
+		"newReservation": {
+			"begins": "Beginnt",
+			"ends": "Endet",
+			"place": "Platznummer",
+			"car": "Auto",
+			"price": "Preis",
+			"paidBy": "Wer zahlt",
+			"newReservation": "Neue Reservierung",
+			"pickPlace": "Parkplatz auswählen",
+			"licencePlate": "KFZ-Kennzeichen",
+			"licencePlateInvalid": "KFZ-Kennzeichen ungültig",
+			"licencePlatePlaceholder": "DBD2408",
+			"selectCar": "Fahrzeug auswählen",
+			"noAvailablePlaces": "Kein freier Parkplatz",
+			"selectGarage": "Zuerst wählen Sie eine Garage",
+			"auto": "AUTO",
+			"now": "JETZT",
+			"pick": "WÄHLEN",
+			"other": "ANDERS",
+			"later": "SPÄTER",
+			"hourShortcut": "Std",
+			"me": "Ich",
+			"creatingReservation": "Reservierung erstellen",
+			"creatingPayment": "Zahlung erstellen",
+			"tokenNoLongerValid": "Zahlungstoken ist weiter ungültig. Reservierung wird gelöscht.",
+			"checkingToken": "Prüfen der gültigkeit des Zahlungtokens.",
+			"redirecting": "Weiterleiten ...",
+			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
+			"processingPayment": "Zahlungsverarbeitung ..."
+		}
+	},
 	"auth0Emails": {
-		"securityReasons": "DE: auth0Emails.securityReasons",
-		"easyAsClickingButton": "DE: auth0Emails.easyAsClickingButton",
-		"confirmAccount": "DE: auth0Emails.confirmAccount",
-		"enjoy": "DE: auth0Emails.enjoy",
-		"bestRegards": "DE: auth0Emails.bestRegards",
-		"PidTeam": "DE: auth0Emails.PidTeam",
-		"welcome": "DE: auth0Emails.welcome",
-		"thankYou": "DE: auth0Emails.thankYou",
-		"howToStart": "DE: auth0Emails.howToStart",
-		"pleasantExperience": "DE: auth0Emails.pleasantExperience",
-		"helpForHelp": "DE: auth0Emails.helpForHelp",
-		"garageSetup": "DE: auth0Emails.garageSetup",
-		"getInTouch": "DE: auth0Emails.getInTouch",
+		"securityReasons": "Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse",
+		"easyAsClickingButton": "Einfach diese Taste drücken:",
+		"confirmAccount": "Kontro prüfen!",
+		"enjoy": "Viel Spaß mit Park-it-direct",
+		"bestRegards": "Mit freundlichen Grüßen,",
+		"PidTeam": "Team Park-it-direct",
+		"welcome": "Wilkommen bei Park-it-direct",
+		"thankYou": "Vielen Dank, dass Sie sich für unser Verwaltungssystem entschieden haben. Schauen wir mal, wie Ihnen Park-it-direct bei dem Verwalten Ihrer Parkflächen helfen kann.",
+		"howToStart": "Wie fängt man an?",
+		"pleasantExperience": "Möchten Sie bequem ein Parkplatz finden? Würden Sie gerne das Parken in Ihrem Unternehmen verwalten? Möchten Sie den Gewinn von Ihren Parkflächen erhöhen? ",
+		"helpForHelp": "Auf jeder Seite befinden sich rechts Hinweise in blauen Feldern. Hinweise können Sie in Ihrem Profil immer wieder ein- oder ausschlaten.",
+		"garageSetup": "Möchten Sie eine Garage Erstellen, und alle Funktionen von Park-it-direct ausprobieren? Da helfen wir Ihnen gerne weiter. Schreiben Sie uns einfach eine Nachricht. Gemeinsam gehen wir das System durch, sodass alles richtig eingestellt ist, und Sie auch wirklich alle Möglichkeiten nutzen können.",
+		"getInTouch": "Möchten Sie uns kontaktieren?",
 		"website": "DE: auth0Emails.website",
 		"passwordResetSubmited": "DE: auth0Emails.passwordResetSubmited",
 		"pwdResetDescr": "DE: auth0Emails.pwdResetDescr",
