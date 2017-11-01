@@ -592,7 +592,9 @@
 	"datetimepicker": {
 		"today": "Today",
 		"now": "Now",
-		"inf": "Infinity"
+		"inf": "Infinity",
+		"hour":"Hour",
+		"minute":"Minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Limited vehicle size",
