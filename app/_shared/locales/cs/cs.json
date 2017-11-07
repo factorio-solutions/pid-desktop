@@ -950,6 +950,43 @@
 		"de": "Deutsch",
 		"pl": "Polski"
 	},
+	"recurringReservation": {
+		"repeat": "CS: recurringReservation.repeat",
+		"repeats": "CS: recurringReservation.repeats",
+		"daily": "CS: recurringReservation.daily",
+		"weekly": "CS: recurringReservation.weekly",
+		"monthly": "CS: recurringReservation.monthly",
+		"repeatEvery": "CS: recurringReservation.repeatEvery",
+		"week": {
+			"one": "CS: recurringReservation.week.one",
+			"few": "CS: recurringReservation.week.few",
+			"many": "CS: recurringReservation.week.many",
+			"other": "CS: recurringReservation.week.other"
+		},
+		"month": {
+			"one": "CS: recurringReservation.month.one",
+			"few": "CS: recurringReservation.month.few",
+			"many": "CS: recurringReservation.month.many",
+			"other": "CS: recurringReservation.month.other"
+		},
+		"day": {
+			"one": "CS: recurringReservation.day.one",
+			"few": "CS: recurringReservation.day.few",
+			"many": "CS: recurringReservation.day.many",
+			"other": "CS: recurringReservation.day.other"
+		},
+		"repeatOn": "CS: recurringReservation.repeatOn",
+		"startsOn": "CS: recurringReservation.startsOn",
+		"ends": "CS: recurringReservation.ends",
+		"after": "CS: recurringReservation.after",
+		"occurence": {
+			"one": "CS: recurringReservation.occurence.one",
+			"few": "CS: recurringReservation.occurence.few",
+			"many": "CS: recurringReservation.occurence.many",
+			"other": "CS: recurringReservation.occurence.other"
+		},
+		"on": "CS: recurringReservation.on"
+	},
 	"mobileApp": {
 		"page": {
 			"userInfoUnavailable": "Informace o uživateli jsou nedostupné",

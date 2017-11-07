@@ -950,6 +950,43 @@
 		"de": "Deutsch",
 		"pl": "Polski"
 	},
+	"recurringReservation": {
+		"repeat": "DE: recurringReservation.repeat",
+		"repeats": "DE: recurringReservation.repeats",
+		"daily": "DE: recurringReservation.daily",
+		"weekly": "DE: recurringReservation.weekly",
+		"monthly": "DE: recurringReservation.monthly",
+		"repeatEvery": "DE: recurringReservation.repeatEvery",
+		"week": {
+			"one": "DE: recurringReservation.week.one",
+			"few": "DE: recurringReservation.week.few",
+			"many": "DE: recurringReservation.week.many",
+			"other": "DE: recurringReservation.week.other"
+		},
+		"month": {
+			"one": "DE: recurringReservation.month.one",
+			"few": "DE: recurringReservation.month.few",
+			"many": "DE: recurringReservation.month.many",
+			"other": "DE: recurringReservation.month.other"
+		},
+		"day": {
+			"one": "DE: recurringReservation.day.one",
+			"few": "DE: recurringReservation.day.few",
+			"many": "DE: recurringReservation.day.many",
+			"other": "DE: recurringReservation.day.other"
+		},
+		"repeatOn": "DE: recurringReservation.repeatOn",
+		"startsOn": "DE: recurringReservation.startsOn",
+		"ends": "DE: recurringReservation.ends",
+		"after": "DE: recurringReservation.after",
+		"occurence": {
+			"one": "DE: recurringReservation.occurence.one",
+			"few": "DE: recurringReservation.occurence.few",
+			"many": "DE: recurringReservation.occurence.many",
+			"other": "DE: recurringReservation.occurence.other"
+		},
+		"on": "DE: recurringReservation.on"
+	},
 	"mobileApp": {
 		"page": {
 			"userInfoUnavailable": "DE: mobileApp.page.userInfoUnavailable",

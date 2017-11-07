@@ -1,5 +1,6 @@
 import moment from 'moment'
 
+export const MOMENT_DATE_FORMAT = 'DD.MM.YYYY'
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm'
 export const MOMENT_DATETIME_FORMAT_MOBILE = 'YYYY-MM-DDTHH:mm'
 export const MOMENT_UTC_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm ZZ'
@@ -15,6 +16,10 @@ export function timeToUTCmobile(value) {
 
 export function formatTime(time) {
   return moment(time).format(MOMENT_DATETIME_FORMAT)
+}
+
+export function formatDate(date) {
+  return moment(date).format(MOMENT_DATE_FORMAT)
 }
 
 
