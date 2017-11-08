@@ -985,7 +985,8 @@
 			"many": "occurences",
 			"other": "occurences"
 		},
-		"on": "On"
+		"on": "On",
+		"every": "every" 
 	},
 	"mobileApp": {
 		"page": {

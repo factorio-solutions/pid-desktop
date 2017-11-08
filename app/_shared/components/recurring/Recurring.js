@@ -16,57 +16,63 @@ import styles from './Recurring.scss'
 const REPEAT_TYPES = [ 'day', 'week', 'month' ]
 const REPEAT_INTERVALS = Array.from(Array(30).keys()).map(i => i + 1)
 const REPEAT_MAX_COUNT = 100
-const REPEAT_DEFAULT_STATE = {
-  type:     'week',
-  interval: 1,
-  day:      [ moment().weekday() ],
-  starts:   formatDate(moment()),
-  count:    10
-}
 
 
 export default class Recurring extends Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired, // will return rule as string or undefined
-    show:     PropTypes.bool.isRequired,
-    rule:     PropTypes.oneOfType([
+    onSubmit:  PropTypes.func.isRequired, // will return rule as string or undefined
+    show:      PropTypes.bool.isRequired,
+    showDays:  PropTypes.bool,
+    showWeeks: PropTypes.bool,
+    rule:      PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
     ]) // start value
   }
 
   static defaultProps = {
-    rule: JSON.stringify(REPEAT_DEFAULT_STATE)
+    showDays:  true,
+    showWeeks: true
   }
 
   constructor(props) {
     super(props)
-    this.state = props.rule ? this.parseRule(props.rule) : REPEAT_DEFAULT_STATE
-  }
-
-  parseRule(rule) {
-    try {
-      return typeof rule === 'string' ? JSON.parse(rule) : rule
-    } catch (e) {
-      return REPEAT_DEFAULT_STATE
+    this.state = props.rule || {
+      type:     'week',
+      interval: 1,
+      day:      [ moment().weekday() ],
+      starts:   formatDate(moment()),
+      count:    10
     }
   }
+  componentDidMount() {
+    this.checkProps(this.props)
+  }
 
-  createRule() {
-    return JSON.stringify(this.state)
+  componentWillReceiveProps(nextProps) {
+    this.checkProps(nextProps)
+  }
+
+  checkProps(props) {
+    const onStateChange = () => props.onSubmit(this.state)
+    !props.showDays && (this.state.type === 'day' || (this.state.type === 'week' && this.state.day.length > 1)) &&
+      this.setState({ ...this.state, type: 'week', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
+    !props.showWeeks && this.state.type === 'week' && this.setState({ ...this.state, type: 'month', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
   }
 
   render() {
-    const { onSubmit, show } = this.props
+    const { onSubmit, show, showDays, showWeeks } = this.props
 
-    const submit = () => onSubmit(this.createRule())
-
+    const filterDays = type => showDays ? true : type !== 'day'
+    const filterWeeks = type => showWeeks ? true : type !== 'week'
     const toTypely = type => type === 'day' ? 'daily' : type + 'ly'
 
     const toTypeDropdown = type => ({
       label:   t([ 'recurringReservation', toTypely(type) ]),
       onClick: () => this.setState({ ...this.state, type })
     })
+
+    const filteredTypes = REPEAT_TYPES.filter(filterDays).filter(filterWeeks)
 
     const toIntervalDropdown = interval => ({
       label:   interval,
@@ -85,51 +91,82 @@ export default class Recurring extends Component {
     }
 
     const createDayNames = (d, index) => {
-      const day = moment([ '2015', '07', 13 + index ].join('-'))
+      const day = moment().weekday(index)
       return {
         name:  day.format('dd'),
         index: day.weekday()
       }
     }
 
-
-    const firstOccurence = moment(this.state.starts, MOMENT_DATE_FORMAT) // true first occurence
-    if (this.state.type === 'week') {
-      const firstWeekday = this.state.day.find(weekday => weekday >= moment(this.state.starts, MOMENT_DATE_FORMAT).weekday())
-      const startingWeekday = this.state.day.length ?
-      firstWeekday === undefined ? this.state.day[0] : firstWeekday :
-      moment().weekday()
-      firstOccurence.weekday(startingWeekday < moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ? startingWeekday + 7 : startingWeekday)
+    const calculateFirstOccurence = state => {
+      const firstOccurence = moment(state.starts, MOMENT_DATE_FORMAT) // true first occurence given selected days
+      if (state.type === 'week') {
+        const firstWeekday = state.day.find(weekday => weekday >= moment(state.starts, MOMENT_DATE_FORMAT).weekday())
+        const startingWeekday = state.day.length ?
+        firstWeekday === undefined ? state.day[0] : firstWeekday :
+        moment(this.state.starts, MOMENT_DATE_FORMAT).weekday()
+        firstOccurence.weekday(startingWeekday < moment(state.starts, MOMENT_DATE_FORMAT).weekday() ? startingWeekday + 7 : startingWeekday)
+      }
+      return firstOccurence
     }
 
     const calculateCount = date => {
-      const count = Math.floor(
-        ((moment(date, MOMENT_DATE_FORMAT).diff(moment(firstOccurence, MOMENT_DATE_FORMAT, true), this.state.type) / this.state.interval) + 1) *
-        ((this.state.type === 'week' && this.state.day.length) || 1)
-      )
-      this.setState({ ...this.state, count: count <= 0 ? 1 : count })
+      const firstOccurence = calculateFirstOccurence(this.state)
+      const lastOccurence = moment(date, MOMENT_DATE_FORMAT)
+      if (this.state.type === 'week') {
+        const lastWeekday = this.state.day.slice().reverse().find(day => day <= moment(date, MOMENT_DATE_FORMAT).weekday())
+        const intervalCorrection = lastOccurence.clone().startOf('week').diff(firstOccurence.clone().startOf('week'), 'week') % this.state.interval
+        const endingWeekday = intervalCorrection ?
+          this.state.day[this.state.day.length - 1] :
+          this.state.day.length ?
+            lastWeekday === undefined ?
+              this.state.day[this.state.day.length - 1] :
+              lastWeekday :
+              moment(this.state.starts, MOMENT_DATE_FORMAT).weekday()
+
+        lastOccurence.weekday(endingWeekday > moment(date, MOMENT_DATE_FORMAT).weekday() ? endingWeekday - 7 : endingWeekday)
+          .subtract(lastOccurence.clone().startOf('week').diff(firstOccurence.clone().startOf('week'), 'week') % this.state.interval, 'weeks')
+      }
+
+      let count = Math.floor((lastOccurence.diff(firstOccurence, this.state.type, true) / this.state.interval)) * ((this.state.type === 'week' && this.state.day.length) || 1)
+
+      if (this.state.type === 'week') {
+        const correction = (firstOccurence.weekday() <= lastOccurence.weekday()) ?
+          this.state.day.filter(day => firstOccurence.weekday() <= day && day <= lastOccurence.weekday()).length :
+          this.state.day.filter(day => firstOccurence.weekday() >= day || day >= lastOccurence.weekday()).length
+
+        count += correction - 1
+      }
+
+      this.setState({ ...this.state, count: count <= 0 ? 1 : count + 1 })
     }
 
     const endsOnValue = () => {
+      const firstOccurence = calculateFirstOccurence(this.state)
+
       const occurencesThisInterval = this.state.type === 'week' ? this.state.day.filter(day => day >= firstOccurence.weekday()).filter((d, i) => i < this.state.count).length || 1 : 1
       const occurencesLastInterval = this.state.type === 'week' ? (this.state.count - occurencesThisInterval < 0 ? 0 : this.state.count - occurencesThisInterval) % (this.state.day.length || 1) : 0
       if (this.state.type === 'week') {
-        const startCorrection = this.state.day[(this.state.count < this.state.day.length ? this.state.count : this.state.day.length) - 1]
+        const startCorrection = this.state.count >= this.state.day.length ?
+          this.state.day[this.state.day.length - 1] :
+          this.state.day.filter(day => day >= firstOccurence.weekday())[this.state.count - 1]
         firstOccurence.weekday(startCorrection + ((startCorrection < moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ? 7 : 0) * (this.state.interval - 1)))
       }
-      console.log(formatDate(firstOccurence), occurencesThisInterval, occurencesLastInterval)
       const add = ((this.state.count - occurencesThisInterval - occurencesLastInterval) / ((this.state.type === 'week' && this.state.day.length) || 1)) * this.state.interval
       const lastOccurence = firstOccurence.clone().add(add, this.state.type)
       if (this.state.type === 'week' && occurencesLastInterval > 0) {
         const endCorrection = this.state.day[occurencesLastInterval - 1]
-        console.log(formatDate(lastOccurence), endCorrection);
         occurencesLastInterval && lastOccurence.add(this.state.interval - 1, this.state.type)
-        console.log(formatDate(lastOccurence), 'actually added', endCorrection <= moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ? endCorrection + 7 : endCorrection);
         lastOccurence.weekday(endCorrection <= lastOccurence.weekday() ? endCorrection + 7 : endCorrection)
-        console.log(formatDate(lastOccurence));
       }
 
       return formatDate(lastOccurence) // also calculate date value from count
+    }
+
+    const submit = () => {
+      const newStarts = calculateFirstOccurence(this.state).format(MOMENT_DATE_FORMAT)
+      onSubmit({ ...this.state, starts: newStarts })
+      this.setState({ ...this.state, starts: newStarts })
     }
 
 
@@ -142,7 +179,7 @@ export default class Recurring extends Component {
               <tr>
                 <td>{t([ 'recurringReservation', 'repeats' ])}</td>
                 <td>
-                  <Dropdown content={REPEAT_TYPES.map(toTypeDropdown)} selected={REPEAT_TYPES.indexOf(this.state.type)} style="light" />
+                  <Dropdown content={filteredTypes.map(toTypeDropdown)} selected={filteredTypes.indexOf(this.state.type)} style="light" />
                 </td>
               </tr>
               <tr>
@@ -152,7 +189,7 @@ export default class Recurring extends Component {
                   <span>{t([ 'recurringReservation', this.state.type ], { count: this.state.interval })}</span>
                 </td>
               </tr>
-              {this.state.type === 'week' && <tr>
+              {this.state.type === 'week' && showDays && <tr>
                 <td>{t([ 'recurringReservation', 'repeatOn' ])}</td>
                 <td>
                   {Array(...{ length: 7 }).map(createDayNames).map(toCheckbox)}
@@ -161,7 +198,8 @@ export default class Recurring extends Component {
               <tr>
                 <td>{t([ 'recurringReservation', 'startsOn' ])}</td>
                 <td className={styles.setLineHeight}>
-                  {this.state.starts}
+                  {calculateFirstOccurence(this.state).format(MOMENT_DATE_FORMAT)}
+                  {/*this.state.starts*/}
                   {/* <DateInput onChange={startsSelected} value={this.state.starts} style={styles.dateSelector} /> */}
                 </td>
               </tr>

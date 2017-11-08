@@ -10,7 +10,9 @@ export default class TestingPage extends Component {
         <h1>Testing page</h1>
         <Recurring
           show
-          onSubmit={rule => console.log('set rule to ', rule)}
+          onSubmit={rule => console.log('set rule to ', JSON.stringify(rule))}
+          showDays
+          showWeeks
         />
       </div>
     )
