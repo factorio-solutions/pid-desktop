@@ -1,11 +1,11 @@
-import moment                                from 'moment'
-import { request }                           from '../helpers/request'
-import requestPromise                        from '../helpers/requestPromise'
-import { calculatePrice, valueAddedTax }     from '../helpers/calculatePrice'
-import * as nav                              from '../helpers/navigation'
-import { t }                                 from '../modules/localization/localization'
-import * as pageBaseActions                  from './pageBase.actions'
-import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
+import moment                                                    from 'moment'
+import { request }                                               from '../helpers/request'
+import requestPromise                                            from '../helpers/requestPromise'
+import { calculatePrice, valueAddedTax }                         from '../helpers/calculatePrice'
+import * as nav                                                  from '../helpers/navigation'
+import { t }                                                     from '../modules/localization/localization'
+import * as pageBaseActions                                      from './pageBase.actions'
+import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT, timeToUTC } from '../helpers/time'
 
 import {
   GET_AVAILABLE_USERS,
@@ -35,6 +35,9 @@ export const NEW_RESERVATION_SET_HOST_NAME = 'NEW_RESERVATION_SET_HOST_NAME'
 export const NEW_RESERVATION_SET_HOST_PHONE = 'NEW_RESERVATION_SET_HOST_PHONE'
 export const NEW_RESERVATION_SET_HOST_EMAIL = 'NEW_RESERVATION_SET_HOST_EMAIL'
 export const NEW_RESERVATION_SET_CLIENT_ID = 'NEW_RESERVATION_SET_CLIENT_ID'
+export const NEW_RESERVATION_SET_RECURRING_RULE = 'NEW_RESERVATION_SET_RECURRING_RULE'
+export const NEW_RESERVATION_SHOW_RECURRING = 'NEW_RESERVATION_SHOW_RECURRING'
+export const NEW_RESERVATION_SET_USE_RECURRING = 'NEW_RESERVATION_SET_USE_RECURRING'
 export const NEW_RESERVATION_CAR_ID = 'NEW_RESERVATION_CAR_ID'
 export const NEW_RESERVATION_CAR_LICENCE_PLATE = 'NEW_RESERVATION_CAR_LICENCE_PLATE'
 export const NEW_RESERVATION_SET_GARAGE = 'NEW_RESERVATION_SET_GARAGE'
@@ -99,6 +102,31 @@ export function setClientId(value) {
   }
 }
 
+export function setRecurringRule(value) {
+  return (dispatch, getState) => {
+    if (value) {
+      const start = moment(value.starts, MOMENT_DATE_FORMAT)
+      dispatch(setFrom(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).year(start.year()).month(start.month()).date(start.date())))
+    }
+    dispatch({ type: NEW_RESERVATION_SET_RECURRING_RULE,
+      value
+    })
+  }
+}
+
+export function setShowRecurring(value) {
+  return { type: NEW_RESERVATION_SHOW_RECURRING,
+    value
+  }
+}
+
+export function setUseRecurring(event) {
+  return {
+    type:  NEW_RESERVATION_SET_USE_RECURRING,
+    value: typeof event === 'boolean' ? event : event.target.checked
+  }
+}
+
 export function setCarId(value) {
   return { type: NEW_RESERVATION_CAR_ID,
     value
@@ -147,6 +175,8 @@ export function setFrom(value) {
       value: fromValue.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
+
+    moment(toValue, MOMENT_DATETIME_FORMAT).diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
   }
@@ -164,6 +194,8 @@ export function setTo(value) {
     dispatch({ type:  NEW_RESERVATION_SET_TO,
       value: toValue.format(MOMENT_DATETIME_FORMAT)
     })
+
+    toValue.diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
   }
@@ -518,14 +550,16 @@ export function submitReservation(id) {
     const createTheReservation = user_id => {
       request(onSuccess
              , id ? UPDATE_RESERVATION : CREATE_RESERVATION
-             , { reservation: { user_id:       ongoing ? undefined : user_id,
-               place_id:      ongoing ? undefined : state.place_id,
-               client_id:     ongoing ? undefined : state.client_id,
-               car_id:        ongoing ? undefined : state.car_id,
-               licence_plate: ongoing ? undefined : state.carLicencePlate == '' ? undefined : state.carLicencePlate,
-               url:           ongoing ? undefined : window.location.href.split('?')[0],
-               begins_at:     ongoing ? undefined : timeToUTC(state.from),
-               ends_at:       timeToUTC(state.to)
+             , { reservation: {
+               user_id:        ongoing ? undefined : user_id,
+               place_id:       ongoing ? undefined : state.place_id,
+               client_id:      ongoing ? undefined : state.client_id,
+               car_id:         ongoing ? undefined : state.car_id,
+               licence_plate:  ongoing ? undefined : state.carLicencePlate == '' ? undefined : state.carLicencePlate,
+               url:            ongoing ? undefined : window.location.href.split('?')[0],
+               begins_at:      ongoing ? undefined : timeToUTC(state.from),
+               ends_at:        timeToUTC(state.to),
+               recurring_rule: state.useRecurring ? JSON.stringify(state.recurringRule) : undefined
              },
                id
              }

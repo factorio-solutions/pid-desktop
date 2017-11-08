@@ -180,6 +180,9 @@ export default function createRoutes() {
       <Route path=":id/admin/activityLog"                 component={ActivityLogPage}/>
 
       <Route path="marketing/:short_name"                 component={MarketingPage}/>
+
+      {/* Testing page for not production environments*/}
+      {process.env.NODE_ENV !== 'production' && <Route path="testing" component={TestingPage} />}
     </Route>
   );
 
@@ -192,8 +195,6 @@ export default function createRoutes() {
         </Route>
       ))}
 
-      {/* Testing page for not production environments*/}
-      {process.env.NODE_ENV !== 'production' && <Route path="/testing" component={TestingPage} />}
     </Route>
   )
 }

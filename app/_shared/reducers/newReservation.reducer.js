@@ -1,3 +1,6 @@
+import moment from 'moment'
+import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT } from '../helpers/time'
+
 import {
   NEW_RESERVATION_SET_USER,
   NEW_RESERVATION_SET_AVAILABLE_USERS,
@@ -8,6 +11,9 @@ import {
   NEW_RESERVATION_SET_HOST_EMAIL,
 
   NEW_RESERVATION_SET_CLIENT_ID,
+  NEW_RESERVATION_SET_RECURRING_RULE,
+  NEW_RESERVATION_SHOW_RECURRING,
+  NEW_RESERVATION_SET_USE_RECURRING,
 
   NEW_RESERVATION_CAR_ID,
   NEW_RESERVATION_CAR_LICENCE_PLATE,
@@ -35,7 +41,10 @@ const defaultState = { user:           undefined, // id of selected user reserva
   phone: { value: '', valid: false },
   email: { value: '', valid: false },
 
-  client_id: undefined, // currently selected client
+  client_id:     undefined, // currently selected client
+  recurringRule: undefined, // rule in string
+  showRecurring: false, // show recurring modal
+  useRecurring:  false, // use recurring
 
   car_id:          undefined, // selected car id
   carLicencePlate: '', // in case there are no available cars
@@ -90,9 +99,31 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_SET_CLIENT_ID:
       return { ...state,
-        client_id: action.value
+        client_id:     action.value,
+        recurringRule: action.value ? state.recurringRule : undefined
       }
 
+    case NEW_RESERVATION_SET_RECURRING_RULE: {
+      const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
+      return { ...state,
+        recurringRule: action.value,
+        showRecurring: false,
+        useRecurring:  !overMonth && !!action.value
+      }
+    }
+
+    case NEW_RESERVATION_SHOW_RECURRING:
+      return { ...state,
+        showRecurring: action.value
+      }
+
+    case NEW_RESERVATION_SET_USE_RECURRING: {
+      const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
+      return { ...state,
+        useRecurring:  !overMonth && action.value,
+        showRecurring: !overMonth && action.value && !state.rule
+      }
+    }
 
     case NEW_RESERVATION_CAR_ID:
       return { ...state,
@@ -113,8 +144,11 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_SET_FROM:
       return { ...state,
-        from: action.value,
-        to:   action.to || state.to
+        from:          action.value,
+        to:            action.to || state.to,
+        recurringRule: !state.recurringRule ? undefined : { ...state.recurringRule,
+          starts: moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)
+        }
       }
 
     case NEW_RESERVATION_SET_TO:

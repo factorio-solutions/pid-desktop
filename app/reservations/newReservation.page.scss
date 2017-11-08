@@ -56,3 +56,25 @@
   .rightCollumn{
   }
 }
+
+
+.recurringForm{
+  display: flex;
+
+  >input{
+    margin: auto 0;
+  }
+  &.hidden{
+    display: none;
+  }
+}
+
+.rule{
+  margin: 15px 0 15px 5px;
+  cursor: pointer;
+  flex: 1 1;
+
+  &.disabled{
+    color: $lightGray;
+  }
+}

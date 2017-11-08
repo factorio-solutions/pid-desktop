@@ -950,6 +950,44 @@
 		"de": "Deutsch",
 		"pl": "Polski"
 	},
+	"recurringReservation": {
+		"repeat": "Repeat",
+		"repeats": "Repeats:",
+		"daily": "daily",
+		"weekly": "weekly",
+		"monthly": "monthly",
+		"repeatEvery": "Repeat every:",
+		"week": {
+			"one": "week",
+			"few": "weeks",
+			"many": "weeks",
+			"other": "weeks"
+		},
+		"month": {
+			"one": "month",
+			"few": "months",
+			"many": "months",
+			"other": "months"
+		},
+		"day": {
+			"one": "day",
+			"few": "days",
+			"many": "days",
+			"other": "days"
+		},
+		"repeatOn": "Repeat on:",
+		"startsOn": "Starts on:",
+		"ends": "Ends:",
+		"after": "After",
+		"occurence": {
+			"one": "occurence",
+			"few": "occurences",
+			"many": "occurences",
+			"other": "occurences"
+		},
+		"on": "On",
+		"every": "every" 
+	},
 	"mobileApp": {
 		"page": {
 			"userInfoUnavailable": "User info unavailable.",

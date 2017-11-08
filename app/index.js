@@ -17,6 +17,8 @@ export const mobile = false  // when different actions are needed on mobile and 
 export const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/queries'
 const history = syncHistoryWithStore(hashHistory, store)
 
+window.moment = require('moment')  // remove this
+
 render(
   <Provider store={store}>
     <Router history={history} routes={createRoutes()} />
