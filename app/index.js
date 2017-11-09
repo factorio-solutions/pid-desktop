@@ -15,6 +15,7 @@ import './_styles/app.desktop.scss'
 export const store = configureStore()
 export const mobile = false  // when different actions are needed on mobile and desktop
 export const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/queries'
+
 const history = syncHistoryWithStore(hashHistory, store)
 
 render(

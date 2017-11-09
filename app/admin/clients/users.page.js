@@ -97,10 +97,7 @@ export class ClientUsersPage extends Component {
       )
     }
 
-    const data = state.users.map((client_user) => {
-      const { full_name, email, phone } = client_user.user
-      return { full_name, email, phone, created_at: client_user.created_at, spoiler: renderSpoiler(client_user) }
-    })
+    const data = state.users.map(client_user => ({ ...client_user.user, created_at: client_user.created_at, spoiler: renderSpoiler(client_user), key:client_user.user.id }))
 
 
     return (
