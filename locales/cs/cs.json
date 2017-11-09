@@ -114,8 +114,8 @@
 		"newGarageOrderHint": "Zde můžete nastavit pořadí obsazování parkovacích míst. Místa se obsazují vzestupně, tedy od nejnižšího čísla. U míst bez nastaveného pořadí určí pořadí systém automaticky.",
 		"newGarageSubscribtionHint": "CS: pageBase.newGarageSubscribtionHint",
 		"newGarageGatesHint": "Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",
-		"garageClientsHint": "CS: pageBase.garageClientsHint",
-		"clientsHint": "Zde najdete seznam klientů, s kterými jste v kontaktu.\n\nVe sloupci \"token klienta\" najdete unikátní identifikátor, který slouží k jednoduchému výběru klienta při tvorbě nových smluv.\n\nVe sloupci \"smlouva\" je zobrazeno zeleným zatržením, má-li klient uzavřenou smlouvu, nebo červeným vykřičníkem, pokud žádnou smlouvu nemá.\n\nVe sloupci \"místa\" je uveden celkový počet míst, která má klient přiřazená.\n\nVe sloupci \"celkem za měsíc\" je zobrazeno celkové měsiční parkovné klienta.\n\nVe sloupci \"faktury\" je zobrazen stav úhrad faktur - zeleně pokud jsou všechny uhrazeny, červeně má-li klient jakoukoliv fakturu po splatnosti.\n\nPo kliknutí na klienta se zobrazí další detaily, např. kontaktní osoba nebo seznam uzavřených smluv. Tlačítky v pravé části pak můžete vytvářet nové smlouvy, kontrolovat faktury, upravovat klienta či zobrazit všechny uživatele, kteří pod klienta patří. V tomto zobrazení je možno kliknout i na jednotlivé smlouvy a ty pak upravovat.",
+		"garageClientsHint": "Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.",
+		"clientsHint": "Zde najdete seznam klientů, s kterými jste v kontaktu.\n\nVe sloupci \"token klienta\" najdete unikátní identifikátor, který slouží k jednoduchému výběru klienta při tvorbě nových dohod.\n\nVe sloupci \"dohoda\" je zobrazeno zeleným zatržením, má-li klient uzavřenou dohodu, nebo červeným vykřičníkem, pokud žádnou dohodu nemá.\n\nVe sloupci \"místa\" je uveden celkový počet míst, která má klient přiřazená.\n\nVe sloupci \"celkem za měsíc\" je zobrazeno celkové měsiční parkovné klienta.\n\nVe sloupci \"faktury\" je zobrazen stav úhrad faktur - zeleně pokud jsou všechny uhrazeny, červeně má-li klient jakoukoliv fakturu po splatnosti.\n\nPo kliknutí na klienta se zobrazí další detaily, např. kontaktní osoba nebo seznam uzavřených dohod. Tlačítky v pravé části pak můžete vytvářet nové dohody, kontrolovat faktury, upravovat klienta či zobrazit všechny uživatele, kteří pod klienta patří. V tomto zobrazení je možno kliknout i na jednotlivé dohody a ty pak upravovat.",
 		"newClientHint": "CS: pageBase.newClientHint",
 		"clientUsersHint": "Zde můžete spravovat uživatele konkrétního klientského účtu a také zvát k tomuto účtu nové uživatele. U každéhu uživatele můžete zobrazit a nastavit jeho práva. Pozvánky, které jste zaslali a čekají na potvrzení jsou uvedeny v části \"Čekající pozvánky\" v záložce \"Uživatelé\".",
 		"settingsHint": "Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.",
@@ -142,7 +142,7 @@
 		"OccupancyOverview": "Přehled obsazenosti",
 		"OccupancyOverviewHint": "Zde vidíte přehled všech rezervací v čase. V pravém horním rohu lze nastavit zobrazené období, v levém horním rohu lze výběr filtrovat podle klientů. Stav rezervace je rozlišen její barvou.\n\nŠedá barva - rezervace již proběhla\nČerná - rezervace právě probíhá\nModrá - rezervace ještě nezačala",
 		"EditGarage": "Upravit garáž",
-		"EditGarageHint": "Zde najdete vizuální přehledy Vaší garáže. Možná zobrazení si vyberete v levém horním rohu.\n\nKlienti: jednotliví klienti jsou odlišeni barvou.\nAgreementy: jednotlivé agreementy jsou odlišeny barvou\nRezervace: jednotlivé rezervace jsou odlišeny barvou\nCeny: jednotlivá nastavení ceny jsou odlišena barvou\nAuta: jednotlivá auta jsou odlišena barvou\n\nV pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",
+		"EditGarageHint": "Zde najdete vizuální přehledy Vaší garáže. Možná zobrazení si vyberete v levém horním rohu.\n\nKlienti: jednotliví klienti jsou odlišeni barvou.\nDohody: jednotlivé dohody jsou odlišeny barvou\nRezervace: jednotlivé rezervace jsou odlišeny barvou\nCeny: jednotlivá nastavení ceny jsou odlišena barvou\nAuta: jednotlivá auta jsou odlišena barvou\n\nV pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",
 		"Occupancy": "Obsazenost",
 		"Invoices": "Faktury",
 		"tableView": "Náhled tabulky",
@@ -263,7 +263,7 @@
 		"to": "do",
 		"place": "místo",
 		"client": "klient",
-		"licencePlate": "poznávací značka",
+		"licencePlate": "SPZ",
 		"state": "stát",
 		"type": "typ",
 		"creator": "Založil",
@@ -334,7 +334,7 @@
 		"resetFilter": "Resetuj filtr"
 	},
 	"garageUsers": {
-		"noRights": "Na to nemáte práva.",
+		"noRights": "Na tuto akci nemáte práva.",
 		"admin": "admin",
 		"receptionist": "recepční",
 		"security": "ochranka",
@@ -613,7 +613,7 @@
 		"subway_nearby": "V blízkosti metra",
 		"wc": "WC",
 		"five_minutes_from_subway": "Pět minut od metra",
-		"number_plate_recognition": "Rozpoznání poznávací značky otevírá bránu",
+		"number_plate_recognition": "Rozpoznání SPZ otevírá bránu",
 		"charging_station": "Nabíjecí stanice pro elektrická auta",
 		"garage": "Garáž",
 		"place": "Místo",
@@ -680,7 +680,7 @@
 	"newRent": {
 		"name": "Název",
 		"namePlaceholder": "Nájemné místa",
-		"invalidName": "Neplatně zadaný název nájemného",
+		"invalidName": "Neplatný název nájemného",
 		"price": "Cena za místo za měsíc (bez DPH)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Neplatná cena",
@@ -752,7 +752,7 @@
 		"visitors": "návštěvnický systém",
 		"security": "přehled a bezpečnostní prvky",
 		"analytics": "jednoduchá obchodní analýza",
-		"3rdParty": "Integrace a shromažďování třetích stran",
+		"3rdParty": "Integrace a agregátory třetích stran",
 		"advancedAnalytics": "pokročilá obchodní analýza",
 		"customDesc": "Nenalezl jste požadovaný mix? Dej nám vědět",
 		"perSpot": "/ místo",
@@ -762,7 +762,7 @@
 		"additionalGoods": "Dodatečné zboží",
 		"bookingPage": "MOJE VLASTNÍ REZERVAČNÍ STRÁNKA",
 		"advertisement": "CS: addFeatures.advertisement",
-		"gateModule": "Modul brány",
+		"gateModule": "MODUL BRÁNY",
 		"openGate": "Otevře bránu pomocí aplikaci",
 		"IdontHaveAccout": "Nemám účet",
 		"createAccount": "VYTVOŘIT ÚČET",
@@ -801,7 +801,7 @@
 		"csobMerchantID": "Id obchodníka ČSOB",
 		"invalidMerchantId": "Id obchodníka je neplatné",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Vyberte vlastní tajný klíč:"
+		"SelectPrivateKey": "Zvolte soukromý klíč:"
 	},
 	"invoices": {
 		"invoiceDate": "datum faktury",
@@ -871,7 +871,7 @@
 		"selectedPlaces": "Vybraná místa",
 		"noSelectedPlaces": "Žádná vybraná místa",
 		"selectRent": "Vyberte nájem",
-		"contractPrice": "Zadej novou konkrétní smluvní cenu",
+		"contractPrice": "Zadej novou konkrétní cenu dohody",
 		"priceInvalid": "Cena je neplatná",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Zvolte měnu",
@@ -883,7 +883,7 @@
 		"paypal": "Paypal",
 		"csob": "ČSOB",
 		"csobPayment": "ČSOB Platby",
-		"SelectPrivateKey": "Vyberte vlastní tajný klíč:",
+		"SelectPrivateKey": "Zvolte soukromý klíč:",
 		"financeSettings": "Nastavení financování",
 		"vat": "Daň z přidané hodnoty",
 		"invoiceRow": "Číselná řada faktur",
@@ -936,10 +936,10 @@
 	"loginVerification": {
 		"description": "Spuštěna vícefázová autorizace. Na email %(email)s vám zašleme ověřovací kód.",
 		"code": "kód",
-		"codeInvalid": "Špatný kód"
+		"codeInvalid": "Neplatný kód"
 	},
 	"reservationInteruption": {
-		"describtion": "Přerušení rezrevace",
+		"describtion": "Přerušení rezervace",
 		"from": "Přerušit od",
 		"to": "Přerušit do"
 	},
@@ -949,6 +949,44 @@
 		"cs": "Česky",
 		"de": "Deutsch",
 		"pl": "Polski"
+	},
+	"recurringReservation": {
+		"repeat": "Opakovat",
+		"repeats": "Opakuje se:",
+		"daily": "Denně",
+		"weekly": "Týdně",
+		"monthly": "Měsíčně",
+		"repeatEvery": "Opakovat jednou za:",
+		"week": {
+			"one": "týden",
+			"few": "týdny",
+			"many": "týdnů",
+			"other": "týdne"
+		},
+		"month": {
+			"one": "měsíc",
+			"few": "měsíce",
+			"many": "měsíců",
+			"other": "měsíce"
+		},
+		"day": {
+			"one": "den",
+			"few": "dny",
+			"many": "dní",
+			"other": "dne"
+		},
+		"repeatOn": "Opakovat v:",
+		"startsOn": "Datum zahájení:",
+		"ends": "Konec:",
+		"after": "Po",
+		"occurence": {
+			"one": "výskytu",
+			"few": "výskytech",
+			"many": "výskytech",
+			"other": "výskytech"
+		},
+		"on": "Dne",
+		"every": "jednou za"
 	},
 	"mobileApp": {
 		"page": {
@@ -968,7 +1006,6 @@
 			"password": "Heslo"
 		},
 		"signUp": {
-			"signUp": "Registrace!",
 			"niceToMeetYou": "Ahoj, jsme rádi, že jste tady.",
 			"fillDetails": "Prosím, vyplňte detaily:",
 			"name": "Vaše celé jméno *",
@@ -985,14 +1022,12 @@
 			"terms": "podmínkami o poskytování služeb"
 		},
 		"terms": {
-			"termsOfServices": "Podmínkami o poskytování služeb",
-			"content": "Ano ano, máme hodně podmínek. Tuny a tuny."
+			"content": "Podmínky používání naleznete na našich webových stránkách."
 		},
 		"menu": {
 			"newNotifications": "Nová upozornění",
 			"access": "Přístup",
-			"myReservations": "Moje rezervace",
-			"welcome": "Vítejte"
+			"myReservations": "Moje rezervace"
 		},
 		"access": {
 			"swipeToOpen": "Swipnutím otevřete bránu",
@@ -1000,7 +1035,6 @@
 			"inSelectedGarage": "ve zvolené garáži"
 		},
 		"reservation": {
-			"details": "Detaily rezervace",
 			"garage": "Garáž",
 			"place": "Místo",
 			"begins": "Začíná",
@@ -1013,8 +1047,6 @@
 			"car": "Auto",
 			"price": "Cena",
 			"paidBy": "Kdo platí",
-			"newReservation": "Nová rezervace",
-			"pickPlace": "Zvolte místo",
 			"licencePlate": "SPZ",
 			"licencePlateInvalid": "Neplatná SPZ",
 			"licencePlatePlaceholder": "1A2 1234",
@@ -1098,7 +1130,7 @@
 			"internal": "interní",
 			"contact_person": "kontaktní osoba",
 			"receptionist": "recepční",
-			"security": "ochranka",
+			"security": "ostraha",
 			"invited_to": "Vás pozval do klienta",
 			"as": "jako",
 			"to_sign_up": "Registrovat se!",
