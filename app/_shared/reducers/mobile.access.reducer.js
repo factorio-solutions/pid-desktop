@@ -8,7 +8,7 @@ import {
 
 
 function setKeyOnIndex(object, index, key, value) {
-  if (index === undefined || key === undefined || value === undefined) return object
+  if (index === undefined || key === undefined) return object
   const newObject = { ...object[index] }
   newObject[key] = value
   return [

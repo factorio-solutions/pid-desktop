@@ -203,7 +203,7 @@
 		"noAvailableGarages": "Zurzeit gibt es keine Garagen, in denen Sie eine Reservierung vornehmen können.",
 		"licencePlate": "Kennzeichen",
 		"licencePlateInvalid": "Kennzeichen",
-		"licencePlatePlaceholder": "B048925",
+		"licencePlatePlaceholder": "P-ID 1234",
 		"price": "Preis",
 		"onClientsExpenses": "Auf Kundenkosten.",
 		"loadingGarage": "Parkhausgrundriss wird geladen …",
@@ -704,9 +704,9 @@
 		"colorPlaceholder": "Schwarz",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "Mein Porsche",
-		"widthPlaceholder": "1,8",
-		"heightPlaceholder": "1,3",
-		"lengthPlaceholder": "4,37",
+		"widthPlaceholder": "1.8",
+		"heightPlaceholder": "1.3",
+		"lengthPlaceholder": "4.37",
 		"licencePlateInvalid": "Ungültiges Kennzeichen",
 		"colorInvalid": "Ungültige Farbe",
 		"modelInvalid": "Ungültiges Modell",
@@ -761,8 +761,8 @@
 		"customPrice": "Eigener Preis",
 		"additionalGoods": "Zusätzliche Waren",
 		"bookingPage": "MEINE EIGENE RESERVIERUNGSSEITE",
-		"advertisement": "Hervorragende Werbung",
-		"gateModule": "Tormodul",
+		"advertisement": "DE: addFeatures.advertisement",
+		"gateModule": "TORMODUL",
 		"openGate": "Tor wird über App geöffnet",
 		"IdontHaveAccout": "Ich habe kein Konto",
 		"createAccount": "KONTO ERSTELLEN",
@@ -858,7 +858,7 @@
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
 		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
 		"flexiplace": "DE: modules.flexiplace",
-		"flexiplaceDescription": "DE: modules.flexiplaceDescription"
+		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -935,7 +935,7 @@
 	},
 	"loginVerification": {
 		"description": "DE: loginVerification.description",
-		"code": "Code",
+		"code": "DE: loginVerification.code",
 		"codeInvalid": "Code ungültig"
 	},
 	"reservationInteruption": {
@@ -985,7 +985,8 @@
 			"many": "DE: recurringReservation.occurence.many",
 			"other": "DE: recurringReservation.occurence.other"
 		},
-		"on": "DE: recurringReservation.on"
+		"on": "DE: recurringReservation.on",
+		"every": "DE: recurringReservation.every"
 	},
 	"mobileApp": {
 		"page": {
@@ -1005,7 +1006,6 @@
 			"password": "Passwort"
 		},
 		"signUp": {
-			"signUp": "Registriert!",
 			"niceToMeetYou": "DE: mobileApp.signUp.niceToMeetYou",
 			"fillDetails": "DE: mobileApp.signUp.fillDetails",
 			"name": "Vor- und Nachname *",
@@ -1022,14 +1022,12 @@
 			"terms": "Nutzungsbedingungen zu"
 		},
 		"terms": {
-			"termsOfServices": "Nutzungsbedingungen",
 			"content": "Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage"
 		},
 		"menu": {
 			"newNotifications": "Neue Benachrichtigungen",
 			"access": "Zugang",
-			"myReservations": "Meine Reservierungen",
-			"welcome": "Willkommen"
+			"myReservations": "Meine Reservierungen"
 		},
 		"access": {
 			"swipeToOpen": "Öffnen Sie das Tor mit einem Swipe",
@@ -1037,7 +1035,6 @@
 			"inSelectedGarage": "in gewählten Garage"
 		},
 		"reservation": {
-			"details": "Reservierungsdetail",
 			"garage": "Garage",
 			"place": "Platznummer",
 			"begins": "Beginnt",
@@ -1050,8 +1047,6 @@
 			"car": "Auto",
 			"price": "Preis",
 			"paidBy": "Wer zahlt",
-			"newReservation": "Neue Reservierung",
-			"pickPlace": "Parkplatz auswählen",
 			"licencePlate": "KFZ-Kennzeichen",
 			"licencePlateInvalid": "KFZ-Kennzeichen ungültig",
 			"licencePlatePlaceholder": "DBD2408",

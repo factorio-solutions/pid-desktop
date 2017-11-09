@@ -5,7 +5,7 @@ import {t}         from '../modules/localization/localization'
 import { RESET_PASSWORD } from '../queries/resetPassword.queries'
 
 
-export const RESET_PASSWORD_EMAIL = 'RESET_PASSWORD_EMAIL'
+export const RESET_PASSWORD_EMAIL = 'LOGIN_SET_EMAIL'
 export const RESET_PASSWORD_MODAL = 'RESET_PASSWORD_MODAL'
 
 
