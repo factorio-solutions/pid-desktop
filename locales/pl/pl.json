@@ -1006,7 +1006,6 @@
 			"password": "Hasło"
 		},
 		"signUp": {
-			"signUp": "Zarejestruj się!",
 			"niceToMeetYou": "Cześć, miło Cię poznać.",
 			"fillDetails": "Wypełnij poniższe informacje:",
 			"name": "Imię i nazwisko",
@@ -1023,14 +1022,12 @@
 			"terms": "warunkami korzystania z usług"
 		},
 		"terms": {
-			"termsOfServices": "warunkami korzystania z usług",
 			"content": "Warunki korzystania z usług znajdziesz na naszej stronie internetowej."
 		},
 		"menu": {
 			"newNotifications": "Nowe powiadomienia",
 			"access": "Dostęp",
-			"myReservations": "Moje rezerwacje",
-			"welcome": "Witamy!"
+			"myReservations": "Moje rezerwacje"
 		},
 		"access": {
 			"swipeToOpen": "Przesuń, żeby otworzyć bramkę",
@@ -1038,7 +1035,6 @@
 			"inSelectedGarage": "w wybranym garażu"
 		},
 		"reservation": {
-			"details": "Szczegóły rezerwacji",
 			"garage": "Garaż",
 			"place": "Miejsce",
 			"begins": "Początek",
@@ -1051,8 +1047,6 @@
 			"car": "Auto",
 			"price": "Cena",
 			"paidBy": "Kto płaci",
-			"newReservation": "Nowa rezerwacja",
-			"pickPlace": "Wybierz miejsce",
 			"licencePlate": "Numer rejestracyjny",
 			"licencePlateInvalid": "Niepłatny nr rejestracyjny",
 			"licencePlatePlaceholder": "1A2 1234",

@@ -1006,7 +1006,6 @@
 			"password": "Passwort"
 		},
 		"signUp": {
-			"signUp": "Registriert!",
 			"niceToMeetYou": "DE: mobileApp.signUp.niceToMeetYou",
 			"fillDetails": "DE: mobileApp.signUp.fillDetails",
 			"name": "Vor- und Nachname *",
@@ -1023,14 +1022,12 @@
 			"terms": "Nutzungsbedingungen zu"
 		},
 		"terms": {
-			"termsOfServices": "Nutzungsbedingungen",
 			"content": "Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage"
 		},
 		"menu": {
 			"newNotifications": "Neue Benachrichtigungen",
 			"access": "Zugang",
-			"myReservations": "Meine Reservierungen",
-			"welcome": "Willkommen"
+			"myReservations": "Meine Reservierungen"
 		},
 		"access": {
 			"swipeToOpen": "Öffnen Sie das Tor mit einem Swipe",
@@ -1038,7 +1035,6 @@
 			"inSelectedGarage": "in gewählten Garage"
 		},
 		"reservation": {
-			"details": "Reservierungsdetail",
 			"garage": "Garage",
 			"place": "Platznummer",
 			"begins": "Beginnt",
@@ -1051,8 +1047,6 @@
 			"car": "Auto",
 			"price": "Preis",
 			"paidBy": "Wer zahlt",
-			"newReservation": "Neue Reservierung",
-			"pickPlace": "Parkplatz auswählen",
 			"licencePlate": "KFZ-Kennzeichen",
 			"licencePlateInvalid": "KFZ-Kennzeichen ungültig",
 			"licencePlatePlaceholder": "DBD2408",
