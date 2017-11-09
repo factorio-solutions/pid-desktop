@@ -1,9 +1,9 @@
 {
-  "name": "Park-it-direct",
-  "productName": "Park-it-direct",
-  "version": "0.1.0",
-  "description": "Parking system suitable for all kinds of parking houses",
-  "main": "index.js",
+  "name": "electron-react-boilerplate",
+  "productName": "ElectronReact",
+  "version": "0.10.1",
+  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
+  "main": "main.js",
   "scripts": {
     "build": "webpack -p",
     "postinstall": "webpack -p",
