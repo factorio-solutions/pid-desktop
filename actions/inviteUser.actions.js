@@ -170,10 +170,12 @@ export function createNewManagebles () {
     const emailsSend = () => { // after invitations
       dispatch(setCurrentEmail(undefined))
       dispatch(resetForm())
-      if (emails.length > 1){
-        dispatch(setSuccess( t(['inviteUser', 'sucessfullyInvited'], { success: (emails.length-unsucessfull.length), failed: unsucessfull.length==0 ? t(['inviteUser', 'zero']) : unsucessfull.join(', ') }) ))
+      if (emails.length > 1) {
+        const messages = [ t([ 'inviteUser', 'sucessfullyInvited' ], { count: emails.length - unsucessfull.length }) ]
+        if (unsucessfull.length > 0) messages.push(t([ 'inviteUser', 'unSucessfullyInvited' ], { emails: unsucessfull.join(', ') }))
+        dispatch(setSuccess(messages.join(' ')))
       } else {
-        unsucessfull.length == 1 ? dispatch(setError( t(['inviteUser', 'connectionExists']) )) : dispatch(setSuccess( t(['inviteUser', 'notificationSend']) ))
+        unsucessfull.length === 1 ? dispatch(setError(t([ 'inviteUser', 'connectionExists' ]))) : dispatch(setSuccess(t([ 'inviteUser', 'notificationSend' ])))
       }
     }
 

@@ -9,8 +9,8 @@ import { DOWNLOAD_INVOICE }                                            from '../
 import { PAY_RESREVATION }                                             from '../queries/newReservation.queries'
 
 
-export const SET_RESERVATIONS           = "SET_RESERVATIONS"
-export const TOGGLE_RESERVATIONS_PAST   = "TOGGLE_RESERVATIONS_PAST"
+export const SET_RESERVATIONS = 'SET_RESERVATIONS'
+export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 
 
 export function setReservations(reservations) {

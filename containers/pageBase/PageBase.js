@@ -15,7 +15,7 @@ import * as pageBaseActions from '../../actions/pageBase.actions'
 import * as loginActions    from '../../actions/login.actions'
 
 
-export class PageBase extends Component {
+class PageBase extends Component {
   static propTypes = {
     state:         PropTypes.object,
     actions:       PropTypes.object,
