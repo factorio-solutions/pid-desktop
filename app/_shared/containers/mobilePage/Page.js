@@ -32,7 +32,6 @@ export class Page extends Component {
     hideHeader:    PropTypes.bool,
     hideDropdown:  PropTypes.bool,
     hideHamburger: PropTypes.bool,
-    label:         PropTypes.string, // header content
     margin:        PropTypes.bool, // will give page 10px margin to offset content
 
     // navigation functions
@@ -74,7 +73,7 @@ export class Page extends Component {
 
   render() {
     const { actions, state } = this.props
-    const { hideDropdown, hideHamburger, hideHeader, label, margin } = this.props
+    const { hideDropdown, hideHamburger, hideHeader, margin } = this.props
     const { back, add, pay, ok, remove } = this.props
 
     const selectedGarage = () => state.garages.findIndex(garage => garage.id === state.garage_id)
@@ -114,8 +113,7 @@ export class Page extends Component {
     const header = (<div className={styles.header}>
       <div className={styles.logo}><Logo /></div>
       <div className={styles.content}>
-        <div><b> {label} </b></div>
-      {!hideDropdown && <div><Dropdown label={t([ 'mobileApp', 'page', 'selectGarage' ])} content={state.garages.map(garageDropdown)} style="dark" selected={selectedGarage()} fixed /></div>}
+      {!hideDropdown && <div><Dropdown label={t([ 'mobileApp', 'page', 'selectGarage' ])} content={state.garages.map(garageDropdown)} style="mobileDark" selected={selectedGarage()} fixed /></div>}
       </div>
       {!hideHamburger && <button onClick={actions.toggleMenu} className={styles.menuButton}> <i className="fa fa-bars" aria-hidden="true"></i> </button>}
       <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={actions.toggleMenu} />

@@ -1114,7 +1114,6 @@ mobileApp.login.email,Email,Zadejte e-mail,Podaj e-mail,E-Mail-Adresse
 mobileApp.login.emailPlaceholder,Mr@park.it,Mr@park.it,Mr@park.it,
 mobileApp.login.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
 mobileApp.login.password,Password,Heslo,Hasło,Passwort
-mobileApp.signUp.signUp,Sign up!,Registrace!,Zarejestruj się!,Registriert!
 mobileApp.signUp.niceToMeetYou,"Hi, nice to meet you.","Ahoj, jsme rádi, že jste tady.","Cześć, miło Cię poznać.",
 mobileApp.signUp.fillDetails,Please fill in some details:,"Prosím, vyplňte detaily:",Wypełnij poniższe informacje:,
 mobileApp.signUp.name,your full name *,Vaše celé jméno *,Imię i nazwisko,Vor- und Nachname *
@@ -1129,16 +1128,13 @@ mobileApp.signUp.passwordConfirm,password confirmation *,Potvrzení hesla *,Potw
 mobileApp.signUp.passwordConfirmInvalid,Password does not match,Heslo se neshoduje,Hasła są niezgodne,Passwort und Bestätigungspasswort stimmen nicht überein.
 mobileApp.signUp.agreeWith,By creating a profile you agree with our,Registrací souhlasíte s našimi,Rejestracja oznacza zgodę z naszymi,Durch Registrierung stimmen Sie unseren
 mobileApp.signUp.terms,Terms of Service,podmínkami o poskytování služeb,warunkami korzystania z usług,Nutzungsbedingungen zu
-mobileApp.terms.termsOfServices,Terms of Service,Podmínkami o poskytování služeb,warunkami korzystania z usług,Nutzungsbedingungen
 mobileApp.terms.content,You can find our Terms of Service on our website.,Podmínky používání naleznete na našich webových stránkách.,Warunki korzystania z usług znajdziesz na naszej stronie internetowej.,Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage
 mobileApp.menu.newNotifications,New notifications,Nová upozornění,Nowe powiadomienia,Neue Benachrichtigungen
 mobileApp.menu.access,Access,Přístup,Dostęp,Zugang
 mobileApp.menu.myReservations,My reservations,Moje rezervace,Moje rezerwacje,Meine Reservierungen
-mobileApp.menu.welcome,Welcome,Vítejte,Witamy!,Willkommen
 mobileApp.access.swipeToOpen,Swipe to open the gate,Swipnutím otevřete bránu,"Przesuń, żeby otworzyć bramkę",Öffnen Sie das Tor mit einem Swipe
 mobileApp.access.noOngoingReservations,No ongoing reservations,Žádné probíhající rezervace,Nie masz żadnych trwających rezerwacji,Keine gültige Reservierung
 mobileApp.access.inSelectedGarage,in selected garage,ve zvolené garáži,w wybranym garażu,in gewählten Garage
-mobileApp.reservation.details,Reservation details,Detaily rezervace,Szczegóły rezerwacji,Reservierungsdetail
 mobileApp.reservation.garage,Garage,Garáž,Garaż,Garage
 mobileApp.reservation.place,Place,Místo,Miejsce,Platznummer
 mobileApp.reservation.begins,Begins,Začíná,Początek,Beginnt
@@ -1149,8 +1145,6 @@ mobileApp.newReservation.place,Place,Místo,Miejsce,Platznummer
 mobileApp.newReservation.car,Car,Auto,Auto,Auto
 mobileApp.newReservation.price,Price,Cena,Cena,Preis
 mobileApp.newReservation.paidBy,Paid by,Kdo platí,Kto płaci,Wer zahlt
-mobileApp.newReservation.newReservation,New reservation,Nová rezervace,Nowa rezerwacja,Neue Reservierung
-mobileApp.newReservation.pickPlace,Pick place,Zvolte místo,Wybierz miejsce,Parkplatz auswählen
 mobileApp.newReservation.licencePlate,License plate,SPZ,Numer rejestracyjny,KFZ-Kennzeichen
 mobileApp.newReservation.licencePlateInvalid,Invalid license plate,Neplatná SPZ,Niepłatny nr rejestracyjny,KFZ-Kennzeichen ungültig
 mobileApp.newReservation.licencePlatePlaceholder,1A2 3456,1A2 1234,1A2 1234,DBD2408

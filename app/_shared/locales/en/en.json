@@ -1006,7 +1006,6 @@
 			"password": "Password"
 		},
 		"signUp": {
-			"signUp": "Sign up!",
 			"niceToMeetYou": "Hi, nice to meet you.",
 			"fillDetails": "Please fill in some details:",
 			"name": "your full name *",
@@ -1023,14 +1022,12 @@
 			"terms": "Terms of Service"
 		},
 		"terms": {
-			"termsOfServices": "Terms of Service",
 			"content": "You can find our Terms of Service on our website."
 		},
 		"menu": {
 			"newNotifications": "New notifications",
 			"access": "Access",
-			"myReservations": "My reservations",
-			"welcome": "Welcome"
+			"myReservations": "My reservations"
 		},
 		"access": {
 			"swipeToOpen": "Swipe to open the gate",
@@ -1038,7 +1035,6 @@
 			"inSelectedGarage": "in selected garage"
 		},
 		"reservation": {
-			"details": "Reservation details",
 			"garage": "Garage",
 			"place": "Place",
 			"begins": "Begins",
@@ -1051,8 +1047,6 @@
 			"car": "Car",
 			"price": "Price",
 			"paidBy": "Paid by",
-			"newReservation": "New reservation",
-			"pickPlace": "Pick place",
 			"licencePlate": "License plate",
 			"licencePlateInvalid": "Invalid license plate",
 			"licencePlatePlaceholder": "1A2 3456",
