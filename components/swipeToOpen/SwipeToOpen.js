@@ -22,7 +22,7 @@ export default class SwipeToOpen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.success && this.props.success !== nextProps.success) {
+    if (nextProps.success !== undefined && this.props.success !== nextProps.success) {
       setTimeout(() => {
         this.swipe.prev()
         this.props.onReset()
