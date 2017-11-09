@@ -1006,7 +1006,6 @@
 			"password": "Heslo"
 		},
 		"signUp": {
-			"signUp": "Registrace!",
 			"niceToMeetYou": "Ahoj, jsme rádi, že jste tady.",
 			"fillDetails": "Prosím, vyplňte detaily:",
 			"name": "Vaše celé jméno *",
@@ -1023,14 +1022,12 @@
 			"terms": "podmínkami o poskytování služeb"
 		},
 		"terms": {
-			"termsOfServices": "Podmínkami o poskytování služeb",
 			"content": "Podmínky používání naleznete na našich webových stránkách."
 		},
 		"menu": {
 			"newNotifications": "Nová upozornění",
 			"access": "Přístup",
-			"myReservations": "Moje rezervace",
-			"welcome": "Vítejte"
+			"myReservations": "Moje rezervace"
 		},
 		"access": {
 			"swipeToOpen": "Swipnutím otevřete bránu",
@@ -1038,7 +1035,6 @@
 			"inSelectedGarage": "ve zvolené garáži"
 		},
 		"reservation": {
-			"details": "Detaily rezervace",
 			"garage": "Garáž",
 			"place": "Místo",
 			"begins": "Začíná",
@@ -1051,8 +1047,6 @@
 			"car": "Auto",
 			"price": "Cena",
 			"paidBy": "Kdo platí",
-			"newReservation": "Nová rezervace",
-			"pickPlace": "Zvolte místo",
 			"licencePlate": "SPZ",
 			"licencePlateInvalid": "Neplatná SPZ",
 			"licencePlatePlaceholder": "1A2 1234",
