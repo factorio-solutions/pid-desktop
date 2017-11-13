@@ -48,6 +48,11 @@ export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
     payment_url
     created_at
     updated_at
+
+    recurring_reservation{
+      id
+      relevant_count
+    }
   }
 }
 `
@@ -69,3 +74,11 @@ export const CHECK_VALIDITY = `mutation PaypalPayReservation ($token:String) {
 export const CREATE_CSOB_PAYMENT = `mutation CsobPayReservation ($id: Id!, $url: String) {
 	csob_pay_reservation(id: $id, url: $url)
 }`
+
+// will take recurring reservation and will destroy their
+export const DESTROY_RECURRING_RESERVATIONS = `mutation reservationMuation($id: Id!) {
+  destroy_recurring_reservation(id: $id) {
+    id
+  }
+}
+`

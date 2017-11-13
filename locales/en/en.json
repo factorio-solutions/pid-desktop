@@ -280,7 +280,19 @@
 		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
-		"destroyRservation": "Cancel reservation"
+		"destroyRservation": "Cancel reservation",
+		"destroyAllReservation": {
+			"one": "Destroy only selected reservation",
+			"few": "Destroy all %(count)s reservations in set repeat.",
+			"many": "Destroy all %(count)s reservations in set repeat.",
+			"other": "Destroy all %(count)s reservations in set repeat."
+		},
+		"updateAllReservation": {
+			"one": "Update only selected reservation",
+			"few": "Update all %(count)s reservations in set repeat.",
+			"many": "Update all %(count)s reservations in set repeat.",
+			"other": "Update all %(count)s reservations in set repeat."
+		}
 	},
 	"garages": {
 		"clients": "Clients",
