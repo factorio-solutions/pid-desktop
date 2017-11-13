@@ -138,7 +138,7 @@ export default class Recurring extends Component {
         count += correction - 1
       }
 
-      this.setState({ ...this.state, count: count <= 0 ? 1 : count + 1 })
+      this.setState({ ...this.state, count: count <= 0 ? 1 : count >= REPEAT_MAX_COUNT ? 100 : count + 1 })
     }
 
     const endsOnValue = () => {
