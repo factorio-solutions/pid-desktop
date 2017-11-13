@@ -144,7 +144,7 @@ export class NewReservationPage extends Component {
                 <DatetimeInput onChange={handleFrom} label={t([ 'newReservation', 'begins' ])} error={t([ 'newReservation', 'invalidaDate' ])} value={state.from} inlineMenu={beginsInlineMenu} editable={!ongoing} />
                 {state.durationDate ? <Input onChange={actions.durationChange} label={t([ 'newReservation', 'duration' ])} error={t([ 'newReservation', 'invalidaValue' ])} inlineMenu={endsInlineMenu} value={String(moment.duration(moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT))).asHours())} type="number" min={0.25} step={0.25} align="right" />
                                     : <DatetimeInput onChange={handleTo} label={t([ 'newReservation', 'ends' ])} error={t([ 'newReservation', 'invalidaDate' ])} inlineMenu={endsInlineMenu} value={state.to} />}
-                {state.client_id && <div className={`${styles.recurringForm} ${overMonth && styles.hidden}`}>
+                {state.client_id && state.reservation === undefined && <div className={`${styles.recurringForm} ${overMonth && styles.hidden}`}>
                   <input type="checkbox" checked={state.useRecurring} onChange={actions.setUseRecurring} />
                   <span className={`${styles.rule} ${!state.useRecurring && styles.disabled}`} onClick={() => actions.setShowRecurring(true)}>{state.recurringRule ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}</span>
                   <Recurring

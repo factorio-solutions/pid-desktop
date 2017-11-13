@@ -38,6 +38,7 @@ export const NEW_RESERVATION_SET_CLIENT_ID = 'NEW_RESERVATION_SET_CLIENT_ID'
 export const NEW_RESERVATION_SET_RECURRING_RULE = 'NEW_RESERVATION_SET_RECURRING_RULE'
 export const NEW_RESERVATION_SHOW_RECURRING = 'NEW_RESERVATION_SHOW_RECURRING'
 export const NEW_RESERVATION_SET_USE_RECURRING = 'NEW_RESERVATION_SET_USE_RECURRING'
+export const NEW_RESERVATION_SET_RECURRING_RESERVATION_ID = 'NEW_RESERVATION_SET_RECURRING_RESERVATION_ID'
 export const NEW_RESERVATION_CAR_ID = 'NEW_RESERVATION_CAR_ID'
 export const NEW_RESERVATION_CAR_LICENCE_PLATE = 'NEW_RESERVATION_CAR_LICENCE_PLATE'
 export const NEW_RESERVATION_SET_GARAGE = 'NEW_RESERVATION_SET_GARAGE'
@@ -124,6 +125,13 @@ export function setUseRecurring(event) {
   return {
     type:  NEW_RESERVATION_SET_USE_RECURRING,
     value: typeof event === 'boolean' ? event : event.target.checked
+  }
+}
+
+export function setRecurringReservationId(value) {
+  return {
+    type: NEW_RESERVATION_SET_RECURRING_RESERVATION_ID,
+    value
   }
 }
 
@@ -551,15 +559,16 @@ export function submitReservation(id) {
       request(onSuccess
              , id ? UPDATE_RESERVATION : CREATE_RESERVATION
              , { reservation: {
-               user_id:        ongoing ? undefined : user_id,
-               place_id:       ongoing ? undefined : state.place_id,
-               client_id:      ongoing ? undefined : state.client_id,
-               car_id:         ongoing ? undefined : state.car_id,
-               licence_plate:  ongoing ? undefined : state.carLicencePlate == '' ? undefined : state.carLicencePlate,
-               url:            ongoing ? undefined : window.location.href.split('?')[0],
-               begins_at:      ongoing ? undefined : timeToUTC(state.from),
-               ends_at:        timeToUTC(state.to),
-               recurring_rule: state.useRecurring ? JSON.stringify(state.recurringRule) : undefined
+               user_id:                  ongoing ? undefined : user_id,
+               place_id:                 ongoing ? undefined : state.place_id,
+               client_id:                ongoing ? undefined : state.client_id,
+               car_id:                   ongoing ? undefined : state.car_id,
+               licence_plate:            ongoing ? undefined : state.carLicencePlate === '' ? undefined : state.carLicencePlate,
+               url:                      ongoing ? undefined : window.location.href.split('?')[0],
+               begins_at:                ongoing ? undefined : timeToUTC(state.from),
+               ends_at:                  timeToUTC(state.to),
+               recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
+               recurring_reservation_id: state.recurring_reservation_id
              },
                id
              }

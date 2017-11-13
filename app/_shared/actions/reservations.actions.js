@@ -4,7 +4,7 @@ import { setCustomModal, setError }  from './pageBase.actions'
 import { t }                         from '../modules/localization/localization'
 import { parseParameters }           from '../helpers/parseUrlParameters'
 
-import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT } from '../queries/reservations.queries'
+import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
 import { DOWNLOAD_INVOICE }                                            from '../queries/invoices.queries'
 import { PAY_RESREVATION }                                             from '../queries/newReservation.queries'
 
@@ -44,6 +44,15 @@ export function destroyReservation (id){
       dispatch(initReservations())
     }
     request(onSuccess, DESTROY_RESERVATION, {id: id})
+  }
+}
+
+export function destroyRecurringReservations (id){
+  return (dispatch, getState) => {
+    const onSuccess = (response) => {
+      dispatch(initReservations())
+    }
+    request(onSuccess, DESTROY_RECURRING_RESERVATIONS, {id: id})
   }
 }
 

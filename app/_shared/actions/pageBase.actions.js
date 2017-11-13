@@ -1,4 +1,8 @@
+import React from 'react'
 import translate from 'counterpart'
+
+import ConfirmModal from '../components/modal/ConfirmModal'
+
 import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
@@ -96,6 +100,18 @@ export function setHint(hint, href) {
         //  , value: hint ? { hint, href }: undefined
          , value: { hint, href }
          }
+}
+
+
+export function confirm(question, callback) {
+  return dispatch => {
+    const onBack = () => dispatch(setCustomModal())
+    const onConfirm = () => {
+      onBack()
+      callback()
+    }
+    dispatch(setCustomModal(<ConfirmModal question={question} onConfirm={onConfirm} onBack={onBack} />))
+  }
 }
 
 export function setGarages(value) {
