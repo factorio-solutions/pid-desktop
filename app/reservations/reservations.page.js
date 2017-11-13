@@ -7,27 +7,31 @@ import PageBase           from '../_shared/containers/pageBase/PageBase'
 import Table              from '../_shared/components/table/Table'
 import RoundButton        from '../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../_shared/components/buttons/LabeledRoundButton'
+import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
 import TabMenu            from '../_shared/components/tabMenu/TabMenu'
 import TabButton          from '../_shared/components/buttons/TabButton'
 import Form               from '../_shared/components/form/Form'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
 import Modal              from '../_shared/components/modal/Modal'
 
-import * as nav                           from '../_shared/helpers/navigation'
-import * as reservationActions            from '../_shared/actions/reservations.actions'
-import * as reservationInteruptionActions from '../_shared/actions/reservationInteruption.actions'
-import { t }                              from '../_shared/modules/localization/localization'
-import { MOMENT_DATETIME_FORMAT }         from '../_shared/helpers/time'
+import * as nav                                 from '../_shared/helpers/navigation'
+import * as reservationActions                  from '../_shared/actions/reservations.actions'
+import * as reservationInteruptionActions       from '../_shared/actions/reservationInteruption.actions'
+import { setRecurringReservationId, clearForm } from '../_shared/actions/newReservation.actions'
+import { setCustomModal }                       from '../_shared/actions/pageBase.actions'
+import { t }                                    from '../_shared/modules/localization/localization'
+import { MOMENT_DATETIME_FORMAT }               from '../_shared/helpers/time'
 
 import styles from './reservations.page.scss'
 
 
 export class ReservationsPage extends Component {
   static propTypes = {
-    state:              PropTypes.object,
-    actions:            PropTypes.object,
-    interuption:        PropTypes.object,
-    interuptionActions: PropTypes.object
+    state:               PropTypes.object,
+    actions:             PropTypes.object,
+    interuption:         PropTypes.object,
+    interuptionActions:  PropTypes.object,
+    newReservationState: PropTypes.object
   }
 
   componentDidMount() {
@@ -35,7 +39,7 @@ export class ReservationsPage extends Component {
   }
 
   render() {
-    const { state, actions, interuption, interuptionActions } = this.props
+    const { state, actions, interuption, interuptionActions, newReservationState } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', sort: 'asc' },
@@ -65,10 +69,64 @@ export class ReservationsPage extends Component {
       { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span> }
     ]
 
-    const destroyClick = reservation => actions.destroyReservation(reservation.id)
-    const editClick = reservation => nav.to(`/reservations/${reservation.id}/edit`)
+    const destroyClick = reservation => {
+      console.log(reservation);
+      if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
+        actions.setCustomModal(<div className={styles.destroyModal}>
+          <CallToActionButton
+            label={t([ 'reservations', 'destroyAllReservation' ], { count: 1 })}
+            type="remove"
+            onClick={() => {
+              actions.setCustomModal()
+              actions.destroyReservation(reservation.id)
+            }}
+          />
+          <CallToActionButton
+            label={t([ 'reservations', 'destroyAllReservation' ], { count: reservation.recurring_reservation.relevant_count })}
+            type="remove"
+            onClick={() => {
+              actions.setCustomModal()
+              actions.destroyRecurringReservations(reservation.recurring_reservation.id)
+            }}
+          />
+          <RoundButton content={<i className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.setCustomModal} />
+        </div>)
+      } else {
+        actions.destroyReservation(reservation.id)
+      }
+    }
+    const editClick = reservation => {
+      console.log(reservation);
+      if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
+        actions.setCustomModal(<div className={styles.destroyModal}>
+          <CallToActionButton
+            label={t([ 'reservations', 'updateAllReservation' ], { count: 1 })}
+            onClick={() => {
+              actions.setCustomModal()
+              actions.setRecurringReservationId(reservation.recurring_reservation.id)
+              nav.to(`/reservations/${reservation.id}/edit`)
+            }}
+          />
+          <CallToActionButton
+            label={t([ 'reservations', 'updateAllReservation' ], { count: reservation.recurring_reservation.relevant_count })}
+            onClick={() => {
+              actions.setCustomModal()
+              actions.setRecurringReservationId(reservation.recurring_reservation.id)
+              nav.to(`/reservations/${reservation.id}/edit`)
+            }}
+          />
+          <RoundButton content={<i className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.setCustomModal} />
+        </div>)
+      } else {
+        nav.to(`/reservations/${reservation.id}/edit`)
+      }
+    }
+    // const editClick = reservation => nav.to(`/reservations/${reservation.id}/edit`)
     const downloadClick = id => actions.downloadInvoice(id)
-    const newReservation = () => nav.to('/reservations/newReservation')
+    const newReservation = () => {
+      (newReservationState.reservation !== undefined || newReservationState.recurring_reservation_id !== undefined) && actions.clearForm()
+      nav.to('/reservations/newReservation')
+    }
     const interuptClick = reservation => interuptionActions.setReservation(reservation)
 
     const reservationIteruptionModal = (<div>
@@ -179,6 +237,9 @@ export class ReservationsPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.reservations, interuption: state.reservationInteruption }),
-  dispatch => ({ actions: bindActionCreators(reservationActions, dispatch), interuptionActions: bindActionCreators(reservationInteruptionActions, dispatch) })
+  state => ({ state: state.reservations, interuption: state.reservationInteruption, newReservationState: state.newReservation }),
+  dispatch => ({
+    actions:            bindActionCreators({ ...reservationActions, setCustomModal, setRecurringReservationId, clearForm }, dispatch),
+    interuptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
+  })
 )(ReservationsPage)
