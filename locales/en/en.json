@@ -888,7 +888,7 @@
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Select currency",
 		"placePrice": "Price per spot per month",
-		"indefinitContract": "Enter new specific agreement price",
+		"indefinitContract": "Create agreement indefinitely.",
 		"indefinite": "Indefinite"
 	},
 	"finance": {
