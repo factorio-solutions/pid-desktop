@@ -18,7 +18,9 @@ export const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000'
 
 const history = syncHistoryWithStore(hashHistory, store)
 
-window.moment = require('moment')  // remove this
+if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
+  window.moment = require('moment')
+}
 
 render(
   <Provider store={store}>
