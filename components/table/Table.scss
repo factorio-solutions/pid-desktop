@@ -86,3 +86,25 @@ $font-size:               16px;
     background-color: darken($white, 10%);
   }
 }
+
+
+.paginatedTable{
+  position: relative;
+
+  >.loading {
+    background: rgba($white, 0.7);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    >span{
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

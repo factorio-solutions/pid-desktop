@@ -35,7 +35,8 @@ export default class Table extends Component {
     onRowSelect:    PropTypes.func, // will be called on select, gives it parameters (data, index) or (undefined, -1) on deselect
     deselect:       PropTypes.bool, // if set to true, will reset selected item
     searchBox:      PropTypes.bool,
-    returnFiltered: PropTypes.func
+    returnFiltered: PropTypes.func,
+    filterClick:    PropTypes.func // will return key and ASC or DESC
   }
 
   static defaultProps = {
@@ -86,16 +87,14 @@ export default class Table extends Component {
   }
 
   render() {
-    const { schema, data, searchBox, returnFiltered } = this.props
+    const { schema, data, searchBox, returnFiltered, filterClick } = this.props
     const { sortKey, sortType, spoilerId } = this.state
     const { compareRepresentations, comparator, representer } = schema.find(s => s.key === sortKey)
     let myComp // comparator to be used
 
     const handleHeadClick = index => {
-      // const { sortType, sortKey } = this.state
-      // const { schema } = this.props
       const isSame = sortKey === schema[index].key
-
+      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc')
       if (schema[index].comparator) {
         this.setState({ ...this.state,
           sortKey:  isSame ? sortKey : schema[index].key,
