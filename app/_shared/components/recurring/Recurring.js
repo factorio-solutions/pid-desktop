@@ -37,14 +37,16 @@ export default class Recurring extends Component {
 
   constructor(props) {
     super(props)
-    this.state = props.rule || {
+    this.state = {
       type:     'week',
       interval: 1,
       day:      [ moment().weekday() ],
       starts:   formatDate(moment()),
-      count:    10
+      count:    10,
+      ...props.rule
     }
   }
+
   componentDidMount() {
     this.checkProps(this.props)
   }
@@ -55,9 +57,25 @@ export default class Recurring extends Component {
 
   checkProps(props) {
     const onStateChange = () => props.onSubmit(this.state)
-    !props.showDays && (this.state.type === 'day' || (this.state.type === 'week' && this.state.day.length > 1)) &&
-      this.setState({ ...this.state, type: 'week', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
-    !props.showWeeks && this.state.type === 'week' && this.setState({ ...this.state, type: 'month', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
+    let newState = this.state
+
+    if (props.rule && props.rule.starts !== this.state.starts) {
+      newState = { ...newState, starts: props.rule.starts, day: [ moment(props.rule.starts, MOMENT_DATE_FORMAT).weekday() ] }
+      // this.setState({ ...this.state, starts: props.rule.starts, day: [ moment(props.rule.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
+    }
+    if (props.showDays && (this.state.type === 'day' || (this.state.type === 'week' && this.state.day.length > 1))) {
+      newState = { ...newState, type: 'week', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }
+      // this.setState({ ...this.state, type: 'week', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
+    }
+    if (!props.showWeeks && this.state.type === 'week') {
+      newState = { ...newState, type: 'month', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }
+      // this.setState({ ...this.state, type: 'month', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
+    }
+    if ((props.rule && props.rule.starts !== this.state.starts) ||
+    (props.showDays && (this.state.type === 'day' || (this.state.type === 'week' && this.state.day.length > 1))) ||
+    (!props.showWeeks && this.state.type === 'week')) {
+      this.setState(newState) //, onStateChange
+    }
   }
 
   render() {

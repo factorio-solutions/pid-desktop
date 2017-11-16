@@ -39,7 +39,7 @@ export class ReservationsPage extends Component {
     const { state, actions, interuption, interuptionActions, newReservationState } = this.props
 
     const schema = [
-      { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', sort: 'asc', includes: 'user', orderBy: 'users.full_name' },
+      { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
       { key: 'client', title: t([ 'reservations', 'client' ]), comparator: 'string', includes: 'client', orderBy: 'clients.name' },
       { key: 'licence_plate', title: t([ 'reservations', 'licencePlate' ]), comparator: 'string', includes: 'car', orderBy: 'cars.name' },
       { key:         'type',
@@ -70,7 +70,8 @@ export class ReservationsPage extends Component {
         title:       t([ 'reservations', 'from' ]),
         comparator:  'date',
         representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
-        orderBy:     'begins_at' },
+        orderBy:     'begins_at',
+        sort:        'asc' },
       { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
     ]
 
