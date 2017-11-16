@@ -155,8 +155,8 @@ export default function newReservation(state = defaultState, action) {
       return { ...state,
         from:          action.value,
         to:            action.to || state.to,
-        recurringRule: !state.recurringRule ? undefined : { ...state.recurringRule,
-          starts: moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)
+        recurringRule: { ...state.recurringRule,
+          starts: moment(action.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)
         }
       }
 
