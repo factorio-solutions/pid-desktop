@@ -4,7 +4,7 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase           from '../_shared/containers/pageBase/PageBase'
-import Table              from '../_shared/components/table/Table'
+import PaginatedTable     from '../_shared/components/table/PaginatedTable'
 import RoundButton        from '../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../_shared/components/buttons/LabeledRoundButton'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
@@ -21,6 +21,7 @@ import { setRecurringReservationId, clearForm } from '../_shared/actions/newRese
 import { setCustomModal }                       from '../_shared/actions/pageBase.actions'
 import { t }                                    from '../_shared/modules/localization/localization'
 import { MOMENT_DATETIME_FORMAT }               from '../_shared/helpers/time'
+import { GET_RESERVATIONS_PAGINATION_QUERY }    from '../_shared/queries/reservations.queries'
 
 import styles from './reservations.page.scss'
 
@@ -34,28 +35,26 @@ export class ReservationsPage extends Component {
     newReservationState: PropTypes.object
   }
 
-  componentDidMount() {
-    this.props.actions.initReservations()
-  }
-
   render() {
     const { state, actions, interuption, interuptionActions, newReservationState } = this.props
 
     const schema = [
-      { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', sort: 'asc' },
-      { key: 'client', title: t([ 'reservations', 'client' ]), comparator: 'string' },
-      { key: 'licence_plate', title: t([ 'reservations', 'licencePlate' ]), comparator: 'string' },
+      { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', sort: 'asc', includes: 'user', orderBy: 'users.full_name' },
+      { key: 'client', title: t([ 'reservations', 'client' ]), comparator: 'string', includes: 'client', orderBy: 'clients.name' },
+      { key: 'licence_plate', title: t([ 'reservations', 'licencePlate' ]), comparator: 'string', includes: 'car', orderBy: 'cars.name' },
       { key:         'type',
         title:       t([ 'reservations', 'type' ]),
         comparator:  'string',
-        representer: o => <i className={`fa ${o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />
+        representer: o => <i className={`fa ${o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />,
+        orderBy:     'reservation_case'
       },
       { key:         'state',
         title:       t([ 'reservations', 'state' ]),
         comparator:  'boolean',
-        representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-question-circle'} ${o ? styles.green : styles.yellow}`} aria-hidden="true" />
+        representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-question-circle'} ${o ? styles.green : styles.yellow}`} aria-hidden="true" />,
+        orderBy:     'approved'
       },
-      { key: 'garage', title: t([ 'reservations', 'garage' ]), comparator: 'string' },
+      { key: 'garage', title: t([ 'reservations', 'garage' ]), comparator: 'string', includes: 'place floor garage', orderBy: 'garages.name' },
       { key:        'place',
         title:      t([ 'reservations', 'place' ]),
         comparator: (type, aRow, bRow) => {
@@ -63,14 +62,19 @@ export class ReservationsPage extends Component {
           const b = bRow.garagefloorName + ' / ' + bRow.name
           return a.toLowerCase() < b.toLowerCase() ? (type === 'asc' ? -1 : 1) : (a.toLowerCase() > b.toLowerCase() ? (type === 'asc' ? 1 : -1) : 0)
         },
-        representer: o => <strong className={styles.place}> {o.garagefloorName} / {o.name} </strong>
+        representer: o => <strong className={styles.place}> {o.garagefloorName} / {o.name} </strong>,
+        includes:    'place',
+        orderBy:     'places.label'
       },
-      { key: 'from', title: t([ 'reservations', 'from' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span> },
-      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span> }
+      { key:         'from',
+        title:       t([ 'reservations', 'from' ]),
+        comparator:  'date',
+        representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
+        orderBy:     'begins_at' },
+      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
     ]
 
     const destroyClick = reservation => {
-      console.log(reservation);
       if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
         actions.setCustomModal(<div className={styles.destroyModal}>
           <CallToActionButton
@@ -95,8 +99,8 @@ export class ReservationsPage extends Component {
         actions.destroyReservation(reservation.id)
       }
     }
+
     const editClick = reservation => {
-      console.log(reservation);
       if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
         actions.setCustomModal(<div className={styles.destroyModal}>
           <CallToActionButton
@@ -121,7 +125,7 @@ export class ReservationsPage extends Component {
         nav.to(`/reservations/${reservation.id}/edit`)
       }
     }
-    // const editClick = reservation => nav.to(`/reservations/${reservation.id}/edit`)
+
     const downloadClick = id => actions.downloadInvoice(id)
     const newReservation = () => {
       (newReservationState.reservation !== undefined || newReservationState.recurring_reservation_id !== undefined) && actions.clearForm()
@@ -147,12 +151,16 @@ export class ReservationsPage extends Component {
       </Form>
     </div>)
 
-    const data = state.reservations.map(reservation => ({
+    const filters = [ <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
+      <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
+    ]
+
+    const transformData = data => data.reservations.map(reservation => ({
       name:          reservation.user.full_name,
       client:        reservation.client && reservation.client.name,
       licence_plate: reservation.car && reservation.car.licence_plate,
       state:         reservation.approved,
-      type:          reservation.case,
+      type:          reservation.reservation_case,
       from:          reservation.begins_at,
       to:            reservation.ends_at,
       garage:        reservation.place.floor.garage.name,
@@ -217,16 +225,13 @@ export class ReservationsPage extends Component {
       </div>)
     }))
 
-    const filters = [ <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
-      <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
-    ]
-
     return (
       <PageBase>
         <Modal content={reservationIteruptionModal} show={interuption.reservation} />
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
-          <Table schema={schema} data={data} />
+          {/* <Table schema={schema} data={data} /> */}
+          <PaginatedTable query={GET_RESERVATIONS_PAGINATION_QUERY} transformData={transformData} schema={schema} variables={{ past: state.past }} />
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={newReservation} type="action" size="big" />
