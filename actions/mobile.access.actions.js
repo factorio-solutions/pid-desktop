@@ -142,7 +142,7 @@ export function openGarageViaBluetooth(name, reservationId, gateId) {
       .then(() => ble.close(device.address))
       .catch(error => {
         logError(error)
-        return ble.close(device.address)
+        return device ? ble.close(device.address) : ble.stopScan()
       })
     } else {
       logError('Cannot see bluetoothLE library')
