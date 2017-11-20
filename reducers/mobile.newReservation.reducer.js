@@ -28,6 +28,7 @@ const defaultState = {
   car_id:          undefined, // selected car id
   carLicencePlate: '', // in case there are no available cars
 
+  flexiplace:      false, // Does garage set flexible place?
   availableFloors: undefined,
   autoselect:      true,
   place_id:        undefined // undefined means no available places
@@ -99,7 +100,9 @@ export default function mobileNewReservation(state = defaultState, action) {
     case MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS:
       return {
         ...state,
-        availableFloors: action.value
+        availableFloors: action.value,
+        flexiplace:      action.flexiplace || false,
+        autoselect:      action.flexiplace ? true : state.autoselect
       }
 
     case MOBILE_NEW_RESERVATION_SET_AUTOSELECT:
