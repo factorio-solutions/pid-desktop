@@ -1,0 +1,66 @@
+@import '../../styles/app.components';
+
+.widthContainer{
+  display: -webkit-flex;
+  background-color: $lightGray;
+}
+
+.grayBackground{ /*for dashboard*/
+  background-color: $lightGray;
+  margin: 20px 20px 20px 0;
+
+  >div>svg{
+    max-width: 100%;
+  }
+}
+
+.width18{
+  display: inline-block;
+  width: 60px;
+  padding: 10px;
+  position: relative;
+}
+
+.width78{
+  display: inline-block;
+  width: calc(100%-60px);
+}
+
+.padding {
+  padding: 10px 5px 0 5px;
+  /*float: right;*/
+}
+
+.text{
+  /*fill: white;*/
+  font-size: 30px;
+  pointer-events: none;
+  /*font-weight: bold;*/
+}
+
+.svgContainer {
+  width: 100%;
+  text-align: left;
+}
+
+.gvSelected {
+  fill: $yellow !important;
+}
+
+.gvOccupied {
+  fill: $gray !important;
+}
+
+.gvFree {
+  fill: $blue !important;
+}
+
+.gvText {
+  fill: $black;
+}
+
+.rotateButton{
+  bottom: 0;
+position: absolute;
+padding-bottom: 10px;
+}

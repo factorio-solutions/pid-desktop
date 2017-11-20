@@ -1,0 +1,80 @@
+@import '../../styles/app.components';
+$borderRadius: 5px;
+
+.cardContainer{
+  margin: 5px;
+  cursor: pointer;
+
+  border-radius:  $borderRadius;
+  background:     $lightGray;
+
+  >div{
+    padding: 5px;
+  }
+}
+
+.header{
+  border-bottom: 1px dashed $black;
+
+  &.selected {
+    background:               $yellow;
+    border-top-left-radius:   $borderRadius;
+    border-top-right-radius:  $borderRadius;
+  }
+}
+
+.body{
+
+  &.border{
+    border-bottom: 1px dashed $black;
+  }
+}
+
+.footer{
+
+  &.hidden{
+    display: none;
+  }
+}
+
+
+.disabled{
+  background-color: $gray;
+  color: $lightGray;
+}
+
+
+.buttons{
+  display: flex;
+}
+
+.footerContainer{
+  display: flex;
+
+  >.footerInfo{
+    flex-grow: 1;
+  }
+}
+
+.reservationBody{
+  display: block;
+  border-top: 1px dashed $gray;
+
+  &.big{
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+  }
+
+  &.timeContainter{
+    display: flex;
+
+    >.from{
+      flex: 1 0;
+    }
+    >.to{
+      flex: 1 0;
+      text-align: right;
+    }
+  }
+}

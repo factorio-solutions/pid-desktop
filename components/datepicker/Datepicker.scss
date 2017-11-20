@@ -1,0 +1,86 @@
+@import '../../styles/app.components';
+
+.datepickerContainer{
+  display: inline-block;
+  width: 250px;
+}
+
+.monthContainer{
+  display:   flex;
+  flex-wrap: nowrap;
+  width:     100%;
+
+  > div {
+    padding:    5px;
+    text-align: center;
+  }
+
+  > .chevron{
+    flex-grow: 1;
+    cursor:    pointer;
+  }
+
+  > .month{
+    flex-grow:   5;
+    font-weight: bold;
+  }
+
+  > .day{
+    flex-grow: 2;
+  }
+}
+
+.daysTable{
+  table-layout: fixed;
+  width:        100%;
+  text-align:   center;
+}
+
+.dayName{
+  color: $lightGray;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+.today{
+  margin:           auto;
+  background-color: $blue;
+  color:            $white;
+  border-radius:    12px;
+  height:           $pickerRowHeigh;
+  width:            $pickerRowHeigh;
+}
+
+.selected{
+  background-color: $yellow;
+  color:            $black;
+  font-weight:      bold;
+  margin:           auto;
+  border-radius:    12px;
+  height:           $pickerRowHeigh;
+  width:            $pickerRowHeigh;
+}
+
+.buttonContainer{
+  display:    block;
+  text-align: center;
+  margin-top: 5px;
+  > span{
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
+
+.pickerRow{
+  height: $pickerRowHeigh;
+  >td{
+    >div{
+      height: $pickerRowHeigh;
+      vertical-align: middle;
+      display: inline-table;
+    }
+  }
+}
