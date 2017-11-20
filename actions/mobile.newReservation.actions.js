@@ -127,10 +127,11 @@ export function setCarLicencePlate(value) {
 }
 
 
-export function setFloors(floors) {
+export function setFloors(floors, flexiplace) {
   return {
     type:  MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS,
-    value: floors
+    value: floors,
+    flexiplace
   }
 }
 
@@ -208,7 +209,7 @@ export function getAvailableCars() {
 export function pickPlaces() {
   return (dispatch, getState) => {
     const onSuccess = response => {
-      dispatch(setFloors(response.data.garage.floors))
+      dispatch(setFloors(response.data.garage.floors, response.data.garage.flexiplace))
 
       if (response.data.garage.floors.find(floor => floor.free_places.find(place => place.id === getState().mobileNewReservation.place_id)) === undefined) {
         // autoselect place if selected place is not available anymore

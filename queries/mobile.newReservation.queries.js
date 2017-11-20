@@ -1,6 +1,7 @@
 // get available floors, mobile purposes
 export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_id: Id) {
   garage(id: $id) {
+    flexiplace
     floors {
       label
       free_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id) {
