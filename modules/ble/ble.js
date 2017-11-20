@@ -79,7 +79,7 @@ function startScan(name) { // use when you know the device you are looking for
     }
 
     bluetoothle.startScan(onDeviceFound, reject, params)
-    setTimeout(reject, MAX_SCANNING_DURATION)
+    setTimeout(() => reject('Device was not found'), MAX_SCANNING_DURATION)
   })
 }
 
@@ -147,6 +147,7 @@ function reconnectErrorHandler(address, error) {
     if (error.error === 'isNotDisconnected') {
       closeBLE(address)
       .then(() => reconnect(address))
+      .catch(err => reconnectErrorHandler(address, err))
       .catch(reject)
     } else if (error.error === 'neverConnected') {
       connectBLE(address)
