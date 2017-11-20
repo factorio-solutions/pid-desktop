@@ -11,7 +11,7 @@ import { t }                    from '../../_shared/modules/localization/localiz
 import styles from './reservationButton.page.scss'
 
 
-export class ReservationButtonPage extends Component {
+class ReservationButtonPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

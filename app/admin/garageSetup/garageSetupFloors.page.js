@@ -16,7 +16,7 @@ import * as garageSetupActions  from '../../_shared/actions/garageSetup.actions'
 import styles from './garageSetupGeneral.page.scss'
 
 
-export class GarageSetupFloorsPage extends Component {
+class GarageSetupFloorsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

@@ -10,15 +10,15 @@ import Button from './Button.js'
 
 
 export default function MobileMenuButton({ icon, label, onClick, type, state, size, question }) {
-  let style = [ styles.button
-              , styles[type]
-              , styles[state]
-              , !icon && styles.adjustPadding
-              ].join(' ')
+  const style = [
+    styles.button,
+    styles[type],
+    styles[state],
+    !icon && styles.adjustPadding
+  ].join(' ')
 
-// style={{height: (size-26) + "px", position: "relative"}}
-  let content = (<div className={styles.centerInDiv} >
-    <span className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true"></span>
+  const content = (<div className={styles.centerInDiv} >
+    <i className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true" />
     <span className={`${styles.label} ${styles.content}`}>{label}</span>
   </div>)
 

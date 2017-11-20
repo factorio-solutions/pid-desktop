@@ -52,6 +52,7 @@ import profile   from '../_shared/reducers/profile.reducer'
 
 import adminModules     from '../_shared/reducers/admin.modules.reducer'
 import adminGoPublic    from '../_shared/reducers/admin.goPublic.reducer'
+import adminFlexiplace  from '../_shared/reducers/admin.flexiplace.reducer'
 import adminFinance     from '../_shared/reducers/admin.finance.reducer'
 import adminActivityLog from '../_shared/reducers/admin.activityLog.reducer'
 
@@ -85,7 +86,6 @@ const appReducer = combineReducers({
   newContract,
   clientUsers,
 
-
   invoices,
   editInvoice,
 
@@ -108,6 +108,7 @@ const appReducer = combineReducers({
 
   adminModules,
   adminGoPublic,
+  adminFlexiplace,
   adminFinance,
   adminActivityLog
 })

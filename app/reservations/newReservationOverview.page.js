@@ -13,15 +13,15 @@ import * as newReservationActions  from '../_shared/actions/newReservation.actio
 import styles from './newReservationOverview.page.scss'
 
 
-export class NewReservationOverviewPage extends Component {
+class NewReservationOverviewPage extends Component {
   static propTypes = {
-    state:        PropTypes.object,
-    actions:      PropTypes.object
+    state:   PropTypes.object,
+    actions: PropTypes.object
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const { location, actions } = this.props
-    if (location.query.hasOwnProperty('token')){
+    if (location.query.hasOwnProperty('token')) {
       location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
     } else if (location.query.hasOwnProperty('csob')) {
       location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
@@ -35,53 +35,60 @@ export class NewReservationOverviewPage extends Component {
 
     const onBack = () => { nav.to('/reservations/newReservation') }
 
-    const formOnSubmit = () => { actions.submitReservation() }
-
     const placeLabel = () => {
-      const findPlace = (place) => {return place.id == state.place_id}
-      const floor = state.garage && state.garage.floors.find((floor)=>{ return floor.places.find(findPlace)!=undefined })
-      const place = floor && floor.places.find(findPlace)
-      if (floor && place) {
-        return (
-          <div>
-            <span className={styles.label}>{t(['newReservationOverview', 'garage'])}: </span>
-            <span>{state.garage.name}</span>
-            <span className={styles.label}>{t(['newReservationOverview', 'floor'])}: </span>
-            <span>{floor.label}</span>
-            <span className={styles.label}>{t(['newReservationOverview', 'place'])}: </span>
-            <span>{place.label}</span>
-          </div>
-        )
+      if (!state.place_id && state.garage && state.garage.flexiplace) {
+        return (<div>
+          <span className={styles.label}>{t([ 'newReservationOverview', 'garage' ])}: </span>
+          <span>{state.garage.name}</span>
+          <span className={styles.label}>{t([ 'newReservationOverview', 'place' ])}: </span>
+          <span>{t([ 'newReservation', 'flexiblePlaceSelected' ])}</span>
+        </div>)
+      } else {
+        const findPlace = place => place.id === state.place_id
+        const floor = state.garage && state.garage.floors.find(floor => floor.places.find(findPlace) !== undefined)
+        const place = floor && floor.places.find(findPlace)
+        if (floor && place) {
+          return (
+            <div>
+              <span className={styles.label}>{t([ 'newReservationOverview', 'garage' ])}: </span>
+              <span>{state.garage.name}</span>
+              <span className={styles.label}>{t([ 'newReservationOverview', 'floor' ])}: </span>
+              <span>{floor.label}</span>
+              <span className={styles.label}>{t([ 'newReservationOverview', 'place' ])}: </span>
+              <span>{place.label}</span>
+            </div>
+          )
+        }
       }
     }
 
     return (
       <PageBase>
-        <Form onSubmit={formOnSubmit} onBack={onBack} submitable={true}>
-          <h2>{t(['newReservationOverview', 'overview'])}</h2>
+        <Form onSubmit={actions.submitReservation} onBack={onBack} submitable>
+          <h2>{t([ 'newReservationOverview', 'overview' ])}</h2>
           {state.user && state.user.id === -1 && <div>
-            <h4>{t(['newReservation', 'selectedUser'])}</h4>
-            <span className={styles.label}>{t(['newReservation', 'hostsName'])}: </span><span>{state.name.value}</span>
-            <span className={styles.label}>{t(['newReservation', 'hostsPhone'])}: </span><span>{state.phone.value}</span>
-            <span className={styles.label}>{t(['newReservation', 'hostsEmail'])}: </span><span>{state.email.value}</span>
+            <h4>{t([ 'newReservation', 'selectedUser' ])}</h4>
+            <span className={styles.label}>{t([ 'newReservation', 'hostsName' ])}: </span><span>{state.name.value}</span>
+            <span className={styles.label}>{t([ 'newReservation', 'hostsPhone' ])}: </span><span>{state.phone.value}</span>
+            <span className={styles.label}>{t([ 'newReservation', 'hostsEmail' ])}: </span><span>{state.email.value}</span>
           </div>}
 
           <div>
-            <h4>{t(['newReservationOverview', 'selectedPlace'])}</h4>
+            <h4>{t([ 'newReservationOverview', 'selectedPlace' ])}</h4>
             <div>{placeLabel()}</div>
           </div>
           <div>
-            <h4>{t(['newReservationOverview', 'duration'])}</h4>
+            <h4>{t([ 'newReservationOverview', 'duration' ])}</h4>
             <div>
-              <span className={styles.label}>{t(['newReservationOverview', 'from'])}: </span>
+              <span className={styles.label}>{t([ 'newReservationOverview', 'from' ])}: </span>
               <span>{state.from}</span>
-              <span className={styles.label}>{t(['newReservationOverview', 'to'])}: </span>
+              <span className={styles.label}>{t([ 'newReservationOverview', 'to' ])}: </span>
               <span>{state.to}</span>
             </div>
           </div>
           <div>
-            <h4>{t(['newReservationOverview', 'price'])}</h4>
-            <div className={styles.label}>{ state.client_id ? t(['newReservation', 'onClientsExpenses']) : state.price }</div>
+            <h4>{t([ 'newReservationOverview', 'price' ])}</h4>
+            <div className={styles.label}>{ state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price }</div>
           </div>
         </Form>
       </PageBase>
@@ -90,6 +97,6 @@ export class NewReservationOverviewPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.newReservation }),
+  state => ({ state: state.newReservation }),
   dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
 )(NewReservationOverviewPage)

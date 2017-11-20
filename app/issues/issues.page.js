@@ -11,7 +11,7 @@ import { t }                    from '../_shared/modules/localization/localizati
 import styles from './issues.page.scss'
 
 
-export class IssuesPage extends Component {
+class IssuesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

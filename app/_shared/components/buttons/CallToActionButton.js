@@ -1,7 +1,7 @@
-import React    from 'react'
-import styles   from './CallToActionButton.scss'
+import React from 'react'
+import styles from './CallToActionButton.scss'
 
-import Button   from './Button.js'
+import Button from './Button.js'
 
 
 // extends Button.js

@@ -14,7 +14,7 @@ import { t }               from '../../_shared/modules/localization/localization
 import styles from './newRent.page.scss'
 
 
-export class NewRentPage extends Component {
+class NewRentPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

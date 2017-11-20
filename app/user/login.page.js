@@ -18,7 +18,7 @@ import * as loginActions  from '../_shared/actions/login.actions'
 import styles from './login.page.scss'
 
 
-export class LoginPage extends Component {
+class LoginPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

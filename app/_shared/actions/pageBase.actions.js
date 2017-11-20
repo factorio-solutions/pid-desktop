@@ -156,14 +156,6 @@ export function setIsGarageAdmin(value) {
     dispatch({ type: PAGE_BASE_SET_IS_GARAGE_ADMIN
              , value
              })
-
-    // const hash = window.location.hash
-    // if (contains(hash, 'admin')){
-    //   dispatch(adminClick())
-    // }
-    // if (contains(hash, 'analytics')){
-    //   dispatch(analyticsClick())
-    // }
   }
 }
 
@@ -552,6 +544,17 @@ export function toAdmin() {
           breadcrumbs.push({label: t(['pageBase','goPublic']), route: `/${garage}/admin/modules/goPublic`})
           secondarySelected = 'modules'
           hint = t(['pageBase','goPublicHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'flexiplace')):
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          breadcrumbs.push({label: t(['pageBase','flexiplace']), route: `/${garage}/admin/modules/flexiplace`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','flexiplaceHint'])
           hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/dashboard') // not accessible for this user

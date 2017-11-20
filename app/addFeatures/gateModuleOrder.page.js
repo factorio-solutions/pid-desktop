@@ -14,7 +14,7 @@ import { t }                from '../_shared/modules/localization/localization'
 import * as orderModuleActions from '../_shared/actions/gateModuleOrder.actions'
 
 
-export class GateModuleOrderPage extends Component {
+class GateModuleOrderPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     actions:      PropTypes.object

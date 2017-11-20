@@ -26,7 +26,7 @@ import { GET_RESERVATIONS_PAGINATION_QUERY }    from '../_shared/queries/reserva
 import styles from './reservations.page.scss'
 
 
-export class ReservationsPage extends Component {
+class ReservationsPage extends Component {
   static propTypes = {
     state:               PropTypes.object,
     actions:             PropTypes.object,
@@ -55,14 +55,10 @@ export class ReservationsPage extends Component {
         orderBy:     'approved'
       },
       { key: 'garage', title: t([ 'reservations', 'garage' ]), comparator: 'string', includes: 'place floor garage', orderBy: 'garages.name' },
-      { key:        'place',
-        title:      t([ 'reservations', 'place' ]),
-        comparator: (type, aRow, bRow) => {
-          const a = aRow.garagefloorName + ' / ' + aRow.name
-          const b = bRow.garagefloorName + ' / ' + bRow.name
-          return a.toLowerCase() < b.toLowerCase() ? (type === 'asc' ? -1 : 1) : (a.toLowerCase() > b.toLowerCase() ? (type === 'asc' ? 1 : -1) : 0)
-        },
-        representer: o => <strong className={styles.place}> {o.garagefloorName} / {o.name} </strong>,
+      { key:         'place',
+        title:       t([ 'reservations', 'place' ]),
+        comparator:  'string',
+        representer: o => <strong className={styles.place}> {o} </strong>,
         includes:    'place',
         orderBy:     'places.label'
       },
@@ -165,7 +161,9 @@ export class ReservationsPage extends Component {
       from:          reservation.begins_at,
       to:            reservation.ends_at,
       garage:        reservation.place.floor.garage.name,
-      place:         { garagefloorName: reservation.place.floor.label, name: reservation.place.label },
+      place:         reservation.place.floor.garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
+        t([ 'reservations', 'flexiblePlace' ]) :
+        `${reservation.place.floor.label} / ${reservation.place.label}`,
       spoiler:       (<div className={styles.spoiler}>
         {!reservation.approved && <div><b>{ reservation.client === null ? t([ 'reservations', 'reservationNotPayed' ]) : t([ 'reservations', 'reservationApproved' ])}</b></div>}
         <div className={styles.flex}>

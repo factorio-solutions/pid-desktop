@@ -6,14 +6,21 @@ import { GET_GARAGE_MODULES, UPDATE_MARKETING, UPDATE_GARAGE }from '../queries/a
 
 
 export const ADMIN_MODULES_SET_GO_PUBLIC            = 'ADMIN_MODULES_SET_GO_PUBLIC'
+export const ADMIN_MODULES_SET_FLEXIPLACE           = 'ADMIN_MODULES_SET_FLEXIPLACE'
 export const ADMIN_MODULES_SET_MARKETING_PAGE       = 'ADMIN_MODULES_SET_MARKETING_PAGE'
-export const ADMIN_MODULES_SET_MARKETING_SHORT_NAME       = 'ADMIN_MODULES_SET_MARKETING_SHORT_NAME'
+export const ADMIN_MODULES_SET_MARKETING_SHORT_NAME = 'ADMIN_MODULES_SET_MARKETING_SHORT_NAME'
 export const ADMIN_MODULES_SET_RESERVATION_FORM     = 'ADMIN_MODULES_SET_RESERVATION_FORM'
 export const ADMIN_MODULES_SET_MR_PARKIT_CONNECTION = 'ADMIN_MODULES_SET_MR_PARKIT_CONNECTION'
 
 
 export function setGoPublic (value) {
   return { type: ADMIN_MODULES_SET_GO_PUBLIC
+         , value
+         }
+}
+
+export function setFlexiplace (value) {
+  return { type: ADMIN_MODULES_SET_FLEXIPLACE
          , value
          }
 }
@@ -47,6 +54,7 @@ export function initModules () {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setGoPublic(response.data.garage.is_public))
+      dispatch(setFlexiplace(response.data.garage.flexiplace))
       dispatch(setMarketingPage(response.data.garage.marketing))
       dispatch(setMarketingShortName(response.data.garage.marketing.short_name))
     }
@@ -86,13 +94,31 @@ export function toggleGoPublic () {
         dispatch(setError(t(['modules', 'cannotBeChanged'])))
       }
       dispatch(setGoPublic(response.data.update_garage.is_public))
-      // dispatch(initModules())
     }
 
     request(onSuccess
            , UPDATE_GARAGE
            , { id: getState().pageBase.garage
              , "garage": { "is_public": value }
+             }
+           )
+  }
+}
+
+export function disableFlexiplace() {
+  return (dispatch, getState) => {
+
+    const onSuccess = (response) => {
+      if (response.data.update_garage.flexiplace) {
+        dispatch(setError(t(['modules', 'cannotBeChanged'])))
+      }
+      dispatch(setFlexiplace(response.data.update_garage.flexiplace))
+    }
+
+    request(onSuccess
+           , UPDATE_GARAGE
+           , { id: getState().pageBase.garage
+             , garage: { flexiplace: false }
              }
            )
   }

@@ -18,7 +18,7 @@ import * as usersActions from '../../_shared/actions/users.actions'
 import styles from './users.page.scss'
 
 
-export class UsersPage extends Component {
+class UsersPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

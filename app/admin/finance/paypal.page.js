@@ -11,7 +11,7 @@ import { t }                    from '../../_shared/modules/localization/localiz
 import styles from './paypal.page.scss'
 
 
-export class PayPalPage extends Component {
+class PayPalPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

@@ -21,7 +21,7 @@ import { setCustomModal }  from '../_shared/actions/pageBase.actions'
 import styles from './profile.page.scss'
 
 
-export class SettingsPage extends Component {
+class SettingsPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:        PropTypes.object,

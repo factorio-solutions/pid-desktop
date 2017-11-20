@@ -24,7 +24,7 @@ const PHONE_REGEX = `\\+[\\d]{2,4}[\\d]{3,}`
 const EMAIL_REGEX = `[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$`
 
 
-export class SignUpPage extends Component {
+class SignUpPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

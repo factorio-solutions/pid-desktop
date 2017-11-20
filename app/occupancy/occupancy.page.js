@@ -19,7 +19,7 @@ import ButtonStack            from '../_shared/components/buttonStack/ButtonStac
 import styles from './occupancy.page.scss'
 
 
-export class OccupancyPage extends Component {
+class OccupancyPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

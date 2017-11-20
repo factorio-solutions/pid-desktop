@@ -13,7 +13,7 @@ import * as newClientActions  from '../../_shared/actions/newClient.actions'
 import styles from './newClient.page.scss'
 
 
-export class NewClientPage extends Component {
+class NewClientPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

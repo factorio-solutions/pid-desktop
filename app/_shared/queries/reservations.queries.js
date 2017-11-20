@@ -30,6 +30,7 @@ export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
         label
         garage {
           name
+          flexiplace
           id
         }
       }
@@ -89,6 +90,7 @@ export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($past: Bool
         label
         garage {
           name
+          flexiplace
           id
         }
       }

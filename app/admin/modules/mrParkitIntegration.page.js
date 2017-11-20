@@ -11,7 +11,7 @@ import { t }                    from '../../_shared/modules/localization/localiz
 import styles from './mrParkitIntegration.page.scss'
 
 
-export class MrParkitIntegrationPage extends Component {
+class MrParkitIntegrationPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

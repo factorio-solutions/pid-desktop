@@ -18,8 +18,7 @@ import styles from './addFeatures.page.scss'
 // export const Integrations
 // export const custom
 
-
-export class AddFeaturesPage extends Component {
+class AddFeaturesPage extends Component {
   static propTypes = {
     state:        PropTypes.object,
     pageBase:     PropTypes.object,

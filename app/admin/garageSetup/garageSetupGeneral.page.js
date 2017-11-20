@@ -20,7 +20,7 @@ import { PRESIGNE_GARAGE_IMAGE_QUERY } from '../../_shared/queries/garageSetup.q
 import styles from './garageSetupGeneral.page.scss'
 
 
-export class GarageSetupGeneralPage extends Component {
+class GarageSetupGeneralPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object

@@ -187,27 +187,9 @@ export function submitPricings() {
         } else {
           request( onSuccess, CREATE_PRICING, { pricing: {...place.pricing, place_id: place.id}} )
         }
-      });
+      })
     })).then(values => { // resolved
        nav.to(`/${getState().pageBase.garage}/admin/modules`)
-    });
-
-    // request( onSuccess
-    //        , SUBMIT_PRICINGS
-    //        , {pricing: {floors:getState().adminGoPublic.garage.floors.filter(floor => { // will filter places with no valid pricing
-    //           floor.places = floor.places.filter(place => {
-    //             if (place.pricing.currency_id === undefined) return false
-    //             if ((place.pricing.flat_price == undefined || place.pricing.flat_price == '') &&
-    //             (place.pricing.exponential_12h_price == undefined || place.pricing.exponential_12h_price == '' ||
-    //             place.pricing.exponential_day_price == undefined || place.pricing.exponential_day_price == '' ||
-    //             place.pricing.exponential_week_price == undefined || place.pricing.exponential_week_price == '' ||
-    //             place.pricing.exponential_month_price == undefined || place.pricing.exponential_month_price == '')) return false
-    //
-    //             return true
-    //           })
-    //
-    //           return floor.places.length > 0
-    //         })}}
-    //       )
+    })
   }
 }

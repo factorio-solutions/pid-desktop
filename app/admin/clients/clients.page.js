@@ -19,7 +19,7 @@ import { MOMENT_DATETIME_FORMAT } from '../../_shared/helpers/time'
 import styles from './clients.page.scss'
 
 
-export class ClientsPage extends Component {
+class ClientsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
