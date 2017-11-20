@@ -25,18 +25,22 @@ class FlexiplacePage extends Component {
     this.props.actions.initPricings()
   }
 
+  componentWillReceiveProps(nextProps) {
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initPricings()
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
+    const { pricing } = state
 
     const goBack = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
     const isSubmitable = () => {
-      const { pricing } = state
-      return pricing.currency_id !== undefined &&
+      return pricing && (pricing.currency_id !== undefined &&
         ((pricing.flat_price !== undefined && pricing.flat_price !== '') ||
         (pricing.exponential_12h_price !== undefined && pricing.exponential_12h_price !== '' &&
         pricing.exponential_day_price !== undefined && pricing.exponential_day_price !== '' &&
         pricing.exponential_week_price !== undefined && pricing.exponential_week_price !== '' &&
-        pricing.exponential_month_price !== undefined && pricing.exponential_month_price !== ''))
+        pricing.exponential_month_price !== undefined && pricing.exponential_month_price !== '')))
     }
 
     const currencies = state.currencies.map(currency => {
@@ -48,60 +52,67 @@ class FlexiplacePage extends Component {
       <PageBase>
         <Form onSubmit={actions.sumbitFlexi} submitable={isSubmitable()} onBack={goBack}>
           <div>
-            <Dropdown label={t(['newPricing', 'selectCurrency'])} content={currencies} style="light" selected={state.currencies.findIndexById(state.pricing.currency_id)} />
+            <Dropdown label={t([ 'newPricing', 'selectCurrency' ])} content={currencies} style="light" selected={state.currencies.findIndexById(pricing && pricing.currency_id)} />
           </div>
 
           <div>
-            <h2>{t(['newPricing', 'flatPrice'])}</h2>
+            <h2>{t([ 'newPricing', 'flatPrice' ])}</h2>
             <PatternInput
               onChange={actions.setFlatPrice}
-              label={t(['newPricing', 'flatPrice'])}
-              error={t(['newPricing', 'invalidPrice'])}
+              label={t([ 'newPricing', 'flatPrice' ])}
+              error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
-              placeholder={t(['newPricing', 'maxPlaceholder'])}
-              value={state.pricing.flat_price || ''}
+              placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
+              value={(pricing && pricing.flat_price) || ''}
             />
           </div>
 
           <div>
-            <h2>{t(['newPricing', 'exponentialPrice'])}</h2>
+            <h2>{t([ 'newPricing', 'exponentialPrice' ])}</h2>
             <PatternInput
               onChange={actions.setExponential12hPrice}
-              label={t(['newPricing', '12hPrice'])}
-              error={t(['newPricing', 'invalidPrice'])}
+              label={t([ 'newPricing', '12hPrice' ])}
+              error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
-              placeholder={t(['newPricing', 'maxPlaceholder'])}
-              value={state.pricing.exponential_12h_price || ''}
+              placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
+              value={(pricing && pricing.exponential_12h_price) || ''}
             />
             <PatternInput
               onChange={actions.setExponentialDayPrice}
-              label={t(['newPricing', 'dayPrice'])}
-              error={t(['newPricing', 'invalidPrice'])}
+              label={t([ 'newPricing', 'dayPrice' ])}
+              error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
-              placeholder={t(['newPricing', 'maxPlaceholder'])}
-              value={state.pricing.exponential_day_price || ''}
+              placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
+              value={(pricing && pricing.exponential_day_price) || ''}
             />
             <PatternInput
               onChange={actions.setExponentialWeekPrice}
-              label={t(['newPricing', 'weekPrice'])}
-              error={t(['newPricing', 'invalidPrice'])}
+              label={t([ 'newPricing', 'weekPrice' ])}
+              error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
-              placeholder={t(['newPricing', 'minPlaceholder'])}
-              value={state.pricing.exponential_week_price || ''}
+              placeholder={t([ 'newPricing', 'minPlaceholder' ])}
+              value={(pricing && pricing.exponential_week_price) || ''}
             />
             <PatternInput
               onChange={actions.setExponentialMonthPrice}
-              label={t(['newPricing', 'monthPrice'])}
-              error={t(['newPricing', 'invalidPrice'])}
+              label={t([ 'newPricing', 'monthPrice' ])}
+              error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
-              placeholder={t(['newPricing', 'decayPlaceholder'])}
-              value={state.pricing.exponential_month_price || ''}
+              placeholder={t([ 'newPricing', 'decayPlaceholder' ])}
+              value={(pricing && pricing.exponential_month_price) || ''}
             />
           </div>
 
           <div>
-            <h2>{t(['newPricing', 'weekendPrice'])}</h2>
-            <PatternInput onChange={actions.setWeekendPricing} label={t(['newPricing', 'weekendPrice'])} error={t(['newPricing', 'invalidPrice'])} pattern="^[+]?\d+([,.]\d+)?$" placeholder={t(['newPricing', 'maxPlaceholder'])} value={state.pricing.weekend_price || ''} />
+            <h2>{t([ 'newPricing', 'weekendPrice' ])}</h2>
+            <PatternInput
+              onChange={actions.setWeekendPricing}
+              label={t([ 'newPricing', 'weekendPrice' ])}
+              error={t([ 'newPricing', 'invalidPrice' ])}
+              pattern="^[+]?\d+([,.]\d+)?$"
+              placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
+              value={(pricing && pricing.weekend_price) || ''}
+            />
           </div>
         </Form>
       </PageBase>

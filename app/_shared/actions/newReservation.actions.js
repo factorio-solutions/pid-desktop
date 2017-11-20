@@ -224,11 +224,18 @@ export function setPrice() {
     const state = getState().newReservation
     const from = moment(state.from, MOMENT_DATETIME_FORMAT)
     const to = moment(state.to, MOMENT_DATETIME_FORMAT)
-    const selectedPlace = state.garage && state.garage.floors.reduce((acc, floor) => {
-      return floor.places.reduce((acc, place) => {
-        return place.id === state.place_id ? place : acc
-      }, acc)
-    }, undefined)
+    let selectedPlace = null
+    if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
+      const freePlaces = state.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+      selectedPlace = freePlaces.length && freePlaces[0]
+    } else {
+      selectedPlace = state.garage && state.garage.floors.reduce((acc, floor) => {
+        return floor.places.reduce((acc, place) => {
+          return place.id === state.place_id ? place : acc
+        }, acc)
+      }, undefined)
+    }
+
 
     dispatch({ type:  NEW_RESERVATION_SET_PRICE,
       value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` : undefined
@@ -508,20 +515,24 @@ export function downloadGarage(id) {
 export function autoSelectPlace() {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    if (!(state.place_id && state.garage.floors.find(floor => {
-      return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
-    }) !== undefined)) { // if place not selected or selected place not found in this garage
-      const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
-        return floor.places.reduce((highestPriorityPlace, place) => {
-          if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority)) {
-            return place
-          } else {
-            return highestPriorityPlace
-          }
-        }, highestPriorityPlace)
-      }, undefined)
+    if (state.garage.flexiplace) {
+      dispatch(setPlace(undefined))
+    } else {
+      if (!(state.place_id && state.garage.floors.find(floor => {
+        return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
+      }) !== undefined)) { // if place not selected or selected place not found in this garage
+        const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
+          return floor.places.reduce((highestPriorityPlace, place) => {
+            if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority)) {
+              return place
+            } else {
+              return highestPriorityPlace
+            }
+          }, highestPriorityPlace)
+        }, undefined)
 
-      dispatch(setPlace(selectedPlace))
+        dispatch(setPlace(selectedPlace))
+      }
     }
   }
 }
@@ -531,7 +542,8 @@ export function autoSelectPlace() {
 export function overviewInit() {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    if (state.user == undefined || state.place_id == undefined || state.from == '' || state.to == '') {
+
+    if (state.user === undefined || (state.place_id === undefined && (state.garage && !state.garage.flexiplace)) || state.from === '' || state.to === '') {
       nav.to('/reservations/newReservation')
     }
   }
@@ -561,6 +573,7 @@ export function submitReservation(id) {
              , { reservation: {
                user_id:                  ongoing ? undefined : user_id,
                place_id:                 ongoing ? undefined : state.place_id,
+               garage_id:                state.garage.id,
                client_id:                ongoing ? undefined : state.client_id,
                car_id:                   ongoing ? undefined : state.car_id,
                licence_plate:            ongoing ? undefined : state.carLicencePlate === '' ? undefined : state.carLicencePlate,
