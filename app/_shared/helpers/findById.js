@@ -4,6 +4,6 @@ Array.prototype.findById = function findById(id) {
 }
 
 // will find index of object with id in array of objects
-Array.prototype.findIndexById = function findById(id) {
+Array.prototype.findIndexById = function findIndexById(id) {
   return this.findIndex(object => object.id === id)
 }

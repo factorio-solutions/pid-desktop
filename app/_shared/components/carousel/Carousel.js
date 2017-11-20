@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import Swiper from 'swiper'
+import Swiper from 'swiper/dist/js/swiper.min.js'
 
 import styles from './Carousel.scss'
+import '../../../../node_modules/swiper/dist/css/swiper.min.css'
 
 
-export default class ReleaseNotesPage extends Component {
+export default class Carousel extends Component {
   static propTypes = {
     images: PropTypes.array,
     width:  PropTypes.string,

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes }  from 'react'
 import ReactDOM                         from 'react-dom'
 import moment                           from 'moment'
+import { t } from '../../modules/localization/localization'
 
 import styles   from './Timepicker.scss'
 import Hours    from './Hours'
@@ -62,7 +63,7 @@ export default class Timepicker extends Component{
           <Minutes time={this.state.selected} onClick={minutesClicked} />
         </div>
         <div className={styles.buttonContainer}>
-          <span onClick={nowClick}>Now</span>
+          <span onClick={nowClick}>{t([ 'datetimepicker', 'now' ])}</span>
         </div>
       </div>
     )

@@ -6,6 +6,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import createRoutes from './routes'
 import configureStore from './_store/configureStore'
 
+import './_shared/helpers/findById'
 import './_shared/styles/normalize.css'
 import './_shared/styles/fonts.scss'
 import './_styles/app.desktop.scss'
@@ -17,6 +18,10 @@ export const mobile = false  // when different actions are needed on mobile and 
 export const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/queries'
 
 const history = syncHistoryWithStore(hashHistory, store)
+
+if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
+  window.moment = require('moment')
+}
 
 render(
   <Provider store={store}>

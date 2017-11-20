@@ -51,7 +51,7 @@ class NotificationsPage extends Component {
     const data = state.notifications.map(function (notification){
       const createSpoiler = () => {
         const returnMessage = () => {
-          const parts = notification.message.split(';')
+          const parts = notification.message ? notification.message.split(';') : ['noMessage'] // if no message comes
           return t(['notifications',parts[0]], {arg1: parts[1] || "", arg2: parts[2] || ""})
         }
 

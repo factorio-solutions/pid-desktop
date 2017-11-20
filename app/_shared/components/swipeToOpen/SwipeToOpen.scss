@@ -53,32 +53,25 @@
   font-weight: bold;
 }
 
-
-.swiper{
-  flex: 1 1;
-  &:not(:last-child){
-    border-bottom: 1px solid $white
-  }
-}
-
 .noPointerEvents{
-  pointer-events: 'none';
+  pointer-events: none;
 }
 
 .container{
   height: 100%;
 
-  >div{ // card
-    height: 100%;
+  &:not(:last-child){
+    border-bottom: 1px dashed $white
+  }
 
-    >div{ // internal div
-      height: 100%;
-    }
+  >div{ // card
+    display: flex;
   }
 }
 
 .message{
   text-align: center;
+  padding-top: 15px;
 
   >div{
     position: absolute;

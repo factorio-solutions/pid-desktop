@@ -51,7 +51,6 @@ export function setTime (time){
   //        }
 }
 
-
 export function initGarage () {
   return (dispatch, getState) => {
     const garagePromise = createPromise(getState, (onSuccess)=>{
@@ -63,7 +62,8 @@ export function initGarage () {
     })
 
     Promise.all([garagePromise, reservationsPromise]).then((data)=>{
-      dispatch(setGarage(updateGaragesPlaces(data[0].garage, data[1])))
+      data[1].garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+      dispatch(setGarage(updateGaragesPlaces(data[0].garage, { garage: { places: data[1].garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], []) } })))
     }).catch((error) => {
       console.error(error)
     })
@@ -75,7 +75,7 @@ export function updateReservations() {
     createPromise(getState, (onSuccess)=>{
       request(onSuccess, GARAGE_RESERVATIONS, {id: getState().pageBase.garage, datetime: timeToUTC(getState().garage.time)})
     }).then((data) => {
-      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, data)))
+      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, { garage: { places: data.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], []) } })))
     }).catch((error) => {
       console.error(error)
     })

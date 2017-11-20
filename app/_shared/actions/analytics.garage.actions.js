@@ -139,20 +139,30 @@ function addProperty (acc, property) {
 export function stateToData() {
   return (dispatch, getState) => {
     const state = getState().analyticsGarage
+
+    let currentDate = moment(state.from, 'DD. MM. YYYY');
+    let initialState = {}
+    while (currentDate.isBefore(moment(state.to, 'DD. MM. YYYY'))) {
+      const property = getProperty(currentDate, state.period)
+      initialState = addProperty(initialState, property)
+      initialState[property].contracts = []
+      initialState[property].reservations = []
+      currentDate = currentDate.add(1, state.period === 'month' ? 'month' : 'week');
+    }
+
     const chartData = state.reservations.reduce((acc, reservation) => {
       const property = getProperty(reservation.created_at, state.period)
-      acc = addProperty(acc, property)
+      addProperty(acc, property)
       acc[property].reservations.push(reservation)
 
       return acc
-    }, {})
+    }, initialState)
 
     return state.contracts.reduce((acc, contract) => {
       let currentDate = moment(contract.from);
       while (currentDate.isBefore(moment(contract.to)) && currentDate.isBefore(moment(state.to, 'DD. MM. YYYY'))) { // stop it as soon as possible
         if (currentDate.isAfter(moment(state.from, "M/YYYY")) && currentDate.isBefore(moment(state.to, "M/YYYY").add(1, 'month'))) {
           const property = getProperty(currentDate, state.period)
-          acc = addProperty(acc, property)
           acc[property].contracts.push(contract)
         }
         currentDate = currentDate.add(1, state.period === 'month' ? 'month' : 'week');

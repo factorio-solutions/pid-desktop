@@ -39,3 +39,9 @@ export const DESTROY_CLIENTUSERS = `mutation clientUserMuation($client_id: Id!, 
   }
 }
 `
+
+// Resend invitation email
+export const RESEND_INVITATION = `mutation resendInvitation($user_id: Id!, $client_id: Id, $car_id: Id, $garage_id: Id) {
+  resend_invitation(user_id: $user_id, client_id: $client_id, car_id: $car_id, garage_id: $garage_id)
+}
+`

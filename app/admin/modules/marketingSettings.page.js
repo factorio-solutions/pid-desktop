@@ -39,7 +39,6 @@ class MarketingSettingsPage extends Component {
 
   render() {
     const { state, pageBase, actions } = this.props
-    console.log(state);
 
     const submitForm       = () => { actions.editGarageMarketing() }
     const goBack           = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
@@ -104,7 +103,7 @@ class MarketingSettingsPage extends Component {
           <Modal content={modalError} show={state.modalError!=undefined} />
           <div>
             <PatternInput onChange={actions.setShortName} label={t(['newMarketing', 'shortName'])+' *'} error={t(['newMarketing', 'invalidShortName'])} pattern="^[a-z-.]+$"                                 placeholder={t(['newMarketing', 'shortNamePlaceholder'])} value={state.short_name.value || ''} highlight={state.highlight}/>
-            <PatternInput onChange={actions.setPhone}     label={t(['newMarketing', 'phone'])+' *'}     error={t(['newMarketing', 'invalidPhone'])}     pattern="\+?\(?\d{2,4}\)?[\d\s-]{3,}"                placeholder={t(['newMarketing', 'phonePlaceholder'])}     value={state.phone.value || ''}      highlight={state.highlight}/>
+            <PatternInput onChange={actions.setPhone}     label={t(['newMarketing', 'phone'])+' *'}     error={t(['newMarketing', 'invalidPhone'])}     pattern="\+[\d]{2,4}[\d]{3,}"                        placeholder={t(['newMarketing', 'phonePlaceholder'])}     value={state.phone.value || ''}      highlight={state.highlight}/>
             <PatternInput onChange={actions.setEmail}     label={t(['newMarketing', 'email'])+' *'}     error={t(['newMarketing', 'imvalidEmail'])}     pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder={t(['newMarketing', 'mailPlaceholder'])}      value={state.email.value || ''}      highlight={state.highlight}/>
           </div>
 

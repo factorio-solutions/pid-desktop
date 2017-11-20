@@ -1,14 +1,15 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
     "build": "webpack -p",
     "postinstall": "webpack -p",
     "start": "node ./src/app.js",
-    "dev": "OPEN_ANALYZER=true webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
+    "dev": "OPEN_ANALYZER=false webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
+    "pro": "webpack-dev-server --progress --colors --open --watch",
     "export_languages": "node app/_shared/modules/localization/export.js /home/hrstktom/Documents/pid-desktop/app/_shared/locales/",
     "import_languages": "node app/_shared/modules/localization/import.js /home/hrstktom/Documents/pid-desktop/app/_shared/locales/"
   },
@@ -27,7 +28,7 @@
     "eslint-config-airbnb": "^15.0.2",
     "eslint-plugin-import": "^2.6.1",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-react": "^7.4.0",
     "redux-logger": "^3.0.6",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-middleware": "^1.6.1",
@@ -48,6 +49,7 @@
     "css-loader": "^0.28.4",
     "detect-browser": "^1.6.2",
     "express": "^4.14.0",
+    "extract-text-webpack-plugin": "^3.0.1",
     "fingerprintjs2": "^1.5.1",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.0.19",
@@ -72,8 +74,8 @@
     "sass-loader": "^6.0.6",
     "sip": "0.0.4",
     "style-loader": "^0.18.2",
-    "swiper": "^3.4.0",
-    "webpack": "^3.0.0",
+    "swiper": "^4.0.1",
+    "webpack": "^3.7.1",
     "ws": "^3.0.0"
   },
   "devEngines": {

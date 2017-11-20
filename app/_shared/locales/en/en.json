@@ -96,7 +96,7 @@
 		"dashboardHint": "\n\nHere you can see an overview of all important information\nabout your account.\n\nThe garage map shows whether spots are rented long term or\navailable for reservation.\n\nThe News section shares what is going on at Park-it-direct.\n\nMost Recent shows the latest changes to your garage,\nincluding details on who made the change and when.\n\nCurrent Status gives brief statistics on available and\noccupied spots.\n\nFinancial Overview presents current financial statistics.\n\n",
 		"issuesHint": "TODO: Issues hint",
 		"analyticsHint": "Here you can check various statistics.",
-		"invoicesHint": "Here is a list of issued invoices.\n\nIn the upper left-hand corner you can filter invoices by client. In the upper right-hand corner you can display all invoices, or current\ninvoices only.",
+		"invoicesHint": "Here is a list of issued invoices.\n\nIn the upper left-hand corner you can filter invoices by client. In the upper right-hand corner you can display current invoices or past invoices only.",
 		"newContractHint": "Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :)",
 		"ReservationButtonHint": "TODO: reservation button hint",
 		"mrParkitIntegrationHint": "TODO: mrParkitIntegration hint",
@@ -115,7 +115,7 @@
 		"newGarageSubscribtionHint": "TODO: New garage subscribtion Hint",
 		"newGarageGatesHint": "Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.",
 		"garageClientsHint": "Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.",
-		"clientsHint": "Here you can find a list of clients with whom you are in contact. \n\nThe “client token” column shows the unique identifier for selecting the client when creating new contracts. \n\nThe “contract” column shows a green check mark if the client has a contract, or a red exclamation point if the client has no contract. \n\nThe “Spots” column shows the total number of parking spots assigned to the client. \n\nThe “Monthly total” column shows the total monthly parking fees paid by the client. \n\nThe “Invoices” column shows payment status for invoices: green if all are paid, red if any are past due. \n\nClick on the client to show more details, such as contact person or list of contracts made. The buttons on the right can create new contracts, check invoices, edit the client or display all users who belong under that client. In this section you can also click on individual contracts and edit them.",
+		"clientsHint": "Here you can find a list of clients with whom you are in agreement. \n\nThe “client token” column shows the unique identifier for selecting the client when creating new agreements. \n\nThe “agreement” column shows a green check mark if the client has an agreement, or a red exclamation point if the client has no agreement. \n\nThe “Spots” column shows the total number of parking spots assigned to the client. \n\nThe “Monthly total” column shows the total monthly parking fees paid by the client. \n\nThe “Invoices” column shows payment status for invoices: green if all are paid, red if any are past due. \n\nClick on the client to show more details, such as contact person or list of agreements made. The buttons on the right can create new agreements, check invoices, edit the client or display all users who belong under that client. In this section you can also click on individual agreements and edit them.",
 		"newClientHint": "Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",
 		"clientUsersHint": "This section lets you manage users of a particular client account. Select a user to view and set up user rights. You can also invite new users to this selected client account. Invitations sent and waiting for confirmation are shown in the \"Pending invitations\" section below.",
 		"settingsHint": "In this section you can set your desired language and switch on and off these help boxes throughout the application.",
@@ -163,9 +163,11 @@
 		"orderGarageModuleHint": "TODO: order Garage Module hint: Here you can order a garage module.",
 		"reservationOverviewHint": "TODO: new reservation overview hint: Here you can double check if everything is ok.",
 		"editInvoiceHint": "TODO: edit invoice hint: Afther clicking OK, a new invoice will be created with corrected data.",
-		"editContractHint": "TODO: edit contract hint: Here you can select a contract and edit it to change parking spots, duration or price.",
+		"editContractHint": "TODO: edit agreement hint: Here you can select an agreement and edit it to change parking spots, duration or price.",
 		"unredNotifications": {
 			"one": "You have one unread notification",
+			"few": "EN: pageBase.unredNotifications.few",
+			"many": "EN: pageBase.unredNotifications.many",
 			"other": "You have %(count)s unread notifications"
 		},
 		"analytics": "Analytics",
@@ -212,7 +214,12 @@
 		"paymentUnsucessfull": "Payment was canceled and not completed.",
 		"validtyCheck": "Performing validity check ...",
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
-		"creatingNewPayment": "Creating payment ..."
+		"creatingNewPayment": "Creating payment ...",
+		"newHost": "New guest",
+		"hostsName": "Guest name",
+		"hostsPhone": "Guest phone",
+		"hostsEmail": "Guest email",
+		"selectedUser": "User"
 	},
 	"clients": {
 		"name": "name",
@@ -223,12 +230,12 @@
 		"token": "client token",
 		"contactPerson": "Contact person",
 		"createdAt": "Created at",
-		"createAgreement": "Create contract",
+		"createAgreement": "Create agreement",
 		"editClient": "Edit client",
 		"goToUsers": "Go to users",
 		"goToInvoices": "Go to invoices",
 		"places": "places",
-		"contract": "contract",
+		"contract": "agreement",
 		"monthlyTotal": "monthly total",
 		"invoices": "invoices"
 	},
@@ -245,7 +252,10 @@
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
 		"pendingUsers": "Pending invitations",
-		"removeUser": "Remove user"
+		"removeUser": "Remove user",
+		"resendInvitation": "Resend email",
+		"resendSuccessfull": "Email was sucessfully send.",
+		"userNotFound": "Could not find this user."
 	},
 	"reservations": {
 		"name": "name",
@@ -267,9 +277,22 @@
 		"host": "Guest",
 		"visitor": "Visitor",
 		"editReservation": "Edit reservation",
+		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
-		"destroyRservation": "Cancel reservation"
+		"destroyRservation": "Cancel reservation",
+		"destroyAllReservation": {
+			"one": "Destroy only selected reservation",
+			"few": "Destroy all %(count)s reservations in set repeat.",
+			"many": "Destroy all %(count)s reservations in set repeat.",
+			"other": "Destroy all %(count)s reservations in set repeat."
+		},
+		"updateAllReservation": {
+			"one": "Update only selected reservation",
+			"few": "Update all %(count)s reservations in set repeat.",
+			"many": "Update all %(count)s reservations in set repeat.",
+			"other": "Update all %(count)s reservations in set repeat."
+		}
 	},
 	"garages": {
 		"clients": "Clients",
@@ -486,7 +509,7 @@
 		"selectUser": "User email(s)",
 		"connectionExists": "This user is already in this client account.",
 		"sendingInvitation": "Loading, inviting user",
-		"notificationSend": "Success: Notification has been send to this user. Wait for the user to accept.",
+		"notificationSend": "Success: Notification has been sent to this user. Wait for the user to accept.",
 		"message": "You have been invited to use the '%(client)s'! client account",
 		"noRights": "You do not have the right to do that.",
 		"inviteMessage": "Invitation message",
@@ -496,8 +519,13 @@
 		"nameLabel": "User's full name (optional)",
 		"phoneLabel": "User's phone number (optional)",
 		"noClients": "You have currently no admin rights to any clients.",
-		"sucessfullyInvited": "%(success)s invitations were sucessfully sent, %(failed)s failed.",
-		"zero": "no",
+		"sucessfullyInvited": {
+			"one": "Invitation sucessfully sent.",
+			"few": "%(count)s invitations were sucessfully sent.",
+			"many": "%(count)s invitations were sucessfully sent.",
+			"other": "%(count)s invitations were sucessfully sent."
+		},
+		"unSucessfullyInvited": "We were not able to invite these users: %(emails)s.",
 		"selectClient": "Select client",
 		"selectGarage": "Select garage",
 		"selectCar": "Select car",
@@ -507,7 +535,7 @@
 		"internal": "internal",
 		"security": "security",
 		"receptionist": "receptionist",
-		"clientRights": "Client rights",
+		"clientRights": "User rights",
 		"clientRightsDesc": "These rights will be only valid if the client is specified.",
 		"GarageRights": "Garage rights",
 		"GarageRightsDesc": "These rights will be valid only if the garage is specified.",
@@ -537,7 +565,8 @@
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to settle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s spot was accepted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
-		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \\\"%(arg1)s\\\". You will not be able to log in again until your email is verified."
+		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \"%(arg1)s\". You will not be able to log in again until your email is verified.",
+		"newReservationForYou": "%(arg1)s (%(arg2)s) just created a new reservation for you."
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -575,7 +604,9 @@
 	"datetimepicker": {
 		"today": "Today",
 		"now": "Now",
-		"inf": "Infinity"
+		"inf": "Infinity",
+		"hour": "Hour",
+		"minute": "Minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Limited vehicle size",
@@ -662,7 +693,7 @@
 		"name": "Name",
 		"namePlaceholder": "Parking spot rent",
 		"invalidName": "Invalid rent name",
-		"price": "Price (not including VAT)",
+		"price": "Price per place per month (not including VAT)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency"
@@ -681,7 +712,7 @@
 		"width": "Width [m]",
 		"height": "Height [m]",
 		"length": "Length [m]",
-		"licencePlatePlaceholder": "1A2 3456",
+		"licencePlatePlaceholder": "LD07 WCL",
 		"colorPlaceholder": "Black",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "My Porsche",
@@ -723,7 +754,7 @@
 		"canAddGarage": "garages and spots",
 		"users": "users",
 		"reservations": "reservations",
-		"saveContracts": "save contracts",
+		"saveContracts": "save agreements",
 		"hosts": "guests",
 		"occupancy": "occupancy overview",
 		"notifications": "notifications",
@@ -742,7 +773,7 @@
 		"customPrice": "Custom pricing",
 		"additionalGoods": "Additional goods",
 		"bookingPage": "MY OWN BOOKING PAGE",
-		"advertisement": "awesome advertisement",
+		"advertisement": "EN: addFeatures.advertisement",
 		"gateModule": "GATE MODULE",
 		"openGate": "Opens gate via app",
 		"IdontHaveAccout": "I don't have an account",
@@ -844,7 +875,7 @@
 	"newContract": {
 		"description": "New Agreement in",
 		"edit": "Editing agreement in",
-		"yourContract": "Your contract in",
+		"yourContract": "Your agreement in",
 		"selectClient": "Select client",
 		"invalidToken": "Token invalid",
 		"tokenPlaceholder": "gaZJBS",
@@ -852,12 +883,12 @@
 		"selectedPlaces": "Selected spots",
 		"noSelectedPlaces": "No selected spots",
 		"selectRent": "Select rent",
-		"contractPrice": "Enter new specific contract price",
+		"contractPrice": "Enter new specific agreement price",
 		"priceInvalid": "Price invalid",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Select currency",
 		"placePrice": "Price per spot per month",
-		"indefinitContract": "Conclude this contract for an indefinite period.",
+		"indefinitContract": "Create agreement indefinitely.",
 		"indefinite": "Indefinite"
 	},
 	"finance": {
@@ -885,7 +916,7 @@
 		"placeTurnover": "Spot turnover",
 		"period": "Period",
 		"reservationCount": "reservation count",
-		"contractCount": "contract count",
+		"contractCount": "agreement count",
 		"date": "date",
 		"shortterm": "Short-term",
 		"longterm": "Long-term",
@@ -915,8 +946,217 @@
 		"total": "Total"
 	},
 	"loginVerification": {
-		"description": "Multifactor authorization has been triggered. We will now send you a code by email %(email)s",
+		"description": "Multifactor authorization has been enabled. We will now send you a code by email %(email)s",
 		"code": "code",
 		"codeInvalid": "Code invalid"
+	},
+	"reservationInteruption": {
+		"describtion": "Interrupt reservation",
+		"from": "Interrupt from",
+		"to": "Interrupt to"
+	},
+	"languages": {
+		"language": "Language",
+		"en": "English",
+		"cs": "Česky",
+		"de": "Deutsch",
+		"pl": "Polski"
+	},
+	"recurringReservation": {
+		"repeat": "Repeat",
+		"repeats": "Repeats:",
+		"daily": "Daily",
+		"weekly": "Weekly",
+		"monthly": "Monthly",
+		"repeatEvery": "Repeat every:",
+		"week": {
+			"one": "week",
+			"few": "weeks",
+			"many": "weeks",
+			"other": "weeks"
+		},
+		"month": {
+			"one": "month",
+			"few": "months",
+			"many": "months",
+			"other": "months"
+		},
+		"day": {
+			"one": "day",
+			"few": "days",
+			"many": "days",
+			"other": "days"
+		},
+		"repeatOn": "Repeat on:",
+		"startsOn": "Starts on:",
+		"ends": "Ends:",
+		"after": "After",
+		"occurence": {
+			"one": "occurrence",
+			"few": "occurrences",
+			"many": "occurrences",
+			"other": "occurrences"
+		},
+		"on": "On",
+		"every": "every"
+	},
+	"mobileApp": {
+		"page": {
+			"userInfoUnavailable": "User info unavailable.",
+			"logOut": "log out",
+			"selectGarage": "Select garage",
+			"allGarages": "All garages"
+		},
+		"login": {
+			"loading": "Loading ...",
+			"loginFailed": "Login failed:",
+			"login": "Please log in or",
+			"signup": "sign up",
+			"email": "Email",
+			"emailPlaceholder": "Mr@park.it",
+			"emailInvalid": "Invalid email address",
+			"password": "Password"
+		},
+		"signUp": {
+			"niceToMeetYou": "Hi, nice to meet you.",
+			"fillDetails": "Please fill in some details:",
+			"name": "your full name *",
+			"nameInvalid": "Invalid name",
+			"phone": "phone number *",
+			"phoneInvalid": "Invalid phone number",
+			"email": "email *",
+			"emailInvalid": "Invalid email address",
+			"password": "password *",
+			"passwordInvalid": "Minimum length is",
+			"passwordConfirm": "password confirmation *",
+			"passwordConfirmInvalid": "Password does not match",
+			"agreeWith": "By creating a profile you agree with our",
+			"terms": "Terms of Service"
+		},
+		"terms": {
+			"content": "You can find our Terms of Service on our website."
+		},
+		"menu": {
+			"newNotifications": "New notifications",
+			"access": "Access",
+			"myReservations": "My reservations"
+		},
+		"access": {
+			"swipeToOpen": "Swipe to open the gate",
+			"noOngoingReservations": "No ongoing reservations",
+			"inSelectedGarage": "in selected garage"
+		},
+		"reservation": {
+			"garage": "Garage",
+			"place": "Place",
+			"begins": "Begins",
+			"ends": "Ends"
+		},
+		"newReservation": {
+			"begins": "Begins",
+			"ends": "Ends",
+			"place": "Place",
+			"car": "Car",
+			"price": "Price",
+			"paidBy": "Paid by",
+			"licencePlate": "License plate",
+			"licencePlateInvalid": "Invalid license plate",
+			"licencePlatePlaceholder": "1A2 3456",
+			"selectCar": "Select car",
+			"noAvailablePlaces": "No available places",
+			"selectGarage": "Select garage first",
+			"auto": "AUTO",
+			"now": "NOW",
+			"pick": "PICK",
+			"other": "OTHER",
+			"later": "LATER",
+			"hourShortcut": "h",
+			"me": "Me",
+			"creatingReservation": "Creating reservation",
+			"creatingPayment": "Creating payment ...",
+			"tokenNoLongerValid": "Token of payment is no longer valid, reservation will be deleted.",
+			"checkingToken": "Checking token validity.",
+			"redirecting": "Redirecting ...",
+			"paymentUnsucessfull": "Payment was unsuccessful.",
+			"processingPayment": "Processing payment ..."
+		}
+	},
+	"auth0Emails": {
+		"securityReasons": "For security reasons we need you to verify your email",
+		"easyAsClickingButton": "It's as easy as clicking the link below:",
+		"confirmAccount": "Confirm my account!",
+		"enjoy": "Enjoy your Park-it-direct experience!",
+		"bestRegards": "Best Regards,",
+		"PidTeam": "the Park-it-direct team",
+		"welcome": "Welcome to Park-it-direct!",
+		"thankYou": "Thank you for using our management tool. Let’s take a look at how Park-it-direct can help you manage your parking.",
+		"howToStart": " How to start with PID?",
+		"pleasantExperience": "Are you looking for a good parking experience? Or you want to organize parking for your company? Or perhaps providing parking for others is your business?",
+		"helpForHelp": "A blue help window on the top or right side of each screen explains the content. You can turn this help on or off at any time in your account settings.",
+		"garageSetup": "Would you like to set up your garage? We will gladly help you. Just let us know and we will give you a call! Together we can go through all the settings and make sure you benefit from using Park-it-direct as much as possible, while saving your valuable time.",
+		"getInTouch": " Need to get in touch with us?",
+		"website": "We are always here for you. You can find contact details on our <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">website</a> or you can use the chat button on our website and in the app.",
+		"passwordResetSubmited": "You have submitted a password change request!",
+		"pwdResetDescr": "If it wasn't you, please disregard this email and make sure you can still log in to your account. If it was you, then ",
+		"confirmPwdReset": "Confirm the password change",
+		"troubleWithAccount": "If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.",
+		"verificationCode": "Below you can find your verification code for Park-it-direct!"
+	},
+	"railsEmails": {
+		"footer": {
+			"enjoy": "Enjoy your Park-it-direct experience!",
+			"regards": "Best Regards,",
+			"team": "the Park-it-direct team"
+		},
+		"invitation_mail": {
+			"hello": "Hello,",
+			"invitation": "You have been invited to Park-it-direct!",
+			"invited_you": "just invited you to start using Park-it-direct.",
+			"says": "says:",
+			"admin": "admin",
+			"secretary": "secretary",
+			"host": "guest",
+			"internal": "internal",
+			"contact_person": "contact person",
+			"receptionist": "receptionist",
+			"security": "security",
+			"invited_to": "just invited you to join a client account",
+			"as": "as",
+			"issue": "In case of any issues, please",
+			"let_us_know": "let us know",
+			"we_will_help": "and we will help you with your account activation."
+		},
+		"new_reservation_mail": {
+			"new_reservation": "You have a new reservation on Park-it-direct!",
+			"reservation_for_you": "has created a new reservation for you.",
+			"more_details": "For more details go to Park-it-direct:",
+			"to_pid": "To Park-it-direct!"
+		},
+		"resend_invitation_mail": {
+			"hello": "Hello,",
+			"invitation_reminder": "This is an invitation reminder to Park-it-direct!",
+			"remind_you": "would like to remind you about your invitation to Park-it-direct.",
+			"admin": "admin",
+			"secretary": "secretary",
+			"host": "guest",
+			"internal": "internal",
+			"contact_person": "contact person",
+			"receptionist": "receptionist",
+			"security": "security",
+			"invited_to": "invited you to join a client account",
+			"as": "as",
+			"to_sign_up": "Sign me up!",
+			"to_pid": "To Park-it-direct!",
+			"issue": "In case of any issues, please",
+			"let_us_know": "let us know",
+			"we_will_help": "and we will help you with your account activation."
+		},
+		"reservation_confirmed": {
+			"reservation_confirmed": "The reservation you requested was confirmed!",
+			"garage": "Garage:",
+			"place": "Place:",
+			"from": "From:",
+			"to": "To:"
+		}
 	}
 }

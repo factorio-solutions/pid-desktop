@@ -1,155 +1,235 @@
 const MAX_SCANNING_DURATION = 15000 // ms
+const IS_ANDROID = window.cordova && cordova.platformId === 'android'
+const UNIT_PASSWORD = 'heslo'
+const UNIT_OPEN_SEQUENCE = [ '0xFE', '0xFF', '0x20' ]
+// const UNIT_OPEN_SEQUENCE = [ '0xFF' ]
+const UNIT_SERVICE = '68F60000-FE41-D5EC-5BED-CD853CA1FDBC'
+const UNIT_CHARACTERISTICS_PASSWORD = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
+const UNIT_CHARACTERISTICS_OPEN_GATE = '68F6000B-FE41-D5EC-5BED-CD853CA1FDBC'
 
-export function init(callback) {
-  const params = {
-    request: true
-    // , restoreKey: 'park-it-direct-bluetoothLE'
-    , statusReceiver: true
-  }
-
-  console.log('Initializing ble')
-  bluetoothle.initialize(callback, params)
+function isInitialized() {
+  console.log('is initialized?')
+  return new Promise((resolve, reject) => {
+    const callback = result => result.isInitialized ? resolve(result) : reject(result)
+    bluetoothle.isInitialized(callback)
+  })
 }
 
-
-export function stopScan(successCallback, errorCallback) {
-  bluetoothle.stopScan(successCallback, errorCallback)
-}
-
-export function scan(successCallback, errorCallback, unlimited) {
-  const params = { allowDuplicates: true // iOS
-    , scanMode: bluetoothle.SCAN_MODE_BALANCED
-    , matchMode: bluetoothle.MATCH_MODE_STICKY
-    , matchNum: bluetoothle.MATCH_NUM_ONE_ADVERTISEMENT
-    , callbackType: bluetoothle.CALLBACK_TYPE_ALL_MATCHES
-    // , services: ['180D', '180F']
-  }
-
-  const onScanTimeout = () => {
-    const scanStopFailed = result => console.log('cannot stop scan if no scan is active', result)
-    const stopScanSuccessfull = result => {
-      console.log('scan stoped', result)
-      errorCallback('Bluetooth of garage was not found')
+function initializeBLE() {
+  console.log('Initializing bluetooth')
+  return new Promise((resolve, reject) => {
+    const callback = result => result.status === 'enabled' ? resolve(result) : reject(result)
+    const params = {
+      request:        true,
+      statusReceiver: true
     }
 
-    stopScan(stopScanSuccessfull, scanStopFailed)
-  }
+    bluetoothle.initialize(callback, params)
+  })
+}
 
-  const requestPermissionSuccess = result => {
-    console.log('now has permision', result)
-    bluetoothle.startScan(successCallback, errorCallback, params)
-    !unlimited && setTimeout(onScanTimeout, MAX_SCANNING_DURATION)
-  }
+function isEnabled() {
+  console.log('is enabled?')
+  return new Promise((resolve, reject) => {
+    const callback = result => result.isEnabled ? resolve() : reject()
+    bluetoothle.isEnabled(callback)
+  })
+}
 
-  const requestPermissionError = result => {
-    console.log('permision rejected')
-    errorCallback(result)
-  }
+function enable() { // doesnt work well, resolve is not being called
+  console.log('enabling bluetooth')
+  return new Promise((resolve, reject) => IS_ANDROID ? bluetoothle.enable(resolve, reject) : reject())
+}
 
-  const hasPermissionSuccess = result => {
-    if (result.hasPermission) {
-      requestPermissionSuccess()
+function hasPermission() {
+  console.log('checking has permission?')
+  return new Promise((resolve, reject) => {
+    if (IS_ANDROID) {
+      const callback = result => result.hasPermission ? resolve(result) : reject(result)
+      bluetoothle.hasPermission(callback)
     } else {
-      console.log('doesnt have permision, asking for it')
-      bluetoothle.requestPermission(requestPermissionSuccess, requestPermissionError)
+      resolve()
     }
-  }
-
-  if (cordova.platformId === 'android') { // has to have this permision, or no new devices will be found
-    console.log('android')
-    bluetoothle.hasPermission(hasPermissionSuccess)
-  } else {
-    console.log('ios')
-    requestPermissionSuccess() // ios doesn't need permission, so skip it
-  }
+  })
 }
 
-export function connect(address, successCallback, errorCallback) {
-  let connected = false
-  const params = { address }
-
-  const connectSuccessfull = result => {
-    connected = true
-    successCallback(result)
-  }
-
-  bluetoothle.connect(connectSuccessfull, errorCallback, params)
-
-  setTimeout(() => {
-    console.log('connected: ', connected)
-    if (!connected) errorCallback('Connection with garage was not established')
-  }, MAX_SCANNING_DURATION)
+function requestPermission() {
+  console.log('requesting for permission')
+  return new Promise((resolve, reject) => bluetoothle.requestPermission(resolve, reject))
 }
 
-export function close(address, success, error) {
-  const params = { address }
-  const onDisconnectSuccessfull = () => {
-    console.log('Closing currenct connection')
-    bluetoothle.close(success, error, params)
-  }
-  const onDisconnectUnsuccessfull = result => {
-    console.log('disconnect not successfull ', result)
-    error(result)
-  }
-
-  bluetoothle.disconnect(onDisconnectSuccessfull, onDisconnectUnsuccessfull, params)
+function isScanning() {
+  return new Promise((resolve, reject) => {
+    const callback = result => result.isScanning ? reject(result) : resolve(result)
+    bluetoothle.isScanning(callback)
+  })
 }
 
+function startScan(name) { // use when you know the device you are looking for
+  console.log('scanning for name', name)
+  return new Promise((resolve, reject) => {
+    const onDeviceFound = device => device.name && (device.name === name || device.name === 'r' + name) ? resolve(device) : console.log('found', device, 'but i am looking for ', name)
 
-export function reconnect(address, reconnectSuccess, reconnectError) {
+    const params = {
+      allowDuplicates: true, // iOS
+      scanMode:        bluetoothle.SCAN_MODE_LOW_LATENCY, // hight power consumtion - set timeout
+      matchMode:       bluetoothle.MATCH_MODE_STICKY, // needs strong signal to be seen
+      matchNum:        bluetoothle.MATCH_NUM_FEW_ADVERTISEMENT,
+      callbackType:    bluetoothle.CALLBACK_TYPE_ALL_MATCHES
+    }
+
+    bluetoothle.startScan(onDeviceFound, reject, params)
+    setTimeout(reject, MAX_SCANNING_DURATION)
+  })
+}
+
+export function stopScan() {
+  console.log('scan stop')
+  return new Promise((resolve, reject) => bluetoothle.stopScan(resolve, reject))
+}
+
+function wasConnected(address) {
+  console.log('checking if was connected')
+  return new Promise((resolve, reject) => {
+    const callback = result => {
+      console.log(result.wasConnected ? 'resolveing' : 'rejecting')
+      result.wasConnected ? resolve(address) : reject(address)
+    }
+
+    bluetoothle.wasConnected(callback, reject, { address })
+  })
+}
+
+function connectBLE(address) {
+  console.log('connecting to device:', address)
+  return new Promise((resolve, reject) => {
+    bluetoothle.connect(resolve, reject, { address })
+    setTimeout(reject, MAX_SCANNING_DURATION)
+  })
+}
+
+function reconnect(address) {
   console.log('recconecting to device: ', address)
-  const params = { address }
-  const recconectErrorHandle = err => {
-    if (err.error === 'isNotDisconnected') {
-      console.log('err device is not disconected, disconecting and trying again')
-      const onCloseSuccessFull = response => {
-        console.log('closed sucessfully, trying to reconect.', response)
-        reconnect(address, reconnectSuccess, reconnectError)
-      }
-      close(address, onCloseSuccessFull, reconnectError)
-    } else if (err.error === 'neverConnected') {
-      connect(address, reconnectSuccess, reconnectError)
-    } else {
-      reconnectError(err)
-    }
-  }
-
-  bluetoothle.reconnect(reconnectSuccess, recconectErrorHandle, params)
+  return new Promise((resolve, reject) => bluetoothle.reconnect(resolve, reject, { address }))
 }
 
-export function discover(address, discoverSuccess, discoverError) {
-  console.log('discover called with address: ', address)
-  const params = { address }
-  const onDiscoverSuccessfull = result => {
-    console.log('discover successfull', result)
-
-    discoverSuccess(result)
-  }
-  const onDiscoverUnsuccessfull = result => {
-    console.log('discover did not succeed', result)
-    const closeSuccessfull = res => console.log('Close successfull afther Failed discover', res)
-
-    discoverError(result)
-    close(address, closeSuccessfull, discoverError)// device will stay discovecerd until close => close
-  }
-
-  bluetoothle.discover(onDiscoverSuccessfull, onDiscoverUnsuccessfull, params)
+function discover(address) {
+  console.log('discovering device', address)
+  return new Promise((resolve, reject) => bluetoothle.discover(resolve, reject, { address }))
 }
 
-export function write(address, service, characteristic, value, writeSuccess, writeError) {
-  const params = { address
-                 , service
-                 , characteristic
-                 , value
-                 }
-  console.log('writing to BLE device', params)
-  bluetoothle.write(writeSuccess, writeError, params)
+function writeBLE(address, service, characteristic, value) {
+  console.log('writing', value)
+  return new Promise((resolve, reject) => bluetoothle.write(resolve, reject, { address, service, characteristic, value }))
 }
 
-export function PacketToEncodedString(input) {
+function packetToEncodedString(input) {
   return bluetoothle.bytesToEncodedString(input.map(value => parseInt(value, 16)))
 }
 
-export function stringToEncodedString(input) {
+function stringToEncodedString(input) {
   return bluetoothle.bytesToEncodedString(bluetoothle.stringToBytes(input))
+}
+
+function disconnect(address) {
+  console.log('disconnecting from', address)
+  return new Promise((resolve, reject) => bluetoothle.disconnect(resolve, reject, { address }))
+}
+
+function closeBLE(address) {
+  console.log('closing connection')
+  return new Promise((resolve, reject) => bluetoothle.close(resolve, reject, { address }))
+}
+
+function reconnectErrorHandler(address, error) {
+  console.log('recconect error handling', address, error)
+  return new Promise((resolve, reject) => {
+    if (error.error === 'isNotDisconnected') {
+      closeBLE(address)
+      .then(() => reconnect(address))
+      .catch(reject)
+    } else if (error.error === 'neverConnected') {
+      connectBLE(address)
+      .then(resolve)
+      .catch(reject)
+    } else {
+      reject(error)
+    }
+  })
+}
+
+
+export function intialize() {
+  console.log('STEP 1: INITIALIZE')
+  return new Promise((resolve, reject) => {
+    isInitialized()
+    .catch(initializeBLE)
+    .then(isEnabled)
+    .catch(reject) // enable
+    .then(hasPermission)
+    .catch(requestPermission)
+    .then(resolve)
+    .catch(reject)
+  })
+}
+
+export function scan(name) {
+  console.log('STEP 2: SCAN')
+  return new Promise((resolve, reject) => {
+    startScan(name)
+    .catch(reject)
+    .then(resolve)
+  })
+}
+
+export function connect(address) {
+  console.log('STEP 3: CONNECT', address)
+  return new Promise((resolve, reject) => {
+    isScanning()
+    .catch(stopScan)
+    .then(() => connectBLE(address))
+    .catch(() => reconnect(address))
+    .catch(error => reconnectErrorHandler(address, error))
+    .then(result => discover(result.address))
+    .then(resolve)
+    .catch(reject)
+  })
+}
+
+export function write(address, repeater, success) {
+  console.log('STEP 4: WRITE', address)
+  return new Promise((resolve, reject) => {
+    const delayedResolve = () => {
+      success()
+      setTimeout(resolve, repeater ? 5000 : 1000)
+    }
+
+    writeBLE(address, UNIT_SERVICE, UNIT_CHARACTERISTICS_PASSWORD, stringToEncodedString(UNIT_PASSWORD))
+    .then(() => writeBLE(address, UNIT_SERVICE, UNIT_CHARACTERISTICS_OPEN_GATE, packetToEncodedString(UNIT_OPEN_SEQUENCE)))
+    .then(delayedResolve)
+    .catch(reject)
+  })
+}
+
+export function close(address) {
+  console.log('STEP 5: DISCONNECT')
+  return new Promise((resolve, reject) => {
+    disconnect(address)
+    .then(result => closeBLE(result.address))
+    .then(resolve)
+    .catch(reject)
+  })
+}
+
+export function scanUnlimited(onResult, error) { // use when you just want to see nearby devices
+  console.log('scanning unlimitedly')
+  const params = {
+    allowDuplicates: true, // iOS
+    scanMode:        bluetoothle.SCAN_MODE_LOW_POWER, // lowe power consumtion
+    matchMode:       bluetoothle.MATCH_MODE_AGGRESSIVE, // needs lower signal to be reported as visible
+    matchNum:        bluetoothle.MATCH_NUM_FEW_ADVERTISEMENT,
+    callbackType:    bluetoothle.CALLBACK_TYPE_ALL_MATCHES
+  }
+
+  bluetoothle.startScan(onResult, error, params)
 }

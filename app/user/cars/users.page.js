@@ -6,6 +6,8 @@ import moment                          from 'moment'
 import PageBase     from '../../_shared/containers/pageBase/PageBase'
 import Table        from '../../_shared/components/table/Table'
 import RoundButton  from '../../_shared/components/buttons/RoundButton'
+import InvitationReminderButton from '../../_shared/components/buttons/InvitationReminderButton'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
 import * as carUserActions from '../../_shared/actions/carUsers.actions'
 import { setCar }          from '../../_shared/actions/inviteUser.actions'
@@ -54,7 +56,8 @@ class CarUsersPage extends Component {
       let returnable = user.user
       const destroyClick = () => { actions.destroyCarUser(this.props.params.id, user.user.id ) }
       returnable.spoiler = <div className={styles.float}>
-        <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])}/>
+        <InvitationReminderButton userId={user.user.id} carId={parseInt(this.props.params.id, 10)} />
+        <LabeledRoundButton label={t(['clientUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} />
       </div>
       return returnable
     }
@@ -66,7 +69,7 @@ class CarUsersPage extends Component {
       return( <div className={styles.spoiler}>
                 <span className={car_user.admin ? styles.boldText : styles.inactiveText}  onClick={adminClick}>{t(['clientUsers','admin'])}</span>
                 <div className={styles.float}>
-                  <RoundButton content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}/>
+                  <LabeledRoundButton label={t(['clientUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['clientUsers','removeClientUser'])} state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'} />
                 </div>
               </div>
       )

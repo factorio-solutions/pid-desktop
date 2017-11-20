@@ -59,6 +59,13 @@ class NewReservationOverviewPage extends Component {
       <PageBase>
         <Form onSubmit={formOnSubmit} onBack={onBack} submitable={true}>
           <h2>{t(['newReservationOverview', 'overview'])}</h2>
+          {state.user && state.user.id === -1 && <div>
+            <h4>{t(['newReservation', 'selectedUser'])}</h4>
+            <span className={styles.label}>{t(['newReservation', 'hostsName'])}: </span><span>{state.name.value}</span>
+            <span className={styles.label}>{t(['newReservation', 'hostsPhone'])}: </span><span>{state.phone.value}</span>
+            <span className={styles.label}>{t(['newReservation', 'hostsEmail'])}: </span><span>{state.email.value}</span>
+          </div>}
+
           <div>
             <h4>{t(['newReservationOverview', 'selectedPlace'])}</h4>
             <div>{placeLabel()}</div>

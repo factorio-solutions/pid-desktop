@@ -26,7 +26,7 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
 }
 `
 
-export const GET_USER =`query Query($id: Id!) {
+export const GET_USER = `query Query($id: Id!) {
   user(id: $id) {
     reservable_cars{
       id
@@ -66,6 +66,20 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
           }
         }
       }
+      free_places(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id) {
+        id
+        label
+      }
+    }
+  }
+}
+`
+
+// will download free places only because garage was downloaded beforehand
+export const GET_GARAGE_DETAILS_LIGHT = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id, $reservation_id: Id) {
+  garage(id: $id) {
+    floors {
+      id
       free_places(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id) {
         id
         label

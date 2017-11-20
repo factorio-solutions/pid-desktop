@@ -94,7 +94,7 @@ import MarketingPage from './marketing/marketing.page'
 import TestingPage from './testing/testing.page'
 
 
-export const AVAILABLE_LANGUAGES = ['en', 'cs', 'pl', 'de']
+export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
 
 
 export default function createRoutes() {
@@ -176,18 +176,21 @@ export default function createRoutes() {
       <Route path=":id/admin/activityLog" component={ActivityLogPage} />
 
       <Route path="marketing/:short_name" component={MarketingPage} />
+
+      {/* Testing page for not production environments*/}
+      {process.env.NODE_ENV !== 'production' && <Route path="testing" component={TestingPage} />}
     </Route>
   )
 
   return (
     <Route path="/" component={App}>
-      <IndexRedirect to={AVAILABLE_LANGUAGES[0] + '/'} />
+      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${localStorage.jwt ? 'dashboard/' : ''}`} />
       {AVAILABLE_LANGUAGES.map(lang => (
         <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
           {subRoutes}
         </Route>
       ))}
+
     </Route>
   )
-  // <Route path="/testing" component={TestingPage}/>
 }

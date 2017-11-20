@@ -2,24 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Park It Direct</title>
+    <title>Park it direct</title>
+    <!-- favicon -->
     <link rel="shortcut icon" href="public/favicon.ico" type="image/x-icon" />
+    <!-- Roboto condensed font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin-ext" />
+    <!-- font awesome icons -->
     <link rel="stylesheet" href="./public/libs/font-awesome/css/font-awesome.min.css" />
+    <!-- custom icons of Park-it-direct -->
     <link rel="stylesheet" href="./public/libs/pid-font/css/pid-font.css" />
-    <!-- Styles for Carousel component -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.4.0/css/swiper.min.css">
-    <!-- Whole app stylesheet <link rel="stylesheet" href="../dist/style.css"/> -->
-    <!-- Intercom scripts -->
-    <script>
-      (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/gjfjce4s';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
-    </script>
+    <!-- Styles separated by webpack -->
+    <link rel="stylesheet" href="./public/styles.css" />
   </head>
+
   <body>
     <div id="root"></div>
 
     <!-- Google maps API -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRQRHxCteBsZ7FyD5_ldp38UW7uCveJy4"></script>
+    <!-- Intercom scripts -->
+    <script type="text/javascript" src="./public/libs/intercom/intercom.js"></script>
+    <!-- Load shared code separated by webpack - must be loaded before bundle.js -->
+    <script type="text/javascript" src="./public/shared.js"></script>
     <!-- Bundled javascript of this app -->
     <script type="text/javascript" src="./public/bundle.js"></script>
   </body>

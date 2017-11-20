@@ -53,7 +53,7 @@ class GaragePage extends Component {
         const contract = state.garage.contracts
           .filter(contract => moment(state.time).isBetween(moment(contract.from), moment(contract.to)))
           .find((contract) => { return contract.places.find(p => p.id === place.id) !== undefined })
-        const reservation = place.reservations.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
+        const reservation = place.reservations[0] //.find(reservation => moment(state.time).isBetween(moment(reservation.begins_at), moment(reservation.ends_at)))
         const calculatePrice = price => valueAddedTax(price, state.garage.dic ? state.garage.vat : 0)
 
         switch (state.selected) {
