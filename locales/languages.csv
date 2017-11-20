@@ -19,7 +19,7 @@ addresses.line1Placeholder,Martense Avenue 526,Pražská 125,Główna 25,Alexand
 addresses.line2Placeholder,Apt. 13,Byt 13,Mieszkanie nr 13,Wohnung Nr. 13
 addresses.cityPlaceholder,Pittsburgh,Praha,Warszawa,Berlin
 addresses.postalCodePlaceholder,7666,11000,00-001,10178
-addresses.statePlaceholder,Pennsylvania,-,,
+addresses.statePlaceholder,Pennsylvania,-,PL: addresses.statePlaceholder,DE: addresses.statePlaceholder
 addresses.countryPlaceholder,USA,Česká republika,Polska,Deutschland
 login_page.please,Please log in or,"Prosím, přihlaste se, nebo si",Zaloguj się lub,Melden Sie sich bitte an oder
 login_page.Sign-Up,register,vytvořte účet,Załóż konto,registrieren Sie sich
@@ -42,8 +42,8 @@ signup_page.minimumLength,Minimum length is,Minimální délka je,Długość min
 signup_page.noMatching,Password does not match,Heslo se neshoduje,Hasło się nie zgadza,Passwort und Bestätigungspasswort stimmen nicht überein.
 signup_page.userNotCreated,"User not created, may already exist.","Uživatel nebyl vytvořen, možná již existuje","Nie udało się wytworzyć konta, być może już istnieje","Der Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon."
 signup_page.loading,Loading,Načítám,Ładowanie,Laden
-pageBase.noFileSelected,No file selected,,,Keine Datei ausgewählt
-pageBase.couldNotUpload,Could not upload,Nepodařilo se nahrát soubor.,,Fehler beim Hochladen.
+pageBase.noFileSelected,No file selected,CS: pageBase.noFileSelected,PL: pageBase.noFileSelected,Keine Datei ausgewählt
+pageBase.couldNotUpload,Could not upload,Nepodařilo se nahrát soubor.,PL: pageBase.couldNotUpload,Fehler beim Hochladen.
 pageBase.Dashboard,Dashboard,Nástěnka,Tablica,Pinnwand
 pageBase.Issues,Issues,Problémy,Problemy,Probleme
 pageBase.Admin,Admin,Admin,Admin,Administrator
@@ -116,7 +116,7 @@ Unter „Letzte Aktivität“ sehen Sie die letzten Anpassungen des Parkhauses u
 Unter „Aktueller Zustand“ sehen Sie eine kurze Statistik zu den freien und belegten Stellplätzen.
 In der Finanzübersicht sehen Sie aktuelle Finanzstatistiken.
 "
-pageBase.issuesHint,TODO: Issues hint,,,
+pageBase.issuesHint,TODO: Issues hint,CS: pageBase.issuesHint,PL: pageBase.issuesHint,DE: pageBase.issuesHint
 pageBase.analyticsHint,Here you can check various statistics.,Zde se můžete podívat na různé statistiky.,Tutaj możesz sprawdzić różne statystyki.,Hier können Sie verschiedene Statistiken überprüfen.
 pageBase.invoicesHint,"Here is a list of issued invoices.
 
@@ -126,8 +126,8 @@ V levém horním rohu si můžete faktury vyfiltrovat podle klienta. V pravém h
 
 Links oben können Sie die Rechnungen nach Kunden filtern. Rechts oben können Sie zwischen der Anzeige aktueller Rechnungen und dem gesamten Verlauf umschalten."
 pageBase.newContractHint,"Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!","Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)"
-pageBase.ReservationButtonHint,TODO: reservation button hint,,,
-pageBase.mrParkitIntegrationHint,TODO: mrParkitIntegration hint,,,
+pageBase.ReservationButtonHint,TODO: reservation button hint,CS: pageBase.ReservationButtonHint,PL: pageBase.ReservationButtonHint,DE: pageBase.ReservationButtonHint
+pageBase.mrParkitIntegrationHint,TODO: mrParkitIntegration hint,CS: pageBase.mrParkitIntegrationHint,PL: pageBase.mrParkitIntegrationHint,DE: pageBase.mrParkitIntegrationHint
 pageBase.goPublicHint,"Here you can choose parking spots you want to offer to the public. You can also set the price for parking spots and choose from three options for calculating the parking price. 
 
 The methods for calculating price are: 
@@ -169,9 +169,9 @@ Im Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen 
 
 Im Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.
 "
-pageBase.financePaypalHint,TODO: Paypal hint,,,
-pageBase.financeCSOBHint,TODO: CSOB hint,,,
-pageBase.pidSettingsHint,TODO: pidSettings Hint,,,
+pageBase.financePaypalHint,TODO: Paypal hint,CS: pageBase.financePaypalHint,PL: pageBase.financePaypalHint,DE: pageBase.financePaypalHint
+pageBase.financeCSOBHint,TODO: CSOB hint,CS: pageBase.financeCSOBHint,PL: pageBase.financeCSOBHint,DE: pageBase.financeCSOBHint
+pageBase.pidSettingsHint,TODO: pidSettings Hint,CS: pageBase.pidSettingsHint,PL: pageBase.pidSettingsHint,DE: pageBase.pidSettingsHint
 pageBase.activityLogHint,"Here you have records of all activities in the Park-it-direct system, including what was done, by whom, and when.","Zde najdete záznam veškerých aktivit v systému Park-it-direct, včetně toho, o jakou akci se jednalo a kdo a kdy ji provedl.","Tutaj znajdziesz dziennik wszystkich aktywności w systemie Park-it-direct, włącznie z tym, o jaką akcję chodziło oraz kto i kiedy jej dokonał.","Hier finden Sie ein Verzeichnis aller Aktivitäten im Park-it-direct-System mit Angaben zum Charakter der Aktion, zum Urheber und zum Zeitpunkt."
 pageBase.reservationsHint,Here you have a list of all your reservations: those you made as well as those others made for your garages.,"Zde najdete všechny Vaše rezervace - jak Vámi vytvořené, tak rezervace ostatních do Vašich garáží.","Tutaj znajdziesz wszystkie swoje rezerwacje - zarówno te wytworzone przez Ciebie, jak i rezerwacje wytworzone przez innych w Twoich garażach.","Hier finden Sie eine Liste aller Reservierungen – Ihre eigenen Reservierungen und die Reservierungen, die andere Personen für Ihr Parkhaus vorgenommen haben."
 pageBase.newReservationHint,"You can make a new reservation here. Depending on your rights, please select user, garage, client and vehicle. Then enter dates and parking place, if applicable. Voilà.","Zde můžete vytvořit novou rezervaci. V závislosti na Vašich právech vyberte postupně uživatele, garáž, klienta a vozidlo. Poté nastavte datum a eventuelně parkovací místo. Voilà.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!","Hier können Sie eine neue Reservierung erstellen. Wählen Sie zuerst den Benutzer und das Parkhaus aus, anschließend die Daten und schließlich den Stellplatz. Voilà."
@@ -237,12 +237,12 @@ In der Spalte „Pro Monat insgesamt“ werden die monatlichen Parkhausgebühren
 In der Spalte „Rechnungen“ wird der Rechnungsstatus angezeigt – wenn alle Rechnungen beglichen sind = grün; wenn eine Rechnung überfällig ist = rot.
 
 Klicken Sie auf einen Kunden, um weitere Details (z.B Kontaktperson oder eine Liste der abgeschlossenen Verträge) anzuzeigen. Mit den Schaltflächen rechts können Sie neue Verträge erstellen, Rechnungen kontrollieren, die Kundendaten anpassen oder alle Benutzer anzeigen, die zum Kunden gehören. In dieser Darstellung können Sie auch auf die einzelnen Verträge klicken und diese anpassen."
-pageBase.newClientHint,"Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",,"Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.","Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben."
+pageBase.newClientHint,"Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",CS: pageBase.newClientHint,"Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.","Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben."
 pageBase.clientUsersHint,"This section lets you manage users of a particular client account. Select a user to view and set up user rights. You can also invite new users to this selected client account. Invitations sent and waiting for confirmation are shown in the ""Pending invitations"" section below.","Zde můžete spravovat uživatele konkrétního klientského účtu a také zvát k tomuto účtu nové uživatele. U každéhu uživatele můžete zobrazit a nastavit jeho práva. Pozvánky, které jste zaslali a čekají na potvrzení jsou uvedeny v části ""Čekající pozvánky"" v záložce ""Uživatelé"".","Ta sekcja umożliwia zarządzanie użytkownikami poszczególnego konta klienta. Wybierając użytkownika możesz zobaczyć i ustawić uprawnienia użytkownika. Możesz również zaprosić nowych użytkowników do wybranego konta klienta. Wysłane zaproszenia, które czekają na odpowiedź znajdziesz w sekcji ""Czekające zaproszenia"".","In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt."
 pageBase.settingsHint,In this section you can set your desired language and switch on and off these help boxes throughout the application.,Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.,Tutaj możesz ustawić język aplikacji oraz włączyć lub wyłączyć okna pomocy w całej aplikacji.,In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.
 pageBase.usersHint,"Here you have a list of all known users. Select a user to see client accounts membership and their role therein. The detailed view also shows which vehicles are assigned to that user, which garages they have access to, and their role therein.","Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí, ve kterých klientských účtech je členem a jaké v nich má role. Dále se v detailu zobrazí, jaká má přiřazená auta, kterých garáží je členem a jaké v nich má role.","Tutaj znajdziesz listę wszystkich użytkowników. Po wybraniu użytkownika zobaczysz, członkiem których kont klienta jest oraz jakie ma w nich role. W szczegółach ukażą się również przyporządkowane do niego auta, garaże których jest członkiem oraz jego rola w nich. ","Hier sehen Sie eine Liste aller Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat."
 pageBase.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani użytkownicy,Alle bekannten Benutzer
-pageBase.editClientHint,TODO: edit client hint: Here you can change information about this client.,,,
+pageBase.editClientHint,TODO: edit client hint: Here you can change information about this client.,CS: pageBase.editClientHint,PL: pageBase.editClientHint,DE: pageBase.editClientHint
 pageBase.notificationsHint,This section displays all notifications that need to be resolved.,"Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.","Tutaj ukazują się wszystkie wiadomości, na które musisz odpowiedzieć.","Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen."
 pageBase.inviteUsersHint,"Invite a new user to connect with the selected Client Account. Please provide an email address and send the invitation. After the user accepts the invitation, he or she automatically becomes a member of the selected Client Account.",Pozvěte do klientského účtu nového uživatele. Zadejte jeho e-mailovou adresu a odešlete pozvánku. Po přijetí pozvánky se uživatel automaticky připojí k vybranému klientskému účtu.,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.","Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. sie automatisch Mitglied des ausgewählten Kundenkontos."
 pageBase.addFeaturesHint,Here you can add functionality to your system. TODO: add features hint,Zde můžete přidat funkce do tvého systému.,Tutaj możesz dodaj funkcje do swojego systemu.,Hier können Sie Funktionen zum System hinzufügen.
@@ -296,7 +296,7 @@ Rezervace: jednotlivé rezervace jsou odlišeny barvou
 Ceny: jednotlivá nastavení ceny jsou odlišena barvou
 Auta: jednotlivá auta jsou odlišena barvou
 
-V pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",,"Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
+V pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",PL: pageBase.EditGarageHint,"Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
 
 Kunden: Die einzelnen Kunden werden in verschiedenen Farben dargestellt.
 Vereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.
@@ -312,7 +312,7 @@ pageBase.cardView,card view,Náhled karty,Widok karty,Kartenansicht
 pageBase.marketing,Marketing,Marketing,Marketing,Marketing
 pageBase.newMarketing,New marketing,Nový marketing,Nowy marketing,Neues Marketing
 pageBase.editMarketing,Edit marketing,Upravit marketing,Edytować marketing,Marketing ändern
-pageBase.garageMarketingHint,"Here you can activate/deactivate and change settings for each module. For more information click on the ""Settings"" button for individual modules.","Zde můžete aktivovat/deaktivovat a spravovat jednotlivé moduly. Více informací se dozvíte po kliknutí na tlačítko ""Nastavení"" u jednotlivých modulů.",Tutaj możesz aktywować/dezaktywować poszczególne moduły oraz zarządzać nimi. Więcej informacji uzyskasz po kliknięciu na „Ustawienia” przy poszczególnych modułach. ,"Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten. Klicken Sie auf „Einstellungen“ bei den einzelnen Modulen, um weitere Informationen anzuzeigen."
+pageBase.garageMarketingHint,"Here you can activate/deactivate and change settings for each module. For more information click on the ""Settings"" button for individual modules.","Zde můžete aktivovat/deaktivovat a spravovat jednotlivé moduly. Více informací se dozvíte po kliknutí na tlačítko ""Nastavení"" u jednotlivých modulů.","Tutaj możesz aktywować/dezaktywować poszczególne moduły oraz zarządzać nimi. Więcej informacji uzyskasz po kliknięciu na „Ustawienia” przy poszczególnych modułach. ","Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten. Klicken Sie auf „Einstellungen“ bei den einzelnen Modulen, um weitere Informationen anzuzeigen."
 pageBase.garageNewMarketingHint,Here you can set up new marketing. TODO: Change this,Zde můžete nastavit nový marketing.,Tutaj możesz ustawić nowy marketing.,Hier können Sie ein neues Marketing einrichten.
 pageBase.garageEditMarketingHint,"This module is for setting up the website where you can promote your garage and accept parking reservations.
 
@@ -347,8 +347,8 @@ pageBase.reservationOverviewHint,TODO: new reservation overview hint: Here you c
 pageBase.editInvoiceHint,"TODO: edit invoice hint: Afther clicking OK, a new invoice will be created with corrected data.",,,
 pageBase.editContractHint,"TODO: edit agreement hint: Here you can select an agreement and edit it to change parking spots, duration or price.",,"Tutaj możesz wybrać umowę i zmienić miejsca parkingowe, czas trwania rezerwacji lub cenę.",
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht.
-pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,,
-pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,,
+pageBase.unredNotifications.few,EN: pageBase.unredNotifications.few,Máte %(count)s nepřečtená upozornění,PL: pageBase.unredNotifications.few,DE: pageBase.unredNotifications.few
+pageBase.unredNotifications.many,EN: pageBase.unredNotifications.many,Máte %(count)s nepřečteného upozornění,PL: pageBase.unredNotifications.many,DE: pageBase.unredNotifications.many
 pageBase.unredNotifications.other,You have %(count)s unread notifications,Máte %(count)s nepřečtených upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesene Nachrichten.
 pageBase.analytics,Analytics,Analýza,Analiza,Analyse
 pageBase.garageTurnover,Garage turnover,Obrat garáže,Obroty garażu,Parkhausumsatz
@@ -383,9 +383,9 @@ V pravém horním rohu lze nastavit přesné rozpětí zobrazeného období.","
 Tutaj możesz zobaczyć statystykę rotacji miejsc – średnią, maksymalną, minimalną i ogólną rotację. Wszystko podzielone jest według tego, czy miejsce jest wynajmowane krótko- czy długoterminowo. W lewym górnym rogu możesz wybrać widok na heatmapie, gdzie wartości są pokazywane poprzez spektrum kolorów: najniższe wartości są żółte, najwyższe – czerwone. W prawym górnym rogu możesz ustawić dokładną rozpiętość pokazywanego okresu.
 ","Hier werden die Umsatzstatistiken für Stellplätze angezeigt – Durchschnitt, maximaler, minimaler und Gesamtumsatz, jeweils für kurzfristige und Langzeitvermietungen. Oben links kann eine Heatmap angezeigt werden, in der die Werte farbig dargestellt werden (niedrigste Werte in Gelb, höchste Werte in Rot).
 Oben rechts kann der gewünschte Anzeigezeitraum eingestellt werden."
-pageBase.analyticspaymentsHint,TODO: payments Hint,,,
-pageBase.analyticsgatesHint,TODO: gates Hint,,,
-pageBase.flexiplaceHint,"I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.","Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",,
+pageBase.analyticspaymentsHint,TODO: payments Hint,CS: pageBase.analyticspaymentsHint,PL: pageBase.analyticspaymentsHint,DE: pageBase.analyticspaymentsHint
+pageBase.analyticsgatesHint,TODO: gates Hint,CS: pageBase.analyticsgatesHint,PL: pageBase.analyticsgatesHint,DE: pageBase.analyticsgatesHint
+pageBase.flexiplaceHint,"I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.","Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",PL: pageBase.flexiplaceHint,DE: pageBase.flexiplaceHint
 newReservation.selectGarage,Select garage *,Vyberte garáž *,Wybierz garaż *,Wählen Sie ein Parkhaus aus *
 newReservation.selectUser,Select user *,Vyberte uživatele *,Wybierz użytkownika *,Wählen Sie einen Benutzer aus *
 newReservation.selectClient,Select client,Vyberte klienta,Wybierz klienta,Wählen Sie einen Kunden aus *
@@ -417,11 +417,11 @@ newReservation.paymentUnsucessfull,Payment was canceled and not completed.,Platb
 newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu platnosti ...,Kontroluję płatność...,Validierung läuft …
 newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
-newReservation.newHost,New guest,Nový host,,
-newReservation.hostsName,Guest name,Jméno hosta,,
-newReservation.hostsPhone,Guest phone,Hostův telefon,,
-newReservation.hostsEmail,Guest email,Hostův email,,
-newReservation.selectedUser,User,Uživatel,,
+newReservation.newHost,New guest,Nový host,PL: newReservation.newHost,DE: newReservation.newHost
+newReservation.hostsName,Guest name,Jméno hosta,PL: newReservation.hostsName,DE: newReservation.hostsName
+newReservation.hostsPhone,Guest phone,Hostův telefon,PL: newReservation.hostsPhone,DE: newReservation.hostsPhone
+newReservation.hostsEmail,Guest email,Hostův email,PL: newReservation.hostsEmail,DE: newReservation.hostsEmail
+newReservation.selectedUser,User,Uživatel,PL: newReservation.selectedUser,DE: newReservation.selectedUser
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -442,7 +442,7 @@ clientUsers.name,username,uživatelské jméno,nazwa użytkownika,Benutzername
 clientUsers.email,email,e-mail,e-mail,E-Mail-Adresse
 clientUsers.memberSince,member since,členem od,członek od,Mitglied seit
 clientUsers.phone,phone,telefon,telefon,Telefon
-clientUsers.contact_person,contact person,kontaktní osoba,,Ansprechpartner
+clientUsers.contact_person,contact person,kontaktní osoba,PL: clientUsers.contact_person,Ansprechpartner
 clientUsers.admin,is admin,je admin,jest adminem,ist Administrator
 clientUsers.secretary,secretary,Sekretář/ka,Sekretarz/Sekretarka,Sekretär/in
 clientUsers.internal,internal,Interní,Wewnętrzny,Intern

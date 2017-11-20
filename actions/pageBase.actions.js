@@ -1,4 +1,8 @@
+import React from 'react'
 import translate from 'counterpart'
+
+import ConfirmModal from '../components/modal/ConfirmModal'
+
 import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
@@ -98,6 +102,18 @@ export function setHint(hint, href) {
          }
 }
 
+
+export function confirm(question, callback) {
+  return dispatch => {
+    const onBack = () => dispatch(setCustomModal())
+    const onConfirm = () => {
+      onBack()
+      callback()
+    }
+    dispatch(setCustomModal(<ConfirmModal question={question} onConfirm={onConfirm} onBack={onBack} />))
+  }
+}
+
 export function setGarages(value) {
   return (dispatch, getState) => {
     dispatch({ type: PAGE_BASE_SET_GARAGES
@@ -140,14 +156,6 @@ export function setIsGarageAdmin(value) {
     dispatch({ type: PAGE_BASE_SET_IS_GARAGE_ADMIN
              , value
              })
-
-    // const hash = window.location.hash
-    // if (contains(hash, 'admin')){
-    //   dispatch(adminClick())
-    // }
-    // if (contains(hash, 'analytics')){
-    //   dispatch(analyticsClick())
-    // }
   }
 }
 
@@ -536,6 +544,17 @@ export function toAdmin() {
           breadcrumbs.push({label: t(['pageBase','goPublic']), route: `/${garage}/admin/modules/goPublic`})
           secondarySelected = 'modules'
           hint = t(['pageBase','goPublicHint'])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'flexiplace')):
+        if (state.isGarageAdmin) {
+          breadcrumbs.push({label: t(['pageBase','Modules']), route: `/${garage}/admin/modules`})
+          breadcrumbs.push({label: t(['pageBase','flexiplace']), route: `/${garage}/admin/modules/flexiplace`})
+          secondarySelected = 'modules'
+          hint = t(['pageBase','flexiplaceHint'])
           hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/dashboard') // not accessible for this user

@@ -1,24 +1,25 @@
 import {
-  SET_RESERVATIONS,
+  // SET_RESERVATIONS,
   TOGGLE_RESERVATIONS_PAST
 }  from '../actions/reservations.actions'
 
-const defaultState =  { reservations: []
-                      , past:         false
-                      }
+const defaultState = {
+  // reservations: [],
+  past: false
+}
 
-export default function reservations (state = defaultState, action) {
+export default function reservations(state = defaultState, action) {
   switch (action.type) {
 
-    case SET_RESERVATIONS:
-    return  { ...state
-            , reservations: action.value
-            }
+    // case SET_RESERVATIONS:
+    //   return { ...state,
+    //     reservations: action.value
+    //   }
 
     case TOGGLE_RESERVATIONS_PAST:
-    return  { ...state
-            , past: !state.past
-            }
+      return { ...state,
+        past: !state.past
+      }
 
     default:
       return state

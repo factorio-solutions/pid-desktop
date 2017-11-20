@@ -14,6 +14,7 @@ import {
   NEW_RESERVATION_SET_RECURRING_RULE,
   NEW_RESERVATION_SHOW_RECURRING,
   NEW_RESERVATION_SET_USE_RECURRING,
+  NEW_RESERVATION_SET_RECURRING_RESERVATION_ID,
 
   NEW_RESERVATION_CAR_ID,
   NEW_RESERVATION_CAR_LICENCE_PLATE,
@@ -33,7 +34,8 @@ import {
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
 
-const defaultState = { user:           undefined, // id of selected user reservation is for
+const defaultState = {
+  user:           undefined, // id of selected user reservation is for
   availableUsers: [], // array of other available users
   reservation:    undefined, // object with reservation to be edited
 
@@ -41,10 +43,11 @@ const defaultState = { user:           undefined, // id of selected user reserva
   phone: { value: '', valid: false },
   email: { value: '', valid: false },
 
-  client_id:     undefined, // currently selected client
-  recurringRule: undefined, // rule in string
-  showRecurring: false, // show recurring modal
-  useRecurring:  false, // use recurring
+  client_id:                undefined, // currently selected client
+  recurringRule:            undefined, // rule in string
+  showRecurring:            false, // show recurring modal
+  useRecurring:             false, // use recurring
+  recurring_reservation_id: undefined,
 
   car_id:          undefined, // selected car id
   carLicencePlate: '', // in case there are no available cars
@@ -125,6 +128,12 @@ export default function newReservation(state = defaultState, action) {
       }
     }
 
+    case NEW_RESERVATION_SET_RECURRING_RESERVATION_ID: {
+      return { ...state,
+        recurring_reservation_id: action.value
+      }
+    }
+
     case NEW_RESERVATION_CAR_ID:
       return { ...state,
         car_id: action.value
@@ -146,8 +155,8 @@ export default function newReservation(state = defaultState, action) {
       return { ...state,
         from:          action.value,
         to:            action.to || state.to,
-        recurringRule: !state.recurringRule ? undefined : { ...state.recurringRule,
-          starts: moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)
+        recurringRule: { ...state.recurringRule,
+          starts: moment(action.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)
         }
       }
 

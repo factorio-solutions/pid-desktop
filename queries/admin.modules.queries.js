@@ -1,7 +1,8 @@
 export const GET_GARAGE_MODULES = `query GetGarage($id: Id!){
   garage(id: $id){
-  	id
+    id
     is_public
+    flexiplace
     marketing{
       id
       short_name
@@ -24,6 +25,7 @@ export const UPDATE_GARAGE = `mutation UpdateGarage($id: Id!, $garage: GarageInp
   update_garage(id: $id, garage: $garage) {
     id
     is_public
+    flexiplace
   }
 }
 `
