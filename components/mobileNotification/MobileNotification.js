@@ -11,19 +11,18 @@ import { t } from '../../modules/localization/localization'
 
 
 export class MobileNotification extends Component {
-  static propTypes = { notification: PropTypes.object
-                     , actions: PropTypes.object
-                     }
+  static propTypes = {
+    notification: PropTypes.object,
+    actions:      PropTypes.object
+  }
 
   returnMessage(message) {
     const parts = message.split(';')
-    return t(['notifications', parts[0]], { arg1: parts[1] || '', arg2: parts[2] || '' })
+    return t([ 'notifications', parts[0] ], { arg1: parts[1] || '', arg2: parts[2] || '' })
   }
 
   render() {
     const { notification, actions } = this.props
-    console.log(notification, actions)
-
 
     return (
       <div className={styles.notification}>

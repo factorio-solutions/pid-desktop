@@ -1,3 +1,8 @@
+import React from 'react'
+import translate from 'counterpart'
+
+import ConfirmModal from '../components/modal/ConfirmModal'
+
 import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
 import {t}         from '../modules/localization/localization'
@@ -97,6 +102,18 @@ export function setHint(hint, href) {
          }
 }
 
+
+export function confirm(question, callback) {
+  return dispatch => {
+    const onBack = () => dispatch(setCustomModal())
+    const onConfirm = () => {
+      onBack()
+      callback()
+    }
+    dispatch(setCustomModal(<ConfirmModal question={question} onConfirm={onConfirm} onBack={onBack} />))
+  }
+}
+
 export function setGarages(value) {
   return (dispatch, getState) => {
     dispatch({ type: PAGE_BASE_SET_GARAGES
@@ -115,6 +132,13 @@ export function setGarages(value) {
 
 export function setGarage(value) {
   return (dispatch, getState) => {
+    // console.log(getState().pageBase.garage, value);
+    // console.log(window.location);
+    //
+    if (window.location.hash.includes(`/${getState().pageBase.garage}/`)){
+      nav.to(`/${value}/` + window.location.hash.split(`/${getState().pageBase.garage}/`)[1].split('?')[0])
+    }
+
     dispatch({ type: PAGE_BASE_SET_GARAGE
              , value
              })
@@ -219,10 +243,11 @@ function contains (string, text) {
   return string.indexOf(text) != -1
 }
 
-export function fetchCurrentUser(){
+export function fetchCurrentUser() {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch( setCurrentUser( response.data.current_user ) )
+      if (response.data.current_user.language !== translate.getLocale()) nav.changeLanguage(response.data.current_user.language)
     }
     request(onSuccess, GET_CURRENT_USER)
   }

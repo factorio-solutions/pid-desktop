@@ -166,6 +166,8 @@
 		"editContractHint": "DE: pageBase.editContractHint",
 		"unredNotifications": {
 			"one": "Sie haben eine ungelesene Nachricht.",
+			"few": "DE: pageBase.unredNotifications.few",
+			"many": "DE: pageBase.unredNotifications.many",
 			"other": "Sie haben %(count)s ungelesene Nachrichten."
 		},
 		"analytics": "Analyse",
@@ -201,7 +203,7 @@
 		"noAvailableGarages": "Zurzeit gibt es keine Garagen, in denen Sie eine Reservierung vornehmen können.",
 		"licencePlate": "Kennzeichen",
 		"licencePlateInvalid": "Kennzeichen",
-		"licencePlatePlaceholder": "B048925",
+		"licencePlatePlaceholder": "P-ID 1234",
 		"price": "Preis",
 		"onClientsExpenses": "Auf Kundenkosten.",
 		"loadingGarage": "Parkhausgrundriss wird geladen …",
@@ -212,7 +214,12 @@
 		"paymentUnsucessfull": "Die Zahlung wurde unterbrochen und nicht erfolgreich abgeschlossen.",
 		"validtyCheck": "Validierung läuft …",
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
-		"creatingNewPayment": "Zahlung wird erstellt …"
+		"creatingNewPayment": "Zahlung wird erstellt …",
+		"newHost": "DE: newReservation.newHost",
+		"hostsName": "DE: newReservation.hostsName",
+		"hostsPhone": "DE: newReservation.hostsPhone",
+		"hostsEmail": "DE: newReservation.hostsEmail",
+		"selectedUser": "DE: newReservation.selectedUser"
 	},
 	"clients": {
 		"name": "Name",
@@ -245,7 +252,10 @@
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
 		"pendingUsers": "Offene Einladungen",
-		"removeUser": "Benutzer löschen"
+		"removeUser": "Benutzer entfernen",
+		"resendInvitation": "DE: clientUsers.resendInvitation",
+		"resendSuccessfull": "DE: clientUsers.resendSuccessfull",
+		"userNotFound": "DE: clientUsers.userNotFound"
 	},
 	"reservations": {
 		"name": "Name",
@@ -267,6 +277,7 @@
 		"host": "Gast",
 		"visitor": "Besucher",
 		"editReservation": "Reservierung bearbeiten",
+		"interuptReservation": "DE: reservations.interuptReservation",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
 		"destroyRservation": "Reservierung stornieren"
@@ -370,7 +381,7 @@
 		"garage": "Parkhaus",
 		"places": "Plätze",
 		"gates": "Tore",
-		"order": "Bestellung",
+		"order": "Reihenfolge",
 		"subscribtion": "Abonnement",
 		"selectImage": "Parkhausbild auswählen",
 		"garagePicture": "Parkhausfoto",
@@ -496,8 +507,13 @@
 		"nameLabel": "Vor- und Nachname des Benutzers (optional)",
 		"phoneLabel": "Telefonnummer des Benutzers (optional)",
 		"noClients": "Es gibt derzeit keine Kunden, für die Sie Administratorrechte haben.",
-		"sucessfullyInvited": "%(success)s Einladungen erfolgreich gesendet, %(failed)s fehlgeschlagen.",
-		"zero": "nein",
+		"sucessfullyInvited": {
+			"one": "DE: inviteUser.sucessfullyInvited.one",
+			"few": "DE: inviteUser.sucessfullyInvited.few",
+			"many": "DE: inviteUser.sucessfullyInvited.many",
+			"other": "DE: inviteUser.sucessfullyInvited.other"
+		},
+		"unSucessfullyInvited": "DE: inviteUser.unSucessfullyInvited",
 		"selectClient": "Kunden auswählen",
 		"selectGarage": "Parkhaus auswählen",
 		"selectCar": "Fahrzeug auswählen",
@@ -507,7 +523,7 @@
 		"internal": "intern",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
-		"clientRights": "Kundenrechte",
+		"clientRights": "Benutzerrechte",
 		"clientRightsDesc": "Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird.",
 		"GarageRights": "Parkhausrechte",
 		"GarageRightsDesc": "Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird.",
@@ -537,7 +553,8 @@
 		"invoiceReminder": "Konto %(arg1)s möchten Sie darüber informieren, dass Rechnungen noch nicht beglichen wurden.",
 		"reservationAccepted": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
 		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
-		"verifyYourEmail": "DE: notifications.verifyYourEmail"
+		"verifyYourEmail": "DE: notifications.verifyYourEmail",
+		"newReservationForYou": "DE: notifications.newReservationForYou"
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -575,7 +592,9 @@
 	"datetimepicker": {
 		"today": "Heute",
 		"now": "Jetzt",
-		"inf": "Unendlich"
+		"inf": "Unendlich",
+		"hour": "DE: datetimepicker.hour",
+		"minute": "DE: datetimepicker.minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Eingeschränkte Fahrzeuggröße",
@@ -662,7 +681,7 @@
 		"name": "Bezeichnung",
 		"namePlaceholder": "Gemieteter Stellplatz",
 		"invalidName": "Eingegebene Bezeichnung für Mietverhältnis ungültig",
-		"price": "Preis (zzgl. MwSt.)",
+		"price": "Preis pro Platz pro Monat (zzgl. MwSt.)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Ungültiger Preis",
 		"selectCurrency": "Währung auswählen"
@@ -681,13 +700,13 @@
 		"width": "Breite [m]",
 		"height": "Höhe [m]",
 		"length": "Länge [m]",
-		"licencePlatePlaceholder": "1A2 3456",
+		"licencePlatePlaceholder": "M BB 7679",
 		"colorPlaceholder": "Schwarz",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "Mein Porsche",
-		"widthPlaceholder": "1,8",
-		"heightPlaceholder": "1,3",
-		"lengthPlaceholder": "4,37",
+		"widthPlaceholder": "1.8",
+		"heightPlaceholder": "1.3",
+		"lengthPlaceholder": "4.37",
 		"licencePlateInvalid": "Ungültiges Kennzeichen",
 		"colorInvalid": "Ungültige Farbe",
 		"modelInvalid": "Ungültiges Modell",
@@ -742,8 +761,8 @@
 		"customPrice": "Eigener Preis",
 		"additionalGoods": "Zusätzliche Waren",
 		"bookingPage": "MEINE EIGENE RESERVIERUNGSSEITE",
-		"advertisement": "Hervorragende Werbung",
-		"gateModule": "Tormodul",
+		"advertisement": "DE: addFeatures.advertisement",
+		"gateModule": "TORMODUL",
 		"openGate": "Tor wird über App geöffnet",
 		"IdontHaveAccout": "Ich habe kein Konto",
 		"createAccount": "KONTO ERSTELLEN",
@@ -832,14 +851,14 @@
 		"marketingPage": "Marketing-Seite",
 		"connectWithMrParkit": "Mit MR. PARKIT verbinden",
 		"reservationForm": "Reservierungsformular",
-		"goPublic": "Für Öffentlichkeit öffnen",
+		"goPublic": "go Public",
 		"goPublicDescription": "Kurzfristige Parkplätze für die PiD-Community anbieten",
 		"setting": "Einstellungen",
 		"Preview": "Vorschau",
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
 		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
 		"flexiplace": "DE: modules.flexiplace",
-		"flexiplaceDescription": "DE: modules.flexiplaceDescription"
+		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -867,10 +886,10 @@
 		"SelectPrivateKey": "Privaten Schlüssel auswählen",
 		"financeSettings": "Finanzeinstellungen",
 		"vat": "Mehrwertsteuer",
-		"invoiceRow": "Normale Rechnungszeilen",
-		"simplyfiedInvoiceRow": "Einfache Rechnungszeilen",
+		"invoiceRow": "Fortlaufende Rechnungsnummer",
+		"simplyfiedInvoiceRow": "Fortlaufende Kassenbonnummer",
 		"invalidVat": "Ungültige Mehrwertsteuer",
-		"invalidRow": "Ungültige Anzahl",
+		"invalidRow": "Ungültige Nummer",
 		"changeSuccess": "Die Werte wurden erfolgreich geändert.",
 		"changeFailed": "Ein Fehler ist aufgetreten. Die Werte wurden nicht geändert.",
 		"uploadKey": "RSA-Schlüssel hochladen"
@@ -917,6 +936,215 @@
 	"loginVerification": {
 		"description": "DE: loginVerification.description",
 		"code": "DE: loginVerification.code",
-		"codeInvalid": "DE: loginVerification.codeInvalid"
+		"codeInvalid": "Code ungültig"
+	},
+	"reservationInteruption": {
+		"describtion": "Reservierung unterbrechen",
+		"from": "Unterbrechen ab",
+		"to": "Unterbrechen bis"
+	},
+	"languages": {
+		"language": "Sprache",
+		"en": "English",
+		"cs": "Česky",
+		"de": "Deutsch",
+		"pl": "Polski"
+	},
+	"recurringReservation": {
+		"repeat": "DE: recurringReservation.repeat",
+		"repeats": "DE: recurringReservation.repeats",
+		"daily": "DE: recurringReservation.daily",
+		"weekly": "DE: recurringReservation.weekly",
+		"monthly": "DE: recurringReservation.monthly",
+		"repeatEvery": "DE: recurringReservation.repeatEvery",
+		"week": {
+			"one": "DE: recurringReservation.week.one",
+			"few": "DE: recurringReservation.week.few",
+			"many": "DE: recurringReservation.week.many",
+			"other": "DE: recurringReservation.week.other"
+		},
+		"month": {
+			"one": "DE: recurringReservation.month.one",
+			"few": "DE: recurringReservation.month.few",
+			"many": "DE: recurringReservation.month.many",
+			"other": "DE: recurringReservation.month.other"
+		},
+		"day": {
+			"one": "DE: recurringReservation.day.one",
+			"few": "DE: recurringReservation.day.few",
+			"many": "DE: recurringReservation.day.many",
+			"other": "DE: recurringReservation.day.other"
+		},
+		"repeatOn": "DE: recurringReservation.repeatOn",
+		"startsOn": "DE: recurringReservation.startsOn",
+		"ends": "DE: recurringReservation.ends",
+		"after": "DE: recurringReservation.after",
+		"occurence": {
+			"one": "DE: recurringReservation.occurence.one",
+			"few": "DE: recurringReservation.occurence.few",
+			"many": "DE: recurringReservation.occurence.many",
+			"other": "DE: recurringReservation.occurence.other"
+		},
+		"on": "DE: recurringReservation.on",
+		"every": "DE: recurringReservation.every"
+	},
+	"mobileApp": {
+		"page": {
+			"userInfoUnavailable": "DE: mobileApp.page.userInfoUnavailable",
+			"logOut": "abmelden",
+			"selectGarage": "Garage auswählen",
+			"allGarages": "Alle Garagen"
+		},
+		"login": {
+			"loading": "Laden...",
+			"loginFailed": "Anmelden fehlgeschlagen:",
+			"login": "Melden Sie sich bitte an oder",
+			"signup": "registrieren Sie sich",
+			"email": "E-Mail-Adresse",
+			"emailPlaceholder": "DE: mobileApp.login.emailPlaceholder",
+			"emailInvalid": "Ungültige E-Mail-Adresse",
+			"password": "Passwort"
+		},
+		"signUp": {
+			"niceToMeetYou": "DE: mobileApp.signUp.niceToMeetYou",
+			"fillDetails": "DE: mobileApp.signUp.fillDetails",
+			"name": "Vor- und Nachname *",
+			"nameInvalid": "Name ungültig",
+			"phone": "Telefonnummer *",
+			"phoneInvalid": "Telefonnummer ungültig",
+			"email": "E-Mail-Adresse *",
+			"emailInvalid": "Ungültige E-Mail-Adresse",
+			"password": "Passwort *",
+			"passwordInvalid": "Mindestlänge ist",
+			"passwordConfirm": "Passwort bestätigen *",
+			"passwordConfirmInvalid": "Passwort und Bestätigungspasswort stimmen nicht überein.",
+			"agreeWith": "Durch Registrierung stimmen Sie unseren",
+			"terms": "Nutzungsbedingungen zu"
+		},
+		"terms": {
+			"content": "Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage"
+		},
+		"menu": {
+			"newNotifications": "Neue Benachrichtigungen",
+			"access": "Zugang",
+			"myReservations": "Meine Reservierungen"
+		},
+		"access": {
+			"swipeToOpen": "Öffnen Sie das Tor mit einem Swipe",
+			"noOngoingReservations": "Keine gültige Reservierung",
+			"inSelectedGarage": "in gewählten Garage"
+		},
+		"reservation": {
+			"garage": "Garage",
+			"place": "Platznummer",
+			"begins": "Beginnt",
+			"ends": "Endet"
+		},
+		"newReservation": {
+			"begins": "Beginnt",
+			"ends": "Endet",
+			"place": "Platznummer",
+			"car": "Auto",
+			"price": "Preis",
+			"paidBy": "Wer zahlt",
+			"licencePlate": "KFZ-Kennzeichen",
+			"licencePlateInvalid": "KFZ-Kennzeichen ungültig",
+			"licencePlatePlaceholder": "DBD2408",
+			"selectCar": "Fahrzeug auswählen",
+			"noAvailablePlaces": "Kein freier Parkplatz",
+			"selectGarage": "Zuerst wählen Sie eine Garage",
+			"auto": "AUTO",
+			"now": "JETZT",
+			"pick": "WÄHLEN",
+			"other": "ANDERS",
+			"later": "SPÄTER",
+			"hourShortcut": "Std",
+			"me": "Ich",
+			"creatingReservation": "Reservierung erstellen",
+			"creatingPayment": "Zahlung erstellen",
+			"tokenNoLongerValid": "Zahlungstoken ist weiter ungültig. Reservierung wird gelöscht.",
+			"checkingToken": "Prüfen der gültigkeit des Zahlungtokens.",
+			"redirecting": "Weiterleiten ...",
+			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
+			"processingPayment": "Zahlungsverarbeitung ..."
+		}
+	},
+	"auth0Emails": {
+		"securityReasons": "Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse",
+		"easyAsClickingButton": "Einfach diese Taste drücken:",
+		"confirmAccount": "Kontro prüfen!",
+		"enjoy": "Viel Spaß mit Park-it-direct",
+		"bestRegards": "Mit freundlichen Grüßen,",
+		"PidTeam": "Team Park-it-direct",
+		"welcome": "Wilkommen bei Park-it-direct",
+		"thankYou": "Vielen Dank, dass Sie sich für unser Verwaltungssystem entschieden haben. Schauen wir mal, wie Ihnen Park-it-direct bei dem Verwalten Ihrer Parkflächen helfen kann.",
+		"howToStart": "Wie fängt man an?",
+		"pleasantExperience": "Möchten Sie bequem ein Parkplatz finden? Würden Sie gerne das Parken in Ihrem Unternehmen verwalten? Möchten Sie den Gewinn von Ihren Parkflächen erhöhen? ",
+		"helpForHelp": "Auf jeder Seite befinden sich rechts Hinweise in blauen Feldern. Hinweise können Sie in Ihrem Profil immer wieder ein- oder ausschlaten.",
+		"garageSetup": "Möchten Sie eine Garage Erstellen, und alle Funktionen von Park-it-direct ausprobieren? Da helfen wir Ihnen gerne weiter. Schreiben Sie uns einfach eine Nachricht. Gemeinsam gehen wir das System durch, sodass alles richtig eingestellt ist, und Sie auch wirklich alle Möglichkeiten nutzen können.",
+		"getInTouch": "Möchten Sie uns kontaktieren?",
+		"website": "DE: auth0Emails.website",
+		"passwordResetSubmited": "DE: auth0Emails.passwordResetSubmited",
+		"pwdResetDescr": "DE: auth0Emails.pwdResetDescr",
+		"confirmPwdReset": "DE: auth0Emails.confirmPwdReset",
+		"troubleWithAccount": "DE: auth0Emails.troubleWithAccount",
+		"verificationCode": "DE: auth0Emails.verificationCode"
+	},
+	"railsEmails": {
+		"footer": {
+			"enjoy": "DE: railsEmails.footer.enjoy",
+			"regards": "DE: railsEmails.footer.regards",
+			"team": "DE: railsEmails.footer.team"
+		},
+		"invitation_mail": {
+			"hello": "DE: railsEmails.invitation_mail.hello",
+			"invitation": "DE: railsEmails.invitation_mail.invitation",
+			"invited_you": "DE: railsEmails.invitation_mail.invited_you",
+			"says": "DE: railsEmails.invitation_mail.says",
+			"admin": "DE: railsEmails.invitation_mail.admin",
+			"secretary": "DE: railsEmails.invitation_mail.secretary",
+			"host": "DE: railsEmails.invitation_mail.host",
+			"internal": "DE: railsEmails.invitation_mail.internal",
+			"contact_person": "DE: railsEmails.invitation_mail.contact_person",
+			"receptionist": "DE: railsEmails.invitation_mail.receptionist",
+			"security": "DE: railsEmails.invitation_mail.security",
+			"invited_to": "DE: railsEmails.invitation_mail.invited_to",
+			"as": "DE: railsEmails.invitation_mail.as",
+			"issue": "DE: railsEmails.invitation_mail.issue",
+			"let_us_know": "DE: railsEmails.invitation_mail.let_us_know",
+			"we_will_help": "DE: railsEmails.invitation_mail.we_will_help"
+		},
+		"new_reservation_mail": {
+			"new_reservation": "DE: railsEmails.new_reservation_mail.new_reservation",
+			"reservation_for_you": "DE: railsEmails.new_reservation_mail.reservation_for_you",
+			"more_details": "DE: railsEmails.new_reservation_mail.more_details",
+			"to_pid": "DE: railsEmails.new_reservation_mail.to_pid"
+		},
+		"resend_invitation_mail": {
+			"hello": "DE: railsEmails.resend_invitation_mail.hello",
+			"invitation_reminder": "DE: railsEmails.resend_invitation_mail.invitation_reminder",
+			"remind_you": "DE: railsEmails.resend_invitation_mail.remind_you",
+			"admin": "DE: railsEmails.resend_invitation_mail.admin",
+			"secretary": "DE: railsEmails.resend_invitation_mail.secretary",
+			"host": "DE: railsEmails.resend_invitation_mail.host",
+			"internal": "DE: railsEmails.resend_invitation_mail.internal",
+			"contact_person": "DE: railsEmails.resend_invitation_mail.contact_person",
+			"receptionist": "DE: railsEmails.resend_invitation_mail.receptionist",
+			"security": "DE: railsEmails.resend_invitation_mail.security",
+			"invited_to": "DE: railsEmails.resend_invitation_mail.invited_to",
+			"as": "DE: railsEmails.resend_invitation_mail.as",
+			"to_sign_up": "DE: railsEmails.resend_invitation_mail.to_sign_up",
+			"to_pid": "DE: railsEmails.resend_invitation_mail.to_pid",
+			"issue": "DE: railsEmails.resend_invitation_mail.issue",
+			"let_us_know": "DE: railsEmails.resend_invitation_mail.let_us_know",
+			"we_will_help": "DE: railsEmails.resend_invitation_mail.we_will_help"
+		},
+		"reservation_confirmed": {
+			"reservation_confirmed": "DE: railsEmails.reservation_confirmed.reservation_confirmed",
+			"garage": "DE: railsEmails.reservation_confirmed.garage",
+			"place": "DE: railsEmails.reservation_confirmed.place",
+			"from": "DE: railsEmails.reservation_confirmed.from",
+			"to": "DE: railsEmails.reservation_confirmed.to"
+		}
 	}
 }

@@ -1,6 +1,7 @@
 
 export const GET_CURRENT_USER = `{
   current_user {
+    language
     full_name
     id
     email

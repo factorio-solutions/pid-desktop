@@ -7,6 +7,16 @@ import RounButton from './RoundButton.js'
 // label = label to be displayed below the button
 
 
+// export default function LabeledRoundButton ({ label, content, onClick, onDisabledClick, type, state, size, question })  {
+//   return (
+//     label ? <div className={styles.labeledRoundButton}>
+//       <RounButton content={content} onClick={onClick} type={type} state={state} question={question} onDisabledClick={onDisabledClick}/>
+//       <div>{label}</div>
+//     </div>
+//     : <RounButton content={content} onClick={onClick} type={type} state={state} question={question} onDisabledClick={onDisabledClick}/>
+//   )
+// }
+
 class LabeledRoundButton extends Component {
   static propTypes = {
     hint:            PropTypes.object.isRequired,

@@ -100,8 +100,8 @@
 		"newContractHint": "Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!",
 		"ReservationButtonHint": "PL: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "PL: pageBase.mrParkitIntegrationHint",
-		"goPublicHint": "PL: pageBase.goPublicHint",
-		"financeHint": "W górnej części możesz włączać/wyłączać oraz ustawiać sposób płatności za parkowanie. W sekcji „Wynajmy” znajdziesz listę wszystkich aktualnych wynajmów długoterminowych, ich cenę, liczbę miejsc parkingowych, jakiej dotyczą, a po kliknięciu możesz je edytować. W sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.",
+		"goPublicHint": "Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.\n\nSie können aus folgenden Berechnugsmögichkeiten wählen:\nPauschalpreis pro 1 Std.\nVariabler Preis (Preis ist von der Länge der Reservierung abhängig)\nWochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)\n\nWählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis.",
+		"financeHint": "W górnej części możesz włączać/wyłączać oraz ustawiać sposób płatności za parkowanie.\n\nW sekcji „Wynajmy” znajdziesz listę wszystkich aktualnych wynajmów długoterminowych, ich cenę, liczbę miejsc parkingowych, jakiej dotyczą, a po kliknięciu możesz je edytować.\n\nW sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.",
 		"financePaypalHint": "PL: pageBase.financePaypalHint",
 		"financeCSOBHint": "PL: pageBase.financeCSOBHint",
 		"pidSettingsHint": "PL: pageBase.pidSettingsHint",
@@ -163,15 +163,17 @@
 		"orderGarageModuleHint": "PL: pageBase.orderGarageModuleHint",
 		"reservationOverviewHint": "PL: pageBase.reservationOverviewHint",
 		"editInvoiceHint": "PL: pageBase.editInvoiceHint",
-		"editContractHint": "PL: pageBase.editContractHint",
+		"editContractHint": "Tutaj możesz wybrać umowę i zmienić miejsca parkingowe, czas trwania rezerwacji lub cenę.",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
+			"few": "PL: pageBase.unredNotifications.few",
+			"many": "PL: pageBase.unredNotifications.many",
 			"other": "Masz %(count)s nieprzeczytanych wiadomości."
 		},
 		"analytics": "Analiza",
 		"garageTurnover": "Obroty garażu",
 		"reservations": "Rezerwacje",
-		"places": "Miejsca",
+		"places": "Obrót miejscami parkingowymi",
 		"payments": "Płatności",
 		"gates": "Bramy",
 		"analyticsGarageTurnoverHint": "Tutaj zobaczysz liczbę rezerwacji w garażu w wybranym terminie.\nW tabelce pod grafem zobaczysz liczbę rezerwacji w poszczególnych dniach oraz całościowe obroty garażu.\nW lewym górnym rogu możesz wybrać podgląd krótkoterminowych lub długoterminowych wynajmów.\nW prawym górnym rogu możesz dokładnie ustawić rozpiętość pokazywanego terminu. \n",
@@ -212,7 +214,12 @@
 		"paymentUnsucessfull": "Płatność została anulowana.",
 		"validtyCheck": "Kontroluję płatność...",
 		"tokenInvalid": "Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.",
-		"creatingNewPayment": "Wytwarzam płatność..."
+		"creatingNewPayment": "Wytwarzam płatność...",
+		"newHost": "PL: newReservation.newHost",
+		"hostsName": "PL: newReservation.hostsName",
+		"hostsPhone": "PL: newReservation.hostsPhone",
+		"hostsEmail": "PL: newReservation.hostsEmail",
+		"selectedUser": "PL: newReservation.selectedUser"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -245,7 +252,10 @@
 		"presetAs": "Ustaw jako",
 		"removeClientUser": "Czy na pewno chcesz usunąć użytkownika?",
 		"pendingUsers": "Zaproszenia czekające na odpowiedź",
-		"removeUser": "PL: clientUsers.removeUser"
+		"removeUser": "Usuń użytkownika",
+		"resendInvitation": "Wyślij ponownie",
+		"resendSuccessfull": "E-mail został wysłany.",
+		"userNotFound": "Nie znaleziono użytkownika."
 	},
 	"reservations": {
 		"name": "Użytkownik",
@@ -266,10 +276,11 @@
 		"pay": "Płatność",
 		"host": "Gość",
 		"visitor": "Odwiedzający",
-		"editReservation": "PL: reservations.editReservation",
-		"payReservation": "PL: reservations.payReservation",
-		"downloadInvoice": "PL: reservations.downloadInvoice",
-		"destroyRservation": "PL: reservations.destroyRservation"
+		"editReservation": "Edytuj rezerwację",
+		"interuptReservation": "Przerwij rezerwację",
+		"payReservation": "Opłać rezerwację",
+		"downloadInvoice": "Ściągnij fakturę",
+		"destroyRservation": "Usuń rezerwację"
 	},
 	"garages": {
 		"clients": "Klienci",
@@ -300,7 +311,7 @@
 		"rentName": "Nazwa wynajmu",
 		"price": "Cena",
 		"places": "Miejsca",
-		"editRent": "PL: garages.editRent"
+		"editRent": "Edytuj wynajem"
 	},
 	"occupancy": {
 		"selectClientClient": "Wybrać klienta",
@@ -319,8 +330,8 @@
 		"type": "Typ:",
 		"period": "Okres:",
 		"licencePlate": "Nr rejestracyjny:",
-		"noClientPlaces": "PL: occupancy.noClientPlaces",
-		"resetFilter": "PL: occupancy.resetFilter"
+		"noClientPlaces": "Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.",
+		"resetFilter": "Zresetować filtr"
 	},
 	"garageUsers": {
 		"noRights": "Nie posiadasz odpowiednich uprawnień.",
@@ -333,7 +344,7 @@
 		"email": "e-mail",
 		"memberSince": "członek od",
 		"phone": "telefon",
-		"removeUser": "PL: garageUsers.removeUser"
+		"removeUser": "Usunąć użytkownika"
 	},
 	"garageManagement": {
 		"garageManagement": "Zarząd garażu",
@@ -467,9 +478,9 @@
 		"selectAccountMandatory": "Wybierz konto",
 		"processing": "Przetwarzam",
 		"users": "Użytkownicy",
-		"addProfilePicture": "PL: newGarage.addProfilePicture",
-		"removeFloor": "PL: newGarage.removeFloor",
-		"uploadSvg": "PL: newGarage.uploadSvg"
+		"addProfilePicture": "Dodaj zdjęcie profilowe",
+		"removeFloor": "Usunąć piętro",
+		"uploadSvg": "Wgraj SVG"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
@@ -496,8 +507,13 @@
 		"nameLabel": "Nazwa użytkownika (opcjonalnie)",
 		"phoneLabel": "Numer telefonu użytkownika (opcjonalnie)",
 		"noClients": "W obecnej chwili nie masz żadnych klientów, co do których masz uprawnienia administratora.",
-		"sucessfullyInvited": "%(success)s zaproszeń odesłano z powodzeniem, %(failed)s się nie udało.",
-		"zero": "nie",
+		"sucessfullyInvited": {
+			"one": "PL: inviteUser.sucessfullyInvited.one",
+			"few": "PL: inviteUser.sucessfullyInvited.few",
+			"many": "PL: inviteUser.sucessfullyInvited.many",
+			"other": "PL: inviteUser.sucessfullyInvited.other"
+		},
+		"unSucessfullyInvited": "PL: inviteUser.unSucessfullyInvited",
 		"selectClient": "Wybierz klienta",
 		"selectGarage": "Wybierz garaż",
 		"selectCar": "Wybierz auto",
@@ -505,7 +521,7 @@
 		"secretary": "Sekretarz/sekretarka",
 		"host": "gość",
 		"internal": "wewnętrzny",
-		"security": "zabezpieczenie",
+		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
 		"clientRights": "Prawa klienta",
 		"clientRightsDesc": "Prawa zaczną obowiązywać jedynie w momencie, kiedy klient zostanie określony.",
@@ -513,7 +529,7 @@
 		"GarageRightsDesc": "Prawa zaczną obowiązywać jedynie w momencie, kiedy garaż zostanie określony.",
 		"carRights": "Prawa samochodów",
 		"carRightsDesc": "Prawa zaczną obowiązywać jedynie w momencie, kiedy samochód zostanie określony.",
-		"contactPerson": "PL: inviteUser.contactPerson"
+		"contactPerson": "osoba kontaktowa"
 	},
 	"notifications": {
 		"user": "Użytkownik",
@@ -537,7 +553,8 @@
 		"invoiceReminder": "Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.",
 		"reservationAccepted": "Twoja rezerwacja na miejsce \"%(arg1)s\" została zaakceptowana.",
 		"reservationDeclined": "Twoja rezerwacja na miejsce \"%(arg1)s\" została odrzucona.",
-		"verifyYourEmail": "PL: notifications.verifyYourEmail"
+		"verifyYourEmail": "PL: notifications.verifyYourEmail",
+		"newReservationForYou": "PL: notifications.newReservationForYou"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -566,7 +583,7 @@
 		"secretary": "sekretarz/sekretarka",
 		"internal": "wewnętrzny",
 		"host": "gość",
-		"security": "zabezpieczenie",
+		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
 		"invitedToClient": "%(date)s zaproszony(-a) do uczestnictwa w:",
 		"invitedToGarage": "%(date)s zaproszony(-a) do garażu:",
@@ -575,7 +592,9 @@
 	"datetimepicker": {
 		"today": "Dzisiaj",
 		"now": "Teraz",
-		"inf": "Nieskończoność"
+		"inf": "Nieskończoność",
+		"hour": "Godzina",
+		"minute": "Minuta"
 	},
 	"newMarketing": {
 		"size_restriction": "Ograniczony rozmiar pojazdu",
@@ -603,23 +622,23 @@
 		"map": "Mapa",
 		"shortName": "Krótka nazwa URL",
 		"shortNamePlaceholder": "st-patricks-garaż",
-		"invalidShortName": "Musi to być jedno słowo.",
+		"invalidShortName": "Musi to być jedno słowo napisane małymi literami.",
 		"phone": "Telefon alarmowy",
 		"phonePlaceholder": "#ERROR!",
 		"invalidPhone": "Niepoprawny numer telefonu",
 		"email": "E-mail alarmowy",
 		"imvalidEmail": "Niepoprawny e-mail",
-		"mailPlaceholder": "kontak@email.com",
+		"mailPlaceholder": "kontakt@email.com",
 		"selectTag": "Wybierz tag zdjęcia",
 		"description": "Opis garażu",
 		"images": "Zdjęcia garażu",
 		"uploading": "Wgrywam...",
 		"notCreated": "Nie można było utworzyć marketingu, ponieważ wybrana nazwa jest już zajęta.",
 		"notUpdated": "Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta.",
-		"addImage": "PL: newMarketing.addImage",
-		"editImage": "PL: newMarketing.editImage",
-		"removeImage": "PL: newMarketing.removeImage",
-		"removeImageQuestion": "PL: newMarketing.removeImageQuestion"
+		"addImage": "Dodaj obrazek",
+		"editImage": "Edytuj obrazek",
+		"removeImage": "Usuń obrazek",
+		"removeImageQuestion": "Czy naprawdę chcesz usunąć obrazek?"
 	},
 	"garageMarketing": {
 		"id": "id",
@@ -642,9 +661,9 @@
 	},
 	"newPricing": {
 		"name": "Nazwa",
-		"flatPrice": "PL: newPricing.flatPrice",
-		"exponentialPrice": "PL: newPricing.exponentialPrice",
-		"weekendPrice": "PL: newPricing.weekendPrice",
+		"flatPrice": "Cena za miejsce (za godzinę, bez VAT)",
+		"exponentialPrice": "Cena zmienna (za godzinę, bez VAT)",
+		"weekendPrice": "Cena weekendowa (za godzinę, bez VAT)",
 		"12hPrice": "Rezerwacja do 12 godzin",
 		"dayPrice": "Rezerwacja od 12 godzin do 1 dnia",
 		"weekPrice": "Rezerwacja od 1 dnia do 1 tygodnia",
@@ -660,9 +679,9 @@
 	},
 	"newRent": {
 		"name": "Nazwa",
-		"namePlaceholder": "PL: newRent.namePlaceholder",
-		"invalidName": "PL: newRent.invalidName",
-		"price": "PL: newRent.price",
+		"namePlaceholder": "Miejsca do wynajęcia",
+		"invalidName": "Niepoprawna nazwa wynajmu",
+		"price": "Cena za miejsce na miesiąc (bez DPH)",
 		"pricePlaceholder": "500",
 		"invalidPrice": "Niepoprawna cena",
 		"selectCurrency": "Wybierz walutę"
@@ -681,7 +700,7 @@
 		"width": "Szerokość [m]",
 		"height": "Wysokość [m]",
 		"length": "Długość [m]",
-		"licencePlatePlaceholder": "1A2 3456",
+		"licencePlatePlaceholder": "ERA 87TL",
 		"colorPlaceholder": "Czarny",
 		"modelPlaceholder": "Porsche 911",
 		"namePlaceholder": "Moje Porsche",
@@ -707,8 +726,8 @@
 		"overview": "Podgląd rezerwacji",
 		"selectedPlace": "Wybrane miejsce",
 		"duration": "Okres",
-		"from": "z",
-		"to": "na",
+		"from": "od",
+		"to": "do",
 		"price": "Cena",
 		"garage": "Garaż",
 		"floor": "Piętro",
@@ -733,7 +752,7 @@
 		"visitors": "system odwiedzin",
 		"security": "podląd i funkcje bezpieczeństwa",
 		"analytics": "prosta analiza biznesowa",
-		"3rdParty": "integracja i gromadzenie trzecich stron",
+		"3rdParty": "Integracja i agregatory stron trzecich",
 		"advancedAnalytics": "zaawansowana analiza biznesowa",
 		"customDesc": "Nie znalazłeś(-aś) odpowiedniego mixu? Daj nam znać!",
 		"perSpot": "/ miejsce",
@@ -789,9 +808,9 @@
 		"dueDate": "termin spłaty",
 		"account": "konto",
 		"client": "klient",
-		"type": "PL: invoices.type",
-		"invoiceText": "PL: invoices.invoiceText",
-		"paid": "PL: invoices.paid",
+		"type": "Rodzaj",
+		"invoiceText": "Przedmiot faktury",
+		"paid": "Zapłacone",
 		"ammount": "kwota",
 		"subject": "temat",
 		"pay": "Zapłacić",
@@ -800,27 +819,27 @@
 		"redirecting": "Przekierowuję...",
 		"paymentUnsucessfull": "Płatność została anulowana. Nie powiodła się.",
 		"payingReservation": "Opłata rezerwacji",
-		"selectClient": "PL: invoices.selectClient",
-		"selectGarage": "PL: invoices.selectGarage",
-		"invoiceNumber": "PL: invoices.invoiceNumber",
-		"stornoInvoice": "PL: invoices.stornoInvoice",
-		"invoiceCanceled": "PL: invoices.invoiceCanceled",
-		"cancelReason": "PL: invoices.cancelReason",
-		"reason": "PL: invoices.reason",
-		"reasonInvalid": "PL: invoices.reasonInvalid",
-		"reasonPlaceholder": "PL: invoices.reasonPlaceholder",
-		"inoiceDate": "PL: invoices.inoiceDate",
-		"invalidaDate": "PL: invoices.invalidaDate",
-		"invalidValue": "PL: invoices.invalidValue",
-		"amount": "PL: invoices.amount",
-		"downloadInvoice": "PL: invoices.downloadInvoice",
-		"editInvoice": "PL: invoices.editInvoice",
-		"payInvoice": "PL: invoices.payInvoice",
-		"sendReminder": "PL: invoices.sendReminder",
-		"invoicePaidLabel": "PL: invoices.invoicePaidLabel",
-		"invoiceIncorect": "PL: invoices.invoiceIncorect",
-		"donwloadExcel": "PL: invoices.donwloadExcel",
-		"donwloadInvoices": "PL: invoices.donwloadInvoices"
+		"selectClient": "Wybierz klienta",
+		"selectGarage": "Wybierz garaż",
+		"invoiceNumber": "Faktura nr",
+		"stornoInvoice": "Czy naprawdę chcesz anulować fakturę?",
+		"invoiceCanceled": "Faktura została anulowana.",
+		"cancelReason": "Podaj powód anulowania faktury:",
+		"reason": "Powód",
+		"reasonInvalid": "Niepoprawny powód",
+		"reasonPlaceholder": "Obliczona cena jest niepoprawna.",
+		"inoiceDate": "Data faktury",
+		"invalidaDate": "Niepoprawna data",
+		"invalidValue": "Niepoprawna wartość",
+		"amount": "Cena",
+		"downloadInvoice": "Ściągnąć fakturę",
+		"editInvoice": "Edytuj fakturę",
+		"payInvoice": "Opłacić fakturę",
+		"sendReminder": "Wysłać przypomnienie",
+		"invoicePaidLabel": "Faktura została zapłacona",
+		"invoiceIncorect": "Anulować fakturę",
+		"donwloadExcel": "Ściągnąć excel",
+		"donwloadInvoices": "Ściągnąć faktury"
 	},
 	"resetPassword": {
 		"send": "Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.",
@@ -838,7 +857,7 @@
 		"Preview": "Podgląd",
 		"startingMarketing": "Aktualizuję twój plan faktur. Przekierowuję...",
 		"cannotBeChanged": "Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.",
-		"flexiplace": "PL: modules.flexiplace",
+		"flexiplace": "Miejsce Flexi",
 		"flexiplaceDescription": "FLexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální"
 	},
 	"newContract": {
@@ -857,8 +876,8 @@
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Wybierz walutę",
 		"placePrice": "Cena za miejsce na miesiąc",
-		"indefinitContract": "PL: newContract.indefinitContract",
-		"indefinite": "PL: newContract.indefinite"
+		"indefinitContract": "Zawrzeć umowę na czas nieokreślony",
+		"indefinite": "Na czas nieokreślony"
 	},
 	"finance": {
 		"paypal": "PayPal",
@@ -873,7 +892,7 @@
 		"invalidRow": "Niepoprawny numer",
 		"changeSuccess": "Wartości zostały zmienione.",
 		"changeFailed": "Wystąpił błąd, wartości nie zostały zmienione.",
-		"uploadKey": "PL: finance.uploadKey"
+		"uploadKey": "Wgrać klucz RSA"
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -915,8 +934,217 @@
 		"total": "Ogółem"
 	},
 	"loginVerification": {
-		"description": "PL: loginVerification.description",
-		"code": "PL: loginVerification.code",
-		"codeInvalid": "PL: loginVerification.codeInvalid"
+		"description": "Wprowadzono autoryzację wieloczynnikową. Na adres %(email) wyślemy Ci kod weryfikacyjny.",
+		"code": "kod",
+		"codeInvalid": "Niepoprawny kod"
+	},
+	"reservationInteruption": {
+		"describtion": "Przerwij rezerwację",
+		"from": "Przerwać od",
+		"to": "Przerwać do"
+	},
+	"languages": {
+		"language": "Język",
+		"en": "English",
+		"cs": "Česky",
+		"de": "Deutsch",
+		"pl": "Polski"
+	},
+	"recurringReservation": {
+		"repeat": "Powtórz",
+		"repeats": "Powtarza się:",
+		"daily": "Codziennie",
+		"weekly": "Co tydzień",
+		"monthly": "Co miesiąc",
+		"repeatEvery": "Powtrzać raz na:",
+		"week": {
+			"one": "tydzień",
+			"few": "tygodnie",
+			"many": "tygodni",
+			"other": "tygodni"
+		},
+		"month": {
+			"one": "miesiąc",
+			"few": "miesiące",
+			"many": "miesięcy",
+			"other": "miesięcy"
+		},
+		"day": {
+			"one": "dzień",
+			"few": "dni",
+			"many": "dni",
+			"other": "dni"
+		},
+		"repeatOn": "Powtarzać w:",
+		"startsOn": "Data rozpoczęcia:",
+		"ends": "Koniec:",
+		"after": "Po",
+		"occurence": {
+			"one": "PL: recurringReservation.occurence.one",
+			"few": "PL: recurringReservation.occurence.few",
+			"many": "PL: recurringReservation.occurence.many",
+			"other": "PL: recurringReservation.occurence.other"
+		},
+		"on": "Dnia",
+		"every": "PL: recurringReservation.every"
+	},
+	"mobileApp": {
+		"page": {
+			"userInfoUnavailable": "Informacje o użytkowniku są niedostępne.",
+			"logOut": "Wylogować",
+			"selectGarage": "Wybierz garaż",
+			"allGarages": "Wszystkie garaże"
+		},
+		"login": {
+			"loading": "Ładowanie...",
+			"loginFailed": "Niepoprawny login:",
+			"login": "Zaloguj się lub",
+			"signup": "Załóż konto",
+			"email": "Podaj e-mail",
+			"emailPlaceholder": "Mr@park.it",
+			"emailInvalid": "Niepoprawny adres e-mail",
+			"password": "Hasło"
+		},
+		"signUp": {
+			"niceToMeetYou": "Cześć, miło Cię poznać.",
+			"fillDetails": "Wypełnij poniższe informacje:",
+			"name": "Imię i nazwisko",
+			"nameInvalid": "Niepoprawne imię i nazwisko",
+			"phone": "Numer telefonu",
+			"phoneInvalid": "Niepoprawny numer telefonu",
+			"email": "E-mail",
+			"emailInvalid": "Niepoprawny adres e-mail",
+			"password": "Hasło",
+			"passwordInvalid": "Minimalna długość to",
+			"passwordConfirm": "Potwierdź hasło",
+			"passwordConfirmInvalid": "Hasła są niezgodne",
+			"agreeWith": "Rejestracja oznacza zgodę z naszymi",
+			"terms": "warunkami korzystania z usług"
+		},
+		"terms": {
+			"content": "Warunki korzystania z usług znajdziesz na naszej stronie internetowej."
+		},
+		"menu": {
+			"newNotifications": "Nowe powiadomienia",
+			"access": "Dostęp",
+			"myReservations": "Moje rezerwacje"
+		},
+		"access": {
+			"swipeToOpen": "Przesuń, żeby otworzyć bramkę",
+			"noOngoingReservations": "Nie masz żadnych trwających rezerwacji",
+			"inSelectedGarage": "w wybranym garażu"
+		},
+		"reservation": {
+			"garage": "Garaż",
+			"place": "Miejsce",
+			"begins": "Początek",
+			"ends": "Koniec"
+		},
+		"newReservation": {
+			"begins": "Początek",
+			"ends": "Koniec",
+			"place": "Miejsce",
+			"car": "Auto",
+			"price": "Cena",
+			"paidBy": "Kto płaci",
+			"licencePlate": "Numer rejestracyjny",
+			"licencePlateInvalid": "Niepłatny nr rejestracyjny",
+			"licencePlatePlaceholder": "1A2 1234",
+			"selectCar": "Wybierz auto",
+			"noAvailablePlaces": "Nie ma dostępnych miejsc",
+			"selectGarage": "Zacznij od wyboru garażu",
+			"auto": "AUTO",
+			"now": "TERAZ",
+			"pick": "WYBIERZ",
+			"other": "INNE",
+			"later": "PÓŹNIEJ",
+			"hourShortcut": "h",
+			"me": "Ja",
+			"creatingReservation": "Utworzyć rezerwację",
+			"creatingPayment": "Wytwarzanie płatności...",
+			"tokenNoLongerValid": "Identyfikator płatności nie jest już ważny. Rezerwacja zostanie usunięta.",
+			"checkingToken": "Sprawdzam ważność identyfikatora.",
+			"redirecting": "Przekierowuję...",
+			"paymentUnsucessfull": "Płatność nie powiodła się.",
+			"processingPayment": "Przetwarzam płatność..."
+		}
+	},
+	"auth0Emails": {
+		"securityReasons": "Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.",
+		"easyAsClickingButton": "Wystarczy kliknąć na poniższy przycisk:",
+		"confirmAccount": "Potwierdzić konto!",
+		"enjoy": "Miłego korzystania z Park-it-direct!",
+		"bestRegards": "Pozdrawiamy",
+		"PidTeam": "Zespół Park-it-Direct",
+		"welcome": "Witamy w Park-it-Direct!",
+		"thankYou": "Dziękujemy za korzystanie z naszego narzędzia do zarządzania. Sprawdź, w jaki sposób Park-it-direct może Ci pomóc w zarządzaniu parkingiem.",
+		"howToStart": "Jak zacząć przygodę z PID?",
+		"pleasantExperience": "Szukasz przyjemnego parkingu? Nie chce Ci się organizoać miejsc parkingowych dla całej firmy? A może zarabiasz wynajmowaniem miejsc parkingowych?",
+		"helpForHelp": "Na każdej stronie na górze lub po prawej stronie znajdziesz niebieskie okienko pomocy, które wyjaśnia zawartość strony. W ustawieniach konta możesz w każdym momencie możesz włączyć/wyłączyć pomoc. ",
+		"garageSetup": "Chcesz założyć garaż? Pomożemy Ci w tym! Daj nam znać, a zadzwonimy do Ciebie. Omówimy razem wszystki ustawienia i dostosujemy je do Twoich potrzeb, żeby zagwarantować Ci jak największy zysk i oszczędność czasu.",
+		"getInTouch": "Chcesz skontaktować się z nami?",
+		"website": "Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
+		"passwordResetSubmited": "Poprosiłeś/-aś o zmianę hasła!",
+		"pwdResetDescr": "Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
+		"confirmPwdReset": "dokończ zmianę hasła",
+		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
+		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
+	},
+	"railsEmails": {
+		"footer": {
+			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
+			"regards": "Pozdrawiamy",
+			"team": "Zespół Park-it-Direct"
+		},
+		"invitation_mail": {
+			"hello": "Dzień dobry,",
+			"invitation": "właśnie zaproszono Cię do Park-it-direct!",
+			"invited_you": "zaprosił/a Cię do korzystania z Park-it-direct.",
+			"says": "pisze:",
+			"admin": "administrator",
+			"secretary": "sekretarz/sekretarka",
+			"host": "gość",
+			"internal": "wewnętrzny",
+			"contact_person": "osoba kontaktowa",
+			"receptionist": "recepcja",
+			"security": "ochrona",
+			"invited_to": "zaprosił/a Cię do klienta",
+			"as": "jako",
+			"issue": "W przypadku jakichkolwiek problemów",
+			"let_us_know": "skontaktuj się z nami mailowo,",
+			"we_will_help": "a my pomożemy Ci aktywować konto."
+		},
+		"new_reservation_mail": {
+			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
+			"reservation_for_you": "utworzył dla Ciebie nową rezerwację.",
+			"more_details": "Więcej informacji znajdziesz w Park-it-direct:",
+			"to_pid": "Do Park-it-direct!"
+		},
+		"resend_invitation_mail": {
+			"hello": "Dzień dobry,",
+			"invitation_reminder": "przypominamy Ci o zaproszeniu",
+			"remind_you": "do Park-it-direct.",
+			"admin": "administrator/ka",
+			"secretary": "sekretarz/sekretarka",
+			"host": "gość",
+			"internal": "wewnętrzny",
+			"contact_person": "osoba kontaktowa",
+			"receptionist": "recepcja",
+			"security": "ochrona",
+			"invited_to": "zaprosił Cię do klienta",
+			"as": "jako",
+			"to_sign_up": "Zarejestruj się!",
+			"to_pid": "Do Park-it-direct!",
+			"issue": "W przypadku jakichkolwiek problemów",
+			"let_us_know": "skontaktuj się z nami mailowo,",
+			"we_will_help": "a my pomożemy Ci aktywować konto."
+		},
+		"reservation_confirmed": {
+			"reservation_confirmed": "Żądana rezerwacja została potwierdzona!",
+			"garage": "Garaż:",
+			"place": "Miejsce:",
+			"from": "Od:",
+			"to": "Do:"
+		}
 	}
 }

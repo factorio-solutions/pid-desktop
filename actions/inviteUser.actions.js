@@ -9,6 +9,7 @@ export const INVITE_USER_SET_EMAIL                = "INVITE_USER_SET_EMAIL"
 export const INVITE_USER_SET_MESSAGE              = "INVITE_USER_SET_MESSAGE"
 export const INVITE_USER_SET_NAME                 = "INVITE_USER_SET_NAME"
 export const INVITE_USER_SET_PHONE                = "INVITE_USER_SET_PHONE"
+export const INVITE_USER_SET_LANGUAGE             = "INVITE_USER_SET_LANGUAGE"
 
 export const INVITE_USER_SET_CLIENT              = "INVITE_USER_SET_CLIENT"
 export const INVITE_USER_SET_CLIENTS             = "INVITE_USER_SET_CLIENTS"
@@ -49,6 +50,11 @@ export function setName (name){
 export function setPhone (phone){
   return  { type: INVITE_USER_SET_PHONE
           , value: phone
+          }
+}
+export function setLanguage (lang){
+  return  { type: INVITE_USER_SET_LANGUAGE
+          , value: lang
           }
 }
 
@@ -139,7 +145,10 @@ export function initManagebles () {
       dispatch(setCars(cars))
     }
 
-    request (onSuccess, INIT_MANAGEBLES)
+    const currentUser = getState().pageBase.current_user
+    currentUser && dispatch(setLanguage(currentUser.language))
+
+    request(onSuccess, INIT_MANAGEBLES)
   }
 }
 
@@ -161,10 +170,12 @@ export function createNewManagebles () {
     const emailsSend = () => { // after invitations
       dispatch(setCurrentEmail(undefined))
       dispatch(resetForm())
-      if (emails.length > 1){
-        dispatch(setSuccess( t(['inviteUser', 'sucessfullyInvited'], { success: (emails.length-unsucessfull.length), failed: unsucessfull.length==0 ? t(['inviteUser', 'zero']) : unsucessfull.join(', ') }) ))
+      if (emails.length > 1) {
+        const messages = [ t([ 'inviteUser', 'sucessfullyInvited' ], { count: emails.length - unsucessfull.length }) ]
+        if (unsucessfull.length > 0) messages.push(t([ 'inviteUser', 'unSucessfullyInvited' ], { emails: unsucessfull.join(', ') }))
+        dispatch(setSuccess(messages.join(' ')))
       } else {
-        unsucessfull.length == 1 ? dispatch(setError( t(['inviteUser', 'connectionExists']) )) : dispatch(setSuccess( t(['inviteUser', 'notificationSend']) ))
+        unsucessfull.length === 1 ? dispatch(setError(t([ 'inviteUser', 'connectionExists' ]))) : dispatch(setSuccess(t([ 'inviteUser', 'notificationSend' ])))
       }
     }
 
@@ -260,6 +271,7 @@ export function createNewManagebles () {
                         , full_name: state.full_name
                         , phone:     state.phone
                         , message:   state.message
+                        , language:  state.language
                         }
               , user_car: state.car_id ? { car_id: +state.car_id
                                          , admin: state.car_admin

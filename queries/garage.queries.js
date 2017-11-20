@@ -55,32 +55,34 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
 export const GARAGE_RESERVATIONS = `
 query GarageReservations($id: Id!, $datetime: Datetime!) {
   garage(id: $id) {
-    places {
-      id
-      contracts_in_time(datetime: $datetime) {
-        rent {
-          id
-          price
-          currency {
-            code
-            symbol
+    floors{
+      places {
+        id
+        contracts_in_time(datetime: $datetime) {
+          rent {
+            id
+            price
+            currency {
+              code
+              symbol
+            }
           }
         }
-      }
-      reservations_in_time(datetime: $datetime) {
-        id
-        client {
-          name
-        }
-        car {
-          licence_plate
-        }
-        begins_at
-        ends_at
-        user {
-          full_name
-          email
-          phone
+        reservations_in_time(datetime: $datetime) {
+          id
+          client {
+            name
+          }
+          car {
+            licence_plate
+          }
+          begins_at
+          ends_at
+          user {
+            full_name
+            email
+            phone
+          }
         }
       }
     }
