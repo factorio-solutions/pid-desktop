@@ -45,6 +45,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     name
     vat
     dic
+    flexiplace
     floors {
       id
       label
