@@ -84,10 +84,12 @@ class NewReservationPage extends Component {
     }
 
     const isSubmitable = () => {
+      // console.log(state);
+      // console.log( state.garage.floors.reduce((acc, f) => [...acc, ...f.free_places], []).length );
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if (state.car_id == undefined && state.carLicencePlate == '') return false
       if (state.from == '' || state.to == '') return false
-      return state.user && (state.place_id || (state.garage && state.garage.flexiplace))
+      return state.user && (state.place_id || (state.garage && state.garage.flexiplace && state.garage.floors.reduce((acc, f) => [...acc, ...f.free_places], []).length))
     }
 
     const placeLabel = () => {
