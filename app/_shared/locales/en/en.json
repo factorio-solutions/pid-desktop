@@ -31,7 +31,8 @@
 		"password": "Password",
 		"loginFailed": "Login failed",
 		"forgot": "Forgot password?",
-		"proceed": "Proceed here"
+		"proceed": "Proceed here",
+		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
 		"name": "your full name *",
@@ -181,7 +182,8 @@
 		"analyticsplacesHint": "Here you can see turnover statistics for parking spots: average, maximum, minimum and total turnover, all displayed separately for short-term and long-term reservations. In the upper left corner you can choose to display a heat map with color coding (the lowest values are yellow, while the highest are red).\nIn the upper right corner you can select the exact period you want to view.",
 		"analyticspaymentsHint": "TODO: payments Hint",
 		"analyticsgatesHint": "TODO: gates Hint",
-		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for."
+		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
+		"pidAdmin":"PID admin"
 	},
 	"newReservation": {
 		"selectGarage": "Select garage *",
@@ -1160,5 +1162,16 @@
 			"from": "From:",
 			"to": "To:"
 		}
+	},
+	"pidAdmin":{
+		"pageBase": {
+			"backToPid": "to PID",
+			"adminMode":"ADMIN MODE OF PARK-IT-DIRECT"
+		},
+		"users": {
+			"id": "id",
+			"name":"name"
+		}
+
 	}
 }

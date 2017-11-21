@@ -5,6 +5,9 @@ import * as localization from './_shared/modules/localization/localization'
 
 import App from './_app/App'
 
+// //////////////////////////////////////////////////////////////////////////////
+// ////////////////////////////REGULAR PAGES/////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
 // login pages
 import LoginPage from './user/login.page'
 import CodeVerificationPage from './user/codeVerification.page'
@@ -93,11 +96,24 @@ import MarketingPage from './marketing/marketing.page'
 
 import TestingPage from './testing/testing.page'
 
+// //////////////////////////////////////////////////////////////////////////////
+// //////////////////////////PID ADMIN PAGES/////////////////////////////////////
+// //////////////////////////////////////////////////////////////////////////////
+import PidAdminDashboardPage from './pidAdmin/dashboard/dashboard.page'
+import PidAdminUsersPage from './pidAdmin/users/users.page'
+
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
 
 
 export default function createRoutes() {
+  const adminSubRoutes = (
+    <Route>
+      <IndexRoute component={PidAdminDashboardPage} />
+      <Route path="users" component={PidAdminUsersPage} />
+    </Route>
+  )
+
   const subRoutes = (
     <Route>
       <IndexRoute component={LoginPage} />
@@ -177,8 +193,13 @@ export default function createRoutes() {
 
       <Route path="marketing/:short_name" component={MarketingPage} />
 
-      {/* Testing page for not production environments*/}
+      {/* Testing page for not production environments */}
       {process.env.NODE_ENV !== 'production' && <Route path="testing" component={TestingPage} />}
+
+      {/* Admin subroutes */}
+      <Route path="pid-admin">
+        {adminSubRoutes}
+      </Route>
     </Route>
   )
 

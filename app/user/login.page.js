@@ -20,8 +20,8 @@ import styles from './login.page.scss'
 
 class LoginPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object
+    state:   PropTypes.object,
+    actions: PropTypes.object
   }
 
   componentDidMount() {
@@ -31,48 +31,63 @@ class LoginPage extends Component {
   render() {
     const { actions, state } = this.props
 
+    const isSubmitable = () => { return state.email.valid && state.password.valid }
+
     const onSubmit = () => {
       if (state.error) {
         actions.dismissModal()
       } else {
-        isSubmitable() && actions.login(state.email.value, state.password.value , true)
+        isSubmitable() && actions.login(state.email.value, state.password.value, true)
       }
     }
-    const isSubmitable    = () => { return state.email.valid && state.password.valid }
 
     const loadingContent = <div>Loading ...</div>
 
-    const errorContent = <div ref="error">
-                           { t(['login_page', 'loginFailed']) }: <br/>
-                           { state.error } <br/>
-                           <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={actions.dismissModal} type='confirm' />
-                         </div>
+    const errorContent = (<div>
+      <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
+      <div>{ state.error }</div>
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
+    </div>)
 
-    const content = <div>
-                      <Logo style='round'/>
+    const content = (<div>
+      <Logo style="round" />
 
-                      <div className={styles.signUpPage}>
-                        {t(['login_page', 'please'])} <Link to={nav.path('/signUpPage')} >{t(['login_page', 'Sign-Up'])}</Link>
-                      </div>
-                      <div className={styles.resetPasswordPage}>
-                        {t(['login_page', 'forgot'])} <Link to={nav.path('/resetPassword')} >{t(['login_page', 'proceed'])}</Link>
-                      </div>
+      <div className={styles.signUpPage}>
+        {t([ 'login_page', 'please' ])} <Link to={nav.path('/signUpPage')} >{t([ 'login_page', 'Sign-Up' ])}</Link>
+      </div>
+      <div className={styles.resetPasswordPage}>
+        {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
+      </div>
 
-                      <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error!=undefined} />
-                      <Form onSubmit={onSubmit} submitable={isSubmitable()}>
-                        <PatternInput onChange={actions.setEmail} label={t(['login_page', 'email'])} error={t(['login_page', 'invalid-email'])} pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder='Mr@park.it' value={state.email.value} onEnter={onSubmit}/>
-                        <PatternInput onChange={actions.setPassword} label={t(['login_page', 'password'])} type='password' pattern="^(?!\s*$).+" value={state.password.value} onEnter={onSubmit}/>
-                      </Form>
-                    </div>
+      <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
+      <Form onSubmit={onSubmit} submitable={isSubmitable()}>
+        <PatternInput
+          onChange={actions.setEmail}
+          label={t([ 'login_page', 'email' ])}
+          error={t([ 'login_page', 'invalid-email' ])}
+          pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          placeholder={t([ 'login_page', 'emailPlaceholder' ])}
+          value={state.email.value}
+          onEnter={onSubmit}
+        />
+        <PatternInput
+          onChange={actions.setPassword}
+          label={t([ 'login_page', 'password' ])}
+          type="password"
+          pattern="^(?!\s*$).+"
+          value={state.password.value}
+          onEnter={onSubmit}
+        />
+      </Form>
+    </div>)
 
     return (
       <MasterPage content={content} />
-    );
+    )
   }
 }
 
-
 export default connect(
-  state    => ({ state: state.login }),
+  state => ({ state: state.login }),
   dispatch => ({ actions: bindActionCreators(loginActions, dispatch) })
 )(LoginPage)

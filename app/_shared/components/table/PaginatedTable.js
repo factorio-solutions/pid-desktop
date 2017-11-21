@@ -5,6 +5,7 @@ import RoundButton from '../buttons/RoundButton'
 import Loading from '../loading/Loading'
 
 import request from '../../helpers/requestPromise'
+import requestAdmin from '../../helpers/requestAdmin'
 
 import styles from './Table.scss'
 
@@ -14,7 +15,12 @@ export default class PaginatedTable extends Component {
     schema:        PropTypes.array.isRequired, // schema for table
     query:         PropTypes.string, // query to ask
     transformData: PropTypes.func, // if set to true, will reset selected item
-    variables:     PropTypes.object
+    variables:     PropTypes.object,
+    admin:         PropTypes.bool
+  }
+
+  static defaultProps = {
+    admin: false
   }
 
   constructor(props) {
@@ -69,13 +75,17 @@ export default class PaginatedTable extends Component {
   }
 
   requestData(variables) { // requests data from server
-    const { query } = this.props
-    request(query, variables).then(this.transformData)
+    const { query, admin } = this.props
+    if (admin) {
+      requestAdmin(query, variables).then(this.transformData)
+    } else {
+      request(query, variables).then(this.transformData)
+    }
   }
 
   transformData(data) { // takes care of transforming data and setting the state when data downloads
     const { transformData } = this.props
-    const transformedData = transformData(data)
+    const transformedData = transformData ? transformData(data) : data
     this.setState({
       ...this.state,
       data:    transformedData,

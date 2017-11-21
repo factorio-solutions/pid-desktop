@@ -3,6 +3,7 @@ export const GET_CURRENT_USER = `{
   current_user {
     language
     full_name
+    pid_admin
     id
     email
     phone
