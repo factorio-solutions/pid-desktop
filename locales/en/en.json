@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20160814a",
+	"PID-RELEASE": "r20161121a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -31,7 +31,8 @@
 		"password": "Password",
 		"loginFailed": "Login failed",
 		"forgot": "Forgot password?",
-		"proceed": "Proceed here"
+		"proceed": "Proceed here",
+		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
 		"name": "your full name *",
@@ -121,10 +122,10 @@
 		"settingsHint": "In this section you can set your desired language and switch on and off these help boxes throughout the application.",
 		"usersHint": "Here you have a list of all known users. Select a user to see client accounts membership and their role therein. The detailed view also shows which vehicles are assigned to that user, which garages they have access to, and their role therein.",
 		"allKnownUsers": "All known users",
-		"editClientHint": "TODO: edit client hint: Here you can change information about this client.",
+		"editClientHint": "Here you can change information about this client.",
 		"notificationsHint": "This section displays all notifications that need to be resolved.",
 		"inviteUsersHint": "Invite a new user to connect with the selected Client Account. Please provide an email address and send the invitation. After the user accepts the invitation, he or she automatically becomes a member of the selected Client Account.",
-		"addFeaturesHint": "Here you can add functionality to your system. TODO: add features hint",
+		"addFeaturesHint": "Here you can add functionality to your system.",
 		"addFeatures": "Add features",
 		"newAccountHint": "Here you can create customer accounts, which contain information about the customer, users, parking spots assigned, etc. You can change these settings in the relevant section.",
 		"editAccountHint": "Here you can edit the name and details of Client Accounts.",
@@ -132,10 +133,10 @@
 		"accounts": "Accounts",
 		"newAccount": "New account",
 		"editAccount": "Edit account",
-		"carUsersHint": "Here you can manage the people using cars. TODO: user car hint",
-		"newCarHint": "Here you can add a new car. This will make creating a new reservation easier. TODO: new car hint",
-		"editCarHint": "Here you can edit car properties. TODO: edit car hint",
-		"carsHint": "This is list of all cars assigned to you.+ TODO: cars hint",
+		"carUsersHint": "Here you can manage the people using cars.",
+		"newCarHint": "Here you can add a new car. This will make creating a new reservation easier.",
+		"editCarHint": "Here you can edit car properties.",
+		"carsHint": "This is list of all cars assigned to you.",
 		"cars": "Cars",
 		"newCar": "New car",
 		"editCar": "Edit car",
@@ -151,19 +152,19 @@
 		"newMarketing": "New marketing",
 		"editMarketing": "Edit marketing",
 		"garageMarketingHint": "Here you can activate/deactivate and change settings for each module. For more information click on the \"Settings\" button for individual modules.",
-		"garageNewMarketingHint": "Here you can set up new marketing. TODO: Change this",
+		"garageNewMarketingHint": "Here you can set up new marketing.",
 		"garageEditMarketingHint": "This module is for setting up the website where you can promote your garage and accept parking reservations.\n\nIn the \"URL short title\" you can set how the link to your page will look. The format is \"URL short title.park-it-direct.com\".\n\nEmergency telephone number and email address are the contact details that will appear on the website in the contact section.\n\nYou can include a brief description of the garage in four languages (switch between languages in the upper right-hand corner).\n\nNext to the description field you may select any number of parameters to appear in the garage description.\n\nYou can upload photographs in the \"Garage photos\" section, which will then display on the website. We recommend photographs of up to 1Mb in .jpg format.",
-		"garageNewPricingHint": "Here you can set up new reservation pricing. TODO: New pricing Hint",
-		"garageEditPricingHint": "Here you can edit pricing properties. TODO: Edit pricing hint",
-		"garageNewRentHint": "Here you can set up new rent for your parking spots. TODO: New rent hint",
-		"garageEditRentHint": "Now you can edit rent properties. TODO: Edit rent hint",
-		"garageAddClientHint": "Here you can add a client to the garage management page. TODO: add client to management hint",
-		"garageGarageUsersHint": "Here you can manage who can use your garage and what rights they have. TODO: Garage users management",
+		"garageNewPricingHint": "Here you can set up new reservation pricing.",
+		"garageEditPricingHint": "Here you can edit pricing properties.",
+		"garageNewRentHint": "Here you can set up new rent for your parking spots.",
+		"garageEditRentHint": "Now you can edit rent properties.",
+		"garageAddClientHint": "Here you can add a client to the garage management page.",
+		"garageGarageUsersHint": "Here you can manage who can use your garage and what rights they have.",
 		"EditUserHint": "Here you can change the data about yourself.",
-		"orderGarageModuleHint": "TODO: order Garage Module hint: Here you can order a garage module.",
-		"reservationOverviewHint": "TODO: new reservation overview hint: Here you can double check if everything is ok.",
-		"editInvoiceHint": "TODO: edit invoice hint: Afther clicking OK, a new invoice will be created with corrected data.",
-		"editContractHint": "TODO: edit agreement hint: Here you can select an agreement and edit it to change parking spots, duration or price.",
+		"orderGarageModuleHint": "Here you can order a garage module.",
+		"reservationOverviewHint": "Here you can double check if everything is ok.",
+		"editInvoiceHint": "Afther clicking OK, a new invoice will be created with corrected data.",
+		"editContractHint": "Here you can edit the agreement - parking spots, duration or price.",
 		"unredNotifications": {
 			"one": "You have one unread notification",
 			"few": "EN: pageBase.unredNotifications.few",
@@ -181,7 +182,8 @@
 		"analyticsplacesHint": "Here you can see turnover statistics for parking spots: average, maximum, minimum and total turnover, all displayed separately for short-term and long-term reservations. In the upper left corner you can choose to display a heat map with color coding (the lowest values are yellow, while the highest are red).\nIn the upper right corner you can select the exact period you want to view.",
 		"analyticspaymentsHint": "TODO: payments Hint",
 		"analyticsgatesHint": "TODO: gates Hint",
-		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for."
+		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
+		"pidAdmin": "PID admin"
 	},
 	"newReservation": {
 		"selectGarage": "Select garage *",
@@ -283,18 +285,18 @@
 		"downloadInvoice": "Download invoice",
 		"destroyRservation": "Cancel reservation",
 		"destroyAllReservation": {
-			"one": "Destroy only selected reservation",
+			"one": "Destroy only selected reservation.",
 			"few": "Destroy all %(count)s reservations in set repeat.",
 			"many": "Destroy all %(count)s reservations in set repeat.",
 			"other": "Destroy all %(count)s reservations in set repeat."
 		},
 		"updateAllReservation": {
-			"one": "Update only selected reservation",
+			"one": "Update only selected reservation.",
 			"few": "Update all %(count)s reservations in set repeat.",
 			"many": "Update all %(count)s reservations in set repeat.",
 			"other": "Update all %(count)s reservations in set repeat."
 		},
-		"flexiblePlace":"flexi"
+		"flexiblePlace": "flexiplace"
 	},
 	"garages": {
 		"clients": "Clients",
@@ -450,7 +452,7 @@
 		"invalidName": "Invalid garage name",
 		"removeFloorRowQuestion": "Are you sure you want to delete this floor?",
 		"removeGateRowQuestion": "Are you sure you want to delete this gate?",
-		"street": "Street and house number",
+		"street": "Straße und Hausnummer *",
 		"city": "City *",
 		"postalCode": "Postal code *",
 		"country": "Country *",
@@ -948,7 +950,7 @@
 		"total": "Total"
 	},
 	"loginVerification": {
-		"description": "Multifactor authorization has been enabled. We will now send you a code by email %(email)s",
+		"description": "Multifactor authorization has been triggered. We will now send you a code by email %(email)s",
 		"code": "code",
 		"codeInvalid": "Code invalid"
 	},
@@ -1080,7 +1082,8 @@
 			"checkingToken": "Checking token validity.",
 			"redirecting": "Redirecting ...",
 			"paymentUnsucessfull": "Payment was unsuccessful.",
-			"processingPayment": "Processing payment ..."
+			"processingPayment": "Processing payment ...",
+			"flexiplace": "FLEXI"
 		}
 	},
 	"auth0Emails": {
