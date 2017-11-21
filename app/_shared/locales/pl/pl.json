@@ -1,18 +1,18 @@
 {
-	"PID-RELEASE": "r20160814a",
+	"PID-RELEASE": "r20161121a",
 	"addresses": {
-		"name": "Imię i nazwisko",
-		"line1": "Adres",
+		"name": "Imię i nazwisko *",
+		"line1": "Adres *",
 		"line2": "Adres - cd.",
-		"city": "Miasto",
-		"postalCode": "Kod pocztowy",
+		"city": "Miasto *",
+		"postalCode": "Kod pocztowy *",
 		"state": "Państwo",
-		"country": "Kraj",
+		"country": "Kraj *",
 		"nameInvalid": "Niepoprawne imię i nazwisko",
 		"line1Invalid": "Niepoprawny adres",
 		"line2Invalid": "Niepoprawny adres",
 		"cityInvalid": "Niepoprawna nazwa miasta",
-		"postalCodeInvalid": "Kod pocztowy",
+		"postalCodeInvalid": "Kod pocztowy *",
 		"stateInvalid": "Niepoprawna nazwa państwa",
 		"countryInvalid": "Niepoprawna nazwa kraju",
 		"namePlaceholder": "Jan Kowalski",
@@ -31,7 +31,8 @@
 		"password": "Hasło",
 		"loginFailed": "Nie udało się zalogować",
 		"forgot": "Nie pamiętasz hasła?",
-		"proceed": "Przejdź dalej"
+		"proceed": "Przejdź dalej",
+		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
 		"name": "Imię i nazwisko *",
@@ -181,7 +182,8 @@
 		"analyticsplacesHint": "\nTutaj możesz zobaczyć statystykę rotacji miejsc – średnią, maksymalną, minimalną i ogólną rotację. Wszystko podzielone jest według tego, czy miejsce jest wynajmowane krótko- czy długoterminowo. W lewym górnym rogu możesz wybrać widok na heatmapie, gdzie wartości są pokazywane poprzez spektrum kolorów: najniższe wartości są żółte, najwyższe – czerwone. W prawym górnym rogu możesz ustawić dokładną rozpiętość pokazywanego okresu.\n",
 		"analyticspaymentsHint": "PL: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "PL: pageBase.analyticsgatesHint",
-		"flexiplaceHint": "PL: pageBase.flexiplaceHint"
+		"flexiplaceHint": "PL: pageBase.flexiplaceHint",
+		"pidAdmin": "PID admin"
 	},
 	"newReservation": {
 		"selectGarage": "Wybierz garaż *",
@@ -219,7 +221,8 @@
 		"hostsName": "PL: newReservation.hostsName",
 		"hostsPhone": "PL: newReservation.hostsPhone",
 		"hostsEmail": "PL: newReservation.hostsEmail",
-		"selectedUser": "PL: newReservation.selectedUser"
+		"selectedUser": "PL: newReservation.selectedUser",
+		"flexiblePlaceSelected": "PL: newReservation.flexiblePlaceSelected"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -264,7 +267,7 @@
 		"place": "Miejsce",
 		"client": "Klient",
 		"licencePlate": "Numer rejestracyjny",
-		"state": "Państwo",
+		"state": "PL: reservations.state",
 		"type": "Typ",
 		"creator": "utworzył",
 		"garage": "Garaż",
@@ -280,7 +283,20 @@
 		"interuptReservation": "Przerwij rezerwację",
 		"payReservation": "Opłać rezerwację",
 		"downloadInvoice": "Ściągnij fakturę",
-		"destroyRservation": "Usuń rezerwację"
+		"destroyRservation": "Usuń rezerwację",
+		"destroyAllReservation": {
+			"one": "PL: reservations.destroyAllReservation.one",
+			"few": "PL: reservations.destroyAllReservation.few",
+			"many": "PL: reservations.destroyAllReservation.many",
+			"other": "PL: reservations.destroyAllReservation.other"
+		},
+		"updateAllReservation": {
+			"one": "PL: reservations.updateAllReservation.one",
+			"few": "PL: reservations.updateAllReservation.few",
+			"many": "PL: reservations.updateAllReservation.many",
+			"other": "PL: reservations.updateAllReservation.other"
+		},
+		"flexiblePlace": "PL: reservations.flexiblePlace"
 	},
 	"garages": {
 		"clients": "Klienci",
@@ -436,7 +452,7 @@
 		"invalidName": "Niepoprawna nazwa garażu",
 		"removeFloorRowQuestion": "Czy na pewno chcesz usunąć to piętro?",
 		"removeGateRowQuestion": "Czy na pewno chcesz usunąć tę bramę?",
-		"street": "Ulica i numer domu",
+		"street": "Ulica i numer domu *",
 		"city": "Miasto",
 		"postalCode": "Kod pocztowy",
 		"country": "Kraj",
@@ -1066,7 +1082,8 @@
 			"checkingToken": "Sprawdzam ważność identyfikatora.",
 			"redirecting": "Przekierowuję...",
 			"paymentUnsucessfull": "Płatność nie powiodła się.",
-			"processingPayment": "Przetwarzam płatność..."
+			"processingPayment": "Przetwarzam płatność...",
+			"flexiplace": "PL: mobileApp.newReservation.flexiplace"
 		}
 	},
 	"auth0Emails": {
