@@ -83,16 +83,20 @@ class NewReservationPage extends Component {
       }) || []
     }
 
+    const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
+
     const isSubmitable = () => {
+      // console.log(state);
+      // console.log( state.garage.floors.reduce((acc, f) => [...acc, ...f.free_places], []).length );
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if (state.car_id == undefined && state.carLicencePlate == '') return false
       if (state.from == '' || state.to == '') return false
-      return state.user && (state.place_id || (state.garage && state.garage.flexiplace))
+      return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
     const placeLabel = () => {
       if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-        return t([ 'newReservation', 'flexiblePlaceSelected' ])
+        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'No available places' ])
       } else {
         const findPlace = place => { return place.id == state.place_id }
         const floor = state.garage && state.garage.floors.find(floor => { return floor.places.find(findPlace) != undefined })

@@ -1,18 +1,18 @@
 {
-	"PID-RELEASE": "r20160814a",
+	"PID-RELEASE": "r20161121a",
 	"addresses": {
-		"name": "Name",
-		"line1": "Adresszeile 1",
+		"name": "Name *",
+		"line1": "Adresszeile 1 *",
 		"line2": "Adresszeile 2",
-		"city": "Stadt",
-		"postalCode": "Postleitzahl",
+		"city": "Stadt *",
+		"postalCode": "Postleitzahl *",
 		"state": "Staat",
-		"country": "Land",
+		"country": "Land *",
 		"nameInvalid": "Name ungültig",
 		"line1Invalid": "Adresszeile 1 ungültig",
 		"line2Invalid": "Adresszeile 2 ungültig",
 		"cityInvalid": "Stadt ungültig",
-		"postalCodeInvalid": "Postleitzahl",
+		"postalCodeInvalid": "Postleitzahl *",
 		"stateInvalid": "Bundesstaat ungültig",
 		"countryInvalid": "Land ungültig",
 		"namePlaceholder": "Wolfgang Müller",
@@ -31,7 +31,8 @@
 		"password": "Passwort",
 		"loginFailed": "Anmeldung fehlgeschlagen",
 		"forgot": "Passwort vergessen?",
-		"proceed": "Hier fortfahren"
+		"proceed": "Hier fortfahren",
+		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
 		"name": "Vor- und Nachname *",
@@ -181,7 +182,8 @@
 		"analyticsplacesHint": "Hier werden die Umsatzstatistiken für Stellplätze angezeigt – Durchschnitt, maximaler, minimaler und Gesamtumsatz, jeweils für kurzfristige und Langzeitvermietungen. Oben links kann eine Heatmap angezeigt werden, in der die Werte farbig dargestellt werden (niedrigste Werte in Gelb, höchste Werte in Rot).\nOben rechts kann der gewünschte Anzeigezeitraum eingestellt werden.",
 		"analyticspaymentsHint": "DE: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
-		"flexiplaceHint": "DE: pageBase.flexiplaceHint"
+		"flexiplaceHint": "DE: pageBase.flexiplaceHint",
+		"pidAdmin": "PID admin"
 	},
 	"newReservation": {
 		"selectGarage": "Wählen Sie ein Parkhaus aus *",
@@ -215,11 +217,12 @@
 		"validtyCheck": "Validierung läuft …",
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
-		"newHost": "DE: newReservation.newHost",
+		"newHost": "Neuer Gast",
 		"hostsName": "DE: newReservation.hostsName",
 		"hostsPhone": "DE: newReservation.hostsPhone",
 		"hostsEmail": "DE: newReservation.hostsEmail",
-		"selectedUser": "DE: newReservation.selectedUser"
+		"selectedUser": "DE: newReservation.selectedUser",
+		"flexiblePlaceSelected": "DE: newReservation.flexiblePlaceSelected"
 	},
 	"clients": {
 		"name": "Name",
@@ -264,7 +267,7 @@
 		"place": "Stellplatz",
 		"client": "Kunde",
 		"licencePlate": "Kennzeichen",
-		"state": "Staat",
+		"state": "DE: reservations.state",
 		"type": "Typ",
 		"creator": "Erstellt von",
 		"garage": "Parkhaus",
@@ -280,7 +283,20 @@
 		"interuptReservation": "DE: reservations.interuptReservation",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
-		"destroyRservation": "Reservierung stornieren"
+		"destroyRservation": "Reservierung stornieren",
+		"destroyAllReservation": {
+			"one": "DE: reservations.destroyAllReservation.one",
+			"few": "DE: reservations.destroyAllReservation.few",
+			"many": "DE: reservations.destroyAllReservation.many",
+			"other": "DE: reservations.destroyAllReservation.other"
+		},
+		"updateAllReservation": {
+			"one": "DE: reservations.updateAllReservation.one",
+			"few": "DE: reservations.updateAllReservation.few",
+			"many": "DE: reservations.updateAllReservation.many",
+			"other": "DE: reservations.updateAllReservation.other"
+		},
+		"flexiblePlace": "DE: reservations.flexiblePlace"
 	},
 	"garages": {
 		"clients": "Kunden",
@@ -1066,7 +1082,8 @@
 			"checkingToken": "Prüfen der gültigkeit des Zahlungtokens.",
 			"redirecting": "Weiterleiten ...",
 			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
-			"processingPayment": "Zahlungsverarbeitung ..."
+			"processingPayment": "Zahlungsverarbeitung ...",
+			"flexiplace": "DE: mobileApp.newReservation.flexiplace"
 		}
 	},
 	"auth0Emails": {

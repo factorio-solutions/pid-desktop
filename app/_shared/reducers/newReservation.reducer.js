@@ -167,7 +167,7 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_SET_PLACE_ID:
       return { ...state,
-        place_id: action.value
+        place_id: state.garage && state.garage.flexiplace ? undefined : action.value
       }
 
     case NEW_RESERVATION_SET_PRICE:
