@@ -401,10 +401,16 @@ export function downloadUser(id) {
 
     Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
       values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
-      dispatch(setUser({ ...values[0].user || { id: -1, reservable_cars: [] },
+
+      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id: -1, reservable_cars: [] }),
         availableGarages: values[1].reservable_garages,
         availableClients: values[2].reservable_clients
       }))
+      if (values[0].user && !values[0].user.last_active) {
+        dispatch(setHostName(values[0].user.full_name, true))
+        dispatch(setHostPhone(values[0].user.phone, true))
+        dispatch(setHostEmail(values[0].user.email, true))
+      }
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
       }
