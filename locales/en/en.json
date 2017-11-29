@@ -589,6 +589,8 @@
 		"phone": "phone",
 		"memberSince": "since",
 		"active": "active",
+		"notActive": "not active",
+		"notConfimed": "not confirmed",
 		"pending": "Pending",
 		"allKnownUsers": "All known users",
 		"pendingInvitations": "Pending invitations",
