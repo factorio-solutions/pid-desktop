@@ -30,7 +30,8 @@ class PageBase extends Component {
 
     const vertical = [
       { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => { nav.to('/pid-admin/') } },
-      { label: t([ 'pageBase', 'Users' ]), key: 'users', icon: 'fa fa-user', onClick: () => { nav.to('/pid-admin/users') } }
+      { label: t([ 'pageBase', 'Users' ]), key: 'users', icon: 'fa fa-user', onClick: () => { nav.to('/pid-admin/users') } },
+      { label: t([ 'pidAdmin', 'pageBase', 'generator' ]), key: 'generator', icon: 'fa fa-fighter-jet', onClick: () => { nav.to('/pid-admin/generator') } }
     ]
 
     const profileDropdown = [

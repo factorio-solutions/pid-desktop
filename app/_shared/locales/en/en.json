@@ -1169,11 +1169,43 @@
 	"pidAdmin":{
 		"pageBase": {
 			"backToPid": "to PID",
-			"adminMode":"ADMIN MODE OF PARK-IT-DIRECT"
+			"adminMode":"ADMIN MODE OF PARK-IT-DIRECT",
+			"generator": "Generator"
 		},
 		"users": {
 			"id": "id",
 			"name":"name"
+		},
+		"generator": {
+			"selectGarages": "Select garages",
+			"selected": "selected",
+			"id": "id",
+			"name": "name",
+			"selectClients": "Select clients",
+			"selectUsers": "Select users",
+			"generateReservations": "Generate reservations",
+			"count":"Count",
+			"countInvalid":"Count invalid",
+			"dateFrom":"Date from",
+			"dateTo":"Date to",
+			"dateInvalid":"date invalid",
+			"dayFrom":"Day from",
+			"dayTo":"Day to",
+			"dayFromInvalid":"number invalid",
+			"durationFrom":"Duration from",
+			"durationTo":"Duration to",
+			"durationFromInvalid":"duration invalid",
+			"internal":"Internal",
+			"host":"Host",
+			"hours":"hours",
+			"or":"OR",
+			"createUsers":"Create users",
+			"create":"Create",
+			"users":"users.",
+			"clientName": "Client name",
+			"clientId": "Client id",
+			"selectAll": "Select all users",
+			"deselectAll": "Deselect all users"
 		}
 
 	}

@@ -102,6 +102,12 @@ import TestingPage from './testing/testing.page'
 import PidAdminDashboardPage from './pidAdmin/dashboard/dashboard.page'
 import PidAdminUsersPage from './pidAdmin/users/users.page'
 
+import PidAdminGeneratorGaragesPage from './pidAdmin/generator/generatorGarages.page'
+import PidAdminGeneratorClientsPage from './pidAdmin/generator/generatorClients.page'
+import PidAdminGeneratorReservationsPage from './pidAdmin/generator/generatorReservations.page'
+import PidAdminGeneratorUsersPage from './pidAdmin/generator/generatorUsers.page'
+import PidAdminGeneratorOverviewPage from './pidAdmin/generator/generatorOverview.page'
+
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
 
@@ -111,6 +117,12 @@ export default function createRoutes() {
     <Route>
       <IndexRoute component={PidAdminDashboardPage} />
       <Route path="users" component={PidAdminUsersPage} />
+      <Route path="generator" component={PidAdminGeneratorGaragesPage} />
+
+      <Route path="generator/clients" component={PidAdminGeneratorClientsPage} />
+      <Route path="generator/reservations" component={PidAdminGeneratorReservationsPage} />
+      <Route path="generator/users" component={PidAdminGeneratorUsersPage} />
+      <Route path="generator/overview" component={PidAdminGeneratorOverviewPage} />
     </Route>
   )
 

@@ -56,6 +56,8 @@ import adminFlexiplace  from '../_shared/reducers/admin.flexiplace.reducer'
 import adminFinance     from '../_shared/reducers/admin.finance.reducer'
 import adminActivityLog from '../_shared/reducers/admin.activityLog.reducer'
 
+import pidAdminGenerator from '../_shared/reducers/pid-admin.generator.reducer'
+
 const appReducer = combineReducers({
   routing,
   pageBase,
@@ -110,7 +112,9 @@ const appReducer = combineReducers({
   adminGoPublic,
   adminFlexiplace,
   adminFinance,
-  adminActivityLog
+  adminActivityLog,
+
+  pidAdminGenerator
 })
 
 const rootReducer = (state, action) => { // app reducer container reducer
