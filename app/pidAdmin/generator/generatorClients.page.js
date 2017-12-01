@@ -10,6 +10,8 @@ import * as generatorActions from '../../_shared/actions/pid-admin.generator.act
 import { t } from '../../_shared/modules/localization/localization'
 import * as nav from '../../_shared/helpers/navigation'
 
+import styles from './generator.page.scss'
+
 
 class PidAdminGeneratorClientsPage extends Component {
   static propTypes = {
@@ -42,10 +44,12 @@ class PidAdminGeneratorClientsPage extends Component {
 
     return (
       <PageBase>
-        <Form onSubmit={onSubmit} submitable={isSubmitable} onBack={onBack}>
-          <h1>{t([ 'pidAdmin', 'generator', 'selectClients' ])}</h1>
-          <Table schema={schema} data={state.clients} />
-        </Form>
+        <div className={styles.marginBot}>
+          <Form onSubmit={onSubmit} submitable={isSubmitable} onBack={onBack} margin>
+            <h1>{t([ 'pidAdmin', 'generator', 'selectClients' ])}</h1>
+            <Table schema={schema} data={state.clients} />
+          </Form>
+        </div>
       </PageBase>
     )
   }

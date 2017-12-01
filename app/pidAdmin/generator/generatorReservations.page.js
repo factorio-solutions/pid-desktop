@@ -37,7 +37,7 @@ class PidAdminGeneratorReservationsPage extends Component {
 
     const createDayNames = (d, index) => {
       const day = moment().weekday(index)
-      return { name: day.format('dd'), index: day.weekday() }
+      return { name: moment(['2015','07',13+index].join('-')).format('dd'), index: day.weekday() }
     }
 
     const toCheckbox = day => {
@@ -47,59 +47,61 @@ class PidAdminGeneratorReservationsPage extends Component {
 
     return (
       <PageBase>
-        <h1>{t([ 'pidAdmin', 'generator', 'generateReservations' ])}</h1>
-        <Form onSubmit={onSubmit} submitable={isSubmitable} onBack={onBack}>
-          <Input value={state.count} onChange={actions.setCount} label={t([ 'pidAdmin', 'generator', 'count' ])} error={t([ 'pidAdmin', 'generator', 'countInvalid' ])} type="number" />
+        <div className={styles.marginBot}>
+          <h1>{t([ 'pidAdmin', 'generator', 'generateReservations' ])}</h1>
+          <Form onSubmit={onSubmit} submitable={isSubmitable} onBack={onBack} margin>
+            <Input value={state.count} onChange={actions.setCount} label={t([ 'pidAdmin', 'generator', 'count' ])} error={t([ 'pidAdmin', 'generator', 'countInvalid' ])} type="number" />
 
-          <DateInput value={state.dateFrom} onChange={actions.setDateFrom} label={t([ 'pidAdmin', 'generator', 'dateFrom' ])} error={t([ 'pidAdmin', 'generator', 'dateInvalid' ])} />
-          <DateInput value={state.dateTo} onChange={actions.setDateTo} label={t([ 'pidAdmin', 'generator', 'dateTo' ])} error={t([ 'pidAdmin', 'generator', 'dateInvalid' ])} />
+            <DateInput value={state.dateFrom} onChange={actions.setDateFrom} label={t([ 'pidAdmin', 'generator', 'dateFrom' ])} error={t([ 'pidAdmin', 'generator', 'dateInvalid' ])} />
+            <DateInput value={state.dateTo} onChange={actions.setDateTo} label={t([ 'pidAdmin', 'generator', 'dateTo' ])} error={t([ 'pidAdmin', 'generator', 'dateInvalid' ])} />
 
-          <div>
-            {Array(...{ length: 7 }).map(createDayNames).map(toCheckbox)}
-          </div>
+            <div>
+              {Array(...{ length: 7 }).map(createDayNames).map(toCheckbox)}
+            </div>
 
-          <div className={styles.inline}>
-            <Input value={state.dayFrom} onChange={actions.setDayFrom} label={t([ 'pidAdmin', 'generator', 'dayFrom' ])} error={t([ 'pidAdmin', 'generator', 'dayFromInvalid' ])} type="number" />
-            :00
-          </div>
-          <div className={styles.inline}>
-            <Input value={state.dayTo} onChange={actions.setDayTo} label={t([ 'pidAdmin', 'generator', 'dayTo' ])} error={t([ 'pidAdmin', 'generator', 'dayFromInvalid' ])} type="number" />
-            :00
-          </div>
+            <div className={styles.inline}>
+              <Input value={state.dayFrom} onChange={actions.setDayFrom} label={t([ 'pidAdmin', 'generator', 'dayFrom' ])} error={t([ 'pidAdmin', 'generator', 'dayFromInvalid' ])} type="number" />
+              :00
+            </div>
+            <div className={styles.inline}>
+              <Input value={state.dayTo} onChange={actions.setDayTo} label={t([ 'pidAdmin', 'generator', 'dayTo' ])} error={t([ 'pidAdmin', 'generator', 'dayFromInvalid' ])} type="number" />
+              :00
+            </div>
 
-          <div className={styles.inline}>
-            <Input
-              value={state.durationFrom}
-              onChange={actions.setDurationFrom}
-              label={t([ 'pidAdmin', 'generator', 'durationFrom' ])}
-              error={t([ 'pidAdmin', 'generator', 'durationFromInvalid' ])}
-              type="number"
-            />
-            {t([ 'pidAdmin', 'generator', 'hours' ])}
-          </div>
-          <div className={styles.inline}>
-            <Input
-              value={state.durationTo}
-              onChange={actions.setDurationTo}
-              label={t([ 'pidAdmin', 'generator', 'durationTo' ])}
-              error={t([ 'pidAdmin', 'generator', 'durationFromInvalid' ])}
-              type="number"
-            />
-            {t([ 'pidAdmin', 'generator', 'hours' ])}
-          </div>
+            <div className={styles.inline}>
+              <Input
+                value={state.durationFrom}
+                onChange={actions.setDurationFrom}
+                label={t([ 'pidAdmin', 'generator', 'durationFrom' ])}
+                error={t([ 'pidAdmin', 'generator', 'durationFromInvalid' ])}
+                type="number"
+              />
+              {t([ 'pidAdmin', 'generator', 'hours' ])}
+            </div>
+            <div className={styles.inline}>
+              <Input
+                value={state.durationTo}
+                onChange={actions.setDurationTo}
+                label={t([ 'pidAdmin', 'generator', 'durationTo' ])}
+                error={t([ 'pidAdmin', 'generator', 'durationFromInvalid' ])}
+                type="number"
+              />
+              {t([ 'pidAdmin', 'generator', 'hours' ])}
+            </div>
 
-          <div className={styles.inline}>
-            <span className={styles.checkbox}>
-              <input type="checkbox" checked={state.internal} onChange={actions.toggleInternal} />
-              {t([ 'pidAdmin', 'generator', 'internal' ])}
-            </span>
-            <span className={styles.checkbox}>
-              <input type="checkbox" checked={!state.internal} onChange={actions.toggleInternal} />
-              {t([ 'pidAdmin', 'generator', 'host' ])}
-            </span>
-          </div>
+            <div className={styles.inline}>
+              <span className={styles.checkbox}>
+                <input type="checkbox" checked={state.internal} onChange={actions.toggleInternal} />
+                {t([ 'pidAdmin', 'generator', 'internal' ])}
+              </span>
+              <span className={styles.checkbox}>
+                <input type="checkbox" checked={!state.internal} onChange={actions.toggleInternal} />
+                {t([ 'pidAdmin', 'generator', 'host' ])}
+              </span>
+            </div>
 
-        </Form>
+          </Form>
+        </div>
       </PageBase>
     )
   }

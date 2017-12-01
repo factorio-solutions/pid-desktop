@@ -10,6 +10,7 @@ import * as generatorActions from '../../_shared/actions/pid-admin.generator.act
 import { t } from '../../_shared/modules/localization/localization'
 import * as nav from '../../_shared/helpers/navigation'
 
+import styles from './generator.page.scss'
 
 class PidAdminGeneratorGaragesPage extends Component {
   static propTypes = {
@@ -41,10 +42,12 @@ class PidAdminGeneratorGaragesPage extends Component {
 
     return (
       <PageBase>
-        <Form onSubmit={onSubmit} submitable={isSubmitable}>
-          <h1>{t([ 'pidAdmin', 'generator', 'selectGarages' ])}</h1>
-          <Table schema={schema} data={state.garages} />
-        </Form>
+        <div className={styles.marginBot}>
+          <Form onSubmit={onSubmit} submitable={isSubmitable} margin>
+            <h1>{t([ 'pidAdmin', 'generator', 'selectGarages' ])}</h1>
+            <Table schema={schema} data={state.garages} />
+          </Form>
+        </div>
       </PageBase>
     )
   }
