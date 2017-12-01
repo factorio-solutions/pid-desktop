@@ -1,15 +1,18 @@
 import request from '../helpers/requestAdmin'
+import * as nav from '../helpers/navigation'
 
 import {
   GET_PID_ADMIN_GARAGES,
   GET_PID_ADMIN_GARAGE_CLIENTS,
   GET_PID_ADMIN_GARAGE_CLIENTS_USERS,
-  PID_ADMIN_GENERATE_RESERVATION
+  PID_ADMIN_GENERATE_RESERVATION,
+  PID_ADMIN_REMOVE_RESERVATION
 } from '../queries/pid-admin.generator.queries'
 
 export const SET_PID_ADMIN_GENERATOR_GARAGES = 'SET_PID_ADMIN_GENERATOR_GARAGES'
 export const SET_PID_ADMIN_GENERATOR_CLIENTS = 'SET_PID_ADMIN_GENERATOR_CLIENTS'
 export const SET_PID_ADMIN_GENERATOR_USERS = 'SET_PID_ADMIN_GENERATOR_USERS'
+export const SET_PID_ADMIN_GENERATOR_RESERVATIONS = 'SET_PID_ADMIN_GENERATOR_RESERVATIONS'
 export const TOGGLE_PID_ADMIN_GENERATOR_GARAGE = 'TOGGLE_PID_ADMIN_GENERATOR_GARAGE'
 export const TOGGLE_PID_ADMIN_GENERATOR_CLIENT = 'TOGGLE_PID_ADMIN_GENERATOR_CLIENT'
 export const TOGGLE_PID_ADMIN_GENERATOR_USER = 'TOGGLE_PID_ADMIN_GENERATOR_USER'
@@ -64,6 +67,13 @@ export function setUsers(value) {
         return { ...user, selected: !!oldUser && oldUser.selected }
       })
     })
+  }
+}
+
+export function setReservations(value) {
+  return {
+    type: SET_PID_ADMIN_GENERATOR_RESERVATIONS,
+    value
   }
 }
 
@@ -229,6 +239,25 @@ export function generateReservations() {
       user_count:    state.createUsers ? state.userCount : null
     }
 
-    request(PID_ADMIN_GENERATE_RESERVATION, variables).then(data => console.log(data))
+    request(PID_ADMIN_GENERATE_RESERVATION, variables).then(data => {
+      dispatch(setReservations(data.generate_reservations.map(reservation => ({
+        ...reservation,
+        userName:   reservation.client.name,
+        clientName: reservation.user.full_name
+      }))))
+      nav.to('/pid-admin/generator/overview')
+    })
+  }
+}
+
+export function removeReservations() {
+  return (dispatch, getState) => {
+    const state = getState().pidAdminGenerator
+
+    request(PID_ADMIN_REMOVE_RESERVATION, {
+      recurring_reservations_id: state.reservations[0].recurring_reservation.id,
+      remove_users:              state.createUsers
+    })
+    .then(() => nav.to('/pid-admin/generator'))
   }
 }
