@@ -233,7 +233,7 @@ export function generateReservations() {
       day_to:        state.dayTo,
       duration_from: state.durationFrom,
       duration_to:   state.durationTo,
-      client_users:  !state.createUsers && state.users.filter(u => u.selected).map(u => ({ user_id: u.id, client_id: u.client_id })),
+      client_users:  !state.createUsers ? state.users.filter(u => u.selected).map(u => ({ user_id: u.id, client_id: u.client_id })) : null,
       internal:      state.internal,
       client_ids:    state.clients.filter(c => c.selected).map(c => c.id),
       user_count:    state.createUsers ? state.userCount : null
