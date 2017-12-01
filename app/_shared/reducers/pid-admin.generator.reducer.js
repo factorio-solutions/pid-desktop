@@ -5,6 +5,7 @@ import {
   SET_PID_ADMIN_GENERATOR_GARAGES,
   SET_PID_ADMIN_GENERATOR_CLIENTS,
   SET_PID_ADMIN_GENERATOR_USERS,
+  SET_PID_ADMIN_GENERATOR_RESERVATIONS,
   TOGGLE_PID_ADMIN_GENERATOR_GARAGE,
   TOGGLE_PID_ADMIN_GENERATOR_CLIENT,
   TOGGLE_PID_ADMIN_GENERATOR_USER,
@@ -27,7 +28,8 @@ const defaultState = {
   garages:      [],
   clients:      [],
   users:        [],
-  count:        100,
+  reservations: [],
+  count:        10,
   dateFrom:     formatDate(moment()),
   dateTo:       formatDate(moment().add(1, 'month')),
   days:         [],
@@ -69,6 +71,12 @@ export default function pidAdminGenerator(state = defaultState, action) {
       return {
         ...state,
         users: action.value
+      }
+
+    case SET_PID_ADMIN_GENERATOR_RESERVATIONS:
+      return {
+        ...state,
+        reservations: action.value
       }
 
     case TOGGLE_PID_ADMIN_GENERATOR_GARAGE:

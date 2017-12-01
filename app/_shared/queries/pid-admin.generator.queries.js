@@ -32,6 +32,22 @@ export const PID_ADMIN_GENERATE_RESERVATION = `mutation GenerateReservations($ga
     id
     begins_at
     ends_at
+    client{
+      name
+    }
+    user{
+      full_name
+    }
+    recurring_reservation{
+      id
+    }
+  }
+}
+`
+
+export const PID_ADMIN_REMOVE_RESERVATION = `mutation RemoveGeneratedReservations($recurring_reservations_id: Id!, $remove_users: Boolean!) {
+  remove_generated_reservations(recurring_reservations_id: $recurring_reservations_id, remove_users: $remove_users) {
+    id
   }
 }
 `

@@ -1205,7 +1205,12 @@
 			"clientName": "Client name",
 			"clientId": "Client id",
 			"selectAll": "Select all users",
-			"deselectAll": "Deselect all users"
+			"deselectAll": "Deselect all users",
+			"beginsAt": "from",
+			"endsAt": "to",
+			"userName": "user",
+			"removeReservations": "Remove reservations",
+			"keepReservations": "Keep reservations"
 		}
 
 	}

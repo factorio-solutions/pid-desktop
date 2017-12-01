@@ -48,17 +48,17 @@ class PidAdminGeneratorUsersPage extends Component {
     return (
       <PageBase>
         <Form onSubmit={actions.generateReservations} submitable={isSubmitable} onBack={onBack}>
-          <span>
+          {/*<span>
             <input type="checkbox" checked={!state.createUsers} onChange={actions.toggleCreateUsers} />
             {t([ 'pidAdmin', 'generator', 'selectUsers' ])}
-          </span>
+          </span>*/}
           <Table schema={schema} data={state.users} />
           <div>
             <CallToActionButton label={t([ 'pidAdmin', 'generator', 'selectAll' ])} onClick={actions.selectAllUsers} />
             <CallToActionButton label={t([ 'pidAdmin', 'generator', 'deselectAll' ])} onClick={actions.deselectAllUsers} />
           </div>
 
-          <h1 className={styles.center}>{t([ 'pidAdmin', 'generator', 'or' ])}</h1>
+          {/*<h1 className={styles.center}>{t([ 'pidAdmin', 'generator', 'or' ])}</h1>
 
           <span >
             <input type="checkbox" checked={state.createUsers} onChange={actions.toggleCreateUsers} />
@@ -68,7 +68,7 @@ class PidAdminGeneratorUsersPage extends Component {
             {t([ 'pidAdmin', 'generator', 'create' ])}
             <Input value={state.userCount} onChange={actions.setUsersCount} label={t([ 'pidAdmin', 'generator', 'count' ])} error={t([ 'pidAdmin', 'generator', 'countInvalid' ])} type="number" />
             {t([ 'pidAdmin', 'generator', 'users' ])}
-          </div>
+          </div>*/}
         </Form>
       </PageBase>
     )
