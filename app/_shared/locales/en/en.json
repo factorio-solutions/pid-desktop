@@ -1174,7 +1174,8 @@
 		},
 		"users": {
 			"id": "id",
-			"name":"name"
+			"name":"name",
+			"impersonate": "impersonate"
 		},
 		"generator": {
 			"selectGarages": "Select garages",
@@ -1212,6 +1213,5 @@
 			"removeReservations": "Remove reservations",
 			"keepReservations": "Keep reservations"
 		}
-
 	}
 }

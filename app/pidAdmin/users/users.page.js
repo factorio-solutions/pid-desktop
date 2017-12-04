@@ -1,22 +1,23 @@
-import React, { Component }   from 'react'
+import React, { Component, PropTypes }   from 'react'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import PageBase from '../../_shared/containers/adminPageBase/PageBase'
 import PaginatedTable from '../../_shared/components/table/PaginatedTable'
+import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
+import * as usersActions from '../../_shared/actions/pid-admin.users.actions'
 import { t } from '../../_shared/modules/localization/localization'
 
 
 class PidAdminDashboardPage extends Component {
-  static propTypes = {}
-
-  // componentDidMount() {
-  //   import request from '../../_shared/helpers/requestAdmin'
-  //   request('{ users { full_name } }').then(data => console.log(data))
-  // }
+  static propTypes = {
+    actions: PropTypes.object
+  }
 
   render() {
+    const { actions } = this.props
+
     const schema = [
       { key: 'id', title: t([ 'pidAdmin', 'users', 'id' ]), comparator: 'number', orderBy: 'id', sort: 'asc' },
       { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' }
@@ -30,7 +31,17 @@ class PidAdminDashboardPage extends Component {
     }
     `
 
-    const transformData = data => data.users
+    const transformData = data => data.users.map(user => ({
+      ...user,
+      spoiler: <div>
+        <LabeledRoundButton
+          label={t([ 'pidAdmin', 'users', 'impersonate' ])}
+          content={<span className="fa fa-user-secret" aria-hidden="true" />}
+          onClick={() => actions.impersonate(user.id)}
+          type="action"
+        />
+      </div>
+    }))
 
     return (
       <PageBase>
@@ -42,5 +53,5 @@ class PidAdminDashboardPage extends Component {
 
 export default connect(
   state => ({ state }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators({}, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
+  dispatch => ({ actions: bindActionCreators(usersActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
 )(PidAdminDashboardPage)

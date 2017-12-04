@@ -20,12 +20,18 @@ import styles from './login.page.scss'
 
 class LoginPage extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    location: PropTypes.object
   }
 
   componentDidMount() {
     new Fingerprint2().get(this.props.actions.setDeviceFingerprint)
+    if (this.props.location && this.props.location.query && this.props.location.query.token) {
+      localStorage.jwt = this.props.location.query.token
+      this.props.actions.resetStore()
+      nav.to('/dashboard')
+    }
   }
 
   render() {
