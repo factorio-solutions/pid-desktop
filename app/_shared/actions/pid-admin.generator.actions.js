@@ -108,8 +108,8 @@ export function deselectAllUsers() {
 
 export function setCount(value) {
   return {
-    type: SET_PID_ADMIN_GENERATOR_COUNT,
-    value
+    type:  SET_PID_ADMIN_GENERATOR_COUNT,
+    value: parseInt(value, 10)
   }
 }
 
