@@ -31,7 +31,7 @@ class PidAdminGeneratorGaragesPage extends Component {
   }
 
   garageOnClick(id) {
-    return () => this.props.m.toggleGarage(id)
+    return () => this.props.actions.toggleGarage(id)
   }
 
   render() {

@@ -48,7 +48,7 @@ class PidAdminGeneratorClientsPage extends Component {
       { key:         'id',
         title:       t([ 'pidAdmin', 'generator', 'selected' ]),
         comparator:  'boolean',
-        representer: o => <input type="checkbox" checked={state.clients.findById(o).selected} onChange={this.onClientClick.clientCheck(o)} />
+        representer: o => <input type="checkbox" checked={state.clients.findById(o).selected} onChange={this.onClientClick(o)} />
       },
       { key: 'id', title: t([ 'pidAdmin', 'generator', 'id' ]), comparator: 'number', sort: 'asc' },
       { key: 'name', title: t([ 'pidAdmin', 'generator', 'name' ]), comparator: 'string' }
