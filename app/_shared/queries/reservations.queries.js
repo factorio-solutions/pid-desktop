@@ -59,8 +59,8 @@ export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
 `
 
 // get all reservations query pagination compatibile
-export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($past: Boolean, $count: Int, $page: Int, $order_by: String, $includes: String) {
-  reservations(past: $past, count: $count, page: $page, order_by: $order_by, includes: $includes) {
+export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($past: Boolean, $count: Int, $page: Int, $order_by: String, $includes: String, $search: Hash) {
+  reservations(past: $past, count: $count, page: $page, order_by: $order_by, includes: $includes, search: $search) {
     id
     reservation_case
     invoice_item {

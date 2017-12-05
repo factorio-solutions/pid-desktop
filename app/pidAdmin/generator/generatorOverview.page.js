@@ -18,6 +18,10 @@ class PidAdminGeneratorOverviewPage extends Component {
     actions: PropTypes.object
   }
 
+  keepOnClick() {
+    nav.to('/pid-admin/generator')
+  }
+
   render() {
     const { state, actions } = this.props
 
@@ -29,7 +33,7 @@ class PidAdminGeneratorOverviewPage extends Component {
       { key: 'clientName', title: t([ 'pidAdmin', 'generator', 'clientName' ]), comparator: 'string' }
     ]
 
-    const onKeepClick = () => nav.to('/pid-admin/generator')
+    // const onKeepClick = () => nav.to('/pid-admin/generator')
 
     return (
       <PageBase>
@@ -43,7 +47,7 @@ class PidAdminGeneratorOverviewPage extends Component {
           />
           <CallToActionButton
             label={t([ 'pidAdmin', 'generator', 'keepReservations' ])}
-            onClick={onKeepClick}
+            onClick={this.keepOnClick}
           />
         </div>
       </PageBase>

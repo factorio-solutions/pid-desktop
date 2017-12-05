@@ -25,16 +25,29 @@ class PidAdminGeneratorUsersPage extends Component {
     this.props.actions.initUsers()
   }
 
+  onBack() {
+    nav.to('/pid-admin/generator/reservations')
+  }
+
+  userOnClick(id) {
+    return () => this.props.actions.toggleUser(id)
+  }
+
+  isSubmitable() {
+    const { state } = this.props
+    return state.createUsers ? !isNaN(state.userCount) : state.users.filter(u => u.selected).length
+  }
+
   render() {
     const { state, actions } = this.props
 
-    const userCheck = id => () => actions.toggleUser(id)
+    // const userCheck = id => () => actions.toggleUser(id)
 
     const schema = [
       { key:         'id',
         title:       t([ 'pidAdmin', 'generator', 'selected' ]),
         comparator:  'boolean',
-        representer: o => <input type="checkbox" checked={state.users.findById(o).selected} onChange={userCheck(o)} />
+        representer: o => <input type="checkbox" checked={state.users.findById(o).selected} onChange={this.userOnClick(o)} />
       },
       { key: 'id', title: t([ 'pidAdmin', 'generator', 'id' ]), comparator: 'number', sort: 'asc' },
       { key: 'full_name', title: t([ 'pidAdmin', 'generator', 'name' ]), comparator: 'string' },
@@ -42,13 +55,13 @@ class PidAdminGeneratorUsersPage extends Component {
       { key: 'client_name', title: t([ 'pidAdmin', 'generator', 'clientId' ]), comparator: 'string' }
     ]
 
-    const onBack = () => nav.to('/pid-admin/generator/reservations')
-    const isSubmitable = state.createUsers ? !isNaN(state.userCount) : state.users.filter(u => u.selected).length
+    // const onBack = () => nav.to('/pid-admin/generator/reservations')
+    // const isSubmitable = state.createUsers ? !isNaN(state.userCount) : state.users.filter(u => u.selected).length
 
     return (
       <PageBase>
         <div className={styles.marginBot}>
-          <Form onSubmit={actions.generateReservations} submitable={isSubmitable} onBack={onBack}>
+          <Form onSubmit={actions.generateReservations} submitable={this.isSubmitable()} onBack={this.onBack}>
             <span>
               <input type="checkbox" checked={!state.createUsers} onChange={actions.toggleCreateUsers} />
               {t([ 'pidAdmin', 'generator', 'selectUsers' ])}

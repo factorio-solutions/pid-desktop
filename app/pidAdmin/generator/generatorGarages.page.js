@@ -22,28 +22,40 @@ class PidAdminGeneratorGaragesPage extends Component {
     this.props.actions.initGarages()
   }
 
-  render() {
-    const { state, actions } = this.props
+  onSubmit() {
+    nav.to('/pid-admin/generator/clients')
+  }
 
-    const garageCheck = id => () => actions.toggleGarage(id)
+  isSubmitable() {
+    return !!this.props.state.garages.filter(g => g.selected).length
+  }
+
+  garageOnClick(id) {
+    return () => this.props.m.toggleGarage(id)
+  }
+
+  render() {
+    const { state } = this.props
+
+    // const garageCheck = id => () => actions.toggleGarage(id)
 
     const schema = [
       { key:         'id',
         title:       t([ 'pidAdmin', 'generator', 'selected' ]),
         comparator:  'boolean',
-        representer: o => <input type="checkbox" checked={state.garages.findById(o).selected} onChange={garageCheck(o)} />
+        representer: o => <input type="checkbox" checked={state.garages.findById(o).selected} onChange={this.garageOnClick(o)} />
       },
       { key: 'id', title: t([ 'pidAdmin', 'generator', 'id' ]), comparator: 'number', sort: 'asc' },
       { key: 'name', title: t([ 'pidAdmin', 'generator', 'name' ]), comparator: 'string' }
     ]
 
-    const onSubmit = () => nav.to('/pid-admin/generator/clients')
-    const isSubmitable = !!state.garages.filter(g => g.selected).length
+    // const onSubmit = () => nav.to('/pid-admin/generator/clients')
+    // const isSubmitable = !!state.garages.filter(g => g.selected).length
 
     return (
       <PageBase>
         <div className={styles.marginBot}>
-          <Form onSubmit={onSubmit} submitable={isSubmitable} margin>
+          <Form onSubmit={this.onSubmit} submitable={this.isSubmitable()} margin>
             <h1>{t([ 'pidAdmin', 'generator', 'selectGarages' ])}</h1>
             <Table schema={schema} data={state.garages} />
           </Form>

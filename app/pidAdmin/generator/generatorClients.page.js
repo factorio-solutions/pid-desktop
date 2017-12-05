@@ -23,29 +23,45 @@ class PidAdminGeneratorClientsPage extends Component {
     this.props.actions.initClients()
   }
 
+  onClientClick(id) {
+    return () => this.props.actions.toggleClient(id)
+  }
+
+  onSubmit() {
+    nav.to('/pid-admin/generator/reservations')
+  }
+
+  onBack() {
+    nav.to('/pid-admin/generator')
+  }
+
+  isSubmitable() {
+    return this.props.state.clients.filter(c => c.selected).length
+  }
+
   render() {
     const { state, actions } = this.props
 
-    const clientCheck = id => () => actions.toggleClient(id)
+    // const clientCheck = id => () => actions.toggleClient(id)
 
     const schema = [
       { key:         'id',
         title:       t([ 'pidAdmin', 'generator', 'selected' ]),
         comparator:  'boolean',
-        representer: o => <input type="checkbox" checked={state.clients.findById(o).selected} onChange={clientCheck(o)} />
+        representer: o => <input type="checkbox" checked={state.clients.findById(o).selected} onChange={this.onClientClick.clientCheck(o)} />
       },
       { key: 'id', title: t([ 'pidAdmin', 'generator', 'id' ]), comparator: 'number', sort: 'asc' },
       { key: 'name', title: t([ 'pidAdmin', 'generator', 'name' ]), comparator: 'string' }
     ]
 
-    const onSubmit = () => nav.to('/pid-admin/generator/reservations')
-    const onBack = () => nav.to('/pid-admin/generator')
-    const isSubmitable = !!state.clients.filter(c => c.selected).length
+    // const onSubmit = () => nav.to('/pid-admin/generator/reservations')
+    // const onBack = () => nav.to('/pid-admin/generator')
+    // const isSubmitable = !!state.clients.filter(c => c.selected).length
 
     return (
       <PageBase>
         <div className={styles.marginBot}>
-          <Form onSubmit={onSubmit} submitable={isSubmitable} onBack={onBack} margin>
+          <Form onSubmit={this.onSubmit} submitable={this.isSubmitable()} onBack={this.onBack} margin>
             <h1>{t([ 'pidAdmin', 'generator', 'selectClients' ])}</h1>
             <Table schema={schema} data={state.clients} />
           </Form>

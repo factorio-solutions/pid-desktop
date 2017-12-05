@@ -8,6 +8,7 @@ import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundBut
 
 import * as usersActions from '../../_shared/actions/pid-admin.users.actions'
 import { t } from '../../_shared/modules/localization/localization'
+import { USERS_PAGINATED_TABLE } from '../../_shared/queries/pid-admin.users.queries'
 
 
 class PidAdminDashboardPage extends Component {
@@ -23,14 +24,6 @@ class PidAdminDashboardPage extends Component {
       { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' }
     ]
 
-    const query = `query Users($count: Int, $page: Int, $order_by: String, $includes: String) {
-      users(count: $count, page: $page, order_by: $order_by, includes: $includes) {
-        id
-        full_name
-      }
-    }
-    `
-
     const transformData = data => data.users.map(user => ({
       ...user,
       spoiler: <div>
@@ -45,7 +38,7 @@ class PidAdminDashboardPage extends Component {
 
     return (
       <PageBase>
-        <PaginatedTable query={query} schema={schema} transformData={transformData} admin />
+        <PaginatedTable query={USERS_PAGINATED_TABLE} schema={schema} transformData={transformData} admin />
       </PageBase>
     )
   }
