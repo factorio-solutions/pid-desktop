@@ -129,7 +129,7 @@ export class OccupancyOverview extends Component {
     const { places, leftClick, rightClick, dayClick, weekClick, monthClick, resetClientClick, loading } = this.props
 
     const prepareDates = () => {
-      const length = this.props.duration === 'day' ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS
+      const length = this.props.duration === 'day' ? DAY : this.props.duration === 'week' ? WEEK_DAYS : MONTH_DAYS
       const days = []
       for (let i = 0; i < length; i++) {
         // if (this.props.duration === 'month'){
@@ -187,13 +187,18 @@ export class OccupancyOverview extends Component {
       return places.sort(sorter).map(place => {
         const prepareRow = () => {
           const row = []
-          const length = (this.props.duration === 'day' ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
+          const daySelected = this.props.duration === 'day'
+          const length = (daySelected ? DAY * 12 : this.props.duration === 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
           for (let i = 0; i < length; i++) {
-            const weekday = moment(this.props.from).locale(moment.locale()).add(Math.floor(i / 2), 'days').isoWeekday()
+            const weekday = moment(this.props.from).locale(moment.locale()).add(Math.floor(daySelected ? 1 : i / 2), 'days').isoWeekday()
             const tdStyles = [
+              styles.relative,
               weekday === 6 || weekday === 7 ? styles.weekend : '',
-              (i) % (2) == 1 ? styles.rightBorder : '',
-              (i) % (2) == 0 ? styles.rightBorderDotted : ''
+              !daySelected && (i) % (2) === 1 ? styles.rightBorder : '',
+              !daySelected && (i) % (2) === 0 ? styles.rightBorderDotted : '',
+              daySelected && styles.rightBorderDotted : '',
+              daySelected && ((i + 1) % (6)) - 3 === 0 ? styles.rightBorder : '',
+              daySelected && (i + 1) % (6) === 0 ? styles.boldBorder : ''
             ]
             row.push(<td key={i} className={tdStyles.join(' ')} />)
           }
