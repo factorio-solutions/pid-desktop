@@ -589,6 +589,8 @@
 		"phone": "Numer telefonu",
 		"memberSince": "Członek od",
 		"active": "Aktywny",
+		"notActive": "PL: users.notActive",
+		"notConfimed": "PL: users.notConfimed",
 		"pending": "Oczekujące",
 		"allKnownUsers": "Wszyscy znani użytkownicy",
 		"pendingInvitations": "Oczekujące zaproszenia",
@@ -1162,6 +1164,55 @@
 			"place": "Miejsce:",
 			"from": "Od:",
 			"to": "Do:"
+		}
+	},
+	"pidAdmin": {
+		"pageBase": {
+			"backToPid": "PL: pidAdmin.pageBase.backToPid",
+			"adminMode": "PL: pidAdmin.pageBase.adminMode",
+			"generator": "PL: pidAdmin.pageBase.generator"
+		},
+		"users": {
+			"id": "PL: pidAdmin.users.id",
+			"name": "PL: pidAdmin.users.name",
+			"impersonate": "PL: pidAdmin.users.impersonate",
+			"lastActive": "PL: pidAdmin.users.lastActive"
+		},
+		"generator": {
+			"selectGarages": "PL: pidAdmin.generator.selectGarages",
+			"selected": "PL: pidAdmin.generator.selected",
+			"id": "PL: pidAdmin.generator.id",
+			"name": "PL: pidAdmin.generator.name",
+			"selectClients": "PL: pidAdmin.generator.selectClients",
+			"selectUsers": "PL: pidAdmin.generator.selectUsers",
+			"generateReservations": "PL: pidAdmin.generator.generateReservations",
+			"count": "PL: pidAdmin.generator.count",
+			"countInvalid": "PL: pidAdmin.generator.countInvalid",
+			"dateFrom": "PL: pidAdmin.generator.dateFrom",
+			"dateTo": "PL: pidAdmin.generator.dateTo",
+			"dateInvalid": "PL: pidAdmin.generator.dateInvalid",
+			"dayFrom": "PL: pidAdmin.generator.dayFrom",
+			"dayTo": "PL: pidAdmin.generator.dayTo",
+			"dayFromInvalid": "PL: pidAdmin.generator.dayFromInvalid",
+			"durationFrom": "PL: pidAdmin.generator.durationFrom",
+			"durationTo": "PL: pidAdmin.generator.durationTo",
+			"durationFromInvalid": "PL: pidAdmin.generator.durationFromInvalid",
+			"internal": "PL: pidAdmin.generator.internal",
+			"host": "PL: pidAdmin.generator.host",
+			"hours": "PL: pidAdmin.generator.hours",
+			"or": "PL: pidAdmin.generator.or",
+			"createUsers": "PL: pidAdmin.generator.createUsers",
+			"create": "PL: pidAdmin.generator.create",
+			"users": "PL: pidAdmin.generator.users",
+			"clientName": "PL: pidAdmin.generator.clientName",
+			"clientId": "PL: pidAdmin.generator.clientId",
+			"selectAll": "PL: pidAdmin.generator.selectAll",
+			"deselectAll": "PL: pidAdmin.generator.deselectAll",
+			"beginsAt": "PL: pidAdmin.generator.beginsAt",
+			"endsAt": "PL: pidAdmin.generator.endsAt",
+			"userName": "PL: pidAdmin.generator.userName",
+			"removeReservations": "PL: pidAdmin.generator.removeReservations",
+			"keepReservations": "PL: pidAdmin.generator.keepReservations"
 		}
 	}
 }

@@ -589,6 +589,8 @@
 		"phone": "Telefonnummer",
 		"memberSince": "Mitglied seit",
 		"active": "aktiv",
+		"notActive": "DE: users.notActive",
+		"notConfimed": "DE: users.notConfimed",
 		"pending": "Bestätigung ausstehend",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"pendingInvitations": "Nicht bestätigte Einladungen",
@@ -1162,6 +1164,55 @@
 			"place": "DE: railsEmails.reservation_confirmed.place",
 			"from": "DE: railsEmails.reservation_confirmed.from",
 			"to": "DE: railsEmails.reservation_confirmed.to"
+		}
+	},
+	"pidAdmin": {
+		"pageBase": {
+			"backToPid": "DE: pidAdmin.pageBase.backToPid",
+			"adminMode": "DE: pidAdmin.pageBase.adminMode",
+			"generator": "DE: pidAdmin.pageBase.generator"
+		},
+		"users": {
+			"id": "DE: pidAdmin.users.id",
+			"name": "DE: pidAdmin.users.name",
+			"impersonate": "DE: pidAdmin.users.impersonate",
+			"lastActive": "DE: pidAdmin.users.lastActive"
+		},
+		"generator": {
+			"selectGarages": "DE: pidAdmin.generator.selectGarages",
+			"selected": "DE: pidAdmin.generator.selected",
+			"id": "DE: pidAdmin.generator.id",
+			"name": "DE: pidAdmin.generator.name",
+			"selectClients": "DE: pidAdmin.generator.selectClients",
+			"selectUsers": "DE: pidAdmin.generator.selectUsers",
+			"generateReservations": "DE: pidAdmin.generator.generateReservations",
+			"count": "DE: pidAdmin.generator.count",
+			"countInvalid": "DE: pidAdmin.generator.countInvalid",
+			"dateFrom": "DE: pidAdmin.generator.dateFrom",
+			"dateTo": "DE: pidAdmin.generator.dateTo",
+			"dateInvalid": "DE: pidAdmin.generator.dateInvalid",
+			"dayFrom": "DE: pidAdmin.generator.dayFrom",
+			"dayTo": "DE: pidAdmin.generator.dayTo",
+			"dayFromInvalid": "DE: pidAdmin.generator.dayFromInvalid",
+			"durationFrom": "DE: pidAdmin.generator.durationFrom",
+			"durationTo": "DE: pidAdmin.generator.durationTo",
+			"durationFromInvalid": "DE: pidAdmin.generator.durationFromInvalid",
+			"internal": "DE: pidAdmin.generator.internal",
+			"host": "DE: pidAdmin.generator.host",
+			"hours": "DE: pidAdmin.generator.hours",
+			"or": "DE: pidAdmin.generator.or",
+			"createUsers": "DE: pidAdmin.generator.createUsers",
+			"create": "DE: pidAdmin.generator.create",
+			"users": "DE: pidAdmin.generator.users",
+			"clientName": "DE: pidAdmin.generator.clientName",
+			"clientId": "DE: pidAdmin.generator.clientId",
+			"selectAll": "DE: pidAdmin.generator.selectAll",
+			"deselectAll": "DE: pidAdmin.generator.deselectAll",
+			"beginsAt": "DE: pidAdmin.generator.beginsAt",
+			"endsAt": "DE: pidAdmin.generator.endsAt",
+			"userName": "DE: pidAdmin.generator.userName",
+			"removeReservations": "DE: pidAdmin.generator.removeReservations",
+			"keepReservations": "DE: pidAdmin.generator.keepReservations"
 		}
 	}
 }
