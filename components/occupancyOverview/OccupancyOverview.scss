@@ -82,6 +82,16 @@
   background: $lightGray;
 }
 
+.times{
+  >td{
+    text-align: center;
+
+    &.bold{
+      font-weight: bold;
+    }
+  }
+}
+
 .reservationDiv{
   position: absolute;
   height: calc(100% - 4px);
