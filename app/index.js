@@ -20,9 +20,9 @@ export const adminEntryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:
 
 const history = syncHistoryWithStore(hashHistory, store)
 
-if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
-  window.moment = require('moment')
-}
+// if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
+//   window.moment = require('moment')
+// }
 
 render(
   <Provider store={store}>

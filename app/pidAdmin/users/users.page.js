@@ -1,6 +1,7 @@
 import React, { Component, PropTypes }   from 'react'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import PageBase from '../../_shared/containers/adminPageBase/PageBase'
 import PaginatedTable from '../../_shared/components/table/PaginatedTable'
