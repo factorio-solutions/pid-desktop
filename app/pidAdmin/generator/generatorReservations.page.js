@@ -37,7 +37,7 @@ class PidAdminGeneratorReservationsPage extends Component {
 
     const createDayNames = (d, index) => {
       const day = moment().weekday(index)
-      return { name: moment(['2015','07',13+index].join('-')).format('dd'), index: day.weekday() }
+      return { name: moment(['2015','07',12+index].join('-')).format('dd'), index: day.weekday() }
     }
 
     const toCheckbox = day => {
