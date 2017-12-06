@@ -1174,7 +1174,9 @@
 		},
 		"users": {
 			"id": "id",
-			"name":"name"
+			"name":"name",
+			"impersonate": "impersonate",
+			"lastActive": "last active"
 		},
 		"generator": {
 			"selectGarages": "Select garages",

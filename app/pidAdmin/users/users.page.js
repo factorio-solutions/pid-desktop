@@ -6,35 +6,29 @@ import PageBase from '../../_shared/containers/adminPageBase/PageBase'
 import PaginatedTable from '../../_shared/components/table/PaginatedTable'
 
 import { t } from '../../_shared/modules/localization/localization'
+import { USERS_PAGINATED_TABLE } from '../../_shared/queries/pid-admin.users.queries'
 
 
 class PidAdminDashboardPage extends Component {
   static propTypes = {}
 
-  // componentDidMount() {
-  //   import request from '../../_shared/helpers/requestAdmin'
-  //   request('{ users { full_name } }').then(data => console.log(data))
-  // }
-
   render() {
     const schema = [
       { key: 'id', title: t([ 'pidAdmin', 'users', 'id' ]), comparator: 'number', orderBy: 'id', sort: 'asc' },
-      { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' }
-    ]
-
-    const query = `query Users($count: Int, $page: Int, $order_by: String, $includes: String) {
-      users(count: $count, page: $page, order_by: $order_by, includes: $includes) {
-        id
-        full_name
+      { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' },
+      { key:         'last_active',
+        title:       t([ 'pidAdmin', 'users', 'lastActive' ]),
+        comparator:  'date',
+        representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
+        orderBy:     'last_active'
       }
-    }
-    `
+    ]
 
     const transformData = data => data.users
 
     return (
       <PageBase>
-        <PaginatedTable query={query} schema={schema} transformData={transformData} admin />
+        <PaginatedTable query={USERS_PAGINATED_TABLE} schema={schema} transformData={transformData} admin />
       </PageBase>
     )
   }
