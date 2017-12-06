@@ -101,7 +101,7 @@ class NewReservationPage extends Component {
         const findPlace = place => { return place.id == state.place_id }
         const floor = state.garage && state.garage.floors.find(floor => { return floor.places.find(findPlace) != undefined })
         const place = floor && floor.places.find(findPlace)
-        return floor && place ? `${floor.label} / ${place.label}` : ''
+        return floor && place ? `${floor.label} / ${place.label}` : t([ 'newReservation', 'noFreePlace' ])
       }
     }
 

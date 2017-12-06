@@ -222,7 +222,8 @@
 		"hostsPhone": "Guest phone",
 		"hostsEmail": "Guest email",
 		"selectedUser": "User",
-		"flexiblePlaceSelected": "flexible"
+		"flexiblePlaceSelected": "flexible",
+		"noFreePlace": "No free place"
 	},
 	"clients": {
 		"name": "name",

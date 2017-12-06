@@ -222,7 +222,8 @@
 		"hostsPhone": "Hostův telefon",
 		"hostsEmail": "Hostův email",
 		"selectedUser": "Uživatel",
-		"flexiblePlaceSelected": "flexibilní"
+		"flexiblePlaceSelected": "flexibilní",
+		"noFreePlace": "Žádná volná místa"
 	},
 	"clients": {
 		"name": "jméno",
