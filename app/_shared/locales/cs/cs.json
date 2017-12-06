@@ -589,6 +589,8 @@
 		"phone": "Telefonní číslo",
 		"memberSince": "Členem od",
 		"active": "Aktivní",
+		"notActive": "CS: users.notActive",
+		"notConfimed": "CS: users.notConfimed",
 		"pending": "Čekající",
 		"allKnownUsers": "Všichni známí uživatelé",
 		"pendingInvitations": "Čekající pozvánky",
@@ -1162,6 +1164,55 @@
 			"place": "Místo:",
 			"from": "Od:",
 			"to": "Do:"
+		}
+	},
+	"pidAdmin": {
+		"pageBase": {
+			"backToPid": "do PID",
+			"adminMode": "ADMIN MODE PARK-IT-DIRECTU",
+			"generator": "Generátor"
+		},
+		"users": {
+			"id": "id",
+			"name": "jméno",
+			"impersonate": "ztělesnit",
+			"lastActive": "naposledy aktivní"
+		},
+		"generator": {
+			"selectGarages": "Zvolte garáž",
+			"selected": "zvoleno",
+			"id": "id",
+			"name": "jméno",
+			"selectClients": "Zvolte klienta",
+			"selectUsers": "Zvolte uživatele",
+			"generateReservations": "Generovat rezervace",
+			"count": "Počet",
+			"countInvalid": "Špatný počet",
+			"dateFrom": "Datum od",
+			"dateTo": "Datum do",
+			"dateInvalid": "Datum neplatné",
+			"dayFrom": "Den od",
+			"dayTo": "Den do",
+			"dayFromInvalid": "Číslo neplatné",
+			"durationFrom": "Délka od",
+			"durationTo": "Délka do",
+			"durationFromInvalid": "Délka neplatná",
+			"internal": "Interní",
+			"host": "Host",
+			"hours": "hodin",
+			"or": "NEBO",
+			"createUsers": "Vytvořit uživatele",
+			"create": "Vytvořit",
+			"users": "uživatelů.",
+			"clientName": "Klientské jméno",
+			"clientId": "Klientské id",
+			"selectAll": "Vybrat všechny uživatele",
+			"deselectAll": "Odebrat všechny uživatele",
+			"beginsAt": "od",
+			"endsAt": "do",
+			"userName": "uživatel",
+			"removeReservations": "Smazat rezervace",
+			"keepReservations": "Ponechat rezervace"
 		}
 	}
 }
