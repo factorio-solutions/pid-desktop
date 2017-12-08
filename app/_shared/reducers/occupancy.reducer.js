@@ -8,50 +8,58 @@ import {
   OCCUPANCY_SET_LOADING
 }  from '../actions/occupancy.actions'
 
-const defaultState =  { garage:     undefined // current one
-                      , clients:    []
-                      , client_id:  undefined
-                      , duration:   "week"
-                      , from:       moment().startOf('day')
-                      , loading:    false
-                      }
+const defaultState = {
+  garage:     undefined, // current one
+  clients:    [],
+  client_ids: [],
+  duration:   'week',
+  from:       moment().startOf('day'),
+  loading:    false
+}
 
 
-export default function occupancy (state = defaultState, action) {
+export default function occupancy(state = defaultState, action) {
   switch (action.type) {
 
     case OCCUPANCY_SET_GARAGE:
-    return  { ...state
-            , garage: action.value
-            }
+      return { ...state,
+        garage:  action.value,
+        loading: false
+      }
 
     case OCCUPANCY_SET_CLIENTS:
-    return  { ...state
-            , clients: action.value
-            }
+      return { ...state,
+        clients: action.value
+      }
 
-    case OCCUPANCY_SET_CLIENT_ID:
-    return  { ...state
-            , client_id: action.value
-            , loading: true
-            }
+    case OCCUPANCY_SET_CLIENT_ID: {
+      const indexOf = state.client_ids.indexOf(action.value)
+      return { ...state,
+        client_ids: action.value === undefined ?
+          [] :
+          indexOf > -1 ?
+            [ ...state.client_ids.slice(0, indexOf), ...state.client_ids.slice(indexOf + 1) ] :
+            [ ...state.client_ids, action.value ].sort((a, b) => a > b),
+        loading: true
+      }
+    }
 
     case OCCUPANCY_SET_DURATION:
-    return  { ...state
-            , duration: action.value
-            , loading: true
-            }
+      return { ...state,
+        duration: action.value,
+        loading:  true
+      }
 
     case OCCUPANCY_SET_FROM:
-    return  { ...state
-            , from: action.value
-            , loading: true
-            }
+      return { ...state,
+        from:    action.value,
+        loading: true
+      }
 
     case OCCUPANCY_SET_LOADING:
-    return  { ...state
-            , loading: action.value
-            }
+      return { ...state,
+        loading: action.value
+      }
 
     default:
       return state

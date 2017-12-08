@@ -13,9 +13,13 @@ import { USERS_PAGINATED_TABLE } from '../../_shared/queries/pid-admin.users.que
 
 
 class PidAdminDashboardPage extends Component {
-  static propTypes = {}
+  static propTypes = {
+    actions: PropTypes.object
+  }
 
   render() {
+    const { actions } = this.props
+
     const schema = [
       { key: 'id', title: t([ 'pidAdmin', 'users', 'id' ]), comparator: 'number', orderBy: 'id', sort: 'asc' },
       { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' },
@@ -27,7 +31,17 @@ class PidAdminDashboardPage extends Component {
       }
     ]
 
-    const transformData = data => data.users
+    const transformData = data => data.users.map(user => ({
+      ...user,
+      spoiler: <div>
+        <LabeledRoundButton
+          label={t([ 'pidAdmin', 'users', 'impersonate' ])}
+          content={<span className="fa fa-user-secret" aria-hidden="true" />}
+          onClick={() => actions.impersonate(user.id)}
+          type="action"
+        />
+      </div>
+    }))
 
     return (
       <PageBase>
