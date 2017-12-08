@@ -1171,7 +1171,8 @@
 		"pageBase": {
 			"backToPid": "to PID",
 			"adminMode": "ADMIN MODE OF PARK-IT-DIRECT",
-			"generator": "Generator"
+			"generator": "Generator",
+			"news": "News"
 		},
 		"users": {
 			"id": "id",
@@ -1214,6 +1215,14 @@
 			"userName": "user",
 			"removeReservations": "Remove reservations",
 			"keepReservations": "Keep reservations"
+		},
+		"news":{
+			"label": "label",
+			"url": "url",
+			"id": "id",
+			"createdAt": "created at",
+			"editNews": "edit news",
+			"deleteNews": "delete news"
 		}
 	}
 }
