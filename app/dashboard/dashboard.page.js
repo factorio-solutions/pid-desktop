@@ -64,7 +64,7 @@ class DashboardPage extends Component {
     const { state, pageBase, analytics, logs, actions, analyticsActions, logsActions, pageBaseActions } = this.props
 
     const prepareNews = news => (<div className={styles.news}>
-      {news.url ? <a href={news.url}>{news.label}</a> : news.label}
+      { news.url ? <a href={news.url}><div dangerouslySetInnerHTML={{ __html: news.label }} /></a> : <div dangerouslySetInnerHTML={{ __html: news.label }} />}
       <span>{moment(news.created_at).format('DD.MM. HH:mm')}</span>
     </div>)
 
