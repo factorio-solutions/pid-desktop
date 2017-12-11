@@ -21,12 +21,17 @@ class PidAdminGeneratorReservationsPage extends Component {
     actions: PropTypes.object
   }
 
-  render() {
-    const { state, actions } = this.props
+  onBack() {
+    nav.to('/pid-admin/generator/clients')
+  }
 
-    const onBack = () => nav.to('/pid-admin/generator/clients')
-    const onSubmit = () => nav.to('/pid-admin/generator/users')
-    const isSubmitable = state.count &&
+  onSubmit() {
+    nav.to('/pid-admin/generator/users')
+  }
+
+  isSubmitable() {
+    const { state } = this.props
+    return state.count &&
       state.dateFrom &&
       state.dateTo &&
       state.days.length &&
@@ -34,10 +39,25 @@ class PidAdminGeneratorReservationsPage extends Component {
       !isNaN(state.dayTo) &&
       !isNaN(state.durationFrom) &&
       !isNaN(state.durationTo)
+  }
+
+  render() {
+    const { state, actions } = this.props
+
+    // const onBack = () => nav.to('/pid-admin/generator/clients')
+    // const onSubmit = () => nav.to('/pid-admin/generator/users')
+    // const isSubmitable = state.count &&
+    //   state.dateFrom &&
+    //   state.dateTo &&
+    //   state.days.length &&
+    //   !isNaN(state.dayFrom) &&
+    //   !isNaN(state.dayTo) &&
+    //   !isNaN(state.durationFrom) &&
+    //   !isNaN(state.durationTo)
 
     const createDayNames = (d, index) => {
       const day = moment().weekday(index)
-      return { name: moment(['2015','07',12+index].join('-')).format('dd'), index: day.weekday() }
+      return { name: moment([ '2015', '07', 13 + index ].join('-')).format('dd'), index: day.weekday() }
     }
 
     const toCheckbox = day => {
@@ -49,7 +69,7 @@ class PidAdminGeneratorReservationsPage extends Component {
       <PageBase>
         <div className={styles.marginBot}>
           <h1>{t([ 'pidAdmin', 'generator', 'generateReservations' ])}</h1>
-          <Form onSubmit={onSubmit} submitable={isSubmitable} onBack={onBack} margin>
+          <Form onSubmit={this.onSubmit} submitable={this.isSubmitable()} onBack={this.onBack} margin>
             <Input value={state.count} onChange={actions.setCount} label={t([ 'pidAdmin', 'generator', 'count' ])} error={t([ 'pidAdmin', 'generator', 'countInvalid' ])} type="number" />
 
             <DateInput value={state.dateFrom} onChange={actions.setDateFrom} label={t([ 'pidAdmin', 'generator', 'dateFrom' ])} error={t([ 'pidAdmin', 'generator', 'dateInvalid' ])} />
