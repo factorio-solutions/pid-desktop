@@ -9,7 +9,8 @@ export const USERS_PAGINATED_TABLE = `query Users($count: Int, $page: Int, $orde
   users(count: $count, page: $page, order_by: $order_by, includes: $includes, search: $search) {
     id
     full_name
-		last_active
+    last_active
+    email
   }
 }
 `

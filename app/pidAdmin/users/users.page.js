@@ -23,6 +23,7 @@ class PidAdminDashboardPage extends Component {
     const schema = [
       { key: 'id', title: t([ 'pidAdmin', 'users', 'id' ]), comparator: 'number', orderBy: 'id', sort: 'asc' },
       { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' },
+      { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string', orderBy: 'email' },
       { key:         'last_active',
         title:       t([ 'pidAdmin', 'users', 'lastActive' ]),
         comparator:  'date',
