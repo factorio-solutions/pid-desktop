@@ -104,7 +104,7 @@ class DashboardPage extends Component {
                     options={{
                       chartArea: {
                         top:    10,
-                        height: '90%',
+                        height: '85%',
                         width:  '95%'
                       },
                       legend: {
