@@ -222,7 +222,8 @@
 		"hostsPhone": "DE: newReservation.hostsPhone",
 		"hostsEmail": "DE: newReservation.hostsEmail",
 		"selectedUser": "DE: newReservation.selectedUser",
-		"flexiblePlaceSelected": "DE: newReservation.flexiblePlaceSelected"
+		"flexiblePlaceSelected": "DE: newReservation.flexiblePlaceSelected",
+		"noFreePlace": "DE: newReservation.noFreePlace"
 	},
 	"clients": {
 		"name": "Name",
@@ -941,15 +942,18 @@
 		"createdAt": "Zeitpunkt"
 	},
 	"dashboard": {
-		"news": "PID-Neuigkeiten",
-		"latestActivity": "Letzte Aktivität",
-		"currentState": "Aktueller Zustand",
-		"financeOverview": "Finanzübersicht",
-		"occupiedTotal": "belegt/insgesamt",
-		"longterm": "Langfristig",
-		"visitors": "Besucher",
+		"used": "DE: dashboard.used",
 		"free": "Verfügbar",
-		"total": "Insgesamt"
+		"unused": "DE: dashboard.unused",
+		"units": {
+			"one": "DE: dashboard.units.one",
+			"few": "DE: dashboard.units.few",
+			"many": "DE: dashboard.units.many",
+			"other": "DE: dashboard.units.other"
+		},
+		"statistics": "DE: dashboard.statistics",
+		"news": "PID-Neuigkeiten",
+		"garage": "Garage"
 	},
 	"loginVerification": {
 		"description": "DE: loginVerification.description",
@@ -1170,7 +1174,8 @@
 		"pageBase": {
 			"backToPid": "DE: pidAdmin.pageBase.backToPid",
 			"adminMode": "DE: pidAdmin.pageBase.adminMode",
-			"generator": "DE: pidAdmin.pageBase.generator"
+			"generator": "DE: pidAdmin.pageBase.generator",
+			"news": "DE: pidAdmin.pageBase.news"
 		},
 		"users": {
 			"id": "DE: pidAdmin.users.id",
@@ -1213,6 +1218,14 @@
 			"userName": "DE: pidAdmin.generator.userName",
 			"removeReservations": "DE: pidAdmin.generator.removeReservations",
 			"keepReservations": "DE: pidAdmin.generator.keepReservations"
+		},
+		"news": {
+			"label": "DE: pidAdmin.news.label",
+			"url": "DE: pidAdmin.news.url",
+			"id": "DE: pidAdmin.news.id",
+			"createdAt": "DE: pidAdmin.news.createdAt",
+			"editNews": "DE: pidAdmin.news.editNews",
+			"deleteNews": "DE: pidAdmin.news.deleteNews"
 		}
 	}
 }

@@ -60,7 +60,7 @@ module.exports = {
         }
       },
       { // css files not included in modules correctly
-        test: /.*(swiper.min).*\.css$/,
+        test: /.*(swiper.min|noHash).*\.css$/,
         use: [
           {
             loader: 'style-loader'
@@ -72,7 +72,7 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        exclude: /.*(swiper.min).*/,
+        exclude: /.*(swiper.min|noHash).*/,
         use: [
           {
             loader: 'style-loader'

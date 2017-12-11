@@ -1,0 +1,13 @@
+div.google-visualization-tooltip{
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -70%) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+div.google-visualization-tooltip>ul, div.google-visualization-tooltip>ul>li{
+  padding: 0;
+  margin: 0 !important;
+  text-align: center;
+}
