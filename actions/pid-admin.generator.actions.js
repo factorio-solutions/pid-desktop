@@ -242,8 +242,8 @@ export function generateReservations() {
     request(PID_ADMIN_GENERATE_RESERVATION, variables).then(data => {
       dispatch(setReservations(data.generate_reservations.map(reservation => ({
         ...reservation,
-        userName:   reservation.client.name,
-        clientName: reservation.user.full_name
+        userName:   reservation.user.full_name,
+        clientName: reservation.client.name
       }))))
       nav.to('/pid-admin/generator/overview')
     })
