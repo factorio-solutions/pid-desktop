@@ -256,6 +256,7 @@
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
 		"pendingUsers": "Pending invitations",
+		"confirmedUsers": "Users of %(name)s",
 		"removeUser": "Remove user",
 		"resendInvitation": "Resend email",
 		"resendSuccessfull": "Email was sucessfully send.",

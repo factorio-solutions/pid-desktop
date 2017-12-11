@@ -78,9 +78,9 @@ class UsersPage extends Component {
       </li>)
     }
 
-    const usersData = (state.filter == 'all' ? state.users : state.pending).map(user => {
+    const usersData = (state.filter === 'all' ? state.users : state.pending).map(user => {
       // user.memberSince = user.clients.length == 0 ? null : user.clients.reduce((max, client)=> { return moment(client.created_at).diff(max) < 0 ? moment(client.created_at) : max}, moment(moment()))
-      user.spoiler = state.filter == 'all' ? (<div className={styles.spoiler}>
+      user.spoiler = state.filter === 'all' ? (<div className={styles.spoiler}>
         <div>
           {t([ 'users', 'memberOfClients' ])}
           <ul>

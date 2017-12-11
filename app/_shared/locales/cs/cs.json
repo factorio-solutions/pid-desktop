@@ -256,6 +256,7 @@
 		"presetAs": "Nastavit jako",
 		"removeClientUser": "Určitě chcete odstranit tohoto uživatele?",
 		"pendingUsers": "Nevyřízené pozvánky",
+		"confirmedUsers": "Uživatelé %(name)s",
 		"removeUser": "Odstranit uživatele",
 		"resendInvitation": "Znovu odeslat",
 		"resendSuccessfull": "Email úspěšně odeslán.",

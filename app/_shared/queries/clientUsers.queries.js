@@ -21,6 +21,13 @@ export const GET_CLIENTUSERS = `query ($id: Id!) {
   }
 }
 `
+export const GET_CLIENT = `query ($id: Id!) {
+  clients(id: $id) {
+    id
+    name
+  }
+}
+`
 
 // update user client relationship
 export const UPDATE_CLIENTUSERS = `mutation clientUserMutation($client_user: ClientUserInput!, $user_id: Id!, $client_id: Id!) {
