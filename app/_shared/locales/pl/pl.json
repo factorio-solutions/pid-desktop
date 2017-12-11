@@ -222,7 +222,8 @@
 		"hostsPhone": "PL: newReservation.hostsPhone",
 		"hostsEmail": "PL: newReservation.hostsEmail",
 		"selectedUser": "PL: newReservation.selectedUser",
-		"flexiblePlaceSelected": "PL: newReservation.flexiblePlaceSelected"
+		"flexiblePlaceSelected": "PL: newReservation.flexiblePlaceSelected",
+		"noFreePlace": "PL: newReservation.noFreePlace"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -469,7 +470,7 @@
 		"placeholderFloorFrom": "3",
 		"placeholderFloorTo": "12",
 		"streetPlaceholder": "Martense Avenue 526",
-		"cityPlaceholder": "Teaneck",
+		"cityPlaceholder": "Česká republika",
 		"postalCodePlaceholder": "7666",
 		"statePlaceholder": "New Jersey",
 		"countryPlaceholder": "USA",
@@ -941,15 +942,18 @@
 		"createdAt": "godzina"
 	},
 	"dashboard": {
-		"news": "Nowości PiD",
-		"latestActivity": "Niedawne aktywności",
-		"currentState": "Stan obecny",
-		"financeOverview": "Przegląd finansów",
-		"occupiedTotal": "zajęte/ogółem",
-		"longterm": "Długoterminowo",
-		"visitors": "Odwiedzający",
+		"used": "PL: dashboard.used",
 		"free": "Wolnych",
-		"total": "Ogółem"
+		"unused": "PL: dashboard.unused",
+		"units": {
+			"one": "PL: dashboard.units.one",
+			"few": "PL: dashboard.units.few",
+			"many": "PL: dashboard.units.many",
+			"other": "PL: dashboard.units.other"
+		},
+		"statistics": "PL: dashboard.statistics",
+		"news": "Nowości PiD",
+		"garage": "Garaż"
 	},
 	"loginVerification": {
 		"description": "Wprowadzono autoryzację wieloczynnikową. Na adres %(email) wyślemy Ci kod weryfikacyjny.",
@@ -1170,7 +1174,8 @@
 		"pageBase": {
 			"backToPid": "PL: pidAdmin.pageBase.backToPid",
 			"adminMode": "PL: pidAdmin.pageBase.adminMode",
-			"generator": "PL: pidAdmin.pageBase.generator"
+			"generator": "PL: pidAdmin.pageBase.generator",
+			"news": "PL: pidAdmin.pageBase.news"
 		},
 		"users": {
 			"id": "PL: pidAdmin.users.id",
@@ -1213,6 +1218,14 @@
 			"userName": "PL: pidAdmin.generator.userName",
 			"removeReservations": "PL: pidAdmin.generator.removeReservations",
 			"keepReservations": "PL: pidAdmin.generator.keepReservations"
+		},
+		"news": {
+			"label": "PL: pidAdmin.news.label",
+			"url": "PL: pidAdmin.news.url",
+			"id": "PL: pidAdmin.news.id",
+			"createdAt": "PL: pidAdmin.news.createdAt",
+			"editNews": "PL: pidAdmin.news.editNews",
+			"deleteNews": "PL: pidAdmin.news.deleteNews"
 		}
 	}
 }

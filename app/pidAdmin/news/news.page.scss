@@ -1,0 +1,14 @@
+@import '../../_styles/app.desktop';
+
+.addButton{
+  padding:    $addButtonMargin 0;
+  text-align: center;
+  position:   fixed;
+  bottom:     0px;
+  right:      50%;
+}
+@media (max-width: $collapseWidth) {
+  .addButton{
+    transform: translateX(50%);
+  }
+}

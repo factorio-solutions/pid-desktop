@@ -27,7 +27,7 @@
 		"please": "Please log in or",
 		"Sign-Up": "register",
 		"email": "Email",
-		"invalid-email": "Invalid email address",
+		"invalid-email": "Invalid email address (john@gmail.com)",
 		"password": "Password",
 		"loginFailed": "Login failed",
 		"forgot": "Forgot password?",
@@ -286,10 +286,10 @@
 		"downloadInvoice": "Download invoice",
 		"destroyRservation": "Cancel reservation",
 		"destroyAllReservation": {
-			"one": "Destroy only selected reservation.",
-			"few": "Destroy all %(count)s reservations in set repeat.",
-			"many": "Destroy all %(count)s reservations in set repeat.",
-			"other": "Destroy all %(count)s reservations in set repeat."
+			"one": "Archive only selected reservation.",
+			"few": "Archive all %(count)s reservations in set repeat.",
+			"many": "Archive all %(count)s reservations in set repeat.",
+			"other": "Archive all %(count)s reservations in set repeat."
 		},
 		"updateAllReservation": {
 			"one": "Update only selected reservation.",
@@ -591,7 +591,7 @@
 		"memberSince": "since",
 		"active": "active",
 		"notActive": "not active",
-		"notConfimed": "not confirmed",
+		"notConfimed": "not confimed",
 		"pending": "Pending",
 		"allKnownUsers": "All known users",
 		"pendingInvitations": "Pending invitations",
@@ -942,15 +942,18 @@
 		"createdAt": "time"
 	},
 	"dashboard": {
+		"used": "Used",
+		"free": "Free",
+		"unused": "Unused",
+		"units": {
+			"one": "unit",
+			"few": "units",
+			"many": "units",
+			"other": "units"
+		},
+		"statistics": "Statistics",
 		"news": "PID news",
-		"latestActivity": "Latest activity",
-		"currentState": "Current state",
-		"financeOverview": "Finance overview",
-		"occupiedTotal": "occupied/total",
-		"longterm": "Long-term",
-		"visitors": "Visitors",
-		"free": "Available",
-		"total": "Total"
+		"garage": "Garage"
 	},
 	"loginVerification": {
 		"description": "Multifactor authorization has been triggered. We will now send you a code by email %(email)s",
@@ -1171,7 +1174,8 @@
 		"pageBase": {
 			"backToPid": "to PID",
 			"adminMode": "ADMIN MODE OF PARK-IT-DIRECT",
-			"generator": "Generator"
+			"generator": "Generator",
+			"news": "News"
 		},
 		"users": {
 			"id": "id",
@@ -1199,7 +1203,7 @@
 			"durationTo": "Duration to",
 			"durationFromInvalid": "duration invalid",
 			"internal": "Internal",
-			"host": "Host",
+			"host": "Guest",
 			"hours": "hours",
 			"or": "OR",
 			"createUsers": "Create users",
@@ -1214,6 +1218,14 @@
 			"userName": "user",
 			"removeReservations": "Remove reservations",
 			"keepReservations": "Keep reservations"
+		},
+		"news": {
+			"label": "label",
+			"url": "url",
+			"id": "id",
+			"createdAt": "created at",
+			"editNews": "edit news",
+			"deleteNews": "delete news"
 		}
 	}
 }

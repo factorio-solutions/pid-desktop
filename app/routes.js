@@ -108,6 +108,9 @@ import PidAdminGeneratorReservationsPage from './pidAdmin/generator/generatorRes
 import PidAdminGeneratorUsersPage from './pidAdmin/generator/generatorUsers.page'
 import PidAdminGeneratorOverviewPage from './pidAdmin/generator/generatorOverview.page'
 
+import PidAdminNewsPage from './pidAdmin/news/news.page'
+import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
+
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
 
@@ -117,12 +120,16 @@ export default function createRoutes() {
     <Route>
       <IndexRoute component={PidAdminDashboardPage} />
       <Route path="users" component={PidAdminUsersPage} />
-      <Route path="generator" component={PidAdminGeneratorGaragesPage} />
 
+      <Route path="generator" component={PidAdminGeneratorGaragesPage} />
       <Route path="generator/clients" component={PidAdminGeneratorClientsPage} />
       <Route path="generator/reservations" component={PidAdminGeneratorReservationsPage} />
       <Route path="generator/users" component={PidAdminGeneratorUsersPage} />
       <Route path="generator/overview" component={PidAdminGeneratorOverviewPage} />
+
+      <Route path="news" component={PidAdminNewsPage} />
+      <Route path="news/newNews" component={PidAdminNewNewsPage} />
+      <Route path="news/:id/edit" component={PidAdminNewNewsPage} />
     </Route>
   )
 
