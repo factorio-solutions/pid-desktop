@@ -97,7 +97,8 @@ export default class OccupancyOverview2 extends Component {
         return 0
       }
 
-      const rowWidth = (this.tbody.childNodes[0].getBoundingClientRect().width - WIDTH_OF_PLACE_CELL)
+      const tBodyWidth = (this.tbody ? this.tbody.childNodes[0].getBoundingClientRect().width : 300)
+      const rowWidth = (tBodyWidth - WIDTH_OF_PLACE_CELL)
       const nowLinePosition = moment().diff(from, duration, true) * rowWidth
 
       return places.sort(sorter).map(place => (<tr key={`${place.floor}-${place.label}`} className={styles.bottomBorder}>
@@ -122,7 +123,7 @@ export default class OccupancyOverview2 extends Component {
 
             const begining = moment(reservation.begins_at)
             const dur = moment(reservation.ends_at).diff(begining.isSameOrBefore(from) ? from : begining, 'hours', true)
-            const cellWidth = (this.tbody.childNodes[0].getBoundingClientRect().width - WIDTH_OF_PLACE_CELL) / (duration === 'day' ? 24 : (duration === 'week' ? WEEK_DAYS : MONTH_DAYS) * 2)
+            const cellWidth = (tBodyWidth - WIDTH_OF_PLACE_CELL) / (duration === 'day' ? 24 : (duration === 'week' ? WEEK_DAYS : MONTH_DAYS) * 2)
 
             const mouseEnter = e => this.setState({
               content: <table className={styles.tooltipTable}><tbody>
