@@ -2,7 +2,7 @@ import { request } from '../helpers/request'
 import { t } from '../modules/localization/localization'
 import { setError, setSuccess } from './pageBase.actions'
 
-import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS, RESEND_INVITATION, GET_CLIENT } from '../queries/clientUsers.queries'
+import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS, RESEND_INVITATION } from '../queries/clientUsers.queries'
 
 
 export const SET_CLIENT_USERS = 'SET_CLIENT_USERS'
@@ -65,9 +65,6 @@ export function initClientUsers(client_id) {
 
       if (response.data.client_users[0]) {
         dispatch(setClientName(response.data.client_users[0].client.name))
-      } else {
-        const onSuccessClientName = data => dispatch(setClientName(data.clients.name))
-        request(onSuccessClientName, GET_CLIENT, { id: parseInt(client_id, 10) })
       }
     }
     request(onSuccess, GET_CLIENTUSERS, { id: parseInt(client_id, 10) })
