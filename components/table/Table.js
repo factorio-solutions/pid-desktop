@@ -164,14 +164,14 @@ export default class Table extends Component {
           [value.key]: search.target.value
         }
       }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
-      return (
-        <td key={key}>
+      return (value.comparator !== 'string' && value.comparator !== 'number') || value.representer ?
+        <td /> :
+        (<td key={key}>
           <div className={styles.tdSearchBar}>
             <i className="fa fa-search" aria-hidden="true" />
             <input type="search" value={this.state.searchBar[value.key]} onChange={searchChange} />
           </div>
-        </td>
-      )
+        </td>)
     }
 
     const prepareBody = (value, key, arr) => {
