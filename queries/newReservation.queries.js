@@ -34,6 +34,10 @@ export const GET_USER = `query Query($id: Id!) {
       licence_plate
     }
     id
+    full_name
+    email
+    phone
+    last_active
   }
 }
 `
@@ -45,6 +49,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     name
     vat
     dic
+    flexiplace
     floors {
       id
       label

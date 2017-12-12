@@ -31,7 +31,7 @@ const INIT_STATE = { content: ''
 // showEmptyFloors: bool... - floor with no available places will not be clickable
 
 
-export class GarageLayout extends Component {
+class GarageLayout extends Component {
   static propTypes = {
     floors:            PropTypes.array.isRequired, // array of all floors
     onPlaceClick:      PropTypes.func, // handling click on svg

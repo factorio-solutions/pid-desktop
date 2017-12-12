@@ -20,6 +20,12 @@
   font-size: 18px;
 }
 
+// types
+.remove{
+  @include colorize($red);
+  color:            $white;
+}
+
 // states
 .selected {
   background-color: $yellow;
