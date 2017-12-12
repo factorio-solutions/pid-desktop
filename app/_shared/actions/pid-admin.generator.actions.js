@@ -1,5 +1,7 @@
 import request from '../helpers/requestAdmin'
+import { dateToUTC } from '../helpers/time'
 import * as nav from '../helpers/navigation'
+
 
 import {
   GET_PID_ADMIN_GARAGES,
@@ -226,8 +228,8 @@ export function generateReservations() {
     const variables = {
       garage_ids:    state.garages.filter(g => g.selected).map(g => g.id),
       count:         state.count,
-      date_from:     state.dateFrom,
-      date_to:       state.dateTo,
+      date_from:     dateToUTC(state.dateFrom),
+      date_to:       dateToUTC(state.dateTo),
       days:          state.days,
       day_from:      state.dayFrom,
       day_to:        state.dayTo,
