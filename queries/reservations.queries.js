@@ -2,7 +2,7 @@
 export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
   reservations(past: $past) {
     id
-    case
+    reservation_case
     invoice_item {
       id
       invoice {
