@@ -93,7 +93,7 @@ export function setClientId(value) {
       value
     })
 
-    dispatch(pickPlaces())
+    dispatch(pickPlaces(true)) // no download clients
   }
 }
 
@@ -175,18 +175,22 @@ export function fromBeforeTo(from, to) {
 export function getAvailableClients() {
   return (dispatch, getState) => {
     const state = getState().mobileNewReservation
+    const garageId = getState().mobileHeader.garage_id
     const onClients = response => {
-      if (response.data.reservable_clients.find(cl => cl.id === state.client_id) === undefined) {
-        state.client_id !== undefined && dispatch(setClientId(undefined))
-        // response.data.reservable_clients[0] ? response.data.reservable_clients[0].id : undefined
+      if (response.data.last_reservation_client) { // I see client from last reservation
+        const client = response.data.reservable_clients.findById(response.data.last_reservation_client.id)
+        client && state.client_id !== client.id && dispatch(setClientId(client.id))
+      } else {
+        response.data.reservable_clients.findById(state.client_id) === undefined && state.client_id !== undefined && dispatch(setClientId(undefined))
       }
+      // if (response.data.reservable_clients.find(cl => cl.id === state.client_id) === undefined) {
+      //   state.client_id !== undefined && dispatch(setClientId(undefined))
+      //   // response.data.reservable_clients[0] ? response.data.reservable_clients[0].id : undefined
+      // }
       dispatch(setAvailableClients(response.data.reservable_clients))
     }
 
-    request(onClients
-           , GET_AVAILABLE_CLIENTS
-           , { garage_id: stateToVariables(getState).garage_id }
-           )
+    request(onClients, GET_AVAILABLE_CLIENTS, { garage_id: garageId })
   }
 }
 
@@ -205,7 +209,7 @@ export function getAvailableCars() {
   }
 }
 
-export function pickPlaces() {
+export function pickPlaces(noClientDownload) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       dispatch(setFloors(response.data.garage.floors))
@@ -219,7 +223,7 @@ export function pickPlaces() {
     const variables = stateToVariables(getState)
     if (variables.garage_id) {
       request(onSuccess, GET_AVAILABLE_FLOORS, { id: variables.garage_id, begins_at: variables.begins_at, ends_at: variables.ends_at, client_id: variables.client_id })
-      dispatch(getAvailableClients())
+      !noClientDownload && dispatch(getAvailableClients())
     } else {
       dispatch(setFloors([]))
       dispatch(autoselectPlace())

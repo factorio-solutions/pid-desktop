@@ -18,7 +18,7 @@ export default function MobileMenuButton({ icon, label, onClick, type, state, si
   ].join(' ')
 
   const content = (<div className={styles.centerInDiv} >
-    <i className={`fa fa-${icon} ${styles.icon} ${styles.content}`} aria-hidden="true" />
+    <i className={`${icon} ${styles.icon} ${styles.content}`} aria-hidden="true" />
     <span className={`${styles.label} ${styles.content}`}>{label}</span>
   </div>)
 

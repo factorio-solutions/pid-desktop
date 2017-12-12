@@ -1,29 +1,26 @@
-import { request }                   from '../helpers/request'
-import { download }                  from '../helpers/download'
-import { setCustomModal, setError }  from './pageBase.actions'
-import { t }                         from '../modules/localization/localization'
-import { parseParameters }           from '../helpers/parseUrlParameters'
+import { request } from '../helpers/request'
+import { download } from '../helpers/download'
+import { setCustomModal, setError } from './pageBase.actions'
+import { t } from '../modules/localization/localization'
+import { parseParameters } from '../helpers/parseUrlParameters'
 
 import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
-import { DOWNLOAD_INVOICE }                                            from '../queries/invoices.queries'
-import { PAY_RESREVATION }                                             from '../queries/newReservation.queries'
+import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
+import { PAY_RESREVATION } from '../queries/newReservation.queries'
 
 
-// export const SET_RESERVATIONS = 'SET_RESERVATIONS'
+export const SET_RESERVATIONS = 'SET_RESERVATIONS'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 
 
-// export function setReservations(reservations) {
-//   return  { type: SET_RESERVATIONS
-//           , value: reservations
-//           }
-// }
+export function setReservations(reservations) { // for mobile reservations
+  return {
+    type:  SET_RESERVATIONS,
+    value: reservations
+  }
+}
 
 export function togglePast() {
-  // return(dispatch, getState) => {
-  //   dispatch({ type: TOGGLE_RESERVATIONS_PAST })
-  //   dispatch(initReservations())
-  // }
   return { type: TOGGLE_RESERVATIONS_PAST }
 }
 
@@ -32,7 +29,7 @@ export function initReservations(callback) { // callback used by mobile access p
   window.dispatchEvent(new Event('paginatedTableUpdate'))
   return (dispatch, getState) => {
     const onSuccess = respoonse => {
-      // dispatch( setReservations(respoonse.data.reservations) )
+      dispatch(setReservations(respoonse.data.reservations))
       callback && callback(respoonse.data.reservations)
     }
     request(onSuccess, GET_RESERVATIONS_QUERY, { past: getState().reservations.past })

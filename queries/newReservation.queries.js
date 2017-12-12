@@ -23,6 +23,9 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     id
     name
   }
+  last_reservation_client(user_id: $user_id, garage_id: $garage_id){
+    id
+  }
 }
 `
 
