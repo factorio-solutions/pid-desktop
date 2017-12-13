@@ -2,53 +2,53 @@ import { request } from '../helpers/request'
 
 import { GET_CLIENTS, GARAGE_CONTRACTS } from '../queries/clients.queries'
 
-export const SET_CLIENTS          = 'SET_GARAGES'
+export const SET_CLIENTS = 'SET_GARAGES'
 export const SET_GARAGE_CONTRACTS = 'SET_GARAGE_CONTRACTS'
 
 
-export function setClients (clients){
-  return  { type: SET_CLIENTS
-          , value: clients
-          }
+export function setClients(clients) {
+  return { type:  SET_CLIENTS,
+    value: clients
+  }
 }
 
-export function setGarageContracts (value){
-  return  { type: SET_GARAGE_CONTRACTS
-          , value
-          }
+export function setGarageContracts(value) {
+  return { type: SET_GARAGE_CONTRACTS,
+    value
+  }
 }
 
 
-export function initClients (){
+export function initClients() {
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      var current_user_id = response.data.current_user.id
-      var uniqueClients = response.data.client_users.reduce((acc, client_user) => {
+    const onSuccess = response => {
+      const current_user_id = response.data.current_user.id
+      const uniqueClients = response.data.client_users.reduce((acc, client_user) => {
         if (acc.find(accumulated => accumulated.id === client_user.client.id) === undefined) acc.push(client_user.client)
         return acc
       }, [])
 
-      var managebleClientIds = response.data.client_users
-                                .filter((client_user) => {return client_user.user_id == current_user_id && client_user.admin })
-                                .map(function (client_users) {return client_users.client.id})
+      const managebleClientIds = response.data.client_users
+                                .filter(client_user => { return client_user.user_id == current_user_id && client_user.admin })
+                                .map(client_users => { return client_users.client.id })
 
-      uniqueClients.map((client) => {
+      uniqueClients.map(client => {
         client.admin = managebleClientIds.includes(client.id)
         client.userOfClient = true
         return client
       })
 
-      dispatch( setClients( uniqueClients ) )
+      dispatch(setClients(uniqueClients))
     }
     request(onSuccess, GET_CLIENTS)
   }
 }
 
-export function initGarageContracts (){
+export function initGarageContracts() {
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
+    const onSuccess = response => {
       const uniqueClients = response.data.garage.contracts.reduce((acc, contract) => {
-        if (!acc.hasOwnProperty(contract.client.id)) acc[contract.client.id] = {...contract.client, userOfClient: false, admin: false, contracts: [] }
+        if (!acc.hasOwnProperty(contract.client.id)) acc[contract.client.id] = { ...contract.client, userOfClient: false, admin: false, contracts: [] }
         acc[contract.client.id].contracts.push(contract)
         return acc
       }, [])
@@ -56,6 +56,6 @@ export function initGarageContracts (){
       dispatch(setGarageContracts(uniqueClients))
     }
 
-    request(onSuccess, GARAGE_CONTRACTS, {id: getState().pageBase.garage})
+    request(onSuccess, GARAGE_CONTRACTS, { id: getState().pageBase.garage })
   }
 }

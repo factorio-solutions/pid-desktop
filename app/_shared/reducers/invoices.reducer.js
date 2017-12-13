@@ -11,56 +11,56 @@ import {
   INVOICSE_SET_FILTERED_INVOICES
 }  from '../actions/invoices.actions'
 
-const defaultState =  { invoices:   []
-                      , clients:    []
-                      , client_id:  undefined
-                      , past:       false
-                      , reason:     '' // reason for cancelling invoice
-                      , invoice_id: undefined // currently canceling invoice
-                      , showModal:  false
-                      , filteredInvoices: [] // invoices filtered by user via table
-                      }
+const defaultState = { invoices:         [],
+  clients:          [],
+  client_id:        undefined,
+  past:             false,
+  reason:           '', // reason for cancelling invoice
+  invoice_id:       undefined, // currently canceling invoice
+  showModal:        false,
+  filteredInvoices: [] // invoices filtered by user via table
+}
 
 
-export default function invoices (state = defaultState, action) {
+export default function invoices(state = defaultState, action) {
   switch (action.type) {
 
     case INVOICES_SET_INVOICES:
-      return  { ...state
-              , invoices: action.value
-              , filteredInvoices: action.value // initially no invoices filtered
-              }
+      return { ...state,
+        invoices:         action.value,
+        filteredInvoices: action.value // initially no invoices filtered
+      }
 
     case INVOICES_SET_CLIENTS:
-      return  { ...state
-              , clients:  action.value
-              }
+      return { ...state,
+        clients: action.value
+      }
 
     case INVOICES_SET_CLIENT_ID:
-      return  { ...state
-              , client_id: action.value
-              }
+      return { ...state,
+        client_id: action.value
+      }
 
     case INVOICES_SET_PAST:
-      return  { ...state
-              , past: action.value
-              }
+      return { ...state,
+        past: action.value
+      }
 
     case INVOICES_SET_REASON:
-      return  { ...state
-              , reason: action.value
-              }
+      return { ...state,
+        reason: action.value
+      }
 
     case INVOICES_TOGGLE_REASON_MODAL:
-      return  { ...state
-              , showModal:  !state.showModal
-              , invoice_id: !state.showModal ? action.value : undefined
-              }
+      return { ...state,
+        showModal:  !state.showModal,
+        invoice_id: !state.showModal ? action.value : undefined
+      }
 
     case INVOICSE_SET_FILTERED_INVOICES:
-      return  { ...state
-              , filteredInvoices: action.value
-              }
+      return { ...state,
+        filteredInvoices: action.value
+      }
 
     default:
       return state

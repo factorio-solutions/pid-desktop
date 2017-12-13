@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import update                          from 'immutability-helper'
 import moment                          from 'moment'
 
 import Table       from '../../_shared/components/table/Table'
@@ -26,45 +25,49 @@ class ClientsPage extends Component {
     actions:  PropTypes.object
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.actions.initClients()
     this.props.pageBase.garage && this.props.actions.initGarageContracts()
   }
 
-  componentWillReceiveProps(nextProps){ // load garage if id changed
+  componentWillReceiveProps(nextProps) { // load garage if id changed
     nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initGarageContracts()
   }
 
   render() {
     const { actions, state, pageBase } = this.props
 
-    const schema = [ { key: 'name',              title: t(['clients','name']),         comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
-                   , { key: 'token',             title: t(['clients','token']),        comparator: 'string' }
-                   , { key: 'hasContract',       title: t(['clients','contract']),     comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" /> }
-                   , { key: 'place_count',       title: t(['clients','places']),       comparator: 'number' }
-                   , { key: 'monthly_total',     title: t(['clients','monthlyTotal']), comparator: 'string' }
-                   , { key: 'all_invoices_paid', title: t(['clients','invoices']),     comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" /> }
-                   , { key: 'user_count',        title: t(['clients','users']),        comparator: 'number' }
-                   ]
+    const schema = [
+      { key: 'name', title: t([ 'clients', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+      { key: 'token', title: t([ 'clients', 'token' ]), comparator: 'string' },
+      { key: 'hasContract', title: t([ 'clients', 'contract' ]), comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" /> },
+      { key: 'place_count', title: t([ 'clients', 'places' ]), comparator: 'number' },
+      { key: 'monthly_total', title: t([ 'clients', 'monthlyTotal' ]), comparator: 'string' },
+      { key: 'all_invoices_paid', title: t([ 'clients', 'invoices' ]), comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" /> },
+      { key: 'user_count', title: t([ 'clients', 'users' ]), comparator: 'number' }
+    ]
 
-    const addClient    = () => {nav.to(`/${pageBase.garage}/admin/clients/newClient`)}
-    const addContract  = () => {nav.to(`/${pageBase.garage}/admin/clients/newContract`)}
+    const addClient = () => nav.to(`/${pageBase.garage}/admin/clients/newClient`)
+    const addContract = () => nav.to(`/${pageBase.garage}/admin/clients/newContract`)
 
-    const addSpoiler = (client, index)=>{
-      const toClient     = () => {nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)}
-      const toEditClient = () => {nav.to(`/${pageBase.garage}/admin/clients/${client.id}/edit`)}
-      const toInvoices = () => { nav.to(`/${pageBase.garage}/admin/invoices`)
+    const addSpoiler = client => {
+      const toClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)
+      const toEditClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/edit`)
+      const toInvoices = () => {
+        nav.to(`/${pageBase.garage}/admin/invoices`)
         actions.setClientId(client.id)
       }
-      const toNewContract = () => { nav.to(`/${pageBase.garage}/admin/clients/newContract`)
+      const toNewContract = () => {
+        nav.to(`/${pageBase.garage}/admin/clients/newContract`)
         actions.setClient(client.id)
       }
-      const prepareContractButton = (contract) =>{
-        const onContractClick = () =>{ nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`) }
+      const prepareContractButton = contract => {
+        const onContractClick = () => nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`)
         return <div className={styles.contract} onClick={onContractClick}>{contract.name}</div>
       }
-      const prepareContactPersons = (acc, user, index, arr) => { acc.push(<span><b>{user.full_name}</b></span>)
-        if (arr.length-1 !== index) acc.push(<span>, </span>)
+      const prepareContactPersons = (acc, user, index, arr) => {
+        acc.push(<span><b>{user.full_name}</b></span>)
+        if (arr.length - 1 !== index) acc.push(<span>, </span>)
         return acc
       }
       const currentContracts = contract => moment().isBetween(moment(contract.from), moment(contract.to))
@@ -74,40 +77,40 @@ class ClientsPage extends Component {
         return sum + Math.round(contract.rent.price * contract.place_count * endOfMonth.diff(startOfMonth, 'days') / moment().daysInMonth())
       }
 
-      var spoiler = <div className={styles.spoiler}>
+      const spoiler = (<div className={styles.spoiler}>
         <div>
-          {t(['clients','contactPerson'])}: {client.contact_persons.reduce(prepareContactPersons, [])}
-          <br/>
-          {t(['clients','createdAt'])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
+          {t([ 'clients', 'contactPerson' ])}: {client.contact_persons.reduce(prepareContactPersons, [])}
+          <br />
+          {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
         </div>
         <div>
           {client.contracts && client.contracts.map(prepareContractButton)}
         </div>
         <div>
-          <LabeledRoundButton label={t(['clients','createAgreement'])} content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={toNewContract} type='action' state={!pageBase.isGarageAdmin && 'disabled'}/>
-          <LabeledRoundButton label={t(['clients','goToInvoices'])} content={<span className='fa fa-files-o' aria-hidden="true"></span>} onClick={toInvoices} type={'action'}/>
-          <LabeledRoundButton label={t(['clients','editClient'])} content={<span className='fa fa-pencil' aria-hidden="true"></span>} onClick={toEditClient} type='action' state={client.admin ? "" : "disabled" }/>
-          <LabeledRoundButton label={t(['clients','goToUsers'])} content={<span className='fa fa-child' aria-hidden="true"></span>} onClick={toClient} type={client.userOfClient ? 'action' : 'disabled'}/>
+          <LabeledRoundButton label={t([ 'clients', 'createAgreement' ])} content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>} onClick={toNewContract} type="action" state={!pageBase.isGarageAdmin && 'disabled'} />
+          <LabeledRoundButton label={t([ 'clients', 'goToInvoices' ])} content={<span className="fa fa-files-o" aria-hidden="true" />} onClick={toInvoices} type={'action'} />
+          <LabeledRoundButton label={t([ 'clients', 'editClient' ])} content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={toEditClient} type="action" state={client.admin ? '' : 'disabled'} />
+          <LabeledRoundButton label={t([ 'clients', 'goToUsers' ])} content={<span className="fa fa-child" aria-hidden="true" />} onClick={toClient} type={client.userOfClient ? 'action' : 'disabled'} />
         </div>
-      </div>
+      </div>)
 
-      return { ...client
-             , spoiler
-             , hasContract: client.contracts && client.contracts.filter(currentContracts).length > 0
-             , monthly_total: client.contracts ? client.contracts.filter(currentContracts).reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
-             }
+      return { ...client,
+        spoiler,
+        hasContract:   client.contracts && client.contracts.filter(currentContracts).length > 0,
+        monthly_total: client.contracts ? client.contracts.filter(currentContracts).reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
+      }
     }
 
-    const filterPresent = (client) => state.clients.find(c => c.id === client.id ) === undefined // filter out client already present in state.clients
+    const filterPresent = client => state.clients.find(c => c.id === client.id) === undefined // filter out client already present in state.clients
 
     return (
       <PageBase>
         <div className={styles.tableContainer}>
-          <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(addSpoiler)}/>
+          <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(addSpoiler)} />
         </div>
         <div className={styles.addButton}>
-          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addClient} type='action' size='big'/>
-          {pageBase.isGarageAdmin && <RoundButton content={<span>+<span className='fa fa-file-text-o' aria-hidden="true"></span></span>} onClick={addContract} type='action' size='big'/>}
+          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addClient} type="action" size="big" />
+          {pageBase.isGarageAdmin && <RoundButton content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>} onClick={addContract} type="action" size="big" />}
         </div>
       </PageBase>
     )
@@ -115,6 +118,6 @@ class ClientsPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.clients, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({...clientActions, setClient, setClientId}, dispatch) })
+  state => ({ state: state.clients, pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators({ ...clientActions, setClient, setClientId }, dispatch) })
 )(ClientsPage)

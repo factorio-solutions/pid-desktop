@@ -27,17 +27,89 @@
 
 .icon-activitylog:before { content: "\e900"; }
 .icon-admin:before { content: "\e901"; }
-.icon-client:before { content: "\e902"; }
-.icon-dashboard:before { content: "\e903"; }
-.icon-finance:before { content: "\e904"; }
-.icon-garage:before { content: "\e905"; }
-.icon-garagesetup:before { content: "\e906"; }
-.icon-invoices:before { content: "\e907"; }
-.icon-issues:before { content: "\e908"; }
-.icon-marketing:before { content: "\e909"; }
-.icon-message:before { content: "\e90a"; }
-.icon-occupancy:before { content: "\e90b"; }
-.icon-profile:before { content: "\e90c"; }
-.icon-reservations:before { content: "\e90d"; }
-.icon-settings:before { content: "\e90e"; }
-.icon-user:before { content: "\e90f"; }
+.icon-airport-nearby:before { content: "\e902"; }
+.icon-camera-at-gate:before { content: "\e903"; }
+.icon-cameras:before { content: "\e904"; }
+.icon-car-wash:before { content: "\e905"; }
+.icon-charging-station:before { content: "\e906"; }
+.icon-city-center:before { content: "\e907"; }
+.icon-client:before { content: "\e908"; }
+.icon-dashboard:before { content: "\e909"; }
+.icon-fifteen-minutes-from-center:before { content: "\e90a"; }
+.icon-finance:before { content: "\e90b"; }
+.icon-garage:before { content: "\e90c"; }
+.icon-garagesetup:before { content: "\e90d"; }
+.icon-guarded-parking:before { content: "\e91a"; }
+.icon-historical-center:before { content: "\e91b"; }
+.icon-invoices:before { content: "\e91c"; }
+.icon-issues:before { content: "\e91d"; }
+.icon-marketing:before { content: "\e91e"; }
+.icon-message:before { content: "\e91f"; }
+.icon-non-stop-open:before { content: "\e920"; }
+.icon-non-stop-reception:before { content: "\e921"; }
+.icon-occupancy:before { content: "\e922"; }
+.icon-profile:before { content: "\e923"; }
+.icon-reservations:before { content: "\e924"; }
+.icon-settings:before { content: "\e925"; }
+.icon-size-restriction:before { content: "\e926"; }
+.icon-tram-nearby:before { content: "\e927"; }
+.icon-user:before { content: "\e928"; }
+.icon-wc:before { content: "\e929"; }
+.icon-gate-opened-by-phone .path1:before {
+  content: "\e90e";
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-phone .path2:before {
+  content: "\e90f";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-phone .path3:before {
+  content: "\e910";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-phone .path4:before {
+  content: "\e911";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-phone .path5:before {
+  content: "\e912";
+  margin-left: -1em;
+  color: rgb(29, 29, 27);
+}
+.icon-gate-opened-by-phone .path6:before {
+  content: "\e913";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-phone .path7:before {
+  content: "\e914";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-receptionist .path1:before {
+  content: "\e915";
+  color: rgb(28, 28, 27);
+}
+.icon-gate-opened-by-receptionist .path2:before {
+  content: "\e916";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-receptionist .path3:before {
+  content: "\e917";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-receptionist .path4:before {
+  content: "\e918";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
+.icon-gate-opened-by-receptionist .path5:before {
+  content: "\e919";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+}
