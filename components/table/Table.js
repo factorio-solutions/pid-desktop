@@ -80,7 +80,7 @@ export default class Table extends Component {
       if (this.state.search === '') {
         return true
       } else {
-        return schema.map(value => { return value.representer ? value.representer(object[value.key]) : object[value.key] })
+        return schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
        .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
          .toLowerCase()
          .includes(this.state.search.toLowerCase())
@@ -157,19 +157,28 @@ export default class Table extends Component {
     }
 
     const prepareSearchBar = (value, key) => {
-      const searchChange = search => this.setState({
+      const searchChange = searchValue => this.setState({
         ...this.state,
         searchBar: {
           ...this.state.searchBar,
-          [value.key]: search.target.value
+          [value.key]: searchValue
         }
       }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
-      return (value.comparator !== 'string' && value.comparator !== 'number') || value.representer ?
+      const renderEnum = enumValue => {
+        const onEnumClick = () => this.state.searchBar[value.key] === enumValue ?  searchChange('') : searchChange(enumValue)
+        return <span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
+          {value.representer ? value.representer(enumValue) : enumValue}
+        </span>
+      }
+      const onChange = event => searchChange(event.target.value)
+      return (value.representer && !value.enum) ?
         <td /> :
         (<td key={key}>
           <div className={styles.tdSearchBar}>
-            <i className="fa fa-search" aria-hidden="true" />
-            <input type="search" value={this.state.searchBar[value.key]} onChange={searchChange} />
+            { value.enum ? value.enum.map(renderEnum) :
+            [ <input type="search" value={this.state.searchBar[value.key]} onChange={onChange} placeholder="----------------" />,
+              <i className="fa fa-search" aria-hidden="true" /> ]
+            }
           </div>
         </td>)
     }
