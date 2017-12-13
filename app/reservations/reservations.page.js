@@ -46,13 +46,15 @@ class ReservationsPage extends Component {
         title:       t([ 'reservations', 'type' ]),
         comparator:  'string',
         representer: o => <i className={`fa ${o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />,
-        orderBy:     'reservation_case'
+        orderBy:     'reservation_case',
+        enum:        [ 'visitor', 'guest', 'internal' ]
       },
       { key:         'state',
         title:       t([ 'reservations', 'state' ]),
         comparator:  'boolean',
         representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-question-circle'} ${o ? styles.green : styles.yellow}`} aria-hidden="true" />,
-        orderBy:     'approved'
+        orderBy:     'approved',
+        enum:        [ true, false ]
       },
       { key: 'garage', title: t([ 'reservations', 'garage' ]), comparator: 'string', includes: 'place floor garage', orderBy: 'garages.name' },
       { key:         'place',
