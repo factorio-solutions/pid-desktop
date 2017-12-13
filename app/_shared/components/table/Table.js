@@ -171,7 +171,7 @@ export default class Table extends Component {
         </span>
       }
       const onChange = event => searchChange(event.target.value)
-      return (value.representer && !value.enum) ?
+      return (value.representer && !value.enum && value.comparator !== 'date') ?
         <td /> :
         (<td key={key}>
           <div className={styles.tdSearchBar}>
