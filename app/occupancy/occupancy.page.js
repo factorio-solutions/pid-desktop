@@ -11,7 +11,7 @@ import PageBase               from '../_shared/containers/pageBase/PageBase'
 import RoundButton            from '../_shared/components/buttons/RoundButton'
 import Dropdown               from '../_shared/components/dropdown/Dropdown'
 // import OccupancyOverview      from '../_shared/components/occupancyOverview/OccupancyOverview'
-import OccupancyOverview2     from '../_shared/components/occupancyOverview/OccupancyOverview2'
+import OccupancyOverview3     from '../_shared/components/occupancyOverview/OccupancyOverview3'
 import TabMenu                from '../_shared/components/tabMenu/TabMenu'
 import TabButton              from '../_shared/components/buttons/TabButton'
 // import TextButton             from '../_shared/components/buttons/TextButton'
@@ -77,7 +77,7 @@ class OccupancyPage extends Component {
     return (
       <PageBase>
         <TabMenu right={filters} left={clientSelector} />
-        <OccupancyOverview2
+        <OccupancyOverview3
           places={garage ? garage.floors.reduce(preparePlaces, []) : []}
           from={state.from}
           duration={state.duration}
