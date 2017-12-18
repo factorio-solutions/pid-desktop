@@ -49,6 +49,7 @@ export default class MasterPage extends Component {
       children } = this.props
 
     const onHamburgerClick = e => { this.setState({ menu: !this.state.menu }) }
+    const onLogoClick = () => nav.to('/dashboard')
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
 
@@ -58,7 +59,7 @@ export default class MasterPage extends Component {
           <a onClick={onHamburgerClick} className={styles.hamburger}>
             <i className="fa fa-bars" aria-hidden="true" />
           </a>
-          <div className={styles.logoContainer}>
+          <div className={styles.logoContainer} onClick={onLogoClick}>
             <Logo style="rect" />
           </div>
 
