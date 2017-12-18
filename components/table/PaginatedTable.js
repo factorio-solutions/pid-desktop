@@ -109,7 +109,7 @@ export default class PaginatedTable extends Component {
 
     const filterClick = (key, ascDesc, searchBox) => {
       const search = Object.keys(searchBox)
-      .filter(key => searchBox[key])
+      .filter(key => searchBox[key] || searchBox[key] === false)
       .reduce((acc, key) => {
         const column = schema.find(o => o.key === key)
         return { ...acc,

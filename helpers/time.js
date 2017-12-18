@@ -10,6 +10,10 @@ export function timeToUTC(value) {
   return moment(value, MOMENT_DATETIME_FORMAT).format(MOMENT_UTC_DATETIME_FORMAT)
 }
 
+export function dateToUTC(value) {
+  return moment(value, MOMENT_DATE_FORMAT).format(MOMENT_UTC_DATETIME_FORMAT)
+}
+
 export function timeToUTCmobile(value) {
   return moment(value, MOMENT_DATETIME_FORMAT_MOBILE).format(MOMENT_UTC_DATETIME_FORMAT)
 }

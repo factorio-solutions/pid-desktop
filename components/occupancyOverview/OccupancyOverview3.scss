@@ -1,0 +1,117 @@
+@import '../../styles/app.components';
+
+.tableDiv{
+  max-height: 760px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.controlls{
+  display: flex;
+
+  .flex{
+    flex-grow: 1;
+    text-align: center;
+  }
+}
+
+.center{
+  text-align: center;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.table{
+  width: 100%;
+  border-collapse: collapse;
+
+  &.fixedHeader{
+    width: calc(100% - 16px);
+  }
+
+  >tbody{
+    table-layout: fixed;
+
+    >tr:hover{
+      border-top: 1px solid $blue;
+      border-bottom: 1px solid $blue;
+      background-color: lighten($blue, 50%);
+    }
+  }
+
+  >tbody, thead {
+    display: block;
+    >tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+
+      > td {
+        position: relative;
+
+        &:first-child{
+          width: 60px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    >tr, td {
+      &.weekend{
+        background: $lightGray;
+      }
+
+      &.rightBorderDotted{
+        border-right: 1px dotted $black;
+      }
+
+      &.boldBorder{
+        border-right: 2px solid $black;
+      }
+
+      &.rightBorder{
+        border-right: 1px solid $black;
+      }
+
+      &.bottomBorder{
+        border-bottom: 1px solid $black;
+      }
+    }
+  }
+}
+
+.now{
+  position: absolute;
+  height: 100%;
+  background: $red;
+  top: 0;
+  width: 2px;
+  z-index: 9;
+}
+
+.reservation{
+  position: absolute;
+  height: calc(100% - 4px);
+  top: 2px;
+  z-index: 9;
+  overflow: hidden;
+
+  color: $white;
+  vertical-align: middle;
+  font-size: 14px;
+  outline: 1px solid $black;
+
+  &.future{
+    background: $blue;
+  }
+
+  &.ongoing{
+    background: $black;
+  }
+
+  &.fulfilled{
+    background: $gray;
+  }
+}

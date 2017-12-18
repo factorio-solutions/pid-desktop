@@ -140,7 +140,7 @@ export default class OccupancyOverview2 extends Component {
               height:  '500px'
             })
             const mouseLeave = () => this.setState(INIT_STATE)
-
+            const width = ((dur / (duration === 'day' ? 1 : 12)) * cellWidth) - (duration === 'day' ? 6 : 4)
             return (<div
               onMouseEnter={mouseEnter}
               onMouseLeave={mouseLeave}
@@ -149,7 +149,7 @@ export default class OccupancyOverview2 extends Component {
                 left: begining.isSameOrBefore(from) ? 0 : ((duration !== 'day' ?
                   (((begining.hours() % 12) + (begining.minutes() / 60)) / 12) :
                   (begining.minutes() / 60)) * cellWidth) + 'px',
-                width: ((dur / (duration === 'day' ? 1 : 12)) * cellWidth) + 'px'
+                width: (width <= 0 ? 1 : width) + 'px' // -4 due to borders of width 1
               }}
             >
               {reservation.car ? reservation.car.licence_plate + ' - ' + reservation.user.full_name : reservation.user.full_name}
