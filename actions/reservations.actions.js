@@ -8,6 +8,8 @@ import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSO
 import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
 import { PAY_RESREVATION } from '../queries/newReservation.queries'
 
+import { mobile } from '../../index'
+
 
 export const SET_RESERVATIONS = 'SET_RESERVATIONS'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
@@ -36,10 +38,14 @@ export function initReservations(callback) { // callback used by mobile access p
   }
 }
 
-export function destroyReservation(id) {
+export function destroyReservation(id, callback) {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(initReservations())
+      if (mobile) {
+        callback()
+      } else {
+        dispatch(initReservations())
+      }
     }
     request(onSuccess, DESTROY_RESERVATION, { id })
   }
