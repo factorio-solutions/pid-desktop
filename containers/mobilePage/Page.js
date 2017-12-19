@@ -124,7 +124,7 @@ export class Page extends Component {
 
     return (<div className={margin && styles.app_page}>
       <Modal content={errorContent} show={state.error} />
-      <Modal content={state.custom_modal} show={state.custom_modal} />
+      <Modal content={state.custom_modal} show={state.custom_modal} zindex={100} />
 
       <div className={!hideHeader && styles.pageContent}>
         {this.props.children}
