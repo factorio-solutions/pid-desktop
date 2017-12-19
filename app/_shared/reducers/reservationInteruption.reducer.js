@@ -20,7 +20,6 @@ export default function reservationInteruption(state = defaultState, action) {
     case RESERVATION_INTERUPTION_SET_RESERVATION: {
       const newFrom = (action.value && moment(action.value.begins_at).isAfter(moment())) ? formatTime(moment(action.value.begins_at)) : formatTime(floorTime(moment()))
       const newTo = formatTime(moment(newFrom, MOMENT_DATETIME_FORMAT).add(15, 'minutes'))
-      console.log(newFrom, newTo);
       return {
         ...state,
         reservation: action.value,
@@ -47,7 +46,6 @@ export default function reservationInteruption(state = defaultState, action) {
             moment())
           )
       const newTo = moment(newFrom, MOMENT_DATETIME_FORMAT).isSameOrAfter(moment(state.to, MOMENT_DATETIME_FORMAT)) ? formatTime(moment(newFrom, MOMENT_DATETIME_FORMAT).add(15, 'minutes')) : state.to
-      console.log(newFrom, newTo);
       return {
         ...state,
         from: newFrom,
