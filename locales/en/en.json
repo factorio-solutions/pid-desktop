@@ -1084,6 +1084,7 @@
 			"hourShortcut": "h",
 			"me": "Me",
 			"creatingReservation": "Creating reservation",
+			"updatingReservation": "Updating reservation",
 			"creatingPayment": "Creating payment ...",
 			"tokenNoLongerValid": "Token of payment is no longer valid, reservation will be deleted.",
 			"checkingToken": "Checking token validity.",

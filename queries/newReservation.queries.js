@@ -106,7 +106,7 @@ export const CREATE_RESERVATION = `mutation createReservation($reservation: Rese
 }
 `
 
-// create reservation mutation
+// update reservation mutation
 export const UPDATE_RESERVATION = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
   update_reservation(reservation: $reservation, id: $id) {
     id
