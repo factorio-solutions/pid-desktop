@@ -4,20 +4,46 @@ import { setCustomModal, setError } from './pageBase.actions'
 import { t } from '../modules/localization/localization'
 import { parseParameters } from '../helpers/parseUrlParameters'
 
-import { GET_RESERVATIONS_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
+import { GET_RESERVATIONS_PAGINATION_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
 import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
 import { PAY_RESREVATION } from '../queries/newReservation.queries'
 
 import { mobile } from '../../index'
 
 
+export const RESERVATIONS_PER_PAGE = 5
+
+export const SET_ONGOING_RESERVATIONS = 'SET_ONGOING_RESERVATIONS'
 export const SET_RESERVATIONS = 'SET_RESERVATIONS'
+export const ADD_RESERVATIONS = 'ADD_RESERVATIONS'
+export const RESERVATIONS_SET_PAGE = 'RESERVATIONS_SET_PAGE'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 
+
+export function setOngoingReservations(reservations) { // for mobile reservations
+  return {
+    type:  SET_ONGOING_RESERVATIONS,
+    value: reservations
+  }
+}
 
 export function setReservations(reservations) { // for mobile reservations
   return {
     type:  SET_RESERVATIONS,
+    value: reservations
+  }
+}
+
+export function addReservations(reservations) { // for mobile reservations
+  return {
+    type:  ADD_RESERVATIONS,
+    value: reservations
+  }
+}
+
+export function setPage(reservations) { // for mobile reservations
+  return {
+    type:  RESERVATIONS_SET_PAGE,
     value: reservations
   }
 }
@@ -27,14 +53,54 @@ export function togglePast() {
 }
 
 
-export function initReservations(callback) { // callback used by mobile access page
-  window.dispatchEvent(new Event('paginatedTableUpdate'))
+export function initOngoingReservations(callback) { // callback used by mobile access page
   return (dispatch, getState) => {
     const onSuccess = respoonse => {
-      dispatch(setReservations(respoonse.data.reservations))
-      callback && callback(respoonse.data.reservations)
+      dispatch(setOngoingReservations(respoonse.data.reservations))
+      callback(respoonse.data.reservations)
     }
-    request(onSuccess, GET_RESERVATIONS_QUERY, { past: getState().reservations.past })
+    request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
+      past:      false,
+      ongoing:   true,
+      user_id:   getState().mobileHeader.current_user.id,
+      order_by:  'begins_at',
+      garage_id: getState().mobileHeader.garage_id
+    })
+  }
+}
+
+export function initReservations() { // callback used by mobile access page
+  return (dispatch, getState) => {
+    const state = getState().reservations
+    const onSuccess = respoonse => {
+      dispatch(setReservations(respoonse.data.reservations))
+    }
+    request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
+      past:      state.past,
+      user_id:   getState().mobileHeader.current_user.id,
+      count:     RESERVATIONS_PER_PAGE,
+      page:      1,
+      order_by:  'begins_at',
+      garage_id: getState().mobileHeader.garage_id
+    })
+  }
+}
+
+export function loadReservations() { // callback used by mobile access page
+  window.dispatchEvent(new Event('paginatedTableUpdate'))
+  return (dispatch, getState) => {
+    const state = getState().reservations
+    const onSuccess = respoonse => {
+      dispatch(addReservations(respoonse.data.reservations))
+    }
+    request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
+      past:      state.past,
+      user_id:   getState().mobileHeader.current_user.id,
+      count:     RESERVATIONS_PER_PAGE,
+      page:      state.page + 1,
+      order_by:  'begins_at',
+      garage_id: getState().mobileHeader.garage_id
+    })
   }
 }
 
