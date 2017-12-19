@@ -55,7 +55,7 @@ export function getCurrentReservationsGates() {
   return (dispatch, getState) => {
     dispatch(resetAccessStore())
 
-    const reservations = getState().reservations.reservations
+    const reservations = getState().reservations.ongoingReservations
       .filter(reservation => {
         const header = getState().mobileHeader
         return (header.garage_id ? reservation.place.floor.garage.id === header.garage_id : true) // reservations of garage selected in header

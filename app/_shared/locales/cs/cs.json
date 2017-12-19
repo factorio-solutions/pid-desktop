@@ -1084,6 +1084,7 @@
 			"hourShortcut": "h",
 			"me": "Já",
 			"creatingReservation": "Vytvářím rezervaci",
+			"updatingReservation": "Upravuji rezervaci",
 			"creatingPayment": "Vytvářím platbu ...",
 			"tokenNoLongerValid": "Identifikátor platby už není platný, rezervace bude odstraněna.",
 			"checkingToken": "Kontroluji identifikátor platby.",

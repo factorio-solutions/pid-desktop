@@ -1,9 +1,9 @@
 // get available floors, mobile purposes
-export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_id: Id) {
+export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_id: Id, $reservation_id: Id) {
   garage(id: $id) {
     floors {
       label
-      free_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id) {
+      free_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id, reservation_id: $reservation_id) {
         id
         label
         pricing{
