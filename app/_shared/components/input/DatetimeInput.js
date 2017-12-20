@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM                        from 'react-dom'
-import styles                          from './Input.scss'
-import moment                          from 'moment'
+import moment from 'moment'
+
+import { MOMENT_DATETIME_FORMAT } from '../../helpers/time'
 
 import PopupDatetimepicker from '../datetimepicker/PopupDatetimepicker'
+
+import styles from './Input.scss'
 
 
 // this component has to know its state, so it can be passed to the value attribute of input
@@ -38,14 +40,13 @@ export default class DatetimeInput extends Component {
     const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, style, editable } = this.props
 
     const handleChange = event => {
-      editable && this.setState({ ... this.state, message: event.target.value })
+      editable && this.setState({ ...this.state, message: event.target.value })
+      onChange && onChange(moment(event.target.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT), moment(event.target.value, MOMENT_DATETIME_FORMAT).isValid())
     }
 
     const handlePick = date => {
-      this.setState({ ... this.state, message: moment(date).format('DD.MM.YYYY HH:mm') })
-      if (typeof onChange === 'function') {
-        onChange(moment(date).format('DD.MM.YYYY HH:mm'), moment(date).isValid())
-      }
+      this.setState({ ...this.state, message: moment(date).format(MOMENT_DATETIME_FORMAT) })
+      onChange && onChange(moment(date).format(MOMENT_DATETIME_FORMAT), moment(date).isValid())
     }
 
     const preventEnter = function (event) {
@@ -67,12 +68,12 @@ export default class DatetimeInput extends Component {
     return (
       <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} >
         <input type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4}) (\d{1,2}):(\d{2})" />
-        <span className={styles.bar}></span>
+        <span className={styles.bar} />
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
-        <label className={`${styles.customFormGroup}  ${styles.error}`} style={{ opacity: moment(this.state.message, 'DD.MM.YYYY HH:mm').isValid() ? 0 : 1 }}>{error}</label>
-        <label className={`${styles.customFormGroup}  ${styles.callendar}`} onClick={editable && showDatepicker}><i className="fa fa-calendar" aria-hidden="true"></i></label>
-        <PopupDatetimepicker onSelect={handlePick} datetime={moment(this.state.message, [ 'YYYY-MM-DDTHH:mm', 'DD.MM.YYYY HH:mm' ]).isValid() ? moment(this.state.message, 'DD.MM.YYYY HH:mm').format('YYYY-MM-DD HH:mm') : undefined} show={this.state.focus} okClick={hideDatepicker} />
+        <label className={`${styles.customFormGroup}  ${styles.error}`} style={{ opacity: moment(this.state.message, MOMENT_DATETIME_FORMAT).isValid() ? 0 : 1 }}>{error}</label>
+        <label className={`${styles.customFormGroup}  ${styles.callendar}`} onClick={editable && showDatepicker}><i className="fa fa-calendar" aria-hidden="true" /></label>
+        <PopupDatetimepicker onSelect={handlePick} datetime={moment(this.state.message, [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ? moment(this.state.message, MOMENT_DATETIME_FORMAT).format('YYYY-MM-DD HH:mm') : undefined} show={this.state.focus} okClick={hideDatepicker} />
       </div>
     )
   }

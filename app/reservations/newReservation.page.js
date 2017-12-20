@@ -55,14 +55,14 @@ class NewReservationPage extends Component {
     }
 
     const userDropdown = () => {
-      const userSelected = (index, a) => { actions.downloadUser(state.availableUsers[index].id) }
+      const userSelected = index => { actions.downloadUser(state.availableUsers[index].id) }
       return state.availableUsers.map((user, index) => {
-        return { label: user.full_name, onClick: userSelected.bind(this, index) }
+        return { label: user.full_name, onClick: () => userSelected(index) }
       }) || []
     }
 
     const garageDropdown = () => {
-      const garageSelected = index => { actions.downloadGarage(state.user.availableGarages[index].id) }
+      const garageSelected = index => actions.downloadGarage(state.user.availableGarages[index].id)
       return state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => {
         return { label: garage.name, onClick: garageSelected.bind(this, index) }
       }) || []
