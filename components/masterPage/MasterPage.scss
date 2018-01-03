@@ -4,6 +4,9 @@ $primaryMenuWidth: 160px;
 $secondaryMenuWidth: 200px;
 $hintWidth: 180px;
 
+.profileDropdown{
+  right: 0;
+}
 .horizontalMenu{
   z-index: 9;
   display: block;
@@ -22,7 +25,8 @@ $hintWidth: 180px;
 
   >.logoContainer{
     margin: auto;
-      width: 160px;
+    width: 160px;
+    cursor: pointer;
   }
 }
 

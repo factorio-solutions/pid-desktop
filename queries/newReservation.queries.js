@@ -23,6 +23,9 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     id
     name
   }
+  last_reservation_client(user_id: $user_id, garage_id: $garage_id){
+    id
+  }
 }
 `
 
@@ -34,6 +37,10 @@ export const GET_USER = `query Query($id: Id!) {
       licence_plate
     }
     id
+    full_name
+    email
+    phone
+    last_active
   }
 }
 `
@@ -99,7 +106,7 @@ export const CREATE_RESERVATION = `mutation createReservation($reservation: Rese
 }
 `
 
-// create reservation mutation
+// update reservation mutation
 export const UPDATE_RESERVATION = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
   update_reservation(reservation: $reservation, id: $id) {
     id

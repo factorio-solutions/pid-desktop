@@ -41,19 +41,10 @@ export default function reservationInteruption(state = defaultState, action) {
           formatTime(floorTime(moment())) : // now
         !isBeforeNow && isBeforeReservationStart ?
           formatTime(moment(state.reservation.begins_at)) : // reservation start
-          formatTime(floorTime(moment(state.reservation.begins_at).isAfter(moment()) ? moment(state.reservation.begins_at) : moment()))
-        // isBeforeNow && isBeforeReservationStart ?
-          // higher of reservationStart or now
-
-
-
-      // const newFrom = moment(action.value, MOMENT_DATETIME_FORMAT).isBefore(moment()) ?
-      //   formatTime(floorTime(moment())) :
-      //   moment(action.value, MOMENT_DATETIME_FORMAT).isBefore(moment(state.reservation.begins_at)) ?
-      //     formatTime(moment(state.reservation.begins_at)) :
-      //     moment(action.value, MOMENT_DATETIME_FORMAT).isAfter(moment(state.reservation.ends_at).subtract(15, 'minutes')) ?
-      //       formatTime(moment(state.reservation.ends_at).subtract(15, 'minutes')) :
-      //       action.value
+          formatTime(floorTime(moment(state.reservation.begins_at).isAfter(moment()) ?
+            moment(state.reservation.begins_at) :
+            moment())
+          )
       const newTo = moment(newFrom, MOMENT_DATETIME_FORMAT).isSameOrAfter(moment(state.to, MOMENT_DATETIME_FORMAT)) ? formatTime(moment(newFrom, MOMENT_DATETIME_FORMAT).add(15, 'minutes')) : state.to
       return {
         ...state,
