@@ -69,14 +69,27 @@
 
 .rightBorderDotted{
   border-right: 1px dotted $black;
-  position: relative; // here to help with reservations
 }
 .rightBorder{
   border-right: 1px solid $black;
 }
 
+.relative{
+  position: relative; // here to help with reservations
+}
+
 .weekend{
   background: $lightGray;
+}
+
+.times{
+  >td{
+    text-align: center;
+
+    &.bold{
+      font-weight: bold;
+    }
+  }
 }
 
 .reservationDiv{
@@ -141,6 +154,9 @@
   }
 }
 
+.boldBorder{
+  border-right: 2px solid $black;
+}
 
 // ============================================================================
 // TOOLTIP TABLE STYLING

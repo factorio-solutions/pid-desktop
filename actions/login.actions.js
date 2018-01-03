@@ -53,6 +53,10 @@ export function dismissModal () {
   }
 }
 
+export function resetStore() {
+  return { type: 'RESET' }
+}
+
 export function loginSuccess(result, redirect, callback) {
   return (dispatch, getState) => {
     if ('id_token' in result) {
@@ -154,7 +158,7 @@ export function refresh_login(refresh_token, callback){
 
 export function logout(){
   return (dispatch, getState) => {
-    dispatch({ type: 'RESET' })
+    dispatch(resetStore())
     delete localStorage['jwt']
     // delete localStorage['refresh_token']
     nav.to('/')

@@ -11,10 +11,14 @@ import {
   MOBILE_NEW_RESERVATION_SET_TO,
   MOBILE_NEW_RESERVATION_SET_FROM_NOW,
   MOBILE_NEW_RESERVATION_SET_DURATION,
-  MOBILE_NEW_RESERVATION_SET_PLACE_ID
+  MOBILE_NEW_RESERVATION_SET_PLACE_ID,
+  MOBILE_NEW_RESERVATION_SET_RESERVATION_ID,
+  MOBILE_NEW_RESERVATION_SET_ALL
 } from '../actions/mobile.newReservation.actions'
 
 const defaultState = {
+  reservation_id: undefined, // the reservation being updated
+
   from: undefined,
   to:   undefined,
 
@@ -37,6 +41,30 @@ const defaultState = {
 
 export default function mobileNewReservation(state = defaultState, action) {
   switch (action.type) {
+
+    case MOBILE_NEW_RESERVATION_SET_ALL:
+      return {
+        ...state,
+        reservation_id:   action.reservation_id,
+        from:             action.from,
+        to:               action.to,
+        fromNow:          false,
+        duration:         undefined,
+        availableClients: action.clients,
+        client_id:        action.client_id,
+        availableCars:    action.cars,
+        car_id:           action.car_id,
+        carLicencePlate:  action.licence_plate,
+        availableFloors:  action.floors,
+        autoselect:       false,
+        place_id:         action.place_id
+      }
+
+    case MOBILE_NEW_RESERVATION_SET_RESERVATION_ID:
+      return {
+        ...state,
+        reservation_id: action.value
+      }
 
     case MOBILE_NEW_RESERVATION_SET_FROM:
       return {
