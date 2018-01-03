@@ -67,7 +67,7 @@ export class OccupancyOverview extends Component {
               || moment(reservation.begins_at).isBefore(this.props.from) && moment(reservation.ends_at).isAfter(moment(this.props.from).add(1, this.props.duration))
         })
 
-        const theRow = this.tbody.childNodes[i].childNodes[1]
+        const theRow = this.tbody.childNodes[i + (this.props.duration === 'day' ? 1 : 0)].childNodes[1]
         while (theRow.firstChild) { // clear reservation divs
           theRow.removeChild(theRow.firstChild)
         }
@@ -115,7 +115,8 @@ export class OccupancyOverview extends Component {
 
         // now line
         const nowPosition = (moment().diff(this.props.from) / intervalLength) * rowWidth
-        if (nowPosition > 0 && nowPosition < rowWidth) {
+        //&& !theRow.parentElement.classList.contains(styles.times)
+        if (nowPosition > 0 && nowPosition < rowWidth ) {
           const now = document.createElement('DIV')
           now.className = styles.nowLine
           now.setAttribute('style', `left: ${nowPosition}px;`)
@@ -129,7 +130,7 @@ export class OccupancyOverview extends Component {
     const { places, leftClick, rightClick, dayClick, weekClick, monthClick, resetClientClick, loading } = this.props
 
     const prepareDates = () => {
-      const length = this.props.duration === 'day' ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS
+      const length = this.props.duration === 'day' ? DAY : this.props.duration === 'week' ? WEEK_DAYS : MONTH_DAYS
       const days = []
       for (let i = 0; i < length; i++) {
         // if (this.props.duration === 'month'){
@@ -187,13 +188,18 @@ export class OccupancyOverview extends Component {
       return places.sort(sorter).map(place => {
         const prepareRow = () => {
           const row = []
-          const length = (this.props.duration === 'day' ? DAY : this.props.duration == 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
+          const daySelected = this.props.duration === 'day'
+          const length = (daySelected ? DAY * 12 : this.props.duration === 'week' ? WEEK_DAYS : MONTH_DAYS) * 2
           for (let i = 0; i < length; i++) {
-            const weekday = moment(this.props.from).locale(moment.locale()).add(Math.floor(i / 2), 'days').isoWeekday()
+            const weekday = moment(this.props.from).locale(moment.locale()).add(Math.floor(daySelected ? 0 : i / 2), 'days').isoWeekday()
             const tdStyles = [
+              styles.relative,
               weekday === 6 || weekday === 7 ? styles.weekend : '',
-              (i) % (2) == 1 ? styles.rightBorder : '',
-              (i) % (2) == 0 ? styles.rightBorderDotted : ''
+              !daySelected && (i) % (2) === 1 ? styles.rightBorder : '',
+              !daySelected && (i) % (2) === 0 ? styles.rightBorderDotted : '',
+              daySelected && styles.rightBorderDotted : '',
+              daySelected && ((i + 1) % (6)) - 3 === 0 ? styles.rightBorder : '',
+              daySelected && (i + 1) % (6) === 0 ? styles.boldBorder : ''
             ]
             row.push(<td key={i} className={tdStyles.join(' ')} />)
           }
@@ -213,11 +219,29 @@ export class OccupancyOverview extends Component {
           <table onMouseMove={() => { this.setState({ ...this.state, visible: false }) }}>
             <thead>
               <tr className={styles.bottomBorder}>
-                <td className={styles.placePadding}>{t([ 'occupancy', 'places' ])}</td>
+                {this.props.duration !== 'day' && <td className={styles.placePadding}>{t([ 'occupancy', 'places' ])}</td>}
                 {prepareDates()}
               </tr>
             </thead>
             <tbody ref={tbody => { this.tbody = tbody }}>
+              {this.props.duration === 'day' && <tr className={styles.times}>
+                <td className={styles.placePadding}>{t([ 'occupancy', 'places' ])}</td>
+                <td colSpan="2" />
+                <td colSpan="2">3:00</td>
+                <td colSpan="1" />
+                <td colSpan="2" className={styles.bold}>6:00</td>
+                <td colSpan="1" />
+                <td colSpan="2">9:00</td>
+                <td colSpan="1" />
+                <td colSpan="2" className={styles.bold}>12:00</td>
+                <td colSpan="1" />
+                <td colSpan="2">15:00</td>
+                <td colSpan="1" />
+                <td colSpan="2" className={styles.bold}>18:00</td>
+                <td colSpan="1" />
+                <td colSpan="2">21:00</td>
+                <td colSpan="2" />
+              </tr>}
               {prepareBody()}
             </tbody>
           </table>

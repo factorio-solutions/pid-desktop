@@ -1,8 +1,8 @@
 {
-	"PID-RELEASE": "r20160814a",
+	"PID-RELEASE": "r20161121a",
 	"addresses": {
 		"name": "Jméno *",
-		"line1": "Řádek 1",
+		"line1": "Řádek 1 *",
 		"line2": "Řádek 2",
 		"city": "Město *",
 		"postalCode": "Poštovní směrovací číslo *",
@@ -31,7 +31,8 @@
 		"password": "Heslo",
 		"loginFailed": "Špatné přihlášení",
 		"forgot": "Zapomenuté heslo?",
-		"proceed": "Pokračujte zde"
+		"proceed": "Pokračujte zde",
+		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
 		"name": "Vaše celé jméno *",
@@ -93,7 +94,7 @@
 		"error": "Chyba",
 		"success": "Úspěch",
 		"inviteUser": "Pozvat nového uživatele",
-		"dashboardHint": "Zde vidíte přehled všech důležitých informací o Vašem účtu.\nNa plánku garáže vidíte, zda jsou jednotlivá místa dlouhodobě pronajatá, či jestli na nich probíhá rezervace.\nV novinkách vidíte aktuality ze světa Park-it-direct.\nV poslední aktivitě vidíte poslední úpravy ve Vaší garáži s detaily o tom kdo a kdy je provedl.\nV aktuálním stavu vidíte stručné statistiky o volných a obsazených místech.\nVe finančním přehledu vidíte aktuální finanční statistiky.",
+		"dashboardHint": "Zde vidíte přehled všech důležitých informací o Vašem účtu.\nNa plánku garáže vidíte, zda na jednotlivých místech aktuálně probíhá rezervace.\nV novinkách vidíte aktuality ze světa Park-it-direct.\nV poslední aktivitě vidíte poslední úpravy Vámi spravovaných součástí s detaily o tom kdo a kdy je provedl.\nV aktuálním stavu vidíte stručné statistiky o volných a obsazených místech.\nVe finančním přehledu vidíte aktuální finanční statistiky.",
 		"issuesHint": "CS: pageBase.issuesHint",
 		"analyticsHint": "Zde se můžete podívat na různé statistiky.",
 		"invoicesHint": "Zde je seznam vystavených faktur. \n\nV levém horním rohu si můžete faktury vyfiltrovat podle klienta. V pravém horním rohu si můžete vybrat mezi zobrazením aktuálních faktur nebo celé historie.",
@@ -107,7 +108,7 @@
 		"pidSettingsHint": "CS: pageBase.pidSettingsHint",
 		"activityLogHint": "Zde najdete záznam veškerých aktivit v systému Park-it-direct, včetně toho, o jakou akci se jednalo a kdo a kdy ji provedl.",
 		"reservationsHint": "Zde najdete všechny Vaše rezervace - jak Vámi vytvořené, tak rezervace ostatních do Vašich garáží.",
-		"newReservationHint": "Zde můžete vytvořit novou rezervaci. V závislosti na Vašich právech vyberte postupně uživatele, garáž, klienta a vozidlo. Poté nastavte datum a eventuelně parkovací místo. Voilà.",
+		"newReservationHint": "Zde můžete vytvořit novou rezervaci.\n\nV závislosti na Vašich právech vyberte postupně uživatele, garáž, klienta a vozidlo. Poté nastavte datum a eventuelně parkovací místo. Voilà.",
 		"garagesHint": "Zde najdete zobrazení klientů, dohod, rezervací, cen a aut na plánku Vaší garáže. Stejné hodnoty jsou vždy vyznačeny stejnou barvou.\nV levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.",
 		"newGarageHint": "Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.",
 		"newGarageFloorsHint": "Zde můžete nastavit počet podlaží a kolik je v každém podlaží parkovacích míst.\n\nKe každému podlaží je možné nahrát plánek ve formátu .svg. S jeho tvorbou Vám rádi pomůžeme, popřípadě si můžete vybrat z předpřipravených šablon.\n\nDále je zde možno nastavit maximální rozměry vozidel.",
@@ -163,7 +164,7 @@
 		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
 		"reservationOverviewHint": "CS: pageBase.reservationOverviewHint",
 		"editInvoiceHint": "CS: pageBase.editInvoiceHint",
-		"editContractHint": "CS: pageBase.editContractHint",
+		"editContractHint": "Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.",
 		"unredNotifications": {
 			"one": "Máte jedno nepřečtené upozornění",
 			"few": "Máte %(count)s nepřečtená upozornění",
@@ -181,7 +182,8 @@
 		"analyticsplacesHint": "Zde můžete vidět statistiky obratu míst - průměrný, maximální, minimální a celkový obrat, to vše rozděleno podle toho, zda je místo pronajímáno dlouhodobě či krátkodobě. V levém horním rohu si lze vybrat zobrazení na heatmapě, kde jsou hodnoty zobrazeny v barevném spektru (žlutě jsou nejnižší hodnoty, červeně nejvyšší).\nV pravém horním rohu lze nastavit přesné rozpětí zobrazeného období.",
 		"analyticspaymentsHint": "CS: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
-		"flexiplaceHint": "Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář."
+		"flexiplaceHint": "Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",
+		"pidAdmin": "PID admin"
 	},
 	"newReservation": {
 		"selectGarage": "Vyberte garáž *",
@@ -219,7 +221,9 @@
 		"hostsName": "Jméno hosta",
 		"hostsPhone": "Hostův telefon",
 		"hostsEmail": "Hostův email",
-		"selectedUser": "Uživatel"
+		"selectedUser": "Uživatel",
+		"flexiblePlaceSelected": "flexibilní",
+		"noFreePlace": "Žádná volná místa"
 	},
 	"clients": {
 		"name": "jméno",
@@ -252,6 +256,7 @@
 		"presetAs": "Nastavit jako",
 		"removeClientUser": "Určitě chcete odstranit tohoto uživatele?",
 		"pendingUsers": "Nevyřízené pozvánky",
+		"confirmedUsers": "Uživatelé %(name)s",
 		"removeUser": "Odstranit uživatele",
 		"resendInvitation": "Znovu odeslat",
 		"resendSuccessfull": "Email úspěšně odeslán.",
@@ -264,10 +269,10 @@
 		"place": "místo",
 		"client": "klient",
 		"licencePlate": "SPZ",
-		"state": "stát",
+		"state": "stav",
 		"type": "typ",
 		"creator": "Založil",
-		"garage": "Garáž",
+		"garage": "garáž",
 		"createdAt": "vytvořeno:",
 		"updatedAt": "upraveno:",
 		"removeReservationQuestion": "Určitě chcete odstranit tuto rezervaci?",
@@ -280,7 +285,20 @@
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
-		"destroyRservation": "Zrušit rezervaci"
+		"destroyRservation": "Zrušit rezervaci",
+		"destroyAllReservation": {
+			"one": "Zrušit pouze vybranou rezervaci.",
+			"few": "Zrušit %(count)s rezervace v nastaveném opakování.",
+			"many": "Zrušit všech %(count)s rezervací v nastaveném opakování.",
+			"other": "Zrušit %(count)s rezervace v nastaveném opakování."
+		},
+		"updateAllReservation": {
+			"one": "Upravit pouze zvolenou rezervaci",
+			"few": "Upravit %(count)s rezervace v nastaveném opakování.",
+			"many": "Upravit všech %(count)s rezervací v nastaveném opakování.",
+			"other": "Upravit %(count)s rezervace v nastaveném opakování."
+		},
+		"flexiblePlace": "fleximísto"
 	},
 	"garages": {
 		"clients": "Klienti",
@@ -436,7 +454,7 @@
 		"invalidName": "Neplatný název garáže",
 		"removeFloorRowQuestion": "Určitě chcete odstranit toto patro?",
 		"removeGateRowQuestion": "Určitě chcete odstranit tuto bránu?",
-		"street": "Číslo ulice a domu",
+		"street": "Číslo ulice a domu *",
 		"city": "Město *",
 		"postalCode": "Poštovní směrovací číslo *",
 		"country": "Země *",
@@ -452,11 +470,11 @@
 		"invalidFloorTo": "Neplatné číslo \"Do\"",
 		"placeholderFloorFrom": "3",
 		"placeholderFloorTo": "12",
-		"streetPlaceholder": "Martense Avenue 526",
-		"cityPlaceholder": "Teaneck",
-		"postalCodePlaceholder": "7666",
-		"statePlaceholder": "New Jersey",
-		"countryPlaceholder": "USA",
+		"streetPlaceholder": "Vinohradská 1",
+		"cityPlaceholder": "Praha",
+		"postalCodePlaceholder": "12000",
+		"statePlaceholder": "CS: newGarage.statePlaceholder",
+		"countryPlaceholder": "Česká republika",
 		"lat": "Zeměpisná šířka",
 		"invalidLat": "Neplatné číslo",
 		"latPlaceholder": "50.08",
@@ -573,6 +591,8 @@
 		"phone": "Telefonní číslo",
 		"memberSince": "Členem od",
 		"active": "Aktivní",
+		"notActive": "Neaktivní",
+		"notConfimed": "Nekonfirmovaný",
 		"pending": "Čekající",
 		"allKnownUsers": "Všichni známí uživatelé",
 		"pendingInvitations": "Čekající pozvánky",
@@ -923,15 +943,18 @@
 		"createdAt": "čas"
 	},
 	"dashboard": {
-		"news": "Novinky",
-		"latestActivity": "Poslední aktivita",
-		"currentState": "Aktuální stav",
-		"financeOverview": "Finanční přehled",
-		"occupiedTotal": "obsazeno/celkem",
-		"longterm": "Dlouhodobé",
-		"visitors": "Návštěvníci",
+		"used": "Obsazených",
 		"free": "K dispozici",
-		"total": "Celkem"
+		"unused": "Nevyužito",
+		"units": {
+			"one": "jednotka",
+			"few": "jednotky",
+			"many": "jednotek",
+			"other": "jednotky"
+		},
+		"statistics": "Statistika",
+		"news": "Novinky",
+		"garage": "Garáž"
 	},
 	"loginVerification": {
 		"description": "Spuštěna vícefázová autorizace. Na email %(email)s vám zašleme ověřovací kód.",
@@ -943,7 +966,7 @@
 		"from": "Přerušit od",
 		"to": "Přerušit do"
 	},
-	"languages":{
+	"languages": {
 		"language": "Jazyk",
 		"en": "English",
 		"cs": "Česky",
@@ -1061,12 +1084,14 @@
 			"hourShortcut": "h",
 			"me": "Já",
 			"creatingReservation": "Vytvářím rezervaci",
+			"updatingReservation": "Upravuji rezervaci",
 			"creatingPayment": "Vytvářím platbu ...",
 			"tokenNoLongerValid": "Identifikátor platby už není platný, rezervace bude odstraněna.",
 			"checkingToken": "Kontroluji identifikátor platby.",
 			"redirecting": "Přesměrovávám ...",
 			"paymentUnsucessfull": "Platba byla neúspěšná.",
-			"processingPayment": "Zpracovávám platbu ..."
+			"processingPayment": "Zpracovávám platbu ...",
+			"flexiplace": "FLEXI"
 		}
 	},
 	"auth0Emails": {
@@ -1145,6 +1170,64 @@
 			"place": "Místo:",
 			"from": "Od:",
 			"to": "Do:"
+		}
+	},
+	"pidAdmin": {
+		"pageBase": {
+			"backToPid": "do PID",
+			"adminMode": "ADMIN MODE PARK-IT-DIRECTU",
+			"generator": "Generátor",
+			"news": "Novinky"
+		},
+		"users": {
+			"id": "id",
+			"name": "jméno",
+			"impersonate": "ztělesnit",
+			"lastActive": "naposledy aktivní"
+		},
+		"generator": {
+			"selectGarages": "Zvolte garáž",
+			"selected": "zvoleno",
+			"id": "id",
+			"name": "jméno",
+			"selectClients": "Zvolte klienta",
+			"selectUsers": "Zvolte uživatele",
+			"generateReservations": "Generovat rezervace",
+			"count": "Počet",
+			"countInvalid": "Špatný počet",
+			"dateFrom": "Datum od",
+			"dateTo": "Datum do",
+			"dateInvalid": "Datum neplatné",
+			"dayFrom": "Den od",
+			"dayTo": "Den do",
+			"dayFromInvalid": "Číslo neplatné",
+			"durationFrom": "Délka od",
+			"durationTo": "Délka do",
+			"durationFromInvalid": "Délka neplatná",
+			"internal": "Interní",
+			"host": "Host",
+			"hours": "hodiny",
+			"or": "NEBO",
+			"createUsers": "Vytvořit uživatele",
+			"create": "Vytvořit",
+			"users": "uživatelů.",
+			"clientName": "Klientské jméno",
+			"clientId": "Klientské id",
+			"selectAll": "Vybrat všechny uživatele",
+			"deselectAll": "Odebrat všechny uživatele",
+			"beginsAt": "od",
+			"endsAt": "do",
+			"userName": "uživatel",
+			"removeReservations": "Smazat rezervace",
+			"keepReservations": "Ponechat rezervace"
+		},
+		"news": {
+			"label": "nápis",
+			"url": "url",
+			"id": "id",
+			"createdAt": "vytvořeno",
+			"editNews": "upravit",
+			"deleteNews": "smazat"
 		}
 	}
 }

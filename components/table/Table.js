@@ -35,12 +35,14 @@ export default class Table extends Component {
     onRowSelect:    PropTypes.func, // will be called on select, gives it parameters (data, index) or (undefined, -1) on deselect
     deselect:       PropTypes.bool, // if set to true, will reset selected item
     searchBox:      PropTypes.bool,
+    searchBar:      PropTypes.bool,
     returnFiltered: PropTypes.func,
     filterClick:    PropTypes.func // will return key and ASC or DESC
   }
 
   static defaultProps = {
-    searchBox: true
+    searchBox: true,
+    searchBar: false
   }
 
   constructor(props) {
@@ -49,7 +51,8 @@ export default class Table extends Component {
       sortKey:   this.props.schema.find(s => s.sort).key,
       sortType:  this.props.schema.find(s => s.sort).sort,
       spoilerId: -1,
-      search:    ''
+      search:    '',
+      searchBar: props.schema.reduce((acc, column) => ({ ...acc, [column.key]: '' }), {})
     }
   }
 
@@ -77,7 +80,7 @@ export default class Table extends Component {
       if (this.state.search === '') {
         return true
       } else {
-        return schema.map(value => { return value.representer ? value.representer(object[value.key]) : object[value.key] })
+        return schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
        .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
          .toLowerCase()
          .includes(this.state.search.toLowerCase())
@@ -87,14 +90,14 @@ export default class Table extends Component {
   }
 
   render() {
-    const { schema, data, searchBox, returnFiltered, filterClick } = this.props
+    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
     const { sortKey, sortType, spoilerId } = this.state
     const { compareRepresentations, comparator, representer } = schema.find(s => s.key === sortKey)
     let myComp // comparator to be used
 
     const handleHeadClick = index => {
       const isSame = sortKey === schema[index].key
-      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc')
+      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc', this.state.searchBar)
       if (schema[index].comparator) {
         this.setState({ ...this.state,
           sortKey:  isSame ? sortKey : schema[index].key,
@@ -153,6 +156,33 @@ export default class Table extends Component {
       )
     }
 
+    const prepareSearchBar = (value, key) => {
+      const searchChange = searchValue => this.setState({
+        ...this.state,
+        searchBar: {
+          ...this.state.searchBar,
+          [value.key]: searchValue
+        }
+      }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
+      const renderEnum = enumValue => {
+        const onEnumClick = () => this.state.searchBar[value.key] === enumValue ?  searchChange('') : searchChange(enumValue)
+        return <span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
+          {value.representer ? value.representer(enumValue) : enumValue}
+        </span>
+      }
+      const onChange = event => searchChange(event.target.value)
+      return (value.representer && !value.enum && value.comparator !== 'date') ?
+        <td /> :
+        (<td key={key}>
+          <div className={styles.tdSearchBar}>
+            { value.enum ? value.enum.map(renderEnum) :
+            [ <input type="search" value={this.state.searchBar[value.key]} onChange={onChange} placeholder="----------------" />,
+              <i className="fa fa-search" aria-hidden="true" /> ]
+            }
+          </div>
+        </td>)
+    }
+
     const prepareBody = (value, key, arr) => {
       return [
         <TableRow
@@ -186,6 +216,9 @@ export default class Table extends Component {
           <thead>
             <tr>
               {schema.map(prepareHeader)}
+            </tr>
+            <tr>
+              {searchBar && schema.map(prepareSearchBar)}
             </tr>
           </thead>
           <tbody>

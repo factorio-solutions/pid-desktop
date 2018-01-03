@@ -1,18 +1,18 @@
 {
-	"PID-RELEASE": "r20160814a",
+	"PID-RELEASE": "r20161121a",
 	"addresses": {
-		"name": "Name",
-		"line1": "Adresszeile 1",
+		"name": "Name *",
+		"line1": "Adresszeile 1 *",
 		"line2": "Adresszeile 2",
-		"city": "Stadt",
-		"postalCode": "Postleitzahl",
+		"city": "Stadt *",
+		"postalCode": "Postleitzahl *",
 		"state": "Staat",
-		"country": "Land",
+		"country": "Land *",
 		"nameInvalid": "Name ungültig",
 		"line1Invalid": "Adresszeile 1 ungültig",
 		"line2Invalid": "Adresszeile 2 ungültig",
 		"cityInvalid": "Stadt ungültig",
-		"postalCodeInvalid": "Postleitzahl",
+		"postalCodeInvalid": "Postleitzahl *",
 		"stateInvalid": "Bundesstaat ungültig",
 		"countryInvalid": "Land ungültig",
 		"namePlaceholder": "Wolfgang Müller",
@@ -31,7 +31,8 @@
 		"password": "Passwort",
 		"loginFailed": "Anmeldung fehlgeschlagen",
 		"forgot": "Passwort vergessen?",
-		"proceed": "Hier fortfahren"
+		"proceed": "Hier fortfahren",
+		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
 		"name": "Vor- und Nachname *",
@@ -181,7 +182,8 @@
 		"analyticsplacesHint": "Hier werden die Umsatzstatistiken für Stellplätze angezeigt – Durchschnitt, maximaler, minimaler und Gesamtumsatz, jeweils für kurzfristige und Langzeitvermietungen. Oben links kann eine Heatmap angezeigt werden, in der die Werte farbig dargestellt werden (niedrigste Werte in Gelb, höchste Werte in Rot).\nOben rechts kann der gewünschte Anzeigezeitraum eingestellt werden.",
 		"analyticspaymentsHint": "DE: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
-		"flexiplaceHint": "DE: pageBase.flexiplaceHint"
+		"flexiplaceHint": "DE: pageBase.flexiplaceHint",
+		"pidAdmin": "PID admin"
 	},
 	"newReservation": {
 		"selectGarage": "Wählen Sie ein Parkhaus aus *",
@@ -215,11 +217,13 @@
 		"validtyCheck": "Validierung läuft …",
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
-		"newHost": "DE: newReservation.newHost",
+		"newHost": "Neuer Gast",
 		"hostsName": "DE: newReservation.hostsName",
 		"hostsPhone": "DE: newReservation.hostsPhone",
 		"hostsEmail": "DE: newReservation.hostsEmail",
-		"selectedUser": "DE: newReservation.selectedUser"
+		"selectedUser": "DE: newReservation.selectedUser",
+		"flexiblePlaceSelected": "DE: newReservation.flexiblePlaceSelected",
+		"noFreePlace": "DE: newReservation.noFreePlace"
 	},
 	"clients": {
 		"name": "Name",
@@ -264,7 +268,7 @@
 		"place": "Stellplatz",
 		"client": "Kunde",
 		"licencePlate": "Kennzeichen",
-		"state": "Staat",
+		"state": "DE: reservations.state",
 		"type": "Typ",
 		"creator": "Erstellt von",
 		"garage": "Parkhaus",
@@ -280,7 +284,20 @@
 		"interuptReservation": "DE: reservations.interuptReservation",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
-		"destroyRservation": "Reservierung stornieren"
+		"destroyRservation": "Reservierung stornieren",
+		"destroyAllReservation": {
+			"one": "DE: reservations.destroyAllReservation.one",
+			"few": "DE: reservations.destroyAllReservation.few",
+			"many": "DE: reservations.destroyAllReservation.many",
+			"other": "DE: reservations.destroyAllReservation.other"
+		},
+		"updateAllReservation": {
+			"one": "DE: reservations.updateAllReservation.one",
+			"few": "DE: reservations.updateAllReservation.few",
+			"many": "DE: reservations.updateAllReservation.many",
+			"other": "DE: reservations.updateAllReservation.other"
+		},
+		"flexiblePlace": "DE: reservations.flexiblePlace"
 	},
 	"garages": {
 		"clients": "Kunden",
@@ -573,6 +590,8 @@
 		"phone": "Telefonnummer",
 		"memberSince": "Mitglied seit",
 		"active": "aktiv",
+		"notActive": "DE: users.notActive",
+		"notConfimed": "DE: users.notConfimed",
 		"pending": "Bestätigung ausstehend",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"pendingInvitations": "Nicht bestätigte Einladungen",
@@ -923,15 +942,18 @@
 		"createdAt": "Zeitpunkt"
 	},
 	"dashboard": {
-		"news": "PID-Neuigkeiten",
-		"latestActivity": "Letzte Aktivität",
-		"currentState": "Aktueller Zustand",
-		"financeOverview": "Finanzübersicht",
-		"occupiedTotal": "belegt/insgesamt",
-		"longterm": "Langfristig",
-		"visitors": "Besucher",
+		"used": "DE: dashboard.used",
 		"free": "Verfügbar",
-		"total": "Insgesamt"
+		"unused": "DE: dashboard.unused",
+		"units": {
+			"one": "DE: dashboard.units.one",
+			"few": "DE: dashboard.units.few",
+			"many": "DE: dashboard.units.many",
+			"other": "DE: dashboard.units.other"
+		},
+		"statistics": "DE: dashboard.statistics",
+		"news": "PID-Neuigkeiten",
+		"garage": "Garage"
 	},
 	"loginVerification": {
 		"description": "DE: loginVerification.description",
@@ -1066,7 +1088,8 @@
 			"checkingToken": "Prüfen der gültigkeit des Zahlungtokens.",
 			"redirecting": "Weiterleiten ...",
 			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
-			"processingPayment": "Zahlungsverarbeitung ..."
+			"processingPayment": "Zahlungsverarbeitung ...",
+			"flexiplace": "DE: mobileApp.newReservation.flexiplace"
 		}
 	},
 	"auth0Emails": {
@@ -1145,6 +1168,64 @@
 			"place": "DE: railsEmails.reservation_confirmed.place",
 			"from": "DE: railsEmails.reservation_confirmed.from",
 			"to": "DE: railsEmails.reservation_confirmed.to"
+		}
+	},
+	"pidAdmin": {
+		"pageBase": {
+			"backToPid": "DE: pidAdmin.pageBase.backToPid",
+			"adminMode": "DE: pidAdmin.pageBase.adminMode",
+			"generator": "DE: pidAdmin.pageBase.generator",
+			"news": "DE: pidAdmin.pageBase.news"
+		},
+		"users": {
+			"id": "DE: pidAdmin.users.id",
+			"name": "DE: pidAdmin.users.name",
+			"impersonate": "DE: pidAdmin.users.impersonate",
+			"lastActive": "DE: pidAdmin.users.lastActive"
+		},
+		"generator": {
+			"selectGarages": "DE: pidAdmin.generator.selectGarages",
+			"selected": "DE: pidAdmin.generator.selected",
+			"id": "DE: pidAdmin.generator.id",
+			"name": "DE: pidAdmin.generator.name",
+			"selectClients": "DE: pidAdmin.generator.selectClients",
+			"selectUsers": "DE: pidAdmin.generator.selectUsers",
+			"generateReservations": "DE: pidAdmin.generator.generateReservations",
+			"count": "DE: pidAdmin.generator.count",
+			"countInvalid": "DE: pidAdmin.generator.countInvalid",
+			"dateFrom": "DE: pidAdmin.generator.dateFrom",
+			"dateTo": "DE: pidAdmin.generator.dateTo",
+			"dateInvalid": "DE: pidAdmin.generator.dateInvalid",
+			"dayFrom": "DE: pidAdmin.generator.dayFrom",
+			"dayTo": "DE: pidAdmin.generator.dayTo",
+			"dayFromInvalid": "DE: pidAdmin.generator.dayFromInvalid",
+			"durationFrom": "DE: pidAdmin.generator.durationFrom",
+			"durationTo": "DE: pidAdmin.generator.durationTo",
+			"durationFromInvalid": "DE: pidAdmin.generator.durationFromInvalid",
+			"internal": "DE: pidAdmin.generator.internal",
+			"host": "DE: pidAdmin.generator.host",
+			"hours": "DE: pidAdmin.generator.hours",
+			"or": "DE: pidAdmin.generator.or",
+			"createUsers": "DE: pidAdmin.generator.createUsers",
+			"create": "DE: pidAdmin.generator.create",
+			"users": "DE: pidAdmin.generator.users",
+			"clientName": "DE: pidAdmin.generator.clientName",
+			"clientId": "DE: pidAdmin.generator.clientId",
+			"selectAll": "DE: pidAdmin.generator.selectAll",
+			"deselectAll": "DE: pidAdmin.generator.deselectAll",
+			"beginsAt": "DE: pidAdmin.generator.beginsAt",
+			"endsAt": "DE: pidAdmin.generator.endsAt",
+			"userName": "DE: pidAdmin.generator.userName",
+			"removeReservations": "DE: pidAdmin.generator.removeReservations",
+			"keepReservations": "DE: pidAdmin.generator.keepReservations"
+		},
+		"news": {
+			"label": "DE: pidAdmin.news.label",
+			"url": "DE: pidAdmin.news.url",
+			"id": "DE: pidAdmin.news.id",
+			"createdAt": "DE: pidAdmin.news.createdAt",
+			"editNews": "DE: pidAdmin.news.editNews",
+			"deleteNews": "DE: pidAdmin.news.deleteNews"
 		}
 	}
 }
