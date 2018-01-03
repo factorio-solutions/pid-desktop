@@ -15,8 +15,6 @@ export const GET_MARKETING = `query ($id: Id!) {
       city_center
       email
       fifteen_minutes_from_center
-      five_minutes_from_center
-      five_minutes_from_subway
       garage_id
       gate_opened_by_phone
       gate_opened_by_receptionist
@@ -24,14 +22,14 @@ export const GET_MARKETING = `query ($id: Id!) {
       marketing_launched
       non_stop_open
       non_stop_reception
-      number_plate_recognition
       phone
       short_name
       size_restriction
-      subway_nearby
-      ten_minutes_from_center
       tram_nearby
       wc
+      guarded_parking
+      car_wash
+      airport_nearby
       images {
         tag
         img
