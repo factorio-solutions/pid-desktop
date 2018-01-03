@@ -1,0 +1,101 @@
+@import '../../styles/app.components';
+
+.header{
+  background-color: $black;
+  display:          block;
+  position:         fixed;
+  top:              0;
+  left:             0;
+  right:            0;
+
+  .logo{
+    height:        35px;
+    border-bottom: 1px solid $yellow;
+    margin:        0 15px;
+
+    > img {
+      height: 100%
+    }
+  }
+
+  .content{
+    padding:    5px 0;
+    color:      $white;
+    text-align: center;
+  }
+}
+
+.backButton{
+  position: fixed;
+  bottom:   $mobileNavigationBottomOffset;
+  left:     $mobileNavigationSidesOffset;
+}
+
+.addButton{
+  position:  fixed;
+  bottom:    $mobileNavigationBottomOffset;
+  transform: translate(-50%, 0);
+  left:      50%;
+}
+
+.okButton{
+  position: fixed;
+  bottom:   $mobileNavigationBottomOffset;
+  right:    $mobileNavigationSidesOffset;
+}
+
+.app_page{
+  margin-bottom: 80px;
+}
+
+.pageContent{
+  // depends on height of header
+  margin-top: 82px;
+}
+
+.menuButton{
+  position: fixed;
+  top: 6px;
+  left: 6px;
+  border: none;
+  outline: none;
+  background: none;
+  color: $gray;
+  font-size: 22px;
+}
+
+.divider{
+  height: 1px;
+  width: 100%;
+  background-color: $gray;
+  // padding: 0 15px;
+}
+
+.line{
+  width: calc(100%-30px);
+  height: 1px;
+  margin: 0 15px;
+  background-color: $yellow;
+}
+
+.currentUserInfo{
+  background-color: $gray;
+  color: $white;
+  padding: 15px;
+  > .buttonContainer {
+    padding-bottom: 15px;
+
+  }
+}
+
+
+.errorContent{
+  text-align: center;
+}
+
+.bottom{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

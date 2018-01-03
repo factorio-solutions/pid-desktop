@@ -1,0 +1,87 @@
+@import '../../styles/app.components';
+
+
+// .pane{
+//   text-align: center;
+// }
+//
+// .disabled, .noGates{
+//   pointer-events: none;
+// }
+//
+// .enabledContent{
+//   background-color: $blue;
+//   color:            $white
+// }
+//
+// .disabledContent{
+//   background-color: $white;
+//
+//   > div{
+//     > .paneContent{
+//       color: $lightGray;
+//
+//       > .comment{
+//         color: $black;
+//         font-weight: bold;
+//       }
+//     }
+//   }
+// }
+//
+// .paneContent{
+//   position:  absolute;
+//   top:       50%;
+//   left:      50%;
+//   width:     100%;
+//   transform: translate(-50%,-50%);
+//
+//   > i {
+//     font-size: 60px;
+//   }
+// }
+//
+.success{
+  background-color: $green;
+  color: $white;
+  font-weight: bold;
+}
+
+.failure{
+  background-color: $red;
+  color: $white;
+  font-weight: bold;
+}
+
+.noPointerEvents{
+  pointer-events: none;
+}
+
+.container{
+  height: 100%;
+
+  &:not(:last-child){
+    border-bottom: 1px dashed $white
+  }
+
+  >div{ // card
+    display: flex;
+  }
+}
+
+.message{
+  text-align: center;
+  padding-top: 15px;
+
+  >div{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translate(0,-50%);
+  }
+}
+
+.rotating{
+  @include rotating(2s);
+}

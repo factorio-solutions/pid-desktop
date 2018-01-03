@@ -1,0 +1,228 @@
+@import '../../styles/app.components';
+
+$labels-offset:           -12px;
+$font-size-accessories:   13px;
+$font-size:               16px;
+$transition-time:         0.2s;
+$placeholder-transition:  0.3s ease all;
+$placeholder-delay:       0.1s;
+
+.customFormGroup {
+  position:   relative;
+  margin-top: -$labels-offset;
+
+  .inlineMenu{
+    top:            $labels-offset;
+    font-size:      $font-size-accessories;
+    left:           100%;
+    transform:      translate(-100%, 0);
+    pointer-events: all;
+    margin-top:     0;
+  }
+
+  .callendar{
+    top:        12px;
+    font-size:  18px;
+    left:       100%;
+    transform:  translate(-100%, 0);
+    pointer-events:   all;
+    margin-top:         0;
+  }
+
+  >input {
+    width:      calc(100% - 24px);
+    // width:      100%;
+    font-size:  $font-size;
+    padding:    12px 12px 8px;
+    display:    block;
+
+    border:           none;
+    border-bottom:    1px solid $gray;
+    background-color: transparent;
+
+    /*IPhone compatibility*/
+    -webkit-border-radius:  0;
+    border-radius:          0;
+    -webkit-box-shadow:     none;
+    box-shadow:             none;
+
+    &::-webkit-datetime-edit {
+      color:transparent;
+    }
+
+    /* border color handling */
+    &:focus{
+      outline:      none;
+      border-color: $yellow;
+
+      &::-webkit-datetime-edit {
+        color:$black;
+        // TODO: compatibility with other browsers
+      }
+    }
+    &:not([value=""]){
+      border-color: $yellow;
+    }
+    &:valid:not(:focus):not([value=""]){
+      border-color: $green;
+      &::-webkit-datetime-edit {
+        color:$black;
+      }
+    }
+    &:invalid:not(:focus):not([value=""]){
+      border-color: $red;
+    }
+
+    /* other colors/showing/disapearing/moving handling */
+    &:focus::-webkit-input-placeholder {
+      opacity: 1;
+    }
+    &:invalid:not(:focus):not([value=""]) ~ .error{
+      opacity: 1;
+    }
+    &:invalid:not(:focus):not([value=""]) ~ .bar:before{
+      background: $red;
+      width:      100%;
+    }
+    &:valid:not(:focus):not([value=""]) ~ .bar:before{
+      background: $green;
+      width:      100%;
+    }
+    &:focus ~ .bar:before, &:focus ~ .bar:after {
+      width:  100%;
+    }
+    &:focus ~ .label, &:not([value=""]) ~ .label{
+      top:        $labels-offset;
+      font-size:  $font-size-accessories;
+
+      /* remove these two lines and label will fly to center/right */
+      left:       0;
+      transform:  translate(0, 0);
+    }
+
+    /* Read only should be valid */
+    &:-moz-read-only { /* For Firefox */
+      border-color: $green;
+
+      ~ .bar:before{
+        background: $green;
+        width:      100%;
+      }
+    }
+    &:read-only {
+      border-color: $green;
+
+      ~ .bar:before{
+        background: $green;
+        width:      100%;
+      }
+    }
+  }
+
+  >input[type="datetime-local"], >input[type="date"]  {
+    // date picker is 5px taller -> correct padding
+    padding-bottom: 3px;
+  }
+
+  >label {
+    color:              $gray ;
+    font-size:          $font-size-accessories;
+    font-weight:        normal;
+    white-space:        nowrap;
+
+    position:           absolute;
+    pointer-events:     none;
+
+    left:               5px;
+    top:                18px;
+    transition:         $transition-time ease all;
+    -moz-transition:    $transition-time ease all;
+    -webkit-transition: $transition-time ease all;
+  }
+
+  ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color:            $lightGray;
+    opacity:          0;
+    transition:       $placeholder-transition;
+    transition-delay: $placeholder-delay
+  }
+  ::-moz-placeholder {
+    color:            $lightGray;
+    opacity:          0;
+    transition:       $placeholder-transition;
+    transition-delay: $placeholder-delay
+  }
+  :-ms-input-placeholder {
+    color: transparent;
+  }
+  :-moz-placeholder {
+    color:            $lightGray;
+    opacity:          0;
+    transition:       $placeholder-transition;
+    transition-delay: $placeholder-delay
+  }
+
+  .error{
+    opacity:            0;
+    color:              $red;
+
+    top:        $labels-offset;
+    font-size:  $font-size-accessories;
+    left:       100%;
+    transform:  translate(-100%, 0);
+  }
+
+  >.bar {
+    position:   relative;
+    display:    block;
+    width:      100%;
+    text-align: initial;
+
+    &:before {
+      content:            '';
+      height:             2px;
+      width:              0;
+      bottom:             1px;
+      position:           absolute;
+      background:         $yellow;
+
+      transition:         $transition-time ease all;
+      -moz-transition:    $transition-time ease all;
+      -webkit-transition: $transition-time ease all;
+    }
+  }
+
+  &.dimmer{
+    background-color: $lightGray !important;
+    >input{
+      color:            $gray !important;
+      cursor:           default;
+    }
+  }
+}
+
+.highlighted{
+  >input {
+    border-bottom: 1px solid $red;
+  }
+}
+
+/* Alignment definitions */
+.left>input{
+  text-align: left;
+}
+.center>input{
+  text-align: center;
+}
+.right>input{
+  text-align: right;
+}
+
+.center>label{
+  left:       50%;
+  transform:  translate(-50%, 0);
+}
+.right>label{
+  left:       100%;
+  transform:  translate(-100%, 0);
+}

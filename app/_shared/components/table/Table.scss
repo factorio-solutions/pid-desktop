@@ -1,0 +1,135 @@
+@import '../../styles/app.components';
+$font-size:               16px;
+
+.searchBox{
+  float: right;
+  padding: 2px 5px;
+  border-bottom:    1px solid $gray;
+
+  >i{
+    // padding: 0 5px;
+    font-size:        $font-size;
+  }
+
+  >input {
+    // width:      100%;
+    font-size:  $font-size;
+    outline:    none;
+    // padding:    12px 12px 8px;
+    // display:    block;
+
+    border:           none;
+    // border-bottom:    1px solid $gray;
+    background-color: transparent;
+
+    /*IPhone compatibility*/
+    -webkit-border-radius:  0;
+    border-radius:          0;
+    -webkit-box-shadow:     none;
+    box-shadow:             none;
+  }
+
+  &:hover{
+    background:  darken($white, 10%);
+  }
+}
+
+.tdSearchBar{
+  display: flex;
+  padding: 5px;
+
+  > input {
+    border: none;
+    outline: none;
+    margin-left: 5px;
+    width: 100%;
+    max-width: 80px;
+    margin: 0;
+  }
+  > span {
+    margin: 2.5px;
+    cursor: pointer;
+
+    &.disabled{
+      color: $lightGray !important;
+      >* {
+        color: $lightGray !important;
+      }
+    }
+  }
+}
+
+.rtTable{
+  width: 100%;
+  border-spacing: 0px;
+  // border-collapse: collapse;
+
+  > thead {
+    > tr > td {
+      border-bottom: 1px solid $black;
+      // font-weight: bold;
+
+      > td:hover {
+        background:  darken($white, 10%);
+      }
+    }
+  }
+}
+
+.tr {
+  > td {
+    border-bottom: 1px solid $black;
+    padding: 4px
+  }
+}
+
+.spoilerRow {
+  background: $yellow;
+  >td{
+    border-bottom: 1px dashed $gray !important;
+  }
+
+  &:hover {
+    background: $yellow !important;
+    color: $black !important;
+  }
+}
+
+.disabled{
+  color: $lightGray
+}
+
+.spoiler {
+  background: darken($white, 10%) !important;
+  // border-top-style: dotted;
+}
+
+.tdHeader{
+  cursor: pointer;
+
+  &:hover{
+    background-color: darken($white, 10%);
+  }
+}
+
+
+.paginatedTable{
+  position: relative;
+
+  >.loading {
+    background: rgba($white, 0.7);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    >span{
+      position: absolute;
+      display: block;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

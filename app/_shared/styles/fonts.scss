@@ -1,0 +1,35 @@
+@import '../styles/variables';
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  letter-spacing: 0.2px;
+  -webkit-font-smoothing: subpixel-antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+}
+
+*::selection {
+  background: $yellow;
+}
+
+*::-moz-selection {
+  background: $yellow;
+}
+
+a:link {
+  text-decoration: none;
+  color: $black;
+  border-bottom: 2px solid $yellow
+}
+
+a:visited {
+  color: $black;
+}
+
+a:hover {
+  color: $yellow;
+}
+
+a:active {
+  color: $yellow;
+}

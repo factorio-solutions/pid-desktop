@@ -1,0 +1,301 @@
+@import '../../styles/app.components';
+
+$primaryMenuWidth: 160px;
+$secondaryMenuWidth: 200px;
+$hintWidth: 180px;
+
+.profileDropdown{
+  right: 0;
+}
+.horizontalMenu{
+  z-index: 9;
+  display: block;
+
+  background-color: $black;
+  color:            $yellow;
+
+  >.hamburger{
+    color: $white;
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    cursor: pointer;
+    font-size: 26px;
+  }
+
+  >.logoContainer{
+    margin: auto;
+    width: 160px;
+    cursor: pointer;
+  }
+}
+
+.user{
+  >div{
+    display: inline-block;
+  }
+
+  >.messages{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    margin-right: 20px;
+
+    >.count{
+      color:          white;
+      background:     $red;
+      border-radius:  50%;
+      padding:        3px 5px;
+      border:         3px solid $black;
+
+      position:   absolute;
+      top:        -10px;
+      right:      -10px;
+      font-size:  13px;
+      min-width:  12px;
+
+      text-align:  center;
+      font-family: Roboto;
+    }
+
+    >i{
+      font-size:      32px;
+      vertical-align: middle;
+      padding:        0 5px;
+      color:          white;
+    }
+  }
+
+}
+
+.profile{
+  cursor: pointer;
+  display: inline-block;
+
+  >i{
+    font-size:      32px;
+    vertical-align: middle;
+    padding:        0 5px;
+    color:          white;
+  }
+}
+
+.page{
+  >.verticalMenu{
+    z-index: 8;
+    background-color: $menuGray;
+    color:            $white;
+  }
+
+  >.secondaryVerticalMenu{
+      z-index: 7;
+      background-color: $gray;
+      color:            $white;
+      transition: all 0.3s ease;
+  }
+
+  >.content{
+    // width: 100%;
+
+    >.hint{
+      background-color: $blue;
+      color:            $white;
+      padding:          10px;
+      // text-align:       center;
+      height:           100%;
+      white-space: pre-wrap;
+    }
+
+    >.children{
+      padding: 0 20px;
+    }
+  }
+}
+
+
+/* -- Responsive Styles (Media Queries) ------------------------------------- */
+/* -- Only apply on big window ---------------------------------------------- */
+@media (min-width: $collapseWidth) {
+  .horizontalMenu{
+    display:  flex;
+    height:   60px;
+
+    >.hamburger{
+      display: none;
+    }
+
+    >.horizontalMenuContent{
+      flex: 1 1;
+
+      >.theContent{
+        // float: right;
+        display: flex;
+
+        >.user{
+          padding: 16px 30px 0 0;
+        }
+
+        >.callToAction{
+          margin: auto;
+          >button{
+            margin: 14px 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .page{
+    display:  flex;
+    position: fixed;
+    bottom:   0;
+    left:     0;
+    right:    0;
+    top:      60px;
+
+    >.verticalMenu{
+      width: $primaryMenuWidth;
+    }
+
+    >.secondaryVerticalMenu{
+      width: $secondaryMenuWidth;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: calc(#{$primaryMenuWidth} - #{$secondaryMenuWidth});
+
+      &.shift{
+        transform: translate($secondaryMenuWidth,0);
+      }
+    }
+
+    >.content{
+      flex: 1 1;
+      transition: all 0.3s ease;
+      transform: translate(0,0); // this is changing how stuff behave
+
+
+      &.shift{
+        transform: translate($secondaryMenuWidth,0);
+      }
+
+      >.children{
+        overflow: auto;
+        overflow-x: hidden;
+        // height: calc(100% - 60px);
+        height: calc(100%);
+
+        &.hashHint{
+          margin-right: $hintWidth;
+        }
+      }
+
+      >.hint{
+        position:         fixed;
+        top:              0;
+        bottom:           0;
+        right:            0;
+        width:            calc(#{$hintWidth} - 2 * 10px); // - 2x padding
+
+        >button{
+          display: block;
+          margin: 10px auto;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1300px) {
+  .page{
+    >.secondaryVerticalMenu{
+      position: static;
+      &.shift{
+        display: inherit;
+        transform: none;
+      }
+      &.hideAdmin:not(.shift){
+        display: none;
+      }
+    }
+    >.content{
+      &.shift{
+        // transform: none;
+        transform: translate(0, 0);
+
+        // >.hint{
+        //   margin-top: 60px;
+        // }
+      }
+    }
+  }
+}
+
+/* -- Only apply on small window -------------------------------------------- */
+@media (max-width: $collapseWidth) {
+  .horizontalMenu{
+    position: relative;
+
+    >.horizontalMenuContent{
+      >.theContent{
+        >.user{
+          position: absolute;
+          top: 8px;
+          right: 12px;
+        }
+
+        >.callToAction{
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .profile{
+    >.name{
+      display: none;
+    }
+  }
+
+  .page{
+    >.verticalMenu{
+      transition: all 0.3s ease;
+      position: absolute;
+      width: 100%;
+      transform: translate(0,-100%);
+
+      &.active:not(.shift){
+        transform: translate(0,0);
+      }
+    }
+
+    >.secondaryVerticalMenu{
+      transition: all 0.3s ease;
+      position: absolute;
+      transform: translate(0,-100%);
+      width: 100%;
+
+      &.shift{
+        transform: translate(0,0);
+      }
+    }
+
+    >.content{
+      position: absolute;
+      width: 100%;
+
+      >.hint{
+        display: flex;
+        //
+        // >button{
+        //   // float: left;
+        // }
+        >div{
+          flex:  1 1;
+          text-align: center;
+          margin-right: 50px;
+        }
+      }
+    }
+  }
+}

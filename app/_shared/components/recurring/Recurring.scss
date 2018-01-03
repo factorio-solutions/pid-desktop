@@ -1,0 +1,38 @@
+.recurring{
+  >tbody{
+    >tr{
+      >td:first-child{
+        text-align: right;
+      }
+
+      >td:not(:first-child){
+        display: flex;
+        margin-left: 15px;
+        // line-height: 36px;
+      }
+    }
+  }
+}
+
+.day:not(:last-child){
+  margin-right: 5px;
+}
+
+.dateSelector{
+  margin-top: 0;
+
+  >label {
+    top: 5px !important;
+  }
+}
+
+.countSelector{
+  width: 65px;
+  margin-top: 0;
+}
+
+.setLineHeight{
+  >span{
+    line-height: 40px;
+  }
+}

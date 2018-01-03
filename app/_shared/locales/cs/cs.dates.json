@@ -1,0 +1,32 @@
+{
+  "formats":{
+    "date": {
+      "default":  "%a, %e. %b %Y",
+      "long":       "%A, %e. %B %Y",
+      "short":      "%d.%m.%y"
+    },
+
+    "time": {
+      "default":  "%H:%M Hod",
+      "long":       "%H:%M:%S %z",
+      "short":      "%H:%M"
+    },
+
+    "datetime": {
+      "default":  "%a, %e. %b %Y, %H:%M Hod",
+      "long":       "%A, %e. %B %Y, %H:%M:%S %z",
+      "short":      "%d.%m.%y %H:%M"
+    }
+  },
+
+  "names":{
+    "__locale": "cs",
+    "days": ["Nedělě", "Pondělí", "Úterý", "Středa", "Čtvrtek", "Pátek", "Sobota"],
+    "abbreviated_days": ["Ne", "Po", "Út", "St", "Čt", "Pá", "So"],
+    "months": ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"],
+    "abbreviated_months": ["Led", "Úno", "Bře", "Dub", "Kvě", "Čvn", "Čvc", "Srp", "Zář", "Říj", "Lis", "Pro"],
+    "am": "dop.",
+    "pm": "odp."
+  }
+
+}

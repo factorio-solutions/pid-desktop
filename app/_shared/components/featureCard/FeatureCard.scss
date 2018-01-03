@@ -1,0 +1,49 @@
+@import '../../styles/app.components';
+
+.pricing{
+  position: relative;
+  flex: 1 1;
+  border: 1px solid $lightGray;
+  margin: 5px;
+  text-align: center;
+  // cursor: pointer;
+  // &:hover {
+  //   background: $blue;
+  //   color: $white;
+  // }
+}
+
+.points{
+  padding: 0;
+  margin: 25px 10px 75px;
+  list-style: none;
+  text-align: center;
+  border-bottom: 1px solid $lightGray;
+
+  >li{
+    padding: 10px 0;
+    line-height: 1.5;
+    letter-spacing: -.01em;
+    border-top: 1px solid $lightGray;
+  }
+}
+
+.button{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.selected{
+  background-color: $blue;
+  color: $white;
+
+  >ul{
+    border-bottom: 1px solid $white;
+    
+    >li{
+      border-top: 1px solid $white;
+    }
+  }
+}
