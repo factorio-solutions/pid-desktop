@@ -30,103 +30,105 @@ class MarketingPage extends Component {
 
   render() {
     const { state, actions } = this.props
-    const { marketing }      = state
+    const { marketing } = state
 
-    const properties = [ { icon: <div><i className="fa fa-compress" title='size_restriction'></i></div>
-                         , key:  'size_restriction'
-                         }
-                       , { icon: <div><i className="fa fa-repeat" title='non_stop_open'></i></div>
-                         , key:  'non_stop_open'
-                         }
-                       , { icon: <div><i className="fa fa-repeat" title='non_stop_reception'></i><i className="fa fa-female" title='non_stop_reception'></i></div>
-                         , key:  'non_stop_reception'
-                         }
-                       , { icon: <div><i className="fa fa-mobile" title='gate_opened_by_phone'></i><i className="fa fa-window-maximize" title='gate_opened_by_phone'></i></div>
-                         , key:  'gate_opened_by_phone'
-                         }
-                       , { icon: <div><i className="fa fa-female" title='gate_opened_by_receptionist'></i><i className="fa fa-window-maximize" title='gate_opened_by_receptionist'></i></div>
-                         , key:  'gate_opened_by_receptionist'
-                         }
-                       , { icon: <div><i className="fa fa-building" title='historical_center'></i></div>
-                         , key:  'historical_center'
-                         }
-                       , { icon: <div><i className="fa fa-building-o" title='city_center'></i></div>
-                         , key:  'city_center'
-                         }
-                       , { icon: <div>5m<i className="fa fa-building-o" title='five_minutes_from_center'></i></div>
-                         , key:  'five_minutes_from_center'
-                         }
-                       , { icon: <div>10m<i className="fa fa-building-o" title='ten_minutes_from_center'></i></div>
-                         , key:  'ten_minutes_from_center'
-                         }
-                       , { icon: <div>15m<i className="fa fa-building-o" title='fifteen_minutes_from_center'></i></div>
-                         , key:  'fifteen_minutes_from_center'
-                         }
-                       , { icon: <div><i className="fa fa-video-camera" title='cameras'></i></div>
-                         , key:  'cameras'
-                         }
-                       , { icon: <div><i className="fa fa-video-camera" title='camera_at_gate'></i><i className="fa fa-window-maximize" title='camera_at_gate'></i></div>
-                         , key:  'camera_at_gate'
-                         }
-                       , { icon: <div><i className="fa fa-train" title='tram_nearby'></i></div>
-                         , key:  'tram_nearby'
-                         }
-                       , { icon: <div><i className="fa fa-subway" title='subway_nearby'></i></div>
-                         , key:  'subway_nearby'
-                         }
-                       , { icon: <div><i className="fa fa-shower" title='wc'></i></div>
-                         , key:  'wc'
-                         }
-                       , { icon: <div>5m<i className="fa fa-subway" title='five_minutes_from_subway'></i></div>
-                         , key:  'five_minutes_from_subway'
-                         }
-                       , { icon: <div><i className="fa fa-video-camera" title='number_plate_recognition'></i><i className="fa fa-address-card-o" title='number_plate_recognition'></i></div>
-                         , key:  'number_plate_recognition'
-                         }
-                       , { icon: <div><i className="fa fa-bolt" title='charging_station'></i></div>
-                         , key:  'charging_station'
-                         }
-                       ]
+    const properties = [
+      { icon: <div><i className="icon-size-restriction" title="size_restriction" /></div>,
+        key:  'size_restriction'
+      },
+      { icon: <div><i className="icon-non-stop-open" title="non_stop_open" /></div>,
+        key:  'non_stop_open'
+      },
+      { icon: <div><i className="icon-non-stop-reception" title="non_stop_reception" /></div>,
+        key:  'non_stop_reception'
+      },
+      { icon: <div>
+        <span className="icon-gate-opened-by-phone">
+          <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" /><span className="path7" />
+        </span>
+      </div>,
+        key: 'gate_opened_by_phone'
+      },
+      { icon: <div>
+        <span className="icon-gate-opened-by-receptionist">
+          <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" />
+        </span>
+      </div>,
+        key: 'gate_opened_by_receptionist'
+      },
+      { icon: <div><i className="icon-historical-center" title="historical_center" /></div>,
+        key:  'historical_center'
+      },
+      { icon: <div><i className="icon-city-center" title="city_center" /></div>,
+        key:  'city_center'
+      },
+      { icon: <div><i className="icon-fifteen-minutes-from-center" title="fifteen_minutes_from_center" /></div>,
+        key:  'fifteen_minutes_from_center'
+      },
+      { icon: <div><i className="icon-cameras" title="cameras" /></div>,
+        key:  'cameras'
+      },
+      { icon: <div><i className="icon-camera-at-gate" title="camera_at_gate" /></div>,
+        key:  'camera_at_gate'
+      },
+      { icon: <div><i className="icon-tram-nearby" title="tram_nearby" /></div>,
+        key:  'tram_nearby'
+      },
+      { icon: <div><i className="icon-wc" title="wc" /></div>,
+        key:  'wc'
+      },
+      { icon: <div><i className="icon-charging-station" title="charging_station" /></div>,
+        key:  'charging_station'
+      },
+      { icon: <div><i className="icon-guarded-parking" title="guarded_parking" /></div>,
+        key:  'guarded_parking'
+      },
+      { icon: <div><i className="icon-car-wash" title="car_wash" /></div>,
+        key:  'car_wash'
+      },
+      { icon: <div><i className="icon-airport-nearby" title="airport_nearby" /></div>,
+        key:  'airport_nearby'
+      }
+    ]
 
     // download page first, make sure marketing is launched
-    if (marketing == undefined || marketing.marketing_launched != true){
+    if (marketing == undefined || marketing.marketing_launched != true) {
       return null
     }
 
-    const filterLanguages = (lang) => {
-      return marketing.descriptions.map((desc)=> {return desc.language}).includes(lang)
+    const filterLanguages = lang => {
+      return marketing.descriptions.map(desc => { return desc.language }).includes(lang)
     }
 
-    const filterProperties = (propertie) => {
+    const filterProperties = propertie => {
       return marketing[propertie.key]
     }
 
     const prepareLanguages = (lang, index) => {
       const langClick = () => { this.context.router.push(`/${lang}${window.location.hash.substring(4)}`) }
-      return <span key={index} className={window.location.hash.substring(2,4) == lang && styles.active} onClick={langClick}>{lang.toUpperCase()}</span>
+      return <span key={index} className={window.location.hash.substring(2, 4) == lang && styles.active} onClick={langClick}>{lang.toUpperCase()}</span>
     }
 
-    const prepareImages = (image) => {
+    const prepareImages = image => {
       return image.img
     }
 
     const prepareTableBody = (propertie, index, arr) => { // make pairs into tr
       if (index % 2 === 0) {
-        return <tr>
+        return (<tr>
           <td className={styles.active}>
             {arr[index].icon}
-            {t(['newMarketing', arr[index].key])}
+            {t([ 'newMarketing', arr[index].key ])}
           </td>
-          {arr[index+1] !== undefined && <td className={styles.active}>
-            {arr[index+1].icon}
-            {t(['newMarketing', arr[index+1].key])}
+          {arr[index + 1] !== undefined && <td className={styles.active}>
+            {arr[index + 1].icon}
+            {t([ 'newMarketing', arr[index + 1].key ])}
           </td>}
-        </tr>
+        </tr>)
       } else {
         return null
       }
     }
-
 
 
     return (
@@ -139,16 +141,16 @@ class MarketingPage extends Component {
           <div className={styles.languages}> {AVAILABLE_LANGUAGES.filter(filterLanguages).map(prepareLanguages)} </div>
         </div>
 
-        {marketing.images && <Carousel width='100%' height='500px' images={marketing.images.map(prepareImages)} />}
+        {marketing.images && <Carousel width="100%" height="500px" images={marketing.images.map(prepareImages)} />}
 
         <div className={styles.content}>
           <div className={styles.displayFlex}>
             <div className={styles.textContent}>
               <h1>{marketing.garage.name}</h1>
-              <h3>{t(['marketing', 'description'])}</h3>
-              <div className={styles.innerContent} dangerouslySetInnerHTML={{__html: marketing.descriptions.filter((desc) => {return desc.language == window.location.hash.substring(2,4)})[0].text}} />
+              <h3>{t([ 'marketing', 'description' ])}</h3>
+              <div className={styles.innerContent} dangerouslySetInnerHTML={{ __html: marketing.descriptions.filter(desc => { return desc.language == window.location.hash.substring(2, 4) })[0].text }} />
 
-              <h3>{t(['marketing', 'properties'])}</h3>
+              <h3>{t([ 'marketing', 'properties' ])}</h3>
               <div className={styles.innerContent} >
                 <table className={styles.propertiesTtable}>
                   <tbody>
@@ -159,32 +161,32 @@ class MarketingPage extends Component {
             </div>
 
             <div className={styles.contacts}>
-              <h2>{t(['marketing', 'contacts'])}</h2>
+              <h2>{t([ 'marketing', 'contacts' ])}</h2>
               <div className={styles.contact}>
-                <i className="fa fa-phone" aria-hidden="true"></i><br/>
+                <i className="fa fa-phone" aria-hidden="true" /><br />
                 {marketing.phone}
               </div>
               <div className={styles.contact}>
-                <i className="fa fa-at" aria-hidden="true"></i><br/>
+                <i className="fa fa-at" aria-hidden="true" /><br />
                 {marketing.email}
               </div>
               <div className={styles.contact}>
-                <i className="fa fa-map-marker" aria-hidden="true"></i><br/>
-                <strong>{marketing.garage.name}</strong><br/>
-                {marketing.garage.address.line_1}<br/>
-                {marketing.garage.address.line_2}{marketing.garage.address.line_2 && <br/>}
-                {marketing.garage.address.city}<br/>
-                {marketing.garage.address.postal_code}<br/>
-                {marketing.garage.address.state}{marketing.garage.address.state && <br/>}
-                {marketing.garage.address.country}<br/>
-                <small>{t(['marketing', 'lat'])}: {marketing.garage.address.lat}, {t(['marketing', 'lng'])}: {marketing.garage.address.lng}<br/></small>
+                <i className="fa fa-map-marker" aria-hidden="true" /><br />
+                <strong>{marketing.garage.name}</strong><br />
+                {marketing.garage.address.line_1}<br />
+                {marketing.garage.address.line_2}{marketing.garage.address.line_2 && <br />}
+                {marketing.garage.address.city}<br />
+                {marketing.garage.address.postal_code}<br />
+                {marketing.garage.address.state}{marketing.garage.address.state && <br />}
+                {marketing.garage.address.country}<br />
+                <small>{t([ 'marketing', 'lat' ])}: {marketing.garage.address.lat}, {t([ 'marketing', 'lng' ])}: {marketing.garage.address.lng}<br /></small>
               </div>
             </div>
           </div>
 
           <div className={styles.mapConiner}>
-            <Map google={window.google} zoom={14} center={{lat: marketing.garage.address.lat, lng: marketing.garage.address.lng}} style={{height: '400px', maxWidth: '700px'}}>
-              <Marker position={{lat: marketing.garage.address.lat, lng: marketing.garage.address.lng}} name='garagePosition'/>
+            <Map google={window.google} zoom={14} center={{ lat: marketing.garage.address.lat, lng: marketing.garage.address.lng }} style={{ height: '400px', maxWidth: '700px' }}>
+              <Marker position={{ lat: marketing.garage.address.lat, lng: marketing.garage.address.lng }} name="garagePosition" />
             </Map>
           </div>
         </div>
@@ -195,6 +197,6 @@ class MarketingPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.marketing }),
+  state => ({ state: state.marketing }),
   dispatch => ({ actions: bindActionCreators(marketingActions, dispatch) })
 )(MarketingPage)
