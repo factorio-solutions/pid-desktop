@@ -1041,7 +1041,8 @@
 		"menu": {
 			"newNotifications": "New notifications",
 			"access": "Access",
-			"myReservations": "My reservations"
+			"myReservations": "My reservations",
+			"guestReservations": "Guest"
 		},
 		"access": {
 			"swipeToOpen": "Swipe to open the gate",
