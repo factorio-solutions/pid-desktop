@@ -13,7 +13,10 @@ import {
   MOBILE_NEW_RESERVATION_SET_DURATION,
   MOBILE_NEW_RESERVATION_SET_PLACE_ID,
   MOBILE_NEW_RESERVATION_SET_RESERVATION_ID,
-  MOBILE_NEW_RESERVATION_SET_ALL
+  MOBILE_NEW_RESERVATION_SET_ALL,
+  MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION,
+  MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS,
+  MOBILE_NEW_RESERVATION_SET_USER_ID
 } from '../actions/mobile.newReservation.actions'
 
 const defaultState = {
@@ -28,37 +31,31 @@ const defaultState = {
   availableClients: [], // available clients for this reservation
   client_id:        undefined, // currently selected client
 
+  availableUsers: [], // only in case of guest reservation
+  user_id:        undefined, // only in case of guest reservation
+
   availableCars:   [], // cars of currently selected user
   car_id:          undefined, // selected car id
   carLicencePlate: '', // in case there are no available cars
 
-  flexiplace:      false, // Does garage set flexible place?
-  availableFloors: undefined,
-  autoselect:      true,
-  place_id:        undefined // undefined means no available places
+  flexiplace:       false, // Does garage set flexible place?
+  availableFloors:  undefined,
+  autoselect:       true,
+  place_id:         undefined, // undefined means no available places
+  guestReservation: false
 }
 
 
 export default function mobileNewReservation(state = defaultState, action) {
   switch (action.type) {
 
-    case MOBILE_NEW_RESERVATION_SET_ALL:
+    case MOBILE_NEW_RESERVATION_SET_ALL: {
+      const { type, ...params } = action
       return {
         ...state,
-        reservation_id:   action.reservation_id,
-        from:             action.from,
-        to:               action.to,
-        fromNow:          false,
-        duration:         undefined,
-        availableClients: action.clients,
-        client_id:        action.client_id,
-        availableCars:    action.cars,
-        car_id:           action.car_id,
-        carLicencePlate:  action.licence_plate,
-        availableFloors:  action.floors,
-        autoselect:       false,
-        place_id:         action.place_id
+        ...params
       }
+    }
 
     case MOBILE_NEW_RESERVATION_SET_RESERVATION_ID:
       return {
@@ -125,6 +122,18 @@ export default function mobileNewReservation(state = defaultState, action) {
         carLicencePlate: action.value
       }
 
+    case MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS:
+      return {
+        ...state,
+        availableUsers: action.value
+      }
+
+    case MOBILE_NEW_RESERVATION_SET_USER_ID:
+      return {
+        ...state,
+        user_id: action.value
+      }
+
     case MOBILE_NEW_RESERVATION_SET_AVAILABLE_FLOORS:
       return {
         ...state,
@@ -143,6 +152,12 @@ export default function mobileNewReservation(state = defaultState, action) {
       return {
         ...state,
         place_id: action.value
+      }
+
+    case MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION:
+      return {
+        ...state,
+        guestReservation: action.value
       }
 
     case MOBILE_NEW_RESERVATION_CLEAR_FORM:
