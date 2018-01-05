@@ -40,6 +40,7 @@ class ReservationsPage extends Component {
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
+      { key: 'note', title: t([ 'newReservation', 'note' ]), comparator: 'string', orderBy: 'note' },
       { key: 'client', title: t([ 'reservations', 'client' ]), comparator: 'string', includes: 'client', orderBy: 'clients.name' },
       { key: 'licence_plate', title: t([ 'reservations', 'licencePlate' ]), comparator: 'string', includes: 'car', orderBy: 'cars.licence_plate' },
       { key:         'type',
@@ -156,6 +157,7 @@ class ReservationsPage extends Component {
 
     const transformData = data => data.reservations.map(reservation => ({
       name:          reservation.user.full_name,
+      note:          reservation.note,
       client:        reservation.client && reservation.client.name,
       licence_plate: reservation.car && reservation.car.licence_plate,
       state:         reservation.approved,
