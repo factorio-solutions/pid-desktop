@@ -17,6 +17,7 @@
   max-height: 200px;
   position: absolute;
   overflow-y: auto;
+  overflow-x: hidden;
 
   background-color: $white;
   color:            $black;
@@ -115,10 +116,24 @@
   border-bottom:    1px solid $white;
 }
 
-.noUnderline{
-  color:            $black;
+.noUnderline {
   background-color: $white;
+  color:            $black;
   // border-bottom:    1px solid $white;
+}
+
+.noUnderlineGuest {
+  padding:          0;
+  background-color: $white;
+  color:            $black;
+  font-size:        25px;
+}
+
+.noUnderlineGuestGray {
+  padding:          0;
+  background-color: $white;
+  color:            $lightGray;
+  font-size:        25px;
 }
 
 .highlighted{

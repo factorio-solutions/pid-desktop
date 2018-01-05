@@ -1,16 +1,19 @@
 import moment from 'moment'
 import { request } from '../helpers/request'
+import actionFactory from '../helpers/actionFactory'
 import requestPromise from '../helpers/requestPromise'
 import { parseParameters } from '../helpers/parseUrlParameters'
 import { setError, setCustomModal, setGarage } from './mobile.header.actions'
 import { MOMENT_DATETIME_FORMAT_MOBILE, MOMENT_UTC_DATETIME_FORMAT, timeToUTCmobile, toFifteenMinuteStep } from '../helpers/time'
 
 import { GET_AVAILABLE_FLOORS } from '../queries/mobile.newReservation.queries'
-import { CREATE_RESERVATION, UPDATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION, GET_RESERVATION } from '../queries/newReservation.queries'
+import { CREATE_RESERVATION, UPDATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION, GET_RESERVATION, GET_AVAILABLE_USERS } from '../queries/newReservation.queries'
+import { USER_AVAILABLE, ADD_CLIENT_USER } from '../queries/inviteUser.queries'
 import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT } from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
 import { entryPoint } from '../../index'
 import { t } from '../modules/localization/localization'
+
 
 export const MOBILE_NEW_RESERVATION_SET_FROM = 'MOBILE_NEW_RESERVATION_SET_FROM'
 export const MOBILE_NEW_RESERVATION_SET_TO = 'MOBILE_NEW_RESERVATION_SET_TO'
@@ -27,7 +30,26 @@ export const MOBILE_NEW_RESERVATION_SET_AUTOSELECT = 'MOBILE_NEW_RESERVATION_SET
 export const MOBILE_NEW_RESERVATION_CLEAR_FORM = 'MOBILE_NEW_RESERVATION_CLEAR_FORM'
 export const MOBILE_NEW_RESERVATION_SET_RESERVATION_ID = 'MOBILE_NEW_RESERVATION_SET_RESERVATION_ID'
 export const MOBILE_NEW_RESERVATION_SET_ALL = 'MOBILE_NEW_RESERVATION_SET_ALL'
+export const MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION = 'MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION'
+export const MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS = 'MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS'
+export const MOBILE_NEW_RESERVATION_SET_USER_ID = 'MOBILE_NEW_RESERVATION_SET_USER_ID'
 
+
+export const setAvailableCars = actionFactory(MOBILE_NEW_RESERVATION_AVAILABLE_CARS)
+export const setCarId = actionFactory(MOBILE_NEW_RESERVATION_CAR_ID)
+export const setCarLicencePlate = actionFactory(MOBILE_NEW_RESERVATION_CAR_LICENCE_PLATE)
+export const setAutoselect = actionFactory(MOBILE_NEW_RESERVATION_SET_AUTOSELECT)
+export const clearForm = actionFactory(MOBILE_NEW_RESERVATION_CLEAR_FORM)
+export const setReservationId = actionFactory(MOBILE_NEW_RESERVATION_SET_RESERVATION_ID)
+export const setGuestReservation = actionFactory(MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION)
+export const setAvailableUsers = actionFactory(MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS)
+// export const setUserId = actionFactory(MOBILE_NEW_RESERVATION_SET_USER_ID)
+export function setUserId(value) {
+  return dispatch => {
+    dispatch({ type: MOBILE_NEW_RESERVATION_SET_USER_ID, value })
+    value && dispatch(getAvailableCars())
+  }
+}
 
 export function setFrom(from) { // if time changed,
   return (dispatch, getState) => {
@@ -101,34 +123,17 @@ export function setClientId(value) {
 }
 
 export function setAvailableClients(value) {
-  value.unshift({ name: t([ 'mobileApp', 'newReservation', 'me' ]), id: undefined })
-  return {
-    type: MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS,
-    value
+  return (dispatch, getState) => {
+    if (!getState().mobileNewReservation.guestReservation) {
+      value.unshift({ name: t([ 'mobileApp', 'newReservation', 'me' ]), id: undefined })
+    }
+    dispatch({
+      type: MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS,
+      value
+    })
+    if (value.length === 1) dispatch(setClientId(value[0].id))
   }
 }
-
-export function setAvailableCars(value) {
-  return {
-    type: MOBILE_NEW_RESERVATION_AVAILABLE_CARS,
-    value
-  }
-}
-
-export function setCarId(value) {
-  return {
-    type: MOBILE_NEW_RESERVATION_CAR_ID,
-    value
-  }
-}
-
-export function setCarLicencePlate(value) {
-  return {
-    type: MOBILE_NEW_RESERVATION_CAR_LICENCE_PLATE,
-    value
-  }
-}
-
 
 export function setFloors(floors, flexiplace) {
   return {
@@ -148,30 +153,15 @@ export function setPlace(id) {
   }
 }
 
-export function setAutoselect(bool) {
-  return {
-    type:  MOBILE_NEW_RESERVATION_SET_AUTOSELECT,
-    value: bool
-  }
-}
-
-export function clearForm() {
-  return { type: MOBILE_NEW_RESERVATION_CLEAR_FORM }
-}
-
-export function setReservationId(value) {
-  return {
-    type: MOBILE_NEW_RESERVATION_SET_RESERVATION_ID,
-    value
-  }
-}
-
-
 export function downloadReservation(id) {
   return (dispatch, getState) => {
+    const currentUserId = getState().mobileHeader.current_user.id
     requestPromise(GET_RESERVATION, { id: parseInt(id, 10) })
     .then(res => {
       dispatch(setGarage(res.reservation.place.floor.garage.id))
+      if (res.reservation.user_id !== currentUserId) {
+        dispatch(setUserId(res.reservation.user_id))
+      }
 
       Promise.all([
         requestPromise(GET_AVAILABLE_CLIENTS, {
@@ -189,18 +179,35 @@ export function downloadReservation(id) {
       ])
       .then(values => {
         const [ client, garage, user ] = values
+
+        let toSet = {
+          reservation_id:  res.reservation.id,
+          from:            moment(res.reservation.begins_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
+          to:              moment(res.reservation.ends_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
+          // availableClients: client.reservable_clients,
+          client_id:       res.reservation.client_id,
+          car_id:          !res.reservation.car.temporary ? res.reservation.car.id : undefined,
+          carLicencePlate: res.reservation.car.temporary ? res.reservation.car.licence_plate : undefined,
+          availableFloors: garage.garage.floors,
+          place_id:        res.reservation.place.id,
+          fromNow:         false,
+          duration:        undefined,
+          autoselect:      false
+        }
+        if (res.reservation.user_id === currentUserId) {
+          toSet = {
+            ...toSet,
+            availableCars: user.user.reservable_cars,
+            user_id:       undefined
+          }
+        } else {
+          dispatch(getAvailableUsers())
+        }
+
+        dispatch(setAvailableClients(client.reservable_clients))
         dispatch({
-          type:           MOBILE_NEW_RESERVATION_SET_ALL,
-          reservation_id: res.reservation.id,
-          from:           moment(res.reservation.begins_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
-          to:             moment(res.reservation.ends_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
-          clients:        client.reservable_clients,
-          client_id:      res.reservation.client_id,
-          cars:           user.user.reservable_cars,
-          car_id:         !res.reservation.car.temporary ? res.reservation.car.id : undefined,
-          licence_plate:  res.reservation.car.temporary ? res.reservation.car.licence_plate : undefined,
-          floors:         garage.garage.floors,
-          place_id:       res.reservation.place.id
+          type: MOBILE_NEW_RESERVATION_SET_ALL,
+          ...toSet
         })
       })
     })
@@ -210,11 +217,12 @@ export function downloadReservation(id) {
 export function initReservation(id) {
   return (dispatch, getState) => {
     if (id) {
-      !getState().mobileNewReservation.reservation_id && dispatch(downloadReservation(id))
+      getState().mobileNewReservation.reservation_id !== parseInt(id, 10) && dispatch(downloadReservation(id))
     } else {
       dispatch(setReservationId())
       dispatch(pickPlaces())
       dispatch(getAvailableCars())
+      dispatch(getAvailableUsers())
     }
   }
 }
@@ -224,7 +232,6 @@ export function roundTime(time) {
 }
 
 export function fromBeforeTo(from, to) {
-  // return (moment(to).diff(moment(from)) > 0)
   return moment(from).isBefore(moment(to))
 }
 
@@ -251,16 +258,27 @@ export function getAvailableClients() {
 
 export function getAvailableCars() {
   return (dispatch, getState) => {
-    const id = getState().mobileHeader.current_user.id
+    const id = getState().mobileNewReservation.guestReservation ? getState().mobileNewReservation.user_id : getState().mobileHeader.current_user.id
+    if (id === undefined) {
+      dispatch(setAvailableCars([]))
+    } else {
+      const onCars = response => {
+        dispatch(setAvailableCars(response.data.user.reservable_cars))
+        getState().mobileNewReservation.car_id === undefined && (response.data.user.reservable_cars.length === 1 ?
+          dispatch(setCarId(response.data.user.reservable_cars[0].id)) :
+          dispatch(setCarId(undefined)))
+      }
 
-    const onCars = response => {
-      dispatch(setAvailableCars(response.data.user.reservable_cars))
-      getState().mobileNewReservation.car_id === undefined && (response.data.user.reservable_cars.length === 1 ?
-        dispatch(setCarId(response.data.user.reservable_cars[0].id)) :
-        dispatch(setCarId(undefined)))
+      request(onCars, GET_USER, { id })
     }
+  }
+}
 
-    request(onCars, GET_USER, { id })
+export function getAvailableUsers() {
+  return (dispatch, getState) => {
+    if (getState().mobileNewReservation.guestReservation) {
+      requestPromise(GET_AVAILABLE_USERS).then(data => dispatch(setAvailableUsers(data.reservable_users.filter(user => user.id !== getState().mobileHeader.current_user.id))))
+    }
   }
 }
 
@@ -277,7 +295,14 @@ export function pickPlaces(noClientDownload) {
 
     const variables = stateToVariables(getState)
     if (variables.garage_id) {
-      request(onSuccess, GET_AVAILABLE_FLOORS, { id: variables.garage_id, begins_at: variables.begins_at, ends_at: variables.ends_at, client_id: variables.client_id })
+      request(
+        onSuccess,
+        GET_AVAILABLE_FLOORS,
+        { id:        variables.garage_id,
+          begins_at: variables.begins_at,
+          ends_at:   variables.ends_at,
+          client_id: variables.client_id
+        })
       !noClientDownload && dispatch(getAvailableClients())
     } else {
       dispatch(setFloors([]))
@@ -302,6 +327,52 @@ export function autoselectPlace() {
 
     dispatch(setPlace(freePlaces.length === 0 ? undefined : freePlaces[0].id))
     dispatch(setAutoselect(true))
+  }
+}
+
+export function submitGuestReservation(callback) {
+  return (dispatch, getState) => {
+    const newGuest = getState().newGuest
+    const state = getState().mobileNewReservation
+    if (state.user_id === undefined) {
+      requestPromise(USER_AVAILABLE, {
+        user: {
+          email:     newGuest.email.value.toLowerCase(),
+          full_name: newGuest.name.value,
+          phone:     newGuest.phone.value,
+          language:  getState().mobileHeader.current_user.language
+        },
+        client_user: state.client_id ? {
+          client_id: +state.client_id,
+          host:      true,
+          message:   [ 'clientInvitationMessage', state.availableClients.findById(state.client_id).name ].join(';')
+        } : null
+      }).then(data => {
+        if (data.user_by_email !== null) { // if the user exists
+          // invite to client
+          if (state.client_id) { // if client is selected then invite as host
+            requestPromise(ADD_CLIENT_USER, {
+              user_id:     data.user_by_email.id,
+              client_user: {
+                client_id: +state.client_id,
+                host:      true,
+                message:   [ 'clientInvitationMessage', state.availableClients.findById(state.client_id).name ].join(';')
+              }
+            }).then(response => {
+              dispatch(setUserId(data.user_by_email.id))
+              dispatch(submitReservation(callback))
+            })
+          } else { // no client selected, create reservation
+            dispatch(setUserId(data.user_by_email.id))
+            dispatch(submitReservation(callback))
+          }
+        } else { // user is current user
+          dispatch(submitReservation(callback))
+        }
+      })
+    } else {
+      dispatch(submitReservation(callback))
+    }
   }
 }
 
@@ -332,7 +403,7 @@ export function submitReservation(callback) {
     request(onSuccess, state.reservation_id ? UPDATE_RESERVATION : CREATE_RESERVATION, {
       id:          state.reservation_id,
       reservation: {
-        user_id:       getState().mobileHeader.current_user.id,
+        user_id:       reservation.user_id || getState().mobileHeader.current_user.id,
         place_id:      reservation.place_id,
         client_id:     reservation.client_id,
         car_id:        reservation.car_id,
@@ -343,7 +414,7 @@ export function submitReservation(callback) {
         begins_at: reservation.begins_at,
         ends_at:   reservation.ends_at
       }
-    }, 'reservationMutation')
+    })
   }
 }
 
@@ -440,6 +511,7 @@ function stateToVariables(getState) {
     client_id:     state.client_id,
     car_id:        state.car_id,
     licence_plate: state.carLicencePlate,
+    user_id:       state.user_id,
     garage_id:     garageId,
     begins_at:     from,
     ends_at:       to
