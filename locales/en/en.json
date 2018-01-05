@@ -1101,7 +1101,8 @@
 			"phone": "Guests phone",
 			"invalidName": "Invalid name",
 			"invalidEmail": "Invalid email",
-			"invalidPhone": "Invalid phone"
+			"invalidPhone": "Invalid phone",
+			"noGuestResrevations": "No guest reservations"
 		}
 	},
 	"auth0Emails": {
