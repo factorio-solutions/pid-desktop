@@ -15,5 +15,11 @@
 }
 
 .disabled{
-  color: $lightGray
+  color: $lightGray;
+}
+
+.guestTitle {
+  margin-bottom: 4px;
+  font-size: 18px;
+  font-weight: bold;
 }

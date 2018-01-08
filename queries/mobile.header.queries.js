@@ -6,6 +6,7 @@ export const GET_CURRENT_USER = `{
     email
     phone
     language
+    secretary
   }
 }
 `

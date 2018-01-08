@@ -1049,7 +1049,8 @@
 		"menu": {
 			"newNotifications": "New notifications",
 			"access": "Access",
-			"myReservations": "My reservations"
+			"myReservations": "My reservations",
+			"guestReservations": "Guest"
 		},
 		"access": {
 			"swipeToOpen": "Swipe to open the gate",
@@ -1090,7 +1091,19 @@
 			"redirecting": "Redirecting ...",
 			"paymentUnsucessfull": "Payment was unsuccessful.",
 			"processingPayment": "Processing payment ...",
-			"flexiplace": "FLEXI"
+			"flexiplace": "FLEXI",
+			"guest":"Guest"
+		},
+		"guest": {
+			"newGuest": "NEW",
+			"pickGuest": "PICK",
+			"name": "Guests name",
+			"email": "Guests email",
+			"phone": "Guests phone",
+			"invalidName": "Invalid name",
+			"invalidEmail": "Invalid email",
+			"invalidPhone": "Invalid phone",
+			"noGuestResrevations": "No guest reservations"
 		}
 	},
 	"auth0Emails": {

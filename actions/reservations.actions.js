@@ -1,3 +1,4 @@
+import actionFactory from '../helpers/actionFactory'
 import { request } from '../helpers/request'
 import { download } from '../helpers/download'
 import { setCustomModal, setError } from './pageBase.actions'
@@ -20,37 +21,11 @@ export const RESERVATIONS_SET_PAGE = 'RESERVATIONS_SET_PAGE'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 
 
-export function setOngoingReservations(reservations) { // for mobile reservations
-  return {
-    type:  SET_ONGOING_RESERVATIONS,
-    value: reservations
-  }
-}
-
-export function setReservations(reservations) { // for mobile reservations
-  return {
-    type:  SET_RESERVATIONS,
-    value: reservations
-  }
-}
-
-export function addReservations(reservations) { // for mobile reservations
-  return {
-    type:  ADD_RESERVATIONS,
-    value: reservations
-  }
-}
-
-export function setPage(reservations) { // for mobile reservations
-  return {
-    type:  RESERVATIONS_SET_PAGE,
-    value: reservations
-  }
-}
-
-export function togglePast() {
-  return { type: TOGGLE_RESERVATIONS_PAST }
-}
+export const setOngoingReservations = actionFactory(SET_ONGOING_RESERVATIONS)
+export const setReservations = actionFactory(SET_RESERVATIONS)
+export const addReservations = actionFactory(ADD_RESERVATIONS)
+export const setPage = actionFactory(RESERVATIONS_SET_PAGE)
+export const togglePast = actionFactory(TOGGLE_RESERVATIONS_PAST)
 
 
 export function initOngoingReservations(callback) { // callback used by mobile access page
