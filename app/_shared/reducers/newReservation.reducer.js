@@ -3,6 +3,7 @@ import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT } from '../helpers/time'
 
 import {
   NEW_RESERVATION_SET_USER,
+  NEW_RESERVATION_SET_NOTE,
   NEW_RESERVATION_SET_AVAILABLE_USERS,
   NEW_RESERVATION_SET_RESERVATION,
 
@@ -36,6 +37,7 @@ import {
 
 const defaultState = {
   user:           undefined, // id of selected user reservation is for
+  note:           '', // users note
   availableUsers: [], // array of other available users
   reservation:    undefined, // object with reservation to be edited
 
@@ -72,6 +74,11 @@ export default function newReservation(state = defaultState, action) {
     case NEW_RESERVATION_SET_USER:
       return { ...state,
         user: action.value
+      }
+
+    case NEW_RESERVATION_SET_NOTE:
+      return { ...state,
+        note: action.value
       }
 
     case NEW_RESERVATION_SET_AVAILABLE_USERS:
