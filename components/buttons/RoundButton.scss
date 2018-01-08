@@ -8,33 +8,36 @@ $big:         1.4;
 
 .button {
   @include border-radius(240px);
+  @include colorize($clickableColor);
 
   width:      $size-normal;
   height:     $size-normal;
-  font-size:  24px;
-  border:     none;
-  outline:    none;
-  text-align: center;
-  transition: all 0.4s ease;
   margin:     5px;
   padding:    0;
+  transition: all 0.4s ease;
 
-  @include colorize($clickableColor);
-  color:   $white;
-  cursor:  pointer;
+  border:     0;
+  outline:    none;
+  color:      $white;
+  font-size:  24px;
+  text-align: center;
+  cursor:     pointer;
 }
 
 
 .action {
   @include colorize($actionColor);
 }
+
 .confirm {
   @include colorize($confirmColor);
 }
+
 .remove {
   @include colorize($removeColor);
 }
-.info{
+
+.info {
   @include colorize($white);
   color: $blue;
 }
@@ -45,13 +48,15 @@ $big:         1.4;
   color:      $black;
   cursor:     default;
 }
-.loading{
+
+.loading {
   background: lighten($confirmColor, 20%);
   cursor: default;
   // &:hover{
   //   background: lighten($confirmColor, 20%);
   // }
 }
+
 .disabled {
   background: $lightGray;
   color:      darken($lightGray, 10);

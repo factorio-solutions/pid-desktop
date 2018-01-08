@@ -6,8 +6,8 @@ import styles from './FeatureCard.scss'
 
 // stat can be 'selected'
 
-export default function FeatureCard ({ title, items=[], buttonLabel, onClick, state }) {
-  const createLi = (item) => <li>{item}</li>
+export default function FeatureCard({ title, items = [], buttonLabel, onClick, state }) {
+  const createLi = item => <li>{item}</li>
 
   return (
     <div className={`${styles.pricing} ${styles[state]}`} onClick={onClick}>
@@ -16,7 +16,7 @@ export default function FeatureCard ({ title, items=[], buttonLabel, onClick, st
         {items.map(createLi)}
       </ul>
       <div className={styles.button}>
-        <CallToActionButton onClick={onClick} label={buttonLabel} type="action" state={state==='selected' && 'inverted'}/>
+        <CallToActionButton onClick={onClick} label={buttonLabel} type="action" state={state === 'selected' && 'inverted'} />
       </div>
     </div>
   )

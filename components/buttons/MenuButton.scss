@@ -2,35 +2,33 @@
 @import './Button';
 
 // button will fill its parent
-$size-collapsed-width:  150px;
+$size-collapsed-width: 150px;
 
 
-.button{
-  font-size:  16px;
-  border:     none;
-  outline:    none;
-  text-align: center;
-  transition: all 0.3s ease;
-
-  padding: 20px;
-  cursor: pointer;
-
+.button {
   @include colorize($menuGray);
-  color:   $lightGray;
-  cursor:  pointer;
 
-  &:not(.selected){
-    >div>.icon{
+  padding:    20px;
+  transition: all .3s ease;
+  border:     0;
+  outline:    none;
+  color:      $lightGray;
+  font-size:  16px;
+  text-align: center;
+  cursor:     pointer;
+
+  &:not(.selected) {
+    >div>.icon {
       color: $white;
     }
   }
 }
 
-.icon{ // default size
+.icon { // default size
   font-size:  50px;
 }
 
-.label{
+.label {
   margin-top: 2px;
   font-size: 15px;
 }
@@ -40,9 +38,11 @@ $size-collapsed-width:  150px;
 .action {
   @include colorize($actionColor);
 }
+
 .confirm {
   @include colorize($confirmColor);
 }
+
 .remove {
   @include colorize($removeColor);
 }
@@ -54,6 +54,7 @@ $size-collapsed-width:  150px;
   color:      $black;
   // cursor:     default;
 }
+
 .disabled {
   background: $lightGray;
   color:      $gray;
@@ -63,33 +64,33 @@ $size-collapsed-width:  150px;
 
 // scalable media
 @media (min-width: $collapseWidth) {
-  .button{
+  .button {
     width: 100%;
   }
 
   @media (max-height: 830px) { // mediuym height
-    .button{
-      padding: 10px
+    .button {
+      padding: 10px;
     }
 
-    .icon{
+    .icon {
       font-size:  40px;
     }
   }
 
   @media (max-height: 650px) { // low height
-    .button{
-      padding: 5px
+    .button {
+      padding: 5px;
     }
 
-    .icon{
+    .icon {
       font-size:  30px;
     }
   }
 }
 
 @media (max-width: $collapseWidth) {
-  .button{
+  .button {
     width: 50%;
   }
 }

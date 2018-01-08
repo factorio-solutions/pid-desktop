@@ -8,33 +8,34 @@ import RoundButton    from '../buttons/RoundButton'
 import styles         from './PopupDatetimepicker.scss'
 
 
-export default class PopupDatetimepicker extends Component{
+export default class PopupDatetimepicker extends Component {
   static propTypes = {
     onSelect: PropTypes.func,
     okClick:  PropTypes.func,
-    datetime: PropTypes.string, //moment compatible format
+    datetime: PropTypes.string, // moment compatible format
     show:     PropTypes.bool,
-    flip:     PropTypes.bool, // will apear to left side of page
+    flip:     PropTypes.bool // will apear to left side of page
   }
 
-  componentDidUpdate(prevProps){
-    if (!prevProps.show && this.props.show){
-      this.container.focus();
+  componentDidUpdate(prevProps) {
+    if (!prevProps.show && this.props.show) {
+      this.container.focus()
     }
   }
 
-  render(){
+  render() {
     const { onSelect, datetime, show, okClick, flip } = this.props
 
-    return(
-      <div className={`${styles.popup} ${show ? "" : styles.hidden} ${flip && styles.flip}`}
-        ref={(div) => { this.container = div }}
+    return (
+      <div
+        className={`${styles.popup} ${show ? '' : styles.hidden} ${flip && styles.flip}`}
+        ref={div => { this.container = div }}
         onBlur={okClick}
         tabIndex={0}
       >
-        <Datetimepicker onSelect={onSelect} datetime={datetime}/>
+        <Datetimepicker onSelect={onSelect} datetime={datetime} />
         <div className={styles.buttonContainer}>
-          <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={okClick} type='confirm'/>
+          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={okClick} type="confirm" />
         </div>
       </div>
     )

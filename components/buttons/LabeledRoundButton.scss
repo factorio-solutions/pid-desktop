@@ -1,16 +1,16 @@
-.labeledRoundButton{
-  width: 60px;
+.labeledRoundButton {
   display: inline-block;
+  width: 60px;
   vertical-align: top;
 
-  >div{
-    text-align: center;
+  >div {
     padding: 2px;
     font-size: 12px;
+    text-align: center;
     word-wrap: break-word;
   }
 
-  >button{
+  >button {
     margin-bottom: 0;
   }
 }
