@@ -12,7 +12,8 @@ export default class PopupDatepicker extends Component {
     okClick:  PropTypes.func,
     date:     PropTypes.string, // moment compatible format
     show:     PropTypes.bool,
-    flip:     PropTypes.bool
+    flip:     PropTypes.bool,
+    showInf:  PropTypes.bool
   }
 
   componentDidUpdate(prevProps) {

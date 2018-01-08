@@ -9,10 +9,10 @@ import { setNotificationCount } from '../actions/notifications.actions'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
 export function request(onSuccess, query, variables = null, operationName = null, onError) {
-  const data = { query
-               , operationName
-               , variables
-               }
+  const data = { query,
+    operationName,
+    variables
+  }
 
   const xmlHttp = new XMLHttpRequest()
 
@@ -27,18 +27,16 @@ export function request(onSuccess, query, variables = null, operationName = null
         }
         nav.to('/')
       }
-    } else { // not 401 status
-      if (xmlHttp.readyState === 4) {
-        try {
-          const response = JSON.parse(xmlHttp.responseText)
-          store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
-          onSuccess({ data: response.data })
-        } catch (e) {
-          if (onError === undefined) {
-            throw (e)
-          } else {
-            onError()
-          }
+    } else if (xmlHttp.readyState === 4) { // not 401 status
+      try {
+        const response = JSON.parse(xmlHttp.responseText)
+        store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
+        onSuccess({ data: response.data })
+      } catch (e) {
+        if (onError === undefined) {
+          throw (e)
+        } else {
+          onError()
         }
       }
     }

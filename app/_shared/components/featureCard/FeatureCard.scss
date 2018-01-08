@@ -1,48 +1,44 @@
 @import '../../styles/app.components';
 
-.pricing{
-  position: relative;
-  flex: 1 1;
-  border: 1px solid $lightGray;
-  margin: 5px;
+.pricing {
+  position:   relative;
+  flex:       1 1;
+  margin:     5px;
+  border:     1px solid $lightGray;
   text-align: center;
-  // cursor: pointer;
-  // &:hover {
-  //   background: $blue;
-  //   color: $white;
-  // }
 }
 
-.points{
-  padding: 0;
-  margin: 25px 10px 75px;
-  list-style: none;
-  text-align: center;
+.points {
+  margin:        25px 10px 75px;
+  padding:       0;
   border-bottom: 1px solid $lightGray;
+  list-style:    none;
+  text-align:    center;
 
-  >li{
-    padding: 10px 0;
-    line-height: 1.5;
-    letter-spacing: -.01em;
+  >li {
+    padding:    10px 0;
     border-top: 1px solid $lightGray;
+
+    letter-spacing: -.01em;
+    line-height:    1.5;
   }
 }
 
-.button{
+.button {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  right:    0;
+  bottom:   0;
+  left:     0;
 }
 
-.selected{
+.selected {
   background-color: $blue;
   color: $white;
 
-  >ul{
+  >ul {
     border-bottom: 1px solid $white;
-    
-    >li{
+
+    >li {
       border-top: 1px solid $white;
     }
   }

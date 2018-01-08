@@ -10,7 +10,6 @@ import './_shared/helpers/findById'
 import './_shared/styles/normalize.css'
 import './_shared/styles/fonts.scss'
 import './_styles/app.desktop.scss'
-import './_shared/helpers/findById'
 
 
 export const store = configureStore()

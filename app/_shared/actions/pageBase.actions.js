@@ -2,6 +2,7 @@ import React from 'react'
 import translate from 'counterpart'
 
 import ConfirmModal from '../components/modal/ConfirmModal'
+import AlertModal from '../components/modal/AlertModal'
 
 import * as nav    from '../helpers/navigation'
 import { request } from '../helpers/request'
@@ -114,6 +115,14 @@ export function confirm(question, callback) {
       callback()
     }
     dispatch(setCustomModal(<ConfirmModal question={question} onConfirm={onConfirm} onBack={onBack} />))
+  }
+}
+
+export function alert(question) {
+  return dispatch => {
+    const onConfirm = () => dispatch(setCustomModal())
+
+    dispatch(setCustomModal(<AlertModal question={question} onConfirm={onConfirm} />))
   }
 }
 
