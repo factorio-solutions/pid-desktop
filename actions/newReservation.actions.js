@@ -29,6 +29,7 @@ const MIN_RESERVATION_DURATION = 30 // minutes
 
 
 export const NEW_RESERVATION_SET_USER = 'NEW_RESERVATION_SET_USER'
+export const NEW_RESERVATION_SET_NOTE = 'NEW_RESERVATION_SET_NOTE'
 export const NEW_RESERVATION_SET_AVAILABLE_USERS = 'NEW_RESERVATION_SET_AVAILABLE_USERS'
 export const NEW_RESERVATION_SET_RESERVATION = 'NEW_RESERVATION_SET_RESERVATION'
 export const NEW_RESERVATION_SET_HOST_NAME = 'NEW_RESERVATION_SET_HOST_NAME'
@@ -61,6 +62,13 @@ export function setUser(value) {
     if (value.availableClients.find(client => client.id === getState().newReservation.client_id) === undefined) { // preselected client no longer available
       dispatch(setClientId(undefined))
     }
+  }
+}
+
+export function setNote(value) {
+  return {
+    type:  NEW_RESERVATION_SET_NOTE,
+    value: value ? value.substring(0, 25) : '' // maximum allowed length
   }
 }
 
@@ -345,6 +353,7 @@ export function setInitialStore(id) {
 
       if (values[1] !== undefined) { // if reservation edit set details
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
+        dispatch(setNote(values[1].reservation.note))
         dispatch(setReservation(values[1].reservation))
         dispatch(downloadUser(values[1].reservation.user_id))
         dispatch(setClientId(values[1].reservation.client_id))
@@ -578,6 +587,7 @@ export function submitReservation(id) {
              , id ? UPDATE_RESERVATION : CREATE_RESERVATION
              , { reservation: {
                user_id:                  ongoing ? undefined : user_id,
+               note:                     state.note ? state.note : undefined,
                place_id:                 ongoing ? undefined : state.place_id,
                garage_id:                state.garage.id,
                client_id:                ongoing ? undefined : state.client_id,
