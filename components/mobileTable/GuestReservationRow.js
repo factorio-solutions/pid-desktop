@@ -11,7 +11,7 @@ export default function GuestReservationRow({ reservation }) {
   return (
     <div>
       <div className={styles.guestTitle}>{reservation.user.full_name} / {reservation.car.licence_plate}</div>
-      <div>{reservation.client.name}</div>
+      <div>{reservation.client && reservation.client.name}</div>
       <div>{reservation.place.floor.garage.name}</div>
       <table className={`${styles.table} ${reservation.approved === false && styles.disabled}`}>
         <tbody>
