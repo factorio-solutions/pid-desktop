@@ -96,7 +96,6 @@ class PageBase extends Component {
           showSecondaryMenu={state.showSecondaryMenu}
           showHints={state.current_user && state.current_user.hint}
           hint={state.hint}
-          breadcrumbs={state.breadcrumbs}
           profileDropdown={profileDropdown}
           secondaryMenuBackButton={state.secondaryMenuBackButton}
         >

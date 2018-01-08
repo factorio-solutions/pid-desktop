@@ -5,28 +5,29 @@
 $size-collapsed-width:  150px;
 
 
-.button{
+.button {
+  @include colorize($gray);
+
+  width:       100%;
+  padding:     0;
+  transition:  all .3s ease;
+
+  border:      0;
+  outline:     none;
   color:       $white;
   font-size:   16px;
   white-space: nowrap;
-  padding:     0;
-
-  @include colorize($gray);
-  width:         100%;
-  cursor:        pointer;
-  border:        none;
-  outline:       none;
-  transition:    all 0.3s ease;
+  cursor:      pointer;
 }
 
-.label{
+.label {
   font-size:  19px;
 }
 
-.container{
+.container {
   margin-top:    -1px;
-  border-bottom: 1px solid $lightGray;
   border-top:    1px solid $lightGray;
+  border-bottom: 1px solid $lightGray;
 }
 
 
@@ -34,9 +35,11 @@ $size-collapsed-width:  150px;
 .action {
   @include colorize($actionColor);
 }
+
 .confirm {
   @include colorize($confirmColor);
 }
+
 .remove {
   @include colorize($removeColor);
 }
@@ -47,6 +50,7 @@ $size-collapsed-width:  150px;
   background: $selectedColor;
   color:      $black;
 }
+
 .disabled {
   background: $lightGray;
   color:      $gray;
@@ -57,30 +61,31 @@ $size-collapsed-width:  150px;
 // scalable content
 
 @media (min-width: $collapseWidth) {
-  .label{
+  .label {
     text-align: left;
   }
-  .container{
+
+  .container {
     padding: 24px 30px;
   }
 
   @media (max-height: 650px) { // low height
-    .container{
+    .container {
       padding: 14px 30px;
     }
   }
 
-  .back{ // state
+  .back { // state
     display: none;
   }
 }
 
 @media (max-width: $collapseWidth) {
-  .container{
+  .container {
     padding: 16px;
   }
 
-  .back{ // state
+  .back { // state
     @include colorize($yellow);
     color:       $black;
     font-weight: bold;

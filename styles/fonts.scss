@@ -1,10 +1,10 @@
 @import '../styles/variables';
 
 body {
-  font-family: "Roboto Condensed", sans-serif;
-  letter-spacing: 0.2px;
+  font-family: 'Roboto Condensed', sans-serif;
+  letter-spacing: .2px;
   -webkit-font-smoothing: subpixel-antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;
 
 }
 
@@ -17,9 +17,9 @@ body {
 }
 
 a:link {
-  text-decoration: none;
+  border-bottom: 2px solid $yellow;
   color: $black;
-  border-bottom: 2px solid $yellow
+  text-decoration: none;
 }
 
 a:visited {

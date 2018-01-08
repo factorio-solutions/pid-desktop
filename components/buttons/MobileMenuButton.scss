@@ -6,53 +6,57 @@ $size-normal-width:     100%;
 $size-collapsed-width:  150px;
 
 
-.button{
-  width:      $size-normal-width;
-  font-size:  16px;
-  border:     none;
-  outline:    none;
-  text-align: center;
-  transition: all 0.4s ease;
-  padding:    18px 0 8px;
+.button {
+  @include colorize($clickableColor);
+
   position:   relative;
   flex:       1 1;
+  width:      $size-normal-width;
   min-height: 100px;
-
-  @include colorize($clickableColor);
+  padding:    18px 0 8px;
+  transition: all .4s ease;
+  border:     0;
+  outline:    none;
   color:   $white;
+  font-size:  16px;
+  text-align: center;
   cursor:  pointer;
 }
 
-.count{
+.count {
   position: absolute;
-  font-weight: bold;
   font-size: 18px;
+  font-weight: bold;
 
   -webkit-filter: invert(100%);
   filter: invert(100%);
 }
-.safariCount{
+
+.safariCount {
   -ms-transform: translate(-128%, 15%); /* IE 9 */
   -webkit-transform: translate(-128%, 15%); /* Chrome, Safari, Opera */
   transform: translate(-128%, 15%);
 }
-.chromeCount{
+
+.chromeCount {
   -ms-transform: translate(-150%, 10%); /* IE 9 */
   -webkit-transform: translate(-150%, 10%); /* Chrome, Safari, Opera */
   transform: translate(-150%, 10%);
 }
 
-.adjustPadding{
+.adjustPadding {
   padding: 12px 0;
 }
 
-.content{
-  display:    block;
+.content {
+  display: block;
 }
-.icon{
+
+.icon {
   font-size:  22px;
 }
-.label{
+
+.label {
   margin-top: 6px;
 }
 
@@ -62,34 +66,36 @@ $size-collapsed-width:  150px;
 .action {
   @include colorize($actionColor);
 }
+
 .confirm {
   @include colorize($confirmColor);
 }
+
 .remove {
   @include colorize($removeColor);
 }
 
 
 // size
-.collapsed{
+.collapsed {
   width:    $size-normal-width;
   padding:  8px 0;
 
-  .label{
+  .label {
     display: none;
   }
 }
 
-.small{
-  text-align: left;
+.small {
   padding: 8px 20px;
+  text-align: left;
 
-  >div{
-    >span{
+  >div {
+    >span {
       display: initial;
 
-      &.content{
-        margin: 0 5px ;
+      &.content {
+        margin: 0 5px;
       }
     }
   }
@@ -101,6 +107,7 @@ $size-collapsed-width:  150px;
   color:      $black;
   // cursor:     default;
 }
+
 .disabled {
   background: $lightGray;
   color:      $gray;
@@ -108,11 +115,11 @@ $size-collapsed-width:  150px;
 }
 
 // Mobile menu button
-.centerInDiv{
+.centerInDiv {
   position:  absolute;
   top:       50%;
   left:      50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   > .icon {
     font-size: 36px;
   }

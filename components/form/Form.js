@@ -7,6 +7,7 @@ import styles from './Form.scss'
 
 export default class Form extends Component {
   static propTypes = {
+    children:    PropTypes.object,
     onSubmit:    PropTypes.func.isRequired,
     onHighlight: PropTypes.func,
     onBack:      PropTypes.func,
@@ -37,17 +38,19 @@ export default class Form extends Component {
       }
     }
     const highlightInputs = () => { onHighlight && onHighlight() }
-    const back = typeof onBack === "function"
+    const back = typeof onBack === 'function'
 
-    var submitButton =  <div className={`${mobile ? styles.mobileSubmitButton : styles.submitBtn} ${margin && styles.marginBot}`}>
-                          {back && <div className={styles.floatLeft}>
-                            <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true"></span>} onClick={onBack}/>
-                          </div>}
-                          <div className={back && styles.floatRight}>
-                            {this.state.submited ? <RoundButton content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true"></span>} onClick={()=>{}} type='confirm' state={'loading'} onDisabledClick={highlightInputs}/>
-                                                 : <RoundButton content={<span className='fa fa-check' aria-hidden="true"></span>} onClick={sendReservation} type='confirm' state={!submitable && 'disabled'} onDisabledClick={highlightInputs}/>}
-                          </div>
-                        </div>
+    const submitButton = (<div className={`${mobile ? styles.mobileSubmitButton : styles.submitBtn} ${margin && styles.marginBot}`}>
+      {back && <div className={styles.floatLeft}>
+        <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={onBack} />
+      </div>}
+      <div className={back && styles.floatRight}>
+        {this.state.submited ?
+          <RoundButton content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />} onClick={() => {}} type="confirm" state={'loading'} onDisabledClick={highlightInputs} /> :
+          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={sendReservation} type="confirm" state={!submitable && 'disabled'} onDisabledClick={highlightInputs} />
+        }
+      </div>
+    </div>)
 
     return (
       <form onSubmit={sendReservation} >
