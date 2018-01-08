@@ -10,7 +10,7 @@ import styles from './GarageSelector.scss'
 import * as pageBaseActions from '../../actions/pageBase.actions'
 import * as nav from '../../helpers/navigation'
 
-export class GarageSelector extends Component {
+class GarageSelector extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object
