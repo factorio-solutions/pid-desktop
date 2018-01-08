@@ -223,7 +223,8 @@
 		"hostsEmail": "Guest email",
 		"selectedUser": "User",
 		"flexiblePlaceSelected": "flexible",
-		"noFreePlace": "No free place"
+		"noFreePlace": "No free place",
+		"note": "Note"
 	},
 	"clients": {
 		"name": "name",

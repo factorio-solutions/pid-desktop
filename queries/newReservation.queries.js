@@ -126,6 +126,7 @@ export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $i
 export const GET_RESERVATION = `query getReservation($id: Id!) {
   reservation(id: $id) {
     id
+    note
     user_id
     car {
       id

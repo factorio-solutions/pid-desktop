@@ -6,7 +6,6 @@ import RoundButton           from '../buttons/RoundButton'
 import GarageSelector        from '../garageSelector/GarageSelector'
 import VerticalMenu          from '../verticalMenu/VerticalMenu'
 import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
-import Breadcrumbs           from '../breadcrumbs/Breadcrumbs'
 import DropdownContent       from '../dropdown/DropdownContent'
 
 import * as nav from '../../helpers/navigation'

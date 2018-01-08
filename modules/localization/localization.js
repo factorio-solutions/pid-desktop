@@ -20,13 +20,13 @@ export function changeLanguage(language) {
   const lang = {
     counterpart: {
       // názvy měsíců a dní a jejich zkratky
-      names: require('../../locales/' + language + '/' + language + '.dates.json').names,
+      names:     require('../../locales/' + language + '/' + language + '.dates.json').names,
       // definuje, který klíč vzít pro různý počet. Tento en rozhoduje zda vzít zero, one nebo other key.
       // vlastním plurarizerem je možné nadefinovat kdy používat i další klíče (např. jeden, dva, tri a vice - pro pripady kdy se tvary těchto počtů liší).
       pluralize: require('../../locales/' + language + '/' + language + '.pluralize.js'),
       // formáty datumů - používá strftime
       // Dokumentace k strftime - https://github.com/samsonjs/strftime#supported-specifiers
-      formats: require('../../locales/' + language + '/' + language + '.dates.json').formats
+      formats:   require('../../locales/' + language + '/' + language + '.dates.json').formats
     }
   }
 

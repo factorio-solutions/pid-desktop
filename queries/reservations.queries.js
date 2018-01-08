@@ -62,6 +62,7 @@ export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
 export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($user_id: Id, $garage_id: Id, $past: Boolean, $ongoing: Boolean, $count: Int, $page: Int, $order_by: String, $includes: String, $search: Hash) {
   reservations(user_id: $user_id, garage_id: $garage_id, past: $past, ongoing: $ongoing, count: $count, page: $page, order_by: $order_by, includes: $includes, search: $search) {
     id
+    note
     reservation_case
     invoice_item {
       id

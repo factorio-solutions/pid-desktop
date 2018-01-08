@@ -1,119 +1,114 @@
 @import '../../styles/app.components';
 
-.button{
+.button {
   display:  inline-block;
   width:    100%;
   height:   36px;
 
   padding:  0 15px;
-  cursor:   pointer;
-  border:   none;
+  border:   0;
   outline:  none;
+  cursor:   pointer;
   overflow: hidden;
 }
 
-.drop{
-  z-index:    10;
-  max-height: 200px;
+.drop {
   position: absolute;
-  overflow-y: auto;
-  overflow-x: hidden;
+
+  max-height: 200px;
+  margin:     0;
+  padding:    0;
+  transition: .25s ease opacity;
 
   background-color: $white;
   color:            $black;
-  box-shadow:       0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  transition:       0.25s ease opacity;
-
-  padding:    0;
-  margin:     0;
-  text-align: center;
+  text-align:       center;
+  box-shadow:       0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  z-index:          10;
+  overflow-y:       auto;
+  overflow-x:       hidden;
 
   & .fixed{
     position: fixed;
   }
-  & .absolute{
-  }
 }
-.drop > li{
-  padding:  14px 16px;
-  cursor:   pointer;
+
+.drop > li {
+  padding: 14px 16px;
+  cursor:  pointer;
 }
-.drop > li:not(.selected):hover{
+
+.drop > li:not(.selected):hover {
   background-color: $gray;
   color:            $white;
 }
 
-.hidden{
-  opacity: 0
+.hidden {
+  opacity: 0;
 }
 
-.display{
+.display {
   display: none;
 }
 
-.selected{
+.selected {
   background-color: $yellow;
   color:            $black;
 }
 
-.float{
-  // float:        right;
-  font-size:    16px;
-  opacity: 0
+.float {
+  font-size: 16px;
+  opacity:   0;
 }
-.visible{
+
+.visible {
   opacity: 1;
 }
 
-.singleItem > i{
+.singleItem > i {
   display: none;
 }
-.singleItem{
+
+.singleItem {
   cursor: default;
 }
 
-.marginCorrection{
-  // correct the width of awesomefont icon
-  // margin-left: 9px;
-
-}
-
-.dimmer{
-  color:            $gray !important;
+.dimmer {
   background-color: $lightGray !important;
+  color:            $gray !important;
   cursor:           default;
 }
 
 
 // -----------------------------------------
 // Custom styles
-.dark{
-  color:            $white;
+.dark {
   background-color: $black;
+  color:            $white;
 }
 
-.mobileDark{
-  color:            $white;
+.mobileDark {
   background-color: $black;
-  font-weight: bold;
-  font-size: 20px;
+  color:            $white;
+  font-size:        20px;
+  font-weight:      bold;
 }
 
-.light{
-  color:            $black;
-  background-color: $white;
+.light {
   border-bottom:    1px solid $black;
+  background-color: $white;
+  color:            $black;
 }
 
-.reservation{
+.reservation {
   @extend .light;
   height: 50px;
 }
 
-.transparent{
-  color:            $white;
-  background-color: rgba(0,0,0,0);
+.transparent {
   border-bottom:    1px solid $white;
+  background-color: rgba(0, 0, 0, 0);
+  color:            $white;
 }
 
 .noUnderline {
@@ -136,24 +131,24 @@
   font-size:        25px;
 }
 
-.highlighted{
+.highlighted {
   border-bottom: 1px solid $red;
 }
 
-.garageSelector{
-  color: $yellow;
-  font-weight: bold;
-  background-color: rgba(0,0,0,0);
+.garageSelector {
+  background-color: rgba(0, 0, 0, 0);
+  color:            $yellow;
+  font-weight:      bold;
 }
 
-.tabDropdown{
-  font-size:  16px;
-  font-weight: bold;
+.tabDropdown {
+  height:        inherit;
+  margin:        5px 2px 0;
+  padding:       10px 20px;
+  border-bottom: 3px solid $black;
+
+  background-color: rgba(0, 0, 0, 0);
   color:            $black;
-  background-color: rgba(0,0,0,0);
-  border-bottom:    3px solid $black;
-  padding: 10px 20px;
-  margin: 5px 2px 0 2px;
-  // width: 150px;
-  height: inherit;
+  font-size:        16px;
+  font-weight:      bold;
 }

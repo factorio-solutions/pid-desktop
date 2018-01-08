@@ -1,11 +1,11 @@
 @import '../../styles/app.components';
 
-.datepickerContainer{
+.datepickerContainer {
   display: inline-block;
-  width: 250px;
+  width:   250px;
 }
 
-.monthContainer{
+.monthContainer {
   display:   flex;
   flex-wrap: nowrap;
   width:     100%;
@@ -15,72 +15,74 @@
     text-align: center;
   }
 
-  > .chevron{
+  > .chevron {
     flex-grow: 1;
     cursor:    pointer;
   }
 
-  > .month{
+  > .month {
     flex-grow:   5;
     font-weight: bold;
   }
 
-  > .day{
+  > .day {
     flex-grow: 2;
   }
 }
 
-.daysTable{
-  table-layout: fixed;
+.daysTable {
   width:        100%;
   text-align:   center;
+  table-layout: fixed;
 }
 
-.dayName{
+.dayName {
   color: $lightGray;
 }
 
-.clickable{
+.clickable {
   cursor: pointer;
 }
 
-.today{
+.today {
+  width:            $pickerRowHeigh;
+  height:           $pickerRowHeigh;
   margin:           auto;
+  border-radius:    12px;
   background-color: $blue;
   color:            $white;
-  border-radius:    12px;
-  height:           $pickerRowHeigh;
-  width:            $pickerRowHeigh;
 }
 
-.selected{
+.selected {
+  width:            $pickerRowHeigh;
+  height:           $pickerRowHeigh;
+  margin:           auto;
+  border-radius:    12px;
   background-color: $yellow;
   color:            $black;
   font-weight:      bold;
-  margin:           auto;
-  border-radius:    12px;
-  height:           $pickerRowHeigh;
-  width:            $pickerRowHeigh;
 }
 
-.buttonContainer{
+.buttonContainer {
   display:    block;
-  text-align: center;
   margin-top: 5px;
-  > span{
-    margin: 0 5px;
-    cursor: pointer;
+  text-align: center;
+
+  > span {
+    margin:      0 5px;
     font-weight: bold;
+    cursor:      pointer;
   }
 }
 
-.pickerRow{
+.pickerRow {
   height: $pickerRowHeigh;
-  >td{
-    >div{
-      height: $pickerRowHeigh;
+
+  >td {
+    >div {
+      display:        inline-table;
+      height:         $pickerRowHeigh;
       vertical-align: middle;
-      display: inline-table;
     }
   }
 }
