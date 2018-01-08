@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM                        from 'react-dom'
 import styles                          from './Input.scss'
 
 // this component has to know its state, so it can be passed to the value attribute of input
@@ -21,25 +20,25 @@ export default class Input extends Component {
     onBlur:       PropTypes.func,
     onEnter:      PropTypes.func, // called when enter pressed
     value:        PropTypes.oneOfType([
-                    PropTypes.string,
-                    PropTypes.number
-                  ]),
-    inlineMenu:   PropTypes.object,
-    style:        PropTypes.string,
-    min:          PropTypes.oneOfType([
-                    PropTypes.string,
-                    PropTypes.number
-                  ]),
-    step:         PropTypes.oneOfType([
-                    PropTypes.string,
-                    PropTypes.number
-                  ]),
-    highlight:    PropTypes.bool
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    inlineMenu: PropTypes.object,
+    style:      PropTypes.string,
+    min:        PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    step: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    highlight: PropTypes.bool
   }
 
   constructor(props) { // just to handle two way databinding
-     super(props);
-     this.state = { message: props.value || '' }
+    super(props)
+    this.state = { message: props.value || '' }
   }
 
   // componentDidMount(){
@@ -52,8 +51,8 @@ export default class Input extends Component {
   //   }
   // }
 
-  componentWillReceiveProps (newProps) {
-    newProps.value != undefined && this.setState({message: newProps.value});
+  componentWillReceiveProps(newProps) {
+    newProps.value !== undefined && this.setState({ message: newProps.value })
     // const { onChange } = this.props
     // if (this.props.value != newProps.value){
     //   this.setState({message: newProps.value});
@@ -63,55 +62,64 @@ export default class Input extends Component {
     // }
   }
 
-  render(){
+  render() {
     const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight, readOnly, required } = this.props
-    var message = this.state.message;
+    let message = this.state.message
 
-    const handleChange = (event) => {
-      if (type=='file') {
-        this.setState({message: event.target.value});
+    const handleChange = event => {
+      if (type === 'file') {
+        this.setState({ message: event.target.value })
 
-        if (typeof onChange === "function") {
-          var reader = new FileReader()
-          reader.onload = ((theFile) => {
-            var target = event.target
-            return function(event) {
+        if (typeof onChange === 'function') {
+          const reader = new FileReader()
+          reader.onload = (() => {
+            return event => {
               onChange(event.target.result, true)
-            };
-          })(event.target.files[0]);
+            }
+          })(event.target.files[0])
           reader.readAsText(event.target.files[0])
-
         }
       } else {
-        this.setState({message: event.target.value});
-        if (typeof onChange === "function") {
-          onChange(event.target.value, event.target.checkValidity()&&event.target.value!="")
+        this.setState({ message: event.target.value })
+        if (typeof onChange === 'function') {
+          onChange(event.target.value, event.target.checkValidity() && event.target.value !== '')
         }
       }
     }
 
-    const preventEnter = function(event){
-      const key = (typeof event.which == "number") ? event.which : event.keyCode
-      if (key == 13){
+    const preventEnter = event => {
+      const key = (typeof event.which === 'number') ? event.which : event.keyCode
+      if (key === 13) {
         event.preventDefault()
-        typeof (onEnter) == "function" && onEnter()
+        typeof (onEnter) === 'function' && onEnter()
       }
     }
-    //onKeyPress={preventEnter} // <- to input
+    // onKeyPress={preventEnter} // <- to input
 
-    const isEmpty = () => { return this.refs.input ? this.refs.input.value==='' : true }
+    const isEmpty = () => { return this.refs.input ? this.refs.input.value === '' : true }
 
-    return(
-      <div className={`${styles.customFormGroup} ${styles[align?align:'left']} ${style} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
-        <input onBlur={onBlur} pattern={pattern} type={type?type:'text'} name={name} value={message} onChange={handleChange}
-          autoComplete={autocomplete} placeholder={placeholder} min={min} step={step} onKeyPress={preventEnter} ref='input' accept={accept}
+    return (
+      <div className={`${styles.customFormGroup} ${styles[align || 'left']} ${style} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+        <input
+          onBlur={onBlur}
+          pattern={pattern} type={type || 'text'}
+          name={name}
+          value={message}
+          onChange={handleChange}
+          autoComplete={autocomplete}
+          placeholder={placeholder}
+          min={min}
+          step={step}
+          onKeyPress={preventEnter}
+          ref="input"
+          accept={accept}
           readOnly={readOnly} required={required}
         />
-        <span className={styles.bar}></span>
+        <span className={styles.bar} />
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
         <label className={`${styles.customFormGroup}  ${styles.error}`}>
-          {error+' '}
+          {error + ' '}
         </label>
       </div>
     )
