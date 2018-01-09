@@ -1,10 +1,9 @@
 import React, { Component, PropTypes }  from 'react'
 import moment from 'moment'
 
-import { t } from '../../modules/localization/localization'
-import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview3'
+import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview'
 
-import styles from './OccupancyOverview3.scss'
+import styles from './OccupancyOverview.scss'
 
 
 export default class Place extends Component {
