@@ -37,7 +37,7 @@ export default class DatetimeInput extends Component {
   }
 
   render() {
-    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, style, editable } = this.props
+    const { label, error, placeholder, onChange, onEnter, inlineMenu, style, editable } = this.props
 
     const handleChange = event => {
       editable && this.setState({ ...this.state, message: event.target.value })

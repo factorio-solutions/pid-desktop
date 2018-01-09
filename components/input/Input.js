@@ -41,30 +41,13 @@ export default class Input extends Component {
     this.state = { message: props.value || '' }
   }
 
-  // componentDidMount(){
-  //   const { required, readOnly } = this.props
-  //   if (required) {
-  //     ReactDOM.findDOMNode(this).children[0].required = true
-  //   }
-  //   if (readOnly){
-  //     ReactDOM.findDOMNode(this).children[0].readOnly = true
-  //   }
-  // }
-
   componentWillReceiveProps(newProps) {
     newProps.value !== undefined && this.setState({ message: newProps.value })
-    // const { onChange } = this.props
-    // if (this.props.value != newProps.value){
-    //   this.setState({message: newProps.value});
-    //   if (typeof onChange === "function") {
-    //     onChange(newProps.value, true)
-    //   }
-    // }
   }
 
   render() {
     const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight, readOnly, required } = this.props
-    let message = this.state.message
+    const message = this.state.message
 
     const handleChange = event => {
       if (type === 'file') {
@@ -72,11 +55,7 @@ export default class Input extends Component {
 
         if (typeof onChange === 'function') {
           const reader = new FileReader()
-          reader.onload = (() => {
-            return event => {
-              onChange(event.target.result, true)
-            }
-          })(event.target.files[0])
+          reader.onload = (() => event => onChange(event.target.result, true))(event.target.files[0])
           reader.readAsText(event.target.files[0])
         }
       } else {
@@ -96,13 +75,14 @@ export default class Input extends Component {
     }
     // onKeyPress={preventEnter} // <- to input
 
-    const isEmpty = () => { return this.refs.input ? this.refs.input.value === '' : true }
+    const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
       <div className={`${styles.customFormGroup} ${styles[align || 'left']} ${style} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
         <input
           onBlur={onBlur}
-          pattern={pattern} type={type || 'text'}
+          pattern={pattern}
+          type={type || 'text'}
           name={name}
           value={message}
           onChange={handleChange}
@@ -111,9 +91,10 @@ export default class Input extends Component {
           min={min}
           step={step}
           onKeyPress={preventEnter}
-          ref="input"
+          ref={input => { this.input = input }}
           accept={accept}
-          readOnly={readOnly} required={required}
+          readOnly={readOnly}
+          required={required}
         />
         <span className={styles.bar} />
         <label className={styles.label}>{label}</label>

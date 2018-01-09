@@ -286,7 +286,7 @@
 		"interuptReservation": "Przerwij rezerwację",
 		"payReservation": "Opłać rezerwację",
 		"downloadInvoice": "Ściągnij fakturę",
-		"destroyRservation": "Usuń rezerwację",
+		"destroyReservation": "Usuń rezerwację",
 		"destroyAllReservation": {
 			"one": "PL: reservations.destroyAllReservation.one",
 			"few": "PL: reservations.destroyAllReservation.few",

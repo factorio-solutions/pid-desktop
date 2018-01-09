@@ -46,11 +46,11 @@ export default class PatternInput extends Component {
       }
     }
 
-    const isEmpty = () => { return this.refs.input ? this.refs.input.value === '' : true }
+    const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
       <div className={`${styles.customFormGroup} ${styles.center} ${highlight && isEmpty() && styles.highlighted}`} >
-        <input pattern={pattern} type={type || 'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter} ref="input" />
+        <input pattern={pattern} type={type || 'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter} ref={input => { this.input = input }} />
         <span className={styles.bar} />
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
