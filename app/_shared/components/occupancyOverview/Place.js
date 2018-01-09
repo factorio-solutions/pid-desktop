@@ -75,7 +75,7 @@ class Place extends Component {
         className={classes.filter(o => o).join(' ')}
         style={{
           left:  left + 'px',
-          width: width <= 0 ? 1 : width + 'px' // -4 due to borders of width 1
+          width: width <= 0 ? 1 : width + 'px'
         }}
       >
         {details && `${reservation.car ? reservation.car.licence_plate + ' - ' + reservation.user.full_name : reservation.user.full_name}`}

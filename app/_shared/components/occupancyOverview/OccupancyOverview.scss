@@ -26,8 +26,6 @@
     table-layout: fixed;
 
     >tr:hover {
-      border-top:       1px solid $blue;
-      border-bottom:    1px solid $blue;
       background-color: lighten($blue, 50%);
     }
   }
@@ -45,6 +43,7 @@
 
         &:first-child {
           width:       60px;
+          padding:     2px 1px;
           font-weight: bold;
         }
       }
@@ -84,11 +83,11 @@
 }
 
 .reservation {
-  position: absolute;
-  top:      2px;
-  height:   calc(100% - 4px);
+  position:     absolute;
+  top:          2px;
+  height:       calc(100% - 4px);
+  padding-left: 1px;
 
-  outline:   1px solid $black;
   color:     $white;
   font-size: 14px;
 
