@@ -1,108 +1,127 @@
 @import '../../styles/app.components';
 
-.tableDiv{
+.tableDiv {
   max-height: 760px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-.center{
+.center {
   text-align: center;
 }
 
-.bold{
+.bold {
   font-weight: bold;
 }
 
-.table{
-  width: 100%;
+.table {
+  width:           100%;
   border-collapse: collapse;
 
-  &.fixedHeader{
+  &.fixedHeader {
     width: calc(100% - 16px);
   }
 
-  >tbody{
+  >tbody {
     table-layout: fixed;
 
-    >tr:hover{
-      border-top: 1px solid $blue;
-      border-bottom: 1px solid $blue;
+    >tr:hover {
+      border-top:       1px solid $blue;
+      border-bottom:    1px solid $blue;
       background-color: lighten($blue, 50%);
     }
   }
 
-  >tbody, thead {
+  > tbody, thead {
     display: block;
+
     >tr {
-      display: table;
-      width: 100%;
+      display:      table;
+      width:        100%;
       table-layout: fixed;
 
       > td {
         position: relative;
 
-        &:first-child{
-          width: 60px;
+        &:first-child {
+          width:       60px;
           font-weight: bold;
         }
       }
     }
 
     >tr, td {
-      &.weekend{
-        background: $lightGray;
+      &.weekend {
+        background: $lightLightGray;
       }
 
-      &.rightBorderDotted{
+      &.rightBorderDotted {
         border-right: 1px dotted $black;
       }
 
-      &.boldBorder{
+      &.boldBorder {
         border-right: 2px solid $black;
       }
 
-      &.rightBorder{
+      &.rightBorder {
         border-right: 1px solid $black;
       }
 
-      &.bottomBorder{
+      &.bottomBorder {
         border-bottom: 1px solid $black;
       }
     }
   }
 }
 
-.now{
-  position: absolute;
-  height: 100%;
+.now {
+  position:   absolute;
+  top:        0;
+  width:      2px;
+  height:     100%;
   background: $red;
-  top: 0;
-  width: 2px;
-  z-index: 9;
+  z-index:    9;
 }
 
-.reservation{
+.reservation {
   position: absolute;
-  height: calc(100% - 4px);
-  top: 2px;
-  z-index: 9;
-  overflow: hidden;
+  top:      2px;
+  height:   calc(100% - 4px);
 
-  color: $white;
-  vertical-align: middle;
+  outline:   1px solid $black;
+  color:     $white;
   font-size: 14px;
-  outline: 1px solid $black;
 
-  &.future{
-    background: $blue;
+  overflow:       hidden;
+  vertical-align: middle;
+  z-index:        9;
+
+  &.forCurrentUser {
+    &.future {
+      background: $darkBlue;
+    }
+    &.ongoing {
+      background: $lightBlue;
+    }
+    &.fulfilled {
+      background: $grayBlue;
+    }
   }
 
-  &.ongoing{
-    background: $black;
+  &.forFellowUser {
+    &.future {
+      background: $blueGreen;
+    }
+    &.ongoing {
+      background: $darkGreen;
+    }
+    &.fulfilled {
+      background: $grayGreen;
+    }
   }
 
-  &.fulfilled{
-    background: $gray;
+  &.noDetails {
+    background: $littleLighterGray;
   }
+
 }

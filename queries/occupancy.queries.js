@@ -25,6 +25,11 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $t
   occupancy_garages {
     id
     name
+    user_garage{
+      admin
+      receptionist
+      security
+    }
     floors {
       id
       label
@@ -39,18 +44,20 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $t
           client {
             name
             id
+            client_user{
+              admin
+              secretary
+              internal
+              host
+            }
           }
           car {
             licence_plate
           }
           begins_at
           ends_at
-          creator {
-            full_name
-            email
-            phone
-          }
           user {
+            id
             full_name
             email
             phone
