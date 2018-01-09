@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20161121a",
+	"PID-RELEASE": "r20180109a",
 	"addresses": {
 		"name": "Jméno *",
 		"line1": "Řádek 1 *",
@@ -223,7 +223,8 @@
 		"hostsEmail": "Hostův email",
 		"selectedUser": "Uživatel",
 		"flexiblePlaceSelected": "flexibilní",
-		"noFreePlace": "Žádná volná místa"
+		"noFreePlace": "Žádná volná místa",
+		"note": "Poznámka"
 	},
 	"clients": {
 		"name": "jméno",
@@ -624,16 +625,14 @@
 		"gate_opened_by_receptionist": "Bránu otevírá recepční",
 		"historical_center": "Historické centrum",
 		"city_center": "Centrum města",
-		"five_minutes_from_center": "Pět minut od centra",
-		"ten_minutes_from_center": "Deset minut od centra",
 		"fifteen_minutes_from_center": "Patnáct minut od centra",
 		"cameras": "Kamerový systém",
 		"camera_at_gate": "Kamera na bráně",
 		"tram_nearby": "Tramvaj v okolí",
-		"subway_nearby": "V blízkosti metra",
 		"wc": "WC",
-		"five_minutes_from_subway": "Pět minut od metra",
-		"number_plate_recognition": "Rozpoznání SPZ otevírá bránu",
+		"guarded_parking": "Hídané parkoviště",
+		"car_wash": "Mička",
+		"airport_nearby": "Blízko letiště",
 		"charging_station": "Nabíjecí stanice pro elektrická auta",
 		"garage": "Garáž",
 		"place": "Místo",
@@ -1050,7 +1049,8 @@
 		"menu": {
 			"newNotifications": "Nová upozornění",
 			"access": "Přístup",
-			"myReservations": "Moje rezervace"
+			"myReservations": "Moje rezervace",
+			"guestReservations": "Host"
 		},
 		"access": {
 			"swipeToOpen": "Swipnutím otevřete bránu",
@@ -1091,7 +1091,19 @@
 			"redirecting": "Přesměrovávám ...",
 			"paymentUnsucessfull": "Platba byla neúspěšná.",
 			"processingPayment": "Zpracovávám platbu ...",
-			"flexiplace": "FLEXI"
+			"flexiplace": "FLEXI",
+			"guest": "Host"
+		},
+		"guest": {
+			"newGuest": "NOVÝ",
+			"pickGuest": "ZVOLIT",
+			"name": "Hostovo jméno",
+			"email": "Hostův email",
+			"phone": "Hostův telefon",
+			"invalidName": "Špatné jméno",
+			"invalidEmail": "Špatný email",
+			"invalidPhone": "Špatný telefon",
+			"noGuestResrevations": "Žádné hostovské rezervace"
 		}
 	},
 	"auth0Emails": {
