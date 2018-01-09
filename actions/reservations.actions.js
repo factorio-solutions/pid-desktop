@@ -44,38 +44,43 @@ export function initOngoingReservations(callback) { // callback used by mobile a
   }
 }
 
-export function initReservations() { // callback used by mobile access page
+export function initReservations() { // will download first 5 reservations
+  window.dispatchEvent(new Event('paginatedTableUpdate'))
   return (dispatch, getState) => {
-    const state = getState().reservations
-    const onSuccess = respoonse => {
-      dispatch(setReservations(respoonse.data.reservations))
+    if (mobile) {
+      const state = getState().reservations
+      const onSuccess = respoonse => {
+        dispatch(setReservations(respoonse.data.reservations))
+      }
+      request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
+        past:      state.past,
+        user_id:   getState().mobileHeader.current_user.id,
+        count:     RESERVATIONS_PER_PAGE,
+        page:      1,
+        order_by:  'begins_at',
+        garage_id: getState().mobileHeader.garage_id
+      })
     }
-    request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
-      past:      state.past,
-      user_id:   getState().mobileHeader.current_user.id,
-      count:     RESERVATIONS_PER_PAGE,
-      page:      1,
-      order_by:  'begins_at',
-      garage_id: getState().mobileHeader.garage_id
-    })
   }
 }
 
-export function loadReservations() { // callback used by mobile access page
+export function loadReservations() { // will load 5 more reservations
   window.dispatchEvent(new Event('paginatedTableUpdate'))
   return (dispatch, getState) => {
-    const state = getState().reservations
-    const onSuccess = respoonse => {
-      dispatch(addReservations(respoonse.data.reservations))
+    if (mobile) {
+      const state = getState().reservations
+      const onSuccess = respoonse => {
+        dispatch(addReservations(respoonse.data.reservations))
+      }
+      request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
+        past:      state.past,
+        user_id:   getState().mobileHeader.current_user.id,
+        count:     RESERVATIONS_PER_PAGE,
+        page:      state.page + 1,
+        order_by:  'begins_at',
+        garage_id: getState().mobileHeader.garage_id
+      })
     }
-    request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
-      past:      state.past,
-      user_id:   getState().mobileHeader.current_user.id,
-      count:     RESERVATIONS_PER_PAGE,
-      page:      state.page + 1,
-      order_by:  'begins_at',
-      garage_id: getState().mobileHeader.garage_id
-    })
   }
 }
 
