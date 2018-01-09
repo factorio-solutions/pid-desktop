@@ -7,7 +7,7 @@ import PageBase            from '../_shared/containers/pageBase/PageBase'
 import TabMenu             from '../_shared/components/tabMenu/TabMenu'
 import TabButton           from '../_shared/components/buttons/TabButton'
 import PopupDatetimepicker from '../_shared/components/datetimepicker/PopupDatetimepicker'
-import GarageLayout        from '../_shared/components/garageLayout/GarageLayout2'
+import GarageLayout        from '../_shared/components/garageLayout/GarageLayout'
 
 import * as nav           from '../_shared/helpers/navigation'
 import { t }              from '../_shared/modules/localization/localization'

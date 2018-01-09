@@ -3,7 +3,7 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
-import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout2'
+import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
 import Form               from '../../_shared/components/form/Form'
 import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import PatternInput       from '../../_shared/components/input/PatternInput'

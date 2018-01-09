@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { Chart } from 'react-google-charts'
 
 import PageBase     from '../_shared/containers/pageBase/PageBase'
-import GarageLayout from '../_shared/components/garageLayout/GarageLayout2'
+import GarageLayout from '../_shared/components/garageLayout/GarageLayout'
 
 import { t, getLanguage }    from '../_shared/modules/localization/localization'
 
@@ -83,13 +83,13 @@ class DashboardPage extends Component {
           <iframe scrolling="auto" className={styles.iframe} src={`https://gama.park-it-direct.com/${getLanguage()}/pid-dashboard`} /> :
           <div className={styles.container}>
             <div>
-              <h2>{t([ 'dashboard', 'garage' ])}</h2>
+              <h2 className={styles.h2}>{t([ 'dashboard', 'garage' ])}</h2>
               <GarageLayout floors={state.garage ? state.garage.floors : []} showEmptyFloors unfold />
             </div>
 
             <div>
               <div>
-                <h2>{t([ 'dashboard', 'statistics' ])}</h2>
+                <h2 className={styles.h2}>{t([ 'dashboard', 'statistics' ])}</h2>
 
                 <div className={styles.section}>
                   <Chart
@@ -137,7 +137,7 @@ class DashboardPage extends Component {
               </div>
 
               {state.news.length > 0 && <div>
-                <h2>{t([ 'dashboard', 'news' ])}</h2>
+                <h2 className={styles.h2}>{t([ 'dashboard', 'news' ])}</h2>
                 <div className={styles.section}>
                   {state.news.map(prepareNews)}
                 </div>

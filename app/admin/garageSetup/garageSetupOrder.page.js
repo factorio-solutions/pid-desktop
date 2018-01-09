@@ -7,7 +7,7 @@ import Form               from '../../_shared/components/form/Form'
 // import Input              from '../../_shared/components/input/Input'
 // import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
-import GarageLayout2      from '../../_shared/components/garageLayout/GarageLayout2'
+import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -89,7 +89,7 @@ class GarageSetupOrderPage extends Component {
               </p>
             </div>
             <div className={styles.garageLayout}>
-              <GarageLayout2
+              <GarageLayout
                 floors={allFloors}
                 onPlaceClick = {addPlaceToOrder}
                 showEmptyFloors = {true}

@@ -7,7 +7,7 @@ import Form               from '../../_shared/components/form/Form'
 import Input              from '../../_shared/components/input/Input'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
-import GarageLayout2      from '../../_shared/components/garageLayout/GarageLayout2'
+import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -126,7 +126,7 @@ class GarageSetupFloorsPage extends Component {
               </div>
             </div>
             <div className={styles.garageLayout}>
-              <GarageLayout2
+              <GarageLayout
                 floors={allFloors}
                 onPlaceClick = {(place)=>{console.log('place clicked', place);}}
                 showEmptyFloors = {true}

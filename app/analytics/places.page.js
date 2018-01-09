@@ -7,7 +7,7 @@ import PageBase     from '../_shared/containers/pageBase/PageBase'
 import TabMenu      from '../_shared/components/tabMenu/TabMenu'
 import TabButton    from '../_shared/components/buttons/TabButton'
 import Table        from '../_shared/components/table/Table'
-import GarageLayout from '../_shared/components/garageLayout/GarageLayout2'
+import GarageLayout from '../_shared/components/garageLayout/GarageLayout'
 import Loading      from '../_shared/components/loading/Loading'
 import DateInput    from '../_shared/components/input/DateInput'
 
