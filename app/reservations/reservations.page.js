@@ -213,13 +213,13 @@ class ReservationsPage extends Component {
                 type="action"
               />
               }
-              {moment(reservation.begins_at).isAfter(moment()) &&
+              {moment(reservation.ends_at).isAfter(moment()) &&
               <LabeledRoundButton
-                label={t([ 'reservations', 'destroyRservation' ])}
+                label={t([ 'reservations', moment(reservation.begins_at).isAfter(moment()) ? 'destroyReservation' : 'teminateEarly' ])}
                 content={<span className="fa fa-times" aria-hidden="true" />}
-                onClick={() => { destroyClick(reservation) }}
+                onClick={() => { moment(reservation.begins_at).isAfter(moment()) ? destroyClick(reservation) : interuptionActions.immediateReservationTermination(reservation) }}
                 type="remove"
-                question={t([ 'reservations', 'removeReservationQuestion' ])}
+                question={t([ 'reservations', moment(reservation.begins_at).isAfter(moment()) ? 'removeReservationQuestion' : 'terminateEarlyQuestion' ])}
               />
               }
             </span>

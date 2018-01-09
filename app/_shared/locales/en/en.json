@@ -277,6 +277,7 @@
 		"createdAt": "created at:",
 		"updatedAt": "updated at:",
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
+		"terminateEarlyQuestion": "Are you sure you want to terminate reservation right now?",
 		"reservationApproved": "This reservation has not been approved yet.",
 		"reservationNotPayed": "This reservation has not been paid.",
 		"pay": "Pay",
@@ -286,7 +287,8 @@
 		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
-		"destroyRservation": "Cancel reservation",
+		"destroyReservation": "Cancel reservation",
+		"teminateEarly": "Terminate early",
 		"destroyAllReservation": {
 			"one": "Archive only selected reservation.",
 			"few": "Archive all %(count)s reservations in set repeat.",
