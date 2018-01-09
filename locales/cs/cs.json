@@ -286,7 +286,7 @@
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
-		"destroyRservation": "Zrušit rezervaci",
+		"destroyReservation": "Zrušit rezervaci",
 		"destroyAllReservation": {
 			"one": "Zrušit pouze vybranou rezervaci.",
 			"few": "Zrušit %(count)s rezervace v nastaveném opakování.",

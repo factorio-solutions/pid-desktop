@@ -286,7 +286,7 @@
 		"interuptReservation": "DE: reservations.interuptReservation",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
-		"destroyRservation": "Reservierung stornieren",
+		"destroyReservation": "Reservierung stornieren",
 		"destroyAllReservation": {
 			"one": "DE: reservations.destroyAllReservation.one",
 			"few": "DE: reservations.destroyAllReservation.few",
