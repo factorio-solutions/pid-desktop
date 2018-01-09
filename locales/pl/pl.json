@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20161121a",
+	"PID-RELEASE": "r20180109a",
 	"addresses": {
 		"name": "Imię i nazwisko *",
 		"line1": "Adres *",
@@ -223,7 +223,8 @@
 		"hostsEmail": "PL: newReservation.hostsEmail",
 		"selectedUser": "PL: newReservation.selectedUser",
 		"flexiblePlaceSelected": "PL: newReservation.flexiblePlaceSelected",
-		"noFreePlace": "PL: newReservation.noFreePlace"
+		"noFreePlace": "PL: newReservation.noFreePlace",
+		"note": "PL: newReservation.note"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -256,6 +257,7 @@
 		"presetAs": "Ustaw jako",
 		"removeClientUser": "Czy na pewno chcesz usunąć użytkownika?",
 		"pendingUsers": "Zaproszenia czekające na odpowiedź",
+		"confirmedUsers": "PL: clientUsers.confirmedUsers",
 		"removeUser": "Usuń użytkownika",
 		"resendInvitation": "Wyślij ponownie",
 		"resendSuccessfull": "E-mail został wysłany.",
@@ -623,16 +625,14 @@
 		"gate_opened_by_receptionist": "Bramę otwiera recepcjonist(k)a",
 		"historical_center": "Historyczne centrum",
 		"city_center": "Centrum miasta",
-		"five_minutes_from_center": "Pięć minut do centrum",
-		"ten_minutes_from_center": "Dziesięć minut do centrum",
 		"fifteen_minutes_from_center": "Piętnaście minut do centrum",
 		"cameras": "Monitoring",
 		"camera_at_gate": "Kamera przy bramie",
 		"tram_nearby": "Blisko przystanku tramwajowego",
-		"subway_nearby": "Blisko stacji metra",
 		"wc": "WC",
-		"five_minutes_from_subway": "Pięć minut do metra",
-		"number_plate_recognition": "Brama otwiera się na podstawie rozpoznania numeru rejestracyjnego",
+		"guarded_parking": "PL: newMarketing.guarded_parking",
+		"car_wash": "PL: newMarketing.car_wash",
+		"airport_nearby": "PL: newMarketing.airport_nearby",
 		"charging_station": "Stacja ładowania samochodów elektrycznych",
 		"garage": "Garaż",
 		"place": "Miejsce",
@@ -1049,7 +1049,8 @@
 		"menu": {
 			"newNotifications": "Nowe powiadomienia",
 			"access": "Dostęp",
-			"myReservations": "Moje rezerwacje"
+			"myReservations": "Moje rezerwacje",
+			"guestReservations": "Gast"
 		},
 		"access": {
 			"swipeToOpen": "Przesuń, żeby otworzyć bramkę",
@@ -1083,13 +1084,26 @@
 			"hourShortcut": "h",
 			"me": "Ja",
 			"creatingReservation": "Utworzyć rezerwację",
+			"updatingReservation": "PL: mobileApp.newReservation.updatingReservation",
 			"creatingPayment": "Wytwarzanie płatności...",
 			"tokenNoLongerValid": "Identyfikator płatności nie jest już ważny. Rezerwacja zostanie usunięta.",
 			"checkingToken": "Sprawdzam ważność identyfikatora.",
 			"redirecting": "Przekierowuję...",
 			"paymentUnsucessfull": "Płatność nie powiodła się.",
 			"processingPayment": "Przetwarzam płatność...",
-			"flexiplace": "PL: mobileApp.newReservation.flexiplace"
+			"flexiplace": "FLEXI",
+			"guest": "Gość"
+		},
+		"guest": {
+			"newGuest": "Nowy",
+			"pickGuest": "WYBIERZ",
+			"name": "Nazwa gościa",
+			"email": "E-mail gościa",
+			"phone": "Telefon gościa",
+			"invalidName": "Zła nazwa",
+			"invalidEmail": "Zły e-mail",
+			"invalidPhone": "Zły telefon",
+			"noGuestResrevations": "Bez rezerwacji gości"
 		}
 	},
 	"auth0Emails": {
@@ -1109,7 +1123,7 @@
 		"website": "Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
 		"passwordResetSubmited": "Poprosiłeś/-aś o zmianę hasła!",
 		"pwdResetDescr": "Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
-		"confirmPwdReset": "dokończ zmianę hasła",
+		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
 		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
 	},
