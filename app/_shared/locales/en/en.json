@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20161121a",
+	"PID-RELEASE": "r20180109a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -1094,7 +1094,7 @@
 			"paymentUnsucessfull": "Payment was unsuccessful.",
 			"processingPayment": "Processing payment ...",
 			"flexiplace": "FLEXI",
-			"guest":"Guest"
+			"guest": "Guest"
 		},
 		"guest": {
 			"newGuest": "NEW",

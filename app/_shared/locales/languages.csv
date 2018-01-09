@@ -1,5 +1,5 @@
 ,en,cs,pl,de
-PID-RELEASE,r20161121a,r20161121a,r20161121a,r20161121a
+PID-RELEASE,r20180109a,r20180109a,r20180109a,r20180109a
 addresses.name,Name *,Jméno *,Imię i nazwisko *,Name *
 addresses.line1,Line 1 *,Řádek 1 *,Adres *,Adresszeile 1 *
 addresses.line2,Line 2,Řádek 2,Adres - cd.,Adresszeile 2
@@ -299,7 +299,7 @@ Rezervace: jednotlivé rezervace jsou odlišeny barvou
 Ceny: jednotlivá nastavení ceny jsou odlišena barvou
 Auta: jednotlivá auta jsou odlišena barvou
 
-V pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",PL: pageBase.EditGarageHint,"Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
+V pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",,"Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
 
 Kunden: Die einzelnen Kunden werden in verschiedenen Farben dargestellt.
 Vereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.
@@ -428,6 +428,7 @@ newReservation.hostsEmail,Guest email,Hostův email,,
 newReservation.selectedUser,User,Uživatel,,
 newReservation.flexiblePlaceSelected,flexible,flexibilní,,
 newReservation.noFreePlace,No free place,Žádná volná místa,,
+newReservation.note,Note,Poznámka,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -456,6 +457,7 @@ clientUsers.host,is a guest,je host,jest gościem,ist Gast
 clientUsers.presetAs,Preset as,Nastavit jako,Ustaw jako,Einstellen als
 clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć użytkownika?,Möchten Sie diesen Benutzer wirklich entfernen?
 clientUsers.pendingUsers,Pending invitations,Nevyřízené pozvánky,Zaproszenia czekające na odpowiedź,Offene Einladungen
+clientUsers.confirmedUsers,Users of %(name)s,Uživatelé %(name)s,,
 clientUsers.removeUser,Remove user,Odstranit uživatele,Usuń użytkownika,Benutzer entfernen
 clientUsers.resendInvitation,Resend email,Znovu odeslat,Wyślij ponownie,
 clientUsers.resendSuccessfull,Email was sucessfully send.,Email úspěšně odeslán.,E-mail został wysłany.,
@@ -790,16 +792,14 @@ newMarketing.gate_opened_by_phone,Gate can be opened by phone,Brána může být
 newMarketing.gate_opened_by_receptionist,Gate opened by receptionist,Bránu otevírá recepční,Bramę otwiera recepcjonist(k)a,Tor wird von der Rezeption geöffnet
 newMarketing.historical_center,Historical center,Historické centrum,Historyczne centrum,Historisches Stadtzentrum
 newMarketing.city_center,City center,Centrum města,Centrum miasta,Stadtzentrum
-newMarketing.five_minutes_from_center,Five minutes from center,Pět minut od centra,Pięć minut do centrum,Fünf Minuten vom Stadtzentrum entfernt
-newMarketing.ten_minutes_from_center,Ten minutes from center,Deset minut od centra,Dziesięć minut do centrum,Zehn Minuten vom Stadtzentrum entfernt
 newMarketing.fifteen_minutes_from_center,Fifteen minutes from center,Patnáct minut od centra,Piętnaście minut do centrum,Fünfzehn Minuten vom Stadtzentrum entfernt
 newMarketing.cameras,CCTV,Kamerový systém,Monitoring,Kamerasystem
 newMarketing.camera_at_gate,Camera at gate,Kamera na bráně,Kamera przy bramie,Kamera am Tor
 newMarketing.tram_nearby,Tram nearby,Tramvaj v okolí,Blisko przystanku tramwajowego,Straßenbahn in der Nähe
-newMarketing.subway_nearby,Subway nearby,V blízkosti metra,Blisko stacji metra,U-Bahn in der Nähe
 newMarketing.wc,WC,WC,WC,WC
-newMarketing.five_minutes_from_subway,Five minutes from subway,Pět minut od metra,Pięć minut do metra,Fünf Minuten von U-Bahn-Station entfernt
-newMarketing.number_plate_recognition,License plate recognition opens gate,Rozpoznání SPZ otevírá bránu,Brama otwiera się na podstawie rozpoznania numeru rejestracyjnego,Kennzeichenerkennung öffnet Tor
+newMarketing.guarded_parking,Guarded parking,Hídané parkoviště,,
+newMarketing.car_wash,Car wash,Mička,,
+newMarketing.airport_nearby,Airport nearby,Blízko letiště,,
 newMarketing.charging_station,Electric car charging stations,Nabíjecí stanice pro elektrická auta,Stacja ładowania samochodów elektrycznych,Ladestation für Elektroautos
 newMarketing.garage,Garage,Garáž,Garaż,Parkhaus
 newMarketing.place,Spot,Místo,Miejsce,Stellplatz
@@ -1150,6 +1150,7 @@ mobileApp.terms.content,You can find our Terms of Service on our website.,Podmí
 mobileApp.menu.newNotifications,New notifications,Nová upozornění,Nowe powiadomienia,Neue Benachrichtigungen
 mobileApp.menu.access,Access,Přístup,Dostęp,Zugang
 mobileApp.menu.myReservations,My reservations,Moje rezervace,Moje rezerwacje,Meine Reservierungen
+mobileApp.menu.guestReservations,Guest,Host,Gast,
 mobileApp.access.swipeToOpen,Swipe to open the gate,Swipnutím otevřete bránu,"Przesuń, żeby otworzyć bramkę",Öffnen Sie das Tor mit einem Swipe
 mobileApp.access.noOngoingReservations,No ongoing reservations,Žádné probíhající rezervace,Nie masz żadnych trwających rezerwacji,Keine gültige Reservierung
 mobileApp.access.inSelectedGarage,in selected garage,ve zvolené garáži,w wybranym garażu,in gewählten Garage
@@ -1177,13 +1178,24 @@ mobileApp.newReservation.later,LATER,POZDĚJI,PÓŹNIEJ,SPÄTER
 mobileApp.newReservation.hourShortcut,h,h,h,Std
 mobileApp.newReservation.me,Me,Já,Ja,Ich
 mobileApp.newReservation.creatingReservation,Creating reservation,Vytvářím rezervaci,Utworzyć rezerwację,Reservierung erstellen
+mobileApp.newReservation.updatingReservation,Updating reservation,Upravuji rezervaci,,
 mobileApp.newReservation.creatingPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzanie płatności...,Zahlung erstellen
 mobileApp.newReservation.tokenNoLongerValid,"Token of payment is no longer valid, reservation will be deleted.","Identifikátor platby už není platný, rezervace bude odstraněna.",Identyfikator płatności nie jest już ważny. Rezerwacja zostanie usunięta.,Zahlungstoken ist weiter ungültig. Reservierung wird gelöscht.
 mobileApp.newReservation.checkingToken,Checking token validity.,Kontroluji identifikátor platby.,Sprawdzam ważność identyfikatora.,Prüfen der gültigkeit des Zahlungtokens.
 mobileApp.newReservation.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,Weiterleiten ...
 mobileApp.newReservation.paymentUnsucessfull,Payment was unsuccessful.,Platba byla neúspěšná.,Płatność nie powiodła się.,Zahlung ist fehlgeschlagen.
 mobileApp.newReservation.processingPayment,Processing payment ...,Zpracovávám platbu ...,Przetwarzam płatność...,Zahlungsverarbeitung ...
-mobileApp.newReservation.flexiplace,FLEXI,FLEXI,,
+mobileApp.newReservation.flexiplace,FLEXI,FLEXI,FLEXI,FLEXI
+mobileApp.newReservation.guest,Guest,Host,Gość,Gast
+mobileApp.guest.newGuest,NEW,NOVÝ,Nowy,NEU
+mobileApp.guest.pickGuest,PICK,ZVOLIT,WYBIERZ,WÄHLEN
+mobileApp.guest.name,Guests name,Hostovo jméno,Nazwa gościa,Gast - Name
+mobileApp.guest.email,Guests email,Hostův email,E-mail gościa,Gast E-Mail
+mobileApp.guest.phone,Guests phone,Hostův telefon,Telefon gościa,Gast Telefonnummer
+mobileApp.guest.invalidName,Invalid name,Špatné jméno,Zła nazwa,Name falsch
+mobileApp.guest.invalidEmail,Invalid email,Špatný email,Zły e-mail,E-Mail falsch
+mobileApp.guest.invalidPhone,Invalid phone,Špatný telefon,Zły telefon,Telefonnummer falsch
+mobileApp.guest.noGuestResrevations,No guest reservations,Žádné hostovské rezervace,Bez rezerwacji gości,Keine Gastreservierungen
 auth0Emails.securityReasons,For security reasons we need you to verify your email,Z bezpečnostních důvodů potřebujeme ověřit váš email,Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.,Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse
 auth0Emails.easyAsClickingButton,It's as easy as clicking the link below:,Jednoduše klikněte na toto tlačítko:,Wystarczy kliknąć na poniższy przycisk:,Einfach diese Taste drücken:
 auth0Emails.confirmAccount,Confirm my account!,Ověřit účet!,Potwierdzić konto!,Kontro prüfen!
@@ -1200,7 +1212,7 @@ auth0Emails.getInTouch, Need to get in touch with us?,Chcete nás kontaktovat?,C
 auth0Emails.website,"We are always here for you. You can find contact details on our <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">website</a> or you can use the chat button on our website and in the app.","Jsme tu pro vás pořád. Kontakt najdete na <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.","Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
 auth0Emails.passwordResetSubmited,You have submitted a password change request!,Požádali jste o změnu hesla!,Poprosiłeś/-aś o zmianę hasła!,
 auth0Emails.pwdResetDescr,"If it wasn't you, please disregard this email and make sure you can still log in to your account. If it was you, then ","Pokud jste o změnu hesla nepožádali, můžete tuto zprávu ignorovat. Pokud jste to byli vy, pak ","Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
-auth0Emails.confirmPwdReset,Confirm the password change,Dokončit změnu hesla,dokończ zmianę hasła,
+auth0Emails.confirmPwdReset,Confirm the password change,Dokončit změnu hesla,Dokończ zmianę hasła,
 auth0Emails.troubleWithAccount,"If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.","Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.","W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
 auth0Emails.verificationCode,Below you can find your verification code for Park-it-direct!,Níže najdete Váš ověřovací kód pro Park-it-direct!,Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!,
 railsEmails.footer.enjoy,Enjoy your Park-it-direct experience!,Užijte si Park-it-direct!,Dziękujemy za korzystanie z Park-it-direct!,
