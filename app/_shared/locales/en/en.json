@@ -350,7 +350,8 @@
 		"period": "Period:",
 		"licencePlate": "License plate:",
 		"noClientPlaces": "The selected client does not have any rented places in this time frame.",
-		"resetFilter": "Reset filter"
+		"resetFilter": "Reset filter",
+		"detailsInaccessible": "Details inaccessible"
 	},
 	"garageUsers": {
 		"noRights": "You do not have the right to do that.",

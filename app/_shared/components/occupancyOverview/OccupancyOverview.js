@@ -1,5 +1,6 @@
-import React, { Component, PropTypes }  from 'react'
-import moment                           from 'moment'
+import React, { Component, PropTypes } from 'react'
+import { connect }                     from 'react-redux'
+import moment                          from 'moment'
 
 import CallToActionButton from '../buttons/CallToActionButton'
 import Tooltip            from '../tooltip/Tooltip'
@@ -21,13 +22,15 @@ const INIT_STATE = { content: '',
 const WIDTH_OF_PLACE_CELL = 63 // px
 
 
-export default class OccupancyOverview extends Component {
+class OccupancyOverview extends Component {
   static propTypes = {
+    pageBase:         PropTypes.object,
     places:           PropTypes.array.isRequired,
     from:             PropTypes.object,
     duration:         PropTypes.string,
     resetClientClick: PropTypes.func,
-    loading:          PropTypes.bool
+    loading:          PropTypes.bool,
+    showDetails:      PropTypes.bool
   }
 
   constructor(props) {
@@ -54,15 +57,19 @@ export default class OccupancyOverview extends Component {
   }
 
   reservationOnMouseEnter(e, reservation) {
+    const { showDetails, pageBase } = this.props
+    const clientUser = reservation.client ? reservation.client.client_user : {}
+
     this.setState({
-      content: <table className={styles.tooltipTable}><tbody>
+      content: (showDetails || clientUser.admin || clientUser.secretary ||
+      (pageBase.current_user && pageBase.current_user.id === reservation.user.id)) ? <table className={styles.tooltipTable}><tbody>
         <tr><td>{t([ 'occupancy', 'reservationsId' ])}</td><td>{reservation.id}</td></tr>
         <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user.full_name}</td></tr>
         {reservation.client && <tr><td>{t([ 'occupancy', 'client' ])}</td><td>{reservation.client.name}</td></tr>}
         <tr><td>{t([ 'occupancy', 'type' ])}</td><td>{reservation.client ? t([ 'reservations', 'host' ]) : t([ 'reservations', 'visitor' ])}</td></tr>
         <tr><td>{t([ 'occupancy', 'period' ])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
         <tr><td>{t([ 'occupancy', 'licencePlate' ])}</td><td>{reservation.car.licence_plate}</td></tr>
-      </tbody></table>,
+      </tbody></table> : <div>{t([ 'occupancy', 'detailsInaccessible' ])}</div>,
       mouseX:  e.target.getBoundingClientRect().right - 160,
       mouseY:  e.target.getBoundingClientRect().bottom - 60,
       visible: true,
@@ -75,7 +82,7 @@ export default class OccupancyOverview extends Component {
   }
 
   render() {
-    const { places, duration, from, resetClientClick, loading } = this.props
+    const { places, duration, from, resetClientClick, loading, showDetails } = this.props
 
     const prepareDates = () => (<tr className={duration !== 'day' && styles.bottomBorder}>
       <td className={styles.placePadding}>{t([ 'occupancy', 'places' ])}</td>
@@ -120,6 +127,7 @@ export default class OccupancyOverview extends Component {
       const nowLinePosition = moment().diff(from, duration, true) * rowWidth
 
       return places.sort(sorter).map(place => (<Place
+        showDetails={showDetails}
         place={place}
         duration={duration}
         from={from}
@@ -166,3 +174,8 @@ export default class OccupancyOverview extends Component {
     )
   }
 }
+
+export default connect(
+  state => ({ pageBase: state.pageBase }),
+  () => ({})
+)(OccupancyOverview)

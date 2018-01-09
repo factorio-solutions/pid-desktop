@@ -72,6 +72,7 @@ class OccupancyPage extends Component {
       <OccupancyOverview
         places={garage ? garage.floors.reduce(preparePlaces, []) : []}
         from={state.from}
+        showDetails={garage.user_garage.admin || garage.user_garage.receptionist || garage.user_garage.security}
         duration={state.duration}
         resetClientClick={actions.resetClientClick}
         loading={!state.garages.length || state.loading}
