@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20161121a",
+	"PID-RELEASE": "r20180109a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Adresszeile 1 *",
@@ -223,7 +223,8 @@
 		"hostsEmail": "DE: newReservation.hostsEmail",
 		"selectedUser": "DE: newReservation.selectedUser",
 		"flexiblePlaceSelected": "DE: newReservation.flexiblePlaceSelected",
-		"noFreePlace": "DE: newReservation.noFreePlace"
+		"noFreePlace": "DE: newReservation.noFreePlace",
+		"note": "DE: newReservation.note"
 	},
 	"clients": {
 		"name": "Name",
@@ -256,6 +257,7 @@
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
 		"pendingUsers": "Offene Einladungen",
+		"confirmedUsers": "DE: clientUsers.confirmedUsers",
 		"removeUser": "Benutzer entfernen",
 		"resendInvitation": "DE: clientUsers.resendInvitation",
 		"resendSuccessfull": "DE: clientUsers.resendSuccessfull",
@@ -623,16 +625,14 @@
 		"gate_opened_by_receptionist": "Tor wird von der Rezeption geöffnet",
 		"historical_center": "Historisches Stadtzentrum",
 		"city_center": "Stadtzentrum",
-		"five_minutes_from_center": "Fünf Minuten vom Stadtzentrum entfernt",
-		"ten_minutes_from_center": "Zehn Minuten vom Stadtzentrum entfernt",
 		"fifteen_minutes_from_center": "Fünfzehn Minuten vom Stadtzentrum entfernt",
 		"cameras": "Kamerasystem",
 		"camera_at_gate": "Kamera am Tor",
 		"tram_nearby": "Straßenbahn in der Nähe",
-		"subway_nearby": "U-Bahn in der Nähe",
 		"wc": "WC",
-		"five_minutes_from_subway": "Fünf Minuten von U-Bahn-Station entfernt",
-		"number_plate_recognition": "Kennzeichenerkennung öffnet Tor",
+		"guarded_parking": "DE: newMarketing.guarded_parking",
+		"car_wash": "DE: newMarketing.car_wash",
+		"airport_nearby": "DE: newMarketing.airport_nearby",
 		"charging_station": "Ladestation für Elektroautos",
 		"garage": "Parkhaus",
 		"place": "Stellplatz",
@@ -1049,7 +1049,8 @@
 		"menu": {
 			"newNotifications": "Neue Benachrichtigungen",
 			"access": "Zugang",
-			"myReservations": "Meine Reservierungen"
+			"myReservations": "Meine Reservierungen",
+			"guestReservations": "DE: mobileApp.menu.guestReservations"
 		},
 		"access": {
 			"swipeToOpen": "Öffnen Sie das Tor mit einem Swipe",
@@ -1083,13 +1084,26 @@
 			"hourShortcut": "Std",
 			"me": "Ich",
 			"creatingReservation": "Reservierung erstellen",
+			"updatingReservation": "DE: mobileApp.newReservation.updatingReservation",
 			"creatingPayment": "Zahlung erstellen",
 			"tokenNoLongerValid": "Zahlungstoken ist weiter ungültig. Reservierung wird gelöscht.",
 			"checkingToken": "Prüfen der gültigkeit des Zahlungtokens.",
 			"redirecting": "Weiterleiten ...",
 			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
 			"processingPayment": "Zahlungsverarbeitung ...",
-			"flexiplace": "DE: mobileApp.newReservation.flexiplace"
+			"flexiplace": "FLEXI",
+			"guest": "Gast"
+		},
+		"guest": {
+			"newGuest": "NEU",
+			"pickGuest": "WÄHLEN",
+			"name": "Gast - Name",
+			"email": "Gast E-Mail",
+			"phone": "Gast Telefonnummer",
+			"invalidName": "Name falsch",
+			"invalidEmail": "E-Mail falsch",
+			"invalidPhone": "Telefonnummer falsch",
+			"noGuestResrevations": "Keine Gastreservierungen"
 		}
 	},
 	"auth0Emails": {
