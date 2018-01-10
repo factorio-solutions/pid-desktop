@@ -26,6 +26,7 @@
     table-layout: fixed;
 
     >tr:hover {
+      outline: 1px dotted $blue;
       background-color: lighten($blue, 50%);
     }
   }
