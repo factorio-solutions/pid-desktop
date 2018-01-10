@@ -234,7 +234,13 @@ class ReservationsPage extends Component {
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
           {/* <Table schema={schema} data={data} /> */}
-          <PaginatedTable query={GET_RESERVATIONS_PAGINATION_QUERY} transformData={transformData} schema={schema} variables={{ past: state.past }} />
+          <PaginatedTable
+            query={GET_RESERVATIONS_PAGINATION_QUERY}
+            parseMetadata={data => data.reservations_metadata}
+            transformData={transformData}
+            schema={schema}
+            variables={{ past: state.past }}
+          />
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={newReservation} type="action" size="big" />
