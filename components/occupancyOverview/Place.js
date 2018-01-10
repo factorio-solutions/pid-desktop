@@ -9,14 +9,15 @@ import styles from './OccupancyOverview.scss'
 
 class Place extends Component {
   static propTypes = {
-    pageBase:     PropTypes.object,
-    place:        PropTypes.object,
-    duration:     PropTypes.string,
-    from:         PropTypes.object,
-    now:          PropTypes.number,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    showDetails:  PropTypes.bool
+    pageBase:           PropTypes.object,
+    place:              PropTypes.object,
+    duration:           PropTypes.string,
+    from:               PropTypes.object,
+    now:                PropTypes.number,
+    onMouseEnter:       PropTypes.func,
+    onMouseLeave:       PropTypes.func,
+    showDetails:        PropTypes.bool,
+    onReservationClick: PropTypes.func
   }
 
   constructor(props) {
@@ -32,7 +33,7 @@ class Place extends Component {
   }
 
   render() {
-    const { place, duration, from, now, onMouseEnter, onMouseLeave, showDetails, pageBase } = this.props
+    const { place, duration, from, now, onMouseEnter, onMouseLeave, showDetails, pageBase, onReservationClick } = this.props
 
     const renderReservation = (reservation, firstCellIndex) => {
       const forCurrentUser = pageBase.current_user && pageBase.current_user.id === reservation.user.id
@@ -68,10 +69,12 @@ class Place extends Component {
       ) - left // due to first cell offset
 
       const mouseEnter = e => onMouseEnter(e, reservation)
+      const onClick = () => onReservationClick(reservation)
 
       return (<div
         onMouseEnter={mouseEnter}
         onMouseLeave={onMouseLeave}
+        onClick={onClick}
         className={classes.filter(o => o).join(' ')}
         style={{
           left:  left + 'px',
