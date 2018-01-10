@@ -76,6 +76,7 @@ class OccupancyPage extends Component {
         duration={state.duration}
         resetClientClick={actions.resetClientClick}
         loading={!state.garages.length || state.loading}
+        onReservationClick={r => console.log(r)}
       />
     ]
 
