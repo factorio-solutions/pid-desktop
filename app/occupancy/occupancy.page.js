@@ -3,19 +3,15 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import * as nav               from '../_shared/helpers/navigation'
-import * as OccupancyActions  from '../_shared/actions/occupancy.actions' // TODO:delete init Garage
-import { t }                  from '../_shared/modules/localization/localization'
+import PageBase          from '../_shared/containers/pageBase/PageBase'
+import Dropdown          from '../_shared/components/dropdown/Dropdown'
+import OccupancyOverview from '../_shared/components/occupancyOverview/OccupancyOverview'
+import TabMenu           from '../_shared/components/tabMenu/TabMenu'
+import TabButton         from '../_shared/components/buttons/TabButton'
+import RoundButton       from '../_shared/components/buttons/RoundButton'
 
-import PageBase               from '../_shared/containers/pageBase/PageBase'
-import RoundButton            from '../_shared/components/buttons/RoundButton'
-import Dropdown               from '../_shared/components/dropdown/Dropdown'
-// import OccupancyOverview      from '../_shared/components/occupancyOverview/OccupancyOverview'
-import OccupancyOverview3     from '../_shared/components/occupancyOverview/OccupancyOverview3'
-import TabMenu                from '../_shared/components/tabMenu/TabMenu'
-import TabButton              from '../_shared/components/buttons/TabButton'
-// import TextButton             from '../_shared/components/buttons/TextButton'
-import ButtonStack            from '../_shared/components/buttonStack/ButtonStack'
+import * as OccupancyActions from '../_shared/actions/occupancy.actions'
+import { t }                 from '../_shared/modules/localization/localization'
 
 import styles from './occupancy.page.scss'
 
@@ -31,30 +27,22 @@ class OccupancyPage extends Component {
     this.props.pageBase.garage && this.props.actions.initOccupancy()
   }
 
-  componentWillReceiveProps(nextProps) {
-    // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.loadGarage()
-  }
-
   render() {
-    const { state, actions } = this.props
-    const garage = state.garage
+    const { state, pageBase, actions } = this.props
 
-    const setNow = () => { actions.setFrom(moment().startOf('day')) }
+    const setNow = () => actions.setFrom(moment().startOf('day'))
 
     const clientDropdown = () => {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
 
       return state.clients.map((client, index) => ({
-        // label:   <span className ={styles.noEvent}>{client.id ? <input type="checkbox" checked={state.client_ids.includes(client.id)} /> : null}{client.name}</span>,
-        // label:   client.name,
         label:   <span>{client.id && state.client_ids.includes(client.id) && <i className="fa fa-check" aria-hidden="true" />}{client.name}</span>,
         onClick: () => clientSelected(index)
       }))
     }
 
     const preparePlaces = (places, floor) => {
-      return places.concat(floor.places
+      return places.concat(floor.occupancy_places
         .filter(place => !state.client_ids.length || place.contracts_in_interval.length)
         .map(place => {
           return { ...place,
@@ -72,23 +60,41 @@ class OccupancyPage extends Component {
       <TabButton label={t([ 'occupancy', 'month' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
     ]
 
-    const clientSelector = <Dropdown label={t([ 'occupancy', 'selectClientClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findIndex(client => { return client.id === state.client_ids[0] })} />
+    const clientSelector = (<Dropdown
+      label={t([ 'occupancy', 'selectClientClient' ])}
+      content={clientDropdown()}
+      style="tabDropdown"
+      selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
+    />)
+
+    const renderOccupancy = garage => [
+      <h2>{garage.name}</h2>,
+      <OccupancyOverview
+        places={garage ? garage.floors.reduce(preparePlaces, []) : []}
+        from={state.from}
+        showDetails={garage.user_garage.admin || garage.user_garage.receptionist || garage.user_garage.security}
+        duration={state.duration}
+        resetClientClick={actions.resetClientClick}
+        loading={!state.garages.length || state.loading}
+      />
+    ]
 
     return (
       <PageBase>
         <TabMenu right={filters} left={clientSelector} />
-        <OccupancyOverview3
-          places={garage ? garage.floors.reduce(preparePlaces, []) : []}
-          from={state.from}
-          duration={state.duration}
-          leftClick={actions.subtract}
-          rightClick={actions.add}
-          dayClick={actions.dayClick}
-          weekClick={actions.weekClick}
-          monthClick={actions.monthClick}
-          resetClientClick={actions.resetClientClick}
-          loading={!state.garage || state.loading}
-        />
+        <div className={styles.occupancies}>
+          {state.garages.map(renderOccupancy)}
+        </div>
+
+        <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
+          <div> <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.subtract} /> </div>
+          <div className={styles.flex}>
+            <RoundButton content={t([ 'occupancy', 'dayShortcut' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />
+            <RoundButton content={t([ 'occupancy', 'weekShortcut' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />
+            <RoundButton content={t([ 'occupancy', 'monthShortcut' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
+          </div>
+          <div> <RoundButton content={<span className="fa fa-chevron-right" aria-hidden="true" />} onClick={actions.add} /> </div>
+        </div>
       </PageBase>
     )
   }

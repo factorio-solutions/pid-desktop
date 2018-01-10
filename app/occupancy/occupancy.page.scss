@@ -1,16 +1,20 @@
-.dropdownContainer{
-  display: block;
+.controlls {
+  display:  flex;
+  position: fixed;
+  right:    200px;
+  bottom:   20px;
+  left:     10px;
 
-  >div{
-    display: inline-block;
-    width: 49%;
+  &.rightOffset {
+    right: 85px;
+  }
 
-    &:last-child{
-      float: right;
-    }
+  .flex {
+    flex-grow:  1;
+    text-align: center;
   }
 }
 
-.noEvent{
-  pointer-events: none;
+.occupancies {
+  margin-bottom: 100px;
 }
