@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180109a",
+	"PID-RELEASE": "r20180111a",
 	"addresses": {
 		"name": "Imię i nazwisko *",
 		"line1": "Adres *",
@@ -27,7 +27,7 @@
 		"please": "Zaloguj się lub",
 		"Sign-Up": "Załóż konto",
 		"email": "E-mail",
-		"invalid-email": "Niepoprawny adres e-mail",
+		"invalid-email": "Niepoprawny adres e-mail (john@gmail.com)",
 		"password": "Hasło",
 		"loginFailed": "Nie udało się zalogować",
 		"forgot": "Nie pamiętasz hasła?",
@@ -41,7 +41,7 @@
 		"password": "Hasło *",
 		"confirmation": "Potwierdź hasło *",
 		"nameInvalid": "Niepoprawne imię lub nazwisko",
-		"phoneInvalid": "Niepoprawny numer telefonu",
+		"phoneInvalid": "PL: signup_page.phoneInvalid",
 		"emailInvalid": "Niepoprawny adres e-mail",
 		"loginFailed": "Nie udało się zalogować",
 		"minimumLength": "Długość minimum",
@@ -277,6 +277,7 @@
 		"createdAt": "utworzone:",
 		"updatedAt": "zaktualizowane:",
 		"removeReservationQuestion": "Czy na pewno chcesz usunąć rezerwację?",
+		"terminateEarlyQuestion": "PL: reservations.terminateEarlyQuestion",
 		"reservationApproved": "Rezerwacja nie została jeszcze zaakceptowana.",
 		"reservationNotPayed": "Rezerwacja nie została opłacona.",
 		"pay": "Płatność",
@@ -286,7 +287,8 @@
 		"interuptReservation": "Przerwij rezerwację",
 		"payReservation": "Opłać rezerwację",
 		"downloadInvoice": "Ściągnij fakturę",
-		"destroyRservation": "Usuń rezerwację",
+		"destroyReservation": "Usuń rezerwację",
+		"teminateEarly": "PL: reservations.teminateEarly",
 		"destroyAllReservation": {
 			"one": "PL: reservations.destroyAllReservation.one",
 			"few": "PL: reservations.destroyAllReservation.few",
@@ -350,7 +352,8 @@
 		"period": "Okres:",
 		"licencePlate": "Nr rejestracyjny:",
 		"noClientPlaces": "Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.",
-		"resetFilter": "Zresetować filtr"
+		"resetFilter": "Zresetować filtr",
+		"detailsInaccessible": "PL: occupancy.detailsInaccessible"
 	},
 	"garageUsers": {
 		"noRights": "Nie posiadasz odpowiednich uprawnień.",
@@ -951,7 +954,7 @@
 			"many": "PL: dashboard.units.many",
 			"other": "PL: dashboard.units.other"
 		},
-		"statistics": "PL: dashboard.statistics",
+		"statistics": "Statystyki",
 		"news": "Nowości PiD",
 		"garage": "Garaż"
 	},

@@ -215,7 +215,7 @@ class ReservationsPage extends Component {
               }
               {moment(reservation.begins_at).isAfter(moment()) &&
               <LabeledRoundButton
-                label={t([ 'reservations', 'destroyRservation' ])}
+                label={t([ 'reservations', 'destroyReservation' ])}
                 content={<span className="fa fa-times" aria-hidden="true" />}
                 onClick={() => { destroyClick(reservation) }}
                 type="remove"
