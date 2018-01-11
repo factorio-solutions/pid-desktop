@@ -10,7 +10,7 @@ import * as pageBaseActions from '../../actions/pageBase.actions'
 import { t } from '../../modules/localization/localization'
 
 
-export class GarageSelector extends Component {
+class GarageSelector extends Component {
   static propTypes = {
     state:   PropTypes.object,
     actions: PropTypes.object

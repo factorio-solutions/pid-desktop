@@ -1,0 +1,41 @@
+@import '../../styles/app.components';
+@import './Button';
+
+$normalSize: 50px;
+$fontSize:   24px;
+$small:       .62;
+
+// ----------------------------------------------------------------------------
+
+.button {
+  @include border-radius(240px);
+
+  width:      $normalSize;
+  height:     $normalSize;
+  margin:     5px;
+  padding:    0;
+  transition: all .4s ease;
+
+  border:           0;
+  outline:          none;
+  background-color: $white;
+  color:            $blue;
+  font-size:        $fontSize;
+  text-align:       center;
+}
+
+.clickable {
+  @include colorize($white);
+  cursor: pointer;
+}
+
+.small {
+  @include colorize($blue);
+
+  width:     $small * $normalSize;
+  height:    $small * $normalSize;
+  margin:    0;
+
+  color:     $white;
+  font-size: $small * $fontSize;
+}

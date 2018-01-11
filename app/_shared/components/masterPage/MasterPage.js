@@ -1,25 +1,25 @@
-import React, { Component, PropTypes }  from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
 
 import Logo                  from '../logo/Logo'
 import CallToActionButton    from '../buttons/CallToActionButton'
-import RoundButton           from '../buttons/RoundButton'
+import I                     from '../buttons/I'
 import GarageSelector        from '../garageSelector/GarageSelector'
 import VerticalMenu          from '../verticalMenu/VerticalMenu'
 import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
 import DropdownContent       from '../dropdown/DropdownContent'
 
 import * as nav from '../../helpers/navigation'
+import { changeHints } from '../../actions/profile.actions'
 
 import styles from './MasterPage.scss'
 
 
-export default class MasterPage extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { menu: false }
-  }
-
+class MasterPage extends Component {
   static propTypes = {
+    actions: PropTypes.object,
+
     name:         PropTypes.string,
     messageCount: PropTypes.oneOfType([ PropTypes.string,
       PropTypes.number
@@ -41,11 +41,28 @@ export default class MasterPage extends Component {
     children:        PropTypes.object
   }
 
+  constructor(props) {
+    super(props)
+    this.state = { menu: false }
+  }
+
   render() {
-    const { name, messageCount, callToAction,
-      verticalMenu, verticalSelected, verticalSecondaryMenu, verticalSecondarySelected, showSecondaryMenu, secondaryMenuBackButton,
-      showHints, hint, profileDropdown,
-      children } = this.props
+    const {
+      actions,
+      name,
+      messageCount,
+      callToAction,
+      verticalMenu,
+      verticalSelected,
+      verticalSecondaryMenu,
+      verticalSecondarySelected,
+      showSecondaryMenu,
+      secondaryMenuBackButton,
+      showHints,
+      hint,
+      profileDropdown,
+      children
+    } = this.props
 
     const onHamburgerClick = e => { this.setState({ menu: !this.state.menu }) }
     const onLogoClick = () => nav.to('/dashboard')
@@ -69,6 +86,10 @@ export default class MasterPage extends Component {
               </div>
 
               <div className={styles.user}>
+                <div className={styles.messages}>
+                  {!showHints && <I size="small" onClick={actions.changeHints} />}
+                </div>
+
                 <div className={styles.messages} onClick={() => nav.to('/notifications')}>
                   <i className={'icon-message'} aria-hidden="true" />
                   {messageCount > 0 && <div className={styles.count}>{messageCount}</div>}
@@ -101,7 +122,10 @@ export default class MasterPage extends Component {
 
           <div className={`${styles.content} ${showSecondaryMenu && styles.shift}`}>
             {showHints && hint && <div className={styles.hint}>
-              {hint.href && <RoundButton content={<i className="fa fa-info" aria-hidden="true" />} onClick={() => { window.open(hint.href) }} type="info" />}
+              <div className={styles.hintCross} onClick={actions.changeHints}>
+                <i className="fa fa-times" aria-hidden="true" />
+              </div>
+              <I />
               <div dangerouslySetInnerHTML={{ __html: hint.hint }} />
             </div>}
             <div className={`${styles.children} ${showHints && hint && styles.hashHint}`}>
@@ -113,3 +137,8 @@ export default class MasterPage extends Component {
     )
   }
 }
+
+export default connect(
+  () => {},
+  dispatch => ({ actions: bindActionCreators({ changeHints }, dispatch) })
+)(MasterPage)
