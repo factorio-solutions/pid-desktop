@@ -1,5 +1,5 @@
 ,en,cs,pl,de
-PID-RELEASE,r20180109a,r20180109a,r20180109a,r20180109a
+PID-RELEASE,r20180111a,r20180111a,r20180111a,r20180111a
 addresses.name,Name *,Jméno *,Imię i nazwisko *,Name *
 addresses.line1,Line 1 *,Řádek 1 *,Adres *,Adresszeile 1 *
 addresses.line2,Line 2,Řádek 2,Adres - cd.,Adresszeile 2
@@ -24,7 +24,7 @@ addresses.countryPlaceholder,USA,Česká republika,Polska,Deutschland
 login_page.please,Please log in or,"Prosím, přihlaste se, nebo si",Zaloguj się lub,Melden Sie sich bitte an oder
 login_page.Sign-Up,register,vytvořte účet,Załóż konto,registrieren Sie sich
 login_page.email,Email,Zadejte e-mail,E-mail,E-Mail-Adresse
-login_page.invalid-email,Invalid email address (john@gmail.com),Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
+login_page.invalid-email,Invalid email address (john@gmail.com),Neplatná e-mailová adresa (john@gmail.com),Niepoprawny adres e-mail (john@gmail.com),Ungültige E-Mail-Adresse (john@gmail.com)
 login_page.password,Password,Heslo,Hasło,Passwort
 login_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalogować,Anmeldung fehlgeschlagen
 login_page.forgot,Forgot password?,Zapomenuté heslo?,Nie pamiętasz hasła?,Passwort vergessen?
@@ -36,7 +36,7 @@ signup_page.email,email *,E-mail *,E-mail *,E-Mail-Adresse *
 signup_page.password,password *,Heslo *,Hasło *,Passwort *
 signup_page.confirmation,confirm password *,Potvrzení hesla *,Potwierdź hasło *,Passwort bestätigen *
 signup_page.nameInvalid,Invalid name,Neplatné jméno,Niepoprawne imię lub nazwisko,Name ungültig
-signup_page.phoneInvalid,Invalid phone number,Neplatné telefonní číslo,Niepoprawny numer telefonu,Telefonnummer ungültig
+signup_page.phoneInvalid,Enter without blank space with dialling code,Zadejte bez mezer s předvolbou daného státu,,Geben Sie ohne Leerzeichen mit der Vorwahl ein
 signup_page.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
 signup_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalogować,Anmeldung fehlgeschlagen
 signup_page.minimumLength,Minimum length is,Minimální délka je,Długość minimum,Mindestlänge ist
@@ -348,7 +348,7 @@ pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete 
 pageBase.orderGarageModuleHint,Here you can order a garage module.,,,
 pageBase.reservationOverviewHint,Here you can double check if everything is ok.,,,
 pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",,,
-pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz wybrać umowę i zmienić miejsca parkingowe, czas trwania rezerwacji lub cenę.",
+pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz wybrać umowę i zmienić miejsca parkingowe, czas trwania rezerwacji lub cenę.","Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis."
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht.
 pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,,
 pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,,
@@ -422,13 +422,13 @@ newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu pl
 newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
 newReservation.newHost,New guest,Nový host,,Neuer Gast
-newReservation.hostsName,Guest name,Jméno hosta,,
-newReservation.hostsPhone,Guest phone,Hostův telefon,,
-newReservation.hostsEmail,Guest email,Hostův email,,
-newReservation.selectedUser,User,Uživatel,,
-newReservation.flexiblePlaceSelected,flexible,flexibilní,,
-newReservation.noFreePlace,No free place,Žádná volná místa,,
-newReservation.note,Note,Poznámka,,
+newReservation.hostsName,Guest name,Jméno hosta,,Gast - Name
+newReservation.hostsPhone,Guest phone,Hostův telefon,,Gast Telefonnummer
+newReservation.hostsEmail,Guest email,Hostův email,,Gast E-Mail
+newReservation.selectedUser,User,Uživatel,,Benutzer
+newReservation.flexiblePlaceSelected,flexible,flexibilní,,flexibel
+newReservation.noFreePlace,No free place,Žádná volná místa,,Keine freie Plätze
+newReservation.note,Note,Poznámka,,Notiz
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -459,9 +459,9 @@ clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě
 clientUsers.pendingUsers,Pending invitations,Nevyřízené pozvánky,Zaproszenia czekające na odpowiedź,Offene Einladungen
 clientUsers.confirmedUsers,Users of %(name)s,Uživatelé %(name)s,,
 clientUsers.removeUser,Remove user,Odstranit uživatele,Usuń użytkownika,Benutzer entfernen
-clientUsers.resendInvitation,Resend email,Znovu odeslat,Wyślij ponownie,
-clientUsers.resendSuccessfull,Email was sucessfully send.,Email úspěšně odeslán.,E-mail został wysłany.,
-clientUsers.userNotFound,Could not find this user.,Uživatel nenalezen.,Nie znaleziono użytkownika.,
+clientUsers.resendInvitation,Resend email,Znovu odeslat,Wyślij ponownie,E-Mail zurücksenden
+clientUsers.resendSuccessfull,Email was sucessfully send.,Email úspěšně odeslán.,E-mail został wysłany.,E-Mail wurde erfolgreich gesendet.
+clientUsers.userNotFound,Could not find this user.,Uživatel nenalezen.,Nie znaleziono użytkownika.,Dieser Benutzer konnte nicht gefunden werden.
 reservations.name,name,jméno,Użytkownik,Name
 reservations.from,from,od,od,von
 reservations.to,to,do,do,bis
@@ -475,16 +475,18 @@ reservations.garage,Garage,garáž,Garaż,Parkhaus
 reservations.createdAt,created at:,vytvořeno:,utworzone:,erstellt:
 reservations.updatedAt,updated at:,upraveno:,zaktualizowane:,aktualisiert:
 reservations.removeReservationQuestion,Are you sure you want to remove this reservation?,Určitě chcete odstranit tuto rezervaci?,Czy na pewno chcesz usunąć rezerwację?,Möchten Sie diese Reservierung wirklich entfernen?
+reservations.terminateEarlyQuestion,Are you sure you want to terminate reservation right now?,Přejete si nyní ukončit rezervaci?,,
 reservations.reservationApproved,This reservation has not been approved yet.,Rezervace zatím nebyla schválena.,Rezerwacja nie została jeszcze zaakceptowana.,Die Reservierung ist noch nicht bestätigt worden.
 reservations.reservationNotPayed,This reservation has not been paid.,Rezervace nebyla zaplacena.,Rezerwacja nie została opłacona.,Die Reservierung ist noch nicht bezahlt worden.
 reservations.pay,Pay,Platba,Płatność,Zahlung
 reservations.host,Guest,Host,Gość,Gast
 reservations.visitor,Visitor,Návštěvník,Odwiedzający,Besucher
 reservations.editReservation,Edit reservation,Upravit rezervaci,Edytuj rezerwację,Reservierung bearbeiten
-reservations.interuptReservation,Interupt reservation,Přerušit rezervaci,Przerwij rezerwację,
+reservations.interuptReservation,Interupt reservation,Přerušit rezervaci,Przerwij rezerwację,Reservierung unterbrechen
 reservations.payReservation,Pay reservation,Zaplatit rezervaci,Opłać rezerwację,Reservierung bezahlen
 reservations.downloadInvoice,Download invoice,Stáhnout fakturu,Ściągnij fakturę,Rechnung herunterladen
-reservations.destroyRservation,Cancel reservation,Zrušit rezervaci,Usuń rezerwację,Reservierung stornieren
+reservations.destroyReservation,Cancel reservation,Zrušit rezervaci,Usuń rezerwację,Reservierung stornieren
+reservations.teminateEarly,Terminate early,Předčasně ukončit,,
 reservations.destroyAllReservation.one,Archive only selected reservation.,Zrušit pouze vybranou rezervaci.,,
 reservations.destroyAllReservation.few,Archive all %(count)s reservations in set repeat.,Zrušit %(count)s rezervace v nastaveném opakování.,,
 reservations.destroyAllReservation.many,Archive all %(count)s reservations in set repeat.,Zrušit všech %(count)s rezervací v nastaveném opakování.,,
@@ -539,8 +541,9 @@ occupancy.client,Client:,Klient:,Klient:,Kunde:
 occupancy.type,Type:,Typ:,Typ:,Typ:
 occupancy.period,Period:,Období:,Okres:,Termin:
 occupancy.licencePlate,License plate:,SPZ:,Nr rejestracyjny:,Kennzeichen:
-occupancy.noClientPlaces,The selected client does not have any rented places in this time frame.,Zvolený klient nemá žádná pronajatá místa v tomto časovém intervalu.,Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.,
-occupancy.resetFilter,Reset filter,Resetuj filtr,Zresetować filtr,
+occupancy.noClientPlaces,The selected client does not have any rented places in this time frame.,Zvolený klient nemá žádná pronajatá místa v tomto časovém intervalu.,Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.,Der ausgewählte Kunde hat in diesem Zeitraum keine gemieteten Plätze.
+occupancy.resetFilter,Reset filter,Resetuj filtr,Zresetować filtr,Filter zurücksetzen
+occupancy.detailsInaccessible,Details inaccessible,Detaily nepřístupné,,
 garageUsers.noRights,You do not have the right to do that.,Na tuto akci nemáte práva.,Nie posiadasz odpowiednich uprawnień.,Sie haben nicht die erforderlichen Berechtigungen.
 garageUsers.admin,admin,admin,admin,Administrator
 garageUsers.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
@@ -638,7 +641,7 @@ newGarage.invalidFloorName,Invalid floor name,Neplatný název patra,Niepoprawna
 newGarage.invalidName,Invalid garage name,Neplatný název garáže,Niepoprawna nazwa garażu,Ungültiger Parkhausname
 newGarage.removeFloorRowQuestion,Are you sure you want to delete this floor?,Určitě chcete odstranit toto patro?,Czy na pewno chcesz usunąć to piętro?,Möchten Sie diese Etage wirklich löschen?
 newGarage.removeGateRowQuestion,Are you sure you want to delete this gate?,Určitě chcete odstranit tuto bránu?,Czy na pewno chcesz usunąć tę bramę?,Möchten Sie dieses Tor wirklich löschen?
-newGarage.street,Straße und Hausnummer *,Číslo ulice a domu *,Ulica i numer domu *,Straße und Hausnummer
+newGarage.street,Street address *,Číslo ulice a domu *,Ulica i numer domu *,Straße und Hausnummer
 newGarage.city,City *,Město *,Miasto,Stadt *
 newGarage.postalCode,Postal code *,Poštovní směrovací číslo *,Kod pocztowy,PLZ *
 newGarage.country,Country *,Země *,Kraj,Land *
@@ -725,7 +728,7 @@ inviteUser.GarageRights,Garage rights,Práva garáže,Prawa garażu,Parkhausrech
 inviteUser.GarageRightsDesc,These rights will be valid only if the garage is specified.,Tato práva budou platná pouze pokud bude garáž specifikována.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy garaż zostanie określony.","Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird."
 inviteUser.carRights,Car rights,Práva aut,Prawa samochodów,Fahrzeugrechte
 inviteUser.carRightsDesc,These rights will be only valid if the car is specified,Tato práva budou platná pouze pokud bude auto specifikováno.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy samochód zostanie określony.","Diese Rechte sind nur gültig, wenn ein Fahrzeug angegeben wird."
-inviteUser.contactPerson,contact person,kontaktní osoba,osoba kontaktowa,
+inviteUser.contactPerson,contact person,kontaktní osoba,osoba kontaktowa,Ansprechpartner
 notifications.user,user,Uživatel,Użytkownik,Benutzer
 notifications.email,email,E-mail,E-mail,E-Mail-Adresse
 notifications.phone,phone,Telefon,Telefon,Telefon
@@ -763,8 +766,8 @@ users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
 users.memberSince,since,Členem od,Członek od,Mitglied seit
 users.active,active,Aktivní,Aktywny,aktiv
-users.notActive,not active,Neaktivní,,
-users.notConfimed,not confimed,Nekonfirmovaný,,
+users.notActive,not active,Neaktivní,,nicht aktiv
+users.notConfimed,not confimed,Nekonfirmovaný,,nicht bestätigte
 users.pending,Pending,Čekající,Oczekujące,Bestätigung ausstehend
 users.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani użytkownicy,Alle bekannten Benutzer
 users.pendingInvitations,Pending invitations,Čekající pozvánky,Oczekujące zaproszenia,Nicht bestätigte Einladungen
@@ -783,8 +786,8 @@ users.invitedToCar,Invited %(date)s to be member of car:,Pozván %(date)s aby by
 datetimepicker.today,Today,Dnes,Dzisiaj,Heute
 datetimepicker.now,Now,Nyní,Teraz,Jetzt
 datetimepicker.inf,Infinity,Nekonečno,Nieskończoność,Unendlich
-datetimepicker.hour,Hour,Hodina,Godzina,
-datetimepicker.minute,Minute,Minuta,Minuta,
+datetimepicker.hour,Hour,Hodina,Godzina,Stunde
+datetimepicker.minute,Minute,Minuta,Minuta,Minute
 newMarketing.size_restriction,Limited vehicle size,Omezená velikost vozidla,Ograniczony rozmiar pojazdu,Eingeschränkte Fahrzeuggröße
 newMarketing.non_stop_open,Open nonstop,Otevřeno nonstop,Otwarte non stop,Nonstop geöffnet
 newMarketing.non_stop_reception,Reception open nonstop,Nonstop recepce,Recepcja non stop,Rezeption nonstop geöffnet
@@ -1009,13 +1012,13 @@ resetPassword.emailInvalid,Invalid email,Neplatný e-mail,Niepoprawny e-mail,Ung
 modules.marketingPage,Marketing page,Marketingová stránka,Strona marketingu,Marketing-Seite
 modules.connectWithMrParkit,Connect with MR.PARKIT,Spojte se s MR.PARKIT,Skontaktuj się z MR.PARKIT,Mit MR. PARKIT verbinden
 modules.reservationForm,Reservation form,Rezervační formulář,Formularz rezerwacji,Reservierungsformular
-modules.goPublic,Go public,Zveřejněte,Zaoferuj publicznie,go Public
+modules.goPublic,Go public,Zveřejněte,Zaoferuj publicznie,Veröffentlichen
 modules.goPublicDescription,Offer short-term parking to the PiD community,Nabídněte krátkodobé parkování pro komunitu PiD,Zaoferuj krótkoterminowe parkowanie dla grupy PiD,Kurzfristige Parkplätze für die PiD-Community anbieten
 modules.setting,Settings,Nastavení,Ustawienia,Einstellungen
 modules.Preview,Preview,Náhled,Podgląd,Vorschau
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,Rechnungsplan wird aktualisiert. Weiterleiten …
 modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen)."
-modules.flexiplace,Flexi place,Flexi místo,Miejsce Flexi,
+modules.flexiplace,Flexi place,Flexi místo,Miejsce Flexi,Flexi Platz
 modules.flexiplaceDescription,Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.,"FLexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
 newContract.description,New Agreement in,Nová dohoda v,Nowa umowa w,Neue Vereinbarung in
 newContract.edit,Editing agreement in,Úprava dohody v,,Vereinbarung bearbeiten in
@@ -1071,14 +1074,14 @@ activityLog.email,email,e-mail,e-mail,E-Mail
 activityLog.subject,subject,předmět,temat,Betreff
 activityLog.action,action,akce,akcja,Aktion
 activityLog.createdAt,time,čas,godzina,Zeitpunkt
-dashboard.used,Used,Obsazených,,
+dashboard.used,Used,Obsazených,,Besetzt
 dashboard.free,Free,K dispozici,Wolnych,Verfügbar
-dashboard.unused,Unused,Nevyužito,,
+dashboard.unused,Unused,Nevyužito,,Frei
 dashboard.units.one,unit,jednotka,,
 dashboard.units.few,units,jednotky,,
 dashboard.units.many,units,jednotek,,
 dashboard.units.other,units,jednotky,,
-dashboard.statistics,Statistics,Statistika,,
+dashboard.statistics,Statistics,Statistika,Statystyki,Statistik
 dashboard.news,PID news,Novinky,Nowości PiD,PID-Neuigkeiten
 dashboard.garage,Garage,Garáž,Garaż,Garage
 loginVerification.description,Multifactor authorization has been triggered. We will now send you a code by email %(email)s,Spuštěna vícefázová autorizace. Na email %(email)s vám zašleme ověřovací kód.,Wprowadzono autoryzację wieloczynnikową. Na adres %(email) wyślemy Ci kod weryfikacyjny.,
@@ -1092,28 +1095,29 @@ languages.en,English,English,English,English
 languages.cs,Česky,Česky,Česky,Česky
 languages.de,Deutsch,Deutsch,Deutsch,Deutsch
 languages.pl,Polski,Polski,Polski,Polski
-recurringReservation.repeat,Repeat,Opakovat,Powtórz,
-recurringReservation.repeats,Repeats:,Opakuje se:,Powtarza się:,
-recurringReservation.daily,Daily,Denně,Codziennie,
-recurringReservation.weekly,Weekly,Týdně,Co tydzień,
-recurringReservation.monthly,Monthly,Měsíčně,Co miesiąc,
+recurringReservation.repeat,Repeat,Opakovat,Powtórz,Wiederholen
+recurringReservation.repeats,Repeats:,Opakuje se:,Powtarza się:,Wiederholt
+recurringReservation.daily,Daily,Denně,Codziennie,Täglich
+recurringReservation.weekly,Weekly,Týdně,Co tydzień,Wochentlich
+recurringReservation.monthly,Monthly,Měsíčně,Co miesiąc,Monatlich
 recurringReservation.repeatEvery,Repeat every:,Opakovat jednou za:,Powtrzać raz na:,
-recurringReservation.week.one,week,týden,tydzień,
-recurringReservation.week.few,weeks,týdny,tygodnie,
-recurringReservation.week.many,weeks,týdnů,tygodni,
-recurringReservation.week.other,weeks,týdne,tygodni,
-recurringReservation.month.one,month,měsíc,miesiąc,
-recurringReservation.month.few,months,měsíce,miesiące,
-recurringReservation.month.many,months,měsíců,miesięcy,
-recurringReservation.month.other,months,měsíce,miesięcy,
-recurringReservation.day.one,day,den,dzień,
-recurringReservation.day.few,days,dny,dni,
-recurringReservation.day.many,days,dní,dni,
-recurringReservation.day.other,days,dne,dni,
+recurringReservation.week.one,week,týden,tydzień,Woche
+recurringReservation.week.few,weeks,týdny,tygodnie,Wochen
+recurringReservation.week.many,weeks,týdnů,tygodni,Wochen
+recurringReservation.week.other,weeks,týdne,tygodni,Wochen
+recurringReservation.month.one,month,měsíc,miesiąc,Monat
+recurringReservation.month.few,months,měsíce,miesiące,Monaten
+recurringReservation.month.many,months,měsíců,miesięcy,Monaten
+recurringReservation.month.other,months,měsíce,miesięcy,Monaten
+recurringReservation.day.one,day,den,dzień,Tag
+recurringReservation.day.few,days,dny,dni,Tage
+recurringReservation.day.many,days,dní,dni,Tage
+recurringReservation.day.other,days,dne,dni,Tage
 recurringReservation.repeatOn,Repeat on:,Opakovat v:,Powtarzać w:,
 recurringReservation.startsOn,Starts on:,Datum zahájení:,Data rozpoczęcia:,
-recurringReservation.ends,Ends:,Konec:,Koniec:,
-recurringReservation.after,After,Po,Po,
+recurringReservation.ends,Ends:,Konec:,Koniec:,"
+Enden:"
+recurringReservation.after,After,Po,Po,Nach
 recurringReservation.occurence.one,occurrence,výskytu,,
 recurringReservation.occurence.few,occurrences,výskytech,,
 recurringReservation.occurence.many,occurrences,výskytech,,
