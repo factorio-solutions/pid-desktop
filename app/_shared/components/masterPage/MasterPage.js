@@ -139,6 +139,6 @@ class MasterPage extends Component {
 }
 
 export default connect(
-  () => {},
+  () => ({}),
   dispatch => ({ actions: bindActionCreators({ changeHints }, dispatch) })
 )(MasterPage)

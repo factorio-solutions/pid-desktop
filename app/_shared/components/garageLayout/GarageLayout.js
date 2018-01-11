@@ -229,22 +229,37 @@ class GarageLayout extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.showEmptyFloors) {
+      const freePlacesFloor = nextProps.floors.findIndex(floor => floor.free_places.length)
+      this.setState({
+        ...this.state,
+        floor: freePlacesFloor === -1 ? 0 : freePlacesFloor
+      })
+    }
+  }
+
 
   render() {
     const divider = <span />
     const { floors, onPlaceClick, showEmptyFloors, unfold } = this.props
     const { floor } = this.state
 
-    const prepareButtons = (floor, index, arr) => {
-      const onFloorClick = () => { this.setState({ ...this.state, floor: index }), () => { this.scanPlacesAddLabels() } }
+    const prepareButtons = (floor, index) => {
+      const onFloorClick = () => this.setState({ ...this.state, floor: index })
       return (
-        <RoundButton key={index} content={floor.label} onClick={onFloorClick} state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex(place => { return place.available == true }) === -1 && 'disabled')} />
+        <RoundButton
+          key={index}
+          content={floor.label}
+          onClick={onFloorClick}
+          state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex(place => place.available) === -1 && 'disabled')}
+        />
       )
     }
 
     const handleSVGClick = ({ target }) => {
       const id = target.getAttribute('id')
-      if (id && id.substring(0, 5) == 'Place') {
+      if (id && id.substring(0, 5) === 'Place') {
         const place = floors[floor].places.find(place => { return place.label === id.substring(5) })
         place && place.available && onPlaceClick(place)
       }
