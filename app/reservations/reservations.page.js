@@ -156,6 +156,7 @@ class ReservationsPage extends Component {
     ]
 
     const transformData = data => data.reservations.map(reservation => ({
+      id:            reservation.id,
       name:          reservation.user.full_name,
       note:          reservation.note,
       client:        reservation.client && reservation.client.name,
@@ -240,6 +241,7 @@ class ReservationsPage extends Component {
             transformData={transformData}
             schema={schema}
             variables={{ past: state.past }}
+            findId={parseInt(this.props.params.id, 10)}
           />
         </div>
         <div className={styles.centerDiv}>
