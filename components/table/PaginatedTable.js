@@ -19,7 +19,8 @@ export default class PaginatedTable extends Component {
     query:         PropTypes.string, // query to ask
     transformData: PropTypes.func, // if set to true, will reset selected item
     variables:     PropTypes.object,
-    admin:         PropTypes.bool
+    admin:         PropTypes.bool,
+    findId:        PropTypes.number
   }
 
   static defaultProps = {
@@ -39,7 +40,7 @@ export default class PaginatedTable extends Component {
       data:      [],
       loading:   true,
       page:      1,
-      count:     10,
+      count:     10, // records per page
       key:       sortedColumn.key, // sorting by this key
       ascDesc:   sortedColumn.sort,
       search:    {},
@@ -48,9 +49,9 @@ export default class PaginatedTable extends Component {
   }
 
   componentDidMount() {
-    const { variables } = this.props
+    const { variables, findId } = this.props
     const { page, count, key, ascDesc, search } = this.state
-    this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
+    this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search, find_by_id: findId })
     window.addEventListener('paginatedTableUpdate', this.loadingRequest, true)
   }
 
@@ -107,7 +108,7 @@ export default class PaginatedTable extends Component {
   }
 
   render() {
-    const { schema } = this.props
+    const { schema, findId } = this.props
     const { data, page, pageCount, loading } = this.state
 
     const prevPage = () => !this.state.loading && this.setState({ ...this.state, page: page - 1, loading: true })
@@ -146,7 +147,7 @@ export default class PaginatedTable extends Component {
         {loading && <div className={styles.loading}>
           <Loading show />
         </div>}
-        <Table schema={schema} data={data} filterClick={filterClick} searchBox={false} searchBar />
+        <Table schema={schema} data={data} filterClick={filterClick} searchBox={false} searchBar selectId={findId} />
         <div>
           <RoundButton
             content={<i className="fa fa-chevron-left" aria-hidden="true" />}
