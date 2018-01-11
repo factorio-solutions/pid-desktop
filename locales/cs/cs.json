@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180109a",
+	"PID-RELEASE": "r20180111a",
 	"addresses": {
 		"name": "Jméno *",
 		"line1": "Řádek 1 *",
@@ -27,7 +27,7 @@
 		"please": "Prosím, přihlaste se, nebo si",
 		"Sign-Up": "vytvořte účet",
 		"email": "Zadejte e-mail",
-		"invalid-email": "Neplatná e-mailová adresa",
+		"invalid-email": "Neplatná e-mailová adresa (john@gmail.com)",
 		"password": "Heslo",
 		"loginFailed": "Špatné přihlášení",
 		"forgot": "Zapomenuté heslo?",
@@ -41,7 +41,7 @@
 		"password": "Heslo *",
 		"confirmation": "Potvrzení hesla *",
 		"nameInvalid": "Neplatné jméno",
-		"phoneInvalid": "Neplatné telefonní číslo",
+		"phoneInvalid": "Zadejte bez mezer s předvolbou daného státu",
 		"emailInvalid": "Neplatná e-mailová adresa",
 		"loginFailed": "Špatné přihlášení",
 		"minimumLength": "Minimální délka je",
@@ -277,6 +277,7 @@
 		"createdAt": "vytvořeno:",
 		"updatedAt": "upraveno:",
 		"removeReservationQuestion": "Určitě chcete odstranit tuto rezervaci?",
+		"terminateEarlyQuestion": "Přejete si nyní ukončit rezervaci?",
 		"reservationApproved": "Rezervace zatím nebyla schválena.",
 		"reservationNotPayed": "Rezervace nebyla zaplacena.",
 		"pay": "Platba",
@@ -286,7 +287,8 @@
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
-		"destroyRservation": "Zrušit rezervaci",
+		"destroyReservation": "Zrušit rezervaci",
+		"teminateEarly": "Předčasně ukončit",
 		"destroyAllReservation": {
 			"one": "Zrušit pouze vybranou rezervaci.",
 			"few": "Zrušit %(count)s rezervace v nastaveném opakování.",
@@ -350,7 +352,8 @@
 		"period": "Období:",
 		"licencePlate": "SPZ:",
 		"noClientPlaces": "Zvolený klient nemá žádná pronajatá místa v tomto časovém intervalu.",
-		"resetFilter": "Resetuj filtr"
+		"resetFilter": "Resetuj filtr",
+		"detailsInaccessible": "Detaily nepřístupné"
 	},
 	"garageUsers": {
 		"noRights": "Na tuto akci nemáte práva.",

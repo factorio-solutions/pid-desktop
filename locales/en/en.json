@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180109a",
+	"PID-RELEASE": "r20180111a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -41,7 +41,7 @@
 		"password": "password *",
 		"confirmation": "confirm password *",
 		"nameInvalid": "Invalid name",
-		"phoneInvalid": "Invalid phone number",
+		"phoneInvalid": "Enter without blank space with dialling code",
 		"emailInvalid": "Invalid email address",
 		"loginFailed": "Login failed",
 		"minimumLength": "Minimum length is",
@@ -277,6 +277,7 @@
 		"createdAt": "created at:",
 		"updatedAt": "updated at:",
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
+		"terminateEarlyQuestion": "Are you sure you want to terminate reservation right now?",
 		"reservationApproved": "This reservation has not been approved yet.",
 		"reservationNotPayed": "This reservation has not been paid.",
 		"pay": "Pay",
@@ -286,7 +287,8 @@
 		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
-		"destroyRservation": "Cancel reservation",
+		"destroyReservation": "Cancel reservation",
+		"teminateEarly": "Terminate early",
 		"destroyAllReservation": {
 			"one": "Archive only selected reservation.",
 			"few": "Archive all %(count)s reservations in set repeat.",
@@ -456,7 +458,7 @@
 		"invalidName": "Invalid garage name",
 		"removeFloorRowQuestion": "Are you sure you want to delete this floor?",
 		"removeGateRowQuestion": "Are you sure you want to delete this gate?",
-		"street": "Straße und Hausnummer *",
+		"street": "Street address *",
 		"city": "City *",
 		"postalCode": "Postal code *",
 		"country": "Country *",
