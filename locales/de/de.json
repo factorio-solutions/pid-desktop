@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180109a",
+	"PID-RELEASE": "r20180111a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Adresszeile 1 *",
@@ -27,7 +27,7 @@
 		"please": "Melden Sie sich bitte an oder",
 		"Sign-Up": "registrieren Sie sich",
 		"email": "E-Mail-Adresse",
-		"invalid-email": "Ungültige E-Mail-Adresse",
+		"invalid-email": "Ungültige E-Mail-Adresse (john@gmail.com)",
 		"password": "Passwort",
 		"loginFailed": "Anmeldung fehlgeschlagen",
 		"forgot": "Passwort vergessen?",
@@ -41,7 +41,7 @@
 		"password": "Passwort *",
 		"confirmation": "Passwort bestätigen *",
 		"nameInvalid": "Name ungültig",
-		"phoneInvalid": "Telefonnummer ungültig",
+		"phoneInvalid": "Geben Sie ohne Leerzeichen mit der Vorwahl ein",
 		"emailInvalid": "Ungültige E-Mail-Adresse",
 		"loginFailed": "Anmeldung fehlgeschlagen",
 		"minimumLength": "Mindestlänge ist",
@@ -164,7 +164,7 @@
 		"orderGarageModuleHint": "DE: pageBase.orderGarageModuleHint",
 		"reservationOverviewHint": "DE: pageBase.reservationOverviewHint",
 		"editInvoiceHint": "DE: pageBase.editInvoiceHint",
-		"editContractHint": "DE: pageBase.editContractHint",
+		"editContractHint": "Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis.",
 		"unredNotifications": {
 			"one": "Sie haben eine ungelesene Nachricht.",
 			"few": "DE: pageBase.unredNotifications.few",
@@ -218,13 +218,13 @@
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
 		"newHost": "Neuer Gast",
-		"hostsName": "DE: newReservation.hostsName",
-		"hostsPhone": "DE: newReservation.hostsPhone",
-		"hostsEmail": "DE: newReservation.hostsEmail",
-		"selectedUser": "DE: newReservation.selectedUser",
-		"flexiblePlaceSelected": "DE: newReservation.flexiblePlaceSelected",
-		"noFreePlace": "DE: newReservation.noFreePlace",
-		"note": "DE: newReservation.note"
+		"hostsName": "Gast - Name",
+		"hostsPhone": "Gast Telefonnummer",
+		"hostsEmail": "Gast E-Mail",
+		"selectedUser": "Benutzer",
+		"flexiblePlaceSelected": "flexibel",
+		"noFreePlace": "Keine freie Plätze",
+		"note": "Notiz"
 	},
 	"clients": {
 		"name": "Name",
@@ -259,9 +259,9 @@
 		"pendingUsers": "Offene Einladungen",
 		"confirmedUsers": "DE: clientUsers.confirmedUsers",
 		"removeUser": "Benutzer entfernen",
-		"resendInvitation": "DE: clientUsers.resendInvitation",
-		"resendSuccessfull": "DE: clientUsers.resendSuccessfull",
-		"userNotFound": "DE: clientUsers.userNotFound"
+		"resendInvitation": "E-Mail zurücksenden",
+		"resendSuccessfull": "E-Mail wurde erfolgreich gesendet.",
+		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden."
 	},
 	"reservations": {
 		"name": "Name",
@@ -277,16 +277,18 @@
 		"createdAt": "erstellt:",
 		"updatedAt": "aktualisiert:",
 		"removeReservationQuestion": "Möchten Sie diese Reservierung wirklich entfernen?",
+		"terminateEarlyQuestion": "DE: reservations.terminateEarlyQuestion",
 		"reservationApproved": "Die Reservierung ist noch nicht bestätigt worden.",
 		"reservationNotPayed": "Die Reservierung ist noch nicht bezahlt worden.",
 		"pay": "Zahlung",
 		"host": "Gast",
 		"visitor": "Besucher",
 		"editReservation": "Reservierung bearbeiten",
-		"interuptReservation": "DE: reservations.interuptReservation",
+		"interuptReservation": "Reservierung unterbrechen",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
-		"destroyRservation": "Reservierung stornieren",
+		"destroyReservation": "Reservierung stornieren",
+		"teminateEarly": "DE: reservations.teminateEarly",
 		"destroyAllReservation": {
 			"one": "DE: reservations.destroyAllReservation.one",
 			"few": "DE: reservations.destroyAllReservation.few",
@@ -349,8 +351,9 @@
 		"type": "Typ:",
 		"period": "Termin:",
 		"licencePlate": "Kennzeichen:",
-		"noClientPlaces": "DE: occupancy.noClientPlaces",
-		"resetFilter": "DE: occupancy.resetFilter"
+		"noClientPlaces": "Der ausgewählte Kunde hat in diesem Zeitraum keine gemieteten Plätze.",
+		"resetFilter": "Filter zurücksetzen",
+		"detailsInaccessible": "DE: occupancy.detailsInaccessible"
 	},
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
@@ -548,7 +551,7 @@
 		"GarageRightsDesc": "Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird.",
 		"carRights": "Fahrzeugrechte",
 		"carRightsDesc": "Diese Rechte sind nur gültig, wenn ein Fahrzeug angegeben wird.",
-		"contactPerson": "DE: inviteUser.contactPerson"
+		"contactPerson": "Ansprechpartner"
 	},
 	"notifications": {
 		"user": "Benutzer",
@@ -592,8 +595,8 @@
 		"phone": "Telefonnummer",
 		"memberSince": "Mitglied seit",
 		"active": "aktiv",
-		"notActive": "DE: users.notActive",
-		"notConfimed": "DE: users.notConfimed",
+		"notActive": "nicht aktiv",
+		"notConfimed": "nicht bestätigte",
 		"pending": "Bestätigung ausstehend",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"pendingInvitations": "Nicht bestätigte Einladungen",
@@ -614,8 +617,8 @@
 		"today": "Heute",
 		"now": "Jetzt",
 		"inf": "Unendlich",
-		"hour": "DE: datetimepicker.hour",
-		"minute": "DE: datetimepicker.minute"
+		"hour": "Stunde",
+		"minute": "Minute"
 	},
 	"newMarketing": {
 		"size_restriction": "Eingeschränkte Fahrzeuggröße",
@@ -870,13 +873,13 @@
 		"marketingPage": "Marketing-Seite",
 		"connectWithMrParkit": "Mit MR. PARKIT verbinden",
 		"reservationForm": "Reservierungsformular",
-		"goPublic": "go Public",
+		"goPublic": "Veröffentlichen",
 		"goPublicDescription": "Kurzfristige Parkplätze für die PiD-Community anbieten",
 		"setting": "Einstellungen",
 		"Preview": "Vorschau",
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
 		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
-		"flexiplace": "DE: modules.flexiplace",
+		"flexiplace": "Flexi Platz",
 		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
 	},
 	"newContract": {
@@ -942,16 +945,16 @@
 		"createdAt": "Zeitpunkt"
 	},
 	"dashboard": {
-		"used": "DE: dashboard.used",
+		"used": "Besetzt",
 		"free": "Verfügbar",
-		"unused": "DE: dashboard.unused",
+		"unused": "Frei",
 		"units": {
 			"one": "DE: dashboard.units.one",
 			"few": "DE: dashboard.units.few",
 			"many": "DE: dashboard.units.many",
 			"other": "DE: dashboard.units.other"
 		},
-		"statistics": "DE: dashboard.statistics",
+		"statistics": "Statistik",
 		"news": "PID-Neuigkeiten",
 		"garage": "Garage"
 	},
@@ -973,34 +976,34 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
-		"repeat": "DE: recurringReservation.repeat",
-		"repeats": "DE: recurringReservation.repeats",
-		"daily": "DE: recurringReservation.daily",
-		"weekly": "DE: recurringReservation.weekly",
-		"monthly": "DE: recurringReservation.monthly",
+		"repeat": "Wiederholen",
+		"repeats": "Wiederholt",
+		"daily": "Täglich",
+		"weekly": "Wochentlich",
+		"monthly": "Monatlich",
 		"repeatEvery": "DE: recurringReservation.repeatEvery",
 		"week": {
-			"one": "DE: recurringReservation.week.one",
-			"few": "DE: recurringReservation.week.few",
-			"many": "DE: recurringReservation.week.many",
-			"other": "DE: recurringReservation.week.other"
+			"one": "Woche",
+			"few": "Wochen",
+			"many": "Wochen",
+			"other": "Wochen"
 		},
 		"month": {
-			"one": "DE: recurringReservation.month.one",
-			"few": "DE: recurringReservation.month.few",
-			"many": "DE: recurringReservation.month.many",
-			"other": "DE: recurringReservation.month.other"
+			"one": "Monat",
+			"few": "Monaten",
+			"many": "Monaten",
+			"other": "Monaten"
 		},
 		"day": {
-			"one": "DE: recurringReservation.day.one",
-			"few": "DE: recurringReservation.day.few",
-			"many": "DE: recurringReservation.day.many",
-			"other": "DE: recurringReservation.day.other"
+			"one": "Tag",
+			"few": "Tage",
+			"many": "Tage",
+			"other": "Tage"
 		},
 		"repeatOn": "DE: recurringReservation.repeatOn",
 		"startsOn": "DE: recurringReservation.startsOn",
-		"ends": "DE: recurringReservation.ends",
-		"after": "DE: recurringReservation.after",
+		"ends": "\nEnden:",
+		"after": "Nach",
 		"occurence": {
 			"one": "DE: recurringReservation.occurence.one",
 			"few": "DE: recurringReservation.occurence.few",

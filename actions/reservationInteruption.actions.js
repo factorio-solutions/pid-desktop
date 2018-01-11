@@ -33,10 +33,9 @@ export function setTo(value) {
 }
 
 
-export function interuptReservation(callback) {
-  return (dispatch, getState) => {
-    const state = getState().reservationInteruption
-    request(INTERUPT_RESERVATION, { id: state.reservation.id, from: timeToUTC(state.from), to: timeToUTC(state.to) })
+function generalReservationInteruption(callback, id, from, to) {
+  return dispatch => {
+    request(INTERUPT_RESERVATION, { id, from, to })
     .then(() => {
       if (mobile) {
         dispatch(setReservation())
@@ -47,4 +46,15 @@ export function interuptReservation(callback) {
       }
     })
   }
+}
+
+export function interuptReservation(callback) {
+  return (dispatch, getState) => {
+    const state = getState().reservationInteruption
+    dispatch(generalReservationInteruption(callback, state.reservation.id, timeToUTC(state.from), timeToUTC(state.to)))
+  }
+}
+
+export function immediateReservationTermination(reservation, callback) {
+  return dispatch => dispatch(generalReservationInteruption(callback, reservation.id))
 }

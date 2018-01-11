@@ -1,20 +1,22 @@
-import React, { Component, PropTypes }  from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect }                     from 'react-redux'
 import moment from 'moment'
 
-import { t } from '../../modules/localization/localization'
-import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview3'
+import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview'
 
-import styles from './OccupancyOverview3.scss'
+import styles from './OccupancyOverview.scss'
 
 
-export default class Place extends Component {
+class Place extends Component {
   static propTypes = {
+    pageBase:     PropTypes.object,
     place:        PropTypes.object,
     duration:     PropTypes.string,
     from:         PropTypes.object,
     now:          PropTypes.number,
     onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func
+    onMouseLeave: PropTypes.func,
+    showDetails:  PropTypes.bool
   }
 
   constructor(props) {
@@ -30,14 +32,19 @@ export default class Place extends Component {
   }
 
   render() {
-    const { place, duration, from, now, onMouseEnter, onMouseLeave } = this.props
+    const { place, duration, from, now, onMouseEnter, onMouseLeave, showDetails, pageBase } = this.props
 
     const renderReservation = (reservation, firstCellIndex) => {
+      const forCurrentUser = pageBase.current_user && pageBase.current_user.id === reservation.user.id
+      const clientUser = reservation.client ? reservation.client.client_user : {}
+      const details = showDetails || clientUser.admin || clientUser.secretary || forCurrentUser
+
       const classes = [
         styles.reservation,
         moment().isBefore(moment(reservation.begins_at)) && styles.future,
         moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) && styles.ongoing,
-        moment().isAfter(moment(reservation.ends_at)) && styles.fulfilled
+        moment().isAfter(moment(reservation.ends_at)) && styles.fulfilled,
+        details ? forCurrentUser ? styles.forCurrentUser : styles.forFellowUser : styles.noDetails
       ]
 
       const begining = moment(reservation.begins_at)
@@ -68,10 +75,10 @@ export default class Place extends Component {
         className={classes.filter(o => o).join(' ')}
         style={{
           left:  left + 'px',
-          width: width <= 0 ? 1 : width + 'px' // -4 due to borders of width 1
+          width: width <= 0 ? 1 : width + 'px'
         }}
       >
-        {reservation.car ? reservation.car.licence_plate + ' - ' + reservation.user.full_name : reservation.user.full_name}
+        {details && `${reservation.car ? reservation.car.licence_plate + ' - ' + reservation.user.full_name : reservation.user.full_name}`}
       </div>)
     }
 
@@ -110,3 +117,8 @@ export default class Place extends Component {
     )
   }
 }
+
+export default connect(
+  state => ({ pageBase: state.pageBase }),
+  () => ({})
+)(Place)
