@@ -15,7 +15,7 @@ const INIT_STATE = {
   mouseX:  0,
   mouseY:  0,
   visible: false,
-  floor:   0, // index of selected floor
+  floor:   -1, // index of selected floor
   rotate:  false
 }
 
@@ -43,11 +43,23 @@ class GarageLayout extends Component {
 
   constructor(props) {
     super(props)
-    this.state = INIT_STATE
+    this.state = {
+      ...INIT_STATE,
+      floor: props.showEmptyFloors ? 0 : INIT_STATE.floor
+    }
   }
 
   componentDidMount() {
     this.scanPlacesAddLabels()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.showEmptyFloors && (this.state.floor === -1 || !nextProps.floors[this.state.floor].free_places.length)) {
+      this.setState({
+        ...this.state,
+        floor: nextProps.floors.findIndex(floor => floor.free_places.length)
+      })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -228,17 +240,6 @@ class GarageLayout extends Component {
       place.parentNode.appendChild(newElement)
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.showEmptyFloors) {
-      const freePlacesFloor = nextProps.floors.findIndex(floor => floor.free_places.length)
-      this.setState({
-        ...this.state,
-        floor: freePlacesFloor === -1 ? 0 : freePlacesFloor
-      })
-    }
-  }
-
 
   render() {
     const divider = <span />
