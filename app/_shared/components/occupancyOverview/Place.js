@@ -56,6 +56,8 @@ class Place extends Component {
     const windowLength = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS) // in days
     const cellCount = windowLength * (duration === 'day' ? 24 : 2)
 
+    const sortByDate = (a, b) => moment(b.begins_at).isBefore(a.begins_at)
+
     const estimatePosition = reservation => {
       const begining = moment(reservation.begins_at)
       const dur = moment(reservation.ends_at).diff(begining.isSameOrBefore(from) ? from : begining, 'hours', true)
@@ -95,8 +97,10 @@ class Place extends Component {
 
     const displayTextOnRight = (reservation, index, arr) => {
       const { estimatedWidth, estimatedTextWidth, estimatedLeftSpace, estimatedRightSpace, ...reserOfReservation } = reservation
+      const nextReservation = arr[index + 1]
+      console.log(reservation);
       const right = estimatedWidth < estimatedTextWidth && !reservation.displayTextLeft && (index + 1 < arr.length ?
-      estimatedRightSpace - arr[index + 1].estimatedTextWidth > estimatedTextWidth :
+      estimatedRightSpace - nextReservation.estimatedTextWidth > estimatedTextWidth :
       estimatedRightSpace > estimatedTextWidth)
 
       return {
@@ -107,11 +111,13 @@ class Place extends Component {
 
     const newPlace = { ...place,
       reservations: place.reservations
+        .sort(sortByDate)
         .map(estimatePosition)
         .map(estimateSpaceArround)
         .map(displayTextOnLeft)
         .map(displayTextOnRight)
     }
+    console.log(newPlace);
 
     const renderReservation = (reservation, firstCellIndex) => {
       const details = this.shouldShowDetails(reservation)
