@@ -26,7 +26,7 @@
     table-layout: fixed;
 
     >tr:hover {
-      outline: 1px dotted $blue;
+      outline:          1px dotted $blue;
       background-color: lighten($blue, 50%);
     }
   }
@@ -96,12 +96,13 @@
   z-index:        9;
 
   >span {
-    white-space:   nowrap;
+    white-space:    nowrap;
+    pointer-events: none;
   }
 
   &:not(.textOnLeft):not(.textOnRight) {
     >span {
-      display: block;
+      display:       block;
       text-overflow: ellipsis;
       overflow:      hidden;
     }
@@ -109,17 +110,17 @@
 
   &.textOnLeft {
     >span {
-      display: inline-block;
+      display:   inline-block;
       transform: translateX(calc(-100% - 3px));
-      color: $black;
+      color:     $black;
     }
   }
 
   &.textOnRight {
     >span {
-      display: block;
+      display:   block;
       transform: translateX(calc(100% + 3px));
-      color: $black;
+      color:     $black;
     }
   }
 
@@ -151,4 +152,8 @@
     background: $littleLighterGray;
   }
 
+}
+
+.tooltipTable {
+  color: $black;
 }
