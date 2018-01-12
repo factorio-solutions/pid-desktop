@@ -20,23 +20,23 @@ export function setGarageContracts(value) {
 
 
 export function initClients() {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
-      const current_user_id = response.data.current_user.id
-      const uniqueClients = response.data.client_users.reduce((acc, client_user) => {
-        if (acc.find(accumulated => accumulated.id === client_user.client.id) === undefined) acc.push(client_user.client)
+      const currentUserId = response.data.current_user.id
+      const uniqueClients = response.data.client_users.reduce((acc, clientUser) => {
+        if (acc.find(accumulated => accumulated.id === clientUser.client.id) === undefined) acc.push(clientUser.client)
         return acc
       }, [])
 
       const managebleClientIds = response.data.client_users
-                                .filter(client_user => { return client_user.user_id == current_user_id && client_user.admin })
-                                .map(client_users => { return client_users.client.id })
+                                .filter(clientUser => clientUser.user_id === currentUserId && clientUser.admin)
+                                .map(clientUsers => clientUsers.client.id)
 
-      uniqueClients.map(client => {
-        client.admin = managebleClientIds.includes(client.id)
-        client.userOfClient = true
-        return client
-      })
+      uniqueClients.map(client => ({
+        ...client,
+        admin:        managebleClientIds.includes(client.id),
+        userOfClient: true
+      }))
 
       dispatch(setClients(uniqueClients))
     }
