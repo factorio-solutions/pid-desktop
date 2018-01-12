@@ -31,7 +31,7 @@ class ClientsPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initGarageContracts()
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGarageContracts()
   }
 
   render() {
@@ -40,10 +40,18 @@ class ClientsPage extends Component {
     const schema = [
       { key: 'name', title: t([ 'clients', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
       { key: 'token', title: t([ 'clients', 'token' ]), comparator: 'string' },
-      { key: 'hasContract', title: t([ 'clients', 'contract' ]), comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" /> },
+      { key:         'hasContract',
+        title:       t([ 'clients', 'contract' ]),
+        comparator:  'boolean',
+        representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+      },
       { key: 'place_count', title: t([ 'clients', 'places' ]), comparator: 'number' },
       { key: 'monthly_total', title: t([ 'clients', 'monthlyTotal' ]), comparator: 'string' },
-      { key: 'all_invoices_paid', title: t([ 'clients', 'invoices' ]), comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" /> },
+      { key:         'all_invoices_paid',
+        title:       t([ 'clients', 'invoices' ]),
+        comparator:  'boolean',
+        representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+      },
       { key: 'user_count', title: t([ 'clients', 'users' ]), comparator: 'number' }
     ]
 
@@ -57,25 +65,34 @@ class ClientsPage extends Component {
         nav.to(`/${pageBase.garage}/admin/invoices`)
         actions.setClientId(client.id)
       }
+
       const toNewContract = () => {
         nav.to(`/${pageBase.garage}/admin/clients/newContract`)
         actions.setClient(client.id)
       }
+
       const prepareContractButton = contract => {
         const onContractClick = () => nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`)
         return <div className={styles.contract} onClick={onContractClick}>{contract.name}</div>
       }
+
       const prepareContactPersons = (acc, user, index, arr) => {
         acc.push(<span><b>{user.full_name}</b></span>)
         if (arr.length - 1 !== index) acc.push(<span>, </span>)
         return acc
       }
-      const currentContracts = contract => moment().isBetween(moment(contract.from), moment(contract.to))
+
+      const currentContractsFilter = contract => moment().isBetween(moment(contract.from), moment(contract.to))
+      const oldContractsFilter = contract => !currentContractsFilter(contract)
+
       const contractSum = (sum, contract) => {
         const startOfMonth = moment(contract.from) < moment().startOf('month') ? moment().startOf('month') : moment(contract.from)
         const endOfMonth = moment().endOf('month') < moment(contract.to) ? moment().endOf('month') : moment(contract.to)
         return sum + Math.round(contract.rent.price * contract.place_count * endOfMonth.diff(startOfMonth, 'days') / moment().daysInMonth())
       }
+
+      const currentContracts = client.contracts && client.contracts.filter(currentContractsFilter)
+      const oldContracts = client.contracts && client.contracts.filter(oldContractsFilter)
 
       const spoiler = (<div className={styles.spoiler}>
         <div>
@@ -84,20 +101,45 @@ class ClientsPage extends Component {
           {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
         </div>
         <div>
-          {client.contracts && client.contracts.map(prepareContractButton)}
+          {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
+          {currentContracts.map(prepareContractButton)}
+          {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
+          {oldContracts.map(prepareContractButton)}
         </div>
         <div>
-          <LabeledRoundButton label={t([ 'clients', 'createAgreement' ])} content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>} onClick={toNewContract} type="action" state={!pageBase.isGarageAdmin && 'disabled'} />
-          <LabeledRoundButton label={t([ 'clients', 'goToInvoices' ])} content={<span className="fa fa-files-o" aria-hidden="true" />} onClick={toInvoices} type={'action'} />
-          <LabeledRoundButton label={t([ 'clients', 'editClient' ])} content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={toEditClient} type="action" state={client.admin ? '' : 'disabled'} />
-          <LabeledRoundButton label={t([ 'clients', 'goToUsers' ])} content={<span className="fa fa-child" aria-hidden="true" />} onClick={toClient} type={client.userOfClient ? 'action' : 'disabled'} />
+          <LabeledRoundButton
+            label={t([ 'clients', 'createAgreement' ])}
+            content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
+            onClick={toNewContract}
+            type="action"
+            state={!pageBase.isGarageAdmin && 'disabled'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'goToInvoices' ])}
+            content={<span className="fa fa-files-o" aria-hidden="true" />}
+            onClick={toInvoices}
+            type={'action'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'editClient' ])}
+            content={<span className="fa fa-pencil" aria-hidden="true" />}
+            onClick={toEditClient}
+            type="action"
+            state={client.admin ? '' : 'disabled'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'goToUsers' ])}
+            content={<span className="fa fa-child" aria-hidden="true" />}
+            onClick={toClient}
+            type={client.userOfClient ? 'action' : 'disabled'}
+          />
         </div>
       </div>)
 
       return { ...client,
         spoiler,
-        hasContract:   client.contracts && client.contracts.filter(currentContracts).length > 0,
-        monthly_total: client.contracts ? client.contracts.filter(currentContracts).reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
+        hasContract:   client.contracts && client.contracts.filter(currentContractsFilter).length > 0,
+        monthly_total: client.contracts ? client.contracts.filter(currentContractsFilter).reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
       }
     }
 
