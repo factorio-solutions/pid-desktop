@@ -98,7 +98,6 @@ class Place extends Component {
     const displayTextOnRight = (reservation, index, arr) => {
       const { estimatedWidth, estimatedTextWidth, estimatedLeftSpace, estimatedRightSpace, ...reserOfReservation } = reservation
       const nextReservation = arr[index + 1]
-      console.log(reservation);
       const right = estimatedWidth < estimatedTextWidth && !reservation.displayTextLeft && (index + 1 < arr.length ?
       estimatedRightSpace - nextReservation.estimatedTextWidth > estimatedTextWidth :
       estimatedRightSpace > estimatedTextWidth)
@@ -117,7 +116,6 @@ class Place extends Component {
         .map(displayTextOnLeft)
         .map(displayTextOnRight)
     }
-    console.log(newPlace);
 
     const renderReservation = (reservation, firstCellIndex) => {
       const details = this.shouldShowDetails(reservation)
