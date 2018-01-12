@@ -92,9 +92,36 @@
   color:     $white;
   font-size: 14px;
 
-  overflow:       hidden;
   vertical-align: middle;
   z-index:        9;
+
+  >span {
+    white-space:   nowrap;
+  }
+
+  &:not(.textOnLeft):not(.textOnRight) {
+    >span {
+      display: block;
+      text-overflow: ellipsis;
+      overflow:      hidden;
+    }
+  }
+
+  &.textOnLeft {
+    >span {
+      display: inline-block;
+      transform: translateX(calc(-100% - 3px));
+      color: $black;
+    }
+  }
+
+  &.textOnRight {
+    >span {
+      display: block;
+      transform: translateX(calc(100% + 3px));
+      color: $black;
+    }
+  }
 
   &.forCurrentUser {
     &.future {
