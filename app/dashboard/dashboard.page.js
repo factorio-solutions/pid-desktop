@@ -83,11 +83,6 @@ class DashboardPage extends Component {
           <iframe scrolling="auto" className={styles.iframe} src={`https://gama.park-it-direct.com/${getLanguage()}/pid-dashboard`} /> :
           <div className={styles.container}>
             <div>
-              <h2 className={styles.h2}>{t([ 'dashboard', 'garage' ])}</h2>
-              <GarageLayout floors={state.garage ? state.garage.floors : []} showEmptyFloors unfold />
-            </div>
-
-            <div>
               <div>
                 <h2 className={styles.h2}>{t([ 'dashboard', 'statistics' ])}</h2>
 
@@ -142,6 +137,11 @@ class DashboardPage extends Component {
                   {state.news.map(prepareNews)}
                 </div>
               </div>}
+            </div>
+
+            <div>
+              <h2 className={styles.h2}>{t([ 'dashboard', 'garage' ])}</h2>
+              <GarageLayout floors={state.garage ? state.garage.floors : []} showEmptyFloors unfold />
             </div>
           </div>
         }

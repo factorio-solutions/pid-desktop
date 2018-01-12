@@ -1,10 +1,10 @@
 @import '../_styles/app.desktop';
 
-.padding{
+.padding {
   padding-right: 25px;
 }
 
-.clickable{
+.clickable {
   cursor: pointer;
 }
 .selected {
@@ -14,67 +14,52 @@
   display: none;
 }
 
-.floatRight{
+.floatRight {
   float: right;
 }
-// .rightCollumn{
-//   padding: 0 25px;
-// }
-.floatCenter{
-  text-align: center
+
+.floatCenter {
+  text-align: center;
 }
 
 .loading {
+  height:     200px;
+  margin:     100px;
   text-align: center;
-  height: 200px;
-  margin: 100px;
 }
 
 
 @media (min-width: $collapseWidth) {
-  .parent{
+  .parent {
     display: flex;
   }
 
-  .leftCollumn{
-    display: inline-block;
-    width: 34%;
-
-    // border-right: 1px solid black;
+  .leftCollumn {
+    flex: 1 1;
   }
 
-  .rightCollumn{
-    display: inline-block;
-    width: 66%;
+  .rightCollumn {
+    flex: 2 2;
   }
 }
 
-@media (max-width: $collapseWidth) {
-  .leftCollumn{
-  }
-
-  .rightCollumn{
-  }
-}
-
-
-.recurringForm{
+.recurringForm {
   display: flex;
 
-  >input{
+  >input {
     margin: auto 0;
   }
-  &.hidden{
+  &.hidden {
     display: none;
   }
 }
 
-.rule{
+.rule {
+  flex: 1 1;
   margin: 15px 0 15px 5px;
   cursor: pointer;
-  flex: 1 1;
 
-  &.disabled{
+  &.disabled {
     color: $lightGray;
   }
 }
