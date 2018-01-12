@@ -1,30 +1,16 @@
-.matchWidth{
+.matchWidth {
 	min-height: 200px;
-	// max-width:  600px;
-
-	// transform: rotate(-90deg) translateX(-100%);
-  // transform-origin: 0 0;
-
 
 	> svg {
-	  // width:  100%;
-	  // height: 100%;
-		height: 90%;
-    max-width: 90%;
+		height: 100%;
+	  width:  100%;
 	}
 }
 
-
-// .matchWidth::after{
-// 	con­tent: "";
-//  	float: left;
-//  	mar­gin-top: 100%;
-// }
-
-.rotate{
+.rotate {
 	>svg{
-		transform-origin: 0% 0%;
+		width: inherit;
 		transform: rotate(-90deg) translate(-100%, 0%);
-    width: inherit;
+		transform-origin: 0% 0%;
 	}
 }
