@@ -7,6 +7,7 @@
 
   >div:first-child {
     flex: 1 1;
+    text-align: left;
   }
 
   >div:last-child {
@@ -15,7 +16,7 @@
 }
 
 .grayBackground { // for dashboard
-  margin:           0 20px 20px 0;
+  // margin:           0 20px 20px 0;
   background-color: $gray;
 
   >div>svg {

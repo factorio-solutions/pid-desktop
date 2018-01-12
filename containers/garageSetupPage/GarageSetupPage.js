@@ -14,7 +14,7 @@ import * as pageBaseActions from '../../actions/pageBase.actions'
 import * as nav from '../../helpers/navigation'
 
 
-export class GarageSetupPage extends Component {
+class GarageSetupPage extends Component {
   static propTypes = {
     state:       PropTypes.object,
     garageSetup: PropTypes.object,
