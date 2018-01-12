@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import moment from 'moment'
 
+import Reservation from './Reservation'
+
 import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview'
 import { getTextWidth14px } from '../../helpers/estimateTextWidth'
 
@@ -10,14 +12,12 @@ import styles from './OccupancyOverview.scss'
 
 class Place extends Component {
   static propTypes = {
-    pageBase:     PropTypes.object,
-    place:        PropTypes.object,
-    duration:     PropTypes.string,
-    from:         PropTypes.object,
-    now:          PropTypes.number,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    showDetails:  PropTypes.bool
+    pageBase:    PropTypes.object,
+    place:       PropTypes.object,
+    duration:    PropTypes.string,
+    from:        PropTypes.object,
+    now:         PropTypes.number,
+    showDetails: PropTypes.bool
   }
 
   constructor(props) {
@@ -50,26 +50,25 @@ class Place extends Component {
   }
 
   render() {
-    const { place, duration, from, now, onMouseEnter, onMouseLeave } = this.props
+    const { place, duration, from, now, showDetails } = this.props
     const rowWidth = this.row ? this.row.getBoundingClientRect().width - 62 : 0 // width of time window
     const cellDuration = duration === 'day' ? 1 : 12 // hours
     const windowLength = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS) // in days
     const cellCount = windowLength * (duration === 'day' ? 24 : 2)
 
-    const sortByDate = (a, b) => moment(b.begins_at).isBefore(a.begins_at)
+    const sortByDate = (a, b) => (a.begins_at < b.begins_at ? -1 : (a.begins_at > b.begins_at ? 1 : 0)) // can be sorted as string - might be faster
 
     const estimatePosition = reservation => {
       const begining = moment(reservation.begins_at)
       const dur = moment(reservation.ends_at).diff(begining.isSameOrBefore(from) ? from : begining, 'hours', true)
       const durationInCells = dur / cellDuration
       const fromStart = begining.diff(from, 'days', true)
-      const text = this.composeLabel(reservation)
 
       return {
         ...reservation,
         estimatedWidth:     (durationInCells / cellCount) * rowWidth, // in px
         estimatedStart:     (fromStart / windowLength) * rowWidth, // in px
-        estimatedTextWidth: getTextWidth14px(text) // in px
+        estimatedTextWidth: getTextWidth14px(this.composeLabel(reservation)) // in px
       }
     }
 
@@ -85,21 +84,15 @@ class Place extends Component {
       }
     }
 
-    const displayTextOnLeft = reservation => {
-      const { estimatedWidth, estimatedTextWidth, estimatedLeftSpace } = reservation
-      const left = estimatedWidth < estimatedTextWidth && estimatedLeftSpace > estimatedTextWidth
-
-      return {
-        ...reservation,
-        displayTextLeft: left
-      }
-    }
+    const displayTextOnLeft = reservation => ({
+      ...reservation,
+      displayTextLeft: reservation.estimatedWidth < reservation.estimatedTextWidth && reservation.estimatedLeftSpace > reservation.estimatedTextWidth
+    })
 
     const displayTextOnRight = (reservation, index, arr) => {
       const { estimatedWidth, estimatedTextWidth, estimatedLeftSpace, estimatedRightSpace, ...reserOfReservation } = reservation
-      const nextReservation = arr[index + 1]
       const right = estimatedWidth < estimatedTextWidth && !reservation.displayTextLeft && (index + 1 < arr.length ?
-      estimatedRightSpace - nextReservation.estimatedTextWidth > estimatedTextWidth :
+      estimatedRightSpace - arr[index + 1].estimatedTextWidth > estimatedTextWidth :
       estimatedRightSpace > estimatedTextWidth)
 
       return {
@@ -116,6 +109,8 @@ class Place extends Component {
         .map(displayTextOnLeft)
         .map(displayTextOnRight)
     }
+
+    console.log(newPlace);
 
     const renderReservation = (reservation, firstCellIndex) => {
       const details = this.shouldShowDetails(reservation)
@@ -150,20 +145,16 @@ class Place extends Component {
         lastCellWidth * ((durationInCells + firstCellOffset) % 1)
       ) - left // due to first cell offset
 
-      const mouseEnter = e => onMouseEnter(e, reservation)
       const text = this.composeLabel(reservation)
 
-      return (<div
-        onMouseEnter={mouseEnter}
-        onMouseLeave={onMouseLeave}
-        className={classes.filter(o => o).join(' ')}
-        style={{
-          left:  left + 'px',
-          width: width <= 0 ? 1 : width + 'px'
-        }}
-      >
-        <span>{text}</span>
-      </div>)
+      return (<Reservation
+        reservation={reservation}
+        showDetails={showDetails}
+        classes={classes.filter(o => o).join(' ')}
+        left={left}
+        width={width}
+        text={text}
+      />)
     }
 
     const renderCells = (o, index) => {
