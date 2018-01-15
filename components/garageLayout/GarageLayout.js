@@ -15,7 +15,7 @@ const INIT_STATE = {
   mouseX:  0,
   mouseY:  0,
   visible: false,
-  floor:   0, // index of selected floor
+  floor:   -1, // index of selected floor
   rotate:  false
 }
 
@@ -43,11 +43,23 @@ class GarageLayout extends Component {
 
   constructor(props) {
     super(props)
-    this.state = INIT_STATE
+    this.state = {
+      ...INIT_STATE,
+      floor: props.showEmptyFloors ? 0 : INIT_STATE.floor
+    }
   }
 
   componentDidMount() {
     this.scanPlacesAddLabels()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.showEmptyFloors && (this.state.floor === -1 || !nextProps.floors[this.state.floor].free_places.length)) {
+      this.setState({
+        ...this.state,
+        floor: nextProps.floors.findIndex(floor => floor.free_places.length)
+      })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -229,22 +241,26 @@ class GarageLayout extends Component {
     }
   }
 
-
   render() {
     const divider = <span />
     const { floors, onPlaceClick, showEmptyFloors, unfold } = this.props
     const { floor } = this.state
 
-    const prepareButtons = (floor, index, arr) => {
-      const onFloorClick = () => { this.setState({ ...this.state, floor: index }), () => { this.scanPlacesAddLabels() } }
+    const prepareButtons = (floor, index) => {
+      const onFloorClick = () => this.setState({ ...this.state, floor: index })
       return (
-        <RoundButton key={index} content={floor.label} onClick={onFloorClick} state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex(place => { return place.available == true }) === -1 && 'disabled')} />
+        <RoundButton
+          key={index}
+          content={floor.label}
+          onClick={onFloorClick}
+          state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex(place => place.available) === -1 && 'disabled')}
+        />
       )
     }
 
     const handleSVGClick = ({ target }) => {
       const id = target.getAttribute('id')
-      if (id && id.substring(0, 5) == 'Place') {
+      if (id && id.substring(0, 5) === 'Place') {
         const place = floors[floor].places.find(place => { return place.label === id.substring(5) })
         place && place.available && onPlaceClick(place)
       }

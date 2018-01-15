@@ -242,7 +242,9 @@
 		"places": "places",
 		"contract": "agreement",
 		"monthlyTotal": "monthly total",
-		"invoices": "invoices"
+		"invoices": "invoices",
+		"currentAgreements": "Active agreements:",
+		"oldAgreements": "Old agreements:"
 	},
 	"clientUsers": {
 		"name": "username",
@@ -323,7 +325,6 @@
 		"flatPrice": "flat price:",
 		"reservationId": "Reservation ID:",
 		"driver": "Driver:",
-		"type": "Type:",
 		"period": "Period:",
 		"licencePlate": "License plate:",
 		"longterm": "Long-term",
