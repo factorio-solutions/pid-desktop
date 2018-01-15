@@ -698,7 +698,8 @@
 		"invalidName": "Invalid pricing name",
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency",
-		"selectPlace": "Start by selecting a spot"
+		"selectPlace": "Start by selecting a spot",
+		"saving": "Saving..."
 	},
 	"newRent": {
 		"name": "Name",
