@@ -357,12 +357,12 @@ export function toReservations() {
     let hint = t([ 'pageBase', 'reservationsHint' ])
 
     switch (true) { // MainMenu
-      case contains(hash, 'newReservation'):
-        hint = t([ 'pageBase', 'newReservationHint' ])
-        break
-
       case contains(hash, 'overview'):
         hint = t([ 'pageBase', 'reservationOverviewHint' ])
+        break
+
+      case contains(hash, 'newReservation'):
+        hint = t([ 'pageBase', 'newReservationHint' ])
         break
     }
 
