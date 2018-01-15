@@ -1,11 +1,12 @@
-import React from 'react'
+import React     from 'react'
 import translate from 'counterpart'
 
 import ConfirmModal from '../components/modal/ConfirmModal'
-import AlertModal from '../components/modal/AlertModal'
+import AlertModal   from '../components/modal/AlertModal'
 
-import * as nav    from '../helpers/navigation'
-import { request } from '../helpers/request'
+import * as nav      from '../helpers/navigation'
+import { request }   from '../helpers/request'
+import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
 
 import { GET_CURRENT_USER, GET_GARAGES } from '../queries/pageBase.queries'
@@ -28,76 +29,17 @@ export const PAGE_BASE_SET_IS_GARAGE_ADMIN = 'PAGE_BASE_SET_IS_GARAGE_ADMIN'
 export const PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST = 'PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST'
 export const PAGE_BASE_SET_IS_GARAGE_SECURITY = 'PAGE_BASE_SET_IS_GARAGE_SECURITY'
 
+export const setSelected = actionFactory(PAGE_BASE_SELECTED)
+export const setSecondaryMenu = actionFactory(PAGE_BASE_SECONDARY_MENU)
+export const setSecondaryMenuSelected = actionFactory(PAGE_BASE_SECONDARY_MENU_SELECTED)
+export const setShowSecondaryMenu = actionFactory(PAGE_BASE_SHOW_SECONDARY_MENU)
+export const setSecondaryMenuBackButton = actionFactory(PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON)
+export const setError = actionFactory(PAGE_BASE_SET_ERROR)
+export const setSuccess = actionFactory(PAGE_BASE_SET_SUCCESS)
+export const setCustomModal = actionFactory(PAGE_BASE_SET_CUSTOM_MODAL)
+export const setShowModal = actionFactory(PAGE_BASE_SET_NOTIFICATIONS_MODAL)
+export const setCurrentUser = actionFactory(PAGE_BASE_SET_CURRENT_USER)
 
-export function setSelected(value) {
-  return {
-    type: PAGE_BASE_SELECTED,
-    value
-  }
-}
-
-export function setSecondaryMenu(value) {
-  return {
-    type: PAGE_BASE_SECONDARY_MENU,
-    value
-  }
-}
-
-export function setSecondaryMenuSelected(value) {
-  return {
-    type: PAGE_BASE_SECONDARY_MENU_SELECTED,
-    value
-  }
-}
-
-export function setShowSecondaryMenu(value) {
-  return {
-    type: PAGE_BASE_SHOW_SECONDARY_MENU,
-    value
-  }
-}
-
-export function setSecondaryMenuBackButton(value) {
-  return {
-    type: PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON,
-    value
-  }
-}
-
-export function setError(value) {
-  return {
-    type: PAGE_BASE_SET_ERROR,
-    value
-  }
-}
-
-export function setSuccess(value) {
-  return {
-    type: PAGE_BASE_SET_SUCCESS,
-    value
-  }
-}
-
-export function setCustomModal(value) {
-  return {
-    type: PAGE_BASE_SET_CUSTOM_MODAL,
-    value
-  }
-}
-
-export function setShowModal(value) {
-  return {
-    type: PAGE_BASE_SET_NOTIFICATIONS_MODAL,
-    value
-  }
-}
-
-export function setCurrentUser(value) {
-  return {
-    type: PAGE_BASE_SET_CURRENT_USER,
-    value
-  }
-}
 
 export function setHint(hint, href) {
   return {
@@ -145,9 +87,6 @@ export function setGarages(value) {
 
 export function setGarage(value) {
   return (dispatch, getState) => {
-    // console.log(getState().pageBase.garage, value);
-    // console.log(window.location);
-    //
     if (window.location.hash.includes(`/${getState().pageBase.garage}/`)) {
       nav.to(`/${value}/` + window.location.hash.split(`/${getState().pageBase.garage}/`)[1].split('?')[0])
     }
