@@ -181,7 +181,7 @@ class ReservationsPage extends Component {
           </div>
           <div>
             <span className={styles.floatRight}>
-              {reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
+              {reservation.client && reservation.client.is_secretary && moment(reservation.ends_at).isAfter(moment()) &&
               <LabeledRoundButton
                 label={t([ 'reservations', 'editReservation' ])}
                 content={<span className="fa fa-pencil" aria-hidden="true" />}

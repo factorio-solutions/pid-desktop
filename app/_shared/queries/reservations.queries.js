@@ -12,6 +12,7 @@ export const GET_RESERVATIONS_QUERY = `query Reservations($past: Boolean) {
     }
     client {
       name
+      is_secretary
     }
     created_at
     creator {
@@ -73,6 +74,7 @@ export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($user_id: I
     }
     client {
       name
+      is_secretary
     }
     created_at
     creator {

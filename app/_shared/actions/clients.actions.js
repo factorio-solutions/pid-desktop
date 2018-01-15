@@ -32,13 +32,12 @@ export function initClients() {
                                 .filter(clientUser => clientUser.user_id === currentUserId && clientUser.admin)
                                 .map(clientUsers => clientUsers.client.id)
 
-      uniqueClients.map(client => ({
+      dispatch(setClients(uniqueClients.map(client => ({
         ...client,
         admin:        managebleClientIds.includes(client.id),
         userOfClient: true
       }))
-
-      dispatch(setClients(uniqueClients))
+))
     }
     request(onSuccess, GET_CLIENTS)
   }
