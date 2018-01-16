@@ -130,7 +130,7 @@ export class Page extends Component {
         {this.props.children}
       </div>
 
-      {back && <div className={styles.backButton}><RoundButton content={<span className="fa fa-chevron-left"></span>} onClick={back} /></div>}
+      {back && <div className={styles.backButton}><RoundButton content={<span className="fa fa-chevron-left"></span>} onClick={back} type="whiteBorder" /></div>}
       {add && <div className={styles.addButton}> <RoundButton content={<span className="fa fa-plus"></span>} onClick={add} type="action" state={!state.online && 'disabled'} /></div>}
       {ok && <div className={styles.okButton}> <RoundButton content={<span className="fa fa-check"></span>} onClick={ok} type="confirm" state={!state.online && 'disabled'} /></div>}
 
