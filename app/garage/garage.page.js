@@ -42,7 +42,8 @@ class GaragePage extends Component {
       <TabButton label={t([ 'garages', 'cars' ])} onClick={() => { actions.setSelected('cars') }} state={state.selected === 'cars' && 'selected'} />
     ]
 
-    const right = [ <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
+    const right = [
+      <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
       <div style={{ display: 'inline-block' }}>
         <TabButton label={t([ 'garages', 'setDate' ])} onClick={() => { actions.setSelector(true) }} state={!state.now && 'selected'} />
         <PopupDatetimepicker onSelect={actions.setTime} show={state.showSelector} flip okClick={() => { actions.setSelector(false) }} datetime={state.time} />
