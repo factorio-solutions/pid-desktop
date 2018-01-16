@@ -30,8 +30,10 @@ class GoPublicPage extends Component {
     nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGoPublic()
   }
 
+  goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/modules`)
+
   render() {
-    const { state, actions, pageBase } = this.props
+    const { state, actions } = this.props
 
     const preparePlaces = floor => ({
       ...floor,
@@ -44,41 +46,30 @@ class GoPublicPage extends Component {
 
     const currencies = () => state.currencies.map(currency => ({
       label:   currency.code,
-      onClick: actions.setSelectedCurrency.bind(this, currency)
+      onClick: () => actions.setCurrencyId(currency.id)
     }))
 
-    const submitForm = () => actions.submitPricings()
-    const goBack = () => nav.to(`/${pageBase.garage}/admin/modules`)
-    const isSubmitable = () => {
-      return state.garage && state.garage.floors.reduce((atLeastOnePricing, floor) => { // at least one pricing has to be complete to submit
-        return floor.places.reduce((atLeastOnePricing, place) => {
-          return atLeastOnePricing || (place.pricing !== null &&
-            place.pricing.currency_id !== undefined &&
-            ((place.pricing.flat_price !== undefined && place.pricing.flat_price !== '') ||
-            (place.pricing.exponential_12h_price !== undefined && place.pricing.exponential_12h_price !== '' &&
-            place.pricing.exponential_day_price !== undefined && place.pricing.exponential_day_price !== '' &&
-            place.pricing.exponential_week_price !== undefined && place.pricing.exponential_week_price !== '' &&
-            place.pricing.exponential_month_price !== undefined && place.pricing.exponential_month_price !== ''))
-          )
-        }, atLeastOnePricing)
-      }, false)
-    }
+    const isSubmitable = () => state.currency_id &&
+      ((state.flat_price.value) ||
+      (state.exponential_12h_price.value &&
+      state.exponential_day_price.value &&
+      state.exponential_week_price.value &&
+      state.exponential_month_price.value))
 
-    const place = state.garage ? state.garage.floors.reduce((acc, floor) => {
-      return [ ...acc, ...floor.places ]
-    }, []).find(place => state.places.includes(place.id)) : undefined
-
-    const pricing = place && place.pricing
-    const selectedCurrency = pricing ? state.currencies.findIndex(c => pricing.currency_id === c.id) : -1
 
     return (
       <PageBase>
         <div className={styles.flex}>
           <div className={styles.half}>
-            <Form onSubmit={submitForm} submitable={isSubmitable()} onBack={goBack}>
+            <Form onSubmit={actions.submitPricings} submitable={isSubmitable()} onBack={this.goBack}>
               {state.places.length === 0 && <div className={styles.dimmer}>{t([ 'newPricing', 'selectPlace' ])}</div>}
               <div>
-                <Dropdown label={t([ 'newPricing', 'selectCurrency' ])} content={currencies()} style="light" selected={selectedCurrency} />
+                <Dropdown
+                  label={t([ 'newPricing', 'selectCurrency' ])}
+                  content={currencies()}
+                  style="light"
+                  selected={state.currencies.findIndexById(state.currency_id)}
+                />
               </div>
               <div>
                 <h2>{t([ 'newPricing', 'flatPrice' ])}</h2>
@@ -88,7 +79,7 @@ class GoPublicPage extends Component {
                   error={t([ 'newPricing', 'invalidPrice' ])}
                   pattern="^[+]?\d+([,.]\d+)?$"
                   placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
-                  value={pricing ? pricing.flat_price || '' : ''}
+                  value={state.flat_price.value || ''}
                 />
               </div>
               <div>
@@ -99,7 +90,7 @@ class GoPublicPage extends Component {
                   error={t([ 'newPricing', 'invalidPrice' ])}
                   pattern="^[+]?\d+([,.]\d+)?$"
                   placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
-                  value={pricing ? pricing.exponential_12h_price || '' : ''}
+                  value={state.exponential_12h_price.value || ''}
                 />
                 <PatternInput
                   onChange={actions.setExponentialDayPrice}
@@ -107,7 +98,7 @@ class GoPublicPage extends Component {
                   error={t([ 'newPricing', 'invalidPrice' ])}
                   pattern="^[+]?\d+([,.]\d+)?$"
                   placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
-                  value={pricing ? pricing.exponential_day_price || '' : ''}
+                  value={state.exponential_day_price.value || ''}
                 />
                 <PatternInput
                   onChange={actions.setExponentialWeekPrice}
@@ -115,7 +106,7 @@ class GoPublicPage extends Component {
                   error={t([ 'newPricing', 'invalidPrice' ])}
                   pattern="^[+]?\d+([,.]\d+)?$"
                   placeholder={t([ 'newPricing', 'minPlaceholder' ])}
-                  value={pricing ? pricing.exponential_week_price || '' : ''}
+                  value={state.exponential_week_price.value || ''}
                 />
                 <PatternInput
                   onChange={actions.setExponentialMonthPrice}
@@ -123,7 +114,7 @@ class GoPublicPage extends Component {
                   error={t([ 'newPricing', 'invalidPrice' ])}
                   pattern="^[+]?\d+([,.]\d+)?$"
                   placeholder={t([ 'newPricing', 'decayPlaceholder' ])}
-                  value={pricing ? pricing.exponential_month_price || '' : ''}
+                  value={state.exponential_month_price.value || ''}
                 />
               </div>
 
@@ -135,7 +126,7 @@ class GoPublicPage extends Component {
                   error={t([ 'newPricing', 'invalidPrice' ])}
                   pattern="^[+]?\d+([,.]\d+)?$"
                   placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
-                  value={pricing ? pricing.weekend_price || '' : ''}
+                  value={state.weekend_price.value || ''}
                 />
               </div>
             </Form>
