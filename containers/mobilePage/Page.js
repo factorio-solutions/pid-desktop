@@ -35,9 +35,10 @@ export class Page extends Component {
     margin:        PropTypes.bool, // will give page 10px margin to offset content
 
     // navigation functions
-    back: PropTypes.func,
-    add:  PropTypes.func,
-    ok:   PropTypes.func
+    back:        PropTypes.func,
+    add:         PropTypes.func,
+    ok:          PropTypes.func,
+    outlineBack: PropTypes.func
   }
 
   static contextTypes = {
@@ -72,7 +73,7 @@ export class Page extends Component {
   render() {
     const { actions, state } = this.props
     const { hideDropdown, hideHamburger, hideHeader, margin } = this.props
-    const { back, add, ok } = this.props
+    const { back, add, ok, outlineBack } = this.props
 
     const selectedGarage = () => state.garages.findIndex(garage => garage.id === state.garage_id)
     const currentUser = () => { console.log('TODO: current user profile') }
@@ -131,6 +132,7 @@ export class Page extends Component {
       </div>
 
       {back && <div className={styles.backButton}><RoundButton content={<span className="fa fa-chevron-left"></span>} onClick={back} /></div>}
+      {outlineBack && <div className={styles.backButton}><RoundButton content={<span className="fa fa-chevron-left"></span>} onClick={outlineBack} type="whiteBorder" /></div>}
       {add && <div className={styles.addButton}> <RoundButton content={<span className="fa fa-plus"></span>} onClick={add} type="action" state={!state.online && 'disabled'} /></div>}
       {ok && <div className={styles.okButton}> <RoundButton content={<span className="fa fa-check"></span>} onClick={ok} type="confirm" state={!state.online && 'disabled'} /></div>}
 

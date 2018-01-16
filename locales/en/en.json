@@ -1058,7 +1058,8 @@
 			"guestReservations": "Guest"
 		},
 		"access": {
-			"swipeToOpen": "Swipe to open the gate",
+			"floor": "Floor",
+			"place": "Place",
 			"noOngoingReservations": "No ongoing reservations",
 			"inSelectedGarage": "in selected garage"
 		},
