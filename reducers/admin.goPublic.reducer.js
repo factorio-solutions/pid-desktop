@@ -48,6 +48,7 @@ export default function adminGoPublic(state = defaultState, action) {
           exponential_day_price:   { value: place && place.pricing && place.pricing.exponential_day_price, valid: true },
           exponential_week_price:  { value: place && place.pricing && place.pricing.exponential_week_price, valid: true },
           exponential_month_price: { value: place && place.pricing && place.pricing.exponential_month_price, valid: true },
+          weekend_price:           { value: place && place.pricing && place.pricing.weekend_price, valid: true },
           currency_id:             place && place.pricing && place.pricing.currency_id
         }
       } else if (state.places.length === 1 && state.places.includes(action.value)) { // last place deselected - remove values
@@ -58,6 +59,7 @@ export default function adminGoPublic(state = defaultState, action) {
           exponential_day_price:   { value: '', valid: false },
           exponential_week_price:  { value: '', valid: false },
           exponential_month_price: { value: '', valid: false },
+          weekend_price:           { value: '', valid: false },
           currency_id:             undefined
         }
       } else {
