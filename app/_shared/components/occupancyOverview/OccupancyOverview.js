@@ -61,7 +61,7 @@ class OccupancyOverview extends Component {
     const clientUser = reservation.client ? reservation.client.client_user : {}
 
     this.setState({
-      content: (showDetails || clientUser.admin || clientUser.secretary ||
+      content: (showDetails || (clientUser && clientUser.admin) || (clientUser && clientUser.secretary) ||
       (pageBase.current_user && pageBase.current_user.id === reservation.user.id)) ? <table className={styles.tooltipTable}><tbody>
         <tr><td>{t([ 'occupancy', 'reservationsId' ])}</td><td>{reservation.id}</td></tr>
         <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user.full_name}</td></tr>

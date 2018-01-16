@@ -310,13 +310,8 @@ export function toReservations() {
 }
 
 export function toOccupancy() {
-  return (dispatch, getState) => {
-    const state = getState().pageBase
-    if (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) {
-      dispatch(setAll('occupancy', [], undefined, t([ 'pageBase', 'OccupancyOverviewHint' ]), 'https://www.youtube.com/'))
-    } else {
-      nav.to('/dashboard')
-    }
+  return dispatch => {
+    dispatch(setAll('occupancy', [], undefined, t([ 'pageBase', 'OccupancyOverviewHint' ]), 'https://www.youtube.com/'))
   }
 }
 

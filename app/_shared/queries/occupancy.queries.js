@@ -71,7 +71,7 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $t
 
 export const GARAGE_CLIENTS_QUERY = `query Garage($id: Id!) {
   garage(id: $id) {
-		clients{
+    clients{
       name
       id
     }

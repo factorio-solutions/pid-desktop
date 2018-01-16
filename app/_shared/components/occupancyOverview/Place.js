@@ -37,7 +37,7 @@ class Place extends Component {
     const renderReservation = (reservation, firstCellIndex) => {
       const forCurrentUser = pageBase.current_user && pageBase.current_user.id === reservation.user.id
       const clientUser = reservation.client ? reservation.client.client_user : {}
-      const details = showDetails || clientUser.admin || clientUser.secretary || forCurrentUser
+      const details = showDetails || (clientUser && clientUser.admin) || (clientUser && clientUser.secretary) || forCurrentUser
 
       const classes = [
         styles.reservation,

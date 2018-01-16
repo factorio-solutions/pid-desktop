@@ -24,7 +24,7 @@ class OccupancyPage extends Component {
   }
 
   componentDidMount() {
-    this.props.pageBase.garage && this.props.actions.initOccupancy()
+    this.props.actions.initOccupancy()
   }
 
   render() {
@@ -72,7 +72,7 @@ class OccupancyPage extends Component {
       <OccupancyOverview
         places={garage ? garage.floors.reduce(preparePlaces, []) : []}
         from={state.from}
-        showDetails={garage.user_garage.admin || garage.user_garage.receptionist || garage.user_garage.security}
+        showDetails={(garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security)}
         duration={state.duration}
         resetClientClick={actions.resetClientClick}
         loading={!state.garages.length || state.loading}
