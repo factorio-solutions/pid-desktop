@@ -86,7 +86,8 @@
 .reservation {
   position:     absolute;
   top:          2px;
-  height:       calc(100% - 4px);
+  height:       calc(100% - 5px);
+  padding-top:  1px;
   padding-left: 1px;
 
   color:     $white;
