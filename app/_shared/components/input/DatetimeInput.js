@@ -18,6 +18,7 @@ export default class DatetimeInput extends Component {
     style:       PropTypes.string,
     onChange:    PropTypes.func, // use if you want to pass value to parent
     onEnter:     PropTypes.func, // called when enter pressed
+    onBlur:      PropTypes.func, // called when enter pressed
     value:       PropTypes.string,
     inlineMenu:  PropTypes.object,
     editable:    PropTypes.bool // can be turned off
@@ -37,16 +38,18 @@ export default class DatetimeInput extends Component {
   }
 
   render() {
-    const { label, error, placeholder, onChange, onEnter, inlineMenu, style, editable } = this.props
+    const { label, error, placeholder, onChange, onEnter, onBlur, inlineMenu, style, editable } = this.props
 
     const handleChange = event => {
       editable && this.setState({ ...this.state, message: event.target.value })
-      onChange && onChange(moment(event.target.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT), moment(event.target.value, MOMENT_DATETIME_FORMAT).isValid())
+      // onChange && onChange(moment(event.target.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT), moment(event.target.value, MOMENT_DATETIME_FORMAT).isValid())
+      onChange && onChange(event.target.value, moment(event.target.value, MOMENT_DATETIME_FORMAT).isValid())
     }
 
     const handlePick = date => {
       this.setState({ ...this.state, message: moment(date).format(MOMENT_DATETIME_FORMAT) })
       onChange && onChange(moment(date).format(MOMENT_DATETIME_FORMAT), moment(date).isValid())
+      onBlur && onBlur()
     }
 
     const preventEnter = function (event) {
@@ -67,7 +70,10 @@ export default class DatetimeInput extends Component {
 
     return (
       <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} >
-        <input type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4}) (\d{1,2}):(\d{2})" />
+        <input
+          type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4}) (\d{1,2}):(\d{2})"
+          onBlur={onBlur}
+        />
         <span className={styles.bar} />
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
