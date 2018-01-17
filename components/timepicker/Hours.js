@@ -1,31 +1,18 @@
 import React    from 'react'
-import moment   from 'moment'
 import styles   from './Timepicker.scss'
 import { t } from '../../modules/localization/localization'
 
 
 export default function Hours({ time, onClick }) {
   const createHours = () => {
-    const hours = Array(4).fill().map(() => Array(6).fill())
-    for (let i = 0; i < 24; i++) {
-      hours[Math.floor(i / 6)][i % 6] = i
-    }
+    const hours = Array(4).fill().map((_, row) => Array(6).fill().map((_, col) => (6 * row) + col))
 
     return hours.map((hoursRow, index) => {
-      const createRow = (hour, index) => {
-        return (
-          <td
-            key={index}
-            className={`${styles.clickable}`}
-            onClick={() => { onClick(hour) }}
-          >
-            <div className={time.substring(0, 2) === hour && styles.selected}>{hour}</div>
-          </td>)
-      }
+      const createRow = hour => (<td key={hour} className={`${styles.clickable}`} onClick={() => onClick(hour)}>
+        <div className={parseInt(time.split(':')[0], 10) === hour && styles.selected}>{hour}</div>
+      </td>)
 
-      return (
-        <tr key={index} className={styles.pickerRow}>{hoursRow.map(createRow)}</tr>
-      )
+      return <tr key={index} className={styles.pickerRow}>{hoursRow.map(createRow)}</tr>
     })
   }
 

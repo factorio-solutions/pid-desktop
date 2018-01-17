@@ -5,18 +5,12 @@ import { t } from '../../modules/localization/localization'
 
 export default function Minutes({ time, onClick }) {
   const createMinutes = () => {
-    const step = 15
-    let i = 0
-    const minutes = []
-    do {
-      minutes.push(i * step)
-      i++
-    } while (i * step < 60)
+    const minutes = Array(4).fill().map((_, row) => row * 15)
 
-    return minutes.map((minute, index) => {
-      return (<tr key={index} className={`${styles.clickable} ${styles.pickerRow}`} onClick={() => { onClick(minute) }}>
+    return minutes.map(minute => {
+      return (<tr key={minute} className={`${styles.clickable} ${styles.pickerRow}`} onClick={() => { onClick(minute) }}>
         <td>
-          <div className={time.substring(3) === minute && styles.selected}>{minute}</div>
+          <div className={parseInt(time.split(':')[1], 10) === minute && styles.selected}>{minute}</div>
         </td>
       </tr>)
     })
