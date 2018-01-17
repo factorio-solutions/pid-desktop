@@ -233,7 +233,6 @@ class GarageLayout extends Component {
   }
 
   render() {
-    const divider = <span />
     const { floors, onPlaceClick, showEmptyFloors, unfold } = this.props
     const { floor } = this.state
 
@@ -244,6 +243,7 @@ class GarageLayout extends Component {
           key={index}
           content={floor.label}
           onClick={onFloorClick}
+          type="action"
           state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex(place => place.available) === -1 && 'disabled')}
         />
       )
@@ -263,20 +263,18 @@ class GarageLayout extends Component {
       unfold === true ? <div className={styles.grayBackground}>
         {floors.map(prepareFloors)}
       </div> :
-      <div className={`${styles.widthContainer}`} ref={'containerDiv'}>
-        <div className={`${styles.width78} ${styles.svgContainer}`}>
+      <div ref={'containerDiv'}>
+        <div className={styles.buttons}>
+          <div>{floors.map(prepareButtons)}</div>
+          <div>
+            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+          </div>
+        </div>
+        <div className={styles.svgContainer}>
           <SvgFromText svg={floors[floor] && floors[floor].scheme || ''} svgClick={handleSVGClick} rotate={this.state.rotate} />
         </div>
-        <div className={styles.width18}>
-          <ButtonStack divider={divider}>
-            {floors.map(prepareButtons)}
-          </ButtonStack>
-          <div className={styles.rotateButton}>
-            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state={'action'} />
-          </div>
 
-          {Tooltip(this.state)}
-        </div>
+        {Tooltip(this.state)}
       </div>
     )
   }

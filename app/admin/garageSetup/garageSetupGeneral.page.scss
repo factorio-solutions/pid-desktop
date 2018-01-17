@@ -1,183 +1,187 @@
 @import '../../_styles/app.desktop';
 
-h2{
-  text-align: left;
+h2 {
   margin-bottom: 0;
+  text-align:    left;
 }
-.general{
+
+.general {
   display: flex;
 
 
-  .imageSelector{
+  .imageSelector {
+    flex:       1 1;
     text-align: center;
-    flex: 1 1;
 
-    input{
+    input {
       display: none;
     }
 
-    img{
+    img {
       max-width: 100%;
     }
 
   }
 
-  .address{
+  .address {
+    flex:          1 1;
     padding-right: 10px;
-    flex: 1 1;
 
-    .checkbox{
+    .checkbox {
       margin-top: 12px;
     }
   }
 }
 
 
-.floors{
-  display: flex;
+.floors {
+  display:    flex;
   text-align: center;
 
-  .floorForm{
+  .floorForm {
+    flex:          1 1;
     padding-right: 10px;
-    flex: 1 1;
 
-    .line{
+    .line {
 
-      >.layout{
-        width: 32%;
+      >.layout {
         display: inline-block;
-        cursor: pointer;
+        width:   32%;
+        cursor:  pointer;
 
-        >img{
-          max-width: 100%;
+        >img {
+          max-width:  100%;
           max-height: 150px;
         }
       }
 
-      >div{
-        width: calc(50% - 5px);
+      >div {
         display: inline-block;
-        cursor: pointer;
+        width:   calc(50% - 5px);
+        cursor:  pointer;
       }
-      :first-child{
+
+      :first-child {
         margin-right: 2.5px;
       }
-      :last-child{
+
+      :last-child {
         margin-left: 2.5px;
       }
     }
   }
 
-  .garageLayout{
-    flex: 1 1;
+  .garageLayout {
+    flex: 2 2;
   }
 }
 
-.gates{
-  display: flex;
+.gates {
+  display:    flex;
   text-align: center;
 
-  .gatesForm{
+  .gatesForm {
+    flex:          1 1;
     padding-right: 10px;
-    flex: 1 1;
   }
 
-  .garageLayout{
-    flex: 1 1;
+  .garageLayout {
+    flex: 2 2;
   }
 
-  .gsmCount{
-    width: 56px;
-    display: inline-block;
-    background: white;
-    margin: 5px;
+  .gsmCount {
+    display:    inline-block;
+    width:      56px;
+    margin:     5px;
+    background: $white;
   }
 }
 
-.subscribtion{
-  .row{
+.subscribtion {
+  .row {
     padding: 0 50px;
 
-    >div{
+    >div {
+      display:        inline-block;
+      width:          calc(50% - 5px);
+      padding-top:    10px;
       vertical-align: top;
-      display: inline-block;
-      width: calc(50% - 5px);
-      padding-top: 10px;
 
-      &:first-child{
-        text-align: right;
-        padding-right: 10px
+      &:first-child {
+        padding-right: 10px;
+        text-align:    right;
       }
     }
   }
 
-  .marketing{
-    text-align: center;
-    padding: 0 25%;
+  .marketing {
+    padding:     0 25%;
     font-weight: bold;
+    text-align:  center;
   }
 }
 
 
 // From looks
-.orderLayout{
-  cursor: default !important;
-  background: $blue;
-  color: $white;
-  padding: 15px 0;
+.orderLayout {
+  padding:       15px 0;
   border-radius: 3px;
+  background:    $blue;
+  color:         $white;
+  cursor:        default !important;
 
-  .checkbox{
-    margin-top: 15px;
+  .checkbox {
+    margin-top:  15px;
     font-weight: bold;
   }
-  span{
+
+  span {
     font-weight: bold;
   }
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-.contentPadding{
+.contentPadding {
   padding: 25px 15px 0;
 }
 
-.inputWidth{
+.inputWidth {
   width: calc(100% - 120px);
 }
 
-.smallInputWidth{
+.smallInputWidth {
   width: calc(33.33% - 43.33px);
 }
-.middleMargin{
-  margin-left: 5px;
+.middleMargin {
   margin-right: 5px;
+  margin-left:  5px;
 }
 
-.latLngInputWidth{
+.latLngInputWidth {
   width: calc(50% - 2.5px);
 }
-.gatePhoneInputWidth{
+.gatePhoneInputWidth {
   width: calc(50% - 33px);
 }
-.rightMargin{
+.rightMargin {
   margin-right: 5px;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
-.inline{
+.inline {
   display: flex;
 }
 
-.floatCenter{
+.floatCenter {
   text-align: center;
 }
 
-.checkbox{
+.checkbox {
   cursor: pointer;
 }
