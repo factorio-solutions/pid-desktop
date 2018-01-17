@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-import RoundButton  from '../buttons/RoundButton'
-
 import styles       from './Module.scss'
 
 
@@ -17,10 +15,10 @@ export default class Module extends Component {
     disabled: false
   }
 
-  render(){
+  render() {
     const { name, description, disabled, actions } = this.props
 
-    return(
+    return (
       <div className={`${styles.container} ${disabled && styles.disabled}`}>
         <div>
           <div>{name}</div>

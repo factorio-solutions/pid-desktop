@@ -1,23 +1,22 @@
 @import '../../styles/app.components';
 
-.tabMenu{
+.tabMenu {
+  display:       block;
   border-bottom: 1px solid $lightGray;
-  display: block;
 
-  .left{
+  .left {
     display: inline-block;
 
-    :first-child{
+    :first-child {
       margin-left: 0;
     }
   }
 
-  .right{
+  .right {
     display: inline-block;
-    float: right;
-    // margin-top: -6px;
+    float:   right;
 
-    :last-child{
+    :last-child {
       margin-right: 0;
     }
   }

@@ -1,27 +1,27 @@
 @import '../../styles/app.components';
 
-.notification{
-  border: 1px solid $gray;
+.notification {
+  margin:        5px 5px 10px;
+  padding:       5px;
+  border:        1px solid $gray;
   border-radius: 5px;
-  padding: 5px;
-  margin: 5px 5px 10px;
 
-  .header{
+  .header {
+    padding:     0 10px;
     font-weight: bold;
-    padding: 0 10px;
 
-    &:first-child{
+    &:first-child {
       padding-top: 10px;
     }
   }
 
-  .body{
+  .body {
+    padding:    10px;
     text-align: center;
-    padding: 10px;
   }
 
-  .notificationsButtons{
-    display: block;
+  .notificationsButtons {
+    display:    block;
     text-align: right;
   }
 }

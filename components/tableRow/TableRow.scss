@@ -1,15 +1,15 @@
 @import '../../styles/app.components';
 
 .tr {
-	cursor: pointer;
+  cursor: pointer;
 
-	&.hover:hover {
-		background-color: darken($white, 10%);
-		color: $black
+  &.hover:hover {
+    background-color: darken($white, 10%);
+    color: 						$black;
 	}
 
-	> td {
-		border-bottom: 1px solid $black;
-		padding: 8px 4px;
+  >td {
+    padding: 			 8px 4px;
+    border-bottom: 1px solid $black;
 	}
 }

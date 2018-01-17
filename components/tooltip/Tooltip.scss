@@ -1,25 +1,22 @@
 @import '../../styles/app.components';
 
-.body{
-  position:         fixed;
-  z-index:          100;
+.body {
+  position:   fixed;
+  padding:    10px;
+  transform:  translateY(-50%);
+  transition: opacity .2s ease;
 
-  border-radius:    3px;
   border:           1px solid $gray;
-
+  border-radius:    3px;
   background-color: $white;
-  padding:          10px;
+  z-index:          100;
   pointer-events:   none;
-
-  transition:       opacity 0.2s ease;
-  // transform:        translateX(-50%);
-  transform:        translateY(-50%);
 }
 
-.originOnBottom{
-  transform:        translateY(-100%);
+.originOnBottom {
+  transform: translateY(-100%);
 }
 
-.originOnTop{
-    transform:        translateY(0%);
+.originOnTop {
+  transform: translateY(0%);
 }

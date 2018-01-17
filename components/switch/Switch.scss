@@ -1,55 +1,45 @@
 @import '../../styles/app.components';
 
 $height: 29px;
-$width: 60px;
+$width:  60px;
 $switch: 25px;
 
-.switchContainer{
+.switchContainer {
   position: relative;
   top: 8px;
-  cursor: pointer;
-  // display: inline-block;
-  // margin: 3px;
-  background-color: $white;
-  border: 1px solid $gray;
-  // height: $height;
   width:  $width;
+  transition: all .3s ease;
+
+  border: 1px solid $gray;
   border-radius: 15px;
-  transition: all 0.3s ease;
+  background-color: $white;
+  cursor: pointer;
 
-  // &.on{
-  //   background-color: lighten($green, 30%)
-  // }
-  //
-  // &.off{
-  //   background-color: lighten($red, 30%)
-  // }
-
-  &.disabled{
+  &.disabled {
     background-color: $lightGray;
   }
 }
 
-.switch{
-  border: 2px solid $gray;
-  height: $switch;
-  width:  $switch;
+.switch {
+  width:         $switch;
+  height:        $switch;
+  transition:    all .3s ease;
+  border:        2px solid $gray;
   border-radius: 50%;
-  transition: all 0.3s ease;
 
-  &.on{
+  &.on {
+    border:           2px solid darken($green, 20%);
     background-color: $green;
-    border: 2px solid darken($green, 20%);
   }
 
-  &.off{
+  &.off {
+    transform:        translate(18px);
+    border:           2px solid darken($red, 20%);
     background-color: $red;
-    border: 2px solid darken($red, 20%);
-    transform: translate(18px);
   }
 
-  &.disabled{
+  &.disabled {
+    border:           2px solid $gray;
     background-color: $lightGray;
-    border: 2px solid $gray;
   }
 }
