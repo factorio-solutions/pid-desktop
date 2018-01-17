@@ -37,12 +37,14 @@ export default class Table extends Component {
     searchBox:      PropTypes.bool,
     searchBar:      PropTypes.bool,
     returnFiltered: PropTypes.func,
-    filterClick:    PropTypes.func // will return key and ASC or DESC
+    filterClick:    PropTypes.func, // will return key and ASC or DESC
+    selectId:       PropTypes.number
   }
 
   static defaultProps = {
     searchBox: true,
-    searchBar: false
+    searchBar: false,
+    selectId:  null
   }
 
   constructor(props) {
@@ -53,6 +55,24 @@ export default class Table extends Component {
       spoilerId: -1,
       search:    '',
       searchBar: props.schema.reduce((acc, column) => ({ ...acc, [column.key]: '' }), {})
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.selectId) {
+      this.setState({
+        ...this.state,
+        spoilerId: this.filterData(this.props.data).sort(this.createComparator()).findIndexById(this.props.selectId)
+      })
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
+      this.setState({
+        ...this.state,
+        spoilerId: this.filterData(nextProps.data).sort(this.createComparator()).findIndexById(nextProps.selectId)
+      })
     }
   }
 
@@ -81,40 +101,27 @@ export default class Table extends Component {
         return true
       } else {
         return schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
-       .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
-         .toLowerCase()
-         .includes(this.state.search.toLowerCase())
+          .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase())
        ).includes(true)
       }
     })
   }
 
-  render() {
-    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
-    const { sortKey, sortType, spoilerId } = this.state
+  createComparator() {
+    const { schema } = this.props
+    const { sortKey, sortType } = this.state
     const { compareRepresentations, comparator, representer } = schema.find(s => s.key === sortKey)
-    let myComp // comparator to be used
-
-    const handleHeadClick = index => {
-      const isSame = sortKey === schema[index].key
-      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc', this.state.searchBar)
-      if (schema[index].comparator) {
-        this.setState({ ...this.state,
-          sortKey:  isSame ? sortKey : schema[index].key,
-          sortType: isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc'
-        })
-      }
-    }
-
 
     if (typeof comparator === 'function') { // custom comparator
-      myComp = (aRow, bRow) => {
+      return (aRow, bRow) => {
         const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
         const b = compareRepresentations ? representer(bRow) : bRow[sortKey]
         return comparator(sortType, a, b)
       }
     } else { // predefined comparators
-      myComp = (aRow, bRow) => {
+      return (aRow, bRow) => {
         const a = compareRepresentations ? representer(aRow[sortKey]) : aRow[sortKey]
         const b = compareRepresentations ? representer(bRow[sortKey]) : bRow[sortKey]
 
@@ -133,8 +140,24 @@ export default class Table extends Component {
         }
       }
     }
+  }
 
-    const newData = this.filterData(data).sort(myComp)
+  render() {
+    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
+    const { sortKey, sortType, spoilerId } = this.state
+
+    const handleHeadClick = index => {
+      const isSame = sortKey === schema[index].key
+      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc', this.state.searchBar)
+      if (schema[index].comparator) {
+        this.setState({ ...this.state,
+          sortKey:  isSame ? sortKey : schema[index].key,
+          sortType: isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc'
+        })
+      }
+    }
+
+    const newData = this.filterData(data).sort(this.createComparator())
 
     const handleRowClick = spoilerId => {
       const { onRowSelect } = this.props
@@ -143,7 +166,7 @@ export default class Table extends Component {
         onRowSelect && onRowSelect(undefined, -1)
       } else {
         this.setState({ spoilerId })
-        onRowSelect && onRowSelect(newData.find(obj => { return obj.key === spoilerId }), spoilerId)
+        onRowSelect && onRowSelect(newData.find(obj => obj.key === spoilerId), spoilerId)
       }
     }
 
@@ -165,7 +188,7 @@ export default class Table extends Component {
         }
       }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
       const renderEnum = enumValue => {
-        const onEnumClick = () => this.state.searchBar[value.key] === enumValue ?  searchChange('') : searchChange(enumValue)
+        const onEnumClick = () => this.state.searchBar[value.key] === enumValue ? searchChange('') : searchChange(enumValue)
         return <span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
           {value.representer ? value.representer(enumValue) : enumValue}
         </span>
@@ -185,19 +208,18 @@ export default class Table extends Component {
 
     const prepareBody = (value, key, arr) => {
       return [
-        <TableRow
-          key={key}
-          className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`}
-          schema={schema}
-          data={value}
-          onClick={() => { handleRowClick(value.key) }}
-          hover
-        />,
-        (arr.length <= 5 || spoilerId === value.key) && value.spoiler && <tr key={value.key + '-spoiler'} className={`${styles.tr} ${styles.spoiler}`}>
-          <td colSpan={schema.length}>{value.spoiler}</td>
-        </tr>
-      ]
-    }
+      <TableRow
+        key={key}
+        className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`}
+        schema={schema}
+        data={value}
+        onClick={() => { handleRowClick(value.key) }}
+        hover
+      />,
+      (arr.length <= 5 || spoilerId === value.key) && value.spoiler && <tr key={value.key + '-spoiler'} className={`${styles.tr} ${styles.spoiler}`}>
+        <td colSpan={schema.length}>{value.spoiler}</td>
+      </tr>
+    ]}
 
     const onFilterChange = e => {
       this.setState({ ...this.state, search: e.target.value }, () => {

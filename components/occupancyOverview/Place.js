@@ -12,12 +12,13 @@ import styles from './OccupancyOverview.scss'
 
 class Place extends Component {
   static propTypes = {
-    pageBase:    PropTypes.object,
-    place:       PropTypes.object,
-    duration:    PropTypes.string,
-    from:        PropTypes.object,
-    now:         PropTypes.number,
-    showDetails: PropTypes.bool
+    pageBase:           PropTypes.object,
+    place:              PropTypes.object,
+    duration:           PropTypes.string,
+    from:               PropTypes.object,
+    now:                PropTypes.number,
+    showDetails:        PropTypes.bool,
+    onReservationClick: PropTypes.func
   }
 
   constructor(props) {
@@ -50,7 +51,7 @@ class Place extends Component {
   }
 
   render() {
-    const { place, duration, from, now, showDetails } = this.props
+    const { place, duration, from, now, showDetails, onReservationClick } = this.props
     const rowWidth = this.row ? this.row.getBoundingClientRect().width - 62 : 0 // width of time window
     const cellDuration = duration === 'day' ? 1 : 12 // hours
     const windowLength = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS) // in days
@@ -152,6 +153,7 @@ class Place extends Component {
         left={left}
         width={width}
         text={text}
+        onClick={onReservationClick}
       />)
     }
 
