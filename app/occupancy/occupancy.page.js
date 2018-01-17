@@ -12,6 +12,7 @@ import RoundButton       from '../_shared/components/buttons/RoundButton'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
 import { t }                 from '../_shared/modules/localization/localization'
+import * as nav              from '../_shared/helpers/navigation'
 
 import styles from './occupancy.page.scss'
 
@@ -76,6 +77,7 @@ class OccupancyPage extends Component {
         duration={state.duration}
         resetClientClick={actions.resetClientClick}
         loading={!state.garages.length || state.loading}
+        onReservationClick={r => nav.to(`/reservations/${r.id}`)}
       />
     ]
 

@@ -23,7 +23,8 @@ class Reservation extends Component {
     classes:     PropTypes.array,
     left:        PropTypes.number,
     width:       PropTypes.number,
-    text:        PropTypes.string
+    text:        PropTypes.string,
+    onClick:     PropTypes.func
   }
 
   constructor(props) {
@@ -40,6 +41,8 @@ class Reservation extends Component {
   }
 
   mouseLeave = () => this.setState(INIT_STATE)
+
+  onReservationClick = () => this.props.onClick(this.props.reservation)
 
   render() {
     const { classes, left, width, text, reservation, pageBase, showDetails } = this.props
@@ -65,7 +68,7 @@ class Reservation extends Component {
       <div>{t([ 'occupancy', 'detailsInaccessible' ])}</div>
 
     return <div>
-      <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} >
+      <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
         <span>{text}</span>
       </div>
       {this.state.visible && <Tooltip

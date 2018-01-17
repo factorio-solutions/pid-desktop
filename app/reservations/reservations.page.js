@@ -27,12 +27,19 @@ import styles from './reservations.page.scss'
 
 
 class ReservationsPage extends Component {
+
   static propTypes = {
     state:               PropTypes.object,
     actions:             PropTypes.object,
+    params:              PropTypes.object,
     interuption:         PropTypes.object,
     interuptionActions:  PropTypes.object,
     newReservationState: PropTypes.object
+  }
+
+  constructor(props) {
+    super(props)
+    !props.state.past && props.params.id && props.actions.togglePast()
   }
 
   render() {
@@ -151,11 +158,8 @@ class ReservationsPage extends Component {
       </Form>
     </div>)
 
-    const filters = [ <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
-      <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
-    ]
-
     const transformData = data => data.reservations.map(reservation => ({
+      id:            reservation.id,
       name:          reservation.user.full_name,
       note:          reservation.note,
       client:        reservation.client && reservation.client.name,
@@ -228,13 +232,24 @@ class ReservationsPage extends Component {
       </div>)
     }))
 
+    const filters = [
+      <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
+      <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
+    ]
+
     return (
       <PageBase>
         <Modal content={reservationIteruptionModal} show={interuption.reservation} />
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
-          {/* <Table schema={schema} data={data} /> */}
-          <PaginatedTable query={GET_RESERVATIONS_PAGINATION_QUERY} transformData={transformData} schema={schema} variables={{ past: state.past }} />
+          <PaginatedTable
+            query={GET_RESERVATIONS_PAGINATION_QUERY}
+            parseMetadata={data => data.reservations_metadata}
+            transformData={transformData}
+            schema={schema}
+            variables={{ past: state.past }}
+            findId={parseInt(this.props.params.id, 10)}
+          />
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={newReservation} type="action" size="big" />

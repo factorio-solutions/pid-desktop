@@ -18,12 +18,13 @@ const WIDTH_OF_PLACE_CELL = 63 // px
 
 class OccupancyOverview extends Component {
   static propTypes = {
-    places:           PropTypes.array.isRequired,
-    from:             PropTypes.object,
-    duration:         PropTypes.string,
-    resetClientClick: PropTypes.func,
-    loading:          PropTypes.bool,
-    showDetails:      PropTypes.bool
+    places:             PropTypes.array.isRequired,
+    from:               PropTypes.object,
+    duration:           PropTypes.string,
+    resetClientClick:   PropTypes.func,
+    loading:            PropTypes.bool,
+    showDetails:        PropTypes.bool,
+    onReservationClick: PropTypes.func
   }
 
   constructor(props) {
@@ -46,7 +47,7 @@ class OccupancyOverview extends Component {
   }
 
   render() {
-    const { places, duration, from, resetClientClick, loading, showDetails } = this.props
+    const { places, duration, from, resetClientClick, loading, showDetails, onReservationClick } = this.props
 
     const prepareDates = () => (<tr className={duration !== 'day' && styles.bottomBorder}>
       <td className={styles.placePadding}>{t([ 'occupancy', 'places' ])}</td>
@@ -97,6 +98,7 @@ class OccupancyOverview extends Component {
         duration={duration}
         from={from}
         now={nowLinePosition}
+        onReservationClick={onReservationClick}
       />))
     }
 
