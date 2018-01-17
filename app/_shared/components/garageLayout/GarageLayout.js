@@ -139,7 +139,7 @@ class GarageLayout extends Component {
 
       // color all with same group same color
       const uniqueGroups = floors
-        .reduce((acc, floor) => [ ...acc, ...floor.places.map(place => place.group).filter(o => o) ], [])
+        .reduce((acc, floor) => [ ...acc, ...(floor.places || []).map(place => place.group).filter(o => o) ], [])
         .filter((group, index, arr) => arr.indexOf(group) === index) // unique values
         .sort((a, b) => a - b)
 
@@ -161,7 +161,7 @@ class GarageLayout extends Component {
       }
 
       const heatGroups = floors
-        .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+        .reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
         .reduce((groups, place) => place.heat !== undefined ? [ ...groups, place.heat ] : groups, [])
 
       if (heatGroups && heatGroups.length) {
@@ -169,7 +169,7 @@ class GarageLayout extends Component {
         const min = Math.min(...heatGroups)
         const max = Math.max(...heatGroups)
 
-        floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+        floors.reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
           .filter(place => place.heat)
           .forEach(place => {
             const yellow = Math.round(mapValue(min, max, 255, 0, place.heat))
