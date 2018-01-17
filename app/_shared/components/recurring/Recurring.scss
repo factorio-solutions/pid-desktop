@@ -1,24 +1,23 @@
-.recurring{
-  >tbody{
-    >tr{
-      >td:first-child{
+.recurring {
+  >tbody {
+    >tr {
+      >td:first-child {
         text-align: right;
       }
 
-      >td:not(:first-child){
-        display: flex;
+      >td:not(:first-child) {
+        display:     flex;
         margin-left: 15px;
-        // line-height: 36px;
       }
     }
   }
 }
 
-.day:not(:last-child){
+.day:not(:last-child) {
   margin-right: 5px;
 }
 
-.dateSelector{
+.dateSelector {
   margin-top: 0;
 
   >label {
@@ -26,13 +25,13 @@
   }
 }
 
-.countSelector{
-  width: 65px;
+.countSelector {
+  width:      65px;
   margin-top: 0;
 }
 
-.setLineHeight{
-  >span{
+.setLineHeight {
+  >span {
     line-height: 40px;
   }
 }

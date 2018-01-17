@@ -2,12 +2,12 @@ import React  from 'react'
 import styles from './MobileTable.scss'
 
 
-export default function MobileTable ({ content })  {
+export default function MobileTable({ content }) {
   // content = [{label: ... , row: object, onClick: function}]
 
   const prepareTableRows = (row, index) => {
-    return(
-      <tr key={index} onClick={ row.onClick }>
+    return (
+      <tr key={index} onClick={row.onClick}>
         <td>
           <div>
             <div> {row.label} </div>
@@ -18,11 +18,11 @@ export default function MobileTable ({ content })  {
     )
   }
 
-  return(
+  return (
     <div className={styles.container}>
       <table className={styles.table}>
         <tbody>
-          {content.map( prepareTableRows )}
+          {content.map(prepareTableRows)}
         </tbody>
       </table>
     </div>

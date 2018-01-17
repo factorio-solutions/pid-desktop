@@ -1,34 +1,32 @@
 @import '../../../_styles/app.desktop';
 
-.container{
-  display: flex;
-  background-color: $blue;
-  color: $white;
-  border: 1px solid $gray;
-  border-radius: 5px;
-  padding: 20px;
+.container {
+  display:    flex;
   margin-top: 10px;
+  padding:    20px;
 
-  >div{
+  border:           1px solid $gray;
+  border-radius:    5px;
+  background-color: $blue;
+  color:            $white;
 
-    &:first-child{ // name and description
+  >div {
+    &:first-child { // name and description
       flex: 1 1;
 
-      >div{
-
-
+      >div {
         &:first-child { // name
-          font-size: 20px;
-          font-weight: bold;
+          font-size:       20px;
+          font-weight:     bold;
           text-decoration: underline;
         }
       }
     }
   }
 
-  &.disabled{
-    color: white;
+  &.disabled {
+    border:           1px solid $gray;
     background-color: $lightLightGray;
-    border: 1px solid $gray;
+    color:            $white;
   }
 }

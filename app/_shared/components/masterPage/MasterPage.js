@@ -96,7 +96,7 @@ class MasterPage extends Component {
                 </div>
 
                 <DropdownContent content={profileDropdown} style={styles.profileDropdown}>
-                  <div className={styles.profile} > {/* onClick={()=>{nav.to('/profile')}}*/}
+                  <div className={styles.profile} > {/* onClick={()=>{nav.to('/profile')}} */}
                     <i className={'icon-profile'} aria-hidden="true" />
                     <span className={styles.name}>{name}</span>
                   </div>

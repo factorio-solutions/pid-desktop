@@ -1,40 +1,28 @@
 @import '../../styles/app.components';
 
-.timePickeContainer{
+.timePickeContainer {
   display: inline-block;
 }
 
-.picker{
+.picker {
   display: flex;
 }
 
-.hoursContainer{
-  width: 204px;
+.hoursContainer {
   display: inline-block;
+  width:   204px;
 }
-.minutesContainer{
+
+.minutesContainer {
+  display:     inline-block;
   margin-left: 15px;
-  display: inline-block;
 }
 
 
-.hoursTable{
-  table-layout: fixed;
+.hoursTable {
   width:        100%;
   text-align:   center;
-
-  >thead {
-    > tr {
-      > td {
-        font-weight: bold;
-      }
-    }
-  }
-}
-
-.minuteTable{
   table-layout: fixed;
-  text-align:   center;
 
   >thead {
     > tr {
@@ -45,46 +33,51 @@
   }
 }
 
-.clickable{
+.minuteTable {
+  text-align:   center;
+  table-layout: fixed;
+
+  >thead {
+    > tr {
+      > td {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.clickable {
   cursor: pointer;
 }
 
-.selected{
-  background-color: $yellow;
-  font-weight:      bold;
+.selected {
+  width:            $pickerRowHeigh;
+  height:           $pickerRowHeigh;
   margin:           auto;
   border-radius:    12px;
-  height:           $pickerRowHeigh;
-  width:            $pickerRowHeigh;
+  background-color: $yellow;
+  font-weight:      bold;
 }
 
-.buttonContainer{
-  display: block;
-  text-align: center;
+.buttonContainer {
+  display:    block;
   margin-top: 5px;
-  >span{
+  text-align: center;
+
+  >span {
     font-weight: bold;
-    cursor: pointer;
+    cursor:      pointer;
   }
 }
 
-.pickerRow{
+.pickerRow {
   height: $pickerRowHeigh;
-  >td{
-    >div{
-      height: $pickerRowHeigh;
+
+  >td {
+    >div {
+      display:        inline-table;
+      height:         $pickerRowHeigh;
       vertical-align: middle;
-      display: inline-table;
     }
   }
 }
-// .buttonStyle{
-//   border:         none;
-//   border-radius:  3px;
-//   padding:        3px 12px;
-//   outline:        none;
-//   text-align:     center;
-//   transition:     all 0.4s ease;
-//   margin:         5px;
-//   cursor:         pointer;
-// }
