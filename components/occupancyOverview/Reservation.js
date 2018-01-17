@@ -50,7 +50,7 @@ class Reservation extends Component {
     }
 
     const clientUser = reservation.client ? reservation.client.client_user : {}
-    const content = (showDetails || clientUser.admin || clientUser.secretary ||
+    const content = (showDetails || (clientUser && clientUser.admin) || (clientUser && clientUser.secretary) ||
     (pageBase.current_user && pageBase.current_user.id === reservation.user.id)) ?
       (<table className={styles.tooltipTable}>
         <tbody>

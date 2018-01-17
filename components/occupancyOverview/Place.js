@@ -41,7 +41,7 @@ class Place extends Component {
     const { showDetails } = this.props
     const forCurrentUser = this.isForCurrentUser(reservation)
     const clientUser = reservation.client ? reservation.client.client_user : {}
-    return showDetails || clientUser.admin || clientUser.secretary || forCurrentUser
+    return showDetails || (clientUser && clientUser.admin) || (clientUser && clientUser.secretary) || forCurrentUser
   }
 
   composeLabel = reservation => {
@@ -109,8 +109,6 @@ class Place extends Component {
         .map(displayTextOnLeft)
         .map(displayTextOnRight)
     }
-
-    console.log(newPlace);
 
     const renderReservation = (reservation, firstCellIndex) => {
       const details = this.shouldShowDetails(reservation)
