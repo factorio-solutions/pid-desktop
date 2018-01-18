@@ -39,7 +39,6 @@ class ReservationsPage extends Component {
 
   constructor(props) {
     super(props)
-    !props.state.past && props.params.id && props.actions.togglePast()
   }
 
   render() {

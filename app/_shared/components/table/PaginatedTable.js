@@ -61,7 +61,7 @@ export default class PaginatedTable extends Component {
 
     if (JSON.stringify(variables) !== JSON.stringify(nextProps.variables) ||
       JSON.stringify(nextState.search) !== JSON.stringify(search) ||
-      nextState.page !== page ||
+      // nextState.page !== page ||
       nextState.count !== count ||
       nextState.ascDesc !== ascDesc ||
       nextState.key !== key) {
@@ -98,6 +98,7 @@ export default class PaginatedTable extends Component {
     const { transformData, parseMetadata } = this.props
     const transformedData = transformData ? transformData(data) : data
     const parsedMetadata = parseMetadata(data)
+
     this.setState({
       ...this.state,
       data:      transformedData,
@@ -107,13 +108,22 @@ export default class PaginatedTable extends Component {
     })
   }
 
+  requestPage = page => () => this.requestData({
+    ...this.props.variables,
+    ...this.keyToOrderByAndIncludes(this.state.key, this.state.ascDesc),
+    page,
+    count:  this.state.count,
+    search: this.state.search
+  })
+
   render() {
     const { schema, findId } = this.props
     const { data, page, pageCount, loading } = this.state
 
-    const prevPage = () => !this.state.loading && this.setState({ ...this.state, page: page - 1, loading: true })
-    const nextPage = () => !this.state.loading && this.setState({ ...this.state, page: page + 1, loading: true })
-    const setPage = page => () => !this.state.loading && this.setState({ ...this.state, page, loading: true })
+
+    const prevPage = () => !this.state.loading && this.setState({ ...this.state, page: page - 1, loading: true }, this.requestPage(page - 1))
+    const nextPage = () => !this.state.loading && this.setState({ ...this.state, page: page + 1, loading: true }, this.requestPage(page + 1))
+    const setPage = page => () => !this.state.loading && this.setState({ ...this.state, page, loading: true }, this.requestPage(page))
 
     const filterClick = (key, ascDesc, searchBox) => {
       const search = Object.keys(searchBox)

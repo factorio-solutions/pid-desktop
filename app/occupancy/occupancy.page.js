@@ -11,6 +11,7 @@ import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
+import { togglePast }        from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
@@ -19,13 +20,19 @@ import styles from './occupancy.page.scss'
 
 class OccupancyPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    pageBase: PropTypes.object,
-    actions:  PropTypes.object
+    state:        PropTypes.object,
+    pageBase:     PropTypes.object,
+    reservations: PropTypes.object,
+    actions:      PropTypes.object
   }
 
   componentDidMount() {
     this.props.actions.initOccupancy()
+  }
+
+  onReservationClick = reservation => {
+    nav.to(`/reservations/find/${reservation.id}`)
+    !this.props.reservations.past && this.props.actions.togglePast()
   }
 
   render() {
@@ -77,7 +84,7 @@ class OccupancyPage extends Component {
         duration={state.duration}
         resetClientClick={actions.resetClientClick}
         loading={!state.garages.length || state.loading}
-        onReservationClick={r => nav.to(`/reservations/${r.id}`)}
+        onReservationClick={this.onReservationClick}
       />
     ]
 
@@ -103,6 +110,6 @@ class OccupancyPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.occupancy, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(OccupancyActions, dispatch) })
+  state => ({ state: state.occupancy, pageBase: state.pageBase, reservations: state.reservations }),
+  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, togglePast }, dispatch) })
 )(OccupancyPage)
