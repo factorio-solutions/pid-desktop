@@ -170,19 +170,7 @@ class ReservationsPage extends Component {
         `${reservation.place.floor.label} / ${reservation.place.label}`
     })
 
-    // const mergeHistory = reservation => {
-    //   const addRecordUpdates = (r, index) => ({
-    //     ...reservationTransformation(r),
-    //     record_update: reservation.record_updates[index]
-    //   })
-    //
-    //   return {
-    //     ...reservation,
-    //     history: reservation.history.map(addRecordUpdates)
-    //   }
-    // }
-
-    const transformData = data => data.reservations.map(reservation => ({ //.map(mergeHistory)
+    const transformData = data => data.reservations.map(reservation => ({
       ...reservationTransformation(reservation),
       history:        reservation.history.map(reservationTransformation),
       record_updates: reservation.record_updates,
