@@ -1,53 +1,52 @@
 @import '../../_styles/app.desktop';
 
 .page {
-	padding: 25px;
+  padding: 25px;
 }
 
 
 
-.spoiler{
-	display: flex;
-	>div:first-child{
-		flex: 1 1;
+.spoiler {
+  display: flex;
+
+  >div:first-child {
+    flex: 1 1;
 	}
 }
 
-.contract{
-	font-weight: bold;
-	cursor: pointer;
-	color: $blue;
+.contract {
+  color: $blue;
+  font-weight: bold;
+  cursor: pointer;
+
+  &.disabled {
+    color:  $gray;
+    cursor: default;
+	}
 }
 
-// .addButton {
-// 	margin-top:  	 $addButtonMargin ;
-// 	text-align: 	 center;
-// 	// position: 		 fixed;
-// 	// bottom: 			 0;
-// 	// right: 				 50%;
-// 	// margin-bottom: 40px;
-// }
-.addButton{
+.addButton {
+  position:   fixed;
+  right:      50%;
+  bottom:     0;
   padding:    $addButtonMargin 0;
   text-align: center;
-  position:   fixed;
-  bottom:     0px;
-  right:      50%;
 }
+
 @media (max-width: $collapseWidth) {
-  .addButton{
+  .addButton {
     transform: translateX(50%);
   }
 }
 
-.tableContainer{
+.tableContainer {
   margin-bottom: 140px;
 }
 
-.green{
-	color: $green;
+.green {
+  color: $green;
 }
 
-.red{
-	color: $red;
+.red {
+  color: $red;
 }
