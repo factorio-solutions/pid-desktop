@@ -151,12 +151,14 @@ class ReservationsPage extends Component {
           label={t([ 'reservationInteruption', 'from' ])}
           error={t([ 'reservationInteruption', 'invalidaDate' ])}
           value={interuption.from}
+          onBlur={interuptionActions.formatFrom}
         />
         <DatetimeInput
           onChange={interuptionActions.setTo}
           label={t([ 'reservationInteruption', 'to' ])}
           error={t([ 'reservationInteruption', 'invalidaDate' ])}
           value={interuption.to}
+          onBlur={interuptionActions.formatTo}
         />
       </Form>
     </div>)
