@@ -5,7 +5,6 @@ import moment                          from 'moment'
 
 import PageBase           from '../_shared/containers/pageBase/PageBase'
 import PaginatedTable     from '../_shared/components/table/PaginatedTable'
-import Table              from '../_shared/components/table/Table'
 import RoundButton        from '../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../_shared/components/buttons/LabeledRoundButton'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
@@ -13,6 +12,7 @@ import TabMenu            from '../_shared/components/tabMenu/TabMenu'
 import TabButton          from '../_shared/components/buttons/TabButton'
 import Form               from '../_shared/components/form/Form'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
+import Input              from '../_shared/components/input/Input'
 import Modal              from '../_shared/components/modal/Modal'
 
 import * as nav                                      from '../_shared/helpers/navigation'
@@ -86,6 +86,13 @@ class ReservationsPage extends Component {
     }
   }
 
+  editNoteClick = reservation => {
+    const { actions } = this.props
+
+    actions.setNewNote(reservation.note)
+    actions.setNewNoteReservation(reservation)
+  }
+
   newReservation = () => {
     const { actions, newReservationState } = this.props
     if (newReservationState.reservation !== undefined || newReservationState.recurring_reservation_id !== undefined) actions.clearForm()
@@ -154,6 +161,15 @@ class ReservationsPage extends Component {
       </Form>
     </div>)
 
+    const reservationNewNoteModal = (<Form onSubmit={actions.editReservationNote} onBack={actions.setNewNoteReservation} submitable margin={false}>
+      <Input
+        onChange={actions.setNewNote}
+        label={t([ 'reservations', 'newNote' ])}
+        value={state.newNote}
+        align="center"
+      />
+    </Form>)
+
     const reservationTransformation = reservation => ({
       id:            reservation.id,
       name:          reservation.user.full_name,
@@ -182,13 +198,19 @@ class ReservationsPage extends Component {
           </div>
           <div>
             <span className={styles.floatRight}>
-              {reservation.client && reservation.client.is_secretary && moment(reservation.ends_at).isAfter(moment()) &&
-              <LabeledRoundButton
-                label={t([ 'reservations', 'editReservation' ])}
-                content={<span className="fa fa-pencil" aria-hidden="true" />}
-                onClick={() => this.editClick(reservation)}
-                type="action"
-              />
+              {reservation.client && reservation.client.is_secretary && moment(reservation.ends_at).isAfter(moment()) ?
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'editReservation' ])}
+                  content={<span className="fa fa-pencil" aria-hidden="true" />}
+                  onClick={() => this.editClick(reservation)}
+                  type="action"
+                /> :
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'editNote' ])}
+                  content={<span className="fa fa-pencil" aria-hidden="true" />}
+                  onClick={() => this.editNoteClick(reservation)}
+                  type="action"
+                />
               }
               {reservation.approved && reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
               <LabeledRoundButton
@@ -237,6 +259,7 @@ class ReservationsPage extends Component {
     return (
       <PageBase>
         <Modal content={reservationIteruptionModal} show={interuption.reservation} />
+        <Modal content={reservationNewNoteModal} show={state.newNoteReservation} />
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
           <PaginatedTable

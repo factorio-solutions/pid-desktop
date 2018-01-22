@@ -1,5 +1,6 @@
 import actionFactory from '../helpers/actionFactory'
 import { request } from '../helpers/request'
+import requestPromise from '../helpers/requestPromise'
 import { download } from '../helpers/download'
 import { setCustomModal, setError } from './pageBase.actions'
 import { t } from '../modules/localization/localization'
@@ -7,7 +8,7 @@ import { parseParameters } from '../helpers/parseUrlParameters'
 
 import { GET_RESERVATIONS_PAGINATION_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
 import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
-import { PAY_RESREVATION } from '../queries/newReservation.queries'
+import { PAY_RESREVATION, UPDATE_RESERVATION } from '../queries/newReservation.queries'
 
 import { mobile } from '../../index'
 
@@ -19,6 +20,8 @@ export const SET_RESERVATIONS = 'SET_RESERVATIONS'
 export const ADD_RESERVATIONS = 'ADD_RESERVATIONS'
 export const RESERVATIONS_SET_PAGE = 'RESERVATIONS_SET_PAGE'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
+export const RESERVATIONS_SET_NEW_NOTE = 'RESERVATIONS_SET_NEW_NOTE'
+export const RESERVATIONS_SET_NEW_NOTE_RESERVATION = 'RESERVATIONS_SET_NEW_NOTE_RESERVATION'
 
 
 export const setOngoingReservations = actionFactory(SET_ONGOING_RESERVATIONS)
@@ -26,6 +29,8 @@ export const setReservations = actionFactory(SET_RESERVATIONS)
 export const addReservations = actionFactory(ADD_RESERVATIONS)
 export const setPage = actionFactory(RESERVATIONS_SET_PAGE)
 export const togglePast = actionFactory(TOGGLE_RESERVATIONS_PAST)
+export const setNewNote = actionFactory(RESERVATIONS_SET_NEW_NOTE)
+export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RESERVATION)
 
 
 export function initOngoingReservations(callback) { // callback used by mobile access page
@@ -98,7 +103,7 @@ export function destroyReservation(id, callback) {
 }
 
 export function destroyRecurringReservations(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(initReservations())
     }
@@ -107,13 +112,13 @@ export function destroyRecurringReservations(id) {
 }
 
 export function downloadInvoice(id) {
-  return (dispatch, getState) => {
+  return () => {
     download(`${id}.pdf`, DOWNLOAD_INVOICE, { id })
   }
 }
 
 export function payReservation(reservation) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(setCustomModal(undefined))
       if (response.data.paypal_check_validity) {
@@ -137,5 +142,23 @@ export function payReservation(reservation) {
       dispatch(setCustomModal(t([ 'newReservation', 'validtyCheck' ])))
       request(onSuccess, CHECK_VALIDITY, { token: parseParameters(reservation.payment_url).token })
     }
+  }
+}
+
+export function editReservationNote() {
+  return (dispatch, getState) => {
+    const state = getState().reservations
+    requestPromise(
+      UPDATE_RESERVATION,
+      {
+        id:          state.newNoteReservation.id,
+        reservation: {
+          note: state.newNote
+        }
+      }
+    ).then(() => {
+      dispatch(setNewNoteReservation())
+      dispatch(initReservations())
+    })
   }
 }
