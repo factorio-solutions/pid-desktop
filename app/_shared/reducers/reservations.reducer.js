@@ -4,7 +4,9 @@ import {
   ADD_RESERVATIONS,
   RESERVATIONS_SET_PAGE,
   TOGGLE_RESERVATIONS_PAST,
-  RESERVATIONS_PER_PAGE
+  RESERVATIONS_PER_PAGE,
+  RESERVATIONS_SET_NEW_NOTE,
+  RESERVATIONS_SET_NEW_NOTE_RESERVATION
 }  from '../actions/reservations.actions'
 
 const defaultState = {
@@ -12,7 +14,10 @@ const defaultState = {
   reservations:        [],
   canLoadMore:         true,
   page:                1, // current page
-  past:                false
+  past:                false,
+
+  newNoteReservation: undefined,
+  newNote:            ''
 }
 
 export default function reservations(state = defaultState, action) {
@@ -45,6 +50,16 @@ export default function reservations(state = defaultState, action) {
     case TOGGLE_RESERVATIONS_PAST:
       return { ...state,
         past: !state.past
+      }
+
+    case RESERVATIONS_SET_NEW_NOTE:
+      return { ...state,
+        newNote: action.value
+      }
+
+    case RESERVATIONS_SET_NEW_NOTE_RESERVATION:
+      return { ...state,
+        newNoteReservation: action.value
       }
 
     default:
