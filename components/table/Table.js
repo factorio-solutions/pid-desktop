@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 
 import TableRow from '../tableRow/TableRow'
+import HistoryTableRow from '../tableRow/HistoryTableRow'
+import UpdatedAtTableRow from '../tableRow/UpdatedAtTableRow'
 
 import styles from './Table.scss'
 
@@ -189,9 +191,9 @@ export default class Table extends Component {
       }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
       const renderEnum = enumValue => {
         const onEnumClick = () => this.state.searchBar[value.key] === enumValue ? searchChange('') : searchChange(enumValue)
-        return <span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
+        return (<span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
           {value.representer ? value.representer(enumValue) : enumValue}
-        </span>
+        </span>)
       }
       const onChange = event => searchChange(event.target.value)
       return (value.representer && !value.enum && value.comparator !== 'date') ?
@@ -207,8 +209,18 @@ export default class Table extends Component {
     }
 
     const prepareBody = (value, key, arr) => {
-      return [
-      <TableRow
+      const createHistortRow = (historyRow, index, arr) => [
+        <HistoryTableRow
+          schema={schema}
+          newData={arr[index - 1] || value}
+          data={historyRow}
+        />,
+        value.record_updates && <UpdatedAtTableRow
+          data={value.record_updates[index]}
+        />
+      ].filter(o => o)
+
+      return [ <TableRow
         key={key}
         className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`}
         schema={schema}
@@ -216,10 +228,12 @@ export default class Table extends Component {
         onClick={() => { handleRowClick(value.key) }}
         hover
       />,
-      (arr.length <= 5 || spoilerId === value.key) && value.spoiler && <tr key={value.key + '-spoiler'} className={`${styles.tr} ${styles.spoiler}`}>
-        <td colSpan={schema.length}>{value.spoiler}</td>
-      </tr>
-    ]}
+        ((arr.length <= 5 || spoilerId === value.key) && value.history && value.history.map(createHistortRow)) || [],
+        (arr.length <= 5 || spoilerId === value.key) && value.spoiler && <tr key={value.key + '-spoiler'} className={`${styles.tr} ${styles.spoiler}`}>
+          <td colSpan={schema.length}>{value.spoiler}</td>
+        </tr>
+      ]
+    }
 
     const onFilterChange = e => {
       this.setState({ ...this.state, search: e.target.value }, () => {
