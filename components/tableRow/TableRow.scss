@@ -15,6 +15,10 @@
   &.updated {
     background-color: darken($white, 10%);
     cursor:           default;
+
+    >td {
+      border-bottom: 1px dashed $black;
+    }
   }
 
   &.hover:hover {

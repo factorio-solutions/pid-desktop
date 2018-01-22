@@ -286,6 +286,8 @@
 		"host": "Guest",
 		"visitor": "Visitor",
 		"editReservation": "Edit reservation",
+		"editNote": "Edit note",
+		"newNote": "New note",
 		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
