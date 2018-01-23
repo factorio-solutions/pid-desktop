@@ -217,6 +217,12 @@ export default class Table extends Component {
         />,
         value.record_updates && <UpdatedAtTableRow
           data={value.record_updates[index]}
+        />,
+        index === arr.length - 1 && <HistoryTableRow
+          schema={schema}
+          newData={arr[index - 1] || value}
+          data={historyRow}
+          originalValues
         />
       ].filter(o => o)
 
