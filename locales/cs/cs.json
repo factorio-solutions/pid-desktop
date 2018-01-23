@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180111a",
+	"PID-RELEASE": "r20180123a",
 	"addresses": {
 		"name": "Jméno *",
 		"line1": "Řádek 1 *",
@@ -122,7 +122,7 @@
 		"settingsHint": "Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.",
 		"usersHint": "Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí, ve kterých klientských účtech je členem a jaké v nich má role. Dále se v detailu zobrazí, jaká má přiřazená auta, kterých garáží je členem a jaké v nich má role.",
 		"allKnownUsers": "Všichni známí uživatelé",
-		"editClientHint": "CS: pageBase.editClientHint",
+		"editClientHint": "Zde můžete upravit údaje klienta.",
 		"notificationsHint": "Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.",
 		"inviteUsersHint": "Pozvěte do klientského účtu nového uživatele. Zadejte jeho e-mailovou adresu a odešlete pozvánku. Po přijetí pozvánky se uživatel automaticky připojí k vybranému klientskému účtu.",
 		"addFeaturesHint": "Zde můžete přidat funkce do tvého systému.",
@@ -162,7 +162,7 @@
 		"garageGarageUsersHint": "Zde můžete spravovat uživatele garáže a jejich práva.",
 		"EditUserHint": "Zde můžete změnit svoje údaje.",
 		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
-		"reservationOverviewHint": "CS: pageBase.reservationOverviewHint",
+		"reservationOverviewHint": "Zde můžete zkontrolovat, zda jsou údaje rezervace správně.",
 		"editInvoiceHint": "CS: pageBase.editInvoiceHint",
 		"editContractHint": "Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.",
 		"unredNotifications": {
@@ -242,7 +242,9 @@
 		"places": "místa",
 		"contract": "dohoda",
 		"monthlyTotal": "celkem za měsíc",
-		"invoices": "faktury"
+		"invoices": "faktury",
+		"currentAgreements": "Aktivní dohody:",
+		"oldAgreements": "Proběhlé dohody:"
 	},
 	"clientUsers": {
 		"name": "uživatelské jméno",
@@ -254,6 +256,7 @@
 		"secretary": "Sekretář/ka",
 		"internal": "Interní",
 		"host": "je host",
+		"driver": "řidič",
 		"presetAs": "Nastavit jako",
 		"removeClientUser": "Určitě chcete odstranit tohoto uživatele?",
 		"pendingUsers": "Nevyřízené pozvánky",
@@ -284,6 +287,8 @@
 		"host": "Host",
 		"visitor": "Návštěvník",
 		"editReservation": "Upravit rezervaci",
+		"editNote": "Upravit poznámku",
+		"newNote": "Nová poznámka",
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
@@ -323,7 +328,6 @@
 		"flatPrice": "pevná cena:",
 		"reservationId": "Id rezervace:",
 		"driver": "Řidič:",
-		"type": "Typ:",
 		"period": "Období:",
 		"licencePlate": "SPZ:",
 		"longterm": "Dlouhodobý",
@@ -531,7 +535,7 @@
 		"noClients": "V současné době nemáte žádné klienty, na kterých máte práva administrátora.",
 		"sucessfullyInvited": {
 			"one": "Pozvánka byla úspěšně odeslána.",
-			"few": "%(count)s pozváneky byly úspěšně odeslány.",
+			"few": "%(count)s pozvánky byly úspěšně odeslány.",
 			"many": "%(count)s pozvánek bylo úspěšně odesláno.",
 			"other": "%(count)s pozvánky bylo úspěšně odesláno."
 		},
@@ -545,6 +549,7 @@
 		"internal": "interní",
 		"security": "ostraha",
 		"receptionist": "recepční",
+		"driver": "řidič",
 		"clientRights": "Práva uživatele",
 		"clientRightsDesc": "Tato práva budou platná pouze pokud bude klient specifikován.",
 		"GarageRights": "Práva garáže",
@@ -697,7 +702,8 @@
 		"invalidName": "Neplatně zadaná cena",
 		"invalidPrice": "Neplatná cena",
 		"selectCurrency": "Vyberte měnu",
-		"selectPlace": "Začněte výběrem místa"
+		"selectPlace": "Začněte výběrem místa",
+		"saving": "Ukládám..."
 	},
 	"newRent": {
 		"name": "Název",
@@ -1056,7 +1062,8 @@
 			"guestReservations": "Host"
 		},
 		"access": {
-			"swipeToOpen": "Swipnutím otevřete bránu",
+			"floor": "Podlaží",
+			"place": "Místo",
 			"noOngoingReservations": "Žádné probíhající rezervace",
 			"inSelectedGarage": "ve zvolené garáži"
 		},
