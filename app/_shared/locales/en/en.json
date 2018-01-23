@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180111a",
+	"PID-RELEASE": "r20180123a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -1063,7 +1063,7 @@
 		},
 		"access": {
 			"floor": "Floor",
-			"place": "Place",
+			"place": "Spot",
 			"noOngoingReservations": "No ongoing reservations",
 			"inSelectedGarage": "in selected garage"
 		},
