@@ -16,6 +16,7 @@ export const GET_CARUSERS = `query ($id: Id!) {
       model
     }
     admin
+    driver
     pending
     created_at
   }
