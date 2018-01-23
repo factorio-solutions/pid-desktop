@@ -60,7 +60,7 @@ class Place extends Component {
     const sortByDate = (a, b) => (a.begins_at < b.begins_at ? -1 : (a.begins_at > b.begins_at ? 1 : 0)) // can be sorted as string - might be faster
 
     const estimatePosition = reservation => {
-      const begining = moment(reservation.begins_at)
+      const begining = moment(reservation.begins_at).isBefore(from) ? from : moment(reservation.begins_at)
       const dur = moment(reservation.ends_at).diff(begining.isSameOrBefore(from) ? from : begining, 'hours', true)
       const durationInCells = dur / cellDuration
       const fromStart = begining.diff(from, 'days', true)
