@@ -41,6 +41,7 @@ export const GET_KNOWN_USERS = `{
     pending
     created_at
     admin
+    driver
     car{
       model
       id
