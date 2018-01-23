@@ -27,7 +27,7 @@ class PidAdminDashboardPage extends Component {
       { key:         'last_active',
         title:       t([ 'pidAdmin', 'users', 'lastActive' ]),
         comparator:  'date',
-        representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
+        representer: o => <span>{moment(o).isValid() ? [ moment(o).format('ddd DD.MM.'), <br />, moment(o).format('H:mm') ] : 'Never active'}</span>,
         orderBy:     'last_active'
       }
     ]
@@ -46,7 +46,13 @@ class PidAdminDashboardPage extends Component {
 
     return (
       <PageBase>
-        <PaginatedTable query={USERS_PAGINATED_TABLE} schema={schema} transformData={transformData} admin />
+        <PaginatedTable
+          schema={schema}
+          query={USERS_PAGINATED_TABLE}
+          transformData={transformData}
+          parseMetadata={data => data.users_metadata}
+          admin
+        />
       </PageBase>
     )
   }

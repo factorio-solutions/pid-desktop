@@ -1,0 +1,16 @@
+@import '../../../_shared/styles/variables';
+
+.inactiveText {
+  margin: 0 5px;
+  color:  $lightGray;
+  cursor: pointer;
+}
+
+.boldText {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.highlight {
+  border-bottom: 1px solid $red;
+}

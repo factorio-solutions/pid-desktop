@@ -71,6 +71,7 @@ query GarageReservations($id: Id!, $datetime: Datetime!) {
         reservations_in_time(datetime: $datetime) {
           id
           client {
+            id
             name
           }
           car {

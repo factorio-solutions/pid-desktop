@@ -62,7 +62,7 @@ class GarageLayout extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     this.props.floors.length !== 0 && this.props.floors.length < this.state.floor + 1 && this.setState({ ...this.state, floor: 0 })
     this.scanPlacesAddLabels()
   }
@@ -95,11 +95,7 @@ class GarageLayout extends Component {
 
       const gControl = currentSvg.getElementById('Gcontrol')
 
-      // const labelChildren = child => {
-      //   (child.id || '').substring(0, 5) == 'Place' && this.addLabel(child, child.id.substring(5), currentSvg)
-      // }
-
-      gControl && Array.prototype.slice.call(currentSvg.getElementById('Gcontrol').childNodes).forEach(child => { // convert childNodet to array cuz of Safari
+      gControl && Array.prototype.slice.call(currentSvg.getElementById('Gcontrol').childNodes).forEach(child => { // convert childNodes to array cuz of Safari
         (child.id || '').substring(0, 5) === 'Place' && this.addLabel(child, child.id.substring(5), currentSvg)
       })
 
@@ -135,18 +131,17 @@ class GarageLayout extends Component {
 
       // color all available blue
       floors[floor] && floors[floor].places && floors[floor].places
-        .filter(place => { return place.available && !place.selected })
+        .filter(place => place.available && !place.selected)
         .forEach(place => {
           const placeRect = currentSvg.getElementById('Place' + place.label)
           placeRect && placeRect.classList.add(styles.gvFree)
         })
 
       // color all with same group same color
-      const uniqueGroups = floors[floor] && floors[floor].places && floors[floor].places
-        .reduce((groups, place) => {
-          place.group && !groups.includes(place.group) && groups.push(place.group)
-          return groups
-        }, [])
+      const uniqueGroups = floors
+        .reduce((acc, floor) => [ ...acc, ...(floor.places || []).map(place => place.group).filter(o => o) ], [])
+        .filter((group, index, arr) => arr.indexOf(group) === index) // unique values
+        .sort((a, b) => a - b)
 
       if (uniqueGroups && uniqueGroups.length) {
         const colors = COLOR_PALETE.length >= uniqueGroups.length ?
@@ -154,13 +149,10 @@ class GarageLayout extends Component {
           COLOR_PALETE.concat(RandomColor({ count: uniqueGroups.length - COLOR_PALETE.length, luminosity: 'light', seed: 'as32d165q4' }))
 
         const assignColors = uniqueGroups
-          .reduce((assign, group, index) => {
-            assign[group] = colors[index]
-            return assign
-          }, {})
+          .reduce((assign, group, index) => ({ ...assign, [group]: colors[index] }), {})
 
         floors[floor] && floors[floor].places && floors[floor].places
-          .filter(place => { return place.group })
+          .filter(place => place.group)
           .forEach(place => {
             const placeRect = currentSvg.getElementById('Place' + place.label)
             placeRect && placeRect.classList.add('hasColorGroup')
@@ -168,18 +160,17 @@ class GarageLayout extends Component {
           })
       }
 
-      const heatGroups = floors[floor] && floors[floor].places && floors[floor].places
+      const heatGroups = floors
+        .reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
         .reduce((groups, place) => place.heat !== undefined ? [ ...groups, place.heat ] : groups, [])
 
       if (heatGroups && heatGroups.length) {
+        const mapValue = (min, max, toMin, toMax, value) => (value - min) * (toMax - toMin) / (max - min) + toMin
         const min = Math.min(...heatGroups)
         const max = Math.max(...heatGroups)
-        const mapValue = (min, max, toMin, toMax, value) => {
-          return (value - min) * (toMax - toMin) / (max - min) + toMin
-        }
 
-        floors[floor] && floors[floor].places && floors[floor].places
-          .filter(place => { return place.heat !== undefined })
+        floors.reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
+          .filter(place => place.heat)
           .forEach(place => {
             const yellow = Math.round(mapValue(min, max, 255, 0, place.heat))
             const placeRect = currentSvg.getElementById('Place' + place.label)
@@ -190,7 +181,7 @@ class GarageLayout extends Component {
 
       // add tooltip event listeners
       floors[floor] && floors[floor].places && floors[floor].places
-        .filter(place => { return place.tooltip })
+        .filter(place => place.tooltip)
         .forEach(place => {
           const placeRect = currentSvg.getElementById('Place' + place.label)
           if (placeRect) {
@@ -242,7 +233,6 @@ class GarageLayout extends Component {
   }
 
   render() {
-    const divider = <span />
     const { floors, onPlaceClick, showEmptyFloors, unfold } = this.props
     const { floor } = this.state
 
@@ -253,6 +243,7 @@ class GarageLayout extends Component {
           key={index}
           content={floor.label}
           onClick={onFloorClick}
+          type="action"
           state={this.state.floor === index ? 'selected' : (!showEmptyFloors && floor.places && floor.places.findIndex(place => place.available) === -1 && 'disabled')}
         />
       )
@@ -272,20 +263,18 @@ class GarageLayout extends Component {
       unfold === true ? <div className={styles.grayBackground}>
         {floors.map(prepareFloors)}
       </div> :
-      <div className={`${styles.widthContainer}`} ref={'containerDiv'}>
-        <div className={`${styles.width78} ${styles.svgContainer}`}>
+      <div ref={'containerDiv'}>
+        <div className={styles.buttons}>
+          <div>{floors.map(prepareButtons)}</div>
+          <div>
+            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+          </div>
+        </div>
+        <div className={styles.svgContainer}>
           <SvgFromText svg={floors[floor] && floors[floor].scheme || ''} svgClick={handleSVGClick} rotate={this.state.rotate} />
         </div>
-        <div className={styles.width18}>
-          <ButtonStack divider={divider}>
-            {floors.map(prepareButtons)}
-          </ButtonStack>
-          <div className={styles.rotateButton}>
-            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state={'action'} />
-          </div>
 
-          {Tooltip(this.state)}
-        </div>
+        {Tooltip(this.state)}
       </div>
     )
   }

@@ -12,31 +12,100 @@ import TabMenu            from '../_shared/components/tabMenu/TabMenu'
 import TabButton          from '../_shared/components/buttons/TabButton'
 import Form               from '../_shared/components/form/Form'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
+import Input              from '../_shared/components/input/Input'
 import Modal              from '../_shared/components/modal/Modal'
 
-import * as nav                                 from '../_shared/helpers/navigation'
-import * as reservationActions                  from '../_shared/actions/reservations.actions'
-import * as reservationInteruptionActions       from '../_shared/actions/reservationInteruption.actions'
-import { setRecurringReservationId, clearForm } from '../_shared/actions/newReservation.actions'
-import { setCustomModal }                       from '../_shared/actions/pageBase.actions'
-import { t }                                    from '../_shared/modules/localization/localization'
-import { MOMENT_DATETIME_FORMAT }               from '../_shared/helpers/time'
-import { GET_RESERVATIONS_PAGINATION_QUERY }    from '../_shared/queries/reservations.queries'
+import * as nav                                      from '../_shared/helpers/navigation'
+import * as reservationActions                       from '../_shared/actions/reservations.actions'
+import * as reservationInteruptionActions            from '../_shared/actions/reservationInteruption.actions'
+import { setRecurringReservationId, clearForm }      from '../_shared/actions/newReservation.actions'
+import { setCustomModal }                            from '../_shared/actions/pageBase.actions'
+import { t }                                         from '../_shared/modules/localization/localization'
+import { MOMENT_DATETIME_FORMAT }                    from '../_shared/helpers/time'
+import { GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY } from '../_shared/queries/reservations.queries'
 
 import styles from './reservations.page.scss'
 
 
 class ReservationsPage extends Component {
+
   static propTypes = {
     state:               PropTypes.object,
     actions:             PropTypes.object,
+    params:              PropTypes.object,
     interuption:         PropTypes.object,
     interuptionActions:  PropTypes.object,
     newReservationState: PropTypes.object
   }
 
+  destroyClick = reservation => {
+    const { actions } = this.props
+
+    if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
+      const destroyOne = () => {
+        actions.setCustomModal()
+        actions.destroyReservation(reservation.id)
+      }
+      const destroyAll = () => {
+        actions.setCustomModal()
+        actions.destroyRecurringReservations(reservation.recurring_reservation.id)
+      }
+
+      actions.setCustomModal(<div className={styles.destroyModal}>
+        <CallToActionButton label={t([ 'reservations', 'destroyAllReservation' ], { count: 1 })} type="remove" onClick={destroyOne} />
+        <CallToActionButton label={t([ 'reservations', 'destroyAllReservation' ], { count: reservation.recurring_reservation.relevant_count })} type="remove" onClick={destroyAll} />
+        <RoundButton content={<i className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.setCustomModal} />
+      </div>)
+    } else {
+      actions.destroyReservation(reservation.id)
+    }
+  }
+
+  editClick = reservation => {
+    const { actions } = this.props
+
+    if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
+      const editOne = () => {
+        actions.setCustomModal()
+        actions.setRecurringReservationId()
+        nav.to(`/reservations/${reservation.id}/edit`)
+      }
+      const editAll = () => {
+        actions.setCustomModal()
+        actions.setRecurringReservationId(reservation.recurring_reservation.id)
+        nav.to(`/reservations/${reservation.id}/edit`)
+      }
+
+      actions.setCustomModal(<div className={styles.destroyModal}>
+        <CallToActionButton label={t([ 'reservations', 'updateAllReservation' ], { count: 1 })} onClick={editOne} />
+        <CallToActionButton label={t([ 'reservations', 'updateAllReservation' ], { count: reservation.recurring_reservation.relevant_count })} onClick={editAll} />
+        <RoundButton content={<i className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.setCustomModal} />
+      </div>)
+    } else {
+      nav.to(`/reservations/${reservation.id}/edit`)
+    }
+  }
+
+  editNoteClick = reservation => {
+    const { actions } = this.props
+
+    actions.setNewNote(reservation.note)
+    actions.setNewNoteReservation(reservation)
+  }
+
+  newReservation = () => {
+    const { actions, newReservationState } = this.props
+    if (newReservationState.reservation !== undefined || newReservationState.recurring_reservation_id !== undefined) actions.clearForm()
+    nav.to('/reservations/newReservation')
+  }
+
+  downloadClick = id => this.props.actions.downloadInvoice(id)
+
+  interuptClick = reservation => this.props.interuptionActions.setReservation(reservation)
+
+
   render() {
-    const { state, actions, interuption, interuptionActions, newReservationState } = this.props
+    const { state, actions, interuption, interuptionActions } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
@@ -74,65 +143,6 @@ class ReservationsPage extends Component {
       { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
     ]
 
-    const destroyClick = reservation => {
-      if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
-        actions.setCustomModal(<div className={styles.destroyModal}>
-          <CallToActionButton
-            label={t([ 'reservations', 'destroyAllReservation' ], { count: 1 })}
-            type="remove"
-            onClick={() => {
-              actions.setCustomModal()
-              actions.destroyReservation(reservation.id)
-            }}
-          />
-          <CallToActionButton
-            label={t([ 'reservations', 'destroyAllReservation' ], { count: reservation.recurring_reservation.relevant_count })}
-            type="remove"
-            onClick={() => {
-              actions.setCustomModal()
-              actions.destroyRecurringReservations(reservation.recurring_reservation.id)
-            }}
-          />
-          <RoundButton content={<i className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.setCustomModal} />
-        </div>)
-      } else {
-        actions.destroyReservation(reservation.id)
-      }
-    }
-
-    const editClick = reservation => {
-      if (reservation.recurring_reservation && reservation.recurring_reservation.relevant_count > 1) {
-        actions.setCustomModal(<div className={styles.destroyModal}>
-          <CallToActionButton
-            label={t([ 'reservations', 'updateAllReservation' ], { count: 1 })}
-            onClick={() => {
-              actions.setCustomModal()
-              actions.setRecurringReservationId(reservation.recurring_reservation.id)
-              nav.to(`/reservations/${reservation.id}/edit`)
-            }}
-          />
-          <CallToActionButton
-            label={t([ 'reservations', 'updateAllReservation' ], { count: reservation.recurring_reservation.relevant_count })}
-            onClick={() => {
-              actions.setCustomModal()
-              actions.setRecurringReservationId(reservation.recurring_reservation.id)
-              nav.to(`/reservations/${reservation.id}/edit`)
-            }}
-          />
-          <RoundButton content={<i className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.setCustomModal} />
-        </div>)
-      } else {
-        nav.to(`/reservations/${reservation.id}/edit`)
-      }
-    }
-
-    const downloadClick = id => actions.downloadInvoice(id)
-    const newReservation = () => {
-      (newReservationState.reservation !== undefined || newReservationState.recurring_reservation_id !== undefined) && actions.clearForm()
-      nav.to('/reservations/newReservation')
-    }
-    const interuptClick = reservation => interuptionActions.setReservation(reservation)
-
     const reservationIteruptionModal = (<div>
       <Form onSubmit={interuptionActions.interuptReservation} onBack={interuptionActions.setReservation} submitable margin={false}>
         <h2>{t([ 'reservationInteruption', 'describtion' ])}</h2>
@@ -141,21 +151,29 @@ class ReservationsPage extends Component {
           label={t([ 'reservationInteruption', 'from' ])}
           error={t([ 'reservationInteruption', 'invalidaDate' ])}
           value={interuption.from}
+          onBlur={interuptionActions.formatFrom}
         />
         <DatetimeInput
           onChange={interuptionActions.setTo}
           label={t([ 'reservationInteruption', 'to' ])}
           error={t([ 'reservationInteruption', 'invalidaDate' ])}
           value={interuption.to}
+          onBlur={interuptionActions.formatTo}
         />
       </Form>
     </div>)
 
-    const filters = [ <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
-      <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
-    ]
+    const reservationNewNoteModal = (<Form onSubmit={actions.editReservationNote} onBack={actions.setNewNoteReservation} submitable margin={false}>
+      <Input
+        onChange={actions.setNewNote}
+        label={t([ 'reservations', 'newNote' ])}
+        value={state.newNote}
+        align="center"
+      />
+    </Form>)
 
-    const transformData = data => data.reservations.map(reservation => ({
+    const reservationTransformation = reservation => ({
+      id:            reservation.id,
       name:          reservation.user.full_name,
       note:          reservation.note,
       client:        reservation.client && reservation.client.name,
@@ -167,33 +185,40 @@ class ReservationsPage extends Component {
       garage:        reservation.place.floor.garage.name,
       place:         reservation.place.floor.garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
         t([ 'reservations', 'flexiblePlace' ]) :
-        `${reservation.place.floor.label} / ${reservation.place.label}`,
-      spoiler:       (<div className={styles.spoiler}>
+        `${reservation.place.floor.label} / ${reservation.place.label}`
+    })
+
+    const transformData = data => data.reservations.map(reservation => ({
+      ...reservationTransformation(reservation),
+      history:        reservation.history.map(reservationTransformation),
+      record_updates: reservation.record_updates,
+      spoiler:        (<div className={styles.spoiler}>
         {!reservation.approved && <div><b>{ reservation.client === null ? t([ 'reservations', 'reservationNotPayed' ]) : t([ 'reservations', 'reservationApproved' ])}</b></div>}
         <div className={styles.flex}>
           <div>
-            <div>{reservation.user.email}</div>
-            <div>{reservation.user.phone}</div>
-          </div>
-          <div>
-            <div>{t([ 'reservations', 'createdAt' ])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)}</div>
-            <div>{t([ 'reservations', 'updatedAt' ])} {moment(reservation.updated_at).format(MOMENT_DATETIME_FORMAT)}</div>
+            {t([ 'reservations', 'createdAt' ])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)} - {reservation.creator.email}
           </div>
           <div>
             <span className={styles.floatRight}>
-              {reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
-              <LabeledRoundButton
-                label={t([ 'reservations', 'editReservation' ])}
-                content={<span className="fa fa-pencil" aria-hidden="true" />}
-                onClick={() => editClick(reservation)}
-                type="action"
-              />
+              {reservation.client && reservation.client.is_secretary && moment(reservation.ends_at).isAfter(moment()) ?
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'editReservation' ])}
+                  content={<span className="fa fa-pencil" aria-hidden="true" />}
+                  onClick={() => this.editClick(reservation)}
+                  type="action"
+                /> :
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'editNote' ])}
+                  content={<span className="fa fa-pencil" aria-hidden="true" />}
+                  onClick={() => this.editNoteClick(reservation)}
+                  type="action"
+                />
               }
               {reservation.approved && reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
               <LabeledRoundButton
                 label={t([ 'reservations', 'interuptReservation' ])}
                 content={<span className="fa fa-pause" aria-hidden="true" />}
-                onClick={() => interuptClick(reservation)}
+                onClick={() => this.interuptClick(reservation)}
                 type="action"
               />
               }
@@ -209,7 +234,7 @@ class ReservationsPage extends Component {
               <LabeledRoundButton
                 label={t([ 'reservations', 'downloadInvoice' ])}
                 content={<span className="fa fa-download" aria-hidden="true" />}
-                onClick={() => { downloadClick(reservation.invoice_item.invoice.id) }}
+                onClick={() => { this.downloadClick(reservation.invoice_item.invoice.id) }}
                 type="action"
               />
               }
@@ -217,7 +242,7 @@ class ReservationsPage extends Component {
               <LabeledRoundButton
                 label={t([ 'reservations', moment(reservation.begins_at).isAfter(moment()) ? 'destroyReservation' : 'teminateEarly' ])}
                 content={<span className="fa fa-times" aria-hidden="true" />}
-                onClick={() => { moment(reservation.begins_at).isAfter(moment()) ? destroyClick(reservation) : interuptionActions.immediateReservationTermination(reservation) }}
+                onClick={() => { moment(reservation.begins_at).isAfter(moment()) ? this.destroyClick(reservation) : interuptionActions.immediateReservationTermination(reservation) }}
                 type="remove"
                 question={t([ 'reservations', moment(reservation.begins_at).isAfter(moment()) ? 'removeReservationQuestion' : 'terminateEarlyQuestion' ])}
               />
@@ -228,16 +253,28 @@ class ReservationsPage extends Component {
       </div>)
     }))
 
+    const filters = [
+      <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
+      <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
+    ]
+
     return (
       <PageBase>
         <Modal content={reservationIteruptionModal} show={interuption.reservation} />
+        <Modal content={reservationNewNoteModal} show={state.newNoteReservation} />
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
-          {/* <Table schema={schema} data={data} /> */}
-          <PaginatedTable query={GET_RESERVATIONS_PAGINATION_QUERY} transformData={transformData} schema={schema} variables={{ past: state.past }} />
+          <PaginatedTable
+            query={GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY}
+            parseMetadata={data => data.reservations_metadata}
+            transformData={transformData}
+            schema={schema}
+            variables={{ past: state.past }}
+            findId={parseInt(this.props.params.id, 10)}
+          />
         </div>
         <div className={styles.centerDiv}>
-          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={newReservation} type="action" size="big" />
+          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.newReservation} type="action" size="big" />
         </div>
       </PageBase>
     )

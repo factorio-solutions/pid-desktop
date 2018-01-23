@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180111a",
+	"PID-RELEASE": "r20180123a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Adresszeile 1 *",
@@ -101,7 +101,7 @@
 		"newContractHint": "Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)",
 		"ReservationButtonHint": "DE: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "DE: pageBase.mrParkitIntegrationHint",
-		"goPublicHint": "DE: pageBase.goPublicHint",
+		"goPublicHint": "Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.\n\nSie können aus folgenden Berechnugsmögichkeiten wählen:\nPauschalpreis pro 1 Std.\nVariabler Preis (Preis ist von der Länge der Reservierung abhängig)\nWochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)\n\nWählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis.",
 		"financeHint": "Im oberen Bereich können Sie aktivieren und einrichten, wie Ihre Kunden für die Parkhausnutzung zahlen können.\n\nIm Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen langfristigen Mietverhältnisse, ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.\n\nIm Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.\n",
 		"financePaypalHint": "DE: pageBase.financePaypalHint",
 		"financeCSOBHint": "DE: pageBase.financeCSOBHint",
@@ -162,7 +162,7 @@
 		"garageGarageUsersHint": "Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann.",
 		"EditUserHint": "Hier können Sie die eigenen Angaben ändern.",
 		"orderGarageModuleHint": "DE: pageBase.orderGarageModuleHint",
-		"reservationOverviewHint": "DE: pageBase.reservationOverviewHint",
+		"reservationOverviewHint": "Hier können Sie kontrolieren, ob die Daten stimmen.",
 		"editInvoiceHint": "DE: pageBase.editInvoiceHint",
 		"editContractHint": "Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis.",
 		"unredNotifications": {
@@ -242,7 +242,9 @@
 		"places": "Stellplätze",
 		"contract": "Vertrag",
 		"monthlyTotal": "Pro Monat insgesamt",
-		"invoices": "Rechnungen"
+		"invoices": "Rechnungen",
+		"currentAgreements": "Laufende Vereinbarungen",
+		"oldAgreements": "Beendete Vereinbarungen"
 	},
 	"clientUsers": {
 		"name": "Benutzername",
@@ -254,6 +256,7 @@
 		"secretary": "Sekretär/in",
 		"internal": "Intern",
 		"host": "ist Gast",
+		"driver": "DE: clientUsers.driver",
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
 		"pendingUsers": "Offene Einladungen",
@@ -284,11 +287,13 @@
 		"host": "Gast",
 		"visitor": "Besucher",
 		"editReservation": "Reservierung bearbeiten",
+		"editNote": "Notiz bearbeiten",
+		"newNote": "Neue Notiz",
 		"interuptReservation": "Reservierung unterbrechen",
 		"payReservation": "Reservierung bezahlen",
 		"downloadInvoice": "Rechnung herunterladen",
 		"destroyReservation": "Reservierung stornieren",
-		"teminateEarly": "DE: reservations.teminateEarly",
+		"teminateEarly": "Sofort beenden",
 		"destroyAllReservation": {
 			"one": "DE: reservations.destroyAllReservation.one",
 			"few": "DE: reservations.destroyAllReservation.few",
@@ -323,7 +328,6 @@
 		"flatPrice": "Festpreis:",
 		"reservationId": "Reservierungsnummer:",
 		"driver": "Fahrer:",
-		"type": "Typ:",
 		"period": "Termin:",
 		"licencePlate": "Kennzeichen",
 		"longterm": "Langfristig",
@@ -545,6 +549,7 @@
 		"internal": "intern",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
+		"driver": "DE: inviteUser.driver",
 		"clientRights": "Benutzerrechte",
 		"clientRightsDesc": "Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird.",
 		"GarageRights": "Parkhausrechte",
@@ -697,7 +702,8 @@
 		"invalidName": "Eingegebener Preis ungültig",
 		"invalidPrice": "Preis ungültig",
 		"selectCurrency": "Währung auswählen",
-		"selectPlace": "Beginnen Sie mit der Auswahl des Stellplatzes"
+		"selectPlace": "Beginnen Sie mit der Auswahl des Stellplatzes",
+		"saving": "DE: newPricing.saving"
 	},
 	"newRent": {
 		"name": "Bezeichnung",
@@ -1056,7 +1062,8 @@
 			"guestReservations": "DE: mobileApp.menu.guestReservations"
 		},
 		"access": {
-			"swipeToOpen": "Öffnen Sie das Tor mit einem Swipe",
+			"floor": "Etage",
+			"place": "Stellplatz",
 			"noOngoingReservations": "Keine gültige Reservierung",
 			"inSelectedGarage": "in gewählten Garage"
 		},
@@ -1189,60 +1196,60 @@
 	},
 	"pidAdmin": {
 		"pageBase": {
-			"backToPid": "DE: pidAdmin.pageBase.backToPid",
-			"adminMode": "DE: pidAdmin.pageBase.adminMode",
-			"generator": "DE: pidAdmin.pageBase.generator",
-			"news": "DE: pidAdmin.pageBase.news"
+			"backToPid": "netřeba překládat",
+			"adminMode": "netřeba překládat",
+			"generator": "netřeba překládat",
+			"news": "netřeba překládat"
 		},
 		"users": {
-			"id": "DE: pidAdmin.users.id",
-			"name": "DE: pidAdmin.users.name",
-			"impersonate": "DE: pidAdmin.users.impersonate",
-			"lastActive": "DE: pidAdmin.users.lastActive"
+			"id": "netřeba překládat",
+			"name": "netřeba překládat",
+			"impersonate": "netřeba překládat",
+			"lastActive": "netřeba překládat"
 		},
 		"generator": {
-			"selectGarages": "DE: pidAdmin.generator.selectGarages",
-			"selected": "DE: pidAdmin.generator.selected",
-			"id": "DE: pidAdmin.generator.id",
-			"name": "DE: pidAdmin.generator.name",
-			"selectClients": "DE: pidAdmin.generator.selectClients",
-			"selectUsers": "DE: pidAdmin.generator.selectUsers",
-			"generateReservations": "DE: pidAdmin.generator.generateReservations",
-			"count": "DE: pidAdmin.generator.count",
-			"countInvalid": "DE: pidAdmin.generator.countInvalid",
-			"dateFrom": "DE: pidAdmin.generator.dateFrom",
-			"dateTo": "DE: pidAdmin.generator.dateTo",
-			"dateInvalid": "DE: pidAdmin.generator.dateInvalid",
-			"dayFrom": "DE: pidAdmin.generator.dayFrom",
-			"dayTo": "DE: pidAdmin.generator.dayTo",
-			"dayFromInvalid": "DE: pidAdmin.generator.dayFromInvalid",
-			"durationFrom": "DE: pidAdmin.generator.durationFrom",
-			"durationTo": "DE: pidAdmin.generator.durationTo",
-			"durationFromInvalid": "DE: pidAdmin.generator.durationFromInvalid",
-			"internal": "DE: pidAdmin.generator.internal",
-			"host": "DE: pidAdmin.generator.host",
-			"hours": "DE: pidAdmin.generator.hours",
-			"or": "DE: pidAdmin.generator.or",
-			"createUsers": "DE: pidAdmin.generator.createUsers",
-			"create": "DE: pidAdmin.generator.create",
-			"users": "DE: pidAdmin.generator.users",
-			"clientName": "DE: pidAdmin.generator.clientName",
-			"clientId": "DE: pidAdmin.generator.clientId",
-			"selectAll": "DE: pidAdmin.generator.selectAll",
-			"deselectAll": "DE: pidAdmin.generator.deselectAll",
-			"beginsAt": "DE: pidAdmin.generator.beginsAt",
-			"endsAt": "DE: pidAdmin.generator.endsAt",
-			"userName": "DE: pidAdmin.generator.userName",
-			"removeReservations": "DE: pidAdmin.generator.removeReservations",
-			"keepReservations": "DE: pidAdmin.generator.keepReservations"
+			"selectGarages": "netřeba překládat",
+			"selected": "netřeba překládat",
+			"id": "netřeba překládat",
+			"name": "netřeba překládat",
+			"selectClients": "netřeba překládat",
+			"selectUsers": "netřeba překládat",
+			"generateReservations": "netřeba překládat",
+			"count": "netřeba překládat",
+			"countInvalid": "netřeba překládat",
+			"dateFrom": "netřeba překládat",
+			"dateTo": "netřeba překládat",
+			"dateInvalid": "netřeba překládat",
+			"dayFrom": "netřeba překládat",
+			"dayTo": "netřeba překládat",
+			"dayFromInvalid": "netřeba překládat",
+			"durationFrom": "netřeba překládat",
+			"durationTo": "netřeba překládat",
+			"durationFromInvalid": "netřeba překládat",
+			"internal": "netřeba překládat",
+			"host": "netřeba překládat",
+			"hours": "netřeba překládat",
+			"or": "netřeba překládat",
+			"createUsers": "netřeba překládat",
+			"create": "netřeba překládat",
+			"users": "netřeba překládat",
+			"clientName": "netřeba překládat",
+			"clientId": "netřeba překládat",
+			"selectAll": "netřeba překládat",
+			"deselectAll": "netřeba překládat",
+			"beginsAt": "netřeba překládat",
+			"endsAt": "netřeba překládat",
+			"userName": "netřeba překládat",
+			"removeReservations": "netřeba překládat",
+			"keepReservations": "netřeba překládat"
 		},
 		"news": {
-			"label": "DE: pidAdmin.news.label",
-			"url": "DE: pidAdmin.news.url",
-			"id": "DE: pidAdmin.news.id",
-			"createdAt": "DE: pidAdmin.news.createdAt",
-			"editNews": "DE: pidAdmin.news.editNews",
-			"deleteNews": "DE: pidAdmin.news.deleteNews"
+			"label": "netřeba překládat",
+			"url": "netřeba překládat",
+			"id": "netřeba překládat",
+			"createdAt": "netřeba překládat",
+			"editNews": "netřeba překládat",
+			"deleteNews": "netřeba překládat"
 		}
 	}
 }

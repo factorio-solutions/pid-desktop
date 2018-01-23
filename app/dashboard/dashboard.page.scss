@@ -1,50 +1,55 @@
 @import '../_styles/app.desktop';
 
-.iframe{
-  width: calc(100% + 54px);
-  border: none;
-  height: 100%;
+.iframe {
+  width:       calc(100% + 54px);
+  height:      100%;
   margin-left: -20px;
+  border:      0;
 }
 
-.h2{
+.h2 {
+  display:       inline-block;
+  padding:       0 10px;
   border-bottom: 2px solid $black;
-  display: inline-block;
-  padding: 0 10px;
 }
 
-.container{
+.container {
   display: flex;
 
-  >div{
-    flex: 1 1;
+  >div:first-child {
+    flex:         1 1;
+    margin-right: 25px;
+  }
+
+  >div:last-child {
+    flex: 2 2;
   }
 }
 
-.news{
-  .newsTime{
-    position:relative;
+.news {
+  .newsTime {
+    position:   relative;
     text-align: right;
 
-    >span{
+    >span {
+      padding:          0 15px;
       background-color: $white;
-      padding: 0 15px;
     }
 
-    &:after {
-      content:"";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 0.5em;
-      border-top: 1px solid black;
-      z-index: -1;
+    &::after {
+      position:   absolute;
+      right:      0;
+      bottom:     0;
+      left:       0;
+      height:     .5em;
+      border-top: 1px solid $black;
+      content:    '';
+      z-index:    -1;
     }
   }
 }
 
-.section{
-  border: 1px solid $lightGray;
+.section {
   padding: 10px;
+  border:  1px solid $lightGray;
 }

@@ -1,59 +1,61 @@
 @import '../_styles/app.desktop';
 
-.contentPadding{
+.contentPadding {
   padding: 25px 15px 0;
 }
 
-.centerDiv{
+.centerDiv {
+  position:   fixed;
+  right:      50%;
+  bottom:     0;
   padding:    $addButtonMargin 0;
   text-align: center;
-  position:   fixed;
-  bottom:     0px;
-  right:      50%;
 }
+
 @media (min-width: $collapseWidth) {
-  .centerDiv{
+  .centerDiv {
     transform: translateX(-50%);
   }
 }
+
 @media (max-width: $collapseWidth) {
-  .centerDiv{
+  .centerDiv {
     transform: translateX(50%);
   }
 }
 
-.tableContainer{
+.tableContainer {
   margin-bottom: 140px;
 }
 
-.floatRight{
+.floatRight {
   float: right;
 }
 
-.place{
+.place {
   font-size: 25px;
 }
 
-.green{
+.green {
   color: $green;
 }
 
-.yellow{
+.yellow {
   color: darken($yellow, 5%);
 }
 
-.spoiler{
+.spoiler {
 
-  >.flex{
+  >.flex {
     display: flex;
 
-    >div{
+    >div {
       flex: 1 1;
     }
   }
 }
 
 
-.destroyModal{
+.destroyModal {
   display: grid;
 }

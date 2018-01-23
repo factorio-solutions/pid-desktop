@@ -37,7 +37,7 @@ class PageBase extends Component {
     const vertical = [
       { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => { nav.to('/dashboard') } },
       { label: t([ 'pageBase', 'Reservation' ]), key: 'reservations', icon: 'icon-reservations', onClick: () => { nav.to('/reservations') } },
-      { label: t([ 'pageBase', 'Occupancy' ]), key: 'occupancy', icon: 'icon-occupancy', onClick: () => { nav.to(`/${state.garage}/occupancy`) } }, // edit preferences in pageBase.action too
+      { label: t([ 'pageBase', 'Occupancy' ]), key: 'occupancy', icon: 'icon-occupancy', onClick: () => { nav.to(`/occupancy`) } }, // edit preferences in pageBase.action too
       (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) &&
         { label: t([ 'pageBase', 'Garage' ]), key: 'garage', icon: 'icon-garage', onClick: () => { nav.to(`/${state.garage}/garage`) } }, // edit preferences in pageBase.action too
       (state.isGarageAdmin && state.pid_tarif >= 2) &&

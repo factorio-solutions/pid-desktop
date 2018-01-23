@@ -18,121 +18,123 @@ import {
   INVITE_USER_RESET_FORM
 } from '../actions/inviteUser.actions'
 
-const booleanAttributes = { client_admin:          false
-                          , client_secretary:      false
-                          , client_host:           false
-                          , client_internal:       false
-                          , client_contact_person: false
-                          , garage_admin:          false
-                          , garage_receptionist:   false
-                          , garage_security:       false
-                          , car_admin:             false
+const booleanAttributes = {
+  client_admin:          false,
+  client_secretary:      false,
+  client_host:           false,
+  client_internal:       false,
+  client_contact_person: false,
+  garage_admin:          false,
+  garage_receptionist:   false,
+  garage_security:       false,
+  car_admin:             false,
+  car_driver:            false,
 
-                          , highlight:             false
-                          }
+  highlight: false
+}
 
-const defaultState =  { ...booleanAttributes
-                      , email:        {value: '', valid: false}
-                      , message:      ""
-                      , full_name:    ""
-                      , phone:        ""
-                      , language:     'en'
+const defaultState = { ...booleanAttributes,
+  email:     { value: '', valid: false },
+  message:   '',
+  full_name: '',
+  phone:     '',
+  language:  'en',
 
-                      , clients:      []
-                      , client_id:    undefined
+  clients:   [],
+  client_id: undefined,
 
-                      , garages:      []
-                      , garage_id:    undefined
+  garages:   [],
+  garage_id: undefined,
 
-                      , cars:         []
-                      , car_id:       undefined
+  cars:   [],
+  car_id: undefined,
 
-                      , error:        undefined
-                      , success:      undefined
-                      , currentEmail: undefined
-                      }
+  error:        undefined,
+  success:      undefined,
+  currentEmail: undefined
+}
 
 
-export default function inviteUser (state = defaultState, action) {
+export default function inviteUser(state = defaultState, action) {
   switch (action.type) {
 
     case INVITE_USER_BOOLEAN_ATTR:
-    return { ...state
-           , [action.attribute]: action.value
-           }
+      return { ...state,
+        [action.attribute]: action.value
+      }
 
     case INVITE_USER_SET_EMAIL:
-    return  { ...state
-            , email: action.value
-            }
+      return { ...state,
+        email: action.value
+      }
     case INVITE_USER_SET_MESSAGE:
-    return  { ...state
-            , message: action.value
-            }
+      return { ...state,
+        message: action.value
+      }
     case INVITE_USER_SET_NAME:
-    return  { ...state
-            , full_name: action.value
-            }
+      return { ...state,
+        full_name: action.value
+      }
     case INVITE_USER_SET_PHONE:
-    return  { ...state
-            , phone: action.value
-            }
+      return { ...state,
+        phone: action.value
+      }
     case INVITE_USER_SET_LANGUAGE:
-    return  { ...state
-            , language: action.value
-            }
+      return { ...state,
+        language: action.value
+      }
 
     case INVITE_USER_SET_CLIENTS:
-    return  { ...state
-            , clients: action.value
-            }
+      return { ...state,
+        clients: action.value
+      }
     case INVITE_USER_SET_CLIENT:
-    return  { ...state
-            , client_id: action.value
-            }
+      return { ...state,
+        client_id: action.value
+      }
 
     case INVITE_USER_SET_GARAGE:
-    return { ...state
-           , garage_id: action.value
-           }
+      return { ...state,
+        garage_id: action.value
+      }
     case INVITE_USER_SET_GARGES:
-    return { ...state
-           , garages: action.value
-           }
+      return { ...state,
+        garages: action.value
+      }
 
     case INVITE_USER_SET_CAR:
-    return { ...state
-           , car_id: action.value
-           }
+      return { ...state,
+        car_id: action.value
+      }
     case INVITE_USER_SET_CARS:
-    return { ...state
-           , cars: action.value
-           }
+      return { ...state,
+        cars: action.value
+      }
 
     case INVITE_USER_SET_ERROR:
-    return  { ...state
-            , error: action.value
-            }
+      return { ...state,
+        error: action.value
+      }
     case INVITE_USER_SET_SUCCESS:
-    return  { ...state
-            , success: action.value
-            }
+      return { ...state,
+        success: action.value
+      }
     case INVITE_USER_SET_CURRENT_EMAIL:
-    return  { ...state
-            , currentEmail: action.value
-            }
+      return { ...state,
+        currentEmail: action.value
+      }
 
     case INVITE_USER_SET_HIGHLIGHT:
-    return  { ...state
-            , highlight: action.value
-            }
+      return { ...state,
+        highlight: action.value
+      }
 
     case INVITE_USER_RESET_FORM:
-    return { ...defaultState
-            , success: state.success
-            , error: state.error
-            , currentEmail: undefined
-            }
+      return { ...defaultState,
+        success:      state.success,
+        error:        state.error,
+        currentEmail: undefined
+      }
 
     default:
       return state

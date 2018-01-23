@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180111a",
+	"PID-RELEASE": "r20180123a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -242,7 +242,9 @@
 		"places": "places",
 		"contract": "agreement",
 		"monthlyTotal": "monthly total",
-		"invoices": "invoices"
+		"invoices": "invoices",
+		"currentAgreements": "Active agreements:",
+		"oldAgreements": "Old agreements:"
 	},
 	"clientUsers": {
 		"name": "username",
@@ -254,6 +256,7 @@
 		"secretary": "secretary",
 		"internal": "internal",
 		"host": "is a guest",
+		"driver": "driver",
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
 		"pendingUsers": "Pending invitations",
@@ -274,8 +277,8 @@
 		"type": "type",
 		"creator": "Creator",
 		"garage": "Garage",
-		"createdAt": "created at:",
-		"updatedAt": "updated at:",
+		"createdAt": "created:",
+		"updatedAt": "updated:",
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
 		"terminateEarlyQuestion": "Are you sure you want to terminate reservation right now?",
 		"reservationApproved": "This reservation has not been approved yet.",
@@ -284,6 +287,8 @@
 		"host": "Guest",
 		"visitor": "Visitor",
 		"editReservation": "Edit reservation",
+		"editNote": "Edit note",
+		"newNote": "New note",
 		"interuptReservation": "Interupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
@@ -323,7 +328,6 @@
 		"flatPrice": "flat price:",
 		"reservationId": "Reservation ID:",
 		"driver": "Driver:",
-		"type": "Type:",
 		"period": "Period:",
 		"licencePlate": "License plate:",
 		"longterm": "Long-term",
@@ -545,6 +549,7 @@
 		"internal": "internal",
 		"security": "security",
 		"receptionist": "receptionist",
+		"driver": "driver",
 		"clientRights": "User rights",
 		"clientRightsDesc": "These rights will be only valid if the client is specified.",
 		"GarageRights": "Garage rights",
@@ -697,7 +702,8 @@
 		"invalidName": "Invalid pricing name",
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency",
-		"selectPlace": "Start by selecting a spot"
+		"selectPlace": "Start by selecting a spot",
+		"saving": "Saving..."
 	},
 	"newRent": {
 		"name": "Name",
@@ -1056,7 +1062,8 @@
 			"guestReservations": "Guest"
 		},
 		"access": {
-			"swipeToOpen": "Swipe to open the gate",
+			"floor": "Floor",
+			"place": "Spot",
 			"noOngoingReservations": "No ongoing reservations",
 			"inSelectedGarage": "in selected garage"
 		},

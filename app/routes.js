@@ -149,11 +149,12 @@ export default function createRoutes() {
       <Route path="dashboard" component={DashboardPage} />
 
       <Route path="reservations" component={ReservationsPage} />
+      <Route path="reservations/find/:id" component={ReservationsPage} />
       <Route path="reservations/newReservation" component={NewReservationPage} />
       <Route path="reservations/:id/edit" component={NewReservationPage} />
       <Route path="reservations/newReservation/overview" component={NewReservationOverviewPage} />
 
-      <Route path=":id/occupancy" component={OccupancyPage} />
+      <Route path="occupancy" component={OccupancyPage} />
 
       <Route path=":id/garage" component={GaragePage} />
 

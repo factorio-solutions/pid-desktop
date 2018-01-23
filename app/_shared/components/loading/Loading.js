@@ -1,5 +1,5 @@
 import React  from 'react'
-import {t}    from '../../modules/localization/localization'
+import { t }    from '../../modules/localization/localization'
 import styles from './Loading.scss'
 
 // Super of all buttons
@@ -11,12 +11,11 @@ import styles from './Loading.scss'
 // question = text of confirm window when type == 'remove'
 
 
-export default function Loading ({ show })  {
-
+export default function Loading({ show }) {
   return show ? (
     <span>
-      <span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true"></span>
-      <span>{t(['signup_page', 'loading'])}</span>
+      <span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />
+      <span>{t([ 'signup_page', 'loading' ])}</span>
     </span>
   ) : null
 }

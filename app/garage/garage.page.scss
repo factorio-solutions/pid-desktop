@@ -1,0 +1,51 @@
+@import '../_styles/app.desktop';
+
+.tooltip {
+  tbody {
+    >tr {
+      >td {
+        &:first-child {
+          color: $gray;
+          font-size: 14px;
+          text-align: right;
+        }
+
+        &.flex {
+          display: flex;
+
+          >.dash {
+            padding: 0 3px;
+          }
+        }
+
+        &:last-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  >div {
+    &:first-child {
+      padding-bottom: 10px;
+    }
+
+    &:last-child {
+      padding-top: 10px;
+    }
+
+    &.optional {
+      border-top: 1px dashed $black;
+
+      tbody {
+        >tr {
+          >td {
+            &:last-child {
+              font-weight: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+}
