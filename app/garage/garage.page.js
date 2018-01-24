@@ -35,11 +35,11 @@ class GaragePage extends Component {
     const { state, actions } = this.props
 
     const left = [
-      <TabButton label={t([ 'garages', 'clients' ])} onClick={() => { actions.setSelected('clients') }} state={state.selected === 'clients' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'contracts' ])} onClick={() => { actions.setSelected('contracts') }} state={state.selected === 'contracts' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'reservations' ])} onClick={() => { actions.setSelected('reservations') }} state={state.selected === 'reservations' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'prices' ])} onClick={() => { actions.setSelected('prices') }} state={state.selected === 'prices' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'cars' ])} onClick={() => { actions.setSelected('cars') }} state={state.selected === 'cars' && 'selected'} />
+      <TabButton label={t([ 'garages', 'clients' ])} onClick={() => actions.setSelected('clients')} state={state.selected === 'clients' && 'selected'} />,
+      <TabButton label={t([ 'garages', 'contracts' ])} onClick={() => actions.setSelected('contracts')} state={state.selected === 'contracts' && 'selected'} />,
+      <TabButton label={t([ 'garages', 'reservations' ])} onClick={() => actions.setSelected('reservations')} state={state.selected === 'reservations' && 'selected'} />,
+      <TabButton label={t([ 'garages', 'prices' ])} onClick={() => actions.setSelected('prices')} state={state.selected === 'prices' && 'selected'} />,
+      <TabButton label={t([ 'garages', 'cars' ])} onClick={() => actions.setSelected('cars')} state={state.selected === 'cars' && 'selected'} />
     ]
 
     const right = [
@@ -147,10 +147,10 @@ class GaragePage extends Component {
 
         switch (state.selected) {
           case 'clients':
-            place.group = contracts[0] ? contracts[0].client.id : undefined
+            place.group = contracts.length ? contracts.map(contract => contract.client.id) : undefined
             break
           case 'contracts':
-            place.group = contracts[0] ? contracts[0].id : undefined
+            place.group = contracts.length ? contracts.map(contract => contract.id) : undefined
             break
           case 'prices':
             place.group = place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent' || place.pricing && place.pricing.id + 'price'
