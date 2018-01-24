@@ -4,7 +4,6 @@ import RandomColor                      from 'randomcolor'
 
 import SvgFromText from '../svgFromText/SvgFromText'
 import Tooltip     from '../tooltip/Tooltip'
-import ButtonStack from '../buttonStack/ButtonStack'
 import RoundButton from '../buttons/RoundButton'
 
 import styles from './GarageLayout.scss'
@@ -18,6 +17,9 @@ const INIT_STATE = {
   floor:   -1, // index of selected floor
   rotate:  false
 }
+
+const GROUP_OFFSET_X = 20 // px
+const GROUP_OFFSET_Y = GROUP_OFFSET_X // px
 
 // floors:[
 //   { label: string...
@@ -67,6 +69,30 @@ class GarageLayout extends Component {
     this.scanPlacesAddLabels()
   }
 
+  calculateCenter(element) {
+    switch (element.tagName) {
+      case 'polygon': {
+        const pointPairs = element.getAttribute('points').split(' ')
+        const xy = pointPairs.reduce((acc, pair) => ({
+          x: acc.x + (+pair.split(',')[0] || 0),
+          y: acc.y + (+pair.split(',')[1] || 0)
+        }), { x: 0, y: 0 })
+
+        return {
+          x: xy.x / pointPairs.length,
+          y: xy.y / pointPairs.length
+        }
+      }
+
+      case 'rect': {
+        return {
+          x: +element.getAttribute('x') + (+element.getAttribute('width') / 2),
+          y: +element.getAttribute('y') + (+element.getAttribute('height') / 2)
+        }
+      }
+    }
+  }
+
   scanPlacesAddLabels() {
     // add labels to all places
     const elements = document.getElementsByTagName('svg') // go trough all svgs - can be multiple on page
@@ -78,7 +104,7 @@ class GarageLayout extends Component {
       if (elements.length > 1) { // dont do if there is only one svg
         for (const styleTag of currentSvg.getElementsByTagName('style')) {
           styleTag.innerHTML.split('{')
-          .reduce((acc, str) => { return [ ...acc, ...str.split('}') ] }, [])
+          .reduce((acc, str) => [ ...acc, ...str.split('}') ], [])
           .map(str => str.trim())
           .filter((obj, index) => index % 2 === 0 && obj.length > 0 && obj[0] === '.' && !obj.includes('SVG_')) // is odd not zero-length class selector that doenst begin with SVG_
           .forEach(selector => {
@@ -116,6 +142,9 @@ class GarageLayout extends Component {
         element.classList.remove('hasHeatGroup')
         element.removeAttribute('style')
       }
+      while (currentSvg.getElementsByClassName('groupCircle').length >= 1) {
+        currentSvg.getElementsByClassName('groupCircle')[0].remove()
+      }
 
 
       const { floors } = this.props
@@ -140,8 +169,10 @@ class GarageLayout extends Component {
       // color all with same group same color
       const uniqueGroups = floors
         .reduce((acc, floor) => [ ...acc, ...(floor.places || []).map(place => place.group).filter(o => o) ], [])
+        .reduce((acc, group) => [ ...acc, ...(Array.isArray(group) ? group : [ group ]) ], []) // flatten arrays
         .filter((group, index, arr) => arr.indexOf(group) === index) // unique values
         .sort((a, b) => a - b)
+
 
       if (uniqueGroups && uniqueGroups.length) {
         const colors = COLOR_PALETE.length >= uniqueGroups.length ?
@@ -155,8 +186,25 @@ class GarageLayout extends Component {
           .filter(place => place.group)
           .forEach(place => {
             const placeRect = currentSvg.getElementById('Place' + place.label)
-            placeRect && placeRect.classList.add('hasColorGroup')
-            placeRect && placeRect.setAttribute('style', `fill: ${assignColors[place.group]};`)
+            if (Array.isArray(place.group) && place.group.length > 1) {
+              place.group.forEach((group, i, arr) => {
+                const center = this.calculateCenter(placeRect)
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+                circle.setAttributeNS(null, 'cx', arr.length % 2 === 0 ?
+                  center.x + (((i - (arr.length / 2)) * GROUP_OFFSET_X) + (GROUP_OFFSET_X / 2)) : // even
+                  center.x + ((i - ((arr.length - 1) / 2)) * GROUP_OFFSET_X) // odd
+                )
+                circle.setAttributeNS(null, 'cy', center.y + GROUP_OFFSET_Y)
+                circle.setAttributeNS(null, 'r', 8)
+                circle.setAttribute('style', `fill: ${assignColors[group]};`)
+                circle.classList.add('groupCircle')
+                circle.classList.add('text')
+                placeRect.parentNode.appendChild(circle)
+              })
+            } else {
+              placeRect && placeRect.classList.add('hasColorGroup')
+              placeRect && placeRect.setAttribute('style', `fill: ${assignColors[Array.isArray(place.group) ? place.group[0] : place.group]};`)
+            }
           })
       }
 
@@ -198,28 +246,11 @@ class GarageLayout extends Component {
 
   addLabel(place, label, el) {
     if (!el.getElementById('Text' + label)) { // if label doenst exist yet
-      let x = 0,
-        y = 0
-      switch (place.tagName) {
-        case 'polygon':
-          place.getAttribute('points').split(' ').forEach(pointPair => {
-            const xy = pointPair.split(',')
-            x += +xy[0] || 0
-            y += +xy[1] || 0
-          })
-          const length = place.getAttribute('points').split(' ').length - 1
-          x /= length
-          y /= length
-          break
-        case 'rect':
-          x = (+place.getAttribute('x')) + (+place.getAttribute('width')) / 2
-          y = (+place.getAttribute('y')) + (+place.getAttribute('height')) / 2
-          break
-      }
+      const xy = this.calculateCenter(place)
 
       const newElement = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-      newElement.setAttributeNS(null, 'x', x)
-      newElement.setAttributeNS(null, 'y', y)
+      newElement.setAttributeNS(null, 'x', xy.x)
+      newElement.setAttributeNS(null, 'y', xy.y)
       newElement.setAttributeNS(null, 'class', `${styles.gvText} ${styles.text}`)
       newElement.setAttributeNS(null, 'text-anchor', 'middle')
       newElement.setAttributeNS(null, 'id', 'Text' + label)
