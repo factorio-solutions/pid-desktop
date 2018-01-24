@@ -154,6 +154,15 @@
     background: $littleLighterGray;
   }
 
+  &.notApproved {
+    background: $red !important;
+  }
+
+}
+
+.notApprovedLabel {
+  font-weight: bold;
+  text-align: center;
 }
 
 .tooltipTable {

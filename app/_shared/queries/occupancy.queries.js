@@ -56,6 +56,7 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $t
           }
           begins_at
           ends_at
+          approved
           user {
             id
             full_name
