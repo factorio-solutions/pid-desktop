@@ -122,7 +122,8 @@ class Place extends Component {
         moment().isBefore(moment(reservation.begins_at)) && styles.future,
         moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) && styles.ongoing,
         moment().isAfter(moment(reservation.ends_at)) && styles.fulfilled,
-        details ? forCurrentUser ? styles.forCurrentUser : styles.forFellowUser : styles.noDetails
+        details ? forCurrentUser ? styles.forCurrentUser : styles.forFellowUser : styles.noDetails,
+        !reservation.approved && styles.notApproved
       ]
 
       const begining = moment(reservation.begins_at)
