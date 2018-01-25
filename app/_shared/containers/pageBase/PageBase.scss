@@ -1,92 +1,79 @@
 @import '../../styles/app.components';
 @import '../../components/buttons/Button';
 
-.absoluteSpan{
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translate(-50%, 0);
+.absoluteSpan {
+  position:    absolute;
+  top:         20px;
+  left:        50%;
+  transform:   translate(-50%, 0);
   font-weight: bold;
 
   -webkit-filter: invert(100%);
-  filter: invert(100%);
+  filter:         invert(100%);
 }
 
-.bottom{
+.bottom {
+  margin-top:  15px;
+  background:  $gray;
+  color:       $white;
+  font-size:   14px;
   line-height: 20px;
-  font-size: 14px;
-  text-align: center;
-  color: $white;
-  background: $gray;
-  margin-top: 15px;
+  text-align:  center;
 }
 
-.clickable{
+.clickable {
   cursor: pointer;
 }
 
-.bottomContent{
+.bottomContent {
   padding: 15px;
 }
 
-.hintContainer{
-  display: flex;
-  background: $blue;
-  color: $white;
+.hintContainer {
+  display:       flex;
   margin-bottom: 24px;
+  background:    $blue;
+  color:         $white;
+
   >button {
     margin: 10px;
   }
 }
 
 .hint {
-  flex: 1 1;
-  padding: 10px;
+  flex:       1 1;
+  padding:    10px;
   text-align: center;
 }
 
-.featureButton{
-  width: 90%;
-  padding: 14px 8px;
-  margin-bottom: 10px;
+.featureButton {
   @include border-radius(5px);
-  font-size:  18px;
-  border:     none;
-  outline:    none;
-  text-align: center;
-  transition: all 0.4s ease;
-
   @include colorize($blue);
-  color:   $white;
-  cursor:  pointer;
+
+  width:         90%;
+  margin-bottom: 10px;
+  padding:       14px 8px;
+  transition:    all 0.4s ease;
+  border:        0;
+  outline:       none;
+  color:         $white;
+  font-size:     18px;
+  text-align:    center;
+  cursor:        pointer;
 }
 
-.dropdownContent{
+.dropdownContent {
+  padding:     6px 20px;
+  background:  $menuGray;
+  color:       $lightGray;
+  font-size:   15px;
   white-space: nowrap;
-  background: $menuGray;
-  color: $lightGray;
-  font-size: 15px;
-  cursor: pointer;
+  cursor:      pointer;
 
-  >i{
-    color: $white;
-    font-size: 32px;
+  >i {
+    padding:        0 5px;
+    color:          $white;
+    font-size:      32px;
     vertical-align: middle;
-  }
-}
-
-@media (min-width: $collapseWidth) {
-  .dropdownContent{
-    padding: 6px 20px;
-
-    >i{
-      padding: 0 5px;
-    }
-  }
-}
-
-@media (max-width: $collapseWidth) {
-  .dropdownContent{
-    padding: 10px 0;
   }
 }
