@@ -34,7 +34,6 @@ class NewReservationPage extends Component {
   }
 
   componentDidMount() {
-    console.log('HERE');
     this.props.actions.setInitialStore(this.props.params.id)
   }
 
