@@ -64,7 +64,6 @@ export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
 export const setReservation = actionFactory(NEW_RESERVATION_SET_RESERVATION)
-export const setHostName = actionFactory(NEW_RESERVATION_SET_HOST_NAME)
 export const setShowRecurring = actionFactory(NEW_RESERVATION_SHOW_RECURRING)
 export const setRecurringReservationId = actionFactory(NEW_RESERVATION_SET_RECURRING_RESERVATION_ID)
 export const setCarId = actionFactory(NEW_RESERVATION_CAR_ID)
@@ -78,6 +77,7 @@ export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
+export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
 export const setHostPhone = patternInputActionFactory(NEW_RESERVATION_SET_HOST_PHONE)
 export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_EMAIL)
 
