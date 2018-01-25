@@ -10,15 +10,17 @@ import VerticalMenu          from '../verticalMenu/VerticalMenu'
 import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
 import DropdownContent       from '../dropdown/DropdownContent'
 
-import * as nav from '../../helpers/navigation'
-import { changeHints } from '../../actions/profile.actions'
+import * as nav                 from '../../helpers/navigation'
+import { changeHints }          from '../../actions/profile.actions'
+import { setShowSecondaryMenu } from '../../actions/pageBase.actions'
 
 import styles from './MasterPage.scss'
 
 
 class MasterPage extends Component {
   static propTypes = {
-    actions: PropTypes.object,
+    actions:  PropTypes.object,
+    pageBase: PropTypes.object,
 
     name:         PropTypes.string,
     messageCount: PropTypes.oneOfType([
@@ -47,7 +49,10 @@ class MasterPage extends Component {
     this.state = { menu: false }
   }
 
-  onHamburgerClick = () => this.setState({ menu: !this.state.menu })
+  onHamburgerClick = () => {
+    this.setState({ menu: !this.props.pageBase.showSecondaryMenu && !this.state.menu })
+    this.props.actions.setShowSecondaryMenu(false)
+  }
 
   onLogoClick = () => nav.to('/dashboard')
   onMessageClick =() => nav.to('/notifications')
@@ -148,6 +153,6 @@ class MasterPage extends Component {
 }
 
 export default connect(
-  () => ({}),
-  dispatch => ({ actions: bindActionCreators({ changeHints }, dispatch) })
+  state => ({ pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators({ changeHints, setShowSecondaryMenu }, dispatch) })
 )(MasterPage)

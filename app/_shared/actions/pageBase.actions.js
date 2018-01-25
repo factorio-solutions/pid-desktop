@@ -129,19 +129,29 @@ export function setIsGarageSecurity(value) {
   }
 }
 
+const secondaryMenuClickFactort = (dispatch, path) => () => {
+  nav.to(path)
+  dispatch(setShowSecondaryMenu(false))
+}
 
 function prepareAdminSecondaryMenu() {
   return (dispatch, getState) => {
     const garage = getState().pageBase.garage
     const state = getState().pageBase
-    return [ { label: t([ 'pageBase', 'Invoices' ]), key: 'invoices', onClick: () => { nav.to(`/${garage}/admin/invoices`) } },
-            { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: () => { nav.to(`/${garage}/admin/clients`) } },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: () => { nav.to(`/${garage}/admin/modules`) } },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: () => { nav.to(`/${garage}/admin/garageSetup/general`) } },
-            { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: () => { nav.to(`/${garage}/admin/users`) } },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: () => { nav.to(`/${garage}/admin/finance`) } },
-          //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: ()=>{nav.to(`/${garage}/admin/pidSettings`)} }
-      state.isGarageAdmin && { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: () => { nav.to(`/${garage}/admin/activityLog`) } }
+
+    return [
+      { label: t([ 'pageBase', 'Invoices' ]), key: 'invoices', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/invoices`) },
+      { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/clients`) },
+      state.isGarageAdmin &&
+      { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules`) },
+      state.isGarageAdmin &&
+      { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/garageSetup/general`) },
+      { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/users`) },
+      state.isGarageAdmin &&
+      { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/finance`) },
+      //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/pidSettings`)} }
+      state.isGarageAdmin &&
+      { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/activityLog`) }
     ].filter(field => field !== false)
   }
 }
@@ -150,11 +160,13 @@ function prepareAnalyticsSecondaryMenu() {
   return (dispatch, getState) => {
     const garage = getState().pageBase.garage
     const state = getState().pageBase
-    return [ state.isGarageAdmin && { label: t([ 'pageBase', 'garageTurnover' ]), key: 'garageTurnover', onClick: () => { nav.to(`/${garage}/analytics/garageTurnover`) } },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'reservations' ]), key: 'reservationsAnalytics', onClick: () => { nav.to(`/${garage}/analytics/reservationsAnalytics`) } },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'places' ]), key: 'placesAnalytics', onClick: () => { nav.to(`/${garage}/analytics/placesAnalytics`) } }
-          //  , state.isGarageAdmin && {label: t(['pageBase', 'payments']),       key: "paymentsAnalytics",      onClick: ()=>{nav.to(`/${garage}/analytics/paymentsAnalytics`)} }
-          //  , state.isGarageAdmin && {label: t(['pageBase', 'gates']),          key: "gatesAnalytics",         onClick: ()=>{nav.to(`/${garage}/analytics/gatesAnalytics`)} }
+
+    return [
+      state.isGarageAdmin && { label: t([ 'pageBase', 'garageTurnover' ]), key: 'garageTurnover', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/garageTurnover`) },
+      state.isGarageAdmin && { label: t([ 'pageBase', 'reservations' ]), key: 'reservationsAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/reservationsAnalytics`) },
+      state.isGarageAdmin && { label: t([ 'pageBase', 'places' ]), key: 'placesAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/placesAnalytics`) }
+      //  , state.isGarageAdmin && {label: t(['pageBase', 'payments']),       key: "paymentsAnalytics",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/paymentsAnalytics`) }
+      //  , state.isGarageAdmin && {label: t(['pageBase', 'gates']),          key: "gatesAnalytics",         onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/gatesAnalytics`) }
     ].filter(field => field !== false)
   }
 }
