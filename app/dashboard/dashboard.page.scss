@@ -13,8 +13,6 @@
   border-bottom: 2px solid $black;
 }
 
-
-
 .news {
   .newsTime {
     position:   relative;
@@ -62,5 +60,8 @@
 
 // -- Only apply on small window --------------------------------------------
 @media (max-width: $collapseWidth) {
-
+  .container > div:first-child {
+    display:        flex;
+    flex-direction: column-reverse;
+  }
 }
