@@ -1,18 +1,18 @@
 @import '../../styles/app.components';
 
 .marginBot {
-  margin-bottom: 180px;
+  // margin-bottom: 180px;
+  margin-bottom: 90px;
 }
 
 .floatRight {
   flex: 1 1;
   text-align: right;
-  // float: right;
 }
 
 .floatLeft {
   flex: 1 1;
-  // float: left;
+  text-align: left;
 }
 
 .mobileSubmitButton {
@@ -26,18 +26,25 @@
   @include rotating(2s);
 }
 
+.submitBtn {
+  display: flex;
+}
+
 // -- Responsive Styles (Media Queries) -------------------------------------
 // -- Only apply on big window ----------------------------------------------
 @media (min-width: $collapseWidth) {
   .submitBtn {
-    display: flex;
     margin-top: 35px;
   }
 }
 
 // -- Only apply on small window --------------------------------------------
 @media (max-width: $collapseWidth) {
-  .submitBtn {
+  .inModal {
+    margin-top: 35px;
+  }
+
+  .submitBtn:not(.inModal) {
     position: fixed;
     right:    80px;
     bottom:   20px;

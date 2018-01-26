@@ -10,7 +10,6 @@ import Table         from '../_shared/components/table/Table'
 import DateInput     from '../_shared/components/input/DateInput'
 import Loading       from '../_shared/components/loading/Loading'
 
-import * as nav                          from '../_shared/helpers/navigation'
 import { t }                             from '../_shared/modules/localization/localization'
 import * as analyticsReservationsActions from '../_shared/actions/analytics.reservations.actions'
 
@@ -20,60 +19,69 @@ import styles from './reservations.page.scss'
 class ReservationsAnalyticsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
+    pageBase: PropTypes.object,
     actions:  PropTypes.object
   }
 
-  componentWillReceiveProps(nextProps){ // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initReservationsAnalytics()
+  componentDidMount() {
+    this.props.pageBase.garage && this.props.actions.initReservationsAnalytics()
   }
 
-  componentDidMount(){
-    this.props.pageBase.garage && this.props.actions.initReservationsAnalytics()
+  componentWillReceiveProps(nextProps) { // load garage if id changed
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initReservationsAnalytics()
   }
 
   render() {
     const { state, actions } = this.props
 
-    const shorttermHandleFrom = (value, valid) => {valid && actions.setFrom(value) }
-    const shorttermHandleTo   = (value, valid) => {valid && actions.setTo(value) }
+    const shorttermHandleFrom = (value, valid) => valid && actions.setFrom(value)
+    const shorttermHandleTo = (value, valid) => valid && actions.setTo(value)
 
-    let data = [[t(['analytics','turnover'])], [t(['analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount'])]]
-    let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> } ]
+    const data = [
+      [ t([ 'analytics', 'turnover' ]) ],
+      [ t([ 'analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount' ]) ]
+    ]
+
+    const schema = [
+      { key: 0, title: t([ 'analytics', 'period' ]), comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> }
+    ]
 
     const tableData = state.filter === 'shortterm' ? actions.reservationsToData() : actions.contractsToData()
 
-    tableData.forEach((o) => {
-      schema.push({ key: schema.length, title: actions.dateRemoveYear(o.date), comparator: 'string'})
-      data[0].push(o.price+' '+actions.currency())
-      data[1].push(state.filter === 'shortterm' ? o.reservations.length+'' : o.contracts.length+'')
+    tableData.forEach(o => {
+      schema.push({ key: schema.length, title: actions.dateRemoveYear(o.date), comparator: 'string' })
+      data[0].push(o.price + ' ' + actions.currency())
+      data[1].push(state.filter === 'shortterm' ? o.reservations.length + '' : o.contracts.length + '')
     })
 
-    const filters = [ <TabButton label={t(['analytics', 'shortterm'])} onClick={() => {actions.shortTermClick()}} state={state.filter=="shortterm" && 'selected'}/>
-                    , <TabButton label={t(['analytics', 'longterm'])}  onClick={() => {actions.longTermClick()}}  state={state.filter=="longterm" && 'selected'}/>
-                    ]
+    const filters = [
+      <TabButton label={t([ 'analytics', 'shortterm' ])} onClick={() => actions.shortTermClick()} state={state.filter === 'shortterm' && 'selected'} />,
+      <TabButton label={t([ 'analytics', 'longterm' ])} onClick={() => actions.longTermClick()} state={state.filter === 'longterm' && 'selected'} />
+    ]
 
-    const datePickers = [ <Loading show={state.loading} />
-                        , <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
-                        , <span className={styles.dash}><b>-</b></span>
-                        , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
-                        ]
+    const datePickers = [
+      <Loading show={state.loading} />,
+      <DateInput onChange={shorttermHandleFrom} label={t([ 'reservations', 'from' ])} value={state.from} style={styles.inline} flip />,
+      <span className={styles.dash} />,
+      <DateInput onChange={shorttermHandleTo} label={t([ 'reservations', 'to' ])} value={state.to} style={styles.inline} flip />
+    ]
 
     return (
       <PageBase>
-        <TabMenu left={filters} right={datePickers}/>
+        <TabMenu left={filters} right={datePickers} />
         <Chart
           chartType="ComboChart"
           data={actions.dataToArray(tableData)}
           options={{
             vAxes: {
-              0:{title: t(['analytics', 'turnover']), format: `# ${actions.currency()}`},
-              1:{title:t(['analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount'])}
+              0: { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+              1: { title: t([ 'analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount' ]) }
             },
-            hAxis: {title: t(['analytics', 'date']) },
+            hAxis:      { title: t([ 'analytics', 'date' ]) },
             seriesType: 'bars',
-            series: {
-              0:{targetAxisIndex:0},
-              1:{targetAxisIndex:1, type:'line'},
+            series:     {
+              0: { targetAxisIndex: 0 },
+              1: { targetAxisIndex: 1, type: 'line' }
             }
           }}
           graph_id="ComboChart"
@@ -87,6 +95,6 @@ class ReservationsAnalyticsPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.analyticsReservations, pageBase: state.pageBase }),
+  state => ({ state: state.analyticsReservations, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(analyticsReservationsActions, dispatch) })
 )(ReservationsAnalyticsPage)

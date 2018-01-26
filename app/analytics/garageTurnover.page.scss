@@ -1,20 +1,25 @@
-.dateSelector{
-  font-size: 16px;
-  padding: 10px 12px;
+.dateSelector {
+  width:      60px;
   margin-top: 5px;
-  border: none;
-  background-color: transparent;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  outline: none;
+  padding:    10px 12px;
 
-  width: 60px;
-  text-align: center;
-  font-weight: bold;
+  border:        0;
+  border-radius: 0;
+  outline:       none;
+
+  background-color:      transparent;
+  font-size:             16px;
+  font-weight:           bold;
+  text-align:            center;
+  -webkit-border-radius: 0;
+  -webkit-box-shadow:    none;
+  box-shadow:            none;
 }
 
 .inline {
   display: inline-block;
+}
+
+.dash {
+  padding: 6px;
 }

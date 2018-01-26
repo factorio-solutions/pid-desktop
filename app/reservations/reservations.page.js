@@ -144,7 +144,7 @@ class ReservationsPage extends Component {
     ]
 
     const reservationIteruptionModal = (<div>
-      <Form onSubmit={interuptionActions.interuptReservation} onBack={interuptionActions.setReservation} submitable margin={false}>
+      <Form onSubmit={interuptionActions.interuptReservation} onBack={interuptionActions.setReservation} submitable margin={false} modal>
         <h2>{t([ 'reservationInteruption', 'describtion' ])}</h2>
         <DatetimeInput
           onChange={interuptionActions.setFrom}
@@ -163,7 +163,7 @@ class ReservationsPage extends Component {
       </Form>
     </div>)
 
-    const reservationNewNoteModal = (<Form onSubmit={actions.editReservationNote} onBack={actions.setNewNoteReservation} submitable margin={false}>
+    const reservationNewNoteModal = (<Form onSubmit={actions.editReservationNote} onBack={actions.setNewNoteReservation} submitable margin={false} modal>
       <Input
         onChange={actions.setNewNote}
         label={t([ 'reservations', 'newNote' ])}

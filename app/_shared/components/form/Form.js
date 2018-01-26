@@ -13,7 +13,8 @@ export default class Form extends Component {
     onBack:      PropTypes.func,
     submitable:  PropTypes.bool,
     mobile:      PropTypes.bool,
-    margin:      PropTypes.bool // margin on the bottom
+    margin:      PropTypes.bool, // margin on the bottom
+    modal:       PropTypes.bool // is in modal, so no position fixed
   }
 
   static defaultProps = {
@@ -30,7 +31,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin } = this.props
+    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal } = this.props
 
     const sendReservation = () => {
       if (submitable) {
@@ -41,7 +42,13 @@ export default class Form extends Component {
 
     const highlightInputs = () => onHighlight && onHighlight()
 
-    const submitButton = (<div className={`${mobile ? styles.mobileSubmitButton : styles.submitBtn} ${margin && styles.marginBot}`}>
+    const submitButton = (<div
+      className={`
+        ${mobile ? styles.mobileSubmitButton : styles.submitBtn}
+        ${margin && styles.marginBot}
+        ${modal && styles.inModal}
+      `}
+    >
       {onBack && <div className={styles.floatLeft}>
         <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={onBack} />
       </div>}

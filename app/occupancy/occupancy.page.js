@@ -62,7 +62,8 @@ class OccupancyPage extends Component {
         }))
     }
 
-    const filters = [ <TabButton label={t([ 'newReservation', 'now' ])} onClick={setNow} />,
+    const filters = [
+      <TabButton label={t([ 'newReservation', 'now' ])} onClick={setNow} />,
       <TabButton label={t([ 'occupancy', 'day' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />,
       <TabButton label={t([ 'occupancy', 'week' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />,
       <TabButton label={t([ 'occupancy', 'month' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />

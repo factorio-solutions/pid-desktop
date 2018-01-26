@@ -189,7 +189,7 @@ class GarageLayout extends Component {
             placeRect.onmouseleave = () => { this.setState({ ...this.state, visible: false }) }
             placeRect.onmousemove = event => {
               const rect = this.refs.containerDiv ? this.refs.containerDiv.getBoundingClientRect() : { left: 0, top: 0 }
-              this.setState({ ...this.state, mouseX: event.clientX - 160 - (this.props.showSecondaryMenu ? 200 : 0) + 20, mouseY: event.clientY - 60 })
+              this.setState({ ...this.state, mouseX: event.clientX - (this.props.showSecondaryMenu ? 200 : 0) + 20, mouseY: event.clientY})
             }
           }
         })

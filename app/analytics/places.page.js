@@ -11,101 +11,114 @@ import GarageLayout from '../_shared/components/garageLayout/GarageLayout'
 import Loading      from '../_shared/components/loading/Loading'
 import DateInput    from '../_shared/components/input/DateInput'
 
-import * as nav                    from '../_shared/helpers/navigation'
 import { t }                       from '../_shared/modules/localization/localization'
 import * as analyticsPlacesActions from '../_shared/actions/analytics.places.actions'
 
-import garageStyles from './garageTurnover.page.scss'
-import styles       from './places.page.scss'
+import styles from './places.page.scss'
 
 
 class PlacesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
+    pageBase: PropTypes.object,
     actions:  PropTypes.object
   }
 
-  componentWillReceiveProps(nextProps){ // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initPlacesAnalytics()
+
+  componentDidMount() {
+    this.props.pageBase.garage && this.props.actions.initPlacesAnalytics()
   }
 
-  componentDidMount(){
-    this.props.pageBase.garage && this.props.actions.initPlacesAnalytics()
+  componentWillReceiveProps(nextProps) { // load garage if id changed
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initPlacesAnalytics()
   }
 
   render() {
     const { state, actions } = this.props
 
-    // const fromHandler = (event) => { actions.setFrom(event.target.value) }
-    // const toHandler   = (event) => { actions.setTo(event.target.value) }
-    const shorttermHandleFrom = (value, valid) => {valid && actions.setFrom(value) }
-    const shorttermHandleTo   = (value, valid) => {valid && actions.setTo(value) }
+    const shorttermHandleFrom = (value, valid) => valid && actions.setFrom(value)
+    const shorttermHandleTo = (value, valid) => valid && actions.setTo(value)
 
-    let data = [[t(['analytics','avgRevenue'])], [t(['analytics','avgTurnover'])], [t(['analytics','minRevenue'])], [t(['analytics','maxRevenue'])]]
-    let schema = [ { key: 0, title: t(['analytics','period']),   comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> } ]
-    let chartData = [ [t(['analytics','date']), t(['analytics','shortterm']), t(['analytics','average']), t(['analytics','longterm'])] ]
+    const data = [
+      [ t([ 'analytics', 'avgRevenue' ]) ],
+      [ t([ 'analytics', 'avgTurnover' ]) ],
+      [ t([ 'analytics', 'minRevenue' ]) ],
+      [ t([ 'analytics', 'maxRevenue' ]) ]
+    ]
 
-    state.garage && state.garage.statistics.forEach((obj) => {
-      schema.push({ key: schema.length, title: t(['analytics','shortterm'])+' ' + obj.date, comparator: 'string'})
-      schema.push({ key: schema.length, title: t(['analytics','longterm']) +' ' + obj.date, comparator: 'string'})
+    const schema = [
+      { key: 0, title: t([ 'analytics', 'period' ]), comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> }
+    ]
 
-      data[0].push((isFinite(obj.shortterm.turnover)    ? obj.shortterm.turnover    : 0) + ' ' +obj.shortterm.currency)
-      data[0].push((isFinite(obj.longterm.turnover)     ? obj.longterm.turnover     : 0) + ' ' +obj.longterm.currency)
-      data[1].push((isFinite(obj.shortterm.avgTurnover) ? obj.shortterm.avgTurnover : 0) + ' ' +obj.shortterm.currency)
-      data[1].push((isFinite(obj.longterm.avgTurnover)  ? obj.longterm.avgTurnover  : 0) + ' ' +obj.longterm.currency)
-      data[2].push((isFinite(obj.shortterm.minRevenue)  ? obj.shortterm.minRevenue  : 0) + ' ' +obj.shortterm.currency)
-      data[2].push((isFinite(obj.longterm.minRevenue)   ? obj.longterm.minRevenue   : 0) + ' ' +obj.longterm.currency)
-      data[3].push((isFinite(obj.shortterm.maxRevenue)  ? obj.shortterm.maxRevenue  : 0) + ' ' +obj.shortterm.currency)
-      data[3].push((isFinite(obj.longterm.maxRevenue)   ? obj.longterm.maxRevenue   : 0) + ' ' +obj.longterm.currency)
+    const chartData = [
+      [
+        t([ 'analytics', 'date' ]),
+        t([ 'analytics', 'shortterm' ]),
+        t([ 'analytics', 'average' ]),
+        t([ 'analytics', 'longterm' ])
+      ]
+    ]
 
-      chartData.push([ obj.date
-                     , (isFinite(obj.shortterm.avgTurnover) ? obj.shortterm.avgTurnover : 0)
-                     , ((isFinite(obj.shortterm.avgTurnover) ? obj.shortterm.avgTurnover : 0) + (isFinite(obj.longterm.avgTurnover) ? obj.longterm.avgTurnover : 0)) / 2
-                     , (isFinite(obj.longterm.avgTurnover) ? obj.longterm.avgTurnover : 0)
-                     ])
+    state.garage && state.garage.statistics.forEach(obj => {
+      schema.push({ key: schema.length, title: t([ 'analytics', 'shortterm' ]) + ' ' + obj.date, comparator: 'string' })
+      schema.push({ key: schema.length, title: t([ 'analytics', 'longterm' ]) + ' ' + obj.date, comparator: 'string' })
+
+      data[0].push((isFinite(obj.shortterm.turnover) ? obj.shortterm.turnover : 0) + ' ' + obj.shortterm.currency)
+      data[0].push((isFinite(obj.longterm.turnover) ? obj.longterm.turnover : 0) + ' ' + obj.longterm.currency)
+      data[1].push((isFinite(obj.shortterm.avgTurnover) ? obj.shortterm.avgTurnover : 0) + ' ' + obj.shortterm.currency)
+      data[1].push((isFinite(obj.longterm.avgTurnover) ? obj.longterm.avgTurnover : 0) + ' ' + obj.longterm.currency)
+      data[2].push((isFinite(obj.shortterm.minRevenue) ? obj.shortterm.minRevenue : 0) + ' ' + obj.shortterm.currency)
+      data[2].push((isFinite(obj.longterm.minRevenue) ? obj.longterm.minRevenue : 0) + ' ' + obj.longterm.currency)
+      data[3].push((isFinite(obj.shortterm.maxRevenue) ? obj.shortterm.maxRevenue : 0) + ' ' + obj.shortterm.currency)
+      data[3].push((isFinite(obj.longterm.maxRevenue) ? obj.longterm.maxRevenue : 0) + ' ' + obj.longterm.currency)
+
+      chartData.push([
+        obj.date,
+        (isFinite(obj.shortterm.avgTurnover) ? obj.shortterm.avgTurnover : 0),
+        ((isFinite(obj.shortterm.avgTurnover) ? obj.shortterm.avgTurnover : 0) + (isFinite(obj.longterm.avgTurnover) ? obj.longterm.avgTurnover : 0)) / 2,
+        (isFinite(obj.longterm.avgTurnover) ? obj.longterm.avgTurnover : 0)
+      ])
     })
 
-    const preparePlaces = (floor) => {
-      return { ...floor
-             , places: floor.places.map((place) => {
-                         return { ...place
-                                , heat: place.averageRevenue
-                                , tooltip: <table className={styles.tooltip}>
-                                             <tbody>
-                                               <tr><td>{t(['analytics','avgRevenue'])}</td><td>{place.averageRevenue} {actions.currency()}</td></tr>
-                                               <tr><td>{t(['analytics','minRevenue'])}</td><td>{isFinite(place.minRevenue) ? place.minRevenue : 0} {actions.currency()}</td></tr>
-                                               <tr><td>{t(['analytics','maxRevenue'])}</td><td>{isFinite(place.maxRevenue) ? place.maxRevenue : 0} {actions.currency()}</td></tr>
-                                             </tbody>
-                                           </table>
-                                }
-                       })
-             }
+    const preparePlaces = floor => {
+      return { ...floor,
+        places: floor.places.map(place => ({
+          ...place,
+          heat:    place.averageRevenue,
+          tooltip: <table className={styles.tooltip}>
+            <tbody>
+              <tr><td>{t([ 'analytics', 'avgRevenue' ])}</td><td>{place.averageRevenue} {actions.currency()}</td></tr>
+              <tr><td>{t([ 'analytics', 'minRevenue' ])}</td><td>{isFinite(place.minRevenue) ? place.minRevenue : 0} {actions.currency()}</td></tr>
+              <tr><td>{t([ 'analytics', 'maxRevenue' ])}</td><td>{isFinite(place.maxRevenue) ? place.maxRevenue : 0} {actions.currency()}</td></tr>
+            </tbody>
+          </table>
+        }))
+      }
     }
 
-    const filters = [ <TabButton label={t(['analytics', 'graph'])}   onClick={() => {actions.graphClick()}}   state={state.display=="graph" && 'selected'}/>
-                    , <TabButton label={t(['analytics', 'heatmap'])} onClick={() => {actions.heatmapClick()}} state={state.display=="heatmap" && 'selected'}/>
-                    ]
+    const filters = [
+      <TabButton label={t([ 'analytics', 'graph' ])} onClick={() => { actions.graphClick() }} state={state.display === 'graph' && 'selected'} />,
+      <TabButton label={t([ 'analytics', 'heatmap' ])} onClick={() => { actions.heatmapClick() }} state={state.display === 'heatmap' && 'selected'} />
+    ]
 
-    const datePickers = [ <Loading show={state.loading} />
-                        // , <input type='text' className={garageStyles.dateSelector} value={state.from} onChange={fromHandler}/>
-                        // , <span><b>-</b></span>
-                        // , <input type='text' className={garageStyles.dateSelector} value={state.to} onChange={toHandler}/>
-                        , <DateInput onChange={shorttermHandleFrom} label={t(['reservations', 'from'])} value={state.from} style={styles.inline} />
-                        , <span className={styles.dash}><b>-</b></span>
-                        , <DateInput onChange={shorttermHandleTo} label={t(['reservations', 'to'])} value={state.to} style={styles.inline} flip={true}/>
-                        ]
+    const datePickers = [
+      <Loading show={state.loading} />,
+      <DateInput onChange={shorttermHandleFrom} label={t([ 'reservations', 'from' ])} value={state.from} style={styles.inline} flip />,
+      <span className={styles.dash} />,
+      <DateInput onChange={shorttermHandleTo} label={t([ 'reservations', 'to' ])} value={state.to} style={styles.inline} flip />
+    ]
 
 
     return (
       <PageBase>
-        <TabMenu left={filters} right={datePickers}/>
+        <TabMenu left={filters} right={datePickers} />
         {state.display === 'graph' ? <div>
           <Chart
             chartType="ComboChart"
             data={chartData}
             options={{
-              vAxis: {title: t(['analytics', 'turnover']), format: `# ${actions.currency()}`},
-              hAxis: {title: t(['analytics', 'month'])},
+              vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+              hAxis:      { title: t([ 'analytics', 'month' ]) },
               seriesType: 'bars'
             }}
             graph_id="ComboChart"
@@ -114,7 +127,7 @@ class PlacesPage extends Component {
           />
           <Table schema={schema} data={data} searchBox={false} />
         </div> : <div>
-          <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors={true}/>
+          <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors />
         </div>}
       </PageBase>
     )
@@ -122,6 +135,6 @@ class PlacesPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.analyticsPlaces, pageBase: state.pageBase }),
+  state => ({ state: state.analyticsPlaces, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(analyticsPlacesActions, dispatch) })
 )(PlacesPage)

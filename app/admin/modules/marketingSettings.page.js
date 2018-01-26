@@ -98,7 +98,7 @@ class MarketingSettingsPage extends Component {
 
     return (
       <PageBase>
-        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs} margin>
           <Modal content={modalContent} show={state.modalContent!=undefined} />
           <Modal content={modalError} show={state.modalError!=undefined} />
           <div>

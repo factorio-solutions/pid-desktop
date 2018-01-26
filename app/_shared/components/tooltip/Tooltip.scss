@@ -3,7 +3,6 @@
 .body {
   position:   fixed;
   padding:    10px;
-  transform:  translateY(-50%);
   transition: opacity .2s ease;
 
   border:           1px solid $gray;
@@ -13,10 +12,57 @@
   pointer-events:   none;
 }
 
-.originOnBottom {
-  transform: translateY(-100%);
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .body {
+    transform: translate(-160px, calc(-50% - 60px));
+
+    &.originOnLeft {
+      transform: translate(calc(-100% - 200px), calc(-50% - 60px));
+    }
+
+    &.originOnBottom {
+      transform: translate(-160px, calc(-100% - 60px));
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 200px), calc(-100% - 60px));
+      }
+    }
+
+    &.originOnTop {
+      transform: translate(-160px, calc(0% - 60px));
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 200px), calc(0% - 60px));
+      }
+    }
+  }
 }
 
-.originOnTop {
-  transform: translateY(0%);
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .body {
+    transform: translate(0, -50%);
+
+    &.originOnLeft {
+      transform: translate(calc(-100% - 40px), -50%);
+    }
+
+    &.originOnBottom {
+      transform: translate(0, -100%);
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 40px), -100%);
+      }
+    }
+
+    &.originOnTop {
+      transform: translate(0, 0%);
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 40px), 0%);
+      }
+    }
+  }
 }

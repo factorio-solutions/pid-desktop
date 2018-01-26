@@ -132,6 +132,7 @@ class InvoicesPage extends Component {
         submitable={state.reason !== '' && state.reason !== undefined}
         onSubmit={() => { actions.stornoInvoice(state.invoice_id, this.props.params.id) }}
         onBack={() => { actions.toggleReason() }}
+        modal
       >
         {t([ 'invoices', 'cancelReason' ])}
         <Input

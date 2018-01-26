@@ -34,8 +34,8 @@ class Reservation extends Component {
 
   mouseEnter = e => {
     this.setState({
-      mouseX:  e.target.getBoundingClientRect().right - 160,
-      mouseY:  e.target.getBoundingClientRect().bottom - 60,
+      mouseX:  e.target.getBoundingClientRect().right,
+      mouseY:  e.target.getBoundingClientRect().bottom,
       visible: true
     })
   }

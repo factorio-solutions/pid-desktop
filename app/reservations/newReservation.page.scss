@@ -28,7 +28,6 @@
   text-align: center;
 }
 
-
 @media (min-width: $collapseWidth) {
   .parent {
     display: flex;
@@ -40,6 +39,12 @@
 
   .rightCollumn {
     flex: 2 2;
+  }
+}
+
+@media (max-width: $collapseWidth) {
+  .rightCollumn {
+    margin-bottom: 90px;
   }
 }
 

@@ -5,23 +5,7 @@
 }
 
 .centerDiv {
-  position:   fixed;
-  right:      50%;
-  bottom:     0;
-  padding:    $addButtonMargin 0;
-  text-align: center;
-}
-
-@media (min-width: $collapseWidth) {
-  .centerDiv {
-    transform: translateX(-50%);
-  }
-}
-
-@media (max-width: $collapseWidth) {
-  .centerDiv {
-    transform: translateX(50%);
-  }
+  @include add-button;
 }
 
 .tableContainer {
