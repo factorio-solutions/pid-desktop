@@ -54,7 +54,9 @@ class OccupancyOverview extends Component {
       {Array(...{ length: duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS }).map((d, index) => {
         const date = moment(from).add(index, 'days')
         return duration === 'month' ?
-          <td key={`d-${index}`} className={`${styles.center} ${styles.bold}`} colSpan={2}> {date.format('DD.')} <br /> {date.format('MM.')} </td> :
+          index % 2 === 0 ?
+            <td key={`d-${index}`} className={`${styles.center} ${styles.bold}`} colSpan={2}> {date.format('DD.')} <br /> {date.format('MM.')} </td> :
+            <td key={`d-${index}`} className={`${styles.center} ${styles.bold}`} colSpan={2} /> :
           <td key={`d-${index}`} className={`${styles.center} ${styles.bold}`} colSpan={duration === 'day' ? 24 : 2}>{date.locale(moment.locale()).format('ddd')} {duration !== 'day' && <br />} {date.format('DD.MM.')} </td>
       })}
     </tr>)
