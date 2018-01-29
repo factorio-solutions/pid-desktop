@@ -35,6 +35,12 @@
 @media (min-width: $collapseWidth) {
   .submitBtn {
     margin-top: 35px;
+
+    &.center {
+      >div {
+        margin: auto;
+      }
+    }
   }
 }
 
@@ -49,11 +55,13 @@
     right:    80px;
     bottom:   20px;
     left:     20px;
-  }
-}
 
-.center {
-  >div {
-    margin: auto;
+    &.center {
+      right: 20px;
+
+      >div {
+        margin: auto;
+      }
+    }
   }
 }
