@@ -36,27 +36,27 @@ class ResetPasswordPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
     </div>)
 
-    const content = (<div>
-      <Logo style="round" />
-
-      <Modal content={modalContent} show={state.modal !== undefined} />
-
-      <div className={styles.resetPasswordPage}>{t([ 'resetPassword', 'description' ])}</div>
-
-      <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
-        <PatternInput
-          onEnter={this.onSubmit}
-          onChange={actions.setEmail}
-          label={t([ 'resetPassword', 'email' ])}
-          error={t([ 'resetPassword', 'emailInvalid' ])}
-          pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-          value={state.email.value}
-        />
-      </Form>
-    </div>)
-
     return (
-      <MasterPage content={content} />
+      <MasterPage>
+        <div className={styles.pageMargin}>
+          <Logo style="round" />
+
+          <Modal content={modalContent} show={state.modal !== undefined} />
+
+          <div className={styles.resetPasswordPage}>{t([ 'resetPassword', 'description' ])}</div>
+
+          <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
+            <PatternInput
+              onEnter={this.onSubmit}
+              onChange={actions.setEmail}
+              label={t([ 'resetPassword', 'email' ])}
+              error={t([ 'resetPassword', 'emailInvalid' ])}
+              pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              value={state.email.value}
+            />
+          </Form>
+        </div>
+      </MasterPage>
     )
   }
 }

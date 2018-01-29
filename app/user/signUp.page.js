@@ -61,62 +61,61 @@ class SignUpPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
     </div>)
 
-    const content = (<div>
-      <Logo style="round" />
-      <Localization />
-
-      <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error !== undefined} />
-      <div className={styles.signUpPage}>
-        <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
-          <PatternInput
-            onEnter={this.onSubmit}
-            onChange={actions.setName}
-            label={t([ 'signup_page', 'name' ])}
-            error={t([ 'signup_page', 'nameInvalid' ])}
-            pattern={NAME_REGEX}
-            value={state.name.value}
-          />
-          <PatternInput
-            onEnter={this.onSubmit}
-            onChange={actions.setPhone}
-            label={t([ 'signup_page', 'phone' ])}
-            error={t([ 'signup_page', 'phoneInvalid' ])}
-            pattern={PHONE_REGEX}
-            value={state.phone.value}
-          />
-          <PatternInput
-            onEnter={this.onSubmit}
-            onChange={actions.setEmail}
-            label={t([ 'signup_page', 'email' ])}
-            error={t([ 'signup_page', 'emailInvalid' ])}
-            pattern={EMAIL_REGEX}
-            value={state.email.value}
-          />
-          <PatternInput
-            onEnter={this.onSubmit}
-            onChange={actions.setPassword}
-            label={t([ 'signup_page', 'password' ])}
-            error={t([ 'signup_page', 'minimumLength' ]) + ' ' + MINIMUM_PASSWORD_LENGTH}
-            type="password"
-            pattern={`\\S{${MINIMUM_PASSWORD_LENGTH},}`}
-            value={state.password.value}
-          />
-          <PatternInput
-            onEnter={this.onSubmit}
-            onChange={actions.setConfirmation}
-            label={t([ 'signup_page', 'confirmation' ])}
-            error={t([ 'signup_page', 'noMatching' ])}
-            type="password"
-            pattern={state.password.value}
-            value={state.confirmation.value}
-          />
-        </Form>
-      </div>
-
-    </div>)
-
     return (
-      <MasterPage content={content} />
+      <MasterPage>
+        <div className={styles.pageMargin}>
+          <Logo style="round" />
+          <Localization />
+
+          <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error !== undefined} />
+          <div className={styles.signUpPage}>
+            <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
+              <PatternInput
+                onEnter={this.onSubmit}
+                onChange={actions.setName}
+                label={t([ 'signup_page', 'name' ])}
+                error={t([ 'signup_page', 'nameInvalid' ])}
+                pattern={NAME_REGEX}
+                value={state.name.value}
+              />
+              <PatternInput
+                onEnter={this.onSubmit}
+                onChange={actions.setPhone}
+                label={t([ 'signup_page', 'phone' ])}
+                error={t([ 'signup_page', 'phoneInvalid' ])}
+                pattern={PHONE_REGEX}
+                value={state.phone.value}
+              />
+              <PatternInput
+                onEnter={this.onSubmit}
+                onChange={actions.setEmail}
+                label={t([ 'signup_page', 'email' ])}
+                error={t([ 'signup_page', 'emailInvalid' ])}
+                pattern={EMAIL_REGEX}
+                value={state.email.value}
+              />
+              <PatternInput
+                onEnter={this.onSubmit}
+                onChange={actions.setPassword}
+                label={t([ 'signup_page', 'password' ])}
+                error={t([ 'signup_page', 'minimumLength' ]) + ' ' + MINIMUM_PASSWORD_LENGTH}
+                type="password"
+                pattern={`\\S{${MINIMUM_PASSWORD_LENGTH},}`}
+                value={state.password.value}
+              />
+              <PatternInput
+                onEnter={this.onSubmit}
+                onChange={actions.setConfirmation}
+                label={t([ 'signup_page', 'confirmation' ])}
+                error={t([ 'signup_page', 'noMatching' ])}
+                type="password"
+                pattern={state.password.value}
+                value={state.confirmation.value}
+              />
+            </Form>
+          </div>
+        </div>
+      </MasterPage>
     )
   }
 }

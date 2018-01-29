@@ -121,6 +121,7 @@ export function verifyCode(email, code, redirect = true, callback = () => {}) {
       dispatch(setError('No response'))
     }
 
+    dispatch({ type: LOGIN_REQUEST }) // show loading
     request(success
            , LOGIN_VERIFICATION
            , { email,

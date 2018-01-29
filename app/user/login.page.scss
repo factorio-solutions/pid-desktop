@@ -13,13 +13,6 @@
 }
 
 .loginPage {
-
-  // -- Responsive Styles (Media Queries) -------------------------------------
-  // -- Only apply on big window ----------------------------------------------
-  // @media (min-width: $collapseWidth) {
-  //
-  // }
-
   // -- Only apply on small window --------------------------------------------
   @media (max-width: $collapseWidth) {
     margin-bottom: 100px;
