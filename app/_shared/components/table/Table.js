@@ -46,7 +46,8 @@ export default class Table extends Component {
   static defaultProps = {
     searchBox: true,
     searchBar: false,
-    selectId:  null
+    selectId:  null,
+    scale:     1
   }
 
   constructor(props) {
@@ -61,6 +62,9 @@ export default class Table extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.updateScale)
+    this.updateScale()
+
     if (this.props.selectId) {
       this.setState({
         ...this.state,
@@ -82,6 +86,24 @@ export default class Table extends Component {
     nextProps.deselect && this.state.spoilerId !== -1 && this.setState({ ...this.state, spoilerId: -1 })
   }
 
+  componentDidUpdate() {
+    this.updateScale()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateScale)
+  }
+
+  updateScale = () => { // will calculate scale for table to fit window
+    const scale = this.table.parentNode.getBoundingClientRect().width / this.table.offsetWidth
+    const newScale = scale > 1 ? 1 : scale
+
+    this.state.scale !== newScale && this.setState({
+      ...this.state,
+      scale: scale > 1 ? 1 : scale
+    })
+  }
+
   filterData(data) {
     const { schema } = this.props
 
@@ -90,7 +112,7 @@ export default class Table extends Component {
         return obj && obj.props && obj.props.children ?
           ([ 'number', 'string' ].includes(typeof obj.props.children) ?
             obj.props.children :
-            obj.props.children.map(child => { return stringifyElement(child) }).join(' ')) :
+            obj.props.children.map(child => stringifyElement(child)).join(' ')) :
             ''
       } else {
         return obj
@@ -248,13 +270,13 @@ export default class Table extends Component {
     }
 
     return (
-      <div>
+      <div style={this.state.scale < 1 ? { height: `${this.table.offsetHeight * this.state.scale}px` } : {}}>
         {searchBox && <div className={styles.searchBox}>
           <input type="search" onChange={onFilterChange} value={this.state.search} />
           <i className="fa fa-search" aria-hidden="true" />
         </div>}
 
-        <table className={styles.rtTable}>
+        <table className={styles.rtTable} style={{ transform: `scale(${this.state.scale})`, transformOrigin: 'top left' }} ref={table => { this.table = table }}>
           <thead>
             <tr>
               {schema.map(prepareHeader)}
