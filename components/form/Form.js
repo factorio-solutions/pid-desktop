@@ -14,7 +14,8 @@ export default class Form extends Component {
     submitable:  PropTypes.bool,
     mobile:      PropTypes.bool,
     margin:      PropTypes.bool, // margin on the bottom
-    modal:       PropTypes.bool // is in modal, so no position fixed
+    modal:       PropTypes.bool, // is in modal, so no position fixed
+    center:      PropTypes.bool // center buttons
   }
 
   static defaultProps = {
@@ -31,7 +32,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal } = this.props
+    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal, center } = this.props
 
     const sendReservation = () => {
       if (submitable) {
@@ -47,6 +48,7 @@ export default class Form extends Component {
         ${mobile ? styles.mobileSubmitButton : styles.submitBtn}
         ${margin && styles.marginBot}
         ${modal && styles.inModal}
+        ${center && styles.center}
       `}
     >
       {onBack && <div className={styles.floatLeft}>
