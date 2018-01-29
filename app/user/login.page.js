@@ -55,7 +55,7 @@ class LoginPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
     </div>)
 
-    const content = (<div>
+    const content = (<div className={styles.loginPage}>
       <Logo style="round" />
 
       <div className={styles.signUpPage}>
