@@ -26,19 +26,26 @@ class inviteUserPage extends Component {
     actions: PropTypes.object
   }
 
-  componentDidMount() {
-    this.props.actions.initManagebles()
-  }
+  componentDidMount() { this.props.actions.initManagebles() }
 
   submitForm = () => this.checkSubmitable() && this.props.actions.createNewManagebles()
+
   goBack = () => nav.back()
+
   emailChanged = (value, valid) => this.props.actions.setEmail({ value, valid })
+
   messageChanged = event => this.props.actions.setMessage(event.target.value)
+
   nameChanged = value => this.props.actions.setName(value)
+
   phoneChanged = value => this.props.actions.setPhone(value)
+
   hightlightInputs = () => this.props.actions.toggleHighlight()
+
   clientSelected = index => this.props.actions.setClient(this.props.state.clients[index].id)
+
   carSelected = index => this.props.actions.setCar(this.props.state.cars[index].id)
+
   garageSelected = index => this.props.actions.setGarage(this.props.state.garages[index].id)
 
   checkSubmitable = () => {
@@ -67,7 +74,6 @@ class inviteUserPage extends Component {
     const { state, actions } = this.props
 
     const clientDropdown = state.clients.map((client, index) => ({ label: client.name, onClick: () => this.clientSelected(index) }))
-    // const currentClient = state.clients.find(client => client.id !== undefined && client.id === state.client_id)
     const currentClient = state.clients.findById(state.client_id)
 
     const carDropdown = state.cars.map((car, index) => ({ label: car.model, onClick: () => this.carSelected(index) }))

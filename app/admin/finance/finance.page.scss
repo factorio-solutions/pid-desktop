@@ -1,27 +1,30 @@
 @import '../../_styles/app.desktop';
 
-.centerDiv{
+.centerDiv {
   padding:    $addButtonMargin 0;
   text-align: center;
 }
 
-.floatRight{
+.floatRight {
   float: right;
 }
 
-.module{
-  flex: 1 1;
+.module {
+  flex:             1 1;
+  margin-top:       10px;
+  padding:          20px;
+  border:           1px solid $gray;
+  border-radius:    5px;
   background-color: $blue;
-  color: white;
-  border: 1px solid $gray;
-  border-radius: 5px;
-  padding: 20px;
-  color: white;
-  margin-top: 10px;
+  color:            $white;
 
-  .settings{
-    float: right;
-    top: -15px;
+  .settings {
     position: relative;
+    top:      -15px;
+    float:    right;
   }
+}
+
+.finance {
+  margin-bottom: 100px;
 }

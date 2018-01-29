@@ -1,1 +1,8 @@
-// @import '../../_styles/app.desktop';
+@import '../../_styles/app.desktop';
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .bottomMargin {
+    margin-bottom: 100px;
+  }
+}

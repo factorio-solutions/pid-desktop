@@ -1,8 +1,15 @@
+@import '../../_styles/app.desktop';
+
 .flex {
   display: flex;
 
   >.half {
     flex: 1 1;
+
+    // -- Only apply on small window --------------------------------------------
+    @media (max-width: $collapseWidth) {
+      margin-bottom: 100px;
+    }
 
     &:first-child {
       position:      relative;
@@ -12,14 +19,14 @@
 }
 
 .dimmer {
-  position: absolute;
-  width:    100%;
-  height:   100%;
+  position:    absolute;
+  width:       100%;
+  height:      100%;
+  padding-top: 50px;
 
   background:     rgba(255, 255, 255, .8);
   font-size:      22px;
   font-weight:    bold;
-  line-height:    500px;
   text-align:     center;
   vertical-align: middle;
   z-index:        1;

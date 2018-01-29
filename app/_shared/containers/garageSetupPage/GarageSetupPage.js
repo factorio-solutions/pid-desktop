@@ -18,6 +18,7 @@ class GarageSetupPage extends Component {
   static propTypes = {
     state:       PropTypes.object,
     garageSetup: PropTypes.object,
+    children:    PropTypes.object,
     actions:     PropTypes.object
   }
 
@@ -31,22 +32,19 @@ class GarageSetupPage extends Component {
       return hash.includes(selectedUrl) ? 'selected' : hash.includes('admin') ? '' : 'disabled'
     }
 
-    const tabs = [ { label: t([ 'newGarage', 'garage' ]), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/general`) }, state: createState('garageSetup/general') },
-                  { label: t([ 'newGarage', 'places' ]), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/floors`) }, state: createState('garageSetup/floors') },
-                  { label: t([ 'newGarage', 'gates' ]), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/gates`) }, state: createState('garageSetup/gates') },
-                  { label: t([ 'newGarage', 'order' ]), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/order`) }, state: createState('garageSetup/order') }
+    const tabs = [
+      { label: t([ 'newGarage', 'garage' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/general`), state: createState('garageSetup/general') },
+      { label: t([ 'newGarage', 'places' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/floors`), state: createState('garageSetup/floors') },
+      { label: t([ 'newGarage', 'gates' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/gates`), state: createState('garageSetup/gates') },
+      { label: t([ 'newGarage', 'order' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/order`), state: createState('garageSetup/order') },
+      window.location.hash.includes('admin') ?
+        { label: t([ 'newGarage', 'users' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/users`), state: createState('garageSetup/users') } :
+        { label: t([ 'newGarage', 'subscribtion' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/subscribtion`), state: createState('garageSetup/subscribtion') }
     ]
-    !window.location.hash.includes('admin') && tabs.push({ label: t([ 'newGarage', 'subscribtion' ]), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/subscribtion`) }, state: createState('garageSetup/subscribtion') })
-    window.location.hash.includes('admin') && tabs.push({ label: t([ 'newGarage', 'users' ]), onClick: () => { nav.to(`/${state.garage}/admin/garageSetup/users`) }, state: createState('garageSetup/users') })
-
-
-    const handleErrorClick = () => {
-      actions.setError(undefined)
-    }
 
     const errorContent = (<div className={styles.floatCenter}>
       { garageSetup.error } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={handleErrorClick} type="confirm" />
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setError} type="confirm" />
     </div>)
 
     const processingContent = (<div className={styles.floatCenter}>
@@ -55,14 +53,18 @@ class GarageSetupPage extends Component {
 
     return (
       <PageBase>
-        <Modal content={errorContent} show={garageSetup.error != undefined && !garageSetup.fetching} />
+        <Modal content={errorContent} show={garageSetup.error !== undefined && !garageSetup.fetching} />
         <Modal content={processingContent} show={garageSetup.fetching} />
+
         <div className={styles.tabs}>
           {tabs.map(preapareTabsButtons)}
         </div>
+
         <div className={styles.content}>
           {children}
         </div>
+
+        <div className={styles.bottomMargin} />
       </PageBase>
     )
   }

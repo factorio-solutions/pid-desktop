@@ -1,17 +1,17 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
 
-import PageBase from '../../_shared/containers/pageBase/PageBase'
-import Form from '../../_shared/components/form/Form'
-import Dropdown from '../../_shared/components/dropdown/Dropdown'
+import PageBase     from '../../_shared/containers/pageBase/PageBase'
+import Form         from '../../_shared/components/form/Form'
+import Dropdown     from '../../_shared/components/dropdown/Dropdown'
 import PatternInput from '../../_shared/components/input/PatternInput'
 
-import * as nav from '../../_shared/helpers/navigation'
-import { t } from '../../_shared/modules/localization/localization'
+import * as nav               from '../../_shared/helpers/navigation'
+import { t }                  from '../../_shared/modules/localization/localization'
 import * as flexiplaceActions from '../../_shared/actions/admin.flexiplace.actions'
 
-// import styles from './flexipage.scss'
+import styles from './flexiplace.page.scss'
 
 
 class FlexiplacePage extends Component {
@@ -33,7 +33,7 @@ class FlexiplacePage extends Component {
     const { state, pageBase, actions } = this.props
     const { pricing } = state
 
-    const goBack = () => { nav.to(`/${pageBase.garage}/admin/modules`) }
+    const goBack = () => nav.to(`/${pageBase.garage}/admin/modules`)
     const isSubmitable = () => {
       return pricing && (pricing.currency_id !== undefined &&
         ((pricing.flat_price !== undefined && pricing.flat_price !== '') ||
@@ -115,6 +115,8 @@ class FlexiplacePage extends Component {
             />
           </div>
         </Form>
+
+        <div className={styles.bottomMargin} />
       </PageBase>
     )
   }

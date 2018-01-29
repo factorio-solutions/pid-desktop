@@ -16,53 +16,89 @@ import styles from './modules.page.scss'
 
 class ModulesPage extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object
-  }
-
-  componentWillReceiveProps(nextProps) { // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initModules()
+    state:    PropTypes.object,
+    pageBase: PropTypes.object,
+    actions:  PropTypes.object
   }
 
   componentDidMount() {
     this.props.pageBase.garage && this.props.actions.initModules()
   }
 
+  componentWillReceiveProps(nextProps) { // load garage if id changed
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initModules()
+  }
+
+  toGoPublicSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/goPublic`)
+
+  toMarketingSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/marketingSettings`)
+
+  toMarketingPreview = () => window.open('#' + nav.path(`/marketing/${this.props.state.short_name}`))
+
+  toGoFlexiPlaceSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/flexiplace`)
+
+  toggleFLexiplace = () => this.props.state.flexiplace ? this.props.actions.disableFlexiplace() : this.toGoFlexiPlaceSettings()
+
   render() {
     const { state, pageBase, actions } = this.props
 
     const userGarage = pageBase.garages.find(garage => garage.garage.id === pageBase.garage)
 
-    const toGoPublicSettings = () => { nav.to(`/${pageBase.garage}/admin/modules/goPublic`) }
-    const toMarketingSettings = () => { nav.to(`/${pageBase.garage}/admin/modules/marketingSettings`) }
-    const toMarketingPreview = () => { window.open('#' + nav.path(`/marketing/${state.short_name}`)) }
-    const toReservationFormSettings = () => { nav.to(`/${pageBase.garage}/admin/modules/reservationButton`) }
-    const toMrParkitConnectionSettings = () => { nav.to(`/${pageBase.garage}/admin/modules/mrParkitIntegration`) }
-    const toGoFlexiPlaceSettings = () => { nav.to(`/${pageBase.garage}/admin/modules/flexiplace`) }
-    const toggleFLexiplace = () => {
-      state.flexiplace ? actions.disableFlexiplace() : toGoFlexiPlaceSettings()
-    }
-
     const goPublicActions = [
-      <CallToActionButton label={t([ 'modules', 'setting' ])} state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2 || state.flexiplace) ? 'disabled' : 'inverted'} onClick={toGoPublicSettings} />,
-      <Switch on={state.goPublic} state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleGoPublic} />
+      <CallToActionButton
+        label={t([ 'modules', 'setting' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2 || state.flexiplace) ? 'disabled' : 'inverted'}
+        onClick={this.toGoPublicSettings}
+      />,
+      <Switch
+        on={state.goPublic}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+        onClick={actions.toggleGoPublic}
+      />
     ]
     const flexiplaceActions = [
-      <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={toGoFlexiPlaceSettings} />,
-      <Switch on={state.flexiplace} onClick={toggleFLexiplace} />
+      <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGoFlexiPlaceSettings} />,
+      <Switch on={state.flexiplace} onClick={this.toggleFLexiplace} />
     ]
     const marketingActions = [
-      <CallToActionButton label={t([ 'modules', 'Preview' ])} state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'} onClick={toMarketingPreview} />,
-      <CallToActionButton label={t([ 'modules', 'setting' ])} state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'} onClick={toMarketingSettings} />,
-      <Switch on={state.marketing && state.marketing.active_marketing_launched} state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'} onClick={actions.toggleMarketing} />
+      <CallToActionButton
+        label={t([ 'modules', 'Preview' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+        onClick={this.toMarketingPreview}
+      />,
+      <CallToActionButton
+        label={t([ 'modules', 'setting' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+        onClick={this.toMarketingSettings}
+      />,
+      <Switch
+        on={state.marketing && state.marketing.active_marketing_launched}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+        onClick={actions.toggleMarketing}
+      />
     ]
 
 
     return (
       <PageBase>
-        <Module name={t([ 'modules', 'goPublic' ])} description={t([ 'modules', 'goPublicDescription' ])} disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2} actions={goPublicActions} />
-        <Module name={t([ 'modules', 'flexiplace' ])} description={t([ 'modules', 'flexiplaceDescription' ])} actions={flexiplaceActions} />
-        <Module name={t([ 'modules', 'marketingPage' ])} disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2} actions={marketingActions} />
+        <Module
+          name={t([ 'modules', 'goPublic' ])}
+          description={t([ 'modules', 'goPublicDescription' ])}
+          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+          actions={goPublicActions}
+        />
+        <Module
+          name={t([ 'modules', 'flexiplace' ])}
+          description={t([ 'modules', 'flexiplaceDescription' ])}
+          actions={flexiplaceActions}
+        />
+        <Module
+          name={t([ 'modules', 'marketingPage' ])}
+          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+          actions={marketingActions}
+        />
+
+        <div className={styles.bottomMargin} />
       </PageBase>
     )
   }
