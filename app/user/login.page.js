@@ -61,12 +61,13 @@ class LoginPage extends Component {
       <div className={styles.signUpPage}>
         {t([ 'login_page', 'please' ])} <Link to={nav.path('/signUpPage')} >{t([ 'login_page', 'Sign-Up' ])}</Link>
       </div>
+
       <div className={styles.resetPasswordPage}>
         {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
       </div>
 
       <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
-      <Form onSubmit={onSubmit} submitable={isSubmitable()}>
+      <Form onSubmit={onSubmit} submitable={isSubmitable()} center>
         <PatternInput
           onChange={actions.setEmail}
           label={t([ 'login_page', 'email' ])}
