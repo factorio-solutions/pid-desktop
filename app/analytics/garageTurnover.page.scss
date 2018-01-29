@@ -1,3 +1,5 @@
+@import '../_styles/app.desktop';
+
 .dateSelector {
   width:      60px;
   margin-top: 5px;
@@ -22,4 +24,11 @@
 
 .dash {
   padding: 6px;
+}
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .bottomMargin {
+    margin-bottom: 100px;
+  }
 }

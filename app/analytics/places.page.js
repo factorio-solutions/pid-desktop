@@ -129,6 +129,8 @@ class PlacesPage extends Component {
         </div> : <div>
           <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors />
         </div>}
+
+        <div className={styles.bottomMargin} />
       </PageBase>
     )
   }

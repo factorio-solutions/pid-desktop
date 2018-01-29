@@ -88,7 +88,10 @@ class ReservationsAnalyticsPage extends Component {
           width="100%"
           height="400px"
         />
+
         <Table schema={schema} data={data} searchBox={false} />
+
+        <div className={styles.bottomMargin} />
       </PageBase>
     )
   }

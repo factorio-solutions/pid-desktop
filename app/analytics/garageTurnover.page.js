@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
 import { Chart }                       from 'react-google-charts'
 
 import PageBase  from '../_shared/containers/pageBase/PageBase'
@@ -74,7 +73,10 @@ class GarageTurnoverPage extends Component {
             width="100%"
             height="400px"
           />}
+
         <Table schema={schema} data={tableData} searchBox={false} />
+
+        <div className={styles.bottomMargin} />
       </PageBase>
     )
   }
