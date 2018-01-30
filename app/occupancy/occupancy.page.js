@@ -56,7 +56,7 @@ class OccupancyPage extends Component {
           return { ...place,
             floor:        floor.label,
             reservations: state.client_ids.length ?
-              place.reservations_in_interval.filter(reservation => { return reservation.client && state.client_ids.includes(reservation.client.id) }) :
+              place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
               place.reservations_in_interval
           }
         }))
@@ -98,7 +98,7 @@ class OccupancyPage extends Component {
 
         <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
           <div> <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.subtract} /> </div>
-          <div className={styles.flex}>
+          <div className={`${styles.flex} ${styles.hideOnSmallDisplays}`}>
             <RoundButton content={t([ 'occupancy', 'dayShortcut' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />
             <RoundButton content={t([ 'occupancy', 'weekShortcut' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />
             <RoundButton content={t([ 'occupancy', 'monthShortcut' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
