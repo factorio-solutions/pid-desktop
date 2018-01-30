@@ -31,22 +31,24 @@ class GaragePage extends Component {
     nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGarage()
   }
 
+  selectFactory = tab => () => this.props.actions.setSelected(tab)
+
+  tabFactory = tab => (<TabButton
+    label={t([ 'garages', tab ])}
+    onClick={this.selectFactory(tab)}
+    state={this.props.state.selected === tab && 'selected'}
+  />)
+
   render() {
     const { state, actions } = this.props
 
-    const left = [
-      <TabButton label={t([ 'garages', 'clients' ])} onClick={() => actions.setSelected('clients')} state={state.selected === 'clients' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'contracts' ])} onClick={() => actions.setSelected('contracts')} state={state.selected === 'contracts' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'reservations' ])} onClick={() => actions.setSelected('reservations')} state={state.selected === 'reservations' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'prices' ])} onClick={() => actions.setSelected('prices')} state={state.selected === 'prices' && 'selected'} />,
-      <TabButton label={t([ 'garages', 'cars' ])} onClick={() => actions.setSelected('cars')} state={state.selected === 'cars' && 'selected'} />
-    ]
+    const left = [ 'clients', 'contracts', 'reservations', 'prices', 'cars' ].map(this.tabFactory)
 
     const right = [
       <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
-      <div style={{ display: 'inline-block' }}>
-        <TabButton label={t([ 'garages', 'setDate' ])} onClick={() => { actions.setSelector(true) }} state={!state.now && 'selected'} />
-        <PopupDatetimepicker onSelect={actions.setTime} show={state.showSelector} flip okClick={() => { actions.setSelector(false) }} datetime={state.time} />
+      <div className={styles.inlineBlock}>
+        <TabButton label={t([ 'garages', 'setDate' ])} onClick={() => actions.setSelector(true)} state={!state.now && 'selected'} />
+        <PopupDatetimepicker onSelect={actions.setTime} show={state.showSelector} flip okClick={() => actions.setSelector(false)} datetime={state.time} />
       </div>
     ]
 

@@ -4,8 +4,6 @@
   padding: 25px;
 }
 
-
-
 .spoiler {
   display: flex;
 
@@ -26,17 +24,7 @@
 }
 
 .addButton {
-  position:   fixed;
-  right:      50%;
-  bottom:     0;
-  padding:    $addButtonMargin 0;
-  text-align: center;
-}
-
-@media (max-width: $collapseWidth) {
-  .addButton {
-    transform: translateX(50%);
-  }
+  @include add-button;
 }
 
 .tableContainer {

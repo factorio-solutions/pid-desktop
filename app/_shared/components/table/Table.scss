@@ -3,6 +3,7 @@
 $font-size: 16px;
 
 .searchBox {
+  max-width:     calc(100% - 10px);
   padding:       2px 5px;
   float:         right;
   border-bottom: 1px solid $gray;

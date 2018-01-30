@@ -11,7 +11,6 @@ import TabButton   from '../../_shared/components/buttons/TabButton'
 
 import * as nav    from '../../_shared/helpers/navigation'
 import { t }       from '../../_shared/modules/localization/localization'
-import { request } from '../../_shared/helpers/request'
 
 import * as usersActions from '../../_shared/actions/users.actions'
 

@@ -13,19 +13,6 @@
   border-bottom: 2px solid $black;
 }
 
-.container {
-  display: flex;
-
-  >div:first-child {
-    flex:         1 1;
-    margin-right: 25px;
-  }
-
-  >div:last-child {
-    flex: 2 2;
-  }
-}
-
 .news {
   .newsTime {
     position:   relative;
@@ -52,4 +39,29 @@
 .section {
   padding: 10px;
   border:  1px solid $lightGray;
+}
+
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .container {
+    display: flex;
+
+    >div:first-child {
+      flex:         1 1;
+      margin-right: 25px;
+    }
+
+    >div:last-child {
+      flex: 2 2;
+    }
+  }
+}
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .container > div:first-child {
+    display:        flex;
+    flex-direction: column-reverse;
+  }
 }

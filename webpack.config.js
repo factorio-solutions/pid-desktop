@@ -3,64 +3,64 @@ const webpack = require('webpack')
 /**
 * Babel polyfill adds all needed function used in modern javascript.
 * We don't need to care about browser features anymore.
-**/
-const BabelPolyfill = require("babel-polyfill")
+* */
+const BabelPolyfill = require('babel-polyfill')
 /**
 * By separating css into separate file (loading it in HTML header) with ExtractTextPlugin, it loads css in parallel to js.
 * By the time js is loaded css is already applied.
 * It also allows to cache css separate to js, further improving loading times.
 * This makes imposible to hot reload modules, but we dont need that in production.
 * It also adds compilation time, which is a good trade for better loading times.
-**/
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+* */
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 
 module.exports = {
   devtool: 'source-map',
 
-  entry: ['babel-polyfill', './app/index'],
+  entry: [ 'babel-polyfill', './app/index' ],
 
   output: {
-    path: path.join(__dirname, 'public'),
-    filename: 'bundle.js',
+    path:       path.join(__dirname, 'public'),
+    filename:   'bundle.js',
     publicPath: '/public/'
   },
 
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
-    modules: [
+    extensions: [ '.js', '.jsx', '.json' ],
+    modules:    [
       path.join(__dirname, 'public'),
-      'node_modules',
-    ],
+      'node_modules'
+    ]
   },
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.RAILS_ENV || 'production'), // Heroku will have RAILS_ENV variable for Rails server
-        'API_ENTRYPOINT': JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
+        NODE_ENV:       JSON.stringify(process.env.RAILS_ENV || 'production'), // Heroku will have RAILS_ENV variable for Rails server
+        API_ENTRYPOINT: JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
     }),
-    new ExtractTextPlugin("styles.css"),
+    new ExtractTextPlugin('styles.css'),
     new webpack.optimize.CommonsChunkPlugin({
-      name: "shared",
-      filename: "shared.js"
+      name:     'shared',
+      filename: 'shared.js'
     })
   ],
 
   node: {
-    __dirname: false,
+    __dirname:  false,
     __filename: false,
-    fs: "empty"
+    fs:         'empty'
   },
 
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test:    /\.jsx?$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
+        use:     {
+          loader:  'babel-loader',
           options: {
             cacheDirectory: true
           }
@@ -68,7 +68,7 @@ module.exports = {
       },
       { // css files not included in modules correctly
         test: /.*(swiper.min|noHash).*\.css$/,
-        use: [
+        use:  [
           {
             loader: 'style-loader'
           },
@@ -78,17 +78,17 @@ module.exports = {
         ]
       },
       {
-        test: /\.(scss|css)$/,
+        test:    /\.(scss|css)$/,
         exclude: /.*(swiper.min|noHash).*/,
-        use: ExtractTextPlugin.extract([
+        use:     ExtractTextPlugin.extract([
           {
-            loader: 'css-loader',
+            loader:  'css-loader',
             options: {
-              sourceMap: true,
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-            },
+              sourceMap:      true,
+              modules:        true,
+              importLoaders:  1,
+              localIdentName: '[name]__[local]__[hash:base64:5]'
+            }
           },
           {
             loader: 'sass-loader'

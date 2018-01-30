@@ -1,6 +1,4 @@
 import React, { Component, PropTypes }  from 'react'
-import ReactDOM                         from 'react-dom'
-import moment                           from 'moment'
 
 import Datetimepicker from './Datetimepicker'
 import RoundButton    from '../buttons/RoundButton'

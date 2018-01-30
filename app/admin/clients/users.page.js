@@ -121,13 +121,16 @@ class ClientUsersPage extends Component {
     return (
       <PageBase>
         <TabMenu left={filters} />
-        {state.filter === 'all' && <Table schema={schema} data={data} />}
-        {state.filter === 'pending' && <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />}
 
+        <div className={styles.tableContainer}>
+          {state.filter === 'all' && <Table schema={schema} data={data} />}
+          {state.filter === 'pending' && <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />}
+        </div>
+
+        <div className={styles.backButton}>
+          <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={onBack} />
+        </div>
         <div className={styles.addButton}>
-          <div style={{ float: 'left' }}>
-            <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={onBack} />
-          </div>
           <RoundButton
             content={<span className="fa fa-plus" aria-hidden="true" />}
             onClick={addClientUserClick}

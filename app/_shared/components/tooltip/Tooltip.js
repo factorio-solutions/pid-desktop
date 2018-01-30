@@ -10,6 +10,14 @@ export default function Tooltip({ content, visible, mouseX, mouseY }) {
   }
 
   return visible ?
-    <div className={`${styles.body} ${window.innerHeight * 3 / 4 < mouseY && styles.originOnBottom} ${window.innerHeight / 4 > mouseY && styles.originOnTop}`} style={style}> {content} </div> :
+    <div
+      className={`
+        ${styles.body}
+        ${(window.innerHeight / 4) * 3 < mouseY && styles.originOnBottom}
+        ${window.innerHeight / 4 > mouseY && styles.originOnTop}
+        ${(window.innerWidth / 3) * 2 < mouseX && styles.originOnLeft}
+      `}
+      style={style}
+    >{ content }</div> :
     null
 }

@@ -1,11 +1,15 @@
 @import '../../styles/app.components';
 
-$labels-offset:          -12px;
-$font-size-accessories:  13px;
-$font-size:              16px;
-$transition-time:        .2s;
-$placeholder-transition: .3s ease all;
-$placeholder-delay:      .1s;
+$labels-offset:                -12px;
+$font-size:                    16px;
+$font-size-accessories:        13px;
+$mobile-font-size-accessories: 9px;
+$transition-time:              .2s;
+$placeholder-transition:       .3s ease all;
+$placeholder-delay:            .1s;
+
+
+
 
 .customFormGroup {
   position:   relative;
@@ -104,7 +108,17 @@ $placeholder-delay:      .1s;
       top:       $labels-offset;
       left:      0;
       transform: translate(0, 0);
-      font-size: $font-size-accessories;
+
+      // -- Responsive Styles (Media Queries) -------------------------------------
+      // -- Only apply on big window ----------------------------------------------
+      @media (min-width: $collapseWidth) {
+        font-size: $font-size-accessories;
+      }
+
+      // -- Only apply on small window --------------------------------------------
+      @media (max-width: $collapseWidth) {
+        font-size: $mobile-font-size-accessories;
+      }
     }
 
     // Read only should be valid
@@ -140,11 +154,20 @@ $placeholder-delay:      .1s;
     -moz-transition:    $transition-time ease all;
     -webkit-transition: $transition-time ease all;
 
-    font-weight:    normal;
     white-space:    nowrap;
+    font-weight:    normal;
     color:          $gray ;
-    font-size:      $font-size-accessories;
     pointer-events: none;
+
+    // -- Responsive Styles (Media Queries) -------------------------------------
+    // -- Only apply on big window ----------------------------------------------
+    @media (min-width: $collapseWidth) {
+      font-size: $font-size-accessories;
+    }
+    // -- Only apply on small window --------------------------------------------
+    @media (max-width: $collapseWidth) {
+      font-size: $mobile-font-size-accessories;
+    }
   }
 
   ::-webkit-input-placeholder { // Chrome/Opera/Safari

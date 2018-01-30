@@ -1,11 +1,20 @@
-.signUpPage{
+@import '../_shared/styles/app.components';
+
+.signUpPage {
   margin: 23px 0 0;
 }
 
-.resetPasswordPage{
+.resetPasswordPage {
   margin: 0 0 20px;
 }
 
-.submitButton{
+.submitButton {
   margin-top: 20px;
+}
+
+.loginPage {
+  // -- Only apply on small window --------------------------------------------
+  @media (max-width: $collapseWidth) {
+    margin-bottom: 100px;
+  }
 }

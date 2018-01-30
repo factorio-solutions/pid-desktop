@@ -10,6 +10,7 @@ import PatternInput from '../_shared/components/input/PatternInput'
 import Form         from '../_shared/components/form/Form'
 import Modal        from '../_shared/components/modal/Modal'
 import RoundButton  from '../_shared/components/buttons/RoundButton'
+import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav           from '../_shared/helpers/navigation'
 import { t }              from '../_shared/modules/localization/localization'
@@ -47,7 +48,7 @@ class LoginPage extends Component {
       }
     }
 
-    const loadingContent = <div>Loading ...</div>
+    const loadingContent = <Loading show />
 
     const errorContent = (<div>
       <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
@@ -55,40 +56,41 @@ class LoginPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
     </div>)
 
-    const content = (<div>
-      <Logo style="round" />
-
-      <div className={styles.signUpPage}>
-        {t([ 'login_page', 'please' ])} <Link to={nav.path('/signUpPage')} >{t([ 'login_page', 'Sign-Up' ])}</Link>
-      </div>
-      <div className={styles.resetPasswordPage}>
-        {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
-      </div>
-
-      <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
-      <Form onSubmit={onSubmit} submitable={isSubmitable()}>
-        <PatternInput
-          onChange={actions.setEmail}
-          label={t([ 'login_page', 'email' ])}
-          error={t([ 'login_page', 'invalid-email' ])}
-          pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-          placeholder={t([ 'login_page', 'emailPlaceholder' ])}
-          value={state.email.value}
-          onEnter={onSubmit}
-        />
-        <PatternInput
-          onChange={actions.setPassword}
-          label={t([ 'login_page', 'password' ])}
-          type="password"
-          pattern="^(?!\s*$).+"
-          value={state.password.value}
-          onEnter={onSubmit}
-        />
-      </Form>
-    </div>)
-
     return (
-      <MasterPage content={content} />
+      <MasterPage>
+        <div className={styles.loginPage}>
+          <Logo style="round" />
+
+          <div className={styles.signUpPage}>
+            {t([ 'login_page', 'please' ])} <Link to={nav.path('/signUpPage')} >{t([ 'login_page', 'Sign-Up' ])}</Link>
+          </div>
+
+          <div className={styles.resetPasswordPage}>
+            {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
+          </div>
+
+          <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
+          <Form onSubmit={onSubmit} submitable={isSubmitable()} center>
+            <PatternInput
+              onChange={actions.setEmail}
+              label={t([ 'login_page', 'email' ])}
+              error={t([ 'login_page', 'invalid-email' ])}
+              pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              placeholder={t([ 'login_page', 'emailPlaceholder' ])}
+              value={state.email.value}
+              onEnter={onSubmit}
+            />
+            <PatternInput
+              onChange={actions.setPassword}
+              label={t([ 'login_page', 'password' ])}
+              type="password"
+              pattern="^(?!\s*$).+"
+              value={state.password.value}
+              onEnter={onSubmit}
+            />
+          </Form>
+        </div>
+      </MasterPage>
     )
   }
 }

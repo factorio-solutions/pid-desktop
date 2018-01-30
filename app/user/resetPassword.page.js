@@ -18,42 +18,51 @@ import styles from './signUp.page.scss'
 
 class ResetPasswordPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object
+    state:   PropTypes.object,
+    actions: PropTypes.object
   }
+
+  onSubmit = () => this.isSubmitable() && this.props.actions.sendPasswordReset()
+
+  isSubmitable = () => this.props.state.email.valid
+
+  goBack = () => nav.to('/')
 
   render() {
     const { actions, state } = this.props
 
-    const onSubmit     = () => { isSubmitable() && actions.sendPasswordReset() }
-    const isSubmitable = () => { return state.email.valid}
-    const goBack       = () => { nav.to('/') }
-
-    const modalContent = <div>
-                           { state.modal } <br/>
-                           <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={actions.dismissModal} type='confirm'  />
-                         </div>
-
-    const content = <div>
-                      <Logo style='round'/>
-
-                      <Modal content={modalContent} show={state.modal!=undefined} />
-
-                      <div className={styles.resetPasswordPage}>{t(['resetPassword', 'description'])}</div>
-
-                      <Form onSubmit={onSubmit} onBack={goBack} submitable={isSubmitable()}>
-                        <PatternInput onEnter={onSubmit} onChange={actions.setEmail} label={t(['resetPassword', 'email'])} error={t(['resetPassword', 'emailInvalid'])} pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  value={state.email.value} />
-                      </Form>
-                    </div>
+    const modalContent = (<div>
+      { state.modal } <br />
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
+    </div>)
 
     return (
-      <MasterPage content={content} />
-    );
+      <MasterPage>
+        <div className={styles.pageMargin}>
+          <Logo style="round" />
+
+          <Modal content={modalContent} show={state.modal !== undefined} />
+
+          <div className={styles.resetPasswordPage}>{t([ 'resetPassword', 'description' ])}</div>
+
+          <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
+            <PatternInput
+              onEnter={this.onSubmit}
+              onChange={actions.setEmail}
+              label={t([ 'resetPassword', 'email' ])}
+              error={t([ 'resetPassword', 'emailInvalid' ])}
+              pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              value={state.email.value}
+            />
+          </Form>
+        </div>
+      </MasterPage>
+    )
   }
 }
 
 
 export default connect(
-  state    => ({ state: state.resetPassword }),
+  state => ({ state: state.resetPassword }),
   dispatch => ({ actions: bindActionCreators(resetPasswordactions, dispatch) })
 )(ResetPasswordPage)

@@ -1,3 +1,5 @@
+@import '../_styles/app.desktop';
+
 .controlls {
   display:  flex;
   position: fixed;
@@ -18,4 +20,27 @@
 
 .occupancies {
   margin-bottom: 100px;
+}
+
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  @media (max-width: 430px) {
+    .hideOnSmallDisplays {
+      display: none;
+    }
+    .controlls>div {
+      flex: 1 1;
+    }
+  }
+
+  .controlls {
+    display: flex;
+
+    >div {
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
 }

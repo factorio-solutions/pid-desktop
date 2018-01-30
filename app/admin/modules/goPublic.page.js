@@ -6,7 +6,7 @@ import PageBase     from '../../_shared/containers/pageBase/PageBase'
 import GarageLayout from '../../_shared/components/garageLayout/GarageLayout'
 import Form         from '../../_shared/components/form/Form'
 import Dropdown     from '../../_shared/components/dropdown/Dropdown'
-import PatternInput     from '../../_shared/components/input/PatternInput'
+import PatternInput from '../../_shared/components/input/PatternInput'
 
 import * as nav             from '../../_shared/helpers/navigation'
 import { t }                from '../../_shared/modules/localization/localization'
@@ -136,7 +136,7 @@ class GoPublicPage extends Component {
             <GarageLayout
               floors={state.garage ? state.garage.floors.map(preparePlaces) : []}
               showEmptyFloors
-              onPlaceClick={place => { actions.togglePlace(place.id) }}
+              onPlaceClick={place => actions.togglePlace(place.id)}
             />
           </div>
         </div>

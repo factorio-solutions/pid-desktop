@@ -1,83 +1,59 @@
 @import '../../_styles/app.desktop';
 
-.clickable{
-  cursor: pointer;
+.clickable {
   font-weight: bold;
+  cursor: pointer;
 }
 
-
-
-.green{
+.green {
   color: $green;
 }
 
-.yellow{
+.yellow {
   color: darken($yellow, 5%);
 }
-.red{
+
+.red {
   color: $red;
 }
 
 
-.spoiler{
+.spoiler {
   display: flex;
 
-  >div{
+  >div {
     flex: 1 1;
   }
 
-  ul{
+  ul {
+    margin:          4px;
+    padding-left:    6px;
     list-style-type: none;
-    margin: 4px;
-    padding-left: 6px;
 
     li>span {
-      color: $gray;
       margin-left: 4px;
-      font-size: 14px;
+      color:       $gray;
+      font-size:   14px;
       font-weight: normal;
     }
   }
 }
 
-.rights{
-  color: $gray;
+.rights {
   margin-left: 4px;
-  font-size: 14px;
+  color:       $gray;
+  font-size:   14px;
   font-weight: normal;
 }
 
-.pointer{
-  cursor: pointer
+.pointer {
+  cursor: pointer;
 }
 
-// .tableContainer{
-//   // margin-bottom: 140px;
-// }
-//
-// .addButton {
-//   margin-top:    $addButtonMargin ;
-//   text-align:    center;
-//   // position: 		 fixed;
-//   // bottom: 			 0;
-//   // margin-bottom: 40px;
-//   // left: 0;
-//   // right: 0;
-// }
-
-.addButton{
-  padding:    $addButtonMargin 0;
-  text-align: center;
-  position:   fixed;
-  bottom:     0px;
-  right:      50%;
-}
-@media (max-width: $collapseWidth) {
-  .addButton{
-    transform: translateX(50%);
-  }
+.addButton {
+  @include add-button;
 }
 
-.tableContainer{
+.tableContainer {
   margin-bottom: 140px;
 }

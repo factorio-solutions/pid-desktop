@@ -1,67 +1,77 @@
-@import '../../_styles/variables.desktop.scss';
-@import '../../_shared/styles/variables.scss';
+@import '../../_styles/app.desktop';
 
 .page {
-	padding: 10px;
+  padding: 10px;
 }
 
 .addButton {
-	margin-top: $addButtonMargin;
-	text-align: center;
+  @include add-button;
+}
+
+.backButton {
+  @include add-button;
+  right: auto;
+  bottom: 15px;
+  left: 0;
+}
+
+.tableContainer {
+  margin-bottom: 140px;
 }
 
 .inactiveText {
-	color: $lightGray;
-	cursor: pointer;
   margin: 0 5px;
+  color: $lightGray;
+  cursor: pointer;
 }
 
 .boldText {
-	margin: 0 5px;
-	cursor: pointer;
+  margin: 0 5px;
+  cursor: pointer;
 }
 
-.clickable{
-	font-weight: bold;
-	cursor: pointer;
-	color: $blue;
+.clickable {
   margin: 0 10px;
+  color: $blue;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .devider {
-	border-bottom: 1px dashed $gray;
-	> * {
-		margin: 0 5px;
-	}
+  border-bottom: 1px dashed $gray;
 
-	> :first-child {
-		margin-left: 0;
-	}
+  > * {
+    margin: 0 5px;
+  }
 
-	> :last-child {
-		margin-right: 0;
-	}
+  > :first-child {
+    margin-left: 0;
+  }
 
-	+ div {
-		span {
-			margin: 0 10px;
-		}
-	}
+  > :last-child {
+    margin-right: 0;
+  }
+
+  + div {
+    span {
+      margin: 0 10px;
+    }
+  }
 }
 
 .spoiler {
-	> div {
-		padding: 5px 0;
-	}
+  > div {
+    padding: 5px 0;
+  }
 }
 
 .float {
-	float: right;
-	> * {
-		margin: 0 5px;
-	}
+  float: right;
+  > * {
+    margin: 0 5px;
+  }
 }
 
 .clear {
-	clear: both;
+  clear: both;
 }

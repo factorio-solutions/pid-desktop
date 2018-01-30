@@ -63,7 +63,8 @@ class OccupancyPage extends Component {
         }))
     }
 
-    const filters = [ <TabButton label={t([ 'newReservation', 'now' ])} onClick={this.setNow} />,
+    const filters = [
+      <TabButton label={t([ 'newReservation', 'now' ])} onClick={this.setNow} />,
       <TabButton label={t([ 'occupancy', 'day' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />,
       <TabButton label={t([ 'occupancy', 'week' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />,
       <TabButton label={t([ 'occupancy', 'month' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
@@ -98,7 +99,7 @@ class OccupancyPage extends Component {
 
         <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
           <div> <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.subtract} /> </div>
-          <div className={styles.flex}>
+          <div className={`${styles.flex} ${styles.hideOnSmallDisplays}`}>
             <RoundButton content={t([ 'occupancy', 'dayShortcut' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />
             <RoundButton content={t([ 'occupancy', 'weekShortcut' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />
             <RoundButton content={t([ 'occupancy', 'monthShortcut' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />

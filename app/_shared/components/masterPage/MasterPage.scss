@@ -4,15 +4,11 @@ $primaryMenuWidth:   160px;
 $secondaryMenuWidth: 200px;
 $hintWidth:          180px;
 
-.profileDropdown {
-  right: 0;
-}
-
 .horizontalMenu {
   display:          block;
   background-color: $black;
   color:            $yellow;
-  z-index:          9;
+  z-index:          900;
 
   >.hamburger {
     position:  absolute;
@@ -84,14 +80,14 @@ $hintWidth:          180px;
   >.verticalMenu {
     background-color: $menuGray;
     color:            $white;
-    z-index:          8;
+    z-index:          800;
   }
 
   >.secondaryVerticalMenu {
     transition:       all .3s ease;
     background-color: $gray;
     color:            $white;
-    z-index:          7;
+    z-index:          700;
   }
 
   >.content {
@@ -107,6 +103,7 @@ $hintWidth:          180px;
         position: absolute;
         top:      10px;
         left:     10px;
+        margin:   0;
         color:    $white;
         cursor:   pointer;
       }
@@ -123,8 +120,12 @@ $hintWidth:          180px;
 // -- Only apply on big window ----------------------------------------------
 @media (min-width: $collapseWidth) {
   .horizontalMenu {
-    display: flex;
-    height:  60px;
+    display:  flex;
+    position: fixed;
+    top:      0;
+    right:    0;
+    left:     0;
+    height:   60px;
 
     >.hamburger {
       display: none;
@@ -149,6 +150,10 @@ $hintWidth:          180px;
         }
       }
     }
+  }
+
+  .profileDropdown {
+    right: 0;
   }
 
   .page {
@@ -241,22 +246,22 @@ $hintWidth:          180px;
 
     >.horizontalMenuContent {
       >.theContent {
-        >.user {
-          position: absolute;
-          top:      8px;
-          right:    12px;
-        }
-
-        >.callToAction {
-          text-align: center;
-        }
+        display:        flex;
+        flex-direction: column-reverse;
+        text-align:     center;
       }
     }
+  }
+
+  .profileDropdown {
+    left: 50%;
   }
 
   .profile {
     >.name {
       display: none;
+
+
     }
   }
 
@@ -288,11 +293,12 @@ $hintWidth:          180px;
       width:    100%;
 
       >.hint {
-        display: flex;
+        display:        flex;
+        flex-direction: row-reverse;
 
         >div {
           flex:         1 1;
-          margin-right: 50px;
+          margin:       0 0 0 50px;
           text-align:   center;
         }
       }
