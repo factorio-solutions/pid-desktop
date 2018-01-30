@@ -19,7 +19,12 @@
   border-collapse: collapse;
 
   &.fixedHeader {
-    width: calc(100% - 16px);
+    @media (min-width: $collapseWidth) {
+      width: calc(100% - 16px);
+    }
+    @media (max-width: $collapseWidth) {
+      width: 100%;
+    }
   }
 
   >tbody {
@@ -167,4 +172,33 @@
 
 .tooltipTable {
   color: $black;
+}
+
+
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .monthDate:nth-child(2n) {
+    display: none;
+  }
+}
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .monthDate {
+    display: none;
+    font-size: 12px;
+
+    &:nth-child(3n) {
+      display: table-cell;
+    }
+  }
+
+  .weekDate {
+    font-size: 12px;
+
+    &:nth-child(2n+1) {
+      color: transparent;
+    }
+  }
 }

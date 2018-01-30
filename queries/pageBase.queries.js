@@ -26,6 +26,7 @@ export const GET_CURRENT_USER = `{
 export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: Id!) {
   update_user(user: $user, id: $id) {
     full_name
+    pid_admin
     id
     email
     phone
