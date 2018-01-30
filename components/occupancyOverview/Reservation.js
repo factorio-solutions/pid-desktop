@@ -66,7 +66,13 @@ class Reservation extends Component {
           <tr><td>{t([ 'occupancy', 'licencePlate' ])}</td><td>{reservation.car.licence_plate}</td></tr>
         </tbody>
       </table>) :
-      <div>{t([ 'occupancy', 'detailsInaccessible' ])}</div>
+      (<table className={styles.tooltipTable}>
+        <tbody>
+          <tr><td colSpan={2} className={styles.notApprovedLabel}>{t([ 'occupancy', 'detailsInaccessible' ])}</td></tr>
+          <tr><td>{t([ 'occupancy', 'period' ])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
+        </tbody>
+      </table>)
+      // <div>{t([ 'occupancy', 'detailsInaccessible' ])}</div>
 
     return <div>
       <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
