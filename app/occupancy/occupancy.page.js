@@ -35,10 +35,11 @@ class OccupancyPage extends Component {
     !this.props.reservations.past && this.props.actions.togglePast()
   }
 
+  setNow = () => this.props.actions.setFrom(moment().startOf('day'))
+
   render() {
     const { state, pageBase, actions } = this.props
 
-    const setNow = () => actions.setFrom(moment().startOf('day'))
 
     const clientDropdown = () => {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
@@ -56,13 +57,13 @@ class OccupancyPage extends Component {
           return { ...place,
             floor:        floor.label,
             reservations: state.client_ids.length ?
-              place.reservations_in_interval.filter(reservation => { return reservation.client && state.client_ids.includes(reservation.client.id) }) :
+              place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
               place.reservations_in_interval
           }
         }))
     }
 
-    const filters = [ <TabButton label={t([ 'newReservation', 'now' ])} onClick={setNow} />,
+    const filters = [ <TabButton label={t([ 'newReservation', 'now' ])} onClick={this.setNow} />,
       <TabButton label={t([ 'occupancy', 'day' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />,
       <TabButton label={t([ 'occupancy', 'week' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />,
       <TabButton label={t([ 'occupancy', 'month' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
