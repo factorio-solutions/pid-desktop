@@ -139,8 +139,8 @@ class GarageLayout extends Component {
         }), { x: 0, y: 0 })
 
         return {
-          x: xy.x / pointPairs.length,
-          y: xy.y / pointPairs.length
+          x: xy.x / (pointPairs.length - 1),
+          y: xy.y / (pointPairs.length - 1)
         }
       }
 
