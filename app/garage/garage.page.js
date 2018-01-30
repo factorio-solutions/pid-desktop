@@ -106,15 +106,16 @@ class GaragePage extends Component {
                 <tr>
                   <td>{t([ 'garages', 'client' ])}</td>
                   <td>
-                    {contracts.length > 0 && contracts.map(contract =>
-                              [ state.selected === 'clients' &&
-                                <span><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[contract.client.id] }} /></span>,
-                                <span>{contract.client.name}</span>,
-                                reservation && reservation.client && reservation.client.id === contract.client.id &&
-                                <span>({t([ 'reservations', 'host' ])})</span>,
-                                <span>,</span>
-                              ].filter(o => o))
-                            }
+                    {contracts.length > 0 && contracts
+                      .map(contract => contract.client)
+                      .filter((client, index, arr) => arr.findIndexById(client.id) === index)
+                      .map(client => [
+                        state.selected === 'clients' && <span><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[client.id] }} /></span>,
+                        <span>{client.name}</span>,
+                        reservation && reservation.client && reservation.client.id === client.id && <span>({t([ 'reservations', 'host' ])})</span>,
+                        <span>,</span>
+                      ].filter(o => o))
+                    }
                     {reservation && !reservation.client && `(${t([ 'reservations', 'visitor' ])})`}
                   </td>
                 </tr>
