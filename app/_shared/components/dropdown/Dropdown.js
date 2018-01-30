@@ -51,21 +51,39 @@ export default class Dropdown extends Component {
     }
   }
 
-  render() {
-    const { label, content, selected, style, onChange, fixed, highlight, position, editable } = this.props
+  toggleDropdown = () => {
+    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
+  }
 
-    const prepareContent = (item, index, arr) => {
-      const handleItemClick = e => {
+  hide = () => {
+    this.ul.classList.add(styles.hidden)
+    setTimeout(() => {
+      this.ul.classList.add(styles.display)
+    }, 250)
+  }
+
+  unhide = () => {
+    if (this.props.content.length > 1) {
+      this.ul.classList.remove(styles.display)
+      this.ul.classList.remove(styles.hidden)
+      this.ul.style.width = this.button.getBoundingClientRect().width + 'px'
+    }
+  }
+
+  render() {
+    const { label, content, style, onChange, highlight, position, editable } = this.props
+
+    const prepareContent = (item, index) => {
+      const onClick = e => {
         e.stopPropagation()
-        typeof item.onClick === 'function' && item.onClick()
+        item.onClick && item.onClick()
         this.setState({ selected: index })
-        typeof onChange === 'function' && onChange(index, true)// for form
-        // browser.name === 'safari' && hide() // safari not handles onBlur well, so hide on select
-        hide()
+        onChange && onChange(index, true)// for form
+        this.hide()
       }
 
       return (
-        <li key={index} className={index == this.state.selected ? styles.selected : ''} onClick={handleItemClick} >
+        <li key={index} className={index === this.state.selected ? styles.selected : ''} onClick={onClick} >
           <label>
             {item.label}
           </label>
@@ -73,32 +91,6 @@ export default class Dropdown extends Component {
       )
     }
 
-    const toggleDropdown = () => {
-      const ul = ReactDOM.findDOMNode(this).children[1]
-      ul.classList.contains(styles.hidden) ? unhide() : hide()
-    }
-
-    const onBlur = e => { hide() }
-
-    const hide = () => {
-      const ul = ReactDOM.findDOMNode(this).children[1]
-
-      ul.classList.add(styles.hidden)
-      setTimeout(() => {
-        ul.classList.add(styles.display)
-      }, 250)
-    }
-
-    const unhide = () => {
-      if (content.length > 1) {
-        const element = ReactDOM.findDOMNode(this).children[1],
-          buttonPosition = ReactDOM.findDOMNode(this).children[0].getBoundingClientRect()
-
-        element.classList.remove(styles.display)
-        element.classList.remove(styles.hidden)
-        element.style.width = buttonPosition.width + 'px'
-      }
-    }
 
 
     return (
@@ -106,13 +98,17 @@ export default class Dropdown extends Component {
         <button
           type="button"
           className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted} ${!editable && styles.dimmer}`}
-          onClick={editable && toggleDropdown}
-          onBlur={onBlur}
+          onClick={editable && this.toggleDropdown}
+          onBlur={this.hide}
+          ref={button => { this.button = button }}
         >
-          <span className={styles.marginCorrection}> {this.state.selected == undefined || content[this.state.selected] == undefined ? label : content[this.state.selected].label} </span>
+          <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? label : content[this.state.selected].label} </span>
           <i className={`fa fa-caret-down ${styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
         </button>
-        <ul className={`${styles.drop} ${styles.hidden} ${styles.display} ${position === 'fixed' ? styles.fixed : styles.absolute}`}>
+        <ul
+          className={`${styles.drop} ${styles.hidden} ${styles.display} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
+          ref={ul => { this.ul = ul }}
+        >
           {content.map(prepareContent)}
         </ul>
       </div>
