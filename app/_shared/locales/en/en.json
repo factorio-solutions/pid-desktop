@@ -906,7 +906,10 @@
 		"selectCurrency": "Select currency",
 		"placePrice": "Price per spot per month",
 		"indefinitContract": "Create agreement indefinitely.",
-		"indefinite": "Indefinite"
+		"indefinite": "Indefinite",
+		"securityInterval": "Security interval",
+		"inMinutes": "in minutes",
+		"securityIntervalInvalid": "Wrong interval"
 	},
 	"finance": {
 		"paypal": "Paypal",

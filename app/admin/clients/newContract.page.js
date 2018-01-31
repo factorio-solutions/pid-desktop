@@ -118,11 +118,25 @@ class NewContractPage extends Component {
                 <div className={styles.checkbox}>
                   <input type="checkbox" checked={state.indefinitly} onClick={actions.toggleIndefinitly} />
                   <span onClick={actions.toggleIndefinitly}>{t([ 'newContract', 'indefinitContract' ])}</span>
+                </div>,
+                <div>
+                  <Input
+                    type="number"
+                    label={`${t([ 'newContract', 'securityInterval' ])} ${t([ 'newContract', 'inMinutes' ])}`}
+                    error={t([ 'newContract', 'securityIntervalInvalid' ])}
+                    placeholder="15"
+                    min={0}
+                    step={1}
+                    highlight={state.highlight}
+                    onChange={actions.setSecurityInterval}
+                    value={state.securityInterval || '0'}
+                  />
                 </div>
               ] :
               <div>
                 <p>{t([ 'newReservation', 'begins' ])}: {state.from}</p>
                 <p>{t([ 'newReservation', 'ends' ])}: {state.indefinitly ? t([ 'newContract', 'indefinite' ]) : state.to}</p>
+                <p>{t([ 'newContract', 'securityInterval' ])}: {state.securityInterval}</p>
               </div>
               }
             </Form>
@@ -136,6 +150,7 @@ class NewContractPage extends Component {
     )
   }
 }
+
 
 export default connect(
   state => ({ state: state.newContract, pageBase: state.pageBase }), // { state: state.dashboard }
