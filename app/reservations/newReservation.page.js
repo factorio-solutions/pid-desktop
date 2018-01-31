@@ -149,6 +149,7 @@ class NewReservationPage extends Component {
                     selected={state.availableUsers.findIndex(user => state.user && user.id === state.user.id)}
                     style="reservation"
                     highlight={state.highlight}
+                    filter
                   />
                 }
                 <Input
@@ -206,6 +207,7 @@ class NewReservationPage extends Component {
                     content={this.clientDropdown()}
                     selected={state.user.availableClients.findIndexById(state.client_id)}
                     style="reservation"
+                    filter
                   />
                 }
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?

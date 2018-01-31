@@ -45,8 +45,9 @@ class OccupancyPage extends Component {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
 
       return state.clients.map((client, index) => ({
-        label:   <span>{client.id && state.client_ids.includes(client.id) && <i className="fa fa-check" aria-hidden="true" />}{client.name}</span>,
-        onClick: () => clientSelected(index)
+        label:       client.name,
+        representer: o => <span>{client.id && state.client_ids.includes(client.id) && <i className="fa fa-check" aria-hidden="true" />}{o}</span>,
+        onClick:     () => clientSelected(index)
       }))
     }
 
@@ -74,6 +75,7 @@ class OccupancyPage extends Component {
       content={clientDropdown()}
       style="tabDropdown"
       selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
+      filter
     />)
 
     const renderOccupancy = garage => [
