@@ -6,7 +6,7 @@ import { setCustomModal, setError } from './pageBase.actions'
 import { t } from '../modules/localization/localization'
 import { parseParameters } from '../helpers/parseUrlParameters'
 
-import { GET_RESERVATIONS_PAGINATION_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
+import { GET_RESERVATIONS_QUERY, GET_RESERVATIONS_PAGINATION_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
 import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
 import { PAY_RESREVATION, UPDATE_RESERVATION } from '../queries/newReservation.queries'
 
@@ -35,11 +35,11 @@ export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RES
 
 export function initOngoingReservations(callback) { // callback used by mobile access page
   return (dispatch, getState) => {
-    const onSuccess = respoonse => {
-      dispatch(setOngoingReservations(respoonse.data.reservations))
-      callback(respoonse.data.reservations)
+    const onSuccess = response => {
+      dispatch(setOngoingReservations(response.data.reservations))
+      callback(response.data.reservations)
     }
-    request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
+    request(onSuccess, GET_RESERVATIONS_QUERY, {
       past:      false,
       ongoing:   true,
       user_id:   getState().mobileHeader.current_user.id,
@@ -54,8 +54,8 @@ export function initReservations() { // will download first 5 reservations
   return (dispatch, getState) => {
     if (mobile) {
       const state = getState().reservations
-      const onSuccess = respoonse => {
-        dispatch(setReservations(respoonse.data.reservations))
+      const onSuccess = response => {
+        dispatch(setReservations(response.data.reservations))
       }
       request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
         past:      state.past,
@@ -74,8 +74,8 @@ export function loadReservations() { // will load 5 more reservations
   return (dispatch, getState) => {
     if (mobile) {
       const state = getState().reservations
-      const onSuccess = respoonse => {
-        dispatch(addReservations(respoonse.data.reservations))
+      const onSuccess = response => {
+        dispatch(addReservations(response.data.reservations))
       }
       request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
         past:      state.past,
