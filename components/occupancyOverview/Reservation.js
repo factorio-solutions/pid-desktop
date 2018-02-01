@@ -32,17 +32,17 @@ class Reservation extends Component {
     this.state = INIT_STATE
   }
 
+  onReservationClick = () => this.props.onClick(this.props.reservation)
+
   mouseEnter = e => {
     this.setState({
-      mouseX:  e.target.getBoundingClientRect().right,
-      mouseY:  e.target.getBoundingClientRect().bottom,
+      mouseX:  e.clientX + 20,
+      mouseY:  e.clientY,
       visible: true
     })
   }
 
   mouseLeave = () => this.setState(INIT_STATE)
-
-  onReservationClick = () => this.props.onClick(this.props.reservation)
 
   render() {
     const { classes, left, width, text, reservation, pageBase, showDetails } = this.props
@@ -72,10 +72,9 @@ class Reservation extends Component {
           <tr><td>{t([ 'occupancy', 'period' ])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
         </tbody>
       </table>)
-      // <div>{t([ 'occupancy', 'detailsInaccessible' ])}</div>
 
     return <div>
-      <div onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
+      <div onMouseEnter={this.mouseEnter} onMouseMove={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
         <span>{text}</span>
       </div>
       {this.state.visible && <Tooltip
