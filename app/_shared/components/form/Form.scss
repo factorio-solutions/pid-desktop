@@ -5,21 +5,20 @@
   margin-bottom: 90px;
 }
 
-.floatRight {
-  flex: 1 1;
-  text-align: right;
-}
-
-.floatLeft {
-  flex: 1 1;
-  text-align: left;
-}
 
 .mobileSubmitButton {
   position: fixed;
   right:    $mobileNavigationSidesOffset;
   bottom:   $mobileNavigationBottomOffset;
   left:     $mobileNavigationSidesOffset;
+
+  >.floatRight {
+    float: right;
+  }
+
+  >.floatLeft {
+    float: left;
+  }
 }
 
 .rotating {
@@ -28,6 +27,16 @@
 
 .submitBtn {
   display: flex;
+
+  >.floatRight {
+    flex: 1 1;
+    text-align: right;
+  }
+
+  >.floatLeft {
+    flex: 1 1;
+    text-align: left;
+  }
 }
 
 // -- Responsive Styles (Media Queries) -------------------------------------

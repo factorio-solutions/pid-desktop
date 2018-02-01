@@ -64,8 +64,8 @@ export default class Form extends Component {
 
     return (
       <form onSubmit={sendReservation} >
-        { children }
-        { submitButton }
+        {children}
+        {submitButton}
       </form>
     )
   }
