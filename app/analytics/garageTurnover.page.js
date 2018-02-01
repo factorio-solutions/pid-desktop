@@ -57,26 +57,28 @@ class GarageTurnoverPage extends Component {
 
     return (
       <PageBase>
-        <TabMenu left={filters} right={datePickers} />
-        {chartData.length === 1 ?
-          <h3>{t([ 'analytics', 'noData' ])}</h3> :
-          <Chart
-            chartType="ComboChart"
-            data={chartData}
-            options={{
-              vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
-              hAxis:      { title: state.period === 'month' ? t([ 'analytics', 'month' ]) : t([ 'analytics', 'week' ]) },
-              seriesType: 'bars',
-              series:     { 1: { type: 'line' } }
-            }}
-            graph_id="ComboChart"
-            width="100%"
-            height="400px"
-          />}
+        <div className={styles.analyticsContainer}>
+          <TabMenu left={filters} right={datePickers} />
+          {chartData.length === 1 ?
+            <h3>{t([ 'analytics', 'noData' ])}</h3> :
+            <Chart
+              chartType="ComboChart"
+              data={chartData}
+              options={{
+                vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+                hAxis:      { title: state.period === 'month' ? t([ 'analytics', 'month' ]) : t([ 'analytics', 'week' ]) },
+                seriesType: 'bars',
+                series:     { 1: { type: 'line' } }
+              }}
+              graph_id="ComboChart"
+              width="100%"
+              height="400px"
+            />}
 
-        <Table schema={schema} data={tableData} searchBox={false} />
+          <Table schema={schema} data={tableData} searchBox={false} />
 
-        <div className={styles.bottomMargin} />
+          <div className={styles.bottomMargin} />
+        </div>
       </PageBase>
     )
   }

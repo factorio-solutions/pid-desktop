@@ -3,12 +3,12 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import { Chart }                       from 'react-google-charts'
 
-import PageBase      from '../_shared/containers/pageBase/PageBase'
-import TabMenu       from '../_shared/components/tabMenu/TabMenu'
-import TabButton     from '../_shared/components/buttons/TabButton'
-import Table         from '../_shared/components/table/Table'
-import DateInput     from '../_shared/components/input/DateInput'
-import Loading       from '../_shared/components/loading/Loading'
+import PageBase  from '../_shared/containers/pageBase/PageBase'
+import TabMenu   from '../_shared/components/tabMenu/TabMenu'
+import TabButton from '../_shared/components/buttons/TabButton'
+import Table     from '../_shared/components/table/Table'
+import DateInput from '../_shared/components/input/DateInput'
+import Loading   from '../_shared/components/loading/Loading'
 
 import { t }                             from '../_shared/modules/localization/localization'
 import * as analyticsReservationsActions from '../_shared/actions/analytics.reservations.actions'
@@ -68,30 +68,31 @@ class ReservationsAnalyticsPage extends Component {
 
     return (
       <PageBase>
-        <TabMenu left={filters} right={datePickers} />
-        <Chart
-          chartType="ComboChart"
-          data={actions.dataToArray(tableData)}
-          options={{
-            vAxes: {
-              0: { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
-              1: { title: t([ 'analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount' ]) }
-            },
-            hAxis:      { title: t([ 'analytics', 'date' ]) },
-            seriesType: 'bars',
-            series:     {
-              0: { targetAxisIndex: 0 },
-              1: { targetAxisIndex: 1, type: 'line' }
-            }
-          }}
-          graph_id="ComboChart"
-          width="100%"
-          height="400px"
-        />
+        <div className={styles.analyticsContainer}>
+          <TabMenu left={filters} right={datePickers} />
+          <Chart
+            chartType="ComboChart"
+            data={actions.dataToArray(tableData)}
+            options={{
+              vAxes: {
+                0: { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+                1: { title: t([ 'analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount' ]) }
+              },
+              hAxis:      { title: t([ 'analytics', 'date' ]) },
+              seriesType: 'bars',
+              series:     {
+                0: { targetAxisIndex: 0 },
+                1: { targetAxisIndex: 1, type: 'line' }
+              }
+            }}
+            graph_id="ComboChart"
+            width="100%"
+            height="400px"
+          />
+          <Table schema={schema} data={data} searchBox={false} />
 
-        <Table schema={schema} data={data} searchBox={false} />
-
-        <div className={styles.bottomMargin} />
+          <div className={styles.bottomMargin} />
+        </div>
       </PageBase>
     )
   }

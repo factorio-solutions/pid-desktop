@@ -111,26 +111,28 @@ class PlacesPage extends Component {
 
     return (
       <PageBase>
-        <TabMenu left={filters} right={datePickers} />
-        {state.display === 'graph' ? <div>
-          <Chart
-            chartType="ComboChart"
-            data={chartData}
-            options={{
-              vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
-              hAxis:      { title: t([ 'analytics', 'month' ]) },
-              seriesType: 'bars'
-            }}
-            graph_id="ComboChart"
-            width="100%"
-            height="400px"
-          />
-          <Table schema={schema} data={data} searchBox={false} />
-        </div> : <div>
-          <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors />
-        </div>}
+        <div className={styles.analyticsContainer}>
+          <TabMenu left={filters} right={datePickers} />
+          {state.display === 'graph' ? <div>
+            <Chart
+              chartType="ComboChart"
+              data={chartData}
+              options={{
+                vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+                hAxis:      { title: t([ 'analytics', 'month' ]) },
+                seriesType: 'bars'
+              }}
+              graph_id="ComboChart"
+              width="100%"
+              height="400px"
+            />
+            <Table schema={schema} data={data} searchBox={false} />
+          </div> : <div>
+            <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors />
+          </div>}
 
-        <div className={styles.bottomMargin} />
+          <div className={styles.bottomMargin} />
+        </div>
       </PageBase>
     )
   }

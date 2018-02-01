@@ -26,6 +26,16 @@
   padding: 6px;
 }
 
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .analyticsContainer {
+    position: absolute;
+    right:    20px;
+    left:     20px;
+  }
+}
+
 // -- Only apply on small window --------------------------------------------
 @media (max-width: $collapseWidth) {
   .bottomMargin {
