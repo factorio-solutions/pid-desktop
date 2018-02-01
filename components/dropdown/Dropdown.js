@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 
-import Input from '../input/Input'
-
 import styles from './Dropdown.scss'
 
 
@@ -22,14 +20,16 @@ export default class Dropdown extends Component {
     highlight: PropTypes.bool,
     position:  PropTypes.string,
     editable:  PropTypes.bool,
-    filter:    PropTypes.bool
+    filter:    PropTypes.bool,
+    order:     PropTypes.bool
   }
 
   static defaultProps = {
     hover:    false,
     style:    'dark',
     editable: true,
-    filter:   false
+    filter:   false,
+    order:    true
   }
 
   constructor(props) {
@@ -77,7 +77,7 @@ export default class Dropdown extends Component {
   }
 
   render() {
-    const { label, content, style, onChange, highlight, position, editable, filter } = this.props
+    const { label, content, style, onChange, highlight, position, editable, filter, order } = this.props
 
     const lis = content.map((item, index) => {
       const onClick = e => {
@@ -95,12 +95,17 @@ export default class Dropdown extends Component {
         .toLowerCase()
         .includes(this.state.filter.toLowerCase())
 
-      return (
-        <li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
+      return {
+        ...item,
+        render: (<li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
           <label>{item.representer ? item.representer(item.label) : item.label}</label>
-        </li>
-      )
+        </li>)
+      }
     })
+
+    const sorter = (a, b) => (a.label || '').toLowerCase() < (b.label || '').toLowerCase() ?
+      -1 :
+      ((a.label || '').toLowerCase() > (b.label || '').toLowerCase() ? 1 : 0)
 
     if (filter) {
       const filterChange = event => this.setState({ ...this.state, filter: event.target.value })
@@ -132,7 +137,7 @@ export default class Dropdown extends Component {
           className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
           ref={ul => { this.ul = ul }}
         >
-          {lis}
+          {order ? lis.sort(sorter).map(o => o.render) : lis.map(o => o.render)}
         </ul>
       </div>
     )
