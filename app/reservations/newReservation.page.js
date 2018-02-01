@@ -267,7 +267,6 @@ class NewReservationPage extends Component {
                       {state.recurringRule ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}
                     </span>
                     <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={this.showRecurring} type="action" size="small" />
-                    {/*<input type="checkbox" checked={state.useRecurring} onChange={actions.setUseRecurring} />*/}
                     <Recurring
                       show={state.showRecurring}
                       rule={state.recurringRule}
