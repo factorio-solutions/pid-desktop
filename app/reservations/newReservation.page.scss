@@ -50,6 +50,7 @@
 
 .recurringForm {
   display: flex;
+  margin: 15px 0;
 
   >input {
     margin: auto 0;
@@ -61,7 +62,7 @@
 
 .rule {
   flex: 1 1;
-  margin: 15px 0 15px 5px;
+  margin: auto 0;
   cursor: pointer;
 
   &.disabled {

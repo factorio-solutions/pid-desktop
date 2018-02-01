@@ -984,7 +984,7 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
-		"repeat": "Repeat",
+		"repeat": "Repeat: disabled",
 		"repeats": "Repeats:",
 		"daily": "Daily",
 		"weekly": "Weekly",
