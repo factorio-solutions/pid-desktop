@@ -137,56 +137,6 @@ export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($user_id: I
 `
 
 // get all reservations query pagination compatibile
-export const GET_RESERVATIONS_PAGINATION_QUERY = `query Reservations($user_id: Id, $garage_id: Id, $past: Boolean, $ongoing: Boolean, $count: Int, $page: Int, $order_by: String, $includes: String, $search: Hash) {
-  reservations(user_id: $user_id, garage_id: $garage_id, past: $past, ongoing: $ongoing, count: $count, page: $page, order_by: $order_by, includes: $includes, search: $search) {
-    id
-    note
-    reservation_case
-    invoice_item {
-      invoice {
-        id
-        payed
-      }
-    }
-    client {
-      name
-      is_secretary
-    }
-    user {
-      full_name
-      email
-    }
-    creator{
-      email
-    }
-    place {
-      label
-      floor {
-        label
-        garage {
-          name
-          flexiplace
-          id
-        }
-      }
-    }
-    car {
-      licence_plate
-    }
-    begins_at
-    ends_at
-    approved
-    created_at
-    payment_url
-    recurring_reservation {
-      id
-      relevant_count
-    }
-  }
-}
-`
-
-// get all reservations query pagination compatibile
 export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($user_id: Id, $garage_id: Id, $past: Boolean, $ongoing: Boolean, $count: Int, $page: Int, $order_by: String, $includes: String, $search: Hash, $find_by_id: Id) {
   reservations_metadata(user_id: $user_id, garage_id: $garage_id, past: $past, ongoing: $ongoing, count: $count, page: $page, order_by: $order_by, includes: $includes, search: $search, find_by_id: $find_by_id) {
     count
