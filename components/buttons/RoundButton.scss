@@ -3,6 +3,7 @@
 
 $size-normal: 50px;
 $big:         1.4;
+$small:       .6;
 
 // ----------------------------------------------------------------------------
 
@@ -71,4 +72,10 @@ $big:         1.4;
   width:     $big * $size-normal;
   height:    $big * $size-normal;
   font-size: $big * 24px;
+}
+
+.small {
+  width:     $small * $size-normal;
+  height:    $small * $size-normal;
+  font-size: $small * 24px;
 }
