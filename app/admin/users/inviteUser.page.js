@@ -120,18 +120,21 @@ class inviteUserPage extends Component {
                 content={clientDropdown}
                 style="light"
                 selected={state.clients.findIndexById(state.client_id)}
+                order={false}
               />}
               {garageDropdown.length > 1 && <Dropdown
                 label={t([ 'inviteUser', 'selectGarage' ])}
                 content={garageDropdown}
                 style="light"
                 selected={state.garages.findIndexById(state.garage_id)}
+                order={false}
               />}
               {carDropdown.length > 1 && <Dropdown
                 label={t([ 'inviteUser', 'selectCar' ])}
                 content={carDropdown}
                 style="light"
                 selected={state.cars.findIndexById(state.car_id)}
+                order={false}
               />}
               <div>
                 <label>{t([ 'inviteUser', 'inviteMessage' ])}</label>

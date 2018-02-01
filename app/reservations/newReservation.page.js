@@ -150,6 +150,7 @@ class NewReservationPage extends Component {
                     style="reservation"
                     highlight={state.highlight}
                     filter
+                    order={false}
                   />
                 }
                 <Input
@@ -198,6 +199,7 @@ class NewReservationPage extends Component {
                     selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
                     style="reservation"
                     highlight={state.highlight}
+                    order={false}
                   />
                 }
                 {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
@@ -208,6 +210,7 @@ class NewReservationPage extends Component {
                     selected={state.user.availableClients.findIndexById(state.client_id)}
                     style="reservation"
                     filter
+                    order={false}
                   />
                 }
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
@@ -229,6 +232,7 @@ class NewReservationPage extends Component {
                     selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
                     style="reservation"
                     highlight={state.highlight}
+                    order={false}
                   />
                 )}
 
