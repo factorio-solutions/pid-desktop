@@ -23,3 +23,15 @@ export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $en
   }
 }
 `
+
+// will donwload user available for reservation with their clients
+export const GET_AVAILABLE_USERS = `{
+  reservable_users {
+    id
+    full_name
+    clients{
+      id
+    }
+  }
+}
+`

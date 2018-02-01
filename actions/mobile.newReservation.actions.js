@@ -6,8 +6,8 @@ import { parseParameters } from '../helpers/parseUrlParameters'
 import { setError, setCustomModal, setGarage } from './mobile.header.actions'
 import { MOMENT_DATETIME_FORMAT_MOBILE, MOMENT_UTC_DATETIME_FORMAT, timeToUTCmobile, toFifteenMinuteStep } from '../helpers/time'
 
-import { GET_AVAILABLE_FLOORS } from '../queries/mobile.newReservation.queries'
-import { CREATE_RESERVATION, UPDATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION, GET_RESERVATION, GET_AVAILABLE_USERS } from '../queries/newReservation.queries'
+import { GET_AVAILABLE_FLOORS, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
+import { CREATE_RESERVATION, UPDATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION, GET_RESERVATION } from '../queries/newReservation.queries'
 import { USER_AVAILABLE, ADD_CLIENT_USER } from '../queries/inviteUser.queries'
 import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT } from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
@@ -242,7 +242,7 @@ export function getAvailableClients() {
     const onClients = response => {
       if (response.data.last_reservation_client) { // I see client from last reservation
         const client = response.data.reservable_clients.findById(response.data.last_reservation_client.id)
-        client && state.client_id !== client.id && dispatch(setClientId(client.id))
+        client && !state.client_id && state.client_id !== client.id && dispatch(setClientId(client.id))
       } else {
         response.data.reservable_clients.findById(state.client_id) === undefined && state.client_id !== undefined && dispatch(setClientId(undefined))
       }
