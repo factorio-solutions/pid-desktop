@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import moment from 'moment'
 
 import TableRow from '../tableRow/TableRow'
+import HistoryTableRow from '../tableRow/HistoryTableRow'
+import UpdatedAtTableRow from '../tableRow/UpdatedAtTableRow'
 
 import styles from './Table.scss'
 
@@ -37,12 +39,15 @@ export default class Table extends Component {
     searchBox:      PropTypes.bool,
     searchBar:      PropTypes.bool,
     returnFiltered: PropTypes.func,
-    filterClick:    PropTypes.func // will return key and ASC or DESC
+    filterClick:    PropTypes.func, // will return key and ASC or DESC
+    selectId:       PropTypes.number
   }
 
   static defaultProps = {
     searchBox: true,
-    searchBar: false
+    searchBar: false,
+    selectId:  null,
+    scale:     1
   }
 
   constructor(props) {
@@ -56,8 +61,47 @@ export default class Table extends Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener('resize', this.updateScale)
+    this.updateScale()
+
+    if (this.props.selectId) {
+      this.setState({
+        ...this.state,
+        spoilerId: this.filterData(this.props.data).sort(this.createComparator()).findIndexById(this.props.selectId)
+      })
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
+      this.setState({
+        ...this.state,
+        spoilerId: this.filterData(nextProps.data).sort(this.createComparator()).findIndexById(nextProps.selectId)
+      })
+    }
+  }
+
   componentWillUpdate(nextProps) {
     nextProps.deselect && this.state.spoilerId !== -1 && this.setState({ ...this.state, spoilerId: -1 })
+  }
+
+  componentDidUpdate() {
+    this.updateScale()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateScale)
+  }
+
+  updateScale = () => { // will calculate scale for table to fit window
+    const scale = this.table.parentNode.getBoundingClientRect().width / this.table.offsetWidth
+    const newScale = scale > 1 ? 1 : scale
+
+    this.state.scale !== newScale && this.setState({
+      ...this.state,
+      scale: scale > 1 ? 1 : scale
+    })
   }
 
   filterData(data) {
@@ -68,7 +112,7 @@ export default class Table extends Component {
         return obj && obj.props && obj.props.children ?
           ([ 'number', 'string' ].includes(typeof obj.props.children) ?
             obj.props.children :
-            obj.props.children.map(child => { return stringifyElement(child) }).join(' ')) :
+            obj.props.children.map(child => stringifyElement(child)).join(' ')) :
             ''
       } else {
         return obj
@@ -81,40 +125,27 @@ export default class Table extends Component {
         return true
       } else {
         return schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
-       .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
-         .toLowerCase()
-         .includes(this.state.search.toLowerCase())
+          .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase())
        ).includes(true)
       }
     })
   }
 
-  render() {
-    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
-    const { sortKey, sortType, spoilerId } = this.state
+  createComparator() {
+    const { schema } = this.props
+    const { sortKey, sortType } = this.state
     const { compareRepresentations, comparator, representer } = schema.find(s => s.key === sortKey)
-    let myComp // comparator to be used
-
-    const handleHeadClick = index => {
-      const isSame = sortKey === schema[index].key
-      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc', this.state.searchBar)
-      if (schema[index].comparator) {
-        this.setState({ ...this.state,
-          sortKey:  isSame ? sortKey : schema[index].key,
-          sortType: isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc'
-        })
-      }
-    }
-
 
     if (typeof comparator === 'function') { // custom comparator
-      myComp = (aRow, bRow) => {
+      return (aRow, bRow) => {
         const a = compareRepresentations ? representer(aRow) : aRow[sortKey]
         const b = compareRepresentations ? representer(bRow) : bRow[sortKey]
         return comparator(sortType, a, b)
       }
     } else { // predefined comparators
-      myComp = (aRow, bRow) => {
+      return (aRow, bRow) => {
         const a = compareRepresentations ? representer(aRow[sortKey]) : aRow[sortKey]
         const b = compareRepresentations ? representer(bRow[sortKey]) : bRow[sortKey]
 
@@ -133,8 +164,24 @@ export default class Table extends Component {
         }
       }
     }
+  }
 
-    const newData = this.filterData(data).sort(myComp)
+  render() {
+    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
+    const { sortKey, sortType, spoilerId } = this.state
+
+    const handleHeadClick = index => {
+      const isSame = sortKey === schema[index].key
+      filterClick && filterClick(schema[index].key, isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc', this.state.searchBar)
+      if (schema[index].comparator) {
+        this.setState({ ...this.state,
+          sortKey:  isSame ? sortKey : schema[index].key,
+          sortType: isSame ? (sortType === 'asc' ? 'desc' : 'asc') : 'asc'
+        })
+      }
+    }
+
+    const newData = this.filterData(data).sort(this.createComparator())
 
     const handleRowClick = spoilerId => {
       const { onRowSelect } = this.props
@@ -143,7 +190,7 @@ export default class Table extends Component {
         onRowSelect && onRowSelect(undefined, -1)
       } else {
         this.setState({ spoilerId })
-        onRowSelect && onRowSelect(newData.find(obj => { return obj.key === spoilerId }), spoilerId)
+        onRowSelect && onRowSelect(newData.find(obj => obj.key === spoilerId), spoilerId)
       }
     }
 
@@ -165,10 +212,10 @@ export default class Table extends Component {
         }
       }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
       const renderEnum = enumValue => {
-        const onEnumClick = () => this.state.searchBar[value.key] === enumValue ?  searchChange('') : searchChange(enumValue)
-        return <span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
+        const onEnumClick = () => this.state.searchBar[value.key] === enumValue ? searchChange('') : searchChange(enumValue)
+        return (<span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
           {value.representer ? value.representer(enumValue) : enumValue}
-        </span>
+        </span>)
       }
       const onChange = event => searchChange(event.target.value)
       return (value.representer && !value.enum && value.comparator !== 'date') ?
@@ -184,15 +231,32 @@ export default class Table extends Component {
     }
 
     const prepareBody = (value, key, arr) => {
-      return [
-        <TableRow
-          key={key}
-          className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`}
+      const createHistortRow = (historyRow, index, arr) => [
+        <HistoryTableRow
           schema={schema}
-          data={value}
-          onClick={() => { handleRowClick(value.key) }}
-          hover
+          newData={arr[index - 1] || value}
+          data={historyRow}
         />,
+        value.record_updates && <UpdatedAtTableRow
+          data={value.record_updates[index]}
+        />,
+        index === arr.length - 1 && <HistoryTableRow
+          schema={schema}
+          newData={arr[index - 1] || value}
+          data={historyRow}
+          originalValues
+        />
+      ].filter(o => o)
+
+      return [ <TableRow
+        key={key}
+        className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`}
+        schema={schema}
+        data={value}
+        onClick={() => { handleRowClick(value.key) }}
+        hover
+      />,
+        ((arr.length <= 5 || spoilerId === value.key) && value.history && value.history.map(createHistortRow)) || [],
         (arr.length <= 5 || spoilerId === value.key) && value.spoiler && <tr key={value.key + '-spoiler'} className={`${styles.tr} ${styles.spoiler}`}>
           <td colSpan={schema.length}>{value.spoiler}</td>
         </tr>
@@ -206,13 +270,13 @@ export default class Table extends Component {
     }
 
     return (
-      <div>
+      <div style={this.state.scale < 1 ? { height: `${this.table.offsetHeight * this.state.scale}px` } : {}}>
         {searchBox && <div className={styles.searchBox}>
           <input type="search" onChange={onFilterChange} value={this.state.search} />
           <i className="fa fa-search" aria-hidden="true" />
         </div>}
 
-        <table className={styles.rtTable}>
+        <table className={styles.rtTable} style={{ transform: `scale(${this.state.scale})`, transformOrigin: 'top left' }} ref={table => { this.table = table }}>
           <thead>
             <tr>
               {schema.map(prepareHeader)}

@@ -1,36 +1,36 @@
 @import '../../styles/app.components';
 
-.menu{
-  opacity: 1;
-  z-index: 101;
+.menu {
   position: fixed;
+  top:      0;
+  right:    100%;
+  left:     auto;
+  width:    75%;
+  height:   100%;
+
+  transition: all .3s cubic-bezier(.1, .7, .1, 1);
   background: $lightGray;
-  transition: all 0.3s cubic-bezier(0.1, 0.7, 0.1, 1);
-
-  top: 0px;
-  left: auto;
-  right: 100%;
-  height: 100%;
-  width: 75%;
+  opacity:    1;
+  z-index:    101;
 }
 
-.shown{
-  transform: translate(100%, 0px);
+.shown {
+  transform: translate(100%, 0);
 }
 
-.dimmer{
-  background-color: rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-
+.dimmer {
+  display:  block;
   position: fixed;
-  display: block;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  height: 100%;
-  width: 100%
+  top:      0;
+  left:     0;
+  width:    100%
+  height:   100%;
+
+  transition:       all .3s ease;
+  background-color: rgba(0, 0, 0, .4);
+  z-index:          100;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
