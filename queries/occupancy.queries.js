@@ -41,6 +41,7 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $t
         }
         reservations_in_interval(from: $from, to: $to) {
           id
+          reservation_case
           client {
             name
             id

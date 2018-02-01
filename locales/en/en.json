@@ -284,6 +284,7 @@
 		"reservationApproved": "This reservation has not been approved yet.",
 		"reservationNotPayed": "This reservation has not been paid.",
 		"pay": "Pay",
+		"internal": "Internal",
 		"host": "Guest",
 		"visitor": "Visitor",
 		"editReservation": "Edit reservation",
