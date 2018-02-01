@@ -61,7 +61,17 @@ class Reservation extends Component {
           <tr><td>{t([ 'occupancy', 'reservationsId' ])}</td><td>{reservation.id}</td></tr>
           <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user.full_name}</td></tr>
           {reservation.client && <tr><td>{t([ 'occupancy', 'client' ])}</td><td>{reservation.client.name}</td></tr>}
-          <tr><td>{t([ 'occupancy', 'type' ])}</td><td>{reservation.client ? t([ 'reservations', 'host' ]) : t([ 'reservations', 'visitor' ])}</td></tr>
+          <tr>
+            <td>{t([ 'occupancy', 'type' ])}</td>
+            <td>
+              {reservation.reservation_case === 'guest' ?
+                t([ 'reservations', 'host' ]) :
+                reservation.reservation_case === 'internal' ?
+                  t([ 'reservations', 'internal' ]) :
+                  t([ 'reservations', 'visitor' ])
+              }
+            </td>
+          </tr>
           <tr><td>{t([ 'occupancy', 'period' ])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
           <tr><td>{t([ 'occupancy', 'licencePlate' ])}</td><td>{reservation.car.licence_plate}</td></tr>
         </tbody>
