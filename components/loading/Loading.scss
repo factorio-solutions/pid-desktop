@@ -1,6 +1,6 @@
 @import '../../styles/app.components';
 
-.rotating{
+.rotating {
   @include rotating(2s);
   padding: 0 5px;
 }

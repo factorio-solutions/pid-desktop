@@ -1,95 +1,95 @@
 @import '../../styles/app.components';
 
-.datetimepicker{
-  position: relative;
+.datetimepicker {
   display: flex;
-  height: 150px;
+  position: relative;
   min-width: 250px;
+  height: 150px;
   overflow: hidden;
 }
 
-.dimmer{
+.dimmer {
+  position: absolute;
+  top:      0;
+  right:    0;
+  bottom:   0;
+  left:     0;
+
   background: -moz-linear-gradient(
     top,
-    rgba($white,0.75) 0%,
-    rgba($white,0.75) 33%,
-    rgba($black,1) calc(33% + 1px),
-    rgba($black,0) calc(33% + 2px),
-    rgba($black,0) calc(67% - 2px),
-    rgba($black,1) calc(67% - 1px),
-    rgba($white,0.75) 67%,
-    rgba($white,0.75) 100%
-  ); /* FF3.6-15 */
+    rgba($white, .75) 0%,
+    rgba($white, .75) 33%,
+    rgba($black, 1) calc(33% + 1px),
+    rgba($black, 0) calc(33% + 2px),
+    rgba($black, 0) calc(67% - 2px),
+    rgba($black, 1) calc(67% - 1px),
+    rgba($white, .75) 67%,
+    rgba($white, .75) 100%
+  ); // Firefox
   background: -webkit-linear-gradient(
     top,
-    rgba($white,0.75) 0%,
-    rgba($white,0.75) 33%,
-    rgba($black,1) calc(33% + 1px),
-    rgba($black,0) calc(33% + 2px),
-    rgba($black,0) calc(67% - 2px),
-    rgba($black,1) calc(67% - 1px),
-    rgba($white,0.75) 67%,
-    rgba($white,0.75) 100%
-  ); /* Chrome10-25,Safari5.1-6 */
+    rgba($white, .75) 0%,
+    rgba($white, .75) 33%,
+    rgba($black, 1) calc(33% + 1px),
+    rgba($black, 0) calc(33% + 2px),
+    rgba($black, 0) calc(67% - 2px),
+    rgba($black, 1) calc(67% - 1px),
+    rgba($white, .75) 67%,
+    rgba($white, .75) 100%
+  ); // Chrome
   background: linear-gradient(
     to bottom,
-    rgba($white,0.75) 0%,
-    rgba($white,0.75) 33%,
-    rgba($black,1) calc(33% + 1px),
-    rgba($black,0) calc(33% + 2px),
-    rgba($black,0) calc(67% - 2px),
-    rgba($black,1) calc(67% - 1px),
-    rgba($white,0.75) 67%,
-    rgba($white,0.75) 100%
+    rgba($white, .75) 0%,
+    rgba($white, .75) 33%,
+    rgba($black, 1) calc(33% + 1px),
+    rgba($black, 0) calc(33% + 2px),
+    rgba($black, 0) calc(67% - 2px),
+    rgba($black, 1) calc(67% - 1px),
+    rgba($white, .75) 67%,
+    rgba($white, .75) 100%
   );
 
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
+  z-index:        3;
   pointer-events: none;
 }
 
-.title{
-  background: $black;
-  color: $white;
+.title {
+  margin:        0;
+  padding:       18px;
   border-bottom: 1px solid $yellow;
-  margin: 0;
-  padding: 18px;
+  background:    $black;
+  color:         $white;
 }
 
-.dates{
+.dates {
   flex: 2 2;
 }
-.hours, .minutes{
+.hours, .minutes {
   flex: 1 1;
 }
 
 .dates, .hours, .minutes { // sliders
   height: 100%;
 
-  >div{ // swiper-wrapper
-
-    >div{ // slides
+  >div { // swiper-wrapper
+    >div { // slides
       line-height: 50px;
-      text-align: center;
+      text-align:  center;
       white-space: nowrap;
     }
   }
 }
 
-.separator{
+.separator {
   line-height: 150px;
 }
 
-.actions{
+.actions {
   display: flex;
 
   >div:first-child {
-    flex: 1 1;
+    flex:        1 1;
     line-height: 60px;
-    text-align: left;
+    text-align:  left;
   }
 }

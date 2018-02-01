@@ -19,14 +19,19 @@
   border-collapse: collapse;
 
   &.fixedHeader {
-    width: calc(100% - 16px);
+    @media (min-width: $collapseWidth) {
+      width: calc(100% - 16px);
+    }
+    @media (max-width: $collapseWidth) {
+      width: 100%;
+    }
   }
 
   >tbody {
     table-layout: fixed;
 
     >tr:hover {
-      outline: 1px dotted $blue;
+      outline:          1px dotted $blue;
       background-color: lighten($blue, 50%);
     }
   }
@@ -86,15 +91,45 @@
 .reservation {
   position:     absolute;
   top:          2px;
-  height:       calc(100% - 4px);
+  height:       calc(100% - 5px);
+  padding-top:  1px;
   padding-left: 1px;
 
   color:     $white;
   font-size: 14px;
+  cursor:    pointer;
 
-  overflow:       hidden;
   vertical-align: middle;
   z-index:        9;
+
+  >span {
+    white-space:    nowrap;
+    pointer-events: none;
+  }
+
+  &:not(.textOnLeft):not(.textOnRight) {
+    >span {
+      display:       block;
+      text-overflow: ellipsis;
+      overflow:      hidden;
+    }
+  }
+
+  &.textOnLeft {
+    >span {
+      display:   inline-block;
+      transform: translateX(calc(-100% - 3px));
+      color:     $black;
+    }
+  }
+
+  &.textOnRight {
+    >span {
+      display:   block;
+      transform: translateX(calc(100% + 3px));
+      color:     $black;
+    }
+  }
 
   &.forCurrentUser {
     &.future {
@@ -124,4 +159,46 @@
     background: $littleLighterGray;
   }
 
+  &.notApproved {
+    background: $red !important;
+  }
+
+}
+
+.notApprovedLabel {
+  font-weight: bold;
+  text-align: center;
+}
+
+.tooltipTable {
+  color: $black;
+}
+
+
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .monthDate:nth-child(2n) {
+    display: none;
+  }
+}
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .monthDate {
+    display: none;
+    font-size: 12px;
+
+    &:nth-child(3n) {
+      display: table-cell;
+    }
+  }
+
+  .weekDate {
+    font-size: 12px;
+
+    &:nth-child(2n+1) {
+      color: transparent;
+    }
+  }
 }

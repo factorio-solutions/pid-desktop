@@ -65,7 +65,10 @@ export function initUsers() {
 
       users = response.data.user_cars.filter(filterNotPending).reduce((acc, uc) => { // cu car user
         acc = addKey(acc, uc.user)
-        acc[uc.user.id].cars.push({ ...uc.car, admin: uc.admin })
+        acc[uc.user.id].cars.push({ ...uc.car,
+          admin:  uc.admin,
+          driver: uc.driver
+        })
         return acc
       }, users)// find users and their cars
 
@@ -95,7 +98,8 @@ export function initUsers() {
 
       const pendingCars = response.data.user_cars.filter(filterPending).map(uc => ({ ...uc.user,
         car: { ...uc.car,
-          admin: uc.admin
+          admin:  uc.admin,
+          driver: uc.driver
         },
         created_at: uc.created_at
       }))

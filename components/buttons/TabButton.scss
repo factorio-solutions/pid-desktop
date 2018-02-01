@@ -8,10 +8,11 @@ $size-collapsed-width:  150px;
 .button {
   @include colorize($white);
   margin:  5px 2px -1px;
-  padding: 10px 20px;
+  padding: 12px 20px;
 
   border:     0;
   outline:    none;
+  background: transparent;
   color:      $black;
   font-size:  16px;
   text-align: center;
@@ -26,8 +27,6 @@ $size-collapsed-width:  150px;
   margin-top: 2px;
   font-size: 15px;
 }
-
-
 
 // states
 .selected {

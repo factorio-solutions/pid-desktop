@@ -12,11 +12,32 @@
   }
 }
 
-.datePicker {
-  padding-right: 5px;
-  border-right:  1px solid $black;
-}
-
 .timePicker {
   padding-left: 4px;
+}
+
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .datePicker {
+    padding-right: 5px;
+    border-right:  1px solid $black;
+  }
+}
+
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .datetimeContainer {
+    flex-direction: column-reverse;
+  }
+
+  .datePicker {
+    padding-top: 5px;
+  }
+
+  .timePicker {
+    padding-bottom: 5px;
+    border-bottom:  1px solid $black;
+  }
 }

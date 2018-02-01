@@ -1,15 +1,39 @@
 @import '../../styles/app.components';
 
 .tr {
-	cursor: pointer;
+  cursor: pointer;
 
-	&.hover:hover {
-		background-color: darken($white, 10%);
-		color: $black
+  &.history {
+    background-color: darken($white, 10%);
+    cursor:           default;
+
+    >td {
+      border: 0;
+    }
+  }
+
+  &.updated {
+    background-color: darken($white, 10%);
+    cursor:           default;
+
+    >td {
+      border-bottom: 1px dashed $black;
+    }
+  }
+
+  &.hover:hover {
+    background-color: darken($white, 10%);
+    color: 						$black;
 	}
 
-	> td {
-		border-bottom: 1px solid $black;
-		padding: 8px 4px;
+  >td {
+    padding: 			 8px 4px;
+    border-bottom: 1px solid $black;
 	}
+}
+
+
+.removed {
+  color:           $red;
+  text-decoration: line-through;
 }

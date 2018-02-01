@@ -1,5 +1,6 @@
 import request       from '../helpers/requestPromise'
 import { timeToUTC } from '../helpers/time'
+import actionFactory from '../helpers/actionFactory'
 
 import { INTERUPT_RESERVATION } from '../queries/reservationInteruption.queries.js'
 import { initReservations }     from './reservations.actions'
@@ -9,28 +10,15 @@ import { mobile } from '../../index'
 export const RESERVATION_INTERUPTION_SET_RESERVATION = 'RESERVATION_INTERUPTION_SET_RESERVATION'
 export const RESERVATION_INTERUPTION_SET_FROM = 'RESERVATION_INTERUPTION_SET_FROM'
 export const RESERVATION_INTERUPTION_SET_TO = 'RESERVATION_INTERUPTION_SET_TO'
+export const RESERVATION_INTERUPTION_FORMAT_FROM = 'RESERVATION_INTERUPTION_FORMAT_FROM'
+export const RESERVATION_INTERUPTION_FORMAT_TO = 'RESERVATION_INTERUPTION_FORMAT_TO'
 
 
-export function setReservation(value) {
-  return {
-    type: RESERVATION_INTERUPTION_SET_RESERVATION,
-    value
-  }
-}
-
-export function setFrom(value) {
-  return {
-    type: RESERVATION_INTERUPTION_SET_FROM,
-    value
-  }
-}
-
-export function setTo(value) {
-  return {
-    type: RESERVATION_INTERUPTION_SET_TO,
-    value
-  }
-}
+export const setReservation = actionFactory(RESERVATION_INTERUPTION_SET_RESERVATION)
+export const setFrom = actionFactory(RESERVATION_INTERUPTION_SET_FROM)
+export const setTo = actionFactory(RESERVATION_INTERUPTION_SET_TO)
+export const formatFrom = actionFactory(RESERVATION_INTERUPTION_FORMAT_FROM)
+export const formatTo = actionFactory(RESERVATION_INTERUPTION_FORMAT_TO)
 
 
 function generalReservationInteruption(callback, id, from, to) {

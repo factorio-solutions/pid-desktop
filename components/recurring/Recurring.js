@@ -56,25 +56,21 @@ export default class Recurring extends Component {
   }
 
   checkProps(props) {
-    const onStateChange = () => props.onSubmit(this.state)
     let newState = this.state
 
     if (props.rule && props.rule.starts !== this.state.starts) {
       newState = { ...newState, starts: props.rule.starts, day: [ moment(props.rule.starts, MOMENT_DATE_FORMAT).weekday() ] }
-      // this.setState({ ...this.state, starts: props.rule.starts, day: [ moment(props.rule.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
     }
     if (props.showDays && (this.state.type === 'day' || (this.state.type === 'week' && this.state.day.length > 1))) {
       newState = { ...newState, type: 'week', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }
-      // this.setState({ ...this.state, type: 'week', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
     }
     if (!props.showWeeks && this.state.type === 'week') {
       newState = { ...newState, type: 'month', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }
-      // this.setState({ ...this.state, type: 'month', day: [ moment(this.state.starts, MOMENT_DATE_FORMAT).weekday() ] }, onStateChange)
     }
     if ((props.rule && props.rule.starts !== this.state.starts) ||
     (props.showDays && (this.state.type === 'day' || (this.state.type === 'week' && this.state.day.length > 1))) ||
     (!props.showWeeks && this.state.type === 'week')) {
-      this.setState(newState) //, onStateChange
+      this.setState(newState)
     }
   }
 
@@ -190,7 +186,7 @@ export default class Recurring extends Component {
 
     return (
       <Modal show={show}>
-        <Form onSubmit={submit} onBack={onSubmit} submitable margin={false} >
+        <Form onSubmit={submit} onBack={onSubmit} submitable margin={false} modal>
           <h2>{t([ 'recurringReservation', 'repeat' ])}</h2>
           <table className={styles.recurring}>
             <tbody>
@@ -217,8 +213,6 @@ export default class Recurring extends Component {
                 <td>{t([ 'recurringReservation', 'startsOn' ])}</td>
                 <td className={styles.setLineHeight}>
                   {calculateFirstOccurence(this.state).format(MOMENT_DATE_FORMAT)}
-                  {/*this.state.starts*/}
-                  {/* <DateInput onChange={startsSelected} value={this.state.starts} style={styles.dateSelector} /> */}
                 </td>
               </tr>
               <tr>

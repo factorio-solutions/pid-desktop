@@ -1,11 +1,19 @@
-import moment                                                    from 'moment'
-import { request }                                               from '../helpers/request'
-import requestPromise                                            from '../helpers/requestPromise'
-import { calculatePrice, valueAddedTax }                         from '../helpers/calculatePrice'
-import * as nav                                                  from '../helpers/navigation'
-import { t }                                                     from '../modules/localization/localization'
-import * as pageBaseActions                                      from './pageBase.actions'
-import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT, timeToUTC } from '../helpers/time'
+import moment from 'moment'
+
+import { request }                       from '../helpers/request'
+import actionFactory                     from '../helpers/actionFactory'
+import requestPromise                    from '../helpers/requestPromise'
+import { calculatePrice, valueAddedTax } from '../helpers/calculatePrice'
+import * as nav                          from '../helpers/navigation'
+import { t }                             from '../modules/localization/localization'
+
+import {
+  MOMENT_DATETIME_FORMAT,
+  MOMENT_DATE_FORMAT,
+  timeToUTC
+} from '../helpers/time'
+import * as pageBaseActions from './pageBase.actions'
+
 
 import {
   GET_AVAILABLE_USERS,
@@ -54,6 +62,25 @@ export const NEW_RESERVATION_SET_ERROR = 'NEW_RESERVATION_SET_ERROR'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
+export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
+export const setReservation = actionFactory(NEW_RESERVATION_SET_RESERVATION)
+export const setShowRecurring = actionFactory(NEW_RESERVATION_SHOW_RECURRING)
+export const setRecurringReservationId = actionFactory(NEW_RESERVATION_SET_RECURRING_RESERVATION_ID)
+export const setCarId = actionFactory(NEW_RESERVATION_CAR_ID)
+export const setCarLicencePlate = actionFactory(NEW_RESERVATION_CAR_LICENCE_PLATE)
+export const setFrom = actionFactory(NEW_RESERVATION_SET_FROM)
+export const setTo = actionFactory(NEW_RESERVATION_SET_TO)
+export const setDurationDate = actionFactory(NEW_RESERVATION_SET_DURATION_DATE)
+export const setLoading = actionFactory(NEW_RESERVATION_SET_LOADING)
+export const setHighlight = actionFactory(NEW_RESERVATION_SET_HIGHLIGHT)
+export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
+export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
+
+const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
+export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
+export const setHostPhone = patternInputActionFactory(NEW_RESERVATION_SET_HOST_PHONE)
+export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_EMAIL)
+
 export function setUser(value) {
   return (dispatch, getState) => {
     dispatch({ type: NEW_RESERVATION_SET_USER,
@@ -72,36 +99,6 @@ export function setNote(value) {
   }
 }
 
-export function setAvailableUsers(value) {
-  return { type: NEW_RESERVATION_SET_AVAILABLE_USERS,
-    value
-  }
-}
-
-export function setReservation(value) {
-  return { type: NEW_RESERVATION_SET_RESERVATION,
-    value
-  }
-}
-
-export function setHostName(value, valid) {
-  return { type:  NEW_RESERVATION_SET_HOST_NAME,
-    value: { value, valid }
-  }
-}
-
-export function setHostPhone(value, valid) {
-  return { type:  NEW_RESERVATION_SET_HOST_PHONE,
-    value: { value, valid }
-  }
-}
-
-export function setHostEmail(value, valid) {
-  return { type:  NEW_RESERVATION_SET_HOST_EMAIL,
-    value: { value, valid }
-  }
-}
-
 export function setClientId(value) {
   return (dispatch, getState) => {
     dispatch({ type: NEW_RESERVATION_SET_CLIENT_ID,
@@ -115,7 +112,14 @@ export function setRecurringRule(value) {
   return (dispatch, getState) => {
     if (value) {
       const start = moment(value.starts, MOMENT_DATE_FORMAT)
-      dispatch(setFrom(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).year(start.year()).month(start.month()).date(start.date())))
+      dispatch(setFrom(
+        moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+        .year(start.year())
+        .month(start.month())
+        .date(start.date())
+        .format(MOMENT_DATETIME_FORMAT)
+      ))
+      dispatch(formatFrom())
     }
     dispatch({ type: NEW_RESERVATION_SET_RECURRING_RULE,
       value
@@ -123,35 +127,10 @@ export function setRecurringRule(value) {
   }
 }
 
-export function setShowRecurring(value) {
-  return { type: NEW_RESERVATION_SHOW_RECURRING,
-    value
-  }
-}
-
 export function setUseRecurring(event) {
   return {
     type:  NEW_RESERVATION_SET_USE_RECURRING,
     value: typeof event === 'boolean' ? event : event.target.checked
-  }
-}
-
-export function setRecurringReservationId(value) {
-  return {
-    type: NEW_RESERVATION_SET_RECURRING_RESERVATION_ID,
-    value
-  }
-}
-
-export function setCarId(value) {
-  return { type: NEW_RESERVATION_CAR_ID,
-    value
-  }
-}
-
-export function setCarLicencePlate(value) {
-  return { type: NEW_RESERVATION_CAR_LICENCE_PLATE,
-    value
   }
 }
 
@@ -172,9 +151,9 @@ export function setGarage(value) {
   }
 }
 
-export function setFrom(value) {
+export function formatFrom() {
   return (dispatch, getState) => {
-    let fromValue = moment(roundTime(value), MOMENT_DATETIME_FORMAT)
+    let fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
     let toValue = null
     const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
 
@@ -198,9 +177,9 @@ export function setFrom(value) {
   }
 }
 
-export function setTo(value) {
+export function formatTo() {
   return (dispatch, getState) => {
-    let toValue = moment(roundTime(value), MOMENT_DATETIME_FORMAT)
+    let toValue = moment(roundTime(getState().newReservation.to), MOMENT_DATETIME_FORMAT)
     const fromValue = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
 
     if (toValue.diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
@@ -217,8 +196,9 @@ export function setTo(value) {
   }
 }
 
+
 export function setPlace(place) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({ type:  NEW_RESERVATION_SET_PLACE_ID,
       value: place ? place.id : undefined
     })
@@ -251,37 +231,6 @@ export function setPrice() {
   }
 }
 
-export function setDurationDate(value) {
-  return { type: NEW_RESERVATION_SET_DURATION_DATE,
-    value
-  }
-}
-
-export function setLoading(value) {
-  return { type: NEW_RESERVATION_SET_LOADING,
-    value
-  }
-}
-
-export function setHighlight(value) {
-  return { type: NEW_RESERVATION_SET_HIGHLIGHT,
-    value
-  }
-}
-
-export function setError(value) {
-  return { type: NEW_RESERVATION_SET_ERROR,
-    value
-  }
-}
-
-export function clearForm(value) {
-  return { type: NEW_RESERVATION_CLEAR_FORM,
-    value
-  }
-}
-
-
 export function toggleHighlight() {
   return (dispatch, getState) => {
     dispatch(setHighlight(!getState().newReservation.highlight))
@@ -289,7 +238,7 @@ export function toggleHighlight() {
 }
 
 export function beginsToNow() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setFrom(roundTime(moment())))
   }
 }
@@ -310,6 +259,8 @@ export function setInitialStore(id) {
     dispatch(setLoading(true))
     dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
     dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
+    dispatch(formatFrom())
+    dispatch(formatTo())
 
 
     const availableUsersPromise = new Promise((resolve, reject) => {
@@ -532,22 +483,20 @@ export function autoSelectPlace() {
     const state = getState().newReservation
     if (state.garage.flexiplace) {
       dispatch(setPlace(undefined))
-    } else {
-      if (!(state.place_id && state.garage.floors.find(floor => {
-        return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
-      }) !== undefined)) { // if place not selected or selected place not found in this garage
-        const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
-          return floor.places.reduce((highestPriorityPlace, place) => {
-            if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority)) {
-              return place
-            } else {
-              return highestPriorityPlace
-            }
-          }, highestPriorityPlace)
-        }, undefined)
+    } else if (!(state.place_id && state.garage.floors.find(floor => {
+      return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
+    }) !== undefined)) { // if place not selected or selected place not found in this garage
+      const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
+        return floor.places.reduce((highestPriorityPlace, place) => {
+          if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority)) {
+            return place
+          } else {
+            return highestPriorityPlace
+          }
+        }, highestPriorityPlace)
+      }, undefined)
 
-        dispatch(setPlace(selectedPlace))
-      }
+      dispatch(setPlace(selectedPlace))
     }
   }
 }

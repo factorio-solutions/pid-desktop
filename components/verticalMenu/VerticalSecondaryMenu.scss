@@ -1,21 +1,16 @@
 @import '../../styles/app.components';
 
-.menu{
-  transition: all 0.3s ease;
-  margin-top: 1px;
+.menu {
   width: 100%;
+  margin-top: 1px;
+  transition: all .3s ease;
 }
 
 // scalable content
-
 @media (min-width: $collapseWidth) {
   @media (min-height: 830px) {
-    .menu{
+    .menu {
       margin-top: 80px;
     }
   }
-}
-
-@media (max-width: $collapseWidth) {
-
 }

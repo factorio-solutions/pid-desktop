@@ -1,25 +1,68 @@
 @import '../../styles/app.components';
 
-.body{
-  position:         fixed;
-  z-index:          100;
+.body {
+  position:   fixed;
+  padding:    10px;
+  transition: opacity .2s ease;
 
-  border-radius:    3px;
   border:           1px solid $gray;
-
+  border-radius:    3px;
   background-color: $white;
-  padding:          10px;
+  z-index:          100;
   pointer-events:   none;
-
-  transition:       opacity 0.2s ease;
-  // transform:        translateX(-50%);
-  transform:        translateY(-50%);
 }
 
-.originOnBottom{
-  transform:        translateY(-100%);
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .body {
+    transform: translate(-160px, calc(-50% - 60px));
+
+    &.originOnLeft {
+      transform: translate(calc(-100% - 200px), calc(-50% - 60px));
+    }
+
+    &.originOnBottom {
+      transform: translate(-160px, calc(-100% - 60px));
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 200px), calc(-100% - 60px));
+      }
+    }
+
+    &.originOnTop {
+      transform: translate(-160px, calc(0% - 60px));
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 200px), calc(0% - 60px));
+      }
+    }
+  }
 }
 
-.originOnTop{
-    transform:        translateY(0%);
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .body {
+    transform: translate(0, -50%);
+
+    &.originOnLeft {
+      transform: translate(calc(-100% - 40px), -50%);
+    }
+
+    &.originOnBottom {
+      transform: translate(0, -100%);
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 40px), -100%);
+      }
+    }
+
+    &.originOnTop {
+      transform: translate(0, 0%);
+
+      &.originOnLeft {
+        transform: translate(calc(-100% - 40px), 0%);
+      }
+    }
+  }
 }
