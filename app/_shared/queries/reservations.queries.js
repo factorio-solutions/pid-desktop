@@ -217,6 +217,10 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
     approved
     created_at
     payment_url
+    price
+    currency{
+      symbol
+    }
     recurring_reservation {
       id
       relevant_count

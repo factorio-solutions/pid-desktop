@@ -137,10 +137,10 @@ class ReservationsPage extends Component {
       { key:         'from',
         title:       t([ 'reservations', 'from' ]),
         comparator:  'date',
-        representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
+        representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} <br /> {moment(o).format('H:mm')}</span>,
         orderBy:     'begins_at',
         sort:        'asc' },
-      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
+      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
     ]
 
     const reservationIteruptionModal = (<div>
@@ -198,6 +198,9 @@ class ReservationsPage extends Component {
           <div>
             {t([ 'reservations', 'createdAt' ])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)} - {reservation.creator.email}
           </div>
+          {reservation.price > 0 && <div>
+            {reservation.price} {reservation.currency.symbol}
+          </div>}
           <div>
             <span className={styles.floatRight}>
               {reservation.client && reservation.client.is_secretary && moment(reservation.ends_at).isAfter(moment()) ?
