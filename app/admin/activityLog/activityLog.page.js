@@ -6,16 +6,14 @@ import moment                          from 'moment'
 import PageBase from '../../_shared/containers/pageBase/PageBase'
 import Table    from '../../_shared/components/table/Table'
 
-import * as nav                      from '../../_shared/helpers/navigation'
 import { t }                         from '../../_shared/modules/localization/localization'
 import * as adminActivityLogsActions from '../../_shared/actions/admin.activityLog.actions'
-
-import styles from './activityLog.page.scss'
 
 
 class ActivityLogPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
+    pageBase: PropTypes.object,
     actions:  PropTypes.object
   }
 
@@ -23,19 +21,20 @@ class ActivityLogPage extends Component {
     this.props.pageBase.garage && this.props.actions.initLogs()
   }
 
-  componentWillReceiveProps(nextProps){ // load garage if id changed
-    nextProps.pageBase.garage != this.props.pageBase.garage && this.props.actions.initLogs()
+  componentWillReceiveProps(nextProps) { // load garage if id changed
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initLogs()
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state } = this.props
 
-    const schema = [ { key: 'full_name',  title: t(['activityLog', 'name']),      comparator: 'string', sort: 'asc' }
-                   , { key: 'email',      title: t(['activityLog', 'email']),     comparator: 'string' }
-                   , { key: 'model',      title: t(['activityLog', 'subject']),   comparator: 'string' }
-                   , { key: 'action',     title: t(['activityLog', 'action']),    comparator: 'string' }
-                   , { key: 'created_at', title: t(['activityLog', 'createdAt']), comparator: 'date',   representer: o => <span>{ moment(o).format('ddd DD.MM.')}  <br/> {moment(o).format('H:mm')}</span> }
-                   ]
+    const schema = [
+      { key: 'full_name', title: t([ 'activityLog', 'name' ]), comparator: 'string', sort: 'asc' },
+      { key: 'email', title: t([ 'activityLog', 'email' ]), comparator: 'string' },
+      { key: 'model', title: t([ 'activityLog', 'subject' ]), comparator: 'string' },
+      { key: 'action', title: t([ 'activityLog', 'action' ]), comparator: 'string' },
+      { key: 'created_at', title: t([ 'activityLog', 'createdAt' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span> }
+    ]
 
     return (
       <PageBase>
@@ -46,6 +45,6 @@ class ActivityLogPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.adminActivityLog, pageBase: state.pageBase }), //{ state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators(adminActivityLogsActions, dispatch) }) //{ actions: bindActionCreators(dashboardActions, dispatch) }
+  state => ({ state: state.adminActivityLog, pageBase: state.pageBase }), // { state: state.dashboard }
+  dispatch => ({ actions: bindActionCreators(adminActivityLogsActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
 )(ActivityLogPage)

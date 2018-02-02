@@ -60,6 +60,7 @@ import pidAdminGenerator from '../_shared/reducers/pid-admin.generator.reducer'
 import pidAdminNews      from '../_shared/reducers/pid-admin.news.reducer'
 import pidAdminNewNews   from '../_shared/reducers/pid-admin.newNews.reducer'
 import pidAdminFinance   from '../_shared/reducers/pid-admin.finance.reducer'
+import pidAdminLogs      from '../_shared/reducers/pid-admin.logs.reducer'
 
 const appReducer = combineReducers({
   routing,
@@ -120,7 +121,8 @@ const appReducer = combineReducers({
   pidAdminGenerator,
   pidAdminNews,
   pidAdminNewNews,
-  pidAdminFinance
+  pidAdminFinance,
+  pidAdminLogs
 })
 
 const rootReducer = (state, action) => { // app reducer container reducer

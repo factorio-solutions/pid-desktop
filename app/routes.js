@@ -1,4 +1,4 @@
-import React from 'react'
+import React                                from 'react'
 import { Route, IndexRoute, IndexRedirect } from 'react-router'
 
 import * as localization from './_shared/modules/localization/localization'
@@ -9,23 +9,23 @@ import App from './_app/App'
 // ////////////////////////////REGULAR PAGES/////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////
 // login pages
-import LoginPage from './user/login.page'
+import LoginPage            from './user/login.page'
 import CodeVerificationPage from './user/codeVerification.page'
-import SignUpPage from './user/signUp.page'
-import ResetPasswordPage from './user/resetPassword.page'
+import SignUpPage           from './user/signUp.page'
+import ResetPasswordPage    from './user/resetPassword.page'
 
 // user profile and notifications
-import ProfilePage from './user/profile.page'
-import CarUsersPage from './user/cars/users.page'
-import NewCarPage from './user/cars/newCar.page'
+import ProfilePage       from './user/profile.page'
+import CarUsersPage      from './user/cars/users.page'
+import NewCarPage        from './user/cars/newCar.page'
 import NotificationsPage from './notifications/notifications.page'
 
 // dashboard
 import DashboardPage from './dashboard/dashboard.page'
 
 // reservations
-import ReservationsPage from './reservations/reservations.page'
-import NewReservationPage from './reservations/newReservation.page'
+import ReservationsPage           from './reservations/reservations.page'
+import NewReservationPage         from './reservations/newReservation.page'
 import NewReservationOverviewPage from './reservations/newReservationOverview.page'
 
 // occupancy page
@@ -38,52 +38,52 @@ import GaragePage from './garage/garage.page'
 import IssuesPage from './issues/issues.page'
 
 // analytics
-import GarageTurnoverPage from './analytics/garageTurnover.page'
+import GarageTurnoverPage        from './analytics/garageTurnover.page'
 import ReservationsAnalyticsPage from './analytics/reservations.page'
-import PlacesPage from './analytics/places.page'
-import PaymentsPage from './analytics/payments.page'
-import GatesPage from './analytics/gates.page'
+import PlacesPage                from './analytics/places.page'
+import PaymentsPage              from './analytics/payments.page'
+import GatesPage                 from './analytics/gates.page'
 
 // Add features page
-import AddFeaturesPage from './addFeatures/addFeatures.page'
+import AddFeaturesPage     from './addFeatures/addFeatures.page'
 import GateModuleOrderPage from './addFeatures/gateModuleOrder.page'
 
 // ADMIN
 // invoices
-import InvoicesPage from './admin/invoices/invoices.page'
+import InvoicesPage    from './admin/invoices/invoices.page'
 import EditInvoicePage from './admin/invoices/editInvoice.page'
 
 // clients
-import ClientsPage from './admin/clients/clients.page'
+import ClientsPage     from './admin/clients/clients.page'
 import ClientUsersPage from './admin/clients/users.page'
-import NewClientPage from './admin/clients/newClient.page'
+import NewClientPage   from './admin/clients/newClient.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules
-import ModulesPage from './admin/modules/modules.page'
-import MarketingSettingsPage from './admin/modules/marketingSettings.page'
-import ReservationButtonPage from './admin/modules/reservationButton.page'
+import ModulesPage             from './admin/modules/modules.page'
+import MarketingSettingsPage   from './admin/modules/marketingSettings.page'
+import ReservationButtonPage   from './admin/modules/reservationButton.page'
 import MrParkitIntegrationPage from './admin/modules/mrParkitIntegration.page'
-import GoPublicPage from './admin/modules/goPublic.page'
-import FlexiplacePage from './admin/modules/flexiplace.page'
+import GoPublicPage            from './admin/modules/goPublic.page'
+import FlexiplacePage          from './admin/modules/flexiplace.page'
 
 // garageSetup
-import GarageSetupGeneralPage from './admin/garageSetup/garageSetupGeneral.page'
-import GarageSetupFloorsPage from './admin/garageSetup/garageSetupFloors.page'
-import GarageSetupGatesPage from './admin/garageSetup/garageSetupGates.page'
-import GarageSetupOrderPage from './admin/garageSetup/garageSetupOrder.page'
+import GarageSetupGeneralPage      from './admin/garageSetup/garageSetupGeneral.page'
+import GarageSetupFloorsPage       from './admin/garageSetup/garageSetupFloors.page'
+import GarageSetupGatesPage        from './admin/garageSetup/garageSetupGates.page'
+import GarageSetupOrderPage        from './admin/garageSetup/garageSetupOrder.page'
 import GarageSetupSubscribtionPage from './admin/garageSetup/garageSetupSubscribtion.page'
-import GarageUsersPage from './admin/garageSetup/users.page'
+import GarageUsersPage             from './admin/garageSetup/users.page'
 
 // users
-import UsersPage from './admin/users/users.page'
+import UsersPage      from './admin/users/users.page'
 import InviteUserPage from './admin/users/inviteUser.page'
 
 // finance
 import FinancePage from './admin/finance/finance.page'
 import NewRentPage from './admin/finance/newRent.page'
-import PayPalPage from './admin/finance/paypal.page'
-import CsobPage from './admin/finance/csob.page'
+import PayPalPage  from './admin/finance/paypal.page'
+import CsobPage    from './admin/finance/csob.page'
 
 // pidSettings
 import PidSettingsPage from './admin/pidSettings/pidSettings.page'
@@ -100,17 +100,20 @@ import TestingPage from './testing/testing.page'
 // //////////////////////////PID ADMIN PAGES/////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////
 import PidAdminDashboardPage from './pidAdmin/dashboard/dashboard.page'
-import PidAdminUsersPage from './pidAdmin/users/users.page'
+import PidAdminUsersPage     from './pidAdmin/users/users.page'
 
-import PidAdminGeneratorGaragesPage from './pidAdmin/generator/generatorGarages.page'
-import PidAdminGeneratorClientsPage from './pidAdmin/generator/generatorClients.page'
+import PidAdminGeneratorGaragesPage      from './pidAdmin/generator/generatorGarages.page'
+import PidAdminGeneratorClientsPage      from './pidAdmin/generator/generatorClients.page'
 import PidAdminGeneratorReservationsPage from './pidAdmin/generator/generatorReservations.page'
-import PidAdminGeneratorUsersPage from './pidAdmin/generator/generatorUsers.page'
-import PidAdminGeneratorOverviewPage from './pidAdmin/generator/generatorOverview.page'
+import PidAdminGeneratorUsersPage        from './pidAdmin/generator/generatorUsers.page'
+import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOverview.page'
 
-import PidAdminNewsPage from './pidAdmin/news/news.page'
+import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
+
 import PidAdminFinancePage from './pidAdmin/finance/finance.page'
+
+import PidAdminLogsPage    from './pidAdmin/logs/logs.page'
 
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
@@ -133,6 +136,8 @@ export default function createRoutes() {
       <Route path="news/:id/edit" component={PidAdminNewNewsPage} />
 
       <Route path="finance" component={PidAdminFinancePage} />
+
+      <Route path="logs" component={PidAdminLogsPage} />
     </Route>
   )
 
