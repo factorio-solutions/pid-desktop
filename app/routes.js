@@ -110,6 +110,7 @@ import PidAdminGeneratorOverviewPage from './pidAdmin/generator/generatorOvervie
 
 import PidAdminNewsPage from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
+import PidAdminFinancePage from './pidAdmin/finance/finance.page'
 
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
@@ -130,6 +131,8 @@ export default function createRoutes() {
       <Route path="news" component={PidAdminNewsPage} />
       <Route path="news/newNews" component={PidAdminNewNewsPage} />
       <Route path="news/:id/edit" component={PidAdminNewNewsPage} />
+
+      <Route path="finance" component={PidAdminFinancePage} />
     </Route>
   )
 
