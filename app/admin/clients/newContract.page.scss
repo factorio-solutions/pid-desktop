@@ -37,3 +37,29 @@
   margin-top: 12px;
   cursor: pointer;
 }
+
+.tooltip {
+  >tbody {
+    >tr {
+      >td {
+        &:first-child {
+          color: $gray;
+          font-size: 14px;
+          text-align: right;
+        }
+
+        &.flex {
+          display: flex;
+
+          >.dash {
+            padding: 0 3px;
+          }
+        }
+
+        &:last-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
