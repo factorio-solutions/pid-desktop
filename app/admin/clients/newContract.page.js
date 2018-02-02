@@ -129,7 +129,7 @@ class NewContractPage extends Component {
                       place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${place.pricing.exponential_month_price} ${place.pricing.currency.symbol}` ],
                       place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${place.pricing.flat_price} ${place.pricing.currency.symbol}` ],
                       place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${place.pricing.weekend_price} ${place.pricing.currency.symbol}` ]
-                    ].filter(o => o).reduce((arr, o) => [ ...arr, <tr> <td>{o[0]}</td> <td>{o[1]}</td> </tr> ], [])}
+                    ].filter(o => o).reduce((arr, o) => [ ...arr, <tr><td>{o[0]}</td><td>{o[1]}</td></tr> ], [])}
                   </tbody>
                 </table>
               </td>
