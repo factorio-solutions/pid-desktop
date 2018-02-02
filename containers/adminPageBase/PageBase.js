@@ -29,15 +29,16 @@ class PageBase extends Component {
     const { state, actions, notifications } = this.props
 
     const vertical = [
-      { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => { nav.to('/pid-admin/') } },
-      { label: t([ 'pageBase', 'Users' ]), key: 'users', icon: 'fa fa-user', onClick: () => { nav.to('/pid-admin/users') } },
-      { label: t([ 'pidAdmin', 'pageBase', 'generator' ]), key: 'generator', icon: 'fa fa-fighter-jet', onClick: () => { nav.to('/pid-admin/generator') } },
-      { label: t([ 'pidAdmin', 'pageBase', 'news' ]), key: 'news', icon: 'fa fa-newspaper-o', onClick: () => { nav.to('/pid-admin/news') } }
+      { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => nav.to('/pid-admin/') },
+      { label: t([ 'pageBase', 'Users' ]), key: 'users', icon: 'fa fa-user', onClick: () => nav.to('/pid-admin/users') },
+      { label: t([ 'pidAdmin', 'pageBase', 'generator' ]), key: 'generator', icon: 'fa fa-fighter-jet', onClick: () => nav.to('/pid-admin/generator') },
+      { label: t([ 'pidAdmin', 'pageBase', 'news' ]), key: 'news', icon: 'fa fa-newspaper-o', onClick: () => nav.to('/pid-admin/news') },
+      { label: t([ 'pidAdmin', 'pageBase', 'finance' ]), key: 'finance', icon: 'fa fa-money', onClick: () => nav.to('/pid-admin/finance') }
     ]
 
     const profileDropdown = [
-      <div className={styles.dropdownContent} onClick={() => { nav.to('/dashboard') }}><i className="fa fa-backward" aria-hidden="true" />{t([ 'pidAdmin', 'pageBase', 'backToPid' ])}</div>,
-      <div className={styles.dropdownContent} onClick={() => { actions.logout() }}><i className="fa fa-sign-out" aria-hidden="true" />{t([ 'pageBase', 'Logout' ])}</div>
+      <div className={styles.dropdownContent} onClick={() => nav.to('/dashboard')}><i className="fa fa-backward" aria-hidden="true" />{t([ 'pidAdmin', 'pageBase', 'backToPid' ])}</div>,
+      <div className={styles.dropdownContent} onClick={() => actions.logout()}><i className="fa fa-sign-out" aria-hidden="true" />{t([ 'pageBase', 'Logout' ])}</div>
     ]
 
     return (
