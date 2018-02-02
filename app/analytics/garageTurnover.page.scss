@@ -33,6 +33,10 @@
     position: absolute;
     right:    20px;
     left:     20px;
+
+    &.shrink {
+      right: 200px;
+    }
   }
 }
 

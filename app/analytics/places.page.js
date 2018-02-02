@@ -34,7 +34,7 @@ class PlacesPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state, pageBase, actions } = this.props
 
     const shorttermHandleFrom = (value, valid) => valid && actions.setFrom(value)
     const shorttermHandleTo = (value, valid) => valid && actions.setTo(value)
@@ -111,7 +111,7 @@ class PlacesPage extends Component {
 
     return (
       <PageBase>
-        <div className={styles.analyticsContainer}>
+        <div className={`${styles.analyticsContainer} ${pageBase.current_user && pageBase.current_user.hint && styles.shrink}`}>
           <TabMenu left={filters} right={datePickers} />
           {state.display === 'graph' ? <div>
             <Chart
