@@ -79,7 +79,7 @@ export default class Dropdown extends Component {
   render() {
     const { label, content, style, onChange, highlight, position, editable, filter, order } = this.props
 
-    const lis = content.map((item, index) => {
+    let lis = content.map((item, index) => {
       const onClick = e => {
         e.stopPropagation()
         item.onClick && item.onClick()
@@ -107,7 +107,13 @@ export default class Dropdown extends Component {
       -1 :
       ((a.label || '').toLowerCase() > (b.label || '').toLowerCase() ? 1 : 0)
 
-    if (filter) {
+    if (order) { // order if needed
+      lis = lis.sort(sorter)
+    }
+
+    lis = lis.map(o => o.render) // render renderable part of object
+
+    if (filter) { // add filter if wanted
       const filterChange = event => this.setState({ ...this.state, filter: event.target.value })
       const onFocus = () => {
         clearTimeout(this.timeout)
@@ -137,7 +143,7 @@ export default class Dropdown extends Component {
           className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
           ref={ul => { this.ul = ul }}
         >
-          {order ? lis.sort(sorter).map(o => o.render) : lis.map(o => o.render)}
+          {lis}
         </ul>
       </div>
     )
