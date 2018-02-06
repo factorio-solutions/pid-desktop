@@ -122,8 +122,12 @@ class InvoicesPage extends Component {
     ]
 
     const clientDropdown = () => {
-      const clientSelected = index => { actions.setClientId(state.clients[index].id) }
-      return state.clients.map((client, index) => { return { label: client.name, onClick: () => clientSelected(index) } })
+      const clientSelected = index => actions.setClientId(state.clients[index].id)
+      return state.clients.map((client, index) => ({
+        label:   client.name,
+        first:   client.id === undefined,
+        onClick: () => clientSelected(index)
+      }))
     }
 
     const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findById(state.client_id)} />
