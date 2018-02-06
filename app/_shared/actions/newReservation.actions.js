@@ -524,7 +524,7 @@ export function submitReservation(id) {
         window.location.replace(response.data.create_reservation.payment_url)
       } else {
         dispatch(pageBaseActions.setCustomModal(undefined))
-        nav.to(`/reservations/find/${response.data.update_reservation.id}`)
+        nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
         dispatch(clearForm())
       }
     }
