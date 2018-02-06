@@ -126,7 +126,7 @@ class InvoicesPage extends Component {
       return state.clients.map((client, index) => { return { label: client.name, onClick: () => clientSelected(index) } })
     }
 
-    const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findById(state.client_id)} order={false} />
+    const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findById(state.client_id)} />
     const customModal = (<div>
       <Form
         submitable={state.reason !== '' && state.reason !== undefined}
