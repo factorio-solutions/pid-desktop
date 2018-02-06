@@ -3,6 +3,8 @@ export const GET_GARAGE_MODULES = `query GetGarage($id: Id!){
     id
     is_public
     flexiplace
+    mr_parkit_integration
+    third_party_integration
     marketing{
       id
       short_name

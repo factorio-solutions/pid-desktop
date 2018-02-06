@@ -190,6 +190,7 @@ export default function createRoutes() {
       <Route path=":id/admin/modules" component={ModulesPage} />
       <Route path=":id/admin/modules/marketingSettings" component={MarketingSettingsPage} />
       <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} />
+      <Route path=":id/admin/modules/3rdPartyIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
       <Route path=":id/admin/modules/flexiplace" component={FlexiplacePage} />

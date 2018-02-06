@@ -5,11 +5,14 @@ import { bindActionCreators }          from 'redux'
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import Switch             from '../../_shared/components/switch/Switch'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import Module             from '../../_shared/components/module/Module'
+import Modal              from '../../_shared/components/modal/Modal'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
 import * as adminModulesActions from '../../_shared/actions/admin.modules.actions'
+import * as thirdPartyActions   from '../../_shared/actions/admin.thirdPartyIntegration.actions'
 
 import styles from './modules.page.scss'
 
@@ -23,6 +26,8 @@ class ModulesPage extends Component {
 
   componentDidMount() {
     this.props.pageBase.garage && this.props.actions.initModules()
+    // console.log(this.token)
+    // this.token.addEventListener('copy', this.onCopyEvent)
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
@@ -38,6 +43,43 @@ class ModulesPage extends Component {
   toGoFlexiPlaceSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/flexiplace`)
 
   toggleFLexiplace = () => this.props.state.flexiplace ? this.props.actions.disableFlexiplace() : this.toGoFlexiPlaceSettings()
+
+  toThirPartyIntegrationSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/3rdPartyIntegration`)
+
+  toMrParkitIntegrationSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/mrParkitIntegration`)
+
+  toggleThirdPartyIntegration = () => {
+    if (this.props.state.thirdPartyIntegration) {
+      const { actions } = this.props
+      actions.disableThirdPartyIntegration()
+      actions.setThirdPartyIntegration(false)
+    } else {
+      nav.to(`/${this.props.pageBase.garage}/admin/modules/3rdPartyIntegration`)
+    }
+  }
+
+  toggleMrParkitIntegration = () => {
+    if (this.props.state.mrParkitIntegration) {
+      const { actions } = this.props
+      actions.disableMrParkitIntegration()
+      actions.setMrParkitIntegration(false)
+    } else {
+      nav.to(`/${this.props.pageBase.garage}/admin/modules/mrParkitIntegration`)
+    }
+  }
+
+  onCopyEvent = event => {
+    console.log('catching event')
+    event.preventDefault()
+    event.clipboardData && event.clipboardData.setData('text/plain', this.token.textContent)
+  }
+
+  copyToken = () => {
+    // console.log('making event')
+    this.token.select()
+    document.execCommand('copy')
+  }
+
 
   render() {
     const { state, pageBase, actions } = this.props
@@ -56,10 +98,12 @@ class ModulesPage extends Component {
         onClick={actions.toggleGoPublic}
       />
     ]
+
     const flexiplaceActions = [
       <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGoFlexiPlaceSettings} />,
       <Switch on={state.flexiplace} onClick={this.toggleFLexiplace} />
     ]
+
     const marketingActions = [
       <CallToActionButton
         label={t([ 'modules', 'Preview' ])}
@@ -78,9 +122,61 @@ class ModulesPage extends Component {
       />
     ]
 
+    const thirdPartyIntegrationActions = [
+      <CallToActionButton
+        label={t([ 'modules', 'showApiKey' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+        onClick={actions.showApiEndpoint}
+      />,
+      <CallToActionButton
+        label={t([ 'modules', 'regenerateApiKey' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+        type="remove"
+        onClick={actions.regenerateApiKey}
+      />,
+      <CallToActionButton
+        label={t([ 'modules', 'setting' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+        onClick={this.toThirPartyIntegrationSettings}
+      />,
+      <Switch
+        on={state.thirdPartyIntegration}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+        onClick={this.toggleThirdPartyIntegration}
+      />
+    ]
+
+    const mrParkitIntegrationActions = [
+      <CallToActionButton
+        label={t([ 'modules', 'setting' ])}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+        onClick={this.toMrParkitIntegrationSettings}
+      />,
+      <Switch
+        on={state.mrParkitIntegration}
+        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+        onClick={this.toggleMrParkitIntegration}
+      />
+    ]
+
+    const tokenModal = (<div>
+      <div>
+        <h2>{t([ 'modules', 'token' ])}</h2>
+        <div className={styles.warning}>{t([ 'modules', 'warning' ])}</div>
+        <div className={styles.warningDesribtion}>{t([ 'modules', 'warningDesribtion' ])}</div>
+      </div>
+      <div>
+        <input className={styles.tokenInput} ref={el => { this.token = el }} value={state.token} />
+        <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyToken} />
+      </div>
+      <div><RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" /></div>
+    </div>)
+
 
     return (
       <PageBase>
+        <Modal content={tokenModal} show={state.token} />
+
         <Module
           name={t([ 'modules', 'goPublic' ])}
           description={t([ 'modules', 'goPublicDescription' ])}
@@ -98,6 +194,19 @@ class ModulesPage extends Component {
           actions={marketingActions}
         />
 
+        <Module
+          name={t([ 'modules', 'thirdPartyIntegration' ])}
+          description={t([ 'modules', 'thirdPartyIntegrationDescription' ])}
+          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+          actions={thirdPartyIntegrationActions}
+        />
+        <Module
+          name={t([ 'modules', 'mrParkitIntegration' ])}
+          description={t([ 'modules', 'mrParkitIntegrationDescription' ])}
+          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+          actions={mrParkitIntegrationActions}
+        />
+
         <div className={styles.bottomMargin} />
       </PageBase>
     )
@@ -106,5 +215,5 @@ class ModulesPage extends Component {
 
 export default connect(
   state => ({ state: state.adminModules, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(adminModulesActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...adminModulesActions, ...thirdPartyActions }, dispatch) })
 )(ModulesPage)
