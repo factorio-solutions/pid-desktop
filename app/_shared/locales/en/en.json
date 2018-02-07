@@ -908,7 +908,16 @@
 		"selectCurrency": "Select currency",
 		"placePrice": "Price per spot per month",
 		"indefinitContract": "Create agreement indefinitely.",
-		"indefinite": "Indefinite"
+		"indefinite": "Indefinite",
+
+		"place": "Place:",
+		"usedBy": "Used by:",
+		"goPublic": "Go public",
+		"rentyType": "Renty type:",
+		"longterm": "Longterm",
+		"shortterm": "Shortterm",
+		"longtermPrice": "Longterm price:",
+		"shorttermPrice": "Shortterm price:"
 	},
 	"finance": {
 		"paypal": "Paypal",

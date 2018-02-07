@@ -1,17 +1,37 @@
-export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $from: Datetime!, $to: Datetime!, $contract_id: Id) {
+export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!) {
   garage(id: $garage_id) {
     id
     is_admin
+    is_public
     name
     floors {
       label
       scheme
-      contractable_places(from: $from, to: $to, contract_id: $contract_id) {
-        id
-      }
       places{
         id
         label
+        pricing{
+          currency{
+            symbol
+          }
+          exponential_12h_price
+          exponential_day_price
+          exponential_month_price
+          exponential_week_price
+          flat_price
+          weekend_price
+        }
+        contracts{
+          client{
+            name
+          }
+          rent{
+            currency{
+              symbol
+            }
+            price
+          }
+        }
       }
     }
   }
