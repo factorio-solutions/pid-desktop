@@ -1,5 +1,4 @@
-import React, { Component, PropTypes }  from 'react'
-import ReactDOM                         from 'react-dom'
+import React, { Component, PropTypes } from 'react'
 
 import styles from './Dropdown.scss'
 
@@ -18,21 +17,27 @@ export default class Dropdown extends Component {
     style:     PropTypes.string,
     selected:  PropTypes.number,
     onChange:  PropTypes.func,
-    fixed:     PropTypes.bool,
     highlight: PropTypes.bool,
     position:  PropTypes.string,
-    editable:  PropTypes.bool
+    editable:  PropTypes.bool,
+    filter:    PropTypes.bool,
+    order:     PropTypes.bool
   }
 
   static defaultProps = {
     hover:    false,
     style:    'dark',
-    editable: true
+    editable: true,
+    filter:   false,
+    order:    true
   }
 
   constructor(props) {
     super(props)
-    this.state = { selected: this.props.selected }
+    this.state = {
+      selected: this.props.selected,
+      filter:   ''
+    }
   }
 
   componentDidMount() {
@@ -45,75 +50,108 @@ export default class Dropdown extends Component {
 
   validateContent(nextProps) {
     if (nextProps.content.length === 1) { // if only one item, autoselect it
-      this.setState({ selected: 0 })
+      this.setState({ ...this.state, selected: 0 })
     } else {
-      this.setState({ selected: nextProps.selected })
+      this.setState({ ...this.state, selected: nextProps.selected })
+    }
+  }
+
+  toggleDropdown = () => {
+    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
+  }
+
+  hide = () => {
+    this.ul.classList.add(styles.hidden)
+    this.timeout = setTimeout(() => {
+      this.setState({ ...this.state, filter: '' })
+      this.ul && this.ul.classList.add(styles.displayNone)
+    }, 250)
+  }
+
+  unhide = () => {
+    if (this.props.content.length > 1) {
+      this.ul.classList.remove(styles.displayNone)
+      this.ul.classList.remove(styles.hidden)
+      this.ul.style.width = this.button.getBoundingClientRect().width + 'px'
+
+      if (this.props.filter) {
+        this.filter.focus()
+      }
     }
   }
 
   render() {
-    const { label, content, selected, style, onChange, fixed, highlight, position, editable } = this.props
+    const { label, content, style, onChange, highlight, position, editable, filter, order } = this.props
 
-    const prepareContent = (item, index, arr) => {
-      const handleItemClick = e => {
+    let lis = content.map((item, index) => {
+      const onClick = e => {
         e.stopPropagation()
-        typeof item.onClick === 'function' && item.onClick()
-        this.setState({ selected: index })
-        typeof onChange === 'function' && onChange(index, true)// for form
-        // browser.name === 'safari' && hide() // safari not handles onBlur well, so hide on select
-        hide()
+        item.onClick && item.onClick()
+        this.setState({ ...this.state, selected: index })
+        onChange && onChange(index, true) // for form
+        this.hide()
       }
 
-      return (
-        <li key={index} className={index == this.state.selected ? styles.selected : ''} onClick={handleItemClick} >
-          <label>
-            {item.label}
-          </label>
-        </li>
-      )
-    }
+      const show = this.state.filter === '' ? true : item.label
+        .toString()
+        .replace(/\s\s+/g, ' ')
+        .trim()
+        .toLowerCase()
+        .includes(this.state.filter.toLowerCase())
 
-    const toggleDropdown = () => {
-      const ul = ReactDOM.findDOMNode(this).children[1]
-      ul.classList.contains(styles.hidden) ? unhide() : hide()
-    }
-
-    const onBlur = e => { hide() }
-
-    const hide = () => {
-      const ul = ReactDOM.findDOMNode(this).children[1]
-
-      ul.classList.add(styles.hidden)
-      setTimeout(() => {
-        ul.classList.add(styles.display)
-      }, 250)
-    }
-
-    const unhide = () => {
-      if (content.length > 1) {
-        const element = ReactDOM.findDOMNode(this).children[1],
-          buttonPosition = ReactDOM.findDOMNode(this).children[0].getBoundingClientRect()
-
-        element.classList.remove(styles.display)
-        element.classList.remove(styles.hidden)
-        element.style.width = buttonPosition.width + 'px'
+      return {
+        ...item,
+        render: (<li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
+          <label>{item.representer ? item.representer(item.label) : item.label}</label>
+        </li>)
       }
+    })
+
+
+    // if object has first: true - then push it to the top
+    const sorter = (a, b) => (a.first || b.first) ?
+      a.first && b.first ? 0 : a.first ? -1 : 1 :
+      (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase() ?
+        -1 :
+        ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
+
+    if (order) { // order if needed
+      lis = lis.sort(sorter)
     }
 
+    lis = lis.map(o => o.render) // render renderable part of object
+
+    if (filter) { // add filter if wanted
+      const filterChange = event => this.setState({ ...this.state, filter: event.target.value })
+      const onFocus = () => {
+        clearTimeout(this.timeout)
+        this.unhide()
+      }
+
+      lis.unshift(<li className={styles.filter}>
+        <input type="search" value={this.state.filter} onChange={filterChange} onFocus={onFocus} onBlur={this.hide} ref={el => { this.filter = el }} />
+        <i className="fa fa-search" aria-hidden="true" />
+      </li>)
+    }
 
     return (
       <div>
         <button
           type="button"
           className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted} ${!editable && styles.dimmer}`}
-          onClick={editable && toggleDropdown}
-          onBlur={onBlur}
+          onClick={editable && this.toggleDropdown}
+          onBlur={this.hide}
+          ref={button => { this.button = button }}
         >
-          <span className={styles.marginCorrection}> {this.state.selected == undefined || content[this.state.selected] == undefined ? label : content[this.state.selected].label} </span>
+          <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? label : content[this.state.selected].label} </span>
           <i className={`fa fa-caret-down ${styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
         </button>
-        <ul className={`${styles.drop} ${styles.hidden} ${styles.display} ${position === 'fixed' ? styles.fixed : styles.absolute}`}>
-          {content.map(prepareContent)}
+
+        <ul
+          className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
+          ref={ul => { this.ul = ul }}
+        >
+          {lis}
         </ul>
       </div>
     )
