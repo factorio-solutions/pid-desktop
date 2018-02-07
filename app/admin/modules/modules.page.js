@@ -75,8 +75,12 @@ class ModulesPage extends Component {
   }
 
   copyToken = () => {
-    // console.log('making event')
     this.token.select()
+    document.execCommand('copy')
+  }
+
+  copyEndpoint = () => {
+    this.endpoint.select()
     document.execCommand('copy')
   }
 
@@ -161,15 +165,25 @@ class ModulesPage extends Component {
 
     const tokenModal = (<div>
       <div>
-        <h2>{t([ 'modules', 'token' ])}</h2>
         <div className={styles.warning}>{t([ 'modules', 'warning' ])}</div>
         <div className={styles.warningDesribtion}>{t([ 'modules', 'warningDesribtion' ])}</div>
       </div>
-      <div>
+
+      <div className={styles.copyField}>
+        <h5>{t([ 'modules', 'apiEndpoint' ])}</h5>
+        <input className={styles.tokenInput} ref={el => { this.endpoint = el }} value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api'} />
+        <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyEndpoint} />
+      </div>
+
+      <div className={styles.copyField}>
+        <h5>{t([ 'modules', 'token' ])}</h5>
         <input className={styles.tokenInput} ref={el => { this.token = el }} value={state.token} />
         <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyToken} />
       </div>
-      <div><RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" /></div>
+
+      <div className={styles.dismissButton}>
+        <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" />
+      </div>
     </div>)
 
 

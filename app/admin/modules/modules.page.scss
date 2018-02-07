@@ -39,7 +39,18 @@
   font-weight: bold;
 }
 
-.warningDesribtion{
+.warningDesribtion {
   color:       $gray;
   font-weight: bold;
+}
+
+.copyField {
+  > h5 {
+    margin-bottom: 0;
+    text-align:    left;
+  }
+}
+
+.dismissButton {
+  margin-top: 15px;
 }

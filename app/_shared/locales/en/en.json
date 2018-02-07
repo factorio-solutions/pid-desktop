@@ -899,9 +899,10 @@
 		"mrParkitIntegrationDescription": "This is simmilar to 3rd party integration, the difference is, your places will be automatically taken care of by Mr. Parkit resrevation system.",
 		"selectPlacesFor3rdParty":"Select places for third party",
 		"selectPlacesForMrParkit":"Select places for Mr. Parkit",
-		"token": "API endpoint for your garage",
+		"token": "Secret token",
+		"apiEndpoint": "Api endpoint",
 		"warning": "Keep it secret!",
-		"warningDesribtion": "API endpoint contains unique token that identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible."
+		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible."
 	},
 	"newContract": {
 		"description": "New Agreement in",
