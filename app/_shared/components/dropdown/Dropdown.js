@@ -73,6 +73,10 @@ export default class Dropdown extends Component {
       this.ul.classList.remove(styles.displayNone)
       this.ul.classList.remove(styles.hidden)
       this.ul.style.width = this.button.getBoundingClientRect().width + 'px'
+
+      if (this.props.filter) {
+        this.filter.focus()
+      }
     }
   }
 
@@ -125,7 +129,7 @@ export default class Dropdown extends Component {
       }
 
       lis.unshift(<li className={styles.filter}>
-        <input type="search" value={this.state.filter} onChange={filterChange} onFocus={onFocus} onBlur={this.hide} />
+        <input type="search" value={this.state.filter} onChange={filterChange} onFocus={onFocus} onBlur={this.hide} ref={el => { this.filter = el }} />
         <i className="fa fa-search" aria-hidden="true" />
       </li>)
     }
