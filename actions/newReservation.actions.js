@@ -296,7 +296,7 @@ export function setInitialStore(id) {
 
       const currentUser = getState().pageBase.current_user
       if (currentUser && currentUser.secretary) { // if is secretary then can create new host
-        users.unshift({
+        users.push({
           full_name: t([ 'newReservation', 'newHost' ]),
           id:        -1
         })
