@@ -33,7 +33,7 @@ class GarageSelector extends Component {
         <div className={styles.img} >
           <img src={content[selectedIndex].img || './public/garage_icon.jpg'} />
         </div>
-        <Dropdown label={t([ 'occupancy', 'selectGarage' ])} content={dropdownContent} selected={selectedIndex} style="garageSelector" position="fixed" />
+        <Dropdown label={t([ 'occupancy', 'selectGarage' ])} content={dropdownContent} selected={selectedIndex} style="garageSelector" position="fixed" filter />
       </div>
     )
   }

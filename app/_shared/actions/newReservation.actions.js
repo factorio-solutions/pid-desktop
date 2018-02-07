@@ -293,12 +293,15 @@ export function setInitialStore(id) {
 
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
       const users = values[0].reservable_users
-      if (getState().pageBase.current_user && getState().pageBase.current_user.secretary) { // if is secretary then can create new host
-        users.unshift({
+
+      const currentUser = getState().pageBase.current_user
+      if (currentUser && currentUser.secretary) { // if is secretary then can create new host
+        users.push({
           full_name: t([ 'newReservation', 'newHost' ]),
           id:        -1
         })
       }
+
       dispatch(setAvailableUsers(users))
       dispatch(setLoading(false))
 

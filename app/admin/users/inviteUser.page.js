@@ -73,12 +73,25 @@ class inviteUserPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const clientDropdown = state.clients.map((client, index) => ({ label: client.name, onClick: () => this.clientSelected(index) }))
     const currentClient = state.clients.findById(state.client_id)
 
-    const carDropdown = state.cars.map((car, index) => ({ label: car.model, onClick: () => this.carSelected(index) }))
+    const clientDropdown = state.clients.map((client, index) => ({
+      label:   client.name,
+      first:   client.id === undefined,
+      onClick: () => this.clientSelected(index)
+    }))
 
-    const garageDropdown = state.garages.map((garage, index) => ({ label: garage.name, onClick: () => this.garageSelected(index) }))
+    const carDropdown = state.cars.map((car, index) => ({
+      label:   car.model,
+      first:   car.id === undefined,
+      onClick: () => this.carSelected(index)
+    }))
+
+    const garageDropdown = state.garages.map((garage, index) => ({
+      label:   garage.name,
+      first:   garage.id === undefined,
+      onClick: () => this.garageSelected(index)
+    }))
 
     const errorContent = (<div className={styles.floatCenter}>
       { state.error } <br />

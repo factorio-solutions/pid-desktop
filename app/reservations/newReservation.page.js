@@ -39,6 +39,7 @@ class NewReservationPage extends Component {
 
   userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
     label:   user.full_name,
+    first:   user.id === this.props.pageBase.current_user.id || user.id === -1,
     onClick: () => this.props.actions.downloadUser(this.props.state.availableUsers[index].id)
   }))
 
@@ -52,6 +53,7 @@ class NewReservationPage extends Component {
 
   clientDropdown = () => this.props.state.user.availableClients.map((client, index) => ({
     label:   client.name,
+    first:   client.id === undefined,
     onClick: () => this.props.actions.setClientId(this.props.state.user.availableClients[index].id)
   })) || []
 
@@ -149,6 +151,7 @@ class NewReservationPage extends Component {
                     selected={state.availableUsers.findIndex(user => state.user && user.id === state.user.id)}
                     style="reservation"
                     highlight={state.highlight}
+                    filter
                   />
                 }
                 <Input
@@ -206,6 +209,7 @@ class NewReservationPage extends Component {
                     content={this.clientDropdown()}
                     selected={state.user.availableClients.findIndexById(state.client_id)}
                     style="reservation"
+                    filter
                   />
                 }
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
