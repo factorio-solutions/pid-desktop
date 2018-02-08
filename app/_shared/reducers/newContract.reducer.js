@@ -135,7 +135,7 @@ export default function newContract(state = defaultState, action) {
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL:
       return { ...state,
-        securityInterval: action.value
+        securityInterval: action.value > 60 ? 60 : action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM:

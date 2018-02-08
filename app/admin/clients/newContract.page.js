@@ -126,6 +126,7 @@ class NewContractPage extends Component {
                     error={t([ 'newContract', 'securityIntervalInvalid' ])}
                     placeholder="15"
                     min={0}
+                    max={60}
                     step={1}
                     highlight={state.highlight}
                     onChange={actions.setSecurityInterval}
