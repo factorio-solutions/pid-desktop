@@ -26,8 +26,6 @@ class ModulesPage extends Component {
 
   componentDidMount() {
     this.props.pageBase.garage && this.props.actions.initModules()
-    // console.log(this.token)
-    // this.token.addEventListener('copy', this.onCopyEvent)
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
@@ -66,12 +64,6 @@ class ModulesPage extends Component {
     } else {
       nav.to(`/${this.props.pageBase.garage}/admin/modules/mrParkitIntegration`)
     }
-  }
-
-  onCopyEvent = event => {
-    console.log('catching event')
-    event.preventDefault()
-    event.clipboardData && event.clipboardData.setData('text/plain', this.token.textContent)
   }
 
   copyToken = () => {
@@ -171,7 +163,7 @@ class ModulesPage extends Component {
 
       <div className={styles.copyField}>
         <h5>{t([ 'modules', 'apiEndpoint' ])}</h5>
-        <input className={styles.tokenInput} ref={el => { this.endpoint = el }} value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api'} />
+        <input className={styles.tokenInput} ref={el => { this.endpoint = el }} value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/queries'} />
         <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyEndpoint} />
       </div>
 
