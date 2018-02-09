@@ -73,6 +73,7 @@ export const GET_CONTRACT_DETAILS = `query ($id:Id!) {
     id
     from
     to
+    security_interval
     garage{
       id
       name

@@ -909,7 +909,9 @@
 		"placePrice": "Price per spot per month",
 		"indefinitContract": "Create agreement indefinitely.",
 		"indefinite": "Indefinite",
-
+		"securityInterval": "Security interval",
+		"inMinutes": "in minutes",
+		"securityIntervalInvalid": "Wrong interval",
 		"place": "Place:",
 		"usedBy": "Used by:",
 		"goPublic": "Go public",
