@@ -23,7 +23,8 @@ export default class TestingPage extends Component {
       method: 'POST',
       body:   JSON.stringify(data)
     })
-    .then(response => console.log(response))
+    .then(response => response.json())
+    .then(response => console.log(response.data.reservations))
   }
 
   render() {
