@@ -19,27 +19,29 @@ import {
   ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES,
   ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL,
   ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM
 } from '../actions/newContract.actions'
 
 const defaultState = {
-  contract_id:  undefined, // id is editing
-  clients:      [],
-  client_id:    undefined,
-  addClient:    false,
-  client_token: '',
-  rents:        [],
-  rent:         undefined,
-  newRent:      false,
-  price:        undefined,
-  currencies:   [],
-  currency_id:  undefined,
-  from:         moment().startOf('day').format(MOMENT_DATETIME_FORMAT),
-  to:           moment().endOf('day').format(MOMENT_DATETIME_FORMAT),
-  garage:       undefined,
-  places:       [],
-  highlight:    false,
-  indefinitly:  false
+  contract_id:      undefined, // id is editing
+  clients:          [],
+  client_id:        undefined,
+  addClient:        false,
+  client_token:     '',
+  rents:            [],
+  rent:             undefined,
+  newRent:          false,
+  price:            undefined,
+  currencies:       [],
+  currency_id:      undefined,
+  from:             moment().startOf('day').format(MOMENT_DATETIME_FORMAT),
+  to:               moment().endOf('day').format(MOMENT_DATETIME_FORMAT),
+  garage:           undefined,
+  places:           [],
+  highlight:        false,
+  indefinitly:      false,
+  securityInterval: 0
 }
 
 
@@ -129,6 +131,11 @@ export default function newContract(state = defaultState, action) {
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY:
       return { ...state,
         indefinitly: action.value
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL:
+      return { ...state,
+        securityInterval: action.value > 60 ? 60 : action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM:

@@ -76,8 +76,8 @@ class ClientsPage extends Component {
       return sum + Math.round(contract.rent.price * contract.place_count * endOfMonth.diff(startOfMonth, 'days') / moment().daysInMonth())
     }
 
-    const currentContracts = client.contracts && client.contracts.filter(currentContractsFilter)
-    const oldContracts = client.contracts && client.contracts.filter(oldContractsFilter)
+    const currentContracts = client.contracts ? client.contracts.filter(currentContractsFilter) : []
+    const oldContracts = client.contracts ? client.contracts.filter(oldContractsFilter) : []
 
     const spoiler = (<div className={styles.spoiler}>
       <div>

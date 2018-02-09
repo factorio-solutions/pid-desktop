@@ -1,16 +1,23 @@
-import update   from 'immutability-helper'
-import moment   from 'moment'
+import update from 'immutability-helper'
+import moment from 'moment'
 
-import actionFactory                         from '../helpers/actionFactory'
-import * as nav                              from '../helpers/navigation'
 import { request }                           from '../helpers/request'
 import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
+import * as nav                              from '../helpers/navigation'
+import actionFactory                         from '../helpers/actionFactory'
 import { t }                                 from '../modules/localization/localization'
 import { setError }                          from './pageBase.actions'
 
-import { GET_RENTS }        from '../queries/admin.finance.queries.js'
-import { GARAGE_CONTRACTS } from '../queries/clients.queries.js'
-import { GET_GARAGE_CLIENT, ADD_CLIENT, GET_CURRENCIES, CREATE_CONTRACT, GET_CONTRACT_DETAILS, UPDATE_CONTRACT } from '../queries/newContract.queries.js'
+import { GET_RENTS }                     from '../queries/admin.finance.queries.js'
+import { GARAGE_CONTRACTS }              from '../queries/clients.queries.js'
+import {
+  GET_GARAGE_CLIENT,
+  ADD_CLIENT,
+  GET_CURRENCIES,
+  CREATE_CONTRACT,
+  GET_CONTRACT_DETAILS,
+  UPDATE_CONTRACT
+} from '../queries/newContract.queries.js'
 
 
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID'
@@ -30,6 +37,7 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE = 'ADMIN_CLIENTS_NEW_CONTRACT
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES'
 export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT = 'ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
 
 
@@ -50,6 +58,12 @@ export const toggleHighlight = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_H
 export const setIndefinitly = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY)
 export const eraseForm = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM)
 
+export function setSecurityInterval(value) {
+  return {
+    type:  ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL,
+    value: parseInt(value, 10)
+  }
+}
 
 export function setFrom(value) {
   return (dispatch, getState) => {
@@ -65,7 +79,8 @@ export function setFrom(value) {
       dispatch(setTo(fromValue.clone().endOf('day').format(MOMENT_DATETIME_FORMAT)))
     }
 
-    dispatch({ type:  ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM,
+    dispatch({
+      type:  ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM,
       value: fromValue.format(MOMENT_DATETIME_FORMAT)
     })
 
@@ -76,7 +91,8 @@ export function setFrom(value) {
 export function setTo(value) {
   return (dispatch, getState) => {
     if (value === '') { // can be empty value
-      dispatch({ type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO,
+      dispatch({
+        type: ADMIN_CLIENTS_NEW_CONTRACT_SET_TO,
         value
       })
     } else {
@@ -87,7 +103,8 @@ export function setTo(value) {
         toValue = fromValue.endOf('day')
       }
 
-      dispatch({ type:  ADMIN_CLIENTS_NEW_CONTRACT_SET_TO,
+      dispatch({
+        type:  ADMIN_CLIENTS_NEW_CONTRACT_SET_TO,
         value: toValue.format(MOMENT_DATETIME_FORMAT)
       })
     }
@@ -140,6 +157,7 @@ export function initContract(id) {
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent))
       dispatch(setPlaces(response.data.contract.places))
+      dispatch(setSecurityInterval(response.data.contract.security_interval))
     }
 
     const garageId = getState().pageBase.garage
@@ -204,8 +222,7 @@ export function addClient() {
       }
     }
 
-    request(
-      onSuccess,
+    request(onSuccess,
       ADD_CLIENT,
       { token: getState().newContract.client_token }
     )
@@ -232,27 +249,25 @@ export function removePlace(index) {
 export function submitNewContract(id) {
   return (dispatch, getState) => {
     const state = getState().newContract
-    const client = state.clients.findById(state.client_id)
+    const client = state.clients.find(cli => cli.id === state.client_id)
     const variables = {
       contract: {
-        client_id:       client.id,
-        contract_places: state.places.map(place => ({ place_id: place.id })),
-        from:            timeToUTC(state.from),
-        to:              state.indefinitly ? null : timeToUTC(state.to)
+        client_id:         client.id,
+        contract_places:   state.places.map(place => ({ place_id: place.id })),
+        from:              timeToUTC(state.from),
+        to:                state.indefinitly ? null : timeToUTC(state.to),
+        security_interval: state.securityInterval
       }
     }
 
     if (state.newRent) {
-      variables.contract = {
-        ...variables.contract,
-        rent: {
-          currency_id: state.currency_id,
+      variables.contract = { ...variables.contract,
+        rent: { currency_id: state.currency_id,
           price:       state.price / state.places.length
         }
       }
     } else {
-      variables.contract = {
-        ...variables.contract,
+      variables.contract = { ...variables.contract,
         rent_id: state.rent.id
       }
     }
