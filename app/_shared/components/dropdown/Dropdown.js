@@ -109,8 +109,9 @@ export default class Dropdown extends Component {
 
 
     // if object has first: true - then push it to the top
-    const sorter = (a, b) => (a.first || b.first) ?
-      a.first && b.first ? 0 : a.first ? -1 : 1 :
+    const sorter = (a, b) =>
+    (a.order || b.order) ?
+      ((a.order && !b.order) ? -1 : (!a.order && b.order) ? 1 : a.order - b.order) :
       (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase() ?
         -1 :
         ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)

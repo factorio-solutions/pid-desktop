@@ -39,7 +39,7 @@ class NewReservationPage extends Component {
 
   userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
     label:   user.full_name,
-    first:   user.id === this.props.pageBase.current_user.id || user.id === -1,
+    order:   user.id === this.props.pageBase.current_user.id ? 1 : user.id === -1 ? 2 : undefined,
     onClick: () => this.props.actions.downloadUser(this.props.state.availableUsers[index].id)
   }))
 
@@ -53,7 +53,7 @@ class NewReservationPage extends Component {
 
   clientDropdown = () => this.props.state.user.availableClients.map((client, index) => ({
     label:   client.name,
-    first:   client.id === undefined,
+    order:   client.id === undefined && 1,
     onClick: () => this.props.actions.setClientId(this.props.state.user.availableClients[index].id)
   })) || []
 

@@ -128,7 +128,7 @@ class InvoicesPage extends Component {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
       return state.clients.map((client, index) => ({
         label:   client.name,
-        first:   client.id === undefined,
+        order:   client.id === undefined && 1,
         onClick: () => clientSelected(index)
       }))
     }

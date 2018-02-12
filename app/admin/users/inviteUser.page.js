@@ -77,19 +77,19 @@ class inviteUserPage extends Component {
 
     const clientDropdown = state.clients.map((client, index) => ({
       label:   client.name,
-      first:   client.id === undefined,
+      order:   client.id === undefined && 1,
       onClick: () => this.clientSelected(index)
     }))
 
     const carDropdown = state.cars.map((car, index) => ({
       label:   car.model,
-      first:   car.id === undefined,
+      order:   car.id === undefined && 1,
       onClick: () => this.carSelected(index)
     }))
 
     const garageDropdown = state.garages.map((garage, index) => ({
       label:   garage.name,
-      first:   garage.id === undefined,
+      order:   garage.id === undefined && 1,
       onClick: () => this.garageSelected(index)
     }))
 
