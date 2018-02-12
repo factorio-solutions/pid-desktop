@@ -1,6 +1,7 @@
 import { request }    from '../helpers/request'
 import * as nav       from '../helpers/navigation'
 import { LOGIN_USER, LOGIN_VERIFICATION } from '../queries/login.queries.js'
+import actionFactort from '../helpers/actionFactory'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -12,11 +13,10 @@ export const RESET_LOGIN_FORM = 'RESET_LOGIN_FORM'
 export const LOGIN_SET_DEVICE_FINGERPRINT = 'LOGIN_SET_DEVICE_FINGERPRINT'
 
 
-function setError(error) {
-  return { type:  LOGIN_FAILURE,
-    value: error
-  }
-}
+export const setError = actionFactort(LOGIN_FAILURE)
+export const setDeviceFingerprint = actionFactort(LOGIN_SET_DEVICE_FINGERPRINT)
+export const resetLoginForm = actionFactort(RESET_LOGIN_FORM)
+export const resetStore = actionFactort('RESET')
 
 export function setEmail(value, valid) {
   return { type:  LOGIN_SET_EMAIL,
@@ -36,29 +36,16 @@ export function setCode(value, valid) {
   }
 }
 
-export function setDeviceFingerprint(value) {
-  return { type: LOGIN_SET_DEVICE_FINGERPRINT,
-    value
-  }
-}
-
-function resetLoginForm() {
-  return { type: RESET_LOGIN_FORM }
-}
-
 
 export function dismissModal() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setError(undefined))
   }
 }
 
-export function resetStore() {
-  return { type: 'RESET' }
-}
 
 export function loginSuccess(result, redirect, callback) {
-  return (dispatch, getState) => {
+  return dispatch => {
     if ('id_token' in result) {
       localStorage.jwt = result.id_token
       localStorage.refresh_token = result.refresh_token
@@ -94,15 +81,16 @@ export function login(email, password, redirect = false, callback = () => {}) {
     }
 
     dispatch({ type: LOGIN_REQUEST })
-    request(success
-           , LOGIN_USER
-           , { email,
-             password,
-             device_fingerprint: getState().login.deviceFingerprint
-           }
-           , null
-           , onError
-           )
+    request(
+      success,
+      LOGIN_USER,
+      { email,
+        password,
+        device_fingerprint: getState().login.deviceFingerprint
+      },
+      null,
+      onError
+    )
   }
 }
 
@@ -122,45 +110,44 @@ export function verifyCode(email, code, redirect = true, callback = () => {}) {
     }
 
     dispatch({ type: LOGIN_REQUEST }) // show loading
-    request(success
-           , LOGIN_VERIFICATION
-           , { email,
-             code,
-             device_fingerprint: getState().login.deviceFingerprint
-           }
-           , null
-           , onError
-           )
-  }
-}
-
-export function refresh_login(refresh_token, callback) {
-  return (dispatch, getState) => {
-    const success = response => {
-      const result = JSON.parse(response.data.login)
-      if ('id_token' in result) {
-        localStorage.jwt = result.id_token
-        dispatch({ type: LOGIN_SUCCESS })
-        callback(result)
-        dispatch(resetLoginForm())
-      } else {
-        delete localStorage.refresh_token
-      }
-    }
-
-    const onError = () => {
-      console.log('Error while refreshing token')
-    }
-
-    request(success, LOGIN_USER, { refresh_token: localStorage.refresh_token }, null, onError)
+    request(
+      success,
+      LOGIN_VERIFICATION,
+      { email,
+        code,
+        device_fingerprint: getState().login.deviceFingerprint
+      },
+      null,
+      onError
+    )
   }
 }
 
 export function logout() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(resetStore())
     delete localStorage.jwt
     // delete localStorage['refresh_token']
     nav.to('/')
+  }
+}
+
+export function refreshLogin(callback, errorCallback) {
+  return dispatch => {
+    const success = response => {
+      const result = JSON.parse(response.data.login)
+      if (result && result.id_token) {
+        localStorage.jwt = result.id_token
+        dispatch({ type: LOGIN_SUCCESS })
+        callback && callback(result)
+        dispatch(resetLoginForm())
+      } else {
+        delete localStorage.refresh_token
+        errorCallback && errorCallback()
+      }
+    }
+
+    const onError = () => console.log('Error while refreshing token')
+    request(success, LOGIN_USER, { refresh_token: localStorage.refresh_token }, null, onError)
   }
 }
