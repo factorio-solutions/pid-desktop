@@ -1,0 +1,36 @@
+// Gel invoices
+export const GET_UNPAID_INVOICES = `query{
+  unpaid_invoices{
+    id
+    invoice_number
+    longterm_rent
+    invoice_date
+    due_date
+    payed
+    ammount
+    subject
+    canceled
+    is_storno_invoice
+    vat
+    currency{
+      symbol
+    }
+    account{
+      garage{
+        name
+        id
+        is_admin
+      }
+    }
+    client{
+      is_admin
+      is_secretary
+      name
+      id
+      admins{
+        id
+      }
+    }
+  }
+}
+`

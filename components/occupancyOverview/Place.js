@@ -149,7 +149,7 @@ class Place extends Component {
 
       return (<Reservation
         reservation={reservation}
-        showDetails={showDetails}
+        showDetails={details}
         classes={classes.filter(o => o).join(' ')}
         left={left}
         width={width}
