@@ -56,7 +56,7 @@ class GarageLayout extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.showEmptyFloors && (this.state.floor === -1 || (nextProps.floors[this.state.floor] && nextProps.floors[this.state.floor].free_places.length))) {
+    if (!this.props.showEmptyFloors && (this.state.floor === -1 || !(nextProps.floors[this.state.floor] && nextProps.floors[this.state.floor].free_places.length))) {
       this.setState({
         ...this.state,
         floor: nextProps.floors.findIndex(floor => floor.free_places.length)
