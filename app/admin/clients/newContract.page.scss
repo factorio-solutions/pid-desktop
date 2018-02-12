@@ -1,16 +1,27 @@
 @import '../../_styles/app.desktop';
 
-.flex {
-  display: flex;
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .flex {
+    display: flex;
 
-  >div:first-child {
-    // position: relative;
-    flex: 1 1;
-    padding-right: 10px;
+    >div:first-child {
+      // position: relative;
+      flex: 1 1;
+      padding-right: 10px;
+    }
+
+    >div:last-child {
+      flex: 2 2;
+    }
   }
+}
 
-  >div:last-child {
-    flex: 2 2;
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .flex > div:first-child {
+    margin-bottom: 20px;
   }
 }
 

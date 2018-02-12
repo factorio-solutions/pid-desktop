@@ -35,7 +35,19 @@ h2 {
 
 
 .floors {
-  display:    flex;
+  // -- Responsive Styles (Media Queries) -------------------------------------
+  // -- Only apply on big window ----------------------------------------------
+  @media (min-width: $collapseWidth) {
+    display:    flex;
+  }
+
+  // -- Only apply on small window --------------------------------------------
+  @media (max-width: $collapseWidth) {
+    .floorForm {
+      margin-bottom: 20px;
+    }
+  }
+
   text-align: center;
 
   .floorForm {
@@ -77,7 +89,19 @@ h2 {
 }
 
 .gates {
-  display:    flex;
+  // -- Responsive Styles (Media Queries) -------------------------------------
+  // -- Only apply on big window ----------------------------------------------
+  @media (min-width: $collapseWidth) {
+    display:    flex;
+  }
+
+  // -- Only apply on small window --------------------------------------------
+  @media (max-width: $collapseWidth) {
+    .gatesForm {
+      margin-bottom: 20px;
+    }
+  }
+
   text-align: center;
 
   .gatesForm {
