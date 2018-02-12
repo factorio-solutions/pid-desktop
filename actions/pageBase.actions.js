@@ -278,7 +278,7 @@ export function initialPageBase() {
         break
     }
 
-    if (getState().pageBase.current_user == undefined) { // if no information about current user
+    if (getState().pageBase.current_user === undefined) { // if no information about current user
       dispatch(fetchCurrentUser())
     }
     if (getState().pageBase.garages.length === 0) { // if no garages
