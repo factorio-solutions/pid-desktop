@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180123a",
+	"PID-RELEASE": "r20180209a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Adresszeile 1 *",
@@ -286,6 +286,7 @@
 		"pay": "Zahlung",
 		"host": "Gast",
 		"visitor": "Besucher",
+		"internal": "Intern",
 		"editReservation": "Reservierung bearbeiten",
 		"editNote": "Notiz bearbeiten",
 		"newNote": "Neue Notiz",
@@ -357,7 +358,8 @@
 		"licencePlate": "Kennzeichen:",
 		"noClientPlaces": "Der ausgewählte Kunde hat in diesem Zeitraum keine gemieteten Plätze.",
 		"resetFilter": "Filter zurücksetzen",
-		"detailsInaccessible": "DE: occupancy.detailsInaccessible"
+		"detailsInaccessible": "DE: occupancy.detailsInaccessible",
+		"reservationNotApproved": "Reservierung ist nicht bestätigt"
 	},
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
@@ -549,7 +551,7 @@
 		"internal": "intern",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
-		"driver": "DE: inviteUser.driver",
+		"driver": "Fahrer",
 		"clientRights": "Benutzerrechte",
 		"clientRightsDesc": "Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird.",
 		"GarageRights": "Parkhausrechte",
@@ -581,7 +583,8 @@
 		"reservationAccepted": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
 		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
 		"verifyYourEmail": "DE: notifications.verifyYourEmail",
-		"newReservationForYou": "DE: notifications.newReservationForYou"
+		"newReservationForYou": "DE: notifications.newReservationForYou",
+		"reservationUpdatedNotification": "\n% (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Reservierungen\"."
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -886,7 +889,19 @@
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
 		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
 		"flexiplace": "Flexi Platz",
-		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
+		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.",
+		"showApiKey": "DE: modules.showApiKey",
+		"regenerateApiKey": "DE: modules.regenerateApiKey",
+		"thirdPartyIntegration": "DE: modules.thirdPartyIntegration",
+		"thirdPartyIntegrationDescription": "DE: modules.thirdPartyIntegrationDescription",
+		"mrParkitIntegration": "DE: modules.mrParkitIntegration",
+		"mrParkitIntegrationDescription": "DE: modules.mrParkitIntegrationDescription",
+		"selectPlacesFor3rdParty": "DE: modules.selectPlacesFor3rdParty",
+		"selectPlacesForMrParkit": "DE: modules.selectPlacesForMrParkit",
+		"token": "DE: modules.token",
+		"apiEndpoint": "Api endpoint",
+		"warning": "DE: modules.warning",
+		"warningDesribtion": "DE: modules.warningDesribtion"
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -905,7 +920,18 @@
 		"selectCurrency": "Währung auswählen",
 		"placePrice": "Preis pro Stellplatz pro Monat",
 		"indefinitContract": "Unbefristeten Vertrag abschließen",
-		"indefinite": "Unbefristet"
+		"indefinite": "Unbefristet",
+		"securityInterval": "DE: newContract.securityInterval",
+		"inMinutes": "DE: newContract.inMinutes",
+		"securityIntervalInvalid": "DE: newContract.securityIntervalInvalid",
+		"place": "Platz:",
+		"usedBy": "Verwendet von:",
+		"goPublic": "Öffentlich",
+		"rentyType": "Mietzeit:",
+		"longterm": "Langzeit",
+		"shortterm": "Kurzzeit",
+		"longtermPrice": "Langzeit Preis:",
+		"shorttermPrice": "Kurzzeit Preis:"
 	},
 	"finance": {
 		"paypal": "Paypal",
@@ -1059,7 +1085,7 @@
 			"newNotifications": "Neue Benachrichtigungen",
 			"access": "Zugang",
 			"myReservations": "Meine Reservierungen",
-			"guestReservations": "DE: mobileApp.menu.guestReservations"
+			"guestReservations": "Gast"
 		},
 		"access": {
 			"floor": "Etage",
@@ -1192,6 +1218,13 @@
 			"place": "DE: railsEmails.reservation_confirmed.place",
 			"from": "DE: railsEmails.reservation_confirmed.from",
 			"to": "DE: railsEmails.reservation_confirmed.to"
+		},
+		"reservation_updated": {
+			"reservation_updated": "Ihre Reservierung wurde aktualisiert:",
+			"garage": "DE: railsEmails.reservation_updated.garage",
+			"place": "DE: railsEmails.reservation_updated.place",
+			"from": "DE: railsEmails.reservation_updated.from",
+			"to": "DE: railsEmails.reservation_updated.to"
 		}
 	},
 	"pidAdmin": {
@@ -1199,7 +1232,8 @@
 			"backToPid": "netřeba překládat",
 			"adminMode": "netřeba překládat",
 			"generator": "netřeba překládat",
-			"news": "netřeba překládat"
+			"news": "netřeba překládat",
+			"finance": "netřeba překládat"
 		},
 		"users": {
 			"id": "netřeba překládat",

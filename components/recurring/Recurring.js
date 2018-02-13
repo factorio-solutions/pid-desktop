@@ -179,7 +179,8 @@ export default class Recurring extends Component {
 
     const submit = () => {
       const newStarts = calculateFirstOccurence(this.state).format(MOMENT_DATE_FORMAT)
-      onSubmit({ ...this.state, starts: newStarts })
+      const dayCorrection = moment.localeData().firstDayOfWeek() // offset it to endglish notation due to english server
+      onSubmit({ ...this.state, starts: newStarts, day: this.state.day.map(d => d + dayCorrection) })
       this.setState({ ...this.state, starts: newStarts })
     }
 

@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180123a",
+	"PID-RELEASE": "r20180209a",
 	"addresses": {
 		"name": "Imię i nazwisko *",
 		"line1": "Adres *",
@@ -286,25 +286,26 @@
 		"pay": "Płatność",
 		"host": "Gość",
 		"visitor": "Odwiedzający",
+		"internal": "Wewnętrzny",
 		"editReservation": "Edytuj rezerwację",
-		"editNote": "PL: reservations.editNote",
-		"newNote": "PL: reservations.newNote",
+		"editNote": "Edytuj notatkę",
+		"newNote": "Nowa notatka",
 		"interuptReservation": "Przerwij rezerwację",
 		"payReservation": "Opłać rezerwację",
 		"downloadInvoice": "Ściągnij fakturę",
 		"destroyReservation": "Usuń rezerwację",
 		"teminateEarly": "Ukończ przedwcześnie",
 		"destroyAllReservation": {
-			"one": "Usunąć jedynie wybraną rezerwację.",
-			"few": "??",
-			"many": "??nastavene opakovani - co je to??",
-			"other": "??"
+			"one": "Usuń wybraną rezerwację.",
+			"few": "Usuń %(count)s rezerwacji w ustawionej powtórce.",
+			"many": "Usuń wszystkie %(count)s rezerwacje w ustawionej powtórce.",
+			"other": "Usuń %(count)s rezerwacji w ustawionej powtórce."
 		},
 		"updateAllReservation": {
-			"one": "Edytować jedynie wybraną rezerwację.",
-			"few": " ",
-			"many": " ",
-			"other": " "
+			"one": "Edytuj jedynie wybraną rezerwację.",
+			"few": " Edytuj %(count)s rezerwacje w ustawionej powtórce.",
+			"many": " Edytuj wszystkie %(count)s rezerwacje w ustawionej powtórce.",
+			"other": "  Edytuj %(count)s rezerwacje w ustawionej powtórce."
 		},
 		"flexiblePlace": "PL: reservations.flexiblePlace"
 	},
@@ -357,7 +358,8 @@
 		"licencePlate": "Nr rejestracyjny:",
 		"noClientPlaces": "Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.",
 		"resetFilter": "Zresetować filtr",
-		"detailsInaccessible": "Szczegóły niedostępne"
+		"detailsInaccessible": "Szczegóły niedostępne",
+		"reservationNotApproved": "PL: occupancy.reservationNotApproved"
 	},
 	"garageUsers": {
 		"noRights": "Nie posiadasz odpowiednich uprawnień.",
@@ -549,7 +551,7 @@
 		"internal": "wewnętrzny",
 		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
-		"driver": "PL: inviteUser.driver",
+		"driver": "kierowca",
 		"clientRights": "Prawa klienta",
 		"clientRightsDesc": "Prawa zaczną obowiązywać jedynie w momencie, kiedy klient zostanie określony.",
 		"GarageRights": "Prawa garażu",
@@ -581,7 +583,8 @@
 		"reservationAccepted": "Twoja rezerwacja na miejsce \"%(arg1)s\" została zaakceptowana.",
 		"reservationDeclined": "Twoja rezerwacja na miejsce \"%(arg1)s\" została odrzucona.",
 		"verifyYourEmail": "Witaj w Park-it-direct! Na adres \"%(arg1)s\"s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.",
-		"newReservationForYou": "%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację."
+		"newReservationForYou": "%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.",
+		"reservationUpdatedNotification": "PL: notifications.reservationUpdatedNotification"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -886,7 +889,19 @@
 		"startingMarketing": "Aktualizuję twój plan faktur. Przekierowuję...",
 		"cannotBeChanged": "Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.",
 		"flexiplace": "Miejsce Flexi",
-		"flexiplaceDescription": "FLexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální"
+		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální",
+		"showApiKey": "PL: modules.showApiKey",
+		"regenerateApiKey": "PL: modules.regenerateApiKey",
+		"thirdPartyIntegration": "PL: modules.thirdPartyIntegration",
+		"thirdPartyIntegrationDescription": "PL: modules.thirdPartyIntegrationDescription",
+		"mrParkitIntegration": "PL: modules.mrParkitIntegration",
+		"mrParkitIntegrationDescription": "PL: modules.mrParkitIntegrationDescription",
+		"selectPlacesFor3rdParty": "PL: modules.selectPlacesFor3rdParty",
+		"selectPlacesForMrParkit": "PL: modules.selectPlacesForMrParkit",
+		"token": "PL: modules.token",
+		"apiEndpoint": "Api endpoint",
+		"warning": "PL: modules.warning",
+		"warningDesribtion": "PL: modules.warningDesribtion"
 	},
 	"newContract": {
 		"description": "Nowa umowa w",
@@ -905,7 +920,18 @@
 		"selectCurrency": "Wybierz walutę",
 		"placePrice": "Cena za miejsce na miesiąc",
 		"indefinitContract": "Zawrzeć umowę na czas nieokreślony",
-		"indefinite": "Na czas nieokreślony"
+		"indefinite": "Na czas nieokreślony",
+		"securityInterval": "PL: newContract.securityInterval",
+		"inMinutes": "PL: newContract.inMinutes",
+		"securityIntervalInvalid": "PL: newContract.securityIntervalInvalid",
+		"place": "PL: newContract.place",
+		"usedBy": "PL: newContract.usedBy",
+		"goPublic": "PL: newContract.goPublic",
+		"rentyType": "PL: newContract.rentyType",
+		"longterm": "PL: newContract.longterm",
+		"shortterm": "PL: newContract.shortterm",
+		"longtermPrice": "PL: newContract.longtermPrice",
+		"shorttermPrice": "PL: newContract.shorttermPrice"
 	},
 	"finance": {
 		"paypal": "PayPal",
@@ -1011,10 +1037,10 @@
 		"ends": "Koniec:",
 		"after": "Po",
 		"occurence": {
-			"one": "PL: recurringReservation.occurence.one",
-			"few": "PL: recurringReservation.occurence.few",
-			"many": "PL: recurringReservation.occurence.many",
-			"other": "PL: recurringReservation.occurence.other"
+			"one": "rezerwacji",
+			"few": "rezerwacjach",
+			"many": "rezerwacjach",
+			"other": "rezerwacjach"
 		},
 		"on": "Dnia",
 		"every": "PL: recurringReservation.every"
@@ -1059,7 +1085,7 @@
 			"newNotifications": "Nowe powiadomienia",
 			"access": "Dostęp",
 			"myReservations": "Moje rezerwacje",
-			"guestReservations": "Gast"
+			"guestReservations": "Gość"
 		},
 		"access": {
 			"floor": "Piętro",
@@ -1192,6 +1218,13 @@
 			"place": "Miejsce:",
 			"from": "Od:",
 			"to": "Do:"
+		},
+		"reservation_updated": {
+			"reservation_updated": "PL: railsEmails.reservation_updated.reservation_updated",
+			"garage": "Garaż:",
+			"place": "Miejsce:",
+			"from": "Od:",
+			"to": "Do:"
 		}
 	},
 	"pidAdmin": {
@@ -1199,7 +1232,8 @@
 			"backToPid": "netřeba překládat",
 			"adminMode": "netřeba překládat",
 			"generator": "netřeba překládat",
-			"news": "netřeba překládat"
+			"news": "netřeba překládat",
+			"finance": "netřeba překládat"
 		},
 		"users": {
 			"id": "netřeba překládat",

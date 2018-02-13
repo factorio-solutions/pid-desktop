@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180123a",
+	"PID-RELEASE": "r20180209a",
 	"addresses": {
 		"name": "Jméno *",
 		"line1": "Řádek 1 *",
@@ -20,7 +20,7 @@
 		"line2Placeholder": "Byt 13",
 		"cityPlaceholder": "Praha",
 		"postalCodePlaceholder": "11000",
-		"statePlaceholder": "-",
+		"statePlaceholder": "Stát",
 		"countryPlaceholder": "Česká republika"
 	},
 	"login_page": {
@@ -286,6 +286,7 @@
 		"pay": "Platba",
 		"host": "Host",
 		"visitor": "Návštěvník",
+		"internal": "Interní",
 		"editReservation": "Upravit rezervaci",
 		"editNote": "Upravit poznámku",
 		"newNote": "Nová poznámka",
@@ -357,7 +358,8 @@
 		"licencePlate": "SPZ:",
 		"noClientPlaces": "Zvolený klient nemá žádná pronajatá místa v tomto časovém intervalu.",
 		"resetFilter": "Resetuj filtr",
-		"detailsInaccessible": "Detaily nepřístupné"
+		"detailsInaccessible": "Detaily nepřístupné",
+		"reservationNotApproved": "Rezervace zatím neschválena"
 	},
 	"garageUsers": {
 		"noRights": "Na tuto akci nemáte práva.",
@@ -581,7 +583,8 @@
 		"reservationAccepted": "Vaše rezervace na \"%(arg1)s místo byla akceptována.",
 		"reservationDeclined": "Vaše rezervace na \"%(arg1)s místo byla zrušena.",
 		"verifyYourEmail": "Vítejte v Park-it-direct! Na adresu \"%(arg1)s\"s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.",
-		"newReservationForYou": "%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci."
+		"newReservationForYou": "%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.",
+		"reservationUpdatedNotification": "%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace."
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -886,7 +889,19 @@
 		"startingMarketing": "Aktualizuji Váš plán fakturace. Přesměrovávám ...",
 		"cannotBeChanged": "Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.",
 		"flexiplace": "Flexi místo",
-		"flexiplaceDescription": " reservations will be regrouped to maximize usage of parking places."
+		"flexiplaceDescription": " reservations will be regrouped to maximize usage of parking places.",
+		"showApiKey": "Zobrazit API endpoint",
+		"regenerateApiKey": "Vygenerovat nový API endpoint",
+		"thirdPartyIntegration": "Integrace 3. stran",
+		"thirdPartyIntegrationDescription": "Aktivací této funkce obdržíte vlastní API s akcemi, které vám umožní spravovat rezervace pomocí dalších systémů",
+		"mrParkitIntegration": "Integrace Mr. Parkit",
+		"mrParkitIntegrationDescription": "Tato funkce je podobná integraci 3. stran, rozdílem je, že o místa se automaticky postará Mr. Parkit",
+		"selectPlacesFor3rdParty": "Místa pro třetí strany",
+		"selectPlacesForMrParkit": "Místa pro Mr. Parkit",
+		"token": "Tajný token",
+		"apiEndpoint": "Api endpoint",
+		"warning": "Držte ho v tajnosti!",
+		"warningDesribtion": "Tajný token je unikátní identifikátor Vaší garáže. Nikomu ho nesdělujte, jinak daná osoba bude moci provádět změny ve Vaší garáži. V případě úniku tokenu co nejrychleji vygenerujte nový endpoint."
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
@@ -905,7 +920,18 @@
 		"selectCurrency": "Zvolte měnu",
 		"placePrice": "Cena za místo za měsíc",
 		"indefinitContract": "Uzavřít dohodu na dobu neurčitou.",
-		"indefinite": "Na dobu neurčitou"
+		"indefinite": "Na dobu neurčitou",
+		"securityInterval": "Ochranný interval",
+		"inMinutes": "v minutách",
+		"securityIntervalInvalid": "Špatný interval",
+		"place": "Místo:",
+		"usedBy": "Pronajato:",
+		"goPublic": "Pro veřejnost",
+		"rentyType": "Typ nájmu",
+		"longterm": "Dlouhodobý",
+		"shortterm": "Krátkodobý",
+		"longtermPrice": "Dlouhodobá cena:",
+		"shorttermPrice": "Krátkodobá cena:"
 	},
 	"finance": {
 		"paypal": "Paypal",
@@ -982,7 +1008,7 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
-		"repeat": "Opakovat",
+		"repeat": "Opakování: vypnuto",
 		"repeats": "Opakuje se:",
 		"daily": "Denně",
 		"weekly": "Týdně",
@@ -1192,6 +1218,13 @@
 			"place": "Místo:",
 			"from": "Od:",
 			"to": "Do:"
+		},
+		"reservation_updated": {
+			"reservation_updated": "Vaše rezervace byla upravena:",
+			"garage": "Garáž:",
+			"place": "Místo:",
+			"from": "Od:",
+			"to": "Do:"
 		}
 	},
 	"pidAdmin": {
@@ -1199,7 +1232,8 @@
 			"backToPid": "do PID",
 			"adminMode": "ADMIN MODE PARK-IT-DIRECTU",
 			"generator": "Generátor",
-			"news": "Novinky"
+			"news": "Novinky",
+			"finance": "Finance"
 		},
 		"users": {
 			"id": "id",
@@ -1244,12 +1278,12 @@
 			"keepReservations": "Ponechat rezervace"
 		},
 		"news": {
-			"label": "nápis",
+			"label": "štítek",
 			"url": "url",
 			"id": "id",
 			"createdAt": "vytvořeno",
-			"editNews": "upravit",
-			"deleteNews": "smazat"
+			"editNews": "upravit novinky",
+			"deleteNews": "smazat novinky"
 		}
 	}
 }

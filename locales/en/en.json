@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180123a",
+	"PID-RELEASE": "r20180209a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Line 1 *",
@@ -284,9 +284,9 @@
 		"reservationApproved": "This reservation has not been approved yet.",
 		"reservationNotPayed": "This reservation has not been paid.",
 		"pay": "Pay",
-		"internal": "Internal",
 		"host": "Guest",
 		"visitor": "Visitor",
+		"internal": "Internal",
 		"editReservation": "Edit reservation",
 		"editNote": "Edit note",
 		"newNote": "New note",
@@ -518,8 +518,8 @@
 		"DICplaceholder": "CZ12345678",
 		"IC": "Business ID No. (IČ)",
 		"invalidIC": "invalid IČ",
-		"DIC": "Tax ID No. (DIČ)",
-		"invalidDIC": "invalid DIČ"
+		"DIC": "Tax ID No. (VAT no.)",
+		"invalidDIC": "invalid VAT no."
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -889,7 +889,19 @@
 		"startingMarketing": "Upgrading your billing plan. Redirecting...",
 		"cannotBeChanged": "You cannot go public until you set a payment method. To do this go to Admin/Finance.",
 		"flexiplace": "Flexi place",
-		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins"
+		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins",
+		"showApiKey": "Show API endpoint",
+		"regenerateApiKey": "Regenerate API endpoint",
+		"thirdPartyIntegration": "3rd party integration",
+		"thirdPartyIntegrationDescription": "By activating this function, we will give you your own API with actions that will allow you to create reservations from another system.",
+		"mrParkitIntegration": "Integration by Mr Parkit",
+		"mrParkitIntegrationDescription": "This is simmilar to 3rd party integration, the difference is, your places will be automatically taken care of by Mr. Parkit resrevation system.",
+		"selectPlacesFor3rdParty": "places for third party",
+		"selectPlacesForMrParkit": "places for Mr. Parkit",
+		"token": "Secret token",
+		"apiEndpoint": "Api endpoint",
+		"warning": "Keep it secret!",
+		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible."
 	},
 	"newContract": {
 		"description": "New Agreement in",
@@ -1202,6 +1214,13 @@
 		},
 		"reservation_confirmed": {
 			"reservation_confirmed": "The reservation you requested was confirmed!",
+			"garage": "Garage:",
+			"place": "Place:",
+			"from": "From:",
+			"to": "To:"
+		},
+		"reservation_updated": {
+			"reservation_updated": "Your reservation had been updated:",
 			"garage": "Garage:",
 			"place": "Place:",
 			"from": "From:",
