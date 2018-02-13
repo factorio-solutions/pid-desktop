@@ -231,7 +231,7 @@ export function getGarage (garage_id, contract_id) {
     const onSuccess = (response) => {
       response.data.garage.floors = response.data.garage.floors.map(floor => {
         floor.places = floor.places.map((place) => {
-          return {...place, available: floor.contractable_places.find(p=>p.id === place.id) !== undefined }
+          return {...place, available: true }
         })
         return floor
       })
