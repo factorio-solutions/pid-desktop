@@ -77,7 +77,7 @@ export default class Table extends Component {
     if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
       this.setState({
         ...this.state,
-        spoilerId: this.filterData(nextProps.data).sort(this.createComparator()).findIndexById(nextProps.selectId)
+        spoilerId: this.filterData(nextProps.data).findIndexById(nextProps.selectId)
       })
     }
   }
