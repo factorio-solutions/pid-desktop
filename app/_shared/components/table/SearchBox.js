@@ -55,8 +55,7 @@ export default class SearchBox extends Component {
       { type === 'date' && [
         <i className={`fa fa-calendar ${styles.callendar}`} aria-hidden="true" onClick={this.showDatePicker} />,
         <PopupDatepicker onSelect={onChange} show={this.state.showDateSelector} flip okClick={this.hideDatePicker} date={value} />
-      ]
-      }
+      ]}
 
       { value ?
         <i className="fa fa-times" aria-hidden="true" onClick={this.setEmpty} /> :
