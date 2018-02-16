@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Form             from '../_shared/components/form/Form'
