@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import moment from 'moment'
+import moment                          from 'moment'
 
-import TableRow from '../tableRow/TableRow'
-import HistoryTableRow from '../tableRow/HistoryTableRow'
+import TableRow          from '../tableRow/TableRow'
+import HistoryTableRow   from '../tableRow/HistoryTableRow'
 import UpdatedAtTableRow from '../tableRow/UpdatedAtTableRow'
+import EnumButton        from './EnumButton'
+import SearchBox         from './SearchBox'
 
 import styles from './Table.scss'
 
@@ -211,23 +213,28 @@ export default class Table extends Component {
           [value.key]: searchValue
         }
       }, () => filterClick && filterClick(this.state.sortKey, this.state.sortType, this.state.searchBar))
+
       const renderEnum = enumValue => {
         const onEnumClick = () => this.state.searchBar[value.key] === enumValue ? searchChange('') : searchChange(enumValue)
-        return (<span onClick={onEnumClick} className={this.state.searchBar[value.key] !== enumValue && styles.disabled}>
+
+        return (<EnumButton disabled={this.state.searchBar[value.key] !== enumValue} onClick={onEnumClick}>
           {value.representer ? value.representer(enumValue) : enumValue}
-        </span>)
+        </EnumButton>)
       }
-      const onChange = event => searchChange(event.target.value)
+
+      const onChange = value => searchChange(value)
+
       return (value.representer && !value.enum && value.comparator !== 'date') ?
         <td /> :
         (<td key={key}>
           <div className={styles.tdSearchBar}>
             { value.enum ? value.enum.map(renderEnum) :
-            [ <input type="search" value={this.state.searchBar[value.key]} onChange={onChange} placeholder="----------------" />,
-              <i className="fa fa-search" aria-hidden="true" /> ]
+              <SearchBox value={this.state.searchBar[value.key]} onChange={onChange} type={value.comparator} />
             }
           </div>
         </td>)
+        // [ <input type="search" value={this.state.searchBar[value.key]} onChange={onChange} placeholder="----------------" />,
+        // <i className="fa fa-search" aria-hidden="true" /> ]
     }
 
     const prepareBody = (value, key, arr) => {
