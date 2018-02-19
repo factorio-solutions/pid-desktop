@@ -119,6 +119,22 @@ h2 {
     margin:     5px;
     background: $white;
   }
+
+  .gateDiv {
+    margin-bottom: 50px;
+
+    >.flexi {
+      display: flex;
+
+      >div:first-child {
+        flex: 1 1;
+
+        >.gatePhoneInput {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 .subscribtion {
@@ -187,9 +203,10 @@ h2 {
 .latLngInputWidth {
   width: calc(50% - 2.5px);
 }
-.gatePhoneInputWidth {
-  width: calc(50% - 33px);
-}
+// .gatePhoneInputWidth {
+//   width: calc(100% - 66px);
+// }
+
 .rightMargin {
   margin-right: 5px;
 }
@@ -208,4 +225,18 @@ h2 {
 
 .checkbox {
   cursor: pointer;
+}
+
+// passwordIndication //
+.red {
+  color: $red;
+}
+
+.green {
+  color: $green;
+}
+
+.passwordIndication {
+  margin: 20px 5px 5px;
+  font-size: 28px;
 }

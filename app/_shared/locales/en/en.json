@@ -508,7 +508,12 @@
 		"users": "Users",
 		"addProfilePicture": "Add profile picture",
 		"removeFloor": "Remove floor",
-		"uploadSvg": "Upload SVG"
+		"uploadSvg": "Upload SVG",
+		"gatePassword": "Gate password",
+		"invalidPasswordPhone": "Invalid password",
+		"placeholderGatePassword": "123456",
+		"passwordWasSet": "Gate has password. Change it by fill in a new password",
+		"passwordWasNotSet": "Password was not set!"
 	},
 	"newClient": {
 		"name": "Client name",

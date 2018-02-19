@@ -84,14 +84,16 @@ class GarageSetupGatesPage extends Component {
     }
 
     const prepareGates = (gate, index, arr) => {
-      const handleGateLabelChange = value => { actions.changeGateLabel(value, index) }
-      const handleGatePhoneChange = value => { actions.changeGatePhone(value, index) }
-      const handleGatePlacesChange = value => { actions.changeGatePlaces(value, index) }
-      const handleGateAddressLine1Change = value => { actions.changeGateAddressLine1(value, index) }
+      console.log(gate);
+      const handleGateLabelChange = value => actions.changeGateLabel(value, index)
+      const handleGatePhoneChange = value => actions.changeGatePhone(value, index)
+      const handleGatePasswordChange = value => actions.changeGatePassword(value, index)
+      const handleGatePlacesChange = value => actions.changeGatePlaces(value, index)
+      const handleGateAddressLine1Change = value => actions.changeGateAddressLine1(value, index)
       // const handleGateAddressLine2Change = value => { actions.changeGateAddressLine2(value, index) }
-      const handleGateAddressLat = value => { actions.changeGateAddressLat(value, index) }
-      const handleGateAddressLng = value => { actions.changeGateAddressLng(value, index) }
-      const removeGateRow = () => { actions.removeGate(index) }
+      const handleGateAddressLat = value => actions.changeGateAddressLat(value, index)
+      const handleGateAddressLng = value => actions.changeGateAddressLng(value, index)
+      const removeGateRow = () => actions.removeGate(index)
 
       const getGateGPS = () => {
         const geocoder = new google.maps.Geocoder()
@@ -105,41 +107,64 @@ class GarageSetupGatesPage extends Component {
         })
       }
 
-      const removeGateButton = () => arr.length <= 1 ?
-        null :
-        <RoundButton
-          content={<span className="fa fa-times" aria-hidden="true" />}
-          onClick={removeGateRow}
-          type="remove"
-          question={t([ 'newGarage', 'removeGateRowQuestion' ])}
-        />
+      // const removeGateButton = () => arr.length > 1 && <RoundButton
+      //   content={<span className="fa fa-times" aria-hidden="true" />}
+      //   onClick={removeGateRow}
+      //   type="remove"
+      //   question={t([ 'newGarage', 'removeGateRowQuestion' ])}
+      // />
 
       return (
-        <div key={index}>
-          <div className={styles.inline}>
-            <Input
-              style={styles.gatePhoneInputWidth + ' ' + styles.rightMargin}
-              onChange={handleGateLabelChange}
-              label={t([ 'newGarage', 'gateLabel' ], { index: index + 1 }) + (index !== arr.length - 1 ? ' *' : '')}
-              error={t([ 'newGarage', 'invalidGateLabel' ])}
-              value={gate.label}
-              name={`gate${index}[label]`}
-              placeholder={t([ 'newGarage', 'placeholderGateLabel' ])}
-              highlight={state.highlight}
-            />
-            <Input
-              style={styles.gatePhoneInputWidth}
-              onChange={handleGatePhoneChange}
-              label={t([ 'newGarage', 'gatePhone' ])}
-              error={t([ 'newGarage', 'invalidGatePhone' ])}
-              value={gate.phone}
-              name={`gate${index}[phone]`}
-              placeholder={t([ 'newGarage', 'placeholderGatePhone' ])}
-              type="tel"
-              pattern="\+?[\d,A-Z]{3,}"
-            />
-            {removeGateButton()}
+        <div key={index} className={styles.gateDiv}>
+          <div className={styles.flexi}>
+            <div>
+              <Input
+                style={styles.gatePhoneInput}
+                onChange={handleGateLabelChange}
+                label={t([ 'newGarage', 'gateLabel' ], { index: index + 1 }) + (index !== arr.length - 1 ? ' *' : '')}
+                error={t([ 'newGarage', 'invalidGateLabel' ])}
+                value={gate.label}
+                name={`gate${index}[label]`}
+                placeholder={t([ 'newGarage', 'placeholderGateLabel' ])}
+                highlight={state.highlight}
+              />
+            </div>
+            {arr.length > 1 && <div>
+              <RoundButton
+                content={<span className="fa fa-times" aria-hidden="true" />}
+                onClick={removeGateRow}
+                type="remove"
+                question={t([ 'newGarage', 'removeGateRowQuestion' ])}
+              />
+            </div>}
           </div>
+          <Input
+            onChange={handleGatePhoneChange}
+            label={t([ 'newGarage', 'gatePhone' ])}
+            error={t([ 'newGarage', 'invalidGatePhone' ])}
+            value={gate.phone}
+            name={`gate${index}[phone]`}
+            placeholder={t([ 'newGarage', 'placeholderGatePhone' ])}
+            type="tel"
+            pattern="\+?[\d,A-Z]{3,}"
+          />
+          {gate.phone.match(/[a-z]/i) &&
+            <div className={styles.flexi}>
+              <Input
+                onChange={handleGatePasswordChange}
+                label={t([ 'newGarage', 'gatePassword' ])}
+                error={t([ 'newGarage', 'invalidPasswordPhone' ])}
+                value={gate.password}
+                name={`gate${index}[password]`}
+                placeholder={t([ 'newGarage', 'placeholderGatePassword' ])}
+                type="password"
+              />
+              { gate.has_password ?
+                <i className={`fa fa-check-circle-o ${styles.passwordIndication} ${styles.green}`} title={t([ 'newGarage', 'passwordWasSet' ])} /> :
+                <i className={`fa fa-times-circle-o ${styles.passwordIndication} ${styles.red}`} title={t([ 'newGarage', 'passwordWasNotSet' ])} />
+              }
+            </div>
+          }
           <Input
             onChange={handleGatePlacesChange}
             label={t([ 'newGarage', 'places' ]) + (index !== arr.length - 1 ? ' *' : '')}
