@@ -23,7 +23,6 @@ export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 export const RESERVATIONS_SET_NEW_NOTE = 'RESERVATIONS_SET_NEW_NOTE'
 export const RESERVATIONS_SET_NEW_NOTE_RESERVATION = 'RESERVATIONS_SET_NEW_NOTE_RESERVATION'
 
-
 export const setOngoingReservations = actionFactory(SET_ONGOING_RESERVATIONS)
 export const setReservations = actionFactory(SET_RESERVATIONS)
 export const addReservations = actionFactory(ADD_RESERVATIONS)
