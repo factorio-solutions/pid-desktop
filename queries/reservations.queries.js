@@ -18,6 +18,7 @@ export const GET_RESERVATIONS_QUERY = `query Reservations($user_id: Id, $garage_
         id
         label
         phone
+        password
       }
     }
     begins_at
