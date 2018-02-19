@@ -83,30 +83,30 @@ export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
 export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
 
-export const toggleHighlight => dispatch =>
-export function toggleHighlight() { return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
-export function toggleLPG() { return (dispatch, getState) => { dispatch(setLPG(!getState().garageSetup.lpg)) } }
-export function toggleBookingPage() { return (dispatch, getState) => { dispatch(setBookingPage(!getState().garageSetup.bookingPage)) } }
 
-export function removeFloor(index) { return (dispatch, getState) => { dispatch(setFloors(update(getState().garageSetup.floors, { $splice: [ [ index, 1 ] ] }))) } }
-export function removeGate(index) { return (dispatch, getState) => { dispatch(setGates(update(getState().garageSetup.gates, { $splice: [ [ index, 1 ] ] }))) } }
+export function toggleHighlight() { return (dispatch, getState) => dispatch(setHighlight(!getState().garageSetup.highlight)) }
+export function toggleLPG() { return (dispatch, getState) => dispatch(setLPG(!getState().garageSetup.lpg)) }
+export function toggleBookingPage() { return (dispatch, getState) => dispatch(setBookingPage(!getState().garageSetup.bookingPage)) }
 
-export function changeFloorLabel(value, index) { return (dispatch, getState) => { dispatch(setFloors(dispatch(changeFloors(index, 'label', value)))) } }
-export function changeFloorPlaces(value, index) { return (dispatch, getState) => { dispatch(setFloors(dispatch(changeFloors(index, 'places', value)))) } }
+export function removeFloor(index) { return (dispatch, getState) => dispatch(setFloors(update(getState().garageSetup.floors, { $splice: [ [ index, 1 ] ] }))) }
+export function removeGate(index) { return (dispatch, getState) => dispatch(setGates(update(getState().garageSetup.gates, { $splice: [ [ index, 1 ] ] }))) }
+
+export function changeFloorLabel(value, index) { return dispatch => dispatch(setFloors(dispatch(changeFloors(index, 'label', value)))) }
+export function changeFloorPlaces(value, index) { return dispatch => dispatch(setFloors(dispatch(changeFloors(index, 'places', value)))) }
 export function changeFloorFrom(value, index) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setFloors(dispatch(changeFloors(index, 'from', value))))
     dispatch(createFloor(index))
   }
 }
 export function changeFloorTo(value, index) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setFloors(dispatch(changeFloors(index, 'to', value))))
     dispatch(createFloor(index))
   }
 }
 export function changeFloorScheme(value, index, scan) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setFloors(dispatch(changeFloors(index, 'scheme', value))))
     if (scan) dispatch(scanSVG(value, index))
   }
@@ -132,35 +132,26 @@ export function addTemplate(file, label) {
   }
 }
 
-export function changeGateLabel(value, index) { return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'label', value)))) } }
-export function changeGatePhone(value, index) { return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'phone', value)))) } }
-export function changeGatePlaces(value, index) { return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
+export function changeGateLabel(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'label', value)))) }
+export function changeGatePhone(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'phone', value)))) }
+export function changeGatePassword(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'password', value)))) }
+export function changeGatePlaces(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'places', value)))) }
 
-export function changeGateAddressLine1(value, index) { return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'line_1', value))))) } }
-export function changeGateAddressLat(value, index) { return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lat', value))))) } }
-export function changeGateAddressLng(value, index) { return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lng', value))))) } }
-
-function changeFloors(index, key, value) {
-  return (dispatch, getState) => {
-    return dispatch(updateValue('floors', index, key, value))
-  }
+export function changeGateAddressLine1(value, index) {
+  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'line_1', value))))) }
 }
 
-function changeGates(index, key, value) {
-  return (dispatch, getState) => {
-    return dispatch(updateValue('gates', index, key, value))
-  }
+export function changeGateAddressLat(value, index) {
+  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lat', value))))) }
+}
+
+export function changeGateAddressLng(value, index) {
+  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lng', value))))) }
 }
 
 
-function insertEmptyFloor(data) {
-  data.push(emptyFloor)
-  return data
-}
-
-function insertEmptyGate(data, line_1, lat, lng) {
-  data.push({ ...emptyGate, address: { line_1, lat, lng } })
-  return data
+function updateKey(object, key, value) {
+  return update(object, { [key]: { $set: value } })
 }
 
 // type - array in which to find - floors, gates ...
@@ -177,8 +168,27 @@ function updateValue(type, index, key, value) {
   }
 }
 
-function updateKey(object, key, value) {
-  return update(object, { [key]: { $set: value } })
+function changeFloors(index, key, value) {
+  return dispatch => {
+    return dispatch(updateValue('floors', index, key, value))
+  }
+}
+
+function changeGates(index, key, value) {
+  return dispatch => {
+    return dispatch(updateValue('gates', index, key, value))
+  }
+}
+
+
+function insertEmptyFloor(data) {
+  data.push(emptyFloor)
+  return data
+}
+
+function insertEmptyGate(data, line_1, lat, lng) {
+  data.push({ ...emptyGate, address: { line_1, lat, lng } })
+  return data
 }
 
 export function loadAddressFromIc() {
@@ -292,7 +302,7 @@ function createFloor(index) {
 }
 
 export function initTarif() {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(setAvailableTarifs(response.data.tarifs))
     }
@@ -659,16 +669,18 @@ function removeKeys(object, keys) {
 }
 
 function gatesForRequest(state) {
-  const garagePlaces = state.floors.reduce((arr, floor) => {
-    return arr.concat(floor.places.map(place => { return place.label }))
-  }, []).filter(unique).sort()
+  const garagePlaces = state.floors
+  .reduce((arr, floor) => arr.concat(floor.places.map(place => place.label)), [])
+  .filter(unique)
+  .sort()
 
   return state.gates.map(gate => {
-    const newGate = Object.assign({}, gate)
+    const { has_password, ...newGate } = gate // remove has_password from object
+    // const newGate = Object.assign({}, gate)
     newGate.address.city = state.city
     newGate.address.postal_code = state.postal_code
-    if (state.state != '') newGate.address.state = state.state
-    if (state.line_2 != '')newGate.address.line_2 = state.line_2
+    if (state.state !== '') newGate.address.state = state.state
+    if (state.line_2 !== '')newGate.address.line_2 = state.line_2
     newGate.address.country = state.country
     newGate.address.lng = parseFloat(newGate.address.lng)
     newGate.address.lat = parseFloat(newGate.address.lat)
