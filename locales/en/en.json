@@ -1050,7 +1050,8 @@
 			"userInfoUnavailable": "User info unavailable.",
 			"logOut": "log out",
 			"selectGarage": "Select garage",
-			"allGarages": "All garages"
+			"allGarages": "All garages",
+			"version": "version"
 		},
 		"login": {
 			"loading": "Loading ...",
