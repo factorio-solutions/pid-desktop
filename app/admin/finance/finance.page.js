@@ -87,7 +87,7 @@ class FinancePage extends Component {
         <div className={styles.module}>
           {t([ 'finance', 'paypal' ])}
           <div className={styles.settings}>
-            <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toPaypalSettings} />
+            {/* <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toPaypalSettings} /> */}
             <Switch on={state.paypal} onClick={this.toPaypalSettings} />
           </div>
         </div>
