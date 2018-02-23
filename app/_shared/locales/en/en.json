@@ -224,7 +224,8 @@
 		"selectedUser": "User",
 		"flexiblePlaceSelected": "flexible",
 		"noFreePlace": "No free place",
-		"note": "Note"
+		"note": "Note",
+		"onetimeVisit": "Onetime visitor"
 	},
 	"clients": {
 		"name": "name",

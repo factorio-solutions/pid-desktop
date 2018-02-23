@@ -39,7 +39,13 @@ class NewReservationPage extends Component {
 
   userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
     label:   user.full_name,
-    order:   user.id === this.props.pageBase.current_user.id ? 1 : user.id === -1 ? 2 : undefined,
+    order:   user.id === this.props.pageBase.current_user.id ?
+      1 :
+      user.id === -1 ?
+        2 :
+        user.id === -2 ?
+          3 :
+        undefined,
     onClick: () => this.props.actions.downloadUser(this.props.state.availableUsers[index].id)
   }))
 
@@ -95,6 +101,7 @@ class NewReservationPage extends Component {
 
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
+      if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
       if (state.car_id === undefined && state.carLicencePlate === '') return false
       if (state.from === '' || state.to === '') return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
