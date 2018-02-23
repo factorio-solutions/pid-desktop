@@ -300,6 +300,10 @@ export function setInitialStore(id) {
           full_name: t([ 'newReservation', 'newHost' ]),
           id:        -1
         })
+        users.push({
+          full_name: t([ 'newReservation', 'onetimeVisit' ]),
+          id:        -2
+        })
       }
 
       dispatch(setAvailableUsers(users))
