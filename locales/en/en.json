@@ -902,7 +902,8 @@
 		"token": "Secret token",
 		"apiEndpoint": "Api endpoint",
 		"warning": "Keep it secret!",
-		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible."
+		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible.",
+		"toApiExplorer": "Go to API explorer!"
 	},
 	"newContract": {
 		"description": "New Agreement in",
