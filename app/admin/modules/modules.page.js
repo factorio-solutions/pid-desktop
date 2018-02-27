@@ -173,6 +173,10 @@ class ModulesPage extends Component {
         <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyToken} />
       </div>
 
+      <div className={styles.toApiExplorer}>
+        <a href={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/explorer'} target="_blank">{t([ 'modules', 'toApiExplorer' ])}</a>
+      </div>
+
       <div className={styles.dismissButton}>
         <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" />
       </div>

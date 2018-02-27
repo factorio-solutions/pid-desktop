@@ -243,9 +243,9 @@ export default class TestingPage extends Component {
     //   }
     // }
 
-    fetch('http://localhost:3000/api/queries', {
+    fetch('https://park-it-direct-alpha-pr-19.herokuapp.com/api/queries', {
       headers: {
-        Authorization:  'NMjYVic6aYh037YmcxYgkN0orWfCkgiAfzeH6iOV',
+        Authorization:  'porZp2ZVRSDT4EVWwtfXRvhFc8sQBeiBSY4E8rUX',
         'Content-type': 'application/json'
       },
       method: 'POST',
