@@ -903,6 +903,9 @@
 		"apiEndpoint": "Api endpoint",
 		"warning": "Keep it secret!",
 		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible.",
+		"requestDesribtionPart1": "To use your secreat token, add header",
+		"requestDesribtionPart2": "Authorization: ",
+		"requestDesribtionPart3": "to your graphQL requests.",
 		"toApiExplorer": "Go to API explorer!"
 	},
 	"newContract": {

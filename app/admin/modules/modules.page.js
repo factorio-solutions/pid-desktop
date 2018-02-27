@@ -174,6 +174,9 @@ class ModulesPage extends Component {
       </div>
 
       <div className={styles.toApiExplorer}>
+        <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart1' ])}</div>
+        <div className={styles.headerDesribtion}>{t([ 'modules', 'requestDesribtionPart2' ])} {state.token}</div>
+        <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart3' ])}</div>
         <a href={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/explorer'} target="_blank">{t([ 'modules', 'toApiExplorer' ])}</a>
       </div>
 

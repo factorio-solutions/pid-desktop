@@ -58,4 +58,17 @@
 .toApiExplorer {
   margin-top: 22px;
   padding: 8px;
+
+  >div {
+    padding: 5px;
+
+    &:last-of-type {
+      margin-bottom: 22px;
+    }
+
+    &.headerDesribtion {
+      color:       $black;
+      font-weight: bold;
+    }
+  }
 }
