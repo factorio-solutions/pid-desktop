@@ -30,9 +30,13 @@
   >tbody {
     table-layout: fixed;
 
-    >tr:hover {
-      outline:          1px dotted $blue;
-      background-color: lighten($blue, 50%);
+    >tr {
+      background-color: $white;
+
+      &:hover {
+        border-bottom:    1px dotted $blue !important;
+        background-color: lighten($blue, 50%);
+      }
     }
   }
 
