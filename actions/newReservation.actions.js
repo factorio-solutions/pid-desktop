@@ -369,7 +369,7 @@ export function downloadUser(id) {
     Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
       values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id: -1, reservable_cars: [] }),
+      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
         availableGarages: values[1].reservable_garages,
         availableClients: values[2].reservable_clients
       }))
@@ -561,7 +561,7 @@ export function submitReservation(id) {
              )
     }
 
-    if (state.user && state.user.id === -1) { // if  new Host being created during new reservation
+    if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
       requestPromise(USER_AVAILABLE, {
         user: {
           email:     state.email.value.toLowerCase(),
@@ -569,7 +569,7 @@ export function submitReservation(id) {
           phone:     state.phone.value,
           language:  getState().pageBase.current_user.language
         },
-        client_user: state.client_id ? {
+        client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
           host:      true,
           message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
