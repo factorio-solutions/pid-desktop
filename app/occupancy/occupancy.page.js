@@ -39,7 +39,7 @@ class OccupancyPage extends Component {
 
   render() {
     const { state, pageBase, actions } = this.props
-
+    const { garage } = state
 
     const clientDropdown = () => {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
@@ -79,24 +79,20 @@ class OccupancyPage extends Component {
       filter
     />)
 
-    const renderOccupancy = garage => [
-      <h2>{garage.name}</h2>,
-      <OccupancyOverview
-        places={garage ? garage.floors.reduce(preparePlaces, []) : []}
-        from={state.from}
-        showDetails={(garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security)}
-        duration={state.duration}
-        resetClientClick={actions.resetClientClick}
-        loading={!state.garages.length || state.loading}
-        onReservationClick={this.onReservationClick}
-      />
-    ]
-
     return (
       <PageBase>
         <TabMenu right={filters} left={clientSelector} />
         <div className={styles.occupancies}>
-          {state.garages.map(renderOccupancy)}
+          <h2>{garage && garage.name}</h2>
+          <OccupancyOverview
+            places={garage ? garage.floors.reduce(preparePlaces, []) : []}
+            from={state.from}
+            showDetails={garage && ((garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security))}
+            duration={state.duration}
+            resetClientClick={actions.resetClientClick}
+            loading={!state.garages.length || state.loading}
+            onReservationClick={this.onReservationClick}
+          />
         </div>
 
         <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
