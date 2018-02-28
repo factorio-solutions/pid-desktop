@@ -28,6 +28,12 @@
   text-align: center;
 }
 
+.fillInContact {
+  padding:    5px;
+  color:      $red;
+  text-align: center;
+}
+
 @media (min-width: $collapseWidth) {
   .parent {
     display: flex;
