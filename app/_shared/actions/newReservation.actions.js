@@ -577,7 +577,7 @@ export function submitReservation(id) {
       }).then(data => {
         if (data.user_by_email !== null) { // if the user exists
           // invite to client
-          if (state.client_id) { // if client is selected then invite as host
+          if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
             requestPromise(ADD_CLIENT_USER, {
               user_id:     data.user_by_email.id,
               client_user: {
