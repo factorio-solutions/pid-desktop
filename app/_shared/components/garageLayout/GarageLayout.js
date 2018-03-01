@@ -342,7 +342,7 @@ class GarageLayout extends Component {
         <div className={styles.buttons}>
           <div>{floors.map(prepareButtons)}</div>
           <div>
-            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+            <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
           </div>
         </div>
         <div className={styles.svgContainer}>
