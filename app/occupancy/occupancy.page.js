@@ -11,7 +11,7 @@ import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { togglePast }        from '../_shared/actions/reservations.actions'
+import { setPast }        from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
@@ -31,8 +31,8 @@ class OccupancyPage extends Component {
   }
 
   onReservationClick = reservation => {
+    this.props.actions.setPast(moment(reservation.ends_at).isBefore(moment()))
     nav.to(`/reservations/find/${reservation.id}`)
-    !this.props.reservations.past && this.props.actions.togglePast()
   }
 
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
@@ -115,5 +115,5 @@ class OccupancyPage extends Component {
 
 export default connect(
   state => ({ state: state.occupancy, pageBase: state.pageBase, reservations: state.reservations }),
-  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, togglePast }, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, setPast }, dispatch) })
 )(OccupancyPage)
