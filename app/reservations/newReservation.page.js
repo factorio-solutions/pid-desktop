@@ -102,7 +102,7 @@ class NewReservationPage extends Component {
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
-      if (state.car_id === undefined && state.carLicencePlate === '') return false
+      if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
