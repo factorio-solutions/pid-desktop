@@ -233,7 +233,7 @@ class NewReservationPage extends Component {
                     placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
                     type="text"
                     align="center"
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id !== -2}
                   /> :
                   <Dropdown
                     editable={!ongoing}
