@@ -228,7 +228,7 @@ class ReservationsPage extends Component {
               {!reservation.approved && reservation.client === null &&
               <LabeledRoundButton
                 label={t([ 'reservations', 'payReservation' ])}
-                content={<i className="icon-pay" title="pay" />}
+                content={<i className="fa fa-credit-card" aria-hidden="true" />}
                 onClick={() => { actions.payReservation(reservation) }}
                 type="action"
               />
