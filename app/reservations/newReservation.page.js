@@ -38,8 +38,14 @@ class NewReservationPage extends Component {
   }
 
   userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
-    label:   user.full_name,
-    order:   user.id === this.props.pageBase.current_user.id ? 1 : user.id === -1 ? 2 : undefined,
+    label: user.full_name,
+    order: user.id === this.props.pageBase.current_user.id ?
+      1 :
+      user.id === -1 ?
+        2 :
+        user.id === -2 ?
+          3 :
+          undefined,
     onClick: () => this.props.actions.downloadUser(this.props.state.availableUsers[index].id)
   }))
 
@@ -95,7 +101,8 @@ class NewReservationPage extends Component {
 
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
-      if (state.car_id === undefined && state.carLicencePlate === '') return false
+      if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
+      if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
@@ -161,35 +168,39 @@ class NewReservationPage extends Component {
                   align="center"
                 />
 
-                {state.user && state.user.id === -1 &&
+                {state.user && state.user.id < 0 &&
                   <PatternInput
                     onChange={actions.setHostName}
-                    label={t([ 'newReservation', 'hostsName' ])}
+                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                     error={t([ 'signup_page', 'nameInvalid' ])}
                     pattern="^(?!\s*$).+"
                     value={state.name.value}
                     highlight={state.highlight}
                   />
                 }
-                {state.user && state.user.id === -1 &&
+                {state.user && state.user.id < 0 &&
                   <PatternInput
                     onChange={actions.setHostPhone}
-                    label={t([ 'newReservation', 'hostsPhone' ])}
+                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                     error={t([ 'signup_page', 'phoneInvalid' ])}
                     pattern="\+[\d]{2,4}[\d]{3,}"
                     value={state.phone.value}
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id === -1}
                   />
                 }
-                {state.user && state.user.id === -1 &&
+                {state.user && state.user.id < 0 &&
                   <PatternInput
                     onChange={actions.setHostEmail}
-                    label={t([ 'newReservation', 'hostsEmail' ])}
+                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
                     error={t([ 'signup_page', 'emailInvalid' ])}
                     pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                     value={state.email.value}
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id === -1}
                   />
+                }
+                {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid && <div className={styles.fillInContact}>
+                  {t([ 'newReservation', 'fillInContact' ])}
+                </div>
                 }
 
                 {state.user &&
@@ -222,7 +233,7 @@ class NewReservationPage extends Component {
                     placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
                     type="text"
                     align="center"
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id !== -2}
                   /> :
                   <Dropdown
                     editable={!ongoing}
