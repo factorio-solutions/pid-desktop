@@ -221,10 +221,15 @@
 		"hostsName": "Guest name",
 		"hostsPhone": "Guest phone",
 		"hostsEmail": "Guest email",
+		"visitorsName": "Visitors name",
+		"visitorsPhone": "Visitors phone",
+		"visitorsEmail": "Visitors email",
 		"selectedUser": "User",
 		"flexiblePlaceSelected": "flexible",
 		"noFreePlace": "No free place",
-		"note": "Note"
+		"note": "Note",
+		"onetimeVisit": "Onetime visitor",
+		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation."
 	},
 	"clients": {
 		"name": "name",
