@@ -1,6 +1,7 @@
 import moment from 'moment'
 import {
   OCCUPANCY_SET_GARAGES,
+  OCCUPANCY_SET_GARAGE,
   OCCUPANCY_SET_CLIENTS,
   OCCUPANCY_SET_CLIENT_ID,
   OCCUPANCY_SET_DURATION,
@@ -10,6 +11,7 @@ import {
 
 const defaultState = {
   garages:    [],
+  garage:     undefined,
   clients:    [],
   client_ids: [],
   duration:   'week',
@@ -23,7 +25,12 @@ export default function occupancy(state = defaultState, action) {
 
     case OCCUPANCY_SET_GARAGES:
       return { ...state,
-        garages: action.value,
+        garages: action.value
+      }
+
+    case OCCUPANCY_SET_GARAGE:
+      return { ...state,
+        garage:  action.value,
         loading: false
       }
 
