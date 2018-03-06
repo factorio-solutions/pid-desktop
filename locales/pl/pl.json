@@ -221,10 +221,15 @@
 		"hostsName": "Nazwisko gościa",
 		"hostsPhone": "Telefon gościa",
 		"hostsEmail": "E-mail gościa",
+		"visitorsName": "Nazwisko odwiedzającego",
+		"visitorsPhone": "Telefon odwiedzającego",
+		"visitorsEmail": "E-mail odwiedzającego",
 		"selectedUser": "Użytkownik",
-		"flexiblePlaceSelected": "???",
+		"flexiblePlaceSelected": "elastyczne",
 		"noFreePlace": "Brak wolnych miejsc",
-		"note": "Uwagi"
+		"note": "Uwagi",
+		"onetimeVisit": "Jednorazowe odwiedziny",
+		"fillInContact": "PL: newReservation.fillInContact"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -256,7 +261,7 @@
 		"secretary": "Sekretarz/Sekretarka",
 		"internal": "Wewnętrzny",
 		"host": "jest gościem",
-		"driver": "PL: clientUsers.driver",
+		"driver": "kierowca",
 		"presetAs": "Ustaw jako",
 		"removeClientUser": "Czy na pewno chcesz usunąć użytkownika?",
 		"pendingUsers": "Zaproszenia czekające na odpowiedź",
@@ -283,7 +288,6 @@
 		"terminateEarlyQuestion": "Czy chcesz zakończyć rezerwację?",
 		"reservationApproved": "Rezerwacja nie została jeszcze zaakceptowana.",
 		"reservationNotPayed": "Rezerwacja nie została opłacona.",
-		"pay": "Płatność",
 		"host": "Gość",
 		"visitor": "Odwiedzający",
 		"internal": "Wewnętrzny",
@@ -508,7 +512,12 @@
 		"users": "Użytkownicy",
 		"addProfilePicture": "Dodaj zdjęcie profilowe",
 		"removeFloor": "Usunąć piętro",
-		"uploadSvg": "Wgraj SVG"
+		"uploadSvg": "Wgraj SVG",
+		"gatePassword": "PL: newGarage.gatePassword",
+		"invalidPasswordPhone": "PL: newGarage.invalidPasswordPhone",
+		"placeholderGatePassword": "PL: newGarage.placeholderGatePassword",
+		"passwordWasSet": "PL: newGarage.passwordWasSet",
+		"passwordWasNotSet": "PL: newGarage.passwordWasNotSet"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
@@ -584,7 +593,8 @@
 		"reservationDeclined": "Twoja rezerwacja na miejsce \"%(arg1)s\" została odrzucona.",
 		"verifyYourEmail": "Witaj w Park-it-direct! Na adres \"%(arg1)s\"s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.",
-		"reservationUpdatedNotification": "PL: notifications.reservationUpdatedNotification"
+		"reservationUpdatedNotification": "%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.",
+		"reservationRemovedDueToUnpaid": "Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona."
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -890,18 +900,22 @@
 		"cannotBeChanged": "Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.",
 		"flexiplace": "Miejsce Flexi",
 		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální",
-		"showApiKey": "PL: modules.showApiKey",
-		"regenerateApiKey": "PL: modules.regenerateApiKey",
-		"thirdPartyIntegration": "PL: modules.thirdPartyIntegration",
-		"thirdPartyIntegrationDescription": "PL: modules.thirdPartyIntegrationDescription",
-		"mrParkitIntegration": "PL: modules.mrParkitIntegration",
-		"mrParkitIntegrationDescription": "PL: modules.mrParkitIntegrationDescription",
-		"selectPlacesFor3rdParty": "PL: modules.selectPlacesFor3rdParty",
-		"selectPlacesForMrParkit": "PL: modules.selectPlacesForMrParkit",
-		"token": "PL: modules.token",
+		"showApiKey": "Pokaż API endpoint",
+		"regenerateApiKey": "Wygeneruj API endpoint",
+		"thirdPartyIntegration": "Integracja z osobami trzecimi",
+		"thirdPartyIntegrationDescription": "Aktywując tę funkcję otrzymasz własny API z opcjami umożliwiającymi zarządzanie rezerwacjami za pomocą innych systemów",
+		"mrParkitIntegration": "Integracja MR.PARKIT",
+		"mrParkitIntegrationDescription": "Funkcja podobna do Integracji z osobami trzecimi. Różnica polega na tym, że miejscami automatycznie zajmie się Mr.Parkit.",
+		"selectPlacesFor3rdParty": "Miejsca dla osób trzecich",
+		"selectPlacesForMrParkit": "Miejsca dla MR.PARKIT",
+		"token": "Skryty token",
 		"apiEndpoint": "Api endpoint",
-		"warning": "PL: modules.warning",
-		"warningDesribtion": "PL: modules.warningDesribtion"
+		"warning": "Nie dziel się nim!",
+		"warningDesribtion": "Skryty token to unikalny identyfikator Twojego garażu. Nie dziel się nim z nikim, w przeciwnym razie ktoś inny będzie mógł dokonywać zmian w Twoim garażu. W przypadku zgubienie tokena szybko wygeneruj nowy endpoint.",
+		"toApiExplorer": "Przejdź do przeglądarki API",
+		"requestDesribtionPart1": "Aby użyć skrytego tokena, dodaj header",
+		"requestDesribtionPart2": "Authorization:",
+		"requestDesribtionPart3": "PL: modules.requestDesribtionPart3"
 	},
 	"newContract": {
 		"description": "Nowa umowa w",
@@ -921,17 +935,17 @@
 		"placePrice": "Cena za miejsce na miesiąc",
 		"indefinitContract": "Zawrzeć umowę na czas nieokreślony",
 		"indefinite": "Na czas nieokreślony",
-		"securityInterval": "PL: newContract.securityInterval",
-		"inMinutes": "PL: newContract.inMinutes",
-		"securityIntervalInvalid": "PL: newContract.securityIntervalInvalid",
-		"place": "PL: newContract.place",
-		"usedBy": "PL: newContract.usedBy",
-		"goPublic": "PL: newContract.goPublic",
-		"rentyType": "PL: newContract.rentyType",
-		"longterm": "PL: newContract.longterm",
-		"shortterm": "PL: newContract.shortterm",
-		"longtermPrice": "PL: newContract.longtermPrice",
-		"shorttermPrice": "PL: newContract.shorttermPrice"
+		"securityInterval": "Interwał bezpieczeństwa",
+		"inMinutes": "w minutach",
+		"securityIntervalInvalid": "Niepoprawny interwał",
+		"place": "Miejsce:",
+		"usedBy": "Wynajęte:",
+		"goPublic": "Publiczne",
+		"rentyType": "Rodzaj wynajmu",
+		"longterm": "Długoterminowy",
+		"shortterm": "Krótkoterminowy",
+		"longtermPrice": "Długoterminowa cena:",
+		"shorttermPrice": "Krótkoterminowa cena:"
 	},
 	"finance": {
 		"paypal": "PayPal",
@@ -979,12 +993,12 @@
 	"dashboard": {
 		"used": "Zajętych",
 		"free": "Wolnych",
-		"unused": "Niewykorzystanych",
+		"unused": "Niewykorzystane:",
 		"units": {
-			"one": "PL: dashboard.units.one",
-			"few": "PL: dashboard.units.few",
-			"many": "PL: dashboard.units.many",
-			"other": "PL: dashboard.units.other"
+			"one": "jednostka",
+			"few": "jednostki",
+			"many": "jednostek",
+			"other": "jednostek"
 		},
 		"statistics": "Statystyki",
 		"news": "Nowości PiD",
@@ -992,7 +1006,7 @@
 	},
 	"loginVerification": {
 		"description": "Wprowadzono autoryzację wieloczynnikową. Na adres %(email) wyślemy Ci kod weryfikacyjny.",
-		"code": "kod",
+		"code": "Kod weryfikacyjny",
 		"codeInvalid": "Niepoprawny kod"
 	},
 	"reservationInteruption": {
@@ -1008,7 +1022,7 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
-		"repeat": "Powtórz",
+		"repeat": "Powtarzanie: wyłączone",
 		"repeats": "Powtarza się:",
 		"daily": "Codziennie",
 		"weekly": "Co tydzień",
@@ -1043,14 +1057,15 @@
 			"other": "rezerwacjach"
 		},
 		"on": "Dnia",
-		"every": "PL: recurringReservation.every"
+		"every": "raz na"
 	},
 	"mobileApp": {
 		"page": {
 			"userInfoUnavailable": "Informacje o użytkowniku są niedostępne.",
 			"logOut": "Wylogować",
 			"selectGarage": "Wybierz garaż",
-			"allGarages": "Wszystkie garaże"
+			"allGarages": "Wszystkie garaże",
+			"version": "wersja"
 		},
 		"login": {
 			"loading": "Ładowanie...",
@@ -1120,7 +1135,7 @@
 			"hourShortcut": "h",
 			"me": "Ja",
 			"creatingReservation": "Utworzyć rezerwację",
-			"updatingReservation": "PL: mobileApp.newReservation.updatingReservation",
+			"updatingReservation": "Trwa edytowanie rezerwacji",
 			"creatingPayment": "Wytwarzanie płatności...",
 			"tokenNoLongerValid": "Identyfikator płatności nie jest już ważny. Rezerwacja zostanie usunięta.",
 			"checkingToken": "Sprawdzam ważność identyfikatora.",
@@ -1220,7 +1235,7 @@
 			"to": "Do:"
 		},
 		"reservation_updated": {
-			"reservation_updated": "PL: railsEmails.reservation_updated.reservation_updated",
+			"reservation_updated": "Twoja rezerwacja została zmieniona:",
 			"garage": "Garaż:",
 			"place": "Miejsce:",
 			"from": "Od:",
@@ -1238,6 +1253,7 @@
 		"users": {
 			"id": "netřeba překládat",
 			"name": "netřeba překládat",
+			"appVersion": "netřeba překládat",
 			"impersonate": "netřeba překládat",
 			"lastActive": "netřeba překládat"
 		},

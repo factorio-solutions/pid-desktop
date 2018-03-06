@@ -288,7 +288,6 @@
 		"terminateEarlyQuestion": "Are you sure you want to terminate reservation right now?",
 		"reservationApproved": "This reservation has not been approved yet.",
 		"reservationNotPayed": "This reservation has not been paid.",
-		"pay": "Pay",
 		"host": "Guest",
 		"visitor": "Visitor",
 		"internal": "Internal",
@@ -513,7 +512,12 @@
 		"users": "Users",
 		"addProfilePicture": "Add profile picture",
 		"removeFloor": "Remove floor",
-		"uploadSvg": "Upload SVG"
+		"uploadSvg": "Upload SVG",
+		"gatePassword": "Gate password",
+		"invalidPasswordPhone": "Invalid password",
+		"placeholderGatePassword": "123456",
+		"passwordWasSet": "Gate has password. Change it by fill in a new password",
+		"passwordWasNotSet": "Password was not set!"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -590,7 +594,7 @@
 		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \"%(arg1)s\". You will not be able to log in again until your email is verified.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) just created a new reservation for you.",
 		"reservationUpdatedNotification": "%(arg1)s just updated your reservation. For more information go to reservations tab.",
-		"reservationRemovedDueToUnpaid": "Your reservation was canceled because it was not payed in last 15 minutes"
+		"reservationRemovedDueToUnpaid": "Your reservation was canceled because it was not paid in last 15 minutes"
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -900,14 +904,18 @@
 		"regenerateApiKey": "Regenerate API endpoint",
 		"thirdPartyIntegration": "3rd party integration",
 		"thirdPartyIntegrationDescription": "By activating this function, we will give you your own API with actions that will allow you to create reservations from another system.",
-		"mrParkitIntegration": "Integration by Mr Parkit",
+		"mrParkitIntegration": "Integration by MR.PARKIT",
 		"mrParkitIntegrationDescription": "This is simmilar to 3rd party integration, the difference is, your places will be automatically taken care of by Mr. Parkit resrevation system.",
 		"selectPlacesFor3rdParty": "places for third party",
-		"selectPlacesForMrParkit": "places for Mr. Parkit",
+		"selectPlacesForMrParkit": "places for MR.PARKIT",
 		"token": "Secret token",
 		"apiEndpoint": "Api endpoint",
 		"warning": "Keep it secret!",
-		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible."
+		"warningDesribtion": "Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible.",
+		"toApiExplorer": "Go to API explorer!",
+		"requestDesribtionPart1": "To use your secret token, add header",
+		"requestDesribtionPart2": "Authorization:",
+		"requestDesribtionPart3": "to your graphQL requests."
 	},
 	"newContract": {
 		"description": "New Agreement in",
@@ -1245,9 +1253,9 @@
 		"users": {
 			"id": "id",
 			"name": "name",
+			"appVersion": "app version",
 			"impersonate": "impersonate",
-			"lastActive": "last active",
-			"appVersion": "app version"
+			"lastActive": "last active"
 		},
 		"generator": {
 			"selectGarages": "Select garages",
