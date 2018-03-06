@@ -15,6 +15,7 @@ export const USERS_PAGINATED_TABLE = `query Users($count: Int, $page: Int, $orde
     full_name
     last_active
     email
+    mobile_app_version
   }
 }
 `

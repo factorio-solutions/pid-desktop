@@ -342,7 +342,7 @@ class GarageLayout extends Component {
         <div className={styles.buttons}>
           <div>{floors.map(prepareButtons)}</div>
           <div>
-            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+            <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
           </div>
         </div>
         <div className={styles.svgContainer}>
@@ -360,7 +360,7 @@ export function assignColorsToGroups(floors) { // will find unique groups and as
     .reduce((acc, floor) => [ ...acc, ...(floor.places || []).map(place => place.group).filter(o => o) ], [])
     .reduce((acc, group) => [ ...acc, ...(Array.isArray(group) ? group : [ group ]) ], []) // flatten arrays
     .filter((group, index, arr) => arr.indexOf(group) === index) // unique values
-    .sort((a, b) => a - b)
+    // .sort((a, b) => a - b)
 
   const colors = COLOR_PALETE.length >= uniqueGroups.length ?
     COLOR_PALETE.slice(0, uniqueGroups.length) :
