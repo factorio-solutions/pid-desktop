@@ -221,10 +221,15 @@
 		"hostsName": "Jméno hosta",
 		"hostsPhone": "Hostův telefon",
 		"hostsEmail": "Hostův email",
+		"visitorsName": "Jméno návštěvníka",
+		"visitorsPhone": "Telefon návštěvníka",
+		"visitorsEmail": "Email návštěvníka",
 		"selectedUser": "Uživatel",
 		"flexiblePlaceSelected": "flexibilní",
 		"noFreePlace": "Žádná volná místa",
-		"note": "Poznámka"
+		"note": "Poznámka",
+		"onetimeVisit": "Jednorázový návštěvník",
+		"fillInContact": "CS: newReservation.fillInContact"
 	},
 	"clients": {
 		"name": "jméno",
@@ -283,7 +288,6 @@
 		"terminateEarlyQuestion": "Přejete si nyní ukončit rezervaci?",
 		"reservationApproved": "Rezervace zatím nebyla schválena.",
 		"reservationNotPayed": "Rezervace nebyla zaplacena.",
-		"pay": "Platba",
 		"host": "Host",
 		"visitor": "Návštěvník",
 		"internal": "Interní",
@@ -508,7 +512,12 @@
 		"users": "Uživatelé",
 		"addProfilePicture": "Přidat profilový obrázek",
 		"removeFloor": "Odstranit patro",
-		"uploadSvg": "Nahrát SVG"
+		"uploadSvg": "Nahrát SVG",
+		"gatePassword": "Heslo brány",
+		"invalidPasswordPhone": "Nesprávné heslo",
+		"placeholderGatePassword": "123456",
+		"passwordWasSet": "Brána je zaheslovaná. Změnu provedete zadáním nového hesla.",
+		"passwordWasNotSet": "Heslo není nastaveno!"
 	},
 	"newClient": {
 		"name": "Jméno klienta",
@@ -584,7 +593,8 @@
 		"reservationDeclined": "Vaše rezervace na \"%(arg1)s místo byla zrušena.",
 		"verifyYourEmail": "Vítejte v Park-it-direct! Na adresu \"%(arg1)s\"s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.",
-		"reservationUpdatedNotification": "%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace."
+		"reservationUpdatedNotification": "%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.",
+		"reservationRemovedDueToUnpaid": "Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut"
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -642,7 +652,7 @@
 		"tram_nearby": "Tramvaj v okolí",
 		"wc": "WC",
 		"guarded_parking": "Hídané parkoviště",
-		"car_wash": "Mička",
+		"car_wash": "Myčka",
 		"airport_nearby": "Blízko letiště",
 		"charging_station": "Nabíjecí stanice pro elektrická auta",
 		"garage": "Garáž",
@@ -894,14 +904,18 @@
 		"regenerateApiKey": "Vygenerovat nový API endpoint",
 		"thirdPartyIntegration": "Integrace 3. stran",
 		"thirdPartyIntegrationDescription": "Aktivací této funkce obdržíte vlastní API s akcemi, které vám umožní spravovat rezervace pomocí dalších systémů",
-		"mrParkitIntegration": "Integrace Mr. Parkit",
+		"mrParkitIntegration": "Integrace MR.PARKIT",
 		"mrParkitIntegrationDescription": "Tato funkce je podobná integraci 3. stran, rozdílem je, že o místa se automaticky postará Mr. Parkit",
 		"selectPlacesFor3rdParty": "Místa pro třetí strany",
-		"selectPlacesForMrParkit": "Místa pro Mr. Parkit",
+		"selectPlacesForMrParkit": "Místa pro MR.PARKIT",
 		"token": "Tajný token",
 		"apiEndpoint": "Api endpoint",
 		"warning": "Držte ho v tajnosti!",
-		"warningDesribtion": "Tajný token je unikátní identifikátor Vaší garáže. Nikomu ho nesdělujte, jinak daná osoba bude moci provádět změny ve Vaší garáži. V případě úniku tokenu co nejrychleji vygenerujte nový endpoint."
+		"warningDesribtion": "Tajný token je unikátní identifikátor Vaší garáže. Nikomu ho nesdělujte, jinak daná osoba bude moci provádět změny ve Vaší garáži. V případě úniku tokenu co nejrychleji vygenerujte nový endpoint.",
+		"toApiExplorer": "Přejít do API prohlížeče!",
+		"requestDesribtionPart1": "Použijte token tak, že přidáte header",
+		"requestDesribtionPart2": "Authorization:",
+		"requestDesribtionPart3": "do vašich graphQL requestů"
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
@@ -992,7 +1006,7 @@
 	},
 	"loginVerification": {
 		"description": "Spuštěna vícefázová autorizace. Na email %(email)s vám zašleme ověřovací kód.",
-		"code": "kód",
+		"code": "Ověřovací kód",
 		"codeInvalid": "Neplatný kód"
 	},
 	"reservationInteruption": {
@@ -1050,7 +1064,8 @@
 			"userInfoUnavailable": "Informace o uživateli jsou nedostupné",
 			"logOut": "odhlásit",
 			"selectGarage": "Zvolte garáž",
-			"allGarages": "Všechny garáže"
+			"allGarages": "Všechny garáže",
+			"version": "verze"
 		},
 		"login": {
 			"loading": "Načítám ...",
@@ -1238,6 +1253,7 @@
 		"users": {
 			"id": "id",
 			"name": "jméno",
+			"appVersion": "verze appky",
 			"impersonate": "ztělesnit",
 			"lastActive": "naposledy aktivní"
 		},
