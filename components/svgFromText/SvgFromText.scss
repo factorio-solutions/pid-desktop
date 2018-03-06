@@ -10,7 +10,7 @@
 .rotate {
   >svg {
     width: 						inherit;
-    transform: 				rotate(-90deg) translate(-100%, 0%);
+    transform: 				rotate(90deg) translate(0%, -100%);
     transform-origin: 0% 0%;
 	}
 }
