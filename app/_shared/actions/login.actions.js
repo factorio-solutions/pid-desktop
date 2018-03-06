@@ -1,7 +1,10 @@
-import { request }    from '../helpers/request'
-import * as nav       from '../helpers/navigation'
+import { request }   from '../helpers/request'
+import * as nav      from '../helpers/navigation'
+import actionFactory from '../helpers/actionFactory'
+import { mobile }    from '../../index'
+import { version }   from '../../../package'
+
 import { LOGIN_USER, LOGIN_VERIFICATION } from '../queries/login.queries.js'
-import actionFactort from '../helpers/actionFactory'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -13,10 +16,10 @@ export const RESET_LOGIN_FORM = 'RESET_LOGIN_FORM'
 export const LOGIN_SET_DEVICE_FINGERPRINT = 'LOGIN_SET_DEVICE_FINGERPRINT'
 
 
-export const setError = actionFactort(LOGIN_FAILURE)
-export const setDeviceFingerprint = actionFactort(LOGIN_SET_DEVICE_FINGERPRINT)
-export const resetLoginForm = actionFactort(RESET_LOGIN_FORM)
-export const resetStore = actionFactort('RESET')
+export const setError = actionFactory(LOGIN_FAILURE)
+export const setDeviceFingerprint = actionFactory(LOGIN_SET_DEVICE_FINGERPRINT)
+export const resetLoginForm = actionFactory(RESET_LOGIN_FORM)
+export const resetStore = actionFactory('RESET')
 
 export function setEmail(value, valid) {
   return { type:  LOGIN_SET_EMAIL,
@@ -86,7 +89,8 @@ export function login(email, password, redirect = false, callback = () => {}) {
       LOGIN_USER,
       { email,
         password,
-        device_fingerprint: getState().login.deviceFingerprint
+        device_fingerprint: getState().login.deviceFingerprint,
+        mobile_app_version: mobile ? version : null
       },
       null,
       onError
@@ -133,7 +137,7 @@ export function logout() {
 }
 
 export function refreshLogin(callback, errorCallback) {
-  return dispatch => {
+  return (dispatch, getState) => {
     const success = response => {
       const result = JSON.parse(response.data.login)
       if (result && result.id_token) {
@@ -147,7 +151,17 @@ export function refreshLogin(callback, errorCallback) {
       }
     }
 
+    const currentUser = getState().mobileHeader.current_user
     const onError = () => console.log('Error while refreshing token')
-    request(success, LOGIN_USER, { refresh_token: localStorage.refresh_token }, null, onError)
+    request(
+      success,
+      LOGIN_USER,
+      { refresh_token:      localStorage.refresh_token,
+        email:              currentUser ? currentUser.email : null,
+        mobile_app_version: version
+      },
+      null,
+      onError
+    )
   }
 }
