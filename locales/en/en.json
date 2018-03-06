@@ -1255,8 +1255,7 @@
 			"name": "name",
 			"appVersion": "app version",
 			"impersonate": "impersonate",
-			"lastActive": "last active",
-			"appVersion": "app version"
+			"lastActive": "last active"
 		},
 		"generator": {
 			"selectGarages": "Select garages",
