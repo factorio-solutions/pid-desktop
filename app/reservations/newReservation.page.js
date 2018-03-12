@@ -109,7 +109,7 @@ class NewReservationPage extends Component {
 
     const placeLabel = () => {
       if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'No available places' ])
+        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'noFreePlace' ])
       } else {
         const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
         const place = floor && floor.places.findById(state.place_id)
