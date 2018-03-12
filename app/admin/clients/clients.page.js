@@ -110,7 +110,7 @@ class ClientsPage extends Component {
           content={<span className="fa fa-pencil" aria-hidden="true" />}
           onClick={toEditClient}
           type="action"
-          state={client.admin ? '' : 'disabled'}
+          state={client.is_admin ? '' : 'disabled'}
         />
         <LabeledRoundButton
           label={t([ 'clients', 'goToUsers' ])}
