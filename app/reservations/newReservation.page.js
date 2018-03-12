@@ -15,12 +15,14 @@ import Dropdown      from '../_shared/components/dropdown/Dropdown'
 import Form          from '../_shared/components/form/Form'
 import Modal         from '../_shared/components/modal/Modal'
 import Recurring     from '../_shared/components/recurring/Recurring'
+import LanguageSpan  from '../admin/users/components/LanguageSpan'
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t }                      from '../_shared/modules/localization/localization'
 import describeRule               from '../_shared/helpers/recurringRuleToDescribtion'
 import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
+import { AVAILABLE_LANGUAGES }    from '../routes'
 
 import styles from './newReservation.page.scss'
 
@@ -142,6 +144,10 @@ class NewReservationPage extends Component {
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
+    const renderLanguage = lang => <LanguageSpan state={state} lang={lang} actions={actions} />
+    const separator = <span>|</span>
+    const addSeparator = (acc, lang, index, array) => array.length - 1 !== index ? [ ...acc, lang, separator ] : [ ...acc, lang ]
+
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -197,6 +203,11 @@ class NewReservationPage extends Component {
                     value={state.email.value}
                     highlight={state.highlight && state.user.id === -1}
                   />
+                }
+                {state.user && state.user.id < 0 &&
+                  <div className={styles.languagesSelector}>
+                    {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
+                  </div>
                 }
                 {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid && <div className={styles.fillInContact}>
                   {t([ 'newReservation', 'fillInContact' ])}
