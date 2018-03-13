@@ -229,7 +229,7 @@
 		"noFreePlace": "Žádná volná místa",
 		"note": "Poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
-		"fillInContact": "CS: newReservation.fillInContact"
+		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci."
 	},
 	"clients": {
 		"name": "jméno",

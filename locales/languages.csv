@@ -453,7 +453,7 @@ newReservation.flexiblePlaceSelected,flexible,flexibilní,elastyczne,flexibel
 newReservation.noFreePlace,No free place,Žádná volná místa,Brak wolnych miejsc,Keine freie Plätze
 newReservation.note,Note,Poznámka,Uwagi,Notiz
 newReservation.onetimeVisit,Onetime visitor,Jednorázový návštěvník,Jednorazowe odwiedziny,Einmaliger Besucher
-newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,,,
+newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
