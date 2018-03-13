@@ -21,7 +21,7 @@ class GarageSelector extends Component {
 
   selected = object => this.props.actions.setGarage(object.id)
 
-  occupancySelected = object => this.props.occupancyAction.loadGarage(object.id)
+  occupancySelected = object => this.props.occupancyAction.resetClientsLoadGarage(object.id)
 
   render() {
     const { state, occupancy } = this.props

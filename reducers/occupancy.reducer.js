@@ -3,6 +3,7 @@ import {
   OCCUPANCY_SET_GARAGES,
   OCCUPANCY_SET_GARAGE,
   OCCUPANCY_SET_CLIENTS,
+  OCCUPANCY_RESET_CLIENTS,
   OCCUPANCY_SET_CLIENT_ID,
   OCCUPANCY_SET_DURATION,
   OCCUPANCY_SET_FROM,
@@ -37,6 +38,12 @@ export default function occupancy(state = defaultState, action) {
     case OCCUPANCY_SET_CLIENTS:
       return { ...state,
         clients: action.value
+      }
+
+    case OCCUPANCY_RESET_CLIENTS:
+      return { ...state,
+        clients:    [],
+        client_ids: []
       }
 
     case OCCUPANCY_SET_CLIENT_ID: {
