@@ -74,7 +74,7 @@ export function resetClientsLoadGarage(id) {
 export function loadGarage(id) {
   return (dispatch, getState) => {
     const state = getState().occupancy
-    const garageId = id || state.garage.id
+    const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id)
 
     requestPromise(GARAGE_DETAILS_QUERY, {
       id:         garageId,
