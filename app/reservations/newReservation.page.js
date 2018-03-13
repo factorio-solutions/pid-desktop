@@ -156,6 +156,11 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
+                {state.user && state.user.id < 0 &&
+                  <div className={styles.languagesSelector}>
+                    {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
+                  </div>
+                }
                 {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
                   <Dropdown
                     editable={!ongoing}
@@ -203,11 +208,6 @@ class NewReservationPage extends Component {
                     value={state.email.value}
                     highlight={state.highlight && state.user.id === -1}
                   />
-                }
-                {state.user && state.user.id < 0 &&
-                  <div className={styles.languagesSelector}>
-                    {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
-                  </div>
                 }
                 {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid && <div className={styles.fillInContact}>
                   {t([ 'newReservation', 'fillInContact' ])}
