@@ -894,6 +894,8 @@
 		"reservationForm": "Reservation form",
 		"goPublic": "Go public",
 		"goPublicDescription": "Offer short-term parking to the PiD community",
+		"goInternal": "Internal paid reservations",
+		"goInternalDescription": "Offer short-term parking to your tenants",
 		"setting": "Settings",
 		"Preview": "Preview",
 		"startingMarketing": "Upgrading your billing plan. Redirecting...",
