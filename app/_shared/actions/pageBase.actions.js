@@ -481,6 +481,15 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+      case (contains(hash, 'modules/') && contains(hash, 'goInternal')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'modules'
+          hint = t([ 'pageBase', 'goInternalHint' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
       case (contains(hash, 'modules/') && contains(hash, 'flexiplace')):
         if (state.isGarageAdmin) {
           secondarySelected = 'modules'
