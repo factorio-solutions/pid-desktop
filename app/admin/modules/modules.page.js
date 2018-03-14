@@ -67,7 +67,7 @@ class ModulesPage extends Component {
       />,
       <Switch
         on={state.goInternal}
-        state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+        state={(userGarage === undefined) && 'disabled'}
         onClick={this.toGoInternalSettings}
       />
     ]
@@ -107,7 +107,7 @@ class ModulesPage extends Component {
         <Module
           name={t([ 'modules', 'goInternal' ])}
           description={t([ 'modules', 'goInternalDescription' ])}
-          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+          disabled={userGarage === undefined}
           actions={goInternalActions}
         />
         <Module
