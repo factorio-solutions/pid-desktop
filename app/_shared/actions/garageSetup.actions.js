@@ -24,6 +24,7 @@ export const GARAGE_SETUP_SET_IMG              = 'GARAGE_SETUP_SET_IMG'
 export const GARAGE_SETUP_SET_NAME             = 'GARAGE_SETUP_SET_NAME'
 export const GARAGE_SETUP_SET_IC               = 'GARAGE_SETUP_SET_IC'
 export const GARAGE_SETUP_SET_DIC              = 'GARAGE_SETUP_SET_DIC'
+export const GARAGE_SETUP_SET_IBAN             = 'GARAGE_SETUP_SET_IBAN'
 export const GARAGE_SETUP_SET_LINE_1           = 'GARAGE_SETUP_SET_LINE_1'
 export const GARAGE_SETUP_SET_LINE_2           = 'GARAGE_SETUP_SET_LINE_2'
 export const GARAGE_SETUP_SET_CITY             = 'GARAGE_SETUP_SET_CITY'
@@ -106,6 +107,12 @@ export function setIc(value) {
 
 export function setDic(value) {
   return { type: GARAGE_SETUP_SET_DIC
+         , value
+         }
+}
+
+export function setIban(value) {
+  return { type: GARAGE_SETUP_SET_IBAN
          , value
          }
 }
@@ -459,6 +466,7 @@ export function intiEditGarageGeneral(id) {
       dispatch(setName(response.data.garage.name))
       dispatch(setIc(response.data.garage.ic))
       dispatch(setDic(response.data.garage.dic))
+      dispatch(setIban(response.data.garage.iban))
       dispatch(setLPG(response.data.garage.lpg))
       dispatch(setLine1(response.data.garage.address.line_1))
       dispatch(setLine2(response.data.garage.address.line_2))
@@ -559,6 +567,7 @@ export function updateGarageGeneral(id, backUrl) {
                    , garage: { name:         state.name
                              , ic:           state.ic
                              , dic:          state.dic
+                             , iban:         state.iban
                              , lpg:          state.lpg
                              , img:          state.img === defaultImage ? null : state.img
                              , pid_tarif_id: state.tarif_id
@@ -667,6 +676,7 @@ export function submitGarage() {
              , { garage: { name:         state.name
                          , ic:           state.ic
                          , dic:          state.dic
+                         , iban:         state.iban
                          , lpg:          state.lpg
                          , img:          state.img === defaultImage ? null : state.img
                          , floors:       newFloors
@@ -688,12 +698,14 @@ export function submitGarage() {
              , "garageMutations"
              )
     } else { // garage edit
+      debbuger
       request( onSuccess
              , UPDATE_GARAGE
              , { id: state.id
                , garage: { name:         state.name
                          , ic:           state.ic
                          , dic:          state.dic
+                         , iban:         state.iban
                          , lpg:          state.lpg
                          , img:          state.img === defaultImage ? null : state.img
                          , floors:       newFloors

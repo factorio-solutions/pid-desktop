@@ -28,6 +28,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!) {
     name
     ic
     dic
+    iban
     img
     lpg
     length
@@ -72,6 +73,7 @@ export const GET_GARAGE_DETAILS_GENERAL =`query ($id: Id!) {
     name
     ic
     dic
+    iban
     img
     lpg
     address {

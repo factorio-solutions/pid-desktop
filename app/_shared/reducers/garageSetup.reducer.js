@@ -10,6 +10,7 @@ import {
   GARAGE_SETUP_SET_NAME,
   GARAGE_SETUP_SET_IC,
   GARAGE_SETUP_SET_DIC,
+  GARAGE_SETUP_SET_IBAN,
   GARAGE_SETUP_SET_LINE_1,
   GARAGE_SETUP_SET_LINE_2,
   GARAGE_SETUP_SET_CITY,
@@ -66,6 +67,7 @@ const defaultState =  { id:                undefined
                       , name:              ""
                       , ic:                ""
                       , dic:               ""
+                      , iban:              ""
                       , line_1:            ""
                       , line_2:            ""
                       , city:              ""
@@ -150,6 +152,11 @@ export default function garageSetup (reducerState = defaultState, action) {
     case GARAGE_SETUP_SET_DIC:
       return { ... reducerState
              , dic: action.value
+             }
+
+    case GARAGE_SETUP_SET_IBAN:
+      return { ... reducerState
+             , iban: action.value
              }
 
     case GARAGE_SETUP_SET_LINE_1:

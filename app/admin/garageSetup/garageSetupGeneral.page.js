@@ -110,6 +110,13 @@ class GarageSetupGeneralPage extends Component {
                 value={state.dic}
                 placeholder={t([ 'newClient', 'DICplaceholder' ])}
               />
+              <Input
+                onChange={actions.setIban}
+                label={t([ 'newClient', 'IBAB' ])}
+                error={t([ 'newClient', 'invalidIBAN' ])}
+                value={state.iban}
+                placeholder={t([ 'newClient', 'IBANplaceholder' ])}
+              />
               <div className={styles.checkbox}><input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG} />
                 <span onClick={actions.toggleLPG}>{t([ 'newGarage', 'lpgAllowed' ])}</span>
               </div>
