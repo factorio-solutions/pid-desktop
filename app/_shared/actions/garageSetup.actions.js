@@ -43,6 +43,7 @@ export const GARAGE_SETUP_SET_GATES            = 'GARAGE_SETUP_SET_GATES'
 export const GARAGE_SETUP_SET_ORDER            = 'GARAGE_SETUP_SET_ORDER'
 export const GARAGE_SETUP_SET_BOOKING_PAGE     = 'GARAGE_SETUP_SET_BOOKING_PAGE'
 export const GARAGE_SETUP_CLEAR_FORM           = 'GARAGE_SETUP_CLEAR_FORM'
+export const GARAGE_SETUP_SET_IBAN_PATTERN     = 'GARAGE_SETUP_SET_IBAN_PATTERN'
 
 
 export function setId(value) {
@@ -223,6 +224,11 @@ export function clearForm(value) {
   return { type: GARAGE_SETUP_CLEAR_FORM }
 }
 
+export function setIbanPattern(value) {
+  return { type: GARAGE_SETUP_SET_IBAN_PATTERN
+         , value
+         }
+}
 
 export function toggleHighlight(){ return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
 export function toggleLPG(){ return (dispatch, getState) => { dispatch(setLPG(!getState().garageSetup.lpg)) } }
@@ -336,8 +342,8 @@ export function loadAddressFromIc() {
         dispatch(setDic(res.DIC))
 
         const onCoordinatesFound = (lat, lng) => {
-          dispatch(setLat( lat ))
-          dispatch(setLng( lng ))
+          dispatch(setLat(lat))
+          dispatch(setLng(lng))
         }
         geocode(onCoordinatesFound, res.AD.UC, res.AA.N, res.AA.PSC, res.AA.NS)
       } catch (e) {
@@ -476,7 +482,8 @@ export function intiEditGarageGeneral(id) {
       dispatch(setCountry(response.data.garage.address.country))
       dispatch(setLat(response.data.garage.address.lat))
       dispatch(setLng(response.data.garage.address.lng))
-
+      
+      dispatch(setIbanPattern())
       dispatch(setFetching(false))
     }
 
