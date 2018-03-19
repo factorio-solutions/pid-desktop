@@ -28,7 +28,8 @@ import {
   GARAGE_SETUP_SET_GATES,
   GARAGE_SETUP_SET_ORDER,
   GARAGE_SETUP_SET_BOOKING_PAGE,
-  GARAGE_SETUP_CLEAR_FORM
+  GARAGE_SETUP_CLEAR_FORM,
+  GARAGE_SETUP_SET_IBAN_PATTERN
 }  from '../actions/garageSetup.actions'
 
 
@@ -246,6 +247,10 @@ export default function garageSetup (reducerState = defaultState, action) {
 
     case GARAGE_SETUP_CLEAR_FORM:
       return defaultState
+    case GARAGE_SETUP_SET_IBAN_PATTERN:
+      return { ... reducerState
+             , ibanPattern: action.value
+             }
 
     default:
       return reducerState
