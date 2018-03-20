@@ -413,6 +413,9 @@
 	},
 	"newGarage": {
 		"garage": "Garage",
+		"company": "Company",
+		"placeholderCompany": "MR.PARKIT s.r.o.",
+		"invalidCompany": "Invalid company name",
 		"places": "Spots",
 		"gates": "Gates",
 		"order": "Order",

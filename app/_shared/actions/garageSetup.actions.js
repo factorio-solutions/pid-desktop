@@ -22,6 +22,7 @@ export const GARAGE_SETUP_SET_AVAILABLE_TARIFS = 'GARAGE_SETUP_SET_AVAILABLE_TAR
 export const GARAGE_SETUP_SET_TARIF_ID         = 'GARAGE_SETUP_SET_TARIF_ID'
 export const GARAGE_SETUP_SET_IMG              = 'GARAGE_SETUP_SET_IMG'
 export const GARAGE_SETUP_SET_NAME             = 'GARAGE_SETUP_SET_NAME'
+export const GARAGE_SETUP_SET_COMPANY_NAME     = 'GARAGE_SETUP_SET_COMPANY_NAME'
 export const GARAGE_SETUP_SET_IC               = 'GARAGE_SETUP_SET_IC'
 export const GARAGE_SETUP_SET_DIC              = 'GARAGE_SETUP_SET_DIC'
 export const GARAGE_SETUP_SET_IBAN             = 'GARAGE_SETUP_SET_IBAN'
@@ -96,6 +97,12 @@ export function setImage(value) {
 
 export function setName(value) {
   return { type: GARAGE_SETUP_SET_NAME
+         , value
+         }
+}
+
+export function setCompanyName(value) {
+  return { type: GARAGE_SETUP_SET_COMPANY_NAME
          , value
          }
 }
@@ -470,6 +477,7 @@ export function intiEditGarageGeneral(id) {
       response.data.garage.img && dispatch(setImage(response.data.garage.img))
 
       dispatch(setName(response.data.garage.name))
+      dispatch(setCompanyName(response.data.garage.company))
       dispatch(setIc(response.data.garage.ic))
       dispatch(setDic(response.data.garage.dic))
       dispatch(setIban(response.data.garage.iban))
@@ -572,6 +580,7 @@ export function updateGarageGeneral(id, backUrl) {
 
     const garage = { id: +id
                    , garage: { name:         state.name
+                             , company:      state.company
                              , ic:           state.ic
                              , dic:          state.dic
                              , iban:         state.iban
@@ -681,6 +690,7 @@ export function submitGarage() {
       request( onSuccess
              , CREATE_NEW_GARAGE
              , { garage: { name:         state.name
+                         , company:      state.company
                          , ic:           state.ic
                          , dic:          state.dic
                          , iban:         state.iban
@@ -709,6 +719,7 @@ export function submitGarage() {
              , UPDATE_GARAGE
              , { id: state.id
                , garage: { name:         state.name
+                         , company:      state.company
                          , ic:           state.ic
                          , dic:          state.dic
                          , iban:         state.iban

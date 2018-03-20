@@ -70,6 +70,7 @@ class GarageSetupGeneralPage extends Component {
       if (state.dic && !state.ic) return false
       if (state.tarif_id === undefined) return false
       if (state.name === '') return false
+      if (state.company === '') return false
       if (state.city === '') return false
       if (state.line_1 === '') return false
       if (state.postal_code === '') return false
@@ -99,6 +100,14 @@ class GarageSetupGeneralPage extends Component {
                 error={t([ 'newGarage', 'invalidName' ])}
                 value={state.name}
                 placeholder={t([ 'newGarage', 'placeholder' ])}
+                highlight={state.highlight}
+              />
+              <Input
+                onChange={actions.setCompanyName}
+                label={t([ 'newGarage', 'company' ])}
+                error={t([ 'newGarage', 'invalidCompany' ])}
+                value={state.company}
+                placeholder={t([ 'newGarage', 'placeholderCompany' ])}
                 highlight={state.highlight}
               />
               <Input
