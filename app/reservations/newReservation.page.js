@@ -100,6 +100,9 @@ class NewReservationPage extends Component {
     const ongoing = state.reservation !== undefined && state.reservation.ongoing
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
+    const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
+    const selectedPlace = places.findById(state.place_id)
+    // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
 
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
@@ -233,6 +236,15 @@ class NewReservationPage extends Component {
                     style="reservation"
                     filter
                   />
+                }
+                {state.client_id && selectedPlace && selectedPlace.go_internal && <div>
+                  <input
+                    type="checkbox"
+                    checked={state.paidByHost}
+                    onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                  />
+                  {t([ 'newReservation', 'paidByHost' ])}
+                </div>
                 }
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
                   <Input
