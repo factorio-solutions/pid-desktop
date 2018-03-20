@@ -528,7 +528,10 @@
 		"IC": "Business ID No. (IČ)",
 		"invalidIC": "invalid IČ",
 		"DIC": "Tax ID No. (VAT no.)",
-		"invalidDIC": "invalid VAT no."
+		"invalidDIC": "invalid VAT no.",
+		"IBAN": "IBAN *",
+		"invalidIBAN": "Invalid IBAN",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
