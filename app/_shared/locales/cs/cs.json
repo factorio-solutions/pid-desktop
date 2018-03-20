@@ -411,6 +411,9 @@
 	},
 	"newGarage": {
 		"garage": "Garáž",
+		"company": "Firma",
+		"placeholderCompany": "MR.PARKIT s.r.o.",
+		"invalidCompany": "Neplatné jméno firmy",
 		"places": "Místa",
 		"gates": "Brány",
 		"order": "Pořadí",
