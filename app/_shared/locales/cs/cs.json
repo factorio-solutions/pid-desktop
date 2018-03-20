@@ -528,7 +528,10 @@
 		"IC": "IČ",
 		"invalidIC": "neplatné IČ",
 		"DIC": "DIČ",
-		"invalidDIC": "neplatné DIČ"
+		"invalidDIC": "neplatné DIČ",
+		"IBAN": "IBAN *",
+		"invalidIBAN": "Neplatný IBAN",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399"
 	},
 	"inviteUser": {
 		"selectUser": "Email(y) uživatele",

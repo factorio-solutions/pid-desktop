@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import Iban                            from 'iban'
 
 import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import UploadButton       from '../../_shared/components/buttons/UploadButton'
@@ -57,6 +58,13 @@ class GarageSetupGeneralPage extends Component {
         nav.to('/addFeatures')
       }
     }
+    const isIbanValid = iban => {
+      const valid = Iban.isValid(iban)
+      const pattern = valid ? undefined : '/(?=a)b/'
+      if (state.ibanPattern !== pattern) {
+        actions.setIbanPattern(pattern)
+      }
+    }
 
     const checkSubmitable = () => {
       if (state.dic && !state.ic) return false
@@ -66,7 +74,7 @@ class GarageSetupGeneralPage extends Component {
       if (state.line_1 === '') return false
       if (state.postal_code === '') return false
       if (state.country === '') return false
-
+      if (!Iban.isValid(state.iban)) return false
       return true
     }
 
@@ -79,7 +87,6 @@ class GarageSetupGeneralPage extends Component {
       }
       geocoder(onCoordinatesFound, state.line_1, state.city, state.postal_code, state.country)
     }
-
     return (
       <GarageSetupPage>
         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
@@ -109,6 +116,16 @@ class GarageSetupGeneralPage extends Component {
                 error={t([ 'newClient', 'invalidDIC' ])}
                 value={state.dic}
                 placeholder={t([ 'newClient', 'DICplaceholder' ])}
+              />
+              <Input
+                onChange={actions.setIban}
+                label={t([ 'newClient', 'IBAN' ])}
+                error={t([ 'newClient', 'invalidIBAN' ])}
+                value={state.iban}
+                placeholder={t([ 'newClient', 'IBANplaceholder' ])}
+                highlight={state.highlight}
+                pattern={state.ibanPattern}
+                isValid={isIbanValid}
               />
               <div className={styles.checkbox}><input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG} />
                 <span onClick={actions.toggleLPG}>{t([ 'newGarage', 'lpgAllowed' ])}</span>

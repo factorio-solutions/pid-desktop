@@ -10,6 +10,7 @@ import {
   GARAGE_SETUP_SET_NAME,
   GARAGE_SETUP_SET_IC,
   GARAGE_SETUP_SET_DIC,
+  GARAGE_SETUP_SET_IBAN,
   GARAGE_SETUP_SET_LINE_1,
   GARAGE_SETUP_SET_LINE_2,
   GARAGE_SETUP_SET_CITY,
@@ -27,7 +28,8 @@ import {
   GARAGE_SETUP_SET_GATES,
   GARAGE_SETUP_SET_ORDER,
   GARAGE_SETUP_SET_BOOKING_PAGE,
-  GARAGE_SETUP_CLEAR_FORM
+  GARAGE_SETUP_CLEAR_FORM,
+  GARAGE_SETUP_SET_IBAN_PATTERN
 }  from '../actions/garageSetup.actions'
 
 
@@ -66,6 +68,7 @@ const defaultState =  { id:                undefined
                       , name:              ""
                       , ic:                ""
                       , dic:               ""
+                      , iban:              ""
                       , line_1:            ""
                       , line_2:            ""
                       , city:              ""
@@ -152,6 +155,11 @@ export default function garageSetup (reducerState = defaultState, action) {
              , dic: action.value
              }
 
+    case GARAGE_SETUP_SET_IBAN:
+      return { ... reducerState
+             , iban: action.value
+             }
+
     case GARAGE_SETUP_SET_LINE_1:
       return { ... reducerState
              , line_1: action.value
@@ -235,6 +243,11 @@ export default function garageSetup (reducerState = defaultState, action) {
     case GARAGE_SETUP_SET_BOOKING_PAGE:
       return { ... reducerState
              , bookingPage: action.value
+             }
+
+    case GARAGE_SETUP_SET_IBAN_PATTERN:
+      return { ... reducerState
+             , ibanPattern: action.value
              }
 
     case GARAGE_SETUP_CLEAR_FORM:
