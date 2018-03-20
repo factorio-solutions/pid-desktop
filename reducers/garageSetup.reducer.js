@@ -245,12 +245,13 @@ export default function garageSetup (reducerState = defaultState, action) {
              , bookingPage: action.value
              }
 
-    case GARAGE_SETUP_CLEAR_FORM:
-      return defaultState
     case GARAGE_SETUP_SET_IBAN_PATTERN:
       return { ... reducerState
              , ibanPattern: action.value
              }
+
+    case GARAGE_SETUP_CLEAR_FORM:
+      return defaultState
 
     default:
       return reducerState
