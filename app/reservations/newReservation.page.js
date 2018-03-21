@@ -15,7 +15,6 @@ import Dropdown      from '../_shared/components/dropdown/Dropdown'
 import Form          from '../_shared/components/form/Form'
 import Modal         from '../_shared/components/modal/Modal'
 import Recurring     from '../_shared/components/recurring/Recurring'
-import LanguageSpan  from '../admin/users/components/LanguageSpan'
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
@@ -154,8 +153,8 @@ class NewReservationPage extends Component {
       actions.setLanguage(lang)
     }
 
-    const renderLanguageButton = lang => (<RoundButton 
-      state={state.language === lang && "selected"}
+    const renderLanguageButton = lang => (<RoundButton
+      state={state.language === lang && 'selected'}
       content={lang.toUpperCase()}
       onClick={languageButtonOnClick(lang)}
       type="action"
