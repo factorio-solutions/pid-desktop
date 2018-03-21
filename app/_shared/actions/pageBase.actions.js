@@ -68,6 +68,32 @@ export function alert(question) {
   }
 }
 
+export function setGaragePidTarif(value) {
+  return { type: PAGE_BASE_SET_PID_TARIF,
+    value
+  }
+}
+
+export function setIsGarageAdmin(value) {
+  return dispatch => {
+    dispatch({ type: PAGE_BASE_SET_IS_GARAGE_ADMIN,
+      value
+    })
+  }
+}
+
+export function setIsGarageReceptionist(value) {
+  return { type: PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
+    value
+  }
+}
+
+export function setIsGarageSecurity(value) {
+  return { type: PAGE_BASE_SET_IS_GARAGE_SECURITY,
+    value
+  }
+}
+
 export function setGarages(value) {
   return (dispatch, getState) => {
     dispatch({
@@ -75,7 +101,7 @@ export function setGarages(value) {
       value
     })
 
-    const selectedGarage = value.find(user_garage => user_garage.garage.id === getState().pageBase.garage)
+    const selectedGarage = value.find(userGarage => userGarage.garage.id === getState().pageBase.garage)
     if (selectedGarage) {
       dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
       dispatch(setIsGarageAdmin(selectedGarage.admin))
@@ -95,37 +121,11 @@ export function setGarage(value) {
       value
     })
 
-    const selectedGarage = getState().pageBase.garages.find(user_garage => user_garage.garage.id === value)
+    const selectedGarage = getState().pageBase.garages.find(userGarage => userGarage.garage.id === value)
     dispatch(setGaragePidTarif(selectedGarage ? selectedGarage.garage.active_pid_tarif_id : false))
     dispatch(setIsGarageAdmin(selectedGarage ? selectedGarage.admin : false))
     dispatch(setIsGarageReceptionist(selectedGarage ? selectedGarage.receptionist : false))
     dispatch(setIsGarageSecurity(selectedGarage ? selectedGarage.security : false))
-  }
-}
-
-export function setIsGarageAdmin(value) {
-  return dispatch => {
-    dispatch({ type: PAGE_BASE_SET_IS_GARAGE_ADMIN,
-      value
-    })
-  }
-}
-
-export function setGaragePidTarif(value) {
-  return { type: PAGE_BASE_SET_PID_TARIF,
-    value
-  }
-}
-
-export function setIsGarageReceptionist(value) {
-  return { type: PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
-    value
-  }
-}
-
-export function setIsGarageSecurity(value) {
-  return { type: PAGE_BASE_SET_IS_GARAGE_SECURITY,
-    value
   }
 }
 
@@ -217,19 +217,22 @@ export function fetchCurrentUser() {
   }
 }
 
-export function fetchGarages() {
+export function fetchGarages(goToDashboard = true) {
   return (dispatch, getState) => {
     const onSuccess = response => {
-      const user_garages = response.data.user_garages
-        .filter(user_garage => user_garage.user_id === response.data.current_user.id) // find garages of current user
-        .filter(user_garage => !user_garage.pending) // find only garages that are not pending
+      const userGarages = response.data.user_garages
+        .filter(userGarage => userGarage.user_id === response.data.current_user.id) // find garages of current user
+        .filter(userGarage => !userGarage.pending) // find only garages that are not pending
 
-      dispatch(setGarages(user_garages))
+      dispatch(setGarages(userGarages))
       dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0]) || undefined)) // parse current garage from  URL
 
-      if (user_garages.length > 0 && (getState().pageBase.garage === undefined || user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined)) {
-        nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
-        user_garages.length > 0 && dispatch(setGarage(user_garages[0].garage.id))
+      if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
+        // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
+        if (goToDashboard) {
+          nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
+        }
+        userGarages.length > 0 && dispatch(setGarage(userGarages[0].garage.id))
       }
     }
     request(onSuccess, GET_GARAGES)
@@ -287,10 +290,10 @@ export function initialPageBase() {
   }
 }
 
-function setAll(selected, secondartMenu, secondarySelected, hint, href) {
+function setAll(selected, secondaryMenu, secondarySelected, hint, href) {
   return dispatch => {
     dispatch(setSelected(selected))
-    dispatch(setSecondaryMenu(secondartMenu))
+    dispatch(setSecondaryMenu(secondaryMenu))
     dispatch(setSecondaryMenuSelected(secondarySelected))
     dispatch(setHint(hint, href))
   }

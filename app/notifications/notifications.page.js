@@ -53,13 +53,13 @@ class NotificationsPage extends Component {
           <span>{returnMessage()}</span> <br />
           {notification.custom_message && <span>{notification.creator.full_name} {t([ 'notifications', 'sais' ])}: "{notification.custom_message}"</span>}{notification.custom_message && <br />}
           {/* }<span className={styles.expiration}>{t(['notifications','expiration'])} {moment(notification.expiration).format('ddd DD.MM.YYYY')}</span> */}
-          {notification.confirmed == undefined ?
+          {!notification.confirmed ?
             <span className={styles.floatRight}>
               {notification.notification_type.indexOf('No') !== -1 && <RoundButton content={<span className="fa fa-times" aria-hidden="true" />} onClick={() => { destroyClick(notification) }} type="remove" question={t([ 'notifications', 'declineQuestion' ])} />}
               {notification.notification_type.indexOf('Yes') !== -1 && <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={() => { confirmClick(notification) }} type="confirm" />}
             </span>
                     : <span> {notification.confirmed ? t([ 'notifications', 'NotificationAccepted' ]) : t([ 'notifications', 'NotificationDeclined' ]) } {moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}</span>
-                  }
+          }
         </div>)
       }
 

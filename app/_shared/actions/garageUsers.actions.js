@@ -39,14 +39,14 @@ export function initGarageUsers (garage_id){
   }
 }
 
-export function destroyGarageUser(garage_id, user_id){
+export function destroyGarageUser(garage_id, user_id) {
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      if (response.data.destroy_user_garage == null){
-        dispatch(setError( t(['garageUsers', 'noRights']) ))
+    const onSuccess = response => {
+      if (response.data.destroy_user_garage == null) {
+        dispatch(setError(t([ 'garageUsers', 'noRights' ])))
       } else {
-        dispatch( initGarageUsers(response.data.destroy_user_garage.garage_id) )
-        dispatch( fetchGarages() )
+        dispatch(initGarageUsers(response.data.destroy_user_garage.garage_id))
+        dispatch(fetchGarages())
       }
     }
     request(onSuccess, DESTROY_GARAGEUSERS, {
