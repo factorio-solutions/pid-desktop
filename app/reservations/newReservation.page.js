@@ -19,7 +19,7 @@ import LanguageSpan  from '../admin/users/components/LanguageSpan'
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
-import { t }                      from '../_shared/modules/localization/localization'
+import { t, getLanguage }         from '../_shared/modules/localization/localization'
 import describeRule               from '../_shared/helpers/recurringRuleToDescribtion'
 import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
 import { AVAILABLE_LANGUAGES }    from '../routes'
@@ -33,6 +33,12 @@ class NewReservationPage extends Component {
     params:   PropTypes.object,
     pageBase: PropTypes.object,
     actions:  PropTypes.object
+  }
+
+  constructor(props) {
+    super(props)
+    // Initialize language of communication
+    this.props.actions.setLanguage(getLanguage())
   }
 
   componentDidMount() {
@@ -144,9 +150,16 @@ class NewReservationPage extends Component {
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
-    const renderLanguage = lang => <LanguageSpan state={state} lang={lang} actions={actions} />
-    const separator = <span>|</span>
-    const addSeparator = (acc, lang, index, array) => array.length - 1 !== index ? [ ...acc, lang, separator ] : [ ...acc, lang ]
+    const languageButtonOnClick = lang => () => {
+      actions.setLanguage(lang)
+    }
+
+    const renderLanguageButton = lang => (<RoundButton 
+      state={state.language === lang && "selected"}
+      content={lang.toUpperCase()}
+      onClick={languageButtonOnClick(lang)}
+      type="action"
+    />)
 
     return (
       <PageBase>
@@ -156,11 +169,6 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {state.user && state.user.id < 0 &&
-                  <div className={styles.languagesSelector}>
-                    {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
-                  </div>
-                }
                 {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
                   <Dropdown
                     editable={!ongoing}
@@ -180,34 +188,36 @@ class NewReservationPage extends Component {
                 />
 
                 {state.user && state.user.id < 0 &&
-                  <PatternInput
-                    onChange={actions.setHostName}
-                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
-                    error={t([ 'signup_page', 'nameInvalid' ])}
-                    pattern="^(?!\s*$).+"
-                    value={state.name.value}
-                    highlight={state.highlight}
-                  />
-                }
-                {state.user && state.user.id < 0 &&
-                  <PatternInput
-                    onChange={actions.setHostPhone}
-                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
-                    error={t([ 'signup_page', 'phoneInvalid' ])}
-                    pattern="\+[\d]{2,4}[\d]{3,}"
-                    value={state.phone.value}
-                    highlight={state.highlight && state.user.id === -1}
-                  />
-                }
-                {state.user && state.user.id < 0 &&
-                  <PatternInput
-                    onChange={actions.setHostEmail}
-                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
-                    error={t([ 'signup_page', 'emailInvalid' ])}
-                    pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                    value={state.email.value}
-                    highlight={state.highlight && state.user.id === -1}
-                  />
+                  <div>
+                    <PatternInput
+                      onChange={actions.setHostName}
+                      label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
+                      error={t([ 'signup_page', 'nameInvalid' ])}
+                      pattern="^(?!\s*$).+"
+                      value={state.name.value}
+                      highlight={state.highlight}
+                    />
+                    <div className={styles.languagesSelector}>
+                      <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
+                      {AVAILABLE_LANGUAGES.map(renderLanguageButton)}
+                    </div>
+                    <PatternInput
+                      onChange={actions.setHostPhone}
+                      label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
+                      error={t([ 'signup_page', 'phoneInvalid' ])}
+                      pattern="\+[\d]{2,4}[\d]{3,}"
+                      value={state.phone.value}
+                      highlight={state.highlight && state.user.id === -1}
+                    />
+                    <PatternInput
+                      onChange={actions.setHostEmail}
+                      label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
+                      error={t([ 'signup_page', 'emailInvalid' ])}
+                      pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                      value={state.email.value}
+                      highlight={state.highlight && state.user.id === -1}
+                    />
+                  </div>
                 }
                 {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid && <div className={styles.fillInContact}>
                   {t([ 'newReservation', 'fillInContact' ])}
