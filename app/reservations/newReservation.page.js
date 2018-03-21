@@ -15,12 +15,14 @@ import Dropdown      from '../_shared/components/dropdown/Dropdown'
 import Form          from '../_shared/components/form/Form'
 import Modal         from '../_shared/components/modal/Modal'
 import Recurring     from '../_shared/components/recurring/Recurring'
+import LanguageSpan  from '../admin/users/components/LanguageSpan'
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t }                      from '../_shared/modules/localization/localization'
 import describeRule               from '../_shared/helpers/recurringRuleToDescribtion'
 import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
+import { AVAILABLE_LANGUAGES }    from '../routes'
 
 import styles from './newReservation.page.scss'
 
@@ -38,8 +40,14 @@ class NewReservationPage extends Component {
   }
 
   userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
-    label:   user.full_name,
-    order:   user.id === this.props.pageBase.current_user.id ? 1 : user.id === -1 ? 2 : undefined,
+    label: user.full_name,
+    order: user.id === this.props.pageBase.current_user.id ?
+      1 :
+      user.id === -1 ?
+        2 :
+        user.id === -2 ?
+          3 :
+          undefined,
     onClick: () => this.props.actions.downloadUser(this.props.state.availableUsers[index].id)
   }))
 
@@ -95,14 +103,15 @@ class NewReservationPage extends Component {
 
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
-      if (state.car_id === undefined && state.carLicencePlate === '') return false
+      if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
+      if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
     const placeLabel = () => {
       if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'No available places' ])
+        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'noFreePlace' ])
       } else {
         const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
         const place = floor && floor.places.findById(state.place_id)
@@ -135,6 +144,10 @@ class NewReservationPage extends Component {
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
+    const renderLanguage = lang => <LanguageSpan state={state} lang={lang} actions={actions} />
+    const separator = <span>|</span>
+    const addSeparator = (acc, lang, index, array) => array.length - 1 !== index ? [ ...acc, lang, separator ] : [ ...acc, lang ]
+
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -143,6 +156,11 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
+                {state.user && state.user.id < 0 &&
+                  <div className={styles.languagesSelector}>
+                    {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
+                  </div>
+                }
                 {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
                   <Dropdown
                     editable={!ongoing}
@@ -161,35 +179,39 @@ class NewReservationPage extends Component {
                   align="center"
                 />
 
-                {state.user && state.user.id === -1 &&
+                {state.user && state.user.id < 0 &&
                   <PatternInput
                     onChange={actions.setHostName}
-                    label={t([ 'newReservation', 'hostsName' ])}
+                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                     error={t([ 'signup_page', 'nameInvalid' ])}
                     pattern="^(?!\s*$).+"
                     value={state.name.value}
                     highlight={state.highlight}
                   />
                 }
-                {state.user && state.user.id === -1 &&
+                {state.user && state.user.id < 0 &&
                   <PatternInput
                     onChange={actions.setHostPhone}
-                    label={t([ 'newReservation', 'hostsPhone' ])}
+                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                     error={t([ 'signup_page', 'phoneInvalid' ])}
                     pattern="\+[\d]{2,4}[\d]{3,}"
                     value={state.phone.value}
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id === -1}
                   />
                 }
-                {state.user && state.user.id === -1 &&
+                {state.user && state.user.id < 0 &&
                   <PatternInput
                     onChange={actions.setHostEmail}
-                    label={t([ 'newReservation', 'hostsEmail' ])}
+                    label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
                     error={t([ 'signup_page', 'emailInvalid' ])}
                     pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                     value={state.email.value}
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id === -1}
                   />
+                }
+                {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid && <div className={styles.fillInContact}>
+                  {t([ 'newReservation', 'fillInContact' ])}
+                </div>
                 }
 
                 {state.user &&
@@ -222,7 +244,7 @@ class NewReservationPage extends Component {
                     placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
                     type="text"
                     align="center"
-                    highlight={state.highlight}
+                    highlight={state.highlight && state.user.id !== -2}
                   /> :
                   <Dropdown
                     editable={!ongoing}

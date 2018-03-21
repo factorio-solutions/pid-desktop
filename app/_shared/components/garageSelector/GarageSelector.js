@@ -7,26 +7,38 @@ import Dropdown from '../dropdown/Dropdown'
 import styles from './GarageSelector.scss'
 
 import * as pageBaseActions from '../../actions/pageBase.actions'
+import * as occupancyActions from '../../actions/occupancy.actions'
 import { t } from '../../modules/localization/localization'
 
 
 class GarageSelector extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object
+    state:           PropTypes.object,
+    occupancy:       PropTypes.object,
+    actions:         PropTypes.object,
+    occupancyAction: PropTypes.object
   }
 
-  render() {
-    const { state, actions } = this.props
+  selected = object => this.props.actions.setGarage(object.id)
 
-    const content = state.garages.map(userGarage => userGarage.garage)
-    const selectedIndex = content.findIndex(garage => garage.id === state.garage)
+  occupancySelected = object => this.props.occupancyAction.resetClientsLoadGarage(object.id)
+
+  render() {
+    const { state, occupancy } = this.props
+
+    const content = window.location.hash.includes('occupancy') ?
+      occupancy.garages :
+      state.garages.map(userGarage => userGarage.garage)
+
+    const selectedIndex = window.location.hash.includes('occupancy') ?
+      content.findIndex(garage => garage.id === (occupancy.garage && occupancy.garage.id)) :
+      content.findIndex(garage => garage.id === state.garage)
 
     if (content === undefined || content.length === 0 || selectedIndex === -1) return null
 
-    const selected = object => actions.setGarage(object.id)
-
-    const dropdownContent = content.map(object => ({ label: object.name, onClick: () => selected(object) }))
+    const dropdownContent = window.location.hash.includes('occupancy') ?
+      content.map(object => ({ label: object.name, onClick: () => this.occupancySelected(object) })) :
+      content.map(object => ({ label: object.name, onClick: () => this.selected(object) }))
 
     return (
       <div>
@@ -40,6 +52,6 @@ class GarageSelector extends Component {
 }
 
 export default connect(
-  state => ({ state: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(pageBaseActions, dispatch) })
+  state => ({ state: state.pageBase, occupancy: state.occupancy }),
+  dispatch => ({ actions: bindActionCreators(pageBaseActions, dispatch), occupancyAction: bindActionCreators(occupancyActions, dispatch) })
 )(GarageSelector)

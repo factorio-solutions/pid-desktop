@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
@@ -53,6 +53,7 @@
     "fingerprintjs2": "^1.5.1",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.0.19",
+    "iban": "0.0.10",
     "immutability-helper": "^2.2.3",
     "is-utf8": "^0.2.1",
     "jszip": "^3.1.3",

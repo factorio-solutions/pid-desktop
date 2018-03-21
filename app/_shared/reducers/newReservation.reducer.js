@@ -10,6 +10,7 @@ import {
   NEW_RESERVATION_SET_HOST_NAME,
   NEW_RESERVATION_SET_HOST_PHONE,
   NEW_RESERVATION_SET_HOST_EMAIL,
+  NEW_RESERVATION_SET_HOST_LANGUAGE,
 
   NEW_RESERVATION_SET_CLIENT_ID,
   NEW_RESERVATION_SET_RECURRING_RULE,
@@ -41,9 +42,10 @@ const defaultState = {
   availableUsers: [], // array of other available users
   reservation:    undefined, // object with reservation to be edited
 
-  name:  { value: '', valid: false },
-  phone: { value: '', valid: false },
-  email: { value: '', valid: false },
+  name:     { value: '', valid: false },
+  phone:    { value: '', valid: false },
+  email:    { value: '', valid: false },
+  language: 'en',
 
   client_id:                undefined, // currently selected client
   recurringRule:            undefined, // rule in string
@@ -105,6 +107,11 @@ export default function newReservation(state = defaultState, action) {
     case NEW_RESERVATION_SET_HOST_EMAIL:
       return { ...state,
         email: action.value
+      }
+
+    case NEW_RESERVATION_SET_HOST_LANGUAGE:
+      return { ...state,
+        language: action.value
       }
 
     case NEW_RESERVATION_SET_CLIENT_ID:

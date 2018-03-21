@@ -43,6 +43,7 @@ export const NEW_RESERVATION_SET_RESERVATION = 'NEW_RESERVATION_SET_RESERVATION'
 export const NEW_RESERVATION_SET_HOST_NAME = 'NEW_RESERVATION_SET_HOST_NAME'
 export const NEW_RESERVATION_SET_HOST_PHONE = 'NEW_RESERVATION_SET_HOST_PHONE'
 export const NEW_RESERVATION_SET_HOST_EMAIL = 'NEW_RESERVATION_SET_HOST_EMAIL'
+export const NEW_RESERVATION_SET_HOST_LANGUAGE = 'NEW_RESERVATION_SET_HOST_LANGUAGE'
 export const NEW_RESERVATION_SET_CLIENT_ID = 'NEW_RESERVATION_SET_CLIENT_ID'
 export const NEW_RESERVATION_SET_RECURRING_RULE = 'NEW_RESERVATION_SET_RECURRING_RULE'
 export const NEW_RESERVATION_SHOW_RECURRING = 'NEW_RESERVATION_SHOW_RECURRING'
@@ -75,6 +76,7 @@ export const setLoading = actionFactory(NEW_RESERVATION_SET_LOADING)
 export const setHighlight = actionFactory(NEW_RESERVATION_SET_HIGHLIGHT)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
+export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -300,6 +302,10 @@ export function setInitialStore(id) {
           full_name: t([ 'newReservation', 'newHost' ]),
           id:        -1
         })
+        users.push({
+          full_name: t([ 'newReservation', 'onetimeVisit' ]),
+          id:        -2
+        })
       }
 
       dispatch(setAvailableUsers(users))
@@ -365,7 +371,7 @@ export function downloadUser(id) {
     Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
       values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id: -1, reservable_cars: [] }),
+      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
         availableGarages: values[1].reservable_garages,
         availableClients: values[2].reservable_clients
       }))
@@ -557,15 +563,15 @@ export function submitReservation(id) {
              )
     }
 
-    if (state.user && state.user.id === -1) { // if  new Host being created during new reservation
+    if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
       requestPromise(USER_AVAILABLE, {
         user: {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
           phone:     state.phone.value,
-          language:  getState().pageBase.current_user.language
+          language:  state.language
         },
-        client_user: state.client_id ? {
+        client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
           host:      true,
           message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
@@ -573,7 +579,7 @@ export function submitReservation(id) {
       }).then(data => {
         if (data.user_by_email !== null) { // if the user exists
           // invite to client
-          if (state.client_id) { // if client is selected then invite as host
+          if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
             requestPromise(ADD_CLIENT_USER, {
               user_id:     data.user_by_email.id,
               client_user: {
