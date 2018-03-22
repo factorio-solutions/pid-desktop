@@ -35,9 +35,9 @@
 }
 
 .languagesSelector {
-  margin-top: 12px;
-  padding:    12px 0;
-  text-align: center;
+  padding:       12px 0;
+  border-bottom: 1px solid $gray;
+  text-align:    center;
 }
 
 @media (min-width: $collapseWidth) {
