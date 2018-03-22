@@ -231,7 +231,8 @@
 		"note": "Poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
-		"paidByHost": "Rezervaci platí host"
+		"paidByHost": "Rezervaci platí host",
+		"languageSelector": "Zvolte jazyk komunikace"
 	},
 	"clients": {
 		"name": "jméno",
