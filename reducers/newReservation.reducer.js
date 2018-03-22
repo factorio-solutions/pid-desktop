@@ -31,6 +31,7 @@ import {
   NEW_RESERVATION_SET_DURATION_DATE,
   NEW_RESERVATION_SET_LOADING,
   NEW_RESERVATION_SET_HIGHLIGHT,
+  NEW_RESERVATION_SET_SEND_SMS,
   NEW_RESERVATION_SET_ERROR,
 
   NEW_RESERVATION_CLEAR_FORM
@@ -66,6 +67,7 @@ const defaultState = {
   durationDate: false, // set duration or end of parking?
   loading:      false,
   hightlight:   false,
+  sendSMS:      false,
   error:        undefined
 }
 
@@ -203,6 +205,11 @@ export default function newReservation(state = defaultState, action) {
     case NEW_RESERVATION_SET_HIGHLIGHT:
       return { ...state,
         highlight: action.value
+      }
+
+    case NEW_RESERVATION_SET_SEND_SMS:
+      return { ...state,
+        sendSMS: action.value
       }
 
     case NEW_RESERVATION_SET_ERROR:
