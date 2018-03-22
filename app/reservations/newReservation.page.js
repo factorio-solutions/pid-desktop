@@ -304,6 +304,13 @@ class NewReservationPage extends Component {
 
                 <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
                 <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+
+                {state.client_id && state.user && state.user.availableClients.findById(state.client_id) && state.user.availableClients.findById(state.client_id).has_sms_api_token &&
+                  <div className={styles.sendSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
+                    <input type="checkbox" checked={state.sendSMS} />
+                    {t([ 'newReservation', 'sendSms' ])}
+                  </div>
+                }
               </Form>
             </div>
           </div>
