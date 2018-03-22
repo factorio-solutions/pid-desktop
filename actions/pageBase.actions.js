@@ -39,7 +39,10 @@ export const setSuccess = actionFactory(PAGE_BASE_SET_SUCCESS)
 export const setCustomModal = actionFactory(PAGE_BASE_SET_CUSTOM_MODAL)
 export const setShowModal = actionFactory(PAGE_BASE_SET_NOTIFICATIONS_MODAL)
 export const setCurrentUser = actionFactory(PAGE_BASE_SET_CURRENT_USER)
-
+export const setGaragePidTarif = actionFactory(PAGE_BASE_SET_PID_TARIF)
+export const setIsGarageAdmin = actionFactory(PAGE_BASE_SET_IS_GARAGE_ADMIN)
+export const setIsGarageReceptionist = actionFactory(PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST)
+export const setIsGarageSecurity = actionFactory(PAGE_BASE_SET_IS_GARAGE_SECURITY)
 
 export function setHint(hint, href) {
   return {
@@ -47,7 +50,6 @@ export function setHint(hint, href) {
     value: { hint, href }
   }
 }
-
 
 export function confirm(question, callback) {
   return dispatch => {
@@ -65,32 +67,6 @@ export function alert(question) {
     const onConfirm = () => dispatch(setCustomModal())
 
     dispatch(setCustomModal(<AlertModal question={question} onConfirm={onConfirm} />))
-  }
-}
-
-export function setGaragePidTarif(value) {
-  return { type: PAGE_BASE_SET_PID_TARIF,
-    value
-  }
-}
-
-export function setIsGarageAdmin(value) {
-  return dispatch => {
-    dispatch({ type: PAGE_BASE_SET_IS_GARAGE_ADMIN,
-      value
-    })
-  }
-}
-
-export function setIsGarageReceptionist(value) {
-  return { type: PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
-    value
-  }
-}
-
-export function setIsGarageSecurity(value) {
-  return { type: PAGE_BASE_SET_IS_GARAGE_SECURITY,
-    value
   }
 }
 
@@ -204,7 +180,7 @@ export function analyticsClick() {
 }
 
 function contains(string, text) {
-  return string.indexOf(text) != -1
+  return string.indexOf(text) !== -1
 }
 
 export function fetchCurrentUser() {
@@ -225,13 +201,11 @@ export function fetchGarages(goToDashboard = true) {
         .filter(userGarage => !userGarage.pending) // find only garages that are not pending
 
       dispatch(setGarages(userGarages))
-      dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0]) || undefined)) // parse current garage from  URL
+      dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined)) // parse current garage from  URL
 
       if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
         // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
-        if (goToDashboard) {
-          nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
-        }
+        goToDashboard && nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
         userGarages.length > 0 && dispatch(setGarage(userGarages[0].garage.id))
       }
     }
@@ -239,56 +213,6 @@ export function fetchGarages(goToDashboard = true) {
   }
 }
 
-
-export function initialPageBase() {
-  return (dispatch, getState) => {
-    const hash = window.location.hash
-
-    if (!contains(hash, 'admin') && !contains(hash, 'analytics')) {
-      dispatch(setShowSecondaryMenu(false))
-    }
-
-    switch (true) { // MainMenu
-      case contains(hash, 'dashboard'):
-        dispatch(toDashboard())
-        break
-      case (contains(hash, 'reservations') && !contains(hash, 'analytics')):
-        dispatch(toReservations())
-        break
-      case contains(hash, 'occupancy'):
-        dispatch(toOccupancy())
-        break
-      case (contains(hash, 'garage') && !contains(hash, 'admin') && !contains(hash, 'garageSetup') && !contains(hash, 'analytics')):
-        dispatch(toGarage())
-        break
-      case contains(hash, 'issues'):
-        dispatch(toIssues())
-        break
-      case contains(hash, 'analytics'):
-        dispatch(toAnalytics())
-        break
-      case contains(hash, 'admin'):
-        dispatch(toAdmin())
-        break
-      case contains(hash, 'addFeatures'):
-        dispatch(toAddFeatures())
-        break
-      case contains(hash, 'profile'):
-        dispatch(toProfile())
-        break
-      case contains(hash, 'notifications'):
-        dispatch(toNotifications())
-        break
-    }
-
-    if (getState().pageBase.current_user === undefined) { // if no information about current user
-      dispatch(fetchCurrentUser())
-    }
-    if (getState().pageBase.garages.length === 0) { // if no garages
-      dispatch(fetchGarages())
-    }
-  }
-}
 
 function setAll(selected, secondaryMenu, secondarySelected, hint, href) {
   return dispatch => {
@@ -400,7 +324,6 @@ export function toAdmin() {
   return (dispatch, getState) => {
     const state = getState().pageBase
     const hash = window.location.hash
-    const garage = getState().pageBase.garage
     let secondarySelected
     let hint
     let hintVideo
@@ -697,5 +620,56 @@ export function toProfile() {
 export function toNotifications() {
   return dispatch => {
     dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'notificationsHint' ]), 'https://www.youtube.com/'))
+  }
+}
+
+
+export function initialPageBase() {
+  return (dispatch, getState) => {
+    const hash = window.location.hash
+
+    if (!contains(hash, 'admin') && !contains(hash, 'analytics')) {
+      dispatch(setShowSecondaryMenu(false))
+    }
+
+    switch (true) { // MainMenu
+      case contains(hash, 'dashboard'):
+        dispatch(toDashboard())
+        break
+      case (contains(hash, 'reservations') && !contains(hash, 'analytics')):
+        dispatch(toReservations())
+        break
+      case contains(hash, 'occupancy'):
+        dispatch(toOccupancy())
+        break
+      case (contains(hash, 'garage') && !contains(hash, 'admin') && !contains(hash, 'garageSetup') && !contains(hash, 'analytics')):
+        dispatch(toGarage())
+        break
+      case contains(hash, 'issues'):
+        dispatch(toIssues())
+        break
+      case contains(hash, 'analytics'):
+        dispatch(toAnalytics())
+        break
+      case contains(hash, 'admin'):
+        dispatch(toAdmin())
+        break
+      case contains(hash, 'addFeatures'):
+        dispatch(toAddFeatures())
+        break
+      case contains(hash, 'profile'):
+        dispatch(toProfile())
+        break
+      case contains(hash, 'notifications'):
+        dispatch(toNotifications())
+        break
+    }
+
+    if (getState().pageBase.current_user === undefined) { // if no information about current user
+      dispatch(fetchCurrentUser())
+    }
+    if (getState().pageBase.garages.length === 0) { // if no garages
+      dispatch(fetchGarages())
+    }
   }
 }
