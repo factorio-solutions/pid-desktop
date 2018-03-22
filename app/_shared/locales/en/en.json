@@ -537,7 +537,10 @@
 		"invalidDIC": "invalid VAT no.",
 		"IBAN": "IBAN *",
 		"invalidIBAN": "Invalid IBAN",
-		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399"
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "invalid token",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
