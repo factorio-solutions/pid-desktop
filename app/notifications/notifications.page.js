@@ -51,15 +51,26 @@ class NotificationsPage extends Component {
 
         return (<div>
           <span>{returnMessage()}</span> <br />
-          {notification.custom_message && <span>{notification.creator.full_name} {t([ 'notifications', 'sais' ])}: "{notification.custom_message}"</span>}{notification.custom_message && <br />}
-          {/* }<span className={styles.expiration}>{t(['notifications','expiration'])} {moment(notification.expiration).format('ddd DD.MM.YYYY')}</span> */}
-          {notification.confirmed == undefined ?
+          {notification.custom_message && <span>{notification.creator.full_name} {t([ 'notifications', 'sais' ])}: {notification.custom_message}</span>}{notification.custom_message && <br />}
+          {!notification.confirmed ?
             <span className={styles.floatRight}>
-              {notification.notification_type.indexOf('No') !== -1 && <RoundButton content={<span className="fa fa-times" aria-hidden="true" />} onClick={() => { destroyClick(notification) }} type="remove" question={t([ 'notifications', 'declineQuestion' ])} />}
-              {notification.notification_type.indexOf('Yes') !== -1 && <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={() => { confirmClick(notification) }} type="confirm" />}
+              {notification.notification_type.indexOf('No') !== -1 && <RoundButton
+                content={<span className="fa fa-times" aria-hidden="true" />}
+                onClick={() => { destroyClick(notification) }}
+                type="remove"
+                question={t([ 'notifications', 'declineQuestion' ])}
+              />}
+              {notification.notification_type.indexOf('Yes') !== -1 && <RoundButton
+                content={<span className="fa fa-check" aria-hidden="true" />}
+                onClick={() => { confirmClick(notification) }}
+                type="confirm"
+              />}
+            </span> :
+            <span>
+              {notification.confirmed ? t([ 'notifications', 'NotificationAccepted' ]) : t([ 'notifications', 'NotificationDeclined' ]) }
+              {moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}
             </span>
-                    : <span> {notification.confirmed ? t([ 'notifications', 'NotificationAccepted' ]) : t([ 'notifications', 'NotificationDeclined' ]) } {moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}</span>
-                  }
+          }
         </div>)
       }
 
@@ -72,17 +83,6 @@ class NotificationsPage extends Component {
       }
     })
 
-    // const filters= <div>
-    //         <ButtonStack divider={<span>|</span>} style='horizontal' >
-    //           <TextButton content={t(['notifications','past'])} onClick={() => {actions.setPast(true)}} state={state.past && 'selected'}/>
-    //           <TextButton content={t(['notifications','current'])} onClick={() => {actions.setPast(false)}} state={!state.past && 'selected'}/>
-    //         </ButtonStack>
-    //         <ButtonStack divider={<span>|</span>} style='horizontal' >
-    //           <TextButton content={t(['pageBase','cardView'])} onClick={() => {actions.setTableView(false)}} state={!state.tableView && 'selected'}/>
-    //           <TextButton content={t(['pageBase','tableView'])} onClick={() => {actions.setTableView(true)}} state={state.tableView && 'selected'}/>
-    //         </ButtonStack>
-    //       </div>
-
     return (
       <PageBase>
         <div>
@@ -94,11 +94,7 @@ class NotificationsPage extends Component {
 }
 
 
-export default connect(state => {
-  const { notifications } = state
-  return ({
-    state: notifications
-  })
-}, dispatch => ({
-  actions: bindActionCreators(notificationsActions, dispatch)
-}))(NotificationsPage)
+export default connect(
+  state => ({ state: state.notifications }),
+  dispatch => ({ actions: bindActionCreators(notificationsActions, dispatch) })
+)(NotificationsPage)
