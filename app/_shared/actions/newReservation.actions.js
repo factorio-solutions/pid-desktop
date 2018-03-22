@@ -569,7 +569,8 @@ export function submitReservation(id) {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
           phone:     state.phone.value,
-          language:  state.language
+          language:  state.language,
+          onetime:   state.user.id === -2
         },
         client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,

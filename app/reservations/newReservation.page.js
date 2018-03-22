@@ -36,6 +36,9 @@ class NewReservationPage extends Component {
   }
 
   componentDidMount() {
+    if (this.props.state.reservation && !this.props.params.id) {
+      this.props.actions.clearForm()
+    }
     this.props.actions.setInitialStore(this.props.params.id)
   }
 
@@ -75,9 +78,13 @@ class NewReservationPage extends Component {
 
   handleBack = () => nav.to('/reservations')
 
-  toOverview = () => this.props.params.id ?
-    this.props.actions.submitReservation(+this.props.params.id) :
-    nav.to('/reservations/newReservation/overview')
+  toOverview = () => {
+    if (this.props.params.id) {
+      this.props.actions.submitReservation(+this.props.params.id)
+    } else {
+      nav.to('/reservations/newReservation/overview')
+    }
+  }
 
   handleDuration = () => this.props.actions.setDurationDate(true)
 
@@ -98,6 +105,8 @@ class NewReservationPage extends Component {
     const { state, actions, pageBase } = this.props
 
     const ongoing = state.reservation !== undefined && state.reservation.ongoing
+
+    const onetime = state.reservation !== undefined && state.reservation.onetime
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
 
@@ -142,12 +151,19 @@ class NewReservationPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.modalClick} type="confirm" />
     </div>)
 
+    const getUserToSelect = () => {
+      if (state.reservation && state.reservation.onetime) {
+        return state.availableUsers.findIndex(user => user.id === -2)
+      } else {
+        return state.availableUsers.findIndex(user => state.user && user.id === state.user.id)
+      }
+    }
+
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
     const renderLanguage = lang => <LanguageSpan state={state} lang={lang} actions={actions} />
     const separator = <span>|</span>
     const addSeparator = (acc, lang, index, array) => array.length - 1 !== index ? [ ...acc, lang, separator ] : [ ...acc, lang ]
-
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -156,7 +172,7 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {state.user && state.user.id < 0 &&
+                {state.user && (state.user.id < 0 || onetime) &&
                   <div className={styles.languagesSelector}>
                     {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
                   </div>
@@ -166,7 +182,7 @@ class NewReservationPage extends Component {
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectUser' ])}
                     content={this.userDropdown()}
-                    selected={state.availableUsers.findIndex(user => state.user && user.id === state.user.id)}
+                    selected={getUserToSelect()}
                     style="reservation"
                     highlight={state.highlight}
                     filter
@@ -179,8 +195,9 @@ class NewReservationPage extends Component {
                   align="center"
                 />
 
-                {state.user && state.user.id < 0 &&
+                {state.user && (state.user.id < 0 || onetime) &&
                   <PatternInput
+                    readOnly={onetime}
                     onChange={actions.setHostName}
                     label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                     error={t([ 'signup_page', 'nameInvalid' ])}
@@ -189,8 +206,9 @@ class NewReservationPage extends Component {
                     highlight={state.highlight}
                   />
                 }
-                {state.user && state.user.id < 0 &&
+                {state.user && (state.user.id < 0 || onetime) &&
                   <PatternInput
+                    readOnly={onetime}
                     onChange={actions.setHostPhone}
                     label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                     error={t([ 'signup_page', 'phoneInvalid' ])}
@@ -199,8 +217,9 @@ class NewReservationPage extends Component {
                     highlight={state.highlight && state.user.id === -1}
                   />
                 }
-                {state.user && state.user.id < 0 &&
+                {state.user && (state.user.id < 0 || onetime) &&
                   <PatternInput
+                    readOnly={onetime}
                     onChange={actions.setHostEmail}
                     label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
                     error={t([ 'signup_page', 'emailInvalid' ])}
