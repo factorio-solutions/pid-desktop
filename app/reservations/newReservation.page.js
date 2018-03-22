@@ -34,14 +34,10 @@ class NewReservationPage extends Component {
     actions:  PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-    // Initialize language of communication
-    this.props.actions.setLanguage(getLanguage())
-  }
-
   componentDidMount() {
-    this.props.actions.setInitialStore(this.props.params.id)
+    const { actions } = this.props
+    actions.setInitialStore(this.props.params.id)
+    actions.setLanguage(getLanguage()) // Initialize language of communication
   }
 
   userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
@@ -139,8 +135,6 @@ class NewReservationPage extends Component {
       <span className={`${!state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDate} >{t([ 'newReservation', 'date' ])}</span>
     </ButtonStack>)
 
-    // const placeInlineMenu = <span className={styles.clickable} onClick={actions.autoSelectPlace}>{t([ 'newReservation', 'auto' ])}</span>
-
     const errorContent = (<div className={styles.floatCenter}>
       {t([ 'newReservation', 'fail' ])}: <br />
       { state.error } <br />
@@ -149,14 +143,10 @@ class NewReservationPage extends Component {
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
-    const languageButtonOnClick = lang => () => {
-      actions.setLanguage(lang)
-    }
-
     const renderLanguageButton = lang => (<RoundButton
       state={state.language === lang && 'selected'}
       content={lang.toUpperCase()}
-      onClick={languageButtonOnClick(lang)}
+      onClick={() => actions.setLanguage(lang)}
       type="action"
     />)
 
