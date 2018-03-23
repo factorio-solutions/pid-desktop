@@ -59,6 +59,7 @@ export function loadGarages() {
     requestPromise(OCCUPANCY_GARAGES_QUERY)
     .then(data => {
       dispatch(setGarages(data.occupancy_garages))
+      console.log(getState().occupancy)
       dispatch(loadGarage(getState().pageBase.garage))
     })
   }
@@ -105,6 +106,7 @@ export function loadClients(id) {
 export function initOccupancy() {
   return dispatch => {
     dispatch(loadGarages())
+    dispatch(resetClientClick())
   }
 }
 
