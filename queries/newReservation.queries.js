@@ -41,6 +41,7 @@ export const GET_USER = `query Query($id: Id!) {
     email
     phone
     last_active
+    language
     onetime
   }
 }
