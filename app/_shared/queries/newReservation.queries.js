@@ -41,6 +41,8 @@ export const GET_USER = `query Query($id: Id!) {
     email
     phone
     last_active
+    language
+    onetime
   }
 }
 `
@@ -128,6 +130,7 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     id
     note
     user_id
+    onetime
     car {
       id
       licence_plate

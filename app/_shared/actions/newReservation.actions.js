@@ -379,6 +379,7 @@ export function downloadUser(id) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
+        dispatch(setLanguage(values[0].user.language))
       }
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
@@ -569,7 +570,8 @@ export function submitReservation(id) {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
           phone:     state.phone.value,
-          language:  state.language
+          language:  state.language,
+          onetime:   state.user.id === -2
         },
         client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
