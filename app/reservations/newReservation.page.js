@@ -161,7 +161,7 @@ class NewReservationPage extends Component {
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
     const renderLanguageButton = lang => (<RoundButton
-      state={state.language === lang && 'selected'}
+      state={(state.language === lang && 'selected') || (onetime && 'disabled')}
       content={lang.toUpperCase()}
       onClick={() => actions.setLanguage(lang)}
       type="action"
