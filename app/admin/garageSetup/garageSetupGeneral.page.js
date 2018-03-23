@@ -88,6 +88,7 @@ class GarageSetupGeneralPage extends Component {
       }
       geocoder(onCoordinatesFound, state.line_1, state.city, state.postal_code, state.country)
     }
+
     return (
       <GarageSetupPage>
         <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
