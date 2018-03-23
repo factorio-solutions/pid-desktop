@@ -237,7 +237,7 @@ class NewReservationPage extends Component {
                     filter
                   />
                 }
-                {state.client_id && selectedPlace && selectedPlace.go_internal && <div>
+                {state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal && <div>
                   <input
                     type="checkbox"
                     checked={state.paidByHost}
