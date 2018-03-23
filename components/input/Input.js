@@ -90,7 +90,7 @@ export default class Input extends Component {
           pattern={pattern}
           type={type || 'text'}
           name={name}
-          value={message}
+          value={message || ''}
           onChange={handleChange}
           autoComplete={autocomplete}
           placeholder={placeholder}

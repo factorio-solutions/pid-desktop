@@ -7,6 +7,7 @@ import {
   UPDATE_GARAGEUSERS,
   DESTROY_GARAGEUSERS
 } from '../queries/garageUsers.queries'
+
 import { fetchGarages, setError } from './pageBase.actions'
 
 export const SET_GARAGE_USERS = 'SET_GARAGE_USERS'
@@ -21,8 +22,8 @@ export const setGarageUsersGarage = actionFactory(SET_GARAGE_USER_GARAGE)
 export function initGarageUsers(garageId) {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(setGarageUsersUsers(response.data.user_garages.filter(garageUser => { return garageUser.pending === false })))
-      dispatch(setGarageUsersPendingUsers(response.data.user_garages.filter(garageUser => { return garageUser.pending === true })))
+      dispatch(setGarageUsersUsers(response.data.user_garages.filter(garageUser => garageUser.pending === false)))
+      dispatch(setGarageUsersPendingUsers(response.data.user_garages.filter(garageUser => garageUser.pending === true)))
       dispatch(setGarageUsersGarage(response.data.garage))
     }
     request(onSuccess, GET_GARAGEUSERS, { id: +garageId })
