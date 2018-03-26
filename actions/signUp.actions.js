@@ -19,6 +19,7 @@ export const REGISTER_SET_EMAIL = 'LOGIN_SET_EMAIL' // listen to the same event
 export const REGISTER_SET_PASSWORD = 'REGISTER_SET_PASSWORD'
 export const REGISTER_SET_CONFIRMATION = 'REGISTER_SET_CONFIRMATION'
 export const REGISTER_SET_RESET_TOKEN = 'REGISTER_SET_RESET_TOKEN'
+export const REGISTER_SET_ACCEPT_TERMS_OF_SERVICE = 'REGISTER_SET_ACCEPT_SERVICIES'
 
 
 export function setError(error) {
@@ -89,6 +90,13 @@ export function setResetToken(token) {
 export function dismissModal() {
   return dispatch => {
     dispatch(setError(undefined))
+  }
+}
+
+export function setAcceptTermsOfService(value) {
+  return {
+    type:  REGISTER_SET_ACCEPT_TERMS_OF_SERVICE,
+    value: value
   }
 }
 

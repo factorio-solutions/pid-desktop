@@ -34,7 +34,8 @@ export default class Input extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
-    highlight: PropTypes.bool
+    highlight: PropTypes.bool,
+    isValid:   PropTypes.func
   }
 
   constructor(props) { // just to handle two way databinding
@@ -47,7 +48,7 @@ export default class Input extends Component {
   }
 
   render() {
-    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, onFocus, inlineMenu, style, min, step, highlight, readOnly, required } = this.props
+    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, onFocus, inlineMenu, style, min, step, highlight, readOnly, required, isValid } = this.props
     const message = this.state.message
 
     const handleChange = event => {
@@ -62,6 +63,9 @@ export default class Input extends Component {
       } else {
         this.setState({ message: event.target.value })
         if (typeof onChange === 'function') {
+          if (typeof isValid === 'function') {
+            isValid(event.target.value)
+          }
           onChange(event.target.value, event.target.checkValidity() && event.target.value !== '')
         }
       }

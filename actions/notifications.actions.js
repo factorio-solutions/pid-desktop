@@ -49,7 +49,7 @@ export function accept(notification) {
       if (mobile) {
         dispatch(initGarages())
       } else {
-        dispatch(fetchGarages())
+        dispatch(fetchGarages(false))
       }
     }
     request(onSuccess, ACCEPT_NOTIFICATION, { id: notification.id, notification: { confirmed: true } })
