@@ -9,9 +9,10 @@ import RoundButton  from '../_shared/components/buttons/RoundButton'
 import PatternInput from  '../_shared/components/input/PatternInput'
 import Form         from '../_shared/components/form/Form'
 import Localization from '../_shared/components/localization/Localization'
+import Checkbox     from '../_shared/components/checkbox/checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
-import { t }              from '../_shared/modules/localization/localization'
+import { t, getLanguage }              from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
 import styles from './signUp.page.scss'
@@ -45,6 +46,7 @@ class SignUpPage extends Component {
     && state.phone.valid
     && state.password.valid
     && state.password.value === state.confirmation.value
+    && state.acceptTermsOfService
   }
 
   goBack = () => nav.to('/')
@@ -60,6 +62,19 @@ class SignUpPage extends Component {
       { state.error } <br />
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
     </div>)
+
+    const getTermsOfServiceLink = () => {
+      const lang = getLanguage()
+      let linkLang
+      if (lang === 'en' || lang === 'cs') {
+        linkLang = lang
+      } else {
+        linkLang = 'en'
+      }
+      return 'https://www.park-it-direct.com/' + linkLang + '/privacy'
+    }
+
+    const handleTermsOfService = () => actions.setAcceptTermsOfService(!state.acceptTermsOfService)
 
     return (
       <MasterPage>
@@ -112,6 +127,12 @@ class SignUpPage extends Component {
                 pattern={state.password.value}
                 value={state.confirmation.value}
               />
+              <Checkbox
+                onChange={handleTermsOfService}
+                checked={state.acceptTermsOfService}
+              > <span onClick={handleTermsOfService}> {t([ 'signup_page', 'acceptTerms' ])} </span>
+                <a target="_blank" rel="noopener noreferrer" href={getTermsOfServiceLink()}>{t([ 'signup_page', 'termsOfService' ])}</a>
+              </Checkbox>
             </Form>
           </div>
         </div>
