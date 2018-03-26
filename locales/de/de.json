@@ -102,6 +102,7 @@
 		"ReservationButtonHint": "DE: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "DE: pageBase.mrParkitIntegrationHint",
 		"goPublicHint": "Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.\n\nSie können aus folgenden Berechnugsmögichkeiten wählen:\nPauschalpreis pro 1 Std.\nVariabler Preis (Preis ist von der Länge der Reservierung abhängig)\nWochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)\n\nWählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis.",
+		"goInternalHint": "DE: pageBase.goInternalHint",
 		"financeHint": "Im oberen Bereich können Sie aktivieren und einrichten, wie Ihre Kunden für die Parkhausnutzung zahlen können.\n\nIm Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen langfristigen Mietverhältnisse, ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.\n\nIm Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.\n",
 		"financePaypalHint": "DE: pageBase.financePaypalHint",
 		"financeCSOBHint": "DE: pageBase.financeCSOBHint",
@@ -217,10 +218,10 @@
 		"validtyCheck": "Validierung läuft …",
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
-		"newHost": "Neuer Gast",
-		"hostsName": "Gast - Name",
-		"hostsPhone": "Gast Telefonnummer",
-		"hostsEmail": "Gast E-Mail",
+		"newHost": "Neuer regelmäßiger Gast",
+		"hostsName": "Rgelmäßiger Gast - Name",
+		"hostsPhone": "Regelmäßiger Gast Telefonnummer",
+		"hostsEmail": "Regelmäßiger Gast E-Mail",
 		"visitorsName": "Besucher Name",
 		"visitorsPhone": "Besucher Telefonnummer",
 		"visitorsEmail": "Besucher E-Mail",
@@ -229,7 +230,8 @@
 		"noFreePlace": "Keine freie Plätze",
 		"note": "Notiz",
 		"onetimeVisit": "Einmaliger Besucher",
-		"fillInContact": "DE: newReservation.fillInContact"
+		"fillInContact": "DE: newReservation.fillInContact",
+		"paidByHost": "DE: newReservation.paidByHost"
 	},
 	"clients": {
 		"name": "Name",
@@ -260,7 +262,7 @@
 		"admin": "ist Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "Intern",
-		"host": "ist Gast",
+		"host": "ist regelmäßiger Gast",
 		"driver": "Fahrer",
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
@@ -288,7 +290,7 @@
 		"terminateEarlyQuestion": "Möchten Sie Ihre Reservierung sofort beenden?",
 		"reservationApproved": "Die Reservierung ist noch nicht bestätigt worden.",
 		"reservationNotPayed": "Die Reservierung ist noch nicht bezahlt worden.",
-		"host": "Gast",
+		"host": "Regelmäßiger Gast",
 		"visitor": "Besucher",
 		"internal": "Intern",
 		"editReservation": "Reservierung bearbeiten",
@@ -461,7 +463,7 @@
 		"gsmName": "Name *",
 		"gsmNameInvalid": "Der Name ist ungültig.",
 		"gsmNamePlaceholder": "Erika Musterfrau",
-		"gsmModulesDescription": "Mit GSM-Modulen können Sie das Tor automatisch für Ihre Gäste öffnen. Der Preis beträgt %(price)s pro Stück.",
+		"gsmModulesDescription": "Die GSM-Module ermöglichen ihnen das Tor automatisch öffnen. Der Preis beträgt %(price)s pro Stück.",
 		"floorName": "Etage *",
 		"placeholderFloor": "%(index)s",
 		"invalidFloorName": "Ungültiger Etagenname",
@@ -528,7 +530,10 @@
 		"IC": "Unternehmensnr. (IČ)",
 		"invalidIC": "Unternehmensnummer ungültig",
 		"DIC": "USt.-ID",
-		"invalidDIC": "USt.-ID ist ungültig"
+		"invalidDIC": "USt.-ID ist ungültig",
+		"IBAN": "IBAN *",
+		"invalidIBAN ": "DE: newClient.invalidIBAN ",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5402"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",
@@ -556,7 +561,7 @@
 		"selectCar": "Fahrzeug auswählen",
 		"admin": "Administrator",
 		"secretary": "Sekretär/in",
-		"host": "Gast",
+		"host": "Regelmäßiger Gast",
 		"internal": "intern",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
@@ -587,7 +592,7 @@
 		"NotificationDeclined": "Abgelehnt am",
 		"current": "aktuell",
 		"sais": "sagt",
-		"accpetReservationNotification": "Gast %(arg2)s möchte eine Reservierung auf Kosten von %(arg1)s erstellen.",
+		"accpetReservationNotification": "Regelmäßiger Gast %(arg2)s möchte eine Reservierung auf Kosten von %(arg1)s erstellen.",
 		"invoiceReminder": "Konto %(arg1)s möchten Sie darüber informieren, dass Rechnungen noch nicht beglichen wurden.",
 		"reservationAccepted": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
 		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
@@ -624,7 +629,7 @@
 		"admin": "Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "intern",
-		"host": "Gast",
+		"host": "Regelmäßiger Gast",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
 		"invitedToClient": "Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:",
@@ -784,7 +789,7 @@
 		"users": "Benutzer",
 		"reservations": "Reservierungen",
 		"saveContracts": "Vereinbarungen speichern",
-		"hosts": "Gäste",
+		"hosts": "Regelmäßige Gäste",
 		"occupancy": "Belegungsübersicht",
 		"notifications": "Nachrichten",
 		"accessFeature": "Zugangsfunktionen",
@@ -894,6 +899,8 @@
 		"reservationForm": "Reservierungsformular",
 		"goPublic": "Veröffentlichen",
 		"goPublicDescription": "Kurzfristige Parkplätze für die PiD-Community anbieten",
+		"goInternal": "DE: modules.goInternal",
+		"goInternalDescription": "DE: modules.goInternalDescription",
 		"setting": "Einstellungen",
 		"Preview": "Vorschau",
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
@@ -1100,7 +1107,7 @@
 			"newNotifications": "Neue Benachrichtigungen",
 			"access": "Zugang",
 			"myReservations": "Meine Reservierungen",
-			"guestReservations": "Gast"
+			"guestReservations": "Regelmäßiger Gast"
 		},
 		"access": {
 			"floor": "Etage",
@@ -1143,18 +1150,18 @@
 			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
 			"processingPayment": "Zahlungsverarbeitung ...",
 			"flexiplace": "FLEXI",
-			"guest": "Gast"
+			"guest": "Regelmäßiger Gast"
 		},
 		"guest": {
 			"newGuest": "NEU",
 			"pickGuest": "WÄHLEN",
-			"name": "Gast - Name",
-			"email": "Gast E-Mail",
-			"phone": "Gast Telefonnummer",
+			"name": "Regelmäßiger Gast - Name",
+			"email": "Regelmäßiger Gast E-Mail",
+			"phone": "Regelmäßiger Gast Telefonnummer",
 			"invalidName": "Name falsch",
 			"invalidEmail": "E-Mail falsch",
 			"invalidPhone": "Telefonnummer falsch",
-			"noGuestResrevations": "Keine Gastreservierungen"
+			"noGuestResrevations": "Keine Reservierung für regelmäßige Gäßte"
 		}
 	},
 	"auth0Emails": {
@@ -1191,7 +1198,7 @@
 			"says": "DE: railsEmails.invitation_mail.says",
 			"admin": "DE: railsEmails.invitation_mail.admin",
 			"secretary": "DE: railsEmails.invitation_mail.secretary",
-			"host": "DE: railsEmails.invitation_mail.host",
+			"host": "Regelmäßiger Gast",
 			"internal": "DE: railsEmails.invitation_mail.internal",
 			"contact_person": "DE: railsEmails.invitation_mail.contact_person",
 			"receptionist": "DE: railsEmails.invitation_mail.receptionist",
@@ -1205,8 +1212,18 @@
 		"new_reservation_mail": {
 			"new_reservation": "DE: railsEmails.new_reservation_mail.new_reservation",
 			"reservation_for_you": "DE: railsEmails.new_reservation_mail.reservation_for_you",
-			"more_details": "DE: railsEmails.new_reservation_mail.more_details",
-			"to_pid": "DE: railsEmails.new_reservation_mail.to_pid"
+			"go_pay_yourself": "DE: railsEmails.new_reservation_mail.go_pay_yourself",
+			"price": "DE: railsEmails.new_reservation_mail.price",
+			"pay_in_24_hours": "DE: railsEmails.new_reservation_mail.pay_in_24_hours",
+			"reservation_was_paid": "DE: railsEmails.new_reservation_mail.reservation_was_paid",
+			"confirmed": "DE: railsEmails.new_reservation_mail.confirmed",
+			"garage_address": "DE: railsEmails.new_reservation_mail.garage_address",
+			"reservation_start": "DE: railsEmails.new_reservation_mail.reservation_start",
+			"reservation_end": "DE: railsEmails.new_reservation_mail.reservation_end",
+			"spot": "DE: railsEmails.new_reservation_mail.spot",
+			"licence_plate": "DE: railsEmails.new_reservation_mail.licence_plate",
+			"reservation_information": "DE: railsEmails.new_reservation_mail.reservation_information",
+			"gps": "GPS:"
 		},
 		"resend_invitation_mail": {
 			"hello": "DE: railsEmails.resend_invitation_mail.hello",
@@ -1214,7 +1231,7 @@
 			"remind_you": "DE: railsEmails.resend_invitation_mail.remind_you",
 			"admin": "DE: railsEmails.resend_invitation_mail.admin",
 			"secretary": "DE: railsEmails.resend_invitation_mail.secretary",
-			"host": "DE: railsEmails.resend_invitation_mail.host",
+			"host": "Regelmäßiger Gast",
 			"internal": "DE: railsEmails.resend_invitation_mail.internal",
 			"contact_person": "DE: railsEmails.resend_invitation_mail.contact_person",
 			"receptionist": "DE: railsEmails.resend_invitation_mail.receptionist",

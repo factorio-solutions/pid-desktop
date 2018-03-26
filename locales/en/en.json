@@ -47,7 +47,9 @@
 		"minimumLength": "Minimum length is",
 		"noMatching": "Password does not match",
 		"userNotCreated": "User not created, may already exist.",
-		"loading": "Loading"
+		"loading": "Loading",
+		"termsOfService": "Terms of Service",
+		"acceptTerms": "Accepting"
 	},
 	"pageBase": {
 		"noFileSelected": "No file selected",
@@ -102,6 +104,7 @@
 		"ReservationButtonHint": "TODO: reservation button hint",
 		"mrParkitIntegrationHint": "TODO: mrParkitIntegration hint",
 		"goPublicHint": "Here you can choose parking spots you want to offer to the public. You can also set the price for parking spots and choose from three options for calculating the parking price. \n\nThe methods for calculating price are: \nFixed hourly rate \nExponential price calculation (set different hourly rates at certain intervals) \nWeekend price (works only in combination with a fixed hourly rate, with a different price for weekends) \n\nChoose the spots on the garage map (available spots are blue, occupied are yellow). Then set the currency at the top of the form, choose one of the options for calculating the price, and set the price.",
+		"goInternalHint": "TODO: goInternalHint hint",
 		"financeHint": "In the top section you can turn on/off and change settings for how your customers can pay for parking.\n\nIn the “Rentals” section you will find a list of all current long-term rentals, including price and number of parking spots, which you can then click on to edit.\n\nIn the “Financing settings” section, you can change the settings for all invoicing.\n",
 		"financePaypalHint": "TODO: Paypal hint",
 		"financeCSOBHint": "TODO: CSOB hint",
@@ -188,7 +191,7 @@
 	"newReservation": {
 		"selectGarage": "Select garage *",
 		"selectUser": "Select user *",
-		"selectClient": "Select client",
+		"selectClient": "Select Client",
 		"selectCar": "Select car *",
 		"begins": "Begins",
 		"invalidaDate": "Invalid date",
@@ -217,10 +220,10 @@
 		"validtyCheck": "Performing validity check ...",
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
-		"newHost": "New guest",
-		"hostsName": "Guest name",
-		"hostsPhone": "Guest phone",
-		"hostsEmail": "Guest email",
+		"newHost": "New regular guest",
+		"hostsName": "Name of regular host ",
+		"hostsPhone": "Phone of regular host",
+		"hostsEmail": "Email of regular host",
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
 		"visitorsEmail": "Visitors email",
@@ -229,7 +232,9 @@
 		"noFreePlace": "No free place",
 		"note": "Note",
 		"onetimeVisit": "Onetime visitor",
-		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation."
+		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
+		"paidByHost": "Reservation paid by guest",
+		"languageSelector": "Choose communication language"
 	},
 	"clients": {
 		"name": "name",
@@ -260,7 +265,7 @@
 		"admin": "is admin",
 		"secretary": "secretary",
 		"internal": "internal",
-		"host": "is a guest",
+		"host": "is a regular guest",
 		"driver": "driver",
 		"presetAs": "Preset as",
 		"removeClientUser": "Are you sure you want to remove this user?",
@@ -288,7 +293,7 @@
 		"terminateEarlyQuestion": "Are you sure you want to terminate reservation right now?",
 		"reservationApproved": "This reservation has not been approved yet.",
 		"reservationNotPayed": "This reservation has not been paid.",
-		"host": "Guest",
+		"host": "Regular host",
 		"visitor": "Visitor",
 		"internal": "Internal",
 		"editReservation": "Edit reservation",
@@ -411,6 +416,9 @@
 	},
 	"newGarage": {
 		"garage": "Garage",
+		"company": "Company",
+		"placeholderCompany": "MR.PARKIT s.r.o.",
+		"invalidCompany": "Invalid company name",
 		"places": "Spots",
 		"gates": "Gates",
 		"order": "Order",
@@ -461,7 +469,7 @@
 		"gsmName": "Name *",
 		"gsmNameInvalid": "Name is invalid",
 		"gsmNamePlaceholder": "John Doe",
-		"gsmModulesDescription": "GSM modules will allow you to automatically open gates for your guests. The price is %(price)s per piece.",
+		"gsmModulesDescription": "GSM modules will allow you to automatically open gates. The price is %(price)s per piece.",
 		"floorName": "Level *",
 		"placeholderFloor": "%(index)s",
 		"invalidFloorName": "Invalid floor name",
@@ -528,7 +536,10 @@
 		"IC": "Business ID No. (IČ)",
 		"invalidIC": "invalid IČ",
 		"DIC": "Tax ID No. (VAT no.)",
-		"invalidDIC": "invalid VAT no."
+		"invalidDIC": "invalid VAT no.",
+		"IBAN": "IBAN *",
+		"invalidIBAN": "Invalid IBAN",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -556,7 +567,7 @@
 		"selectCar": "Select car",
 		"admin": "admin",
 		"secretary": "secretary",
-		"host": "guest",
+		"host": "regular guest",
 		"internal": "internal",
 		"security": "security",
 		"receptionist": "receptionist",
@@ -587,7 +598,7 @@
 		"NotificationDeclined": "declined on",
 		"current": "current",
 		"sais": "says",
-		"accpetReservationNotification": "Guest %(arg2)s would like to create a reservation on %(arg1)s expenses.",
+		"accpetReservationNotification": "Regular guest %(arg2)s would like to create a reservation on %(arg1)s expenses.",
 		"invoiceReminder": "Account %(arg1)s would like to inform you that you have unpaid invoices to settle.",
 		"reservationAccepted": "Your reservation on \"%(arg1)s\"s spot was accepted.",
 		"reservationDeclined": "Your reservation on \"%(arg1)s\"s place was declined.",
@@ -624,7 +635,7 @@
 		"admin": "admin",
 		"secretary": "secretary",
 		"internal": "internal",
-		"host": "guest",
+		"host": "regular guest",
 		"security": "security",
 		"receptionist": "receptionist",
 		"invitedToClient": "Invited %(date)s to be member of client:",
@@ -784,7 +795,7 @@
 		"users": "users",
 		"reservations": "reservations",
 		"saveContracts": "save agreements",
-		"hosts": "guests",
+		"hosts": "regular guests",
 		"occupancy": "occupancy overview",
 		"notifications": "notifications",
 		"accessFeature": "access features",
@@ -894,6 +905,8 @@
 		"reservationForm": "Reservation form",
 		"goPublic": "Go public",
 		"goPublicDescription": "Offer short-term parking to the PiD community",
+		"goInternal": "Internal paid reservations",
+		"goInternalDescription": "Offer short-term parking to your tenants",
 		"setting": "Settings",
 		"Preview": "Preview",
 		"startingMarketing": "Upgrading your billing plan. Redirecting...",
@@ -1100,7 +1113,7 @@
 			"newNotifications": "New notifications",
 			"access": "Access",
 			"myReservations": "My reservations",
-			"guestReservations": "Guest"
+			"guestReservations": "Regular guest"
 		},
 		"access": {
 			"floor": "Floor",
@@ -1143,18 +1156,18 @@
 			"paymentUnsucessfull": "Payment was unsuccessful.",
 			"processingPayment": "Processing payment ...",
 			"flexiplace": "FLEXI",
-			"guest": "Guest"
+			"guest": "Regular guest"
 		},
 		"guest": {
 			"newGuest": "NEW",
 			"pickGuest": "PICK",
-			"name": "Guests name",
-			"email": "Guests email",
-			"phone": "Guests phone",
+			"name": "Regular guests name",
+			"email": "Regular guests email",
+			"phone": "Regular guests phone",
 			"invalidName": "Invalid name",
 			"invalidEmail": "Invalid email",
 			"invalidPhone": "Invalid phone",
-			"noGuestResrevations": "No guest reservations"
+			"noGuestResrevations": "No regular guests reservations"
 		}
 	},
 	"auth0Emails": {
@@ -1191,7 +1204,7 @@
 			"says": "says:",
 			"admin": "admin",
 			"secretary": "secretary",
-			"host": "guest",
+			"host": "regular guest",
 			"internal": "internal",
 			"contact_person": "contact person",
 			"receptionist": "receptionist",
@@ -1205,8 +1218,18 @@
 		"new_reservation_mail": {
 			"new_reservation": "You have a new reservation on Park-it-direct!",
 			"reservation_for_you": "has created a new reservation for you.",
-			"more_details": "For more details go to Park-it-direct:",
-			"to_pid": "To Park-it-direct!"
+			"go_pay_yourself": "Go pay",
+			"price": "Price:",
+			"pay_in_24_hours": "Reservation must be payed in 24 hours.",
+			"reservation_was_paid": "Reservation was paid by client.",
+			"confirmed": "Confirmed",
+			"garage_address": "Garage address",
+			"reservation_start": "Reservation start",
+			"reservation_end": "Reservation end",
+			"spot": "Spot number",
+			"licence_plate": "Licence plate",
+			"reservation_information": "Reservation information",
+			"gps": "GPS:"
 		},
 		"resend_invitation_mail": {
 			"hello": "Hello,",
@@ -1214,7 +1237,7 @@
 			"remind_you": "would like to remind you about your invitation to Park-it-direct.",
 			"admin": "admin",
 			"secretary": "secretary",
-			"host": "guest",
+			"host": "pravidelný  host",
 			"internal": "internal",
 			"contact_person": "contact person",
 			"receptionist": "receptionist",
@@ -1277,7 +1300,7 @@
 			"durationTo": "Duration to",
 			"durationFromInvalid": "duration invalid",
 			"internal": "Internal",
-			"host": "Guest",
+			"host": "Regular guest",
 			"hours": "hours",
 			"or": "OR",
 			"createUsers": "Create users",
