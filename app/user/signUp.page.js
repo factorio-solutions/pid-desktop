@@ -63,17 +63,6 @@ class SignUpPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
     </div>)
 
-    const getTermsOfServiceLink = () => {
-      const lang = getLanguage()
-      let linkLang
-      if (lang === 'en' || lang === 'cs') {
-        linkLang = lang
-      } else {
-        linkLang = 'en'
-      }
-      return 'https://www.park-it-direct.com/' + linkLang + '/privacy'
-    }
-
     const handleTermsOfService = () => actions.setAcceptTermsOfService(!state.acceptTermsOfService)
 
     return (
@@ -131,7 +120,7 @@ class SignUpPage extends Component {
                 onChange={handleTermsOfService}
                 checked={state.acceptTermsOfService}
               > <span onClick={handleTermsOfService}> {t([ 'signup_page', 'acceptTerms' ])} </span>
-                <a target="_blank" rel="noopener noreferrer" href={getTermsOfServiceLink()}>{t([ 'signup_page', 'termsOfService' ])}</a>
+                <a target="_blank" rel="noopener noreferrer" href={`https://www.park-it-direct.com/${getLanguage()}/privacy`}>{t([ 'signup_page', 'termsOfService' ])}</a>
               </Checkbox>
             </Form>
           </div>
