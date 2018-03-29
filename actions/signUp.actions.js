@@ -1,14 +1,13 @@
 import translate from 'counterpart'
 
-import { t } from '../modules/localization/localization'
-import { login } from './login.actions'
-
-
-import { request } from '../helpers/request'
-// import * as nav from '../helpers/navigation'
-import { mobile } from '../../index'
+import actionFactory from '../helpers/actionFactory'
+import { t }         from '../modules/localization/localization'
+import { login }     from './login.actions'
+import { request }   from '../helpers/request'
+import { mobile }    from '../../index'
 
 import { CREATE_USER_QUERY } from '../queries/signUp.queries'
+
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
@@ -22,83 +21,22 @@ export const REGISTER_SET_RESET_TOKEN = 'REGISTER_SET_RESET_TOKEN'
 export const REGISTER_SET_ACCEPT_TERMS_OF_SERVICE = 'REGISTER_SET_ACCEPT_SERVICIES'
 
 
-export function setError(error) {
-  return {
-    type:  REGISTER_FAILURE,
-    value: error
-  }
-}
+const patternInputActionFactory = type => (value, valid) => ({ type, value: { valid, value } })
 
-export function setName(value, valid) {
-  return {
-    type:  REGISTER_SET_NAME,
-    value: {
-      value,
-      valid
-    }
-  }
-}
-
-export function setPhone(value, valid) {
-  return {
-    type:  REGISTER_SET_PHONE,
-    value: {
-      value,
-      valid
-    }
-  }
-}
-
-export function setEmail(value, valid) {
-  return {
-    type:  REGISTER_SET_EMAIL,
-    value: {
-      value,
-      valid
-    }
-  }
-}
-
-export function setPassword(value, valid) {
-  return {
-    type:  REGISTER_SET_PASSWORD,
-    value: {
-      value,
-      valid
-    }
-  }
-}
-
-export function setConfirmation(value, valid) {
-  return {
-    type:  REGISTER_SET_CONFIRMATION,
-    value: {
-      value,
-      valid
-    }
-  }
-}
-
-export function setResetToken(token) {
-  return {
-    type:  REGISTER_SET_RESET_TOKEN,
-    value: token
-  }
-}
+export const setError = actionFactory(REGISTER_FAILURE)
+export const setName = patternInputActionFactory(REGISTER_SET_NAME)
+export const setPhone = patternInputActionFactory(REGISTER_SET_PHONE)
+export const setEmail = patternInputActionFactory(REGISTER_SET_EMAIL)
+export const setPassword = patternInputActionFactory(REGISTER_SET_PASSWORD)
+export const setConfirmation = patternInputActionFactory(REGISTER_SET_CONFIRMATION)
+export const setResetToken = actionFactory(REGISTER_SET_RESET_TOKEN)
+export const setAcceptTermsOfService = actionFactory(REGISTER_SET_ACCEPT_TERMS_OF_SERVICE)
 
 
 export function dismissModal() {
-  return dispatch => {
-    dispatch(setError(undefined))
-  }
+  return dispatch => dispatch(setError(undefined))
 }
 
-export function setAcceptTermsOfService(value) {
-  return {
-    type:  REGISTER_SET_ACCEPT_TERMS_OF_SERVICE,
-    value: value
-  }
-}
 
 export function init(params) {
   return dispatch => {
