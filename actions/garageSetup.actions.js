@@ -34,7 +34,6 @@ export const GARAGE_SETUP_SET_NAME = 'GARAGE_SETUP_SET_NAME'
 export const GARAGE_SETUP_SET_COMPANY_NAME = 'GARAGE_SETUP_SET_COMPANY_NAME'
 export const GARAGE_SETUP_SET_IC = 'GARAGE_SETUP_SET_IC'
 export const GARAGE_SETUP_SET_DIC = 'GARAGE_SETUP_SET_DIC'
-export const GARAGE_SETUP_SET_IBAN = 'GARAGE_SETUP_SET_IBAN'
 export const GARAGE_SETUP_SET_LINE_1 = 'GARAGE_SETUP_SET_LINE_1'
 export const GARAGE_SETUP_SET_LINE_2 = 'GARAGE_SETUP_SET_LINE_2'
 export const GARAGE_SETUP_SET_CITY = 'GARAGE_SETUP_SET_CITY'
@@ -53,8 +52,6 @@ export const GARAGE_SETUP_SET_GATES = 'GARAGE_SETUP_SET_GATES'
 export const GARAGE_SETUP_SET_ORDER = 'GARAGE_SETUP_SET_ORDER'
 export const GARAGE_SETUP_SET_BOOKING_PAGE = 'GARAGE_SETUP_SET_BOOKING_PAGE'
 export const GARAGE_SETUP_CLEAR_FORM = 'GARAGE_SETUP_CLEAR_FORM'
-export const GARAGE_SETUP_SET_IBAN_PATTERN = 'GARAGE_SETUP_SET_IBAN_PATTERN'
-
 
 export const setId = actionFactory(GARAGE_SETUP_SET_ID)
 export const setFloor = actionFactory(GARAGE_SETUP_SET_SELECTED_FLOOR)
@@ -68,7 +65,6 @@ export const setName = actionFactory(GARAGE_SETUP_SET_NAME)
 export const setCompanyName = actionFactory(GARAGE_SETUP_SET_COMPANY_NAME)
 export const setIc = actionFactory(GARAGE_SETUP_SET_IC)
 export const setDic = actionFactory(GARAGE_SETUP_SET_DIC)
-export const setIban = actionFactory(GARAGE_SETUP_SET_IBAN)
 export const setLine1 = actionFactory(GARAGE_SETUP_SET_LINE_1)
 export const setLine2 = actionFactory(GARAGE_SETUP_SET_LINE_2)
 export const setCity = actionFactory(GARAGE_SETUP_SET_CITY)
@@ -87,7 +83,6 @@ export const setGates = actionFactory(GARAGE_SETUP_SET_GATES)
 export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
 export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
-export const setIbanPattern = actionFactory(GARAGE_SETUP_SET_IBAN_PATTERN)
 
 
 export function toggleHighlight() { return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
@@ -252,7 +247,7 @@ function scanPlaces(string) {
       }
     }
     return arr
-  }, []).filter(unique).filter(value => !value.isNaN()) // only unique not NaN numbers
+  }, []).filter(unique).filter(value => !isNaN(value)) // only unique not NaN numbers
 }
 
 export function scanSVG(fileContent, index) {
@@ -345,7 +340,6 @@ export function intiEditGarageGeneral(id) {
       dispatch(setCompanyName(response.data.garage.company))
       dispatch(setIc(response.data.garage.ic))
       dispatch(setDic(response.data.garage.dic))
-      dispatch(setIban(response.data.garage.iban))
       dispatch(setLPG(response.data.garage.lpg))
       dispatch(setLine1(response.data.garage.address.line_1))
       dispatch(setLine2(response.data.garage.address.line_2))
@@ -356,7 +350,6 @@ export function intiEditGarageGeneral(id) {
       dispatch(setLat(response.data.garage.address.lat))
       dispatch(setLng(response.data.garage.address.lng))
 
-      dispatch(setIbanPattern())
       dispatch(setFetching(false))
     }
 
@@ -448,7 +441,6 @@ export function updateGarageGeneral(id, backUrl) {
         company:      state.company,
         ic:           state.ic,
         dic:          state.dic,
-        iban:         state.iban,
         lpg:          state.lpg,
         img:          state.img === defaultImage ? null : state.img,
         pid_tarif_id: state.tarif_id,
@@ -551,7 +543,6 @@ export function submitGarage() {
                company:      state.company,
                ic:           state.ic,
                dic:          state.dic,
-               iban:         state.iban,
                lpg:          state.lpg,
                img:          state.img === defaultImage ? null : state.img,
                floors:       newFloors,
@@ -580,7 +571,6 @@ export function submitGarage() {
                  company:      state.company,
                  ic:           state.ic,
                  dic:          state.dic,
-                 iban:         state.iban,
                  lpg:          state.lpg,
                  img:          state.img === defaultImage ? null : state.img,
                  floors:       newFloors,

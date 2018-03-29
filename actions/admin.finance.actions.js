@@ -22,6 +22,8 @@ export const ADMIN_FINANCE_SET_VAT = 'ADMIN_FINANCE_SET_VAT'
 export const ADMIN_FINANCE_SET_INVOICE_ROW = 'ADMIN_FINANCE_SET_INVOICE_ROW'
 export const ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW = 'ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW'
 export const ADMIN_FINANCE_SET_HIGHTLIGHT = 'ADMIN_FINANCE_SET_HIGHTLIGHT'
+export const GARAGE_SETUP_SET_IBAN = 'GARAGE_SETUP_SET_IBAN'
+export const GARAGE_SETUP_SET_IBAN_PATTERN = 'GARAGE_SETUP_SET_IBAN_PATTERN'
 
 
 export const setRents = actionFactory(ADMIN_FINANCE_SET_RENTS)
@@ -31,6 +33,9 @@ export const setAccountId = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_ID)
 export const setCsobMerchantId = actionFactory(ADMIN_FINANCE_SET_CSOB_MERCHANT_ID)
 export const setCsobPrivateKey = actionFactory(ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY)
 export const setHighlight = actionFactory(ADMIN_FINANCE_SET_HIGHTLIGHT)
+export const setIban = actionFactory(GARAGE_SETUP_SET_IBAN)
+export const setIbanPattern = actionFactory(GARAGE_SETUP_SET_IBAN_PATTERN)
+
 
 export function setVat(value) {
   return { type:  ADMIN_FINANCE_SET_VAT,
@@ -80,6 +85,9 @@ export function initFinance(id) {
       dispatch(setVat(response.data.garage.vat))
       dispatch(setInvoiceRow(response.data.garage.invoice_row))
       dispatch(setSimplyfiedInvoiceRow(response.data.garage.simplyfied_invoice_row))
+
+      dispatch(setIban(response.data.garage.account.iban))
+      dispatch(setIbanPattern())
     }
 
     request(onSuccess, GET_GARAGE_PAYMENT_METHOD, { id: +id })
@@ -161,9 +169,11 @@ export function submitGarage(id) {
     request(onSuccess
            , UPDATE_GARAGE
            , { id:     +id,
-             garage: { vat:                    state.vat,
+             garage: {
+               vat:                    state.vat,
                invoice_row:            state.invoiceRow,
-               simplyfied_invoice_row: state.simplyfiedInvoiceRow
+               simplyfied_invoice_row: state.simplyfiedInvoiceRow,
+               iban:                   state.iban
              }
            }
            )
