@@ -8,6 +8,7 @@ import {
   ADMIN_FINANCE_SET_VAT,
   ADMIN_FINANCE_SET_INVOICE_ROW,
   ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW,
+  ADMIN_FINANCE_SET_ACCOUNT_NUMBER,
   ADMIN_FINANCE_SET_HIGHTLIGHT
 }  from '../actions/admin.finance.actions'
 
@@ -21,6 +22,7 @@ const defaultState = {
   vat:                  undefined,
   invoiceRow:           undefined,
   simplyfiedInvoiceRow: undefined,
+  accountNumber:        undefined,
   highlight:            false
 }
 
@@ -80,6 +82,12 @@ export default function adminFinance(state = defaultState, action) {
       return {
         ...state,
         simplyfiedInvoiceRow: action.value
+      }
+
+    case ADMIN_FINANCE_SET_ACCOUNT_NUMBER:
+      return {
+        ...state,
+        accountNumber: action.value
       }
 
     case ADMIN_FINANCE_SET_HIGHTLIGHT:
