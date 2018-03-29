@@ -24,7 +24,7 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  PAY_RESREVATION,
+  // PAY_RESREVATION,
   GET_RESERVATION
 } from '../queries/newReservation.queries'
 
@@ -45,6 +45,7 @@ export const NEW_RESERVATION_SET_HOST_PHONE = 'NEW_RESERVATION_SET_HOST_PHONE'
 export const NEW_RESERVATION_SET_HOST_EMAIL = 'NEW_RESERVATION_SET_HOST_EMAIL'
 export const NEW_RESERVATION_SET_HOST_LANGUAGE = 'NEW_RESERVATION_SET_HOST_LANGUAGE'
 export const NEW_RESERVATION_SET_CLIENT_ID = 'NEW_RESERVATION_SET_CLIENT_ID'
+export const NEW_RESERVATION_SET_PAID_BY_HOST = 'NEW_RESERVATION_SET_PAID_BY_HOST'
 export const NEW_RESERVATION_SET_RECURRING_RULE = 'NEW_RESERVATION_SET_RECURRING_RULE'
 export const NEW_RESERVATION_SHOW_RECURRING = 'NEW_RESERVATION_SHOW_RECURRING'
 export const NEW_RESERVATION_SET_USE_RECURRING = 'NEW_RESERVATION_SET_USE_RECURRING'
@@ -74,6 +75,7 @@ export const setTo = actionFactory(NEW_RESERVATION_SET_TO)
 export const setDurationDate = actionFactory(NEW_RESERVATION_SET_DURATION_DATE)
 export const setLoading = actionFactory(NEW_RESERVATION_SET_LOADING)
 export const setHighlight = actionFactory(NEW_RESERVATION_SET_HIGHLIGHT)
+export const setPaidByHost = actionFactory(NEW_RESERVATION_SET_PAID_BY_HOST)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
 export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
@@ -550,6 +552,7 @@ export function submitReservation(id) {
                place_id:                 ongoing ? undefined : state.place_id,
                garage_id:                state.garage.id,
                client_id:                ongoing ? undefined : state.client_id,
+               paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
                car_id:                   ongoing ? undefined : state.car_id,
                licence_plate:            ongoing ? undefined : state.carLicencePlate === '' ? undefined : state.carLicencePlate,
                url:                      ongoing ? undefined : window.location.href.split('?')[0],
@@ -621,16 +624,16 @@ export function paymentSucessfull() {
   }
 }
 
-export function payReservation(token) {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
-      dispatch(paymentSucessfull())
-    }
-
-    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
-    request(onSuccess
-           , PAY_RESREVATION
-           , { token }
-           )
-  }
-}
+// export function payReservation(token) {
+//   return (dispatch, getState) => {
+//     const onSuccess = response => {
+//       dispatch(paymentSucessfull())
+//     }
+//
+//     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
+//     request(onSuccess
+//            , PAY_RESREVATION
+//            , { token }
+//            )
+//   }
+// }
