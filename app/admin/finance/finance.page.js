@@ -146,6 +146,13 @@ class FinancePage extends Component {
               step={1}
               highlight={state.highlight}
             />
+            <Input
+              onChange={actions.setAccountNumber}
+              onEnter={this.submitForm}
+              label={t([ 'finance', 'accountNumber' ])}
+              error={t([ 'finance', 'invalidAccountNumber' ])}
+              value={state.accountNumber}
+            />
           </Form>
         </div>
       </PageBase>
