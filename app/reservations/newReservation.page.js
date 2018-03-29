@@ -35,8 +35,11 @@ class NewReservationPage extends Component {
   }
 
   componentDidMount() {
-    const { actions } = this.props
-    actions.setInitialStore(this.props.params.id)
+    const { actions, params, state } = this.props
+    if (state.reservation && !params.id) {
+      actions.clearForm()
+    }
+    actions.setInitialStore(params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
 
@@ -76,9 +79,13 @@ class NewReservationPage extends Component {
 
   handleBack = () => nav.to('/reservations')
 
-  toOverview = () => this.props.params.id ?
-    this.props.actions.submitReservation(+this.props.params.id) :
-    nav.to('/reservations/newReservation/overview')
+  toOverview = () => {
+    if (this.props.params.id) {
+      this.props.actions.submitReservation(+this.props.params.id)
+    } else {
+      nav.to('/reservations/newReservation/overview')
+    }
+  }
 
   handleDuration = () => this.props.actions.setDurationDate(true)
 
@@ -99,6 +106,8 @@ class NewReservationPage extends Component {
     const { state, actions, pageBase } = this.props
 
     const ongoing = state.reservation !== undefined && state.reservation.ongoing
+
+    const onetime = state.reservation !== undefined && state.reservation.onetime
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
 
@@ -141,10 +150,18 @@ class NewReservationPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.modalClick} type="confirm" />
     </div>)
 
+    const getUserToSelect = () => {
+      if (state.reservation && state.reservation.onetime) {
+        return state.availableUsers.findIndex(user => user.id === -2)
+      } else {
+        return state.availableUsers.findIndex(user => state.user && user.id === state.user.id)
+      }
+    }
+
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
     const renderLanguageButton = lang => (<RoundButton
-      state={state.language === lang && 'selected'}
+      state={(state.language === lang && 'selected') || (onetime && 'disabled')}
       content={lang.toUpperCase()}
       onClick={() => actions.setLanguage(lang)}
       type="action"
@@ -163,7 +180,7 @@ class NewReservationPage extends Component {
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectUser' ])}
                     content={this.userDropdown()}
-                    selected={state.availableUsers.findIndex(user => state.user && user.id === state.user.id)}
+                    selected={getUserToSelect()}
                     style="reservation"
                     highlight={state.highlight}
                     filter
@@ -176,9 +193,10 @@ class NewReservationPage extends Component {
                   align="center"
                 />
 
-                {state.user && state.user.id < 0 &&
+                {state.user && (state.user.id < 0 || onetime) &&
                   <div>
                     <PatternInput
+		                  readOnly={onetime}
                       onChange={actions.setHostName}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                       error={t([ 'signup_page', 'nameInvalid' ])}
@@ -191,6 +209,7 @@ class NewReservationPage extends Component {
                       {AVAILABLE_LANGUAGES.map(renderLanguageButton)}
                     </div>
                     <PatternInput
+                      readOnly={onetime}
                       onChange={actions.setHostPhone}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                       error={t([ 'signup_page', 'phoneInvalid' ])}
@@ -199,6 +218,7 @@ class NewReservationPage extends Component {
                       highlight={state.highlight && state.user.id === -1}
                     />
                     <PatternInput
+                      readOnly={onetime}
                       onChange={actions.setHostEmail}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
                       error={t([ 'signup_page', 'emailInvalid' ])}

@@ -51,17 +51,19 @@ class GarageSetupOrderPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const hightlightInputs = () => { actions.toggleHighlight() }
-    const addPlaceToOrder = place => { actions.addToOrder(place.label) }
-    const makeButton = (label, index) => <CallToActionButton label={label} onClick={() => { actions.removeFromOrder(index) }} />
+    const addPlaceToOrder = place => actions.addToOrder(place.label)
+    const makeButton = (label, index) => <CallToActionButton label={label} onClick={() => actions.removeFromOrder(index)} />
 
-    const allFloors = state.floors.filter(floor => {
-      floor.places.map(place => ({
+    const allFloors = state.floors
+    .filter(floor => floor.label.length > 0 && floor.scheme.length > 0)
+    .map(floor => ({
+      ...floor,
+      places: floor.places.map(place => ({
         ...place,
         available: !state.order.includes(place.label)
       }))
-      return floor.label.length > 0 && floor.scheme.length > 0
-    })
+    }))
+
 
     const submitForm = () => {
       if (this.props.params.id) {
@@ -74,7 +76,7 @@ class GarageSetupOrderPage extends Component {
 
     return (
       <GarageSetupPage>
-        <Form onSubmit={submitForm} submitable onBack={this.goBack} onHighlight={hightlightInputs}>
+        <Form onSubmit={submitForm} submitable onBack={this.goBack} onHighlight={actions.toggleHighlight}>
           <div className={styles.gates}>
             <div className={styles.gatesForm}>
               <h2>{t([ 'newGarage', 'placePriority' ])}</h2>
