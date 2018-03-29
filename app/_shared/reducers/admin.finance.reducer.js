@@ -8,7 +8,9 @@ import {
   ADMIN_FINANCE_SET_VAT,
   ADMIN_FINANCE_SET_INVOICE_ROW,
   ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW,
-  ADMIN_FINANCE_SET_HIGHTLIGHT
+  ADMIN_FINANCE_SET_HIGHTLIGHT,
+  GARAGE_SETUP_SET_IBAN,
+  GARAGE_SETUP_SET_IBAN_PATTERN
 }  from '../actions/admin.finance.actions'
 
 const defaultState = {
@@ -21,6 +23,7 @@ const defaultState = {
   vat:                  undefined,
   invoiceRow:           undefined,
   simplyfiedInvoiceRow: undefined,
+  iban:                 '',
   highlight:            false
 }
 
@@ -87,6 +90,19 @@ export default function adminFinance(state = defaultState, action) {
         ...state,
         highlight: action.value
       }
+
+    case GARAGE_SETUP_SET_IBAN:
+      return {
+        ...state,
+        iban: action.value
+      }
+
+    case GARAGE_SETUP_SET_IBAN_PATTERN:
+      return {
+        ...state,
+        ibanPattern: action.value
+      }
+
 
     default:
       return state

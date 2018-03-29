@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import update                          from 'immutability-helper'
+import Iban                            from 'iban'
 
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import Table              from '../../_shared/components/table/Table'
@@ -60,6 +61,7 @@ class FinancePage extends Component {
     if (state.vat === undefined || state.vat === '') return false
     if (state.invoiceRow === undefined || state.invoiceRow === '') return false
     if (state.simplyfiedInvoiceRow === undefined || state.simplyfiedInvoiceRow === '') return false
+    if (state.iban && !Iban.isValid(state.iban)) return false
     return true
   }
 
@@ -79,6 +81,14 @@ class FinancePage extends Component {
       </div>)
 
       return update(rent, { spoiler: { $set: spoiler }, price: { $set: `${Math.round(rent.price * 10) / 10} ${rent.currency.symbol}` }, place_count: { $set: rent.place_count + '' } })
+    }
+
+    const isIbanValid = iban => {
+      const valid = Iban.isValid(iban)
+      const pattern = valid ? undefined : '/(?=a)b/'
+      if (state.ibanPattern !== pattern) {
+        actions.setIbanPattern(pattern)
+      }
     }
 
 
@@ -145,6 +155,16 @@ class FinancePage extends Component {
               min={0}
               step={1}
               highlight={state.highlight}
+            />
+            <Input
+              onChange={actions.setIban}
+              label={t([ 'newClient', 'IBAN' ])}
+              error={t([ 'newClient', 'invalidIBAN' ])}
+              value={state.iban}
+              placeholder={t([ 'newClient', 'IBANplaceholder' ])}
+              highlight={state.highlight}
+              pattern={state.ibanPattern}
+              isValid={isIbanValid}
             />
           </Form>
         </div>
