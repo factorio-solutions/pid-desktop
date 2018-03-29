@@ -120,7 +120,7 @@ class SignUpPage extends Component {
                 onChange={handleTermsOfService}
                 checked={state.acceptTermsOfService}
               > <span onClick={handleTermsOfService}> {t([ 'signup_page', 'acceptTerms' ])} </span>
-                <a target="_blank" rel="noopener noreferrer" href={`https://www.park-it-direct.com/${getLanguage()}/privacy`}>{t([ 'signup_page', 'termsOfService' ])}</a>
+                <a target="_blank" rel="noopener noreferrer" href={`https://www.park-it-direct.com/${getLanguage().replace('de', 'en').replace('pl', 'en')}/privacy`}>{t([ 'signup_page', 'termsOfService' ])}</a>
               </Checkbox>
             </Form>
           </div>
