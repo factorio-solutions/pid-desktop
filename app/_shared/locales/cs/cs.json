@@ -47,7 +47,9 @@
 		"minimumLength": "Minimální délka je",
 		"noMatching": "Heslo se neshoduje",
 		"userNotCreated": "Uživatel nebyl vytvořen, možná již existuje",
-		"loading": "Načítám"
+		"loading": "Načítám",
+		"termsOfService": "Podmínkami služby",
+		"acceptTerms": "Souhlasím s"
 	},
 	"pageBase": {
 		"noFileSelected": "CS: pageBase.noFileSelected",

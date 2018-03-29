@@ -47,7 +47,9 @@
 		"minimumLength": "Minimum length is",
 		"noMatching": "Password does not match",
 		"userNotCreated": "User not created, may already exist.",
-		"loading": "Loading"
+		"loading": "Loading",
+		"termsOfService": "Terms of Service",
+		"acceptTerms": "Accepting"
 	},
 	"pageBase": {
 		"noFileSelected": "No file selected",
