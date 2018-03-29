@@ -11,7 +11,6 @@ import {
   GARAGE_SETUP_SET_COMPANY_NAME,
   GARAGE_SETUP_SET_IC,
   GARAGE_SETUP_SET_DIC,
-  GARAGE_SETUP_SET_IBAN,
   GARAGE_SETUP_SET_LINE_1,
   GARAGE_SETUP_SET_LINE_2,
   GARAGE_SETUP_SET_CITY,
@@ -29,8 +28,7 @@ import {
   GARAGE_SETUP_SET_GATES,
   GARAGE_SETUP_SET_ORDER,
   GARAGE_SETUP_SET_BOOKING_PAGE,
-  GARAGE_SETUP_CLEAR_FORM,
-  GARAGE_SETUP_SET_IBAN_PATTERN
+  GARAGE_SETUP_CLEAR_FORM
 }  from '../actions/garageSetup.actions'
 
 
@@ -66,7 +64,6 @@ const defaultState = {
   error:         undefined,
   fetching:      false,
 
-                      // general settings
   availableTarifs: [],
   tarif_id:        undefined,
   img:             defaultImage,
@@ -74,7 +71,6 @@ const defaultState = {
   company:         '',
   ic:              '',
   dic:             '',
-  iban:            '',
   line_1:          '',
   line_2:          '',
   city:            '',
@@ -84,7 +80,6 @@ const defaultState = {
   lat:             '',
   lng:             '',
 
-                      // floors
   floors: [ emptyFloor ],
   lpg:    false,
   length: undefined,
@@ -92,13 +87,10 @@ const defaultState = {
   width:  undefined,
   weight: undefined,
 
-                      // gates
   gates: [], // first empty floor is added onComponentMount
 
-                      // order
   order: [], // ['label 1', 'label 2', ...]
 
-                      // subscribe
   bookingPage: false
 }
 
@@ -176,12 +168,6 @@ export default function garageSetup(reducerState = defaultState, action) {
       return {
         ...reducerState,
         dic: action.value
-      }
-
-    case GARAGE_SETUP_SET_IBAN:
-      return {
-        ...reducerState,
-        iban: action.value
       }
 
     case GARAGE_SETUP_SET_LINE_1:
@@ -284,12 +270,6 @@ export default function garageSetup(reducerState = defaultState, action) {
       return {
         ...reducerState,
         bookingPage: action.value
-      }
-
-    case GARAGE_SETUP_SET_IBAN_PATTERN:
-      return {
-        ...reducerState,
-        ibanPattern: action.value
       }
 
     case GARAGE_SETUP_CLEAR_FORM:
