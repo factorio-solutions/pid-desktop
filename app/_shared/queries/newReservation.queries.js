@@ -55,6 +55,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     vat
     dic
     flexiplace
+    has_payment_gate
     floors {
       id
       label
@@ -63,6 +64,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         id
         label
         priority
+        go_internal
         pricing{
           flat_price
           exponential_12h_price
@@ -116,12 +118,12 @@ export const UPDATE_RESERVATION = `mutation updateReservation($reservation: Rese
 }
 `
 
-export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $id:Id) {
-	paypal_pay_reservation(token: $token, id: $id) {
-		id
-    approved
-	}
-}`
+// export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $id:Id) {
+// 	paypal_pay_reservation(token: $token, id: $id) {
+// 		id
+//     approved
+// 	}
+// }`
 
 
 // get reservation details

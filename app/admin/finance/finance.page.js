@@ -157,6 +157,13 @@ class FinancePage extends Component {
               highlight={state.highlight}
             />
             <Input
+              onChange={actions.setAccountNumber}
+              onEnter={this.submitForm}
+              label={t([ 'finance', 'accountNumber' ])}
+              error={t([ 'finance', 'invalidAccountNumber' ])}
+              value={state.accountNumber}
+            />
+            <Input
               onChange={actions.setIban}
               label={t([ 'newClient', 'IBAN' ])}
               error={t([ 'newClient', 'invalidIBAN' ])}
