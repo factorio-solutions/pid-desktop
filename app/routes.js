@@ -27,6 +27,7 @@ import DashboardPage from './dashboard/dashboard.page'
 import ReservationsPage           from './reservations/reservations.page'
 import NewReservationPage         from './reservations/newReservation.page'
 import NewReservationOverviewPage from './reservations/newReservationOverview.page'
+import BulkRemovalReservationPage from './reservations/bulkRemoval.page'
 
 // occupancy page
 import OccupancyPage from './occupancy/occupancy.page'
@@ -160,6 +161,7 @@ export default function createRoutes() {
       <Route path="reservations/newReservation" component={NewReservationPage} />
       <Route path="reservations/:id/edit" component={NewReservationPage} />
       <Route path="reservations/newReservation/overview" component={NewReservationOverviewPage} />
+      <Route path="reservations/bulkRemoval" component={BulkRemovalReservationPage} />
 
       <Route path="occupancy" component={OccupancyPage} />
 

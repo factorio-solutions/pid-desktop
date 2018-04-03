@@ -1,0 +1,45 @@
+@import '../_styles/app.desktop';
+
+.contentPadding {
+  padding: 25px 15px 0;
+}
+
+.centerDiv {
+  @include add-button;
+}
+
+.tableContainer {
+  margin-bottom: 140px;
+}
+
+.floatRight {
+  float: right;
+}
+
+.place {
+  font-size: 25px;
+}
+
+.green {
+  color: $green;
+}
+
+.yellow {
+  color: darken($yellow, 5%);
+}
+
+.spoiler {
+
+  >.flex {
+    display: flex;
+
+    >div {
+      flex: 1 1;
+    }
+  }
+}
+
+
+.destroyModal {
+  display: grid;
+}

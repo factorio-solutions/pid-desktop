@@ -14,6 +14,7 @@ import notifications   from '../_shared/reducers/notifications.reducer'
 import newReservation         from '../_shared/reducers/newReservation.reducer'
 import reservations           from '../_shared/reducers/reservations.reducer'
 import reservationInteruption from '../_shared/reducers/reservationInteruption.reducer'
+import reservationBulkRemoval from '../_shared/reducers/reservationsBulkRemoval.reducer'
 
 import garageSetup  from '../_shared/reducers/garageSetup.reducer'
 import newMarketing from '../_shared/reducers/newMarketing.reducer'
@@ -77,6 +78,7 @@ const appReducer = combineReducers({
   newReservation,
   reservations,
   reservationInteruption,
+  reservationBulkRemoval,
 
   garageSetup,
   newMarketing,
