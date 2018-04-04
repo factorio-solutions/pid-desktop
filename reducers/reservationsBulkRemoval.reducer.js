@@ -1,15 +1,22 @@
 import moment from 'moment'
+import { MOMENT_DATETIME_FORMAT } from '../helpers/time'
 import {
   SET_GARAGES,
-  SET_RESERVATION_TO_BE_REMOVED
+  SET_RESERVATION_TO_BE_REMOVED,
+  SET_AVAILABLE_USERS,
+  SET_USER_ID,
+  SET_TO,
+  SET_FROM
 }  from '../actions/reservationsBulkRemoval.actions'
 
 const defaultState = {
-  garages:     [],
-  from:        moment().startOf('day').subtract(10, 'days'),
-  to:          moment().endOf('day').add(10, 'days'),
-  toBeRemoved: [],
-  loading:     false
+  availableUsers: [],
+  garages:        [],
+  from:           moment().startOf('day').subtract(10, 'days').format(MOMENT_DATETIME_FORMAT),
+  to:             moment().endOf('day').add(10, 'days').format(MOMENT_DATETIME_FORMAT),
+  toBeRemoved:    [],
+  loading:        false,
+  userId:         undefined
 }
 
 // TODO: Set loading
@@ -24,6 +31,26 @@ export default function reservations(state = defaultState, action) {
     case SET_RESERVATION_TO_BE_REMOVED:
       return { ...state,
         toBeRemoved: action.value
+      }
+
+    case SET_AVAILABLE_USERS:
+      return { ...state,
+        availableUsers: action.value
+      }
+
+    case SET_USER_ID:
+      return { ...state,
+        userId: action.value
+      }
+
+    case SET_FROM:
+      return { ...state,
+        from: action.value
+      }
+
+    case SET_TO:
+      return { ...state,
+        to: action.value
       }
 
     default:
