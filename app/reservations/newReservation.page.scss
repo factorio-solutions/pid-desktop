@@ -88,3 +88,15 @@
   font-weight: bold;
   cursor:      pointer;
 }
+
+.smsTemplates {
+  >.textLabel {
+    margin: 5px 0 3px;
+  }
+
+  >textarea {
+    width:  100%;
+    height: 100px;
+    resize: none;
+  }
+}

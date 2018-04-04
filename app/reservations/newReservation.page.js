@@ -25,6 +25,8 @@ import { AVAILABLE_LANGUAGES }    from '../routes'
 
 import styles from './newReservation.page.scss'
 
+const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤ]')
+
 
 class NewReservationPage extends Component {
   static propTypes = {
@@ -95,6 +97,8 @@ class NewReservationPage extends Component {
     this.handleBack()
   }
 
+  onTextAreaChange = event => this.props.actions.setTemplateText(event.target.value)
+
   render() {
     const { state, actions, pageBase } = this.props
 
@@ -107,6 +111,7 @@ class NewReservationPage extends Component {
       if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
       if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
+      if (ACCENT_REGEX.test(state.templateText) ? state.templateText.length > 140 : state.templateText.length > 320) return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
@@ -306,9 +311,30 @@ class NewReservationPage extends Component {
                 <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
 
                 {state.client_id && state.user && state.user.availableClients.findById(state.client_id) && state.user.availableClients.findById(state.client_id).has_sms_api_token &&
-                  <div className={styles.sendSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
-                    <input type="checkbox" checked={state.sendSMS} />
-                    {t([ 'newReservation', 'sendSms' ])}
+                  <div>
+                    <div className={styles.sendSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
+                      <input type="checkbox" checked={state.sendSMS} />
+                      {t([ 'newReservation', 'sendSms' ])}
+                    </div>
+                    {state.sendSMS &&
+                      <div className={styles.smsTemplates}>
+                        <Dropdown
+                          label={t([ 'newReservation', 'selectTemplate' ])}
+                          content={state.user.availableClients.findById(state.client_id).sms_templates.map((template, index) => ({
+                            label:   template.name,
+                            onClick: () => actions.setSelectedTemplate(index, template.template)
+                          }))}
+                          selected={state.selectedTemplate}
+                          style="reservation"
+                        />
+                        <div className={styles.textLabel}><label>{t([ 'newReservation', 'smsText' ])}</label></div>
+                        <textarea value={state.templateText} onChange={this.onTextAreaChange} />
+                        <div>
+                          {state.templateText.length}/{ACCENT_REGEX.test(state.templateText) ? 140 : 320}
+                          {t([ 'newReservation', 'character' ])}
+                        </div>
+                      </div>
+                    }
                   </div>
                 }
               </Form>
