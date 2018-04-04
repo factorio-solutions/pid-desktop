@@ -39,6 +39,17 @@
   }
 }
 
+h2 {
+  display: inline-block;
+  border-bottom: 1px solid $gray;
+  align: center;
+}
+
+h3 {
+  display: inline-block;
+  border-bottom: 1px solid $gray;
+  align: center;
+}
 
 .destroyModal {
   display: grid;

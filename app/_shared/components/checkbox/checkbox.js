@@ -12,8 +12,9 @@ export default class Checkbox extends Component {
     const { children, checked, onChange } = this.props
 
     const onEnter = e => {
+      // Key code for key Enter
       if (e.keyCode === 13) {
-        onChange()
+        onChange(e)
       }
     }
 
