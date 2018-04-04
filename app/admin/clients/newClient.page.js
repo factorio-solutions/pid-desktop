@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase from '../../_shared/containers/pageBase/PageBase'
-import Input    from '../../_shared/components/input/Input'
-import Form     from '../../_shared/components/form/Form'
+import Input             from '../../_shared/components/input/Input'
+import Form              from '../../_shared/components/form/Form'
+import NewClientPageBase from './components/newClientPageBase'
 
 import * as nav               from '../../_shared/helpers/navigation'
 import { t }                  from '../../_shared/modules/localization/localization'
@@ -19,41 +19,26 @@ class NewClientPage extends Component {
     params:   PropTypes.object
   }
 
-  componentDidMount() {
-    this.props.actions.clearForm()
-    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
+  checkSubmitable = () => {
+    if (this.props.state.name === '') return false
+    if (this.props.state.line_1 === '') return false
+    if (this.props.state.city === '') return false
+    if (this.props.state.postal_code === '') return false
+    if (this.props.state.country === '') return false
+    return true
   }
 
+  submitForm = () => this.checkSubmitable() && this.props.actions.submitNewClient(this.props.params.client_id)
+  goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/clients`)
+
   render() {
-    const { state, actions, pageBase } = this.props
-
-    const checkSubmitable = () => {
-      if (state.name === '') return false
-      if (state.line_1 === '') return false
-      if (state.city === '') return false
-      if (state.postal_code === '') return false
-      if (state.country === '') return false
-      return true
-    }
-
-    const submitForm = () => checkSubmitable() && actions.submitNewClient(this.props.params.client_id)
-    const goBack = () => nav.to(`/${pageBase.garage}/admin/clients`)
-    const hightlightInputs = () => actions.toggleHighlight()
-
+    const { state, actions } = this.props
 
     return (
-      <PageBase>
-        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
-          {pageBase.current_user && pageBase.current_user.pid_admin && <Input
-            onEnter={submitForm}
-            onChange={actions.setSmsApiToken}
-            label={t([ 'newClient', 'SmsApiToken' ])}
-            error={t([ 'newClient', 'invalidSmsApiToken' ])}
-            value={state.smsApiToken}
-            placeholder={t([ 'newClient', 'SmsApiTokenPlaceholder' ])}
-          />}
+      <NewClientPageBase params={this.props.params}>
+        <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setIC}
             label={t([ 'newClient', 'IC' ])}
             error={t([ 'newClient', 'invalidIC' ])}
@@ -62,7 +47,7 @@ class NewClientPage extends Component {
             onBlur={actions.loadFromIc}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setName}
             label={t([ 'newClient', 'name' ]) + ' *'}
             error={t([ 'newClient', 'invalidName' ])}
@@ -71,7 +56,7 @@ class NewClientPage extends Component {
             highlight={state.highlight}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setDIC}
             label={t([ 'newClient', 'DIC' ])}
             error={t([ 'newClient', 'invalidDIC' ])}
@@ -79,7 +64,7 @@ class NewClientPage extends Component {
             placeholder={t([ 'newClient', 'DICplaceholder' ])}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setLine1}
             label={t([ 'addresses', 'line1' ])}
             error={t([ 'addresses', 'line1Invalid' ])}
@@ -88,7 +73,7 @@ class NewClientPage extends Component {
             highlight={state.highlight}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setLine2}
             label={t([ 'addresses', 'line2' ])}
             error={t([ 'addresses', 'line2Invalid' ])}
@@ -96,7 +81,7 @@ class NewClientPage extends Component {
             placeholder={t([ 'addresses', 'line2Placeholder' ])}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setCity}
             label={t([ 'addresses', 'city' ])}
             error={t([ 'addresses', 'cityInvalid' ])}
@@ -105,7 +90,7 @@ class NewClientPage extends Component {
             highlight={state.highlight}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setPostalCode}
             label={t([ 'addresses', 'postalCode' ])}
             error={t([ 'addresses', 'postalCodeInvalid' ])}
@@ -114,7 +99,7 @@ class NewClientPage extends Component {
             highlight={state.highlight}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setState}
             label={t([ 'addresses', 'state' ])}
             error={t([ 'addresses', 'stateInvalid' ])}
@@ -122,7 +107,7 @@ class NewClientPage extends Component {
             placeholder={t([ 'addresses', 'statePlaceholder' ])}
           />
           <Input
-            onEnter={submitForm}
+            onEnter={this.submitForm}
             onChange={actions.setCountry}
             label={t([ 'addresses', 'country' ])}
             error={t([ 'addresses', 'countryInvalid' ])}
@@ -131,7 +116,7 @@ class NewClientPage extends Component {
             highlight={state.highlight}
           />
         </Form>
-      </PageBase>
+      </NewClientPageBase>
     )
   }
 }
