@@ -355,6 +355,11 @@ export function toAdmin() {
         hint = t([ 'pageBase', 'editClientHint' ])
         hintVideo = 'https://www.youtube.com/'
         break
+      case (contains(hash, 'clients/') && contains(hash, 'smsSettings')):
+        secondarySelected = 'clients'
+        hint = t([ 'pageBase', 'smsSettingsHint' ])
+        hintVideo = 'https://www.youtube.com/'
+        break
       case (contains(hash, 'clients/') && contains(hash, 'newContract')):
         secondarySelected = 'clients'
         hint = t([ 'pageBase', 'newContractHint' ])

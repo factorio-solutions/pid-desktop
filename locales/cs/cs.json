@@ -184,7 +184,8 @@
 		"analyticspaymentsHint": "CS: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",
-		"pidAdmin": "PID admin"
+		"pidAdmin": "PID admin",
+		"smsSettingsHint": "Na této stránce si můžete aktivovat a nastavit sms-službu. Pro psaní textů můžete použít níže vysvětlené proměnné, které budou nahrazovány odpovídajícími údaji.\n\n\"{{ garage }}\" = jméno garáže\n\"{{ address }}\" = adresa vjezdu\n\"{{ gps }}\" = gps koordinaty vjezdu\n\"{{ place }}\" = patro / místo\n\"{{ begin }}\" = začátekrezervace\n\"{{ end }}\" = konec rezervace\n\"{{ gate }}\" = tel. číslo serveru"
 	},
 	"newReservation": {
 		"selectGarage": "Vyberte garáž *",
