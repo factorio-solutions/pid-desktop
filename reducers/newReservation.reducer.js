@@ -108,7 +108,8 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_SET_HOST_EMAIL:
       return { ...state,
-        email: action.value
+        email:      action.value,
+        paidByHost: action.value.valid ? state.paidByHost : false
       }
 
     case NEW_RESERVATION_SET_HOST_LANGUAGE:
