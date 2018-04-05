@@ -17,16 +17,22 @@ export const GET_GARAGE_PAYMENT_METHOD = `query ($id:Id!){
     vat
     invoice_row
     simplyfied_invoice_row
+    account_number
     account{
       id
       paypal_email
       csob_merchant_id
       csob_private_key
+      iban
     }
   }
 }
 `
-export const GET_PERMISSION = `mutation PaypalGetPermission ($url:String!) { paypal_get_permissions(url: $url) }`
+
+export const GET_PERMISSION = `mutation PaypalGetPermission ($url:String!, $account_id:Id!) {
+  paypal_get_permissions(url: $url, account_id: $account_id)
+}
+`
 
 // updates existing account
 export const UPDATE_ACCOUNT = `mutation updateAccount ($id:Id!, $account:AccountInput!){
@@ -36,4 +42,5 @@ export const UPDATE_ACCOUNT = `mutation updateAccount ($id:Id!, $account:Account
     csob_merchant_id
     csob_private_key
   }
-}`
+}
+`

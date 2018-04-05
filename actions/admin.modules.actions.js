@@ -9,6 +9,7 @@ import { GET_GARAGE_TOKEN, REGENERATE_GARAGE_TOKEN } from '../queries/admin.thir
 
 
 export const ADMIN_MODULES_SET_GO_PUBLIC = 'ADMIN_MODULES_SET_GO_PUBLIC'
+export const ADMIN_MODULES_SET_GO_INTERNAL = 'ADMIN_MODULES_SET_GO_INTERNAL'
 export const ADMIN_MODULES_SET_FLEXIPLACE = 'ADMIN_MODULES_SET_FLEXIPLACE'
 export const ADMIN_MODULES_SET_MARKETING_PAGE = 'ADMIN_MODULES_SET_MARKETING_PAGE'
 export const ADMIN_MODULES_SET_MARKETING_SHORT_NAME = 'ADMIN_MODULES_SET_MARKETING_SHORT_NAME'
@@ -19,6 +20,7 @@ export const ADMIN_MODULES_SET_THIRD_PARTY_TOKEN = 'ADMIN_MODULES_SET_THIRD_PART
 
 
 export const setGoPublic = actionFactory(ADMIN_MODULES_SET_GO_PUBLIC)
+export const setGoInternal = actionFactory(ADMIN_MODULES_SET_GO_INTERNAL)
 export const setFlexiplace = actionFactory(ADMIN_MODULES_SET_FLEXIPLACE)
 export const setMarketingPage = actionFactory(ADMIN_MODULES_SET_MARKETING_PAGE)
 export const setMarketingShortName = actionFactory(ADMIN_MODULES_SET_MARKETING_SHORT_NAME)
@@ -32,6 +34,7 @@ export function initModules() {
   return (dispatch, getState) => {
     const onSuccess = response => {
       dispatch(setGoPublic(response.data.garage.is_public))
+      dispatch(setGoInternal(response.data.garage.go_internal))
       dispatch(setFlexiplace(response.data.garage.flexiplace))
       dispatch(setMarketingPage(response.data.garage.marketing))
       dispatch(setMarketingShortName(response.data.garage.marketing.short_name))

@@ -1,21 +1,23 @@
 import React, { Component, PropTypes } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators }          from 'redux'
+import { connect }                     from 'react-redux'
 
-import Logo from '../../components/logo/Logo'
-import Dropdown from '../../components/dropdown/Dropdown'
-import RoundButton from '../../components/buttons/RoundButton'
-import MobileSlideMenu from '../../components/mobileSlideMenu/MobileSlideMenu'
-import ButtonStack from '../../components/buttonStack/ButtonStack'
+import Logo             from '../../components/logo/Logo'
+import Dropdown         from '../../components/dropdown/Dropdown'
+import RoundButton      from '../../components/buttons/RoundButton'
+import MobileSlideMenu  from '../../components/mobileSlideMenu/MobileSlideMenu'
+import ButtonStack      from '../../components/buttonStack/ButtonStack'
 import MobileMenuButton from '../../components/buttons/MobileMenuButton'
-import Modal from '../../components/modal/Modal'
-import Localization from '../../components/localization/Localization'
+import Modal            from '../../components/modal/Modal'
+import Localization     from '../../components/localization/Localization'
 
 import styles from './Page.scss'
 
 import * as headerActions from '../../actions/mobile.header.actions'
-import * as loginActions from '../../actions/login.actions'
-import { t } from '../../modules/localization/localization'
+import * as loginActions  from '../../actions/login.actions'
+import { t }              from '../../modules/localization/localization'
+import { LOGIN, MENU }    from '../../../_resources/constants/RouterPaths'
+import { version }        from '../../../../package.json'
 
 
 export class Page extends Component {
@@ -63,12 +65,13 @@ export class Page extends Component {
   }
 
   unauthorizedHandler() {
-    this.logout(false)
+    this.props.loginActions.refreshLogin(() => this.context.router.push(MENU), () => this.logout(false))
   }
 
   logout(revoke) { // private method
-    this.props.actions.logout(revoke, () => { this.context.router.push('/login') })
+    this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
   }
+
 
   render() {
     const { actions, state } = this.props
@@ -105,6 +108,7 @@ export class Page extends Component {
       </ButtonStack>
 
       <div className={styles.bottom}>
+        <div className={styles.appVersion}> {t([ 'mobileApp', 'page', 'version' ])} {version} </div>
         <Localization />
       </div>
     </div>)

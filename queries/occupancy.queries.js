@@ -1,31 +1,18 @@
-// get available clients and garages
-// manageble_clients {
-//   name
-//   id
-//   created_at
-// }
-// export const OCCUPANCY_INIT = `{
-//   user_garages {
-//     garage {
-//       clients{
-//         name
-//         id
-//       }
-//     }
-//   }
-// }
-// `
 
-// Get details about garage id: $id
-// client {
-//   name
-//   id
-// }
-export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $to: Datetime!, $client_ids: [Id]) {
+export const OCCUPANCY_GARAGES_QUERY = `query OccupancyGarages {
   occupancy_garages {
     id
     name
-    user_garage{
+    img
+  }
+}
+`
+
+export const GARAGE_DETAILS_QUERY = `query OccupancyGarage($id: Id!, $from: Datetime!, $to: Datetime!, $client_ids: [Id]) {
+  garage(id: $id) {
+    id
+    name
+    user_garage {
       admin
       receptionist
       security
@@ -45,7 +32,7 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarages($from: Datetime!, $t
           client {
             name
             id
-            client_user{
+            client_user {
               admin
               secretary
               internal

@@ -28,7 +28,7 @@
   overflow-y:       auto;
   overflow-x:       hidden;
 
-  & .fixed{
+  & .fixed {
     position: fixed;
   }
 }
@@ -36,19 +36,38 @@
 .drop > li {
   padding: 14px 16px;
   cursor:  pointer;
+
+  &.filter {
+    padding: 10px;
+
+    >i {
+      font-size: 16px;
+    }
+
+    >input {
+      width:            calc(100% - 16px);
+      border:           0;
+      border-bottom: 1px solid $gray;
+      border-radius:    0;
+      outline:          none;
+      background-color: transparent;
+      font-size:        16px;
+      box-shadow:       none;
+
+      // IPhone compatibility
+      -webkit-box-shadow:    none;
+      -webkit-border-radius: 0;
+    }
+  }
 }
 
-.drop > li:not(.selected):hover {
+.drop > li:not(.selected):not(.filter):hover {
   background-color: $gray;
   color:            $white;
 }
 
 .hidden {
   opacity: 0;
-}
-
-.display {
-  display: none;
 }
 
 .selected {
@@ -77,6 +96,10 @@
   background-color: $lightGray !important;
   color:            $gray !important;
   cursor:           default;
+}
+
+.displayNone {
+  display: none;
 }
 
 

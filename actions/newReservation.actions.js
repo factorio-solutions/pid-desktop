@@ -24,7 +24,7 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  PAY_RESREVATION,
+  // PAY_RESREVATION,
   GET_RESERVATION
 } from '../queries/newReservation.queries'
 
@@ -43,7 +43,9 @@ export const NEW_RESERVATION_SET_RESERVATION = 'NEW_RESERVATION_SET_RESERVATION'
 export const NEW_RESERVATION_SET_HOST_NAME = 'NEW_RESERVATION_SET_HOST_NAME'
 export const NEW_RESERVATION_SET_HOST_PHONE = 'NEW_RESERVATION_SET_HOST_PHONE'
 export const NEW_RESERVATION_SET_HOST_EMAIL = 'NEW_RESERVATION_SET_HOST_EMAIL'
+export const NEW_RESERVATION_SET_HOST_LANGUAGE = 'NEW_RESERVATION_SET_HOST_LANGUAGE'
 export const NEW_RESERVATION_SET_CLIENT_ID = 'NEW_RESERVATION_SET_CLIENT_ID'
+export const NEW_RESERVATION_SET_PAID_BY_HOST = 'NEW_RESERVATION_SET_PAID_BY_HOST'
 export const NEW_RESERVATION_SET_RECURRING_RULE = 'NEW_RESERVATION_SET_RECURRING_RULE'
 export const NEW_RESERVATION_SHOW_RECURRING = 'NEW_RESERVATION_SHOW_RECURRING'
 export const NEW_RESERVATION_SET_USE_RECURRING = 'NEW_RESERVATION_SET_USE_RECURRING'
@@ -73,8 +75,10 @@ export const setTo = actionFactory(NEW_RESERVATION_SET_TO)
 export const setDurationDate = actionFactory(NEW_RESERVATION_SET_DURATION_DATE)
 export const setLoading = actionFactory(NEW_RESERVATION_SET_LOADING)
 export const setHighlight = actionFactory(NEW_RESERVATION_SET_HIGHLIGHT)
+export const setPaidByHost = actionFactory(NEW_RESERVATION_SET_PAID_BY_HOST)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
+export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -293,12 +297,19 @@ export function setInitialStore(id) {
 
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
       const users = values[0].reservable_users
-      if (getState().pageBase.current_user && getState().pageBase.current_user.secretary) { // if is secretary then can create new host
-        users.unshift({
+
+      const currentUser = getState().pageBase.current_user
+      if (currentUser && currentUser.secretary) { // if is secretary then can create new host
+        users.push({
           full_name: t([ 'newReservation', 'newHost' ]),
           id:        -1
         })
+        users.push({
+          full_name: t([ 'newReservation', 'onetimeVisit' ]),
+          id:        -2
+        })
       }
+
       dispatch(setAvailableUsers(users))
       dispatch(setLoading(false))
 
@@ -362,7 +373,7 @@ export function downloadUser(id) {
     Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
       values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id: -1, reservable_cars: [] }),
+      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
         availableGarages: values[1].reservable_garages,
         availableClients: values[2].reservable_clients
       }))
@@ -370,6 +381,7 @@ export function downloadUser(id) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
+        dispatch(setLanguage(values[0].user.language))
       }
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
@@ -524,7 +536,7 @@ export function submitReservation(id) {
         window.location.replace(response.data.create_reservation.payment_url)
       } else {
         dispatch(pageBaseActions.setCustomModal(undefined))
-        nav.to(`/reservations/find/${response.data.update_reservation.id}`)
+        nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
         dispatch(clearForm())
       }
     }
@@ -540,6 +552,7 @@ export function submitReservation(id) {
                place_id:                 ongoing ? undefined : state.place_id,
                garage_id:                state.garage.id,
                client_id:                ongoing ? undefined : state.client_id,
+               paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
                car_id:                   ongoing ? undefined : state.car_id,
                licence_plate:            ongoing ? undefined : state.carLicencePlate === '' ? undefined : state.carLicencePlate,
                url:                      ongoing ? undefined : window.location.href.split('?')[0],
@@ -554,15 +567,16 @@ export function submitReservation(id) {
              )
     }
 
-    if (state.user && state.user.id === -1) { // if  new Host being created during new reservation
+    if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
       requestPromise(USER_AVAILABLE, {
         user: {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
           phone:     state.phone.value,
-          language:  getState().pageBase.current_user.language
+          language:  state.language,
+          onetime:   state.user.id === -2
         },
-        client_user: state.client_id ? {
+        client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
           host:      true,
           message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
@@ -570,7 +584,7 @@ export function submitReservation(id) {
       }).then(data => {
         if (data.user_by_email !== null) { // if the user exists
           // invite to client
-          if (state.client_id) { // if client is selected then invite as host
+          if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
             requestPromise(ADD_CLIENT_USER, {
               user_id:     data.user_by_email.id,
               client_user: {
@@ -610,16 +624,16 @@ export function paymentSucessfull() {
   }
 }
 
-export function payReservation(token) {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
-      dispatch(paymentSucessfull())
-    }
-
-    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
-    request(onSuccess
-           , PAY_RESREVATION
-           , { token }
-           )
-  }
-}
+// export function payReservation(token) {
+//   return (dispatch, getState) => {
+//     const onSuccess = response => {
+//       dispatch(paymentSucessfull())
+//     }
+//
+//     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
+//     request(onSuccess
+//            , PAY_RESREVATION
+//            , { token }
+//            )
+//   }
+// }

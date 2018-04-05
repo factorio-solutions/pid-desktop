@@ -56,7 +56,7 @@ class GarageLayout extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.showEmptyFloors && (this.state.floor === -1 || (nextProps.floors[this.state.floor] && nextProps.floors[this.state.floor].free_places.length))) {
+    if (!this.props.showEmptyFloors && (this.state.floor === -1 || !(nextProps.floors[this.state.floor] && nextProps.floors[this.state.floor].free_places.length))) {
       this.setState({
         ...this.state,
         floor: nextProps.floors.findIndex(floor => floor.free_places.length)
@@ -256,8 +256,12 @@ class GarageLayout extends Component {
           placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
           placeRect.onmouseleave = () => { this.setState({ ...this.state, visible: false }) }
           placeRect.onmousemove = event => {
-            const rect = this.refs.containerDiv ? this.refs.containerDiv.getBoundingClientRect() : { left: 0, top: 0 }
-            this.setState({ ...this.state, mouseX: event.clientX - 160 - (this.props.showSecondaryMenu ? 200 : 0) + 20, mouseY: event.clientY - 60 })
+            const secondaryMenuCorrection = window.innerWidth > 1300 && (window.location.hash.includes('/admin/') || window.location.hash.includes('/analytics/'))
+            this.setState({
+              ...this.state,
+              mouseX: event.clientX - (this.props.showSecondaryMenu || secondaryMenuCorrection ? 200 : 0) + 20,
+              mouseY: event.clientY
+            })
           }
         }
       })
@@ -338,7 +342,7 @@ class GarageLayout extends Component {
         <div className={styles.buttons}>
           <div>{floors.map(prepareButtons)}</div>
           <div>
-            <RoundButton content={<i className="fa fa-refresh" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+            <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
           </div>
         </div>
         <div className={styles.svgContainer}>
@@ -356,7 +360,7 @@ export function assignColorsToGroups(floors) { // will find unique groups and as
     .reduce((acc, floor) => [ ...acc, ...(floor.places || []).map(place => place.group).filter(o => o) ], [])
     .reduce((acc, group) => [ ...acc, ...(Array.isArray(group) ? group : [ group ]) ], []) // flatten arrays
     .filter((group, index, arr) => arr.indexOf(group) === index) // unique values
-    .sort((a, b) => a - b)
+    // .sort((a, b) => a - b)
 
   const colors = COLOR_PALETE.length >= uniqueGroups.length ?
     COLOR_PALETE.slice(0, uniqueGroups.length) :

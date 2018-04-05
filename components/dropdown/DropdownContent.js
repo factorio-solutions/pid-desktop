@@ -1,5 +1,4 @@
 import React, { Component, PropTypes }  from 'react'
-import ReactDOM                         from 'react-dom'
 
 import styles from './Dropdown.scss'
 
@@ -9,6 +8,7 @@ import styles from './Dropdown.scss'
 // style = sets style, can be 'dark'/'light' (default is 'dark'), more can be created
 // selected = index of select item in content
 // fillParent = flag to indicate whenever or not to fill parent element widthvise
+
 export default class DropdownContent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -18,45 +18,37 @@ export default class DropdownContent extends Component {
 
   static defaultProps = { style: '' }
 
-  // constructor(props) {
-  //    super(props);
-  //    this.state = { selected: this.props.selected }
-  // }
+  toggleDropdown = () => {
+    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
+  }
+
+  hide = () => {
+    this.ul.classList.add(styles.hidden)
+    setTimeout(() => { this.ul.classList.add(styles.displayNone) }, 250)
+  }
+
+  unhide = () => {
+    this.ul.classList.remove(styles.displayNone)
+    this.ul.classList.remove(styles.hidden)
+  }
 
   render() {
     const { content, style, children } = this.props
 
-
-    const toggleDropdown = () => { ReactDOM.findDOMNode(this).children[1].classList.contains(styles.hidden) ? unhide() : hide() }
-
-    const hide = () => {
-      const ul = ReactDOM.findDOMNode(this).children[1]
-      ul.classList.add(styles.hidden)
-      setTimeout(() => { ul.classList.add(styles.display) }, 250)
-    }
-
-    const unhide = () => {
-      const ul = ReactDOM.findDOMNode(this).children[1]
-      ul.classList.remove(styles.display)
-      ul.classList.remove(styles.hidden)
-      // ul.style.width = ReactDOM.findDOMNode(this).children[0].getBoundingClientRect().width+"px"
-    }
-
     const hideDropdown = row => {
       return { ...row,
         onClick: () => {
-          hide()
+          this.hide()
           row.onClick()
         } }
     }
 
-
     return (
       <div>
-        <div onClick={toggleDropdown}>
+        <div onClick={this.toggleDropdown}>
           {children}
         </div>
-        <ul className={`${style} ${styles.drop} ${styles.hidden} ${styles.display}`}>
+        <ul className={`${style} ${styles.drop} ${styles.hidden} ${styles.displayNone}`} ref={ul => { this.ul = ul }}>
           {content.map(hideDropdown)}
         </ul>
       </div>
