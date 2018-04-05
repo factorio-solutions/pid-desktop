@@ -186,7 +186,8 @@
 		"analyticspaymentsHint": "TODO: payments Hint",
 		"analyticsgatesHint": "TODO: gates Hint",
 		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
-		"pidAdmin": "PID admin"
+		"pidAdmin": "PID admin",
+		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server"
 	},
 	"newReservation": {
 		"selectGarage": "Select garage *",
@@ -221,9 +222,9 @@
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
 		"newHost": "New regular guest",
-		"hostsName": "Name of regular host ",
-		"hostsPhone": "Phone of regular host",
-		"hostsEmail": "Email of regular host",
+		"hostsName": "Name of regular guest",
+		"hostsPhone": "Phone of regular guest",
+		"hostsEmail": "Email of regular guest",
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
 		"visitorsEmail": "Visitors email",
@@ -234,7 +235,8 @@
 		"onetimeVisit": "Onetime visitor",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
-		"languageSelector": "Choose communication language"
+		"languageSelector": "Choose communication language",
+		"sendSms": "Send notification about reservation via SMS"
 	},
 	"clients": {
 		"name": "name",
@@ -416,7 +418,7 @@
 	},
 	"newGarage": {
 		"garage": "Garage",
-		"company": "Company",
+		"company": "Company name",
 		"placeholderCompany": "MR.PARKIT s.r.o.",
 		"invalidCompany": "Invalid company name",
 		"places": "Spots",
@@ -539,7 +541,16 @@
 		"invalidDIC": "invalid VAT no.",
 		"IBAN": "IBAN *",
 		"invalidIBAN": "Invalid IBAN",
-		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399"
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "invalid token",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
+		"newTemplateName": "Template name",
+		"invalidNewTemplateName": "Invalid template name",
+		"newTemplateText": "Template text",
+		"selectTemplate": "Select template",
+		"edit": "Client",
+		"smsSettings": "SMS module"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -1265,6 +1276,14 @@
 			"place": "Place:",
 			"from": "From:",
 			"to": "To:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "There has been a new reservation created for you",
+			"from": "Begins at:",
+			"to": "Ends at:",
+			"garage": "Garage:"
 		}
 	},
 	"pidAdmin": {
