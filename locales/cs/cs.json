@@ -186,7 +186,8 @@
 		"analyticspaymentsHint": "CS: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",
-		"pidAdmin": "PID admin"
+		"pidAdmin": "PID admin",
+		"smsSettingsHint": "Na této stránce si můžete aktivovat a nastavit sms-službu. Pro psaní textů můžete použít níže vysvětlené proměnné, které budou nahrazovány odpovídajícími údaji.\n\n\"{{ garage }}\" = jméno garáže\n\"{{ address }}\" = adresa vjezdu\n\"{{ gps }}\" = gps koordinaty vjezdu\n\"{{ place }}\" = patro / místo\n\"{{ begin }}\" = začátekrezervace\n\"{{ end }}\" = konec rezervace\n\"{{ gate }}\" = tel. číslo serveru"
 	},
 	"newReservation": {
 		"selectGarage": "Vyberte garáž *",
@@ -222,7 +223,7 @@
 		"creatingNewPayment": "Vytvářím platbu ...",
 		"newHost": "Nový pravidelný host",
 		"hostsName": "Jméno pravidelného hosta",
-		"hostsPhone": "Ttelefon pravidelného hosta",
+		"hostsPhone": "Telefon pravidelného hosta",
 		"hostsEmail": "Email pravidelného hosta",
 		"visitorsName": "Jméno návštěvníka",
 		"visitorsPhone": "Telefon návštěvníka",
@@ -234,7 +235,8 @@
 		"onetimeVisit": "Jednorázový návštěvník",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
-		"languageSelector": "Zvolte jazyk komunikace"
+		"languageSelector": "Zvolte jazyk komunikace",
+		"sendSms": "Odeslat upozornění o rezervaci pomocí SMS"
 	},
 	"clients": {
 		"name": "jméno",
@@ -538,8 +540,17 @@
 		"DIC": "DIČ",
 		"invalidDIC": "neplatné DIČ",
 		"IBAN": "IBAN *",
-		"invalidIBAN ": "Nesprávný IBAN",
-		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5400"
+		"invalidIBAN": "Nesprávný IBAN",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5400",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "neplatný token",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
+		"newTemplateName": "Jméno šablony",
+		"invalidNewTemplateName": "Nevhodné jméno šablony",
+		"newTemplateText": "Obsah šablony",
+		"selectTemplate": "Zvolte šablonu",
+		"edit": "Klient",
+		"smsSettings": "SMS modul"
 	},
 	"inviteUser": {
 		"selectUser": "Email(y) uživatele",
@@ -591,7 +602,7 @@
 		"clientInvitationMessage": "Byl(a) jste pozván(a) na klientský účet '%(arg1)s'. Chcete přijmout?",
 		"garageInvitationMessage": "Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?",
 		"carInvitationMessage": "Byl(a) jste pozván(a) pro použití '%(arg1)s' auta. Chcete přijmout?",
-		"clientUserDestroyed": "Byla jste odstraněna z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",
+		"clientUserDestroyed": "Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",
 		"accountPlaceDestroyed": "Vaše rezervace byly stornovány, jelikož správce garáže odstranil parkovací místo z Klientského účtu.",
 		"past": "minulost",
 		"NotificationAccepted": "přijato dne",
@@ -973,7 +984,9 @@
 		"invalidRow": "Neplatné číslo",
 		"changeSuccess": "Hodnoty byly úspěšně změněny.",
 		"changeFailed": "Došlo k chybě, hodnoty se nezměnily.",
-		"uploadKey": "Nahrát RSA klíč"
+		"uploadKey": "Nahrát RSA klíč",
+		"accountNumber": "Číslo účtu",
+		"invalidAccountNumber": "Nesprávné číslo účtu"
 	},
 	"analytics": {
 		"week": "týden",
@@ -1220,8 +1233,8 @@
 			"reservation_for_you": "pro Vás vytvořil novou rezervaci.",
 			"go_pay_yourself": "Zaplatit",
 			"price": "Cena:",
-			"pay_in_24_hours": "Rezervaci je potřeba zaplatit do 24. hodin.",
-			"reservation_was_paid": "Rezervace byla zaplacena klientem",
+			"pay_in_24_hours": "Rezervaci je potřeba zaplatit do 24 hodin.",
+			"reservation_was_paid": "Rezervace byla zaplacena klientem.",
 			"confirmed": "Potvrzeno",
 			"garage_address": "Adresa garáže",
 			"reservation_start": "Začátek rezervace",
@@ -1263,6 +1276,14 @@
 			"place": "Místo:",
 			"from": "Od:",
 			"to": "Do:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "Byla Vám vytvořena nová rezervace",
+			"from": "Začátek:",
+			"to": "Konec:",
+			"garage": "Garáž:"
 		}
 	},
 	"pidAdmin": {
