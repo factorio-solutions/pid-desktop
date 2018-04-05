@@ -108,7 +108,8 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_SET_HOST_EMAIL:
       return { ...state,
-        email: action.value
+        email:      action.value,
+        paidByHost: action.value.valid ? state.paidByHost : false
       }
 
     case NEW_RESERVATION_SET_HOST_LANGUAGE:
@@ -124,7 +125,8 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_SET_PAID_BY_HOST:
       return { ...state,
-        paidByHost: action.value
+        paidByHost: state.user.id === -2 ? state.email.value && state.email.valid && action.value : action.value
+        // paidByHost: action.value
       }
 
     case NEW_RESERVATION_SET_RECURRING_RULE: {
