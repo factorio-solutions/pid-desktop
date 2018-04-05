@@ -28,6 +28,18 @@
   text-align: center;
 }
 
+.fillInContact {
+  padding:    5px;
+  color:      $red;
+  text-align: center;
+}
+
+.languagesSelector {
+  padding:       12px 0;
+  border-bottom: 1px solid $gray;
+  text-align:    center;
+}
+
 @media (min-width: $collapseWidth) {
   .parent {
     display: flex;

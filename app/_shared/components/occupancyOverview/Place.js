@@ -47,7 +47,7 @@ class Place extends Component {
 
   composeLabel = reservation => {
     const details = this.shouldShowDetails(reservation)
-    return details && `${reservation.car ? reservation.car.licence_plate + ' - ' + reservation.user.full_name : reservation.user.full_name}`
+    return details && [ reservation.car && reservation.car.licence_plate, reservation.user.full_name ].filter(o => o).join(' - ')
   }
 
   render() {
@@ -149,7 +149,7 @@ class Place extends Component {
 
       return (<Reservation
         reservation={reservation}
-        showDetails={showDetails}
+        showDetails={details}
         classes={classes.filter(o => o).join(' ')}
         left={left}
         width={width}

@@ -65,6 +65,7 @@ import MarketingSettingsPage   from './admin/modules/marketingSettings.page'
 import ReservationButtonPage   from './admin/modules/reservationButton.page'
 import MrParkitIntegrationPage from './admin/modules/mrParkitIntegration.page'
 import GoPublicPage            from './admin/modules/goPublic.page'
+import GoInternalPage          from './admin/modules/goInternal.page'
 import FlexiplacePage          from './admin/modules/flexiplace.page'
 
 // garageSetup
@@ -82,7 +83,6 @@ import InviteUserPage from './admin/users/inviteUser.page'
 // finance
 import FinancePage from './admin/finance/finance.page'
 import NewRentPage from './admin/finance/newRent.page'
-import PayPalPage  from './admin/finance/paypal.page'
 import CsobPage    from './admin/finance/csob.page'
 
 // pidSettings
@@ -193,6 +193,7 @@ export default function createRoutes() {
       <Route path=":id/admin/modules/3rdPartyIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
+      <Route path=":id/admin/modules/goInternal" component={GoInternalPage} />
       <Route path=":id/admin/modules/flexiplace" component={FlexiplacePage} />
 
       <Route path="addFeatures/garageSetup/general" component={GarageSetupGeneralPage} />
@@ -213,7 +214,6 @@ export default function createRoutes() {
       <Route path=":id/admin/finance" component={FinancePage} />
       <Route path=":id/admin/finance/newRent" component={NewRentPage} />
       <Route path=":id/admin/finance/:rent_id/editRent" component={NewRentPage} />
-      <Route path=":id/admin/finance/paypal" component={PayPalPage} />
       <Route path=":id/admin/finance/csob" component={CsobPage} />
 
       <Route path=":id/admin/pidSettings" component={PidSettingsPage} />

@@ -1,17 +1,27 @@
-@import '../../_styles/variables.desktop';
-@import '../../_shared/styles/variables';
+@import '../../_styles/app.desktop';
 
-.flex {
-  display: flex;
+// -- Responsive Styles (Media Queries) -------------------------------------
+// -- Only apply on big window ----------------------------------------------
+@media (min-width: $collapseWidth) {
+  .flex {
+    display: flex;
 
-  >div:first-child {
-    position: relative;
-    flex: 1 1;
-    padding-right: 10px;
+    >div:first-child {
+      // position: relative;
+      flex: 1 1;
+      padding-right: 10px;
+    }
+
+    >div:last-child {
+      flex: 2 2;
+    }
   }
+}
 
-  >div:last-child {
-    flex: 2 2;
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .flex > div:first-child {
+    margin-bottom: 20px;
   }
 }
 
@@ -36,4 +46,30 @@
 .checkbox {
   margin-top: 12px;
   cursor: pointer;
+}
+
+.tooltip {
+  >tbody {
+    >tr {
+      >td {
+        &:first-child {
+          color: $gray;
+          font-size: 14px;
+          text-align: right;
+        }
+
+        &.flex {
+          display: flex;
+
+          >.dash {
+            padding: 0 3px;
+          }
+        }
+
+        &:last-child {
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }

@@ -110,7 +110,7 @@ class GaragePage extends Component {
                       .map(contract => contract.client)
                       .filter((client, index, arr) => arr.findIndexById(client.id) === index)
                       .map(client => [
-                        state.selected === 'clients' && <span><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[client.id] }} /></span>,
+                        state.selected === 'clients' && <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[client.id] }} /></span>,
                         <span>{client.name}</span>,
                         reservation && reservation.client && reservation.client.id === client.id && <span>({t([ 'reservations', 'host' ])})</span>,
                         <span>,</span>
@@ -136,7 +136,7 @@ class GaragePage extends Component {
                 <tr>
                   <td>{t([ 'garages', 'contract' ])}</td>
                   <td>{contracts.length > 0 && contracts.map(contract => [ state.selected === 'contracts' &&
-                  <span><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[contract.id] }} /></span>,
+                  <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[contract.id] }} /></span>,
                     <span>{contract.name},</span>
                   ])}</td>
                 </tr>

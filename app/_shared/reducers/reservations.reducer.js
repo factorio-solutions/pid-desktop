@@ -3,6 +3,7 @@ import {
   SET_RESERVATIONS,
   ADD_RESERVATIONS,
   RESERVATIONS_SET_PAGE,
+  RESERVATIONS_SET_PAST,
   TOGGLE_RESERVATIONS_PAST,
   RESERVATIONS_PER_PAGE,
   RESERVATIONS_SET_NEW_NOTE,
@@ -45,6 +46,11 @@ export default function reservations(state = defaultState, action) {
     case RESERVATIONS_SET_PAGE: // for mobile app
       return { ...state,
         page: action.value
+      }
+
+    case RESERVATIONS_SET_PAST:
+      return { ...state,
+        past: action.value
       }
 
     case TOGGLE_RESERVATIONS_PAST:

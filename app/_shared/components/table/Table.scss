@@ -34,14 +34,23 @@ $font-size: 16px;
   display: flex;
   padding: 5px;
 
-  > input {
-    width:       100%;
-    max-width:   80px;
-    margin:      0;
-    margin-left: 5px;
-    border:      0;
-    outline:     none;
+
+  >span {
+    > input {
+      width:       100%;
+      max-width:   80px;
+      margin:      0;
+      border:      0;
+      outline:     none;
+    }
+
+    > i {
+      &.callendar {
+        margin-right: 5px;
+      }
+    }
   }
+
   > span {
     margin: 2.5px;
     cursor: pointer;

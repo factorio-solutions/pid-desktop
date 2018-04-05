@@ -50,10 +50,10 @@ class LoginPage extends Component {
 
     const loadingContent = <Loading show />
 
-    const errorContent = (<div>
+    const errorContent = (<div className={styles.redFont}>
       <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
       <div>{ state.error }</div>
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
+      <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.dismissModal} type="red" />
     </div>)
 
     return (

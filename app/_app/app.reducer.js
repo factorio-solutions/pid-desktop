@@ -51,6 +51,7 @@ import profile   from '../_shared/reducers/profile.reducer'
 
 import adminModules               from '../_shared/reducers/admin.modules.reducer'
 import adminGoPublic              from '../_shared/reducers/admin.goPublic.reducer'
+import adminGoInternal  from '../_shared/reducers/admin.goInternal.reducer'
 import adminFlexiplace            from '../_shared/reducers/admin.flexiplace.reducer'
 import adminThirdPartyIntegration from '../_shared/reducers/admin.thirdPartyIntegration.reducer'
 import adminFinance               from '../_shared/reducers/admin.finance.reducer'
@@ -114,6 +115,7 @@ const appReducer = combineReducers({
 
   adminModules,
   adminGoPublic,
+  adminGoInternal,
   adminFlexiplace,
   adminThirdPartyIntegration,
   adminFinance,

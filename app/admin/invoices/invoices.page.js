@@ -90,7 +90,7 @@ class InvoicesPage extends Component {
                type="action"
              />
              {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin || invoice.client.is_secretary) &&
-               <LabeledRoundButton label={t([ 'invoices', 'payInvoice' ])} content={<span>{t([ 'invoices', 'pay' ])}</span>} onClick={() => {}} type="action" />}
+               <LabeledRoundButton label={t([ 'invoices', 'payInvoice' ])} content={<i className="fa fa-credit-card" aria-hidden="true" />} onClick={() => {}} type="action" />}
              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&
                <LabeledRoundButton
                  label={t([ 'invoices', 'sendReminder' ])}
@@ -126,7 +126,11 @@ class InvoicesPage extends Component {
 
     const clientDropdown = () => {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
-      return state.clients.map((client, index) => ({ label: client.name, onClick: () => clientSelected(index) }))
+      return state.clients.map((client, index) => ({
+        label:   client.name,
+        order:   client.id === undefined && 1,
+        onClick: () => clientSelected(index)
+      }))
     }
 
     const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findById(state.client_id)} />

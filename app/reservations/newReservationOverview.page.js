@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Form             from '../_shared/components/form/Form'
@@ -22,7 +21,8 @@ class NewReservationOverviewPage extends Component {
   componentDidMount() {
     const { location, actions } = this.props
     if (location.query.hasOwnProperty('token')) {
-      location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
+      // location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
+      location.query.success !== 'true' && actions.paymentUnsucessfull()
     } else if (location.query.hasOwnProperty('csob')) {
       location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
     } else {
@@ -66,11 +66,20 @@ class NewReservationOverviewPage extends Component {
       <PageBase>
         <Form onSubmit={actions.submitReservation} onBack={onBack} submitable>
           <h2>{t([ 'newReservationOverview', 'overview' ])}</h2>
-          {state.user && state.user.id === -1 && <div>
-            <h4>{t([ 'newReservation', 'selectedUser' ])}</h4>
-            <span className={styles.label}>{t([ 'newReservation', 'hostsName' ])}: </span><span>{state.name.value}</span>
-            <span className={styles.label}>{t([ 'newReservation', 'hostsPhone' ])}: </span><span>{state.phone.value}</span>
-            <span className={styles.label}>{t([ 'newReservation', 'hostsEmail' ])}: </span><span>{state.email.value}</span>
+          {state.user && state.user.id < 0 && <div>
+            <h4>{t([ 'newReservation', state.user.id === -1 ? 'selectedUser' : 'onetimeVisit' ])}</h4>
+            {state.name.value && [
+              <span className={styles.label}>{t([ 'newReservation', 'hostsName' ])}: </span>,
+              <span>{state.name.value}</span>
+            ]}
+            {state.phone.value && [
+              <span className={styles.label}>{t([ 'newReservation', 'hostsPhone' ])}: </span>,
+              <span>{state.phone.value}</span>
+            ]}
+            {state.email.value && [
+              <span className={styles.label}>{t([ 'newReservation', 'hostsEmail' ])}: </span>,
+              <span>{state.email.value}</span>
+            ]}
           </div>}
 
           <div>

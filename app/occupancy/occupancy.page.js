@@ -11,7 +11,7 @@ import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { togglePast }        from '../_shared/actions/reservations.actions'
+import { setPast }        from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
@@ -31,22 +31,23 @@ class OccupancyPage extends Component {
   }
 
   onReservationClick = reservation => {
+    this.props.actions.setPast(moment(reservation.ends_at).isBefore(moment()))
     nav.to(`/reservations/find/${reservation.id}`)
-    !this.props.reservations.past && this.props.actions.togglePast()
   }
 
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
 
   render() {
     const { state, pageBase, actions } = this.props
-
+    const { garage } = state
 
     const clientDropdown = () => {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
 
       return state.clients.map((client, index) => ({
-        label:   <span>{client.id && state.client_ids.includes(client.id) && <i className="fa fa-check" aria-hidden="true" />}{client.name}</span>,
-        onClick: () => clientSelected(index)
+        label:       client.name,
+        representer: o => <span>{client.id && state.client_ids.includes(client.id) && <i className="fa fa-check" aria-hidden="true" />}{o}</span>,
+        onClick:     () => clientSelected(index)
       }))
     }
 
@@ -75,26 +76,23 @@ class OccupancyPage extends Component {
       content={clientDropdown()}
       style="tabDropdown"
       selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
+      filter
     />)
-
-    const renderOccupancy = garage => [
-      <h2>{garage.name}</h2>,
-      <OccupancyOverview
-        places={garage ? garage.floors.reduce(preparePlaces, []) : []}
-        from={state.from}
-        showDetails={(garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security)}
-        duration={state.duration}
-        resetClientClick={actions.resetClientClick}
-        loading={!state.garages.length || state.loading}
-        onReservationClick={this.onReservationClick}
-      />
-    ]
 
     return (
       <PageBase>
         <TabMenu right={filters} left={clientSelector} />
         <div className={styles.occupancies}>
-          {state.garages.map(renderOccupancy)}
+          <h2>{garage && garage.name}</h2>
+          <OccupancyOverview
+            places={garage ? garage.floors.reduce(preparePlaces, []) : []}
+            from={state.from}
+            showDetails={garage && ((garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security))}
+            duration={state.duration}
+            resetClientClick={actions.resetClientClick}
+            loading={!state.garages.length || state.loading}
+            onReservationClick={this.onReservationClick}
+          />
         </div>
 
         <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
@@ -113,5 +111,5 @@ class OccupancyPage extends Component {
 
 export default connect(
   state => ({ state: state.occupancy, pageBase: state.pageBase, reservations: state.reservations }),
-  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, togglePast }, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, setPast }, dispatch) })
 )(OccupancyPage)

@@ -391,7 +391,6 @@ export function submitReservation(callback) {
 
     const reservation = stateToVariables(getState)
     const state = getState().mobileNewReservation
-
     dispatch(setCustomModal(
       state.reservation_id ?
         t([ 'mobileApp', 'newReservation', 'updatingReservation' ]) :

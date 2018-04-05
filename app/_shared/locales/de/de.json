@@ -1,5 +1,5 @@
 {
-	"PID-RELEASE": "r20180123a",
+	"PID-RELEASE": "r20180209a",
 	"addresses": {
 		"name": "Name *",
 		"line1": "Adresszeile 1 *",
@@ -47,7 +47,9 @@
 		"minimumLength": "Mindestlänge ist",
 		"noMatching": "Passwort und Bestätigungspasswort stimmen nicht überein.",
 		"userNotCreated": "Der Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon.",
-		"loading": "Laden"
+		"loading": "Laden",
+		"termsOfService": "Nutzungsbedingungen",
+		"acceptTerms": "Ich stimme den Nutzungsbedingungen zu. "
 	},
 	"pageBase": {
 		"noFileSelected": "Keine Datei ausgewählt",
@@ -102,6 +104,7 @@
 		"ReservationButtonHint": "DE: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "DE: pageBase.mrParkitIntegrationHint",
 		"goPublicHint": "Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.\n\nSie können aus folgenden Berechnugsmögichkeiten wählen:\nPauschalpreis pro 1 Std.\nVariabler Preis (Preis ist von der Länge der Reservierung abhängig)\nWochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)\n\nWählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis.",
+		"goInternalHint": "DE: pageBase.goInternalHint",
 		"financeHint": "Im oberen Bereich können Sie aktivieren und einrichten, wie Ihre Kunden für die Parkhausnutzung zahlen können.\n\nIm Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen langfristigen Mietverhältnisse, ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.\n\nIm Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.\n",
 		"financePaypalHint": "DE: pageBase.financePaypalHint",
 		"financeCSOBHint": "DE: pageBase.financeCSOBHint",
@@ -112,9 +115,9 @@
 		"garagesHint": "Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.\nLinks oben können Sie auswählen, welcher Wert dargestellt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder für das aktuelle Datum angezeigt werden soll.",
 		"newGarageHint": "Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.",
 		"newGarageFloorsHint": "DE: pageBase.newGarageFloorsHint",
-		"newGarageOrderHint": "DE: pageBase.newGarageOrderHint",
+		"newGarageOrderHint": "Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteil.",
 		"newGarageSubscribtionHint": "DE: pageBase.newGarageSubscribtionHint",
-		"newGarageGatesHint": "DE: pageBase.newGarageGatesHint",
+		"newGarageGatesHint": "Hier können Sie die Tore bearbeiten (Ein- und Ausfahrten) und bestimmen, welche Tore zu welchen Plätzen gehören.",
 		"garageClientsHint": "Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten im ausgewählten Parkhaus zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Parkhausgrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass das Parkhaus mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etage mit den Schaltflächen links aus.",
 		"clientsHint": "Hier finden Sie eine Liste der Kunden, mit denen Sie in Kontakt stehen.\n\nIn der Spalte „Kunden-Token“ wird eine einzigartige ID angezeigt, mit der Sie den Kunden bei der Erstellung neuer Verträge einfach und schnell auswählen können.\n\nIn der Spalte „Vertrag“ wird durch eine grüne Markierung angezeigt, wenn der Kunde einen Vertrag abgeschlossen hat. Ein rotes Ausrufezeichen gibt an, dass kein Vertrag vorliegt.\n\nIn der Spalte „Stellplätze“ wird die Gesamtanzahl der dem Kunden zugewiesenen Stellplätze angezeigt.\n\nIn der Spalte „Pro Monat insgesamt“ werden die monatlichen Parkhausgebühren des Kunden insgesamt angezeigt.\n\nIn der Spalte „Rechnungen“ wird der Rechnungsstatus angezeigt – wenn alle Rechnungen beglichen sind = grün; wenn eine Rechnung überfällig ist = rot.\n\nKlicken Sie auf einen Kunden, um weitere Details (z.B Kontaktperson oder eine Liste der abgeschlossenen Verträge) anzuzeigen. Mit den Schaltflächen rechts können Sie neue Verträge erstellen, Rechnungen kontrollieren, die Kundendaten anpassen oder alle Benutzer anzeigen, die zum Kunden gehören. In dieser Darstellung können Sie auch auf die einzelnen Verträge klicken und diese anpassen.",
 		"newClientHint": "Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben.",
@@ -122,7 +125,7 @@
 		"settingsHint": "In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.",
 		"usersHint": "Hier sehen Sie eine Liste aller Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat.",
 		"allKnownUsers": "Alle bekannten Benutzer",
-		"editClientHint": "DE: pageBase.editClientHint",
+		"editClientHint": "Hier können Sie die Kundendaten bearbeiten.",
 		"notificationsHint": "Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen.",
 		"inviteUsersHint": "Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. sie automatisch Mitglied des ausgewählten Kundenkontos.",
 		"addFeaturesHint": "Hier können Sie Funktionen zum System hinzufügen.",
@@ -166,9 +169,9 @@
 		"editInvoiceHint": "DE: pageBase.editInvoiceHint",
 		"editContractHint": "Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis.",
 		"unredNotifications": {
-			"one": "Sie haben eine ungelesene Nachricht.",
-			"few": "DE: pageBase.unredNotifications.few",
-			"many": "DE: pageBase.unredNotifications.many",
+			"one": "Sie haben eine ungelesene Nachricht",
+			"few": "Sie haben %(count)s ungelesene Nachrichten",
+			"many": "Sie haben %(count)s ungelesener Nachricht",
 			"other": "Sie haben %(count)s ungelesene Nachrichten."
 		},
 		"analytics": "Analyse",
@@ -182,8 +185,9 @@
 		"analyticsplacesHint": "Hier werden die Umsatzstatistiken für Stellplätze angezeigt – Durchschnitt, maximaler, minimaler und Gesamtumsatz, jeweils für kurzfristige und Langzeitvermietungen. Oben links kann eine Heatmap angezeigt werden, in der die Werte farbig dargestellt werden (niedrigste Werte in Gelb, höchste Werte in Rot).\nOben rechts kann der gewünschte Anzeigezeitraum eingestellt werden.",
 		"analyticspaymentsHint": "DE: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
-		"flexiplaceHint": "DE: pageBase.flexiplaceHint",
-		"pidAdmin": "PID admin"
+		"flexiplaceHint": "Wenn Sie Flexiplatz für öffentlich angebotene Parkplätze einstellen möchten, müssen diese alle Plätze gleichen Preis haben. Dazu dient dieses Formular.",
+		"pidAdmin": "PID admin",
+		"smsSettingsHint": "Auf dieser Seite können Sie den SMS Dienst aktivieren. Bei schreiben der Texte können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.\n\n\"{{ garage }}\" = Garagenname\n\"{{ address }}\" = Einfahrtsadresse\n\"{{ gps }}\" = GPS Koordinate der Einfahrt\n\"{{ place }}\" = Stockwerk / Prakplatznummer\n\"{{ begin }}\" = Buchungsanfang\n\"{{ end }}\" = Buchungsende\n\"{{ gate }}\" = Telefonnummer des Servers"
 	},
 	"newReservation": {
 		"selectGarage": "Wählen Sie ein Parkhaus aus *",
@@ -217,14 +221,22 @@
 		"validtyCheck": "Validierung läuft …",
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
-		"newHost": "Neuer Gast",
-		"hostsName": "Gast - Name",
-		"hostsPhone": "Gast Telefonnummer",
-		"hostsEmail": "Gast E-Mail",
+		"newHost": "Neuer regelmäßiger Gast",
+		"hostsName": "Rgelmäßiger Gast - Name",
+		"hostsPhone": "Regelmäßiger Gast Telefonnummer",
+		"hostsEmail": "Regelmäßiger Gast E-Mail",
+		"visitorsName": "Besucher Name",
+		"visitorsPhone": "Besucher Telefonnummer",
+		"visitorsEmail": "Besucher E-Mail",
 		"selectedUser": "Benutzer",
 		"flexiblePlaceSelected": "flexibel",
 		"noFreePlace": "Keine freie Plätze",
-		"note": "Notiz"
+		"note": "Notiz",
+		"onetimeVisit": "Einmaliger Besucher",
+		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.",
+		"paidByHost": "Buchung wir vom Gast bezahlt",
+		"languageSelector": "Wählen Sie die Kommunikationssprache",
+		"sendSms": "Buchungsbestätigung per SMS schicken"
 	},
 	"clients": {
 		"name": "Name",
@@ -255,14 +267,14 @@
 		"admin": "ist Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "Intern",
-		"host": "ist Gast",
-		"driver": "DE: clientUsers.driver",
+		"host": "ist regelmäßiger Gast",
+		"driver": "Fahrer",
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
 		"pendingUsers": "Offene Einladungen",
-		"confirmedUsers": "DE: clientUsers.confirmedUsers",
+		"confirmedUsers": "Benutzer %(name)s",
 		"removeUser": "Benutzer entfernen",
-		"resendInvitation": "E-Mail zurücksenden",
+		"resendInvitation": "E-Mail erneut senden",
 		"resendSuccessfull": "E-Mail wurde erfolgreich gesendet.",
 		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden."
 	},
@@ -273,19 +285,19 @@
 		"place": "Stellplatz",
 		"client": "Kunde",
 		"licencePlate": "Kennzeichen",
-		"state": "DE: reservations.state",
+		"state": "Status",
 		"type": "Typ",
 		"creator": "Erstellt von",
 		"garage": "Parkhaus",
 		"createdAt": "erstellt:",
 		"updatedAt": "aktualisiert:",
 		"removeReservationQuestion": "Möchten Sie diese Reservierung wirklich entfernen?",
-		"terminateEarlyQuestion": "DE: reservations.terminateEarlyQuestion",
+		"terminateEarlyQuestion": "Möchten Sie Ihre Reservierung sofort beenden?",
 		"reservationApproved": "Die Reservierung ist noch nicht bestätigt worden.",
 		"reservationNotPayed": "Die Reservierung ist noch nicht bezahlt worden.",
-		"pay": "Zahlung",
-		"host": "Gast",
+		"host": "Regelmäßiger Gast",
 		"visitor": "Besucher",
+		"internal": "Intern",
 		"editReservation": "Reservierung bearbeiten",
 		"editNote": "Notiz bearbeiten",
 		"newNote": "Neue Notiz",
@@ -295,18 +307,18 @@
 		"destroyReservation": "Reservierung stornieren",
 		"teminateEarly": "Sofort beenden",
 		"destroyAllReservation": {
-			"one": "DE: reservations.destroyAllReservation.one",
-			"few": "DE: reservations.destroyAllReservation.few",
-			"many": "DE: reservations.destroyAllReservation.many",
-			"other": "DE: reservations.destroyAllReservation.other"
+			"one": "Nur gewählte Reservierung stornieren.",
+			"few": "%(count)s Reservierungen der Serie stornieren.",
+			"many": "Alle %(count)s Reservierungen der Serie beenden.",
+			"other": "%(count)s Reservierungen der Serie stornieren."
 		},
 		"updateAllReservation": {
-			"one": "DE: reservations.updateAllReservation.one",
-			"few": "DE: reservations.updateAllReservation.few",
-			"many": "DE: reservations.updateAllReservation.many",
-			"other": "DE: reservations.updateAllReservation.other"
+			"one": "Nur gewählte Reservierung bearbeiten.",
+			"few": "%(count)s Reservierungen der Serie bearbeiten.",
+			"many": "Alle %(count)s Reservierungen der Serie bearbeiten.",
+			"other": "%(count)s Reservierungen der Serie bearbeiten."
 		},
-		"flexiblePlace": "DE: reservations.flexiblePlace"
+		"flexiblePlace": "Flexiplatz"
 	},
 	"garages": {
 		"clients": "Kunden",
@@ -357,7 +369,8 @@
 		"licencePlate": "Kennzeichen:",
 		"noClientPlaces": "Der ausgewählte Kunde hat in diesem Zeitraum keine gemieteten Plätze.",
 		"resetFilter": "Filter zurücksetzen",
-		"detailsInaccessible": "DE: occupancy.detailsInaccessible"
+		"detailsInaccessible": "Information nicht verfügbar",
+		"reservationNotApproved": "Reservierung ist nicht bestätigt"
 	},
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
@@ -405,6 +418,9 @@
 	},
 	"newGarage": {
 		"garage": "Parkhaus",
+		"company": "Unternehmensname",
+		"placeholderCompany": "MR.PARKIT s.r.o.",
+		"invalidCompany": "Unternehmensname ungültig",
 		"places": "Plätze",
 		"gates": "Tore",
 		"order": "Reihenfolge",
@@ -455,7 +471,7 @@
 		"gsmName": "Name *",
 		"gsmNameInvalid": "Der Name ist ungültig.",
 		"gsmNamePlaceholder": "Erika Musterfrau",
-		"gsmModulesDescription": "Mit GSM-Modulen können Sie das Tor automatisch für Ihre Gäste öffnen. Der Preis beträgt %(price)s pro Stück.",
+		"gsmModulesDescription": "Die GSM-Module ermöglichen ihnen das Tor automatisch öffnen. Der Preis beträgt %(price)s pro Stück.",
 		"floorName": "Etage *",
 		"placeholderFloor": "%(index)s",
 		"invalidFloorName": "Ungültiger Etagenname",
@@ -506,7 +522,12 @@
 		"users": "Benutzer",
 		"addProfilePicture": "Profilbild hinzufügen",
 		"removeFloor": "Etage löschen",
-		"uploadSvg": "SVG hochladen"
+		"uploadSvg": "SVG hochladen",
+		"gatePassword": "Tor-Kennwort",
+		"invalidPasswordPhone": "Kennwort falsch",
+		"placeholderGatePassword": "123456",
+		"passwordWasSet": "Tor ist verschlüsselt. Ändern nach Kennwort Eingabe möglich.",
+		"passwordWasNotSet": "Kennwort ist nicht eingestellt!"
 	},
 	"newClient": {
 		"name": "Name des Kunden",
@@ -517,7 +538,19 @@
 		"IC": "Unternehmensnr. (IČ)",
 		"invalidIC": "Unternehmensnummer ungültig",
 		"DIC": "USt.-ID",
-		"invalidDIC": "USt.-ID ist ungültig"
+		"invalidDIC": "USt.-ID ist ungültig",
+		"IBAN": "IBAN *",
+		"invalidIBAN": "IBAN ungültig",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5402",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "Token ungültig",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
+		"newTemplateName": "Schablonenname",
+		"invalidNewTemplateName": "Schablonenname ungültig",
+		"newTemplateText": "Schabloneninhalt",
+		"selectTemplate": "Wählen Sie eine Schablone",
+		"edit": "Kunde",
+		"smsSettings": "SMS Modul"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",
@@ -534,29 +567,29 @@
 		"phoneLabel": "Telefonnummer des Benutzers (optional)",
 		"noClients": "Es gibt derzeit keine Kunden, für die Sie Administratorrechte haben.",
 		"sucessfullyInvited": {
-			"one": "DE: inviteUser.sucessfullyInvited.one",
-			"few": "DE: inviteUser.sucessfullyInvited.few",
-			"many": "DE: inviteUser.sucessfullyInvited.many",
-			"other": "DE: inviteUser.sucessfullyInvited.other"
+			"one": "Einladung wurde erfolgreich gesendet.",
+			"few": "%(count)s Einladungen wurden erfolgreich gesendet.",
+			"many": "%(count)s Einladungen wurden erfolgreich gesendet.",
+			"other": "%(count)s Einladungen wurden erfolgreich gesendet."
 		},
-		"unSucessfullyInvited": "DE: inviteUser.unSucessfullyInvited",
+		"unSucessfullyInvited": "Einladungen an diese Benutzer wurden nicht gesendet: %(emails)s.",
 		"selectClient": "Kunden auswählen",
 		"selectGarage": "Parkhaus auswählen",
 		"selectCar": "Fahrzeug auswählen",
 		"admin": "Administrator",
 		"secretary": "Sekretär/in",
-		"host": "Gast",
+		"host": "Regelmäßiger Gast",
 		"internal": "intern",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
-		"driver": "DE: inviteUser.driver",
+		"driver": "Fahrer",
 		"clientRights": "Benutzerrechte",
 		"clientRightsDesc": "Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird.",
 		"GarageRights": "Parkhausrechte",
 		"GarageRightsDesc": "Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird.",
 		"carRights": "Fahrzeugrechte",
 		"carRightsDesc": "Diese Rechte sind nur gültig, wenn ein Fahrzeug angegeben wird.",
-		"contactPerson": "Ansprechpartner"
+		"contactPerson": "Kontaktperson"
 	},
 	"notifications": {
 		"user": "Benutzer",
@@ -569,19 +602,21 @@
 		"clientInvitationMessage": "Sie wurden zum Kundenkonto „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?",
 		"garageInvitationMessage": "Sie wurden zum Parkhaus „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?",
 		"carInvitationMessage": "Sie wurden zum Fahrzeug „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?",
-		"clientUserDestroyed": "Sie wurden vom Kundenkonto „%(arg1)s“ gelöscht. Alle mit diesem Kundenkonto verknüpften Reservierungen wurden gelöscht.",
+		"clientUserDestroyed": "Sie wurden vom Kundenkonto „%(arg1)s“ entfernt. Alle mit diesem Kundenkonto verknüpften Reservierungen wurden gelöscht.",
 		"accountPlaceDestroyed": "Ihre Reservierung wurde storniert, weil der Eigentümer den Stellplatz aus dem Kundenkonto gelöscht hat.",
 		"past": "Vergangenheit",
 		"NotificationAccepted": "Angenommen am",
 		"NotificationDeclined": "Abgelehnt am",
 		"current": "aktuell",
 		"sais": "sagt",
-		"accpetReservationNotification": "Gast %(arg2)s möchte eine Reservierung auf Kosten von %(arg1)s erstellen.",
+		"accpetReservationNotification": "Regelmäßiger Gast %(arg2)s möchte eine Reservierung auf Kosten von %(arg1)s erstellen.",
 		"invoiceReminder": "Konto %(arg1)s möchten Sie darüber informieren, dass Rechnungen noch nicht beglichen wurden.",
 		"reservationAccepted": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
 		"reservationDeclined": "Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
-		"verifyYourEmail": "DE: notifications.verifyYourEmail",
-		"newReservationForYou": "DE: notifications.newReservationForYou"
+		"verifyYourEmail": "Wilkommen in Park-it-direct! Wir haben eine Bestätigungs-E-Mail an \"%(arg1)s\"s geschickt.\nNachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen.",
+		"newReservationForYou": "%(arg1)s (%(arg2)s) hat für Sie eine Reservierung erstellt.",
+		"reservationUpdatedNotification": "\n% (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Reservierungen\".",
+		"reservationRemovedDueToUnpaid": "Da Ihre Reservierung innerhalb 15 Minuten nicht bezahlt wurden. Haben wir sie storniert."
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -600,8 +635,8 @@
 		"phone": "Telefonnummer",
 		"memberSince": "Mitglied seit",
 		"active": "aktiv",
-		"notActive": "nicht aktiv",
-		"notConfimed": "nicht bestätigte",
+		"notActive": "Inaktiv",
+		"notConfimed": "Anstehend",
 		"pending": "Bestätigung ausstehend",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"pendingInvitations": "Nicht bestätigte Einladungen",
@@ -611,7 +646,7 @@
 		"admin": "Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "intern",
-		"host": "Gast",
+		"host": "Regelmäßiger Gast",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
 		"invitedToClient": "Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:",
@@ -638,9 +673,9 @@
 		"camera_at_gate": "Kamera am Tor",
 		"tram_nearby": "Straßenbahn in der Nähe",
 		"wc": "WC",
-		"guarded_parking": "DE: newMarketing.guarded_parking",
-		"car_wash": "DE: newMarketing.car_wash",
-		"airport_nearby": "DE: newMarketing.airport_nearby",
+		"guarded_parking": "Bewachter Parkplatz",
+		"car_wash": "Autowaschanlage",
+		"airport_nearby": "Nahe dem Flughafen",
 		"charging_station": "Ladestation für Elektroautos",
 		"garage": "Parkhaus",
 		"place": "Stellplatz",
@@ -703,7 +738,7 @@
 		"invalidPrice": "Preis ungültig",
 		"selectCurrency": "Währung auswählen",
 		"selectPlace": "Beginnen Sie mit der Auswahl des Stellplatzes",
-		"saving": "DE: newPricing.saving"
+		"saving": "Speichern..."
 	},
 	"newRent": {
 		"name": "Bezeichnung",
@@ -771,7 +806,7 @@
 		"users": "Benutzer",
 		"reservations": "Reservierungen",
 		"saveContracts": "Vereinbarungen speichern",
-		"hosts": "Gäste",
+		"hosts": "Regelmäßige Gäste",
 		"occupancy": "Belegungsübersicht",
 		"notifications": "Nachrichten",
 		"accessFeature": "Zugangsfunktionen",
@@ -780,7 +815,7 @@
 		"visitors": "Besuchersystem",
 		"security": "Überblick und Sicherheitselemente",
 		"analytics": "Einfache Geschäftsanalysen",
-		"3rdParty": "Integration und Sammlung von Dritten",
+		"3rdParty": "Integration und Aggregatoren von Dritten",
 		"advancedAnalytics": "Komplexe Geschäftsanalysen",
 		"customDesc": "Haben Sie die gewünschte Funktionszusammenstellung nicht gefunden? Lassen Sie es uns wissen!",
 		"perSpot": "/ Stellplatz",
@@ -881,12 +916,30 @@
 		"reservationForm": "Reservierungsformular",
 		"goPublic": "Veröffentlichen",
 		"goPublicDescription": "Kurzfristige Parkplätze für die PiD-Community anbieten",
+		"goInternal": "Interne bezahlte Buchungen",
+		"goInternalDescription": "Bieten Sie Ihren Mietern bezahltes Kurzzeit-Parken",
 		"setting": "Einstellungen",
 		"Preview": "Vorschau",
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
 		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
 		"flexiplace": "Flexi Platz",
-		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
+		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.",
+		"showApiKey": "API Endpunkt zeigen",
+		"regenerateApiKey": "Einen neuen API Endpunkt erstellen",
+		"thirdPartyIntegration": "Integration von Dritten",
+		"thirdPartyIntegrationDescription": "Durch aktivierung dieser Funktion, bekommen Sie eine eigene API mit Aktionen, die Ihnen Verwaltung der Reservierungen durch Dritte ermöglichen",
+		"mrParkitIntegration": "MR.PARKIT Integration",
+		"mrParkitIntegrationDescription": "Ähnlich der Funktion \"Integration von Dritten\". Reservierungen werden über MR.PARKIT ermittelt.",
+		"selectPlacesFor3rdParty": "Plätze für die Dritten",
+		"selectPlacesForMrParkit": "Plätze für MR.PARKIT",
+		"token": "Security Token",
+		"apiEndpoint": "Api endpoint",
+		"warning": "Halten Sie es geheim!",
+		"warningDesribtion": "Security Token dient zu einzigartiger Identifizierung Ihrer Parkfläche. Behalten Sie es geheim und sagen es niemandem. Falls jemand Ihr Security Token erfahren hat, erstellen Sie sofort einen neuen Endpunkt.",
+		"toApiExplorer": "Gehe zu API-Browser!",
+		"requestDesribtionPart1": "Verwenden Sie dasToken, indem Sie den Header einfügen",
+		"requestDesribtionPart2": "Authorization:",
+		"requestDesribtionPart3": "für Ihre graphQL Aufträge"
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -905,7 +958,18 @@
 		"selectCurrency": "Währung auswählen",
 		"placePrice": "Preis pro Stellplatz pro Monat",
 		"indefinitContract": "Unbefristeten Vertrag abschließen",
-		"indefinite": "Unbefristet"
+		"indefinite": "Unbefristet",
+		"securityInterval": "Sicherheitsintervall",
+		"inMinutes": "in Minuten",
+		"securityIntervalInvalid": "Intervall falsch",
+		"place": "Platz:",
+		"usedBy": "Verwendet von:",
+		"goPublic": "Öffentlich",
+		"rentyType": "Mietzeit:",
+		"longterm": "Langzeit",
+		"shortterm": "Kurzzeit",
+		"longtermPrice": "Langzeit Preis:",
+		"shorttermPrice": "Kurzzeit Preis:"
 	},
 	"finance": {
 		"paypal": "Paypal",
@@ -920,7 +984,9 @@
 		"invalidRow": "Ungültige Nummer",
 		"changeSuccess": "Die Werte wurden erfolgreich geändert.",
 		"changeFailed": "Ein Fehler ist aufgetreten. Die Werte wurden nicht geändert.",
-		"uploadKey": "RSA-Schlüssel hochladen"
+		"uploadKey": "RSA-Schlüssel hochladen",
+		"accountNumber": "Kontonummer",
+		"invalidAccountNumber": "Ungültige Kontonummer"
 	},
 	"analytics": {
 		"week": "Woche",
@@ -955,18 +1021,18 @@
 		"free": "Verfügbar",
 		"unused": "Frei",
 		"units": {
-			"one": "DE: dashboard.units.one",
-			"few": "DE: dashboard.units.few",
-			"many": "DE: dashboard.units.many",
-			"other": "DE: dashboard.units.other"
+			"one": "Einheit",
+			"few": "Einheiten",
+			"many": "Einheiten",
+			"other": "Einheiten"
 		},
 		"statistics": "Statistik",
 		"news": "PID-Neuigkeiten",
 		"garage": "Garage"
 	},
 	"loginVerification": {
-		"description": "DE: loginVerification.description",
-		"code": "DE: loginVerification.code",
+		"description": "Zwei-Faktor-Autorisierung aktiviert. Bestätigungscode wurde an %(email)s gesendet.",
+		"code": "Bestätigungscode",
 		"codeInvalid": "Code ungültig"
 	},
 	"reservationInteruption": {
@@ -982,12 +1048,12 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
-		"repeat": "Wiederholen",
+		"repeat": "Wiederholen: aus",
 		"repeats": "Wiederholt",
 		"daily": "Täglich",
 		"weekly": "Wochentlich",
 		"monthly": "Monatlich",
-		"repeatEvery": "DE: recurringReservation.repeatEvery",
+		"repeatEvery": "Wiederholen einmal in:",
 		"week": {
 			"one": "Woche",
 			"few": "Wochen",
@@ -1006,25 +1072,26 @@
 			"many": "Tage",
 			"other": "Tage"
 		},
-		"repeatOn": "DE: recurringReservation.repeatOn",
-		"startsOn": "DE: recurringReservation.startsOn",
+		"repeatOn": "Wiederholen am:",
+		"startsOn": "Beginn am",
 		"ends": "\nEnden:",
 		"after": "Nach",
 		"occurence": {
-			"one": "DE: recurringReservation.occurence.one",
-			"few": "DE: recurringReservation.occurence.few",
-			"many": "DE: recurringReservation.occurence.many",
-			"other": "DE: recurringReservation.occurence.other"
+			"one": "Wiederholung",
+			"few": "Wiederholungen",
+			"many": "Wiederholungen",
+			"other": "Wiederholungen"
 		},
-		"on": "DE: recurringReservation.on",
-		"every": "DE: recurringReservation.every"
+		"on": "Am",
+		"every": "Einmal pro"
 	},
 	"mobileApp": {
 		"page": {
-			"userInfoUnavailable": "DE: mobileApp.page.userInfoUnavailable",
+			"userInfoUnavailable": "Informationen über diesen Benutzer sind nicht verfügbar.",
 			"logOut": "abmelden",
 			"selectGarage": "Garage auswählen",
-			"allGarages": "Alle Garagen"
+			"allGarages": "Alle Garagen",
+			"version": "Version"
 		},
 		"login": {
 			"loading": "Laden...",
@@ -1032,13 +1099,13 @@
 			"login": "Melden Sie sich bitte an oder",
 			"signup": "registrieren Sie sich",
 			"email": "E-Mail-Adresse",
-			"emailPlaceholder": "DE: mobileApp.login.emailPlaceholder",
+			"emailPlaceholder": "Mr@park.it",
 			"emailInvalid": "Ungültige E-Mail-Adresse",
 			"password": "Passwort"
 		},
 		"signUp": {
-			"niceToMeetYou": "DE: mobileApp.signUp.niceToMeetYou",
-			"fillDetails": "DE: mobileApp.signUp.fillDetails",
+			"niceToMeetYou": "Hallo, willkommen in der App.",
+			"fillDetails": "Füllen Sie bitte das Formular aus:",
 			"name": "Vor- und Nachname *",
 			"nameInvalid": "Name ungültig",
 			"phone": "Telefonnummer *",
@@ -1059,7 +1126,7 @@
 			"newNotifications": "Neue Benachrichtigungen",
 			"access": "Zugang",
 			"myReservations": "Meine Reservierungen",
-			"guestReservations": "DE: mobileApp.menu.guestReservations"
+			"guestReservations": "Regelmäßiger Gast"
 		},
 		"access": {
 			"floor": "Etage",
@@ -1094,7 +1161,7 @@
 			"hourShortcut": "Std",
 			"me": "Ich",
 			"creatingReservation": "Reservierung erstellen",
-			"updatingReservation": "DE: mobileApp.newReservation.updatingReservation",
+			"updatingReservation": "Reservierung wird bearbeitet",
 			"creatingPayment": "Zahlung erstellen",
 			"tokenNoLongerValid": "Zahlungstoken ist weiter ungültig. Reservierung wird gelöscht.",
 			"checkingToken": "Prüfen der gültigkeit des Zahlungtokens.",
@@ -1102,18 +1169,18 @@
 			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
 			"processingPayment": "Zahlungsverarbeitung ...",
 			"flexiplace": "FLEXI",
-			"guest": "Gast"
+			"guest": "Regelmäßiger Gast"
 		},
 		"guest": {
 			"newGuest": "NEU",
 			"pickGuest": "WÄHLEN",
-			"name": "Gast - Name",
-			"email": "Gast E-Mail",
-			"phone": "Gast Telefonnummer",
+			"name": "Regelmäßiger Gast - Name",
+			"email": "Regelmäßiger Gast E-Mail",
+			"phone": "Regelmäßiger Gast Telefonnummer",
 			"invalidName": "Name falsch",
 			"invalidEmail": "E-Mail falsch",
 			"invalidPhone": "Telefonnummer falsch",
-			"noGuestResrevations": "Keine Gastreservierungen"
+			"noGuestResrevations": "Keine Reservierung für regelmäßige Gäßte"
 		}
 	},
 	"auth0Emails": {
@@ -1130,68 +1197,93 @@
 		"helpForHelp": "Auf jeder Seite befinden sich rechts Hinweise in blauen Feldern. Hinweise können Sie in Ihrem Profil immer wieder ein- oder ausschlaten.",
 		"garageSetup": "Möchten Sie eine Garage Erstellen, und alle Funktionen von Park-it-direct ausprobieren? Da helfen wir Ihnen gerne weiter. Schreiben Sie uns einfach eine Nachricht. Gemeinsam gehen wir das System durch, sodass alles richtig eingestellt ist, und Sie auch wirklich alle Möglichkeiten nutzen können.",
 		"getInTouch": "Möchten Sie uns kontaktieren?",
-		"website": "DE: auth0Emails.website",
-		"passwordResetSubmited": "DE: auth0Emails.passwordResetSubmited",
-		"pwdResetDescr": "DE: auth0Emails.pwdResetDescr",
-		"confirmPwdReset": "DE: auth0Emails.confirmPwdReset",
-		"troubleWithAccount": "DE: auth0Emails.troubleWithAccount",
-		"verificationCode": "DE: auth0Emails.verificationCode"
+		"website": "Wir sind immer für Sie da! Kontakt finden Sie auf <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\"> unserer Webseite</a>, oder schreiben Sie uns einfach im Chat unten rechts an.",
+		"passwordResetSubmited": "Sie haben Kennwortänderung verlangt!",
+		"pwdResetDescr": "Falls Sie eine Kennwortänderung nicht verlangt haben, können Sie diese Nachricht ignorieren. Falls Sie eine verlangt haben, dann",
+		"confirmPwdReset": "Kennwort ändern",
+		"troubleWithAccount": "Falls Sie Probleme mit Ihrem Konto haben, zweifeln Sie bitte nicht uns anzusprechen, indem Sie auf diese E-Mail antworten.",
+		"verificationCode": "Weiter unten finden Sie Ihren Bestätigungscode für Park-it-direct!"
 	},
 	"railsEmails": {
 		"footer": {
-			"enjoy": "DE: railsEmails.footer.enjoy",
-			"regards": "DE: railsEmails.footer.regards",
-			"team": "DE: railsEmails.footer.team"
+			"enjoy": "Viel Spaß mit Park-it-direct!",
+			"regards": "Mit freundlichen Grüßen,",
+			"team": "Park-it-direct Team"
 		},
 		"invitation_mail": {
-			"hello": "DE: railsEmails.invitation_mail.hello",
-			"invitation": "DE: railsEmails.invitation_mail.invitation",
-			"invited_you": "DE: railsEmails.invitation_mail.invited_you",
-			"says": "DE: railsEmails.invitation_mail.says",
-			"admin": "DE: railsEmails.invitation_mail.admin",
-			"secretary": "DE: railsEmails.invitation_mail.secretary",
-			"host": "DE: railsEmails.invitation_mail.host",
-			"internal": "DE: railsEmails.invitation_mail.internal",
-			"contact_person": "DE: railsEmails.invitation_mail.contact_person",
-			"receptionist": "DE: railsEmails.invitation_mail.receptionist",
-			"security": "DE: railsEmails.invitation_mail.security",
-			"invited_to": "DE: railsEmails.invitation_mail.invited_to",
-			"as": "DE: railsEmails.invitation_mail.as",
-			"issue": "DE: railsEmails.invitation_mail.issue",
-			"let_us_know": "DE: railsEmails.invitation_mail.let_us_know",
-			"we_will_help": "DE: railsEmails.invitation_mail.we_will_help"
+			"hello": "Guten Tag,",
+			"invitation": "Sie wurden gerade in die Park-it-direct App eingeladen!",
+			"invited_you": "hat Sie zum benutzen der Park-it-direct App eingeladen.",
+			"says": "Ihre/ Seine Nachricht lautet:",
+			"admin": "Administrator",
+			"secretary": "Sekretär/in",
+			"host": "Regelmäßiger Gast",
+			"internal": "Intern",
+			"contact_person": "Ansprechpartner",
+			"receptionist": "Rezeptionist/in",
+			"security": "Wachdienst",
+			"invited_to": "Hat Sie zum folgenden Kunden eingeladen",
+			"as": "als",
+			"issue": "Falls Sie Fragen oder Probleme hätten,",
+			"let_us_know": "wenden Sie sich bitte an unser Kundenservice,",
+			"we_will_help": "und wir helfen Ihnen Ihr Konto aktivieren."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "DE: railsEmails.new_reservation_mail.new_reservation",
-			"reservation_for_you": "DE: railsEmails.new_reservation_mail.reservation_for_you",
-			"more_details": "DE: railsEmails.new_reservation_mail.more_details",
-			"to_pid": "DE: railsEmails.new_reservation_mail.to_pid"
+			"new_reservation": "Sie haben eine neue Buchung bei Park-it-direct!",
+			"reservation_for_you": "hat für Sie eine Buchung erstellt.",
+			"go_pay_yourself": "Zahlen",
+			"price": "Preis:",
+			"pay_in_24_hours": "Buchung muss innerhalb 24 Stunden bezahlt werden.",
+			"reservation_was_paid": "Buchung wurde von dem Gastgeber bezahlt.",
+			"confirmed": "Bestätigt",
+			"garage_address": "Adresse der Garage",
+			"reservation_start": "Gebucht ab:",
+			"reservation_end": "Gebucht bis:",
+			"spot": "Parkplatznummer:",
+			"licence_plate": "Kennzeichen",
+			"reservation_information": "Information über die Buchung",
+			"gps": "GPS:"
 		},
 		"resend_invitation_mail": {
-			"hello": "DE: railsEmails.resend_invitation_mail.hello",
-			"invitation_reminder": "DE: railsEmails.resend_invitation_mail.invitation_reminder",
-			"remind_you": "DE: railsEmails.resend_invitation_mail.remind_you",
-			"admin": "DE: railsEmails.resend_invitation_mail.admin",
-			"secretary": "DE: railsEmails.resend_invitation_mail.secretary",
-			"host": "DE: railsEmails.resend_invitation_mail.host",
-			"internal": "DE: railsEmails.resend_invitation_mail.internal",
-			"contact_person": "DE: railsEmails.resend_invitation_mail.contact_person",
-			"receptionist": "DE: railsEmails.resend_invitation_mail.receptionist",
-			"security": "DE: railsEmails.resend_invitation_mail.security",
-			"invited_to": "DE: railsEmails.resend_invitation_mail.invited_to",
-			"as": "DE: railsEmails.resend_invitation_mail.as",
-			"to_sign_up": "DE: railsEmails.resend_invitation_mail.to_sign_up",
-			"to_pid": "DE: railsEmails.resend_invitation_mail.to_pid",
-			"issue": "DE: railsEmails.resend_invitation_mail.issue",
-			"let_us_know": "DE: railsEmails.resend_invitation_mail.let_us_know",
-			"we_will_help": "DE: railsEmails.resend_invitation_mail.we_will_help"
+			"hello": "Guten Tag,",
+			"invitation_reminder": "dies ist eine Erinnerungs-Nachricht von Park-it-direct!",
+			"remind_you": "würde Sie gerne in die Park-it-direct App wiederholt einladen.",
+			"admin": "Administrator",
+			"secretary": "Sekretär/in",
+			"host": "Regelmäßiger Gast",
+			"internal": "Intern",
+			"contact_person": "Ansprechpartner",
+			"receptionist": "Receptionist/in",
+			"security": "Wachdienst",
+			"invited_to": "Hat Sie zum folgenden Kunden eingeladen",
+			"as": "als",
+			"to_sign_up": "Registrieren!",
+			"to_pid": "Bei Park-it-direct!",
+			"issue": "Falls Sie Fragen oder Probleme hätten,",
+			"let_us_know": "wenden Sie sich bitte an unser Kundenservice,",
+			"we_will_help": "und wir helfen Ihnen Ihr Konto aktivieren."
 		},
 		"reservation_confirmed": {
-			"reservation_confirmed": "DE: railsEmails.reservation_confirmed.reservation_confirmed",
-			"garage": "DE: railsEmails.reservation_confirmed.garage",
-			"place": "DE: railsEmails.reservation_confirmed.place",
-			"from": "DE: railsEmails.reservation_confirmed.from",
-			"to": "DE: railsEmails.reservation_confirmed.to"
+			"reservation_confirmed": "Ihre Buchungsanfrage wurde genehmigt!",
+			"garage": "Garage",
+			"place": "Parkplatznummer:",
+			"from": "Von:",
+			"to": "Bis:"
+		},
+		"reservation_updated": {
+			"reservation_updated": "Ihre Reservierung wurde aktualisiert:",
+			"garage": "Garage:",
+			"place": "Platz:",
+			"from": "Von:",
+			"to": "Bis:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "Es wurde für Sie eine neue Buchung erstellt",
+			"from": "Von:",
+			"to": "Bis:",
+			"garage": "Garage:"
 		}
 	},
 	"pidAdmin": {
@@ -1199,11 +1291,13 @@
 			"backToPid": "netřeba překládat",
 			"adminMode": "netřeba překládat",
 			"generator": "netřeba překládat",
-			"news": "netřeba překládat"
+			"news": "netřeba překládat",
+			"finance": "netřeba překládat"
 		},
 		"users": {
 			"id": "netřeba překládat",
 			"name": "netřeba překládat",
+			"appVersion": "netřeba překládat",
 			"impersonate": "netřeba překládat",
 			"lastActive": "netřeba překládat"
 		},

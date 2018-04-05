@@ -1,11 +1,11 @@
 /* Park it direct custom icons */
 @font-face {
   font-family: 'PidFont';
-  src:  url('../fonts/pid-font.eot?7etgt8');
-  src:  url('../fonts/pid-font.eot?7etgt8#iefix') format('embedded-opentype'),
-    url('../fonts/pid-font.ttf?7etgt8') format('truetype'),
-    url('../fonts/pid-font.woff?7etgt8') format('woff'),
-    url('../fonts/pid-font.svg?7etgt8#icomoon') format('svg');
+  src:  url('../fonts/icomoon.eot?qr65o9');
+  src:  url('../fonts/icomoon.eot?qr65o9#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?qr65o9') format('truetype'),
+    url('../fonts/icomoon.woff?qr65o9') format('woff'),
+    url('../fonts/icomoon.svg?qr65o9#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,36 +25,48 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-activitylog:before { content: "\e900"; }
-.icon-admin:before { content: "\e901"; }
-.icon-airport-nearby:before { content: "\e902"; }
-.icon-camera-at-gate:before { content: "\e903"; }
-.icon-cameras:before { content: "\e904"; }
-.icon-car-wash:before { content: "\e905"; }
-.icon-charging-station:before { content: "\e906"; }
-.icon-city-center:before { content: "\e907"; }
-.icon-client:before { content: "\e908"; }
-.icon-dashboard:before { content: "\e909"; }
-.icon-fifteen-minutes-from-center:before { content: "\e90a"; }
-.icon-finance:before { content: "\e90b"; }
-.icon-garage:before { content: "\e90c"; }
-.icon-garagesetup:before { content: "\e90d"; }
-.icon-guarded-parking:before { content: "\e91a"; }
-.icon-historical-center:before { content: "\e91b"; }
-.icon-invoices:before { content: "\e91c"; }
-.icon-issues:before { content: "\e91d"; }
-.icon-marketing:before { content: "\e91e"; }
-.icon-message:before { content: "\e91f"; }
-.icon-non-stop-open:before { content: "\e920"; }
-.icon-non-stop-reception:before { content: "\e921"; }
-.icon-occupancy:before { content: "\e922"; }
-.icon-profile:before { content: "\e923"; }
-.icon-reservations:before { content: "\e924"; }
-.icon-settings:before { content: "\e925"; }
-.icon-size-restriction:before { content: "\e926"; }
-.icon-tram-nearby:before { content: "\e927"; }
-.icon-user:before { content: "\e928"; }
-.icon-wc:before { content: "\e929"; }
+.icon-activitylog:before {
+  content: "\e900";
+}
+.icon-admin:before {
+  content: "\e901";
+}
+.icon-airport-nearby:before {
+  content: "\e902";
+}
+.icon-camera-at-gate:before {
+  content: "\e903";
+}
+.icon-cameras:before {
+  content: "\e904";
+}
+.icon-car-wash:before {
+  content: "\e905";
+}
+.icon-charging-station:before {
+  content: "\e906";
+}
+.icon-city-center:before {
+  content: "\e907";
+}
+.icon-client:before {
+  content: "\e908";
+}
+.icon-dashboard:before {
+  content: "\e909";
+}
+.icon-fifteen-minutes-from-center:before {
+  content: "\e90a";
+}
+.icon-finance:before {
+  content: "\e90b";
+}
+.icon-garage:before {
+  content: "\e90c";
+}
+.icon-garagesetup:before {
+  content: "\e90d";
+}
 .icon-gate-opened-by-phone .path1:before {
   content: "\e90e";
   color: rgb(0, 0, 0);
@@ -112,4 +124,55 @@
   content: "\e919";
   margin-left: -1em;
   color: rgb(0, 0, 0);
+}
+.icon-guarded-parking:before {
+  content: "\e91a";
+}
+.icon-historical-center:before {
+  content: "\e91b";
+}
+.icon-invoices:before {
+  content: "\e91c";
+}
+.icon-issues:before {
+  content: "\e91d";
+}
+.icon-marketing:before {
+  content: "\e91e";
+}
+.icon-message:before {
+  content: "\e91f";
+}
+.icon-non-stop-open:before {
+  content: "\e920";
+}
+.icon-non-stop-reception:before {
+  content: "\e921";
+}
+.icon-occupancy:before {
+  content: "\e922";
+}
+.icon-pay:before {
+  content: "\e923";
+}
+.icon-profile:before {
+  content: "\e924";
+}
+.icon-reservations:before {
+  content: "\e925";
+}
+.icon-settings:before {
+  content: "\e926";
+}
+.icon-size-restriction:before {
+  content: "\e927";
+}
+.icon-tram-nearby:before {
+  content: "\e928";
+}
+.icon-user:before {
+  content: "\e929";
+}
+.icon-wc:before {
+  content: "\e92a";
 }

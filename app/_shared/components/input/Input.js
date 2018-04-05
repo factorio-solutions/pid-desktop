@@ -19,6 +19,7 @@ export default class Input extends Component {
     onChange:     PropTypes.func, // use if you want to pass value to parent
     onBlur:       PropTypes.func,
     onEnter:      PropTypes.func, // called when enter pressed
+    onFocus:      PropTypes.func, // called when enter pressed
     value:        PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -33,7 +34,8 @@ export default class Input extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
-    highlight: PropTypes.bool
+    highlight: PropTypes.bool,
+    isValid:   PropTypes.func
   }
 
   constructor(props) { // just to handle two way databinding
@@ -46,7 +48,7 @@ export default class Input extends Component {
   }
 
   render() {
-    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, inlineMenu, style, min, step, highlight, readOnly, required } = this.props
+    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, onFocus, inlineMenu, style, min, step, highlight, readOnly, required, isValid } = this.props
     const message = this.state.message
 
     const handleChange = event => {
@@ -61,6 +63,9 @@ export default class Input extends Component {
       } else {
         this.setState({ message: event.target.value })
         if (typeof onChange === 'function') {
+          if (typeof isValid === 'function') {
+            isValid(event.target.value)
+          }
           onChange(event.target.value, event.target.checkValidity() && event.target.value !== '')
         }
       }
@@ -81,10 +86,11 @@ export default class Input extends Component {
       <div className={`${styles.customFormGroup} ${styles[align || 'left']} ${style} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
         <input
           onBlur={onBlur}
+          onFocus={onFocus}
           pattern={pattern}
           type={type || 'text'}
           name={name}
-          value={message}
+          value={message || ''}
           onChange={handleChange}
           autoComplete={autocomplete}
           placeholder={placeholder}
