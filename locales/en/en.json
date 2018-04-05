@@ -973,7 +973,9 @@
 		"invalidRow": "Invalid number",
 		"changeSuccess": "Values changed sucessfully.",
 		"changeFailed": "An error occurred. Values were not changed.",
-		"uploadKey": "Upload RSA key"
+		"uploadKey": "Upload RSA key",
+		"accountNumber": "Account number",
+		"invalidAccountNumber": "Invalid account number"
 	},
 	"analytics": {
 		"week": "week",
