@@ -47,7 +47,9 @@
 		"minimumLength": "Długość minimum",
 		"noMatching": "Hasło się nie zgadza",
 		"userNotCreated": "Nie udało się wytworzyć konta, być może już istnieje",
-		"loading": "Ładowanie"
+		"loading": "Ładowanie",
+		"termsOfService": "warunkami świadczenia usług",
+		"acceptTerms": "Zgadzam się z "
 	},
 	"pageBase": {
 		"noFileSelected": "Wybierz plik.",
@@ -184,7 +186,8 @@
 		"analyticspaymentsHint": "PL: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "PL: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.",
-		"pidAdmin": "PID admin"
+		"pidAdmin": "PID admin",
+		"smsSettingsHint": "PL: pageBase.smsSettingsHint"
 	},
 	"newReservation": {
 		"selectGarage": "Wybierz garaż *",
@@ -231,7 +234,9 @@
 		"note": "Uwagi",
 		"onetimeVisit": "Jednorazowe odwiedziny",
 		"fillInContact": "PL: newReservation.fillInContact",
-		"paidByHost": "PL: newReservation.paidByHost"
+		"paidByHost": "PL: newReservation.paidByHost",
+		"languageSelector": "PL: newReservation.languageSelector",
+		"sendSms": "PL: newReservation.sendSms"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -413,6 +418,9 @@
 	},
 	"newGarage": {
 		"garage": "Garaż",
+		"company": "PL: newGarage.company",
+		"placeholderCompany": "MR.PARKIT s.r.o.",
+		"invalidCompany": "PL: newGarage.invalidCompany",
 		"places": "Miejsca",
 		"gates": "Bramy",
 		"order": "Zamówienie",
@@ -532,8 +540,17 @@
 		"DIC": "DIČ",
 		"invalidDIC": "niepoprawny DIČ",
 		"IBAN": "IBAN *",
-		"invalidIBAN ": "PL: newClient.invalidIBAN ",
-		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5401"
+		"invalidIBAN": "Niepoprawny IBAN",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5401",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "invalid token",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
+		"newTemplateName": "PL: newClient.newTemplateName",
+		"invalidNewTemplateName": "PL: newClient.invalidNewTemplateName",
+		"newTemplateText": "PL: newClient.newTemplateText",
+		"selectTemplate": "PL: newClient.selectTemplate",
+		"edit": "PL: newClient.edit",
+		"smsSettings": "PL: newClient.smsSettings"
 	},
 	"inviteUser": {
 		"selectUser": "E-mail(e) użytkownika",
@@ -967,7 +984,9 @@
 		"invalidRow": "Niepoprawny numer",
 		"changeSuccess": "Wartości zostały zmienione.",
 		"changeFailed": "Wystąpił błąd, wartości nie zostały zmienione.",
-		"uploadKey": "Wgrać klucz RSA"
+		"uploadKey": "Wgrać klucz RSA",
+		"accountNumber": "PL: finance.accountNumber",
+		"invalidAccountNumber": "PL: finance.invalidAccountNumber"
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -1257,6 +1276,14 @@
 			"place": "Miejsce:",
 			"from": "Od:",
 			"to": "Do:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
+			"from": "Od:",
+			"to": "Do:",
+			"garage": "Garaż:"
 		}
 	},
 	"pidAdmin": {
