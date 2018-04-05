@@ -119,6 +119,8 @@ class NewReservationPage extends Component {
       if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
       if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
+      // if onetime visitor and he has to pay by himself, then the email is mandatory
+      if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
@@ -227,7 +229,7 @@ class NewReservationPage extends Component {
                       error={t([ 'signup_page', 'emailInvalid' ])}
                       pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                       value={state.email.value}
-                      highlight={state.highlight && state.user.id === -1}
+                      highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
                     />
                   </div>
                 }
