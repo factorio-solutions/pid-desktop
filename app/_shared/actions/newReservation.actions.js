@@ -161,6 +161,13 @@ export function setGarage(value) {
   }
 }
 
+export function removeDiacritics() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    dispatch(setTemplateText(state.templateText.normalize('NFD').replace(/[\u0300-\u036f]/g, '')))
+  }
+}
+
 export function formatFrom() {
   return (dispatch, getState) => {
     let fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)

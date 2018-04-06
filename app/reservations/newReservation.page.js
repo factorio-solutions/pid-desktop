@@ -126,6 +126,8 @@ class NewReservationPage extends Component {
       // if onetime visitor and he has to pay by himself, then the email is mandatory
       if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
       if (ACCENT_REGEX.test(state.templateText) ? state.templateText.length > 140 : state.templateText.length > 320) return false
+      // if onetime visitor and we want to send him sms, then the phone is mandatory
+      if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
@@ -206,7 +208,7 @@ class NewReservationPage extends Component {
                 {state.user && (state.user.id < 0 || onetime) &&
                   <div>
                     <PatternInput
-		                  readOnly={onetime}
+                      readOnly={onetime}
                       onChange={actions.setHostName}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                       error={t([ 'signup_page', 'nameInvalid' ])}
@@ -225,7 +227,7 @@ class NewReservationPage extends Component {
                       error={t([ 'signup_page', 'phoneInvalid' ])}
                       pattern="\+[\d]{2,4}[\d]{3,}"
                       value={state.phone.value}
-                      highlight={state.highlight && state.user.id === -1}
+                      highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
                     />
                     <PatternInput
                       readOnly={onetime}
@@ -361,9 +363,12 @@ class NewReservationPage extends Component {
                           selected={state.selectedTemplate}
                           style="reservation"
                         />
-                        <div className={styles.textLabel}><label>{t([ 'newReservation', 'smsText' ])}</label></div>
+                        <div className={styles.textLabel}>
+                          <label>{t([ 'newReservation', 'smsText' ])}</label>
+                          <span className={styles.removeDiacritics} onClick={actions.removeDiacritics}>{t([ 'newReservation', 'removeDiacritics' ])}</span>
+                        </div>
                         <textarea value={state.templateText} onChange={this.onTextAreaChange} />
-                        <div>
+                        <div className={state.highlight && state.templateText.length > (ACCENT_REGEX.test(state.templateText) ? 140 : 320) && styles.redText}>
                           {state.templateText.length}/{ACCENT_REGEX.test(state.templateText) ? 140 : 320}
                           {t([ 'newReservation', 'character' ])}
                         </div>
