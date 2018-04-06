@@ -1,5 +1,9 @@
 @import '../../styles/app.components';
 
+.dropdownContainter {
+  position: relative;
+}
+
 .button {
   display:  inline-block;
   width:    100%;
