@@ -1,9 +1,11 @@
 import moment from 'moment'
-import { request } from '../helpers/request'
+
+import { request }    from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
-import { timeToUTC } from '../helpers/time'
-import actionFactory from '../helpers/actionFactory'
-import { t } from '../modules/localization/localization'
+import { timeToUTC }  from '../helpers/time'
+import actionFactory  from '../helpers/actionFactory'
+import { t }          from '../modules/localization/localization'
+import * as pageBase  from './pageBase.actions'
 
 import { OCCUPANCY_GARAGES_QUERY, GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
 
@@ -65,7 +67,8 @@ export function loadGarages() {
 }
 
 export function resetClientsLoadGarage(id) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    if (getState().pageBase.garages.find(garage => garage.garage.id === id)) dispatch(pageBase.setGarage(id))
     dispatch(resetClients())
     dispatch(loadGarage(id))
   }
@@ -74,9 +77,9 @@ export function resetClientsLoadGarage(id) {
 export function loadGarage(id) {
   return (dispatch, getState) => {
     const state = getState().occupancy
-    const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id)
+    const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage
 
-    requestPromise(GARAGE_DETAILS_QUERY, {
+    garageId && requestPromise(GARAGE_DETAILS_QUERY, {
       id:         garageId,
       from:       timeToUTC(state.from),
       to:         timeToUTC(state.from.clone().add(1, state.duration)),
@@ -88,16 +91,16 @@ export function loadGarage(id) {
 }
 
 export function loadClients(id) {
-  return dispatch => {
+  return (dispatch, getState) => {
     const onClientsSuccess = response => {
       response.data.garage.clients.unshift({ name: t([ 'occupancy', 'allReservations' ]), id: undefined })
       dispatch(setClients(response.data.garage.clients))
     }
 
-    // const garage = getState().pageBase.garage
-    request(onClientsSuccess
+    const garageId = id || getState().pageBase.garage
+    garageId && request(onClientsSuccess
       , GARAGE_CLIENTS_QUERY
-      , { id } // || garage
+      , { id: garageId }
     )
   }
 }
@@ -105,6 +108,7 @@ export function loadClients(id) {
 export function initOccupancy() {
   return dispatch => {
     dispatch(loadGarages())
+    dispatch(resetClientClick())
   }
 }
 

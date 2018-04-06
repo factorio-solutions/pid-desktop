@@ -31,6 +31,8 @@ class ModulesPage extends Component {
 
   toGoPublicSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/goPublic`)
 
+  toGoInternalSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/goInternal`)
+
   toMarketingSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/marketingSettings`)
 
   toMarketingPreview = () => window.open('#' + nav.path(`/marketing/${this.props.state.short_name}`))
@@ -56,10 +58,25 @@ class ModulesPage extends Component {
         onClick={actions.toggleGoPublic}
       />
     ]
+
+    const goInternalActions = [
+      <CallToActionButton
+        label={t([ 'modules', 'setting' ])}
+        state={(userGarage === undefined) ? 'disabled' : 'inverted'}
+        onClick={this.toGoInternalSettings}
+      />,
+      <Switch
+        on={state.goInternal}
+        state={(userGarage === undefined) && 'disabled'}
+        onClick={this.toGoInternalSettings}
+      />
+    ]
+
     const flexiplaceActions = [
       <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGoFlexiPlaceSettings} />,
       <Switch on={state.flexiplace} onClick={this.toggleFLexiplace} />
     ]
+
     const marketingActions = [
       <CallToActionButton
         label={t([ 'modules', 'Preview' ])}
@@ -86,6 +103,12 @@ class ModulesPage extends Component {
           description={t([ 'modules', 'goPublicDescription' ])}
           disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
           actions={goPublicActions}
+        />
+        <Module
+          name={t([ 'modules', 'goInternal' ])}
+          description={t([ 'modules', 'goInternalDescription' ])}
+          disabled={userGarage === undefined}
+          actions={goInternalActions}
         />
         <Module
           name={t([ 'modules', 'flexiplace' ])}

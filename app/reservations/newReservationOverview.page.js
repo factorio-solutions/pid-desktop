@@ -21,7 +21,8 @@ class NewReservationOverviewPage extends Component {
   componentDidMount() {
     const { location, actions } = this.props
     if (location.query.hasOwnProperty('token')) {
-      location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
+      // location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
+      location.query.success !== 'true' && actions.paymentUnsucessfull()
     } else if (location.query.hasOwnProperty('csob')) {
       location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
     } else {

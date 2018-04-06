@@ -47,7 +47,9 @@
 		"minimumLength": "Minimum length is",
 		"noMatching": "Password does not match",
 		"userNotCreated": "User not created, may already exist.",
-		"loading": "Loading"
+		"loading": "Loading",
+		"termsOfService": "Terms of Service",
+		"acceptTerms": "Accepting"
 	},
 	"pageBase": {
 		"noFileSelected": "No file selected",
@@ -220,9 +222,9 @@
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
 		"newHost": "New regular guest",
-		"hostsName": "Name of regular host ",
-		"hostsPhone": "Phone of regular host",
-		"hostsEmail": "Email of regular host",
+		"hostsName": "Name of regular guest",
+		"hostsPhone": "Phone of regular guest",
+		"hostsEmail": "Email of regular guest",
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
 		"visitorsEmail": "Visitors email",
@@ -419,7 +421,7 @@
 	},
 	"newGarage": {
 		"garage": "Garage",
-		"company": "Company",
+		"company": "Company name",
 		"placeholderCompany": "MR.PARKIT s.r.o.",
 		"invalidCompany": "Invalid company name",
 		"places": "Spots",
@@ -546,10 +548,10 @@
 		"SmsApiToken": "SMS API Token",
 		"invalidSmsApiToken": "invalid token",
 		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
-		"newTemplateName":"Template name",
-		"invalidNewTemplateName":"Invalid template name",
-		"newTemplateText":"Template text",
-		"selectTemplate":"Select template",
+		"newTemplateName": "Template name",
+		"invalidNewTemplateName": "Invalid template name",
+		"newTemplateText": "Template text",
+		"selectTemplate": "Select template",
 		"edit": "Client",
 		"smsSettings": "SMS module"
 	},
@@ -985,7 +987,9 @@
 		"invalidRow": "Invalid number",
 		"changeSuccess": "Values changed sucessfully.",
 		"changeFailed": "An error occurred. Values were not changed.",
-		"uploadKey": "Upload RSA key"
+		"uploadKey": "Upload RSA key",
+		"accountNumber": "Account number",
+		"invalidAccountNumber": "Invalid account number"
 	},
 	"analytics": {
 		"week": "week",
@@ -1275,6 +1279,14 @@
 			"place": "Place:",
 			"from": "From:",
 			"to": "To:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "There has been a new reservation created for you",
+			"from": "Begins at:",
+			"to": "Ends at:",
+			"garage": "Garage:"
 		}
 	},
 	"pidAdmin": {
