@@ -239,7 +239,8 @@
 		"sendSms": "Send notification about reservation via SMS",
 		"selectTemplate": "Select template",
 		"smsText": "SMS text",
-		"character": "characters"
+		"character": "characters",
+		"removeDiacritics": "remove diacritics"
 	},
 	"clients": {
 		"name": "name",
