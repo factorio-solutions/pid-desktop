@@ -236,7 +236,11 @@
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
 		"languageSelector": "Choose communication language",
-		"sendSms": "Send notification about reservation via SMS"
+		"sendSms": "Send notification about reservation via SMS",
+		"selectTemplate": "Select template",
+		"smsText": "SMS text",
+		"character": "characters",
+		"removeDiacritics": "remove diacritics"
 	},
 	"clients": {
 		"name": "name",

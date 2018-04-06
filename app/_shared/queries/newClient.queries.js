@@ -6,22 +6,33 @@ export const CREATE_NEW_CLIENT = `mutation clientMutations($client: ClientInput!
 }
 `
 
-//fetches a name of client to rename
+export const CREATE_NEW_TEMPLATE = `mutation templateMutations($sms_template: SmsTemplateInput!, $client_id: Id!) {
+  create_sms_template(sms_template: $sms_template, client_id:$client_id) {
+    id
+  }
+}
+`
+
+// fetches a name of client to rename
 export const EDIT_CLIENT_INIT = `query ($id: Id!) {
-  client_users(client_id: $id) {
-    client {
+  client(id: $id) {
+    id
+    name
+    sms_api_token
+    ic
+    dic
+    address{
+      line_1
+      line_2
+      city
+      postal_code
+      state
+      country
+    }
+    sms_templates{
       id
       name
-      ic
-      dic
-      address{
-        line_1
-        line_2
-        city
-        postal_code
-        state
-        country
-      }
+      template
     }
   }
 }
@@ -37,5 +48,12 @@ export const EDIT_CLIENT_MUTATION = `mutation RenameClient($client: ClientInput!
 
 export const LOAD_INFO_FROM_IC = `query IcToInfo($ic:String){
   ares(ic:$ic)
+}
+`
+
+export const UPDATE_SMS_TEMPLATE = `mutation UpdateSMSTempalte($id: Id!, $sms_template: SmsTemplateInput!) {
+  update_sms_template(id: $id, sms_template: $sms_template) {
+    id
+  }
 }
 `

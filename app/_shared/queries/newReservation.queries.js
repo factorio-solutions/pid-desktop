@@ -22,6 +22,11 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
   reservable_clients(user_id: $user_id, garage_id: $garage_id) {
     id
     name
+    has_sms_api_token
+    sms_templates {
+      name
+      template
+    }
   }
   last_reservation_client(user_id: $user_id, garage_id: $garage_id){
     id
@@ -56,6 +61,16 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     dic
     flexiplace
     has_payment_gate
+    address {
+      line_1
+      line_2
+      city
+      postal_code
+      state
+      country
+      lat
+      lng
+    }
     floors {
       id
       label
