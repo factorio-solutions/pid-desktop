@@ -17,11 +17,13 @@ export const GET_GARAGE_PAYMENT_METHOD = `query ($id:Id!){
     vat
     invoice_row
     simplyfied_invoice_row
+    account_number
     account{
       id
       paypal_email
       csob_merchant_id
       csob_private_key
+      iban
     }
   }
 }
