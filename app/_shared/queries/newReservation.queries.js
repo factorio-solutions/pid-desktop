@@ -99,6 +99,9 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       }
     }
   }
+  random_phone_number {
+    number
+  }
 }
 `
 
