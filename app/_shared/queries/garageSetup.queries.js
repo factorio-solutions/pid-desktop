@@ -135,8 +135,11 @@ export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
         lat
         lng
       }
-      places{
+      places {
         label
+        floor {
+          label
+        }
       }
     }
   }
