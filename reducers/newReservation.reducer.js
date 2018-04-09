@@ -38,6 +38,8 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
 
+  NEW_RESERVATION_SET_GATE_PHONE_NUMBER,
+
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
 
@@ -76,7 +78,9 @@ const defaultState = {
   error:        undefined,
 
   selectedTemplate: undefined, // index of it
-  templateText:     ''
+  templateText:     '',
+
+  gatePhoneNumber: ''
 }
 
 function placeLabel(state) {
@@ -104,7 +108,7 @@ function substituteVariablesInTemplate(template, state) {
     .replace('{{ place }}', placeLabel(state))
     .replace('{{ begin }}', state.from)
     .replace('{{ end }}', state.to)
-    .replace('{{ gate }}', 'TODO: add gate number')
+    .replace('{{ gate }}', state.gatePhoneNumber)
 }
 
 export default function newReservation(state = defaultState, action) {
@@ -297,6 +301,12 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         templateText: substituteVariablesInTemplate(action.value, state)
+      }
+
+    case NEW_RESERVATION_SET_GATE_PHONE_NUMBER:
+      return {
+        ...state,
+        gatePhoneNumber: action.value
       }
 
 
