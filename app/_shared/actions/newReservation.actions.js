@@ -501,7 +501,7 @@ export function downloadGarage(id) {
       })
       dispatch(setGarage(garage))
       dispatch(autoSelectPlace())
-      dispatch(setGatePhoneNumber(value.random_phone_number.number))
+      value.random_phone_number && dispatch(setGatePhoneNumber(value.random_phone_number.number))
     })
   }
 }
