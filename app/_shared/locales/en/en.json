@@ -554,7 +554,9 @@
 		"newTemplateText": "Template text",
 		"selectTemplate": "Select template",
 		"edit": "Client",
-		"smsSettings": "SMS module"
+		"smsSettings": "SMS module",
+		"activate": "activate",
+		"deactivate": "deactivate"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",

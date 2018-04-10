@@ -40,6 +40,7 @@ class SmsSettingsPage extends Component {
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/clients`)
 
   submitForm = () => this.checkSubmitable() && this.props.actions.submitSmsTemplates(this.props.params.client_id)
+  toggleSmsApiToken = () => this.props.actions.toggleIsSmsApiTokenActive(this.props.params.client_id)
   submitNewTemplateForm = () => this.checkNewTemplateSubmitable() && this.props.actions.submitNewTemplate(this.props.params.client_id)
 
   checkNewTemplateSubmitable = () => {
@@ -53,6 +54,10 @@ class SmsSettingsPage extends Component {
 
     const selectedTemplateIndex = state.templates.findIndexById(state.selectedTemplate)
     const selectedTemplate = state.templates[selectedTemplateIndex]
+
+    const beginsInlineMenu = <span className={state.isSmsApiTokenActive ? styles.deactivate : styles.activate} onClick={this.toggleSmsApiToken}>
+      {t([ 'newClient', state.isSmsApiTokenActive ? 'deactivate' : 'activate' ])}
+    </span>
 
     return (
       <NewClientPageBase params={this.props.params}>
@@ -74,14 +79,15 @@ class SmsSettingsPage extends Component {
           </Form>
         </Modal>
         <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
-          {pageBase.current_user && pageBase.current_user.pid_admin && <Input
+          <Input
             onEnter={this.submitForm}
             onChange={actions.setSmsApiToken}
             label={t([ 'newClient', 'SmsApiToken' ])}
             error={t([ 'newClient', 'invalidSmsApiToken' ])}
-            value={state.smsApiToken}
+            value={pageBase.current_user && pageBase.current_user.pid_admin ? state.smsApiToken : ''}
             placeholder={t([ 'newClient', 'SmsApiTokenPlaceholder' ])}
-          />}
+            inlineMenu={state.smsApiToken && beginsInlineMenu}
+          />
           <div className={styles.dropdownAdd}>
             <Dropdown content={state.templates.map(this.templatesDropdown)} label={t([ 'newClient', 'selectTemplate' ])} style="light" selected={selectedTemplateIndex} />
             <RoundButton
