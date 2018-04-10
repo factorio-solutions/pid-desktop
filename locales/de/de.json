@@ -20,7 +20,7 @@
 		"line2Placeholder": "Wohnung Nr. 13",
 		"cityPlaceholder": "Berlin",
 		"postalCodePlaceholder": "10178",
-		"statePlaceholder": "DE: addresses.statePlaceholder",
+		"statePlaceholder": "Bundesland",
 		"countryPlaceholder": "Deutschland"
 	},
 	"login_page": {
@@ -114,7 +114,7 @@
 		"newReservationHint": "Hier können Sie eine neue Reservierung erstellen. Wählen Sie zuerst den Benutzer und das Parkhaus aus, anschließend die Daten und schließlich den Stellplatz. Voilà.",
 		"garagesHint": "Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.\nLinks oben können Sie auswählen, welcher Wert dargestellt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder für das aktuelle Datum angezeigt werden soll.",
 		"newGarageHint": "Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.",
-		"newGarageFloorsHint": "DE: pageBase.newGarageFloorsHint",
+		"newGarageFloorsHint": "Hier können Sie die Stockwerke und jeweilige Parkplätze erstellen.\n\nZu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Herstellung. Sie können auch eine der Vorlagen verwenden.\n\nWeiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen.",
 		"newGarageOrderHint": "Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteil.",
 		"newGarageSubscribtionHint": "DE: pageBase.newGarageSubscribtionHint",
 		"newGarageGatesHint": "Hier können Sie die Tore bearbeiten (Ein- und Ausfahrten) und bestimmen, welche Tore zu welchen Plätzen gehören.",
@@ -234,9 +234,13 @@
 		"note": "Notiz",
 		"onetimeVisit": "Einmaliger Besucher",
 		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.",
-		"paidByHost": "Buchung wir vom Gast bezahlt",
+		"paidByHost": "Buchung wird vom Gast bezahlt",
 		"languageSelector": "Wählen Sie die Kommunikationssprache",
-		"sendSms": "Buchungsbestätigung per SMS schicken"
+		"selectTemplate": "Bestätigung per SMS schicken",
+		"sendSms": "Wählen Sie eine Vorlage",
+		"smsText": "Text der Nachricht",
+		"character": "Zeichen",
+		"removeDiacritics": "Diakritika entfernen"
 	},
 	"clients": {
 		"name": "Name",
@@ -550,7 +554,9 @@
 		"newTemplateText": "Schabloneninhalt",
 		"selectTemplate": "Wählen Sie eine Schablone",
 		"edit": "Kunde",
-		"smsSettings": "SMS Modul"
+		"smsSettings": "SMS Modul",
+		"activate": "DE: newClient.activate",
+		"deactivate": "DE: newClient.deactivate"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",

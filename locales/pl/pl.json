@@ -236,7 +236,11 @@
 		"fillInContact": "PL: newReservation.fillInContact",
 		"paidByHost": "PL: newReservation.paidByHost",
 		"languageSelector": "PL: newReservation.languageSelector",
-		"sendSms": "PL: newReservation.sendSms"
+		"selectTemplate": "PL: newReservation.selectTemplate",
+		"sendSms": "PL: newReservation.sendSms",
+		"smsText": "PL: newReservation.smsText",
+		"character": "PL: newReservation.character",
+		"removeDiacritics": "PL: newReservation.removeDiacritics"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -543,14 +547,16 @@
 		"invalidIBAN": "Niepoprawny IBAN",
 		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5401",
 		"SmsApiToken": "SMS API Token",
-		"invalidSmsApiToken": "invalid token",
+		"invalidSmsApiToken": "PL: newClient.invalidSmsApiToken",
 		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
 		"newTemplateName": "PL: newClient.newTemplateName",
 		"invalidNewTemplateName": "PL: newClient.invalidNewTemplateName",
 		"newTemplateText": "PL: newClient.newTemplateText",
 		"selectTemplate": "PL: newClient.selectTemplate",
 		"edit": "PL: newClient.edit",
-		"smsSettings": "PL: newClient.smsSettings"
+		"smsSettings": "PL: newClient.smsSettings",
+		"activate": "PL: newClient.activate",
+		"deactivate": "PL: newClient.deactivate"
 	},
 	"inviteUser": {
 		"selectUser": "E-mail(e) użytkownika",
