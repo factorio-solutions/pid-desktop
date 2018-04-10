@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import styles                          from './checkbox.scss'
+import styles                          from './Checkbox.scss'
 
 export default class Checkbox extends Component {
   static propTypes = {
