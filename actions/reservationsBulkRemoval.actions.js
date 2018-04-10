@@ -70,6 +70,15 @@ export function setReservationToBeRemove(id) {
   }
 }
 
+export function cancelSelection() {
+  return dispatch => {
+    dispatch({
+      type:  SET_RESERVATION_TO_BE_REMOVED,
+      value: []
+    })
+  }
+}
+
 export function setClientsReservationsToBeRemove(client) {
   return (dispatch, getState) => {
     const { toBeRemoved } = getState().reservationBulkRemoval
@@ -124,6 +133,14 @@ export function loadAvailableUsers() {
     requestPromise(GET_AVAILABLE_USERS, {
       id: +curretUserId
     }).then(data => {
+      const users = data.reservable_users
+      const curretnUser = getState().pageBase.current_user
+      if (curretnUser && curretnUser.secretary) {
+        users.push({
+          full_name: 'All users',
+          id:        -1
+        })
+      }
       dispatch(setAvailableUsers(data.reservable_users))
     })
   }
@@ -162,17 +179,11 @@ export function formatTo() {
   }
 }
 
-export function addReservations() {
-  return []
-}
-
 export function destroyReservation(id, callback) {
-  return dispatch => {
+  return () => {
     const onSuccess = response => {
       if (mobile) {
         callback()
-      } else {
-        dispatch(initReservations())
       }
     }
     request(onSuccess, DESTROY_RESERVATION, { id })
@@ -188,3 +199,13 @@ export function destroyRecurringReservations(id) {
   }
 }
 
+export function destroyAllSelectedReservations() {
+  return (dispatch, getState) => {
+    const { toBeRemoved } = getState().reservationBulkRemoval
+    toBeRemoved.forEach(reservation => {
+      destroyReservation(reservation)
+    })
+    cancelSelection()
+    loadReservations()
+  }
+}
