@@ -496,13 +496,13 @@ newReservation.noFreePlace,No free place,Žádná volná místa,Brak wolnych mie
 newReservation.note,Note,Poznámka,Uwagi,Notiz
 newReservation.onetimeVisit,Onetime visitor,Jednorázový návštěvník,Jednorazowe odwiedziny,Einmaliger Besucher
 newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.,,Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.
-newReservation.paidByHost,Reservation paid by guest,Rezervaci platí host,,Buchung wird vom Gast bezahlt
-newReservation.languageSelector,Choose communication language,Zvolte jazyk komunikace,,Wählen Sie die Kommunikationssprache
-newReservation.selectTemplate,Send notification about reservation via SMS,Odeslat upozornění o rezervaci pomocí SMS,,Bestätigung per SMS schicken
-newReservation.sendSms,Select template,Zvolte šablonu,,Wählen Sie eine Vorlage
-newReservation.smsText,SMS text,text SMS,,Text der Nachricht
-newReservation.character,characters,zknaků,,Zeichen
-newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,,Diakritika entfernen
+newReservation.paidByHost,Reservation paid by guest,Rezervaci platí host,Za rezerwację płaci gość,Buchung wird vom Gast bezahlt
+newReservation.languageSelector,Choose communication language,Zvolte jazyk komunikace,Wybierz język komunikacji,Wählen Sie die Kommunikationssprache
+newReservation.selectTemplate,Select template,Zvolte šablonu,Wybierz szablon,Wählen Sie eine Vorlage
+newReservation.sendSms,Send notification about reservation via SMS,Odeslat upozornění o rezervaci pomocí SMS,Wysłać sms z potwierdzeniem rezerwacji,Bestätigung per SMS schicken
+newReservation.smsText,SMS text,text SMS,Tekst SMS,Text der Nachricht
+newReservation.character,characters,znaků,znaków,Zeichen
+newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,usunąć polskie znaki,Diakritika entfernen
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -663,9 +663,9 @@ orderGarageModule.placingOrder,Creating order ...,Vytvářím objednávku ...,Wy
 orderGarageModule.orderSuccessfull,Order successfully completed,Objednávka byla úspěšně dokončena,Wytwrzanie zamówienia przebiegło poprawnie.,Die Bestellung wurde erfolgreich abgeschlossen.
 orderGarageModule.orderFailed,"Payment failed, try again later.","Platba selhala, zkuste to později.","Płatność się nie powiodła, spróbuj później.","Die Zahlung ist fehlgeschlagen, versuchen Sie es bitte später erneut."
 newGarage.garage,Garage,Garáž,Garaż,Parkhaus
-newGarage.company,Company name,Firma,,Unternehmensname
+newGarage.company,Company name,Firma,Firma,Unternehmensname
 newGarage.placeholderCompany,MR.PARKIT s.r.o.,MR.PARKIT s.r.o.,MR.PARKIT s.r.o.,MR.PARKIT s.r.o.
-newGarage.invalidCompany,Invalid company name,Neplatné jméno firmy,,Unternehmensname ungültig
+newGarage.invalidCompany,Invalid company name,Neplatné jméno firmy,Niepoprawna nazwa firmy,Unternehmensname ungültig
 newGarage.places,Spots,Místa,Miejsca,Plätze
 newGarage.gates,Gates,Brány,Bramy,Tore
 newGarage.order,Order,Pořadí,Zamówienie,Reihenfolge
@@ -786,16 +786,16 @@ newClient.IBAN,IBAN *,IBAN *,IBAN *,IBAN *
 newClient.invalidIBAN,Invalid IBAN,Nesprávný IBAN,Niepoprawny IBAN,IBAN ungültig
 newClient.IBANplaceholder,CZ65 0800 0000 1920 0014 5399,CZ65 0800 0000 1920 0014 5400,CZ65 0800 0000 1920 0014 5401,CZ65 0800 0000 1920 0014 5402
 newClient.SmsApiToken,SMS API Token,SMS API Token,SMS API Token,SMS API Token
-newClient.invalidSmsApiToken,invalid token,neplatný token,,Token ungültig
+newClient.invalidSmsApiToken,invalid token,neplatný token,Niepoprawny token,Token ungültig
 newClient.SmsApiTokenPlaceholder,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx
-newClient.newTemplateName,Template name,Jméno šablony,,Schablonenname
-newClient.invalidNewTemplateName,Invalid template name,Nevhodné jméno šablony,,Schablonenname ungültig
-newClient.newTemplateText,Template text,Obsah šablony,,Schabloneninhalt
-newClient.selectTemplate,Select template,Zvolte šablonu,,Wählen Sie eine Schablone
-newClient.edit,Client,Klient,,Kunde
-newClient.smsSettings,SMS module,SMS modul,,SMS Modul
-newClient.activate,activate,aktivovat,,
-newClient.deactivate,deactivate,deaktivovat,,
+newClient.newTemplateName,Template name,Jméno šablony,Nazwa szablonu,Schablonenname
+newClient.invalidNewTemplateName,Invalid template name,Nevhodné jméno šablony,Niepoprawna nazwa szablonu,Schablonenname ungültig
+newClient.newTemplateText,Template text,Obsah šablony,Treść szablonu,Schabloneninhalt
+newClient.selectTemplate,Select template,Zvolte šablonu,Wybierz szablon,Wählen Sie eine Schablone
+newClient.edit,Client,Klient,Klient,Kunde
+newClient.smsSettings,SMS module,SMS modul,Moduł SMS,SMS Modul
+newClient.activate,activate,aktivovat,Aktywuj,
+newClient.deactivate,deactivate,deaktivovat,Dezaktywuj,
 inviteUser.selectUser,User email(s),Email(y) uživatele,E-mail(e) użytkownika,E-Mail-Adresse(n) des Benutzers
 inviteUser.connectionExists,This user is already in this client account.,Tento uživatel již je v tomto klientském účtu.,Użytkownik znajduje się już na tym koncie klienta.,Dieser Benutzer ist in diesem Kundenkonto bereits vorhanden.
 inviteUser.sendingInvitation,"Loading, inviting user","Načítám, zvu uživatele","Przetwarzam, zapraszam użytkownika.","Ladevorgang läuft, Benutzer wird eingeladen."
@@ -1121,8 +1121,8 @@ modules.connectWithMrParkit,Connect with MR.PARKIT,Spojte se s MR.PARKIT,Skontak
 modules.reservationForm,Reservation form,Rezervační formulář,Formularz rezerwacji,Reservierungsformular
 modules.goPublic,Go public,Zveřejněte,Zaoferuj publicznie,Veröffentlichen
 modules.goPublicDescription,Offer short-term parking to the PiD community,Nabídněte krátkodobé parkování pro komunitu PiD,Zaoferuj krótkoterminowe parkowanie dla grupy PiD,Kurzfristige Parkplätze für die PiD-Community anbieten
-modules.goInternal,Internal paid reservations,Interní placené rezervace,,Interne bezahlte Buchungen
-modules.goInternalDescription,Offer short-term parking to your tenants,Nabídněte krátkodobé parkování Vašim nájemcům,,Bieten Sie Ihren Mietern bezahltes Kurzzeit-Parken
+modules.goInternal,Internal paid reservations,Interní placené rezervace,Wewnętrzne płatne rezerwacje,Interne bezahlte Buchungen
+modules.goInternalDescription,Offer short-term parking to your tenants,Nabídněte krátkodobé parkování Vašim nájemcům,Zaoferuj swoim najemcom krótkoterminowe parkowanie,Bieten Sie Ihren Mietern bezahltes Kurzzeit-Parken
 modules.setting,Settings,Nastavení,Ustawienia,Einstellungen
 modules.Preview,Preview,Náhled,Podgląd,Vorschau
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,Rechnungsplan wird aktualisiert. Weiterleiten …
@@ -1186,8 +1186,8 @@ finance.invalidRow,Invalid number,Neplatné číslo,Niepoprawny numer,Ungültige
 finance.changeSuccess,Values changed sucessfully.,Hodnoty byly úspěšně změněny.,Wartości zostały zmienione.,Die Werte wurden erfolgreich geändert.
 finance.changeFailed,An error occurred. Values were not changed.,"Došlo k chybě, hodnoty se nezměnily.","Wystąpił błąd, wartości nie zostały zmienione.",Ein Fehler ist aufgetreten. Die Werte wurden nicht geändert.
 finance.uploadKey,Upload RSA key,Nahrát RSA klíč,Wgrać klucz RSA,RSA-Schlüssel hochladen
-finance.accountNumber,Account number,Číslo účtu,,Kontonummer
-finance.invalidAccountNumber,Invalid account number,Nesprávné číslo účtu,,Ungültige Kontonummer
+finance.accountNumber,Account number,Číslo účtu,Numer konta,Kontonummer
+finance.invalidAccountNumber,Invalid account number,Nesprávné číslo účtu,Niepoprawny numer konta,Ungültige Kontonummer
 analytics.week,week,týden,tydzień,Woche
 analytics.month,month,měsíc,miesiąc,Monat
 analytics.turnover,turnover,obrat,obrót,Umsatz
@@ -1380,17 +1380,17 @@ railsEmails.invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontakt
 railsEmails.invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,a my pomożemy Ci aktywować konto.,und wir helfen Ihnen Ihr Konto aktivieren.
 railsEmails.new_reservation_mail.new_reservation,You have a new reservation on Park-it-direct!,Máte novou rezervaci v Park-it-direct!,Masz nową rezerwacją w Park-it-direct!,Sie haben eine neue Buchung bei Park-it-direct!
 railsEmails.new_reservation_mail.reservation_for_you,has created a new reservation for you.,pro Vás vytvořil novou rezervaci.,utworzył dla Ciebie nową rezerwację.,hat für Sie eine Buchung erstellt.
-railsEmails.new_reservation_mail.go_pay_yourself,Go pay,Zaplatit,,Zahlen
-railsEmails.new_reservation_mail.price,Price:,Cena:,,Preis:
-railsEmails.new_reservation_mail.pay_in_24_hours,Reservation must be payed in 24 hours.,Rezervaci je potřeba zaplatit do 24 hodin.,,Buchung muss innerhalb 24 Stunden bezahlt werden.
-railsEmails.new_reservation_mail.reservation_was_paid,Reservation was paid by client.,Rezervace byla zaplacena klientem.,,Buchung wurde von dem Gastgeber bezahlt.
-railsEmails.new_reservation_mail.confirmed,Confirmed,Potvrzeno,,Bestätigt
-railsEmails.new_reservation_mail.garage_address,Garage address,Adresa garáže,,Adresse der Garage
-railsEmails.new_reservation_mail.reservation_start,Reservation start,Začátek rezervace,,Gebucht ab:
-railsEmails.new_reservation_mail.reservation_end,Reservation end,Konec rezervace,,Gebucht bis:
-railsEmails.new_reservation_mail.spot,Spot number,Číslo místa,,Parkplatznummer:
-railsEmails.new_reservation_mail.licence_plate,Licence plate,SPZ,,Kennzeichen
-railsEmails.new_reservation_mail.reservation_information,Reservation information,Informace o rezervaci,,Information über die Buchung
+railsEmails.new_reservation_mail.go_pay_yourself,Go pay,Zaplatit,Zapłać,Zahlen
+railsEmails.new_reservation_mail.price,Price:,Cena:,Cena:,Preis:
+railsEmails.new_reservation_mail.pay_in_24_hours,Reservation must be payed in 24 hours.,Rezervaci je potřeba zaplatit do 24 hodin.,Rezerwację należy opłacić w ciągu 24 godzin.,Buchung muss innerhalb 24 Stunden bezahlt werden.
+railsEmails.new_reservation_mail.reservation_was_paid,Reservation was paid by client.,Rezervace byla zaplacena klientem.,Rezerwacja została zapłacona przez klienta.,Buchung wurde von dem Gastgeber bezahlt.
+railsEmails.new_reservation_mail.confirmed,Confirmed,Potvrzeno,Potwierdzone,Bestätigt
+railsEmails.new_reservation_mail.garage_address,Garage address,Adresa garáže,Adres garażu,Adresse der Garage
+railsEmails.new_reservation_mail.reservation_start,Reservation start,Začátek rezervace,Początek rezerwacji:,Gebucht ab:
+railsEmails.new_reservation_mail.reservation_end,Reservation end,Konec rezervace,Koniec rezerwacji:,Gebucht bis:
+railsEmails.new_reservation_mail.spot,Spot number,Číslo místa,Numer miejsca:,Parkplatznummer:
+railsEmails.new_reservation_mail.licence_plate,Licence plate,SPZ,Nr rejestracyjny,Kennzeichen
+railsEmails.new_reservation_mail.reservation_information,Reservation information,Informace o rezervaci,Informacje o rezerwacji,Information über die Buchung
 railsEmails.new_reservation_mail.gps,GPS:,GPS:,GPS:,GPS:
 railsEmails.resend_invitation_mail.hello,"Hello,","Dobrý den,","Dzień dobry,","Guten Tag,"
 railsEmails.resend_invitation_mail.invitation_reminder,This is an invitation reminder to Park-it-direct!,Toto je připomínkový email od Park-it-direct!,przypominamy Ci o zaproszeniu,dies ist eine Erinnerungs-Nachricht von Park-it-direct!

@@ -84,7 +84,7 @@ class SmsSettingsPage extends Component {
             onChange={actions.setSmsApiToken}
             label={t([ 'newClient', 'SmsApiToken' ])}
             error={t([ 'newClient', 'invalidSmsApiToken' ])}
-            value={pageBase.current_user && pageBase.current_user.pid_admin ? state.smsApiToken : ''}
+            value={pageBase.current_user && pageBase.current_user.pid_admin && state.isSmsApiTokenActive ? state.smsApiToken : ''}
             placeholder={t([ 'newClient', 'SmsApiTokenPlaceholder' ])}
             inlineMenu={state.smsApiToken && beginsInlineMenu}
           />

@@ -236,8 +236,8 @@
 		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.",
 		"paidByHost": "Buchung wird vom Gast bezahlt",
 		"languageSelector": "Wählen Sie die Kommunikationssprache",
-		"selectTemplate": "Bestätigung per SMS schicken",
-		"sendSms": "Wählen Sie eine Vorlage",
+		"selectTemplate": "Wählen Sie eine Vorlage",
+		"sendSms": "Bestätigung per SMS schicken",
 		"smsText": "Text der Nachricht",
 		"character": "Zeichen",
 		"removeDiacritics": "Diakritika entfernen"

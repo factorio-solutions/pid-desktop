@@ -23,6 +23,8 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     id
     name
     has_sms_api_token
+    is_sms_api_token_active
+    is_secretary
     sms_templates {
       name
       template
