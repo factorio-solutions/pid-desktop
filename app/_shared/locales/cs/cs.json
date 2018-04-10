@@ -166,7 +166,7 @@
 		"EditUserHint": "Zde můžete změnit svoje údaje.",
 		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
 		"reservationOverviewHint": "Zde můžete zkontrolovat, zda jsou údaje rezervace správně.",
-		"editInvoiceHint": "CS: pageBase.editInvoiceHint",
+		"editInvoiceHint": "Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.",
 		"editContractHint": "Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.",
 		"unredNotifications": {
 			"one": "Máte jedno nepřečtené upozornění",
@@ -236,7 +236,11 @@
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
 		"languageSelector": "Zvolte jazyk komunikace",
-		"sendSms": "Odeslat upozornění o rezervaci pomocí SMS"
+		"selectTemplate": "Odeslat upozornění o rezervaci pomocí SMS",
+		"sendSms": "Zvolte šablonu",
+		"smsText": "text SMS",
+		"character": "zknaků",
+		"removeDiacritics": "odstranit diakritiku"
 	},
 	"clients": {
 		"name": "jméno",
@@ -550,7 +554,9 @@
 		"newTemplateText": "Obsah šablony",
 		"selectTemplate": "Zvolte šablonu",
 		"edit": "Klient",
-		"smsSettings": "SMS modul"
+		"smsSettings": "SMS modul",
+		"activate": "aktivovat",
+		"deactivate": "deaktivovat"
 	},
 	"inviteUser": {
 		"selectUser": "Email(y) uživatele",
