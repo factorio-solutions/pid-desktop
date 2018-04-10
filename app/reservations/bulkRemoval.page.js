@@ -21,7 +21,7 @@ import * as bulkRemovalActions                       from '../_shared/actions/re
 import * as reservationInteruptionActions            from '../_shared/actions/reservationInteruption.actions'
 import { setCustomModal }                            from '../_shared/actions/pageBase.actions'
 import { t }                                         from '../_shared/modules/localization/localization'
-import { MOMENT_DATETIME_FORMAT }                    from '../_shared/helpers/time'
+import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT }                    from '../_shared/helpers/time'
 import { GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY } from '../_shared/queries/reservations.queries'
 
 import styles from './bulkRemoval.page.scss'
@@ -37,7 +37,7 @@ class BulkRemovalReservationPage extends Component {
   }
 
   componentDidMount() {
-    // this.props.actions.initReservations() // TODO: Needs to be implemented
+    // this.props.actions.initReservations()
     this.props.actions.loadAvailableUsers()
   }
 
@@ -47,16 +47,21 @@ class BulkRemovalReservationPage extends Component {
   }
 
   userDropdown = () => this.props.state.availableUsers.map(user => ({
-    label:   user.full_name,
-    order:   user.id === this.props.pageBase.current_user.id ? 1 : undefined,
-          // TODO: Need to changed
+    label: user.full_name,
+    order: user.id === this.props.pageBase.current_user.id ?
+      2 :
+      user.id === -1 ?
+        1 :
+        undefined,
     onClick: () => this.props.actions.setUserId(user.id)
   }))
 
   formatReservation = reservation => {
     const { actions, state } = this.props
-    const startsAt = moment(reservation.begins_at).format(MOMENT_DATETIME_FORMAT)
-    const endsAt = moment(reservation.ends_at).format(MOMENT_DATETIME_FORMAT)
+    const startsAtDate = moment(reservation.begins_at).format(MOMENT_DATE_FORMAT)
+    const startsAtTime = moment(reservation.begins_at).format('HH:mm')
+    const endsAtDate = moment(reservation.ends_at).format(MOMENT_DATE_FORMAT)
+    const endsAtTime = moment(reservation.ends_at).format('HH:mm')
     const onChecked = () => {
       actions.setReservationToBeRemove(reservation.id)
     }
@@ -64,7 +69,7 @@ class BulkRemovalReservationPage extends Component {
       <Checkbox
         checked={state.toBeRemoved.includes(reservation.id)}
         onChange={onChecked}
-      > {startsAt} - {endsAt}
+      > <b>{startsAtDate}</b> {startsAtTime} - <b>{endsAtDate}</b> {endsAtTime}
       </Checkbox>
     )
   }
@@ -135,6 +140,12 @@ class BulkRemovalReservationPage extends Component {
     )
   }
 
+  findReservationsOnClick = () => {
+    const { actions } = this.props
+    actions.cancelSelection()
+    actions.loadReservations()
+  }
+
   render() {
     const { state, actions, pageBase } = this.props
     const allGarages = state.garages
@@ -174,7 +185,7 @@ class BulkRemovalReservationPage extends Component {
             />
             <CallToActionButton
               label="Najít Rezervace"
-              onClick={() => actions.loadReservations()}
+              onClick={this.findReservationsOnClick}
             />
           </div>
         }
@@ -183,6 +194,11 @@ class BulkRemovalReservationPage extends Component {
             {allGarages.map(this.formatGarage)}
           </div>
         </div>
+        <CallToActionButton
+          label="Zrušit rezervace"
+          onClick={this.findReservationsOnClick}
+          state="remove"
+        />
       </PageBase>
     )
   }

@@ -280,14 +280,12 @@ class ReservationsPage extends Component {
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.newReservation} type="action" size="big" />
-          {pageBase.current_user && (pageBase.current_user.secretary || pageBase.current_user.pid_admin) &&
-            <LabeledRoundButton
-              content={<span className="fa fa-times" aria-hidden="true" />}
-              onClick={() => nav.to('/reservations/bulkRemoval')}
-              type="remove"
-              question="No message"
-            />
-          }
+          <LabeledRoundButton
+            content={<span className="fa fa-times" aria-hidden="true" />}
+            onClick={() => nav.to('/reservations/bulkRemoval')}
+            type="remove"
+            question="No message"
+          />
         </div>
       </PageBase>
     )
