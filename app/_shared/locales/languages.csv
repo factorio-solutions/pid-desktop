@@ -19,7 +19,7 @@ addresses.line1Placeholder,Martense Avenue 526,Pražská 125,Główna 25,Alexand
 addresses.line2Placeholder,Apt. 13,Byt 13,Mieszkanie nr 13,Wohnung Nr. 13
 addresses.cityPlaceholder,Pittsburgh,Praha,Warszawa,Berlin
 addresses.postalCodePlaceholder,7666,11000,00-001,10178
-addresses.statePlaceholder,Pennsylvania,Stát,-,
+addresses.statePlaceholder,Pennsylvania,Stát,-,Bundesland
 addresses.countryPlaceholder,USA,Česká republika,Polska,Deutschland
 login_page.please,Please log in or,"Prosím, přihlaste se, nebo si",Zaloguj się lub,Melden Sie sich bitte an oder
 login_page.Sign-Up,register,vytvořte účet,Załóż konto,registrieren Sie sich
@@ -206,7 +206,11 @@ Dále je zde možno nastavit maximální rozměry vozidel.","Tutaj ustawisz licz
 
 Do każdego piętra możesz wgrać plan w formacie .svg. Chętnie pomożemy Ci go utworzyć lub wybrać z przygotowanych wcześniej szablonów.
 
-Oprócz tego ustawisz tu również maksymalne rozmiary pojazdów.",
+Oprócz tego ustawisz tu również maksymalne rozmiary pojazdów.","Hier können Sie die Stockwerke und jeweilige Parkplätze erstellen.
+
+Zu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Herstellung. Sie können auch eine der Vorlagen verwenden.
+
+Weiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen."
 pageBase.newGarageOrderHint,"Here you can set the order for filling up parking spots. Spots are taken in ascending order, starting with the lowest number. If spots have no specified order, the system sets the order automatically.","Zde můžete nastavit pořadí obsazování parkovacích míst. Místa se obsazují vzestupně, tedy od nejnižšího čísla. U míst bez nastaveného pořadí určí pořadí systém automaticky.","Tutaj ustawisz kolejność zajmowania miejsc parkingowych. Zajmowane są one rosnąco, tj. od najmniejszego do największego numeru. W przypadku miejsc bez określonego numeru system przydzieli je automatycznie.","Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteil."
 pageBase.newGarageSubscribtionHint,TODO: New garage subscribtion Hint,,,
 pageBase.newGarageGatesHint,Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.,"Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",Tutaj możesz ustawić poszczególne bramy (wjazdy i wyjazdy) oraz przyporządkować je do konkretnych miejsc.,"Hier können Sie die Tore bearbeiten (Ein- und Ausfahrten) und bestimmen, welche Tore zu welchen Plätzen gehören."
@@ -380,7 +384,7 @@ pageBase.garageGarageUsersHint,Here you can manage who can use your garage and w
 pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete změnit svoje údaje.,Tutaj możesz zmienić swoje dane.,Hier können Sie die eigenen Angaben ändern.
 pageBase.orderGarageModuleHint,Here you can order a garage module.,,,
 pageBase.reservationOverviewHint,Here you can double check if everything is ok.,"Zde můžete zkontrolovat, zda jsou údaje rezervace správně.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie kontrolieren, ob die Daten stimmen."
-pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",,,
+pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,,
 pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.","Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis."
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht
 pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,,Sie haben %(count)s ungelesene Nachrichten
@@ -492,9 +496,13 @@ newReservation.noFreePlace,No free place,Žádná volná místa,Brak wolnych mie
 newReservation.note,Note,Poznámka,Uwagi,Notiz
 newReservation.onetimeVisit,Onetime visitor,Jednorázový návštěvník,Jednorazowe odwiedziny,Einmaliger Besucher
 newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.,,Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.
-newReservation.paidByHost,Reservation paid by guest,Rezervaci platí host,,Buchung wir vom Gast bezahlt
+newReservation.paidByHost,Reservation paid by guest,Rezervaci platí host,,Buchung wird vom Gast bezahlt
 newReservation.languageSelector,Choose communication language,Zvolte jazyk komunikace,,Wählen Sie die Kommunikationssprache
-newReservation.sendSms,Send notification about reservation via SMS,Odeslat upozornění o rezervaci pomocí SMS,,Buchungsbestätigung per SMS schicken
+newReservation.selectTemplate,Send notification about reservation via SMS,Odeslat upozornění o rezervaci pomocí SMS,,Bestätigung per SMS schicken
+newReservation.sendSms,Select template,Zvolte šablonu,,Wählen Sie eine Vorlage
+newReservation.smsText,SMS text,text SMS,,Text der Nachricht
+newReservation.character,characters,zknaků,,Zeichen
+newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,,Diakritika entfernen
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -778,7 +786,7 @@ newClient.IBAN,IBAN *,IBAN *,IBAN *,IBAN *
 newClient.invalidIBAN,Invalid IBAN,Nesprávný IBAN,Niepoprawny IBAN,IBAN ungültig
 newClient.IBANplaceholder,CZ65 0800 0000 1920 0014 5399,CZ65 0800 0000 1920 0014 5400,CZ65 0800 0000 1920 0014 5401,CZ65 0800 0000 1920 0014 5402
 newClient.SmsApiToken,SMS API Token,SMS API Token,SMS API Token,SMS API Token
-newClient.invalidSmsApiToken,invalid token,neplatný token,invalid token,Token ungültig
+newClient.invalidSmsApiToken,invalid token,neplatný token,,Token ungültig
 newClient.SmsApiTokenPlaceholder,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx,z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx
 newClient.newTemplateName,Template name,Jméno šablony,,Schablonenname
 newClient.invalidNewTemplateName,Invalid template name,Nevhodné jméno šablony,,Schablonenname ungültig
@@ -786,6 +794,8 @@ newClient.newTemplateText,Template text,Obsah šablony,,Schabloneninhalt
 newClient.selectTemplate,Select template,Zvolte šablonu,,Wählen Sie eine Schablone
 newClient.edit,Client,Klient,,Kunde
 newClient.smsSettings,SMS module,SMS modul,,SMS Modul
+newClient.activate,activate,aktivovat,,
+newClient.deactivate,deactivate,deaktivovat,,
 inviteUser.selectUser,User email(s),Email(y) uživatele,E-mail(e) użytkownika,E-Mail-Adresse(n) des Benutzers
 inviteUser.connectionExists,This user is already in this client account.,Tento uživatel již je v tomto klientském účtu.,Użytkownik znajduje się już na tym koncie klienta.,Dieser Benutzer ist in diesem Kundenkonto bereits vorhanden.
 inviteUser.sendingInvitation,"Loading, inviting user","Načítám, zvu uživatele","Przetwarzam, zapraszam użytkownika.","Ladevorgang läuft, Benutzer wird eingeladen."
