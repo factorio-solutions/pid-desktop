@@ -236,10 +236,10 @@
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
 		"languageSelector": "Zvolte jazyk komunikace",
-		"selectTemplate": "Odeslat upozornění o rezervaci pomocí SMS",
-		"sendSms": "Zvolte šablonu",
+		"selectTemplate": "Zvolte šablonu",
+		"sendSms": "Odeslat upozornění o rezervaci pomocí SMS",
 		"smsText": "text SMS",
-		"character": "zknaků",
+		"character": "znaků",
 		"removeDiacritics": "odstranit diakritiku"
 	},
 	"clients": {
