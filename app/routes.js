@@ -61,7 +61,6 @@ import SmsSettingsPage from './admin/clients/smsSettings.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules
-import ModulesPage             from './admin/modules/modules.page'
 import MarketingSettingsPage   from './admin/modules/marketingSettings.page'
 import ReservationButtonPage   from './admin/modules/reservationButton.page'
 import MrParkitIntegrationPage from './admin/modules/mrParkitIntegration.page'
@@ -189,8 +188,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 
-      <Route path=":id/admin/modules" component={ModulesPage} />
-      <Route path=":id/admin/modules/marketingSettings" component={MarketingSettingsPage} />
+      <Route path=":id/admin/modules/marketingPage" component={MarketingSettingsPage} />
       <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} />
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
