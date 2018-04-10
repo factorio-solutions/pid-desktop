@@ -19,6 +19,7 @@ export const EDIT_CLIENT_INIT = `query ($id: Id!) {
     id
     name
     sms_api_token
+    is_sms_api_token_active
     ic
     dic
     address{

@@ -15,6 +15,7 @@ import {
 
 export const SET_CLIENT_NAME = 'SET_CLIENT_NAME'
 export const SET_CLIENT_SMS_API_TOKEN = 'SET_CLIENT_SMS_API_TOKEN'
+export const SET_CLIENT_IS_SMS_API_TOKEN_ACTIVE = 'SET_CLIENT_IS_SMS_API_TOKEN_ACTIVE'
 export const SET_CLIENT_IC = 'SET_CLIENT_IC'
 export const SET_CLIENT_DIC = 'SET_CLIENT_DIC'
 export const SET_CLIENT_LINE1 = 'SET_CLIENT_LINE1'
@@ -36,6 +37,7 @@ export const CLEAR_CLIENT_FORM = 'CLEAR_CLIENT_FORM'
 
 export const setName = actionFactory(SET_CLIENT_NAME)
 export const setSmsApiToken = actionFactory(SET_CLIENT_SMS_API_TOKEN)
+export const setIsSmsApiTokenActive = actionFactory(SET_CLIENT_IS_SMS_API_TOKEN_ACTIVE)
 export const setIC = actionFactory(SET_CLIENT_IC)
 export const setDIC = actionFactory(SET_CLIENT_DIC)
 export const setLine1 = actionFactory(SET_CLIENT_LINE1)
@@ -67,6 +69,7 @@ export function initClient(id) {
     const onSuccess = response => {
       dispatch(setName(response.data.client.name))
       dispatch(setSmsApiToken(response.data.client.sms_api_token))
+      dispatch(setIsSmsApiTokenActive(response.data.client.is_sms_api_token_active))
       dispatch(setLine1(response.data.client.address.line_1))
       dispatch(setLine2(response.data.client.address.line_2))
       dispatch(setCity(response.data.client.address.city))
@@ -84,7 +87,7 @@ export function initClient(id) {
     const currentUser = getState().pageBase.current_user
     request(
       onSuccess,
-      EDIT_CLIENT_INIT.replace(currentUser && currentUser.pid_admin ? '' : 'sms_api_token', ''),
+      EDIT_CLIENT_INIT,
       { id: parseInt(id, 10) }
     )
   }
@@ -184,5 +187,14 @@ export function submitSmsTemplates(id) {
     ]).then(() => {
       dispatch(initClient(id))
     })
+  }
+}
+
+export function toggleIsSmsApiTokenActive(id) {
+  return (dispatch, getState) => {
+    const state = getState().newClient
+
+    requestPromise(EDIT_CLIENT_MUTATION, { id: parseInt(id, 10), client: { is_sms_api_token_active: !state.isSmsApiTokenActive } })
+    .then(() => dispatch(initClient(id)))
   }
 }

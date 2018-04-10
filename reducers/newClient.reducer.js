@@ -1,6 +1,7 @@
 import {
   SET_CLIENT_NAME,
   SET_CLIENT_SMS_API_TOKEN,
+  SET_CLIENT_IS_SMS_API_TOKEN_ACTIVE,
   SET_CLIENT_IC,
   SET_CLIENT_DIC,
   SET_CLIENT_LINE1,
@@ -21,18 +22,19 @@ import {
 }  from '../actions/newClient.actions'
 
 const defaultState = {
-  name:             '',
-  smsApiToken:      '',
-  ic:               '',
-  dic:              '',
-  line_1:           '',
-  line_2:           '',
-  city:             '',
-  postal_code:      '',
-  state:            '',
-  country:          '',
-  templates:        [],
-  selectedTemplate: null,
+  name:                '',
+  smsApiToken:         '',
+  isSmsApiTokenActive: false,
+  ic:                  '',
+  dic:                 '',
+  line_1:              '',
+  line_2:              '',
+  city:                '',
+  postal_code:         '',
+  state:               '',
+  country:             '',
+  templates:           [],
+  selectedTemplate:    null,
 
   showNewTemplateModal: false,
   newTemplateName:      '',
@@ -54,6 +56,12 @@ export default function newClient(appState = defaultState, action) {
       return {
         ...appState,
         smsApiToken: action.value
+      }
+
+    case SET_CLIENT_IS_SMS_API_TOKEN_ACTIVE:
+      return {
+        ...appState,
+        isSmsApiTokenActive: action.value
       }
 
     case SET_CLIENT_IC :
