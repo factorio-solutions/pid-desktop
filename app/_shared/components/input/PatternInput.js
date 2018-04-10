@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-// import ReactDOM                        from 'react-dom'
 import styles                          from './Input.scss'
-import { read } from 'fs';
 
 
 // this component has to know its state, so it can be passed to the value attribute of input

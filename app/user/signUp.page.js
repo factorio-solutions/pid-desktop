@@ -9,7 +9,7 @@ import RoundButton  from '../_shared/components/buttons/RoundButton'
 import PatternInput from  '../_shared/components/input/PatternInput'
 import Form         from '../_shared/components/form/Form'
 import Localization from '../_shared/components/localization/Localization'
-import Checkbox     from '../_shared/components/checkbox/checkbox'
+import Checkbox     from '../_shared/components/checkbox/Checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
 import { t, getLanguage }              from '../_shared/modules/localization/localization'
@@ -119,7 +119,8 @@ class SignUpPage extends Component {
               <Checkbox
                 onChange={handleTermsOfService}
                 checked={state.acceptTermsOfService}
-              > <span onClick={handleTermsOfService}> {t([ 'signup_page', 'acceptTerms' ])} </span>
+              >
+                <span onClick={handleTermsOfService}> {t([ 'signup_page', 'acceptTerms' ])} </span>
                 <a target="_blank" rel="noopener noreferrer" href={`https://www.park-it-direct.com/${getLanguage().replace('de', 'en').replace('pl', 'en')}/privacy`}>{t([ 'signup_page', 'termsOfService' ])}</a>
               </Checkbox>
             </Form>
