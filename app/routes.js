@@ -57,6 +57,7 @@ import EditInvoicePage from './admin/invoices/editInvoice.page'
 import ClientsPage     from './admin/clients/clients.page'
 import ClientUsersPage from './admin/clients/users.page'
 import NewClientPage   from './admin/clients/newClient.page'
+import SmsSettingsPage from './admin/clients/smsSettings.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules
@@ -65,6 +66,7 @@ import MarketingSettingsPage   from './admin/modules/marketingSettings.page'
 import ReservationButtonPage   from './admin/modules/reservationButton.page'
 import MrParkitIntegrationPage from './admin/modules/mrParkitIntegration.page'
 import GoPublicPage            from './admin/modules/goPublic.page'
+import GoInternalPage          from './admin/modules/goInternal.page'
 import FlexiplacePage          from './admin/modules/flexiplace.page'
 
 // garageSetup
@@ -183,6 +185,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/:client_id/users" component={ClientUsersPage} />
       <Route path=":id/admin/clients/newClient" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} />
+      <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 
@@ -191,6 +194,7 @@ export default function createRoutes() {
       <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} />
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
+      <Route path=":id/admin/modules/goInternal" component={GoInternalPage} />
       <Route path=":id/admin/modules/flexiplace" component={FlexiplacePage} />
 
       <Route path="addFeatures/garageSetup/general" component={GarageSetupGeneralPage} />

@@ -147,7 +147,7 @@ class GarageSetupGatesPage extends Component {
             value={gate.places}
             placeholder={t([ 'newGarage', 'placesPlaceholder' ])}
             highlight={state.highlight}
-            pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"
+            pattern="(\w+\s*)(\s*(,|-|/)\s*\w+)*"
           />
           <Input
             onChange={handleGateAddressLine1Change}

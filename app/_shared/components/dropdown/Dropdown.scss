@@ -1,5 +1,9 @@
 @import '../../styles/app.components';
 
+.dropdownContainter {
+  position: relative;
+}
+
 .button {
   display:  inline-block;
   width:    100%;
@@ -154,8 +158,9 @@
   font-size:        25px;
 }
 
-.highlighted{
+.highlighted {
   border-bottom: 1px solid $red;
+  background:    rgba($red, .5);
 }
 
 .garageSelector {

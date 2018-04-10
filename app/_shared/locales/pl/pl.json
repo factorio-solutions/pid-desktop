@@ -47,7 +47,9 @@
 		"minimumLength": "Długość minimum",
 		"noMatching": "Hasło się nie zgadza",
 		"userNotCreated": "Nie udało się wytworzyć konta, być może już istnieje",
-		"loading": "Ładowanie"
+		"loading": "Ładowanie",
+		"termsOfService": "warunkami świadczenia usług",
+		"acceptTerms": "Zgadzam się z "
 	},
 	"pageBase": {
 		"noFileSelected": "Wybierz plik.",
@@ -102,6 +104,7 @@
 		"ReservationButtonHint": "PL: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "PL: pageBase.mrParkitIntegrationHint",
 		"goPublicHint": "Tutaj możesz wybrać miejsca parkingowe, które chcesz zaoferować publicznie. Możesz też ustawić ich cenę oraz wybrać jedną z trzech możliwych opcji obliczania ceny za parkowanie.\n\nMetody obliczania ceny za parkowanie to:\nStała stawka godzinowa\nCena rosnąca wykładniczo (żeby obliczyć ją, ustaw różne stawki dla poszczególnych interwałów czasowych)\nCena weekendowa (działa jedynie w połączeniu ze stałą stawką godzinową, umożliwia ustawienie innej ceny na weekend)\n\nNa planie garażu wybierz miejsca: niebieskim kolorem oznaczone są dostępne miejsca, żółtym - zajęte. W górnej części formularza ustaw walutę, wybierz jeden ze sposobów obliczania ceny oraz wpisz kwotę.\n",
+		"goInternalHint": "PL: pageBase.goInternalHint",
 		"financeHint": "W górnej części możesz włączać/wyłączać oraz ustawiać sposób płatności za parkowanie.\n\nW sekcji „Wynajmy” znajdziesz listę wszystkich aktualnych wynajmów długoterminowych, ich cenę, liczbę miejsc parkingowych, jakiej dotyczą, a po kliknięciu możesz je edytować.\n\nW sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.",
 		"financePaypalHint": "PL: pageBase.financePaypalHint",
 		"financeCSOBHint": "PL: pageBase.financeCSOBHint",
@@ -153,7 +156,7 @@
 		"editMarketing": "Edytować marketing",
 		"garageMarketingHint": "Tutaj możesz aktywować/dezaktywować poszczególne moduły oraz zarządzać nimi. Więcej informacji uzyskasz po kliknięciu na „Ustawienia” przy poszczególnych modułach. ",
 		"garageNewMarketingHint": "Tutaj możesz ustawić nowy marketing.",
-		"garageEditMarketingHint": "Tutaj możesz zarządzać edycją marketingu.",
+		"garageEditMarketingHint": "W tym module możesz zmieniać ustawienia strony internetowej służącej do reklamowania Twojego garaży oraz do przyjmowania rezerwacji miejsc parkingowych.\n\nW polu \"URL krótka nazwa\" ustaw link do Twojej strony. Poprawny format to \"URL krótka nazwa.park-it-direct.com\".\n\nTelefon awaryjny i e-mail awaryjny to dane kontaktowe, które pojawią się na stronie internetowej w dziale kontaktów.\n\nW opisie garaży możesz podać krótki opis w 4 językach (zmienisz je w prawym górnym rogu pola).\n\nObok pola z opisem możesz wybrać dowolną liczbę parametrów, które pojawią się w opisie garażu.\n\nW części \"Zdjęcia garaży\" możesz wgrać fotografie, które pojawią się na stronie internetowej. Polecamy zdjęcia o rozmiarze do 1MB w formacie .jpg.",
 		"garageNewPricingHint": "Tutaj możesz ustawić nową cenę rezerwacji.",
 		"garageEditPricingHint": "Tutaj możesz edytować właściwości ceny.",
 		"garageNewRentHint": "Tutaj możesz ustawić nowy wynajem swoich miejsc.",
@@ -182,8 +185,9 @@
 		"analyticsplacesHint": "\nTutaj możesz zobaczyć statystykę rotacji miejsc – średnią, maksymalną, minimalną i ogólną rotację. Wszystko podzielone jest według tego, czy miejsce jest wynajmowane krótko- czy długoterminowo. W lewym górnym rogu możesz wybrać widok na heatmapie, gdzie wartości są pokazywane poprzez spektrum kolorów: najniższe wartości są żółte, najwyższe – czerwone. W prawym górnym rogu możesz ustawić dokładną rozpiętość pokazywanego okresu.\n",
 		"analyticspaymentsHint": "PL: pageBase.analyticspaymentsHint",
 		"analyticsgatesHint": "PL: pageBase.analyticsgatesHint",
-		"flexiplaceHint": "PL: pageBase.flexiplaceHint",
-		"pidAdmin": "PID admin"
+		"flexiplaceHint": "Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.",
+		"pidAdmin": "PID admin",
+		"smsSettingsHint": "PL: pageBase.smsSettingsHint"
 	},
 	"newReservation": {
 		"selectGarage": "Wybierz garaż *",
@@ -217,10 +221,10 @@
 		"validtyCheck": "Kontroluję płatność...",
 		"tokenInvalid": "Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.",
 		"creatingNewPayment": "Wytwarzam płatność...",
-		"newHost": "Nowy gość",
-		"hostsName": "Nazwisko gościa",
-		"hostsPhone": "Telefon gościa",
-		"hostsEmail": "E-mail gościa",
+		"newHost": "Nowy regularny gość",
+		"hostsName": "Nazwisko regularnego gościa",
+		"hostsPhone": "Telefon regularnego gościa",
+		"hostsEmail": "E-mail regularnego gościa",
 		"visitorsName": "Nazwisko odwiedzającego",
 		"visitorsPhone": "Telefon odwiedzającego",
 		"visitorsEmail": "E-mail odwiedzającego",
@@ -229,7 +233,14 @@
 		"noFreePlace": "Brak wolnych miejsc",
 		"note": "Uwagi",
 		"onetimeVisit": "Jednorazowe odwiedziny",
-		"fillInContact": "PL: newReservation.fillInContact"
+		"fillInContact": "PL: newReservation.fillInContact",
+		"paidByHost": "PL: newReservation.paidByHost",
+		"languageSelector": "PL: newReservation.languageSelector",
+		"selectTemplate": "PL: newReservation.selectTemplate",
+		"sendSms": "PL: newReservation.sendSms",
+		"smsText": "PL: newReservation.smsText",
+		"character": "PL: newReservation.character",
+		"removeDiacritics": "PL: newReservation.removeDiacritics"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -260,12 +271,12 @@
 		"admin": "jest adminem",
 		"secretary": "Sekretarz/Sekretarka",
 		"internal": "Wewnętrzny",
-		"host": "jest gościem",
+		"host": "jest regularnym gościem",
 		"driver": "kierowca",
 		"presetAs": "Ustaw jako",
 		"removeClientUser": "Czy na pewno chcesz usunąć użytkownika?",
 		"pendingUsers": "Zaproszenia czekające na odpowiedź",
-		"confirmedUsers": "PL: clientUsers.confirmedUsers",
+		"confirmedUsers": "Użytkownicy %(name)s",
 		"removeUser": "Usuń użytkownika",
 		"resendInvitation": "Wyślij ponownie",
 		"resendSuccessfull": "E-mail został wysłany.",
@@ -288,8 +299,8 @@
 		"terminateEarlyQuestion": "Czy chcesz zakończyć rezerwację?",
 		"reservationApproved": "Rezerwacja nie została jeszcze zaakceptowana.",
 		"reservationNotPayed": "Rezerwacja nie została opłacona.",
-		"host": "Gość",
-		"visitor": "Odwiedzający",
+		"host": "Regularny gość",
+		"visitor": "Odwiedzający/a",
 		"internal": "Wewnętrzny",
 		"editReservation": "Edytuj rezerwację",
 		"editNote": "Edytuj notatkę",
@@ -311,7 +322,7 @@
 			"many": " Edytuj wszystkie %(count)s rezerwacje w ustawionej powtórce.",
 			"other": "  Edytuj %(count)s rezerwacje w ustawionej powtórce."
 		},
-		"flexiblePlace": "PL: reservations.flexiblePlace"
+		"flexiblePlace": "Miejsce Flexi"
 	},
 	"garages": {
 		"clients": "Klienci",
@@ -363,7 +374,7 @@
 		"noClientPlaces": "Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.",
 		"resetFilter": "Zresetować filtr",
 		"detailsInaccessible": "Szczegóły niedostępne",
-		"reservationNotApproved": "PL: occupancy.reservationNotApproved"
+		"reservationNotApproved": "Rezerwacja nie została jeszcze potwierdzona."
 	},
 	"garageUsers": {
 		"noRights": "Nie posiadasz odpowiednich uprawnień.",
@@ -411,6 +422,9 @@
 	},
 	"newGarage": {
 		"garage": "Garaż",
+		"company": "PL: newGarage.company",
+		"placeholderCompany": "MR.PARKIT s.r.o.",
+		"invalidCompany": "PL: newGarage.invalidCompany",
 		"places": "Miejsca",
 		"gates": "Bramy",
 		"order": "Zamówienie",
@@ -461,8 +475,8 @@
 		"gsmName": "Imię i nazwisko",
 		"gsmNameInvalid": "Niepoprawne imię i nazwisko",
 		"gsmNamePlaceholder": "Jan Kowalski",
-		"gsmModulesDescription": "Moduły GSM umożliwią Ci automatyczne otwierania bram gościom. Cena wynosi %(price)s za miejsce.",
-		"floorName": "Piętro",
+		"gsmModulesDescription": "Moduły GSM umożliwią Ci automatyczne otwierania bram. Cena wynosi %(price)s za miejsce.",
+		"floorName": "Piętro *",
 		"placeholderFloor": "%(index)s",
 		"invalidFloorName": "Niepoprawna nazwa piętra",
 		"invalidName": "Niepoprawna nazwa garażu",
@@ -513,11 +527,11 @@
 		"addProfilePicture": "Dodaj zdjęcie profilowe",
 		"removeFloor": "Usunąć piętro",
 		"uploadSvg": "Wgraj SVG",
-		"gatePassword": "PL: newGarage.gatePassword",
-		"invalidPasswordPhone": "PL: newGarage.invalidPasswordPhone",
-		"placeholderGatePassword": "PL: newGarage.placeholderGatePassword",
-		"passwordWasSet": "PL: newGarage.passwordWasSet",
-		"passwordWasNotSet": "PL: newGarage.passwordWasNotSet"
+		"gatePassword": "Hasło bramy",
+		"invalidPasswordPhone": "Niepoprawne hasło",
+		"placeholderGatePassword": "123456",
+		"passwordWasSet": "Brama posiada hasło. Możesz je zmienić podając nowe hasło.",
+		"passwordWasNotSet": "Hasło nie zostało ustawione!"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
@@ -528,7 +542,21 @@
 		"IC": "IČ",
 		"invalidIC": "niepoprawny IČ",
 		"DIC": "DIČ",
-		"invalidDIC": "niepoprawny DIČ"
+		"invalidDIC": "niepoprawny DIČ",
+		"IBAN": "IBAN *",
+		"invalidIBAN": "Niepoprawny IBAN",
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5401",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "PL: newClient.invalidSmsApiToken",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
+		"newTemplateName": "PL: newClient.newTemplateName",
+		"invalidNewTemplateName": "PL: newClient.invalidNewTemplateName",
+		"newTemplateText": "PL: newClient.newTemplateText",
+		"selectTemplate": "PL: newClient.selectTemplate",
+		"edit": "PL: newClient.edit",
+		"smsSettings": "PL: newClient.smsSettings",
+		"activate": "PL: newClient.activate",
+		"deactivate": "PL: newClient.deactivate"
 	},
 	"inviteUser": {
 		"selectUser": "E-mail(e) użytkownika",
@@ -556,7 +584,7 @@
 		"selectCar": "Wybierz auto",
 		"admin": "admin",
 		"secretary": "Sekretarz/sekretarka",
-		"host": "gość",
+		"host": "regularny gość",
 		"internal": "wewnętrzny",
 		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
@@ -587,7 +615,7 @@
 		"NotificationDeclined": "odrzucone dnia",
 		"current": "aktualnie",
 		"sais": "pokazuje",
-		"accpetReservationNotification": "Gość %(arg2)s chce utworzyć rezerwację na koszt %(arg1)s.",
+		"accpetReservationNotification": "Regularny gość %(arg2)s chce utworzyć rezerwację na koszt %(arg1)s.",
 		"invoiceReminder": "Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.",
 		"reservationAccepted": "Twoja rezerwacja na miejsce \"%(arg1)s\" została zaakceptowana.",
 		"reservationDeclined": "Twoja rezerwacja na miejsce \"%(arg1)s\" została odrzucona.",
@@ -624,7 +652,7 @@
 		"admin": "admin",
 		"secretary": "sekretarz/sekretarka",
 		"internal": "wewnętrzny",
-		"host": "gość",
+		"host": "regularny gość",
 		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
 		"invitedToClient": "%(date)s zaproszony(-a) do uczestnictwa w:",
@@ -784,7 +812,7 @@
 		"users": "użytkownicy",
 		"reservations": "rezerwacje",
 		"saveContracts": "zapisz umowy",
-		"hosts": "goście",
+		"hosts": "regularni goście",
 		"occupancy": "przegląd zajętych miejsc",
 		"notifications": "wiadomości",
 		"accessFeature": "dostęp do funkcji",
@@ -894,6 +922,8 @@
 		"reservationForm": "Formularz rezerwacji",
 		"goPublic": "Zaoferuj publicznie",
 		"goPublicDescription": "Zaoferuj krótkoterminowe parkowanie dla grupy PiD",
+		"goInternal": "PL: modules.goInternal",
+		"goInternalDescription": "PL: modules.goInternalDescription",
 		"setting": "Ustawienia",
 		"Preview": "Podgląd",
 		"startingMarketing": "Aktualizuję twój plan faktur. Przekierowuję...",
@@ -960,7 +990,9 @@
 		"invalidRow": "Niepoprawny numer",
 		"changeSuccess": "Wartości zostały zmienione.",
 		"changeFailed": "Wystąpił błąd, wartości nie zostały zmienione.",
-		"uploadKey": "Wgrać klucz RSA"
+		"uploadKey": "Wgrać klucz RSA",
+		"accountNumber": "PL: finance.accountNumber",
+		"invalidAccountNumber": "PL: finance.invalidAccountNumber"
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -1100,7 +1132,7 @@
 			"newNotifications": "Nowe powiadomienia",
 			"access": "Dostęp",
 			"myReservations": "Moje rezerwacje",
-			"guestReservations": "Gość"
+			"guestReservations": "Regularny gość"
 		},
 		"access": {
 			"floor": "Piętro",
@@ -1143,18 +1175,18 @@
 			"paymentUnsucessfull": "Płatność nie powiodła się.",
 			"processingPayment": "Przetwarzam płatność...",
 			"flexiplace": "FLEXI",
-			"guest": "Gość"
+			"guest": "Regularny gość"
 		},
 		"guest": {
 			"newGuest": "Nowy",
 			"pickGuest": "WYBIERZ",
-			"name": "Nazwa gościa",
-			"email": "E-mail gościa",
-			"phone": "Telefon gościa",
+			"name": "Nazwa regularnego gościa",
+			"email": "E-mail regularnego gościa",
+			"phone": "Telefon regularnego gościa",
 			"invalidName": "Niepoprawna nazwa",
 			"invalidEmail": "Niepoprawny e-mail",
 			"invalidPhone": "Niepoprawny telefon",
-			"noGuestResrevations": "Bez rezerwacji gości"
+			"noGuestResrevations": "Bez rezerwacji regularnych gości"
 		}
 	},
 	"auth0Emails": {
@@ -1191,7 +1223,7 @@
 			"says": "pisze:",
 			"admin": "administrator",
 			"secretary": "sekretarz/sekretarka",
-			"host": "gość",
+			"host": "regularny gość",
 			"internal": "wewnętrzny",
 			"contact_person": "osoba kontaktowa",
 			"receptionist": "recepcja",
@@ -1205,8 +1237,18 @@
 		"new_reservation_mail": {
 			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
 			"reservation_for_you": "utworzył dla Ciebie nową rezerwację.",
-			"more_details": "Więcej informacji znajdziesz w Park-it-direct:",
-			"to_pid": "Do Park-it-direct!"
+			"go_pay_yourself": "PL: railsEmails.new_reservation_mail.go_pay_yourself",
+			"price": "PL: railsEmails.new_reservation_mail.price",
+			"pay_in_24_hours": "PL: railsEmails.new_reservation_mail.pay_in_24_hours",
+			"reservation_was_paid": "PL: railsEmails.new_reservation_mail.reservation_was_paid",
+			"confirmed": "PL: railsEmails.new_reservation_mail.confirmed",
+			"garage_address": "PL: railsEmails.new_reservation_mail.garage_address",
+			"reservation_start": "PL: railsEmails.new_reservation_mail.reservation_start",
+			"reservation_end": "PL: railsEmails.new_reservation_mail.reservation_end",
+			"spot": "PL: railsEmails.new_reservation_mail.spot",
+			"licence_plate": "PL: railsEmails.new_reservation_mail.licence_plate",
+			"reservation_information": "PL: railsEmails.new_reservation_mail.reservation_information",
+			"gps": "GPS:"
 		},
 		"resend_invitation_mail": {
 			"hello": "Dzień dobry,",
@@ -1214,7 +1256,7 @@
 			"remind_you": "do Park-it-direct.",
 			"admin": "administrator/ka",
 			"secretary": "sekretarz/sekretarka",
-			"host": "gość",
+			"host": "regularny gość",
 			"internal": "wewnętrzny",
 			"contact_person": "osoba kontaktowa",
 			"receptionist": "recepcja",
@@ -1240,6 +1282,14 @@
 			"place": "Miejsce:",
 			"from": "Od:",
 			"to": "Do:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
+			"from": "Od:",
+			"to": "Do:",
+			"garage": "Garaż:"
 		}
 	},
 	"pidAdmin": {
@@ -1277,7 +1327,7 @@
 			"durationTo": "netřeba překládat",
 			"durationFromInvalid": "netřeba překládat",
 			"internal": "netřeba překládat",
-			"host": "netřeba překládat",
+			"host": "Regularny gość",
 			"hours": "netřeba překládat",
 			"or": "netřeba překládat",
 			"createUsers": "netřeba překládat",

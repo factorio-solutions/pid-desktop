@@ -24,7 +24,7 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  PAY_RESREVATION,
+  // PAY_RESREVATION,
   GET_RESERVATION
 } from '../queries/newReservation.queries'
 
@@ -43,7 +43,9 @@ export const NEW_RESERVATION_SET_RESERVATION = 'NEW_RESERVATION_SET_RESERVATION'
 export const NEW_RESERVATION_SET_HOST_NAME = 'NEW_RESERVATION_SET_HOST_NAME'
 export const NEW_RESERVATION_SET_HOST_PHONE = 'NEW_RESERVATION_SET_HOST_PHONE'
 export const NEW_RESERVATION_SET_HOST_EMAIL = 'NEW_RESERVATION_SET_HOST_EMAIL'
+export const NEW_RESERVATION_SET_HOST_LANGUAGE = 'NEW_RESERVATION_SET_HOST_LANGUAGE'
 export const NEW_RESERVATION_SET_CLIENT_ID = 'NEW_RESERVATION_SET_CLIENT_ID'
+export const NEW_RESERVATION_SET_PAID_BY_HOST = 'NEW_RESERVATION_SET_PAID_BY_HOST'
 export const NEW_RESERVATION_SET_RECURRING_RULE = 'NEW_RESERVATION_SET_RECURRING_RULE'
 export const NEW_RESERVATION_SHOW_RECURRING = 'NEW_RESERVATION_SHOW_RECURRING'
 export const NEW_RESERVATION_SET_USE_RECURRING = 'NEW_RESERVATION_SET_USE_RECURRING'
@@ -59,6 +61,10 @@ export const NEW_RESERVATION_SET_DURATION_DATE = 'NEW_RESERVATION_SET_DURATION_D
 export const NEW_RESERVATION_SET_LOADING = 'NEW_RESERVATION_SET_LOADING'
 export const NEW_RESERVATION_SET_HIGHLIGHT = 'NEW_RESERVATION_SET_HIGHLIGHT'
 export const NEW_RESERVATION_SET_ERROR = 'NEW_RESERVATION_SET_ERROR'
+export const NEW_RESERVATION_SET_SELECTED_TEMPLATE = 'NEW_RESERVATION_SET_SELECTED_TEMPLATE'
+export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_TEXT'
+export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
+export const NEW_RESERVATION_SET_GATE_PHONE_NUMBER = 'NEW_RESERVATION_SET_GATE_PHONE_NUMBER'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -73,8 +79,14 @@ export const setTo = actionFactory(NEW_RESERVATION_SET_TO)
 export const setDurationDate = actionFactory(NEW_RESERVATION_SET_DURATION_DATE)
 export const setLoading = actionFactory(NEW_RESERVATION_SET_LOADING)
 export const setHighlight = actionFactory(NEW_RESERVATION_SET_HIGHLIGHT)
+export const setPaidByHost = actionFactory(NEW_RESERVATION_SET_PAID_BY_HOST)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
+export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
+export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
+export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
+export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
+export const setGatePhoneNumber = actionFactory(NEW_RESERVATION_SET_GATE_PHONE_NUMBER)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -148,6 +160,13 @@ export function setGarage(value) {
     }).catch(error => {
       throw (error)
     })
+  }
+}
+
+export function removeDiacritics() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    dispatch(setTemplateText(state.templateText.normalize('NFD').replace(/[\u0300-\u036f]/g, '')))
   }
 }
 
@@ -377,6 +396,7 @@ export function downloadUser(id) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
+        dispatch(setLanguage(values[0].user.language))
       }
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
@@ -481,6 +501,7 @@ export function downloadGarage(id) {
       })
       dispatch(setGarage(garage))
       dispatch(autoSelectPlace())
+      dispatch(setGatePhoneNumber(value.random_phone_number.number))
     })
   }
 }
@@ -547,13 +568,16 @@ export function submitReservation(id) {
                place_id:                 ongoing ? undefined : state.place_id,
                garage_id:                state.garage.id,
                client_id:                ongoing ? undefined : state.client_id,
+               paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
                car_id:                   ongoing ? undefined : state.car_id,
                licence_plate:            ongoing ? undefined : state.carLicencePlate === '' ? undefined : state.carLicencePlate,
                url:                      ongoing ? undefined : window.location.href.split('?')[0],
                begins_at:                ongoing ? undefined : timeToUTC(state.from),
                ends_at:                  timeToUTC(state.to),
                recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
-               recurring_reservation_id: state.recurring_reservation_id
+               recurring_reservation_id: state.recurring_reservation_id,
+               send_sms:                 state.sendSMS,
+               sms_text:                 state.templateText
              },
                id
              }
@@ -567,7 +591,8 @@ export function submitReservation(id) {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
           phone:     state.phone.value,
-          language:  getState().pageBase.current_user.language
+          language:  state.language,
+          onetime:   state.user.id === -2
         },
         client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
@@ -617,16 +642,16 @@ export function paymentSucessfull() {
   }
 }
 
-export function payReservation(token) {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
-      dispatch(paymentSucessfull())
-    }
-
-    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
-    request(onSuccess
-           , PAY_RESREVATION
-           , { token }
-           )
-  }
-}
+// export function payReservation(token) {
+//   return (dispatch, getState) => {
+//     const onSuccess = response => {
+//       dispatch(paymentSucessfull())
+//     }
+//
+//     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
+//     request(onSuccess
+//            , PAY_RESREVATION
+//            , { token }
+//            )
+//   }
+// }

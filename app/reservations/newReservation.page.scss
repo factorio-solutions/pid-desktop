@@ -34,6 +34,12 @@
   text-align: center;
 }
 
+.languagesSelector {
+  padding:       12px 0;
+  border-bottom: 1px solid $gray;
+  text-align:    center;
+}
+
 @media (min-width: $collapseWidth) {
   .parent {
     display: flex;
@@ -56,7 +62,7 @@
 
 .recurringForm {
   display: flex;
-  margin: 15px 0;
+  margin:  15px 0;
 
   >input {
     margin: auto 0;
@@ -67,11 +73,41 @@
 }
 
 .rule {
-  flex: 1 1;
+  flex:   1 1;
   margin: auto 0;
   cursor: pointer;
 
   &.disabled {
     color: $lightGray;
   }
+}
+
+.sendSmsCheckbox {
+  margin-top:  12px;
+  padding:     12px 0;
+  font-weight: bold;
+  cursor:      pointer;
+}
+
+.smsTemplates {
+  >.textLabel {
+    margin: 5px 0 3px;
+
+    >.removeDiacritics {
+      float:     right;
+      color:     $gray;
+      font-size: 13px;
+      cursor:    pointer;
+    }
+  }
+
+  >textarea {
+    width:  100%;
+    height: 100px;
+    resize: none;
+  }
+}
+
+.redText {
+  color: $red;
 }
