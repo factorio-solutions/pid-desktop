@@ -31,7 +31,7 @@ class FinancePage extends Component {
         name:    'rents',
         content: <RentsTab />
       },
-      { name:    'settings',
+      { name:    'financeSettings',
         content: <SettingsTab params={params} />
       }
     ]
