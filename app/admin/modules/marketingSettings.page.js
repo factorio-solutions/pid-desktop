@@ -133,7 +133,7 @@ class MarketingSettingsPage extends Component {
               onChange={actions.setPhone}
               label={t([ 'newMarketing', 'phone' ]) + ' *'}
               error={t([ 'newMarketing', 'invalidPhone' ])}
-              pattern="\+[\d]{2,4}[\d]{3,}"
+              pattern="\+[\d]{2,4}[\d\s]{3,}"
               placeholder={t([ 'newMarketing', 'phonePlaceholder' ])}
               value={state.phone.value || ''}
               highlight={state.highlight}

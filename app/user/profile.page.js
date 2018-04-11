@@ -95,7 +95,7 @@ class SettingsPage extends Component {
               onChange={actions.setPhone}
               label={t([ 'signup_page', 'phone' ])}
               error={t([ 'signup_page', 'phoneInvalid' ])}
-              pattern="\+[\d]{2,4}[\d]{3,}"
+              pattern="\+[\d]{2,4}[\d\s]{3,}"
               value={state.phone.value}
               highlight={state.highlight}
             />

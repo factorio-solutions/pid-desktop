@@ -68,14 +68,15 @@ export function submitUser() {
       nav.to(`/${base.garage}/dashboard`)
     }
 
-    request(onSuccess
-           , UPDATE_CURRENT_USER
-           , { id:   base.current_user.id,
-             user: { full_name: state.name.value,
-               phone:     state.phone.value
-             }
-           }
-           )
+    request(onSuccess,
+      UPDATE_CURRENT_USER,
+      { id:   base.current_user.id,
+        user: {
+          full_name: state.name.value,
+          phone:     state.phone.value.replace(/\s/g, '')
+        }
+      }
+    )
   }
 }
 
