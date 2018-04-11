@@ -531,7 +531,8 @@
 		"invalidPasswordPhone": "Invalid password",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Gate has password. Change it by fill in a new password",
-		"passwordWasNotSet": "Password was not set!"
+		"passwordWasNotSet": "Password was not set!",
+		"addAllPalces": "Add all palces"
 	},
 	"newClient": {
 		"name": "Client name",
