@@ -993,7 +993,9 @@
 		"changeFailed": "An error occurred. Values were not changed.",
 		"uploadKey": "Upload RSA key",
 		"accountNumber": "Account number",
-		"invalidAccountNumber": "Invalid account number"
+		"invalidAccountNumber": "Invalid account number",
+		"paymentGates": "Payment gates",
+		"rents": "Rents"
 	},
 	"analytics": {
 		"week": "week",
