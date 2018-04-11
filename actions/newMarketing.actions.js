@@ -255,7 +255,7 @@ function marketingObject(state) { // creates MarketingInputType object for the r
       return properties
     },
     { short_name:   state.short_name.value,
-      phone:        state.phone.value,
+      phone:        state.phone.value.replace(/\s/g, ''),
       email:        state.email.value,
       descriptions: marketingDescriptions(state),
       images:       state.images.filter((img, index, arr) => { return index != arr.length - 1 })

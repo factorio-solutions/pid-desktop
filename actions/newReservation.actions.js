@@ -590,7 +590,7 @@ export function submitReservation(id) {
         user: {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
-          phone:     state.phone.value,
+          phone:     state.phone.value.replace(/\s/g, ''),
           language:  state.language,
           onetime:   state.user.id === -2
         },
