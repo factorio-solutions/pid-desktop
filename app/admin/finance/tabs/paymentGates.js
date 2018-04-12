@@ -17,10 +17,15 @@ class PaymentGatesTab extends Component {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
     params:   PropTypes.object,
-    actions:  PropTypes.object
+    actions:  PropTypes.object,
+    location: PropTypes.object
   }
 
   componentDidMount() {
+    console.log(this.props)
+    if (this.props.location.query.hasOwnProperty('request_token')) { // got request token => Permissions granted -> update account
+      this.props.actions.upadteAccount(this.props.location.query)
+    }
     this.props.actions.initFinance(this.props.params.id)
   }
 

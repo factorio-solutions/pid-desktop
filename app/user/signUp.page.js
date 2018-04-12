@@ -12,7 +12,7 @@ import Localization from '../_shared/components/localization/Localization'
 import Checkbox     from '../_shared/components/checkbox/Checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
-import { t, getLanguage }              from '../_shared/modules/localization/localization'
+import { t, getLanguage } from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
 import styles from './signUp.page.scss'

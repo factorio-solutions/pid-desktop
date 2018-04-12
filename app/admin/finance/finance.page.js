@@ -16,16 +16,17 @@ import * as financeActions from '../../_shared/actions/admin.finance.actions'
 class FinancePage extends Component {
   static propTypes = {
     pageBase: PropTypes.object,
-    params:   PropTypes.object
+    params:   PropTypes.object,
+    location: PropTypes.object
   }
 
   constructor(props) {
     super(props)
 
-    const { pageBase, params } = props
+    const { pageBase, params, location } = props
     const FINANCE_TABS = [
       { name:    'paymentGates',
-        content: <PaymentGatesTab params={params} />
+        content: <PaymentGatesTab params={params} location={location} />
       },
       pageBase.current_user && pageBase.current_user.garage_admin && {
         name:    'rents',
