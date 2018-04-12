@@ -669,3 +669,13 @@ function gatesForRequest(state) {
     }
   })
 }
+
+export function addAllPlaces(index) {
+  return (dispatch, getState) => {
+    const allPlaces = getState().garageSetup.floors
+      .reduce((acc, floor) => [ ...acc, ...floor.places.map(place => `${floor.label}/${place.label}`) ], [])
+      .join(', ')
+
+    dispatch(changeGatePlaces(allPlaces, index))
+  }
+}
