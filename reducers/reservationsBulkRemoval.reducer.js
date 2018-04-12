@@ -1,5 +1,3 @@
-import moment from 'moment'
-import { MOMENT_DATETIME_FORMAT } from '../helpers/time'
 import {
   SET_GARAGES,
   SET_RESERVATION_TO_BE_REMOVED,
@@ -12,8 +10,8 @@ import {
 const defaultState = {
   availableUsers: [],
   garages:        [],
-  from:           moment().startOf('day').subtract(10, 'days').format(MOMENT_DATETIME_FORMAT),
-  to:             moment().endOf('day').add(10, 'days').format(MOMENT_DATETIME_FORMAT),
+  from:           '',
+  to:             '',
   toBeRemoved:    [],
   loading:        false,
   userId:         undefined

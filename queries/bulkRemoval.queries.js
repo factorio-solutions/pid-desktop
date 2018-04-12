@@ -15,3 +15,10 @@ export const RESERVATIONS_QUERY = `query reservationsInDates($user_id: Id!, $sec
   }
 }
 `
+
+export const DESTROY_RESERVATIONS = `mutation DestroyReservations($ids: [Id!]) {
+  destroy_reservations(ids: $ids) {
+    id
+  }
+}
+`
