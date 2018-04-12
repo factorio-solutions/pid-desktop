@@ -5,15 +5,16 @@ import { request } from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
 import { t } from '../modules/localization/localization'
 import { parseParameters } from '../helpers/parseUrlParameters'
-import { timeToUTC, MOMENT_DATETIME_FORMAT, MIN_RESERVATION_DURATION } from '../helpers/time'
-import { roundTime } from '../actions/newReservation.actions'
+import { timeToUTC, MOMENT_DATETIME_FORMAT } from '../helpers/time'
+import { roundTime } from './newReservation.actions'
 
 import { GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
 import { DESTROY_RESERVATION, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
-import { RESERVATIONS_QUERY } from '../queries/bulkRemoval.queries'
+import { RESERVATIONS_QUERY, DESTROY_RESERVATIONS } from '../queries/bulkRemoval.queries'
 import { GET_AVAILABLE_USERS } from '../queries/newReservation.queries'
 
 import { mobile } from '../../index'
+import { login } from './login.actions';
 
 
 export const RESERVATIONS_PER_PAGE = 5
@@ -51,6 +52,37 @@ function formatGarages(reservations) {
     }
     return accum
   }, [])
+}
+
+export function roundTimeUp(time) {
+  return moment(time, MOMENT_DATETIME_FORMAT).set('minute', Math.ceil(moment(time, MOMENT_DATETIME_FORMAT).minutes() / 15) * 15)
+}
+
+export function adjustFromDate(from) {
+  return (dispatch, getState) => {
+    let newFrom = moment(from, MOMENT_DATETIME_FORMAT)
+    let to = moment(getState().reservationBulkRemoval.to, MOMENT_DATETIME_FORMAT)
+    if (moment().isAfter(newFrom)) {
+      newFrom = roundTimeUp(moment())
+    }
+    if (newFrom.isSameOrAfter(to)) {
+      to = newFrom.clone().add(30, 'm')
+      dispatch(setTo(to.format(MOMENT_DATETIME_FORMAT)))
+    }
+    dispatch(setFrom(newFrom.format(MOMENT_DATETIME_FORMAT)))
+  }
+}
+
+export function adjustToDate(to) {
+  return (dispatch, getState) => {
+    const from = moment(getState().reservationBulkRemoval.from, MOMENT_DATETIME_FORMAT)
+    let newTo = moment(to, MOMENT_DATETIME_FORMAT)
+    if (newTo.isSameOrBefore(from)) {
+      console.log('NewTo is before from')
+      newTo = from.clone().add(30, 'm')
+    }
+    dispatch(setTo(newTo.format(MOMENT_DATETIME_FORMAT)))
+  }
 }
 
 export function setReservationToBeRemove(id) {
@@ -105,7 +137,12 @@ export function unsetClientsReservationsToBeRemove(client) {
 
 export function setGarages(reservations) {
   return dispatch => {
-    const garages = formatGarages(reservations)
+    let garages = {}
+    if (reservations && reservations.length > 0) {
+      garages = formatGarages(reservations)
+    } else {
+      garages.noData = true
+    }
     dispatch({
       type:  SET_GARAGES,
       value: garages
@@ -120,9 +157,13 @@ export function loadReservations() {
       user_id:   state.userId,
       from:      timeToUTC(state.from),
       to:        timeToUTC(state.to),
-      secretary: true
+      secretary: getState().pageBase.current_user.secretary
     }).then(data => {
-      dispatch(setGarages(data.reservations_in_dates))
+      if (data) {
+        dispatch(setGarages(data.reservations_in_dates))
+      } else {
+        dispatch(setGarages())
+      }
     })
   }
 }
@@ -141,41 +182,21 @@ export function loadAvailableUsers() {
           id:        -1
         })
       }
+      if (users.length === 1) {
+        dispatch(setUserId(curretnUser.id))
+      }
       dispatch(setAvailableUsers(data.reservable_users))
     })
   }
 }
 
-export function formatFrom() {
-  return (dispatch, getState) => {
-    let fromValue = moment(roundTime(getState().reservationBulkRemoval.from), MOMENT_DATETIME_FORMAT)
-    let toValue = null
-    const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
-
-    if (fromValue.diff(now, 'minutes') < 0) { // cannot create reservations in the past
-      fromValue = now
-    }
-
-    if (moment(getState().reservationBulkRemoval.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(getState().reservationBulkRemoval.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
-      toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)
-      dispatch(setTo(toValue))
-    }
-  }
-}
-
-export function formatTo() {
-  return (dispatch, getState) => {
-    let toValue = moment(roundTime(getState().reservationBulkRemoval.to), MOMENT_DATETIME_FORMAT)
-    const fromValue = moment(getState().reservationBulkRemoval.from, MOMENT_DATETIME_FORMAT)
-
-    if (toValue.diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
-      toValue = fromValue.add(MIN_RESERVATION_DURATION, 'minutes')
-    }
-
-    dispatch({ type:  SET_TO,
-      value: toValue.format(MOMENT_DATETIME_FORMAT)
-    })
+export function initStorage() {
+  return dispatch => {
+    const from = roundTimeUp(moment())
+    const to = from.clone().add(30, 'm')
+    dispatch(loadAvailableUsers())
+    dispatch(setFrom(from.format(MOMENT_DATETIME_FORMAT)))
+    dispatch(setTo(to.format(MOMENT_DATETIME_FORMAT)))
   }
 }
 
@@ -202,10 +223,13 @@ export function destroyRecurringReservations(id) {
 export function destroyAllSelectedReservations() {
   return (dispatch, getState) => {
     const { toBeRemoved } = getState().reservationBulkRemoval
-    toBeRemoved.forEach(reservation => {
-      destroyReservation(reservation)
-    })
-    cancelSelection()
-    loadReservations()
+
+    request(() => console.log('Success'), DESTROY_RESERVATIONS, { ids: toBeRemoved })
+    // toBeRemoved.forEach(reservation => {
+    //   console.log(reservation)
+    //   dispatch(destroyReservation(reservation))
+    // })
+    dispatch(cancelSelection())
+    dispatch(loadReservations())
   }
 }

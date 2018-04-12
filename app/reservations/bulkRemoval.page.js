@@ -38,7 +38,7 @@ class BulkRemovalReservationPage extends Component {
 
   componentDidMount() {
     // this.props.actions.initReservations()
-    this.props.actions.loadAvailableUsers()
+    this.props.actions.initStorage()
   }
 
   getUserToSelect = () => {
@@ -93,14 +93,14 @@ class BulkRemovalReservationPage extends Component {
 
     return (
       <div>
-        <Checkbox
-          checked={isChecked()}
-          onChange={onChange}
-        > <h3> {client.name} </h3>
-        </Checkbox>
-        <ul>
-          {client.reservations.map(this.formatReservation)}
-        </ul>
+        <div className={styles.h3BorderBotom}>
+          <Checkbox
+            checked={isChecked()}
+            onChange={onChange}
+          > <h3> {client.name} </h3>
+          </Checkbox>
+        </div>
+        {client.reservations.map(this.formatReservation)}
       </div>
     )
   }
@@ -128,14 +128,14 @@ class BulkRemovalReservationPage extends Component {
     }
     return (
       <div>
-        <Checkbox
-          checked={isChecked()}
-          onChange={onChange}
-        > <h2> {garage.name} </h2>
-        </Checkbox>
-        <ul>
-          {garage.clients.map(this.formatClient)}
-        </ul>
+        <div className={styles.h2BorderBotom}>
+          <Checkbox
+            checked={isChecked()}
+            onChange={onChange}
+          > <h2> {garage.name} </h2>
+          </Checkbox>
+        </div>
+        {garage.clients.map(this.formatClient)}
       </div>
     )
   }
@@ -144,6 +144,12 @@ class BulkRemovalReservationPage extends Component {
     const { actions } = this.props
     actions.cancelSelection()
     actions.loadReservations()
+  }
+
+  cancelSelectedReservations = () => {
+    const { actions } = this.props
+    console.log('Budu asi mazat')
+    actions.destroyAllSelectedReservations()
   }
 
   render() {
@@ -158,47 +164,60 @@ class BulkRemovalReservationPage extends Component {
 
     return (
       <PageBase>
-        {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
-          <div>
-            <Dropdown
-              label={t([ 'newReservation', 'selectUser' ])}
-              content={this.userDropdown()}
-              selected={this.getUserToSelect()}
-              highlight={state.highlight}
-              filter
-            />
-            <DatetimeInput
-              onBlur={actions.formatFrom}
-              onChange={actions.setFrom}
-              label={t([ 'newReservation', 'begins' ])}
-              error={t([ 'newReservation', 'invalidaDate' ])}
-              value={state.from}
-              inlineMenu={beginsInlineMenu}
-            />
-            <DatetimeInput
-              onBlur={actions.formatTo}
-              onChange={actions.setTo}
-              label={t([ 'newReservation', 'ends' ])}
-              error={t([ 'newReservation', 'invalidaDate' ])}
-              value={state.to}
-              inlineMenu={endsInlineMenu}
-            />
+        <div className={styles.container}>
+          {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
+            <div>
+              <Dropdown
+                label={t([ 'newReservation', 'selectUser' ])}
+                content={this.userDropdown()}
+                selected={this.getUserToSelect()}
+                highlight={state.highlight}
+                filter
+              />
+            </div>
+          }
+          <DatetimeInput
+            onChange={actions.adjustFromDate}
+            label={t([ 'newReservation', 'begins' ])}
+            error={t([ 'newReservation', 'invalidaDate' ])}
+            value={state.from}
+            inlineMenu={beginsInlineMenu}
+          />
+          <DatetimeInput
+            onChange={actions.adjustToDate}
+            label={t([ 'newReservation', 'ends' ])}
+            error={t([ 'newReservation', 'invalidaDate' ])}
+            value={state.to}
+            inlineMenu={endsInlineMenu}
+          />
+          <div className={styles.centerDiv}>
             <CallToActionButton
-              label="Najít Rezervace"
+              label="Find Reservations"
               onClick={this.findReservationsOnClick}
             />
           </div>
-        }
-        <div className={styles.leftCollumn}>
-          <div className={styles.padding}>
-            {allGarages.map(this.formatGarage)}
+          {allGarages && !allGarages.noData &&
+            <div className={styles.centerDiv}>
+              <div className={styles.padding}>
+                {allGarages.map(this.formatGarage)}
+              </div>
+            </div>
+          }
+          {allGarages && allGarages.noData &&
+            <div className={styles.centerDiv}>
+              {/* TODO: Add translations */}
+              <h1>No Reservations</h1>
+            </div>
+          }
+          <div className={styles.centerDiv}>
+            <CallToActionButton
+              label="Cancle reservations"
+              onClick={this.cancelSelectedReservations}
+              type="remove"
+              state={state.toBeRemoved.length === 0 ? 'disabled' : ''}
+            />
           </div>
         </div>
-        <CallToActionButton
-          label="Zrušit rezervace"
-          onClick={this.findReservationsOnClick}
-          state="remove"
-        />
       </PageBase>
     )
   }
