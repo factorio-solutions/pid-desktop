@@ -1,56 +1,70 @@
 import moment from 'moment'
 
-import actionFactory from '../helpers/actionFactory'
-import { request } from '../helpers/request'
-import requestPromise from '../helpers/requestPromise'
-import { t } from '../modules/localization/localization'
-import { timeToUTC, MOMENT_DATETIME_FORMAT } from '../helpers/time'
+import actionFactory                                   from '../helpers/actionFactory'
+import { request }                                     from '../helpers/request'
+import requestPromise                                  from '../helpers/requestPromise'
+import { t }                                           from '../modules/localization/localization'
+import { timeToUTC, MOMENT_DATETIME_FORMAT, ceilTime } from '../helpers/time'
 
-import { RESERVATIONS_QUERY, DESTROY_RESERVATIONS } from '../queries/bulkRemoval.queries'
-import { GET_AVAILABLE_USERS } from '../queries/newReservation.queries'
+import { RESERVATIONS_QUERY, DESTROY_RESERVATIONS } from '../queries/reservationsBulkRemoval.queries'
+import { GET_AVAILABLE_USERS }                      from '../queries/newReservation.queries'
 
 import { mobile } from '../../index'
 
 
-export const RESERVATIONS_PER_PAGE = 5
+export const SET_BULK_REMOVAL_GARAGES = 'SET_GARAGES'
+export const SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED = 'SET_RESERVATION_TO_BE_REMOVED'
+export const SET_BULK_REMOVAL_AVAILABLE_USERS = 'SET_AVAILABLE_USERS'
+export const SET_BULK_REMOVAL_USER_ID = 'SET_USER_ID'
+export const SET_BULK_REMOVAL_TO = 'SET_TO'
+export const SET_BULK_REMOVAL_FROM = 'SET_FROM'
+export const BULK_REMOVAL_CLEAR_FORM = 'BULK_REMOVAL_CLEAR_FORM'
 
-export const SET_GARAGES = 'SET_GARAGES'
-export const SET_RESERVATION_TO_BE_REMOVED = 'SET_RESERVATION_TO_BE_REMOVED'
-export const SET_AVAILABLE_USERS = 'SET_AVAILABLE_USERS'
-export const SET_USER_ID = 'SET_USER_ID'
-export const SET_TO = 'SET_TO'
-export const SET_FROM = 'SET_FROM'
 
-export const setAvailableUsers = actionFactory(SET_AVAILABLE_USERS)
-export const setUserId = actionFactory(SET_USER_ID)
-export const setTo = actionFactory(SET_TO)
-export const setFrom = actionFactory(SET_FROM)
+export const setAvailableUsers = actionFactory(SET_BULK_REMOVAL_AVAILABLE_USERS)
+export const setUserId = actionFactory(SET_BULK_REMOVAL_USER_ID)
+export const setTo = actionFactory(SET_BULK_REMOVAL_TO)
+export const setFrom = actionFactory(SET_BULK_REMOVAL_FROM)
+export const clearForm = actionFactory(BULK_REMOVAL_CLEAR_FORM)
+export const setReservationsToBeRemoved = actionFactory(SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED)
+export const setGarages = actionFactory(SET_BULK_REMOVAL_GARAGES)
+
+// function formatGarages(reservations) {
+//   return reservations.reduce((accum, reservation) => {
+//     const garage = accum.findById(reservation.garage.id)
+//     if (garage) {
+//       const client = garage.clients.findById(reservation.client.id)
+//       if (client) {
+//         client.reservations.push(reservation)
+//       } else {
+//         garage.clients.push({ ...reservation.client, reservations: [ reservation ] })
+//       }
+//     } else {
+//       accum.push({
+//         ...reservation.garage,
+//         clients: [ {
+//           ...reservation.client,
+//           reservations: [ reservation ]
+//         } ]
+//       })
+//     }
+//     return accum
+//   }, [])
+// }
+
+function find(id, array, emptyObject) {
+  const foundObject = array.findById(id)
+  if (!foundObject) array.push(emptyObject)
+  return foundObject || array.findById(id)
+}
 
 function formatGarages(reservations) {
   return reservations.reduce((accum, reservation) => {
-    const garage = accum.find(g => g.id === reservation.garage.id)
-    if (garage) {
-      const client = garage.clients.find(c => c.id === reservation.client.id)
-      if (client) {
-        client.reservations.push(reservation)
-      } else {
-        garage.clients.push({ ...reservation.client, reservations: [ reservation ] })
-      }
-    } else {
-      accum.push({
-        ...reservation.garage,
-        clients: [ {
-          ...reservation.client,
-          reservations: [ reservation ]
-        } ]
-      })
-    }
+    const garage = find(reservation.garage.id, accum, { ...reservation.garage, clients: [] })
+    const client = find(reservation.client.id, garage.clients, { ...reservation.client, reservations: [] })
+    client.reservations.push(reservation)
     return accum
   }, [])
-}
-
-export function roundTimeUp(time) {
-  return moment(time, MOMENT_DATETIME_FORMAT).set('minute', Math.ceil(moment(time, MOMENT_DATETIME_FORMAT).minutes() / 15) * 15)
 }
 
 export function adjustFromDate(from) {
@@ -58,7 +72,7 @@ export function adjustFromDate(from) {
     let newFrom = moment(from, MOMENT_DATETIME_FORMAT)
     let to = moment(getState().reservationBulkRemoval.to, MOMENT_DATETIME_FORMAT)
     if (moment().isAfter(newFrom)) {
-      newFrom = roundTimeUp(moment())
+      newFrom = ceilTime(moment())
     }
     if (newFrom.isSameOrAfter(to)) {
       to = newFrom.clone().add(30, 'm')
@@ -90,20 +104,20 @@ export function setReservationToBeRemove(id) {
       toBeRemoved.push(id)
     }
     dispatch({
-      type:  SET_RESERVATION_TO_BE_REMOVED,
+      type:  SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED,
       value: toBeRemoved
     })
   }
 }
 
-export function cancelSelection() {
-  return dispatch => {
-    dispatch({
-      type:  SET_RESERVATION_TO_BE_REMOVED,
-      value: []
-    })
-  }
-}
+// export function cancelSelection() {
+//   return dispatch => {
+//     dispatch({
+//       type:  SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED,
+//       value: []
+//     })
+//   }
+// }
 
 export function setClientsReservationsToBeRemove(client) {
   return (dispatch, getState) => {
@@ -129,33 +143,29 @@ export function unsetClientsReservationsToBeRemove(client) {
   }
 }
 
-export function setGarages(reservations) {
-  return dispatch => {
-    let garages = {}
-    if (reservations && reservations.length > 0) {
-      garages = formatGarages(reservations)
-    } else {
-      garages.noData = true
-    }
-    dispatch({
-      type:  SET_GARAGES,
-      value: garages
-    })
-  }
-}
+// export function setGarages(reservations = []) {
+//   return dispatch => {
+//     // let garages = {}
+//     // if (reservations && reservations.length > 0) {
+//     //   garages = formatGarages(reservations)
+//     // } else {
+//     //   garages.noData = true
+//     // }
+//     dispatch({
+//       type:  SET_BULK_REMOVAL_GARAGES,
+//       value: reservations.length > 0 ? formatGarages(reservations) : { noData: true }
+//     })
+//   }
+// }
 
-export function selectReservations(reservations) {
-  return dispatch => {
-    const ids = reservations.reduce((acc, reservation) => {
-      acc.push(reservation.id)
-      return acc
-    }, [])
-    dispatch({
-      type:  SET_RESERVATION_TO_BE_REMOVED,
-      value: ids
-    })
-  }
-}
+// export function selectReservations(reservations) {
+//   return dispatch => {
+//     dispatch({
+//       type:  SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED,
+//       value: reservations.map(reservation => reservation.id)
+//     })
+//   }
+// }
 
 export function loadReservations() {
   return (dispatch, getState) => {
@@ -167,11 +177,14 @@ export function loadReservations() {
       secretary: getState().pageBase.current_user.secretary
     }).then(data => {
       if (data) {
-        dispatch(setGarages(data.reservations_in_dates))
-        dispatch(selectReservations(data.reservations_in_dates))
+        const reservations = data.reservations_in_dates
+        dispatch(setGarages(reservations.length > 0 ? formatGarages(reservations) : { noData: true }))
+        dispatch(setReservationsToBeRemoved(reservations.map(reservation => reservation.id)))
+        // dispatch(selectReservations(data.reservations_in_dates))
       } else {
-        dispatch(setGarages())
-        dispatch(cancelSelection())
+        dispatch(setGarages({ noData: true }))
+        dispatch(setReservationsToBeRemoved([]))
+        // dispatch(cancelSelection())
       }
     })
   }
@@ -180,38 +193,19 @@ export function loadReservations() {
 export function loadAvailableUsers() {
   return (dispatch, getState) => {
     const currentUser = getState().pageBase.current_user
-    const selectedUserId = getState().reservationBulkRemoval.userId
-    requestPromise(GET_AVAILABLE_USERS, {
-      id: +currentUser.id
-    }).then(data => {
-      const users = data.reservable_users
-      if (currentUser && currentUser.secretary) {
-        users.push({
+
+    currentUser && requestPromise(GET_AVAILABLE_USERS, { id: currentUser.id }).then(data => {
+      const users = [
+        ...data.reservable_users,
+        currentUser && currentUser.secretary && {
           full_name: t([ 'bulkCancellation', 'allUsers' ]),
           id:        -1
-        })
-        if (!selectedUserId) {
-          dispatch(setUserId(-1))
         }
-      }
-      if (users.length === 1) {
-        dispatch(setUserId(users[0].id))
-      }
+      ].filter(o => o)
+
+      if (users.length === 1) dispatch(setUserId(users[0].id))
       dispatch(setAvailableUsers(users))
     })
-  }
-}
-
-export function initStorage() {
-  return (dispatch, getState) => {
-    const { from, to } = getState().reservationBulkRemoval
-    if (!(from && to)) {
-      const newFrom = roundTimeUp(moment())
-      const newTo = newFrom.clone().add(30, 'm')
-      dispatch(setFrom(newFrom.format(MOMENT_DATETIME_FORMAT)))
-      dispatch(setTo(newTo.format(MOMENT_DATETIME_FORMAT)))
-    }
-    dispatch(loadAvailableUsers())
   }
 }
 

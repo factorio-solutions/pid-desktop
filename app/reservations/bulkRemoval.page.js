@@ -7,7 +7,6 @@ import PageBase           from '../_shared/containers/pageBase/PageBase'
 import Checkbox           from '../_shared/components/checkbox/checkbox'
 import Dropdown           from '../_shared/components/dropdown/Dropdown'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
-import ButtonStack        from '../_shared/components/buttonStack/ButtonStack'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
 
 import * as bulkRemovalActions from '../_shared/actions/reservationsBulkRemoval.actions'
@@ -27,12 +26,7 @@ class BulkRemovalReservationPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initStorage()
-  }
-
-  getUserToSelect = () => {
-    const { state } = this.props
-    return state.availableUsers.findIndex(user => state.userId && user.id === state.userId)
+    this.props.actions.loadAvailableUsers()
   }
 
   userDropdown = () => this.props.state.availableUsers.map(user => ({
@@ -51,9 +45,7 @@ class BulkRemovalReservationPage extends Component {
     const startsAtTime = moment(reservation.begins_at).format('HH:mm')
     const endsAtDate = moment(reservation.ends_at).format(MOMENT_DATE_FORMAT)
     const endsAtTime = moment(reservation.ends_at).format('HH:mm')
-    const onChecked = () => {
-      actions.setReservationToBeRemove(reservation.id)
-    }
+    const onChecked = () => actions.setReservationToBeRemove(reservation.id)
     return (
       <Checkbox
         checked={state.toBeRemoved.includes(reservation.id)}
@@ -73,18 +65,13 @@ class BulkRemovalReservationPage extends Component {
       }
     }
 
-    const isChecked = () => {
-      const { toBeRemoved } = state
-      return client.reservations.reduce((acc, reserv) => {
-        return acc && toBeRemoved.includes(reserv.id)
-      }, true)
-    }
+    const isChecked = !!client.reservations.find(res => state.toBeRemoved.includes(res.id))
 
     return (
       <div>
-        <div className={styles.h3BorderBotom}>
+        <div className={styles.h3BorderBottom}>
           <Checkbox
-            checked={isChecked()}
+            checked={isChecked}
             onChange={onChange}
           > <h3> {client.name} </h3>
           </Checkbox>
@@ -107,19 +94,13 @@ class BulkRemovalReservationPage extends Component {
         })
       }
     }
-    const isChecked = () => {
-      const { toBeRemoved } = state
-      return garage.clients.reduce((acc, client) => {
-        return acc && client.reservations.reduce((accc, reservation) => {
-          return accc && toBeRemoved.includes(reservation.id)
-        }, acc)
-      }, true)
-    }
+
+    const isChecked = !!garage.clients.find(cli => cli.reservations.find(res => state.toBeRemoved.includes(res.id)))
     return (
       <div>
-        <div className={styles.h2BorderBotom}>
+        <div className={styles.h2BorderBottom}>
           <Checkbox
-            checked={isChecked()}
+            checked={isChecked}
             onChange={onChange}
           > <h2> {garage.name} </h2>
           </Checkbox>
@@ -129,25 +110,9 @@ class BulkRemovalReservationPage extends Component {
     )
   }
 
-  findReservationsOnClick = () => {
-    const { actions } = this.props
-    actions.loadReservations()
-  }
-
-  cancelSelectedReservations = () => {
-    const { actions } = this.props
-    actions.destroyAllSelectedReservations()
-  }
-
   render() {
     const { state, actions, pageBase } = this.props
     const allGarages = state.garages
-
-    const beginsInlineMenu = <span className={styles.clickable} onClick={actions.beginsToNow}>{t([ 'newReservation', 'now' ])}</span>
-    const endsInlineMenu = (<ButtonStack style="horizontal" divider={<span> | </span>}>
-      <span className={`${state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDuration} >{t([ 'newReservation', 'duration' ])}</span>
-      <span className={`${!state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDate} >{t([ 'newReservation', 'date' ])}</span>
-    </ButtonStack>)
 
     return (
       <PageBase>
@@ -158,7 +123,7 @@ class BulkRemovalReservationPage extends Component {
               <Dropdown
                 label={t([ 'newReservation', 'selectUser' ])}
                 content={this.userDropdown()}
-                selected={this.getUserToSelect()}
+                selected={state.availableUsers.findIndexById(state.userId)}
                 highlight={state.highlight}
                 style="reservation"
               />
@@ -169,19 +134,18 @@ class BulkRemovalReservationPage extends Component {
             label={t([ 'newReservation', 'begins' ])}
             error={t([ 'newReservation', 'invalidaDate' ])}
             value={state.from}
-            inlineMenu={beginsInlineMenu}
           />
           <DatetimeInput
             onChange={actions.adjustToDate}
             label={t([ 'newReservation', 'ends' ])}
             error={t([ 'newReservation', 'invalidaDate' ])}
             value={state.to}
-            inlineMenu={endsInlineMenu}
           />
+
           <div className={styles.centerDiv}>
             <CallToActionButton
               label={t([ 'bulkCancellation', 'findReservations' ])}
-              onClick={this.findReservationsOnClick}
+              onClick={actions.loadReservations}
             />
           </div>
           {allGarages && !allGarages.noData &&
@@ -199,7 +163,7 @@ class BulkRemovalReservationPage extends Component {
           <div className={styles.centerDiv}>
             <CallToActionButton
               label={t([ 'bulkCancellation', 'cancelReservations' ])}
-              onClick={this.cancelSelectedReservations}
+              onClick={actions.destroyAllSelectedReservations}
               type="remove"
               state={state.toBeRemoved.length === 0 ? 'disabled' : ''}
             />

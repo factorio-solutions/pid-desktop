@@ -1,35 +1,31 @@
 @import '../_styles/app.desktop';
 
 .centerDiv {
-  text-align: center;
   padding-top: 5px;
+  text-align:  center;
 }
 
 h2 {
-  display: inline-block;
-  font-weight: bold;
+  display:        inline-block;
   padding-bottom: 1px;
-  font-size: xx-large;
+  font-size:      xx-large;
+  font-weight:    bold;
 }
 
 h3 {
-  display: inline-block;
+  display:   inline-block;
   font-size: larger;
 }
 
-.h2BorderBotom {
+.h2BorderBottom {
   border-bottom: 4px solid $black;
 }
 
-.h3BorderBotom {
+.h3BorderBottom {
   border-bottom: 2px solid $black;
 }
 
-.destroyModal {
-  display: grid;
-}
-
-.container   { 
-  width:400px;
-  padding:15px; 
+.container {
+  width:   400px;
+  padding: 15px;
 }
