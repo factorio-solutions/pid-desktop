@@ -184,7 +184,8 @@
 		"analyticspaymentsHint": "TODO: payments Hint",
 		"analyticsgatesHint": "TODO: gates Hint",
 		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
-		"pidAdmin": "PID admin"
+		"pidAdmin": "PID admin",
+		"bulkRemovalHint": "Here you can remove more of your reservations at once."
 	},
 	"newReservation": {
 		"selectGarage": "Select garage *",
@@ -1322,5 +1323,12 @@
 			"editNews": "edit news",
 			"deleteNews": "delete news"
 		}
+	},
+	"bulkCancellation": {
+		"bulkCancellation": "Bulk cancellation",
+		"findReservations": "Find reservations",
+		"cancelReservations": "Cancel reservations",
+		"allUsers": "All users",
+		"noReservations": "No Reservations"
 	}
 }
