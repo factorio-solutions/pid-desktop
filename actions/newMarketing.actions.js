@@ -234,7 +234,7 @@ export function editGarageMarketing() {
         dispatch(setModal(undefined))
         dispatch(clearForm())
 
-        nav.to(`/${getState().pageBase.garage}/admin/modules`)
+        // nav.to(`/${getState().pageBase.garage}/admin/modules`)
       }
     }
 
