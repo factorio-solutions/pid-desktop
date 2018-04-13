@@ -4,17 +4,12 @@ import actionFactory from '../helpers/actionFactory'
 import { request } from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
 import { t } from '../modules/localization/localization'
-import { parseParameters } from '../helpers/parseUrlParameters'
 import { timeToUTC, MOMENT_DATETIME_FORMAT } from '../helpers/time'
-import { roundTime } from './newReservation.actions'
 
-import { GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
-import { DESTROY_RESERVATION, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
 import { RESERVATIONS_QUERY, DESTROY_RESERVATIONS } from '../queries/bulkRemoval.queries'
 import { GET_AVAILABLE_USERS } from '../queries/newReservation.queries'
 
 import { mobile } from '../../index'
-import { login } from './login.actions';
 
 
 export const RESERVATIONS_PER_PAGE = 5
@@ -78,7 +73,6 @@ export function adjustToDate(to) {
     const from = moment(getState().reservationBulkRemoval.from, MOMENT_DATETIME_FORMAT)
     let newTo = moment(to, MOMENT_DATETIME_FORMAT)
     if (newTo.isSameOrBefore(from)) {
-      console.log('NewTo is before from')
       newTo = from.clone().add(30, 'm')
     }
     dispatch(setTo(newTo.format(MOMENT_DATETIME_FORMAT)))
@@ -150,19 +144,34 @@ export function setGarages(reservations) {
   }
 }
 
+export function selectReservations(reservations) {
+  return dispatch => {
+    const ids = reservations.reduce((acc, reservation) => {
+      acc.push(reservation.id)
+      return acc
+    }, [])
+    dispatch({
+      type:  SET_RESERVATION_TO_BE_REMOVED,
+      value: ids
+    })
+  }
+}
+
 export function loadReservations() {
   return (dispatch, getState) => {
-    const state = getState().reservationBulkRemoval
+    const { userId, from, to } = getState().reservationBulkRemoval
     requestPromise(RESERVATIONS_QUERY, {
-      user_id:   state.userId,
-      from:      timeToUTC(state.from),
-      to:        timeToUTC(state.to),
+      user_id:   userId,
+      from:      timeToUTC(from),
+      to:        timeToUTC(to),
       secretary: getState().pageBase.current_user.secretary
     }).then(data => {
       if (data) {
         dispatch(setGarages(data.reservations_in_dates))
+        dispatch(selectReservations(data.reservations_in_dates))
       } else {
         dispatch(setGarages())
+        dispatch(cancelSelection())
       }
     })
   }
@@ -170,66 +179,51 @@ export function loadReservations() {
 
 export function loadAvailableUsers() {
   return (dispatch, getState) => {
-    const curretUserId = getState().pageBase.current_user.id
+    const currentUser = getState().pageBase.current_user
+    const selectedUserId = getState().reservationBulkRemoval.userId
     requestPromise(GET_AVAILABLE_USERS, {
-      id: +curretUserId
+      id: +currentUser.id
     }).then(data => {
       const users = data.reservable_users
-      const curretnUser = getState().pageBase.current_user
-      if (curretnUser && curretnUser.secretary) {
+      if (currentUser && currentUser.secretary) {
         users.push({
-          full_name: 'All users',
+          full_name: t([ 'bulkCancellation', 'allUsers' ]),
           id:        -1
         })
+        if (!selectedUserId) {
+          dispatch(setUserId(-1))
+        }
       }
       if (users.length === 1) {
-        dispatch(setUserId(curretnUser.id))
+        dispatch(setUserId(users[0].id))
       }
-      dispatch(setAvailableUsers(data.reservable_users))
+      dispatch(setAvailableUsers(users))
     })
   }
 }
 
 export function initStorage() {
-  return dispatch => {
-    const from = roundTimeUp(moment())
-    const to = from.clone().add(30, 'm')
+  return (dispatch, getState) => {
+    const { from, to } = getState().reservationBulkRemoval
+    if (!(from && to)) {
+      const newFrom = roundTimeUp(moment())
+      const newTo = newFrom.clone().add(30, 'm')
+      dispatch(setFrom(newFrom.format(MOMENT_DATETIME_FORMAT)))
+      dispatch(setTo(newTo.format(MOMENT_DATETIME_FORMAT)))
+    }
     dispatch(loadAvailableUsers())
-    dispatch(setFrom(from.format(MOMENT_DATETIME_FORMAT)))
-    dispatch(setTo(to.format(MOMENT_DATETIME_FORMAT)))
   }
 }
 
-export function destroyReservation(id, callback) {
-  return () => {
-    const onSuccess = response => {
+export function destroyAllSelectedReservations(callback = undefined, OnError = undefined) {
+  return (dispatch, getState) => {
+    const { toBeRemoved } = getState().reservationBulkRemoval
+    const onSuccess = () => {
       if (mobile) {
         callback()
       }
     }
-    request(onSuccess, DESTROY_RESERVATION, { id })
-  }
-}
-
-export function destroyRecurringReservations(id) {
-  return dispatch => {
-    const onSuccess = response => {
-      dispatch(initReservations())
-    }
-    request(onSuccess, DESTROY_RECURRING_RESERVATIONS, { id })
-  }
-}
-
-export function destroyAllSelectedReservations() {
-  return (dispatch, getState) => {
-    const { toBeRemoved } = getState().reservationBulkRemoval
-
-    request(() => console.log('Success'), DESTROY_RESERVATIONS, { ids: toBeRemoved })
-    // toBeRemoved.forEach(reservation => {
-    //   console.log(reservation)
-    //   dispatch(destroyReservation(reservation))
-    // })
-    dispatch(cancelSelection())
+    request(onSuccess, DESTROY_RESERVATIONS, { ids: toBeRemoved }, 'BulkCancelation', OnError)
     dispatch(loadReservations())
   }
 }

@@ -4,25 +4,16 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase           from '../_shared/containers/pageBase/PageBase'
-import PaginatedTable     from '../_shared/components/table/PaginatedTable'
-import RoundButyton       from '../_shared/components/buttons/RoundButton'
-import LabeledRoundButton from '../_shared/components/buttons/LabeledRoundButton'
-import Form               from '../_shared/components/form/Form'
-import Modal              from '../_shared/components/modal/Modal'
-import TabMenu            from '../_shared/components/tabMenu/TabMenu'
 import Checkbox           from '../_shared/components/checkbox/checkbox'
 import Dropdown           from '../_shared/components/dropdown/Dropdown'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
 import ButtonStack        from '../_shared/components/buttonStack/ButtonStack'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
 
-import * as nav                                      from '../_shared/helpers/navigation'
-import * as bulkRemovalActions                       from '../_shared/actions/reservationsBulkRemoval.actions'
-import * as reservationInteruptionActions            from '../_shared/actions/reservationInteruption.actions'
-import { setCustomModal }                            from '../_shared/actions/pageBase.actions'
-import { t }                                         from '../_shared/modules/localization/localization'
-import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT }                    from '../_shared/helpers/time'
-import { GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY } from '../_shared/queries/reservations.queries'
+import * as bulkRemovalActions from '../_shared/actions/reservationsBulkRemoval.actions'
+import { setCustomModal }      from '../_shared/actions/pageBase.actions'
+import { t }                   from '../_shared/modules/localization/localization'
+import { MOMENT_DATE_FORMAT }  from '../_shared/helpers/time'
 
 import styles from './bulkRemoval.page.scss'
 
@@ -32,12 +23,10 @@ class BulkRemovalReservationPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object,
-    params:   PropTypes.object,
     pageBase: PropTypes.object
   }
 
   componentDidMount() {
-    // this.props.actions.initReservations()
     this.props.actions.initStorage()
   }
 
@@ -142,13 +131,11 @@ class BulkRemovalReservationPage extends Component {
 
   findReservationsOnClick = () => {
     const { actions } = this.props
-    actions.cancelSelection()
     actions.loadReservations()
   }
 
   cancelSelectedReservations = () => {
     const { actions } = this.props
-    console.log('Budu asi mazat')
     actions.destroyAllSelectedReservations()
   }
 
@@ -165,6 +152,7 @@ class BulkRemovalReservationPage extends Component {
     return (
       <PageBase>
         <div className={styles.container}>
+          <h1>{t([ 'bulkCancellation', 'bulkCancellation' ])}</h1>
           {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
             <div>
               <Dropdown
@@ -172,7 +160,7 @@ class BulkRemovalReservationPage extends Component {
                 content={this.userDropdown()}
                 selected={this.getUserToSelect()}
                 highlight={state.highlight}
-                filter
+                style="reservation"
               />
             </div>
           }
@@ -192,7 +180,7 @@ class BulkRemovalReservationPage extends Component {
           />
           <div className={styles.centerDiv}>
             <CallToActionButton
-              label="Find Reservations"
+              label={t([ 'bulkCancellation', 'findReservations' ])}
               onClick={this.findReservationsOnClick}
             />
           </div>
@@ -205,13 +193,12 @@ class BulkRemovalReservationPage extends Component {
           }
           {allGarages && allGarages.noData &&
             <div className={styles.centerDiv}>
-              {/* TODO: Add translations */}
-              <h1>No Reservations</h1>
+              <h1>{t([ 'bulkCancellation', 'noReservations' ])}</h1>
             </div>
           }
           <div className={styles.centerDiv}>
             <CallToActionButton
-              label="Cancle reservations"
+              label={t([ 'bulkCancellation', 'cancelReservations' ])}
               onClick={this.cancelSelectedReservations}
               type="remove"
               state={state.toBeRemoved.length === 0 ? 'disabled' : ''}
