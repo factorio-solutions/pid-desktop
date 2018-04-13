@@ -36,6 +36,15 @@ class ModulesPageBase extends Component {
     state={window.location.hash.includes(`/${tab}`) && 'selected'}
   />)
 
+  toGoInternalSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/goInternal`)
+
+  toMarketingPreview = () => window.open('#' + nav.path(`/marketing/${this.props.state.short_name}`))
+
+  toGoFlexiPlaceSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/modules/flexiplace`)
+
+  toggleFLexiplace = () => this.props.state.flexiplace ? this.props.actions.disableFlexiplace() : this.toGoFlexiPlaceSettings()
+
+
   render() {
     const { children, pageBase, state, actions } = this.props
 

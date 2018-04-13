@@ -1,9 +1,10 @@
 import request       from '../helpers/requestPromise'
 import actionFactory from '../helpers/actionFactory'
-import * as nav      from '../helpers/navigation'
 import { t }         from '../modules/localization/localization'
+// import * as nav      from '../helpers/navigation'
 
 import { setCustomModal } from './pageBase.actions'
+import { initModules } from './admin.modules.actions'
 import { GET_GARAGE, UPDATE_ALL_PLACES } from '../queries/admin.goInternal.queries.js'
 
 
@@ -81,7 +82,8 @@ export function submitGoInternal() {
     })
     .then(() => {
       dispatch(setCustomModal())
-      nav.to(`/${getState().pageBase.garage}/admin/modules`)
+      // nav.to(`/${getState().pageBase.garage}/admin/modules`)
+      dispatch(initModules())
     })
   }
 }
@@ -99,6 +101,6 @@ export function submitIntegration(key) {
     requestPromise(UPDATE_ALL_PLACES, { places: getPlaces(getState).map(place => ({
       id:    place.id,
       [key]: state.places.includes(place.id)
-    })) }).then(() => nav.to(`/${getState().pageBase.garage}/admin/modules`))
+    })) }) // .then(() => nav.to(`/${getState().pageBase.garage}/admin/modules`))
   }
 }
