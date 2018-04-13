@@ -167,8 +167,11 @@ export default function newReservation(state = defaultState, action) {
     case NEW_RESERVATION_SET_CLIENT_ID:
       return {
         ...state,
-        client_id:     action.value,
-        recurringRule: action.value ? state.recurringRule : undefined
+        client_id:        action.value,
+        recurringRule:    action.value ? state.recurringRule : undefined,
+        sendSMS:          false,
+        selectedTemplate: undefined,
+        templateText:     ''
       }
 
     case NEW_RESERVATION_SET_PAID_BY_HOST:
@@ -277,11 +280,12 @@ export default function newReservation(state = defaultState, action) {
       }
 
     case NEW_RESERVATION_SET_SEND_SMS:
+      const client = state.user.availableClients.findById(state.client_id)
       return {
         ...state,
         sendSMS:          action.value,
-        selectedTemplate: undefined,
-        templateText:     ''
+        selectedTemplate: action.value ? client.sms_templates.length === 1 ? 0 : undefined : undefined,
+        templateText:     action.value ? client.sms_templates.length === 1 ? client.sms_templates[0].template : '' : ''
       }
 
     case NEW_RESERVATION_SET_ERROR:
