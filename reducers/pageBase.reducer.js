@@ -51,47 +51,56 @@ export default function pageBase(state = defaultState, action) {
   switch (action.type) {
 
     case PAGE_BASE_SELECTED:
-      return { ...state,
+      return {
+        ...state,
         selected: action.value
       }
 
     case PAGE_BASE_SECONDARY_MENU:
-      return { ...state,
+      return {
+        ...state,
         secondaryMenu: action.value
       }
 
     case PAGE_BASE_SECONDARY_MENU_SELECTED:
-      return { ...state,
+      return {
+        ...state,
         secondarySelected: action.value
       }
 
     case PAGE_BASE_SHOW_SECONDARY_MENU:
-      return { ...state,
+      return {
+        ...state,
         showSecondaryMenu: action.value
       }
 
     case PAGE_BASE_SET_SECONDARY_MENU_BACK_BUTTON:
-      return { ...state,
+      return {
+        ...state,
         secondaryMenuBackButton: action.value
       }
 
     case PAGE_BASE_SET_ERROR:
-      return { ...state,
+      return {
+        ...state,
         error: action.value
       }
 
     case PAGE_BASE_SET_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         success: action.value
       }
 
     case PAGE_BASE_SET_CUSTOM_MODAL:
-      return { ...state,
+      return {
+        ...state,
         custom_modal: action.value
       }
 
     case PAGE_BASE_SET_NOTIFICATIONS_MODAL:
-      return { ...state,
+      return {
+        ...state,
         notificationsModal: action.value
       }
 
@@ -105,42 +114,50 @@ export default function pageBase(state = defaultState, action) {
           user_hash:  action.value.intercom_user_hash // HMAC using SHA-256
         })
       }
-      return { ...state,
+      return {
+        ...state,
         current_user: action.value
       }
 
     case PAGE_BASE_SET_HINT:
-      return { ...state,
+      return {
+        ...state,
         hint: action.value
       }
 
     case PAGE_BASE_SET_GARAGES:
-      return { ...state,
+      return {
+        ...state,
         garages: action.value
       }
 
     case PAGE_BASE_SET_GARAGE:
-      return { ...state,
+      return {
+        ...state,
         garage: action.value
       }
 
     case PAGE_BASE_SET_PID_TARIF:
-      return { ...state,
+      return {
+        ...state,
         pid_tarif: action.value
       }
 
     case PAGE_BASE_SET_IS_GARAGE_ADMIN:
-      return { ...state,
+      return {
+        ...state,
         isGarageAdmin: action.value
       }
 
     case PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST:
-      return { ...state,
+      return {
+        ...state,
         isGarageReceptionist: action.value
       }
 
     case PAGE_BASE_SET_IS_GARAGE_SECURITY:
-      return { ...state,
+      return {
+        ...state,
         isGarageSecurity: action.value
       }
 
