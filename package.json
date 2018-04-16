@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
@@ -74,7 +74,6 @@
     "redux-reset": "^0.3.0",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^6.0.6",
-    "sip": "0.0.4",
     "style-loader": "^0.18.2",
     "swiper": "^4.0.1",
     "webpack": "^3.7.1",

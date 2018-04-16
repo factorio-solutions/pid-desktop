@@ -84,14 +84,15 @@ class GarageSetupGatesPage extends Component {
     }
 
     const prepareGates = (gate, index, arr) => {
-      const handleGateLabelChange = value => { actions.changeGateLabel(value, index) }
-      const handleGatePhoneChange = value => { actions.changeGatePhone(value, index) }
-      const handleGatePlacesChange = value => { actions.changeGatePlaces(value, index) }
-      const handleGateAddressLine1Change = value => { actions.changeGateAddressLine1(value, index) }
-      // const handleGateAddressLine2Change = value => { actions.changeGateAddressLine2(value, index) }
-      const handleGateAddressLat = value => { actions.changeGateAddressLat(value, index) }
-      const handleGateAddressLng = value => { actions.changeGateAddressLng(value, index) }
-      const removeGateRow = () => { actions.removeGate(index) }
+      const handleGateLabelChange = value => actions.changeGateLabel(value, index)
+      const handleGatePhoneChange = value => actions.changeGatePhone(value, index)
+      const handleGatePlacesChange = value => actions.changeGatePlaces(value, index)
+      const handleGateAddressLine1Change = value => actions.changeGateAddressLine1(value, index)
+      const handleGateAddressLat = value => actions.changeGateAddressLat(value, index)
+      const handleGateAddressLng = value => actions.changeGateAddressLng(value, index)
+      const removeGateRow = () => actions.removeGate(index)
+      const addAllPlaces = () => actions.addAllPlaces(index)
+      const addAllPlacesInlineMenu = <span className={styles.clickable} onClick={addAllPlaces}>{t([ 'newGarage', 'addAllPalces' ])}</span>
 
       const getGateGPS = () => {
         const geocoder = new google.maps.Geocoder()
@@ -147,7 +148,8 @@ class GarageSetupGatesPage extends Component {
             value={gate.places}
             placeholder={t([ 'newGarage', 'placesPlaceholder' ])}
             highlight={state.highlight}
-            pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"
+            pattern="(-?\w+\s*)(\s*(,|-|\/)\s*-?\w+)*"
+            inlineMenu={addAllPlacesInlineMenu}
           />
           <Input
             onChange={handleGateAddressLine1Change}

@@ -8,13 +8,13 @@ import Form            from '../../_shared/components/form/Form'
 import Dropdown        from '../../_shared/components/dropdown/Dropdown'
 import PatternInput    from '../../_shared/components/input/PatternInput'
 
-import { t }                from '../../_shared/modules/localization/localization'
-import * as goPublicActions from '../../_shared/actions/admin.goPublic.actions'
+import { t }                  from '../../_shared/modules/localization/localization'
+import * as goInternalActions from '../../_shared/actions/admin.goInternal.actions'
 
 import styles from './goPublic.page.scss'
 
 
-class GoPublicPage extends Component {
+class GoInternalPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
@@ -22,11 +22,11 @@ class GoPublicPage extends Component {
   }
 
   componentDidMount() {
-    this.props.pageBase.garage && this.props.actions.initGoPublic()
+    this.props.pageBase.garage && this.props.actions.initGoInternal()
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
-    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGoPublic()
+    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGoInternal()
   }
 
   render() {
@@ -36,7 +36,7 @@ class GoPublicPage extends Component {
       ...floor,
       places: floor.places.map(place => ({
         ...place,
-        available: true,
+        available: true, // TODO: set unvavailable if is set to third party
         selected:  state.places.includes(place.id)
       }))
     })
@@ -46,19 +46,20 @@ class GoPublicPage extends Component {
       onClick: () => actions.setCurrencyId(currency.id)
     }))
 
-    const isSubmitable = () => state.currency_id &&
+    const isSubmitable = () => !state.places.length ||
+      (state.currency_id &&
       ((state.flat_price.value) ||
       (state.exponential_12h_price.value &&
       state.exponential_day_price.value &&
       state.exponential_week_price.value &&
-      state.exponential_month_price.value))
+      state.exponential_month_price.value)))
+
 
     return (
       <ModulesPageBase>
         <div className={styles.flex}>
           <div className={styles.half}>
-            <Form onSubmit={actions.submitPricings} submitable={isSubmitable()}>
-              {state.places.length === 0 && <div className={styles.dimmer}>{t([ 'newPricing', 'selectPlace' ])}</div>}
+            <Form onSubmit={actions.submitGoInternal} submitable={isSubmitable()}>
               <div>
                 <Dropdown
                   label={t([ 'newPricing', 'selectCurrency' ])}
@@ -142,6 +143,6 @@ class GoPublicPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.adminGoPublic, pageBase: state.pageBase }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators(goPublicActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
-)(GoPublicPage)
+  state => ({ state: state.adminGoInternal, pageBase: state.pageBase }), // { state: state.dashboard }
+  dispatch => ({ actions: bindActionCreators(goInternalActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
+)(GoInternalPage)

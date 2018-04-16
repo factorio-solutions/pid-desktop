@@ -199,7 +199,7 @@ export function createNewManagebles() {
           user: {
             email:     email.toLowerCase(),
             full_name: state.full_name,
-            phone:     state.phone,
+            phone:     state.phone.replace(/\s/g, ''),
             message:   state.message,
             language:  state.language
           },

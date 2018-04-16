@@ -51,7 +51,7 @@ class inviteUserPage extends Component {
   checkSubmitable = () => {
     const { state } = this.props
     if (!state.email.valid) return false
-    if (!/\+[\d]{2,4}[\d]{3,}/.test(state.phone) && state.phone !== '') return false
+    if (!/\+[\d]{2,4}[\d\s]{3,}/.test(state.phone) && state.phone !== '') return false
     if (!/^(?!\s*$).+/.test(state.full_name) && state.phone !== '') return false
     if (state.client_id && !(state.client_admin || state.client_secretary || state.client_host || state.client_internal || state.client_contact_person)) return false
     if (state.garage_id && !(state.garage_admin || state.garage_receptionist || state.garage_security)) return false
@@ -176,7 +176,7 @@ class inviteUserPage extends Component {
                 onChange={this.phoneChanged}
                 label={t([ 'inviteUser', 'phoneLabel' ])}
                 error={t([ 'signup_page', 'phoneInvalid' ])}
-                pattern="\+[\d]{2,4}[\d]{3,}"
+                pattern="\+[\d]{2,4}[\d\s]{3,}"
                 value={state.phone}
               />
               <div>

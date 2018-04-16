@@ -25,6 +25,8 @@ import { AVAILABLE_LANGUAGES }    from '../routes'
 
 import styles from './newReservation.page.scss'
 
+const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤ]')
+
 
 class NewReservationPage extends Component {
   static propTypes = {
@@ -102,6 +104,8 @@ class NewReservationPage extends Component {
     this.handleBack()
   }
 
+  onTextAreaChange = event => this.props.actions.setTemplateText(event.target.value)
+
   render() {
     const { state, actions, pageBase } = this.props
 
@@ -110,12 +114,20 @@ class NewReservationPage extends Component {
     const onetime = state.reservation !== undefined && state.reservation.onetime
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
+    const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
+    const selectedPlace = places.findById(state.place_id)
+    // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
 
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
       if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
+      // if onetime visitor and he has to pay by himself, then the email is mandatory
+      if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
+      if (ACCENT_REGEX.test(state.templateText) ? state.templateText.length > 140 : state.templateText.length > 320) return false
+      // if onetime visitor and we want to send him sms, then the phone is mandatory
+      if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
@@ -196,7 +208,7 @@ class NewReservationPage extends Component {
                 {state.user && (state.user.id < 0 || onetime) &&
                   <div>
                     <PatternInput
-		                  readOnly={onetime}
+                      readOnly={onetime}
                       onChange={actions.setHostName}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                       error={t([ 'signup_page', 'nameInvalid' ])}
@@ -213,9 +225,9 @@ class NewReservationPage extends Component {
                       onChange={actions.setHostPhone}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                       error={t([ 'signup_page', 'phoneInvalid' ])}
-                      pattern="\+[\d]{2,4}[\d]{3,}"
+                      pattern="\+[\d]{2,4}[\d\s]{3,}"
                       value={state.phone.value}
-                      highlight={state.highlight && state.user.id === -1}
+                      highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
                     />
                     <PatternInput
                       readOnly={onetime}
@@ -224,7 +236,7 @@ class NewReservationPage extends Component {
                       error={t([ 'signup_page', 'emailInvalid' ])}
                       pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                       value={state.email.value}
-                      highlight={state.highlight && state.user.id === -1}
+                      highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
                     />
                   </div>
                 }
@@ -252,6 +264,15 @@ class NewReservationPage extends Component {
                     style="reservation"
                     filter
                   />
+                }
+                {state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal && <div>
+                  <input
+                    type="checkbox"
+                    checked={state.paidByHost}
+                    onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                  />
+                  {t([ 'newReservation', 'paidByHost' ])}
+                </div>
                 }
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
                   <Input
@@ -324,6 +345,41 @@ class NewReservationPage extends Component {
 
                 <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
                 <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+
+                {state.client_id && state.user &&
+                  state.user.availableClients.findById(state.client_id) &&
+                  state.user.availableClients.findById(state.client_id).has_sms_api_token &&
+                  state.user.availableClients.findById(state.client_id).is_sms_api_token_active &&
+                  state.user.availableClients.findById(state.client_id).is_secretary &&
+                  <div>
+                    <div className={styles.sendSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
+                      <input type="checkbox" checked={state.sendSMS} />
+                      {t([ 'newReservation', 'sendSms' ])}
+                    </div>
+                    {state.sendSMS &&
+                      <div className={styles.smsTemplates}>
+                        <Dropdown
+                          label={t([ 'newReservation', 'selectTemplate' ])}
+                          content={state.user.availableClients.findById(state.client_id).sms_templates.map((template, index) => ({
+                            label:   template.name,
+                            onClick: () => actions.setSelectedTemplate(index, template.template)
+                          }))}
+                          selected={state.selectedTemplate}
+                          style="reservation"
+                        />
+                        <div className={styles.textLabel}>
+                          <label>{t([ 'newReservation', 'smsText' ])}</label>
+                          <span className={styles.removeDiacritics} onClick={actions.removeDiacritics}>{t([ 'newReservation', 'removeDiacritics' ])}</span>
+                        </div>
+                        <textarea value={state.templateText} onChange={this.onTextAreaChange} />
+                        <div className={state.highlight && state.templateText.length > (ACCENT_REGEX.test(state.templateText) ? 140 : 320) && styles.redText}>
+                          {state.templateText.length}/{ACCENT_REGEX.test(state.templateText) ? 140 : 320}
+                          {t([ 'newReservation', 'character' ])}
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
               </Form>
             </div>
           </div>
