@@ -119,7 +119,7 @@ function prepareAdminSecondaryMenu() {
       { label: t([ 'pageBase', 'Invoices' ]), key: 'invoices', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/invoices`) },
       { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/clients`) },
       state.isGarageAdmin &&
-      { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules`) },
+      { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules/goPublic`) },
       state.isGarageAdmin &&
       { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/garageSetup/general`) },
       { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/users`) },
@@ -357,6 +357,11 @@ export function toAdmin() {
         hint = t([ 'pageBase', 'editClientHint' ])
         hintVideo = 'https://www.youtube.com/'
         break
+      case (contains(hash, 'clients/') && contains(hash, 'smsSettings')):
+        secondarySelected = 'clients'
+        hint = t([ 'pageBase', 'smsSettingsHint' ])
+        hintVideo = 'https://www.youtube.com/'
+        break
       case (contains(hash, 'clients/') && contains(hash, 'newContract')):
         secondarySelected = 'clients'
         hint = t([ 'pageBase', 'newContractHint' ])
@@ -404,6 +409,15 @@ export function toAdmin() {
         if (state.isGarageAdmin) {
           secondarySelected = 'modules'
           hint = t([ 'pageBase', 'goPublicHint' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'goInternal')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'modules'
+          hint = t([ 'pageBase', 'goInternalHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/dashboard') // not accessible for this user

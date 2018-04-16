@@ -21,7 +21,10 @@ export const ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY = 'ADMIN_FINANCE_SET_CSOB_PRIVAT
 export const ADMIN_FINANCE_SET_VAT = 'ADMIN_FINANCE_SET_VAT'
 export const ADMIN_FINANCE_SET_INVOICE_ROW = 'ADMIN_FINANCE_SET_INVOICE_ROW'
 export const ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW = 'ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW'
+export const ADMIN_FINANCE_SET_ACCOUNT_NUMBER = 'ADMIN_FINANCE_SET_ACCOUNT_NUMBER'
 export const ADMIN_FINANCE_SET_HIGHTLIGHT = 'ADMIN_FINANCE_SET_HIGHTLIGHT'
+export const ADMIN_FINANCE_SET_IBAN = 'ADMIN_FINANCE_SET_IBAN'
+export const ADMIN_FINANCE_SET_IBAN_PATTERN = 'ADMIN_FINANCE_SET_IBAN_PATTERN'
 
 
 export const setRents = actionFactory(ADMIN_FINANCE_SET_RENTS)
@@ -30,7 +33,11 @@ export const setCSOB = actionFactory(ADMIN_FINANCE_SET_CSOB)
 export const setAccountId = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_ID)
 export const setCsobMerchantId = actionFactory(ADMIN_FINANCE_SET_CSOB_MERCHANT_ID)
 export const setCsobPrivateKey = actionFactory(ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY)
+export const setAccountNumber = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_NUMBER)
 export const setHighlight = actionFactory(ADMIN_FINANCE_SET_HIGHTLIGHT)
+export const setIban = actionFactory(ADMIN_FINANCE_SET_IBAN)
+export const setIbanPattern = actionFactory(ADMIN_FINANCE_SET_IBAN_PATTERN)
+
 
 export function setVat(value) {
   return { type:  ADMIN_FINANCE_SET_VAT,
@@ -80,6 +87,9 @@ export function initFinance(id) {
       dispatch(setVat(response.data.garage.vat))
       dispatch(setInvoiceRow(response.data.garage.invoice_row))
       dispatch(setSimplyfiedInvoiceRow(response.data.garage.simplyfied_invoice_row))
+      dispatch(setAccountNumber(response.data.garage.account_number))
+      dispatch(setIban(response.data.garage.account.iban))
+      dispatch(setIbanPattern())
     }
 
     request(onSuccess, GET_GARAGE_PAYMENT_METHOD, { id: +id })
@@ -140,14 +150,15 @@ export function updateCsobAccount() {
       nav.to(`/${getState().pageBase.garage}/admin/finance`)
     }
 
-    request(onSuccess
-           , UPDATE_ACCOUNT
-           , { id:      +state.account_id,
-             account: { csob_merchant_id: state.csob_merchant_id,
-               csob_private_key: state.csob_private_key === 'stored' ? null : state.csob_private_key // update account, key unchanged => set to null
-             }
-           }
-           )
+    request(
+      onSuccess,
+      UPDATE_ACCOUNT,
+      { id:      +state.account_id,
+        account: {
+          csob_merchant_id: state.csob_merchant_id,
+          csob_private_key: state.csob_private_key === 'stored' ? null : state.csob_private_key // update account, key unchanged => set to null
+        }
+      })
   }
 }
 
@@ -158,14 +169,16 @@ export function submitGarage(id) {
       dispatch(response.data ? setSuccess(t([ 'finance', 'changeSuccess' ])) : setError(t([ 'finance', 'changeFailed' ])))
     }
 
-    request(onSuccess
-           , UPDATE_GARAGE
-           , { id:     +id,
-             garage: { vat:                    state.vat,
-               invoice_row:            state.invoiceRow,
-               simplyfied_invoice_row: state.simplyfiedInvoiceRow
-             }
-           }
-           )
+    request(onSuccess,
+      UPDATE_GARAGE,
+      { id:     +id,
+        garage: {
+          vat:                    state.vat,
+          invoice_row:            state.invoiceRow,
+          simplyfied_invoice_row: state.simplyfiedInvoiceRow,
+          account_number:         state.accountNumber,
+          iban:                   state.iban
+        }
+      })
   }
 }

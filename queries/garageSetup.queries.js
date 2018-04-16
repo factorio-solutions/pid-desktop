@@ -29,7 +29,6 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!) {
     company
     ic
     dic
-    iban
     img
     lpg
     length
@@ -136,8 +135,11 @@ export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
         lat
         lng
       }
-      places{
+      places {
         label
+        floor {
+          label
+        }
       }
     }
   }

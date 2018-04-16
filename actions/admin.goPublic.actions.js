@@ -19,18 +19,18 @@ export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE = 'ADMIN_GO_PUBLIC_SET_
 export const ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE = 'ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE'
 
 
-const patterinInputActionFactory = type => (value, valid) => ({ type, valid, value: parseInt(value, 10) })
+const patternInputActionFactory = type => (value, valid) => ({ type, valid, value: parseInt(value, 10) })
 
 export const setGarage = actionFactory(ADMIN_GO_PUBLIC_SET_GARAGE)
 export const togglePlace = actionFactory(ADMIN_GO_PUBLIC_SET_PLACES)
 export const setCurrencies = actionFactory(ADMIN_GO_PUBLIC_SET_CURRENCIES)
 export const setCurrencyId = actionFactory(ADMIN_GO_PUBLIC_SET_CURRENCY_ID)
-export const setFlatPrice = patterinInputActionFactory(ADMIN_GO_PUBLIC_SET_FLAT_PRICE)
-export const setExponential12hPrice = patterinInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_12H_PRICE)
-export const setExponentialDayPrice = patterinInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_DAY_PRICE)
-export const setExponentialWeekPrice = patterinInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE)
-export const setExponentialMonthPrice = patterinInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE)
-export const setWeekendPricing = patterinInputActionFactory(ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE)
+export const setFlatPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_FLAT_PRICE)
+export const setExponential12hPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_12H_PRICE)
+export const setExponentialDayPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_DAY_PRICE)
+export const setExponentialWeekPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE)
+export const setExponentialMonthPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE)
+export const setWeekendPricing = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE)
 
 
 export function initGoPublic() {
@@ -75,7 +75,7 @@ export function submitPricings() {
 
     Promise.all(promises).then(() => { // resolved
       dispatch(setCustomModal())
-      nav.to(`/${getState().pageBase.garage}/admin/modules`)
+      // nav.to(`/${getState().pageBase.garage}/admin/modules`)
     })
   }
 }

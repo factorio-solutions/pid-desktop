@@ -34,7 +34,6 @@ export const GARAGE_SETUP_SET_NAME = 'GARAGE_SETUP_SET_NAME'
 export const GARAGE_SETUP_SET_COMPANY_NAME = 'GARAGE_SETUP_SET_COMPANY_NAME'
 export const GARAGE_SETUP_SET_IC = 'GARAGE_SETUP_SET_IC'
 export const GARAGE_SETUP_SET_DIC = 'GARAGE_SETUP_SET_DIC'
-export const GARAGE_SETUP_SET_IBAN = 'GARAGE_SETUP_SET_IBAN'
 export const GARAGE_SETUP_SET_LINE_1 = 'GARAGE_SETUP_SET_LINE_1'
 export const GARAGE_SETUP_SET_LINE_2 = 'GARAGE_SETUP_SET_LINE_2'
 export const GARAGE_SETUP_SET_CITY = 'GARAGE_SETUP_SET_CITY'
@@ -53,8 +52,6 @@ export const GARAGE_SETUP_SET_GATES = 'GARAGE_SETUP_SET_GATES'
 export const GARAGE_SETUP_SET_ORDER = 'GARAGE_SETUP_SET_ORDER'
 export const GARAGE_SETUP_SET_BOOKING_PAGE = 'GARAGE_SETUP_SET_BOOKING_PAGE'
 export const GARAGE_SETUP_CLEAR_FORM = 'GARAGE_SETUP_CLEAR_FORM'
-export const GARAGE_SETUP_SET_IBAN_PATTERN = 'GARAGE_SETUP_SET_IBAN_PATTERN'
-
 
 export const setId = actionFactory(GARAGE_SETUP_SET_ID)
 export const setFloor = actionFactory(GARAGE_SETUP_SET_SELECTED_FLOOR)
@@ -68,7 +65,6 @@ export const setName = actionFactory(GARAGE_SETUP_SET_NAME)
 export const setCompanyName = actionFactory(GARAGE_SETUP_SET_COMPANY_NAME)
 export const setIc = actionFactory(GARAGE_SETUP_SET_IC)
 export const setDic = actionFactory(GARAGE_SETUP_SET_DIC)
-export const setIban = actionFactory(GARAGE_SETUP_SET_IBAN)
 export const setLine1 = actionFactory(GARAGE_SETUP_SET_LINE_1)
 export const setLine2 = actionFactory(GARAGE_SETUP_SET_LINE_2)
 export const setCity = actionFactory(GARAGE_SETUP_SET_CITY)
@@ -87,7 +83,6 @@ export const setGates = actionFactory(GARAGE_SETUP_SET_GATES)
 export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
 export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
-export const setIbanPattern = actionFactory(GARAGE_SETUP_SET_IBAN_PATTERN)
 
 
 export function toggleHighlight() { return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
@@ -236,25 +231,6 @@ function unique(value, index, array) {
   return array.indexOf(value) === index
 }
 
-function scanPlaces(string) {
-  return string.split(',').reduce((arr, val) => {
-    if (val.indexOf('-') === -1) { // single value
-      arr.push(val.trim())
-    } else { // range
-      const range = val.split('-')
-      const from = parseInt(range[0], 10)
-      const to = parseInt(range[1], 10)
-
-      if (from < to) {
-        for (let i = from; i <= to; i++) { arr.push(i) }
-      } else {
-        for (let i = to; i <= from; i++) { arr.push(i) }
-      }
-    }
-    return arr
-  }, []).filter(unique).filter(value => !value.isNaN()) // only unique not NaN numbers
-}
-
 export function scanSVG(fileContent, index) {
   return dispatch => {
     const places = []
@@ -345,7 +321,6 @@ export function intiEditGarageGeneral(id) {
       dispatch(setCompanyName(response.data.garage.company))
       dispatch(setIc(response.data.garage.ic))
       dispatch(setDic(response.data.garage.dic))
-      dispatch(setIban(response.data.garage.iban))
       dispatch(setLPG(response.data.garage.lpg))
       dispatch(setLine1(response.data.garage.address.line_1))
       dispatch(setLine2(response.data.garage.address.line_2))
@@ -356,7 +331,6 @@ export function intiEditGarageGeneral(id) {
       dispatch(setLat(response.data.garage.address.lat))
       dispatch(setLng(response.data.garage.address.lng))
 
-      dispatch(setIbanPattern())
       dispatch(setFetching(false))
     }
 
@@ -393,10 +367,10 @@ export function intiEditGarageGates(id) {
 
       dispatch(setFloors(response.data.garage.floors))
       getState().garageSetup.floors.forEach((floor, index) => { dispatch(scanSVG(floor.scheme, index)) })
-      response.data.garage.gates.forEach(gate => {
-        gate.places = gate.places.reduce((arr, place) => [ ...arr, place.label ], []).join(', ')
-      })
-      dispatch(setGates(response.data.garage.gates))
+      dispatch(setGates(response.data.garage.gates.map(gate => ({
+        ...gate,
+        places: gate.places.map(place => `${place.floor.label}/${place.label}`).join(', ')
+      }))))
 
       dispatch(setFetching(false))
     }
@@ -448,7 +422,6 @@ export function updateGarageGeneral(id, backUrl) {
         company:      state.company,
         ic:           state.ic,
         dic:          state.dic,
-        iban:         state.iban,
         lpg:          state.lpg,
         img:          state.img === defaultImage ? null : state.img,
         pid_tarif_id: state.tarif_id,
@@ -551,7 +524,6 @@ export function submitGarage() {
                company:      state.company,
                ic:           state.ic,
                dic:          state.dic,
-               iban:         state.iban,
                lpg:          state.lpg,
                img:          state.img === defaultImage ? null : state.img,
                floors:       newFloors,
@@ -580,7 +552,6 @@ export function submitGarage() {
                  company:      state.company,
                  ic:           state.ic,
                  dic:          state.dic,
-                 iban:         state.iban,
                  lpg:          state.lpg,
                  img:          state.img === defaultImage ? null : state.img,
                  floors:       newFloors,
@@ -662,30 +633,49 @@ function removeKeys(object, keys) {
                .reduce((newObj, key) => ({ ...newObj, [key]: object[key] }), {})
 }
 
-function gatesForRequest(state) {
-  const garagePlaces = state.floors.reduce((arr, floor) => {
-    return arr.concat(floor.places.map(place => { return place.label }))
-  }, []).filter(unique).sort()
 
+function gatesForRequest(state) {
   return state.gates.map(gate => {
-    const newGate = Object.assign({}, gate)
-    newGate.address.city = state.city
-    newGate.address.postal_code = state.postal_code
-    if (state.state !== '') newGate.address.state = state.state
-    if (state.line_2 !== '')newGate.address.line_2 = state.line_2
-    newGate.address.country = state.country
-    newGate.address.lng = parseFloat(newGate.address.lng)
-    newGate.address.lat = parseFloat(newGate.address.lat)
-    const places = scanPlaces(newGate.places)
-    newGate.places = garagePlaces.filter(place => {
-      return places.find(label => {
-        if (typeof label === 'string') {
-          return place === label
-        } else {
-          return label === parseInt(place.replace(/^\D+/g, ''), 10)
-        }
-      }) !== undefined
-    })
-    return newGate
+    const { places, ...gateWithoutPlaces } = gate
+    const floors = gate.places
+      .split(',')
+      .filter(string => string.includes('/')) // remove labels without "/" of a bat
+      .map(floorPlace => ({ // find place and floor labels
+        floor: floorPlace.split('/')[0].trim(),
+        place: floorPlace.split('/')[1].trim()
+      }))
+      .filter(o => { // find places where floor exists and place exists
+        const floor = state.floors.find(fl => fl.label === o.floor)
+        return floor && !!floor.places.find(place => place.label === o.place)
+      })
+      .reduce((acc, o) => { // create [{ label: floor, places: [palce, ...]}, ...] structure
+        const floor = acc.find(fl => fl.label === o.floor)
+        floor ? floor.places.push(o.place) : acc.push({ label: o.floor, places: [ o.place ] })
+        return acc
+      }, [])
+
+    return { ...gateWithoutPlaces,
+      address: {
+        line_1:      state.line_1,
+        city:        state.city,
+        postal_code: state.postal_code,
+        state:       state.state || undefined,
+        line_2:      state.line_2 || undefined,
+        country:     state.country,
+        lng:         parseFloat(gate.address.lng),
+        lat:         parseFloat(gate.address.lat)
+      },
+      floors
+    }
   })
+}
+
+export function addAllPlaces(index) {
+  return (dispatch, getState) => {
+    const allPlaces = getState().garageSetup.floors
+      .reduce((acc, floor) => [ ...acc, ...floor.places.map(place => `${floor.label}/${place.label}`) ], [])
+      .join(', ')
+
+    dispatch(changeGatePlaces(allPlaces, index))
+  }
 }

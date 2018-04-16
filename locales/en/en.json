@@ -47,7 +47,9 @@
 		"minimumLength": "Minimum length is",
 		"noMatching": "Password does not match",
 		"userNotCreated": "User not created, may already exist.",
-		"loading": "Loading"
+		"loading": "Loading",
+		"termsOfService": "Terms of Service",
+		"acceptTerms": "Accepting"
 	},
 	"pageBase": {
 		"noFileSelected": "No file selected",
@@ -185,6 +187,7 @@
 		"analyticsgatesHint": "TODO: gates Hint",
 		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
 		"pidAdmin": "PID admin",
+		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server",
 		"bulkRemovalHint": "Here you can remove more of your reservations at once."
 	},
 	"newReservation": {
@@ -220,9 +223,9 @@
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
 		"newHost": "New regular guest",
-		"hostsName": "Name of regular host ",
-		"hostsPhone": "Phone of regular host",
-		"hostsEmail": "Email of regular host",
+		"hostsName": "Name of regular guest",
+		"hostsPhone": "Phone of regular guest",
+		"hostsEmail": "Email of regular guest",
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
 		"visitorsEmail": "Visitors email",
@@ -233,7 +236,12 @@
 		"onetimeVisit": "Onetime visitor",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
-		"languageSelector": "Choose communication language"
+		"languageSelector": "Choose communication language",
+		"selectTemplate": "Select template",
+		"sendSms": "Send notification about reservation via SMS",
+		"smsText": "SMS text",
+		"character": "characters",
+		"removeDiacritics": "remove diacritics"
 	},
 	"clients": {
 		"name": "name",
@@ -415,7 +423,7 @@
 	},
 	"newGarage": {
 		"garage": "Garage",
-		"company": "Company",
+		"company": "Company name",
 		"placeholderCompany": "MR.PARKIT s.r.o.",
 		"invalidCompany": "Invalid company name",
 		"places": "Spots",
@@ -524,7 +532,8 @@
 		"invalidPasswordPhone": "Invalid password",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Gate has password. Change it by fill in a new password",
-		"passwordWasNotSet": "Password was not set!"
+		"passwordWasNotSet": "Password was not set!",
+		"addAllPalces": "Add all palces"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -538,7 +547,18 @@
 		"invalidDIC": "invalid VAT no.",
 		"IBAN": "IBAN *",
 		"invalidIBAN": "Invalid IBAN",
-		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399"
+		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5399",
+		"SmsApiToken": "SMS API Token",
+		"invalidSmsApiToken": "invalid token",
+		"SmsApiTokenPlaceholder": "z3iVNCixUh66qhkRtQK470ixzJoLjvQTj1Vp60Vx",
+		"newTemplateName": "Template name",
+		"invalidNewTemplateName": "Invalid template name",
+		"newTemplateText": "Template text",
+		"selectTemplate": "Select template",
+		"edit": "Client",
+		"smsSettings": "SMS module",
+		"activate": "activate",
+		"deactivate": "deactivate"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -972,7 +992,11 @@
 		"invalidRow": "Invalid number",
 		"changeSuccess": "Values changed sucessfully.",
 		"changeFailed": "An error occurred. Values were not changed.",
-		"uploadKey": "Upload RSA key"
+		"uploadKey": "Upload RSA key",
+		"accountNumber": "Account number",
+		"invalidAccountNumber": "Invalid account number",
+		"paymentGates": "Payment gates",
+		"rents": "Rents"
 	},
 	"analytics": {
 		"week": "week",
@@ -1262,6 +1286,14 @@
 			"place": "Place:",
 			"from": "From:",
 			"to": "To:"
+		}
+	},
+	"railsSMSs": {
+		"reservation_sms": {
+			"new_reservation": "There has been a new reservation created for you",
+			"from": "Begins at:",
+			"to": "Ends at:",
+			"garage": "Garage:"
 		}
 	},
 	"pidAdmin": {

@@ -136,7 +136,7 @@ export default class Dropdown extends Component {
     }
 
     return (
-      <div>
+      <div className={styles.dropdownContainter}>
         <button
           type="button"
           className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted} ${!editable && styles.dimmer}`}
