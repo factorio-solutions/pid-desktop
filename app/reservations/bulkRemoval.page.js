@@ -4,7 +4,7 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import PageBase           from '../_shared/containers/pageBase/PageBase'
-import Checkbox           from '../_shared/components/checkbox/checkbox'
+import Checkbox           from '../_shared/components/checkbox/Checkbox'
 import Dropdown           from '../_shared/components/dropdown/Dropdown'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
@@ -45,35 +45,25 @@ class BulkRemovalReservationPage extends Component {
     const startsAtTime = moment(reservation.begins_at).format('HH:mm')
     const endsAtDate = moment(reservation.ends_at).format(MOMENT_DATE_FORMAT)
     const endsAtTime = moment(reservation.ends_at).format('HH:mm')
-    const onChecked = () => actions.setReservationToBeRemove(reservation.id)
+    const onChecked = () => actions.toggleReservation(reservation.id)
+
     return (
-      <Checkbox
-        checked={state.toBeRemoved.includes(reservation.id)}
-        onChange={onChecked}
-      > <b>{startsAtDate}</b> {startsAtTime} - <b>{endsAtDate}</b> {endsAtTime}
+      <Checkbox checked={state.toBeRemoved.includes(reservation.id)} onChange={onChecked}>
+        <b>{startsAtDate}</b> {startsAtTime} - <b>{endsAtDate}</b> {endsAtTime}
       </Checkbox>
     )
   }
 
   formatClient = client => {
     const { actions, state } = this.props
-    const onChange = event => {
-      if (event.target.checked) {
-        actions.setClientsReservationsToBeRemove(client)
-      } else {
-        actions.unsetClientsReservationsToBeRemove(client)
-      }
-    }
-
+    const onChange = checked => actions.setReservationsInClient(checked, client)
     const isChecked = !!client.reservations.find(res => state.toBeRemoved.includes(res.id))
 
     return (
       <div>
         <div className={styles.h3BorderBottom}>
-          <Checkbox
-            checked={isChecked}
-            onChange={onChange}
-          > <h3> {client.name} </h3>
+          <Checkbox checked={isChecked} onChange={onChange}>
+            <h3> {client.name} </h3>
           </Checkbox>
         </div>
         {client.reservations.map(this.formatReservation)}
@@ -83,26 +73,14 @@ class BulkRemovalReservationPage extends Component {
 
   formatGarage = garage => {
     const { actions, state } = this.props
-    const onChange = event => {
-      if (event.target.checked) {
-        garage.clients.forEach(client => {
-          actions.setClientsReservationsToBeRemove(client)
-        })
-      } else {
-        garage.clients.forEach(client => {
-          actions.unsetClientsReservationsToBeRemove(client)
-        })
-      }
-    }
-
+    const onChange = checked => garage.clients.forEach(client => actions.setReservationsInClient(checked, client))
     const isChecked = !!garage.clients.find(cli => cli.reservations.find(res => state.toBeRemoved.includes(res.id)))
+
     return (
       <div>
         <div className={styles.h2BorderBottom}>
-          <Checkbox
-            checked={isChecked}
-            onChange={onChange}
-          > <h2> {garage.name} </h2>
+          <Checkbox checked={isChecked} onChange={onChange}>
+            <h2> {garage.name} </h2>
           </Checkbox>
         </div>
         {garage.clients.map(this.formatClient)}
@@ -148,18 +126,16 @@ class BulkRemovalReservationPage extends Component {
               onClick={actions.loadReservations}
             />
           </div>
-          {allGarages && !allGarages.noData &&
-            <div className={styles.centerDiv}>
-              <div className={styles.padding}>
-                {allGarages.map(this.formatGarage)}
-              </div>
-            </div>
-          }
-          {allGarages && allGarages.noData &&
+
+          {allGarages && (allGarages.noData ?
             <div className={styles.centerDiv}>
               <h1>{t([ 'bulkCancellation', 'noReservations' ])}</h1>
-            </div>
+            </div> :
+            <div className={`${styles.centerDiv} ${styles.padding}`}>
+              {allGarages.map(this.formatGarage)}
+            </div>)
           }
+
           <div className={styles.centerDiv}>
             <CallToActionButton
               label={t([ 'bulkCancellation', 'cancelReservations' ])}
