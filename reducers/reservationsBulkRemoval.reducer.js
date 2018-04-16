@@ -2,6 +2,7 @@ import moment from 'moment'
 
 import {
   SET_BULK_REMOVAL_GARAGES,
+  TOGGLE_RESERVATION_IN_TO_BE_REMOVED,
   SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED,
   SET_BULK_REMOVAL_AVAILABLE_USERS,
   SET_BULK_REMOVAL_USER_ID,
@@ -19,7 +20,7 @@ const defaultState = {
   to:             ceilTime(moment()).add(30, 'm').format(MOMENT_DATETIME_FORMAT),
   toBeRemoved:    [],
   loading:        false,
-  userId:         undefined
+  userId:         -1
 }
 
 
@@ -31,6 +32,15 @@ export default function reservationBulkRemoval(state = defaultState, action) {
         ...state,
         garages: action.value
       }
+
+    case TOGGLE_RESERVATION_IN_TO_BE_REMOVED: {
+      const index = state.toBeRemoved.indexOf(action.value)
+      return { ...state,
+        toBeRemoved: index > -1 ?
+            [ ...state.toBeRemoved.slice(0, index), ...state.toBeRemoved.slice(index + 1) ] :
+            [ ...state.toBeRemoved, action.value ]
+      }
+    }
 
     case SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED:
       return {
