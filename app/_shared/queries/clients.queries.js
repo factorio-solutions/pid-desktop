@@ -24,6 +24,8 @@ export const GET_CLIENTS = `{
     }
     contact_persons{
       full_name
+      email
+      phone
     }
   }
 }
