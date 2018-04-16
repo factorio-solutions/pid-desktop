@@ -871,7 +871,8 @@
 		"csobMerchantID": "ČSOB merchant ID",
 		"invalidMerchantId": "Merchant ID invalid",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Select private key:"
+		"SelectPrivateKey": "Select private key:",
+		"invalidKeyPair": "Merchant id or key is invalid"
 	},
 	"invoices": {
 		"invoiceDate": "Issued",
