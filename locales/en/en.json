@@ -634,7 +634,8 @@
 		"editUser": "Edit my user profile",
 		"email": "Email:",
 		"createdAt": "Profile created:",
-		"cars": "Cars"
+		"cars": "Cars",
+		"showPublicGarages": "Show me public garages"
 	},
 	"users": {
 		"username": "username",
