@@ -4,13 +4,14 @@ import { bindActionCreators }          from 'redux'
 import update                          from 'immutability-helper'
 import moment                          from 'moment'
 
-import PageBase            from '../_shared/containers/pageBase/PageBase'
-import Localization        from '../_shared/components/localization/Localization'
-import PatternInput        from '../_shared/components/input/PatternInput'
-import Form                from '../_shared/components/form/Form'
-import Table               from '../_shared/components/table/Table'
-import RoundButton         from '../_shared/components/buttons/RoundButton'
-import CallToActionButton  from '../_shared/components/buttons/CallToActionButton'
+import PageBase           from '../_shared/containers/pageBase/PageBase'
+import Localization       from '../_shared/components/localization/Localization'
+import PatternInput       from '../_shared/components/input/PatternInput'
+import Form               from '../_shared/components/form/Form'
+import Table              from '../_shared/components/table/Table'
+import RoundButton        from '../_shared/components/buttons/RoundButton'
+import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
+import Checkbox           from '../_shared/components/checkbox/Checkbox'
 
 import * as nav            from '../_shared/helpers/navigation'
 import { t }               from '../_shared/modules/localization/localization'
@@ -48,12 +49,12 @@ class SettingsPage extends Component {
                     { key: 'color', title: t([ 'cars', 'color' ]), comparator: 'string' }
     ]
 
-    const addCar = () => { nav.to('/profile/cars/newCar') }
+    const addCar = () => nav.to('/profile/cars/newCar')
 
     const addSpoiler = car => {
-      const toCar = () => { nav.to(`/profile/cars/${car.id}/users`) }
-      const toEditCar = () => { nav.to(`/profile/cars/${car.id}/edit`) }
-      const destroyCar = () => { actions.destroyCar(car.id) }
+      const toCar = () => nav.to(`/profile/cars/${car.id}/users`)
+      const toEditCar = () => nav.to(`/profile/cars/${car.id}/edit`)
+      const destroyCar = () => actions.destroyCar(car.id)
 
       const spoiler = (<span className={styles.floatRight}>
         <RoundButton content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={toEditCar} type="action" state={car.admin ? '' : 'disabled'} />
@@ -65,7 +66,7 @@ class SettingsPage extends Component {
 
     const emailSentModal = (<div style={{ textAlign: 'center' }}>
       { t([ 'profile', 'emailSent' ]) } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={() => { actions.setCustomModal() }} type="confirm" />
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setCustomModal} type="confirm" />
     </div>)
 
     return (
@@ -102,7 +103,13 @@ class SettingsPage extends Component {
           </Form>
 
           <div>
-            <CallToActionButton label={t([ 'profile', 'resetPassword' ])} onClick={() => { actions.changePassword(emailSentModal) }} />
+            <CallToActionButton label={t([ 'profile', 'resetPassword' ])} onClick={() => actions.changePassword(emailSentModal)} />
+          </div>
+
+          <div>
+            <Checkbox checked={pageBase.current_user && !pageBase.current_user.hide_public_garages} onChange={actions.toggleShowPublicGarages}>
+              {<span>{t([ 'profile', 'showPublicGarages' ])}</span>}
+            </Checkbox>
           </div>
 
           <div>

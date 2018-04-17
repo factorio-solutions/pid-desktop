@@ -3,7 +3,7 @@ import * as nav     from '../helpers/navigation'
 
 import { GET_CURRENT_USER, UPDATE_CURRENT_USER } from '../queries/pageBase.queries.js'
 import { GET_CARS, DESTROY_CAR } from '../queries/profile.queries'
-import { setCurrentUser, setCustomModal } from './pageBase.actions'
+import { setCurrentUser, setCustomModal, fetchCurrentUser } from './pageBase.actions'
 import { resetPassword }  from './resetPassword.actions'
 
 
@@ -36,7 +36,7 @@ export function toggleHighlight() {
 }
 
 export function initCars(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onCarsSuccess = response => {
       dispatch(setCars(response.data.user_cars.map(userCar => { return { ...userCar.car, admin: userCar.admin } })))
     }
@@ -46,11 +46,10 @@ export function initCars(id) {
 }
 
 export function initUser() {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(initCars(response.data.current_user.id))
       dispatch(setName(response.data.current_user.full_name, true))
-      // dispatch(setEmail(response.data.current_user.email, true))
       dispatch(setPhone(response.data.current_user.phone, true))
     }
 
@@ -80,6 +79,22 @@ export function submitUser() {
   }
 }
 
+export function toggleShowPublicGarages() {
+  return (dispatch, getState) => {
+    const currentUser = getState().pageBase.current_user
+    const onSuccess = () => dispatch(fetchCurrentUser())
+
+    request(onSuccess,
+      UPDATE_CURRENT_USER,
+      { id:   currentUser.id,
+        user: {
+          hide_public_garages: !currentUser.hide_public_garages
+        }
+      }
+    )
+  }
+}
+
 export function changeHints() {
   return (dispatch, getState) => {
     const onSuccess = response => {
@@ -92,7 +107,7 @@ export function changeHints() {
 }
 
 export function destroyCar(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(initCars())
     }
