@@ -240,7 +240,8 @@
 		"sendSms": "Send notification about reservation via SMS",
 		"smsText": "SMS text",
 		"character": "characters",
-		"removeDiacritics": "remove diacritics"
+		"removeDiacritics": "remove diacritics",
+		"perHour": " / hour"
 	},
 	"clients": {
 		"name": "name",

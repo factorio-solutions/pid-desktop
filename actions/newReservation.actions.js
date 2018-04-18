@@ -481,11 +481,13 @@ export function downloadGarage(id) {
                 <span>
                   <b>{t([ 'newReservation', 'price' ])}: </b>
                   { pricing.flat_price ? pricePerHour(pricing.flat_price) :
-                                  duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
-                                  duration < 24 ? pricePerHour(pricing.exponential_day_price) :
-                                  duration < 168 ? pricePerHour(pricing.exponential_week_price) :
-                                  pricePerHour(pricing.exponential_month_price)
-                                } {symbol}
+                    duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
+                    duration < 24 ? pricePerHour(pricing.exponential_day_price) :
+                    duration < 168 ? pricePerHour(pricing.exponential_week_price) :
+                    pricePerHour(pricing.exponential_month_price)
+                  }
+                  {symbol}
+                  {t([ 'newReservation', 'perHour' ])}
                 </span>
               </div>
               {pricing.weekend_price && <div>
