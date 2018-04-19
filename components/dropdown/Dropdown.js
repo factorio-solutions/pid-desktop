@@ -104,7 +104,7 @@ export default class Dropdown extends Component {
               .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
               .filter(o => o !== false)
               .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
-              .map((length, index, arr) => item.label.substring(arr[index - 1] || 0, length))
+              .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
               .map((part, index) => index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>)
             }
           </label>
