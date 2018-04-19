@@ -187,6 +187,7 @@
 		"analyticsgatesHint": "PL: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.",
 		"pidAdmin": "PID admin",
+		"bulkRemovalHint": "PL: pageBase.bulkRemovalHint",
 		"smsSettingsHint": "PL: pageBase.smsSettingsHint"
 	},
 	"newReservation": {
@@ -240,7 +241,8 @@
 		"sendSms": "Wysłać sms z potwierdzeniem rezerwacji",
 		"smsText": "Tekst SMS",
 		"character": "znaków",
-		"removeDiacritics": "usunąć polskie znaki"
+		"removeDiacritics": "usunąć polskie znaki",
+		"perHour": "PL: newReservation.perHour"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -531,7 +533,10 @@
 		"invalidPasswordPhone": "Niepoprawne hasło",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Brama posiada hasło. Możesz je zmienić podając nowe hasło.",
-		"passwordWasNotSet": "Hasło nie zostało ustawione!"
+		"passwordWasNotSet": "Hasło nie zostało ustawione!",
+		"addAllPalces": "PL: newGarage.addAllPalces",
+		"notAssignNumber": "PL: newGarage.notAssignNumber",
+		"selcetNumber": "PL: newGarage.selcetNumber"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
@@ -633,7 +638,8 @@
 		"editUser": "Edytować profil użytkownika",
 		"email": "E-mail:",
 		"createdAt": "Profil założony:",
-		"cars": "Auta"
+		"cars": "Auta",
+		"showPublicGarages": "PL: profile.showPublicGarages"
 	},
 	"users": {
 		"username": "Nazwa użytkownika",
@@ -870,7 +876,8 @@
 		"csobMerchantID": "ID firmowe ČSOB",
 		"invalidMerchantId": "Niepoprawne ID firmowe",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Wybierz klucz osobisty:"
+		"SelectPrivateKey": "Wybierz klucz osobisty:",
+		"invalidKeyPair": "PL: newAccount.invalidKeyPair"
 	},
 	"invoices": {
 		"invoiceDate": "data wystawienia faktury",
@@ -992,7 +999,9 @@
 		"changeFailed": "Wystąpił błąd, wartości nie zostały zmienione.",
 		"uploadKey": "Wgrać klucz RSA",
 		"accountNumber": "Numer konta",
-		"invalidAccountNumber": "Niepoprawny numer konta"
+		"invalidAccountNumber": "Niepoprawny numer konta",
+		"paymentGates": "PL: finance.paymentGates",
+		"rents": "Wynajmy"
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -1088,8 +1097,14 @@
 			"many": "rezerwacjach",
 			"other": "rezerwacjach"
 		},
-		"on": "Dnia",
 		"every": "raz na"
+	},
+	"bulkCancellation": {
+		"findReservations": "PL: bulkCancellation.findReservations",
+		"bulkCancellation": "PL: bulkCancellation.bulkCancellation",
+		"cancelReservations": "PL: bulkCancellation.cancelReservations",
+		"allUsers": "PL: bulkCancellation.allUsers",
+		"noReservations": "PL: bulkCancellation.noReservations"
 	},
 	"mobileApp": {
 		"page": {
@@ -1229,7 +1244,10 @@
 			"receptionist": "recepcja",
 			"security": "ochrona",
 			"invited_to": "zaprosił/a Cię do klienta",
+			"invited_to_garage": "zaprosił/a Cię do garażu",
+			"invited_to_car": "zaprosił/a Cię do auta",
 			"as": "jako",
+			"to_sign_up": "Zarejestruj się!",
 			"issue": "W przypadku jakichkolwiek problemów",
 			"let_us_know": "skontaktuj się z nami mailowo,",
 			"we_will_help": "a my pomożemy Ci aktywować konto."
@@ -1262,6 +1280,8 @@
 			"receptionist": "recepcja",
 			"security": "ochrona",
 			"invited_to": "zaprosił Cię do klienta",
+			"invited_to_garage": "zaprosił/a Cię do garażu",
+			"invited_to_car": "zaprosił/a Cię do auta",
 			"as": "jako",
 			"to_sign_up": "Zarejestruj się!",
 			"to_pid": "Do Park-it-direct!",

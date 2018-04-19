@@ -427,6 +427,7 @@ pageBase.analyticspaymentsHint,TODO: payments Hint,,,
 pageBase.analyticsgatesHint,TODO: gates Hint,,,
 pageBase.flexiplaceHint,"I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.","Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.","Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.","Wenn Sie Flexiplatz für öffentlich angebotene Parkplätze einstellen möchten, müssen diese alle Plätze gleichen Preis haben. Dazu dient dieses Formular."
 pageBase.pidAdmin,PID admin,PID admin,PID admin,PID admin
+pageBase.bulkRemovalHint,Here you can remove more of your reservations at once.,Zde můžete smazat stornovat více rezervaci najednou.,,
 pageBase.smsSettingsHint,"On this page you can activate and set sms service. To customize texts you can use variables explained here:
 
 ""{{ garage }}"" = garage name
@@ -503,6 +504,7 @@ newReservation.sendSms,Send notification about reservation via SMS,Odeslat upozo
 newReservation.smsText,SMS text,text SMS,Tekst SMS,Text der Nachricht
 newReservation.character,characters,znaků,znaków,Zeichen
 newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,usunąć polskie znaki,Diakritika entfernen
+newReservation.perHour, / hour, / hod.,,/ Std.
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -773,8 +775,11 @@ newGarage.invalidPasswordPhone,Invalid password,Nesprávné heslo,Niepoprawne ha
 newGarage.placeholderGatePassword,123456,123456,123456,123456
 newGarage.passwordWasSet,Gate has password. Change it by fill in a new password,Brána je zaheslovaná. Změnu provedete zadáním nového hesla.,Brama posiada hasło. Możesz je zmienić podając nowe hasło.,Tor ist verschlüsselt. Ändern nach Kennwort Eingabe möglich.
 newGarage.passwordWasNotSet,Password was not set!,Heslo není nastaveno!,Hasło nie zostało ustawione!,Kennwort ist nicht eingestellt!
+newGarage.addAllPalces,Add all places,Přidat všechna místa,,Alle Stellplätze hinzufügen
+newGarage.notAssignNumber,Number not assigned,Číslo nepřiřazeno,,Keine Nummer hinzugefügt
+newGarage.selcetNumber,Number to open gate,Číslo pro otevření brány,,Tel. Nummer für das öffnen
 newClient.name,Client name,Jméno klienta,Nazwisko klienta,Name des Kunden
-newClient.placeholder,Company client,Klient společnosti,Klient firmy,Unternehmenskunde
+newClient.placeholder,Company ltd.,Společnost s.r.o.,Klient firmy,Unternehmen GmbH
 newClient.invalidName,Invalid client name,Neplatné jméno klienta,Niepoprawne nazwisko klienta,Kundennamen ist ungültig
 newClient.ICplaceholder,12345678,12345678,12345678,12345678
 newClient.DICplaceholder,CZ12345678,CZ12345678,CZ12345678,DE12345678
@@ -794,8 +799,8 @@ newClient.newTemplateText,Template text,Obsah šablony,Treść szablonu,Schablon
 newClient.selectTemplate,Select template,Zvolte šablonu,Wybierz szablon,Wählen Sie eine Schablone
 newClient.edit,Client,Klient,Klient,Kunde
 newClient.smsSettings,SMS module,SMS modul,Moduł SMS,SMS Modul
-newClient.activate,activate,aktivovat,Aktywuj,
-newClient.deactivate,deactivate,deaktivovat,Dezaktywuj,
+newClient.activate,activate,aktivovat,Aktywuj,Aktivieren
+newClient.deactivate,deactivate,deaktivovat,Dezaktywuj,Deaktivieren
 inviteUser.selectUser,User email(s),Email(y) uživatele,E-mail(e) użytkownika,E-Mail-Adresse(n) des Benutzers
 inviteUser.connectionExists,This user is already in this client account.,Tento uživatel již je v tomto klientském účtu.,Użytkownik znajduje się już na tym koncie klienta.,Dieser Benutzer ist in diesem Kundenkonto bereits vorhanden.
 inviteUser.sendingInvitation,"Loading, inviting user","Načítám, zvu uživatele","Przetwarzam, zapraszam użytkownika.","Ladevorgang läuft, Benutzer wird eingeladen."
@@ -867,6 +872,7 @@ profile.editUser,Edit my user profile,Upravit svůj uživatelský profil,Edytowa
 profile.email,Email:,Email:,E-mail:,E-Mail-Adresse:
 profile.createdAt,Profile created:,Profil vytvořen:,Profil założony:,Profilerstellungsdatum:
 profile.cars,Cars,Auta,Auta,Fahrzeuge
+profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,,Öffentlich angebotene Garagen anzeigen
 users.username,username,uživatelské jméno,Nazwa użytkownika,Benutzername
 users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
@@ -1076,6 +1082,7 @@ newAccount.csobMerchantID,ČSOB merchant ID,Id obchodníka ČSOB,ID firmowe ČSO
 newAccount.invalidMerchantId,Merchant ID invalid,Id obchodníka je neplatné,Niepoprawne ID firmowe,Die Händler-ID ist ungültig.
 newAccount.csobMerchantIdplaceholder,A2411K3nLj,A2411K3nLj,A2411K3nLj,A2411K3nLj
 newAccount.SelectPrivateKey,Select private key:,Zvolte soukromý klíč:,Wybierz klucz osobisty:,Privaten Schlüssel auswählen:
+newAccount.invalidKeyPair,Merchant id or key is invalid,Id obchodníka nebo soukromý klíč jsou špatně,,
 invoices.invoiceDate,Issued,datum faktury,data wystawienia faktury,Rechnungsdatum
 invoices.dueDate,Due date,datum splatnosti,termin spłaty,Fälligkeitsdatum
 invoices.account,Account,účet,konto,Konto
@@ -1084,7 +1091,7 @@ invoices.type,Type,druh,Rodzaj,Art
 invoices.invoiceText,Invoice text,Text faktury,Przedmiot faktury,Rechnungstext
 invoices.paid,Paid,uhrazeno,Zapłacone,Bezahlt
 invoices.ammount,Amount,částka,kwota,Betrag
-invoices.subject,Subject,předmět,temat,Gegenstand
+invoices.subject,Subject,Předmět,temat,Gegenstand
 invoices.pay,Pay,Platit,Zapłacić,Zahlen
 invoices.invoicePaid,Are you sure you want to mark this invoice as paid?,Opravdu chcete označit tuto fakturu za zaplacenou?,Czy naprawdę chcesz oznaczyć tę fakturę jako zapłaconą?,Möchten Sie diese Rechnung wirklich als „Beglichen“ markieren?
 invoices.initializingPayment,Initiating payment ...,Inicializuji platby ...,Inicjalizuję płatności...,Zahlung wird initialisiert …
@@ -1188,6 +1195,8 @@ finance.changeFailed,An error occurred. Values were not changed.,"Došlo k chyb�
 finance.uploadKey,Upload RSA key,Nahrát RSA klíč,Wgrać klucz RSA,RSA-Schlüssel hochladen
 finance.accountNumber,Account number,Číslo účtu,Numer konta,Kontonummer
 finance.invalidAccountNumber,Invalid account number,Nesprávné číslo účtu,Niepoprawny numer konta,Ungültige Kontonummer
+finance.paymentGates,Payment gates,Platební brány,,
+finance.rents,Rents,Nájmy,Wynajmy,Mietverhältnisse
 analytics.week,week,týden,tydzień,Woche
 analytics.month,month,měsíc,miesiąc,Monat
 analytics.turnover,turnover,obrat,obrót,Umsatz
@@ -1260,7 +1269,12 @@ recurringReservation.occurence.one,occurrence,výskytu,rezerwacji,Wiederholung
 recurringReservation.occurence.few,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.many,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.other,occurrences,výskytech,rezerwacjach,Wiederholungen
-recurringReservation.on,On,Dne,Dnia,Am
+bulkCancellation.findReservations,On,Dne,Dnia,Am
+bulkCancellation.bulkCancellation,Bulk cancellation,Hromadné rušení,,
+bulkCancellation.findReservations,Find reservations,Najít rezervace,,
+bulkCancellation.cancelReservations,Cancel reservations,Zrušit vybrané rezervace,,
+bulkCancellation.allUsers,All users,Všichni uživatelé,,
+bulkCancellation.noReservations,No Reservations,Žádné rezervace,,
 recurringReservation.every,every,jednou za,raz na,Einmal pro
 mobileApp.page.userInfoUnavailable,User info unavailable.,Informace o uživateli jsou nedostupné,Informacje o użytkowniku są niedostępne.,Informationen über diesen Benutzer sind nicht verfügbar.
 mobileApp.page.logOut,log out,odhlásit,Wylogować,abmelden
@@ -1374,7 +1388,10 @@ railsEmails.invitation_mail.contact_person,contact person,kontaktní osoba,osoba
 railsEmails.invitation_mail.receptionist,receptionist,recepční,recepcja,Rezeptionist/in
 railsEmails.invitation_mail.security,security,ochranka,ochrona,Wachdienst
 railsEmails.invitation_mail.invited_to,just invited you to join a client account,Vás pozval do klienta,zaprosił/a Cię do klienta,Hat Sie zum folgenden Kunden eingeladen
+railsEmails.invitation_mail.invited_to_garage,just invited you to join garage,Vás pozval do garáže,zaprosił/a Cię do garażu,Hat Sie in folgende Garage eingeladen
+railsEmails.invitation_mail.invited_to_car,just invited you to join car,Vás pozval do auta,zaprosił/a Cię do auta,Hat Sie in folgendes Auto eingeladen
 railsEmails.invitation_mail.as,as,jako,jako,als
+railsEmails.invitation_mail.to_sign_up,Sign me up!,Registrovat se!,Zarejestruj się!,Registrieren!
 railsEmails.invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",W przypadku jakichkolwiek problemów,"Falls Sie Fragen oder Probleme hätten,"
 railsEmails.invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unser Kundenservice,"
 railsEmails.invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,a my pomożemy Ci aktywować konto.,und wir helfen Ihnen Ihr Konto aktivieren.
@@ -1403,6 +1420,8 @@ railsEmails.resend_invitation_mail.contact_person,contact person,kontaktní osob
 railsEmails.resend_invitation_mail.receptionist,receptionist,recepční,recepcja,Receptionist/in
 railsEmails.resend_invitation_mail.security,security,ostraha,ochrona,Wachdienst
 railsEmails.resend_invitation_mail.invited_to,invited you to join a client account,Vás pozval do klienta,zaprosił Cię do klienta,Hat Sie zum folgenden Kunden eingeladen
+railsEmails.resend_invitation_mail.invited_to_garage,just invited you to join garage,Vás pozval do garáže,zaprosił/a Cię do garażu,Hat Sie in folgende Garage eingeladen
+railsEmails.resend_invitation_mail.invited_to_car,just invited you to join car,Vás pozval do auta,zaprosił/a Cię do auta,Hat Sie in folgendes Auto eingeladen
 railsEmails.resend_invitation_mail.as,as,jako,jako,als
 railsEmails.resend_invitation_mail.to_sign_up,Sign me up!,Registrovat se!,Zarejestruj się!,Registrieren!
 railsEmails.resend_invitation_mail.to_pid,To Park-it-direct!,Do Park-it-direct!,Do Park-it-direct!,Bei Park-it-direct!
