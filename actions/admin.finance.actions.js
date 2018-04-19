@@ -15,6 +15,10 @@ import { UPDATE_GARAGE }                                                        
 export const ADMIN_FINANCE_SET_RENTS = 'ADMIN_FINANCE_SET_RENTS'
 export const ADMIN_FINANCE_SET_PAYPAL = 'ADMIN_FINANCE_SET_PAYPAL'
 export const ADMIN_FINANCE_SET_CSOB = 'ADMIN_FINANCE_SET_CSOB'
+export const ADMIN_FINANCE_SET_GP_WEBPAY = 'ADMIN_FINANCE_SET_GP_WEBPAY'
+export const ADMIN_FINANCE_SET_GP_WEBPAY_MERCHANT_ID = 'ADMIN_FINANCE_SET_GP_WEBPAY_MERCHANT_ID'
+export const ADMIN_FINANCE_SET_GP_WEBPAY_PASSWORD = 'ADMIN_FINANCE_SET_GP_WEBPAY_PASSWORD'
+export const ADMIN_FINANCE_SET_GP_WEBPAY_PRIVATE_KEY = 'ADMIN_FINANCE_SET_GP_WEBPAY_PRIVATE_KEY'
 export const ADMIN_FINANCE_SET_ACCOUNT_ID = 'ADMIN_FINANCE_SET_ACCOUNT_ID'
 export const ADMIN_FINANCE_SET_CSOB_MERCHANT_ID = 'ADMIN_FINANCE_SET_CSOB_MERCHANT_ID'
 export const ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY = 'ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY'
@@ -30,9 +34,13 @@ export const ADMIN_FINANCE_SET_IBAN_PATTERN = 'ADMIN_FINANCE_SET_IBAN_PATTERN'
 export const setRents = actionFactory(ADMIN_FINANCE_SET_RENTS)
 export const setPaypal = actionFactory(ADMIN_FINANCE_SET_PAYPAL)
 export const setCSOB = actionFactory(ADMIN_FINANCE_SET_CSOB)
+export const setGpWebpay = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY)
 export const setAccountId = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_ID)
 export const setCsobMerchantId = actionFactory(ADMIN_FINANCE_SET_CSOB_MERCHANT_ID)
 export const setCsobPrivateKey = actionFactory(ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY)
+export const setGpWebpayMerchantId = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY_MERCHANT_ID)
+export const setGpWebpayPassword = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY_PASSWORD)
+export const setGpWebpayPrivateKey = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY_PRIVATE_KEY)
 export const setAccountNumber = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_NUMBER)
 export const setHighlight = actionFactory(ADMIN_FINANCE_SET_HIGHTLIGHT)
 export const setIban = actionFactory(ADMIN_FINANCE_SET_IBAN)
@@ -80,8 +88,11 @@ export function initFinance(id) {
   return dispatch => {
     const onSuccess = response => {
       dispatch(setCSOB(response.data.garage.account.csob_merchant_id !== null))
+      dispatch(setGpWebpay(response.data.garage.account.gp_webpay_merchant_id !== null))
       dispatch(setCsobMerchantId(response.data.garage.account.csob_merchant_id || ''))
       dispatch(setCsobPrivateKey(response.data.garage.account.csob_private_key ? 'stored' : ''))
+      dispatch(setGpWebpayMerchantId(response.data.garage.account.gp_webpay_merchant_id || ''))
+      dispatch(setGpWebpayPrivateKey(response.data.garage.account.gp_webpay_private_key ? 'stored' : ''))
       dispatch(setPaypal(response.data.garage.account.paypal_email !== null))
       dispatch(setAccountId(response.data.garage.account.id))
       dispatch(setVat(response.data.garage.vat))
@@ -157,6 +168,26 @@ export function updateCsobAccount() {
         account: {
           csob_merchant_id: state.csob_merchant_id,
           csob_private_key: state.csob_private_key === 'stored' ? null : state.csob_private_key // update account, key unchanged => set to null
+        }
+      })
+  }
+}
+
+export function updateGpWebpayAccount() {
+  return (dispatch, getState) => {
+    const state = getState().adminFinance
+    const onSuccess = () => {
+      nav.to(`/${getState().pageBase.garage}/admin/finance`)
+    }
+
+    request(
+      onSuccess,
+      UPDATE_ACCOUNT,
+      { id:      +state.account_id,
+        account: {
+          gp_webpay_merchant_id: state.gp_webpay_merchant_id,
+          gp_webpay_private_key: state.gp_webpay_private_key === 'stored' ? null : state.gp_webpay_private_key, // update account, key unchanged => set to null
+          gp_webpay_password:    state.gp_webpay_password
         }
       })
   }
