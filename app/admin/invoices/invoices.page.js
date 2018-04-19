@@ -36,7 +36,7 @@ class InvoicesPage extends Component {
     const { state, pageBase, actions } = this.props
 
     const schema = [
-      { key: 'invoice_number', title: t([ 'invoices', 'invoiceNumber' ]), comparator: 'integer', representer: o => <b>{o}</b>, sort: 'desc' },
+      { key: 'invoice_number', title: t([ 'invoices', 'invoiceNumber' ]), comparator: 'number', representer: o => <b>{o}</b>, sort: 'desc' },
       { key: 'invoice_date', title: t([ 'invoices', 'invoiceDate' ]), comparator: 'date', representer: o => o ? moment(o).format('DD. MM. YYYY') : null },
       { key: 'due_date', title: t([ 'invoices', 'dueDate' ]), comparator: 'date', representer: o => o ? moment(o).format('DD. MM. YYYY') : null },
       { key: 'client_name', title: t([ 'invoices', 'client' ]), comparator: 'string', representer: o => <b>{o}</b> },
