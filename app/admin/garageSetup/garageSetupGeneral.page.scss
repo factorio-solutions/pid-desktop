@@ -213,3 +213,13 @@ h2 {
 .clickable {
   cursor: pointer;
 }
+
+.phoneNumberDropdown {
+  >label {
+    margin-top:    -8px;
+    margin-bottom: -5px;
+    float:         left;
+    color:         $gray;
+    font-size:     13px;
+  }
+}

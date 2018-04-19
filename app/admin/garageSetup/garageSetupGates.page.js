@@ -8,6 +8,7 @@ import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
+import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -93,6 +94,15 @@ class GarageSetupGatesPage extends Component {
       const removeGateRow = () => actions.removeGate(index)
       const addAllPlaces = () => actions.addAllPlaces(index)
       const addAllPlacesInlineMenu = <span className={styles.clickable} onClick={addAllPlaces}>{t([ 'newGarage', 'addAllPalces' ])}</span>
+      const availableNumbers = [
+        { id: null, number: t([ 'newGarage', 'notAssignNumber' ]), order: 1 },
+        ...state.registeredNumbers.filter(number => !state.gates.map(gate => gate.phone_number_id).includes(number.id) || gate.phone_number_id === number.id)
+      ]
+      const availableNumbersDropdown = number => ({
+        label:   number.number,
+        order:   number.order,
+        onClick: () => actions.changeGatePhoneNumberId(number.id, index)
+      })
 
       const getGateGPS = () => {
         const geocoder = new google.maps.Geocoder()
@@ -140,6 +150,15 @@ class GarageSetupGatesPage extends Component {
               pattern="\+?[\d,A-Z]{3,}"
             />
             {removeGateButton()}
+          </div>
+          <div className={styles.phoneNumberDropdown}>
+            <label>{t([ 'newGarage', 'selcetNumber' ])}</label>
+            <Dropdown
+              label={t([ 'newGarage', 'selcetNumber' ])}
+              content={availableNumbers.map(availableNumbersDropdown)}
+              selected={availableNumbers.findIndexById(gate.phone_number_id)}
+              style="garageSetupGates"
+            />
           </div>
           <Input
             onChange={handleGatePlacesChange}

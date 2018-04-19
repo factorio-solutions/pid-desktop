@@ -38,8 +38,6 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
 
-  NEW_RESERVATION_SET_GATE_PHONE_NUMBER,
-
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
 
@@ -78,9 +76,7 @@ const defaultState = {
   error:        undefined,
 
   selectedTemplate: undefined, // index of it
-  templateText:     '',
-
-  gatePhoneNumber: ''
+  templateText:     ''
 }
 
 function placeLabel(state) {
@@ -94,6 +90,15 @@ function placeLabel(state) {
 }
 
 function substituteVariablesInTemplate(template, state) {
+  const place = state.garage.floors
+    .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+    .findById(state.place_id)
+
+  const gates = place && place.gates
+    .filter(gate => gate.phone_number)
+    .map(gate => `${gate.label} (${gate.phone_number.number})`)
+    .join(', ')
+
   return template
     .replace('{{ garage }}', (state.garage && state.garage.name) || '')
     .replace('{{ address }}', (state.garage && state.garage.address && [
@@ -108,7 +113,7 @@ function substituteVariablesInTemplate(template, state) {
     .replace('{{ place }}', placeLabel(state))
     .replace('{{ begin }}', state.from)
     .replace('{{ end }}', state.to)
-    .replace('{{ gate }}', state.gatePhoneNumber)
+    .replace('{{ gate }}', gates || 'use app to open')
 }
 
 export default function newReservation(state = defaultState, action) {
@@ -305,12 +310,6 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         templateText: substituteVariablesInTemplate(action.value, state)
-      }
-
-    case NEW_RESERVATION_SET_GATE_PHONE_NUMBER:
-      return {
-        ...state,
-        gatePhoneNumber: action.value
       }
 
 

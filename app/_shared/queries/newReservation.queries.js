@@ -82,6 +82,12 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         label
         priority
         go_internal
+        gates {
+          label
+          phone_number{
+            number
+          }
+        }
         pricing{
           flat_price
           exponential_12h_price
@@ -100,9 +106,6 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         label
       }
     }
-  }
-  random_phone_number {
-    number
   }
 }
 `
