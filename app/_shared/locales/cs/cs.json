@@ -187,8 +187,8 @@
 		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",
 		"pidAdmin": "PID admin",
-		"smsSettingsHint": "Na této stránce si můžete aktivovat a nastavit sms-službu. Pro psaní textů můžete použít níže vysvětlené proměnné, které budou nahrazovány odpovídajícími údaji.\n\n\"{{ garage }}\" = jméno garáže\n\"{{ address }}\" = adresa vjezdu\n\"{{ gps }}\" = gps koordinaty vjezdu\n\"{{ place }}\" = patro / místo\n\"{{ begin }}\" = začátekrezervace\n\"{{ end }}\" = konec rezervace\n\"{{ gate }}\" = tel. číslo serveru",
-		"bulkRemovalHint": "Zde můžete smazat stornovat více rezervaci najednou."
+		"bulkRemovalHint": "Zde můžete smazat stornovat více rezervaci najednou.",
+		"smsSettingsHint": "Na této stránce si můžete aktivovat a nastavit sms-službu. Pro psaní textů můžete použít níže vysvětlené proměnné, které budou nahrazovány odpovídajícími údaji.\n\n\"{{ garage }}\" = jméno garáže\n\"{{ address }}\" = adresa vjezdu\n\"{{ gps }}\" = gps koordinaty vjezdu\n\"{{ place }}\" = patro / místo\n\"{{ begin }}\" = začátekrezervace\n\"{{ end }}\" = konec rezervace\n\"{{ gate }}\" = tel. číslo serveru"
 	},
 	"newReservation": {
 		"selectGarage": "Vyberte garáž *",
@@ -241,7 +241,8 @@
 		"sendSms": "Odeslat upozornění o rezervaci pomocí SMS",
 		"smsText": "text SMS",
 		"character": "znaků",
-		"removeDiacritics": "odstranit diakritiku"
+		"removeDiacritics": "odstranit diakritiku",
+		"perHour": " / hod."
 	},
 	"clients": {
 		"name": "jméno",
@@ -532,11 +533,14 @@
 		"invalidPasswordPhone": "Nesprávné heslo",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Brána je zaheslovaná. Změnu provedete zadáním nového hesla.",
-		"passwordWasNotSet": "Heslo není nastaveno!"
+		"passwordWasNotSet": "Heslo není nastaveno!",
+		"addAllPalces": "Přidat všechna místa",
+		"notAssignNumber": "Číslo nepřiřazeno",
+		"selcetNumber": "Číslo pro otevření brány"
 	},
 	"newClient": {
 		"name": "Jméno klienta",
-		"placeholder": "Klient společnosti",
+		"placeholder": "Společnost s.r.o.",
 		"invalidName": "Neplatné jméno klienta",
 		"ICplaceholder": "12345678",
 		"DICplaceholder": "CZ12345678",
@@ -634,7 +638,8 @@
 		"editUser": "Upravit svůj uživatelský profil",
 		"email": "Email:",
 		"createdAt": "Profil vytvořen:",
-		"cars": "Auta"
+		"cars": "Auta",
+		"showPublicGarages": "Zobrazovat veřejné garáže"
 	},
 	"users": {
 		"username": "uživatelské jméno",
@@ -871,7 +876,8 @@
 		"csobMerchantID": "Id obchodníka ČSOB",
 		"invalidMerchantId": "Id obchodníka je neplatné",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Zvolte soukromý klíč:"
+		"SelectPrivateKey": "Zvolte soukromý klíč:",
+		"invalidKeyPair": "Id obchodníka nebo soukromý klíč jsou špatně"
 	},
 	"invoices": {
 		"invoiceDate": "datum faktury",
@@ -882,7 +888,7 @@
 		"invoiceText": "Text faktury",
 		"paid": "uhrazeno",
 		"ammount": "částka",
-		"subject": "předmět",
+		"subject": "Předmět",
 		"pay": "Platit",
 		"invoicePaid": "Opravdu chcete označit tuto fakturu za zaplacenou?",
 		"initializingPayment": "Inicializuji platby ...",
@@ -993,7 +999,9 @@
 		"changeFailed": "Došlo k chybě, hodnoty se nezměnily.",
 		"uploadKey": "Nahrát RSA klíč",
 		"accountNumber": "Číslo účtu",
-		"invalidAccountNumber": "Nesprávné číslo účtu"
+		"invalidAccountNumber": "Nesprávné číslo účtu",
+		"paymentGates": "Platební brány",
+		"rents": "Nájmy"
 	},
 	"analytics": {
 		"week": "týden",
@@ -1089,8 +1097,14 @@
 			"many": "výskytech",
 			"other": "výskytech"
 		},
-		"on": "Dne",
 		"every": "jednou za"
+	},
+	"bulkCancellation": {
+		"findReservations": "Najít rezervace",
+		"bulkCancellation": "Hromadné rušení",
+		"cancelReservations": "Zrušit vybrané rezervace",
+		"allUsers": "Všichni uživatelé",
+		"noReservations": "Žádné rezervace"
 	},
 	"mobileApp": {
 		"page": {
@@ -1230,7 +1244,10 @@
 			"receptionist": "recepční",
 			"security": "ochranka",
 			"invited_to": "Vás pozval do klienta",
+			"invited_to_garage": "Vás pozval do garáže",
+			"invited_to_car": "Vás pozval do auta",
 			"as": "jako",
+			"to_sign_up": "Registrovat se!",
 			"issue": "V případě jakýchkoliv problémů nás, prosím,",
 			"let_us_know": "kontaktujte mailem",
 			"we_will_help": "a my Vám pomůžeme s aktivací účtu."
@@ -1263,6 +1280,8 @@
 			"receptionist": "recepční",
 			"security": "ostraha",
 			"invited_to": "Vás pozval do klienta",
+			"invited_to_garage": "Vás pozval do garáže",
+			"invited_to_car": "Vás pozval do auta",
 			"as": "jako",
 			"to_sign_up": "Registrovat se!",
 			"to_pid": "Do Park-it-direct!",
@@ -1352,12 +1371,5 @@
 			"editNews": "upravit novinky",
 			"deleteNews": "smazat novinky"
 		}
-	},
-	"bulkCancellation": {
-		"bulkCancellation": "Hromadné rušení",
-		"findReservations": "Najít rezervace",
-		"cancelReservations": "Zrušit vybrané rezervace",
-		"allUsers": "Všichni uživatelé",
-		"noReservations": "Žádné rezervace"
 	}
 }

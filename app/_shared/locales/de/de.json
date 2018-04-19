@@ -187,6 +187,7 @@
 		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Wenn Sie Flexiplatz für öffentlich angebotene Parkplätze einstellen möchten, müssen diese alle Plätze gleichen Preis haben. Dazu dient dieses Formular.",
 		"pidAdmin": "PID admin",
+		"bulkRemovalHint": "DE: pageBase.bulkRemovalHint",
 		"smsSettingsHint": "Auf dieser Seite können Sie den SMS Dienst aktivieren. Bei schreiben der Texte können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.\n\n\"{{ garage }}\" = Garagenname\n\"{{ address }}\" = Einfahrtsadresse\n\"{{ gps }}\" = GPS Koordinate der Einfahrt\n\"{{ place }}\" = Stockwerk / Prakplatznummer\n\"{{ begin }}\" = Buchungsanfang\n\"{{ end }}\" = Buchungsende\n\"{{ gate }}\" = Telefonnummer des Servers"
 	},
 	"newReservation": {
@@ -240,7 +241,8 @@
 		"sendSms": "Bestätigung per SMS schicken",
 		"smsText": "Text der Nachricht",
 		"character": "Zeichen",
-		"removeDiacritics": "Diakritika entfernen"
+		"removeDiacritics": "Diakritika entfernen",
+		"perHour": "/ Std."
 	},
 	"clients": {
 		"name": "Name",
@@ -531,11 +533,14 @@
 		"invalidPasswordPhone": "Kennwort falsch",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Tor ist verschlüsselt. Ändern nach Kennwort Eingabe möglich.",
-		"passwordWasNotSet": "Kennwort ist nicht eingestellt!"
+		"passwordWasNotSet": "Kennwort ist nicht eingestellt!",
+		"addAllPalces": "Alle Stellplätze hinzufügen",
+		"notAssignNumber": "Keine Nummer hinzugefügt",
+		"selcetNumber": "Tel. Nummer für das öffnen"
 	},
 	"newClient": {
 		"name": "Name des Kunden",
-		"placeholder": "Unternehmenskunde",
+		"placeholder": "Unternehmen GmbH",
 		"invalidName": "Kundennamen ist ungültig",
 		"ICplaceholder": "12345678",
 		"DICplaceholder": "DE12345678",
@@ -555,8 +560,8 @@
 		"selectTemplate": "Wählen Sie eine Schablone",
 		"edit": "Kunde",
 		"smsSettings": "SMS Modul",
-		"activate": "DE: newClient.activate",
-		"deactivate": "DE: newClient.deactivate"
+		"activate": "Aktivieren",
+		"deactivate": "Deaktivieren"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",
@@ -633,7 +638,8 @@
 		"editUser": "Mein Benutzerprofil bearbeiten",
 		"email": "E-Mail-Adresse:",
 		"createdAt": "Profilerstellungsdatum:",
-		"cars": "Fahrzeuge"
+		"cars": "Fahrzeuge",
+		"showPublicGarages": "Öffentlich angebotene Garagen anzeigen"
 	},
 	"users": {
 		"username": "Benutzername",
@@ -870,7 +876,8 @@
 		"csobMerchantID": "ČSOB-Händler-ID",
 		"invalidMerchantId": "Die Händler-ID ist ungültig.",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Privaten Schlüssel auswählen:"
+		"SelectPrivateKey": "Privaten Schlüssel auswählen:",
+		"invalidKeyPair": "DE: newAccount.invalidKeyPair"
 	},
 	"invoices": {
 		"invoiceDate": "Rechnungsdatum",
@@ -992,7 +999,9 @@
 		"changeFailed": "Ein Fehler ist aufgetreten. Die Werte wurden nicht geändert.",
 		"uploadKey": "RSA-Schlüssel hochladen",
 		"accountNumber": "Kontonummer",
-		"invalidAccountNumber": "Ungültige Kontonummer"
+		"invalidAccountNumber": "Ungültige Kontonummer",
+		"paymentGates": "DE: finance.paymentGates",
+		"rents": "Mietverhältnisse"
 	},
 	"analytics": {
 		"week": "Woche",
@@ -1088,8 +1097,14 @@
 			"many": "Wiederholungen",
 			"other": "Wiederholungen"
 		},
-		"on": "Am",
 		"every": "Einmal pro"
+	},
+	"bulkCancellation": {
+		"findReservations": "DE: bulkCancellation.findReservations",
+		"bulkCancellation": "DE: bulkCancellation.bulkCancellation",
+		"cancelReservations": "DE: bulkCancellation.cancelReservations",
+		"allUsers": "DE: bulkCancellation.allUsers",
+		"noReservations": "DE: bulkCancellation.noReservations"
 	},
 	"mobileApp": {
 		"page": {
@@ -1229,7 +1244,10 @@
 			"receptionist": "Rezeptionist/in",
 			"security": "Wachdienst",
 			"invited_to": "Hat Sie zum folgenden Kunden eingeladen",
+			"invited_to_garage": "Hat Sie in folgende Garage eingeladen",
+			"invited_to_car": "Hat Sie in folgendes Auto eingeladen",
 			"as": "als",
+			"to_sign_up": "Registrieren!",
 			"issue": "Falls Sie Fragen oder Probleme hätten,",
 			"let_us_know": "wenden Sie sich bitte an unser Kundenservice,",
 			"we_will_help": "und wir helfen Ihnen Ihr Konto aktivieren."
@@ -1262,6 +1280,8 @@
 			"receptionist": "Receptionist/in",
 			"security": "Wachdienst",
 			"invited_to": "Hat Sie zum folgenden Kunden eingeladen",
+			"invited_to_garage": "Hat Sie in folgende Garage eingeladen",
+			"invited_to_car": "Hat Sie in folgendes Auto eingeladen",
 			"as": "als",
 			"to_sign_up": "Registrieren!",
 			"to_pid": "Bei Park-it-direct!",
