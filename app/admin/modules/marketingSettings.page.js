@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import ModulesPageBase    from './components/modulesPageBase'
 import Form               from '../../_shared/components/form/Form'
 import Wysiwyg            from '../../_shared/components/wysiwyg/Wysiwyg'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
@@ -12,7 +12,6 @@ import PatternInput       from '../../_shared/components/input/PatternInput'
 import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import Modal              from '../../_shared/components/modal/Modal'
 
-import * as nav                           from '../../_shared/helpers/navigation'
 import { t }                              from '../../_shared/modules/localization/localization'
 import * as newMarketingActions           from '../../_shared/actions/newMarketing.actions'
 import { PRESIGNE_MARKETING_IMAGE_QUERY } from '../../_shared/queries/newMarketing.queries'
@@ -36,8 +35,6 @@ class MarketingSettingsPage extends Component {
   }
 
   submitForm = () => this.props.actions.editGarageMarketing()
-
-  goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/modules`)
 
   hightlightInputs = () => this.props.actions.toggleHighlight()
 
@@ -118,8 +115,8 @@ class MarketingSettingsPage extends Component {
     </div>)
 
     return (
-      <PageBase>
-        <Form onSubmit={this.submitForm} submitable={checkSubmitable()} onBack={this.goBack} onHighlight={this.hightlightInputs}>
+      <ModulesPageBase>
+        <Form onSubmit={this.submitForm} submitable={checkSubmitable()} onHighlight={this.hightlightInputs}>
           <Modal content={modalContent} show={state.modalContent !== undefined} />
           <Modal content={modalError} show={state.modalError !== undefined} />
           <div>
@@ -136,7 +133,7 @@ class MarketingSettingsPage extends Component {
               onChange={actions.setPhone}
               label={t([ 'newMarketing', 'phone' ]) + ' *'}
               error={t([ 'newMarketing', 'invalidPhone' ])}
-              pattern="\+[\d]{2,4}[\d]{3,}"
+              pattern="\+[\d]{2,4}[\d\s]{3,}"
               placeholder={t([ 'newMarketing', 'phonePlaceholder' ])}
               value={state.phone.value || ''}
               highlight={state.highlight}
@@ -179,7 +176,7 @@ class MarketingSettingsPage extends Component {
         </Form>
 
         <div className={styles.bottomMargin} />
-      </PageBase>
+      </ModulesPageBase>
     )
   }
 }

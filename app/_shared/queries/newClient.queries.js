@@ -9,6 +9,8 @@ export const CREATE_NEW_CLIENT = `mutation clientMutations($client: ClientInput!
 export const CREATE_NEW_TEMPLATE = `mutation templateMutations($sms_template: SmsTemplateInput!, $client_id: Id!) {
   create_sms_template(sms_template: $sms_template, client_id:$client_id) {
     id
+    name
+    template
   }
 }
 `

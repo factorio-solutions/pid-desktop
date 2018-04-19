@@ -4,8 +4,6 @@
   display: flex;
 
   >.half {
-    flex: 1 1;
-
     // -- Only apply on small window --------------------------------------------
     @media (max-width: $collapseWidth) {
       margin-bottom: 100px;
@@ -13,7 +11,12 @@
 
     &:first-child {
       position:      relative;
+      flex:          1 1;
       padding-right: 10px;
+    }
+
+    &:last-child {
+      flex: 2 2;
     }
   }
 }

@@ -29,53 +29,63 @@ export default function signUp(state = initialState, action) {
   switch (action.type) {
 
     case REGISTER_REQUEST:
-      return { ...state,
+      return {
+        ...state,
         fetching: true
       }
 
     case REGISTER_FAILURE:
-      return { ...state,
+      return {
+        ...state,
         fetching: false,
         error:    action.value
       }
 
     case REGISTER_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         fetching: false
       }
 
     case REGISTER_SET_NAME:
-      return { ...state,
+      return {
+        ...state,
         name: action.value
       }
 
     case REGISTER_SET_PHONE:
-      return { ...state,
+      return {
+        ...state,
         phone: action.value
       }
 
     case REGISTER_SET_EMAIL:
-      return { ...state,
+      return {
+        ...state,
         email: action.value
       }
 
     case REGISTER_SET_PASSWORD:
-      return { ...state,
+      return {
+        ...state,
         password: action.value
       }
 
     case REGISTER_SET_CONFIRMATION:
-      return { ...state,
+      return {
+        ...state,
         confirmation: action.value
       }
 
     case REGISTER_SET_RESET_TOKEN:
-      return { ...state,
+      return {
+        ...state,
         reset_token: action.value
       }
 
     case REGISTER_SET_ACCEPT_TERMS_OF_SERVICE:
-      return { ...state,
+      return {
+        ...state,
         acceptTermsOfService: action.value
       }
 

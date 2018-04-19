@@ -12,7 +12,7 @@ import Localization from '../_shared/components/localization/Localization'
 import Checkbox     from '../_shared/components/checkbox/Checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
-import { t, getLanguage }              from '../_shared/modules/localization/localization'
+import { t, getLanguage } from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
 import styles from './signUp.page.scss'
@@ -21,7 +21,7 @@ const MINIMUM_PASSWORD_LENGTH = 4
 
 
 const NAME_REGEX = '^(?!\\s*$).+'
-const PHONE_REGEX = '\\+[\\d]{2,4}[\\d]{3,}'
+const PHONE_REGEX = '\\+[\\d]{2,4}[\\d\\s]{3,}'
 const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$'
 
 

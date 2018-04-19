@@ -1,26 +1,25 @@
 import React, { Component, PropTypes } from 'react'
-import styles                          from './Checkbox.scss'
+
+import styles from './Checkbox.scss'
+
 
 export default class Checkbox extends Component {
   static propTypes = {
-    children:  PropTypes.object,
-    checked:   PropTypes.bool,
-    onChange:  PropTypes.func,
-    highlight: PropTypes.bool
+    children: PropTypes.object,
+    checked:  PropTypes.bool,
+    onChange: PropTypes.func
   }
 
-  render() {
-    const { children, checked, onChange, highlight } = this.props
+  onEnter = event => event.keyCode === 13 && this.props.onChange(!event.target.checked)
 
-    const onEnter = e => {
-      if (e.keyCode === 13) {
-        onChange()
-      }
-    }
+  onClick = event => this.props.onChange(event.target.checked)
+
+  render() {
+    const { children, checked } = this.props
 
     return (
-      <div className={`${styles.checkbox} ${!checked && highlight && styles.highlight}`}>
-        <input type="checkbox" checked={checked} onChange={onChange} onKeyUp={onEnter} />
+      <div className={styles.checkbox}>
+        <input type="checkbox" checked={checked} onChange={this.onClick} onKeyUp={this.onEnter} />
         <span>{children}</span>
       </div>
     )

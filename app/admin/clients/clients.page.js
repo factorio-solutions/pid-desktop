@@ -62,7 +62,7 @@ class ClientsPage extends Component {
     }
 
     const prepareContactPersons = (acc, user, index, arr) => {
-      acc.push(<span><b>{user.full_name}</b></span>)
+      acc.push(<span><b>{user.full_name}</b> ({user.email}, {user.phone})</span>)
       if (arr.length - 1 !== index) acc.push(<span>, </span>)
       return acc
     }

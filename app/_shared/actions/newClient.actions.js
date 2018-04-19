@@ -65,7 +65,7 @@ export function toggleHighlight() {
 
 
 export function initClient(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(setName(response.data.client.name))
       dispatch(setSmsApiToken(response.data.client.sms_api_token))
@@ -84,7 +84,7 @@ export function initClient(id) {
       }
     }
 
-    const currentUser = getState().pageBase.current_user
+    // const currentUser = getState().pageBase.current_user
     request(
       onSuccess,
       EDIT_CLIENT_INIT,
@@ -119,10 +119,10 @@ export function loadFromIc() {
 
 function generateClient(state) {
   return {
-    name:          state.name,
-    ic:            state.ic === '' ? null : state.ic,
-    dic:           state.dic === '' ? null : state.dic,
-    address:       {
+    name:    state.name,
+    ic:      state.ic === '' ? null : state.ic,
+    dic:     state.dic === '' ? null : state.dic,
+    address: {
       line_1:      state.line_1,
       line_2:      state.line_2 === '' ? null : state.line_2,
       city:        state.city,
@@ -157,8 +157,8 @@ export function submitNewClient(id) {
 export function submitNewTemplate(id) {
   return (dispatch, getState) => {
     const state = getState().newClient
-    const onSuccess = () => {
-      dispatch(initClient(id))
+    const onSuccess = response => {
+      dispatch(setSmsTemplates([ ...state.templates, { ...response.data.create_sms_template, original: true } ]))
     }
 
     dispatch(clearNewTemplateForm())

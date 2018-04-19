@@ -37,10 +37,8 @@ class NewReservationPage extends Component {
   }
 
   componentDidMount() {
-    const { actions, params, state } = this.props
-    if (state.reservation && !params.id) {
-      actions.clearForm()
-    }
+    const { actions, params } = this.props
+    actions.clearForm()
     actions.setInitialStore(params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
@@ -225,7 +223,7 @@ class NewReservationPage extends Component {
                       onChange={actions.setHostPhone}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                       error={t([ 'signup_page', 'phoneInvalid' ])}
-                      pattern="\+[\d]{2,4}[\d]{3,}"
+                      pattern="\+[\d]{2,4}[\d\s]{3,}"
                       value={state.phone.value}
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
                     />

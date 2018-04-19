@@ -15,7 +15,7 @@ function Button({ content, onClick, onDisabledClick, type, state, style, questio
   const handleClick = e => {
     e.stopPropagation()
     if (typeof onClick === 'function') { // if no fuction, do nothing
-      if (type === 'remove') {
+      if (type === 'remove' && question !== 'No message') {
         // confirm(question || 'Are you sure?') && onClick()
         confirm(question || 'Are you sure?', onClick)
       } else {

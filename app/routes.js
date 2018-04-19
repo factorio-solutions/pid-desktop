@@ -27,6 +27,7 @@ import DashboardPage from './dashboard/dashboard.page'
 import ReservationsPage           from './reservations/reservations.page'
 import NewReservationPage         from './reservations/newReservation.page'
 import NewReservationOverviewPage from './reservations/newReservationOverview.page'
+import BulkRemovalReservationPage from './reservations/bulkRemoval.page'
 
 // occupancy page
 import OccupancyPage from './occupancy/occupancy.page'
@@ -61,7 +62,6 @@ import SmsSettingsPage from './admin/clients/smsSettings.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules
-import ModulesPage             from './admin/modules/modules.page'
 import MarketingSettingsPage   from './admin/modules/marketingSettings.page'
 import ReservationButtonPage   from './admin/modules/reservationButton.page'
 import MrParkitIntegrationPage from './admin/modules/mrParkitIntegration.page'
@@ -162,6 +162,7 @@ export default function createRoutes() {
       <Route path="reservations/newReservation" component={NewReservationPage} />
       <Route path="reservations/:id/edit" component={NewReservationPage} />
       <Route path="reservations/newReservation/overview" component={NewReservationOverviewPage} />
+      <Route path="reservations/bulkRemoval" component={BulkRemovalReservationPage} />
 
       <Route path="occupancy" component={OccupancyPage} />
 
@@ -189,8 +190,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 
-      <Route path=":id/admin/modules" component={ModulesPage} />
-      <Route path=":id/admin/modules/marketingSettings" component={MarketingSettingsPage} />
+      <Route path=":id/admin/modules/marketingPage" component={MarketingSettingsPage} />
       <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} />
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
