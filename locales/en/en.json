@@ -533,7 +533,9 @@
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Gate has password. Change it by fill in a new password",
 		"passwordWasNotSet": "Password was not set!",
-		"addAllPalces": "Add all palces"
+		"addAllPalces": "Add all palces",
+		"notAssignNumber": "Number not assigned",
+		"selcetNumber": "Number to open gate"
 	},
 	"newClient": {
 		"name": "Client name",
