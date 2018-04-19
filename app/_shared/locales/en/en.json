@@ -187,7 +187,8 @@
 		"analyticsgatesHint": "TODO: gates Hint",
 		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
 		"pidAdmin": "PID admin",
-		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server"
+		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server",
+		"bulkRemovalHint": "Here you can remove more of your reservations at once."
 	},
 	"newReservation": {
 		"selectGarage": "Select garage *",
@@ -1356,5 +1357,12 @@
 			"editNews": "edit news",
 			"deleteNews": "delete news"
 		}
+	},
+	"bulkCancellation": {
+		"bulkCancellation": "Bulk cancellation",
+		"findReservations": "Find reservations",
+		"cancelReservations": "Cancel reservations",
+		"allUsers": "All users",
+		"noReservations": "No Reservations"
 	}
 }

@@ -242,6 +242,8 @@ export function toReservations() {
       case contains(hash, 'newReservation'):
         hint = t([ 'pageBase', 'newReservationHint' ])
         break
+      case contains(hash, 'bulkRemoval'):
+        hint = t([ 'pageBase', 'bulkRemovalHint' ])
     }
 
     dispatch(setAll('reservations', [], undefined, hint, 'https://www.youtube.com/'))

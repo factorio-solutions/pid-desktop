@@ -35,7 +35,8 @@ class ReservationsPage extends Component {
     params:              PropTypes.object,
     interuption:         PropTypes.object,
     interuptionActions:  PropTypes.object,
-    newReservationState: PropTypes.object
+    newReservationState: PropTypes.object,
+    pageBase:            PropTypes.object
   }
 
   destroyClick = reservation => {
@@ -105,7 +106,7 @@ class ReservationsPage extends Component {
 
 
   render() {
-    const { state, actions, interuption, interuptionActions } = this.props
+    const { state, actions, interuption, interuptionActions, pageBase } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
@@ -256,6 +257,7 @@ class ReservationsPage extends Component {
       </div>)
     }))
 
+
     const filters = [
       <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
       <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
@@ -278,6 +280,12 @@ class ReservationsPage extends Component {
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.newReservation} type="action" size="big" />
+          <LabeledRoundButton
+            content={<span className="fa fa-times" aria-hidden="true" />}
+            onClick={() => nav.to('/reservations/bulkRemoval')}
+            type="remove"
+            question="No message"
+          />
         </div>
       </PageBase>
     )
@@ -285,7 +293,7 @@ class ReservationsPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.reservations, interuption: state.reservationInteruption, newReservationState: state.newReservation }),
+  state => ({ state: state.reservations, interuption: state.reservationInteruption, newReservationState: state.newReservation, pageBase: state.pageBase }),
   dispatch => ({
     actions:            bindActionCreators({ ...reservationActions, setCustomModal, setRecurringReservationId, clearForm }, dispatch),
     interuptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
