@@ -64,7 +64,6 @@ export const NEW_RESERVATION_SET_ERROR = 'NEW_RESERVATION_SET_ERROR'
 export const NEW_RESERVATION_SET_SELECTED_TEMPLATE = 'NEW_RESERVATION_SET_SELECTED_TEMPLATE'
 export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_TEXT'
 export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
-export const NEW_RESERVATION_SET_GATE_PHONE_NUMBER = 'NEW_RESERVATION_SET_GATE_PHONE_NUMBER'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -86,7 +85,6 @@ export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
 export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
-export const setGatePhoneNumber = actionFactory(NEW_RESERVATION_SET_GATE_PHONE_NUMBER)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -503,7 +501,6 @@ export function downloadGarage(id) {
       })
       dispatch(setGarage(garage))
       dispatch(autoSelectPlace())
-      value.random_phone_number && dispatch(setGatePhoneNumber(value.random_phone_number.number))
     })
   }
 }
