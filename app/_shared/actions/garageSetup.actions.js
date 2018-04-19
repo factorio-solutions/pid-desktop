@@ -49,6 +49,7 @@ export const GARAGE_SETUP_SET_HEIGHT = 'GARAGE_SETUP_SET_HEIGHT'
 export const GARAGE_SETUP_SET_WIDTH = 'GARAGE_SETUP_SET_WIDTH'
 export const GARAGE_SETUP_SET_WEIGHT = 'GARAGE_SETUP_SET_WEIGHT'
 export const GARAGE_SETUP_SET_GATES = 'GARAGE_SETUP_SET_GATES'
+export const GARAGE_SETUP_SET_REGISTERED_NUMBERS = 'GARAGE_SETUP_SET_REGISTERED_NUMBERS'
 export const GARAGE_SETUP_SET_ORDER = 'GARAGE_SETUP_SET_ORDER'
 export const GARAGE_SETUP_SET_BOOKING_PAGE = 'GARAGE_SETUP_SET_BOOKING_PAGE'
 export const GARAGE_SETUP_CLEAR_FORM = 'GARAGE_SETUP_CLEAR_FORM'
@@ -80,6 +81,7 @@ export const setHeight = actionFactory(GARAGE_SETUP_SET_HEIGHT)
 export const setWidth = actionFactory(GARAGE_SETUP_SET_WIDTH)
 export const setWeight = actionFactory(GARAGE_SETUP_SET_WEIGHT)
 export const setGates = actionFactory(GARAGE_SETUP_SET_GATES)
+export const setRegisteredNumbers = actionFactory(GARAGE_SETUP_SET_REGISTERED_NUMBERS)
 export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
 export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
@@ -177,6 +179,7 @@ export function addTemplate(file, label) {
 export function changeGateLabel(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'label', value)))) } }
 export function changeGatePhone(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'phone', value)))) } }
 export function changeGatePlaces(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
+export function changeGatePhoneNumberId(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'phone_number_id', value)))) } }
 
 export function changeGateAddressLine1(value, index) {
   return (dispatch, getState) => {
@@ -363,6 +366,8 @@ export function intiEditGarageFloors(id) {
 export function intiEditGarageGates(id) {
   return (dispatch, getState) => {
     const onSuccess = response => {
+      dispatch(setRegisteredNumbers(response.data.registered_phone_numbers))
+
       dispatch(setId(response.data.garage.id))
 
       dispatch(setFloors(response.data.garage.floors))
