@@ -203,12 +203,12 @@ class inviteUserPage extends Component {
                     ]
                   }
                   {(currentClient.admin || currentClient.secretary) &&
-                    [ <AttributeSpan state={state} attribute="client_host" actions={actions} label="host" highlight={highlightClientRoles} />,
+                    [ <AttributeSpan state={state} attribute="client_internal" actions={actions} label="internal" highlight={highlightClientRoles} />,
                       <span>|</span>
                     ]
                   }
                   {(currentClient.admin || currentClient.secretary || currentClient.internal) &&
-                    <AttributeSpan state={state} attribute="client_internal" actions={actions} label="internal" highlight={highlightClientRoles} />
+                    <AttributeSpan state={state} attribute="client_host" actions={actions} label="host" highlight={highlightClientRoles} />
                   }
                 </p>}
               </div>}
