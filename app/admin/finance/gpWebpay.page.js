@@ -40,8 +40,8 @@ class GpWebpayPage extends Component {
   render() {
     const { state, pageBase, actions } = this.props
 
-    const goBack = () => { nav.to(`/${pageBase.garage}/admin/finance`) }
-    const submitForm = () => { this.checkSubmitable() && actions.updateGpWebpayAccount() }
+    const goBack = () => nav.to(`/${pageBase.garage}/admin/finance`)
+    const submitForm = () => this.checkSubmitable() && actions.enableAccountGpWebpay()
 
     return (
       <PageBase>
@@ -58,7 +58,6 @@ class GpWebpayPage extends Component {
             label={t([ 'newAccount', 'csobMerchantID' ])}
             error={t([ 'newAccount', 'invalidMerchantId' ])}
             value={state.gp_webpay_merchant_id}
-            name="client[merchantId]"
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
             highlight={state.highlight}
           />
@@ -68,7 +67,6 @@ class GpWebpayPage extends Component {
             label={t([ 'newAccount', 'gpWebpayPassword' ])}
             error={t([ 'newAccount', 'invalidGpWebpayPassword' ])}
             value={state.gp_webpay_password}
-            name="client[password]"
             placeholder={t([ 'newAccount', 'gpWebPayplaceholder' ])}
             highlight={state.highlight}
           />
@@ -80,13 +78,13 @@ class GpWebpayPage extends Component {
             onChange={actions.setGpWebpayPrivateKey}
             label="file"
             type="file"
-            name={`newAccountPrivateKey`}
             accept=".key"
+            name="newAccountPrivateKey"
           />
           <LabeledRoundButton
             label={t([ 'finance', 'uploadKey' ])}
             content={<span className="fa fa-file-code-o" aria-hidden="true" />}
-            onClick={() => { document.getElementsByName(`newAccountPrivateKey`)[0].click() }}
+            onClick={() => { document.getElementsByName('newAccountPrivateKey')[0].click() }}
             type={state.gp_webpay_private_key === '' ? 'action' : 'confirm'}
           />
         </Form>

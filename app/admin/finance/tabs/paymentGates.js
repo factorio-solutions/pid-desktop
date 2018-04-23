@@ -23,7 +23,7 @@ class PaymentGatesTab extends Component {
 
   componentDidMount() {
     if (this.props.location.query.hasOwnProperty('request_token')) { // got request token => Permissions granted -> update account
-      this.props.actions.upadteAccount(this.props.location.query)
+      this.props.actions.upadteAccountPaypal(this.props.location.query)
     }
     this.props.actions.initFinance(this.props.params.id)
   }
@@ -56,7 +56,7 @@ class PaymentGatesTab extends Component {
           {t([ 'finance', 'csob' ])}
           <div className={styles.settings}>
             <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toCsobSettings} />
-            <Switch on={state.csob} onClick={state.csob ? actions.disableCsobAccount : this.toCsobSettings} />
+            <Switch on={state.csob} onClick={state.csob ? actions.disableAccountCsob : this.toCsobSettings} />
           </div>
         </div>
 
@@ -64,7 +64,7 @@ class PaymentGatesTab extends Component {
           {t([ 'finance', 'GpWebpay' ])}
           <div className={styles.settings}>
             <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGpWebpaySettings} />
-            <Switch on={state.gp_webpay} onClick={this.toGpWebpaySettings} />
+            <Switch on={state.gp_webpay} onClick={state.gp_webpay ? actions.disableAccountGpWebpay : this.toGpWebpaySettings} />
           </div>
         </div>
       </div>

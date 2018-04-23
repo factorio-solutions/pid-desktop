@@ -34,17 +34,16 @@ class CsobPage extends Component {
 
   checkSubmitable = () => {
     const { state } = this.props
-    return state.csob_merchant_id !== '' && state.csob_private_key !== ''
+    if (state.csob_merchant_id === '' || state.csob_private_key === '') return false
+    return true
   }
 
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/finance`)
 
-  submitForm = () => this.checkSubmitable() && this.props.actions.enableCsobAccount()
+  submitForm = () => this.checkSubmitable() && this.props.actions.enableAccountCsob()
 
   render() {
-    const { state, pageBase, actions } = this.props
-    const goBack = () => { nav.to(`/${pageBase.garage}/admin/finance`) }
-
+    const { state, actions } = this.props
     return (
       <PageBase>
         <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
@@ -64,7 +63,7 @@ class CsobPage extends Component {
             onChange={actions.setCsobPrivateKey}
             label="file"
             type="file"
-            name={'newAccountPrivateKey'}
+            name="newAccountPrivateKey"
             accept=".key"
           />
           <LabeledRoundButton
