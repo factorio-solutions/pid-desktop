@@ -39,6 +39,8 @@ class PaymentGatesTab extends Component {
 
   toCsobSettings = () => nav.to(`/${this.props.pageBase.garage}/admin/finance/csob`)
 
+  toGpWebpaySettings = () => nav.to(`/${this.props.pageBase.garage}/admin/finance/GpWebpay`)
+
   render() {
     const { state } = this.props
 
@@ -56,6 +58,14 @@ class PaymentGatesTab extends Component {
           <div className={styles.settings}>
             <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toCsobSettings} />
             <Switch on={state.csob} onClick={this.toCsobSettings} />
+          </div>
+        </div>
+
+        <div className={styles.module}>
+          {t([ 'finance', 'GpWebpay' ])}
+          <div className={styles.settings}>
+            <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGpWebpaySettings} />
+            <Switch on={state.gp_webpay} onClick={this.toGpWebpaySettings} />
           </div>
         </div>
       </div>
