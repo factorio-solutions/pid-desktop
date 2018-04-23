@@ -51,7 +51,8 @@ class GpWebpayPage extends Component {
           submitable={checkSubmitable()}
           onBack={goBack}
           onHighlight={actions.toggleHighlight}
-        ><h2>{t([ 'finance', 'csobPayment' ])}</h2>
+        >
+          <h2>{t([ 'finance', 'csobPayment' ])}</h2>
           <Input
             onEnter={submitForm}
             onChange={actions.setGpWebpayMerchantId}

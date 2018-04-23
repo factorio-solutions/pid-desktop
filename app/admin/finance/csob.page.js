@@ -40,7 +40,7 @@ class CsobPage extends Component {
 
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/finance`)
 
-  submitForm = () => this.checkSubmitable() && this.props.actions.updateCsobAccount()
+  submitForm = () => this.checkSubmitable() && this.props.actions.enableCsobAccount()
 
   render() {
     const { state, actions } = this.props
@@ -54,7 +54,6 @@ class CsobPage extends Component {
             label={t([ 'newAccount', 'csobMerchantID' ])}
             error={t([ 'newAccount', 'invalidMerchantId' ])}
             value={state.csob_merchant_id}
-            name="client[merchantId]"
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
             highlight={state.highlight}
           />

@@ -5,9 +5,9 @@ import { bindActionCreators }          from 'redux'
 import CallToActionButton from '../../../_shared/components/buttons/CallToActionButton'
 import Switch             from '../../../_shared/components/switch/Switch'
 
-import * as nav                 from '../../../_shared/helpers/navigation'
-import { t }                    from '../../../_shared/modules/localization/localization'
-import * as financeActions      from '../../../_shared/actions/admin.finance.actions'
+import * as nav            from '../../../_shared/helpers/navigation'
+import { t }               from '../../../_shared/modules/localization/localization'
+import * as financeActions from '../../../_shared/actions/admin.finance.actions'
 
 import styles from '../finance.page.scss'
 
@@ -22,7 +22,6 @@ class PaymentGatesTab extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     if (this.props.location.query.hasOwnProperty('request_token')) { // got request token => Permissions granted -> update account
       this.props.actions.upadteAccount(this.props.location.query)
     }
@@ -42,7 +41,7 @@ class PaymentGatesTab extends Component {
   toGpWebpaySettings = () => nav.to(`/${this.props.pageBase.garage}/admin/finance/GpWebpay`)
 
   render() {
-    const { state } = this.props
+    const { state, actions } = this.props
 
     return (
       <div>
@@ -57,7 +56,7 @@ class PaymentGatesTab extends Component {
           {t([ 'finance', 'csob' ])}
           <div className={styles.settings}>
             <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toCsobSettings} />
-            <Switch on={state.csob} onClick={this.toCsobSettings} />
+            <Switch on={state.csob} onClick={state.csob ? actions.disableCsobAccount : this.toCsobSettings} />
           </div>
         </div>
 

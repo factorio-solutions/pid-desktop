@@ -154,7 +154,21 @@ export function upadteAccount(params) {
   }
 }
 
-export function updateCsobAccount() {
+export function updateCsobAccount(csobMerchantId, csobPrivateKey, callback) {
+  return (dispatch, getState) => {
+    request(
+      callback,
+      UPDATE_ACCOUNT,
+      { id:      +getState().adminFinance.account_id,
+        account: {
+          csob_merchant_id: csobMerchantId,
+          csob_private_key: csobPrivateKey
+        }
+      })
+  }
+}
+
+export function enableCsobAccount() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
     const onSuccess = response => {
@@ -163,15 +177,14 @@ export function updateCsobAccount() {
         dispatch(setError(t([ 'newAccount', 'invalidKeyPair' ])))
     }
 
-    request(
-      onSuccess,
-      UPDATE_ACCOUNT,
-      { id:      +state.account_id,
-        account: {
-          csob_merchant_id: state.csob_merchant_id,
-          csob_private_key: state.csob_private_key === 'stored' ? null : state.csob_private_key // update account, key unchanged => set to null
-        }
-      })
+    dispatch(updateCsobAccount(state.csob_merchant_id, state.csob_private_key, onSuccess))
+  }
+}
+
+export function disableCsobAccount() {
+  return (dispatch, getState) => {
+    const onSuccess = () => dispatch(initFinance(getState().pageBase.garage))
+    dispatch(updateCsobAccount(null, null, onSuccess))
   }
 }
 
