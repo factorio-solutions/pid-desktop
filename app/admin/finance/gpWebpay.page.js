@@ -32,23 +32,22 @@ class GpWebpayPage extends Component {
     }
   }
 
+  checkSubmitable = () => {
+    const { state } = this.props
+    return state.csob_merchant_id !== '' && state.csob_private_key !== ''
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
 
     const goBack = () => { nav.to(`/${pageBase.garage}/admin/finance`) }
-    const checkSubmitable = () => {
-      if (state.gp_webpay_merchant_id === '' || state.gp_webpay_private_key === '') return false
-
-      return true
-    }
-
-    const submitForm = () => { checkSubmitable() && actions.updateGpWebpayAccount() }
+    const submitForm = () => { this.checkSubmitable() && actions.updateGpWebpayAccount() }
 
     return (
       <PageBase>
         <Form
           onSubmit={submitForm}
-          submitable={checkSubmitable()}
+          submitable={this.checkSubmitable()}
           onBack={goBack}
           onHighlight={actions.toggleHighlight}
         >

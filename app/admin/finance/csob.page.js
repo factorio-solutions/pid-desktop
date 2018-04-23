@@ -34,8 +34,7 @@ class CsobPage extends Component {
 
   checkSubmitable = () => {
     const { state } = this.props
-    if (state.csob_merchant_id === '' || state.csob_private_key === '') return false
-    return true
+    return state.csob_merchant_id !== '' && state.csob_private_key !== ''
   }
 
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/finance`)
@@ -43,7 +42,9 @@ class CsobPage extends Component {
   submitForm = () => this.checkSubmitable() && this.props.actions.enableCsobAccount()
 
   render() {
-    const { state, actions } = this.props
+    const { state, pageBase, actions } = this.props
+    const goBack = () => { nav.to(`/${pageBase.garage}/admin/finance`) }
+
     return (
       <PageBase>
         <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
@@ -58,7 +59,14 @@ class CsobPage extends Component {
             highlight={state.highlight}
           />
           <label className={state.highlight && styles.red}>{t([ 'finance', 'SelectPrivateKey' ])}: </label>
-          <Input style={styles.hidden} onChange={actions.setCsobPrivateKey} label="file" type="file" name={'newAccountPrivateKey'} accept=".key" />
+          <Input
+            style={styles.hidden}
+            onChange={actions.setCsobPrivateKey}
+            label="file"
+            type="file"
+            name={'newAccountPrivateKey'}
+            accept=".key"
+          />
           <LabeledRoundButton
             label={t([ 'finance', 'uploadKey' ])}
             content={<span className="fa fa-file-code-o" aria-hidden="true" />}
