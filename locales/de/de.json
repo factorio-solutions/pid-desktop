@@ -1064,6 +1064,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Wiederholen: aus",
+		"repeatEnabled": "DE: recurringReservation.repeatEnabled",
 		"repeats": "Wiederholt",
 		"daily": "Täglich",
 		"weekly": "Wochentlich",
@@ -1097,11 +1098,12 @@
 			"many": "Wiederholungen",
 			"other": "Wiederholungen"
 		},
+		"on": "Am",
 		"every": "Einmal pro"
 	},
 	"bulkCancellation": {
-		"findReservations": "DE: bulkCancellation.findReservations",
 		"bulkCancellation": "DE: bulkCancellation.bulkCancellation",
+		"findReservations": "DE: bulkCancellation.findReservations",
 		"cancelReservations": "DE: bulkCancellation.cancelReservations",
 		"allUsers": "DE: bulkCancellation.allUsers",
 		"noReservations": "DE: bulkCancellation.noReservations"
