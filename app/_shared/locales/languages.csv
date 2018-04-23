@@ -1243,6 +1243,7 @@ languages.cs,Česky,Česky,Česky,Česky
 languages.de,Deutsch,Deutsch,Deutsch,Deutsch
 languages.pl,Polski,Polski,Polski,Polski
 recurringReservation.repeat,Repeat: disabled,Opakování: vypnuto,Powtarzanie: wyłączone,Wiederholen: aus
+recurringReservation.repeatEnabled,Repeat: enabled,Opakování: zapnuto,,
 recurringReservation.repeats,Repeats:,Opakuje se:,Powtarza się:,Wiederholt
 recurringReservation.daily,Daily,Denně,Codziennie,Täglich
 recurringReservation.weekly,Weekly,Týdně,Co tydzień,Wochentlich
@@ -1269,7 +1270,7 @@ recurringReservation.occurence.one,occurrence,výskytu,rezerwacji,Wiederholung
 recurringReservation.occurence.few,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.many,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.other,occurrences,výskytech,rezerwacjach,Wiederholungen
-bulkCancellation.findReservations,On,Dne,Dnia,Am
+recurringReservation.on,On,Dne,Dnia,Am
 bulkCancellation.bulkCancellation,Bulk cancellation,Hromadné rušení,,
 bulkCancellation.findReservations,Find reservations,Najít rezervace,,
 bulkCancellation.cancelReservations,Cancel reservations,Zrušit vybrané rezervace,,

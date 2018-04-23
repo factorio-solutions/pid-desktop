@@ -1064,6 +1064,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Opakování: vypnuto",
+		"repeatEnabled": "Opakování: zapnuto",
 		"repeats": "Opakuje se:",
 		"daily": "Denně",
 		"weekly": "Týdně",
@@ -1097,11 +1098,12 @@
 			"many": "výskytech",
 			"other": "výskytech"
 		},
+		"on": "Dne",
 		"every": "jednou za"
 	},
 	"bulkCancellation": {
-		"findReservations": "Najít rezervace",
 		"bulkCancellation": "Hromadné rušení",
+		"findReservations": "Najít rezervace",
 		"cancelReservations": "Zrušit vybrané rezervace",
 		"allUsers": "Všichni uživatelé",
 		"noReservations": "Žádné rezervace"

@@ -1064,6 +1064,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Repeat: disabled",
+		"repeatEnabled": "Repeat: enabled",
 		"repeats": "Repeats:",
 		"daily": "Daily",
 		"weekly": "Weekly",
@@ -1097,11 +1098,12 @@
 			"many": "occurrences",
 			"other": "occurrences"
 		},
+		"on": "On",
 		"every": "every"
 	},
 	"bulkCancellation": {
-		"findReservations": "Find reservations",
 		"bulkCancellation": "Bulk cancellation",
+		"findReservations": "Find reservations",
 		"cancelReservations": "Cancel reservations",
 		"allUsers": "All users",
 		"noReservations": "No Reservations"
