@@ -27,7 +27,7 @@ const defaultState = {
   csob_merchant_id:      '',
   csob_private_key:      '',
   gp_webpay_merchant_id: '',
-  gp_webpay_password:    '',
+  gp_webpay_password:    null,
   gp_webpay_private_key: '',
   vat:                   undefined,
   invoiceRow:            undefined,

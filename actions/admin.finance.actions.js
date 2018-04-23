@@ -133,42 +133,41 @@ export function paypalClick() {
   }
 }
 
-export function upadteAccount(params) {
+
+export function upadteAccount(id, account, callback) {
+  request(callback, UPDATE_ACCOUNT, { id, account })
+}
+
+
+export function upadteAccountPaypal(params) {
   return dispatch => {
     const onSuccess = response => {
       dispatch(setCustomModal(undefined))
       dispatch(setCSOB(response.data.update_account.csob_merchant_id !== null))
       dispatch(setPaypal(response.data.update_account.paypal_email !== null))
     }
+    const valuesToChange = {
+      paypal_temporary_token:          params.request_token,
+      paypal_temporary_token_verifier: params.verification_code
+    }
 
-    request(
-      onSuccess,
-      UPDATE_ACCOUNT,
-      { id:      +params.id,
-        account: {
-          paypal_temporary_token:          params.request_token,
-          paypal_temporary_token_verifier: params.verification_code
-        }
-      }
-    )
+    upadteAccount(+params.id, valuesToChange, onSuccess)
   }
 }
 
-export function updateCsobAccount(csobMerchantId, csobPrivateKey, callback) {
+
+export function updateAccountCsob(csobMerchantId, csobPrivateKey, callback) {
   return (dispatch, getState) => {
-    request(
-      callback,
-      UPDATE_ACCOUNT,
-      { id:      +getState().adminFinance.account_id,
-        account: {
-          csob_merchant_id: csobMerchantId,
-          csob_private_key: csobPrivateKey
-        }
-      })
+    const valuesToChange = {
+      csob_merchant_id: csobMerchantId,
+      csob_private_key: csobPrivateKey
+    }
+
+    upadteAccount(+getState().adminFinance.account_id, valuesToChange, callback)
   }
 }
 
-export function enableCsobAccount() {
+export function enableAccountCsob() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
     const onSuccess = response => {
@@ -177,36 +176,52 @@ export function enableCsobAccount() {
         dispatch(setError(t([ 'newAccount', 'invalidKeyPair' ])))
     }
 
-    dispatch(updateCsobAccount(state.csob_merchant_id, state.csob_private_key, onSuccess))
+    dispatch(updateAccountCsob(state.csob_merchant_id, state.csob_private_key, onSuccess))
   }
 }
 
-export function disableCsobAccount() {
+export function disableAccountCsob() {
   return (dispatch, getState) => {
     const onSuccess = () => dispatch(initFinance(getState().pageBase.garage))
-    dispatch(updateCsobAccount(null, null, onSuccess))
+    dispatch(updateAccountCsob(null, null, onSuccess))
   }
 }
 
-export function updateGpWebpayAccount() {
+
+export function updateAccountGpWebpay(gpWebpayMerchantId, gpWebpayPrivateKey, gpWebpayPassword, callback) {
+  return (dispatch, getState) => {
+    const valuesToChange = {
+      gp_webpay_merchant_id: gpWebpayMerchantId,
+      gp_webpay_private_key: gpWebpayPrivateKey,
+      gp_webpay_password:    gpWebpayPassword
+    }
+
+    upadteAccount(+getState().adminFinance.account_id, valuesToChange, callback)
+  }
+}
+
+export function enableAccountGpWebpay() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
     const onSuccess = () => {
       nav.to(`/${getState().pageBase.garage}/admin/finance`)
     }
-
-    request(
-      onSuccess,
-      UPDATE_ACCOUNT,
-      { id:      +state.account_id,
-        account: {
-          gp_webpay_merchant_id: state.gp_webpay_merchant_id,
-          gp_webpay_private_key: state.gp_webpay_private_key === 'stored' ? null : state.gp_webpay_private_key, // update account, key unchanged => set to null
-          gp_webpay_password:    state.gp_webpay_password
-        }
-      })
+    dispatch(updateAccountGpWebpay(
+      state.gp_webpay_merchant_id,
+      state.gp_webpay_private_key, // update account, key unchanged => set to null
+      state.gp_webpay_password,
+      onSuccess
+    ))
   }
 }
+
+export function disableAccountGpWebpay() {
+  return (dispatch, getState) => {
+    const onSuccess = () => dispatch(initFinance(getState().pageBase.garage))
+    dispatch(updateAccountGpWebpay(null, null, null, onSuccess))
+  }
+}
+
 
 export function submitGarage(id) {
   return (dispatch, getState) => {
