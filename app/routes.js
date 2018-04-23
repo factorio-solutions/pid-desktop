@@ -82,9 +82,10 @@ import UsersPage      from './admin/users/users.page'
 import InviteUserPage from './admin/users/inviteUser.page'
 
 // finance
-import FinancePage from './admin/finance/finance.page'
-import NewRentPage from './admin/finance/newRent.page'
-import CsobPage    from './admin/finance/csob.page'
+import FinancePage  from './admin/finance/finance.page'
+import NewRentPage  from './admin/finance/newRent.page'
+import CsobPage     from './admin/finance/csob.page'
+import GpWebpayPage from './admin/finance/gpWebpay.page'
 
 // pidSettings
 import PidSettingsPage from './admin/pidSettings/pidSettings.page'
@@ -216,6 +217,7 @@ export default function createRoutes() {
       <Route path=":id/admin/finance/newRent" component={NewRentPage} />
       <Route path=":id/admin/finance/:rent_id/editRent" component={NewRentPage} />
       <Route path=":id/admin/finance/csob" component={CsobPage} />
+      <Route path=":id/admin/finance/GpWebpay" component={GpWebpayPage} />
 
       <Route path=":id/admin/pidSettings" component={PidSettingsPage} />
 

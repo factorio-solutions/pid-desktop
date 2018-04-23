@@ -23,7 +23,7 @@ class NewReservationOverviewPage extends Component {
     if (location.query.hasOwnProperty('token')) {
       // location.query.success === 'true' ? actions.payReservation(location.query.token) : actions.paymentUnsucessfull()
       location.query.success !== 'true' && actions.paymentUnsucessfull()
-    } else if (location.query.hasOwnProperty('csob')) {
+    } else if (location.query.hasOwnProperty('csob') || location.query.hasOwnProperty('gp_webpay')) {
       location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
     } else {
       actions.overviewInit()
