@@ -22,21 +22,10 @@ export function setGarageContracts(value) {
 export function initClients() {
   return dispatch => {
     const onSuccess = response => {
-      // const currentUserId = response.data.current_user.id
-      // const uniqueClients = response.data.client_users.reduce((acc, clientUser) => {
-      //   if (acc.find(accumulated => accumulated.id === clientUser.client.id) === undefined) acc.push(clientUser.client)
-      //   return acc
-      // }, [])
-      //
-      // const managebleClientIds = response.data.client_users
-      //                           .filter(clientUser => clientUser.user_id === currentUserId && clientUser.admin)
-      //                           .map(clientUsers => clientUsers.client.id)
-
       dispatch(setClients(response.data.clients.map(client => ({
         ...client,
         userOfClient: true
-      }))
-    ))
+      }))))
     }
     request(onSuccess, GET_CLIENTS)
   }
