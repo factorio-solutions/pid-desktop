@@ -34,7 +34,7 @@ class GpWebpayPage extends Component {
 
   checkSubmitable = () => {
     const { state } = this.props
-    return state.csob_merchant_id !== '' && state.csob_private_key !== ''
+    return state.gp_webpay_merchant_id !== '' && state.gp_webpay_private_key !== ''
   }
 
   render() {
