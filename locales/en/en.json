@@ -806,7 +806,11 @@
 		"price": "Price",
 		"garage": "Garage",
 		"floor": "Floor",
-		"place": "Spot"
+		"place": "Spot",
+		"paymentMethod": "Payment method",
+		"raiffeisenbank": "Raiffeisenbank - online payment",
+		"csob": "ČSOB - online payment",
+		"paypal": "PayPal"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",
