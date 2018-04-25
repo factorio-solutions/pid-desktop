@@ -342,7 +342,7 @@ class NewReservationPage extends Component {
                 }
 
                 <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
-                <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+                <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
 
                 {state.client_id && state.user &&
                   state.user.availableClients.findById(state.client_id) &&
