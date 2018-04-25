@@ -339,7 +339,7 @@ export function submitGuestReservation(callback) {
         user: {
           email:     newGuest.email.value.toLowerCase(),
           full_name: newGuest.name.value,
-          phone:     newGuest.phone.value,
+          phone:     newGuest.phone.value.replace(/\s/g, ''),
           language:  getState().mobileHeader.current_user.language
         },
         client_user: state.client_id ? {

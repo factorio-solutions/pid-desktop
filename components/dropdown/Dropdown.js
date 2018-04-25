@@ -92,17 +92,22 @@ export default class Dropdown extends Component {
         this.hide()
       }
 
-      const show = this.state.filter === '' ? true : item.label
-        .toString()
-        .replace(/\s\s+/g, ' ')
-        .trim()
-        .toLowerCase()
-        .includes(this.state.filter.toLowerCase())
+      const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
+      const show = this.state.filter === '' ? true : lowercaseTrimmedLabel.includes(this.state.filter.toLowerCase())
 
       return {
         ...item,
         render: (<li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
-          <label>{item.representer ? item.representer(item.label) : item.label}</label>
+          <label>
+            {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
+              .split(this.state.filter.toLowerCase() || undefined) // split by filter
+              .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
+              .filter(o => o !== false)
+              .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
+              .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
+              .map((part, index) => index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>)
+            }
+          </label>
         </li>)
       }
     })
@@ -136,7 +141,7 @@ export default class Dropdown extends Component {
     }
 
     return (
-      <div>
+      <div className={styles.dropdownContainter}>
         <button
           type="button"
           className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted} ${!editable && styles.dimmer}`}

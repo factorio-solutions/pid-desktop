@@ -1,5 +1,9 @@
 @import '../../styles/app.components';
 
+.dropdownContainter {
+  position: relative;
+}
+
 .button {
   display:  inline-block;
   width:    100%;
@@ -128,6 +132,11 @@
   height: 50px;
 }
 
+.garageSetupGates {
+  @extend .light;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 .transparent {
   border-bottom:    1px solid $white;
   background-color: rgba(0, 0, 0, 0);
@@ -154,14 +163,19 @@
   font-size:        25px;
 }
 
-.highlighted{
+.highlighted {
   border-bottom: 1px solid $red;
+  background:    rgba($red, .5);
 }
 
 .garageSelector {
   background-color: rgba(0, 0, 0, 0);
   color:            $yellow;
   font-weight:      bold;
+
+  + .drop {
+    max-height: 350px;
+  }
 }
 
 .tabDropdown {

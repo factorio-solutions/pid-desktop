@@ -49,92 +49,110 @@ export default function newContract(state = defaultState, action) {
   switch (action.type) {
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID:
-      return { ...state,
+      return {
+        ...state,
         contract_id: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENTS:
-      return { ...state,
+      return {
+        ...state,
         clients: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT:
-      return { ...state,
+      return {
+        ...state,
         client_id: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_ADD_CLIENT:
-      return { ...state,
+      return {
+        ...state,
         addClient: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CLIENT_TOKEN:
-      return { ...state,
+      return {
+        ...state,
         client_token: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_RENTS:
-      return { ...state,
+      return {
+        ...state,
         rents: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_RENT:
-      return { ...state,
+      return {
+        ...state,
         rent: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_NEW_RENT:
-      return { ...state,
+      return {
+        ...state,
         newRent: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_PRICE:
-      return { ...state,
+      return {
+        ...state,
         price: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CURRENCIES:
-      return { ...state,
+      return {
+        ...state,
         currencies: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CURRENCY:
-      return { ...state,
+      return {
+        ...state,
         currency_id: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_FROM:
-      return { ...state,
+      return {
+        ...state,
         from: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_TO:
-      return { ...state,
+      return {
+        ...state,
         to: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE:
-      return { ...state,
+      return {
+        ...state,
         garage: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES:
-      return { ...state,
+      return {
+        ...state,
         places: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT:
-      return { ...state,
+      return {
+        ...state,
         highlight: !state.highlight
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY:
-      return { ...state,
+      return {
+        ...state,
         indefinitly: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL:
-      return { ...state,
+      return {
+        ...state,
         securityInterval: action.value > 60 ? 60 : action.value
       }
 

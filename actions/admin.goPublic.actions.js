@@ -75,7 +75,7 @@ export function submitPricings() {
 
     Promise.all(promises).then(() => { // resolved
       dispatch(setCustomModal())
-      nav.to(`/${getState().pageBase.garage}/admin/modules`)
+      // nav.to(`/${getState().pageBase.garage}/admin/modules`)
     })
   }
 }

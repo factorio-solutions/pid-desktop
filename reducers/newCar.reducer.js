@@ -11,65 +11,74 @@ import {
   CLEAR_CAR_FORM
 }  from '../actions/newCar.actions'
 
-const defaultState =  { licence_plate: ''
-                      , color:         ''
-                      , model:         ''
-                      , name:          ''
-                      , width:         ''
-                      , height:        ''
-                      , length:        ''
-                      , highlight:     false
-                      , lpg:           false
-                      }
+const defaultState = { licence_plate: '',
+  color:         '',
+  model:         '',
+  name:          '',
+  width:         '',
+  height:        '',
+  length:        '',
+  highlight:     false,
+  lpg:           false
+}
 
 
-export default function newCar (state = defaultState, action) {
+export default function newCar(state = defaultState, action) {
   switch (action.type) {
 
     case SET_CAR_LICENCE_PLATE:
-      return { ... state
-             , licence_plate: action.value
-             }
+      return {
+        ...state,
+        licence_plate: action.value
+      }
 
     case SET_CAR_COLOR:
-      return { ... state
-             , color: action.value
-             }
+      return {
+        ...state,
+        color: action.value
+      }
 
     case SET_CAR_MODEL:
-      return { ... state
-             , model: action.value
-             }
+      return {
+        ...state,
+        model: action.value
+      }
 
     case SET_CAR_NAME:
-      return { ... state
-             , name: action.value
-             }
+      return {
+        ...state,
+        name: action.value
+      }
 
     case SET_CAR_WIDTH:
-      return { ... state
-             , width: action.value
-             }
+      return {
+        ...state,
+        width: action.value
+      }
 
     case SET_CAR_HEIGHT:
-      return { ... state
-             , height: action.value
-             }
+      return {
+        ...state,
+        height: action.value
+      }
 
     case SET_CAR_LENGTH:
-      return { ... state
-             , length: action.value
-             }
+      return {
+        ...state,
+        length: action.value
+      }
 
     case SET_CAR_LPG:
-      return { ... state
-             , lpg: !state.lpg
-             }
+      return {
+        ...state,
+        lpg: !state.lpg
+      }
 
     case SET_CAR_HIGHLIGHT:
-      return { ... state
-             , highlight: action.value
-             }
+      return {
+        ...state,
+        highlight: action.value
+      }
 
     case CLEAR_CAR_FORM:
       return defaultState

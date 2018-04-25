@@ -104,7 +104,11 @@ export const GET_GARAGE_DETAILS_FLOORS =`query ($id: Id!) {
   }
 }`
 
-export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
+export const GET_GARAGE_DETAILS_GATES = `query ($id: Id!) {
+  registered_phone_numbers {
+    id
+    number
+  }
   garage(id: $id) {
     id
     pid_tarif_id
@@ -130,13 +134,17 @@ export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
       id
       label
       phone
+      phone_number_id
       address {
         line_1
         lat
         lng
       }
-      places{
+      places {
         label
+        floor {
+          label
+        }
       }
     }
   }

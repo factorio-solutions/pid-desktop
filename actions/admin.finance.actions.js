@@ -146,8 +146,10 @@ export function upadteAccount(params) {
 export function updateCsobAccount() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
-    const onSuccess = () => {
-      nav.to(`/${getState().pageBase.garage}/admin/finance`)
+    const onSuccess = response => {
+      response.data.update_account ?
+        nav.to(`/${getState().pageBase.garage}/admin/finance`) :
+        dispatch(setError(t([ 'newAccount', 'invalidKeyPair' ])))
     }
 
     request(
