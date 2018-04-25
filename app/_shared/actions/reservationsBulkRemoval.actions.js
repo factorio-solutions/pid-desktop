@@ -9,13 +9,14 @@ import { RESERVATIONS_QUERY, DESTROY_RESERVATIONS } from '../queries/reservation
 import { GET_AVAILABLE_USERS }                      from '../queries/newReservation.queries'
 
 
-export const SET_BULK_REMOVAL_GARAGES = 'SET_GARAGES'
+export const SET_BULK_REMOVAL_GARAGES = 'SET_BULK_REMOVAL_GARAGES'
 export const TOGGLE_RESERVATION_IN_TO_BE_REMOVED = 'TOGGLE_RESERVATION_IN_TO_BE_REMOVED'
-export const SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED = 'SET_RESERVATION_TO_BE_REMOVED'
-export const SET_BULK_REMOVAL_AVAILABLE_USERS = 'SET_AVAILABLE_USERS'
-export const SET_BULK_REMOVAL_USER_ID = 'SET_USER_ID'
-export const SET_BULK_REMOVAL_TO = 'SET_TO'
-export const SET_BULK_REMOVAL_FROM = 'SET_FROM'
+export const SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED = 'SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED'
+export const SET_BULK_REMOVAL_AVAILABLE_USERS = 'SET_BULK_REMOVAL_AVAILABLE_USERS'
+export const SET_BULK_REMOVAL_USER_ID = 'SET_BULK_REMOVAL_USER_ID'
+export const SET_BULK_REMOVAL_TO = 'SET_BULK_REMOVAL_TO'
+export const SET_BULK_REMOVAL_FROM = 'SET_BULK_REMOVAL_FROM'
+export const RESET_BULK_REMOVAL_TIMES = 'RESET_BULK_REMOVAL_TIMES'
 export const BULK_REMOVAL_CLEAR_FORM = 'BULK_REMOVAL_CLEAR_FORM'
 
 
@@ -24,6 +25,7 @@ export const toggleReservation = actionFactory(TOGGLE_RESERVATION_IN_TO_BE_REMOV
 export const setUserId = actionFactory(SET_BULK_REMOVAL_USER_ID)
 export const setTo = actionFactory(SET_BULK_REMOVAL_TO)
 export const setFrom = actionFactory(SET_BULK_REMOVAL_FROM)
+export const resetTimes = actionFactory(RESET_BULK_REMOVAL_TIMES)
 export const clearForm = actionFactory(BULK_REMOVAL_CLEAR_FORM)
 export const setReservationsToBeRemoved = actionFactory(SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED)
 export const setGarages = actionFactory(SET_BULK_REMOVAL_GARAGES)

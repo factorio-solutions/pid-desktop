@@ -26,6 +26,7 @@ class BulkRemovalReservationPage extends Component {
   }
 
   componentDidMount() {
+    this.props.actions.resetTimes()
     this.props.actions.loadAvailableUsers()
   }
 
