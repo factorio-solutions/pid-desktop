@@ -8,21 +8,27 @@ import {
   SET_BULK_REMOVAL_USER_ID,
   SET_BULK_REMOVAL_TO,
   SET_BULK_REMOVAL_FROM,
+  RESET_BULK_REMOVAL_TIMES,
   BULK_REMOVAL_CLEAR_FORM
 }  from '../actions/reservationsBulkRemoval.actions'
 import { MOMENT_DATETIME_FORMAT, ceilTime } from '../helpers/time'
 
 
+function generateFromTo() {
+  return {
+    from: ceilTime(moment()).format(MOMENT_DATETIME_FORMAT),
+    to:   ceilTime(moment()).add(30, 'm').format(MOMENT_DATETIME_FORMAT)
+  }
+}
+
 const defaultState = {
+  ...generateFromTo(),
   availableUsers: [],
   garages:        [],
-  from:           ceilTime(moment()).format(MOMENT_DATETIME_FORMAT),
-  to:             ceilTime(moment()).add(30, 'm').format(MOMENT_DATETIME_FORMAT),
   toBeRemoved:    [],
   loading:        false,
   userId:         -1
 }
-
 
 export default function reservationBulkRemoval(state = defaultState, action) {
   switch (action.type) {
@@ -65,12 +71,18 @@ export default function reservationBulkRemoval(state = defaultState, action) {
         ...state,
         from: action.value
       }
-
     case SET_BULK_REMOVAL_TO:
       return {
         ...state,
         to: action.value
       }
+
+    case RESET_BULK_REMOVAL_TIMES:
+      return {
+        ...state,
+        ...generateFromTo()
+      }
+
 
     case BULK_REMOVAL_CLEAR_FORM:
       return defaultState
