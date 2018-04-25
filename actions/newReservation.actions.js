@@ -61,6 +61,9 @@ export const NEW_RESERVATION_SET_DURATION_DATE = 'NEW_RESERVATION_SET_DURATION_D
 export const NEW_RESERVATION_SET_LOADING = 'NEW_RESERVATION_SET_LOADING'
 export const NEW_RESERVATION_SET_HIGHLIGHT = 'NEW_RESERVATION_SET_HIGHLIGHT'
 export const NEW_RESERVATION_SET_ERROR = 'NEW_RESERVATION_SET_ERROR'
+export const NEW_RESERVATION_SET_SELECTED_TEMPLATE = 'NEW_RESERVATION_SET_SELECTED_TEMPLATE'
+export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_TEXT'
+export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -79,6 +82,9 @@ export const setPaidByHost = actionFactory(NEW_RESERVATION_SET_PAID_BY_HOST)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
 export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
+export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
+export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
+export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -152,6 +158,13 @@ export function setGarage(value) {
     }).catch(error => {
       throw (error)
     })
+  }
+}
+
+export function removeDiacritics() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    dispatch(setTemplateText(state.templateText.normalize('NFD').replace(/[\u0300-\u036f]/g, '')))
   }
 }
 
@@ -466,11 +479,13 @@ export function downloadGarage(id) {
                 <span>
                   <b>{t([ 'newReservation', 'price' ])}: </b>
                   { pricing.flat_price ? pricePerHour(pricing.flat_price) :
-                                  duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
-                                  duration < 24 ? pricePerHour(pricing.exponential_day_price) :
-                                  duration < 168 ? pricePerHour(pricing.exponential_week_price) :
-                                  pricePerHour(pricing.exponential_month_price)
-                                } {symbol}
+                    duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
+                    duration < 24 ? pricePerHour(pricing.exponential_day_price) :
+                    duration < 168 ? pricePerHour(pricing.exponential_week_price) :
+                    pricePerHour(pricing.exponential_month_price)
+                  }
+                  {symbol}
+                  {t([ 'newReservation', 'perHour' ])}
                 </span>
               </div>
               {pricing.weekend_price && <div>
@@ -559,7 +574,9 @@ export function submitReservation(id) {
                begins_at:                ongoing ? undefined : timeToUTC(state.from),
                ends_at:                  timeToUTC(state.to),
                recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
-               recurring_reservation_id: state.recurring_reservation_id
+               recurring_reservation_id: state.recurring_reservation_id,
+               send_sms:                 state.sendSMS,
+               sms_text:                 state.templateText
              },
                id
              }
@@ -572,7 +589,7 @@ export function submitReservation(id) {
         user: {
           email:     state.email.value.toLowerCase(),
           full_name: state.name.value,
-          phone:     state.phone.value,
+          phone:     state.phone.value.replace(/\s/g, ''),
           language:  state.language,
           onetime:   state.user.id === -2
         },

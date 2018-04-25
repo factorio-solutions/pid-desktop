@@ -59,78 +59,95 @@ export default function inviteUser(state = defaultState, action) {
   switch (action.type) {
 
     case INVITE_USER_BOOLEAN_ATTR:
-      return { ...state,
+      return {
+        ...state,
         [action.attribute]: action.value
       }
 
     case INVITE_USER_SET_EMAIL:
-      return { ...state,
+      return {
+        ...state,
         email: action.value
       }
     case INVITE_USER_SET_MESSAGE:
-      return { ...state,
+      return {
+        ...state,
         message: action.value
       }
     case INVITE_USER_SET_NAME:
-      return { ...state,
+      return {
+        ...state,
         full_name: action.value
       }
     case INVITE_USER_SET_PHONE:
-      return { ...state,
+      return {
+        ...state,
         phone: action.value
       }
     case INVITE_USER_SET_LANGUAGE:
-      return { ...state,
+      return {
+        ...state,
         language: action.value
       }
 
     case INVITE_USER_SET_CLIENTS:
-      return { ...state,
+      return {
+        ...state,
         clients: action.value
       }
     case INVITE_USER_SET_CLIENT:
-      return { ...state,
+      return {
+        ...state,
         client_id: action.value
       }
 
     case INVITE_USER_SET_GARAGE:
-      return { ...state,
+      return {
+        ...state,
         garage_id: action.value
       }
     case INVITE_USER_SET_GARGES:
-      return { ...state,
+      return {
+        ...state,
         garages: action.value
       }
 
     case INVITE_USER_SET_CAR:
-      return { ...state,
+      return {
+        ...state,
         car_id: action.value
       }
     case INVITE_USER_SET_CARS:
-      return { ...state,
+      return {
+        ...state,
         cars: action.value
       }
 
     case INVITE_USER_SET_ERROR:
-      return { ...state,
+      return {
+        ...state,
         error: action.value
       }
     case INVITE_USER_SET_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         success: action.value
       }
     case INVITE_USER_SET_CURRENT_EMAIL:
-      return { ...state,
+      return {
+        ...state,
         currentEmail: action.value
       }
 
     case INVITE_USER_SET_HIGHLIGHT:
-      return { ...state,
+      return {
+        ...state,
         highlight: action.value
       }
 
     case INVITE_USER_RESET_FORM:
-      return { ...defaultState,
+      return {
+        ...defaultState,
         success:      state.success,
         error:        state.error,
         currentEmail: undefined

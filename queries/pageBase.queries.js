@@ -18,6 +18,7 @@ export const GET_CURRENT_USER = `{
     has_account
     has_client
     created_at
+    hide_public_garages
   }
 }
 `
@@ -39,6 +40,7 @@ export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: 
     has_garages
     has_account
     has_client
+    hide_public_garages
   }
 }
 `
