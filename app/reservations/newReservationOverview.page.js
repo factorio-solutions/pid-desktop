@@ -11,7 +11,7 @@ import * as newReservationActions from '../_shared/actions/newReservation.action
 
 import styles from './newReservationOverview.page.scss'
 
-const AVAILABLE_PAYMENT_METHOD = [ 'raiffeisenbank', 'csob', 'paypal' ]
+const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'paypal' ] // TODO: add 'raiffeisenbank'
 
 
 class NewReservationOverviewPage extends Component {
