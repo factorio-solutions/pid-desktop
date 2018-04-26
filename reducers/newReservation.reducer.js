@@ -37,6 +37,7 @@ import {
 
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
+  NEW_RESERVATION_SET_PAYMENT_METHOD,
 
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
@@ -76,7 +77,9 @@ const defaultState = {
   error:        undefined,
 
   selectedTemplate: undefined, // index of it
-  templateText:     ''
+  templateText:     '',
+
+  paymentMethod: ''
 }
 
 function placeLabel(state) {
@@ -310,6 +313,12 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         templateText: substituteVariablesInTemplate(action.value, state)
+      }
+
+    case NEW_RESERVATION_SET_PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethod: action.value
       }
 
 

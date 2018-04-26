@@ -64,6 +64,11 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     flexiplace
     is_public
     has_payment_gate
+    account {
+      raiffeisenbank_is_active
+      csob_is_active
+      paypal_is_active
+    }
     address {
       line_1
       line_2
