@@ -38,7 +38,6 @@ class NewReservationPage extends Component {
 
   componentDidMount() {
     const { actions, params } = this.props
-    actions.clearForm()
     actions.setInitialStore(params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
