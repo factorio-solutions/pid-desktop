@@ -471,6 +471,7 @@ export function downloadGarage(id) {
           }
 
           if (place.available && place.pricing) { // add tooltip to available places
+            if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
             const pricing = place.pricing
             const symbol = pricing.currency.symbol
             const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
