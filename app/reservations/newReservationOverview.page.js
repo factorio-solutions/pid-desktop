@@ -122,14 +122,14 @@ class NewReservationOverviewPage extends Component {
             <div className={styles.label}>{ state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price }</div>
           </div>
 
-          <div>
+          {!state.client_id && <div>
             <h4>{t([ 'newReservationOverview', 'paymentMethod' ])}</h4>
             <table className={styles.paymentMethods}>
               <tbody>
                 {AVAILABLE_PAYMENT_METHOD.map(this.renderPaymentRow)}
               </tbody>
             </table>
-          </div>
+          </div>}
         </Form>
       </PageBase>
     )
