@@ -253,8 +253,8 @@ class GarageLayout extends Component {
       .forEach(place => {
         const placeRect = currentSvg.getElementById('Place' + place.label)
         if (placeRect) {
-          placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
-          placeRect.onmouseleave = () => { this.setState({ ...this.state, visible: false }) }
+          placeRect.onmouseenter = () => this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip })
+          placeRect.onmouseleave = () => this.setState({ ...this.state, visible: false })
           placeRect.onmousemove = event => {
             const secondaryMenuCorrection = window.innerWidth > 1300 && (window.location.hash.includes('/admin/') || window.location.hash.includes('/analytics/'))
             this.setState({
@@ -335,7 +335,7 @@ class GarageLayout extends Component {
     const prepareFloors = floor => <SvgFromText svg={floor.scheme || ''} svgClick={this.handleSVGClick} />
 
     return (
-      unfold === true ? <div className={styles.grayBackground}>
+      unfold ? <div className={styles.grayBackground}>
         {floors.map(prepareFloors)}
       </div> :
       <div ref={'containerDiv'}>
