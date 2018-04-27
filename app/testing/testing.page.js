@@ -1,19 +1,20 @@
-import React, { Component, PropTypes } from 'react'
-import * as localization from '../_shared/modules/localization/localization'
+import React, { Component } from 'react'
 
-import Recurring from '../_shared/components/recurring/Recurring'
+import requestPromise from '../_shared/helpers/requestPromise'
+import { GARAGE_CONTRACTS } from '../_shared/queries/clients.queries'
 
 export default class TestingPage extends Component {
+
+  download = () => {
+    requestPromise(GARAGE_CONTRACTS, { id: 1 })
+    .then(data => console.log(data))
+  }
+
   render() {
     return (
       <div>
         <h1>Testing page</h1>
-        <Recurring
-          show
-          onSubmit={rule => console.log('set rule to ', JSON.stringify(rule))}
-          showDays
-          showWeeks
-        />
+        <button onClick={this.download}>Download</button>
       </div>
     )
   }

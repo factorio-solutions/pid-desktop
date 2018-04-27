@@ -11,7 +11,7 @@ import * as newReservationActions from '../_shared/actions/newReservation.action
 
 import styles from './newReservationOverview.page.scss'
 
-const AVAILABLE_PAYMENT_METHOD = [ 'raiffeisenbank', 'csob', 'paypal' ]
+const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'paypal' ] // TODO: add 'raiffeisenbank'
 
 
 class NewReservationOverviewPage extends Component {
@@ -122,14 +122,14 @@ class NewReservationOverviewPage extends Component {
             <div className={styles.label}>{ state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price }</div>
           </div>
 
-          <div>
+          {!state.client_id && <div>
             <h4>{t([ 'newReservationOverview', 'paymentMethod' ])}</h4>
             <table className={styles.paymentMethods}>
               <tbody>
                 {AVAILABLE_PAYMENT_METHOD.map(this.renderPaymentRow)}
               </tbody>
             </table>
-          </div>
+          </div>}
         </Form>
       </PageBase>
     )

@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import moment from 'moment'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Chart } from 'react-google-charts'
+import moment                          from 'moment'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
+import { Chart }                       from 'react-google-charts'
 
 import PageBase     from '../_shared/containers/pageBase/PageBase'
 import GarageLayout from '../_shared/components/garageLayout/GarageLayout'
 
-import { t, getLanguage }    from '../_shared/modules/localization/localization'
+import { t, getLanguage } from '../_shared/modules/localization/localization'
 
-import * as dashboardActions         from '../_shared/actions/dashboard.actions'
+import * as dashboardActions from '../_shared/actions/dashboard.actions'
 
 import './dashboard.noHash.page.css'
 import styles from './dashboard.page.scss'
@@ -134,7 +134,10 @@ class DashboardPage extends Component {
               {state.news.length > 0 && <div>
                 <h2 className={styles.h2}>{t([ 'dashboard', 'news' ])}</h2>
                 <div className={styles.section}>
-                  {state.news.map(prepareNews)}
+                  {state.news
+                    .sort((a, b) => moment(a.created_at).isBefore(moment(b.created_at)))
+                    .map(prepareNews)
+                  }
                 </div>
               </div>}
             </div>
