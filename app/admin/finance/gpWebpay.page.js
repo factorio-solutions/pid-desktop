@@ -19,11 +19,17 @@ class GpWebpayPage extends Component {
     state:    PropTypes.object,
     actions:  PropTypes.object,
     pageBase: PropTypes.object,
-    params:   PropTypes.object
+    params:   PropTypes.object,
+    location: PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.initFinance(this.props.params.id)
+    const { location, actions } = this.props
+    if (location.query.hasOwnProperty('gp_webpay') && location.query.hasOwnProperty('verify')) {
+      actions.testPaymentSuccessful(location.query.verify === 'true')
+    } else {
+      actions.initFinance(this.props.params.id)
+    }
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
@@ -34,7 +40,7 @@ class GpWebpayPage extends Component {
 
   checkSubmitable = () => {
     const { state } = this.props
-    return state.gp_webpay_merchant_id !== '' && state.gp_webpay_private_key !== ''
+    return state.gp_webpay_merchant_id !== '' && state.gp_webpay_private_key !== '' && state.gp_webpay_password
   }
 
   render() {
@@ -51,11 +57,11 @@ class GpWebpayPage extends Component {
           onBack={goBack}
           onHighlight={actions.toggleHighlight}
         >
-          <h2>{t([ 'finance', 'csobPayment' ])}</h2>
+          <h2>{t([ 'finance', 'gpWebpayPayment' ])}</h2>
           <Input
             onEnter={submitForm}
             onChange={actions.setGpWebpayMerchantId}
-            label={t([ 'newAccount', 'csobMerchantID' ])}
+            label={t([ 'newAccount', 'gpWebpayMerchantID' ])}
             error={t([ 'newAccount', 'invalidMerchantId' ])}
             value={state.gp_webpay_merchant_id}
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
