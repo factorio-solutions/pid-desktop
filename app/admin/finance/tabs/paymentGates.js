@@ -61,7 +61,7 @@ class PaymentGatesTab extends Component {
         </div>
 
         <div className={styles.module}>
-          {t([ 'finance', 'GpWebpay' ])}
+          {t([ 'finance', 'gpWebpay' ])}
           <div className={styles.settings}>
             <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGpWebpaySettings} />
             <Switch on={state.gp_webpay} onClick={state.gp_webpay ? actions.disableAccountGpWebpay : this.toGpWebpaySettings} />

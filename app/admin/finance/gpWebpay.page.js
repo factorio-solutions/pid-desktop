@@ -73,7 +73,7 @@ class GpWebpayPage extends Component {
             label={t([ 'newAccount', 'gpWebpayPassword' ])}
             error={t([ 'newAccount', 'invalidGpWebpayPassword' ])}
             value={state.gp_webpay_password}
-            placeholder={t([ 'newAccount', 'gpWebPayplaceholder' ])}
+            placeholder={t([ 'newAccount', 'gpWebpayPasswordPlaceholder' ])}
             highlight={state.highlight}
           />
           <label className={state.highlight && styles.red}>
