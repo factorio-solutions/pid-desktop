@@ -7,9 +7,9 @@ import Input              from '../../_shared/components/input/Input'
 import Form               from '../../_shared/components/form/Form'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
-import * as nav                 from '../../_shared/helpers/navigation'
-import { t }                    from '../../_shared/modules/localization/localization'
-import * as financeActions      from '../../_shared/actions/admin.finance.actions'
+import * as nav            from '../../_shared/helpers/navigation'
+import { t }               from '../../_shared/modules/localization/localization'
+import * as financeActions from '../../_shared/actions/admin.finance.actions'
 
 import styles from './csob.page.scss'
 
@@ -67,6 +67,7 @@ class GpWebpayPage extends Component {
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
             highlight={state.highlight}
           />
+
           <Input
             onEnter={submitForm}
             onChange={actions.setGpWebpayPassword}
@@ -75,7 +76,9 @@ class GpWebpayPage extends Component {
             value={state.gp_webpay_password}
             placeholder={t([ 'newAccount', 'gpWebpayPasswordPlaceholder' ])}
             highlight={state.highlight}
+            type="password"
           />
+
           <label className={state.highlight && styles.red}>
             {t([ 'finance', 'SelectPrivateKey' ])}:
           </label>
@@ -87,6 +90,7 @@ class GpWebpayPage extends Component {
             accept=".key"
             name="newAccountPrivateKey"
           />
+
           <LabeledRoundButton
             label={t([ 'finance', 'uploadKey' ])}
             content={<span className="fa fa-file-code-o" aria-hidden="true" />}
