@@ -1,3 +1,4 @@
+import React from 'react'
 import moment from 'moment'
 
 import { request }                       from '../helpers/request'
@@ -442,9 +443,10 @@ export function downloadGarage(id) {
         }
       }
 
-      request(onSuccess
-        , (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS) // download only free places if got rest of details
-        , { id:             id || state.garage.id,
+      request(
+        onSuccess,
+        (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
+        { id:             id || state.garage.id,
           user_id:        state.user.id,
           client_id:      state.client_id,
           begins_at:      timeToUTC(state.from),
@@ -471,6 +473,7 @@ export function downloadGarage(id) {
           }
 
           if (place.available && place.pricing) { // add tooltip to available places
+            if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
             const pricing = place.pricing
             const symbol = pricing.currency.symbol
             const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')

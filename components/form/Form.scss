@@ -12,6 +12,10 @@
   bottom:   $mobileNavigationBottomOffset;
   left:     $mobileNavigationSidesOffset;
 
+  &.inModal {
+    position: inherit;
+  }
+
   >.floatRight {
     float: right;
   }
