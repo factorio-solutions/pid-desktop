@@ -9,6 +9,7 @@ import {
   SET_BULK_REMOVAL_TO,
   SET_BULK_REMOVAL_FROM,
   RESET_BULK_REMOVAL_TIMES,
+  SET_BULK_REMOVAL_LOADING,
   BULK_REMOVAL_CLEAR_FORM
 }  from '../actions/reservationsBulkRemoval.actions'
 import { MOMENT_DATETIME_FORMAT, ceilTime } from '../helpers/time'
@@ -83,6 +84,11 @@ export default function reservationBulkRemoval(state = defaultState, action) {
         ...generateFromTo()
       }
 
+    case SET_BULK_REMOVAL_LOADING:
+      return {
+        ...state,
+        loading: action.value
+      }
 
     case BULK_REMOVAL_CLEAR_FORM:
       return defaultState
