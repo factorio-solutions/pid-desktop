@@ -1376,6 +1376,15 @@
 			"createdAt": "created at",
 			"editNews": "edit news",
 			"deleteNews": "delete news"
+		},
+		"logs": {
+			"accessLogs": "Access logs",
+			"garageLogs": "Garage logs",
+			"user": "user",
+			"accessType": "access type",
+			"createdAt": "created at",
+			"gate": "gate",
+			"reservation": "reservation"
 		}
 	}
 }
