@@ -62,7 +62,7 @@ class ClientsPage extends Component {
     }
 
     const prepareContactPersons = (acc, user, index, arr) => {
-      acc.push(<span><b>{user.full_name}</b></span>)
+      acc.push(<span><b>{user.full_name}</b> ({user.email}, {user.phone})</span>)
       if (arr.length - 1 !== index) acc.push(<span>, </span>)
       return acc
     }
@@ -85,12 +85,12 @@ class ClientsPage extends Component {
         <br />
         {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
       </div>
-      <div>
+      {client.is_admin && <div>
         {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
         {currentContracts.map(prepareContractButton)}
         {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
         {oldContracts.map(prepareContractButton)}
-      </div>
+      </div>}
       <div>
         <LabeledRoundButton
           label={t([ 'clients', 'createAgreement' ])}
@@ -104,6 +104,7 @@ class ClientsPage extends Component {
           content={<span className="fa fa-files-o" aria-hidden="true" />}
           onClick={toInvoices}
           type={'action'}
+          state={client.is_admin ? '' : 'disabled'}
         />
         <LabeledRoundButton
           label={t([ 'clients', 'editClient' ])}
@@ -128,6 +129,15 @@ class ClientsPage extends Component {
     }
   }
 
+  filterAttributes = client => {
+    let newClient = { ...client }
+    if (!client.is_admin) newClient.monthly_total = null
+    if (!client.is_admin) newClient.all_invoices_paid = null
+    if (!client.is_admin) newClient.token = null
+    if (!client.is_admin) newClient.hasContract = null
+    return newClient
+  }
+
   render() {
     const { state, pageBase } = this.props
 
@@ -137,14 +147,14 @@ class ClientsPage extends Component {
       { key:         'hasContract',
         title:       t([ 'clients', 'contract' ]),
         comparator:  'boolean',
-        representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+        representer: o => o === null ? null : <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
       },
       { key: 'place_count', title: t([ 'clients', 'places' ]), comparator: 'number' },
       { key: 'monthly_total', title: t([ 'clients', 'monthlyTotal' ]), comparator: 'string' },
       { key:         'all_invoices_paid',
         title:       t([ 'clients', 'invoices' ]),
         comparator:  'boolean',
-        representer: o => <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+        representer: o => o === null ? null : <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
       },
       { key: 'user_count', title: t([ 'clients', 'users' ]), comparator: 'number' }
     ]
@@ -155,7 +165,7 @@ class ClientsPage extends Component {
     return (
       <PageBase>
         <div className={styles.tableContainer}>
-          <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(this.addSpoiler)} />
+          <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(this.addSpoiler).map(this.filterAttributes)} />
         </div>
         <div className={styles.addButton}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.addClient} type="action" size="big" />

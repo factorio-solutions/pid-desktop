@@ -187,6 +187,7 @@
 		"analyticsgatesHint": "TODO: gates Hint",
 		"flexiplaceHint": "I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.",
 		"pidAdmin": "PID admin",
+		"bulkRemovalHint": "Here you can remove more of your reservations at once.",
 		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server"
 	},
 	"newReservation": {
@@ -236,7 +237,12 @@
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
 		"languageSelector": "Choose communication language",
-		"sendSms": "Send notification about reservation via SMS"
+		"selectTemplate": "Select template",
+		"sendSms": "Send notification about reservation via SMS",
+		"smsText": "SMS text",
+		"character": "characters",
+		"removeDiacritics": "remove diacritics",
+		"perHour": " / hour"
 	},
 	"clients": {
 		"name": "name",
@@ -527,11 +533,14 @@
 		"invalidPasswordPhone": "Invalid password",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Gate has password. Change it by fill in a new password",
-		"passwordWasNotSet": "Password was not set!"
+		"passwordWasNotSet": "Password was not set!",
+		"addAllPalces": "Add all places",
+		"notAssignNumber": "Number not assigned",
+		"selcetNumber": "Number to open gate"
 	},
 	"newClient": {
 		"name": "Client name",
-		"placeholder": "Company client",
+		"placeholder": "Company ltd.",
 		"invalidName": "Invalid client name",
 		"ICplaceholder": "12345678",
 		"DICplaceholder": "CZ12345678",
@@ -550,7 +559,9 @@
 		"newTemplateText": "Template text",
 		"selectTemplate": "Select template",
 		"edit": "Client",
-		"smsSettings": "SMS module"
+		"smsSettings": "SMS module",
+		"activate": "activate",
+		"deactivate": "deactivate"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -627,7 +638,8 @@
 		"editUser": "Edit my user profile",
 		"email": "Email:",
 		"createdAt": "Profile created:",
-		"cars": "Cars"
+		"cars": "Cars",
+		"showPublicGarages": "Show me public garages"
 	},
 	"users": {
 		"username": "username",
@@ -794,7 +806,11 @@
 		"price": "Price",
 		"garage": "Garage",
 		"floor": "Floor",
-		"place": "Spot"
+		"place": "Spot",
+		"paymentMethod": "Payment method",
+		"raiffeisenbank": "Raiffeisenbank - online payment",
+		"csob": "ČSOB - online payment",
+		"paypal": "PayPal"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",
@@ -864,7 +880,8 @@
 		"csobMerchantID": "ČSOB merchant ID",
 		"invalidMerchantId": "Merchant ID invalid",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Select private key:"
+		"SelectPrivateKey": "Select private key:",
+		"invalidKeyPair": "Merchant id or key is invalid"
 	},
 	"invoices": {
 		"invoiceDate": "Issued",
@@ -986,7 +1003,9 @@
 		"changeFailed": "An error occurred. Values were not changed.",
 		"uploadKey": "Upload RSA key",
 		"accountNumber": "Account number",
-		"invalidAccountNumber": "Invalid account number"
+		"invalidAccountNumber": "Invalid account number",
+		"paymentGates": "Payment gates",
+		"rents": "Rents"
 	},
 	"analytics": {
 		"week": "week",
@@ -1049,6 +1068,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Repeat: disabled",
+		"repeatEnabled": "Repeat: enabled",
 		"repeats": "Repeats:",
 		"daily": "Daily",
 		"weekly": "Weekly",
@@ -1084,6 +1104,13 @@
 		},
 		"on": "On",
 		"every": "every"
+	},
+	"bulkCancellation": {
+		"bulkCancellation": "Bulk cancellation",
+		"findReservations": "Find reservations",
+		"cancelReservations": "Cancel reservations",
+		"allUsers": "All users",
+		"noReservations": "No Reservations"
 	},
 	"mobileApp": {
 		"page": {
@@ -1223,7 +1250,10 @@
 			"receptionist": "receptionist",
 			"security": "security",
 			"invited_to": "just invited you to join a client account",
+			"invited_to_garage": "just invited you to join garage",
+			"invited_to_car": "just invited you to join car",
 			"as": "as",
+			"to_sign_up": "Sign me up!",
 			"issue": "In case of any issues, please",
 			"let_us_know": "let us know",
 			"we_will_help": "and we will help you with your account activation."
@@ -1256,6 +1286,8 @@
 			"receptionist": "receptionist",
 			"security": "security",
 			"invited_to": "invited you to join a client account",
+			"invited_to_garage": "just invited you to join garage",
+			"invited_to_car": "just invited you to join car",
 			"as": "as",
 			"to_sign_up": "Sign me up!",
 			"to_pid": "To Park-it-direct!",
@@ -1344,6 +1376,15 @@
 			"createdAt": "created at",
 			"editNews": "edit news",
 			"deleteNews": "delete news"
+		},
+		"logs": {
+			"accessLogs": "Access logs",
+			"garageLogs": "Garage logs",
+			"user": "user",
+			"accessType": "access type",
+			"createdAt": "created at",
+			"gate": "gate",
+			"reservation": "reservation"
 		}
 	}
 }

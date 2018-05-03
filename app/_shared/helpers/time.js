@@ -26,13 +26,24 @@ export function formatDate(date) {
   return moment(date).format(MOMENT_DATE_FORMAT)
 }
 
+function roundTime(roundMethod, minutes) {
+  return roundMethod(minutes / 15) * 15
+}
 
 export function toFifteenMinuteStep(minutes) {
-  return Math.floor(parseInt(minutes, 10) / 15) * 15
+  return roundTime(Math.floor, parseInt(minutes, 10))
+}
+
+function ceilFifteenMinuteStep(minutes) {
+  return roundTime(Math.ceil, parseInt(minutes, 10))
 }
 
 export function floorTime(time) {
   return moment(time).set('minute', toFifteenMinuteStep(moment(time).minutes()))
+}
+
+export function ceilTime(time) {
+  return moment(time).set('minute', ceilFifteenMinuteStep(moment(time).minutes()))
 }
 
 export function readFormatedTime(time) {

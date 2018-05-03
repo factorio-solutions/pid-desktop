@@ -2,12 +2,11 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase     from '../../_shared/containers/pageBase/PageBase'
-import Form         from '../../_shared/components/form/Form'
-import Dropdown     from '../../_shared/components/dropdown/Dropdown'
-import PatternInput from '../../_shared/components/input/PatternInput'
+import ModulesPageBase from './components/modulesPageBase'
+import Form            from '../../_shared/components/form/Form'
+import Dropdown        from '../../_shared/components/dropdown/Dropdown'
+import PatternInput    from '../../_shared/components/input/PatternInput'
 
-import * as nav               from '../../_shared/helpers/navigation'
 import { t }                  from '../../_shared/modules/localization/localization'
 import * as flexiplaceActions from '../../_shared/actions/admin.flexiplace.actions'
 
@@ -30,10 +29,9 @@ class FlexiplacePage extends Component {
   }
 
   render() {
-    const { state, pageBase, actions } = this.props
+    const { state, actions } = this.props
     const { pricing } = state
 
-    const goBack = () => nav.to(`/${pageBase.garage}/admin/modules`)
     const isSubmitable = () => {
       return pricing && (pricing.currency_id !== undefined &&
         ((pricing.flat_price !== undefined && pricing.flat_price !== '') ||
@@ -49,8 +47,8 @@ class FlexiplacePage extends Component {
     })
 
     return (
-      <PageBase>
-        <Form onSubmit={actions.sumbitFlexi} submitable={isSubmitable()} onBack={goBack}>
+      <ModulesPageBase>
+        <Form onSubmit={actions.sumbitFlexi} submitable={isSubmitable()}>
           <div>
             <Dropdown label={t([ 'newPricing', 'selectCurrency' ])} content={currencies} style="light" selected={state.currencies.findIndexById(pricing && pricing.currency_id)} />
           </div>
@@ -117,7 +115,7 @@ class FlexiplacePage extends Component {
         </Form>
 
         <div className={styles.bottomMargin} />
-      </PageBase>
+      </ModulesPageBase>
     )
   }
 }

@@ -2,14 +2,13 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase     from '../../_shared/containers/pageBase/PageBase'
-import GarageLayout from '../../_shared/components/garageLayout/GarageLayout'
-import Form         from '../../_shared/components/form/Form'
-import Dropdown     from '../../_shared/components/dropdown/Dropdown'
-import PatternInput from '../../_shared/components/input/PatternInput'
+import ModulesPageBase from './components/modulesPageBase'
+import GarageLayout    from '../../_shared/components/garageLayout/GarageLayout'
+import Form            from '../../_shared/components/form/Form'
+import Dropdown        from '../../_shared/components/dropdown/Dropdown'
+import PatternInput    from '../../_shared/components/input/PatternInput'
 
-import * as nav             from '../../_shared/helpers/navigation'
-import { t }                from '../../_shared/modules/localization/localization'
+import { t }                  from '../../_shared/modules/localization/localization'
 import * as goInternalActions from '../../_shared/actions/admin.goInternal.actions'
 
 import styles from './goPublic.page.scss'
@@ -29,8 +28,6 @@ class GoInternalPage extends Component {
   componentWillReceiveProps(nextProps) { // load garage if id changed
     nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGoInternal()
   }
-
-  goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/modules`)
 
   render() {
     const { state, actions } = this.props
@@ -59,10 +56,10 @@ class GoInternalPage extends Component {
 
 
     return (
-      <PageBase>
+      <ModulesPageBase>
         <div className={styles.flex}>
           <div className={styles.half}>
-            <Form onSubmit={actions.submitGoInternal} submitable={isSubmitable()} onBack={this.goBack}>
+            <Form onSubmit={actions.submitGoInternal} submitable={isSubmitable()}>
               <div>
                 <Dropdown
                   label={t([ 'newPricing', 'selectCurrency' ])}
@@ -140,7 +137,7 @@ class GoInternalPage extends Component {
             />
           </div>
         </div>
-      </PageBase>
+      </ModulesPageBase>
     )
   }
 }

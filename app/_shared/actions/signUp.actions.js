@@ -73,7 +73,7 @@ export function register(callback = () => {}) {
         user: {
           email:       state.email.value,
           full_name:   state.name.value,
-          phone:       state.phone.value,
+          phone:       state.phone.value.replace(/\s/g, ''),
           password:    state.password.value,
           reset_token: state.reset_token,
           language:    translate.getLocale()

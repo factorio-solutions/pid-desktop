@@ -1,16 +1,16 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import moment from 'moment'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
+import moment                          from 'moment'
 
-import Table from '../../_shared/components/table/Table'
-import RoundButton from '../../_shared/components/buttons/RoundButton'
+import Table              from '../../_shared/components/table/Table'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
-import PageBase from '../../_shared/containers/adminPageBase/PageBase'
+import PageBase           from '../../_shared/containers/adminPageBase/PageBase'
 
 import * as newsActions from '../../_shared/actions/pid-admin.news.actions'
-import { initNewNews } from '../../_shared/actions/pid-admin.newNews.actions'
-import { t } from '../../_shared/modules/localization/localization'
+import { initNewNews }  from '../../_shared/actions/pid-admin.newNews.actions'
+import { t }            from '../../_shared/modules/localization/localization'
 
 import styles from './news.page.scss'
 

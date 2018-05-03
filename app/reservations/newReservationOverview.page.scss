@@ -1,47 +1,77 @@
 @import '../_shared/styles/app.components';
+
 @mixin colorize($color) {
   background-color: $color;
 
   &:not(.selected):not(.disabled):hover {
-    background-color: darken($color, 10%)
+    background-color: darken($color, 10%);
   }
 }
-$size-normal: 50px;
 
+$normalSize:   50px;
+$borderColor:  $lightGray;
+$borderRadius: 5px;
+$leftOffset:   15px;
 
-.submitButton{
+.submitButton {
   @include border-radius(240px);
-
-  width:      $size-normal;
-  height:     $size-normal;
-  font-size:  24px;
-  border:     none;
-  outline:    none;
-  text-align: center;
-  transition: all 0.4s ease;
-  margin:     5px;
-
-  @include colorize($clickableColor);
-  color:   $white;
-  cursor:  pointer;
-
   @include colorize($confirmColor);
+
+  width:  $normalSize;
+  height: $normalSize;
+
+  margin:     5px;
+  transition: all .4s ease;
+  border:     0;
+  outline:    none;
+  color:      $white;
+  font-size:  24px;
+  text-align: center;
+  cursor:     pointer;
 }
 
-/* page styling */
-.floatRight{
+// page styling
+.floatRight {
   float: right;
 }
 
-.floatLeft{
+.floatLeft {
   float: left;
 }
 
-.form{
-  margin-top: 15px;
+.form {
+  margin-top: $leftOffset;
 }
 
-.label{
+.label {
+  margin-left: $leftOffset;
   font-weight: bold;
-  margin-left: 15px;
+}
+
+.paymentMethods {
+  margin-left: $leftOffset;
+  border-spacing: 0 3px;
+
+  >tbody>tr>td {
+    padding:       18px;
+    border-top:    1px solid $borderColor;
+    border-bottom: 1px solid $borderColor;
+    cursor:        pointer;
+
+    &:first-child {
+      border-left:               1px solid $borderColor;
+      border-top-left-radius:    $borderRadius;
+      border-bottom-left-radius: $borderRadius;
+    }
+
+    &:last-child {
+      border-right:               1px solid $borderColor;
+      border-top-right-radius:    $borderRadius;
+      border-bottom-right-radius: $borderRadius;
+    }
+
+    >img {
+      height: 40px;
+    }
+  }
 }

@@ -26,32 +26,38 @@ export default function adminModules(state = defaultState, action) {
   switch (action.type) {
 
     case ADMIN_MODULES_SET_GO_PUBLIC:
-      return { ...state,
+      return {
+        ...state,
         goPublic: action.value
       }
 
     case ADMIN_MODULES_SET_GO_INTERNAL:
-      return { ...state,
+      return {
+        ...state,
         goInternal: action.value
       }
 
     case ADMIN_MODULES_SET_FLEXIPLACE:
-      return { ...state,
+      return {
+        ...state,
         flexiplace: action.value
       }
 
     case ADMIN_MODULES_SET_MARKETING_PAGE:
-      return { ...state,
+      return {
+        ...state,
         marketing: action.value
       }
 
     case ADMIN_MODULES_SET_MARKETING_SHORT_NAME:
-      return { ...state,
+      return {
+        ...state,
         short_name: action.value
       }
 
     case ADMIN_MODULES_SET_RESERVATION_FORM:
-      return { ...state,
+      return {
+        ...state,
         reservationForm: action.value
       }
 
