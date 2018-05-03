@@ -230,7 +230,7 @@ class GarageLayout extends Component {
   colorizeHeatPlaces(currentSvg, floors) {
     const heatGroups = floors
       .reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
-      .reduce((groups, place) => place.heat !== undefined ? [ ...groups, place.heat ] : groups, [])
+      .reduce((groups, place) => (place.heat !== undefined ? [ ...groups, place.heat ] : groups), [])
 
     if (heatGroups && heatGroups.length) {
       const min = Math.min(...heatGroups)
@@ -341,9 +341,11 @@ class GarageLayout extends Component {
       <div ref={'containerDiv'}>
         <div className={styles.buttons}>
           <div>{floors.map(prepareButtons)}</div>
-          <div>
-            <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
-          </div>
+          {(floors.length !== 0) &&
+            <div>
+              <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+            </div>
+          }
         </div>
         <div className={styles.svgContainer}>
           <SvgFromText svg={(floors[floor] && floors[floor].scheme) || ''} svgClick={this.handleSVGClick} rotate={this.state.rotate} />
