@@ -20,7 +20,7 @@
 		"line2Placeholder": "Wohnung Nr. 13",
 		"cityPlaceholder": "Berlin",
 		"postalCodePlaceholder": "10178",
-		"statePlaceholder": "DE: addresses.statePlaceholder",
+		"statePlaceholder": "Bundesland",
 		"countryPlaceholder": "Deutschland"
 	},
 	"login_page": {
@@ -114,7 +114,7 @@
 		"newReservationHint": "Hier können Sie eine neue Reservierung erstellen. Wählen Sie zuerst den Benutzer und das Parkhaus aus, anschließend die Daten und schließlich den Stellplatz. Voilà.",
 		"garagesHint": "Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.\nLinks oben können Sie auswählen, welcher Wert dargestellt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder für das aktuelle Datum angezeigt werden soll.",
 		"newGarageHint": "Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.",
-		"newGarageFloorsHint": "DE: pageBase.newGarageFloorsHint",
+		"newGarageFloorsHint": "Hier können Sie die Stockwerke und jeweilige Parkplätze erstellen.\n\nZu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Herstellung. Sie können auch eine der Vorlagen verwenden.\n\nWeiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen.",
 		"newGarageOrderHint": "Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteil.",
 		"newGarageSubscribtionHint": "DE: pageBase.newGarageSubscribtionHint",
 		"newGarageGatesHint": "Hier können Sie die Tore bearbeiten (Ein- und Ausfahrten) und bestimmen, welche Tore zu welchen Plätzen gehören.",
@@ -187,6 +187,7 @@
 		"analyticsgatesHint": "DE: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Wenn Sie Flexiplatz für öffentlich angebotene Parkplätze einstellen möchten, müssen diese alle Plätze gleichen Preis haben. Dazu dient dieses Formular.",
 		"pidAdmin": "PID admin",
+		"bulkRemovalHint": "DE: pageBase.bulkRemovalHint",
 		"smsSettingsHint": "Auf dieser Seite können Sie den SMS Dienst aktivieren. Bei schreiben der Texte können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.\n\n\"{{ garage }}\" = Garagenname\n\"{{ address }}\" = Einfahrtsadresse\n\"{{ gps }}\" = GPS Koordinate der Einfahrt\n\"{{ place }}\" = Stockwerk / Prakplatznummer\n\"{{ begin }}\" = Buchungsanfang\n\"{{ end }}\" = Buchungsende\n\"{{ gate }}\" = Telefonnummer des Servers"
 	},
 	"newReservation": {
@@ -234,9 +235,14 @@
 		"note": "Notiz",
 		"onetimeVisit": "Einmaliger Besucher",
 		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.",
-		"paidByHost": "Buchung wir vom Gast bezahlt",
+		"paidByHost": "Buchung wird vom Gast bezahlt",
 		"languageSelector": "Wählen Sie die Kommunikationssprache",
-		"sendSms": "Buchungsbestätigung per SMS schicken"
+		"selectTemplate": "Wählen Sie eine Vorlage",
+		"sendSms": "Bestätigung per SMS schicken",
+		"smsText": "Text der Nachricht",
+		"character": "Zeichen",
+		"removeDiacritics": "Diakritika entfernen",
+		"perHour": "/ Std."
 	},
 	"clients": {
 		"name": "Name",
@@ -527,11 +533,14 @@
 		"invalidPasswordPhone": "Kennwort falsch",
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Tor ist verschlüsselt. Ändern nach Kennwort Eingabe möglich.",
-		"passwordWasNotSet": "Kennwort ist nicht eingestellt!"
+		"passwordWasNotSet": "Kennwort ist nicht eingestellt!",
+		"addAllPalces": "Alle Stellplätze hinzufügen",
+		"notAssignNumber": "Keine Nummer hinzugefügt",
+		"selcetNumber": "Tel. Nummer für das öffnen"
 	},
 	"newClient": {
 		"name": "Name des Kunden",
-		"placeholder": "Unternehmenskunde",
+		"placeholder": "Unternehmen GmbH",
 		"invalidName": "Kundennamen ist ungültig",
 		"ICplaceholder": "12345678",
 		"DICplaceholder": "DE12345678",
@@ -550,7 +559,9 @@
 		"newTemplateText": "Schabloneninhalt",
 		"selectTemplate": "Wählen Sie eine Schablone",
 		"edit": "Kunde",
-		"smsSettings": "SMS Modul"
+		"smsSettings": "SMS Modul",
+		"activate": "Aktivieren",
+		"deactivate": "Deaktivieren"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",
@@ -627,7 +638,8 @@
 		"editUser": "Mein Benutzerprofil bearbeiten",
 		"email": "E-Mail-Adresse:",
 		"createdAt": "Profilerstellungsdatum:",
-		"cars": "Fahrzeuge"
+		"cars": "Fahrzeuge",
+		"showPublicGarages": "Öffentlich angebotene Garagen anzeigen"
 	},
 	"users": {
 		"username": "Benutzername",
@@ -864,7 +876,8 @@
 		"csobMerchantID": "ČSOB-Händler-ID",
 		"invalidMerchantId": "Die Händler-ID ist ungültig.",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
-		"SelectPrivateKey": "Privaten Schlüssel auswählen:"
+		"SelectPrivateKey": "Privaten Schlüssel auswählen:",
+		"invalidKeyPair": "DE: newAccount.invalidKeyPair"
 	},
 	"invoices": {
 		"invoiceDate": "Rechnungsdatum",
@@ -986,7 +999,9 @@
 		"changeFailed": "Ein Fehler ist aufgetreten. Die Werte wurden nicht geändert.",
 		"uploadKey": "RSA-Schlüssel hochladen",
 		"accountNumber": "Kontonummer",
-		"invalidAccountNumber": "Ungültige Kontonummer"
+		"invalidAccountNumber": "Ungültige Kontonummer",
+		"paymentGates": "DE: finance.paymentGates",
+		"rents": "Mietverhältnisse"
 	},
 	"analytics": {
 		"week": "Woche",
@@ -1049,6 +1064,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Wiederholen: aus",
+		"repeatEnabled": "DE: recurringReservation.repeatEnabled",
 		"repeats": "Wiederholt",
 		"daily": "Täglich",
 		"weekly": "Wochentlich",
@@ -1084,6 +1100,13 @@
 		},
 		"on": "Am",
 		"every": "Einmal pro"
+	},
+	"bulkCancellation": {
+		"bulkCancellation": "DE: bulkCancellation.bulkCancellation",
+		"findReservations": "DE: bulkCancellation.findReservations",
+		"cancelReservations": "DE: bulkCancellation.cancelReservations",
+		"allUsers": "DE: bulkCancellation.allUsers",
+		"noReservations": "DE: bulkCancellation.noReservations"
 	},
 	"mobileApp": {
 		"page": {
@@ -1223,7 +1246,10 @@
 			"receptionist": "Rezeptionist/in",
 			"security": "Wachdienst",
 			"invited_to": "Hat Sie zum folgenden Kunden eingeladen",
+			"invited_to_garage": "Hat Sie in folgende Garage eingeladen",
+			"invited_to_car": "Hat Sie in folgendes Auto eingeladen",
 			"as": "als",
+			"to_sign_up": "Registrieren!",
 			"issue": "Falls Sie Fragen oder Probleme hätten,",
 			"let_us_know": "wenden Sie sich bitte an unser Kundenservice,",
 			"we_will_help": "und wir helfen Ihnen Ihr Konto aktivieren."
@@ -1256,6 +1282,8 @@
 			"receptionist": "Receptionist/in",
 			"security": "Wachdienst",
 			"invited_to": "Hat Sie zum folgenden Kunden eingeladen",
+			"invited_to_garage": "Hat Sie in folgende Garage eingeladen",
+			"invited_to_car": "Hat Sie in folgendes Auto eingeladen",
 			"as": "als",
 			"to_sign_up": "Registrieren!",
 			"to_pid": "Bei Park-it-direct!",

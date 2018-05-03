@@ -258,8 +258,8 @@ export function getAvailableClients() {
 
 export function getAvailableCars() {
   return (dispatch, getState) => {
-    const id = getState().mobileNewReservation.guestReservation ? getState().mobileNewReservation.user_id : getState().mobileHeader.current_user.id
-    if (id === undefined) {
+    const id = getState().mobileNewReservation.guestReservation ? getState().mobileNewReservation.user_id : (getState().mobileHeader.current_user && getState().mobileHeader.current_user.id)
+    if (id) {
       dispatch(setAvailableCars([]))
     } else {
       const onCars = response => {
@@ -339,7 +339,7 @@ export function submitGuestReservation(callback) {
         user: {
           email:     newGuest.email.value.toLowerCase(),
           full_name: newGuest.name.value,
-          phone:     newGuest.phone.value,
+          phone:     newGuest.phone.value.replace(/\s/g, ''),
           language:  getState().mobileHeader.current_user.language
         },
         client_user: state.client_id ? {

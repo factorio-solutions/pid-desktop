@@ -26,6 +26,7 @@ import {
   GARAGE_SETUP_SET_WIDTH,
   GARAGE_SETUP_SET_WEIGHT,
   GARAGE_SETUP_SET_GATES,
+  GARAGE_SETUP_SET_REGISTERED_NUMBERS,
   GARAGE_SETUP_SET_ORDER,
   GARAGE_SETUP_SET_BOOKING_PAGE,
   GARAGE_SETUP_CLEAR_FORM
@@ -87,7 +88,8 @@ const defaultState = {
   width:  undefined,
   weight: undefined,
 
-  gates: [], // first empty floor is added onComponentMount
+  gates:             [], // first empty floor is added onComponentMount
+  registeredNumbers: [], // Available phone numbers for gates
 
   order: [], // ['label 1', 'label 2', ...]
 
@@ -258,6 +260,12 @@ export default function garageSetup(reducerState = defaultState, action) {
       return {
         ...reducerState,
         gates: action.value
+      }
+
+    case GARAGE_SETUP_SET_REGISTERED_NUMBERS:
+      return {
+        ...reducerState,
+        registeredNumbers: action.value
       }
 
     case GARAGE_SETUP_SET_ORDER:

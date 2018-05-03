@@ -238,6 +238,7 @@ $placeholder-delay:            .1s;
 .highlighted {
   >input {
     border-bottom: 1px solid $red;
+    background:    rgba($red, .5);
   }
 }
 

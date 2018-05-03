@@ -1,6 +1,7 @@
-import { request }   from '../helpers/request'
-import { t }         from '../modules/localization/localization'
-import actionFactory from '../helpers/actionFactory'
+import { request }        from '../helpers/request'
+import { t, getLanguage } from '../modules/localization/localization'
+import actionFactory      from '../helpers/actionFactory'
+
 
 import { USER_AVAILABLE, ADD_CLIENT_USER, ADD_GARAGE_USER, ADD_CAR_USER, INIT_MANAGEBLES } from '../queries/inviteUser.queries'
 
@@ -58,7 +59,7 @@ export function toggleHighlight() {
 
 
 export function initManagebles() {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       const clients = response.data.client_users.filter(cu => {
         return cu.user_id === response.data.current_user.id && (cu.admin || cu.secretary || cu.internal)
@@ -77,8 +78,7 @@ export function initManagebles() {
       dispatch(setCars(cars))
     }
 
-    const currentUser = getState().pageBase.current_user
-    currentUser && dispatch(setLanguage(currentUser.language))
+    dispatch(setLanguage(getLanguage()))
 
     request(onSuccess, INIT_MANAGEBLES)
   }
@@ -199,7 +199,7 @@ export function createNewManagebles() {
           user: {
             email:     email.toLowerCase(),
             full_name: state.full_name,
-            phone:     state.phone,
+            phone:     state.phone.replace(/\s/g, ''),
             message:   state.message,
             language:  state.language
           },

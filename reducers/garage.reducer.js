@@ -7,43 +7,49 @@ import {
   GARAGE_SET_TIME
 }  from '../actions/garage.actions'
 
-const defaultState =  { selected:     'clients'
-                      , garage:       undefined // garage details
-                      , now:          true // is now selected
-                      , showSelector: false // show datetime selector?
-                      , time:         moment()
-                      }
+const defaultState = {
+  selected:     'clients',
+  garage:       undefined, // garage details
+  now:          true, // is now selected
+  showSelector: false, // show datetime selector?
+  time:         moment()
+}
 
 
-export default function garage (state = defaultState, action) {
+export default function garage(state = defaultState, action) {
   switch (action.type) {
 
     case GARAGE_SET_SELECTED:
-      return  { ...state
-              , selected: action.value
-              }
+      return {
+        ...state,
+        selected: action.value
+      }
 
     case GARAGE_SET_GARAGE:
-      return  { ...state
-              , garage: action.value
-              }
+      return {
+        ...state,
+        garage: action.value
+      }
 
     case GARAGE_SET_NOW:
-      return  { ...state
-              , time: moment()
-              , now: true
-              }
+      return {
+        ...state,
+        time: moment(),
+        now:  true
+      }
 
     case GARAGE_SET_SHOW_SELECTOR:
-      return  { ...state
-              , showSelector: action.value
-              }
+      return {
+        ...state,
+        showSelector: action.value
+      }
 
     case GARAGE_SET_TIME:
-      return  { ...state
-              , time: action.value
-              , now: moment().isBetween(moment(action.value), moment(action.value).add(15, 'minutes'))
-              }
+      return {
+        ...state,
+        time: action.value,
+        now:  moment().isBetween(moment(action.value), moment(action.value).add(15, 'minutes'))
+      }
 
     default:
       return state
