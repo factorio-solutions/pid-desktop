@@ -17,7 +17,7 @@ export const ADMIN_MODULES_SET_RESERVATION_FORM = 'ADMIN_MODULES_SET_RESERVATION
 export const ADMIN_MODULES_SET_MR_PARKIT_INTEGRATION = 'ADMIN_MODULES_SET_MR_PARKIT_INTEGRATION'
 export const ADMIN_MODULES_SET_THIRD_PARTY_INTEGRATION = 'ADMIN_MODULES_SET_THIRD_PARTY_INTEGRATION'
 export const ADMIN_MODULES_SET_THIRD_PARTY_TOKEN = 'ADMIN_MODULES_SET_THIRD_PARTY_TOKEN'
-
+export const ADMIN_MODULES_TOGGLE_SHOW_HINT = 'ADMIN_MODULES_TOGGLE_SHOW_HINT'
 
 export const setGoPublic = actionFactory(ADMIN_MODULES_SET_GO_PUBLIC)
 export const setGoInternal = actionFactory(ADMIN_MODULES_SET_GO_INTERNAL)
@@ -28,6 +28,7 @@ export const setAdminReservationForm = actionFactory(ADMIN_MODULES_SET_RESERVATI
 export const setMrParkitIntegration = actionFactory(ADMIN_MODULES_SET_MR_PARKIT_INTEGRATION)
 export const setThirdPartyIntegration = actionFactory(ADMIN_MODULES_SET_THIRD_PARTY_INTEGRATION)
 export const setToken = actionFactory(ADMIN_MODULES_SET_THIRD_PARTY_TOKEN)
+export const toggleShowHint = actionFactory(ADMIN_MODULES_TOGGLE_SHOW_HINT)
 
 
 export function initModules() {

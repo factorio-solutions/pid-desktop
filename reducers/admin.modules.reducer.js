@@ -7,7 +7,8 @@ import {
   ADMIN_MODULES_SET_RESERVATION_FORM,
   ADMIN_MODULES_SET_MR_PARKIT_INTEGRATION,
   ADMIN_MODULES_SET_THIRD_PARTY_INTEGRATION,
-  ADMIN_MODULES_SET_THIRD_PARTY_TOKEN
+  ADMIN_MODULES_SET_THIRD_PARTY_TOKEN,
+  ADMIN_MODULES_TOGGLE_SHOW_HINT
  }  from '../actions/admin.modules.actions'
 
 const defaultState = {
@@ -18,7 +19,8 @@ const defaultState = {
   reservationForm:       false,
   mrParkitIntegration:   false,
   thirdPartyIntegration: false,
-  token:                 undefined
+  token:                 undefined,
+  showHint:              false
 }
 
 
@@ -74,6 +76,12 @@ export default function adminModules(state = defaultState, action) {
     case ADMIN_MODULES_SET_THIRD_PARTY_TOKEN:
       return { ...state,
         token: action.value
+      }
+
+    case ADMIN_MODULES_TOGGLE_SHOW_HINT:
+      return {
+        ...state,
+        showHint: !state.showHint
       }
 
     default:

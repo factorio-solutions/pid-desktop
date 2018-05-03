@@ -943,7 +943,7 @@
 		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins",
 		"showApiKey": "Show API endpoint",
 		"regenerateApiKey": "Regenerate API endpoint",
-		"thirdPartyIntegration": "3rd party integration",
+		"3rdPartyIntegration": "3rd party integration",
 		"thirdPartyIntegrationDescription": "By activating this function, we will give you your own API with actions that will allow you to create reservations from another system.",
 		"mrParkitIntegration": "Integration by MR.PARKIT",
 		"mrParkitIntegrationDescription": "This is simmilar to 3rd party integration, the difference is, your places will be automatically taken care of by Mr. Parkit resrevation system.",
@@ -956,7 +956,8 @@
 		"toApiExplorer": "Go to API explorer!",
 		"requestDesribtionPart1": "To use your secret token, add header",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "to your graphQL requests."
+		"requestDesribtionPart3": "to your graphQL requests.",
+		"selectPlaces": "To activate this module, please, fill the form bellow"
 	},
 	"newContract": {
 		"description": "New Agreement in",
