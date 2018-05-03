@@ -1,0 +1,74 @@
+@import '../../../_styles/app.desktop';
+
+// -- Only apply on small window --------------------------------------------
+@media (max-width: $collapseWidth) {
+  .bottomMargin {
+    margin-bottom: 100px;
+  }
+}
+
+
+.tokenInput {
+  width:   300px;
+  padding: 12px;
+
+  border:           0;
+  border-bottom:    1px solid $gray;
+  border-radius:    0;
+  outline:          none;
+  background-color: transparent;
+  font-size:        14px;
+  text-align:       center;
+
+  -webkit-border-radius: 0;
+  -webkit-box-shadow:    none;
+  box-shadow:            none;
+}
+
+.copy {
+  padding:   8px;
+  color:     $lightGray;
+  font-size: 24px;
+  cursor:    pointer;
+}
+
+.warning {
+  padding:     15px 0 10px;
+  color:       $red;
+  font-size:   20px;
+  font-weight: bold;
+}
+
+.warningDesribtion {
+  color:       $gray;
+  font-weight: bold;
+}
+
+.copyField {
+  > h5 {
+    margin-bottom: 0;
+    text-align:    left;
+  }
+}
+
+.dismissButton {
+  margin-top: 15px;
+}
+
+.toApiExplorer {
+  margin-top: 22px;
+  padding: 8px;
+
+  >div {
+    padding: 5px;
+
+    &:last-of-type {
+      margin-bottom: 22px;
+    }
+
+    &.headerDesribtion {
+      color:       $black;
+      font-weight: bold;
+    }
+  }
+}

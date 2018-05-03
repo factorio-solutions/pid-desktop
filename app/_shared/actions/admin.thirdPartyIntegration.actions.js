@@ -1,7 +1,7 @@
-import { request }    from '../helpers/request'
-import actionFactory  from '../helpers/actionFactory'
-import * as nav       from '../helpers/navigation'
-import requestPromise from '../helpers/requestPromise'
+import { request }     from '../helpers/request'
+import actionFactory   from '../helpers/actionFactory'
+import requestPromise  from '../helpers/requestPromise'
+import { initModules } from './admin.modules.actions'
 
 import { GET_GARAGE, UPDATE_ALL_PLACES } from '../queries/admin.thirdPartyIntegration.queries.js'
 
@@ -9,13 +9,11 @@ import { GET_GARAGE, UPDATE_ALL_PLACES } from '../queries/admin.thirdPartyIntegr
 export const ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE = 'ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE'
 export const ADMIN_THIRD_PARTY_INTEGRATION_TOGGLE_PLACE = 'ADMIN_THIRD_PARTY_INTEGRATION_TOGGLE_PLACE'
 export const ADMIN_THIRD_PARTY_INTEGRATION_SET_PLACES = 'ADMIN_THIRD_PARTY_INTEGRATION_SET_PLACES'
-// export const ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE_TOKEN = 'ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE_TOKEN'
 
 
 export const setGarage = actionFactory(ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE)
 export const togglePlace = actionFactory(ADMIN_THIRD_PARTY_INTEGRATION_TOGGLE_PLACE)
 export const setPlaces = actionFactory(ADMIN_THIRD_PARTY_INTEGRATION_SET_PLACES)
-// export const setToken = actionFactory(ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE_TOKEN)
 
 
 export function initThirdPartyIntegration(key) {
@@ -46,14 +44,17 @@ export function submitIntegration(key) {
     requestPromise(UPDATE_ALL_PLACES, { places: getPlaces(getState).map(place => ({
       id:    place.id,
       [key]: state.places.includes(place.id)
-    })) }).then(() => nav.to(`/${getState().pageBase.garage}/admin/modules`))
+    })) }).then(() => dispatch(initModules()))
   }
 }
 
 export function disableIntegration(key) {
   return (dispatch, getState) => {
     requestPromise(UPDATE_ALL_PLACES, { places: getPlaces(getState).map(place => ({ id: place.id, [key]: false })) })
-    .then(() => nav.to(`/${getState().pageBase.garage}/admin/modules`))
+    .then(() => {
+      dispatch(initThirdPartyIntegration(key))
+      dispatch(initModules())
+    })
   }
 }
 
