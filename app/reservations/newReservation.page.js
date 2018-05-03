@@ -384,8 +384,9 @@ class NewReservationPage extends Component {
           <div className={styles.rightCollumn}>
             {state.loading ?
               <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
-              state.garage && <GarageLayout
-                floors={state.garage.floors.map(highlightSelected)}
+              <GarageLayout
+                floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
+                // floors={[]}
                 onPlaceClick={ongoing ? () => {} : this.handlePlaceClick}
                 showEmptyFloors={false}
               />
