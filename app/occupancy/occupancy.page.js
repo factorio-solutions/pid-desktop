@@ -79,8 +79,6 @@ class OccupancyPage extends Component {
       filter
     />)
 
-    console.log(garage ? garage.floors.reduce(preparePlaces, []) : [])
-
     return (
       <PageBase>
         <TabMenu right={filters} left={clientSelector} />
