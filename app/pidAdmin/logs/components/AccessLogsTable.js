@@ -32,7 +32,7 @@ class AccessLogsTable extends Component {
       <div>{gate.label}</div>
       <div>{gate.phone}</div>
     </div> :
-    ''
+    t([ 'pidAdmin', 'logs', 'noGate' ])
 
   formatReservation = reservation => reservation ?
     <div>
@@ -41,7 +41,7 @@ class AccessLogsTable extends Component {
       <div>{moment(reservation.begins_at).format('DD.MM.YYYY')} {moment(reservation.begins_at).format('H:mm')}</div>
       <div>{moment(reservation.ends_at).format('DD.MM.YYYY')} {moment(reservation.ends_at).format('H:mm')}</div>
     </div> :
-    ''
+    t([ 'pidAdmin', 'logs', 'noReservation' ])
 
   render() {
     const { state } = this.props
