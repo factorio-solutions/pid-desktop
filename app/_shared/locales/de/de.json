@@ -304,6 +304,7 @@
 		"host": "Regelmäßiger Gast",
 		"visitor": "Besucher",
 		"internal": "Intern",
+		"mrParkit": "DE: reservations.mrParkit",
 		"editReservation": "Reservierung bearbeiten",
 		"editNote": "Notiz bearbeiten",
 		"newNote": "Neue Notiz",
@@ -874,8 +875,12 @@
 		"csobPayment": "ČSOB-Zahlungsdaten",
 		"paypalPayment": "Paypal wurde ausgewählt – Sie werden weitergeleitet, wenn Sie auf „OK“ klicken.",
 		"csobMerchantID": "ČSOB-Händler-ID",
+		"gpWebpayMerchantID": "DE: newAccount.gpWebpayMerchantID",
 		"invalidMerchantId": "Die Händler-ID ist ungültig.",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
+		"gpWebpayMerchantIdplaceholder": "1234567890",
+		"gpWebpayPassword": "DE: newAccount.gpWebpayPassword",
+		"gpWebpayPasswordPlaceholder": "DE: newAccount.gpWebpayPasswordPlaceholder",
 		"SelectPrivateKey": "Privaten Schlüssel auswählen:",
 		"invalidKeyPair": "DE: newAccount.invalidKeyPair"
 	},
@@ -939,7 +944,7 @@
 		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.",
 		"showApiKey": "API Endpunkt zeigen",
 		"regenerateApiKey": "Einen neuen API Endpunkt erstellen",
-		"thirdPartyIntegration": "Integration von Dritten",
+		"3rdPartyIntegration": "Integration von Dritten",
 		"thirdPartyIntegrationDescription": "Durch aktivierung dieser Funktion, bekommen Sie eine eigene API mit Aktionen, die Ihnen Verwaltung der Reservierungen durch Dritte ermöglichen",
 		"mrParkitIntegration": "MR.PARKIT Integration",
 		"mrParkitIntegrationDescription": "Ähnlich der Funktion \"Integration von Dritten\". Reservierungen werden über MR.PARKIT ermittelt.",
@@ -952,7 +957,8 @@
 		"toApiExplorer": "Gehe zu API-Browser!",
 		"requestDesribtionPart1": "Verwenden Sie dasToken, indem Sie den Header einfügen",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "für Ihre graphQL Aufträge"
+		"requestDesribtionPart3": "für Ihre graphQL Aufträge",
+		"selectPlaces": "DE: modules.selectPlaces"
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -965,7 +971,7 @@
 		"selectedPlaces": "Ausgewählte Stellplätze",
 		"noSelectedPlaces": "Keine Stellplätze ausgewählt",
 		"selectRent": "Mietverhältnis auswählen",
-		"contractPrice": "Neuen konkreten vereinbarten Preis auswählen",
+		"contractPrice": "Geben Sie den Monatspreis dieser Vereinbarung ein",
 		"priceInvalid": "Ungültiger Preis",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Währung auswählen",
@@ -987,7 +993,9 @@
 	"finance": {
 		"paypal": "Paypal",
 		"csob": "ČSOB",
+		"gpWebpay": "Raiffeisenbank",
 		"csobPayment": "ČSOB-Zahlungen",
+		"gpWebpayPayment": "Raiffeisenbank‎",
 		"SelectPrivateKey": "Privaten Schlüssel auswählen",
 		"financeSettings": "Finanzeinstellungen",
 		"vat": "Mehrwertsteuer",
@@ -1001,7 +1009,10 @@
 		"accountNumber": "Kontonummer",
 		"invalidAccountNumber": "Ungültige Kontonummer",
 		"paymentGates": "DE: finance.paymentGates",
-		"rents": "Mietverhältnisse"
+		"rents": "Mietverhältnisse",
+		"testPayment": "DE: finance.testPayment",
+		"testPaymentSuccessful": "DE: finance.testPaymentSuccessful",
+		"testPaymentUnsuccessful": "DE: finance.testPaymentUnsuccessful"
 	},
 	"analytics": {
 		"week": "Woche",
@@ -1102,11 +1113,11 @@
 		"every": "Einmal pro"
 	},
 	"bulkCancellation": {
-		"bulkCancellation": "DE: bulkCancellation.bulkCancellation",
-		"findReservations": "DE: bulkCancellation.findReservations",
-		"cancelReservations": "DE: bulkCancellation.cancelReservations",
-		"allUsers": "DE: bulkCancellation.allUsers",
-		"noReservations": "DE: bulkCancellation.noReservations"
+		"bulkCancellation": "Massenstornierung",
+		"findReservations": "Buchungen finden",
+		"cancelReservations": "Ausgewählte Buchungen stornieren",
+		"allUsers": "Alle Benutzer",
+		"noReservations": "Keine Buchungen"
 	},
 	"mobileApp": {
 		"page": {
@@ -1207,6 +1218,7 @@
 		}
 	},
 	"auth0Emails": {
+		"verificationEmailSubject": "Verifizierungs-E-Mail",
 		"securityReasons": "Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse",
 		"easyAsClickingButton": "Einfach diese Taste drücken:",
 		"confirmAccount": "Kontro prüfen!",
@@ -1221,13 +1233,20 @@
 		"garageSetup": "Möchten Sie eine Garage Erstellen, und alle Funktionen von Park-it-direct ausprobieren? Da helfen wir Ihnen gerne weiter. Schreiben Sie uns einfach eine Nachricht. Gemeinsam gehen wir das System durch, sodass alles richtig eingestellt ist, und Sie auch wirklich alle Möglichkeiten nutzen können.",
 		"getInTouch": "Möchten Sie uns kontaktieren?",
 		"website": "Wir sind immer für Sie da! Kontakt finden Sie auf <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\"> unserer Webseite</a>, oder schreiben Sie uns einfach im Chat unten rechts an.",
-		"passwordResetSubmited": "Sie haben Kennwortänderung verlangt!",
+		"passwordResetSubject": "Passwort zurücksetzen",
+		"passwordResetSubmited": "Sie haben eine Kennwortänderung verlangt!",
 		"pwdResetDescr": "Falls Sie eine Kennwortänderung nicht verlangt haben, können Sie diese Nachricht ignorieren. Falls Sie eine verlangt haben, dann",
 		"confirmPwdReset": "Kennwort ändern",
 		"troubleWithAccount": "Falls Sie Probleme mit Ihrem Konto haben, zweifeln Sie bitte nicht uns anzusprechen, indem Sie auf diese E-Mail antworten.",
+		"verificationCodeEmailSubject": "Verifizierungscode",
 		"verificationCode": "Weiter unten finden Sie Ihren Bestätigungscode für Park-it-direct!"
 	},
 	"railsEmails": {
+		"invitation_mail_subject": "Sie wurden zu Park-it-direct eingeladen!",
+		"resend_invitation_mail_subject": "Park-it-direct Einladungserinnerung",
+		"new_reservation_mail_subject": "%{user} hat für Sie gebucht.",
+		"reservation_confirmed_subject": "Buchung in der Garage: %{garage} wurde bestätigt.",
+		"reservation_updated_subject": "Ihre Buchung in der Garage %{garage} wurde aktualisiert.",
 		"footer": {
 			"enjoy": "Viel Spaß mit Park-it-direct!",
 			"regards": "Mit freundlichen Grüßen,",
@@ -1372,6 +1391,17 @@
 			"createdAt": "netřeba překládat",
 			"editNews": "netřeba překládat",
 			"deleteNews": "netřeba překládat"
+		},
+		"logs": {
+			"accessLogs": "netřeba překládat",
+			"garageLogs": "netřeba překládat",
+			"user": "DE: pidAdmin.logs.user",
+			"accessType": "DE: pidAdmin.logs.accessType",
+			"createdAt": "DE: pidAdmin.logs.createdAt",
+			"gate": "DE: pidAdmin.logs.gate",
+			"reservation": "DE: pidAdmin.logs.reservation",
+			"noGate": "DE: pidAdmin.logs.noGate",
+			"noReservation": "DE: pidAdmin.logs.noReservation"
 		}
 	}
 }

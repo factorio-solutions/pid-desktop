@@ -807,11 +807,7 @@
 		"price": "Price",
 		"garage": "Garage",
 		"floor": "Floor",
-		"place": "Spot",
-		"paymentMethod": "Payment method",
-		"raiffeisenbank": "Raiffeisenbank - online payment",
-		"csob": "ČSOB - online payment",
-		"paypal": "PayPal"
+		"place": "Spot"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",
@@ -879,8 +875,12 @@
 		"csobPayment": "ČSOB payment information",
 		"paypalPayment": "Paypal selected. You will be redirected after clicking OK.",
 		"csobMerchantID": "ČSOB merchant ID",
+		"gpWebpayMerchantID": "Raiffeisenbank‎ merchant ID",
 		"invalidMerchantId": "Merchant ID invalid",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
+		"gpWebpayMerchantIdplaceholder": "1234567890",
+		"gpWebpayPassword": "Private key password",
+		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Select private key:",
 		"invalidKeyPair": "Merchant id or key is invalid"
 	},
@@ -971,7 +971,7 @@
 		"selectedPlaces": "Selected spots",
 		"noSelectedPlaces": "No selected spots",
 		"selectRent": "Select rent",
-		"contractPrice": "Enter new specific agreement price",
+		"contractPrice": "Enter monthly price for this agreement",
 		"priceInvalid": "Price invalid",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Select currency",
@@ -993,7 +993,9 @@
 	"finance": {
 		"paypal": "Paypal",
 		"csob": "ČSOB",
+		"gpWebpay": "Raiffeisenbank",
 		"csobPayment": "ČSOB Payments",
+		"gpWebpayPayment": "Raiffeisenbank‎ payment",
 		"SelectPrivateKey": "Select private key",
 		"financeSettings": "Finance settings",
 		"vat": "Value added tax",
@@ -1007,7 +1009,10 @@
 		"accountNumber": "Account number",
 		"invalidAccountNumber": "Invalid account number",
 		"paymentGates": "Payment gates",
-		"rents": "Rents"
+		"rents": "Rents",
+		"testPayment": "You can now perform a test payment to verify the correctness of the entered data.",
+		"testPaymentSuccessful": "Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.",
+		"testPaymentUnsuccessful": "Your test payment was unsuccessful."
 	},
 	"analytics": {
 		"week": "week",
@@ -1213,6 +1218,7 @@
 		}
 	},
 	"auth0Emails": {
+		"verificationEmailSubject": "Verification email",
 		"securityReasons": "For security reasons we need you to verify your email",
 		"easyAsClickingButton": "It's as easy as clicking the link below:",
 		"confirmAccount": "Confirm my account!",
@@ -1227,13 +1233,20 @@
 		"garageSetup": "Would you like to set up your garage? We will gladly help you. Just let us know and we will give you a call! Together we can go through all the settings and make sure you benefit from using Park-it-direct as much as possible, while saving your valuable time.",
 		"getInTouch": " Need to get in touch with us?",
 		"website": "We are always here for you. You can find contact details on our <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">website</a> or you can use the chat button on our website and in the app.",
+		"passwordResetSubject": "Password reset",
 		"passwordResetSubmited": "You have submitted a password change request!",
 		"pwdResetDescr": "If it wasn't you, please disregard this email and make sure you can still log in to your account. If it was you, then ",
 		"confirmPwdReset": "Confirm the password change",
 		"troubleWithAccount": "If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.",
+		"verificationCodeEmailSubject": "Verification code",
 		"verificationCode": "Below you can find your verification code for Park-it-direct!"
 	},
 	"railsEmails": {
+		"invitation_mail_subject": "You have been invited to Park-It-Direct!",
+		"resend_invitation_mail_subject": "Invitation reminder to Park-It-Direct.",
+		"new_reservation_mail_subject": "%{user} has created new reservation for you.",
+		"reservation_confirmed_subject": "Reservation in %{garage} has been confirmed.",
+		"reservation_updated_subject": "Your reservation in %{garage} has been updated.",
 		"footer": {
 			"enjoy": "Enjoy your Park-it-direct experience!",
 			"regards": "Best Regards,",
