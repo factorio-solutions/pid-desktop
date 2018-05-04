@@ -14,15 +14,17 @@ import * as thirdPartyActions from '../../_shared/actions/admin.thirdPartyIntegr
 import styles from './mrParkitIntegration.page.scss'
 
 
-class MrParkitIntegrationPage extends Component {
+class ThirdPartyIntegrationPage extends Component {
   static propTypes = {
     state:   PropTypes.object,
     actions: PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.initThirdPartyIntegration('mr_parkit')
+    this.props.actions.initThirdPartyIntegration('third_party')
   }
+
+  onSubmit = () => this.props.actions.submitThirdPartyIntegration()
 
   render() {
     const { state, actions } = this.props
@@ -47,8 +49,8 @@ class MrParkitIntegrationPage extends Component {
       <ModulesPageBase>
         <div className={styles.flex}>
           <div className={styles.half}>
-            <h2>{t([ 'modules', 'selectPlacesForMrParkit' ])}</h2>
-            <Form onSubmit={actions.submitMrParkitIntegration} submitable={state.places.length}>
+            <h2>{t([ 'modules', 'selectPlacesFor3rdParty' ])}</h2>
+            <Form onSubmit={actions.submitThirdPartyIntegration} submitable={state.places.length}>
               <div className={styles.places}>
                 {state.places.length ?
                   state.garage && state.garage.floors.reduce(createPlaceButtons, []) :
@@ -74,4 +76,4 @@ class MrParkitIntegrationPage extends Component {
 export default connect(
   state => ({ state: state.adminThirdPartyIntegration, pageBase: state.pageBase }), // { state: state.dashboard }
   dispatch => ({ actions: bindActionCreators(thirdPartyActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
-)(MrParkitIntegrationPage)
+)(ThirdPartyIntegrationPage)

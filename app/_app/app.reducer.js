@@ -30,7 +30,6 @@ import newClient   from '../_shared/reducers/newClient.reducer'
 import newContract from '../_shared/reducers/newContract.reducer'
 import clientUsers from '../_shared/reducers/clientUsers.reducer'
 
-
 import invoices    from '../_shared/reducers/invoices.reducer'
 import editInvoice from '../_shared/reducers/editInvoice.reducer'
 
@@ -51,12 +50,13 @@ import garage    from '../_shared/reducers/garage.reducer'
 import issues    from '../_shared/reducers/issues.reducer'
 import profile   from '../_shared/reducers/profile.reducer'
 
-import adminModules     from '../_shared/reducers/admin.modules.reducer'
-import adminGoPublic    from '../_shared/reducers/admin.goPublic.reducer'
+import adminModules               from '../_shared/reducers/admin.modules.reducer'
+import adminGoPublic              from '../_shared/reducers/admin.goPublic.reducer'
 import adminGoInternal  from '../_shared/reducers/admin.goInternal.reducer'
-import adminFlexiplace  from '../_shared/reducers/admin.flexiplace.reducer'
-import adminFinance     from '../_shared/reducers/admin.finance.reducer'
-import adminActivityLog from '../_shared/reducers/admin.activityLog.reducer'
+import adminFlexiplace            from '../_shared/reducers/admin.flexiplace.reducer'
+import adminThirdPartyIntegration from '../_shared/reducers/admin.thirdPartyIntegration.reducer'
+import adminFinance               from '../_shared/reducers/admin.finance.reducer'
+import adminActivityLog           from '../_shared/reducers/admin.activityLog.reducer'
 
 import pidAdminGenerator from '../_shared/reducers/pid-admin.generator.reducer'
 import pidAdminNews      from '../_shared/reducers/pid-admin.news.reducer'
@@ -119,6 +119,7 @@ const appReducer = combineReducers({
   adminGoPublic,
   adminGoInternal,
   adminFlexiplace,
+  adminThirdPartyIntegration,
   adminFinance,
   adminActivityLog,
 
