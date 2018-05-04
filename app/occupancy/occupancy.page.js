@@ -54,14 +54,14 @@ class OccupancyPage extends Component {
     const preparePlaces = (places, floor) => {
       return places.concat(floor.occupancy_places
         .filter(place => !state.client_ids.length || place.contracts_in_interval.length)
-        .map(place => {
-          return { ...place,
-            floor:        floor.label,
-            reservations: state.client_ids.length ?
-              place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
-              place.reservations_in_interval
-          }
+        .map(place => ({
+          ...place,
+          floor:        floor.label,
+          reservations: state.client_ids.length ?
+            place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
+            place.reservations_in_interval
         }))
+      )
     }
 
     const filters = [
@@ -78,6 +78,8 @@ class OccupancyPage extends Component {
       selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
       filter
     />)
+
+    console.log(garage ? garage.floors.reduce(preparePlaces, []) : [])
 
     return (
       <PageBase>

@@ -223,8 +223,8 @@ class ModulesPageBase extends Component {
         { ((window.location.hash.includes('goPublic') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2 || state.flexiplace)) ||
           (window.location.hash.includes('goInternal') && userGarage) ||
           (window.location.hash.includes('flexiplace')) ||
-          (window.location.hash.includes('3rdPartyIntegration')) ||
-          (window.location.hash.includes('mrParkitIntegration')) ||
+          (window.location.hash.includes('3rdPartyIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)) ||
+          (window.location.hash.includes('mrParkitIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)) ||
           (window.location.hash.includes('marketingPage') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2))) &&
           children
         }
