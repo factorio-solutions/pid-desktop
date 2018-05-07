@@ -41,7 +41,7 @@ export function initOngoingReservations(callback) { // callback used by mobile a
 
     const onSuccess = response => {
       dispatch(setOngoingReservations(response.data.reservations))
-      dispatch(setCustomModal(undefined))
+      dispatch(setCustomModal())
       callback(response.data.reservations)
     }
     request(onSuccess, GET_RESERVATIONS_QUERY, {
@@ -62,7 +62,7 @@ export function initReservations() { // will download first 5 reservations
       const state = getState().reservations
       const onSuccess = response => {
         dispatch(setReservations(response.data.reservations))
-        dispatch(setCustomModal(undefined))
+        dispatch(setCustomModal())
       }
       request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
         past:      state.past,
