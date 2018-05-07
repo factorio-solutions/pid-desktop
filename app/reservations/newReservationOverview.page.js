@@ -18,7 +18,8 @@ class NewReservationOverviewPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
+    pageBase: PropTypes.object
   }
 
   componentDidMount() {
@@ -80,7 +81,7 @@ class NewReservationOverviewPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state, pageBase, actions } = this.props
 
     return (
       <PageBase>
@@ -119,10 +120,12 @@ class NewReservationOverviewPage extends Component {
 
           <div>
             <h4>{t([ 'newReservationOverview', 'price' ])}</h4>
-            <div className={styles.label}>{ state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price }</div>
+            <div className={styles.label}>{state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price}</div>
           </div>
 
-          {!state.client_id && <div>
+          {(!state.client_id ||
+          (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id))) &&
+          <div>
             <h4>{t([ 'newReservationOverview', 'paymentMethod' ])}</h4>
             <table className={styles.paymentMethods}>
               <tbody>
@@ -137,6 +140,6 @@ class NewReservationOverviewPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.newReservation }),
+  state => ({ state: state.newReservation, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
 )(NewReservationOverviewPage)

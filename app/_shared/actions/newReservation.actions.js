@@ -582,7 +582,7 @@ export function submitReservation(id) {
                recurring_reservation_id: state.recurring_reservation_id,
                send_sms:                 state.sendSMS,
                sms_text:                 state.templateText,
-               payment_method:           ongoing || state.client_id ? undefined : state.paymentMethod
+               payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod
              },
                id
              }
