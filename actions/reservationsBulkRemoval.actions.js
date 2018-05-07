@@ -5,17 +5,19 @@ import requestPromise                                  from '../helpers/requestP
 import { t }                                           from '../modules/localization/localization'
 import { timeToUTC, MOMENT_DATETIME_FORMAT, ceilTime } from '../helpers/time'
 
-import { RESERVATIONS_QUERY, DESTROY_RESERVATIONS } from '../queries/reservationsBulkRemoval.queries'
+import { RESERVATIONS_QUERY, INTERUPT_RESERVATION } from '../queries/reservationsBulkRemoval.queries'
 import { GET_AVAILABLE_USERS }                      from '../queries/newReservation.queries'
 
 
-export const SET_BULK_REMOVAL_GARAGES = 'SET_GARAGES'
+export const SET_BULK_REMOVAL_GARAGES = 'SET_BULK_REMOVAL_GARAGES'
 export const TOGGLE_RESERVATION_IN_TO_BE_REMOVED = 'TOGGLE_RESERVATION_IN_TO_BE_REMOVED'
-export const SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED = 'SET_RESERVATION_TO_BE_REMOVED'
-export const SET_BULK_REMOVAL_AVAILABLE_USERS = 'SET_AVAILABLE_USERS'
-export const SET_BULK_REMOVAL_USER_ID = 'SET_USER_ID'
-export const SET_BULK_REMOVAL_TO = 'SET_TO'
-export const SET_BULK_REMOVAL_FROM = 'SET_FROM'
+export const SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED = 'SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED'
+export const SET_BULK_REMOVAL_AVAILABLE_USERS = 'SET_BULK_REMOVAL_AVAILABLE_USERS'
+export const SET_BULK_REMOVAL_USER_ID = 'SET_BULK_REMOVAL_USER_ID'
+export const SET_BULK_REMOVAL_TO = 'SET_BULK_REMOVAL_TO'
+export const SET_BULK_REMOVAL_FROM = 'SET_BULK_REMOVAL_FROM'
+export const RESET_BULK_REMOVAL_TIMES = 'RESET_BULK_REMOVAL_TIMES'
+export const SET_BULK_REMOVAL_LOADING = 'SET_BULK_REMOVAL_LOADING'
 export const BULK_REMOVAL_CLEAR_FORM = 'BULK_REMOVAL_CLEAR_FORM'
 
 
@@ -24,8 +26,10 @@ export const toggleReservation = actionFactory(TOGGLE_RESERVATION_IN_TO_BE_REMOV
 export const setUserId = actionFactory(SET_BULK_REMOVAL_USER_ID)
 export const setTo = actionFactory(SET_BULK_REMOVAL_TO)
 export const setFrom = actionFactory(SET_BULK_REMOVAL_FROM)
+export const resetTimes = actionFactory(RESET_BULK_REMOVAL_TIMES)
 export const clearForm = actionFactory(BULK_REMOVAL_CLEAR_FORM)
 export const setReservationsToBeRemoved = actionFactory(SET_BULK_REMOVAL_RESERVATION_TO_BE_REMOVED)
+export const setLoading = actionFactory(SET_BULK_REMOVAL_LOADING)
 export const setGarages = actionFactory(SET_BULK_REMOVAL_GARAGES)
 
 
@@ -83,6 +87,7 @@ export function setReservationsInClient(to, client) {
 export function loadReservations() {
   return (dispatch, getState) => {
     const { userId, from, to } = getState().reservationBulkRemoval
+    dispatch(setLoading(true))
 
     requestPromise(RESERVATIONS_QUERY, {
       user_id:   userId,
@@ -90,6 +95,7 @@ export function loadReservations() {
       to:        timeToUTC(to),
       secretary: getState().pageBase.current_user.secretary
     }).then(data => {
+      dispatch(setLoading(false))
       if (data) {
         const reservations = data.reservations_in_dates
         dispatch(setGarages(reservations.length > 0 ? formatGarages(reservations) : { noData: true }))
@@ -121,11 +127,18 @@ export function loadAvailableUsers() {
   }
 }
 
-export function destroyAllSelectedReservations() {
+export function interuptAllSelectedReservations() {
   return (dispatch, getState) => {
-    const { toBeRemoved } = getState().reservationBulkRemoval
+    const { toBeRemoved, from, to } = getState().reservationBulkRemoval
+    dispatch(setLoading(true))
 
-    requestPromise(DESTROY_RESERVATIONS, { ids: toBeRemoved })
-    .then(() => dispatch(loadReservations()))
+    requestPromise(INTERUPT_RESERVATION, {
+      ids:  toBeRemoved,
+      from: timeToUTC(from),
+      to:   timeToUTC(to)
+    }).then(() => {
+      dispatch(setLoading(false))
+      dispatch(loadReservations())
+    })
   }
 }

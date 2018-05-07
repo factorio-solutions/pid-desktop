@@ -164,7 +164,7 @@
 		"garageAddClientHint": "Zde můžete přidat klienta na stránky se správou garáží",
 		"garageGarageUsersHint": "Zde můžete spravovat uživatele garáže a jejich práva.",
 		"EditUserHint": "Zde můžete změnit svoje údaje.",
-		"orderGarageModuleHint": "CS: pageBase.orderGarageModuleHint",
+		"orderGarageModuleHint": "Zde si můžete objednat modul pro přístup do garáže",
 		"reservationOverviewHint": "Zde můžete zkontrolovat, zda jsou údaje rezervace správně.",
 		"editInvoiceHint": "Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.",
 		"editContractHint": "Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.",
@@ -304,6 +304,7 @@
 		"host": "Pravidelný host",
 		"visitor": "Návštěvník",
 		"internal": "Interní",
+		"mrParkit": "Mr. Parkit",
 		"editReservation": "Upravit rezervaci",
 		"editNote": "Upravit poznámku",
 		"newNote": "Nová poznámka",
@@ -874,8 +875,12 @@
 		"csobPayment": "Platební informace ČSOB",
 		"paypalPayment": "Paypal vybrán - budete přesměrováni po kliknutí na tlačítko OK.",
 		"csobMerchantID": "Id obchodníka ČSOB",
+		"gpWebpayMerchantID": "ID obchodníka Raiffeisenbank‎",
 		"invalidMerchantId": "Id obchodníka je neplatné",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
+		"gpWebpayMerchantIdplaceholder": "1234567890",
+		"gpWebpayPassword": "Heslo k soukromému klíči",
+		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Zvolte soukromý klíč:",
 		"invalidKeyPair": "Id obchodníka nebo soukromý klíč jsou špatně"
 	},
@@ -939,7 +944,7 @@
 		"flexiplaceDescription": " reservations will be regrouped to maximize usage of parking places.",
 		"showApiKey": "Zobrazit API endpoint",
 		"regenerateApiKey": "Vygenerovat nový API endpoint",
-		"thirdPartyIntegration": "Integrace 3. stran",
+		"3rdPartyIntegration": "Integrace 3. stran",
 		"thirdPartyIntegrationDescription": "Aktivací této funkce obdržíte vlastní API s akcemi, které vám umožní spravovat rezervace pomocí dalších systémů",
 		"mrParkitIntegration": "Integrace MR.PARKIT",
 		"mrParkitIntegrationDescription": "Tato funkce je podobná integraci 3. stran, rozdílem je, že o místa se automaticky postará Mr. Parkit",
@@ -952,7 +957,8 @@
 		"toApiExplorer": "Přejít do API prohlížeče!",
 		"requestDesribtionPart1": "Použijte token tak, že přidáte header",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "do vašich graphQL requestů"
+		"requestDesribtionPart3": "do vašich graphQL requestů",
+		"selectPlaces": "Pro aktivaci modulu, prosím, vyplňte formulát."
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
@@ -965,7 +971,7 @@
 		"selectedPlaces": "Vybraná místa",
 		"noSelectedPlaces": "Žádná vybraná místa",
 		"selectRent": "Vyberte nájem",
-		"contractPrice": "Zadej novou konkrétní cenu dohody",
+		"contractPrice": "Zadejte měsíční cenu této dohody",
 		"priceInvalid": "Cena je neplatná",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Zvolte měnu",
@@ -987,7 +993,9 @@
 	"finance": {
 		"paypal": "Paypal",
 		"csob": "ČSOB",
+		"gpWebpay": "Raiffeisenbank",
 		"csobPayment": "ČSOB Platby",
+		"gpWebpayPayment": "Raiffeisenbank‎ platby",
 		"SelectPrivateKey": "Zvolte soukromý klíč:",
 		"financeSettings": "Nastavení financování",
 		"vat": "Daň z přidané hodnoty",
@@ -1001,7 +1009,10 @@
 		"accountNumber": "Číslo účtu",
 		"invalidAccountNumber": "Nesprávné číslo účtu",
 		"paymentGates": "Platební brány",
-		"rents": "Nájmy"
+		"rents": "Nájmy",
+		"testPayment": "Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.",
+		"testPaymentSuccessful": "Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.",
+		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně."
 	},
 	"analytics": {
 		"week": "týden",
@@ -1207,6 +1218,7 @@
 		}
 	},
 	"auth0Emails": {
+		"verificationEmailSubject": "Ověřovací email",
 		"securityReasons": "Z bezpečnostních důvodů potřebujeme ověřit váš email",
 		"easyAsClickingButton": "Jednoduše klikněte na toto tlačítko:",
 		"confirmAccount": "Ověřit účet!",
@@ -1221,13 +1233,20 @@
 		"garageSetup": "Chtěli byste založit garáž? S tím Vám rádi pomůžeme, dejte nám vědět a my Vám zavoláme! Spolu projdeme všechna nastavení a ujistíme se, že Vám Park-it-direct zajistí maximální prospěch a úsporu času.",
 		"getInTouch": "Chcete nás kontaktovat?",
 		"website": "Jsme tu pro vás pořád. Kontakt najdete na <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.",
+		"passwordResetSubject": "Reset hesla",
 		"passwordResetSubmited": "Požádali jste o změnu hesla!",
 		"pwdResetDescr": "Pokud jste o změnu hesla nepožádali, můžete tuto zprávu ignorovat. Pokud jste to byli vy, pak ",
 		"confirmPwdReset": "Dokončit změnu hesla",
 		"troubleWithAccount": "Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.",
+		"verificationCodeEmailSubject": "Ověřovací kód",
 		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!"
 	},
 	"railsEmails": {
+		"invitation_mail_subject": "Byl jste pozván do Park-It-Directu!",
+		"resend_invitation_mail_subject": "Připomínáme pozvánku v Park-It-Direct.",
+		"new_reservation_mail_subject": "%{user} Vám vytvořil(a) novou rezervaci.",
+		"reservation_confirmed_subject": "Rezervace v %{garage} byla potvrzena.",
+		"reservation_updated_subject": "Vaše rezervace v %{garage} byla aktualizována.",
 		"footer": {
 			"enjoy": "Užijte si Park-it-direct!",
 			"regards": "S pozdravem,",
@@ -1372,6 +1391,17 @@
 			"createdAt": "vytvořeno",
 			"editNews": "upravit novinky",
 			"deleteNews": "smazat novinky"
+		},
+		"logs": {
+			"accessLogs": "Log vjezdů",
+			"garageLogs": "Log garáží",
+			"user": "uživatel",
+			"accessType": "typ přístupu",
+			"createdAt": "čas přístupu",
+			"gate": "brána",
+			"reservation": "rezervace",
+			"noGate": "není konfigurovaná brána",
+			"noReservation": "nemá platnou rezervaci"
 		}
 	}
 }

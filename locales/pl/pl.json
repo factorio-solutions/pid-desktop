@@ -304,6 +304,7 @@
 		"host": "Regularny gość",
 		"visitor": "Odwiedzający/a",
 		"internal": "Wewnętrzny",
+		"mrParkit": "PL: reservations.mrParkit",
 		"editReservation": "Edytuj rezerwację",
 		"editNote": "Edytuj notatkę",
 		"newNote": "Nowa notatka",
@@ -874,8 +875,12 @@
 		"csobPayment": "Informacje płatnicze ČSOB",
 		"paypalPayment": "PayPal został wybrany -- po kliknięciu na przycisk OK nastąpi przekierowanie.",
 		"csobMerchantID": "ID firmowe ČSOB",
+		"gpWebpayMerchantID": "PL: newAccount.gpWebpayMerchantID",
 		"invalidMerchantId": "Niepoprawne ID firmowe",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
+		"gpWebpayMerchantIdplaceholder": "1234567890",
+		"gpWebpayPassword": "PL: newAccount.gpWebpayPassword",
+		"gpWebpayPasswordPlaceholder": "PL: newAccount.gpWebpayPasswordPlaceholder",
 		"SelectPrivateKey": "Wybierz klucz osobisty:",
 		"invalidKeyPair": "PL: newAccount.invalidKeyPair"
 	},
@@ -939,7 +944,7 @@
 		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální",
 		"showApiKey": "Pokaż API endpoint",
 		"regenerateApiKey": "Wygeneruj API endpoint",
-		"thirdPartyIntegration": "Integracja z osobami trzecimi",
+		"3rdPartyIntegration": "Integracja z osobami trzecimi",
 		"thirdPartyIntegrationDescription": "Aktywując tę funkcję otrzymasz własny API z opcjami umożliwiającymi zarządzanie rezerwacjami za pomocą innych systemów",
 		"mrParkitIntegration": "Integracja MR.PARKIT",
 		"mrParkitIntegrationDescription": "Funkcja podobna do Integracji z osobami trzecimi. Różnica polega na tym, że miejscami automatycznie zajmie się Mr.Parkit.",
@@ -952,7 +957,8 @@
 		"toApiExplorer": "Przejdź do przeglądarki API",
 		"requestDesribtionPart1": "Aby użyć skrytego tokena, dodaj header",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "PL: modules.requestDesribtionPart3"
+		"requestDesribtionPart3": "PL: modules.requestDesribtionPart3",
+		"selectPlaces": "PL: modules.selectPlaces"
 	},
 	"newContract": {
 		"description": "Nowa umowa w",
@@ -987,7 +993,9 @@
 	"finance": {
 		"paypal": "PayPal",
 		"csob": "ČSOB",
+		"gpWebpay": "Raiffeisenbank",
 		"csobPayment": "Płatności ČSOB",
+		"gpWebpayPayment": "Raiffeisenbank‎",
 		"SelectPrivateKey": "Wybierz klucz osobisty",
 		"financeSettings": "Ustawienia finansów",
 		"vat": "Podatek VAT",
@@ -1001,7 +1009,10 @@
 		"accountNumber": "Numer konta",
 		"invalidAccountNumber": "Niepoprawny numer konta",
 		"paymentGates": "PL: finance.paymentGates",
-		"rents": "Wynajmy"
+		"rents": "Wynajmy",
+		"testPayment": "PL: finance.testPayment",
+		"testPaymentSuccessful": "PL: finance.testPaymentSuccessful",
+		"testPaymentUnsuccessful": "PL: finance.testPaymentUnsuccessful"
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -1207,6 +1218,7 @@
 		}
 	},
 	"auth0Emails": {
+		"verificationEmailSubject": "PL: auth0Emails.verificationEmailSubject",
 		"securityReasons": "Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.",
 		"easyAsClickingButton": "Wystarczy kliknąć na poniższy przycisk:",
 		"confirmAccount": "Potwierdzić konto!",
@@ -1221,13 +1233,20 @@
 		"garageSetup": "Chcesz założyć garaż? Pomożemy Ci w tym! Daj nam znać, a zadzwonimy do Ciebie. Omówimy razem wszystki ustawienia i dostosujemy je do Twoich potrzeb, żeby zagwarantować Ci jak największy zysk i oszczędność czasu.",
 		"getInTouch": "Chcesz skontaktować się z nami?",
 		"website": "Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
+		"passwordResetSubject": "PL: auth0Emails.passwordResetSubject",
 		"passwordResetSubmited": "Poprosiłeś/-aś o zmianę hasła!",
 		"pwdResetDescr": "Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
 		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
+		"verificationCodeEmailSubject": "PL: auth0Emails.verificationCodeEmailSubject",
 		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
 	},
 	"railsEmails": {
+		"invitation_mail_subject": "PL: railsEmails.invitation_mail_subject",
+		"resend_invitation_mail_subject": "PL: railsEmails.resend_invitation_mail_subject",
+		"new_reservation_mail_subject": "PL: railsEmails.new_reservation_mail_subject",
+		"reservation_confirmed_subject": "PL: railsEmails.reservation_confirmed_subject",
+		"reservation_updated_subject": "PL: railsEmails.reservation_updated_subject",
 		"footer": {
 			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
 			"regards": "Pozdrawiamy",
@@ -1372,6 +1391,17 @@
 			"createdAt": "netřeba překládat",
 			"editNews": "netřeba překládat",
 			"deleteNews": "netřeba překládat"
+		},
+		"logs": {
+			"accessLogs": "netřeba překládat",
+			"garageLogs": "netřeba překládat",
+			"user": "PL: pidAdmin.logs.user",
+			"accessType": "PL: pidAdmin.logs.accessType",
+			"createdAt": "PL: pidAdmin.logs.createdAt",
+			"gate": "PL: pidAdmin.logs.gate",
+			"reservation": "PL: pidAdmin.logs.reservation",
+			"noGate": "PL: pidAdmin.logs.noGate",
+			"noReservation": "PL: pidAdmin.logs.noReservation"
 		}
 	}
 }

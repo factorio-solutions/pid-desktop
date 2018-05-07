@@ -17,6 +17,6 @@ export default function CallToActionButton({ label, onClick, state, type }) {
   const content = <span className={styles.label}>{label}</span>
 
   return (
-    <Button content={content} onClick={onClick} state={state} style={style} />
+    <Button content={content} onClick={onClick} state={state} style={style} type={type} />
   )
 }
