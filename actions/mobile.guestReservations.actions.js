@@ -5,6 +5,8 @@ import { GET_RESERVATIONS_PAGINATION_QUERY } from '../queries/reservations.queri
 
 
 import { RESERVATIONS_PER_PAGE } from './reservations.actions'
+import { setCustomModal } from './pageBase.actions'
+import { t } from '../modules/localization/localization'
 
 
 export const SET_GUEST_RESERVATIONS = 'SET_GUEST_RESERVATIONS'
@@ -19,8 +21,10 @@ export const setPage = actionFactory(GUEST_RESERVATIONS_SET_PAGE)
 
 export function initReservations() { // callback used by mobile access page
   return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     const onSuccess = respoonse => {
       dispatch(setGuestReservations(respoonse.data.reservations))
+      dispatch(setCustomModal(undefined))
     }
     request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
       past:      false,
@@ -35,9 +39,11 @@ export function initReservations() { // callback used by mobile access page
 
 export function loadReservations() { // callback used by mobile access page
   return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     const state = getState().guestReservations
     const onSuccess = respoonse => {
       dispatch(addGuestReservations(respoonse.data.reservations))
+      dispatch(setCustomModal(undefined))
     }
     request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
       past:      false,
