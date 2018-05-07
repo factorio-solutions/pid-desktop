@@ -2,7 +2,7 @@ import * as ble from '../modules/ble/ble'
 import moment from 'moment'
 import { request } from '../helpers/request'
 
-import { MOBILE_ACCESS_OPEN_GATE } from '../queries/mobile.access.queries'
+import { MOBILE_ACCESS_OPEN_GATE, MOBILE_ACCESS_LOG_ACCESS } from '../queries/mobile.access.queries'
 import { setError } from './mobile.header.actions'
 
 
@@ -92,6 +92,27 @@ export function openGarageViaPhone(reservationId, gateId) {
         user_id:        getState().mobileHeader.current_user.id,
         reservation_id: reservationId,
         gate_id:        gateId
+      }
+    )
+  }
+}
+
+export function createGateAccessLog(reservationId, gateId) {
+  return (dispatch, getState) => {
+    const onSuccess = response => {
+      console.log(response)
+    }
+
+    request(
+      onSuccess,
+      MOBILE_ACCESS_LOG_ACCESS,
+      {
+        gate_access_log: {
+          user_id:        getState().mobileHeader.current_user.id,
+          reservation_id: reservationId,
+          gate_id:        gateId,
+          access_type:    'Bluetooth'
+        }
       }
     )
   }
@@ -187,6 +208,7 @@ export function openGarage(reservation, gateId) {
     console.log('opening gate')
     dispatch(stopScanning()) // stop previous scanning
     if (gate.phone.match(/[A-Z]/i)) {
+      dispatch(createGateAccessLog(reservation.id, gateId))
       dispatch(openGarageViaBluetooth(gate.phone, reservation.id, gateId))
     } else {
       dispatch(openGarageViaPhone(reservation.id, gateId))
