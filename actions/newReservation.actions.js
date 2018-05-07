@@ -281,7 +281,9 @@ export function setInitialStore(id) {
 
 
     const availableUsersPromise = new Promise((resolve, reject) => {
+      dispatch(setLoading(true))
       const onSuccess = response => {
+        dispatch(setLoading(false))
         if (response.data !== undefined) {
           resolve(response.data)
         } else {
@@ -294,7 +296,9 @@ export function setInitialStore(id) {
 
     const editReservationPromise = new Promise((resolve, reject) => {
       if (id) {
+        dispatch(setLoading(true))
         const onSuccess = response => {
+          dispatch(setLoading(false))
           if (response.hasOwnProperty('data')) {
             resolve(response.data)
           } else {

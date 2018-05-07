@@ -37,8 +37,11 @@ export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RES
 
 export function initOngoingReservations(callback) { // callback used by mobile access page
   return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
+
     const onSuccess = response => {
       dispatch(setOngoingReservations(response.data.reservations))
+      dispatch(setCustomModal())
       callback(response.data.reservations)
     }
     request(onSuccess, GET_RESERVATIONS_QUERY, {
@@ -54,10 +57,12 @@ export function initOngoingReservations(callback) { // callback used by mobile a
 export function initReservations() { // will download first 5 reservations
   window.dispatchEvent(new Event('paginatedTableUpdate'))
   return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (mobile) {
       const state = getState().reservations
       const onSuccess = response => {
         dispatch(setReservations(response.data.reservations))
+        dispatch(setCustomModal())
       }
       request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
         past:      state.past,
