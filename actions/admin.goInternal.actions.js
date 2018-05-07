@@ -58,6 +58,16 @@ function getPlaces(garage) {
   return garage.floors.reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
 }
 
+export function disableGoInternal() {
+  return (dispatch, getState) => {
+    request(UPDATE_ALL_PLACES, { places: getPlaces(getState().adminGoInternal.garage).map(place => ({ id: place.id, go_internal: false })) })
+    .then(() => {
+      dispatch(initModules())
+      dispatch(initGoInternal())
+    })
+  }
+}
+
 export function submitGoInternal() {
   return (dispatch, getState) => {
     dispatch(setCustomModal(t([ 'newPricing', 'saving' ])))

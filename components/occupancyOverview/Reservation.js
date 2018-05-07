@@ -68,7 +68,9 @@ class Reservation extends Component {
                 t([ 'reservations', 'host' ]) :
                 reservation.reservation_case === 'internal' ?
                   t([ 'reservations', 'internal' ]) :
-                  t([ 'reservations', 'visitor' ])
+                  reservation.reservation_case === 'mr_parkit' ?
+                    t([ 'reservations', 'mrParkit' ]) :
+                    t([ 'reservations', 'visitor' ])
               }
             </td>
           </tr>
