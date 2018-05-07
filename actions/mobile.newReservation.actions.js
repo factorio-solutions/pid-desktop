@@ -156,6 +156,7 @@ export function setPlace(id) {
 export function downloadReservation(id) {
   return (dispatch, getState) => {
     const currentUserId = getState().mobileHeader.current_user.id
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     requestPromise(GET_RESERVATION, { id: parseInt(id, 10) })
     .then(res => {
       dispatch(setGarage(res.reservation.place.floor.garage.id))
@@ -209,6 +210,7 @@ export function downloadReservation(id) {
           type: MOBILE_NEW_RESERVATION_SET_ALL,
           ...toSet
         })
+        dispatch(setCustomModal(undefined))
       })
     })
   }
@@ -216,6 +218,7 @@ export function downloadReservation(id) {
 
 export function initReservation(id) {
   return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (id) {
       getState().mobileNewReservation.reservation_id !== parseInt(id, 10) && dispatch(downloadReservation(id))
     } else {
@@ -224,6 +227,7 @@ export function initReservation(id) {
       dispatch(getAvailableCars())
       dispatch(getAvailableUsers())
     }
+    // dispatch(setCustomModal(undefined))
   }
 }
 
@@ -286,6 +290,7 @@ export function pickPlaces(noClientDownload) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       dispatch(setFloors(response.data.garage.floors, response.data.garage.flexiplace))
+      dispatch(setCustomModal(undefined))
 
       if (response.data.garage.floors.find(floor => floor.free_places.find(place => place.id === getState().mobileNewReservation.place_id)) === undefined) {
         // autoselect place if selected place is not available anymore
