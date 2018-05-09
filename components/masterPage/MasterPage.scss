@@ -6,7 +6,7 @@ $hintWidth:          180px;
 
 .horizontalMenu {
   display:          block;
-  background-color: $black;
+  background-color: $horizontalMenuBackground;
   color:            $yellow;
   z-index:          900;
 
@@ -78,14 +78,15 @@ $hintWidth:          180px;
 
 .page {
   >.verticalMenu {
-    background-color: $menuGray;
+    border-right:     1px solid $lightGray;
+    background-color: $verticalMenuBorderColor;
     color:            $white;
     z-index:          800;
   }
 
   >.secondaryVerticalMenu {
     transition:       all .3s ease;
-    background-color: $gray;
+    background-color: $verticalMenuBorderColor;
     color:            $white;
     z-index:          700;
   }

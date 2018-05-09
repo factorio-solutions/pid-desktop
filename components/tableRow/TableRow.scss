@@ -4,7 +4,7 @@
   cursor: pointer;
 
   &.history {
-    background-color: darken($white, 10%);
+    background-color: $tableSpoilerBackground;
     cursor:           default;
 
     >td {
@@ -13,7 +13,7 @@
   }
 
   &.updated {
-    background-color: darken($white, 10%);
+    background-color: $tableSpoilerBackground;
     cursor:           default;
 
     >td {
@@ -22,13 +22,13 @@
   }
 
   &.hover:hover {
-    background-color: darken($white, 10%);
+    background-color: $tableSpoilerBackground;
     color: 						$black;
 	}
 
   >td {
     padding: 			 8px 4px;
-    border-bottom: 1px solid $black;
+    border-bottom: 1px solid $verticalMenuBorderColor;
 	}
 }
 
