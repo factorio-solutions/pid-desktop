@@ -175,9 +175,8 @@
 }
 
 .garageSelector {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: $yellow;
   color:            $black;
-  color:            $dropdownSelectedBackground;
   font-weight:      bold;
 
   + .drop {
