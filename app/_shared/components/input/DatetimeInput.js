@@ -20,6 +20,7 @@ export default class DatetimeInput extends Component {
     onEnter:     PropTypes.func, // called when enter pressed
     onBlur:      PropTypes.func, // called when enter pressed
     value:       PropTypes.string,
+    align:       PropTypes.string,
     inlineMenu:  PropTypes.object,
     editable:    PropTypes.bool // can be turned off
   }
@@ -38,7 +39,7 @@ export default class DatetimeInput extends Component {
   }
 
   render() {
-    const { label, error, placeholder, onChange, onEnter, onBlur, inlineMenu, style, editable } = this.props
+    const { label, error, placeholder, onChange, onEnter, onBlur, inlineMenu, style, editable, align } = this.props
 
     const handleChange = event => {
       editable && this.setState({ ...this.state, message: event.target.value })
@@ -60,16 +61,12 @@ export default class DatetimeInput extends Component {
       }
     }
 
-    const showDatepicker = () => {
-      this.setState({ ...this.state, focus: true })
-    }
+    const showDatepicker = () => this.setState({ ...this.state, focus: true })
 
-    const hideDatepicker = () => {
-      this.setState({ ...this.state, focus: false })
-    }
+    const hideDatepicker = () => this.setState({ ...this.state, focus: false })
 
     return (
-      <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} >
+      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`} >
         <input
           type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4}) (\d{1,2}):(\d{2})"
           onBlur={onBlur}

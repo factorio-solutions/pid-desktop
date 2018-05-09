@@ -61,23 +61,23 @@
 
     >tr, td {
       &.weekend {
-        background: $lightLightGray;
+        background: $menuButtonFontColor;
       }
 
       &.rightBorderDotted {
-        border-right: 1px dotted $black;
+        border-right: 1px dotted $verticalMenuBorderColor;
       }
 
       &.boldBorder {
-        border-right: 2px solid $black;
+        border-right: 2px solid $verticalMenuBorderColor;
       }
 
       &.rightBorder {
-        border-right: 1px solid $black;
+        border-right: 1px solid $verticalMenuBorderColor;
       }
 
       &.bottomBorder {
-        border-bottom: 1px solid $black;
+        border-bottom: 1px solid $verticalMenuBorderColor;
       }
     }
   }

@@ -31,14 +31,14 @@ $font-size: 16px;
 }
 
 .tdSearchBar {
-  display: flex;
-  padding: 5px;
-
+  display:   flex;
+  padding:   5px;
+  font-size: 12px;
 
   >span {
     > input {
       width:       100%;
-      max-width:   80px;
+      max-width:   50px;
       margin:      0;
       border:      0;
       outline:     none;
@@ -71,7 +71,7 @@ $font-size: 16px;
 
   > thead {
     > tr > td {
-      border-bottom: 1px solid $black;
+      border-bottom: 1px solid $verticalMenuBorderColor;
 
       > td:hover {
         background:  darken($white, 10%);
@@ -105,7 +105,7 @@ $font-size: 16px;
 }
 
 .spoiler {
-  background: darken($white, 10%) !important;
+  background: $tableSpoilerBackground !important;
 }
 
 .tdHeader {

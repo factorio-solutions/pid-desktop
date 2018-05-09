@@ -2,7 +2,7 @@
 
 $labels-offset:                -12px;
 $font-size:                    16px;
-$font-size-accessories:        13px;
+$font-size-accessories:        12px;
 $mobile-font-size-accessories: 9px;
 $transition-time:              .2s;
 $placeholder-transition:       .3s ease all;
@@ -13,7 +13,7 @@ $placeholder-delay:            .1s;
 
 .customFormGroup {
   position:   relative;
-  margin-top: -$labels-offset;
+  margin-top: 22px;
 
   .inlineMenu {
     top:            $labels-offset;
@@ -40,7 +40,7 @@ $placeholder-delay:            .1s;
     padding: 12px 12px 8px;
 
     border:           0;
-    border-bottom:    1px solid $gray;
+    border-bottom:    1px solid $verticalMenuBorderColor;
     border-radius:    0;
     background-color: transparent;
     font-size:        $font-size;
@@ -95,10 +95,10 @@ $placeholder-delay:            .1s;
       background: $red;
     }
 
-    &:valid:not(:focus):not([value='']) ~ .bar:before {
-      width:      100%;
-      background: $green;
-    }
+    // &:valid:not(:focus):not([value='']) ~ .bar:before {
+    //   width:      100%;
+    //   background: $green;
+    // }
 
     &:focus ~ .bar:before, &:focus ~ .bar:after {
       width:  100%;
@@ -196,9 +196,10 @@ $placeholder-delay:            .1s;
   }
 
   .error {
-    top:       $labels-offset;
-    left:      100%;
-    transform: translate(-100%, 0);
+    top:        $labels-offset;
+    left:       100%;
+    margin-top: 12px;
+    transform:  translate(-100%, 0);
 
     color:     $red;
     font-size: $font-size-accessories;
