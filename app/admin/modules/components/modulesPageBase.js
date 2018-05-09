@@ -234,6 +234,6 @@ class ModulesPageBase extends Component {
 }
 
 export default connect(
-  state => ({  state: state.adminModules, pageBase: state.pageBase }),
+  state => ({ state: state.adminModules, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators({ ...adminModulesActions, ...thirdPartyActions, disableGoInternal }, dispatch) })
 )(ModulesPageBase)
