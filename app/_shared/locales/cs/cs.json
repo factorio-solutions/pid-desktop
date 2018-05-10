@@ -882,7 +882,11 @@
 		"gpWebpayPassword": "Heslo k soukromému klíči",
 		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Zvolte soukromý klíč:",
-		"invalidKeyPair": "Id obchodníka nebo soukromý klíč jsou špatně"
+		"invalidKeyPair": "Id obchodníka nebo soukromý klíč jsou špatně",
+		"gpWebpayMerchantID": "ID obchodníka Raiffeisenbank‎",
+		"gpWebpayMerchantIdplaceholder": "1234567890",
+		"gpWebpayPassword": "Heslo k soukromému klíči",
+		"gpWebpayPasswordPlaceholder": "abcd1234"
 	},
 	"invoices": {
 		"invoiceDate": "datum faktury",
@@ -1010,9 +1014,11 @@
 		"invalidAccountNumber": "Nesprávné číslo účtu",
 		"paymentGates": "Platební brány",
 		"rents": "Nájmy",
+		"gpWebpayPayment": "Raiffeisenbank‎ platby",
 		"testPayment": "Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.",
 		"testPaymentSuccessful": "Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.",
-		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně."
+		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně.",
+		"gpWebpay": "Raiffeisenbank"
 	},
 	"analytics": {
 		"week": "týden",
