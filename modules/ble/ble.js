@@ -210,6 +210,7 @@ export function write(address, repeater, success) {
       setTimeout(resolve, repeater ? 5000 : 1000)
     }
 
+    console.log('writing password: ', UNIT_PASSWORD)
     writeBLE(address, UNIT_SERVICE, UNIT_CHARACTERISTICS_PASSWORD, stringToEncodedString(UNIT_PASSWORD))
     .then(() => writeBLE(address, UNIT_SERVICE, UNIT_CHARACTERISTICS_OPEN_GATE, packetToEncodedString(UNIT_OPEN_SEQUENCE)))
     .then(delayedResolve)
