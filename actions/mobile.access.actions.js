@@ -131,7 +131,7 @@ function logErrorFactory(reservationId, gateId) {
 }
 
 
-export function openGarageViaBluetooth(name, reservationId, gateId) {
+export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
   return (dispatch, getState) => {
     const message = mess => dispatch(setMessage(mess, reservationId, gateId))
     const opened = bool => dispatch(setOpened(bool, reservationId, gateId))
@@ -155,6 +155,8 @@ export function openGarageViaBluetooth(name, reservationId, gateId) {
         message('Request sucessfully sent' + (repeater ? ' (repeater)' : ' (gate unit)'))
         opened(true)
       }
+
+      ble.setPassword(pwd);
 
       (!device ?
       ble.intialize().then(() => ble.scan(name)).then(onDeviceFound) :
@@ -209,7 +211,7 @@ export function openGarage(reservation, gateId) {
     dispatch(stopScanning()) // stop previous scanning
     if (gate.phone.match(/[A-Z]/i)) {
       dispatch(createGateAccessLog(reservation.id, gateId))
-      dispatch(openGarageViaBluetooth(gate.phone, reservation.id, gateId))
+      dispatch(openGarageViaBluetooth(gate.phone, gate.password, reservation.id, gateId))
     } else {
       dispatch(openGarageViaPhone(reservation.id, gateId))
     }

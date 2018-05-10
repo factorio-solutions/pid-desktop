@@ -1,11 +1,12 @@
 const MAX_SCANNING_DURATION = 15000 // ms
 const IS_ANDROID = window.cordova && cordova.platformId === 'android'
-const UNIT_PASSWORD = 'heslo'
+let UNIT_PASSWORD = 'heslo'
 const UNIT_OPEN_SEQUENCE = [ '0xFE', '0xFF', '0x20' ]
-// const UNIT_OPEN_SEQUENCE = [ '0xFF' ]
+// const UNIT_BLINKING_SEQUENCE = [ '0xFF' ]
 const UNIT_SERVICE = '68F60000-FE41-D5EC-5BED-CD853CA1FDBC'
 const UNIT_CHARACTERISTICS_PASSWORD = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
 const UNIT_CHARACTERISTICS_OPEN_GATE = '68F6000B-FE41-D5EC-5BED-CD853CA1FDBC'
+
 
 function isInitialized() {
   console.log('is initialized?')
@@ -159,6 +160,10 @@ function reconnectErrorHandler(address, error) {
   })
 }
 
+
+export function setPassword(pwd) {
+  UNIT_PASSWORD = (pwd && pwd.substr(0, 12)) || 'heslo'
+}
 
 export function intialize() {
   console.log('STEP 1: INITIALIZE')
