@@ -164,9 +164,9 @@
 		"garageAddClientHint": "Tutaj możesz dodać klienta do strony zarządzania garażem.",
 		"garageGarageUsersHint": "Tutaj możesz wybrać, kto może zarządzać twoim garażem.",
 		"EditUserHint": "Tutaj możesz zmienić swoje dane.",
-		"orderGarageModuleHint": "PL: pageBase.orderGarageModuleHint",
+		"orderGarageModuleHint": "Tutaj możesz zamówić moduł dostępu do garażu.",
 		"reservationOverviewHint": "Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.",
-		"editInvoiceHint": "PL: pageBase.editInvoiceHint",
+		"editInvoiceHint": "Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.",
 		"editContractHint": "Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
@@ -188,7 +188,7 @@
 		"flexiplaceHint": "Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.",
 		"pidAdmin": "PID admin",
 		"bulkRemovalHint": "PL: pageBase.bulkRemovalHint",
-		"smsSettingsHint": "PL: pageBase.smsSettingsHint"
+		"smsSettingsHint": "Na tej stronie możesz aktywować usługę SMS oraz zmienić jej ustawienia. Do pisania tekstów możesz wykorzystać wytłumaczone poniżej zmienne, które zostaną zastąpione odpowiednimi danymi:\n\n\"{{ garage }}\" = nazwa garażu\n\"{{ address }}\" = adres wjazdu\n\"{{ gps }}\" = parametry gps wjazdu\n\"{{ place }}\" = piętro / miejsce\n\"{{ begin }}\" = początek rezerwacji\n\"{{ end }}\" = koniec rezerwacji\n\"{{ gate }}\" = numer telefonu serwera"
 	},
 	"newReservation": {
 		"selectGarage": "Wybierz garaż *",
@@ -535,13 +535,13 @@
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Brama posiada hasło. Możesz je zmienić podając nowe hasło.",
 		"passwordWasNotSet": "Hasło nie zostało ustawione!",
-		"addAllPalces": "PL: newGarage.addAllPalces",
-		"notAssignNumber": "PL: newGarage.notAssignNumber",
-		"selcetNumber": "PL: newGarage.selcetNumber"
+		"addAllPalces": "Dodać wszystkie miejsca",
+		"notAssignNumber": "Numer nie został przyporządkowany",
+		"selcetNumber": "Numer do otwarcia bramy"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
-		"placeholder": "Klient firmy",
+		"placeholder": "Spółka z o.o.",
 		"invalidName": "Niepoprawne nazwisko klienta",
 		"ICplaceholder": "12345678",
 		"DICplaceholder": "CZ12345678",
@@ -640,7 +640,7 @@
 		"email": "E-mail:",
 		"createdAt": "Profil założony:",
 		"cars": "Auta",
-		"showPublicGarages": "PL: profile.showPublicGarages"
+		"showPublicGarages": "Pokaż garaże oferowane publicznie"
 	},
 	"users": {
 		"username": "Nazwa użytkownika",
@@ -879,10 +879,10 @@
 		"invalidMerchantId": "Niepoprawne ID firmowe",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
 		"gpWebpayMerchantIdplaceholder": "1234567890",
-		"gpWebpayPassword": "PL: newAccount.gpWebpayPassword",
-		"gpWebpayPasswordPlaceholder": "PL: newAccount.gpWebpayPasswordPlaceholder",
+		"gpWebpayPassword": "Hasło do klucza prywatnego",
+		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Wybierz klucz osobisty:",
-		"invalidKeyPair": "PL: newAccount.invalidKeyPair"
+		"invalidKeyPair": "Niepoprawne ID firmy lub klucz prywatny"
 	},
 	"invoices": {
 		"invoiceDate": "data wystawienia faktury",
@@ -957,8 +957,8 @@
 		"toApiExplorer": "Przejdź do przeglądarki API",
 		"requestDesribtionPart1": "Aby użyć skrytego tokena, dodaj header",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "PL: modules.requestDesribtionPart3",
-		"selectPlaces": "PL: modules.selectPlaces"
+		"requestDesribtionPart3": "dla Twoich raphQL requests",
+		"selectPlaces": "Żeby aktywować moduł, wypełnij formularz."
 	},
 	"newContract": {
 		"description": "Nowa umowa w",
@@ -971,7 +971,7 @@
 		"selectedPlaces": "Wybrane miejsca",
 		"noSelectedPlaces": "Nie ma żadnych wybranych miejsc",
 		"selectRent": "Wybierz najem",
-		"contractPrice": "Wpisz konkretną kwotę umowy",
+		"contractPrice": "Wprowadź miesięczną cenę tej umowy",
 		"priceInvalid": "Kwota jest niepoprawna",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Wybierz walutę",
@@ -1008,11 +1008,11 @@
 		"uploadKey": "Wgrać klucz RSA",
 		"accountNumber": "Numer konta",
 		"invalidAccountNumber": "Niepoprawny numer konta",
-		"paymentGates": "PL: finance.paymentGates",
+		"paymentGates": "Bramy płatnicze",
 		"rents": "Wynajmy",
-		"testPayment": "PL: finance.testPayment",
-		"testPaymentSuccessful": "PL: finance.testPaymentSuccessful",
-		"testPaymentUnsuccessful": "PL: finance.testPaymentUnsuccessful"
+		"testPayment": "Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",
+		"testPaymentSuccessful": "Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.",
+		"testPaymentUnsuccessful": "Transakcja próbna nie powiodła się."
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -1214,11 +1214,11 @@
 			"invalidName": "Niepoprawna nazwa",
 			"invalidEmail": "Niepoprawny e-mail",
 			"invalidPhone": "Niepoprawny telefon",
-			"noGuestResrevations": "Bez rezerwacji regularnych gości"
+			"noGuestResrevations": "Brak rezerwacji regularnych gości"
 		}
 	},
 	"auth0Emails": {
-		"verificationEmailSubject": "PL: auth0Emails.verificationEmailSubject",
+		"verificationEmailSubject": "E-mail kontrolny",
 		"securityReasons": "Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.",
 		"easyAsClickingButton": "Wystarczy kliknąć na poniższy przycisk:",
 		"confirmAccount": "Potwierdzić konto!",
@@ -1238,15 +1238,15 @@
 		"pwdResetDescr": "Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
 		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
-		"verificationCodeEmailSubject": "PL: auth0Emails.verificationCodeEmailSubject",
+		"verificationCodeEmailSubject": "Kod weryfikacyjny",
 		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
 	},
 	"railsEmails": {
-		"invitation_mail_subject": "PL: railsEmails.invitation_mail_subject",
-		"resend_invitation_mail_subject": "PL: railsEmails.resend_invitation_mail_subject",
-		"new_reservation_mail_subject": "PL: railsEmails.new_reservation_mail_subject",
-		"reservation_confirmed_subject": "PL: railsEmails.reservation_confirmed_subject",
-		"reservation_updated_subject": "PL: railsEmails.reservation_updated_subject",
+		"invitation_mail_subject": "Zostałeś zaproszony do Park-It-Direct!",
+		"resend_invitation_mail_subject": "Przypominamy o zaproszeniu do Park-It-Direct.",
+		"new_reservation_mail_subject": "%{user} utworzył(a) nową rezerwację.",
+		"reservation_confirmed_subject": "Rezerwacja w %{garage} została potwierdzona.",
+		"reservation_updated_subject": "Twora rezerwacja w %{garage} została zaktualizowana.",
 		"footer": {
 			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
 			"regards": "Pozdrawiamy",
@@ -1274,7 +1274,7 @@
 			"we_will_help": "a my pomożemy Ci aktywować konto."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
+			"new_reservation": "PL: railsEmails.new_reservation_mail.new_reservation",
 			"reservation_for_you": "utworzył dla Ciebie nową rezerwację.",
 			"go_pay_yourself": "Zapłać",
 			"price": "Cena:",

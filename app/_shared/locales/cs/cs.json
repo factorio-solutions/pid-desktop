@@ -504,7 +504,7 @@
 		"streetPlaceholder": "Vinohradská 1",
 		"cityPlaceholder": "Praha",
 		"postalCodePlaceholder": "12000",
-		"statePlaceholder": "CS: newGarage.statePlaceholder",
+		"statePlaceholder": "-",
 		"countryPlaceholder": "Česká republika",
 		"lat": "Zeměpisná šířka",
 		"invalidLat": "Neplatné číslo",
@@ -882,11 +882,7 @@
 		"gpWebpayPassword": "Heslo k soukromému klíči",
 		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Zvolte soukromý klíč:",
-		"invalidKeyPair": "Id obchodníka nebo soukromý klíč jsou špatně",
-		"gpWebpayMerchantID": "ID obchodníka Raiffeisenbank‎",
-		"gpWebpayMerchantIdplaceholder": "1234567890",
-		"gpWebpayPassword": "Heslo k soukromému klíči",
-		"gpWebpayPasswordPlaceholder": "abcd1234"
+		"invalidKeyPair": "Id obchodníka nebo soukromý klíč jsou špatně"
 	},
 	"invoices": {
 		"invoiceDate": "datum faktury",
@@ -962,7 +958,7 @@
 		"requestDesribtionPart1": "Použijte token tak, že přidáte header",
 		"requestDesribtionPart2": "Authorization:",
 		"requestDesribtionPart3": "do vašich graphQL requestů",
-		"selectPlaces": "Pro aktivaci modulu, prosím, vyplňte formulát."
+		"selectPlaces": "Pro aktivaci modulu, prosím, vyplňte formulář."
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
@@ -1014,11 +1010,9 @@
 		"invalidAccountNumber": "Nesprávné číslo účtu",
 		"paymentGates": "Platební brány",
 		"rents": "Nájmy",
-		"gpWebpayPayment": "Raiffeisenbank‎ platby",
 		"testPayment": "Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.",
 		"testPaymentSuccessful": "Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.",
-		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně.",
-		"gpWebpay": "Raiffeisenbank"
+		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně."
 	},
 	"analytics": {
 		"week": "týden",
@@ -1280,7 +1274,7 @@
 			"we_will_help": "a my Vám pomůžeme s aktivací účtu."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "Máte novou rezervaci v Park-it-direct!",
+			"new_reservation": "Máte novou rezervaci v %{garage}",
 			"reservation_for_you": "pro Vás vytvořil novou rezervaci.",
 			"go_pay_yourself": "Zaplatit",
 			"price": "Cena:",

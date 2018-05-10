@@ -382,9 +382,9 @@ pageBase.garageEditRentHint,Now you can edit rent properties.,Zde můžete uprav
 pageBase.garageAddClientHint,Here you can add a client to the garage management page.,Zde můžete přidat klienta na stránky se správou garáží,Tutaj możesz dodać klienta do strony zarządzania garażem.,Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.
 pageBase.garageGarageUsersHint,Here you can manage who can use your garage and what rights they have.,Zde můžete spravovat uživatele garáže a jejich práva.,"Tutaj możesz wybrać, kto może zarządzać twoim garażem.","Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann."
 pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete změnit svoje údaje.,Tutaj możesz zmienić swoje dane.,Hier können Sie die eigenen Angaben ändern.
-pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,,
+pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,Tutaj możesz zamówić moduł dostępu do garażu.,
 pageBase.reservationOverviewHint,Here you can double check if everything is ok.,"Zde můžete zkontrolovat, zda jsou údaje rezervace správně.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie kontrolieren, ob die Daten stimmen."
-pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,,
+pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.,
 pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.","Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis."
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht
 pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,,Sie haben %(count)s ungelesene Nachrichten
@@ -444,7 +444,15 @@ pageBase.smsSettingsHint,"On this page you can activate and set sms service. To 
 ""{{ place }}"" = patro / místo
 ""{{ begin }}"" = začátekrezervace
 ""{{ end }}"" = konec rezervace
-""{{ gate }}"" = tel. číslo serveru",,"Auf dieser Seite können Sie den SMS Dienst aktivieren. Bei schreiben der Texte können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.
+""{{ gate }}"" = tel. číslo serveru","Na tej stronie możesz aktywować usługę SMS oraz zmienić jej ustawienia. Do pisania tekstów możesz wykorzystać wytłumaczone poniżej zmienne, które zostaną zastąpione odpowiednimi danymi:
+
+""{{ garage }}"" = nazwa garażu
+""{{ address }}"" = adres wjazdu
+""{{ gps }}"" = parametry gps wjazdu
+""{{ place }}"" = piętro / miejsce
+""{{ begin }}"" = początek rezerwacji
+""{{ end }}"" = koniec rezerwacji
+""{{ gate }}"" = numer telefonu serwera","Auf dieser Seite können Sie den SMS Dienst aktivieren. Bei schreiben der Texte können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.
 
 ""{{ garage }}"" = Garagenname
 ""{{ address }}"" = Einfahrtsadresse
@@ -745,7 +753,7 @@ newGarage.placeholderFloorTo,12,12,12,12
 newGarage.streetPlaceholder,Martense Avenue 526,Vinohradská 1,Martense Avenue 526,Neue Straße 123
 newGarage.cityPlaceholder,Pittsburgh,Praha,Česká republika,Dresden
 newGarage.postalCodePlaceholder,7666,12000,7666,1127
-newGarage.statePlaceholder,Pennsylvania,,New Jersey,Sachsen
+newGarage.statePlaceholder,Pennsylvania,-,New Jersey,Sachsen
 newGarage.countryPlaceholder,USA,Česká republika,USA,Deutschland
 newGarage.lat,Latitude,Zeměpisná šířka,Szerokość geograficzna,Geographische Breite
 newGarage.invalidLat,Invalid number,Neplatné číslo,Niepoprawna wartość,Ungültige Angabe
@@ -776,11 +784,11 @@ newGarage.invalidPasswordPhone,Invalid password,Nesprávné heslo,Niepoprawne ha
 newGarage.placeholderGatePassword,123456,123456,123456,123456
 newGarage.passwordWasSet,Gate has password. Change it by fill in a new password,Brána je zaheslovaná. Změnu provedete zadáním nového hesla.,Brama posiada hasło. Możesz je zmienić podając nowe hasło.,Tor ist verschlüsselt. Ändern nach Kennwort Eingabe möglich.
 newGarage.passwordWasNotSet,Password was not set!,Heslo není nastaveno!,Hasło nie zostało ustawione!,Kennwort ist nicht eingestellt!
-newGarage.addAllPalces,Add all places,Přidat všechna místa,,Alle Stellplätze hinzufügen
-newGarage.notAssignNumber,Number not assigned,Číslo nepřiřazeno,,Keine Nummer hinzugefügt
-newGarage.selcetNumber,Number to open gate,Číslo pro otevření brány,,Tel. Nummer für das öffnen
+newGarage.addAllPalces,Add all places,Přidat všechna místa,Dodać wszystkie miejsca,Alle Stellplätze hinzufügen
+newGarage.notAssignNumber,Number not assigned,Číslo nepřiřazeno,Numer nie został przyporządkowany,Keine Nummer hinzugefügt
+newGarage.selcetNumber,Number to open gate,Číslo pro otevření brány,Numer do otwarcia bramy,Tel. Nummer für das öffnen
 newClient.name,Client name,Jméno klienta,Nazwisko klienta,Name des Kunden
-newClient.placeholder,Company ltd.,Společnost s.r.o.,Klient firmy,Unternehmen GmbH
+newClient.placeholder,Company ltd.,Společnost s.r.o.,Spółka z o.o.,Unternehmen GmbH
 newClient.invalidName,Invalid client name,Neplatné jméno klienta,Niepoprawne nazwisko klienta,Kundennamen ist ungültig
 newClient.ICplaceholder,12345678,12345678,12345678,12345678
 newClient.DICplaceholder,CZ12345678,CZ12345678,CZ12345678,DE12345678
@@ -873,7 +881,7 @@ profile.editUser,Edit my user profile,Upravit svůj uživatelský profil,Edytowa
 profile.email,Email:,Email:,E-mail:,E-Mail-Adresse:
 profile.createdAt,Profile created:,Profil vytvořen:,Profil założony:,Profilerstellungsdatum:
 profile.cars,Cars,Auta,Auta,Fahrzeuge
-profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,,Öffentlich angebotene Garagen anzeigen
+profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,Pokaż garaże oferowane publicznie,Öffentlich angebotene Garagen anzeigen
 users.username,username,uživatelské jméno,Nazwa użytkownika,Benutzername
 users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
@@ -1084,10 +1092,10 @@ newAccount.gpWebpayMerchantID,Raiffeisenbank‎ merchant ID,ID obchodníka Raiff
 newAccount.invalidMerchantId,Merchant ID invalid,Id obchodníka je neplatné,Niepoprawne ID firmowe,Die Händler-ID ist ungültig.
 newAccount.csobMerchantIdplaceholder,A2411K3nLj,A2411K3nLj,A2411K3nLj,A2411K3nLj
 newAccount.gpWebpayMerchantIdplaceholder,1234567890,1234567890,1234567890,1234567890
-newAccount.gpWebpayPassword,Private key password,Heslo k soukromému klíči,,
-newAccount.gpWebpayPasswordPlaceholder,abcd1234,abcd1234,,
+newAccount.gpWebpayPassword,Private key password,Heslo k soukromému klíči,Hasło do klucza prywatnego,
+newAccount.gpWebpayPasswordPlaceholder,abcd1234,abcd1234,abcd1234,
 newAccount.SelectPrivateKey,Select private key:,Zvolte soukromý klíč:,Wybierz klucz osobisty:,Privaten Schlüssel auswählen:
-newAccount.invalidKeyPair,Merchant id or key is invalid,Id obchodníka nebo soukromý klíč jsou špatně,,
+newAccount.invalidKeyPair,Merchant id or key is invalid,Id obchodníka nebo soukromý klíč jsou špatně,Niepoprawne ID firmy lub klucz prywatny,
 invoices.invoiceDate,Issued,datum faktury,data wystawienia faktury,Rechnungsdatum
 invoices.dueDate,Due date,datum splatnosti,termin spłaty,Fälligkeitsdatum
 invoices.account,Account,účet,konto,Konto
@@ -1156,8 +1164,8 @@ modules.warningDesribtion,"Secret token identifies your garage. Do not share you
 modules.toApiExplorer,Go to API explorer!,Přejít do API prohlížeče!,Przejdź do przeglądarki API,Gehe zu API-Browser!
 modules.requestDesribtionPart1,"To use your secret token, add header","Použijte token tak, že přidáte header","Aby użyć skrytego tokena, dodaj header","Verwenden Sie dasToken, indem Sie den Header einfügen"
 modules.requestDesribtionPart2,Authorization:,Authorization:,Authorization:,Authorization:
-modules.requestDesribtionPart3,to your graphQL requests.,do vašich graphQL requestů,,für Ihre graphQL Aufträge
-modules.selectPlaces,"To activate this module, please, fill the form bellow","Pro aktivaci modulu, prosím, vyplňte formulát.",,
+modules.requestDesribtionPart3,to your graphQL requests.,do vašich graphQL requestů,dla Twoich raphQL requests,für Ihre graphQL Aufträge
+modules.selectPlaces,"To activate this module, please, fill the form bellow","Pro aktivaci modulu, prosím, vyplňte formulář.","Żeby aktywować moduł, wypełnij formularz.","Füllen Sie bitte das Formular aus, bevor Sie das Modul aktivieren."
 newContract.description,New Agreement in,Nová dohoda v,Nowa umowa w,Neue Vereinbarung in
 newContract.edit,Editing agreement in,Úprava dohody v,Edycja umowy w,Vereinbarung bearbeiten in
 newContract.yourContract,Your agreement in,Vaše dohoda v,Twoja umowa w,Ihr Vertrag in
@@ -1168,7 +1176,7 @@ newContract.clientNotFound,No client with this token exists,Žádný klient s t�
 newContract.selectedPlaces,Selected spots,Vybraná místa,Wybrane miejsca,Ausgewählte Stellplätze
 newContract.noSelectedPlaces,No selected spots,Žádná vybraná místa,Nie ma żadnych wybranych miejsc,Keine Stellplätze ausgewählt
 newContract.selectRent,Select rent,Vyberte nájem,Wybierz najem,Mietverhältnis auswählen
-newContract.contractPrice,Enter monthly price for this agreement,Zadejte měsíční cenu této dohody,Wpisz konkretną kwotę umowy,Geben Sie den Monatspreis dieser Vereinbarung ein
+newContract.contractPrice,Enter monthly price for this agreement,Zadejte měsíční cenu této dohody,Wprowadź miesięczną cenę tej umowy,Geben Sie den Monatspreis dieser Vereinbarung ein
 newContract.priceInvalid,Price invalid,Cena je neplatná,Kwota jest niepoprawna,Ungültiger Preis
 newContract.pricePlaceholder,10000,10000,10000,10000
 newContract.selectCurrency,Select currency,Zvolte měnu,Wybierz walutę,Währung auswählen
@@ -1203,11 +1211,11 @@ finance.changeFailed,An error occurred. Values were not changed.,"Došlo k chyb�
 finance.uploadKey,Upload RSA key,Nahrát RSA klíč,Wgrać klucz RSA,RSA-Schlüssel hochladen
 finance.accountNumber,Account number,Číslo účtu,Numer konta,Kontonummer
 finance.invalidAccountNumber,Invalid account number,Nesprávné číslo účtu,Niepoprawny numer konta,Ungültige Kontonummer
-finance.paymentGates,Payment gates,Platební brány,,
+finance.paymentGates,Payment gates,Platební brány,Bramy płatnicze,
 finance.rents,Rents,Nájmy,Wynajmy,Mietverhältnisse
-finance.testPayment,You can now perform a test payment to verify the correctness of the entered data.,"Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.",,
-finance.testPaymentSuccessful,Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.,Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.,,
-finance.testPaymentUnsuccessful,Your test payment was unsuccessful.,Vaše testovací platba neproběhla úspěšně.,,
+finance.testPayment,You can now perform a test payment to verify the correctness of the entered data.,"Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.","Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",
+finance.testPaymentSuccessful,Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.,Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.,Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.,
+finance.testPaymentUnsuccessful,Your test payment was unsuccessful.,Vaše testovací platba neproběhla úspěšně.,Transakcja próbna nie powiodła się.,
 analytics.week,week,týden,tydzień,Woche
 analytics.month,month,měsíc,miesiąc,Monat
 analytics.turnover,turnover,obrat,obrót,Umsatz
@@ -1365,8 +1373,8 @@ mobileApp.guest.phone,Regular guests phone,Telefon pravidelného hosta,Telefon r
 mobileApp.guest.invalidName,Invalid name,Špatné jméno,Niepoprawna nazwa,Name falsch
 mobileApp.guest.invalidEmail,Invalid email,Špatný email,Niepoprawny e-mail,E-Mail falsch
 mobileApp.guest.invalidPhone,Invalid phone,Špatný telefon,Niepoprawny telefon,Telefonnummer falsch
-mobileApp.guest.noGuestResrevations,No regular guests reservations,Žádné rezervace pravidelného hosta,Bez rezerwacji regularnych gości,Keine Reservierung für regelmäßige Gäßte
-auth0Emails.verificationEmailSubject,Verification email,Ověřovací email,,Verifizierungs-E-Mail
+mobileApp.guest.noGuestResrevations,No regular guests reservations,Žádné rezervace pravidelného hosta,Brak rezerwacji regularnych gości,Keine Reservierung für regelmäßige Gäßte
+auth0Emails.verificationEmailSubject,Verification email,Ověřovací email,E-mail kontrolny,Verifizierungs-E-Mail
 auth0Emails.securityReasons,For security reasons we need you to verify your email,Z bezpečnostních důvodů potřebujeme ověřit váš email,Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.,Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse
 auth0Emails.easyAsClickingButton,It's as easy as clicking the link below:,Jednoduše klikněte na toto tlačítko:,Wystarczy kliknąć na poniższy przycisk:,Einfach diese Taste drücken:
 auth0Emails.confirmAccount,Confirm my account!,Ověřit účet!,Potwierdzić konto!,Kontro prüfen!
@@ -1386,13 +1394,13 @@ auth0Emails.passwordResetSubmited,You have submitted a password change request!,
 auth0Emails.pwdResetDescr,"If it wasn't you, please disregard this email and make sure you can still log in to your account. If it was you, then ","Pokud jste o změnu hesla nepožádali, můžete tuto zprávu ignorovat. Pokud jste to byli vy, pak ","Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,","Falls Sie eine Kennwortänderung nicht verlangt haben, können Sie diese Nachricht ignorieren. Falls Sie eine verlangt haben, dann"
 auth0Emails.confirmPwdReset,Confirm the password change,Dokončit změnu hesla,Dokończ zmianę hasła,Kennwort ändern
 auth0Emails.troubleWithAccount,"If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.","Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.","W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.","Falls Sie Probleme mit Ihrem Konto haben, zweifeln Sie bitte nicht uns anzusprechen, indem Sie auf diese E-Mail antworten."
-auth0Emails.verificationCodeEmailSubject,Verification code,Ověřovací kód,,Verifizierungscode
+auth0Emails.verificationCodeEmailSubject,Verification code,Ověřovací kód,Kod weryfikacyjny,Verifizierungscode
 auth0Emails.verificationCode,Below you can find your verification code for Park-it-direct!,Níže najdete Váš ověřovací kód pro Park-it-direct!,Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!,Weiter unten finden Sie Ihren Bestätigungscode für Park-it-direct!
-railsEmails.invitation_mail_subject,You have been invited to Park-It-Direct!,Byl jste pozván do Park-It-Directu!,,Sie wurden zu Park-it-direct eingeladen!
-railsEmails.resend_invitation_mail_subject,Invitation reminder to Park-It-Direct.,Připomínáme pozvánku v Park-It-Direct.,,Park-it-direct Einladungserinnerung
-railsEmails.new_reservation_mail_subject,%{user} has created new reservation for you.,%{user} Vám vytvořil(a) novou rezervaci.,,%{user} hat für Sie gebucht.
-railsEmails.reservation_confirmed_subject,Reservation in %{garage} has been confirmed.,Rezervace v %{garage} byla potvrzena.,,Buchung in der Garage: %{garage} wurde bestätigt.
-railsEmails.reservation_updated_subject,Your reservation in %{garage} has been updated.,Vaše rezervace v %{garage} byla aktualizována.,,Ihre Buchung in der Garage %{garage} wurde aktualisiert.
+railsEmails.invitation_mail_subject,You have been invited to Park-It-Direct!,Byl jste pozván do Park-It-Directu!,Zostałeś zaproszony do Park-It-Direct!,Sie wurden zu Park-it-direct eingeladen!
+railsEmails.resend_invitation_mail_subject,Invitation reminder to Park-It-Direct.,Připomínáme pozvánku v Park-It-Direct.,Przypominamy o zaproszeniu do Park-It-Direct.,Park-it-direct Einladungserinnerung
+railsEmails.new_reservation_mail_subject,%{user} has created new reservation for you.,%{user} Vám vytvořil(a) novou rezervaci.,%{user} utworzył(a) nową rezerwację.,%{user} hat für Sie gebucht.
+railsEmails.reservation_confirmed_subject,Reservation in %{garage} has been confirmed.,Rezervace v %{garage} byla potvrzena.,Rezerwacja w %{garage} została potwierdzona.,Buchung in der Garage: %{garage} wurde bestätigt.
+railsEmails.reservation_updated_subject,Your reservation in %{garage} has been updated.,Vaše rezervace v %{garage} byla aktualizována.,Twora rezerwacja w %{garage} została zaktualizowana.,Ihre Buchung in der Garage %{garage} wurde aktualisiert.
 railsEmails.footer.enjoy,Enjoy your Park-it-direct experience!,Užijte si Park-it-direct!,Dziękujemy za korzystanie z Park-it-direct!,Viel Spaß mit Park-it-direct!
 railsEmails.footer.regards,"Best Regards,","S pozdravem,",Pozdrawiamy,"Mit freundlichen Grüßen,"
 railsEmails.footer.team,the Park-it-direct team,tým Park-it-direct,Zespół Park-it-Direct,Park-it-direct Team
@@ -1415,7 +1423,7 @@ railsEmails.invitation_mail.to_sign_up,Sign me up!,Registrovat se!,Zarejestruj s
 railsEmails.invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",W przypadku jakichkolwiek problemów,"Falls Sie Fragen oder Probleme hätten,"
 railsEmails.invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unser Kundenservice,"
 railsEmails.invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,a my pomożemy Ci aktywować konto.,und wir helfen Ihnen Ihr Konto aktivieren.
-railsEmails.new_reservation_mail.new_reservation,You have a new reservation on Park-it-direct!,Máte novou rezervaci v Park-it-direct!,Masz nową rezerwacją w Park-it-direct!,Sie haben eine neue Buchung bei Park-it-direct!
+railsEmails.new_reservation_mail.new_reservation,You have a new reservation in %{garage},Máte novou rezervaci v %{garage},,
 railsEmails.new_reservation_mail.reservation_for_you,has created a new reservation for you.,pro Vás vytvořil novou rezervaci.,utworzył dla Ciebie nową rezerwację.,hat für Sie eine Buchung erstellt.
 railsEmails.new_reservation_mail.go_pay_yourself,Go pay,Zaplatit,Zapłać,Zahlen
 railsEmails.new_reservation_mail.price,Price:,Cena:,Cena:,Preis:
