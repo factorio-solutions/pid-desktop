@@ -1,18 +1,19 @@
 import moment from 'moment'
-import { request } from '../helpers/request'
-import actionFactory from '../helpers/actionFactory'
-import requestPromise from '../helpers/requestPromise'
-import { parseParameters } from '../helpers/parseUrlParameters'
-import { setError, setCustomModal, setGarage } from './mobile.header.actions'
-import { MOMENT_DATETIME_FORMAT_MOBILE, MOMENT_UTC_DATETIME_FORMAT, timeToUTCmobile, toFifteenMinuteStep } from '../helpers/time'
 
-import { GET_AVAILABLE_FLOORS, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
+import { request }                                                                                         from '../helpers/request'
+import actionFactory                                                                                       from '../helpers/actionFactory'
+import requestPromise                                                                                      from '../helpers/requestPromise'
+import { parseParameters }                                                                                 from '../helpers/parseUrlParameters'
+import { MOMENT_DATETIME_FORMAT_MOBILE, MOMENT_UTC_DATETIME_FORMAT, timeToUTCmobile, toFifteenMinuteStep } from '../helpers/time'
+import { t }                                                                                               from '../modules/localization/localization'
+import { setError, setCustomModal, setGarage }                                                             from './mobile.header.actions'
+
+import { GET_AVAILABLE_FLOORS, GET_AVAILABLE_USERS }                                                                 from '../queries/mobile.newReservation.queries'
 import { CREATE_RESERVATION, UPDATE_RESERVATION, GET_AVAILABLE_CLIENTS, GET_USER, PAY_RESREVATION, GET_RESERVATION } from '../queries/newReservation.queries'
-import { USER_AVAILABLE, ADD_CLIENT_USER } from '../queries/inviteUser.queries'
-import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT } from '../queries/reservations.queries'
-import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
-import { entryPoint } from '../../index'
-import { t } from '../modules/localization/localization'
+import { USER_AVAILABLE, ADD_CLIENT_USER }                                                                           from '../queries/inviteUser.queries'
+import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT }                                                                       from '../queries/reservations.queries'
+import { AVAILABLE_DURATIONS }                                                                                       from '../../reservations/newReservation.page'
+import { entryPoint }                                                                                                from '../../index'
 
 
 export const MOBILE_NEW_RESERVATION_SET_FROM = 'MOBILE_NEW_RESERVATION_SET_FROM'
@@ -156,6 +157,7 @@ export function setPlace(id) {
 export function downloadReservation(id) {
   return (dispatch, getState) => {
     const currentUserId = getState().mobileHeader.current_user.id
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     requestPromise(GET_RESERVATION, { id: parseInt(id, 10) })
     .then(res => {
       dispatch(setGarage(res.reservation.place.floor.garage.id))
@@ -209,6 +211,7 @@ export function downloadReservation(id) {
           type: MOBILE_NEW_RESERVATION_SET_ALL,
           ...toSet
         })
+        dispatch(setCustomModal())
       })
     })
   }
@@ -216,6 +219,7 @@ export function downloadReservation(id) {
 
 export function initReservation(id) {
   return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (id) {
       getState().mobileNewReservation.reservation_id !== parseInt(id, 10) && dispatch(downloadReservation(id))
     } else {
@@ -258,8 +262,8 @@ export function getAvailableClients() {
 
 export function getAvailableCars() {
   return (dispatch, getState) => {
-    const id = getState().mobileNewReservation.guestReservation ? getState().mobileNewReservation.user_id : getState().mobileHeader.current_user.id
-    if (id === undefined) {
+    const id = getState().mobileNewReservation.guestReservation ? getState().mobileNewReservation.user_id : (getState().mobileHeader.current_user && getState().mobileHeader.current_user.id)
+    if (id) {
       dispatch(setAvailableCars([]))
     } else {
       const onCars = response => {
@@ -286,6 +290,7 @@ export function pickPlaces(noClientDownload) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       dispatch(setFloors(response.data.garage.floors, response.data.garage.flexiplace))
+      dispatch(setCustomModal())
 
       if (response.data.garage.floors.find(floor => floor.free_places.find(place => place.id === getState().mobileNewReservation.place_id)) === undefined) {
         // autoselect place if selected place is not available anymore
@@ -339,7 +344,7 @@ export function submitGuestReservation(callback) {
         user: {
           email:     newGuest.email.value.toLowerCase(),
           full_name: newGuest.name.value,
-          phone:     newGuest.phone.value,
+          phone:     newGuest.phone.value.replace(/\s/g, ''),
           language:  getState().mobileHeader.current_user.language
         },
         client_user: state.client_id ? {
@@ -391,7 +396,6 @@ export function submitReservation(callback) {
 
     const reservation = stateToVariables(getState)
     const state = getState().mobileNewReservation
-
     dispatch(setCustomModal(
       state.reservation_id ?
         t([ 'mobileApp', 'newReservation', 'updatingReservation' ]) :

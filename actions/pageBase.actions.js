@@ -39,7 +39,10 @@ export const setSuccess = actionFactory(PAGE_BASE_SET_SUCCESS)
 export const setCustomModal = actionFactory(PAGE_BASE_SET_CUSTOM_MODAL)
 export const setShowModal = actionFactory(PAGE_BASE_SET_NOTIFICATIONS_MODAL)
 export const setCurrentUser = actionFactory(PAGE_BASE_SET_CURRENT_USER)
-
+export const setGaragePidTarif = actionFactory(PAGE_BASE_SET_PID_TARIF)
+export const setIsGarageAdmin = actionFactory(PAGE_BASE_SET_IS_GARAGE_ADMIN)
+export const setIsGarageReceptionist = actionFactory(PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST)
+export const setIsGarageSecurity = actionFactory(PAGE_BASE_SET_IS_GARAGE_SECURITY)
 
 export function setHint(hint, href) {
   return {
@@ -47,7 +50,6 @@ export function setHint(hint, href) {
     value: { hint, href }
   }
 }
-
 
 export function confirm(question, callback) {
   return dispatch => {
@@ -75,7 +77,7 @@ export function setGarages(value) {
       value
     })
 
-    const selectedGarage = value.find(user_garage => user_garage.garage.id === getState().pageBase.garage)
+    const selectedGarage = value.find(userGarage => userGarage.garage.id === getState().pageBase.garage)
     if (selectedGarage) {
       dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
       dispatch(setIsGarageAdmin(selectedGarage.admin))
@@ -95,37 +97,11 @@ export function setGarage(value) {
       value
     })
 
-    const selectedGarage = getState().pageBase.garages.find(user_garage => user_garage.garage.id === value)
+    const selectedGarage = getState().pageBase.garages.find(userGarage => userGarage.garage.id === value)
     dispatch(setGaragePidTarif(selectedGarage ? selectedGarage.garage.active_pid_tarif_id : false))
     dispatch(setIsGarageAdmin(selectedGarage ? selectedGarage.admin : false))
     dispatch(setIsGarageReceptionist(selectedGarage ? selectedGarage.receptionist : false))
     dispatch(setIsGarageSecurity(selectedGarage ? selectedGarage.security : false))
-  }
-}
-
-export function setIsGarageAdmin(value) {
-  return dispatch => {
-    dispatch({ type: PAGE_BASE_SET_IS_GARAGE_ADMIN,
-      value
-    })
-  }
-}
-
-export function setGaragePidTarif(value) {
-  return { type: PAGE_BASE_SET_PID_TARIF,
-    value
-  }
-}
-
-export function setIsGarageReceptionist(value) {
-  return { type: PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
-    value
-  }
-}
-
-export function setIsGarageSecurity(value) {
-  return { type: PAGE_BASE_SET_IS_GARAGE_SECURITY,
-    value
   }
 }
 
@@ -143,7 +119,7 @@ function prepareAdminSecondaryMenu() {
       { label: t([ 'pageBase', 'Invoices' ]), key: 'invoices', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/invoices`) },
       { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/clients`) },
       state.isGarageAdmin &&
-      { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules`) },
+      { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules/goPublic`) },
       state.isGarageAdmin &&
       { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/garageSetup/general`) },
       { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/users`) },
@@ -204,7 +180,7 @@ export function analyticsClick() {
 }
 
 function contains(string, text) {
-  return string.indexOf(text) != -1
+  return string.indexOf(text) !== -1
 }
 
 export function fetchCurrentUser() {
@@ -217,19 +193,20 @@ export function fetchCurrentUser() {
   }
 }
 
-export function fetchGarages() {
+export function fetchGarages(goToDashboard = true) {
   return (dispatch, getState) => {
     const onSuccess = response => {
-      const user_garages = response.data.user_garages
-        .filter(user_garage => user_garage.user_id === response.data.current_user.id) // find garages of current user
-        .filter(user_garage => !user_garage.pending) // find only garages that are not pending
+      const userGarages = response.data.user_garages
+        .filter(userGarage => userGarage.user_id === response.data.current_user.id) // find garages of current user
+        .filter(userGarage => !userGarage.pending) // find only garages that are not pending
 
-      dispatch(setGarages(user_garages))
-      dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0]) || undefined)) // parse current garage from  URL
+      dispatch(setGarages(userGarages))
+      dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined)) // parse current garage from  URL
 
-      if (user_garages.length > 0 && (getState().pageBase.garage === undefined || user_garages.find(user_garage => user_garage.garage.id === getState().pageBase.garage) === undefined)) {
-        nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
-        user_garages.length > 0 && dispatch(setGarage(user_garages[0].garage.id))
+      if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
+        // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
+        goToDashboard && nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
+        userGarages.length > 0 && dispatch(setGarage(userGarages[0].garage.id))
       }
     }
     request(onSuccess, GET_GARAGES)
@@ -237,60 +214,10 @@ export function fetchGarages() {
 }
 
 
-export function initialPageBase() {
-  return (dispatch, getState) => {
-    const hash = window.location.hash
-
-    if (!contains(hash, 'admin') && !contains(hash, 'analytics')) {
-      dispatch(setShowSecondaryMenu(false))
-    }
-
-    switch (true) { // MainMenu
-      case contains(hash, 'dashboard'):
-        dispatch(toDashboard())
-        break
-      case (contains(hash, 'reservations') && !contains(hash, 'analytics')):
-        dispatch(toReservations())
-        break
-      case contains(hash, 'occupancy'):
-        dispatch(toOccupancy())
-        break
-      case (contains(hash, 'garage') && !contains(hash, 'admin') && !contains(hash, 'garageSetup') && !contains(hash, 'analytics')):
-        dispatch(toGarage())
-        break
-      case contains(hash, 'issues'):
-        dispatch(toIssues())
-        break
-      case contains(hash, 'analytics'):
-        dispatch(toAnalytics())
-        break
-      case contains(hash, 'admin'):
-        dispatch(toAdmin())
-        break
-      case contains(hash, 'addFeatures'):
-        dispatch(toAddFeatures())
-        break
-      case contains(hash, 'profile'):
-        dispatch(toProfile())
-        break
-      case contains(hash, 'notifications'):
-        dispatch(toNotifications())
-        break
-    }
-
-    if (getState().pageBase.current_user === undefined) { // if no information about current user
-      dispatch(fetchCurrentUser())
-    }
-    if (getState().pageBase.garages.length === 0) { // if no garages
-      dispatch(fetchGarages())
-    }
-  }
-}
-
-function setAll(selected, secondartMenu, secondarySelected, hint, href) {
+function setAll(selected, secondaryMenu, secondarySelected, hint, href) {
   return dispatch => {
     dispatch(setSelected(selected))
-    dispatch(setSecondaryMenu(secondartMenu))
+    dispatch(setSecondaryMenu(secondaryMenu))
     dispatch(setSecondaryMenuSelected(secondarySelected))
     dispatch(setHint(hint, href))
   }
@@ -315,6 +242,8 @@ export function toReservations() {
       case contains(hash, 'newReservation'):
         hint = t([ 'pageBase', 'newReservationHint' ])
         break
+      case contains(hash, 'bulkRemoval'):
+        hint = t([ 'pageBase', 'bulkRemovalHint' ])
     }
 
     dispatch(setAll('reservations', [], undefined, hint, 'https://www.youtube.com/'))
@@ -397,7 +326,6 @@ export function toAdmin() {
   return (dispatch, getState) => {
     const state = getState().pageBase
     const hash = window.location.hash
-    const garage = getState().pageBase.garage
     let secondarySelected
     let hint
     let hintVideo
@@ -427,6 +355,11 @@ export function toAdmin() {
       case (contains(hash, 'clients/') && contains(hash, 'edit') && !contains(hash, 'editContract')):
         secondarySelected = 'clients'
         hint = t([ 'pageBase', 'editClientHint' ])
+        hintVideo = 'https://www.youtube.com/'
+        break
+      case (contains(hash, 'clients/') && contains(hash, 'smsSettings')):
+        secondarySelected = 'clients'
+        hint = t([ 'pageBase', 'smsSettingsHint' ])
         hintVideo = 'https://www.youtube.com/'
         break
       case (contains(hash, 'clients/') && contains(hash, 'newContract')):
@@ -476,6 +409,15 @@ export function toAdmin() {
         if (state.isGarageAdmin) {
           secondarySelected = 'modules'
           hint = t([ 'pageBase', 'goPublicHint' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
+      case (contains(hash, 'modules/') && contains(hash, 'goInternal')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'modules'
+          hint = t([ 'pageBase', 'goInternalHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/dashboard') // not accessible for this user
@@ -694,5 +636,56 @@ export function toProfile() {
 export function toNotifications() {
   return dispatch => {
     dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'notificationsHint' ]), 'https://www.youtube.com/'))
+  }
+}
+
+
+export function initialPageBase() {
+  return (dispatch, getState) => {
+    const hash = window.location.hash
+
+    if (!contains(hash, 'admin') && !contains(hash, 'analytics')) {
+      dispatch(setShowSecondaryMenu(false))
+    }
+
+    switch (true) { // MainMenu
+      case contains(hash, 'dashboard'):
+        dispatch(toDashboard())
+        break
+      case (contains(hash, 'reservations') && !contains(hash, 'analytics')):
+        dispatch(toReservations())
+        break
+      case contains(hash, 'occupancy'):
+        dispatch(toOccupancy())
+        break
+      case (contains(hash, 'garage') && !contains(hash, 'admin') && !contains(hash, 'garageSetup') && !contains(hash, 'analytics')):
+        dispatch(toGarage())
+        break
+      case contains(hash, 'issues'):
+        dispatch(toIssues())
+        break
+      case contains(hash, 'analytics'):
+        dispatch(toAnalytics())
+        break
+      case contains(hash, 'admin'):
+        dispatch(toAdmin())
+        break
+      case contains(hash, 'addFeatures'):
+        dispatch(toAddFeatures())
+        break
+      case contains(hash, 'profile'):
+        dispatch(toProfile())
+        break
+      case contains(hash, 'notifications'):
+        dispatch(toNotifications())
+        break
+    }
+
+    if (getState().pageBase.current_user === undefined) { // if no information about current user
+      dispatch(fetchCurrentUser())
+    }
+    if (getState().pageBase.garages.length === 0) { // if no garages
+      dispatch(fetchGarages())
+    }
   }
 }

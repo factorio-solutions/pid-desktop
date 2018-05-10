@@ -7,10 +7,6 @@ import { t }         from '../modules/localization/localization'
 import geocode       from '../helpers/geocode'
 import actionFactory from '../helpers/actionFactory'
 
-import { emptyGate, emptyFloor, defaultImage } from '../reducers/garageSetup.reducer'
-import { setGarage, fetchGarages }             from './pageBase.actions'
-
-import { LOAD_INFO_FROM_IC } from '../queries/newClient.queries'
 import {
   CREATE_NEW_GARAGE,
   UPDATE_GARAGE,
@@ -20,6 +16,10 @@ import {
   GET_GARAGE_DETAILS_GATES,
   GET_GARAGE_DETAILS_ORDER
 } from '../queries/garageSetup.queries'
+
+import { LOAD_INFO_FROM_IC }                   from '../queries/newClient.queries'
+import { emptyGate, emptyFloor, defaultImage } from '../reducers/garageSetup.reducer'
+import { setGarage, fetchGarages }             from './pageBase.actions'
 
 
 export const GARAGE_SETUP_SET_ID = 'GARAGE_SETUP_SET_ID'
@@ -31,6 +31,7 @@ export const GARAGE_SETUP_SET_AVAILABLE_TARIFS = 'GARAGE_SETUP_SET_AVAILABLE_TAR
 export const GARAGE_SETUP_SET_TARIF_ID = 'GARAGE_SETUP_SET_TARIF_ID'
 export const GARAGE_SETUP_SET_IMG = 'GARAGE_SETUP_SET_IMG'
 export const GARAGE_SETUP_SET_NAME = 'GARAGE_SETUP_SET_NAME'
+export const GARAGE_SETUP_SET_COMPANY_NAME = 'GARAGE_SETUP_SET_COMPANY_NAME'
 export const GARAGE_SETUP_SET_IC = 'GARAGE_SETUP_SET_IC'
 export const GARAGE_SETUP_SET_DIC = 'GARAGE_SETUP_SET_DIC'
 export const GARAGE_SETUP_SET_LINE_1 = 'GARAGE_SETUP_SET_LINE_1'
@@ -48,10 +49,10 @@ export const GARAGE_SETUP_SET_HEIGHT = 'GARAGE_SETUP_SET_HEIGHT'
 export const GARAGE_SETUP_SET_WIDTH = 'GARAGE_SETUP_SET_WIDTH'
 export const GARAGE_SETUP_SET_WEIGHT = 'GARAGE_SETUP_SET_WEIGHT'
 export const GARAGE_SETUP_SET_GATES = 'GARAGE_SETUP_SET_GATES'
+export const GARAGE_SETUP_SET_REGISTERED_NUMBERS = 'GARAGE_SETUP_SET_REGISTERED_NUMBERS'
 export const GARAGE_SETUP_SET_ORDER = 'GARAGE_SETUP_SET_ORDER'
 export const GARAGE_SETUP_SET_BOOKING_PAGE = 'GARAGE_SETUP_SET_BOOKING_PAGE'
 export const GARAGE_SETUP_CLEAR_FORM = 'GARAGE_SETUP_CLEAR_FORM'
-
 
 export const setId = actionFactory(GARAGE_SETUP_SET_ID)
 export const setFloor = actionFactory(GARAGE_SETUP_SET_SELECTED_FLOOR)
@@ -62,6 +63,7 @@ export const setAvailableTarifs = actionFactory(GARAGE_SETUP_SET_AVAILABLE_TARIF
 export const setTarif = actionFactory(GARAGE_SETUP_SET_TARIF_ID)
 export const setImage = actionFactory(GARAGE_SETUP_SET_IMG)
 export const setName = actionFactory(GARAGE_SETUP_SET_NAME)
+export const setCompanyName = actionFactory(GARAGE_SETUP_SET_COMPANY_NAME)
 export const setIc = actionFactory(GARAGE_SETUP_SET_IC)
 export const setDic = actionFactory(GARAGE_SETUP_SET_DIC)
 export const setLine1 = actionFactory(GARAGE_SETUP_SET_LINE_1)
@@ -79,20 +81,62 @@ export const setHeight = actionFactory(GARAGE_SETUP_SET_HEIGHT)
 export const setWidth = actionFactory(GARAGE_SETUP_SET_WIDTH)
 export const setWeight = actionFactory(GARAGE_SETUP_SET_WEIGHT)
 export const setGates = actionFactory(GARAGE_SETUP_SET_GATES)
+export const setRegisteredNumbers = actionFactory(GARAGE_SETUP_SET_REGISTERED_NUMBERS)
 export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
 export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
 
 
-export function toggleHighlight() { return (dispatch, getState) => dispatch(setHighlight(!getState().garageSetup.highlight)) }
-export function toggleLPG() { return (dispatch, getState) => dispatch(setLPG(!getState().garageSetup.lpg)) }
-export function toggleBookingPage() { return (dispatch, getState) => dispatch(setBookingPage(!getState().garageSetup.bookingPage)) }
+export function toggleHighlight() { return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
+export function toggleLPG() { return (dispatch, getState) => { dispatch(setLPG(!getState().garageSetup.lpg)) } }
+export function toggleBookingPage() { return (dispatch, getState) => { dispatch(setBookingPage(!getState().garageSetup.bookingPage)) } }
 
-export function removeFloor(index) { return (dispatch, getState) => dispatch(setFloors(update(getState().garageSetup.floors, { $splice: [ [ index, 1 ] ] }))) }
-export function removeGate(index) { return (dispatch, getState) => dispatch(setGates(update(getState().garageSetup.gates, { $splice: [ [ index, 1 ] ] }))) }
+export function removeFloor(index) { return (dispatch, getState) => { dispatch(setFloors(update(getState().garageSetup.floors, { $splice: [ [ index, 1 ] ] }))) } }
+export function removeGate(index) { return (dispatch, getState) => { dispatch(setGates(update(getState().garageSetup.gates, { $splice: [ [ index, 1 ] ] }))) } }
 
-export function changeFloorLabel(value, index) { return dispatch => dispatch(setFloors(dispatch(changeFloors(index, 'label', value)))) }
-export function changeFloorPlaces(value, index) { return dispatch => dispatch(setFloors(dispatch(changeFloors(index, 'places', value)))) }
+function updateKey(object, key, value) {
+  return update(object, { [key]: { $set: value } })
+}
+
+// type - array in which to find - floors, gates ...
+// index - index in array
+// key - name of key to be updated
+// value - value to change key to
+function updateValue(type, index, key, value) {
+  return (dispatch, getState) => {
+    const arr = getState().garageSetup[type]
+    const newObject = updateKey(arr[index], key, value)
+    const newArr = update(arr, { $splice: [ [ index, 1, newObject ] ] })
+
+    return newArr
+  }
+}
+
+
+function insertEmptyFloor(data) {
+  data.push(emptyFloor)
+  return data
+}
+
+function insertEmptyGate(data, line_1, lat, lng) {
+  data.push({ ...emptyGate, address: { line_1, lat, lng } })
+  return data
+}
+
+function changeFloors(index, key, value) {
+  return dispatch => {
+    return dispatch(updateValue('floors', index, key, value))
+  }
+}
+
+function changeGates(index, key, value) {
+  return dispatch => {
+    return dispatch(updateValue('gates', index, key, value))
+  }
+}
+
+export function changeFloorLabel(value, index) { return dispatch => { dispatch(setFloors(dispatch(changeFloors(index, 'label', value)))) } }
+export function changeFloorPlaces(value, index) { return dispatch => { dispatch(setFloors(dispatch(changeFloors(index, 'places', value)))) } }
 export function changeFloorFrom(value, index) {
   return dispatch => {
     dispatch(setFloors(dispatch(changeFloors(index, 'from', value))))
@@ -132,64 +176,28 @@ export function addTemplate(file, label) {
   }
 }
 
-export function changeGateLabel(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'label', value)))) }
-export function changeGatePhone(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'phone', value)))) }
+export function changeGateLabel(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'label', value)))) } }
+export function changeGatePhone(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'phone', value)))) } }
+export function changeGatePlaces(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
+export function changeGatePhoneNumberId(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'phone_number_id', value)))) } }
 export function changeGatePassword(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'password', value)))) }
-export function changeGatePlaces(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'places', value)))) }
 
 export function changeGateAddressLine1(value, index) {
-  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'line_1', value))))) }
-}
-
-export function changeGateAddressLat(value, index) {
-  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lat', value))))) }
-}
-
-export function changeGateAddressLng(value, index) {
-  return (dispatch, getState) => { dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lng', value))))) }
-}
-
-
-function updateKey(object, key, value) {
-  return update(object, { [key]: { $set: value } })
-}
-
-// type - array in which to find - floors, gates ...
-// index - index in array
-// key - name of key to be updated
-// value - value to change key to
-function updateValue(type, index, key, value) {
   return (dispatch, getState) => {
-    const arr = getState().garageSetup[type]
-    const newObject = updateKey(arr[index], key, value)
-    const newArr = update(arr, { $splice: [ [ index, 1, newObject ] ] })
-
-    return newArr
+    dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'line_1', value)))))
+  }
+}
+export function changeGateAddressLat(value, index) {
+  return (dispatch, getState) => {
+    dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lat', value)))))
+  }
+}
+export function changeGateAddressLng(value, index) {
+  return (dispatch, getState) => {
+    dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lng', value)))))
   }
 }
 
-function changeFloors(index, key, value) {
-  return dispatch => {
-    return dispatch(updateValue('floors', index, key, value))
-  }
-}
-
-function changeGates(index, key, value) {
-  return dispatch => {
-    return dispatch(updateValue('gates', index, key, value))
-  }
-}
-
-
-function insertEmptyFloor(data) {
-  data.push(emptyFloor)
-  return data
-}
-
-function insertEmptyGate(data, line_1, lat, lng) {
-  data.push({ ...emptyGate, address: { line_1, lat, lng } })
-  return data
-}
 
 export function loadAddressFromIc() {
   return (dispatch, getState) => {
@@ -197,6 +205,7 @@ export function loadAddressFromIc() {
       try {
         const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
 
+        dispatch(setCompanyName(res.OF))
         dispatch(setLine1(res.AD.UC))
         dispatch(setLine2(''))
         dispatch(setCity(res.AA.N))
@@ -222,32 +231,12 @@ export function loadAddressFromIc() {
   }
 }
 
-
-function scanPlaces(string) {
-  return string.split(',').reduce((arr, val) => {
-    if (val.indexOf('-') == -1) { // single value
-      arr.push(val.trim())
-    } else { // range
-      const range = val.split('-')
-      const from = parseInt(range[0])
-      const to = parseInt(range[1])
-
-      if (from < to) {
-        for (var i = from; i <= to; i++) { arr.push(i) }
-      } else {
-        for (var i = to; i <= from; i++) { arr.push(i) }
-      }
-    }
-    return arr
-  }, []).filter(unique).filter(value => { return value != 'NaN' }) // only unique not NaN numbers
-}
-
 function unique(value, index, array) {
   return array.indexOf(value) === index
 }
 
 export function scanSVG(fileContent, index) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const places = []
     let from
     let to
@@ -255,8 +244,8 @@ export function scanSVG(fileContent, index) {
 
     for (let i = 1; i < splitedContent.length; i++) {
       const label = splitedContent[i].substring(0, splitedContent[i].indexOf('"', 0))
-      from = from ? from > parseInt(label) ? parseInt(label) : from : parseInt(label)
-      to = to ? to < parseInt(label) ? parseInt(label) : to : parseInt(label)
+      from = from ? from > parseInt(label, 10) ? parseInt(label, 10) : from : parseInt(label, 10)
+      to = to ? to < parseInt(label, 10) ? parseInt(label, 10) : to : parseInt(label, 10)
       places.push({ label })
     }
 
@@ -270,9 +259,9 @@ export function scanSVG(fileContent, index) {
 function createFloor(index) {
   return (dispatch, getState) => {
     const floor = getState().garageSetup.floors[index]
-    if (floor.from == '' || floor.to == '') return
-    const from = parseInt(floor.from)
-    const to = parseInt(floor.to)
+    if (floor.from === '' || floor.to === '') return
+    const from = parseInt(floor.from, 10)
+    const to = parseInt(floor.to, 10)
 
     const inRow = Math.floor(Math.sqrt(to - from + 1)) // + 1 // optional + 1
     const inColumn = Math.ceil((to - from + 1) / inRow)
@@ -325,7 +314,7 @@ export function removeFromOrder(index) {
 
 // EDIT GARAGE
 export function intiEditGarageGeneral(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(setId(response.data.garage.id))
       dispatch(setTarif(response.data.garage.pid_tarif_id))
@@ -333,6 +322,7 @@ export function intiEditGarageGeneral(id) {
       response.data.garage.img && dispatch(setImage(response.data.garage.img))
 
       dispatch(setName(response.data.garage.name))
+      dispatch(setCompanyName(response.data.garage.company))
       dispatch(setIc(response.data.garage.ic))
       dispatch(setDic(response.data.garage.dic))
       dispatch(setLPG(response.data.garage.lpg))
@@ -349,7 +339,7 @@ export function intiEditGarageGeneral(id) {
     }
 
     dispatch(setFetching(true))
-    request(onSuccess, GET_GARAGE_DETAILS_GENERAL, { id: parseInt(id) })
+    request(onSuccess, GET_GARAGE_DETAILS_GENERAL, { id: parseInt(id, 10) })
   }
 }
 
@@ -370,27 +360,29 @@ export function intiEditGarageFloors(id) {
     }
 
     dispatch(setFetching(true))
-    request(onSuccess, GET_GARAGE_DETAILS_FLOORS, { id: parseInt(id) })
+    request(onSuccess, GET_GARAGE_DETAILS_FLOORS, { id: parseInt(id, 10) })
   }
 }
 
 export function intiEditGarageGates(id) {
   return (dispatch, getState) => {
     const onSuccess = response => {
+      dispatch(setRegisteredNumbers(response.data.registered_phone_numbers))
+
       dispatch(setId(response.data.garage.id))
 
       dispatch(setFloors(response.data.garage.floors))
       getState().garageSetup.floors.forEach((floor, index) => { dispatch(scanSVG(floor.scheme, index)) })
-      response.data.garage.gates.forEach(gate => {
-        gate.places = gate.places.reduce((arr, place) => [ ...arr, place.label ], []).join(', ')
-      })
-      dispatch(setGates(response.data.garage.gates))
+      dispatch(setGates(response.data.garage.gates.map(gate => ({
+        ...gate,
+        places: gate.places.map(place => `${place.floor.label}/${place.label}`).join(', ')
+      }))))
 
       dispatch(setFetching(false))
     }
 
     dispatch(setFetching(true))
-    request(onSuccess, GET_GARAGE_DETAILS_GATES, { id: parseInt(id) })
+    request(onSuccess, GET_GARAGE_DETAILS_GATES, { id: parseInt(id, 10) })
   }
 }
 
@@ -404,7 +396,7 @@ export function intiEditGarageOrder(id) {
       dispatch(setOrder(
         response.data.garage.floors
         .reduce((arr, floor) => [ ...arr, ...floor.places ], [])
-        .filter(place => place.priority != 0)
+        .filter(place => place.priority !== 0)
         .sort((a, b) => { return b.priority - a.priority })
         .map(place => place.label)
       ))
@@ -413,7 +405,7 @@ export function intiEditGarageOrder(id) {
     }
 
     dispatch(setFetching(true))
-    request(onSuccess, GET_GARAGE_DETAILS_ORDER, { id: parseInt(id) })
+    request(onSuccess, GET_GARAGE_DETAILS_ORDER, { id: parseInt(id, 10) })
   }
 }
 
@@ -433,6 +425,7 @@ export function updateGarageGeneral(id, backUrl) {
 
     const garage = { id:     +id,
       garage: { name:         state.name,
+        company:      state.company,
         ic:           state.ic,
         dic:          state.dic,
         lpg:          state.lpg,
@@ -527,20 +520,14 @@ export function submitGarage() {
         dispatch(clearForm())
         nav.to('/dashboard')
       }
-      // if (state.error == undefined ){
-      //   dispatch(setFetching(false))
-      //   if (placesHaveGate){
-      //     nav.to('/garages')
-      //     dispatch(clearForm())
-      //   }
-      // }
     }
 
     dispatch(setFetching(true))
-    if (state.id == undefined) { // new garage
+    if (state.id === undefined) { // new garage
       request(onSuccess
              , CREATE_NEW_GARAGE
              , { garage: { name:         state.name,
+               company:      state.company,
                ic:           state.ic,
                dic:          state.dic,
                lpg:          state.lpg,
@@ -568,6 +555,7 @@ export function submitGarage() {
              , UPDATE_GARAGE
              , { id:     state.id,
                garage: { name:         state.name,
+                 company:      state.company,
                  ic:           state.ic,
                  dic:          state.dic,
                  lpg:          state.lpg,
@@ -597,7 +585,7 @@ export function submitGarage() {
     }, []).filter(unique).sort()
 
     const placesHaveGate = garagePlaces.reduce((bool, garagePlace) => {
-      return bool && gatePlaces.indexOf(garagePlace) != -1
+      return bool && gatePlaces.indexOf(garagePlace) !== -1
     }, true)
 
     if (!placesHaveGate) {
@@ -618,14 +606,6 @@ function prepareModuleOrder() {
         state:       state.gsm_state,
         country:     state.gsm_country
       }
-                                          //  , invoice_address: { name:        state.gsm_name
-                                          //                     , line_1:      state.gsm_line_1
-                                          //                     , line_2:      state.gsm_line_2
-                                          //                     , city:        state.gsm_city
-                                          //                     , postal_code: state.gsm_postal_code
-                                          //                     , state:       state.gsm_state
-                                          //                     , country:     state.gsm_country
-                                          //                     }
     }
   }
 }
@@ -633,16 +613,7 @@ function prepareModuleOrder() {
 function prepareLayoutOrder() {
   return (dispatch, getState) => {
     const state = getState().garageSetup
-    return state.gsmModules === 0 ? null : { amount: state.floors.length
-                                          //  , invoice_address: { name:        state.gsm_name
-                                          //                     , line_1:      state.gsm_line_1
-                                          //                     , line_2:      state.gsm_line_2
-                                          //                     , city:        state.gsm_city
-                                          //                     , postal_code: state.gsm_postal_code
-                                          //                     , state:       state.gsm_state
-                                          //                     , country:     state.gsm_country
-                                          //                     }
-    }
+    return state.gsmModules === 0 ? null : { amount: state.floors.length }
   }
 }
 
@@ -668,33 +639,49 @@ function removeKeys(object, keys) {
                .reduce((newObj, key) => ({ ...newObj, [key]: object[key] }), {})
 }
 
-function gatesForRequest(state) {
-  const garagePlaces = state.floors
-  .reduce((arr, floor) => arr.concat(floor.places.map(place => place.label)), [])
-  .filter(unique)
-  .sort()
 
+function gatesForRequest(state) {
   return state.gates.map(gate => {
-    const { has_password, ...newGate } = gate // remove has_password from object
-    // const newGate = Object.assign({}, gate)
-    newGate.address.city = state.city
-    newGate.address.postal_code = state.postal_code
-    if (state.state !== '') newGate.address.state = state.state
-    if (state.line_2 !== '')newGate.address.line_2 = state.line_2
-    newGate.address.country = state.country
-    newGate.address.lng = parseFloat(newGate.address.lng)
-    newGate.address.lat = parseFloat(newGate.address.lat)
-    const places = scanPlaces(newGate.places)
-    // newGate.places = scanPlaces(newGate.places).filter((place)=>{return garagePlaces.indexOf(place) != -1}) // filter placeGates that have
-    newGate.places = garagePlaces.filter(place => {
-      return places.find(label => {
-        if (typeof label === 'string') {
-          return place === label
-        } else {
-          return label === parseInt(place.replace(/^\D+/g, ''))
-        }
-      }) !== undefined
-    })
-    return newGate
+    const { places, has_password, ...gateWithoutPlaces } = gate
+    const floors = gate.places
+      .split(',')
+      .filter(string => string.includes('/')) // remove labels without "/" of a bat
+      .map(floorPlace => ({ // find place and floor labels
+        floor: floorPlace.split('/')[0].trim(),
+        place: floorPlace.split('/')[1].trim()
+      }))
+      .filter(o => { // find places where floor exists and place exists
+        const floor = state.floors.find(fl => fl.label === o.floor)
+        return floor && !!floor.places.find(place => place.label === o.place)
+      })
+      .reduce((acc, o) => { // create [{ label: floor, places: [palce, ...]}, ...] structure
+        const floor = acc.find(fl => fl.label === o.floor)
+        floor ? floor.places.push(o.place) : acc.push({ label: o.floor, places: [ o.place ] })
+        return acc
+      }, [])
+
+    return { ...gateWithoutPlaces,
+      address: {
+        line_1:      state.line_1,
+        city:        state.city,
+        postal_code: state.postal_code,
+        state:       state.state || undefined,
+        line_2:      state.line_2 || undefined,
+        country:     state.country,
+        lng:         parseFloat(gate.address.lng),
+        lat:         parseFloat(gate.address.lat)
+      },
+      floors
+    }
   })
+}
+
+export function addAllPlaces(index) {
+  return (dispatch, getState) => {
+    const allPlaces = getState().garageSetup.floors
+      .reduce((acc, floor) => [ ...acc, ...floor.places.map(place => `${floor.label}/${place.label}`) ], [])
+      .join(', ')
+
+    dispatch(changeGatePlaces(allPlaces, index))
+  }
 }

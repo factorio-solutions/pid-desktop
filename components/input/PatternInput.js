@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-// import ReactDOM                        from 'react-dom'
 import styles                          from './Input.scss'
 
 
@@ -16,7 +15,8 @@ export default class PatternInput extends Component {
     value:       PropTypes.string,
     type:        PropTypes.string,
     inlineMenu:  PropTypes.object,
-    highlight:   PropTypes.bool
+    highlight:   PropTypes.bool,
+    readOnly:    PropTypes.bool
   }
 
   constructor(props) { // just to handle two way databinding
@@ -29,7 +29,7 @@ export default class PatternInput extends Component {
   }
 
   render() {
-    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, highlight } = this.props
+    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, highlight, readOnly } = this.props
 
     const handleChange = event => {
       this.setState({ message: event.target.value })
@@ -49,8 +49,17 @@ export default class PatternInput extends Component {
     const isEmpty = () => { return this.input ? this.input.value === '' : true }
 
     return (
-      <div className={`${styles.customFormGroup} ${styles.center} ${highlight && isEmpty() && styles.highlighted}`} >
-        <input pattern={pattern} type={type || 'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter} ref={input => { this.input = input }} />
+      <div className={`${styles.customFormGroup} ${styles.center} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+        <input
+          pattern={pattern}
+          type={type || 'text'}
+          value={this.state.message}
+          onChange={handleChange}
+          placeholder={placeholder}
+          onKeyPress={preventEnter}
+          ref={input => { this.input = input }}
+          readOnly={readOnly}
+        />
         <span className={styles.bar} />
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>

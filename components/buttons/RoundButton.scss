@@ -41,6 +41,10 @@ $small:       .6;
   @include colorize($removeColor);
 }
 
+.red {
+  @include colorize($removeColor);
+}
+
 .info {
   @include colorize($white);
   color: $blue;

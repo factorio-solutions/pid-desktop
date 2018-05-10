@@ -18,6 +18,7 @@ import {
   MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS,
   MOBILE_NEW_RESERVATION_SET_USER_ID
 } from '../actions/mobile.newReservation.actions'
+import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
 
 const defaultState = {
   reservation_id: undefined, // the reservation being updated
@@ -26,7 +27,7 @@ const defaultState = {
   to:   undefined,
 
   fromNow:  true, // marks if  from NOW is selected or not
-  duration: 2, // if undefined, then other is selected
+  duration: AVAILABLE_DURATIONS[0], // if undefined, then other is selected
 
   availableClients: [], // available clients for this reservation
   client_id:        undefined, // currently selected client
