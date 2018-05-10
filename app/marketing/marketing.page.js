@@ -25,7 +25,13 @@ class MarketingPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initMarketingPage(this.props.params.short_name, () => { this.forceUpdate() }) // to redraw map to show correct position
+    this.props.actions.initMarketingPage(this.props.params.short_name, () => this.forceUpdate()) // to redraw map to show correct position
+  }
+
+  componentWillUpdate(nextProps) {
+    if (nextProps.state.marketing && !nextProps.state.marketing.descriptions.find(desc => desc.language === window.location.hash.substring(2, 4))) {
+      this.context.router.push(`/${nextProps.state.marketing.descriptions[0].language}${window.location.hash.substring(4)}`)
+    }
   }
 
   render() {
@@ -130,6 +136,7 @@ class MarketingPage extends Component {
       }
     }
 
+    const marketingOfLanguage = marketing.descriptions.find(desc => desc.language == window.location.hash.substring(2, 4))
 
     return (
       <div className={styles.container}>
@@ -148,7 +155,7 @@ class MarketingPage extends Component {
             <div className={styles.textContent}>
               <h1>{marketing.garage.name}</h1>
               <h3>{t([ 'marketing', 'description' ])}</h3>
-              <div className={styles.innerContent} dangerouslySetInnerHTML={{ __html: marketing.descriptions.filter(desc => { return desc.language == window.location.hash.substring(2, 4) })[0].text }} />
+              <div className={styles.innerContent} dangerouslySetInnerHTML={{ __html: (marketingOfLanguage || marketing.descriptions[0]).text }} />
 
               <h3>{t([ 'marketing', 'properties' ])}</h3>
               <div className={styles.innerContent} >

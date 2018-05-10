@@ -8,6 +8,7 @@ import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
+import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -84,16 +85,25 @@ class GarageSetupGatesPage extends Component {
     }
 
     const prepareGates = (gate, index, arr) => {
-      console.log(gate);
       const handleGateLabelChange = value => actions.changeGateLabel(value, index)
       const handleGatePhoneChange = value => actions.changeGatePhone(value, index)
       const handleGatePasswordChange = value => actions.changeGatePassword(value, index)
       const handleGatePlacesChange = value => actions.changeGatePlaces(value, index)
       const handleGateAddressLine1Change = value => actions.changeGateAddressLine1(value, index)
-      // const handleGateAddressLine2Change = value => { actions.changeGateAddressLine2(value, index) }
       const handleGateAddressLat = value => actions.changeGateAddressLat(value, index)
       const handleGateAddressLng = value => actions.changeGateAddressLng(value, index)
       const removeGateRow = () => actions.removeGate(index)
+      const addAllPlaces = () => actions.addAllPlaces(index)
+      const addAllPlacesInlineMenu = <span className={styles.clickable} onClick={addAllPlaces}>{t([ 'newGarage', 'addAllPalces' ])}</span>
+      const availableNumbers = [
+        { id: null, number: t([ 'newGarage', 'notAssignNumber' ]), order: 1 },
+        ...state.registeredNumbers.filter(number => !state.gates.map(gate => gate.phone_number_id).includes(number.id) || gate.phone_number_id === number.id)
+      ]
+      const availableNumbersDropdown = number => ({
+        label:   number.number,
+        order:   number.order,
+        onClick: () => actions.changeGatePhoneNumberId(number.id, index)
+      })
 
       const getGateGPS = () => {
         const geocoder = new google.maps.Geocoder()
@@ -107,47 +117,50 @@ class GarageSetupGatesPage extends Component {
         })
       }
 
-      // const removeGateButton = () => arr.length > 1 && <RoundButton
-      //   content={<span className="fa fa-times" aria-hidden="true" />}
-      //   onClick={removeGateRow}
-      //   type="remove"
-      //   question={t([ 'newGarage', 'removeGateRowQuestion' ])}
-      // />
+      const removeGateButton = () => arr.length <= 1 ?
+        null :
+        <RoundButton
+          content={<span className="fa fa-times" aria-hidden="true" />}
+          onClick={removeGateRow}
+          type="remove"
+          question={t([ 'newGarage', 'removeGateRowQuestion' ])}
+        />
 
       return (
-        <div key={index} className={styles.gateDiv}>
-          <div className={styles.flexi}>
-            <div>
-              <Input
-                style={styles.gatePhoneInput}
-                onChange={handleGateLabelChange}
-                label={t([ 'newGarage', 'gateLabel' ], { index: index + 1 }) + (index !== arr.length - 1 ? ' *' : '')}
-                error={t([ 'newGarage', 'invalidGateLabel' ])}
-                value={gate.label}
-                name={`gate${index}[label]`}
-                placeholder={t([ 'newGarage', 'placeholderGateLabel' ])}
-                highlight={state.highlight}
-              />
-            </div>
-            {arr.length > 1 && <div>
-              <RoundButton
-                content={<span className="fa fa-times" aria-hidden="true" />}
-                onClick={removeGateRow}
-                type="remove"
-                question={t([ 'newGarage', 'removeGateRowQuestion' ])}
-              />
-            </div>}
+        <div key={index}>
+          <div className={styles.inline}>
+            <Input
+              style={styles.gatePhoneInputWidth + ' ' + styles.rightMargin}
+              onChange={handleGateLabelChange}
+              label={t([ 'newGarage', 'gateLabel' ], { index: index + 1 }) + (index !== arr.length - 1 ? ' *' : '')}
+              error={t([ 'newGarage', 'invalidGateLabel' ])}
+              value={gate.label}
+              name={`gate${index}[label]`}
+              placeholder={t([ 'newGarage', 'placeholderGateLabel' ])}
+              highlight={state.highlight}
+            />
+            <Input
+              style={styles.gatePhoneInputWidth}
+              onChange={handleGatePhoneChange}
+              label={t([ 'newGarage', 'gatePhone' ])}
+              error={t([ 'newGarage', 'invalidGatePhone' ])}
+              value={gate.phone}
+              name={`gate${index}[phone]`}
+              placeholder={t([ 'newGarage', 'placeholderGatePhone' ])}
+              type="tel"
+              pattern="\+?[\d,A-Z]{3,}"
+            />
+            {removeGateButton()}
           </div>
-          <Input
-            onChange={handleGatePhoneChange}
-            label={t([ 'newGarage', 'gatePhone' ])}
-            error={t([ 'newGarage', 'invalidGatePhone' ])}
-            value={gate.phone}
-            name={`gate${index}[phone]`}
-            placeholder={t([ 'newGarage', 'placeholderGatePhone' ])}
-            type="tel"
-            pattern="\+?[\d,A-Z]{3,}"
-          />
+          <div className={styles.phoneNumberDropdown}>
+            <label>{t([ 'newGarage', 'selcetNumber' ])}</label>
+            <Dropdown
+              label={t([ 'newGarage', 'selcetNumber' ])}
+              content={availableNumbers.map(availableNumbersDropdown)}
+              selected={availableNumbers.findIndexById(gate.phone_number_id)}
+              style="garageSetupGates"
+            />
+          </div>
           {gate.phone.match(/[a-z]/i) &&
             <div className={styles.flexi}>
               <Input
@@ -172,7 +185,8 @@ class GarageSetupGatesPage extends Component {
             value={gate.places}
             placeholder={t([ 'newGarage', 'placesPlaceholder' ])}
             highlight={state.highlight}
-            pattern="(\w+\s*)(\s*(,|-)\s*\w+)*"
+            pattern="(-?\w+\s*)(\s*(,|-|\/)\s*-?\w+)*"
+            inlineMenu={addAllPlacesInlineMenu}
           />
           <Input
             onChange={handleGateAddressLine1Change}

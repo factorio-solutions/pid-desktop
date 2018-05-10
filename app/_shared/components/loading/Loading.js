@@ -11,7 +11,7 @@ import styles from './Loading.scss'
 // question = text of confirm window when type == 'remove'
 
 
-export default function Loading({ show }) {
+export default function Loading({ show = true }) {
   return show ? (
     <span>
       <span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />

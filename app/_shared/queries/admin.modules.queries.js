@@ -2,7 +2,10 @@ export const GET_GARAGE_MODULES = `query GetGarage($id: Id!){
   garage(id: $id){
     id
     is_public
+    go_internal
     flexiplace
+    mr_parkit_integration
+    third_party_integration
     marketing{
       id
       short_name

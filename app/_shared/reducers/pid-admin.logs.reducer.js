@@ -1,7 +1,11 @@
-import { SET_PID_ADMIN_LOGS_LOGS }  from '../actions/pid-admin.logs.actions'
+import {
+  SET_PID_ADMIN_LOGS_LOGS,
+  SET_PID_ADMIN_LOGS_ACCESS_LOGS
+}  from '../actions/pid-admin.logs.actions'
 
 const defaultState = {
-  logs: []
+  logs:       [],
+  accessLogs: []
 }
 
 export default function pidAdminLogs(state = defaultState, action) {
@@ -11,6 +15,12 @@ export default function pidAdminLogs(state = defaultState, action) {
       return {
         ...state,
         logs: action.value
+      }
+
+    case SET_PID_ADMIN_LOGS_ACCESS_LOGS:
+      return {
+        ...state,
+        accessLogs: action.value
       }
 
     default:

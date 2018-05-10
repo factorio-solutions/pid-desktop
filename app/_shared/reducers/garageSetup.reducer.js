@@ -8,6 +8,7 @@ import {
   GARAGE_SETUP_SET_TARIF_ID,
   GARAGE_SETUP_SET_IMG,
   GARAGE_SETUP_SET_NAME,
+  GARAGE_SETUP_SET_COMPANY_NAME,
   GARAGE_SETUP_SET_IC,
   GARAGE_SETUP_SET_DIC,
   GARAGE_SETUP_SET_LINE_1,
@@ -25,6 +26,7 @@ import {
   GARAGE_SETUP_SET_WIDTH,
   GARAGE_SETUP_SET_WEIGHT,
   GARAGE_SETUP_SET_GATES,
+  GARAGE_SETUP_SET_REGISTERED_NUMBERS,
   GARAGE_SETUP_SET_ORDER,
   GARAGE_SETUP_SET_BOOKING_PAGE,
   GARAGE_SETUP_CLEAR_FORM
@@ -64,11 +66,11 @@ const defaultState = {
   error:         undefined,
   fetching:      false,
 
-  // general settings
   availableTarifs: [],
   tarif_id:        undefined,
   img:             defaultImage,
   name:            '',
+  company:         '',
   ic:              '',
   dic:             '',
   line_1:          '',
@@ -80,7 +82,6 @@ const defaultState = {
   lat:             '',
   lng:             '',
 
-  // floors
   floors: [ emptyFloor ],
   lpg:    false,
   length: undefined,
@@ -88,13 +89,11 @@ const defaultState = {
   width:  undefined,
   weight: undefined,
 
-  // gates
-  gates: [], // first empty floor is added onComponentMount
+  gates:             [], // first empty floor is added onComponentMount
+  registeredNumbers: [], // Available phone numbers for gates
 
-  // order
   order: [], // ['label 1', 'label 2', ...]
 
-  // subscribe
   bookingPage: false
 }
 
@@ -154,6 +153,12 @@ export default function garageSetup(reducerState = defaultState, action) {
       return {
         ...reducerState,
         name: action.value
+      }
+
+    case GARAGE_SETUP_SET_COMPANY_NAME:
+      return {
+        ...reducerState,
+        company: action.value
       }
 
     case GARAGE_SETUP_SET_IC:
@@ -256,6 +261,12 @@ export default function garageSetup(reducerState = defaultState, action) {
       return {
         ...reducerState,
         gates: action.value
+      }
+
+    case GARAGE_SETUP_SET_REGISTERED_NUMBERS:
+      return {
+        ...reducerState,
+        registeredNumbers: action.value
       }
 
     case GARAGE_SETUP_SET_ORDER:

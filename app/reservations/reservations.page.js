@@ -35,7 +35,8 @@ class ReservationsPage extends Component {
     params:              PropTypes.object,
     interuption:         PropTypes.object,
     interuptionActions:  PropTypes.object,
-    newReservationState: PropTypes.object
+    newReservationState: PropTypes.object,
+    pageBase:            PropTypes.object
   }
 
   destroyClick = reservation => {
@@ -115,9 +116,9 @@ class ReservationsPage extends Component {
       { key:         'type',
         title:       t([ 'reservations', 'type' ]),
         comparator:  'string',
-        representer: o => <i className={`fa ${o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />,
+        representer: o => <i className={`fa ${o === 'mr_parkit' ? 'fa-rss' : o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />,
         orderBy:     'reservation_case',
-        enum:        [ 'visitor', 'guest', 'internal' ]
+        enum:        [ 'visitor', 'guest', 'internal', 'mr_parkit' ]
       },
       { key:         'state',
         title:       t([ 'reservations', 'state' ]),
@@ -228,7 +229,7 @@ class ReservationsPage extends Component {
               {!reservation.approved && reservation.client === null &&
               <LabeledRoundButton
                 label={t([ 'reservations', 'payReservation' ])}
-                content={t([ 'reservations', 'pay' ])}
+                content={<i className="fa fa-credit-card" aria-hidden="true" />}
                 onClick={() => { actions.payReservation(reservation) }}
                 type="action"
               />
@@ -256,6 +257,7 @@ class ReservationsPage extends Component {
       </div>)
     }))
 
+
     const filters = [
       <TabButton label={t([ 'notifications', 'current' ])} onClick={actions.togglePast} state={!state.past && 'selected'} />,
       <TabButton label={t([ 'notifications', 'past' ])} onClick={actions.togglePast} state={state.past && 'selected'} />
@@ -278,6 +280,12 @@ class ReservationsPage extends Component {
         </div>
         <div className={styles.centerDiv}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.newReservation} type="action" size="big" />
+          <LabeledRoundButton
+            content={<span className="fa fa-times" aria-hidden="true" />}
+            onClick={() => nav.to('/reservations/bulkRemoval')}
+            type="remove"
+            question="No message"
+          />
         </div>
       </PageBase>
     )
@@ -285,7 +293,7 @@ class ReservationsPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.reservations, interuption: state.reservationInteruption, newReservationState: state.newReservation }),
+  state => ({ state: state.reservations, interuption: state.reservationInteruption, newReservationState: state.newReservation, pageBase: state.pageBase }),
   dispatch => ({
     actions:            bindActionCreators({ ...reservationActions, setCustomModal, setRecurringReservationId, clearForm }, dispatch),
     interuptionActions: bindActionCreators(reservationInteruptionActions, dispatch)

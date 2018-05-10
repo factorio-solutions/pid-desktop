@@ -11,7 +11,7 @@ import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { togglePast }        from '../_shared/actions/reservations.actions'
+import { setPast }        from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
@@ -31,15 +31,15 @@ class OccupancyPage extends Component {
   }
 
   onReservationClick = reservation => {
+    this.props.actions.setPast(moment(reservation.ends_at).isBefore(moment()))
     nav.to(`/reservations/find/${reservation.id}`)
-    !this.props.reservations.past && this.props.actions.togglePast()
   }
 
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
 
   render() {
     const { state, pageBase, actions } = this.props
-
+    const { garage } = state
 
     const clientDropdown = () => {
       const clientSelected = index => actions.setClientId(state.clients[index].id)
@@ -54,14 +54,14 @@ class OccupancyPage extends Component {
     const preparePlaces = (places, floor) => {
       return places.concat(floor.occupancy_places
         .filter(place => !state.client_ids.length || place.contracts_in_interval.length)
-        .map(place => {
-          return { ...place,
-            floor:        floor.label,
-            reservations: state.client_ids.length ?
-              place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
-              place.reservations_in_interval
-          }
+        .map(place => ({
+          ...place,
+          floor:        floor.label,
+          reservations: state.client_ids.length ?
+            place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
+            place.reservations_in_interval
         }))
+      )
     }
 
     const filters = [
@@ -79,24 +79,20 @@ class OccupancyPage extends Component {
       filter
     />)
 
-    const renderOccupancy = garage => [
-      <h2>{garage.name}</h2>,
-      <OccupancyOverview
-        places={garage ? garage.floors.reduce(preparePlaces, []) : []}
-        from={state.from}
-        showDetails={(garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security)}
-        duration={state.duration}
-        resetClientClick={actions.resetClientClick}
-        loading={!state.garages.length || state.loading}
-        onReservationClick={this.onReservationClick}
-      />
-    ]
-
     return (
       <PageBase>
         <TabMenu right={filters} left={clientSelector} />
         <div className={styles.occupancies}>
-          {state.garages.map(renderOccupancy)}
+          <h2>{garage && garage.name}</h2>
+          <OccupancyOverview
+            places={garage ? garage.floors.reduce(preparePlaces, []) : []}
+            from={state.from}
+            showDetails={garage && ((garage.user_garage && garage.user_garage.admin) || (garage.user_garage && garage.user_garage.receptionist) || (garage.user_garage && garage.user_garage.security))}
+            duration={state.duration}
+            resetClientClick={actions.resetClientClick}
+            loading={!state.garages.length || state.loading}
+            onReservationClick={this.onReservationClick}
+          />
         </div>
 
         <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
@@ -115,5 +111,5 @@ class OccupancyPage extends Component {
 
 export default connect(
   state => ({ state: state.occupancy, pageBase: state.pageBase, reservations: state.reservations }),
-  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, togglePast }, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, setPast }, dispatch) })
 )(OccupancyPage)

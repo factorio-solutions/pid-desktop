@@ -1,7 +1,8 @@
 import request from '../helpers/requestPromise'
-import * as nav from '../helpers/navigation'
+// import * as nav from '../helpers/navigation'
 
 import { INIT_GARAGE_PRICINGS, CREATE_UNIFORM_PRICING } from '../queries/admin.flexiplace.queries'
+import { initModules } from './admin.modules.actions'
 
 
 export const ADMIN_FLEXIPLACE_PRESET_PRICING = 'ADMIN_FLEXIPLACE_PRESET_PRICING'
@@ -52,12 +53,12 @@ export function initPricings() {
 }
 
 export function sumbitFlexi() {
-  return (dipatch, getState) => {
+  return (dispatch, getState) => {
     const state = getState().adminFlexiplace
     const garageId = getState().pageBase.garage
 
     getState().pageBase.garage && request(CREATE_UNIFORM_PRICING, { garage_id: garageId, pricing: state.pricing }).then(() => {
-      nav.to(`/${garageId}/admin/modules`)
+      dispatch(initModules())
     })
   }
 }

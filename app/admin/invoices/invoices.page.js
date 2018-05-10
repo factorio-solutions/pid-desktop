@@ -36,7 +36,7 @@ class InvoicesPage extends Component {
     const { state, pageBase, actions } = this.props
 
     const schema = [
-      { key: 'invoice_number', title: t([ 'invoices', 'invoiceNumber' ]), comparator: 'integer', representer: o => <b>{o}</b>, sort: 'asc' },
+      { key: 'invoice_number', title: t([ 'invoices', 'invoiceNumber' ]), comparator: 'number', representer: o => <b>{o}</b>, sort: 'desc' },
       { key: 'invoice_date', title: t([ 'invoices', 'invoiceDate' ]), comparator: 'date', representer: o => o ? moment(o).format('DD. MM. YYYY') : null },
       { key: 'due_date', title: t([ 'invoices', 'dueDate' ]), comparator: 'date', representer: o => o ? moment(o).format('DD. MM. YYYY') : null },
       { key: 'client_name', title: t([ 'invoices', 'client' ]), comparator: 'string', representer: o => <b>{o}</b> },
@@ -90,7 +90,7 @@ class InvoicesPage extends Component {
                type="action"
              />
              {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin || invoice.client.is_secretary) &&
-               <LabeledRoundButton label={t([ 'invoices', 'payInvoice' ])} content={<span>{t([ 'invoices', 'pay' ])}</span>} onClick={() => {}} type="action" />}
+               <LabeledRoundButton label={t([ 'invoices', 'payInvoice' ])} content={<i className="fa fa-credit-card" aria-hidden="true" />} onClick={() => {}} type="action" />}
              {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&
                <LabeledRoundButton
                  label={t([ 'invoices', 'sendReminder' ])}

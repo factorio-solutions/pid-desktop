@@ -26,6 +26,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!) {
     id
     pid_tarif_id
     name
+    company
     ic
     dic
     img
@@ -70,8 +71,10 @@ export const GET_GARAGE_DETAILS_GENERAL =`query ($id: Id!) {
     id
     pid_tarif_id
     name
+    company
     ic
     dic
+    iban
     img
     lpg
     address {
@@ -101,7 +104,11 @@ export const GET_GARAGE_DETAILS_FLOORS =`query ($id: Id!) {
   }
 }`
 
-export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
+export const GET_GARAGE_DETAILS_GATES = `query ($id: Id!) {
+  registered_phone_numbers {
+    id
+    number
+  }
   garage(id: $id) {
     id
     pid_tarif_id
@@ -128,13 +135,17 @@ export const GET_GARAGE_DETAILS_GATES =`query ($id: Id!) {
       label
       phone
       has_password
+      phone_number_id
       address {
         line_1
         lat
         lng
       }
-      places{
+      places {
         label
+        floor {
+          label
+        }
       }
     }
   }

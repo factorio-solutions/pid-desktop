@@ -24,6 +24,7 @@ class PidAdminDashboardPage extends Component {
       { key: 'id', title: t([ 'pidAdmin', 'users', 'id' ]), comparator: 'number', orderBy: 'id', sort: 'asc' },
       { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string', orderBy: 'email' },
+      { key: 'mobile_app_version', title: t([ 'pidAdmin', 'users', 'appVersion' ]), comparator: 'string', orderBy: 'mobile_app_version' },
       { key:         'last_active',
         title:       t([ 'pidAdmin', 'users', 'lastActive' ]),
         comparator:  'date',

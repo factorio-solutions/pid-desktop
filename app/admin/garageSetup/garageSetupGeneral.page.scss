@@ -119,23 +119,8 @@ h2 {
     margin:     5px;
     background: $white;
   }
-
-  .gateDiv {
-    margin-bottom: 50px;
-
-    >.flexi {
-      display: flex;
-
-      >div:first-child {
-        flex: 1 1;
-
-        >.gatePhoneInput {
-          width: 100%;
-        }
-      }
-    }
-  }
 }
+
 
 .subscribtion {
   .row {
@@ -203,9 +188,10 @@ h2 {
 .latLngInputWidth {
   width: calc(50% - 2.5px);
 }
-// .gatePhoneInputWidth {
-//   width: calc(100% - 66px);
-// }
+
+.gatePhoneInputWidth {
+  width: calc(50% - 33px);
+}
 
 .rightMargin {
   margin-right: 5px;
@@ -227,7 +213,33 @@ h2 {
   cursor: pointer;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
+.phoneNumberDropdown {
+  >label {
+    margin-top:    -8px;
+    margin-bottom: -5px;
+    float:         left;
+    color:         $gray;
+    font-size:     13px;
+  }
+}
+
 // passwordIndication //
+.flexi {
+  display: flex;
+
+  >div:first-child {
+    flex: 1 1;
+
+    >.gatePhoneInput {
+      width: 100%;
+    }
+  }
+}
+
 .red {
   color: $red;
 }

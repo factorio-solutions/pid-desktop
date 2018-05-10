@@ -7,7 +7,9 @@ export default function SvgFromText({ svg, svgClick, rotate }) {
   const setSvgWidth = containerDiv => {
     if (containerDiv) {
       if (rotate) {
-        containerDiv.children[0].style.height = `${containerDiv.getBoundingClientRect().width}px`
+        if (containerDiv.children[0]) {
+          containerDiv.children[0].style.height = `${containerDiv.getBoundingClientRect().width}px`
+        }
       } else {
         containerDiv.children[0] && containerDiv.children[0].removeAttribute('style')
       }

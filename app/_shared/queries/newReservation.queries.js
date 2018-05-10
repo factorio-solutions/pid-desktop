@@ -22,6 +22,13 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
   reservable_clients(user_id: $user_id, garage_id: $garage_id) {
     id
     name
+    has_sms_api_token
+    is_sms_api_token_active
+    is_secretary
+    sms_templates {
+      name
+      template
+    }
   }
   last_reservation_client(user_id: $user_id, garage_id: $garage_id){
     id
@@ -41,6 +48,8 @@ export const GET_USER = `query Query($id: Id!) {
     email
     phone
     last_active
+    language
+    onetime
   }
 }
 `
@@ -53,6 +62,23 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     vat
     dic
     flexiplace
+    is_public
+    has_payment_gate
+    account {
+      raiffeisenbank_is_active
+      csob_is_active
+      paypal_is_active
+    }
+    address {
+      line_1
+      line_2
+      city
+      postal_code
+      state
+      country
+      lat
+      lng
+    }
     floors {
       id
       label
@@ -61,6 +87,13 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         id
         label
         priority
+        go_internal
+        gates {
+          label
+          phone_number{
+            number
+          }
+        }
         pricing{
           flat_price
           exponential_12h_price
@@ -114,12 +147,12 @@ export const UPDATE_RESERVATION = `mutation updateReservation($reservation: Rese
 }
 `
 
-export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $id:Id) {
-	paypal_pay_reservation(token: $token, id: $id) {
-		id
-    approved
-	}
-}`
+// export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $id:Id) {
+// 	paypal_pay_reservation(token: $token, id: $id) {
+// 		id
+//     approved
+// 	}
+// }`
 
 
 // get reservation details
@@ -128,6 +161,7 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     id
     note
     user_id
+    onetime
     car {
       id
       licence_plate

@@ -68,12 +68,14 @@ class Reservation extends Component {
                 t([ 'reservations', 'host' ]) :
                 reservation.reservation_case === 'internal' ?
                   t([ 'reservations', 'internal' ]) :
-                  t([ 'reservations', 'visitor' ])
+                  reservation.reservation_case === 'mr_parkit' ?
+                    t([ 'reservations', 'mrParkit' ]) :
+                    t([ 'reservations', 'visitor' ])
               }
             </td>
           </tr>
           <tr><td>{t([ 'occupancy', 'period' ])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
-          <tr><td>{t([ 'occupancy', 'licencePlate' ])}</td><td>{reservation.car.licence_plate}</td></tr>
+          <tr><td>{t([ 'occupancy', 'licencePlate' ])}</td><td>{reservation.car && reservation.car.licence_plate}</td></tr>
         </tbody>
       </table>) :
       (<table className={styles.tooltipTable}>

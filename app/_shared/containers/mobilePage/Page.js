@@ -17,6 +17,7 @@ import * as headerActions from '../../actions/mobile.header.actions'
 import * as loginActions  from '../../actions/login.actions'
 import { t }              from '../../modules/localization/localization'
 import { LOGIN, MENU }    from '../../../_resources/constants/RouterPaths'
+import { version }        from '../../../../package.json'
 
 
 export class Page extends Component {
@@ -71,6 +72,7 @@ export class Page extends Component {
     this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
   }
 
+
   render() {
     const { actions, state } = this.props
     const { hideDropdown, hideHamburger, hideHeader, margin } = this.props
@@ -106,7 +108,8 @@ export class Page extends Component {
       </ButtonStack>
 
       <div className={styles.bottom}>
-        <Localization />
+        <div className={styles.appVersion}> {t([ 'mobileApp', 'page', 'version' ])} {version} </div>
+        <Localization afterChange={actions.initGarages} />
       </div>
     </div>)
 

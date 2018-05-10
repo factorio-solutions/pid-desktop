@@ -27,6 +27,7 @@ import DashboardPage from './dashboard/dashboard.page'
 import ReservationsPage           from './reservations/reservations.page'
 import NewReservationPage         from './reservations/newReservation.page'
 import NewReservationOverviewPage from './reservations/newReservationOverview.page'
+import BulkRemovalReservationPage from './reservations/bulkRemoval.page'
 
 // occupancy page
 import OccupancyPage from './occupancy/occupancy.page'
@@ -57,15 +58,17 @@ import EditInvoicePage from './admin/invoices/editInvoice.page'
 import ClientsPage     from './admin/clients/clients.page'
 import ClientUsersPage from './admin/clients/users.page'
 import NewClientPage   from './admin/clients/newClient.page'
+import SmsSettingsPage from './admin/clients/smsSettings.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules
-import ModulesPage             from './admin/modules/modules.page'
-import MarketingSettingsPage   from './admin/modules/marketingSettings.page'
-import ReservationButtonPage   from './admin/modules/reservationButton.page'
-import MrParkitIntegrationPage from './admin/modules/mrParkitIntegration.page'
-import GoPublicPage            from './admin/modules/goPublic.page'
-import FlexiplacePage          from './admin/modules/flexiplace.page'
+import MarketingSettingsPage     from './admin/modules/marketingSettings.page'
+import ReservationButtonPage     from './admin/modules/reservationButton.page'
+import MrParkitIntegrationPage   from './admin/modules/mrParkitIntegration.page'
+import ThirdPartyIntegrationPage from './admin/modules/thirdPartyIntegration.page'
+import GoPublicPage              from './admin/modules/goPublic.page'
+import GoInternalPage            from './admin/modules/goInternal.page'
+import FlexiplacePage            from './admin/modules/flexiplace.page'
 
 // garageSetup
 import GarageSetupGeneralPage      from './admin/garageSetup/garageSetupGeneral.page'
@@ -80,10 +83,10 @@ import UsersPage      from './admin/users/users.page'
 import InviteUserPage from './admin/users/inviteUser.page'
 
 // finance
-import FinancePage from './admin/finance/finance.page'
-import NewRentPage from './admin/finance/newRent.page'
-import PayPalPage  from './admin/finance/paypal.page'
-import CsobPage    from './admin/finance/csob.page'
+import FinancePage  from './admin/finance/finance.page'
+import NewRentPage  from './admin/finance/newRent.page'
+import CsobPage     from './admin/finance/csob.page'
+import GpWebpayPage from './admin/finance/gpWebpay.page'
 
 // pidSettings
 import PidSettingsPage from './admin/pidSettings/pidSettings.page'
@@ -161,6 +164,7 @@ export default function createRoutes() {
       <Route path="reservations/newReservation" component={NewReservationPage} />
       <Route path="reservations/:id/edit" component={NewReservationPage} />
       <Route path="reservations/newReservation/overview" component={NewReservationOverviewPage} />
+      <Route path="reservations/bulkRemoval" component={BulkRemovalReservationPage} />
 
       <Route path="occupancy" component={OccupancyPage} />
 
@@ -184,14 +188,16 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/:client_id/users" component={ClientUsersPage} />
       <Route path=":id/admin/clients/newClient" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} />
+      <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 
-      <Route path=":id/admin/modules" component={ModulesPage} />
-      <Route path=":id/admin/modules/marketingSettings" component={MarketingSettingsPage} />
+      <Route path=":id/admin/modules/marketingPage" component={MarketingSettingsPage} />
       <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} />
+      <Route path=":id/admin/modules/3rdPartyIntegration" component={ThirdPartyIntegrationPage} />
       <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
       <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
+      <Route path=":id/admin/modules/goInternal" component={GoInternalPage} />
       <Route path=":id/admin/modules/flexiplace" component={FlexiplacePage} />
 
       <Route path="addFeatures/garageSetup/general" component={GarageSetupGeneralPage} />
@@ -212,8 +218,8 @@ export default function createRoutes() {
       <Route path=":id/admin/finance" component={FinancePage} />
       <Route path=":id/admin/finance/newRent" component={NewRentPage} />
       <Route path=":id/admin/finance/:rent_id/editRent" component={NewRentPage} />
-      <Route path=":id/admin/finance/paypal" component={PayPalPage} />
       <Route path=":id/admin/finance/csob" component={CsobPage} />
+      <Route path=":id/admin/finance/GpWebpay" component={GpWebpayPage} />
 
       <Route path=":id/admin/pidSettings" component={PidSettingsPage} />
 

@@ -1,41 +1,37 @@
-// fetch all clients
+// fetch all clients of current user
 export const GET_CLIENTS = `{
-  current_user {
+  clients{
+    name
+    token
     id
-  }
-  client_users {
-    client_id
-    user_id
-    admin
-    client {
-      name
-      token
-      id
-      user_count
+    user_count
+    place_count
+    all_invoices_paid
+    created_at
+    is_admin
+    contracts{
+      from
+      to
       place_count
-      all_invoices_paid
-      created_at
-      contracts{
-        from
-        to
-        place_count
-        name
-        id
-        rent{
-          price
-          currency{
-            symbol
-          }
+      name
+      id
+      rent{
+        price
+        currency{
+          symbol
         }
       }
-      contact_persons{
-        full_name
-      }
+    }
+    contact_persons{
+      full_name
+      email
+      phone
     }
   }
 }
 `
 
+// fetch client of garage
 export const GARAGE_CONTRACTS = `query GargeContracts($id: Id!){
   garage(id: $id){
     contracts{

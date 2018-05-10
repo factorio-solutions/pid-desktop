@@ -10,8 +10,10 @@ import {
   NEW_RESERVATION_SET_HOST_NAME,
   NEW_RESERVATION_SET_HOST_PHONE,
   NEW_RESERVATION_SET_HOST_EMAIL,
+  NEW_RESERVATION_SET_HOST_LANGUAGE,
 
   NEW_RESERVATION_SET_CLIENT_ID,
+  NEW_RESERVATION_SET_PAID_BY_HOST,
   NEW_RESERVATION_SET_RECURRING_RULE,
   NEW_RESERVATION_SHOW_RECURRING,
   NEW_RESERVATION_SET_USE_RECURRING,
@@ -30,7 +32,12 @@ import {
   NEW_RESERVATION_SET_DURATION_DATE,
   NEW_RESERVATION_SET_LOADING,
   NEW_RESERVATION_SET_HIGHLIGHT,
+  NEW_RESERVATION_SET_SEND_SMS,
   NEW_RESERVATION_SET_ERROR,
+
+  NEW_RESERVATION_SET_SELECTED_TEMPLATE,
+  NEW_RESERVATION_SET_TEMPLATE_TEXT,
+  NEW_RESERVATION_SET_PAYMENT_METHOD,
 
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
@@ -41,11 +48,13 @@ const defaultState = {
   availableUsers: [], // array of other available users
   reservation:    undefined, // object with reservation to be edited
 
-  name:  { value: '', valid: false },
-  phone: { value: '', valid: false },
-  email: { value: '', valid: false },
+  name:     { value: '', valid: false },
+  phone:    { value: '', valid: false },
+  email:    { value: '', valid: false },
+  language: 'en',
 
   client_id:                undefined, // currently selected client
+  paidByHost:               false,
   recurringRule:            undefined, // rule in string
   showRecurring:            false, // show recurring modal
   useRecurring:             false, // use recurring
@@ -64,58 +73,125 @@ const defaultState = {
   durationDate: false, // set duration or end of parking?
   loading:      false,
   hightlight:   false,
-  error:        undefined
+  sendSMS:      false,
+  error:        undefined,
+
+  selectedTemplate: undefined, // index of it
+  templateText:     '',
+
+  paymentMethod: ''
 }
 
+function placeLabel(state) {
+  if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
+    return 'flexiplace'
+  } else {
+    const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
+    const place = floor && floor.places.findById(state.place_id)
+    return `${floor.label} / ${place.label}`
+  }
+}
+
+function substituteVariablesInTemplate(template, state) {
+  const place = state.garage.floors
+    .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+    .findById(state.place_id)
+
+  const gates = place && place.gates
+    .filter(gate => gate.phone_number)
+    .map(gate => `${gate.label} (${gate.phone_number.number})`)
+    .join(', ')
+
+  return template
+    .replace('{{ garage }}', (state.garage && state.garage.name) || '')
+    .replace('{{ address }}', (state.garage && state.garage.address && [
+      state.garage.address.line_1,
+      state.garage.address.line_2,
+      state.garage.address.city,
+      state.garage.address.postal_code,
+      state.garage.address.state,
+      state.garage.address.country
+    ].filter(o => o).join(', ')) || '')
+    .replace('{{ gps }}', (state.garage && state.garage.address && `${state.garage.address.lat}, ${state.garage.address.lng}`) || '')
+    .replace('{{ place }}', placeLabel(state))
+    .replace('{{ begin }}', state.from)
+    .replace('{{ end }}', state.to)
+    .replace('{{ gate }}', gates || 'use app to open')
+}
 
 export default function newReservation(state = defaultState, action) {
   switch (action.type) {
 
     case NEW_RESERVATION_SET_USER:
-      return { ...state,
+      return {
+        ...state,
         user: action.value
       }
 
     case NEW_RESERVATION_SET_NOTE:
-      return { ...state,
+      return {
+        ...state,
         note: action.value
       }
 
     case NEW_RESERVATION_SET_AVAILABLE_USERS:
-      return { ...state,
+      return {
+        ...state,
         availableUsers: action.value
       }
 
     case NEW_RESERVATION_SET_RESERVATION:
-      return { ...state,
+      return {
+        ...state,
         reservation: action.value
       }
 
 
     case NEW_RESERVATION_SET_HOST_NAME:
-      return { ...state,
+      return {
+        ...state,
         name: action.value
       }
 
     case NEW_RESERVATION_SET_HOST_PHONE:
-      return { ...state,
+      return {
+        ...state,
         phone: action.value
       }
 
     case NEW_RESERVATION_SET_HOST_EMAIL:
-      return { ...state,
+      return {
+        ...state,
         email: action.value
+        // paidByHost: action.value.valid ? state.paidByHost : false
+      }
+
+    case NEW_RESERVATION_SET_HOST_LANGUAGE:
+      return {
+        ...state,
+        language: action.value
       }
 
     case NEW_RESERVATION_SET_CLIENT_ID:
+      return {
+        ...state,
+        client_id:        action.value,
+        recurringRule:    action.value ? state.recurringRule : undefined,
+        sendSMS:          false,
+        selectedTemplate: undefined,
+        templateText:     ''
+      }
+
+    case NEW_RESERVATION_SET_PAID_BY_HOST:
       return { ...state,
-        client_id:     action.value,
-        recurringRule: action.value ? state.recurringRule : undefined
+        // paidByHost: state.user.id === -2 ? state.email.value && state.email.valid && action.value : action.value
+        paidByHost: action.value
       }
 
     case NEW_RESERVATION_SET_RECURRING_RULE: {
       const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
-      return { ...state,
+      return {
+        ...state,
         recurringRule: action.value,
         showRecurring: false,
         useRecurring:  !overMonth && !!action.value
@@ -123,43 +199,50 @@ export default function newReservation(state = defaultState, action) {
     }
 
     case NEW_RESERVATION_SHOW_RECURRING:
-      return { ...state,
+      return {
+        ...state,
         showRecurring: action.value
       }
 
     case NEW_RESERVATION_SET_USE_RECURRING: {
       const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
-      return { ...state,
+      return {
+        ...state,
         useRecurring:  !overMonth && action.value,
         showRecurring: !overMonth && action.value && !state.rule
       }
     }
 
     case NEW_RESERVATION_SET_RECURRING_RESERVATION_ID: {
-      return { ...state,
+      return {
+        ...state,
         recurring_reservation_id: action.value
       }
     }
 
     case NEW_RESERVATION_CAR_ID:
-      return { ...state,
+      return {
+        ...state,
         car_id: action.value
       }
 
     case NEW_RESERVATION_CAR_LICENCE_PLATE:
-      return { ...state,
+      return {
+        ...state,
         carLicencePlate: action.value
       }
 
 
     case NEW_RESERVATION_SET_GARAGE:
-      return { ...state,
+      return {
+        ...state,
         garage: action.value
       }
 
 
     case NEW_RESERVATION_SET_FROM:
-      return { ...state,
+      return {
+        ...state,
         from:          action.value,
         to:            action.to || state.to,
         recurringRule: { ...state.recurringRule,
@@ -168,39 +251,74 @@ export default function newReservation(state = defaultState, action) {
       }
 
     case NEW_RESERVATION_SET_TO:
-      return { ...state,
+      return {
+        ...state,
         to: action.value
       }
 
     case NEW_RESERVATION_SET_PLACE_ID:
-      return { ...state,
+      return {
+        ...state,
         place_id: state.garage && state.garage.flexiplace ? undefined : action.value
       }
 
     case NEW_RESERVATION_SET_PRICE:
-      return { ...state,
+      return {
+        ...state,
         price: action.value
       }
 
 
     case NEW_RESERVATION_SET_DURATION_DATE:
-      return { ...state,
+      return {
+        ...state,
         durationDate: action.value
       }
 
     case NEW_RESERVATION_SET_LOADING:
-      return { ...state,
+      return {
+        ...state,
         loading: action.value
       }
 
     case NEW_RESERVATION_SET_HIGHLIGHT:
-      return { ...state,
+      return {
+        ...state,
         highlight: action.value
       }
 
+    case NEW_RESERVATION_SET_SEND_SMS:
+      const client = state.user.availableClients.findById(state.client_id)
+      return {
+        ...state,
+        sendSMS:          action.value,
+        selectedTemplate: action.value ? client.sms_templates.length === 1 ? 0 : undefined : undefined,
+        templateText:     action.value ? client.sms_templates.length === 1 ? client.sms_templates[0].template : '' : ''
+      }
+
     case NEW_RESERVATION_SET_ERROR:
-      return { ...state,
+      return {
+        ...state,
         error: action.value
+      }
+
+    case NEW_RESERVATION_SET_SELECTED_TEMPLATE:
+      return {
+        ...state,
+        selectedTemplate: action.value,
+        templateText:     substituteVariablesInTemplate(action.template, state)
+      }
+
+    case NEW_RESERVATION_SET_TEMPLATE_TEXT:
+      return {
+        ...state,
+        templateText: substituteVariablesInTemplate(action.value, state)
+      }
+
+    case NEW_RESERVATION_SET_PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethod: action.value
       }
 
 
