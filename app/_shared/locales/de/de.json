@@ -807,7 +807,11 @@
 		"price": "Preis",
 		"garage": "Parkhaus",
 		"floor": "Etage",
-		"place": "Stellplatz"
+		"place": "Stellplatz",
+		"csob": "DE: newReservationOverview.csob",
+		"paypal": "DE: newReservationOverview.paypal",
+		"raiffeisenbank": "DE: newReservationOverview.raiffeisenbank",
+		"paymentMethod": "DE: newReservationOverview.paymentMethod"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Ich bin ein Parkhausbesitzer",

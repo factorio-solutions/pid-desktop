@@ -120,7 +120,7 @@
 		"newGarageGatesHint": "Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",
 		"garageClientsHint": "Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.",
 		"clientsHint": "Zde najdete seznam klientů, s kterými jste v kontaktu.\n\nVe sloupci \"token klienta\" najdete unikátní identifikátor, který slouží k jednoduchému výběru klienta při tvorbě nových dohod.\n\nVe sloupci \"dohoda\" je zobrazeno zeleným zatržením, má-li klient uzavřenou dohodu, nebo červeným vykřičníkem, pokud žádnou dohodu nemá.\n\nVe sloupci \"místa\" je uveden celkový počet míst, která má klient přiřazená.\n\nVe sloupci \"celkem za měsíc\" je zobrazeno celkové měsiční parkovné klienta.\n\nVe sloupci \"faktury\" je zobrazen stav úhrad faktur - zeleně pokud jsou všechny uhrazeny, červeně má-li klient jakoukoliv fakturu po splatnosti.\n\nPo kliknutí na klienta se zobrazí další detaily, např. kontaktní osoba nebo seznam uzavřených dohod. Tlačítky v pravé části pak můžete vytvářet nové dohody, kontrolovat faktury, upravovat klienta či zobrazit všechny uživatele, kteří pod klienta patří. V tomto zobrazení je možno kliknout i na jednotlivé dohody a ty pak upravovat.",
-		"newClientHint": "CS: pageBase.newClientHint",
+		"newClientHint": "\nZde vytváříte nový klientský účet. Klientský účet shromažďuje informace o klientech, jejich uživatelích, parkovacích místech, která mohou používat, atd. Budete je moci nastavit v příslušných sekcích v systému.",
 		"clientUsersHint": "Zde můžete spravovat uživatele konkrétního klientského účtu a také zvát k tomuto účtu nové uživatele. U každéhu uživatele můžete zobrazit a nastavit jeho práva. Pozvánky, které jste zaslali a čekají na potvrzení jsou uvedeny v části \"Čekající pozvánky\" v záložce \"Uživatelé\".",
 		"settingsHint": "Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.",
 		"usersHint": "Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí, ve kterých klientských účtech je členem a jaké v nich má role. Dále se v detailu zobrazí, jaká má přiřazená auta, kterých garáží je členem a jaké v nich má role.",
@@ -807,7 +807,11 @@
 		"price": "Cena",
 		"garage": "Garáž",
 		"floor": "Podlaží",
-		"place": "Místo"
+		"place": "Místo",
+		"csob": "ČSOB - online platba",
+		"paypal": "PayPal",
+		"raiffeisenbank": "Raiffeisenbank - online platba",
+		"paymentMethod": "Platební metoda"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Jsem majitelem garáže",
