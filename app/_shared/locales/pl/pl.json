@@ -164,9 +164,9 @@
 		"garageAddClientHint": "Tutaj możesz dodać klienta do strony zarządzania garażem.",
 		"garageGarageUsersHint": "Tutaj możesz wybrać, kto może zarządzać twoim garażem.",
 		"EditUserHint": "Tutaj możesz zmienić swoje dane.",
-		"orderGarageModuleHint": "PL: pageBase.orderGarageModuleHint",
+		"orderGarageModuleHint": "Tutaj możesz zamówić moduł dostępu do garażu.",
 		"reservationOverviewHint": "Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.",
-		"editInvoiceHint": "PL: pageBase.editInvoiceHint",
+		"editInvoiceHint": "Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.",
 		"editContractHint": "Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
@@ -188,7 +188,7 @@
 		"flexiplaceHint": "Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.",
 		"pidAdmin": "PID admin",
 		"bulkRemovalHint": "PL: pageBase.bulkRemovalHint",
-		"smsSettingsHint": "PL: pageBase.smsSettingsHint"
+		"smsSettingsHint": "Na tej stronie możesz aktywować usługę SMS oraz zmienić jej ustawienia. Do pisania tekstów możesz wykorzystać wytłumaczone poniżej zmienne, które zostaną zastąpione odpowiednimi danymi:\n\n\"{{ garage }}\" = nazwa garażu\n\"{{ address }}\" = adres wjazdu\n\"{{ gps }}\" = parametry gps wjazdu\n\"{{ place }}\" = piętro / miejsce\n\"{{ begin }}\" = początek rezerwacji\n\"{{ end }}\" = koniec rezerwacji\n\"{{ gate }}\" = numer telefonu serwera"
 	},
 	"newReservation": {
 		"selectGarage": "Wybierz garaż *",
@@ -304,6 +304,7 @@
 		"host": "Regularny gość",
 		"visitor": "Odwiedzający/a",
 		"internal": "Wewnętrzny",
+		"mrParkit": "PL: reservations.mrParkit",
 		"editReservation": "Edytuj rezerwację",
 		"editNote": "Edytuj notatkę",
 		"newNote": "Nowa notatka",
@@ -534,13 +535,13 @@
 		"placeholderGatePassword": "123456",
 		"passwordWasSet": "Brama posiada hasło. Możesz je zmienić podając nowe hasło.",
 		"passwordWasNotSet": "Hasło nie zostało ustawione!",
-		"addAllPalces": "PL: newGarage.addAllPalces",
-		"notAssignNumber": "PL: newGarage.notAssignNumber",
-		"selcetNumber": "PL: newGarage.selcetNumber"
+		"addAllPalces": "Dodać wszystkie miejsca",
+		"notAssignNumber": "Numer nie został przyporządkowany",
+		"selcetNumber": "Numer do otwarcia bramy"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
-		"placeholder": "Klient firmy",
+		"placeholder": "Spółka z o.o.",
 		"invalidName": "Niepoprawne nazwisko klienta",
 		"ICplaceholder": "12345678",
 		"DICplaceholder": "CZ12345678",
@@ -639,7 +640,7 @@
 		"email": "E-mail:",
 		"createdAt": "Profil założony:",
 		"cars": "Auta",
-		"showPublicGarages": "PL: profile.showPublicGarages"
+		"showPublicGarages": "Pokaż garaże oferowane publicznie"
 	},
 	"users": {
 		"username": "Nazwa użytkownika",
@@ -806,7 +807,11 @@
 		"price": "Cena",
 		"garage": "Garaż",
 		"floor": "Piętro",
-		"place": "Miejsce"
+		"place": "Miejsce",
+		"csob": "PL: newReservationOverview.csob",
+		"paypal": "PL: newReservationOverview.paypal",
+		"raiffeisenbank": "PL: newReservationOverview.raiffeisenbank",
+		"paymentMethod": "PL: newReservationOverview.paymentMethod"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Jestem właścicielem(-ką) garażu",
@@ -874,10 +879,14 @@
 		"csobPayment": "Informacje płatnicze ČSOB",
 		"paypalPayment": "PayPal został wybrany -- po kliknięciu na przycisk OK nastąpi przekierowanie.",
 		"csobMerchantID": "ID firmowe ČSOB",
+		"gpWebpayMerchantID": "PL: newAccount.gpWebpayMerchantID",
 		"invalidMerchantId": "Niepoprawne ID firmowe",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
+		"gpWebpayMerchantIdplaceholder": "1234567890",
+		"gpWebpayPassword": "Hasło do klucza prywatnego",
+		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Wybierz klucz osobisty:",
-		"invalidKeyPair": "PL: newAccount.invalidKeyPair"
+		"invalidKeyPair": "Niepoprawne ID firmy lub klucz prywatny"
 	},
 	"invoices": {
 		"invoiceDate": "data wystawienia faktury",
@@ -939,7 +948,7 @@
 		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální",
 		"showApiKey": "Pokaż API endpoint",
 		"regenerateApiKey": "Wygeneruj API endpoint",
-		"thirdPartyIntegration": "Integracja z osobami trzecimi",
+		"3rdPartyIntegration": "Integracja z osobami trzecimi",
 		"thirdPartyIntegrationDescription": "Aktywując tę funkcję otrzymasz własny API z opcjami umożliwiającymi zarządzanie rezerwacjami za pomocą innych systemów",
 		"mrParkitIntegration": "Integracja MR.PARKIT",
 		"mrParkitIntegrationDescription": "Funkcja podobna do Integracji z osobami trzecimi. Różnica polega na tym, że miejscami automatycznie zajmie się Mr.Parkit.",
@@ -952,7 +961,8 @@
 		"toApiExplorer": "Przejdź do przeglądarki API",
 		"requestDesribtionPart1": "Aby użyć skrytego tokena, dodaj header",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "PL: modules.requestDesribtionPart3"
+		"requestDesribtionPart3": "dla Twoich raphQL requests",
+		"selectPlaces": "Żeby aktywować moduł, wypełnij formularz."
 	},
 	"newContract": {
 		"description": "Nowa umowa w",
@@ -965,7 +975,7 @@
 		"selectedPlaces": "Wybrane miejsca",
 		"noSelectedPlaces": "Nie ma żadnych wybranych miejsc",
 		"selectRent": "Wybierz najem",
-		"contractPrice": "Wpisz konkretną kwotę umowy",
+		"contractPrice": "Wprowadź miesięczną cenę tej umowy",
 		"priceInvalid": "Kwota jest niepoprawna",
 		"pricePlaceholder": "10000",
 		"selectCurrency": "Wybierz walutę",
@@ -987,7 +997,9 @@
 	"finance": {
 		"paypal": "PayPal",
 		"csob": "ČSOB",
+		"gpWebpay": "Raiffeisenbank",
 		"csobPayment": "Płatności ČSOB",
+		"gpWebpayPayment": "Raiffeisenbank‎",
 		"SelectPrivateKey": "Wybierz klucz osobisty",
 		"financeSettings": "Ustawienia finansów",
 		"vat": "Podatek VAT",
@@ -1000,8 +1012,11 @@
 		"uploadKey": "Wgrać klucz RSA",
 		"accountNumber": "Numer konta",
 		"invalidAccountNumber": "Niepoprawny numer konta",
-		"paymentGates": "PL: finance.paymentGates",
-		"rents": "Wynajmy"
+		"paymentGates": "Bramy płatnicze",
+		"rents": "Wynajmy",
+		"testPayment": "Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",
+		"testPaymentSuccessful": "Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.",
+		"testPaymentUnsuccessful": "Transakcja próbna nie powiodła się."
 	},
 	"analytics": {
 		"week": "tydzień",
@@ -1102,11 +1117,11 @@
 		"every": "raz na"
 	},
 	"bulkCancellation": {
-		"bulkCancellation": "PL: bulkCancellation.bulkCancellation",
-		"findReservations": "PL: bulkCancellation.findReservations",
-		"cancelReservations": "PL: bulkCancellation.cancelReservations",
-		"allUsers": "PL: bulkCancellation.allUsers",
-		"noReservations": "PL: bulkCancellation.noReservations"
+		"bulkCancellation": "Usuń zbiorowo",
+		"findReservations": "Znajdź rezerwacje",
+		"cancelReservations": "Usuń wybrane rezerwacje",
+		"allUsers": "Wszyscy użytkownicy",
+		"noReservations": "Brak rezerwacji"
 	},
 	"mobileApp": {
 		"page": {
@@ -1203,10 +1218,11 @@
 			"invalidName": "Niepoprawna nazwa",
 			"invalidEmail": "Niepoprawny e-mail",
 			"invalidPhone": "Niepoprawny telefon",
-			"noGuestResrevations": "Bez rezerwacji regularnych gości"
+			"noGuestResrevations": "Brak rezerwacji regularnych gości"
 		}
 	},
 	"auth0Emails": {
+		"verificationEmailSubject": "E-mail kontrolny",
 		"securityReasons": "Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.",
 		"easyAsClickingButton": "Wystarczy kliknąć na poniższy przycisk:",
 		"confirmAccount": "Potwierdzić konto!",
@@ -1221,13 +1237,20 @@
 		"garageSetup": "Chcesz założyć garaż? Pomożemy Ci w tym! Daj nam znać, a zadzwonimy do Ciebie. Omówimy razem wszystki ustawienia i dostosujemy je do Twoich potrzeb, żeby zagwarantować Ci jak największy zysk i oszczędność czasu.",
 		"getInTouch": "Chcesz skontaktować się z nami?",
 		"website": "Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
+		"passwordResetSubject": "PL: auth0Emails.passwordResetSubject",
 		"passwordResetSubmited": "Poprosiłeś/-aś o zmianę hasła!",
 		"pwdResetDescr": "Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
 		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
+		"verificationCodeEmailSubject": "Kod weryfikacyjny",
 		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
 	},
 	"railsEmails": {
+		"invitation_mail_subject": "Zostałeś zaproszony do Park-It-Direct!",
+		"resend_invitation_mail_subject": "Przypominamy o zaproszeniu do Park-It-Direct.",
+		"new_reservation_mail_subject": "%{user} utworzył(a) nową rezerwację.",
+		"reservation_confirmed_subject": "Rezerwacja w %{garage} została potwierdzona.",
+		"reservation_updated_subject": "Twora rezerwacja w %{garage} została zaktualizowana.",
 		"footer": {
 			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
 			"regards": "Pozdrawiamy",
@@ -1255,7 +1278,7 @@
 			"we_will_help": "a my pomożemy Ci aktywować konto."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
+			"new_reservation": "PL: railsEmails.new_reservation_mail.new_reservation",
 			"reservation_for_you": "utworzył dla Ciebie nową rezerwację.",
 			"go_pay_yourself": "Zapłać",
 			"price": "Cena:",
@@ -1372,6 +1395,17 @@
 			"createdAt": "netřeba překládat",
 			"editNews": "netřeba překládat",
 			"deleteNews": "netřeba překládat"
+		},
+		"logs": {
+			"accessLogs": "netřeba překládat",
+			"garageLogs": "netřeba překládat",
+			"user": "użytkownik",
+			"accessType": "rodzaj dostępu",
+			"createdAt": "czas dostępu",
+			"gate": "brama",
+			"reservation": "rezerwacja",
+			"noGate": "brama nie została skonfigurowana",
+			"noReservation": "brak ważnej rezerwacji"
 		}
 	}
 }
