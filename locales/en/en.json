@@ -810,7 +810,8 @@
 		"place": "Spot",
 		"csob": "ČSOB - online payment",
 		"paypal": "PayPal",
-		"raiffeisenbank": "Raiffeisenbank - online payment"
+		"raiffeisenbank": "Raiffeisenbank - online payment",
+		"paymentMethod": "Payment method"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",

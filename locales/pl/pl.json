@@ -807,7 +807,11 @@
 		"price": "Cena",
 		"garage": "Garaż",
 		"floor": "Piętro",
-		"place": "Miejsce"
+		"place": "Miejsce",
+		"csob": "PL: newReservationOverview.csob",
+		"paypal": "PL: newReservationOverview.paypal",
+		"raiffeisenbank": "PL: newReservationOverview.raiffeisenbank",
+		"paymentMethod": "PL: newReservationOverview.paymentMethod"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Jestem właścicielem(-ką) garażu",
@@ -1113,11 +1117,11 @@
 		"every": "raz na"
 	},
 	"bulkCancellation": {
-		"bulkCancellation": "PL: bulkCancellation.bulkCancellation",
-		"findReservations": "PL: bulkCancellation.findReservations",
-		"cancelReservations": "PL: bulkCancellation.cancelReservations",
-		"allUsers": "PL: bulkCancellation.allUsers",
-		"noReservations": "PL: bulkCancellation.noReservations"
+		"bulkCancellation": "Usuń zbiorowo",
+		"findReservations": "Znajdź rezerwacje",
+		"cancelReservations": "Usuń wybrane rezerwacje",
+		"allUsers": "Wszyscy użytkownicy",
+		"noReservations": "Brak rezerwacji"
 	},
 	"mobileApp": {
 		"page": {
@@ -1395,13 +1399,13 @@
 		"logs": {
 			"accessLogs": "netřeba překládat",
 			"garageLogs": "netřeba překládat",
-			"user": "PL: pidAdmin.logs.user",
-			"accessType": "PL: pidAdmin.logs.accessType",
-			"createdAt": "PL: pidAdmin.logs.createdAt",
-			"gate": "PL: pidAdmin.logs.gate",
-			"reservation": "PL: pidAdmin.logs.reservation",
-			"noGate": "PL: pidAdmin.logs.noGate",
-			"noReservation": "PL: pidAdmin.logs.noReservation"
+			"user": "użytkownik",
+			"accessType": "rodzaj dostępu",
+			"createdAt": "czas dostępu",
+			"gate": "brama",
+			"reservation": "rezerwacja",
+			"noGate": "brama nie została skonfigurowana",
+			"noReservation": "brak ważnej rezerwacji"
 		}
 	}
 }

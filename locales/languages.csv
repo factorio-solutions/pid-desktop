@@ -259,7 +259,8 @@ In der Spalte „Pro Monat insgesamt“ werden die monatlichen Parkhausgebühren
 In der Spalte „Rechnungen“ wird der Rechnungsstatus angezeigt – wenn alle Rechnungen beglichen sind = grün; wenn eine Rechnung überfällig ist = rot.
 
 Klicken Sie auf einen Kunden, um weitere Details (z.B Kontaktperson oder eine Liste der abgeschlossenen Verträge) anzuzeigen. Mit den Schaltflächen rechts können Sie neue Verträge erstellen, Rechnungen kontrollieren, die Kundendaten anpassen oder alle Benutzer anzeigen, die zum Kunden gehören. In dieser Darstellung können Sie auch auf die einzelnen Verträge klicken und diese anpassen."
-pageBase.newClientHint,"Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",,"Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.","Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben."
+pageBase.newClientHint,"Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.","
+Zde vytváříte nový klientský účet. Klientský účet shromažďuje informace o klientech, jejich uživatelích, parkovacích místech, která mohou používat, atd. Budete je moci nastavit v příslušných sekcích v systému.","Tutaj możesz utworzyć nowe konto klienta. Jest to sekcja, która zawiera informacje na temat klienta, jego użytkownikóa oraz miejsc parkingowych, z których mogą korzystać. Będziesz móc ustawić je w odpowiednich sekcjach systemu.","Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben."
 pageBase.clientUsersHint,"This section lets you manage users of a particular client account. Select a user to view and set up user rights. You can also invite new users to this selected client account. Invitations sent and waiting for confirmation are shown in the ""Pending invitations"" section below.","Zde můžete spravovat uživatele konkrétního klientského účtu a také zvát k tomuto účtu nové uživatele. U každéhu uživatele můžete zobrazit a nastavit jeho práva. Pozvánky, které jste zaslali a čekají na potvrzení jsou uvedeny v části ""Čekající pozvánky"" v záložce ""Uživatelé"".","Ta sekcja umożliwia zarządzanie użytkownikami poszczególnego konta klienta. Wybierając użytkownika możesz zobaczyć i ustawić uprawnienia użytkownika. Możesz również zaprosić nowych użytkowników do wybranego konta klienta. Wysłane zaproszenia, które czekają na odpowiedź znajdziesz w sekcji ""Czekające zaproszenia"".","In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt."
 pageBase.settingsHint,In this section you can set your desired language and switch on and off these help boxes throughout the application.,Zde můžete nastavit jazyk aplikace a pak zde můžete zapnout nebo vypnout zobrazování těchto okýnek s nápovědou v celé aplikaci.,Tutaj możesz ustawić język aplikacji oraz włączyć lub wyłączyć okna pomocy w całej aplikacji.,In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.
 pageBase.usersHint,"Here you have a list of all known users. Select a user to see client accounts membership and their role therein. The detailed view also shows which vehicles are assigned to that user, which garages they have access to, and their role therein.","Zde naleznete seznam všech uživatelů. Po zvolení uživatele se zobrazí, ve kterých klientských účtech je členem a jaké v nich má role. Dále se v detailu zobrazí, jaká má přiřazená auta, kterých garáží je členem a jaké v nich má role.","Tutaj znajdziesz listę wszystkich użytkowników. Po wybraniu użytkownika zobaczysz, członkiem których kont klienta jest oraz jakie ma w nich role. W szczegółach ukażą się również przyporządkowane do niego auta, garaże których jest członkiem oraz jego rola w nich. ","Hier sehen Sie eine Liste aller Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat."
@@ -1027,6 +1028,10 @@ newReservationOverview.price,Price,Cena,Cena,Preis
 newReservationOverview.garage,Garage,Garáž,Garaż,Parkhaus
 newReservationOverview.floor,Floor,Podlaží,Piętro,Etage
 newReservationOverview.place,Spot,Místo,Miejsce,Stellplatz
+newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,,
+newReservationOverview.paypal,PayPal,PayPal,,
+newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,,
+newReservationOverview.paymentMethod,Payment method,Platební metoda,,
 addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Parkhausbesitzer
 addFeatures.LongTerm,LONG-TERM OR PERSONAL,DLOUHODOBÉ NEBO OSOBNÍ,DŁUGOTERMINOWO LUB PERSONALNIE,LANGFRISTIG ODER PERSÖNLICH
 addFeatures.Automation,AUTOMATION & ACCESS,AUTOMATIZACE A PŘÍSTUP,AUTOMATYZACJA I DOSTĘP,AUTOMATISIERUNG UND ZUGANG
@@ -1290,11 +1295,11 @@ recurringReservation.occurence.few,occurrences,výskytech,rezerwacjach,Wiederhol
 recurringReservation.occurence.many,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.other,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.on,On,Dne,Dnia,Am
-bulkCancellation.bulkCancellation,Bulk cancellation,Hromadné rušení,,Massenstornierung
-bulkCancellation.findReservations,Find reservations,Najít rezervace,,Buchungen finden
-bulkCancellation.cancelReservations,Cancel reservations,Zrušit vybrané rezervace,,Ausgewählte Buchungen stornieren
-bulkCancellation.allUsers,All users,Všichni uživatelé,,Alle Benutzer
-bulkCancellation.noReservations,No Reservations,Žádné rezervace,,Keine Buchungen
+bulkCancellation.bulkCancellation,Bulk cancellation,Hromadné rušení,Usuń zbiorowo,Massenstornierung
+bulkCancellation.findReservations,Find reservations,Najít rezervace,Znajdź rezerwacje,Buchungen finden
+bulkCancellation.cancelReservations,Cancel reservations,Zrušit vybrané rezervace,Usuń wybrane rezerwacje,Ausgewählte Buchungen stornieren
+bulkCancellation.allUsers,All users,Všichni uživatelé,Wszyscy użytkownicy,Alle Benutzer
+bulkCancellation.noReservations,No Reservations,Žádné rezervace,Brak rezerwacji,Keine Buchungen
 recurringReservation.every,every,jednou za,raz na,Einmal pro
 mobileApp.page.userInfoUnavailable,User info unavailable.,Informace o uživateli jsou nedostupné,Informacje o użytkowniku są niedostępne.,Informationen über diesen Benutzer sind nicht verfügbar.
 mobileApp.page.logOut,log out,odhlásit,Wylogować,abmelden
@@ -1522,10 +1527,10 @@ pidAdmin.news.editNews,edit news,upravit novinky,netřeba překládat,netřeba p
 pidAdmin.news.deleteNews,delete news,smazat novinky,netřeba překládat,netřeba překládat
 pidAdmin.logs.accessLogs,Access logs,Log vjezdů,netřeba překládat,netřeba překládat
 pidAdmin.logs.garageLogs,Garage logs,Log garáží,netřeba překládat,netřeba překládat
-pidAdmin.logs.user,user,uživatel,,
-pidAdmin.logs.accessType,access type,typ přístupu,,
-pidAdmin.logs.createdAt,created at,čas přístupu,,
-pidAdmin.logs.gate,gate,brána,,
-pidAdmin.logs.reservation,reservation,rezervace,,
-pidAdmin.logs.noGate,no gate configured,není konfigurovaná brána,,
-pidAdmin.logs.noReservation,no valid reservation,nemá platnou rezervaci,,
+pidAdmin.logs.user,user,uživatel,użytkownik,
+pidAdmin.logs.accessType,access type,typ přístupu,rodzaj dostępu,
+pidAdmin.logs.createdAt,created at,čas přístupu,czas dostępu,
+pidAdmin.logs.gate,gate,brána,brama,
+pidAdmin.logs.reservation,reservation,rezervace,rezerwacja,
+pidAdmin.logs.noGate,no gate configured,není konfigurovaná brána,brama nie została skonfigurowana,
+pidAdmin.logs.noReservation,no valid reservation,nemá platnou rezervaci,brak ważnej rezerwacji,
