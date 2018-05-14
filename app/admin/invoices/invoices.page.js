@@ -12,6 +12,7 @@ import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import Input              from '../../_shared/components/input/Input'
 import Form               from '../../_shared/components/form/Form'
 import Modal              from '../../_shared/components/modal/Modal'
+import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 
 import styles               from './invoices.page.scss'
 import * as nav             from '../../_shared/helpers/navigation'
@@ -153,11 +154,16 @@ class InvoicesPage extends Component {
       </Form>
     </div>)
 
+    const ICOsSelector = (<div>
+      <h3>{t([ 'invoices', 'selectYourPohodaIc' ])}</h3>
+      {state.possibleICOs.map(ico => <div><CallToActionButton label={`${ico.name}, ${ico.ic}`} onClick={() => actions.generateXml(ico.ic)} /></div>)}
+    </div>)
 
 
     return (
       <PageBase>
         <Modal content={customModal} show={state.showModal} />
+        <Modal content={ICOsSelector} show={state.possibleICOs.length} />
         <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters} />
         <Table schema={schema} data={invoiceData} returnFiltered={actions.setFilteredInvoices} />
         <div className={styles.actionButtons}>

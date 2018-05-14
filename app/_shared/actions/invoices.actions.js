@@ -94,7 +94,9 @@ export function showPossibleIcos() {
     .map(invoice => invoice.account)
     .map(account => ({ name: account.garage.name, ic: account.ic }))
 
-    dispatch([ ...clients, ...garages ])
+    dispatch(setPossibleIcos([ ...clients, ...garages ]
+      .filter((value, index, self) => self.findIndex(i => i.ic === value.ic) === index) // unique values
+    ))
   }
 }
 
@@ -106,12 +108,13 @@ export function payInvoice(id) {
     }
 
     dispatch(setCustomModal(<div>{t([ 'invoices', 'initializingPayment' ])}</div>))
-    request(onSuccess
-           , UPDATE_INVOICE
-           , { id:      +id,
-             invoice: { url: window.location.href.split('?')[0] }
-           }
-           )
+    request(
+      onSuccess,
+      UPDATE_INVOICE,
+      { id:      +id,
+        invoice: { url: window.location.href.split('?')[0] }
+      }
+    )
   }
 }
 
@@ -184,14 +187,15 @@ export function reminder(id) {
 
     const invoice = state.invoices.find(invoice => { return invoice.id === id })
     invoice.client != null && invoice.client.admins.forEach(admin => {
-      request(onSuccess
-             , REMINDER_NOTIFICATION
-             , { notification: { user_id:           admin.id,
-               notification_type: 'Yes',
-               message:           'invoiceReminder;' + invoice.account.garage.name
-             }
-             }
-             )
+      request(
+        onSuccess,
+        REMINDER_NOTIFICATION,
+        { notification: {
+          user_id:           admin.id,
+          notification_type: 'Yes',
+          message:           'invoiceReminder;' + invoice.account.garage.name
+        } }
+      )
     })
   }
 }
@@ -201,7 +205,8 @@ export function generateExcel() {
   return (dispatch, getState) => {
     const invoices = getState().invoices.filteredInvoices
 
-    const header = [ [ t([ 'invoices', 'invoiceNumber' ]),
+    const header = [ [
+      t([ 'invoices', 'invoiceNumber' ]),
       'id',
       t([ 'invoices', 'client' ]),
       t([ 'invoices', 'invoiceDate' ]),
@@ -211,8 +216,7 @@ export function generateExcel() {
       t([ 'invoices', 'ammount' ]),
       t([ 'invoices', 'paid' ]),
       t([ 'invoices', 'invoiceCanceled' ])
-    ]
-    ]
+    ] ]
 
     const data = invoices.reduce((acc, invoice) => {
       return [ ...acc, [ invoice.invoice_number,
@@ -240,11 +244,15 @@ export function downloadZip() {
   }
 }
 
-export function generateXml(ic, filterInvoicesByIc) {
+export function generateXml(ic) {
   return (dispatch, getState) => {
-    const invoices = getState().invoices.filteredInvoices.map(invoice => invoice.id).map(id => `invoices[]=${id}`).join('&')
+    const invoices = getState().invoices.filteredInvoices
+    .filter(invoice => invoice.client.ic === ic || invoice.account.ic === ic)
+    .map(invoice => invoice.id)
+    .map(id => `invoices[]=${id}`).join('&')
 
-    createDownloadLink(`${entryPoint}/pohoda.xml?${invoices}`, 'pohodaExport.xml').click()
+    createDownloadLink(`${entryPoint}/pohoda.xml?ic=${ic}&${invoices}`, 'pohodaExport.xml').click()
+    dispatch(setPossibleIcos([]))
 
     // get(`${entryPoint}/pohoda?${invoices}`)
     // .then(data => {
