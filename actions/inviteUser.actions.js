@@ -198,8 +198,8 @@ export function createNewManagebles() {
         {
           user: {
             email:     email.toLowerCase(),
-            full_name: emails.length > 1 ? null : state.full_name,
-            phone:     emails.length > 1 ? null : state.phone.replace(/\s/g, ''),
+            full_name: emails.length > 1 ? "" : state.full_name,
+            phone:     emails.length > 1 ? "" : state.phone.replace(/\s/g, ''),
             message:   state.message,
             language:  state.language
           },
