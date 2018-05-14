@@ -153,13 +153,15 @@ class InvoicesPage extends Component {
       </Form>
     </div>)
 
+
+
     return (
       <PageBase>
         <Modal content={customModal} show={state.showModal} />
         <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters} />
         <Table schema={schema} data={invoiceData} returnFiltered={actions.setFilteredInvoices} />
         <div className={styles.actionButtons}>
-          <LabeledRoundButton label={t([ 'invoices', 'donwloadXML' ])} content={<span className="fa fa-file-code-o" aria-hidden="true" />} onClick={actions.generateXml} type="action" />
+          <LabeledRoundButton label={t([ 'invoices', 'donwloadXML' ])} content={<span className="fa fa-file-code-o" aria-hidden="true" />} onClick={actions.showPossibleIcos} type="action" />
           <LabeledRoundButton label={t([ 'invoices', 'donwloadExcel' ])} content={<span className="fa fa-file-excel-o" aria-hidden="true" />} onClick={actions.generateExcel} type="action" />
           <LabeledRoundButton label={t([ 'invoices', 'donwloadInvoices' ])} content={<span className="fa fa-files-o" aria-hidden="true" />} onClick={actions.downloadZip} type="action" />
         </div>

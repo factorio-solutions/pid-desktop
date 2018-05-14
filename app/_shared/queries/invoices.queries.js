@@ -16,6 +16,7 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
       symbol
     }
     account{
+      ic
       garage{
         name
         id
@@ -27,6 +28,7 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
       is_secretary
       name
       id
+      ic
       admins{
         id
       }

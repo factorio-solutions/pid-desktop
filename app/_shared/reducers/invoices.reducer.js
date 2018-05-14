@@ -5,17 +5,20 @@ import {
   INVOICES_SET_PAST,
   INVOICES_SET_REASON,
   INVOICES_TOGGLE_REASON_MODAL,
-  INVOICSE_SET_FILTERED_INVOICES
+  INVOICSE_SET_FILTERED_INVOICES,
+  INVOICES_SET_POSSIBLE_ICOS
 }  from '../actions/invoices.actions'
 
-const defaultState = { invoices:         [],
+const defaultState = {
+  invoices:         [],
   clients:          [],
   client_id:        undefined,
   past:             false,
   reason:           '', // reason for cancelling invoice
   invoice_id:       undefined, // currently canceling invoice
   showModal:        false,
-  filteredInvoices: [] // invoices filtered by user via table
+  filteredInvoices: [], // invoices filtered by user via table
+  possibleICOs:     [] // icos for whom is possible the xml to be generated
 }
 
 
@@ -64,6 +67,12 @@ export default function invoices(state = defaultState, action) {
       return {
         ...state,
         filteredInvoices: action.value
+      }
+
+    case INVOICES_SET_POSSIBLE_ICOS:
+      return {
+        ...state,
+        possibleICOs: action.value
       }
 
     default:

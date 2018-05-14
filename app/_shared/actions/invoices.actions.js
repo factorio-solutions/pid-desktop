@@ -2,6 +2,7 @@ import { request }                    from '../helpers/request'
 import { get }                        from '../helpers/get'
 import { downloadCSV }                from '../helpers/downloadCSV'
 import { formatTime }                 from '../helpers/time'
+import actionFactory                  from '../helpers/actionFactory'
 import { t }                          from '../modules/localization/localization'
 import { entryPoint }                 from '../../index'
 import {
@@ -28,25 +29,17 @@ export const INVOICES_SET_REASON = 'INVOICES_SET_REASON'
 export const INVOICES_SET_INVOICE_ID = 'INVOICES_SET_INVOICE_ID'
 export const INVOICES_TOGGLE_REASON_MODAL = 'INVOICES_TOGGLE_REASON_MODAL'
 export const INVOICSE_SET_FILTERED_INVOICES = 'INVOICSE_SET_FILTERED_INVOICES'
+export const INVOICES_SET_POSSIBLE_ICOS = 'INVOICES_SET_POSSIBLE_ICOS'
 
 
-export function setInvoices(value) {
-  return { type: INVOICES_SET_INVOICES,
-    value
-  }
-}
+export const setInvoices = actionFactory(INVOICES_SET_INVOICES)
+export const setClients = actionFactory(INVOICES_SET_CLIENTS)
+export const setClientId = actionFactory(INVOICES_SET_CLIENT_ID)
+export const setReason = actionFactory(INVOICES_SET_REASON)
+export const toggleReason = actionFactory(INVOICES_TOGGLE_REASON_MODAL)
+export const setFilteredInvoices = actionFactory(INVOICSE_SET_FILTERED_INVOICES)
+export const setPossibleIcos = actionFactory(INVOICES_SET_POSSIBLE_ICOS)
 
-export function setClients(value) {
-  return { type: INVOICES_SET_CLIENTS,
-    value
-  }
-}
-
-export function setClientId(value) {
-  return { type: INVOICES_SET_CLIENT_ID,
-    value
-  }
-}
 
 export function setPast(value, garage_id) {
   return (dispatch, getState) => {
@@ -54,24 +47,6 @@ export function setPast(value, garage_id) {
       value
     })
     dispatch(initInvoices(garage_id))
-  }
-}
-
-export function setReason(value) {
-  return { type: INVOICES_SET_REASON,
-    value
-  }
-}
-
-export function toggleReason(id) {
-  return { type:  INVOICES_TOGGLE_REASON_MODAL,
-    value: id
-  }
-}
-
-export function setFilteredInvoices(value) {
-  return { type: INVOICSE_SET_FILTERED_INVOICES,
-    value
   }
 }
 
@@ -98,13 +73,28 @@ export function initInvoices(garage_id) {
       dispatch(setClients(clients))
     }
 
-    request(onSuccess
-           , GET_INVOICES
-           , {
-             garage_id: garage_id && +garage_id,
-             past:      state.past
-           }
-           )
+    request(
+      onSuccess,
+      GET_INVOICES,
+      { garage_id: garage_id && +garage_id,
+        past:      state.past
+      }
+    )
+  }
+}
+
+export function showPossibleIcos() {
+  return (dispatch, getState) => {
+    const invoices = getState().invoices.filteredInvoices
+    const clients = invoices
+    .map(invoice => invoice.client)
+    .map(client => ({ name: client.name, ic: client.ic }))
+
+    const garages = invoices
+    .map(invoice => invoice.account)
+    .map(account => ({ name: account.garage.name, ic: account.ic }))
+
+    dispatch([ ...clients, ...garages ])
   }
 }
 
@@ -250,7 +240,7 @@ export function downloadZip() {
   }
 }
 
-export function generateXml() {
+export function generateXml(ic, filterInvoicesByIc) {
   return (dispatch, getState) => {
     const invoices = getState().invoices.filteredInvoices.map(invoice => invoice.id).map(id => `invoices[]=${id}`).join('&')
 
