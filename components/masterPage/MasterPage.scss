@@ -208,6 +208,8 @@ $hintWidth:          180px;
         bottom:   0;
         width:    calc(#{$hintWidth} - 2 * 10px); // - 2x padding
 
+        border-left: 1px solid $hintBorderColor;
+
         >button {
           display: block;
           margin:  10px auto;
@@ -296,6 +298,8 @@ $hintWidth:          180px;
       >.hint {
         display:        flex;
         flex-direction: row-reverse;
+
+        border-bottom: 1px solid $hintBorderColor;
 
         >div {
           flex:         1 1;
