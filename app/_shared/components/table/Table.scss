@@ -6,7 +6,7 @@ $font-size: 16px;
   max-width:     calc(100% - 10px);
   padding:       2px 5px;
   float:         right;
-  border-bottom: 1px solid $gray;
+  border-bottom: 1px solid $verticalMenuBorderColor;
 
   >i {
     font-size: $font-size;
@@ -83,7 +83,7 @@ $font-size: 16px;
 .tr {
   > td {
     padding:       4px;
-    border-bottom: 1px solid $black;
+    border-bottom: 1px solid $verticalMenuBorderColor;
   }
 }
 
@@ -91,7 +91,7 @@ $font-size: 16px;
   background: $yellow;
 
   >td {
-    border-bottom: 1px dashed $gray !important;
+    border-bottom: 1px dashed $verticalMenuBorderColor !important;
   }
 
   &:hover {
