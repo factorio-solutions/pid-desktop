@@ -42,7 +42,7 @@ export function request(onSuccess, query, variables = null, operationName = null
     }
   }
 
-  xmlHttp.open('POST', entryPoint, true)
+  xmlHttp.open('POST', entryPoint + '/queries', true)
   xmlHttp.setRequestHeader('Content-type', 'application/json')
   xmlHttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt)
   xmlHttp.send(JSON.stringify(data))

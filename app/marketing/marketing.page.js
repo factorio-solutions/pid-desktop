@@ -9,7 +9,6 @@ import Carousel from '../_shared/components/carousel/Carousel'
 import * as marketingActions   from '../_shared/actions/marketing.actions'
 import { AVAILABLE_LANGUAGES } from '../routes'
 import { t }                   from '../_shared/modules/localization/localization'
-import { entryPoint }          from '../index'
 
 import styles from './marketing.page.scss'
 

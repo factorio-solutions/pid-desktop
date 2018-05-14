@@ -1,12 +1,23 @@
-import { request }  from '../helpers/request'
-import { download, downloadMultiple } from '../helpers/download'
-import { downloadCSV } from '../helpers/downloadCSV'
-import { formatTime } from '../helpers/time'
-import { t }        from '../modules/localization/localization'
-import * as nav     from '../helpers/navigation'
+import { request }                    from '../helpers/request'
+import { get }                        from '../helpers/get'
+import { downloadCSV }                from '../helpers/downloadCSV'
+import { formatTime }                 from '../helpers/time'
+import { t }                          from '../modules/localization/localization'
+import { entryPoint }                 from '../../index'
+import {
+  download,
+  downloadMultiple,
+  createDownloadLink
+} from '../helpers/download'
 
-import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION, GET_ACCOUNT_DETAILS, GET_CLIENT_DETAILS, DOWNLOAD_INVOICE, PAY_INVOICE } from '../queries/invoices.queries'
-import { toAccounts, toClients, setError, setCustomModal } from './pageBase.actions'
+import {
+  GET_INVOICES,
+  UPDATE_INVOICE,
+  REMINDER_NOTIFICATION,
+  DOWNLOAD_INVOICE,
+  PAY_INVOICE
+} from '../queries/invoices.queries'
+import { setError, setCustomModal } from './pageBase.actions'
 
 
 export const INVOICES_SET_INVOICES = 'INVOICES_SET_INVOICES'
@@ -236,5 +247,19 @@ export function downloadZip() {
   return (dispatch, getState) => {
     const invoices = getState().invoices.filteredInvoices
     downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, invoices.map(invoice => invoice.id))
+  }
+}
+
+export function generateXml() {
+  return (dispatch, getState) => {
+    const invoices = getState().invoices.filteredInvoices.map(invoice => invoice.id).map(id => `invoices[]=${id}`).join('&')
+
+    createDownloadLink(`${entryPoint}/pohoda.xml?${invoices}`, 'pohodaExport.xml').click()
+
+    // get(`${entryPoint}/pohoda?${invoices}`)
+    // .then(data => {
+    //   console.log(data)
+    //   // createDownloadLink(data, 'pohodaExport.xml').click()
+    // })
   }
 }

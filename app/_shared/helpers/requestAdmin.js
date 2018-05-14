@@ -1,8 +1,8 @@
 import * as nav from './navigation'
-import { adminEntryPoint } from '../../index'
+import { entryPoint } from '../../index'
 
 export default function requestAdmin(query, variables = null) {
-  return fetch(adminEntryPoint, {
+  return fetch(entryPoint + '/admin', {
     method:  'POST',
     headers: {
       'content-type': 'application/json',
