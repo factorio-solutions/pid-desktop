@@ -58,8 +58,10 @@ export function initReservations() { // will download first 5 reservations
   return (dispatch, getState) => {
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (mobile) {
+      dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
       const state = getState().reservations
       const onSuccess = response => {
+        dispatch(setCustomModal(undefined))
         dispatch(setReservations(response.data.reservations))
         dispatch(setCustomModal())
       }

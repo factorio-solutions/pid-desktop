@@ -180,6 +180,7 @@ export function changeGateLabel(value, index) { return dispatch => { dispatch(se
 export function changeGatePhone(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'phone', value)))) } }
 export function changeGatePlaces(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'places', value)))) } }
 export function changeGatePhoneNumberId(value, index) { return dispatch => { dispatch(setGates(dispatch(changeGates(index, 'phone_number_id', value)))) } }
+export function changeGatePassword(value, index) { return dispatch => dispatch(setGates(dispatch(changeGates(index, 'password', value)))) }
 
 export function changeGateAddressLine1(value, index) {
   return (dispatch, getState) => {
@@ -641,7 +642,7 @@ function removeKeys(object, keys) {
 
 function gatesForRequest(state) {
   return state.gates.map(gate => {
-    const { places, ...gateWithoutPlaces } = gate
+    const { places, has_password, ...gateWithoutPlaces } = gate
     const floors = gate.places
       .split(',')
       .filter(string => string.includes('/')) // remove labels without "/" of a bat

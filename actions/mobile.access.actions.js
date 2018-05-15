@@ -211,7 +211,7 @@ export function openGarage(reservation, gateId) {
     dispatch(stopScanning()) // stop previous scanning
     if (gate.phone.match(/[A-Z]/i)) {
       dispatch(createGateAccessLog(reservation.id, gateId))
-      dispatch(openGarageViaBluetooth(gate.phone, gate.password, reservation.id, gateId))
+      dispatch(openGarageViaBluetooth(gate.phone, reservation.id, gateId))
     } else {
       dispatch(openGarageViaPhone(reservation.id, gateId))
     }

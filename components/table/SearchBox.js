@@ -50,7 +50,7 @@ export default class SearchBox extends Component {
     const { value, onChange, type } = this.props
 
     return (<span>
-      <input type="search" value={value} onChange={this.onInputChange} placeholder="----------------" ref={input => { this.input = input }} />
+      <input type="search" value={value} onChange={this.onInputChange} placeholder="------------------------------------------------" ref={input => { this.input = input }} />
 
       { type === 'date' && [
         <i className={`fa fa-calendar ${styles.callendar}`} aria-hidden="true" onClick={this.showDatePicker} />,

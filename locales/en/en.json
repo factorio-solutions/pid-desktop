@@ -807,7 +807,11 @@
 		"price": "Price",
 		"garage": "Garage",
 		"floor": "Floor",
-		"place": "Spot"
+		"place": "Spot",
+		"csob": "ČSOB - online payment",
+		"paypal": "PayPal",
+		"raiffeisenbank": "Raiffeisenbank - online payment",
+		"paymentMethod": "Payment method"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",
@@ -1274,7 +1278,7 @@
 			"we_will_help": "and we will help you with your account activation."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "You have a new reservation on Park-it-direct!",
+			"new_reservation": "You have a new reservation in %{garage}",
 			"reservation_for_you": "has created a new reservation for you.",
 			"go_pay_yourself": "Go pay",
 			"price": "Price:",

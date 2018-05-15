@@ -5,7 +5,7 @@ import Button from './Button.js'
 // extends Button.js
 // state = 'selected'
 
-export default function TabButton({ label, onClick, state }) {
+export default function TabButton({ label, onClick, onDisabledClick, state }) {
   const style = [
     styles.button,
     styles[state]
@@ -14,6 +14,6 @@ export default function TabButton({ label, onClick, state }) {
   const content = <div className={`${styles.label}`}>{label}</div>
 
   return (
-    <Button content={content} onClick={state !== 'selected' && onClick} state={state} style={style} />
+    <Button content={content} onClick={state !== 'selected' ? onClick : onDisabledClick} state={state} style={style} />
   )
 }

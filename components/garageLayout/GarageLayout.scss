@@ -3,7 +3,7 @@
 .buttons {
   display:          flex;
   padding:          10px;
-  background-color: $gray;
+  background-color: $tableSpoilerBackground;
 
   >div:first-child {
     flex: 1 1;
@@ -17,7 +17,7 @@
 
 .grayBackground { // for dashboard
   // margin:           0 20px 20px 0;
-  background-color: $gray;
+  background-color: $tableSpoilerBackground;
 
   min-height: 600px;
 
@@ -37,7 +37,7 @@
 
 .svgContainer {
   width:            100%;
-  background-color: $gray;
+  background-color: $tableSpoilerBackground;
   text-align:       left;
 }
 

@@ -134,6 +134,7 @@ export const GET_GARAGE_DETAILS_GATES = `query ($id: Id!) {
       id
       label
       phone
+      has_password
       phone_number_id
       address {
         line_1

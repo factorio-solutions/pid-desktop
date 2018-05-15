@@ -46,6 +46,7 @@ export const UPDATE_ACCOUNT = `mutation updateAccount ($id:Id!, $account:Account
     gp_webpay_merchant_id
     gp_webpay_private_key
     gp_webpay_password
+    return_url
   }
 }
 `
