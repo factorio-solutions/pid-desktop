@@ -42,11 +42,11 @@ export const emptyFloor = {
 }
 
 export const emptyGate = {
-  label:   '',
-  phone:   '',
-  passwod: '',
-  places:  '', // places of this gate, example: "5-15, 17-20, 30, 32"
-  address: {
+  label:    '',
+  phone:    '',
+  password: '',
+  places:   '', // places of this gate, example: "5-15, 17-20, 30, 32"
+  address:  {
     line_1: '',
     lat:    '',
     lng:    ''
