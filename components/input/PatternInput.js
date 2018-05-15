@@ -14,6 +14,7 @@ export default class PatternInput extends Component {
     onEnter:     PropTypes.func, // called when enter pressed
     value:       PropTypes.string,
     type:        PropTypes.string,
+    align:       PropTypes.string,
     inlineMenu:  PropTypes.object,
     highlight:   PropTypes.bool,
     readOnly:    PropTypes.bool
@@ -29,7 +30,7 @@ export default class PatternInput extends Component {
   }
 
   render() {
-    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, highlight, readOnly } = this.props
+    const { label, error, pattern, placeholder, onChange, onEnter, inlineMenu, type, highlight, readOnly, align } = this.props
 
     const handleChange = event => {
       this.setState({ message: event.target.value })
@@ -49,7 +50,7 @@ export default class PatternInput extends Component {
     const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
-      <div className={`${styles.customFormGroup} ${styles.center} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
         <input
           pattern={pattern}
           type={type || 'text'}

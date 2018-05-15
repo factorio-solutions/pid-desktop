@@ -6,7 +6,9 @@ import { composeParameters } from '../helpers/parseUrlParameters'
 import { t }                 from '../modules/localization/localization'
 import * as nav              from '../helpers/navigation'
 
-import { setSuccess, setError, fetchCurrentUser, setCustomModal } from './pageBase.actions'
+import ConfirmModal       from '../../_shared/components/modal/ConfirmModal'
+
+import { setSuccess, setError, fetchCurrentUser, setCustomModal, alert } from './pageBase.actions'
 
 import { GET_RENTS, GET_GARAGE_PAYMENT_METHOD, GET_PERMISSION, UPDATE_ACCOUNT } from '../queries/admin.finance.queries'
 import { UPDATE_GARAGE }                                                        from '../queries/garageSetup.queries'
@@ -171,9 +173,11 @@ export function enableAccountCsob() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
     const onSuccess = response => {
-      response.data.update_account ?
-        nav.to(`/${getState().pageBase.garage}/admin/finance`) :
+      if (response.data.update_account) {
+        nav.to(`/${getState().pageBase.garage}/admin/finance`)
+      } else {
         dispatch(setError(t([ 'newAccount', 'invalidKeyPair' ])))
+      }
     }
 
     dispatch(updateAccountCsob(state.csob_merchant_id, state.csob_private_key, onSuccess))
@@ -188,12 +192,13 @@ export function disableAccountCsob() {
 }
 
 
-export function updateAccountGpWebpay(gpWebpayMerchantId, gpWebpayPrivateKey, gpWebpayPassword, callback) {
+export function updateAccountGpWebpay(gpWebpayMerchantId, gpWebpayPrivateKey, gpWebpayPassword, url, callback) {
   return (dispatch, getState) => {
     const valuesToChange = {
       gp_webpay_merchant_id: gpWebpayMerchantId,
       gp_webpay_private_key: gpWebpayPrivateKey,
-      gp_webpay_password:    gpWebpayPassword
+      gp_webpay_password:    gpWebpayPassword,
+      return_url:            url
     }
 
     upadteAccount(+getState().adminFinance.account_id, valuesToChange, callback)
@@ -203,22 +208,42 @@ export function updateAccountGpWebpay(gpWebpayMerchantId, gpWebpayPrivateKey, gp
 export function enableAccountGpWebpay() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
-    const onSuccess = () => {
+    const callback = url => () => window.location.replace(url)
+    const onBack = () => {
       nav.to(`/${getState().pageBase.garage}/admin/finance`)
+      dispatch(setCustomModal())
+    }
+    const onSuccess = response => {
+      if (response.data && response.data.update_account.return_url) {
+        dispatch(setCustomModal(
+          <ConfirmModal
+            question={t([ 'finance', 'testPayment' ])}
+            onConfirm={callback(response.data.update_account.return_url)}
+            onBack={onBack}
+          />))
+      } else {
+        onBack()
+      }
     }
     dispatch(updateAccountGpWebpay(
       state.gp_webpay_merchant_id,
       state.gp_webpay_private_key, // update account, key unchanged => set to null
       state.gp_webpay_password,
+      window.location.href.split('?')[0],
       onSuccess
     ))
   }
 }
 
+export function testPaymentSuccessful(successful) {
+  const message = t([ 'finance', successful ? 'testPaymentSuccessful' : 'testPaymentUnsuccessful' ])
+  return dispatch => dispatch(alert(message))
+}
+
 export function disableAccountGpWebpay() {
   return (dispatch, getState) => {
     const onSuccess = () => dispatch(initFinance(getState().pageBase.garage))
-    dispatch(updateAccountGpWebpay(null, null, null, onSuccess))
+    dispatch(updateAccountGpWebpay(null, null, null, null, onSuccess))
   }
 }
 
