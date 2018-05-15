@@ -138,10 +138,10 @@ class ReservationsPage extends Component {
       { key:         'from',
         title:       t([ 'reservations', 'from' ]),
         comparator:  'date',
-        representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} <br /> {moment(o).format('H:mm')}</span>,
+        representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
         orderBy:     'begins_at',
         sort:        'asc' },
-      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
+      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
     ]
 
     const reservationIteruptionModal = (<div>

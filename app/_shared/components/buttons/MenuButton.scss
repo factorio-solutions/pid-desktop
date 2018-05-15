@@ -6,20 +6,20 @@ $size-collapsed-width: 150px;
 
 
 .button {
-  @include colorize($menuGray);
+  @include colorize($verticalMenuBorderColor);
 
   padding:    20px;
   transition: all .3s ease;
   border:     0;
   outline:    none;
-  color:      $lightGray;
+  color:      $menuButtonFontColor;
   font-size:  16px;
   text-align: center;
   cursor:     pointer;
 
   &:not(.selected) {
     >div>.icon {
-      color: $white;
+      color: $menuButtonFontColor;
     }
   }
 }
