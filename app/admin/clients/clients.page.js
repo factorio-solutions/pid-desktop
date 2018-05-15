@@ -85,7 +85,7 @@ class ClientsPage extends Component {
         <br />
         {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
       </div>
-      {client.is_admin && <div>
+      {(client.is_admin || pageBase.isGarageAdmin) && <div>
         {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
         {currentContracts.map(prepareContractButton)}
         {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
