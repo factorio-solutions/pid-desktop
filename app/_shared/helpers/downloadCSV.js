@@ -12,7 +12,6 @@ export function downloadCSV(data) {
   })
 
   const encodedUri = encodeURI(csvContent)
-  console.log(csvContent)
   const link = document.createElement('a')
   link.setAttribute('href', encodedUri)
   link.setAttribute('download', 'invoices.csv')

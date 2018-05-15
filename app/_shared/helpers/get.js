@@ -13,6 +13,7 @@ export function get(url) {
 
     xmlHttp.open('GET', url, true)
     xmlHttp.setRequestHeader('Content-type', 'application/json')
+    xmlHttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt)
     xmlHttp.send()
   })
 }

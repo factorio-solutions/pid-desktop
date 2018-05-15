@@ -251,13 +251,10 @@ export function generateXml(ic) {
     .map(invoice => invoice.id)
     .map(id => `invoices[]=${id}`).join('&')
 
-    createDownloadLink(`${entryPoint}/pohoda.xml?ic=${ic}&${invoices}`, 'pohodaExport.xml').click()
+    get(`${entryPoint}/pohoda.xml?ic=${ic}&${invoices}`)
+    .then(data => {
+      createDownloadLink(encodeURI(`data:text/xml;charset=utf-8,\ufeff${data}`), 'pohodaExport.xml').click()
+    })
     dispatch(setPossibleIcos([]))
-
-    // get(`${entryPoint}/pohoda?${invoices}`)
-    // .then(data => {
-    //   console.log(data)
-    //   // createDownloadLink(data, 'pohodaExport.xml').click()
-    // })
   }
 }
