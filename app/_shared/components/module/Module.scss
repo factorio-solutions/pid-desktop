@@ -27,6 +27,6 @@
   &.disabled {
     border:           1px solid $verticalMenuBorderColor;
     background-color: $tableSpoilerBackground;
-    color:            $black;
+    color:            $verticalMenuBorderColor;
   }
 }
