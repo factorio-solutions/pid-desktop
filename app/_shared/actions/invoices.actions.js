@@ -96,6 +96,7 @@ export function showPossibleIcos() {
 
     dispatch(setPossibleIcos([ ...clients, ...garages ]
       .filter((value, index, self) => self.findIndex(i => i.ic === value.ic) === index) // unique values
+      .filter(o => o.ic)
     ))
   }
 }
