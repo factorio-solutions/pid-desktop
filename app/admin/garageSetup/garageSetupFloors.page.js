@@ -71,12 +71,12 @@ class GarageSetupFloorsPage extends Component {
     }
 
     const prepareFloors = (floor, index, arr) => {
-      const handleFileSelect = value => { actions.scanSVG(value, index) }
-      const handleFloorNameChange = value => { actions.changeFloorLabel(value, index) }
-      const handleFloorFromChange = value => { actions.changeFloorFrom(value, index) }
-      const handleFloorToChange = value => { actions.changeFloorTo(value, index) }
-      const fileSelector = () => { document.getElementsByName(`floor${index}[file]`)[0].click() }
-      const removeRow = () => { actions.removeFloor(index) }
+      const handleFileSelect = value => actions.scanSVG(value, index)
+      const handleFloorNameChange = value => actions.changeFloorLabel(value, index)
+      const handleFloorFromChange = value => actions.changeFloorFrom(value, index)
+      const handleFloorToChange = value => actions.changeFloorTo(value, index)
+      const fileSelector = () => document.getElementsByName(`floor${index}[file]`)[0].click()
+      const removeRow = () => actions.removeFloor(index)
 
       const deleteButton = () => {
         return arr.length <= 1 ?
