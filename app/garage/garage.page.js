@@ -42,12 +42,14 @@ class GaragePage extends Component {
   render() {
     const { state, actions } = this.props
 
+    const onDateSelectorClick = () => actions.setSelector(true)
+
     const left = [ 'clients', 'contracts', 'reservations', 'prices', 'cars' ].map(this.tabFactory)
 
     const right = [
       <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
       <div className={styles.inlineBlock}>
-        <TabButton label={t([ 'garages', 'setDate' ])} onClick={() => actions.setSelector(true)} state={!state.now && 'selected'} />
+        <TabButton label={t([ 'garages', 'setDate' ])} onDisabledClick={onDateSelectorClick} onClick={onDateSelectorClick} state={!state.now && 'selected'} />
         <PopupDatetimepicker onSelect={actions.setTime} show={state.showSelector} flip okClick={() => actions.setSelector(false)} datetime={state.time} />
       </div>
     ]

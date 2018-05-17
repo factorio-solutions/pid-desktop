@@ -31,6 +31,8 @@
     "key-spacing": ["error", { "align": "value" }],
     "no-multi-spaces": ["error", { exceptions: { "ImportDeclaration": true } }],
     "class-methods-use-this": 0,
+    "no-confusing-arrow": 0,
+    "no-return-assign": 0,
     "react/self-closing-comp": ["error", { "component": true, "html": true }],
     "react/prefer-stateless-function": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

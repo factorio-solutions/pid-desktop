@@ -807,7 +807,11 @@
 		"price": "Preis",
 		"garage": "Parkhaus",
 		"floor": "Etage",
-		"place": "Stellplatz"
+		"place": "Stellplatz",
+		"csob": "DE: newReservationOverview.csob",
+		"paypal": "DE: newReservationOverview.paypal",
+		"raiffeisenbank": "DE: newReservationOverview.raiffeisenbank",
+		"paymentMethod": "DE: newReservationOverview.paymentMethod"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Ich bin ein Parkhausbesitzer",
@@ -958,7 +962,7 @@
 		"requestDesribtionPart1": "Verwenden Sie dasToken, indem Sie den Header einfügen",
 		"requestDesribtionPart2": "Authorization:",
 		"requestDesribtionPart3": "für Ihre graphQL Aufträge",
-		"selectPlaces": "DE: modules.selectPlaces"
+		"selectPlaces": "Füllen Sie bitte das Formular aus, bevor Sie das Modul aktivieren."
 	},
 	"newContract": {
 		"description": "Neue Vereinbarung in",
@@ -1274,7 +1278,7 @@
 			"we_will_help": "und wir helfen Ihnen Ihr Konto aktivieren."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "Sie haben eine neue Buchung bei Park-it-direct!",
+			"new_reservation": "DE: railsEmails.new_reservation_mail.new_reservation",
 			"reservation_for_you": "hat für Sie eine Buchung erstellt.",
 			"go_pay_yourself": "Zahlen",
 			"price": "Preis:",

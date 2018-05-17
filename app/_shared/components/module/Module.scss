@@ -5,10 +5,10 @@
   margin:  10px 0;
   padding: 20px;
 
-  border:           1px solid $gray;
+  border:           1px solid $verticalMenuBorderColor;
   border-radius:    5px;
-  background-color: $blue;
-  color:            $white;
+  background-color: $tableSpoilerBackground;
+  color:            $black;
 
   >div {
     &:first-child { // name and description
@@ -25,8 +25,8 @@
   }
 
   &.disabled {
-    border:           1px solid $gray;
-    background-color: $lightLightGray;
-    color:            $white;
+    border:           1px solid $verticalMenuBorderColor;
+    background-color: $tableSpoilerBackground;
+    color:            $verticalMenuBorderColor;
   }
 }

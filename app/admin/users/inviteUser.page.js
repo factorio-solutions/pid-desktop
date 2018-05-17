@@ -116,6 +116,8 @@ class inviteUserPage extends Component {
     const highlightGarageRoles = state.highlight && !(state.garage_admin || state.garage_receptionist || state.garage_security)
     const highlightCarRoles = state.highlight && !(state.car_admin || state.car_driver)
 
+    const multipleUsers = state.email.value.includes(',')
+
     return (
       <PageBase>
         <Modal content={errorContent} show={state.error} />
@@ -170,6 +172,7 @@ class inviteUserPage extends Component {
                 error={t([ 'signup_page', 'nameInvalid' ])}
                 pattern="^(?!\s*$).+"
                 value={state.full_name}
+                readOnly={multipleUsers}
               />
               <PatternInput
                 onEnter={this.submitForm}
@@ -178,6 +181,7 @@ class inviteUserPage extends Component {
                 error={t([ 'signup_page', 'phoneInvalid' ])}
                 pattern="\+[\d]{2,4}[\d\s]{3,}"
                 value={state.phone}
+                readOnly={multipleUsers}
               />
               <div>
                 <h3>{t([ 'languages', 'language' ])}</h3>

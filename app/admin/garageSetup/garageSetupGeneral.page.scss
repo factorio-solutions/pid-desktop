@@ -121,6 +121,7 @@ h2 {
   }
 }
 
+
 .subscribtion {
   .row {
     padding: 0 50px;
@@ -187,9 +188,11 @@ h2 {
 .latLngInputWidth {
   width: calc(50% - 2.5px);
 }
+
 .gatePhoneInputWidth {
   width: calc(50% - 33px);
 }
+
 .rightMargin {
   margin-right: 5px;
 }
@@ -222,4 +225,30 @@ h2 {
     color:         $gray;
     font-size:     13px;
   }
+}
+
+// passwordIndication //
+.flexi {
+  display: flex;
+
+  >div:first-child {
+    flex: 1 1;
+
+    >.gatePhoneInput {
+      width: 100%;
+    }
+  }
+}
+
+.red {
+  color: $red;
+}
+
+.green {
+  color: $green;
+}
+
+.passwordIndication {
+  margin: 20px 5px 5px;
+  font-size: 28px;
 }

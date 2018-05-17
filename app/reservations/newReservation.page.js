@@ -324,22 +324,43 @@ class NewReservationPage extends Component {
                     type="checkbox"
                     checked={state.paidByHost}
                     onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                    align="left"
                   />
                   {t([ 'newReservation', 'paidByHost' ])}
                 </div>
                 }
-                {state.client_id &&
-                  <DatetimeInput
+                {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
+                  <Input
+                    readOnly={ongoing}
+                    onChange={actions.setCarLicencePlate}
+                    value={state.carLicencePlate}
+                    label={t([ 'newReservation', 'licencePlate' ])}
+                    error={t([ 'newReservation', 'licencePlateInvalid' ])}
+                    placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
+                    type="text"
+                    align="center"
+                    highlight={state.highlight && state.user.id !== -2}
+                  /> :
+                  <Dropdown
                     editable={!ongoing}
-                    onBlur={actions.formatFrom}
-                    onChange={actions.setFrom}
-                    label={t([ 'newReservation', 'begins' ])}
-                    error={t([ 'newReservation', 'invalidaDate' ])}
-                    value={state.from}
-                    inlineMenu={beginsInlineMenu}
+                    label={t([ 'newReservation', 'selectCar' ])}
+                    content={this.carDropdown()}
+                    selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
+                    style="reservation"
+                    highlight={state.highlight}
                   />
-                }
-                {state.client_id && (state.durationDate ?
+                )}
+
+                <DatetimeInput
+                  editable={!ongoing}
+                  onBlur={actions.formatFrom}
+                  onChange={actions.setFrom}
+                  label={t([ 'newReservation', 'begins' ])}
+                  error={t([ 'newReservation', 'invalidaDate' ])}
+                  value={state.from}
+                  inlineMenu={beginsInlineMenu}
+                />
+                {state.durationDate ?
                   <Input
                     onChange={actions.durationChange}
                     label={t([ 'newReservation', 'duration' ])}
@@ -349,7 +370,7 @@ class NewReservationPage extends Component {
                     type="number"
                     min={0.25}
                     step={0.25}
-                    align="right"
+                    align="left"
                   /> :
                   <DatetimeInput
                     onBlur={actions.formatTo}
@@ -358,7 +379,7 @@ class NewReservationPage extends Component {
                     error={t([ 'newReservation', 'invalidaDate' ])}
                     value={state.to}
                     inlineMenu={endsInlineMenu}
-                  />)
+                  />
                 }
 
                 {state.client_id && state.reservation === undefined &&
@@ -390,7 +411,7 @@ class NewReservationPage extends Component {
                   state.user.availableClients.findById(state.client_id).is_secretary &&
                   <div>
                     <div className={styles.sendSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
-                      <input type="checkbox" checked={state.sendSMS} />
+                      <input type="checkbox" checked={state.sendSMS} align="left" />
                       {t([ 'newReservation', 'sendSms' ])}
                     </div>
                     {state.sendSMS &&
