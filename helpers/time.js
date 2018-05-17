@@ -1,6 +1,7 @@
 import moment from 'moment'
 
 export const MOMENT_DATE_FORMAT = 'DD.MM.YYYY'
+export const MOMENT_TIME_FORMAT = 'HH:mm'
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm'
 export const MOMENT_DATETIME_FORMAT_MOBILE = 'YYYY-MM-DDTHH:mm'
 export const MOMENT_UTC_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm ZZ'
