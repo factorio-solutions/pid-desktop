@@ -65,13 +65,14 @@ class NewReservationPage extends Component {
               user.id === -2 ?
                 3 :
                 undefined,
-          onClick: () => this.props.actions.downloadUser(user.id)
+          onClick: () => this.props.actions.downloadUser(user.id, user.rights)
         })
       }
       return acc
     }, [])
     return { users, buttons }
   }
+
 
   garageDropdown = () => {
     const { state, actions } = this.props
@@ -182,6 +183,8 @@ class NewReservationPage extends Component {
     const getUserToSelect = () => {
       if (state.reservation && state.reservation.onetime) {
         return state.availableUsers.findIndex(user => user.id === -2)
+      } else if (state.user && state.user.id === -1) {
+        return state.availableUsers.findIndex(user => state.user && user.id === state.user.id && user.rights && JSON.stringify(user.rights) === JSON.stringify(state.user.rights))
       } else {
         return state.availableUsers.findIndex(user => state.user && user.id === state.user.id)
       }
@@ -233,7 +236,7 @@ class NewReservationPage extends Component {
                   />
 
                 }
-                
+
                 {state.user && (state.user.id < 0 || onetime) &&
                   <div>
                     <PatternInput

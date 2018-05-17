@@ -322,6 +322,12 @@ export function setInitialStore(id) {
       if (currentUser && currentUser.secretary) { // if is secretary then can create new host
         users.push({
           full_name: t([ 'newReservation', 'newHost' ]),
+          rights:    { host: true },
+          id:        -1
+        })
+        users.push({
+          full_name: t([ 'newReservation', 'newInternal' ]),
+          rights:    { internal: true },
           id:        -1
         })
         users.push({
@@ -356,7 +362,7 @@ export function setInitialStore(id) {
   }
 }
 
-export function downloadUser(id) {
+export function downloadUser(id, rights) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     dispatch(setLoading(true))
@@ -395,7 +401,8 @@ export function downloadUser(id) {
 
       dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
         availableGarages: values[1].reservable_garages,
-        availableClients: values[2].reservable_clients
+        availableClients: values[2].reservable_clients,
+        rights // Client user rights
       }))
       if (values[0].user && !values[0].user.last_active) {
         dispatch(setHostName(values[0].user.full_name, true))
@@ -605,7 +612,7 @@ export function submitReservation(id) {
         },
         client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
-          host:      true,
+          ...state.user.rights,
           message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
         } : null
       }).then(data => {
@@ -616,7 +623,7 @@ export function submitReservation(id) {
               user_id:     data.user_by_email.id,
               client_user: {
                 client_id: +state.client_id,
-                host:      true,
+                ...state.user.rights,
                 message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
               }
             }).then(response => {
