@@ -22,7 +22,5 @@ export default function MobileMenuButton({ icon, label, onClick, type, state, si
     <span className={`${styles.label} ${styles.content}`}>{label}</span>
   </div>)
 
-  return (
-    <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} />
-  )
+  return <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} />
 }
