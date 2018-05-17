@@ -924,7 +924,9 @@
 		"invoicePaidLabel": "Faktura została zapłacona",
 		"invoiceIncorect": "Anulować fakturę",
 		"donwloadExcel": "Ściągnąć excel",
-		"donwloadInvoices": "Ściągnąć faktury"
+		"donwloadInvoices": "Ściągnąć faktury",
+		"donwloadXML": "PL: invoices.donwloadXML",
+		"selectYourPohodaIc": "PL: invoices.selectYourPohodaIc"
 	},
 	"resetPassword": {
 		"send": "Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.",
