@@ -43,17 +43,35 @@ class NewReservationPage extends Component {
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
 
-  userDropdown = () => this.props.state.availableUsers.map((user, index) => ({
-    label: user.full_name,
-    order: user.id === this.props.pageBase.current_user.id ?
-      1 :
-      user.id === -1 ?
-        2 :
-        user.id === -2 ?
-          3 :
-          undefined,
-    onClick: () => this.props.actions.downloadUser(this.props.state.availableUsers[index].id)
-  }))
+  userDropdown = () => {
+    const makeButton = (id, label, text) => {
+      return {
+        label,
+        text,
+        onClick: () => this.props.actions.downloadUser(id)
+      }
+    }
+    const buttons = []
+    const users = this.props.state.availableUsers.reduce((acc, user) => {
+      if (user.id < 0) {
+        buttons.push(makeButton(user.id, [ t([ 'newReservation', user.full_name ]) + ' ', <b>{user.full_name}</b> ], t([ 'newReservation', `${user.full_name}Text` ])))
+      } else {
+        acc.push({
+          label: user.full_name,
+          order: user.id === this.props.pageBase.current_user.id ?
+            1 :
+            user.id === -1 ?
+              2 :
+              user.id === -2 ?
+                3 :
+                undefined,
+          onClick: () => this.props.actions.downloadUser(user.id)
+        })
+      }
+      return acc
+    }, [])
+    return { users, buttons }
+  }
 
   garageDropdown = () => {
     const { state, actions } = this.props
@@ -115,6 +133,7 @@ class NewReservationPage extends Component {
     const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
     const selectedPlace = places.findById(state.place_id)
     // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
+    const userDropdown = this.userDropdown()
 
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
@@ -185,7 +204,7 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
+                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
                   // <Dropdown
                   //   editable={!ongoing}
                   //   label={t([ 'newReservation', 'selectUser' ])}
@@ -198,11 +217,11 @@ class NewReservationPage extends Component {
                   <SearchField
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectUser' ])}
-                    content={this.userDropdown()}
+                    content={userDropdown.users}
                     selected={getUserToSelect()}
-                    style="reservation"
                     highlight={state.highlight}
                     filter
+                    buttons={userDropdown.buttons}
                   />
                 }
                 {state.user &&
@@ -254,36 +273,6 @@ class NewReservationPage extends Component {
                   {t([ 'newReservation', 'fillInContact' ])}
                 </div>
                 }
-
-                {state.user &&
-                  <Dropdown
-                    editable={!ongoing}
-                    label={t([ 'newReservation', 'selectGarage' ])}
-                    content={this.garageDropdown()}
-                    selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
-                    style="reservation"
-                    highlight={state.highlight}
-                  />
-                }
-                {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
-                  <Dropdown
-                    editable={!ongoing}
-                    label={t([ 'newReservation', 'selectClient' ])}
-                    content={this.clientDropdown()}
-                    selected={state.user.availableClients.findIndexById(state.client_id)}
-                    style="reservation"
-                    filter
-                  />
-                }
-                {state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal && <div>
-                  <input
-                    type="checkbox"
-                    checked={state.paidByHost}
-                    onChange={() => actions.setPaidByHost(!state.paidByHost)}
-                  />
-                  {t([ 'newReservation', 'paidByHost' ])}
-                </div>
-                }
                 {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
                   <Input
                     readOnly={ongoing}
@@ -296,7 +285,7 @@ class NewReservationPage extends Component {
                     align="center"
                     highlight={state.highlight && state.user.id !== -2}
                   /> :
-                  <Dropdown
+                  <SearchField
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectCar' ])}
                     content={this.carDropdown()}
@@ -305,17 +294,49 @@ class NewReservationPage extends Component {
                     highlight={state.highlight}
                   />
                 )}
-
-                <DatetimeInput
-                  editable={!ongoing}
-                  onBlur={actions.formatFrom}
-                  onChange={actions.setFrom}
-                  label={t([ 'newReservation', 'begins' ])}
-                  error={t([ 'newReservation', 'invalidaDate' ])}
-                  value={state.from}
-                  inlineMenu={beginsInlineMenu}
-                />
-                {state.durationDate ?
+                {state.user && ((state.email.valid && state.phone.valid && state.carLicencePlate) || state.user.id !== -1) &&
+                  <SearchField
+                    editable={!ongoing}
+                    label={t([ 'newReservation', 'selectGarage' ])}
+                    content={this.garageDropdown()}
+                    selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
+                    style="reservation"
+                    highlight={state.highlight}
+                    placeholder={t([ 'newReservation', 'selectGarage' ])}
+                  />
+                }
+                {state.user && state.user.availableClients && state.user.availableClients.length > 1 && state.garage &&
+                  <SearchField
+                    editable={!ongoing}
+                    label={t([ 'newReservation', 'selectClient' ])}
+                    content={this.clientDropdown()}
+                    selected={state.user.availableClients.findIndexById(state.client_id)}
+                    style="reservation"
+                    filter
+                    placeholder={t([ 'newReservation', 'selectClient' ])}
+                  />
+                }
+                {state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal && <div>
+                  <input
+                    type="checkbox"
+                    checked={state.paidByHost}
+                    onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                  />
+                  {t([ 'newReservation', 'paidByHost' ])}
+                </div>
+                }
+                {state.client_id &&
+                  <DatetimeInput
+                    editable={!ongoing}
+                    onBlur={actions.formatFrom}
+                    onChange={actions.setFrom}
+                    label={t([ 'newReservation', 'begins' ])}
+                    error={t([ 'newReservation', 'invalidaDate' ])}
+                    value={state.from}
+                    inlineMenu={beginsInlineMenu}
+                  />
+                }
+                {state.client_id && (state.durationDate ?
                   <Input
                     onChange={actions.durationChange}
                     label={t([ 'newReservation', 'duration' ])}
@@ -334,7 +355,7 @@ class NewReservationPage extends Component {
                     error={t([ 'newReservation', 'invalidaDate' ])}
                     value={state.to}
                     inlineMenu={endsInlineMenu}
-                  />
+                  />)
                 }
 
                 {state.client_id && state.reservation === undefined &&
@@ -352,9 +373,12 @@ class NewReservationPage extends Component {
                     />
                   </div>
                 }
-
-                <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
-                <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+                {state.client_id &&
+                  <div>
+                    <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
+                    <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+                  </div>
+                }
 
                 {state.client_id && state.user &&
                   state.user.availableClients.findById(state.client_id) &&
