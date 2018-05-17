@@ -12,6 +12,7 @@ import ButtonStack   from '../_shared/components/buttonStack/ButtonStack'
 import RoundButton   from '../_shared/components/buttons/RoundButton'
 import GarageLayout  from '../_shared/components/garageLayout/GarageLayout'
 import Dropdown      from '../_shared/components/dropdown/Dropdown'
+import SearchField   from '../_shared/components/searchField/SearchField'
 import Form          from '../_shared/components/form/Form'
 import Modal         from '../_shared/components/modal/Modal'
 import Recurring     from '../_shared/components/recurring/Recurring'
@@ -185,7 +186,16 @@ class NewReservationPage extends Component {
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
                 {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
-                  <Dropdown
+                  // <Dropdown
+                  //   editable={!ongoing}
+                  //   label={t([ 'newReservation', 'selectUser' ])}
+                  //   content={this.userDropdown()}
+                  //   selected={getUserToSelect()}
+                  //   style="reservation"
+                  //   highlight={state.highlight}
+                  //   filter
+                  // />
+                  <SearchField
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectUser' ])}
                     content={this.userDropdown()}
@@ -195,13 +205,16 @@ class NewReservationPage extends Component {
                     filter
                   />
                 }
-                <Input
-                  onChange={actions.setNote}
-                  label={t([ 'newReservation', 'note' ])}
-                  value={state.note}
-                  align="center"
-                />
+                {state.user &&
+                  <Input
+                    onChange={actions.setNote}
+                    label={t([ 'newReservation', 'note' ])}
+                    value={state.note}
+                    align="center"
+                  />
 
+                }
+                
                 {state.user && (state.user.id < 0 || onetime) &&
                   <div>
                     <PatternInput
