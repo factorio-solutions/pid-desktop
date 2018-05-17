@@ -40,6 +40,6 @@
 }
 
 .inverted {
-  @include colorize($white);
-  color:   $black;
+  @include colorize($lightGray);
+  color:   $gray;
 }

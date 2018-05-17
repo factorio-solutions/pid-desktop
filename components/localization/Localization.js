@@ -20,11 +20,12 @@ const CHANGE_USERS_LANGUAGE = `mutation UpdateUserLanguage($user_id: Id!, $langu
 
 class Localization extends Component {
   static propTypes = {
-    user: PropTypes.object
+    user:        PropTypes.object,
+    afterChange: PropTypes.func
   }
 
   render() {
-    const { user } = this.props
+    const { user, afterChange } = this.props
 
     const prepareButtons = (language, i) => {
       const langClick = () => {
@@ -34,6 +35,8 @@ class Localization extends Component {
           language,
           user_id: user.id
         }).then(response => console.log(response))
+
+        afterChange && afterChange()
       }
 
       return <RoundButton key={i} content={language.toUpperCase()} onClick={langClick} type="action" />

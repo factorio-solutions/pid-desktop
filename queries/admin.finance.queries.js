@@ -23,6 +23,8 @@ export const GET_GARAGE_PAYMENT_METHOD = `query ($id:Id!){
       paypal_email
       csob_merchant_id
       csob_private_key
+      gp_webpay_merchant_id
+      gp_webpay_private_key
       iban
     }
   }
@@ -41,6 +43,10 @@ export const UPDATE_ACCOUNT = `mutation updateAccount ($id:Id!, $account:Account
     paypal_email
     csob_merchant_id
     csob_private_key
+    gp_webpay_merchant_id
+    gp_webpay_private_key
+    gp_webpay_password
+    return_url
   }
 }
 `

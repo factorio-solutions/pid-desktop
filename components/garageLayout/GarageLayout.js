@@ -230,7 +230,7 @@ class GarageLayout extends Component {
   colorizeHeatPlaces(currentSvg, floors) {
     const heatGroups = floors
       .reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
-      .reduce((groups, place) => place.heat !== undefined ? [ ...groups, place.heat ] : groups, [])
+      .reduce((groups, place) => (place.heat !== undefined ? [ ...groups, place.heat ] : groups), [])
 
     if (heatGroups && heatGroups.length) {
       const min = Math.min(...heatGroups)
@@ -253,8 +253,8 @@ class GarageLayout extends Component {
       .forEach(place => {
         const placeRect = currentSvg.getElementById('Place' + place.label)
         if (placeRect) {
-          placeRect.onmouseenter = () => { this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip }) }
-          placeRect.onmouseleave = () => { this.setState({ ...this.state, visible: false }) }
+          placeRect.onmouseenter = () => this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip })
+          placeRect.onmouseleave = () => this.setState({ ...this.state, visible: false })
           placeRect.onmousemove = event => {
             const secondaryMenuCorrection = window.innerWidth > 1300 && (window.location.hash.includes('/admin/') || window.location.hash.includes('/analytics/'))
             this.setState({
@@ -335,15 +335,17 @@ class GarageLayout extends Component {
     const prepareFloors = floor => <SvgFromText svg={floor.scheme || ''} svgClick={this.handleSVGClick} />
 
     return (
-      unfold === true ? <div className={styles.grayBackground}>
+      unfold ? <div className={styles.grayBackground}>
         {floors.map(prepareFloors)}
       </div> :
       <div ref={'containerDiv'}>
         <div className={styles.buttons}>
           <div>{floors.map(prepareButtons)}</div>
-          <div>
-            <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
-          </div>
+          {(floors.length !== 0) &&
+            <div>
+              <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={() => { this.setState({ ...this.state, rotate: !this.state.rotate }) }} state="action" />
+            </div>
+          }
         </div>
         <div className={styles.svgContainer}>
           <SvgFromText svg={(floors[floor] && floors[floor].scheme) || ''} svgClick={this.handleSVGClick} rotate={this.state.rotate} />

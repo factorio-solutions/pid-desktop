@@ -383,7 +383,7 @@ pageBase.garageEditRentHint,Now you can edit rent properties.,Zde můžete uprav
 pageBase.garageAddClientHint,Here you can add a client to the garage management page.,Zde můžete přidat klienta na stránky se správou garáží,Tutaj możesz dodać klienta do strony zarządzania garażem.,Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.
 pageBase.garageGarageUsersHint,Here you can manage who can use your garage and what rights they have.,Zde můžete spravovat uživatele garáže a jejich práva.,"Tutaj możesz wybrać, kto może zarządzać twoim garażem.","Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann."
 pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete změnit svoje údaje.,Tutaj możesz zmienić swoje dane.,Hier können Sie die eigenen Angaben ändern.
-pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,Tutaj możesz zamówić moduł dostępu do garażu.,
+pageBase.orderGarageModuleHint,Here you can order a garage module.,,,
 pageBase.reservationOverviewHint,Here you can double check if everything is ok.,"Zde můžete zkontrolovat, zda jsou údaje rezervace správně.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie kontrolieren, ob die Daten stimmen."
 pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.,
 pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.","Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis."
@@ -1028,10 +1028,10 @@ newReservationOverview.price,Price,Cena,Cena,Preis
 newReservationOverview.garage,Garage,Garáž,Garaż,Parkhaus
 newReservationOverview.floor,Floor,Podlaží,Piętro,Etage
 newReservationOverview.place,Spot,Místo,Miejsce,Stellplatz
-newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,,
-newReservationOverview.paypal,PayPal,PayPal,,
-newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,,
-newReservationOverview.paymentMethod,Payment method,Platební metoda,,
+newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,,ČSOB - Online-Zahlung
+newReservationOverview.paypal,PayPal,PayPal,,PayPal
+newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,,Raiffeisenbank - Online- Zahlung
+newReservationOverview.paymentMethod,Payment method,Platební metoda,,Zahlungsmethode
 addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Parkhausbesitzer
 addFeatures.LongTerm,LONG-TERM OR PERSONAL,DLOUHODOBÉ NEBO OSOBNÍ,DŁUGOTERMINOWO LUB PERSONALNIE,LANGFRISTIG ODER PERSÖNLICH
 addFeatures.Automation,AUTOMATION & ACCESS,AUTOMATIZACE A PŘÍSTUP,AUTOMATYZACJA I DOSTĘP,AUTOMATISIERUNG UND ZUGANG
@@ -1137,6 +1137,8 @@ invoices.invoicePaidLabel,Invoice paid,Faktura uhrazena,Faktura została zapłac
 invoices.invoiceIncorect,Cancel invoice,Stornovat fakturu,Anulować fakturę,Rechnung falsch
 invoices.donwloadExcel,Download Excel,Stáhnout excel,Ściągnąć excel,Excel herunterladen
 invoices.donwloadInvoices,Download invoices,Stáhnout faktury,Ściągnąć faktury,Rechnungen herunterladen
+invoices.donwloadXML,Pohoda XML,Pohoda XML,,
+invoices.selectYourPohodaIc,Select IČ of company you are accounting for:,Zvolte IČ společnosti pro kterou účtujete:,,
 resetPassword.send,A password reset email has been sent to your address.,Obnova hesla byla odeslána na Váš e-mail.,Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.,Eine E-Mail zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse versendet.
 resetPassword.description,Please enter your email here and we will send you a description of the password reset process,Zde vložte svůj e-mail a my Vám zašleme popis procesu obnovení hesla,"Wpisz tutaj swój adres e-mail, a my prześlemy Ci instrukcje dotyczące odnowienia hasła.",Geben Sie hier Ihre E-Mail-Adresse ein. Wir senden Ihnen eine Anleitung zum Zurücksetzen des Passworts zu.
 resetPassword.email,email,e-mail,e-mail,E-Mail-Adresse

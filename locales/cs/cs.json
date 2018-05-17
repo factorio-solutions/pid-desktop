@@ -924,7 +924,9 @@
 		"invoicePaidLabel": "Faktura uhrazena",
 		"invoiceIncorect": "Stornovat fakturu",
 		"donwloadExcel": "Stáhnout excel",
-		"donwloadInvoices": "Stáhnout faktury"
+		"donwloadInvoices": "Stáhnout faktury",
+		"donwloadXML": "Pohoda XML",
+		"selectYourPohodaIc": "Zvolte IČ společnosti pro kterou účtujete:"
 	},
 	"resetPassword": {
 		"send": "Obnova hesla byla odeslána na Váš e-mail.",

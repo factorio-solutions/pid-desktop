@@ -109,7 +109,7 @@ export class Page extends Component {
 
       <div className={styles.bottom}>
         <div className={styles.appVersion}> {t([ 'mobileApp', 'page', 'version' ])} {version} </div>
-        <Localization />
+        <Localization afterChange={actions.initGarages} />
       </div>
     </div>)
 

@@ -164,9 +164,9 @@
 		"garageAddClientHint": "Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.",
 		"garageGarageUsersHint": "Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann.",
 		"EditUserHint": "Hier können Sie die eigenen Angaben ändern.",
-		"orderGarageModuleHint": "DE: pageBase.orderGarageModuleHint",
+		"orderGarageModuleHint": "Hier können Sie ein Zutritt- Modul bestellen.",
 		"reservationOverviewHint": "Hier können Sie kontrolieren, ob die Daten stimmen.",
-		"editInvoiceHint": "DE: pageBase.editInvoiceHint",
+		"editInvoiceHint": "Durch die OK Taste wird eine neue Rechnung mit korrigierten Daten erstellt.",
 		"editContractHint": "Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis.",
 		"unredNotifications": {
 			"one": "Sie haben eine ungelesene Nachricht",
@@ -808,10 +808,10 @@
 		"garage": "Parkhaus",
 		"floor": "Etage",
 		"place": "Stellplatz",
-		"csob": "DE: newReservationOverview.csob",
-		"paypal": "DE: newReservationOverview.paypal",
-		"raiffeisenbank": "DE: newReservationOverview.raiffeisenbank",
-		"paymentMethod": "DE: newReservationOverview.paymentMethod"
+		"csob": "ČSOB - Online-Zahlung",
+		"paypal": "PayPal",
+		"raiffeisenbank": "Raiffeisenbank - Online- Zahlung",
+		"paymentMethod": "Zahlungsmethode"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Ich bin ein Parkhausbesitzer",
@@ -924,7 +924,9 @@
 		"invoicePaidLabel": "Rechnung bezahlt",
 		"invoiceIncorect": "Rechnung falsch",
 		"donwloadExcel": "Excel herunterladen",
-		"donwloadInvoices": "Rechnungen herunterladen"
+		"donwloadInvoices": "Rechnungen herunterladen",
+		"donwloadXML": "DE: invoices.donwloadXML",
+		"selectYourPohodaIc": "DE: invoices.selectYourPohodaIc"
 	},
 	"resetPassword": {
 		"send": "Eine E-Mail zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse versendet.",
