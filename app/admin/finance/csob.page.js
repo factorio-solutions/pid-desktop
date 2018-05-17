@@ -40,7 +40,7 @@ class CsobPage extends Component {
 
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/finance`)
 
-  submitForm = () => this.checkSubmitable() && this.props.actions.updateCsobAccount()
+  submitForm = () => this.checkSubmitable() && this.props.actions.enableAccountCsob()
 
   render() {
     const { state, actions } = this.props
@@ -54,12 +54,18 @@ class CsobPage extends Component {
             label={t([ 'newAccount', 'csobMerchantID' ])}
             error={t([ 'newAccount', 'invalidMerchantId' ])}
             value={state.csob_merchant_id}
-            name="client[merchantId]"
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
             highlight={state.highlight}
           />
           <label className={state.highlight && styles.red}>{t([ 'finance', 'SelectPrivateKey' ])}: </label>
-          <Input style={styles.hidden} onChange={actions.setCsobPrivateKey} label="file" type="file" name={'newAccountPrivateKey'} accept=".key" />
+          <Input
+            style={styles.hidden}
+            onChange={actions.setCsobPrivateKey}
+            label="file"
+            type="file"
+            name="newAccountPrivateKey"
+            accept=".key"
+          />
           <LabeledRoundButton
             label={t([ 'finance', 'uploadKey' ])}
             content={<span className="fa fa-file-code-o" aria-hidden="true" />}

@@ -924,7 +924,9 @@
 		"invoicePaidLabel": "Invoice paid",
 		"invoiceIncorect": "Cancel invoice",
 		"donwloadExcel": "Download Excel",
-		"donwloadInvoices": "Download invoices"
+		"donwloadInvoices": "Download invoices",
+		"donwloadXML": "Pohoda XML",
+		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
 	},
 	"resetPassword": {
 		"send": "A password reset email has been sent to your address.",

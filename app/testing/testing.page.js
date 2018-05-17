@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
+import DatetimeInput from '../_shared/components/input/DatetimeInput.js'
+import TimeInput from '../_shared/components/input/TimeInput.js'
 
-import requestPromise from '../_shared/helpers/requestPromise'
-import { GARAGE_CONTRACTS } from '../_shared/queries/clients.queries'
 
 export default class TestingPage extends Component {
-
-  download = () => {
-    requestPromise(GARAGE_CONTRACTS, { id: 1 })
-    .then(data => console.log(data))
-  }
-
   render() {
     return (
       <div>
         <h1>Testing page</h1>
-        <button onClick={this.download}>Download</button>
+        <DatetimeInput />
+        <TimeInput value="15:00" onChange={time => console.log(time)} />
       </div>
     )
   }

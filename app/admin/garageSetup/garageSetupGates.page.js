@@ -87,6 +87,7 @@ class GarageSetupGatesPage extends Component {
     const prepareGates = (gate, index, arr) => {
       const handleGateLabelChange = value => actions.changeGateLabel(value, index)
       const handleGatePhoneChange = value => actions.changeGatePhone(value, index)
+      const handleGatePasswordChange = value => actions.changeGatePassword(value, index)
       const handleGatePlacesChange = value => actions.changeGatePlaces(value, index)
       const handleGateAddressLine1Change = value => actions.changeGateAddressLine1(value, index)
       const handleGateAddressLat = value => actions.changeGateAddressLat(value, index)
@@ -160,6 +161,23 @@ class GarageSetupGatesPage extends Component {
               style="garageSetupGates"
             />
           </div>
+          {gate.phone.match(/[a-z]/i) &&
+            <div className={styles.flexi}>
+              <Input
+                onChange={handleGatePasswordChange}
+                label={t([ 'newGarage', 'gatePassword' ])}
+                error={t([ 'newGarage', 'invalidPasswordPhone' ])}
+                value={gate.password}
+                name={`gate${index}[password]`}
+                placeholder={t([ 'newGarage', 'placeholderGatePassword' ])}
+                type="password"
+              />
+              { gate.has_password ?
+                <i className={`fa fa-check-circle-o ${styles.passwordIndication} ${styles.green}`} title={t([ 'newGarage', 'passwordWasSet' ])} /> :
+                <i className={`fa fa-times-circle-o ${styles.passwordIndication} ${styles.red}`} title={t([ 'newGarage', 'passwordWasNotSet' ])} />
+              }
+            </div>
+          }
           <Input
             onChange={handleGatePlacesChange}
             label={t([ 'newGarage', 'places' ]) + (index !== arr.length - 1 ? ' *' : '')}

@@ -106,7 +106,7 @@ class ReservationsPage extends Component {
 
 
   render() {
-    const { state, actions, interuption, interuptionActions, pageBase } = this.props
+    const { state, actions, interuption, interuptionActions } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
@@ -116,9 +116,9 @@ class ReservationsPage extends Component {
       { key:         'type',
         title:       t([ 'reservations', 'type' ]),
         comparator:  'string',
-        representer: o => <i className={`fa ${o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />,
+        representer: o => <i className={`fa ${o === 'mr_parkit' ? 'fa-rss' : o === 'visitor' ? 'fa-credit-card' : o === 'guest' ? 'fa-suitcase' : 'fa-home'}`} aria-hidden="true" />,
         orderBy:     'reservation_case',
-        enum:        [ 'visitor', 'guest', 'internal' ]
+        enum:        [ 'visitor', 'guest', 'internal', 'mr_parkit' ]
       },
       { key:         'state',
         title:       t([ 'reservations', 'state' ]),
@@ -138,10 +138,10 @@ class ReservationsPage extends Component {
       { key:         'from',
         title:       t([ 'reservations', 'from' ]),
         comparator:  'date',
-        representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} <br /> {moment(o).format('H:mm')}</span>,
+        representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>,
         orderBy:     'begins_at',
         sort:        'asc' },
-      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
+      { key: 'to', title: t([ 'reservations', 'to' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.')} <br /> {moment(o).format('H:mm')}</span>, orderBy: 'ends_at' }
     ]
 
     const reservationIteruptionModal = (<div>

@@ -8,6 +8,8 @@ import Checkbox           from '../_shared/components/checkbox/Checkbox'
 import Dropdown           from '../_shared/components/dropdown/Dropdown'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
+import Loading            from '../_shared/components/loading/Loading'
+import Modal              from '../_shared/components/modal/Modal'
 
 import * as bulkRemovalActions from '../_shared/actions/reservationsBulkRemoval.actions'
 import { setCustomModal }      from '../_shared/actions/pageBase.actions'
@@ -26,6 +28,7 @@ class BulkRemovalReservationPage extends Component {
   }
 
   componentDidMount() {
+    this.props.actions.resetTimes()
     this.props.actions.loadAvailableUsers()
   }
 
@@ -94,6 +97,10 @@ class BulkRemovalReservationPage extends Component {
 
     return (
       <PageBase>
+        <Modal show={state.loading}>
+          <Loading />
+        </Modal>
+
         <div className={styles.container}>
           <h1>{t([ 'bulkCancellation', 'bulkCancellation' ])}</h1>
           {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
@@ -104,6 +111,7 @@ class BulkRemovalReservationPage extends Component {
                 selected={state.availableUsers.findIndexById(state.userId)}
                 highlight={state.highlight}
                 style="reservation"
+                filter
               />
             </div>
           }
@@ -139,7 +147,7 @@ class BulkRemovalReservationPage extends Component {
           <div className={styles.centerDiv}>
             <CallToActionButton
               label={t([ 'bulkCancellation', 'cancelReservations' ])}
-              onClick={actions.destroyAllSelectedReservations}
+              onClick={actions.interuptAllSelectedReservations}
               type="remove"
               state={state.toBeRemoved.length === 0 ? 'disabled' : ''}
             />

@@ -38,7 +38,6 @@ class NewReservationPage extends Component {
 
   componentDidMount() {
     const { actions, params } = this.props
-    actions.clearForm()
     actions.setInitialStore(params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
@@ -200,7 +199,7 @@ class NewReservationPage extends Component {
                   onChange={actions.setNote}
                   label={t([ 'newReservation', 'note' ])}
                   value={state.note}
-                  align="center"
+                  align="left"
                 />
 
                 {state.user && (state.user.id < 0 || onetime) &&
@@ -213,6 +212,7 @@ class NewReservationPage extends Component {
                       pattern="^(?!\s*$).+"
                       value={state.name.value}
                       highlight={state.highlight}
+                      align="left"
                     />
                     <div className={styles.languagesSelector}>
                       <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
@@ -226,6 +226,7 @@ class NewReservationPage extends Component {
                       pattern="\+[\d]{2,4}[\d\s]{3,}"
                       value={state.phone.value}
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
+                      align="left"
                     />
                     <PatternInput
                       readOnly={onetime}
@@ -235,6 +236,7 @@ class NewReservationPage extends Component {
                       pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                       value={state.email.value}
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
+                      align="left"
                     />
                   </div>
                 }
@@ -268,6 +270,7 @@ class NewReservationPage extends Component {
                     type="checkbox"
                     checked={state.paidByHost}
                     onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                    align="left"
                   />
                   {t([ 'newReservation', 'paidByHost' ])}
                 </div>
@@ -281,7 +284,7 @@ class NewReservationPage extends Component {
                     error={t([ 'newReservation', 'licencePlateInvalid' ])}
                     placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
                     type="text"
-                    align="center"
+                    align="left"
                     highlight={state.highlight && state.user.id !== -2}
                   /> :
                   <Dropdown
@@ -302,6 +305,7 @@ class NewReservationPage extends Component {
                   error={t([ 'newReservation', 'invalidaDate' ])}
                   value={state.from}
                   inlineMenu={beginsInlineMenu}
+                  align="left"
                 />
                 {state.durationDate ?
                   <Input
@@ -313,7 +317,7 @@ class NewReservationPage extends Component {
                     type="number"
                     min={0.25}
                     step={0.25}
-                    align="right"
+                    align="left"
                   /> :
                   <DatetimeInput
                     onBlur={actions.formatTo}
@@ -322,6 +326,7 @@ class NewReservationPage extends Component {
                     error={t([ 'newReservation', 'invalidaDate' ])}
                     value={state.to}
                     inlineMenu={endsInlineMenu}
+                    align="left"
                   />
                 }
 
@@ -342,7 +347,7 @@ class NewReservationPage extends Component {
                 }
 
                 <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
-                <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+                <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
 
                 {state.client_id && state.user &&
                   state.user.availableClients.findById(state.client_id) &&
@@ -351,7 +356,7 @@ class NewReservationPage extends Component {
                   state.user.availableClients.findById(state.client_id).is_secretary &&
                   <div>
                     <div className={styles.sendSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
-                      <input type="checkbox" checked={state.sendSMS} />
+                      <input type="checkbox" checked={state.sendSMS} align="left" />
                       {t([ 'newReservation', 'sendSms' ])}
                     </div>
                     {state.sendSMS &&
@@ -385,8 +390,9 @@ class NewReservationPage extends Component {
           <div className={styles.rightCollumn}>
             {state.loading ?
               <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
-              state.garage && <GarageLayout
-                floors={state.garage.floors.map(highlightSelected)}
+              <GarageLayout
+                floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
+                // floors={[]}
                 onPlaceClick={ongoing ? () => {} : this.handlePlaceClick}
                 showEmptyFloors={false}
               />

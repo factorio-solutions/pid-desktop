@@ -6,7 +6,9 @@ import { composeParameters } from '../helpers/parseUrlParameters'
 import { t }                 from '../modules/localization/localization'
 import * as nav              from '../helpers/navigation'
 
-import { setSuccess, setError, fetchCurrentUser, setCustomModal } from './pageBase.actions'
+import ConfirmModal       from '../../_shared/components/modal/ConfirmModal'
+
+import { setSuccess, setError, fetchCurrentUser, setCustomModal, alert } from './pageBase.actions'
 
 import { GET_RENTS, GET_GARAGE_PAYMENT_METHOD, GET_PERMISSION, UPDATE_ACCOUNT } from '../queries/admin.finance.queries'
 import { UPDATE_GARAGE }                                                        from '../queries/garageSetup.queries'
@@ -15,6 +17,10 @@ import { UPDATE_GARAGE }                                                        
 export const ADMIN_FINANCE_SET_RENTS = 'ADMIN_FINANCE_SET_RENTS'
 export const ADMIN_FINANCE_SET_PAYPAL = 'ADMIN_FINANCE_SET_PAYPAL'
 export const ADMIN_FINANCE_SET_CSOB = 'ADMIN_FINANCE_SET_CSOB'
+export const ADMIN_FINANCE_SET_GP_WEBPAY = 'ADMIN_FINANCE_SET_GP_WEBPAY'
+export const ADMIN_FINANCE_SET_GP_WEBPAY_MERCHANT_ID = 'ADMIN_FINANCE_SET_GP_WEBPAY_MERCHANT_ID'
+export const ADMIN_FINANCE_SET_GP_WEBPAY_PASSWORD = 'ADMIN_FINANCE_SET_GP_WEBPAY_PASSWORD'
+export const ADMIN_FINANCE_SET_GP_WEBPAY_PRIVATE_KEY = 'ADMIN_FINANCE_SET_GP_WEBPAY_PRIVATE_KEY'
 export const ADMIN_FINANCE_SET_ACCOUNT_ID = 'ADMIN_FINANCE_SET_ACCOUNT_ID'
 export const ADMIN_FINANCE_SET_CSOB_MERCHANT_ID = 'ADMIN_FINANCE_SET_CSOB_MERCHANT_ID'
 export const ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY = 'ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY'
@@ -30,9 +36,13 @@ export const ADMIN_FINANCE_SET_IBAN_PATTERN = 'ADMIN_FINANCE_SET_IBAN_PATTERN'
 export const setRents = actionFactory(ADMIN_FINANCE_SET_RENTS)
 export const setPaypal = actionFactory(ADMIN_FINANCE_SET_PAYPAL)
 export const setCSOB = actionFactory(ADMIN_FINANCE_SET_CSOB)
+export const setGpWebpay = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY)
 export const setAccountId = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_ID)
 export const setCsobMerchantId = actionFactory(ADMIN_FINANCE_SET_CSOB_MERCHANT_ID)
 export const setCsobPrivateKey = actionFactory(ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY)
+export const setGpWebpayMerchantId = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY_MERCHANT_ID)
+export const setGpWebpayPassword = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY_PASSWORD)
+export const setGpWebpayPrivateKey = actionFactory(ADMIN_FINANCE_SET_GP_WEBPAY_PRIVATE_KEY)
 export const setAccountNumber = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_NUMBER)
 export const setHighlight = actionFactory(ADMIN_FINANCE_SET_HIGHTLIGHT)
 export const setIban = actionFactory(ADMIN_FINANCE_SET_IBAN)
@@ -80,8 +90,11 @@ export function initFinance(id) {
   return dispatch => {
     const onSuccess = response => {
       dispatch(setCSOB(response.data.garage.account.csob_merchant_id !== null))
+      dispatch(setGpWebpay(response.data.garage.account.gp_webpay_merchant_id !== null))
       dispatch(setCsobMerchantId(response.data.garage.account.csob_merchant_id || ''))
       dispatch(setCsobPrivateKey(response.data.garage.account.csob_private_key ? 'stored' : ''))
+      dispatch(setGpWebpayMerchantId(response.data.garage.account.gp_webpay_merchant_id || ''))
+      dispatch(setGpWebpayPrivateKey(response.data.garage.account.gp_webpay_private_key ? 'stored' : ''))
       dispatch(setPaypal(response.data.garage.account.paypal_email !== null))
       dispatch(setAccountId(response.data.garage.account.id))
       dispatch(setVat(response.data.garage.vat))
@@ -122,47 +135,118 @@ export function paypalClick() {
   }
 }
 
-export function upadteAccount(params) {
+
+export function upadteAccount(id, account, callback) {
+  request(callback, UPDATE_ACCOUNT, { id, account })
+}
+
+
+export function upadteAccountPaypal(params) {
   return dispatch => {
     const onSuccess = response => {
       dispatch(setCustomModal(undefined))
       dispatch(setCSOB(response.data.update_account.csob_merchant_id !== null))
       dispatch(setPaypal(response.data.update_account.paypal_email !== null))
     }
+    const valuesToChange = {
+      paypal_temporary_token:          params.request_token,
+      paypal_temporary_token_verifier: params.verification_code
+    }
 
-    request(
-      onSuccess,
-      UPDATE_ACCOUNT,
-      { id:      +params.id,
-        account: {
-          paypal_temporary_token:          params.request_token,
-          paypal_temporary_token_verifier: params.verification_code
-        }
-      }
-    )
+    upadteAccount(+params.id, valuesToChange, onSuccess)
   }
 }
 
-export function updateCsobAccount() {
+
+export function updateAccountCsob(csobMerchantId, csobPrivateKey, callback) {
+  return (dispatch, getState) => {
+    const valuesToChange = {
+      csob_merchant_id: csobMerchantId,
+      csob_private_key: csobPrivateKey
+    }
+
+    upadteAccount(+getState().adminFinance.account_id, valuesToChange, callback)
+  }
+}
+
+export function enableAccountCsob() {
   return (dispatch, getState) => {
     const state = getState().adminFinance
     const onSuccess = response => {
-      response.data.update_account ?
-        nav.to(`/${getState().pageBase.garage}/admin/finance`) :
+      if (response.data.update_account) {
+        nav.to(`/${getState().pageBase.garage}/admin/finance`)
+      } else {
         dispatch(setError(t([ 'newAccount', 'invalidKeyPair' ])))
+      }
     }
 
-    request(
-      onSuccess,
-      UPDATE_ACCOUNT,
-      { id:      +state.account_id,
-        account: {
-          csob_merchant_id: state.csob_merchant_id,
-          csob_private_key: state.csob_private_key === 'stored' ? null : state.csob_private_key // update account, key unchanged => set to null
-        }
-      })
+    dispatch(updateAccountCsob(state.csob_merchant_id, state.csob_private_key, onSuccess))
   }
 }
+
+export function disableAccountCsob() {
+  return (dispatch, getState) => {
+    const onSuccess = () => dispatch(initFinance(getState().pageBase.garage))
+    dispatch(updateAccountCsob(null, null, onSuccess))
+  }
+}
+
+
+export function updateAccountGpWebpay(gpWebpayMerchantId, gpWebpayPrivateKey, gpWebpayPassword, url, callback) {
+  return (dispatch, getState) => {
+    const valuesToChange = {
+      gp_webpay_merchant_id: gpWebpayMerchantId,
+      gp_webpay_private_key: gpWebpayPrivateKey,
+      gp_webpay_password:    gpWebpayPassword,
+      return_url:            url
+    }
+
+    upadteAccount(+getState().adminFinance.account_id, valuesToChange, callback)
+  }
+}
+
+export function enableAccountGpWebpay() {
+  return (dispatch, getState) => {
+    const state = getState().adminFinance
+    const callback = url => () => window.location.replace(url)
+    const onBack = () => {
+      nav.to(`/${getState().pageBase.garage}/admin/finance`)
+      dispatch(setCustomModal())
+    }
+    const onSuccess = response => {
+      if (response.data && response.data.update_account.return_url) {
+        dispatch(setCustomModal(
+          <ConfirmModal
+            question={t([ 'finance', 'testPayment' ])}
+            onConfirm={callback(response.data.update_account.return_url)}
+            onBack={onBack}
+          />))
+      } else {
+        onBack()
+      }
+    }
+    dispatch(updateAccountGpWebpay(
+      state.gp_webpay_merchant_id,
+      state.gp_webpay_private_key, // update account, key unchanged => set to null
+      state.gp_webpay_password,
+      window.location.href.split('?')[0],
+      onSuccess
+    ))
+  }
+}
+
+export function testPaymentSuccessful(successful) {
+  const message = t([ 'finance', successful ? 'testPaymentSuccessful' : 'testPaymentUnsuccessful' ])
+  return dispatch => dispatch(alert(message))
+}
+
+export function disableAccountGpWebpay() {
+  return (dispatch, getState) => {
+    const onSuccess = () => dispatch(initFinance(getState().pageBase.garage))
+    dispatch(updateAccountGpWebpay(null, null, null, null, onSuccess))
+  }
+}
+
 
 export function submitGarage(id) {
   return (dispatch, getState) => {

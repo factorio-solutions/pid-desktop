@@ -1,3 +1,4 @@
+import React from 'react'
 import moment from 'moment'
 
 import { request }                       from '../helpers/request'
@@ -64,6 +65,7 @@ export const NEW_RESERVATION_SET_ERROR = 'NEW_RESERVATION_SET_ERROR'
 export const NEW_RESERVATION_SET_SELECTED_TEMPLATE = 'NEW_RESERVATION_SET_SELECTED_TEMPLATE'
 export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_TEXT'
 export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
+export const NEW_RESERVATION_SET_PAYMENT_METHOD = 'NEW_RESERVATION_SET_PAYMENT_METHOD'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -85,6 +87,7 @@ export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
 export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
+export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -281,7 +284,9 @@ export function setInitialStore(id) {
 
 
     const availableUsersPromise = new Promise((resolve, reject) => {
+      dispatch(setLoading(true))
       const onSuccess = response => {
+        dispatch(setLoading(false))
         if (response.data !== undefined) {
           resolve(response.data)
         } else {
@@ -294,7 +299,9 @@ export function setInitialStore(id) {
 
     const editReservationPromise = new Promise((resolve, reject) => {
       if (id) {
+        dispatch(setLoading(true))
         const onSuccess = response => {
+          dispatch(setLoading(false))
           if (response.hasOwnProperty('data')) {
             resolve(response.data)
           } else {
@@ -440,9 +447,10 @@ export function downloadGarage(id) {
         }
       }
 
-      request(onSuccess
-        , (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS) // download only free places if got rest of details
-        , { id:             id || state.garage.id,
+      request(
+        onSuccess,
+        (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
+        { id:             id || state.garage.id,
           user_id:        state.user.id,
           client_id:      state.client_id,
           begins_at:      timeToUTC(state.from),
@@ -469,6 +477,7 @@ export function downloadGarage(id) {
           }
 
           if (place.available && place.pricing) { // add tooltip to available places
+            if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
             const pricing = place.pricing
             const symbol = pricing.currency.symbol
             const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
@@ -576,7 +585,8 @@ export function submitReservation(id) {
                recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
                recurring_reservation_id: state.recurring_reservation_id,
                send_sms:                 state.sendSMS,
-               sms_text:                 state.templateText
+               sms_text:                 state.templateText,
+               payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod
              },
                id
              }
