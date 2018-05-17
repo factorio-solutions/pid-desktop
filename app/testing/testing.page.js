@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import DatetimeInput from '../_shared/components/input/DatetimeInput.js'
+import TimeInput from '../_shared/components/input/TimeInput.js'
 
 
 export default class TestingPage extends Component {
@@ -6,12 +8,8 @@ export default class TestingPage extends Component {
     return (
       <div>
         <h1>Testing page</h1>
-        <Recurring
-          show
-          onSubmit={rule => console.log('set rule to ', JSON.stringify(rule))}
-          showDays
-          showWeeks
-        />
+        <DatetimeInput />
+        <TimeInput value="15:00" onChange={time => console.log(time)} />
       </div>
     )
   }
