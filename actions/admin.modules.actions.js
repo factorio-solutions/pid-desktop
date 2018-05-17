@@ -57,14 +57,15 @@ export function toggleMarketing() {
     }
 
     dispatch(setCustomModal(t([ 'modules', 'startingMarketing' ])))
-    request(onSuccess
-           , UPDATE_MARKETING
-           , { id:        state.marketing.id,
-             marketing: { marketing_launched: !state.marketing.active_marketing_launched,
-               url:                window.location.href
-             }
-           }
-           )
+    request(onSuccess,
+      UPDATE_MARKETING,
+      { id:        state.marketing.id,
+        marketing: {
+          marketing_launched: !state.marketing.active_marketing_launched,
+          url:                window.location.href
+        }
+      }
+    )
   }
 }
 
@@ -80,12 +81,14 @@ export function toggleGoPublic() {
       dispatch(setGoPublic(response.data.update_garage.is_public))
     }
 
-    request(onSuccess
-           , UPDATE_GARAGE
-           , { id:     getState().pageBase.garage,
-             garage: { is_public: value }
-           }
-           )
+    request(onSuccess,
+      UPDATE_GARAGE,
+      { id:     getState().pageBase.garage,
+        garage: {
+          is_public: value
+        }
+      }
+    )
   }
 }
 
@@ -98,12 +101,14 @@ export function disableFlexiplace() {
       dispatch(setFlexiplace(response.data.update_garage.flexiplace))
     }
 
-    request(onSuccess
-           , UPDATE_GARAGE
-           , { id:     getState().pageBase.garage,
-             garage: { flexiplace: false }
-           }
-           )
+    request(onSuccess,
+      UPDATE_GARAGE,
+      { id:     getState().pageBase.garage,
+        garage: {
+          flexiplace: false
+        }
+      }
+    )
   }
 }
 

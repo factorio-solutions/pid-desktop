@@ -9,7 +9,7 @@ $small:       .6;
 
 .button {
   @include border-radius(240px);
-  @include colorize($clickableColor);
+  @include colorize($lightGray);
 
   width:      $size-normal;
   height:     $size-normal;
