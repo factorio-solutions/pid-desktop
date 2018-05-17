@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+import CallToActionButton from '../buttons/CallToActionButton'
+
 import styles from './SearchField.scss'
 
 
@@ -12,23 +14,23 @@ import styles from './SearchField.scss'
 
 export default class SearchField extends Component {
   static propTypes = {
-    label:     PropTypes.string.isRequired,
-    content:   PropTypes.array.isRequired,
-    style:     PropTypes.string,
-    selected:  PropTypes.number,
-    onChange:  PropTypes.func,
-    highlight: PropTypes.bool,
-    position:  PropTypes.string,
-    editable:  PropTypes.bool,
-    filter:    PropTypes.bool,
-    order:     PropTypes.bool
+    label:       PropTypes.string.isRequired,
+    content:     PropTypes.array.isRequired,
+    style:       PropTypes.string,
+    selected:    PropTypes.number,
+    onChange:    PropTypes.func,
+    highlight:   PropTypes.bool,
+    position:    PropTypes.string,
+    editable:    PropTypes.bool,
+    order:       PropTypes.bool,
+    buttons:     PropTypes.array,
+    placeholder: PropTypes.string
   }
 
   static defaultProps = {
     hover:    false,
     style:    'dark',
     editable: true,
-    filter:   false,
     order:    true
   }
 
@@ -42,6 +44,7 @@ export default class SearchField extends Component {
 
   componentDidMount() {
     this.validateContent(this.props)
+    this.filter.focus()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,7 +66,6 @@ export default class SearchField extends Component {
   hide = () => {
     this.ul.classList.add(styles.hidden)
     this.timeout = setTimeout(() => {
-      this.setState({ ...this.state, filter: '' })
       this.ul && this.ul.classList.add(styles.displayNone)
     }, 250)
   }
@@ -80,23 +82,20 @@ export default class SearchField extends Component {
     }
   }
 
-  // filterChange = event => this.setState({ ...this.state, filter: event.target.value })
+  filterChange = event => this.setState({ ...this.state, filter: event.target.value })
 
   render() {
-    const { label, content, onChange, style, position } = this.props
+    const { label, content, onChange, style, position, buttons, placeholder, editable } = this.props
+    let buttonsArray = []
     let list = content.map((item, index) => {
       const onClick = e => {
         e.stopPropagation()
         item.onClick && item.onClick()
-        this.setState({ ...this.state, selected: index })
         onChange && onChange(index, true) // for form
-        console.log(this.filter)
-        console.log(item.label)
-        this.filter.value = item.label
-        console.log(this.filter)
+        // HACK: filter is not set without setTimeout.
+        setTimeout(() => this.setState({ ...this.state, selected: index, filter: item.label }), 0)
         this.hide()
       }
-
       const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
       const show = this.state.filter === '' ? true : lowercaseTrimmedLabel.includes(this.state.filter.toLowerCase())
 
@@ -121,17 +120,32 @@ export default class SearchField extends Component {
           </li>)
       }
     })
-    const filterChange = event => this.setState({ ...this.state, filter: event.target.value })
+    if (buttons) {
+      buttonsArray = buttons.map(item => {
+        return (
+          <div className={styles.line}>
+            <div className={styles.minWidthButton}>
+              <CallToActionButton
+                label={item.label}
+                onClick={item.onClick}
+              />
+            </div>
+            <div>{item.text}</div>
+          </div>
+        )
+      })
+    }
     list = list.map(o => o.render)
     return (
       <div>
         <input
-          type="search"
+          type="text"
           value={this.state.filter}
-          onChange={filterChange}
+          placeholder={placeholder}
+          onChange={this.filterChange}
           ref={el => { this.filter = el }}
           label={label}
-          className={styles.filter}
+          className={`${styles.filter} ${!editable && styles.dimmer}`}
           onFocus={this.toggleDropdown}
           onBlur={this.toggleDropdown}
         />
@@ -139,21 +153,14 @@ export default class SearchField extends Component {
           className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
           ref={ul => { this.ul = ul }}
         >
-          <ul>
+          <ul className={styles.scrollable}>
             {list}
-            <li>
-              <button>Ahoj0</button>
-            </li>
-            <li>
-              <button>Ahoj1</button>
-            </li>
-            <li>
-              <button>Ahoj2</button>
-            </li>
           </ul>
-          <ul>
-            
-          </ul>
+          {buttonsArray.length > 0 &&
+            <div className={styles.buttons}>
+              {buttonsArray}
+            </div>
+          }
         </div>
       </div>
     )
