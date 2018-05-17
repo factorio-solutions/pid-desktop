@@ -1,0 +1,94 @@
+@import '../../styles/app.components';
+
+.dropdownContainer {
+  position: relative;
+}
+
+.drop {
+  overflow-y: hidden;
+}
+
+.drop > ul {
+  max-height: 200px;
+  // box-shadow:       0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+  // z-index:          10;
+  overflow-y:       auto;
+  overflow-x:       hidden;
+  width:            100%;
+  width:            calc(100% - 16px);
+}
+
+.filter {
+  padding: 10px;
+
+  >i {
+    font-size: 16px;
+  }
+  width:            100%;
+  border:           0;
+  border-bottom:    1px solid $gray;
+  border-radius:    0;
+  outline:          none;
+  background-color: transparent;
+  font-size:        16px;
+  box-shadow:       none;
+
+  // IPhone compatibility
+  -webkit-box-shadow:    none;
+  -webkit-border-radius: 0;
+}
+
+ul > li:not(button) {
+  padding: 14px 16px;
+  cursor:  pointer;
+  &.filter {
+    padding: 10px;
+    >i {
+      font-size: 16px;
+    } 
+  }
+}
+.drop > ul > li:not(.selected):not(.filter):hover {
+  background-color: $gray;
+  color:            $white;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.selected {
+  background-color: $yellow;
+  color:            $black;
+}
+
+.float {
+  font-size: 16px;
+  opacity:   0;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.singleItem > i {
+  display: none;
+}
+
+.singleItem {
+  cursor: default;
+}
+
+.dimmer {
+  background-color: $lightGray !important;
+  color:            $gray !important;
+  cursor:           default;
+}
+
+.displayNone {
+  display: none;
+}
+
+
+// -----------------------------------------
+// Custom styles
