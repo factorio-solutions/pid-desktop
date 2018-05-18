@@ -8,6 +8,8 @@ import Input         from '../_shared/components/input/Input'
 import PatternInput  from '../_shared/components/input/PatternInput'
 import Uneditable    from '../_shared/components/input/Uneditable'
 import DatetimeInput from '../_shared/components/input/DatetimeInput'
+import Dateinput     from '../_shared/components/input/DateInput'
+import TimeInput     from '../_shared/components/input/TimeInput'
 import ButtonStack   from '../_shared/components/buttonStack/ButtonStack'
 import RoundButton   from '../_shared/components/buttons/RoundButton'
 import GarageLayout  from '../_shared/components/garageLayout/GarageLayout'
@@ -21,7 +23,7 @@ import * as newReservationActions from '../_shared/actions/newReservation.action
 import * as nav                   from '../_shared/helpers/navigation'
 import { t, getLanguage }         from '../_shared/modules/localization/localization'
 import describeRule               from '../_shared/helpers/recurringRuleToDescribtion'
-import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
+import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT, MOMENT_TIME_FORMAT } from '../_shared/helpers/time'
 import { AVAILABLE_LANGUAGES }    from '../routes'
 
 import styles from './newReservation.page.scss'
@@ -57,14 +59,8 @@ class NewReservationPage extends Component {
         buttons.push(makeButton(user.id, [ t([ 'newReservation', user.full_name ]) + ' ', <b>{user.full_name}</b> ], t([ 'newReservation', `${user.full_name}Text` ])))
       } else {
         acc.push({
-          label: user.full_name,
-          order: user.id === this.props.pageBase.current_user.id ?
-            1 :
-            user.id === -1 ?
-              2 :
-              user.id === -2 ?
-                3 :
-                undefined,
+          label:   user.full_name,
+          order:   user.id === this.props.pageBase.current_user.id ? 1 : undefined,
           onClick: () => this.props.actions.downloadUser(user.id, user.rights)
         })
       }
@@ -192,12 +188,15 @@ class NewReservationPage extends Component {
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
-    const renderLanguageButton = lang => (<RoundButton
-      state={(state.language === lang && 'selected') || (onetime && 'disabled')}
-      content={lang.toUpperCase()}
-      onClick={() => actions.setLanguage(lang)}
-      type="action"
-    />)
+    const renderLanguageButton = lang => {
+      const selectLanguage = state.user.language ? state.user.language : state.language
+      return (<RoundButton
+        state={(selectLanguage === lang && 'selected') || ((onetime || state.user.language) && 'disabled')}
+        content={lang.toUpperCase()}
+        onClick={() => actions.setLanguage(lang)}
+        type="action"
+      />)
+    }
 
     return (
       <PageBase>
@@ -207,16 +206,7 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
-                  // <Dropdown
-                  //   editable={!ongoing}
-                  //   label={t([ 'newReservation', 'selectUser' ])}
-                  //   content={this.userDropdown()}
-                  //   selected={getUserToSelect()}
-                  //   style="reservation"
-                  //   highlight={state.highlight}
-                  //   filter
-                  // />
+                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && !state.user &&
                   <SearchField
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectUser' ])}
@@ -227,25 +217,16 @@ class NewReservationPage extends Component {
                     buttons={userDropdown.buttons}
                   />
                 }
+
                 {state.user &&
-                  <Input
-                    onChange={actions.setNote}
-                    label={t([ 'newReservation', 'note' ])}
-                    value={state.note}
-                    align="center"
-                  />
-
-                }
-
-                {state.user && (state.user.id < 0 || onetime) &&
                   <div>
                     <PatternInput
-                      readOnly={onetime}
+                      readOnly={onetime || (state.user && state.user.id > - 1)}
                       onChange={actions.setHostName}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                       error={t([ 'signup_page', 'nameInvalid' ])}
                       pattern="^(?!\s*$).+"
-                      value={state.name.value}
+                      value={state.user ? state.user.full_name : state.name.value}
                       highlight={state.highlight}
                     />
                     <div className={styles.languagesSelector}>
@@ -253,22 +234,28 @@ class NewReservationPage extends Component {
                       {AVAILABLE_LANGUAGES.map(renderLanguageButton)}
                     </div>
                     <PatternInput
-                      readOnly={onetime}
+                      readOnly={onetime || (state.user && state.user.id > - 1)}
                       onChange={actions.setHostPhone}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                       error={t([ 'signup_page', 'phoneInvalid' ])}
                       pattern="\+[\d]{2,4}[\d\s]{3,}"
-                      value={state.phone.value}
+                      value={state.user ? state.user.phone : state.phone.value }
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
                     />
                     <PatternInput
-                      readOnly={onetime}
+                      readOnly={onetime || (state.user && state.user.id > - 1)}
                       onChange={actions.setHostEmail}
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
                       error={t([ 'signup_page', 'emailInvalid' ])}
                       pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                      value={state.email.value}
+                      value={(state.email.value)}
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
+                    />
+                    <Input
+                      onChange={actions.setNote}
+                      label={t([ 'newReservation', 'note' ])}
+                      value={state.note}
+                      align="center"
                     />
                   </div>
                 }
@@ -324,43 +311,58 @@ class NewReservationPage extends Component {
                     type="checkbox"
                     checked={state.paidByHost}
                     onChange={() => actions.setPaidByHost(!state.paidByHost)}
-                    align="left"
                   />
                   {t([ 'newReservation', 'paidByHost' ])}
                 </div>
                 }
-                {state.user && (state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
-                  <Input
-                    readOnly={ongoing}
-                    onChange={actions.setCarLicencePlate}
-                    value={state.carLicencePlate}
-                    label={t([ 'newReservation', 'licencePlate' ])}
-                    error={t([ 'newReservation', 'licencePlateInvalid' ])}
-                    placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
-                    type="text"
-                    align="center"
-                    highlight={state.highlight && state.user.id !== -2}
-                  /> :
-                  <Dropdown
-                    editable={!ongoing}
-                    label={t([ 'newReservation', 'selectCar' ])}
-                    content={this.carDropdown()}
-                    selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
-                    style="reservation"
-                    highlight={state.highlight}
-                  />
-                )}
-
-                <DatetimeInput
-                  editable={!ongoing}
-                  onBlur={actions.formatFrom}
-                  onChange={actions.setFrom}
-                  label={t([ 'newReservation', 'begins' ])}
-                  error={t([ 'newReservation', 'invalidaDate' ])}
-                  value={state.from}
-                  inlineMenu={beginsInlineMenu}
-                />
-                {state.durationDate ?
+                {state.client_id &&
+                  <div className={styles.dateTimeContainer}>
+                    <div className={styles.leftCollumn}>
+                      <Dateinput
+                        editable={!ongoing}
+                        onBlur={actions.formatFrom}
+                        onChange={actions.setFromDate}
+                        label={t([ 'newReservation', 'begins' ])}
+                        error={t([ 'newReservation', 'invalidaDate' ])}
+                        value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
+                        inlineMenu={beginsInlineMenu}
+                      />
+                      <TimeInput
+                        editable={!ongoing}
+                        onBlur={actions.formatFrom}
+                        onChange={actions.setFromTime}
+                        label={t([ 'newReservation', 'begins' ])}
+                        error={t([ 'newReservation', 'invalidaDate' ])}
+                        value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
+                        inlineMenu={beginsInlineMenu}
+                      />
+                    </div>
+                    <div className={styles.middleCollumn} >
+                      <i className="fa fa-arrow-right" aria-hidden="true" />
+                    </div>
+                    <div className={styles.rightCcollumn}>
+                      <Dateinput
+                        editable={!ongoing}
+                        onBlur={actions.formatTo}
+                        onChange={actions.setToDate}
+                        label={t([ 'newReservation', 'ends' ])}
+                        error={t([ 'newReservation', 'invalidaDate' ])}
+                        value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
+                        inlineMenu={beginsInlineMenu}
+                      />
+                      <TimeInput
+                        editable={!ongoing}
+                        onBlur={actions.formatTo}
+                        onChange={actions.setToTime}
+                        label={t([ 'newReservation', 'ends' ])}
+                        error={t([ 'newReservation', 'invalidaDate' ])}
+                        value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
+                        inlineMenu={beginsInlineMenu}
+                      />
+                    </div>
+                  </div>
+                }
+                {state.client_id && state.durationDate &&
                   <Input
                     onChange={actions.durationChange}
                     label={t([ 'newReservation', 'duration' ])}
@@ -371,14 +373,6 @@ class NewReservationPage extends Component {
                     min={0.25}
                     step={0.25}
                     align="left"
-                  /> :
-                  <DatetimeInput
-                    onBlur={actions.formatTo}
-                    onChange={actions.setTo}
-                    label={t([ 'newReservation', 'ends' ])}
-                    error={t([ 'newReservation', 'invalidaDate' ])}
-                    value={state.to}
-                    inlineMenu={endsInlineMenu}
                   />
                 }
 

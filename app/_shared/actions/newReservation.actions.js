@@ -11,6 +11,7 @@ import { t }                             from '../modules/localization/localizat
 import {
   MOMENT_DATETIME_FORMAT,
   MOMENT_DATE_FORMAT,
+  MOMENT_TIME_FORMAT,
   timeToUTC
 } from '../helpers/time'
 import * as pageBaseActions from './pageBase.actions'
@@ -171,6 +172,35 @@ export function removeDiacritics() {
   }
 }
 
+export function setFromDate(value) {
+  return (dispatch, getState) => {
+    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let fromDate = moment(value, MOMENT_DATE_FORMAT)
+    let toValue = null
+    from.set('year', fromDate.get('year'))
+    from.set('month', fromDate.get('month'))
+    from.set('day', fromDate.get('day'))
+    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+      value: from.format(MOMENT_DATETIME_FORMAT),
+      to:    toValue
+    })
+  }
+}
+
+export function setFromTime(value) {
+  return (dispatch, getState) => {
+    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let fromTime = moment(value, MOMENT_TIME_FORMAT)
+    let toValue = null
+    from.set('hour', fromTime.get('hour'))
+    from.set('minute', fromTime.get('minute'))
+    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+      value: from.format(MOMENT_DATETIME_FORMAT),
+      to:    toValue
+    })
+  }
+}
+
 export function formatFrom() {
   return (dispatch, getState) => {
     let fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
@@ -194,6 +224,35 @@ export function formatFrom() {
     moment(toValue, MOMENT_DATETIME_FORMAT).diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
+  }
+}
+
+export function setToDate(value) {
+  return (dispatch, getState) => {
+    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let toDate = moment(value, MOMENT_DATE_FORMAT)
+    let fromValue = null
+    to.set('year', toDate.get('year'))
+    to.set('month', toDate.get('month'))
+    to.set('day', toDate.get('day'))
+    dispatch({ type:  NEW_RESERVATION_SET_TO,
+      value:   to.format(MOMENT_DATETIME_FORMAT),
+      from:    fromValue
+    })
+  }
+}
+
+export function setToTime(value) {
+  return (dispatch, getState) => {
+    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let toTime = moment(value, MOMENT_TIME_FORMAT)
+    let fromValue = null
+    to.set('hour', toTime.get('hour'))
+    to.set('minute', toTime.get('minute'))
+    dispatch({ type:  NEW_RESERVATION_SET_TO,
+      value:   to.format(MOMENT_DATETIME_FORMAT),
+      from:    fromValue
+    })
   }
 }
 
