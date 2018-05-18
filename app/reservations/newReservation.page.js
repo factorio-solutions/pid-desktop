@@ -49,14 +49,24 @@ class NewReservationPage extends Component {
     const makeButton = (id, label, text) => {
       return {
         label,
-        text,
+        text:    (t([ 'newReservation',  'dropButtonDescrText']) + text),
         onClick: () => this.props.actions.downloadUser(id)
       }
     }
     const buttons = []
     const users = this.props.state.availableUsers.reduce((acc, user) => {
       if (user.id < 0) {
-        buttons.push(makeButton(user.id, [ t([ 'newReservation', user.full_name ]) + ' ', <b>{user.full_name}</b> ], t([ 'newReservation', `${user.full_name}Text` ])))
+        let roleName = ''
+        if (user.id === -1) {
+          if (user.rights && user.rights.internal) {
+            roleName = 'nternal'
+          } else {
+            roleName = 'newHost'
+          }
+        } else {
+          roleName = 'onetimeVisit'
+        }
+        buttons.push(makeButton(user.id, [ t([ 'newReservation', 'dropButtonText' ]), <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
       } else {
         acc.push({
           label:   user.full_name,
@@ -206,7 +216,7 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && !state.user &&
+                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && // (state.user && state.user.id > 0) &&
                   <SearchField
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectUser' ])}
@@ -218,7 +228,36 @@ class NewReservationPage extends Component {
                   />
                 }
 
-                {state.user &&
+                {state.user && state.user.id >= 0 &&
+                  <div>
+                    <div className={styles.languagesSelector}>
+                      <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
+                      {AVAILABLE_LANGUAGES.map(renderLanguageButton)}
+                    </div>
+                    <PatternInput
+                      readOnly={onetime || (state.user && state.user.id > - 1)}
+                      onChange={actions.setHostPhone}
+                      label={t([ 'newReservation', 'phone' ])}
+                      error={t([ 'signup_page', 'phoneInvalid' ])}
+                      pattern="\+[\d]{2,4}[\d\s]{3,}"
+                      value={state.user.id >= 0 ? state.user.phone : state.phone.value}
+                      highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
+                      align="left"
+                    />
+                    <PatternInput
+                      readOnly={onetime || (state.user && state.user.id > - 1)}
+                      onChange={actions.setHostEmail}
+                      label={t([ 'newReservation', 'email' ])}
+                      error={t([ 'signup_page', 'emailInvalid' ])}
+                      pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                      value={(state.user.email)}
+                      highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
+                      align="left"
+                    />
+                  </div>
+                }
+
+                {state.user && state.user.id < 0 &&
                   <div>
                     <PatternInput
                       readOnly={onetime || (state.user && state.user.id > - 1)}
@@ -226,8 +265,9 @@ class NewReservationPage extends Component {
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
                       error={t([ 'signup_page', 'nameInvalid' ])}
                       pattern="^(?!\s*$).+"
-                      value={state.user ? state.user.full_name : state.name.value}
+                      value={state.name.value}
                       highlight={state.highlight}
+                      align="left"
                     />
                     <div className={styles.languagesSelector}>
                       <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
@@ -239,8 +279,9 @@ class NewReservationPage extends Component {
                       label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
                       error={t([ 'signup_page', 'phoneInvalid' ])}
                       pattern="\+[\d]{2,4}[\d\s]{3,}"
-                      value={state.user ? state.user.phone : state.phone.value }
+                      value={state.user ? state.user.phone : state.phone.value}
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
+                      align="left"
                     />
                     <PatternInput
                       readOnly={onetime || (state.user && state.user.id > - 1)}
@@ -250,12 +291,13 @@ class NewReservationPage extends Component {
                       pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                       value={(state.email.value)}
                       highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
+                      align="left"
                     />
                     <Input
                       onChange={actions.setNote}
                       label={t([ 'newReservation', 'note' ])}
                       value={state.note}
-                      align="center"
+                      align="left"
                     />
                   </div>
                 }
@@ -272,10 +314,10 @@ class NewReservationPage extends Component {
                     error={t([ 'newReservation', 'licencePlateInvalid' ])}
                     placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
                     type="text"
-                    align="center"
+                    align="left"
                     highlight={state.highlight && state.user.id !== -2}
                   /> :
-                  <SearchField
+                  <Dropdown
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectCar' ])}
                     content={this.carDropdown()}
@@ -285,7 +327,7 @@ class NewReservationPage extends Component {
                   />
                 )}
                 {state.user && ((state.email.valid && state.phone.valid && state.carLicencePlate) || state.user.id !== -1) &&
-                  <SearchField
+                  <Dropdown
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectGarage' ])}
                     content={this.garageDropdown()}
@@ -296,7 +338,7 @@ class NewReservationPage extends Component {
                   />
                 }
                 {state.user && state.user.availableClients && state.user.availableClients.length > 1 && state.garage &&
-                  <SearchField
+                  <Dropdown
                     editable={!ongoing}
                     label={t([ 'newReservation', 'selectClient' ])}
                     content={this.clientDropdown()}

@@ -133,13 +133,14 @@
     margin: auto;
     order: 2;
     min-width: 15px;
+    text-align: center;
   }
+  // TODO: Rename
   &>div.rightCcollumn {
     flex: 3 3;
     min-width: 100px;
     margin: auto;
     order: 3;
     margin-right: 0px;
-    color: white;
   }
 }

@@ -223,6 +223,7 @@
 		"tokenInvalid": "Tato transakce již není platná a rezervace bude smazána",
 		"creatingNewPayment": "Vytvářím platbu ...",
 		"newHost": "Nový pravidelný host",
+		"newHostText": " si smí rezervace navrhovat, ale potřebuje schválení",
 		"hostsName": "Jméno pravidelného hosta",
 		"hostsPhone": "Telefon pravidelného hosta",
 		"hostsEmail": "Email pravidelného hosta",
@@ -234,6 +235,7 @@
 		"noFreePlace": "Žádná volná místa",
 		"note": "Poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
+		"onetimeVisitText": " se nestane členem klienta. Nevytváří ani nenavrhuje rezervace.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
 		"languageSelector": "Zvolte jazyk komunikace",
@@ -242,7 +244,11 @@
 		"smsText": "text SMS",
 		"character": "znaků",
 		"removeDiacritics": "odstranit diakritiku",
-		"perHour": " / hod."
+		"perHour": " / hod.",
+		"dropButtonText": "Nový uživatel s právy ",
+		"dropButtonDescrText": "Uživatel s právy ",
+		"newInternal": "Interní",
+		"newInternalText": " si smí samostatně vytvářet rezervace."
 	},
 	"clients": {
 		"name": "jméno",
