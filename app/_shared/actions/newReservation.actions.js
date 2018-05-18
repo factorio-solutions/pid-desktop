@@ -11,6 +11,7 @@ import { t }                             from '../modules/localization/localizat
 import {
   MOMENT_DATETIME_FORMAT,
   MOMENT_DATE_FORMAT,
+  MOMENT_TIME_FORMAT,
   timeToUTC
 } from '../helpers/time'
 import * as pageBaseActions from './pageBase.actions'
@@ -171,6 +172,38 @@ export function removeDiacritics() {
   }
 }
 
+export function setFromDate(value) {
+  return (dispatch, getState) => {
+    
+    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let fromDate = moment(value, MOMENT_DATE_FORMAT)
+    let toValue = null
+    from.set('year', fromDate.get('year'))
+    from.set('month', fromDate.get('month'))
+    from.set('date', fromDate.get('date'))
+    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+      value: from.format(MOMENT_DATETIME_FORMAT),
+      to:    toValue
+    })
+    dispatch(formatFrom())
+  }
+}
+
+export function setFromTime(value) {
+  return (dispatch, getState) => {
+    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let fromTime = moment(value, MOMENT_TIME_FORMAT)
+    let toValue = null
+    from.set('hour', fromTime.get('hour'))
+    from.set('minute', fromTime.get('minute'))
+    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+      value: from.format(MOMENT_DATETIME_FORMAT),
+      to:    toValue
+    })
+    dispatch(formatFrom())
+  }
+}
+
 export function formatFrom() {
   return (dispatch, getState) => {
     let fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
@@ -194,6 +227,37 @@ export function formatFrom() {
     moment(toValue, MOMENT_DATETIME_FORMAT).diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
+  }
+}
+
+export function setToDate(value) {
+  return (dispatch, getState) => {
+    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let toDate = moment(value, MOMENT_DATE_FORMAT)
+    let fromValue = null
+    to.set('year', toDate.get('year'))
+    to.set('month', toDate.get('month'))
+    to.set('date', toDate.get('date'))
+    dispatch({ type:  NEW_RESERVATION_SET_TO,
+      value:   to.format(MOMENT_DATETIME_FORMAT),
+      from:    fromValue
+    })
+    dispatch(formatTo())
+  }
+}
+
+export function setToTime(value) {
+  return (dispatch, getState) => {
+    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    let toTime = moment(value, MOMENT_TIME_FORMAT)
+    let fromValue = null
+    to.set('hour', toTime.get('hour'))
+    to.set('minute', toTime.get('minute'))
+    dispatch({ type:  NEW_RESERVATION_SET_TO,
+      value:   to.format(MOMENT_DATETIME_FORMAT),
+      from:    fromValue
+    })
+    dispatch(formatTo())
   }
 }
 
@@ -322,6 +386,12 @@ export function setInitialStore(id) {
       if (currentUser && currentUser.secretary) { // if is secretary then can create new host
         users.push({
           full_name: t([ 'newReservation', 'newHost' ]),
+          rights:    { host: true },
+          id:        -1
+        })
+        users.push({
+          full_name: t([ 'newReservation', 'newInternal' ]),
+          rights:    { internal: true },
           id:        -1
         })
         users.push({
@@ -356,7 +426,7 @@ export function setInitialStore(id) {
   }
 }
 
-export function downloadUser(id) {
+export function downloadUser(id, rights) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     dispatch(setLoading(true))
@@ -395,7 +465,8 @@ export function downloadUser(id) {
 
       dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
         availableGarages: values[1].reservable_garages,
-        availableClients: values[2].reservable_clients
+        availableClients: values[2].reservable_clients,
+        rights // Client user rights
       }))
       if (values[0].user && !values[0].user.last_active) {
         dispatch(setHostName(values[0].user.full_name, true))
@@ -605,7 +676,7 @@ export function submitReservation(id) {
         },
         client_user: state.client_id && state.user.id === -1 ? {
           client_id: +state.client_id,
-          host:      true,
+          ...state.user.rights,
           message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
         } : null
       }).then(data => {
@@ -616,7 +687,7 @@ export function submitReservation(id) {
               user_id:     data.user_by_email.id,
               client_user: {
                 client_id: +state.client_id,
-                host:      true,
+                ...state.user.rights,
                 message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
               }
             }).then(response => {

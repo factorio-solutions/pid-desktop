@@ -223,6 +223,7 @@
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
 		"newHost": "New regular guest",
+		"newInternal": "New internal",
 		"hostsName": "Name of regular guest",
 		"hostsPhone": "Phone of regular guest",
 		"hostsEmail": "Email of regular guest",

@@ -1,0 +1,101 @@
+@import '../../styles/app.components';
+
+.dropdownContainer {
+  position: relative;
+}
+
+.drop {
+  overflow-x: hidden;
+  text-align: left;
+}
+
+.drop > ul.scrollable {
+  max-height:       200px;
+  overflow-y:       auto;
+  overflow-x:       hidden;
+  list-style-type:  none;
+  padding:          0;
+}
+
+.filter {
+  padding:          10px;
+  // width:            100%;
+  border:           0;
+  border-bottom:    1px solid $gray;
+  outline:          none;
+  text-align:       center;
+  width: -webkit-fill-available;
+  // IPhone compatibility
+  -webkit-box-shadow:    none;
+  -webkit-border-radius: 0;
+}
+
+ul.scrollable > li {
+  padding: 14px 16px;
+  cursor:  pointer;
+}
+
+.buttons {
+  border-top: 1px solid $black;
+  margin-top: 10px;
+  display: table;
+
+  & div.minWidthButton {
+    max-width: 200px;
+    min-width: 150px;
+    display: table-cell;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 5px 5px 0px;
+  }
+}
+
+.buttons > .line {
+  display: table-row;
+  margin: 15px 0px 15px 0px;
+}
+
+.drop > ul > li:not(.selected):not(.filter):hover {
+  background-color: $gray;
+  color:            $white;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.selected {
+  background-color: $yellow;
+  color:            $black;
+}
+
+.float {
+  font-size: 16px;
+  opacity:   0;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.singleItem > i {
+  display: none;
+}
+
+.singleItem {
+  cursor: default;
+}
+
+.dimmer {
+  background-color: $lightGray !important;
+  color:            $gray !important;
+  cursor:           default;
+}
+
+.displayNone {
+  display: none;
+}
+
+
+// -----------------------------------------
+// Custom styles
