@@ -44,18 +44,26 @@ export default class SearchField extends Component {
 
   componentDidMount() {
     this.validateContent(this.props)
-    this.filter.focus()
   }
 
   componentWillReceiveProps(nextProps) {
     this.validateContent(nextProps)
   }
 
+  handleSelection() {
+    const user = this.props.content[this.state.selected]
+    if (user) {
+      this.setState({ ...this.state, filter: user.label })
+    } else {
+      this.filter.focus()
+    }
+  }
+
   validateContent(nextProps) {
     if (nextProps.content.length === 1) { // if only one item, autoselect it
-      this.setState({ ...this.state, selected: 0 })
+      this.setState({ ...this.state, selected: 0 }, this.handleSelection)
     } else {
-      this.setState({ ...this.state, selected: nextProps.selected })
+      this.setState({ ...this.state, selected: nextProps.selected }, this.handleSelection)
     }
   }
 

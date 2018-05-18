@@ -174,16 +174,18 @@ export function removeDiacritics() {
 
 export function setFromDate(value) {
   return (dispatch, getState) => {
+    
     let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
     let fromDate = moment(value, MOMENT_DATE_FORMAT)
     let toValue = null
     from.set('year', fromDate.get('year'))
     from.set('month', fromDate.get('month'))
-    from.set('day', fromDate.get('day'))
+    from.set('date', fromDate.get('date'))
     dispatch({ type:  NEW_RESERVATION_SET_FROM,
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
+    dispatch(formatFrom())
   }
 }
 
@@ -198,6 +200,7 @@ export function setFromTime(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
+    dispatch(formatFrom())
   }
 }
 
@@ -234,11 +237,12 @@ export function setToDate(value) {
     let fromValue = null
     to.set('year', toDate.get('year'))
     to.set('month', toDate.get('month'))
-    to.set('day', toDate.get('day'))
+    to.set('date', toDate.get('date'))
     dispatch({ type:  NEW_RESERVATION_SET_TO,
       value:   to.format(MOMENT_DATETIME_FORMAT),
       from:    fromValue
     })
+    dispatch(formatTo())
   }
 }
 
@@ -253,6 +257,7 @@ export function setToTime(value) {
       value:   to.format(MOMENT_DATETIME_FORMAT),
       from:    fromValue
     })
+    dispatch(formatTo())
   }
 }
 
