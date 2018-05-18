@@ -95,7 +95,17 @@ export default class SearchField extends Component {
   render() {
     const { label, content, onChange, style, position, buttons, placeholder, editable } = this.props
     let buttonsArray = []
-    let list = content.map((item, index) => {
+
+    const sorter = (a, b) =>
+    (a.order || b.order) ?
+      ((a.order && !b.order) ? -1 : (!a.order && b.order) ? 1 : a.order - b.order) :
+      (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase() ?
+        -1 :
+        ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
+
+    let list = content.sort(sorter).map((item, index) => {
+      console.log(item)
+
       const onClick = e => {
         e.stopPropagation()
         item.onClick && item.onClick()
@@ -128,6 +138,7 @@ export default class SearchField extends Component {
           </li>)
       }
     })
+
     if (buttons) {
       buttonsArray = buttons.map(item => {
         return (
