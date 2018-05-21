@@ -15,20 +15,11 @@ import styles from './SearchField.scss'
 export default class SearchField extends Component {
   static propTypes = {
     content:     PropTypes.array.isRequired,
-    style:       PropTypes.string,
     selected:    PropTypes.number,
     onChange:    PropTypes.func,
-    position:    PropTypes.string,
     editable:    PropTypes.bool,
     buttons:     PropTypes.array,
     placeholder: PropTypes.string
-  }
-
-  static defaultProps = {
-    hover:    false,
-    style:    'dark',
-    editable: true,
-    order:    true
   }
 
   constructor(props) {
@@ -81,17 +72,13 @@ export default class SearchField extends Component {
       this.ul.style.width = this.filter.getBoundingClientRect().width + 'px'
       this.ul.classList.remove(styles.displayNone)
       this.ul.classList.remove(styles.hidden)
-      
-      if (this.props.filter) {
-        this.filter.focus()
-      }
     }
   }
 
   filterChange = event => this.setState({ ...this.state, filter: event.target.value })
 
   render() {
-    const { content, onChange, style, position, buttons, placeholder, editable } = this.props
+    const { content, onChange, buttons, placeholder, editable } = this.props
     let buttonsArray = []
 
     const sorter = (a, b) =>
@@ -159,7 +146,9 @@ export default class SearchField extends Component {
                 onClick={item.onClick}
               />
             </div>
-            <div className={styles.buttonDescription}>{item.text}</div>
+            <div className={styles.buttonDescription}>
+              {item.text}
+            </div>
           </div>
         )
       })
