@@ -7,7 +7,6 @@ import PageBase      from '../_shared/containers/pageBase/PageBase'
 import Input         from '../_shared/components/input/Input'
 import PatternInput  from '../_shared/components/input/PatternInput'
 import Uneditable    from '../_shared/components/input/Uneditable'
-import DatetimeInput from '../_shared/components/input/DatetimeInput'
 import Dateinput     from '../_shared/components/input/DateInput'
 import TimeInput     from '../_shared/components/input/TimeInput'
 import ButtonStack   from '../_shared/components/buttonStack/ButtonStack'
@@ -70,6 +69,8 @@ class NewReservationPage extends Component {
       } else {
         acc.push({
           label:   user.full_name,
+          phone:   user.phone,
+          email:   user.email,
           order:   user.id === this.props.pageBase.current_user.id ? 1 : undefined,
           onClick: () => this.props.actions.downloadUser(user.id, user.rights)
         })
@@ -190,9 +191,9 @@ class NewReservationPage extends Component {
       if (state.reservation && state.reservation.onetime) {
         return state.availableUsers.findIndex(user => user.id === -2)
       } else if (state.user && state.user.id === -1) {
-        return state.availableUsers.findIndex(user => state.user && user.id === state.user.id && user.rights && JSON.stringify(user.rights) === JSON.stringify(state.user.rights))
+        return userDropdown.users.findIndex(user => state.user && user.id === state.user.id && user.rights && JSON.stringify(user.rights) === JSON.stringify(state.user.rights))
       } else {
-        return state.availableUsers.findIndex(user => state.user && user.id === state.user.id)
+        return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
       }
     }
 
@@ -219,7 +220,7 @@ class NewReservationPage extends Component {
                 {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && // (state.user && state.user.id > 0) &&
                   <SearchField
                     editable={!ongoing}
-                    label={t([ 'newReservation', 'selectUser' ])}
+                    placeholder={t([ 'newReservation', 'selectUser' ])}
                     content={userDropdown.users}
                     selected={getUserToSelect()}
                     highlight={state.highlight}

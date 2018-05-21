@@ -248,7 +248,9 @@
 		"dropButtonText": "Nový uživatel s právy ",
 		"dropButtonDescrText": "Uživatel s právy ",
 		"newInternal": "Interní",
-		"newInternalText": " si smí samostatně vytvářet rezervace."
+		"newInternalText": " si smí samostatně vytvářet rezervace.",
+		"phone": "Telefonní číslo",
+		"email": "E-mail"
 	},
 	"clients": {
 		"name": "jméno",
