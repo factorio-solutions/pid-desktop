@@ -4,6 +4,8 @@ export const GET_AVAILABLE_USERS = `{
   reservable_users {
     id
     full_name
+    phone
+    email
   }
 }
 `
