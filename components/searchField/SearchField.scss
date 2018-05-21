@@ -29,12 +29,16 @@ ul.scrollable > li {
   display: table;
   width: 95%;
 
+  &.displayNone {
+    display: none;
+  }
+
   .contactLabel {
     display: table-row;
     font-size: larger;
   }
 
-  & div.contactInfo {
+  div.contactInfo {
     display: table-row;
     font-size: smaller;
     }
