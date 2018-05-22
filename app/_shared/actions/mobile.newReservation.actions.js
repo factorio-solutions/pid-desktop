@@ -44,7 +44,7 @@ export const clearForm = actionFactory(MOBILE_NEW_RESERVATION_CLEAR_FORM)
 export const setReservationId = actionFactory(MOBILE_NEW_RESERVATION_SET_RESERVATION_ID)
 export const setGuestReservation = actionFactory(MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION)
 export const setAvailableUsers = actionFactory(MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS)
-// export const setUserId = actionFactory(MOBILE_NEW_RESERVATION_SET_USER_ID)
+
 export function setUserId(value) {
   return dispatch => {
     dispatch({ type: MOBILE_NEW_RESERVATION_SET_USER_ID, value })
@@ -268,12 +268,13 @@ export function getAvailableCars() {
     } else {
       const onCars = response => {
         dispatch(setAvailableCars(response.data.user.reservable_cars))
+        dispatch(setCustomModal())
         getState().mobileNewReservation.car_id === undefined && (response.data.user.reservable_cars.length === 1 ?
           dispatch(setCarId(response.data.user.reservable_cars[0].id)) :
           dispatch(setCarId(undefined)))
       }
 
-      request(onCars, GET_USER, { id })
+      id && request(onCars, GET_USER, { id })
     }
   }
 }
@@ -281,7 +282,11 @@ export function getAvailableCars() {
 export function getAvailableUsers() {
   return (dispatch, getState) => {
     if (getState().mobileNewReservation.guestReservation) {
-      requestPromise(GET_AVAILABLE_USERS).then(data => dispatch(setAvailableUsers(data.reservable_users.filter(user => user.id !== getState().mobileHeader.current_user.id))))
+      requestPromise(GET_AVAILABLE_USERS)
+      .then(data => {
+        dispatch(setAvailableUsers(data.reservable_users.filter(user => user.id !== getState().mobileHeader.current_user.id)))
+        dispatch(setCustomModal())
+      })
     }
   }
 }
@@ -312,6 +317,7 @@ export function pickPlaces(noClientDownload) {
     } else {
       dispatch(setFloors([]))
       dispatch(autoselectPlace())
+      dispatch(setCustomModal())
     }
   }
 }
@@ -425,7 +431,7 @@ export function submitReservation(callback) {
 export function checkReservation(reservation, callback = () => {}) {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(setCustomModal(undefined))
+      dispatch(setCustomModal())
       if (response.data.paypal_check_validity) {
         dispatch(payReservation(reservation.payment_url, callback))
       } else {
@@ -435,7 +441,7 @@ export function checkReservation(reservation, callback = () => {}) {
     }
 
     const onCSOBSuccess = response => {
-      dispatch(setCustomModal(undefined))
+      dispatch(setCustomModal())
       dispatch(payReservation(response.data.csob_pay_reservation, callback))
     }
 

@@ -1,0 +1,69 @@
+@import '../../styles/app.components';
+
+.reservationCard {
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: $reservationCardBackground;
+
+  >.title {
+    display: flex;
+    margin-bottom: 10px;
+
+    >div:first-child { // title and garage
+      flex: 1 1;
+      color: $yellow;
+
+      >div:first-child {
+        font-weight: bold;
+      }
+    }
+
+    >div.icon { // the pencil
+      font-size: 32px;
+    }
+  }
+
+  >.footer {
+    display: flex;
+    color:   $white;
+
+    >div:first-child { // times
+      display: flex;
+
+      >div:first-child, >div:last-child {
+        font-weight: bold;
+
+        >div:first-child {
+          margin-bottom: 4px;
+        }
+      }
+
+      >div:nth-child(2) {
+        padding: 0 16px;
+        font-size: 36px;
+      }
+    }
+
+    >div:last-child { // floor place
+      flex: 1 1;
+      text-align: right;
+
+      >div:first-child {
+        font-size: 26px;
+        letter-spacing: 1px;
+      }
+
+      >div:last-child {
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+.gray {
+  color: $lightGray;
+}
+
+.access {
+  padding: 10px;
+}

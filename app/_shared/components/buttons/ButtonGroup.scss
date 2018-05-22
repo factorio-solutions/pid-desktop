@@ -1,0 +1,33 @@
+@import '../../styles/app.components';
+@import './Button';
+
+$border-radius: 8px;
+
+.button {
+  @include colorize($lightLightGray);
+
+  padding:    6px 16px;
+  transition: all .4s ease;
+
+  border:     0;
+  outline:    0;
+  color:      $gray;
+  text-align: center;
+  cursor:     pointer;
+
+  &:first-child {
+    border-top-left-radius:    $border-radius;
+    border-bottom-left-radius: $border-radius;
+  }
+
+  &:last-child {
+    border-top-right-radius:    $border-radius;
+    border-bottom-right-radius: $border-radius;
+  }
+}
+
+.selected {
+  background: $selectedColor;
+  color:      $black;
+  cursor:     default;
+}
