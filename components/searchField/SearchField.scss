@@ -14,9 +14,9 @@
 }
 
 .filter {
-  padding:          10px;
+  padding:          1ex;
   border:           0;
-  border-bottom:    1px solid $gray;
+  border-bottom:    0.1ex solid $gray;
   outline:          none;
   text-align:       center;
   width: -webkit-fill-available;
@@ -88,7 +88,7 @@ ul.scrollable > li {
 }
 
 .float {
-  font-size: 16px;
+  font-size: 1em;
   opacity:   0;
 }
 
