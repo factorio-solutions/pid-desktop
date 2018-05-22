@@ -13,7 +13,8 @@ import ButtonGroupButton from './ButtonGroupButton'
 export default function ButtonGroup({ buttons }) {
   return (
     <span>
-      {buttons.map(button => (<ButtonGroupButton
+      {buttons.map((button, index) => (<ButtonGroupButton
+        key={index}
         content={button.content}
         onClick={button.onClick}
         state={button.selected && 'selected'}

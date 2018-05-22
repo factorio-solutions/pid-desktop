@@ -44,7 +44,7 @@ export const clearForm = actionFactory(MOBILE_NEW_RESERVATION_CLEAR_FORM)
 export const setReservationId = actionFactory(MOBILE_NEW_RESERVATION_SET_RESERVATION_ID)
 export const setGuestReservation = actionFactory(MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION)
 export const setAvailableUsers = actionFactory(MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS)
-// export const setUserId = actionFactory(MOBILE_NEW_RESERVATION_SET_USER_ID)
+
 export function setUserId(value) {
   return dispatch => {
     dispatch({ type: MOBILE_NEW_RESERVATION_SET_USER_ID, value })

@@ -18,6 +18,10 @@ $swiper-transition-length: .3s;
   background-color: $swiper-background-color;
   color:            $white;
 
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
   >div {
     padding:    $swiper-padding;
     text-align: center;
@@ -40,14 +44,20 @@ $swiper-transition-length: .3s;
       position: absolute;
       top:      0;
 
-      transition: color $swiper-transition-length ease, border-color $swiper-transition-length ease;
+      transition: color $swiper-transition-length ease, border-color $swiper-transition-length ease, border $swiper-transition-length ease;
 
       border-color:     $white;
       background-color: $swiper-background-color;
       color:            $white;
 
-      >i {
+      >div {
+        width:  100%;
+        height: 100%;
         pointer-events: none;
+
+        >i {
+          pointer-events: none;
+        }
       }
 
       &.isReseting {
@@ -56,12 +66,32 @@ $swiper-transition-length: .3s;
     }
   }
 
-  &.swiped {
+  &.swipedSuccess {
     color: $green;
 
     >div.slider {
       border-color: $green;
       color:        $green;
     }
+  }
+
+  &.swipedError {
+    color: $red;
+
+    >div.slider {
+      border-color: $red;
+      color:        $red;
+    }
+  }
+}
+
+.rotating {
+  @include rotating(2s);
+
+  border-top:    2px solid $gray !important;
+  border-bottom: 2px solid $gray !important;
+
+  >div {
+    @include rotating-reverse(2s);
   }
 }
