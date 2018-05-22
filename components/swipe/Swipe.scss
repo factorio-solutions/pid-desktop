@@ -1,0 +1,97 @@
+@import '../../styles/app.components';
+
+$swiper-background-color:  #292929;
+$swiper-height:            38px;
+$swiper-padding:           10px;
+$swiper-icon-border-width: 2px;
+$swiper-transition-length: .3s;
+
+
+.swipe {
+  display:  flex;
+  position: relative;
+  height:   $swiper-height;
+
+  transition:    color $swiper-transition-length ease;
+  border-radius: $swiper-height / 2;
+
+  background-color: $swiper-background-color;
+  color:            $white;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  >div {
+    padding:    $swiper-padding;
+    text-align: center;
+
+    &:nth-child(2) {
+      flex: 1 1;
+    }
+
+    &:first-child, &:nth-child(3), &.slider {
+      width:  $swiper-height - 2 * $swiper-icon-border-width - 2 * $swiper-padding;
+      height: $swiper-height - 2 * $swiper-icon-border-width - 2 * $swiper-padding;
+
+      border:        $swiper-icon-border-width solid $gray;
+      border-radius: $swiper-height / 2;
+
+      color: $gray;
+    }
+
+    &.slider {
+      position: absolute;
+      top:      0;
+
+      transition: color $swiper-transition-length ease, border-color $swiper-transition-length ease, border $swiper-transition-length ease;
+
+      border-color:     $white;
+      background-color: $swiper-background-color;
+      color:            $white;
+
+      >div {
+        width:  100%;
+        height: 100%;
+        pointer-events: none;
+
+        >i {
+          pointer-events: none;
+        }
+      }
+
+      &.isReseting {
+        transition: left .75s ease;
+      }
+    }
+  }
+
+  &.swipedSuccess {
+    color: $green;
+
+    >div.slider {
+      border-color: $green;
+      color:        $green;
+    }
+  }
+
+  &.swipedError {
+    color: $red;
+
+    >div.slider {
+      border-color: $red;
+      color:        $red;
+    }
+  }
+}
+
+.rotating {
+  @include rotating(2s);
+
+  border-top:    2px solid $gray !important;
+  border-bottom: 2px solid $gray !important;
+
+  >div {
+    @include rotating-reverse(2s);
+  }
+}

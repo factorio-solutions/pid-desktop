@@ -1,9 +1,9 @@
-import { request } from '../helpers/request'
+import { request }   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 
 import { GET_CURRENT_USER, GET_RESERVABLE_GARAGES } from '../queries/mobile.header.queries'
-import { REVOKE_TOKEN } from '../queries/login.queries'
-import { t } from '../modules/localization/localization'
+import { REVOKE_TOKEN }                             from '../queries/login.queries'
+import { t }                                        from '../modules/localization/localization'
 
 
 export const MOBILE_MENU_SET_GARAGES = 'MOBILE_MENU_SET_GARAGES'
@@ -13,6 +13,7 @@ export const MOBILE_MENU_SET_SHOW_MENU = 'MOBILE_MENU_SET_SHOW_MENU'
 export const MOBILE_MENU_SET_ERROR = 'MOBILE_MENU_SET_ERROR'
 export const MOBILE_MENU_SET_CUSTOM_MODAL = 'PAGE_BASE_SET_CUSTOM_MODAL'
 export const SET_MOBILE_LANGUAGE = 'SET_MOBILE_LANGUAGE'
+export const SET_MOBILE_PERSONAL = 'SET_MOBILE_PERSONAL'
 
 
 export const resetStore = actionFactory('RESET')
@@ -23,7 +24,18 @@ export const setShowMenu = actionFactory(MOBILE_MENU_SET_SHOW_MENU)
 export const setError = actionFactory(MOBILE_MENU_SET_ERROR)
 export const setCustomModal = actionFactory(MOBILE_MENU_SET_CUSTOM_MODAL)
 export const setLanguage = actionFactory(SET_MOBILE_LANGUAGE)
+export const setPersonal = actionFactory(SET_MOBILE_PERSONAL)
 
+
+export function hideSplashscreen() {
+  return () => {
+    if (navigator.splashscreen) {
+      setTimeout(() => {
+        navigator.splashscreen.hide()
+      }, 500)
+    }
+  }
+}
 
 export function initGarages() {
   return dispatch => {
