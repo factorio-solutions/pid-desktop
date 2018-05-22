@@ -174,7 +174,7 @@ export function removeDiacritics() {
 
 export function setFromDate(value) {
   return (dispatch, getState) => {
-    
+
     let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
     let fromDate = moment(value, MOMENT_DATE_FORMAT)
     let toValue = null
@@ -206,13 +206,9 @@ export function setFromTime(value) {
 
 export function formatFrom() {
   return (dispatch, getState) => {
-    let fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
+    const fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
     let toValue = null
-    const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
 
-    if (fromValue.diff(now, 'minutes') < 0) { // cannot create reservations in the past
-      fromValue = now
-    }
 
     if (moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT).isValid() &&
         moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
@@ -318,12 +314,6 @@ export function setPrice() {
 export function toggleHighlight() {
   return (dispatch, getState) => {
     dispatch(setHighlight(!getState().newReservation.highlight))
-  }
-}
-
-export function beginsToNow() {
-  return dispatch => {
-    dispatch(setFrom(roundTime(moment())))
   }
 }
 
@@ -665,50 +655,61 @@ export function submitReservation(id) {
              )
     }
 
-    if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
-      requestPromise(USER_AVAILABLE, {
-        user: {
-          email:     state.email.value.toLowerCase(),
-          full_name: state.name.value,
-          phone:     state.phone.value.replace(/\s/g, ''),
-          language:  state.language,
-          onetime:   state.user.id === -2
-        },
-        client_user: state.client_id && state.user.id === -1 ? {
-          client_id: +state.client_id,
-          ...state.user.rights,
-          message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
-        } : null
-      }).then(data => {
-        if (data.user_by_email !== null) { // if the user exists
-          // invite to client
-          if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
-            requestPromise(ADD_CLIENT_USER, {
-              user_id:     data.user_by_email.id,
-              client_user: {
-                client_id: +state.client_id,
-                ...state.user.rights,
-                message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
-              }
-            }).then(response => {
-              console.log('client successfully created', response)
+    const sendNewReservationRequest = () => {
+      if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
+        requestPromise(USER_AVAILABLE, {
+          user: {
+            email:     state.email.value.toLowerCase(),
+            full_name: state.name.value,
+            phone:     state.phone.value.replace(/\s/g, ''),
+            language:  state.language,
+            onetime:   state.user.id === -2
+          },
+          client_user: state.client_id && state.user.id === -1 ? {
+            client_id: +state.client_id,
+            ...state.user.rights,
+            message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
+          } : null
+        }).then(data => {
+          if (data.user_by_email !== null) { // if the user exists
+            // invite to client
+            if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
+              requestPromise(ADD_CLIENT_USER, {
+                user_id:     data.user_by_email.id,
+                client_user: {
+                  client_id: +state.client_id,
+                  ...state.user.rights,
+                  message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
+                }
+              }).then(response => {
+                console.log('client successfully created', response)
+                createTheReservation(data.user_by_email.id)
+              })
+            } else { // no client selected, create reservation
               createTheReservation(data.user_by_email.id)
-            })
-          } else { // no client selected, create reservation
-            createTheReservation(data.user_by_email.id)
+            }
+          } else { // user is current user
+            createTheReservation()
           }
-        } else { // user is current user
-          createTheReservation()
-        }
-      })
-    } else { // create reservation as normal
-      createTheReservation(state.user.id)
+        })
+      } else { // create reservation as normal
+        createTheReservation(state.user.id)
+      }
+    }
+
+    // check if reservation is being created in the past - warn user about it
+    const fromValue = moment(roundTime(state.from), MOMENT_DATETIME_FORMAT)
+    const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
+    if (fromValue.diff(now, 'minutes') < 0) {
+      dispatch(pageBaseActions.confirm(t([ 'newReservation', 'creatingReservationInPast' ]), sendNewReservationRequest))
+    } else {
+      sendNewReservationRequest()
     }
   }
 }
 
 export function paymentUnsucessfull() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(pageBaseActions.setError(t([ 'newReservation', 'paymentUnsucessfull' ])))
     nav.to('/reservations')
   }

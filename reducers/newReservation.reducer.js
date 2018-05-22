@@ -65,10 +65,10 @@ const defaultState = {
 
   garage: undefined, // loaded garage details // GARAGE ID IS IN HERE
 
-  fromTime:     '',
-  fromDate:     '',
-  toTime:       '',
-  toDate:       '',
+  fromTime: '',
+  fromDate: '',
+  toTime:   '',
+  toDate:   '',
   place_id: undefined, // if of selected place
   price:    undefined,
 
