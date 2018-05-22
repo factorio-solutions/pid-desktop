@@ -19,7 +19,7 @@ export default function MobileMenuButton({ icon, label, onClick, type, state, si
 
   const content = (<div className={styles.centerInDiv} >
     <i className={`${icon} ${styles.icon} ${styles.content}`} aria-hidden="true" />
-    <span className={`${styles.label} ${styles.content}`}>{label}</span>
+    <span className={styles.content}>{label}</span>
   </div>)
 
   return <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} />

@@ -1129,7 +1129,14 @@
 			"logOut": "log out",
 			"selectGarage": "Select garage",
 			"allGarages": "All garages",
-			"version": "version"
+			"version": "version",
+			"resrevations": "reservations",
+			"notifications": "notifications",
+			"personal": "personal",
+			"work": "work"
+		},
+		"notifications": {
+			"noNewNotifications": "No new notifications."
 		},
 		"login": {
 			"loading": "Loading ...",
@@ -1176,7 +1183,9 @@
 			"garage": "Garage",
 			"place": "Place",
 			"begins": "Begins",
-			"ends": "Ends"
+			"ends": "Ends",
+			"place": "Place",
+			"floor": "Floor"
 		},
 		"newReservation": {
 			"begins": "Begins",

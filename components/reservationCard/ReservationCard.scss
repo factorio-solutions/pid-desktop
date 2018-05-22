@@ -18,7 +18,7 @@
       }
     }
 
-    >div:last-child { // the pencil
+    >div.icon { // the pencil
       font-size: 32px;
     }
   }
@@ -62,4 +62,8 @@
 
 .gray {
   color: $lightGray;
+}
+
+.access {
+  padding: 10px;
 }

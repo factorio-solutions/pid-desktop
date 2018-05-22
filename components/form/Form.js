@@ -7,7 +7,10 @@ import styles from './Form.scss'
 
 export default class Form extends Component {
   static propTypes = {
-    children:    PropTypes.object,
+    children: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     onSubmit:    PropTypes.func.isRequired,
     onHighlight: PropTypes.func,
     onBack:      PropTypes.func,

@@ -6,7 +6,9 @@ import styles from './Swipe.scss'
 export default class Swipe extends Component {
   static propTypes = {
     label:   PropTypes.string.isRequired,
-    onSwipe: PropTypes.func.isRequired
+    onSwipe: PropTypes.func.isRequired,
+    success: PropTypes.bool,
+    error:   PropTypes.string
   }
 
   constructor(props) {
@@ -16,6 +18,12 @@ export default class Swipe extends Component {
       sliderPosition: 0,
       swiped:         false,
       reseting:       false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.success !== undefined) {
+      setTimeout(this.resetSlider, 1000)
     }
   }
 
@@ -30,8 +38,7 @@ export default class Swipe extends Component {
   onDragOrMoveEnd = event => {
     if (this.state.sliderPosition / this.maxSliderLeft() > 0.95) {
       this.props.onSwipe()
-      this.setState({ ...this.state, swiped: true })
-      setTimeout(this.resetSlider, 1000)
+      this.setState({ ...this.state, swiped: true, sliderPosition: this.maxSliderLeft() })
     } else {
       this.resetSlider()
     }
@@ -54,16 +61,25 @@ export default class Swipe extends Component {
   createDimensionsRef = variableName => element => { if (element) this[variableName] = element.getBoundingClientRect() }
 
   render() {
-    const { label } = this.props
+    const { label, success, error } = this.props
 
     return (
-      <div className={`${styles.swipe} ${this.state.swiped && styles.swiped}`} ref={this.createDimensionsRef('trackDimensions')}>
+      <div
+        className={`${styles.swipe}
+          ${this.state.swiped && success === true && styles.swipedSuccess}
+          ${this.state.swiped && success === false && styles.swipedError}
+        `}
+        ref={this.createDimensionsRef('trackDimensions')}
+      >
         <div><i className="fa fa-lock" aria-hidden="true" /></div>
-        <div>{label}</div>
+        <div>{error || label}</div>
         <div><i className="fa fa-unlock-alt" aria-hidden="true" /></div>
 
         <div
-          className={`${styles.slider} ${this.state.reseting && styles.isReseting}`}
+          className={`${styles.slider}
+            ${this.state.swiped && !this.state.reseting && success === undefined && styles.rotating}
+            ${this.state.reseting && styles.isReseting}
+          `}
           style={{ left: `${this.state.sliderPosition}px` }}
           ref={this.createDimensionsRef('sliderDimensions')}
 
@@ -74,7 +90,12 @@ export default class Swipe extends Component {
           onTouchEnd={this.onDragOrMoveEnd}
           onDragEnd={this.onDragOrMoveEnd}
         >
-          <i className={`fa fa-${this.state.swiped ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
+          <div>
+            {/* this.state.swiped && !this.state.reseting && success === undefined ?
+              <i className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" /> :
+            */}
+            <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
+          </div>
         </div>
       </div>
     )
