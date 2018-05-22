@@ -173,8 +173,6 @@ class NewReservationPage extends Component {
       }))
     })
 
-    const beginsInlineMenu = <span className={styles.clickable} onClick={actions.beginsToNow}>{t([ 'newReservation', 'now' ])}</span>
-
     const endsInlineMenu = (<ButtonStack style="horizontal" divider={<span> | </span>}>
       <span className={`${state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDuration} >{t([ 'newReservation', 'duration' ])}</span>
       <span className={`${!state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDate} >{t([ 'newReservation', 'date' ])}</span>
@@ -367,7 +365,6 @@ class NewReservationPage extends Component {
                         label={t([ 'newReservation', 'begins' ])}
                         error={t([ 'newReservation', 'invalidaDate' ])}
                         value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
-                        inlineMenu={beginsInlineMenu}
                       />
                       <TimeInput
                         editable={!ongoing}
@@ -376,7 +373,6 @@ class NewReservationPage extends Component {
                         label={t([ 'newReservation', 'begins' ])}
                         error={t([ 'newReservation', 'invalidaDate' ])}
                         value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
-                        inlineMenu={beginsInlineMenu}
                       />
                     </div>
                     <div className={styles.middleCollumn} >
@@ -390,7 +386,6 @@ class NewReservationPage extends Component {
                         label={t([ 'newReservation', 'ends' ])}
                         error={t([ 'newReservation', 'invalidaDate' ])}
                         value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
-                        inlineMenu={beginsInlineMenu}
                       />
                       <TimeInput
                         editable={!ongoing}
@@ -399,7 +394,6 @@ class NewReservationPage extends Component {
                         label={t([ 'newReservation', 'ends' ])}
                         error={t([ 'newReservation', 'invalidaDate' ])}
                         value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
-                        inlineMenu={beginsInlineMenu}
                       />
                     </div>
                   </div>

@@ -243,7 +243,8 @@
 		"smsText": "SMS text",
 		"character": "characters",
 		"removeDiacritics": "remove diacritics",
-		"perHour": " / hour"
+		"perHour": " / hour",
+		"creatingReservationInPast": "You are creating reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?"
 	},
 	"clients": {
 		"name": "name",

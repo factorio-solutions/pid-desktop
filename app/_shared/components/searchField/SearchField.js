@@ -104,8 +104,6 @@ export default class SearchField extends Component {
         ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
 
     let list = content.sort(sorter).map((item, index) => {
-      console.log(item)
-
       const onClick = e => {
         e.stopPropagation()
         item.onClick && item.onClick()
