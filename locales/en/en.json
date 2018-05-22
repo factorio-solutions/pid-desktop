@@ -1167,23 +1167,7 @@
 		"terms": {
 			"content": "You can find our Terms of Service on our website."
 		},
-		"menu": {
-			"newNotifications": "New notifications",
-			"access": "Access",
-			"myReservations": "My reservations",
-			"guestReservations": "Regular guest"
-		},
-		"access": {
-			"floor": "Floor",
-			"place": "Spot",
-			"noOngoingReservations": "No ongoing reservations",
-			"inSelectedGarage": "in selected garage"
-		},
 		"reservation": {
-			"garage": "Garage",
-			"place": "Place",
-			"begins": "Begins",
-			"ends": "Ends",
 			"place": "Place",
 			"floor": "Floor"
 		},
