@@ -90,7 +90,7 @@ export const GET_GARAGE_DETAILS_GENERAL =`query ($id: Id!) {
   }
 }`
 
-export const GET_GARAGE_DETAILS_FLOORS =`query ($id: Id!) {
+export const GET_GARAGE_DETAILS_FLOORS = `query ($id: Id!) {
   garage(id: $id) {
     id
     length
@@ -98,8 +98,14 @@ export const GET_GARAGE_DETAILS_FLOORS =`query ($id: Id!) {
     width
     weight
     floors {
+      id
       label
       scheme
+      places {
+        id
+        label
+        priority
+      }
     }
   }
 }`
