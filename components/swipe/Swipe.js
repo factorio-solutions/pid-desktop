@@ -91,9 +91,6 @@ export default class Swipe extends Component {
           onDragEnd={this.onDragOrMoveEnd}
         >
           <div>
-            {/* this.state.swiped && !this.state.reseting && success === undefined ?
-              <i className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" /> :
-            */}
             <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
           </div>
         </div>

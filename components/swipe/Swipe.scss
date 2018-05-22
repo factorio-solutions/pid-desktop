@@ -1,7 +1,7 @@
 @import '../../styles/app.components';
 
 $swiper-background-color:  #292929;
-$swiper-height:            38px;
+$swiper-height:            50px;
 $swiper-padding:           10px;
 $swiper-icon-border-width: 2px;
 $swiper-transition-length: .3s;
@@ -18,6 +18,10 @@ $swiper-transition-length: .3s;
   background-color: $swiper-background-color;
   color:            $white;
 
+  i {
+    font-size: 24px;
+  }
+
   &:not(:last-child) {
     margin-bottom: 10px;
   }
@@ -27,7 +31,8 @@ $swiper-transition-length: .3s;
     text-align: center;
 
     &:nth-child(2) {
-      flex: 1 1;
+      flex:   1 1;
+      margin: auto 0;
     }
 
     &:first-child, &:nth-child(3), &.slider {
