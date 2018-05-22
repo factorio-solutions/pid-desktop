@@ -64,9 +64,11 @@ export class Page extends Component {
 
   componentDidMount() {
     window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
-    const { actions, hideDropdown, hideHeader } = this.props
+    const { state, actions, hideDropdown, hideHeader } = this.props
     actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
     !hideHeader && !hideDropdown && actions.initGarages()
+
+    state.current_user && !state.current_user.secretary && actions.setPersonal(true)
   }
 
   componentWillReceiveProps(newProps) {
@@ -129,11 +131,11 @@ export class Page extends Component {
               onClick:  () => actions.setPersonal(true),
               selected: state.personal
             },
-            { content:  t([ 'mobileApp', 'page', 'work' ]),
+            state.current_user && state.current_user.secretary && { content:  t([ 'mobileApp', 'page', 'work' ]),
               onClick:  () => actions.setPersonal(false),
               selected: !state.personal
             }
-          ]}
+          ].filter(o => o)}
         />
       </div>
       {divider}
