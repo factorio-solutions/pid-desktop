@@ -463,7 +463,7 @@ export function downloadUser(id, rights) {
     Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
       values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
+      dispatch(setUser({ ...(values[0].user ? values[0].user : { id }),
         availableGarages: values[1].reservable_garages,
         availableClients: values[2].reservable_clients,
         rights // Client user rights
