@@ -30,10 +30,17 @@ export const setPersonal = actionFactory(SET_MOBILE_PERSONAL)
 export function hideSplashscreen() {
   return () => {
     if (navigator.splashscreen) {
-      setTimeout(() => {
-        navigator.splashscreen.hide()
-      }, 500)
+      setTimeout(() => navigator.splashscreen.hide, 1000)
     }
+  }
+}
+
+export function hideCustomSplashscreen() {
+  return () => {
+    setTimeout(() => {
+      document.getElementById('custom-splashscreen')
+      .classList.add('hidden')
+    }, 1500)
   }
 }
 
