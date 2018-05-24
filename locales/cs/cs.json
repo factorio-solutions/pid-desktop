@@ -222,10 +222,16 @@
 		"validtyCheck": "Provádím kontrolu platnosti ...",
 		"tokenInvalid": "Tato transakce již není platná a rezervace bude smazána",
 		"creatingNewPayment": "Vytvářím platbu ...",
-		"newHost": "Nový pravidelný host",
+		"newHost": "Pravidelný host",
 		"newHostText": " si smí rezervace navrhovat, ale potřebuje schválení",
+		"newInternal": "Nový internal",
+		"newInternalText": " si smí samostatně vytvářet rezervace.",
+		"dropButtonText": "Nový uživatel s právy ",
+		"dropButtonDescrText": "Uživatel s právy",
 		"hostsName": "Jméno pravidelného hosta",
+		"phone": "Telefonní číslo",
 		"hostsPhone": "Telefon pravidelného hosta",
+		"email": "E-mail",
 		"hostsEmail": "Email pravidelného hosta",
 		"visitorsName": "Jméno návštěvníka",
 		"visitorsPhone": "Telefon návštěvníka",
@@ -235,7 +241,7 @@
 		"noFreePlace": "Žádná volná místa",
 		"note": "Poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
-		"onetimeVisitText": " se nestane členem klienta. Nevytváří ani nenavrhuje rezervace.",
+		"onetimeVisitText": " si smí samostatně vytvářet rezervace.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
 		"languageSelector": "Zvolte jazyk komunikace",
@@ -245,10 +251,7 @@
 		"character": "znaků",
 		"removeDiacritics": "odstranit diakritiku",
 		"perHour": " / hod.",
-		"dropButtonText": "Nový uživatel s právy ",
-		"dropButtonDescrText": "Uživatel s právy ",
-		"newInternal": "Interní",
-		"newInternalText": " si smí samostatně vytvářet rezervace."
+		"creatingReservationInPast": "Vytváříte rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?"
 	},
 	"clients": {
 		"name": "jméno",
@@ -930,7 +933,9 @@
 		"invoicePaidLabel": "Faktura uhrazena",
 		"invoiceIncorect": "Stornovat fakturu",
 		"donwloadExcel": "Stáhnout excel",
-		"donwloadInvoices": "Stáhnout faktury"
+		"donwloadInvoices": "Stáhnout faktury",
+		"donwloadXML": "Pohoda XML",
+		"selectYourPohodaIc": "Zvolte IČ společnosti pro kterou účtujete:"
 	},
 	"resetPassword": {
 		"send": "Obnova hesla byla odeslána na Váš e-mail.",
@@ -951,7 +956,7 @@
 		"startingMarketing": "Aktualizuji Váš plán fakturace. Přesměrovávám ...",
 		"cannotBeChanged": "Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.",
 		"flexiplace": "Flexi místo",
-		"flexiplaceDescription": " reservations will be regrouped to maximize usage of parking places.",
+		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální",
 		"showApiKey": "Zobrazit API endpoint",
 		"regenerateApiKey": "Vygenerovat nový API endpoint",
 		"3rdPartyIntegration": "Integrace 3. stran",
@@ -1135,7 +1140,14 @@
 			"logOut": "odhlásit",
 			"selectGarage": "Zvolte garáž",
 			"allGarages": "Všechny garáže",
-			"version": "verze"
+			"version": "verze",
+			"resrevations": "rezervace",
+			"notifications": "notifikace",
+			"personal": "osobní",
+			"work": "pracovní"
+		},
+		"notifications": {
+			"noNewNotifications": "Žádné nové notifikace"
 		},
 		"login": {
 			"loading": "Načítám ...",
@@ -1166,23 +1178,9 @@
 		"terms": {
 			"content": "Podmínky používání naleznete na našich webových stránkách."
 		},
-		"menu": {
-			"newNotifications": "Nová upozornění",
-			"access": "Přístup",
-			"myReservations": "Moje rezervace",
-			"guestReservations": "Pravidelný host"
-		},
-		"access": {
-			"floor": "Podlaží",
-			"place": "Místo",
-			"noOngoingReservations": "Žádné probíhající rezervace",
-			"inSelectedGarage": "ve zvolené garáži"
-		},
 		"reservation": {
-			"garage": "Garáž",
-			"place": "Místo",
-			"begins": "Začíná",
-			"ends": "Končí"
+			"floor": "Podlaží",
+			"place": "Místo"
 		},
 		"newReservation": {
 			"begins": "Začíná",
