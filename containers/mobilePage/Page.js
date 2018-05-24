@@ -70,7 +70,6 @@ export class Page extends Component {
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
     actions.hideSplashscreen()
-    console.log('page did mount')
   }
 
   componentWillReceiveProps(newProps) {
