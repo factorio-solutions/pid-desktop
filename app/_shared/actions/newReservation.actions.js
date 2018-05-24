@@ -248,14 +248,14 @@ export function setToDate(value) {
 
 export function setToTime(value) {
   return (dispatch, getState) => {
-    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let toTime = moment(value, MOMENT_TIME_FORMAT)
-    let fromValue = null
+    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const toTime = moment(value, MOMENT_TIME_FORMAT)
+    const fromValue = null
     to.set('hour', toTime.get('hour'))
     to.set('minute', toTime.get('minute'))
     dispatch({ type:  NEW_RESERVATION_SET_TO,
-      value:   to.format(MOMENT_DATETIME_FORMAT),
-      from:    fromValue
+      value: to.format(MOMENT_DATETIME_FORMAT),
+      from:  fromValue
     })
     dispatch(formatTo())
   }
@@ -341,16 +341,12 @@ export function roundTime(time) {
 export function setInitialStore(id) {
   return (dispatch, getState) => {
     dispatch(setLoading(true))
-    dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
-    dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
-    dispatch(formatFrom())
-    dispatch(formatTo())
-
+    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'loading' ])}</div>))
 
     const availableUsersPromise = new Promise((resolve, reject) => {
       dispatch(setLoading(true))
       const onSuccess = response => {
-        dispatch(setLoading(false))
+        // dispatch(setLoading(false))
         if (response.data !== undefined) {
           resolve(response.data)
         } else {
@@ -365,7 +361,7 @@ export function setInitialStore(id) {
       if (id) {
         dispatch(setLoading(true))
         const onSuccess = response => {
-          dispatch(setLoading(false))
+          // dispatch(setLoading(false))
           if (response.hasOwnProperty('data')) {
             resolve(response.data)
           } else {
@@ -378,6 +374,8 @@ export function setInitialStore(id) {
         resolve(undefined)
       }
     })
+
+    const hideLoading = () => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
 
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
       const users = values[0].reservable_users
@@ -407,7 +405,7 @@ export function setInitialStore(id) {
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(setNote(values[1].reservation.note))
         dispatch(setReservation(values[1].reservation))
-        dispatch(downloadUser(values[1].reservation.user_id))
+        dispatch(downloadUser(values[1].reservation.user_id, undefined, hideLoading))
         dispatch(setClientId(values[1].reservation.client_id))
         values[1].reservation.car.temporary ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate)) : dispatch(setCarId(values[1].reservation.car.id))
         dispatch(setFrom(moment(values[1].reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
@@ -415,8 +413,15 @@ export function setInitialStore(id) {
         dispatch(setPlace(values[1].reservation.place))
       } else {
         dispatch(setReservation(undefined))
+        dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
+        dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
+        dispatch(formatFrom())
+        dispatch(formatTo())
         if (users.length === 1) {
-          dispatch(downloadUser(users[0].id))
+          dispatch(downloadUser(users[0].id, undefined, hideLoading))
+        } else {  
+          console.log('Init')        
+          hideLoading()
         }
       }
     }).catch(error => { // error
@@ -426,7 +431,7 @@ export function setInitialStore(id) {
   }
 }
 
-export function downloadUser(id, rights) {
+export function downloadUser(id, rights, callback) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     dispatch(setLoading(true))
@@ -468,23 +473,38 @@ export function downloadUser(id, rights) {
         availableClients: values[2].reservable_clients,
         rights // Client user rights
       }))
+      let callbackCalled = false;
       if (values[0].user && !values[0].user.last_active) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
         dispatch(setLanguage(values[0].user.language))
+        if (typeof callback === 'function') {
+          console.log('User download')
+          callback()
+          callbackCalled = true
+        }
       }
       if (getState().newReservation.reservation) { // download garage
-        dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
+        dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id, callback))
+        callbackCalled = true        
       }
       if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-        dispatch(downloadGarage(values[1].reservable_garages[0].id))
+        dispatch(downloadGarage(values[1].reservable_garages[0].id, callback))
+        callbackCalled = true        
       }
       if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
+        if (typeof callback === 'function' && !callbackCalled) {
+          console.log('User download - one car available')
+          callback()
+        }
       }
 
-      dispatch(setLoading(false))
+      // dispatch(setLoading(false))
+      // if (typeof callback === 'function') {
+      //   callback()
+      // }
     }).catch(error => {
       dispatch(setLoading(false))
       throw (error)
@@ -506,7 +526,7 @@ function clientsPromise(user_id, garage_id) {
   })
 }
 
-export function downloadGarage(id) {
+export function downloadGarage(id, callback) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     new Promise((resolve, reject) => {
@@ -580,7 +600,13 @@ export function downloadGarage(id) {
         })
       })
       dispatch(setGarage(garage))
-      dispatch(autoSelectPlace())
+      if (!state.reservation) {
+        dispatch(autoSelectPlace())
+      }
+      if (typeof callback === 'function') {
+        console.log('garage hide loading')
+        callback()
+      }
     })
   }
 }
@@ -602,7 +628,6 @@ export function autoSelectPlace() {
           }
         }, highestPriorityPlace)
       }, undefined)
-
       dispatch(setPlace(selectedPlace))
     }
   }
