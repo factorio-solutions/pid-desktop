@@ -12,31 +12,86 @@ import {
 } from '../queries/mobile.reservations.queries'
 
 
+export const RESERVATIONS_PER_PAGE = 10
 export const MOBILE_RESERVATIONS_SET_RESERVATIONS = 'MOBILE_RESERVATIONS_SET_RESERVATIONS'
 export const MOBILE_RESERVATIONS_SET_BLE_DEVICES = 'MOBILE_RESERVATIONS_SET_BLE_DEVICES'
 export const MOBILE_RESERVATIONS_SET_OPENED = 'MOBILE_RESERVATIONS_SET_OPENED'
 export const MOBILE_RESERVATIONS_SET_FIND = 'MOBILE_RESERVATIONS_SET_FIND'
+export const MOBILE_RESERVATIONS_SET_PAGINATION = 'MOBILE_RESERVATIONS_SET_PAGINATION'
+export const MOBILE_RESERVATIONS_RESET_PAGINATION = 'MOBILE_RESERVATIONS_RESET_PAGINATION'
 
 export const setReservations = actionFactory(MOBILE_RESERVATIONS_SET_RESERVATIONS)
 export const setBleDevices = actionFactory(MOBILE_RESERVATIONS_SET_BLE_DEVICES)
-export const setFind = actionFactory(MOBILE_RESERVATIONS_SET_FIND)
+export const resetPagination = actionFactory(MOBILE_RESERVATIONS_RESET_PAGINATION)
 
+export function setPagination(page, canLoadMore) {
+  return { type: MOBILE_RESERVATIONS_SET_PAGINATION, page, canLoadMore }
+}
+
+// export const setFind = actionFactory(MOBILE_RESERVATIONS_SET_FIND)
+export function setFind(value) {
+  return dispatch => {
+    dispatch({ type: MOBILE_RESERVATIONS_SET_FIND, value })
+    dispatch(initReservations())
+  }
+}
+
+
+function createPaginationVariables(getState) {
+  const header = getState().mobileHeader
+  const reservations = getState().reservations
+
+  return {
+    count:     RESERVATIONS_PER_PAGE,
+    page:      reservations.currentPage,
+    order_by:  'begins_at',
+    search:    reservations.find ? reservations.find : null,
+    garage_id: header.garage_id,
+    user_id:   header.personal && header.current_user ? header.current_user.id : null,
+    secretary: !header.personal
+  }
+}
 
 export function initReservations() {
-  return dispatch => {
+  return (dispatch, getState) => {
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
+    dispatch(resetPagination())
+
+    requestPromise(
+      MOBILE_GET_RESERVATIONS_QUERY,
+      createPaginationVariables(getState)
+    )
+    .then(response => {
+      const metadata = response.mobile_reservations_meta
+      dispatch(setReservations(response.mobile_reservations))
+      dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
+
+      dispatch(setCustomModal())
+      dispatch(hideCustomSplashscreen())
+    })
+  }
+}
+
+export function loadAnotherReservationsPage() {
+  return (dispatch, getState) => {
+    const paginationVars = createPaginationVariables(getState)
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
 
     requestPromise(
       MOBILE_GET_RESERVATIONS_QUERY,
-      { order_by: 'begins_at',
-        count:    1000 // consider it unlimited xD
+      { ...paginationVars,
+        page: paginationVars.page + 1
       }
     )
     .then(response => {
-      dispatch(setReservations(response.reservations))
-      dispatch(setCustomModal())
+      const metadata = response.mobile_reservations_meta
+      dispatch(setReservations([
+        ...getState().reservations.reservations,
+        ...response.mobile_reservations
+      ]))
+      dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
 
-      dispatch(hideCustomSplashscreen())
+      dispatch(setCustomModal())
     })
   }
 }
