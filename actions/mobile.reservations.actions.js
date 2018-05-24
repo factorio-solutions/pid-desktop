@@ -3,7 +3,7 @@ import actionFactory        from '../helpers/actionFactory'
 import { t }                from '../modules/localization/localization'
 import * as ble             from '../modules/ble/ble'
 import { setCustomModal }   from './pageBase.actions'
-import { hideCustomSplashscreen } from './mobile.header.actions'
+import { hideSplashscreen } from './mobile.header.actions'
 
 import {
   MOBILE_GET_RESERVATIONS_QUERY,
@@ -67,7 +67,7 @@ export function initReservations() {
       dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
 
       dispatch(setCustomModal())
-      dispatch(hideCustomSplashscreen())
+      dispatch(hideSplashscreen())
     })
   }
 }
