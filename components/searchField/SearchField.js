@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
 import CallToActionButton from '../buttons/CallToActionButton'
+import Input              from '../input/Input'
 
 import styles from './SearchField.scss'
 
@@ -14,24 +15,26 @@ import styles from './SearchField.scss'
 
 export default class SearchField extends Component {
   static propTypes = {
-    content:     PropTypes.array.isRequired,
-    selected:    PropTypes.number,
-    onChange:    PropTypes.func,
-    editable:    PropTypes.bool,
-    buttons:     PropTypes.array,
-    placeholder: PropTypes.string
+    dropdownContent: PropTypes.array.isRequired,
+    searchQuery:     PropTypes.string,
+    selected:        PropTypes.number,
+    onChange:        PropTypes.func,
+    editable:        PropTypes.bool,
+    buttons:         PropTypes.array,
+    placeholder:     PropTypes.string
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      selected: this.props.selected,
-      filter:   ''
+      selected: this.props.selected
     }
   }
 
   componentDidMount() {
-    this.filter.focus()
+    if (!this.props.searchQuery) {
+      this.filter.input.focus()
+    }
     this.validateContent(this.props)
   }
 
@@ -44,12 +47,12 @@ export default class SearchField extends Component {
     if (user) {
       this.setState({ ...this.state, filter: user.label })
     } else {
-      this.filter.focus()
+      this.filter.input.focus()
     }
   }
 
   validateContent(nextProps) {
-    if (nextProps.content.length === 1) { // if only one item, autoselect it
+    if (nextProps.dropdownContent.length === 1) { // if only one item, autoselect it
       this.setState({ ...this.state, selected: 0 }) // , this.handleSelection)
     } else {
       this.setState({ ...this.state, selected: nextProps.selected }) // , this.handleSelection)
@@ -68,17 +71,15 @@ export default class SearchField extends Component {
   }
 
   unhide = () => {
-    if (this.props.content.length > 1) {
-      this.ul.style.width = this.filter.getBoundingClientRect().width + 'px'
+    if (this.props.dropdownContent.length > 1) {
+      this.ul.style.width = this.filter.input.getBoundingClientRect().width + 'px'
       this.ul.classList.remove(styles.displayNone)
       this.ul.classList.remove(styles.hidden)
     }
   }
 
-  filterChange = event => this.setState({ ...this.state, filter: event.target.value })
-
   render() {
-    const { content, onChange, buttons, placeholder, editable } = this.props
+    const { dropdownContent, buttons, placeholder, editable, searchQuery, onChange } = this.props
     let buttonsArray = []
 
     const sorter = (a, b) =>
@@ -88,17 +89,15 @@ export default class SearchField extends Component {
         -1 :
         ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
 
-    let list = content.sort(sorter).map((item, index) => {
+    let list = dropdownContent.sort(sorter).map((item, index) => {
       const onClick = e => {
         e.stopPropagation()
         item.onClick && item.onClick()
-        onChange && onChange(index, true) // for form
-        // HACK: filter is not set without setTimeout.
-        setTimeout(() => this.setState({ ...this.state, selected: index, filter: item.label }), 0)
+        onChange && onChange(item.label) // for form
         this.hide()
       }
       const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-      const show = this.state.filter === '' ? true : lowercaseTrimmedLabel.includes(this.state.filter.toLowerCase())
+      const show = searchQuery === '' ? true : lowercaseTrimmedLabel.includes(searchQuery.toLowerCase())
 
       return {
         ...item,
@@ -111,8 +110,8 @@ export default class SearchField extends Component {
             <div>
               <label className={styles.contactLabel}>
                 {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
-                  .split(this.state.filter.toLowerCase() || undefined) // split by filter
-                  .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
+                  .split(searchQuery.toLowerCase() || undefined) // split by filter
+                  .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && searchQuery.length && searchQuery ], [])
                   .filter(o => o !== false)
                   .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
                   .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
@@ -156,15 +155,18 @@ export default class SearchField extends Component {
     list = list.map(o => o.render)
     return (
       <div>
-        <input
-          type="text"
-          className={`${styles.filter} ${!editable && styles.dimmer}`}
-          value={this.state.filter}
-          onChange={this.filterChange}
+        <Input
+          onChange={onChange}
+          value={searchQuery}
+          label={placeholder}
+          // error={t([ 'newReservation', 'licencePlateInvalid' ])}
           placeholder={placeholder}
+          type="text"
+          align="left"
+          // highlight={state.highlight && state.user.id !== -2}
           onFocus={this.toggleDropdown}
           onBlur={this.toggleDropdown}
-          ref={el => this.filter = el}
+          ref={component => this.filter = component}
         />
         <div
           className={`${styles.drop} ${styles.hidden} ${styles.displayNone}`}
