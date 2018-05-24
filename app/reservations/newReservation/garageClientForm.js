@@ -52,7 +52,7 @@ class GarageClientForm extends Component {
           highlight={state.highlight}
           placeholder={t([ 'newReservation', 'selectGarage' ])}
         />
-        {state.user && state.user.availableClients && state.user.availableClients.length > 1 && state.garage &&
+        {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
           <Dropdown
             editable={!ongoing}
             label={t([ 'newReservation', 'selectClient' ])}

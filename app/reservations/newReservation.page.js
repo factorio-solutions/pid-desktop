@@ -1,6 +1,7 @@
 import React, { Component, PropTypes }  from 'react'
 import { connect }                      from 'react-redux'
 import { bindActionCreators }           from 'redux'
+import moment                           from 'moment'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Uneditable       from '../_shared/components/input/Uneditable'
@@ -14,6 +15,9 @@ import NewUserForm      from './newReservation/newUserForm'
 import GarageClientForm from './newReservation/garageClientForm'
 import SmsForm          from './newReservation/smsForm'
 import DateTimeForm     from './newReservation/dateTimeForm'
+import Recurring        from '../_shared/components/recurring/Recurring'
+import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
+
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
@@ -94,7 +98,7 @@ class NewReservationPage extends Component {
   }
 
   render() {
-    const { state, pageBase } = this.props
+    const { state, pageBase, actions } = this.props
 
     const ongoing = state.reservation !== undefined && state.reservation.ongoing
 
@@ -150,7 +154,6 @@ class NewReservationPage extends Component {
         return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
       }
     }
-
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -159,14 +162,15 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && // (state.user && state.user.id > 0) &&
+                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && !state.reservation && // (state.user && state.user.id > 0) &&
                   <SearchField
                     editable={!ongoing}
                     placeholder={t([ 'newReservation', 'selectUser' ])}
-                    content={userDropdown.users}
+                    dropdownContent={userDropdown.users}
                     selected={getUserToSelect()}
                     highlight={state.highlight}
-                    filter
+                    searchQuery={state.name.value}
+                    onChange={actions.setHostName}
                     buttons={userDropdown.buttons}
                   />
                 }
@@ -194,7 +198,7 @@ class NewReservationPage extends Component {
                     ongoing={ongoing}
                   />
                 }
-                {state.client_id &&
+                {state.garage &&
                   <div>
                     <DateTimeForm ongoing={ongoing} />
                     {/* Place and price  */}
@@ -206,8 +210,15 @@ class NewReservationPage extends Component {
                     }
                   </div>
                 }
-                
               </Form>
+              {/* Has to be outside of Form tag because it contains Form */}
+              <Recurring
+                show={state.showRecurring}
+                rule={state.recurringRule}
+                onSubmit={actions.setRecurringRule}
+                showDays={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
+                showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
+              />
             </div>
           </div>
 
@@ -218,7 +229,7 @@ class NewReservationPage extends Component {
                 floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
                 // floors={[]}
                 onPlaceClick={ongoing ? () => {} : this.handlePlaceClick}
-                showEmptyFloors={false}
+                showEmptyFloors={state.reservation} // If reservation is set show Empty floors
               />
             }
           </div>

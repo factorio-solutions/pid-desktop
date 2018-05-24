@@ -55,10 +55,6 @@ class NewUserForm extends Component {
           highlight={state.highlight}
           align="left"
         />
-        <div className={languagesSelector}>
-          <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
-          {AVAILABLE_LANGUAGES.map(this.renderLanguageButton)}
-        </div>
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
@@ -96,6 +92,10 @@ class NewUserForm extends Component {
           value={state.note}
           align="left"
         />
+        <div className={languagesSelector}>
+          <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
+          {AVAILABLE_LANGUAGES.map(this.renderLanguageButton)}
+        </div>
       </div>
     )
   }

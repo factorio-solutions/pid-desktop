@@ -250,7 +250,8 @@
 		"newInternal": "Interní",
 		"newInternalText": " si smí samostatně vytvářet rezervace.",
 		"phone": "Telefonní číslo",
-		"email": "E-mail"
+		"email": "E-mail",
+		"loading": "Načítám ..."
 	},
 	"clients": {
 		"name": "jméno",

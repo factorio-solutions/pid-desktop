@@ -28,6 +28,15 @@ class ExistingUserForm extends Component {
     const { state, actions, ongoing } = this.props
     return (
       <div>
+        {state.reservation &&
+          <Input
+            readOnly="true"
+            value={state.user.full_name}
+            type="text"
+            align="left"
+            label={t([ 'newReservation', 'df' ])}
+          />
+        }
         { state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
           <Input
             readOnly={ongoing}
@@ -56,8 +65,8 @@ class ExistingUserForm extends Component {
 
 export default connect(
   state => {
-    const { user, car_id, carLicencePlate, highlight } = state.newReservation
-    return { state: { user, car_id, carLicencePlate, highlight } }
+    const { user, car_id, carLicencePlate, highlight, reservation } = state.newReservation
+    return { state: { user, car_id, carLicencePlate, highlight, reservation } }
   },
   dispatch => ({ actions: bindActionCreators({ setCarId, setCarLicencePlate }, dispatch) })
 )(ExistingUserForm)

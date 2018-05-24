@@ -8,7 +8,6 @@ import TimeInput   from '../../_shared/components/input/TimeInput'
 import RoundButton from '../../_shared/components/buttons/RoundButton'
 import Input            from '../../_shared/components/input/Input'
 import ButtonStack      from '../../_shared/components/buttonStack/ButtonStack'
-import Recurring        from '../../_shared/components/recurring/Recurring'
 
 import {
   beginsToNow,
@@ -84,7 +83,6 @@ class DateTimeForm extends Component {
           </div>
           <div className={styles.rightCcollumn}>
             <Dateinput
-              editable={!ongoing}
               onBlur={actions.formatTo}
               onChange={actions.setToDate}
               label={t([ 'newReservation', 'ends' ])}
@@ -93,7 +91,6 @@ class DateTimeForm extends Component {
               inlineMenu={beginsInlineMenu}
             />
             <TimeInput
-              editable={!ongoing}
               onBlur={actions.formatTo}
               onChange={actions.setToTime}
               label={t([ 'newReservation', 'ends' ])}
@@ -120,19 +117,13 @@ class DateTimeForm extends Component {
         }
 
         {/* Recurring reservation */}
+        {/* Recurring modal is in newReservationPage because Recurring component contains Form */}
         {state.reservation === undefined &&
           <div className={`${styles.recurringForm} ${overMonth && styles.hidden}`}>
             <span className={`${styles.rule} ${!state.useRecurring && styles.disabled}`} onClick={this.showRecurring}>
-              {state.recurringRule ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}
+              {(state.useRecurring) ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}
             </span>
             <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={this.showRecurring} type="action" size="small" />
-            <Recurring
-              show={state.showRecurring}
-              rule={state.recurringRule}
-              onSubmit={actions.setRecurringRule}
-              showDays={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
-              showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
-            />
           </div>
         }
       </div>
@@ -142,8 +133,8 @@ class DateTimeForm extends Component {
 
 export default connect(
   state => {
-    const { from, to, recurringRule } = state.newReservation
-    return { state: { from, to, recurringRule } }
+    const { from, to, recurringRule, useRecurring } = state.newReservation
+    return { state: { from, to, recurringRule, useRecurring } }
   },
   dispatch => ({ actions: bindActionCreators({
     beginsToNow,
