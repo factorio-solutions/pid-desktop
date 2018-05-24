@@ -170,8 +170,8 @@
 		"editContractHint": "Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.",
 		"unredNotifications": {
 			"one": "Masz jedną nieprzeczytaną wiadomość.",
-			"few": "PL: pageBase.unredNotifications.few",
-			"many": "PL: pageBase.unredNotifications.many",
+			"few": "Masz %(count)s nieprzeczytane wiadomości",
+			"many": "Masz %(count)s nieprzeczytanych wiadomości.",
 			"other": "Masz %(count)s nieprzeczytanych wiadomości."
 		},
 		"analytics": "Analiza",
@@ -223,8 +223,15 @@
 		"tokenInvalid": "Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.",
 		"creatingNewPayment": "Wytwarzam płatność...",
 		"newHost": "Nowy regularny gość",
+		"newHostText": "PL: newReservation.newHostText",
+		"newInternal": "PL: newReservation.newInternal",
+		"newInternalText": "PL: newReservation.newInternalText",
+		"dropButtonText": "PL: newReservation.dropButtonText",
+		"dropButtonDescrText": "PL: newReservation.dropButtonDescrText",
 		"hostsName": "Nazwisko regularnego gościa",
+		"phone": "PL: newReservation.phone",
 		"hostsPhone": "Telefon regularnego gościa",
+		"email": "PL: newReservation.email",
 		"hostsEmail": "E-mail regularnego gościa",
 		"visitorsName": "Nazwisko odwiedzającego",
 		"visitorsPhone": "Telefon odwiedzającego",
@@ -234,6 +241,7 @@
 		"noFreePlace": "Brak wolnych miejsc",
 		"note": "Uwagi",
 		"onetimeVisit": "Jednorazowe odwiedziny",
+		"onetimeVisitText": "PL: newReservation.onetimeVisitText",
 		"fillInContact": "PL: newReservation.fillInContact",
 		"paidByHost": "Za rezerwację płaci gość",
 		"languageSelector": "Wybierz język komunikacji",
@@ -242,7 +250,8 @@
 		"smsText": "Tekst SMS",
 		"character": "znaków",
 		"removeDiacritics": "usunąć polskie znaki",
-		"perHour": "PL: newReservation.perHour"
+		"perHour": "PL: newReservation.perHour",
+		"creatingReservationInPast": "PL: newReservation.creatingReservationInPast"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -808,10 +817,10 @@
 		"garage": "Garaż",
 		"floor": "Piętro",
 		"place": "Miejsce",
-		"csob": "PL: newReservationOverview.csob",
-		"paypal": "PL: newReservationOverview.paypal",
-		"raiffeisenbank": "PL: newReservationOverview.raiffeisenbank",
-		"paymentMethod": "PL: newReservationOverview.paymentMethod"
+		"csob": "ČSOB - płatność online",
+		"paypal": "PayPal",
+		"raiffeisenbank": "Raiffeisenbank - płatność online",
+		"paymentMethod": "Metoda płatności"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Jestem właścicielem(-ką) garażu",
@@ -924,7 +933,9 @@
 		"invoicePaidLabel": "Faktura została zapłacona",
 		"invoiceIncorect": "Anulować fakturę",
 		"donwloadExcel": "Ściągnąć excel",
-		"donwloadInvoices": "Ściągnąć faktury"
+		"donwloadInvoices": "Ściągnąć faktury",
+		"donwloadXML": "Pohoda XML",
+		"selectYourPohodaIc": "Wybierz REGON firmy, na którą wystawiona będzie faktura:"
 	},
 	"resetPassword": {
 		"send": "Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.",
@@ -945,7 +956,7 @@
 		"startingMarketing": "Aktualizuję twój plan faktur. Przekierowuję...",
 		"cannotBeChanged": "Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.",
 		"flexiplace": "Miejsce Flexi",
-		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální",
+		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.",
 		"showApiKey": "Pokaż API endpoint",
 		"regenerateApiKey": "Wygeneruj API endpoint",
 		"3rdPartyIntegration": "Integracja z osobami trzecimi",
@@ -1079,7 +1090,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Powtarzanie: wyłączone",
-		"repeatEnabled": "PL: recurringReservation.repeatEnabled",
+		"repeatEnabled": "Powtarzanie: włączone",
 		"repeats": "Powtarza się:",
 		"daily": "Codziennie",
 		"weekly": "Co tydzień",
@@ -1129,7 +1140,14 @@
 			"logOut": "Wylogować",
 			"selectGarage": "Wybierz garaż",
 			"allGarages": "Wszystkie garaże",
-			"version": "wersja"
+			"version": "wersja",
+			"resrevations": "rezerwacje",
+			"notifications": "notyfikacje",
+			"personal": "prywatne",
+			"work": "służbowe"
+		},
+		"notifications": {
+			"noNewNotifications": "Brak nowych notyfikacji"
 		},
 		"login": {
 			"loading": "Ładowanie...",
@@ -1160,23 +1178,9 @@
 		"terms": {
 			"content": "Warunki korzystania z usług znajdziesz na naszej stronie internetowej."
 		},
-		"menu": {
-			"newNotifications": "Nowe powiadomienia",
-			"access": "Dostęp",
-			"myReservations": "Moje rezerwacje",
-			"guestReservations": "Regularny gość"
-		},
-		"access": {
-			"floor": "Piętro",
-			"place": "Miejsce",
-			"noOngoingReservations": "Nie masz żadnych trwających rezerwacji",
-			"inSelectedGarage": "w wybranym garażu"
-		},
 		"reservation": {
-			"garage": "Garaż",
-			"place": "Miejsce",
-			"begins": "Początek",
-			"ends": "Koniec"
+			"floor": "Piętro",
+			"place": "Miejsce"
 		},
 		"newReservation": {
 			"begins": "Początek",
