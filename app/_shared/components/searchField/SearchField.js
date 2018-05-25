@@ -19,15 +19,19 @@ export default class SearchField extends Component {
     searchQuery:     PropTypes.string,
     selected:        PropTypes.number,
     onChange:        PropTypes.func,
-    editable:        PropTypes.bool,
     buttons:         PropTypes.array,
     placeholder:     PropTypes.string
+  }
+
+  static defaultProps= {
+    buttons: []
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      selected: this.props.selected
+      selected: this.props.selected,
+      show:     true
     }
   }
 
@@ -42,56 +46,61 @@ export default class SearchField extends Component {
     this.validateContent(nextProps)
   }
 
-  handleSelection() {
-    const user = this.props.content[this.state.selected]
-    if (user) {
-      this.setState({ ...this.state, filter: user.label })
-    } else {
-      this.filter.input.focus()
-    }
-  }
-
   validateContent(nextProps) {
-    if (nextProps.dropdownContent.length === 1) { // if only one item, autoselect it
-      this.setState({ ...this.state, selected: 0 }) // , this.handleSelection)
-    } else {
-      this.setState({ ...this.state, selected: nextProps.selected }) // , this.handleSelection)
+    this.setState({
+      ...this.state,
+      selected: nextProps.dropdownContent.length === 1 ? nextProps.selected : 0
+    })
+  }
+
+  hide = () => setTimeout(
+    () => this.setState({
+      ...this.state,
+      show: false
+    }),
+    0
+  )
+
+  show = () => {
+    if (this.props.dropdownContent.length > 1) {
+      this.setState({
+        ...this.state,
+        show: true
+      })
     }
   }
 
-  toggleDropdown = () => {
-    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
-  }
+  generateButtons = item => (
+    <tr>
+      <td><CallToActionButton label={item.label} onClick={item.onClick} /></td>
+      <td>{item.text}</td>
+    </tr>
+  )
 
-  hide = () => {
-    this.ul.classList.add(styles.hidden)
-    this.timeout = setTimeout(() => {
-      this.ul && this.ul.classList.add(styles.displayNone)
-    }, 250)
-  }
+  sorter = (a, b) => {
+    if (a.order || b.order) { // sort by order
+      const aOrder = (a.order || Infinity)
+      const bOrder = (b.order || Infinity)
+      return aOrder - bOrder
+    } else { // sort by label
+      const aLabel = (a.label.toString() || '').toLowerCase()
+      const bLabel = (b.label.toString() || '').toLowerCase()
 
-  unhide = () => {
-    if (this.props.dropdownContent.length > 1) {
-      this.ul.style.width = this.filter.input.getBoundingClientRect().width + 'px'
-      this.ul.classList.remove(styles.displayNone)
-      this.ul.classList.remove(styles.hidden)
+      if (aLabel < bLabel) {
+        return -1
+      } else if (aLabel > bLabel) {
+        return 1
+      } else {
+        return 0
+      }
     }
   }
 
   render() {
-    const { dropdownContent, buttons, placeholder, editable, searchQuery, onChange } = this.props
-    let buttonsArray = []
+    const { dropdownContent, buttons, placeholder, searchQuery, onChange } = this.props
 
-    const sorter = (a, b) =>
-    (a.order || b.order) ?
-      ((a.order && !b.order) ? -1 : (!a.order && b.order) ? 1 : a.order - b.order) :
-      (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase() ?
-        -1 :
-        ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
-
-    let list = dropdownContent.sort(sorter).map((item, index) => {
-      const onClick = e => {
-        e.stopPropagation()
+    let list = dropdownContent.sort(this.sorter).map((item, index) => {
+      const onClick = () => {
         item.onClick && item.onClick()
         onChange && onChange(item.label) // for form
         this.hide()
@@ -135,52 +144,36 @@ export default class SearchField extends Component {
       }
     })
 
-    if (buttons) {
-      buttonsArray = buttons.map(item => {
-        return (
-          <div className={styles.line}>
-            <div className={styles.minWidthButton}>
-              <CallToActionButton
-                label={item.label}
-                onClick={item.onClick}
-              />
-            </div>
-            <div className={styles.buttonDescription}>
-              {item.text}
-            </div>
-          </div>
-        )
-      })
-    }
+
     list = list.map(o => o.render)
+
     return (
       <div>
         <Input
           onChange={onChange}
           value={searchQuery}
           label={placeholder}
-          // error={t([ 'newReservation', 'licencePlateInvalid' ])}
           placeholder={placeholder}
           type="text"
           align="left"
-          // highlight={state.highlight && state.user.id !== -2}
-          onFocus={this.toggleDropdown}
-          onBlur={this.toggleDropdown}
+          onFocus={this.show}
+          onBlur={this.hide}
           ref={component => this.filter = component}
         />
-        <div
-          className={`${styles.drop} ${styles.hidden} ${styles.displayNone}`}
-          ref={ul => this.ul = ul}
-        >
-          <ul className={styles.scrollable}>
-            {list}
-          </ul>
-          {buttonsArray.length > 0 &&
-            <div className={styles.buttons}>
-              {buttonsArray}
-            </div>
-          }
-        </div>
+
+        {this.state.show||true &&
+          <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
+            <ul className={styles.scrollable}>
+              {list}
+            </ul>
+
+            <table className={styles.buttons}>
+              <tbody>
+                {buttons.map(this.generateButtons)}
+              </tbody>
+            </table>
+          </div>
+        }
       </div>
     )
   }
