@@ -26,6 +26,7 @@ export const PAGE_BASE_SET_GARAGES = 'PAGE_BASE_SET_GARAGES'
 export const PAGE_BASE_SET_GARAGE = 'PAGE_BASE_SET_GARAGE'
 export const PAGE_BASE_SET_PID_TARIF = 'PAGE_BASE_SET_PID_TARIF'
 export const PAGE_BASE_SET_IS_GARAGE_ADMIN = 'PAGE_BASE_SET_IS_GARAGE_ADMIN'
+export const PAGE_BASE_SET_IS_GARAGE_MANAGER = 'PAGE_BASE_SET_IS_GARAGE_MANAGER'
 export const PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST = 'PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST'
 export const PAGE_BASE_SET_IS_GARAGE_SECURITY = 'PAGE_BASE_SET_IS_GARAGE_SECURITY'
 
@@ -41,6 +42,7 @@ export const setShowModal = actionFactory(PAGE_BASE_SET_NOTIFICATIONS_MODAL)
 export const setCurrentUser = actionFactory(PAGE_BASE_SET_CURRENT_USER)
 export const setGaragePidTarif = actionFactory(PAGE_BASE_SET_PID_TARIF)
 export const setIsGarageAdmin = actionFactory(PAGE_BASE_SET_IS_GARAGE_ADMIN)
+export const setIsGarageManager = actionFactory(PAGE_BASE_SET_IS_GARAGE_MANAGER)
 export const setIsGarageReceptionist = actionFactory(PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST)
 export const setIsGarageSecurity = actionFactory(PAGE_BASE_SET_IS_GARAGE_SECURITY)
 
@@ -81,6 +83,7 @@ export function setGarages(value) {
     if (selectedGarage) {
       dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
       dispatch(setIsGarageAdmin(selectedGarage.admin))
+      dispatch(setIsGarageManager(selectedGarage.manager))
       dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
       dispatch(setIsGarageSecurity(selectedGarage.security))
     }
@@ -100,6 +103,7 @@ export function setGarage(value) {
     const selectedGarage = getState().pageBase.garages.find(userGarage => userGarage.garage.id === value)
     dispatch(setGaragePidTarif(selectedGarage ? selectedGarage.garage.active_pid_tarif_id : false))
     dispatch(setIsGarageAdmin(selectedGarage ? selectedGarage.admin : false))
+    dispatch(setIsGarageManager(selectedGarage ? selectedGarage.manager : false))
     dispatch(setIsGarageReceptionist(selectedGarage ? selectedGarage.receptionist : false))
     dispatch(setIsGarageSecurity(selectedGarage ? selectedGarage.security : false))
   }
@@ -120,7 +124,7 @@ function prepareAdminSecondaryMenu() {
       { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/clients`) },
       state.isGarageAdmin &&
       { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules/goPublic`) },
-      state.isGarageAdmin &&
+      (state.isGarageAdmin || state.isGarageManager) &&
       { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/garageSetup/general`) },
       { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/users`) },
       state.isGarageAdmin &&
@@ -443,7 +447,7 @@ export function toAdmin() {
         break
 
       case (contains(hash, 'garageSetup') && contains(hash, 'general')):
-        if (state.isGarageAdmin) {
+        if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
           hint = t([ 'pageBase', 'newGarageHint' ])
           hintVideo = 'https://www.youtube.com/'
@@ -452,7 +456,7 @@ export function toAdmin() {
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
-        if (state.isGarageAdmin) {
+        if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
           hint = t([ 'pageBase', 'newGarageFloorsHint' ])
           hintVideo = 'https://www.youtube.com/'
@@ -461,7 +465,7 @@ export function toAdmin() {
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
-        if (state.isGarageAdmin) {
+        if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
           hint = t([ 'pageBase', 'newGarageGatesHint' ])
           hintVideo = 'https://www.youtube.com/'
@@ -470,7 +474,7 @@ export function toAdmin() {
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'order')):
-        if (state.isGarageAdmin) {
+        if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
           hint = t([ 'pageBase', 'newGarageOrderHint' ])
           hintVideo = 'https://www.youtube.com/'
@@ -488,7 +492,7 @@ export function toAdmin() {
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'users')):
-        if (state.isGarageAdmin) {
+        if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
           hint = t([ 'pageBase', 'garageGarageUsersHint' ])
           hintVideo = 'https://www.youtube.com/'

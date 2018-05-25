@@ -40,7 +40,7 @@ class GarageSetupGeneralPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state, pageBase, actions } = this.props
 
     const submitForm = () => {
       if (this.props.params.id) {
@@ -81,133 +81,152 @@ class GarageSetupGeneralPage extends Component {
       geocoder(onCoordinatesFound, state.line_1, state.city, state.postal_code, state.country)
     }
 
+    const readOnly = pageBase.isGarageManager && !pageBase.isGarageAdmin
+
+    const formContent = (<div className={styles.general}>
+      <div className={styles.address}>
+        <h2>{t([ 'newGarage', 'garageAddress' ])}</h2>
+        <Input
+          onChange={actions.setName}
+          label={t([ 'newGarage', 'name' ])}
+          error={t([ 'newGarage', 'invalidName' ])}
+          value={state.name}
+          placeholder={t([ 'newGarage', 'placeholder' ])}
+          highlight={state.highlight}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setIc}
+          label={t([ 'newClient', 'IC' ])}
+          error={t([ 'newClient', 'invalidIC' ])}
+          value={state.ic}
+          placeholder={t([ 'newClient', 'ICplaceholder' ])}
+          highlight={state.dic && state.highlight}
+          onBlur={actions.loadAddressFromIc}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setCompanyName}
+          label={t([ 'newGarage', 'company' ])}
+          error={t([ 'newGarage', 'invalidCompany' ])}
+          value={state.company}
+          placeholder={t([ 'newGarage', 'placeholderCompany' ])}
+          highlight={state.highlight}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setDic}
+          label={t([ 'newClient', 'DIC' ])}
+          error={t([ 'newClient', 'invalidDIC' ])}
+          value={state.dic}
+          placeholder={t([ 'newClient', 'DICplaceholder' ])}
+          readOnly={readOnly}
+        />
+
+        <div className={styles.checkbox}><input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG} />
+          <span onClick={actions.toggleLPG}>{t([ 'newGarage', 'lpgAllowed' ])}</span>
+        </div>
+        <Input
+          onChange={actions.setLine1}
+          onBlur={geocode}
+          label={t([ 'newGarage', 'street' ])}
+          error={t([ 'newGarage', 'invalidStreet' ])}
+          value={state.line_1}
+          placeholder={t([ 'newGarage', 'cityPlaceholder' ])}
+          highlight={state.highlight}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setLine2}
+          onBlur={geocode}
+          label={t([ 'addresses', 'line2' ])}
+          error={t([ 'addresses', 'line2Invalid' ])}
+          value={state.line_2}
+          placeholder={t([ 'addresses', 'line2Placeholder' ])}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setCity}
+          onBlur={geocode}
+          label={t([ 'newGarage', 'city' ])}
+          error={t([ 'newGarage', 'invalidCity' ])}
+          value={state.city}
+          placeholder={t([ 'newGarage', 'cityPlaceholder' ])}
+          highlight={state.highlight}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setPostalCode}
+          onBlur={geocode}
+          label={t([ 'newGarage', 'postalCode' ])}
+          error={t([ 'newGarage', 'invalidPostalCode' ])}
+          value={state.postal_code}
+          placeholder={t([ 'newGarage', 'postalCodePlaceholder' ])}
+          highlight={state.highlight}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setState}
+          onBlur={geocode}
+          label={t([ 'newGarage', 'state' ])}
+          error={t([ 'newGarage', 'invalidCountry' ])}
+          value={state.state}
+          placeholder={t([ 'newGarage', 'statePlaceholder' ])}
+          readOnly={readOnly}
+        />
+        <Input
+          onChange={actions.setCountry}
+          onBlur={geocode}
+          label={t([ 'newGarage', 'country' ])}
+          error={t([ 'newGarage', 'invalidState' ])}
+          value={state.country}
+          placeholder={t([ 'newGarage', 'countryPlaceholder' ])}
+          highlight={state.highlight}
+          readOnly={readOnly}
+        />
+        <div className={styles.inline}>
+          <Input
+            style={styles.latLngInputWidth + ' ' + styles.rightMargin}
+            onChange={actions.setLat}
+            label={t([ 'newGarage', 'lat' ])}
+            error={t([ 'newGarage', 'invalidLat' ])}
+            value={state.lat}
+            placeholder={t([ 'newGarage', 'latPlaceholder' ])}
+            readOnly={readOnly}
+          />
+          <Input
+            style={styles.latLngInputWidth}
+            onChange={actions.setLng}
+            label={t([ 'newGarage', 'lng' ])}
+            error={t([ 'newGarage', 'invalidLng' ])}
+            value={state.lng}
+            placeholder={t([ 'newGarage', 'lngPlaceholder' ])}
+            readOnly={readOnly}
+          />
+        </div>
+      </div>
+      <div className={styles.imageSelector}>
+        <h2>{t([ 'newGarage', 'garagePicture' ])}</h2>
+        <img src={state.img} />
+        {!readOnly && <div>
+          <UploadButton
+            label={t([ 'newGarage', 'addProfilePicture' ])}
+            type={state.img === defaultImage ? 'action' : 'confirm'}
+            onUpload={actions.setImage}
+            query={PRESIGNE_GARAGE_IMAGE_QUERY}
+          />
+        </div>}
+      </div>
+    </div>)
+
     return (
       <GarageSetupPage>
-        <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
-          <div className={styles.general}>
-            <div className={styles.address}>
-              <h2>{t([ 'newGarage', 'garageAddress' ])}</h2>
-              <Input
-                onChange={actions.setName}
-                label={t([ 'newGarage', 'name' ])}
-                error={t([ 'newGarage', 'invalidName' ])}
-                value={state.name}
-                placeholder={t([ 'newGarage', 'placeholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setIc}
-                label={t([ 'newClient', 'IC' ])}
-                error={t([ 'newClient', 'invalidIC' ])}
-                value={state.ic}
-                placeholder={t([ 'newClient', 'ICplaceholder' ])}
-                highlight={state.dic && state.highlight}
-                onBlur={actions.loadAddressFromIc}
-              />
-              <Input
-                onChange={actions.setCompanyName}
-                label={t([ 'newGarage', 'company' ])}
-                error={t([ 'newGarage', 'invalidCompany' ])}
-                value={state.company}
-                placeholder={t([ 'newGarage', 'placeholderCompany' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setDic}
-                label={t([ 'newClient', 'DIC' ])}
-                error={t([ 'newClient', 'invalidDIC' ])}
-                value={state.dic}
-                placeholder={t([ 'newClient', 'DICplaceholder' ])}
-              />
-
-              <div className={styles.checkbox}><input type="checkbox" checked={state.lpg} onChange={actions.toggleLPG} />
-                <span onClick={actions.toggleLPG}>{t([ 'newGarage', 'lpgAllowed' ])}</span>
-              </div>
-              <Input
-                onChange={actions.setLine1}
-                onBlur={geocode}
-                label={t([ 'newGarage', 'street' ])}
-                error={t([ 'newGarage', 'invalidStreet' ])}
-                value={state.line_1}
-                placeholder={t([ 'newGarage', 'cityPlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setLine2}
-                onBlur={geocode}
-                label={t([ 'addresses', 'line2' ])}
-                error={t([ 'addresses', 'line2Invalid' ])}
-                value={state.line_2}
-                placeholder={t([ 'addresses', 'line2Placeholder' ])}
-              />
-              <Input
-                onChange={actions.setCity}
-                onBlur={geocode}
-                label={t([ 'newGarage', 'city' ])}
-                error={t([ 'newGarage', 'invalidCity' ])}
-                value={state.city}
-                placeholder={t([ 'newGarage', 'cityPlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setPostalCode}
-                onBlur={geocode}
-                label={t([ 'newGarage', 'postalCode' ])}
-                error={t([ 'newGarage', 'invalidPostalCode' ])}
-                value={state.postal_code}
-                placeholder={t([ 'newGarage', 'postalCodePlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setState}
-                onBlur={geocode}
-                label={t([ 'newGarage', 'state' ])}
-                error={t([ 'newGarage', 'invalidCountry' ])}
-                value={state.state}
-                placeholder={t([ 'newGarage', 'statePlaceholder' ])}
-              />
-              <Input
-                onChange={actions.setCountry}
-                onBlur={geocode}
-                label={t([ 'newGarage', 'country' ])}
-                error={t([ 'newGarage', 'invalidState' ])}
-                value={state.country}
-                placeholder={t([ 'newGarage', 'countryPlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <div className={styles.inline}>
-                <Input
-                  style={styles.latLngInputWidth + ' ' + styles.rightMargin}
-                  onChange={actions.setLat}
-                  label={t([ 'newGarage', 'lat' ])}
-                  error={t([ 'newGarage', 'invalidLat' ])}
-                  value={state.lat}
-                  placeholder={t([ 'newGarage', 'latPlaceholder' ])}
-                />
-                <Input
-                  style={styles.latLngInputWidth}
-                  onChange={actions.setLng}
-                  label={t([ 'newGarage', 'lng' ])}
-                  error={t([ 'newGarage', 'invalidLng' ])}
-                  value={state.lng}
-                  placeholder={t([ 'newGarage', 'lngPlaceholder' ])}
-                />
-              </div>
-            </div>
-            <div className={styles.imageSelector}>
-              <h2>{t([ 'newGarage', 'garagePicture' ])}</h2>
-              <img src={state.img} />
-              <div>
-                <UploadButton
-                  label={t([ 'newGarage', 'addProfilePicture' ])}
-                  type={state.img === defaultImage ? 'action' : 'confirm'}
-                  onUpload={actions.setImage}
-                  query={PRESIGNE_GARAGE_IMAGE_QUERY}
-                />
-              </div>
-            </div>
-          </div>
-        </Form>
+        {readOnly ?
+          formContent :
+          <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
+            {formContent}
+          </Form>
+        }
       </GarageSetupPage>
     )
   }
