@@ -34,7 +34,7 @@ class ExistingUserForm extends Component {
             value={state.user.full_name}
             type="text"
             align="left"
-            label={t([ 'newReservation', 'df' ])}
+            label={t([ 'newReservation', 'userName' ])}
           />
         }
         { state.user.reservable_cars && state.user.reservable_cars.length === 0 ?

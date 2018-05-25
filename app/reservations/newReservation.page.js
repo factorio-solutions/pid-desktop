@@ -43,11 +43,11 @@ class NewReservationPage extends Component {
   }
 
   userDropdown = () => {
-    const makeButton = (id, label, text, user) => {
+    const makeButton = (user, label, text) => {
       return {
         label,
         text:    [ t([ 'newReservation', 'dropButtonDescrText' ]), <b>{user.full_name}</b>, text ],
-        onClick: () => { this.props.actions.downloadUser(id) }
+        onClick: () => { this.props.actions.downloadUser(user.id, user.rights) }
       }
     }
     const buttons = []
@@ -63,7 +63,7 @@ class NewReservationPage extends Component {
         } else {
           roleName = 'onetimeVisit'
         }
-        buttons.push(makeButton(user.id, [ t([ 'newReservation', 'dropButtonText' ]), <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ]), user))
+        buttons.push(makeButton(user, [ t([ 'newReservation', 'dropButtonText' ]), <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
       } else {
         acc.push({
           label:   user.full_name,
