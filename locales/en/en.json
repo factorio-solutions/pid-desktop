@@ -391,6 +391,7 @@
 	"garageUsers": {
 		"noRights": "You do not have the right to do that.",
 		"admin": "admin",
+		"manager": "manager",
 		"receptionist": "receptionist",
 		"security": "security",
 		"pendingUsers": "Pending users",
@@ -602,6 +603,7 @@
 		"host": "regular guest",
 		"internal": "internal",
 		"security": "security",
+		"manager": "manager",
 		"receptionist": "receptionist",
 		"driver": "driver",
 		"clientRights": "User rights",

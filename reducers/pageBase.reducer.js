@@ -14,6 +14,7 @@ import {
   PAGE_BASE_SET_GARAGE,
   PAGE_BASE_SET_PID_TARIF,
   PAGE_BASE_SET_IS_GARAGE_ADMIN,
+  PAGE_BASE_SET_IS_GARAGE_MANAGER,
   PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
   PAGE_BASE_SET_IS_GARAGE_SECURITY
 }  from '../actions/pageBase.actions'
@@ -40,6 +41,7 @@ const defaultState = {
   // selectedGarage
   garages:              [],
   isGarageAdmin:        false, // is admin of currently selected garage?
+  isGarageManager:      false, // is admin of currently selected garage?
   isGarageReceptionist: false, // is receptionist of currently selected garage?
   isGarageSecurity:     false, // is security of currently selected garage?
   garage:               undefined,
@@ -147,6 +149,12 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         isGarageAdmin: action.value
+      }
+
+    case PAGE_BASE_SET_IS_GARAGE_MANAGER:
+      return {
+        ...state,
+        isGarageManager: action.value
       }
 
     case PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST:
