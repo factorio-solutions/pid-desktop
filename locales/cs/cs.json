@@ -251,7 +251,8 @@
 		"newInternalText": " si smí samostatně vytvářet rezervace.",
 		"phone": "Telefonní číslo",
 		"email": "E-mail",
-		"loading": "Načítám ..."
+		"loading": "Načítám ...",
+		"userName": "Jméno uživatele"
 	},
 	"clients": {
 		"name": "jméno",

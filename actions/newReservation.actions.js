@@ -95,6 +95,8 @@ export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NA
 export const setHostPhone = patternInputActionFactory(NEW_RESERVATION_SET_HOST_PHONE)
 export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_EMAIL)
 
+const hideLoading = dispatch => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
+
 export function setUser(value) {
   return (dispatch, getState) => {
     dispatch({ type: NEW_RESERVATION_SET_USER,
@@ -174,10 +176,9 @@ export function removeDiacritics() {
 
 export function setFromDate(value) {
   return (dispatch, getState) => {
-    
-    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let fromDate = moment(value, MOMENT_DATE_FORMAT)
-    let toValue = null
+    const from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const fromDate = moment(value, MOMENT_DATE_FORMAT)
+    const toValue = null
     from.set('year', fromDate.get('year'))
     from.set('month', fromDate.get('month'))
     from.set('date', fromDate.get('date'))
@@ -191,9 +192,9 @@ export function setFromDate(value) {
 
 export function setFromTime(value) {
   return (dispatch, getState) => {
-    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let fromTime = moment(value, MOMENT_TIME_FORMAT)
-    let toValue = null
+    const from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const fromTime = moment(value, MOMENT_TIME_FORMAT)
+    const toValue = null
     from.set('hour', fromTime.get('hour'))
     from.set('minute', fromTime.get('minute'))
     dispatch({ type:  NEW_RESERVATION_SET_FROM,
@@ -232,9 +233,9 @@ export function formatFrom() {
 
 export function setToDate(value) {
   return (dispatch, getState) => {
-    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let toDate = moment(value, MOMENT_DATE_FORMAT)
-    let fromValue = null
+    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const toDate = moment(value, MOMENT_DATE_FORMAT)
+    const fromValue = null
     to.set('year', toDate.get('year'))
     to.set('month', toDate.get('month'))
     to.set('date', toDate.get('date'))
@@ -375,8 +376,6 @@ export function setInitialStore(id) {
       }
     })
 
-    const hideLoading = () => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
-
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
       const users = values[0].reservable_users
 
@@ -420,18 +419,17 @@ export function setInitialStore(id) {
         if (users.length === 1) {
           dispatch(downloadUser(users[0].id, undefined, hideLoading))
         } else {  
-          console.log('Init')        
-          hideLoading()
+          hideLoading(dispatch)
         }
       }
     }).catch(error => { // error
-      dispatch(setLoading(false))
+      hideLoading(dispatch)
       throw (error)
     })
   }
 }
 
-export function downloadUser(id, rights, callback) {
+export function downloadUser(id, rights) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     dispatch(setLoading(true))
@@ -473,40 +471,36 @@ export function downloadUser(id, rights, callback) {
         availableClients: values[2].reservable_clients,
         rights // Client user rights
       }))
-      let callbackCalled = false;
+      let hideLoadingCalled = false
       if (values[0].user && !values[0].user.last_active) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
         dispatch(setLanguage(values[0].user.language))
-        if (typeof callback === 'function') {
-          console.log('User download')
-          callback()
-          callbackCalled = true
-        }
+        hideLoading(dispatch)
+        hideLoadingCalled = true
       }
       if (getState().newReservation.reservation) { // download garage
-        dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id, callback))
-        callbackCalled = true        
+        dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
+        hideLoadingCalled = true
+
       }
       if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-        dispatch(downloadGarage(values[1].reservable_garages[0].id, callback))
-        callbackCalled = true        
+        dispatch(downloadGarage(values[1].reservable_garages[0].id))
+        hideLoadingCalled = true
       }
       if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
-        if (typeof callback === 'function' && !callbackCalled) {
-          console.log('User download - one car available')
-          callback()
+        if (!hideLoadingCalled) {
+          hideLoading(dispatch)
+          hideLoadingCalled = true
         }
       }
-
-      // dispatch(setLoading(false))
-      // if (typeof callback === 'function') {
-      //   callback()
-      // }
+      if (!hideLoadingCalled) {
+        hideLoading(dispatch)
+      }
     }).catch(error => {
-      dispatch(setLoading(false))
+      hideLoading(dispatch)
       throw (error)
     })
   }
@@ -526,7 +520,7 @@ function clientsPromise(user_id, garage_id) {
   })
 }
 
-export function downloadGarage(id, callback) {
+export function downloadGarage(id) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     new Promise((resolve, reject) => {
@@ -603,10 +597,7 @@ export function downloadGarage(id, callback) {
       if (!state.reservation) {
         dispatch(autoSelectPlace())
       }
-      if (typeof callback === 'function') {
-        console.log('garage hide loading')
-        callback()
-      }
+      hideLoading(dispatch)
     })
   }
 }
