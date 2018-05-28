@@ -142,9 +142,9 @@ function prepareAnalyticsSecondaryMenu() {
     const state = getState().pageBase
 
     return [
-      state.isGarageAdmin && { label: t([ 'pageBase', 'garageTurnover' ]), key: 'garageTurnover', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/garageTurnover`) },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'reservations' ]), key: 'reservationsAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/reservationsAnalytics`) },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'places' ]), key: 'placesAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/placesAnalytics`) }
+      (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'garageTurnover' ]), key: 'garageTurnover', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/garageTurnover`) },
+      (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'reservations' ]), key: 'reservationsAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/reservationsAnalytics`) },
+      (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'places' ]), key: 'placesAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/placesAnalytics`) }
       //  , state.isGarageAdmin && {label: t(['pageBase', 'payments']),       key: "paymentsAnalytics",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/paymentsAnalytics`) }
       //  , state.isGarageAdmin && {label: t(['pageBase', 'gates']),          key: "gatesAnalytics",         onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/gatesAnalytics`) }
     ].filter(field => field !== false)
@@ -263,7 +263,7 @@ export function toOccupancy() {
 export function toGarage() {
   return (dispatch, getState) => {
     const state = getState().pageBase
-    if (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) {
+    if (state.isGarageAdmin || state.isGarageManager || state.isGarageReceptionist || state.isGarageSecurity) {
       dispatch(setAll('garage', [], undefined, t([ 'pageBase', 'garagesHint' ]), 'https://www.youtube.com/'))
     } else {
       nav.to('/dashboard')
@@ -280,7 +280,7 @@ export function toIssues() {
 export function toAnalytics() {
   return (dispatch, getState) => {
     const state = getState().pageBase
-    if (state.isGarageAdmin && state.pid_tarif >= 2) {
+    if ((state.isGarageAdmin || state.isGarageManager) && state.pid_tarif >= 2) {
       const hash = window.location.hash
       let secondarySelected
       let hint
