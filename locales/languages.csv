@@ -1,4 +1,4 @@
-re,en,cs,pl,de
+,en,cs,pl,de
 PID-RELEASE,r20180209a,r20180209a,r20180209a,r20180209a
 addresses.name,Name *,Jméno *,Imię i nazwisko *,Name *
 addresses.line1,Line 1 *,Řádek 1 *,Adres *,Adresszeile 1 *
@@ -383,13 +383,13 @@ pageBase.garageEditRentHint,Now you can edit rent properties.,Zde můžete uprav
 pageBase.garageAddClientHint,Here you can add a client to the garage management page.,Zde můžete přidat klienta na stránky se správou garáží,Tutaj możesz dodać klienta do strony zarządzania garażem.,Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.
 pageBase.garageGarageUsersHint,Here you can manage who can use your garage and what rights they have.,Zde můžete spravovat uživatele garáže a jejich práva.,"Tutaj możesz wybrać, kto może zarządzać twoim garażem.","Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann."
 pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete změnit svoje údaje.,Tutaj możesz zmienić swoje dane.,Hier können Sie die eigenen Angaben ändern.
-pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,Tutaj możesz zamówić moduł dostępu do garażu.,
+pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,Tutaj możesz zamówić moduł dostępu do garażu.,Hier können Sie ein Zutritt- Modul bestellen.
 pageBase.reservationOverviewHint,Here you can double check if everything is ok.,"Zde můžete zkontrolovat, zda jsou údaje rezervace správně.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie kontrolieren, ob die Daten stimmen."
-pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.,
+pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.,Durch die OK Taste wird eine neue Rechnung mit korrigierten Daten erstellt.
 pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.","Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis."
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht
-pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,,Sie haben %(count)s ungelesene Nachrichten
-pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,,Sie haben %(count)s ungelesener Nachricht
+pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,Masz %(count)s nieprzeczytane wiadomości,Sie haben %(count)s ungelesene Nachrichten
+pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesener Nachricht
 pageBase.unredNotifications.other,You have %(count)s unread notifications,Máte %(count)s nepřečtených upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesene Nachrichten.
 pageBase.analytics,Analytics,Analýza,Analiza,Analyse
 pageBase.garageTurnover,Garage turnover,Obrat garáže,Rotacja garażu,Parkhausumsatz
@@ -493,9 +493,16 @@ newReservation.paymentUnsucessfull,Payment was canceled and not completed.,Platb
 newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu platnosti ...,Kontroluję płatność...,Validierung läuft …
 newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
-newReservation.newHost,New regular guest,Nový pravidelný host,Nowy regularny gość,Neuer regelmäßiger Gast
+newReservation.newHost,Regular guest,Pravidelný host,Nowy regularny gość,Neuer regelmäßiger Gast
+newReservation.newHostText,"may create reservations for himself, but need them to be approved by a secretary"," si smí rezervace navrhovat, ale potřebuje schválení",,
+newReservation.newInternal,New internal,Nový internal,,
+newReservation.newInternalText,may create reservations for himself, si smí samostatně vytvářet rezervace.,,
+newReservation.dropButtonText,New user with rights,Nový uživatel s právy ,,
+newReservation.dropButtonDescrText,User with rights,Uživatel s právy,,
 newReservation.hostsName,Name of regular guest,Jméno pravidelného hosta,Nazwisko regularnego gościa,Rgelmäßiger Gast - Name
+newReservation.phone,Phone number,Telefonní číslo,,
 newReservation.hostsPhone,Phone of regular guest,Telefon pravidelného hosta,Telefon regularnego gościa,Regelmäßiger Gast Telefonnummer
+newReservation.email,Email,E-mail,,
 newReservation.hostsEmail,Email of regular guest,Email pravidelného hosta,E-mail regularnego gościa,Regelmäßiger Gast E-Mail
 newReservation.visitorsName,Visitors name,Jméno návštěvníka,Nazwisko odwiedzającego,Besucher Name
 newReservation.visitorsPhone,Visitors phone,Telefon návštěvníka,Telefon odwiedzającego,Besucher Telefonnummer
@@ -505,6 +512,7 @@ newReservation.flexiblePlaceSelected,flexible,flexibilní,elastyczne,flexibel
 newReservation.noFreePlace,No free place,Žádná volná místa,Brak wolnych miejsc,Keine freie Plätze
 newReservation.note,Note,Poznámka,Uwagi,Notiz
 newReservation.onetimeVisit,Onetime visitor,Jednorázový návštěvník,Jednorazowe odwiedziny,Einmaliger Besucher
+newReservation.onetimeVisitText,may create reservations for himself, si smí samostatně vytvářet rezervace.,,
 newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.,,Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.
 newReservation.paidByHost,Reservation paid by guest,Rezervaci platí host,Za rezerwację płaci gość,Buchung wird vom Gast bezahlt
 newReservation.languageSelector,Choose communication language,Zvolte jazyk komunikace,Wybierz język komunikacji,Wählen Sie die Kommunikationssprache
@@ -514,6 +522,7 @@ newReservation.smsText,SMS text,text SMS,Tekst SMS,Text der Nachricht
 newReservation.character,characters,znaků,znaków,Zeichen
 newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,usunąć polskie znaki,Diakritika entfernen
 newReservation.perHour, / hour, / hod.,,/ Std.
+newReservation.creatingReservationInPast,You are creating reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?,Vytváříte rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -1028,10 +1037,10 @@ newReservationOverview.price,Price,Cena,Cena,Preis
 newReservationOverview.garage,Garage,Garáž,Garaż,Parkhaus
 newReservationOverview.floor,Floor,Podlaží,Piętro,Etage
 newReservationOverview.place,Spot,Místo,Miejsce,Stellplatz
-newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,,
-newReservationOverview.paypal,PayPal,PayPal,,
-newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,,
-newReservationOverview.paymentMethod,Payment method,Platební metoda,,
+newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,ČSOB - płatność online,ČSOB - Online-Zahlung
+newReservationOverview.paypal,PayPal,PayPal,PayPal,PayPal
+newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,Raiffeisenbank - płatność online,Raiffeisenbank - Online- Zahlung
+newReservationOverview.paymentMethod,Payment method,Platební metoda,Metoda płatności,Zahlungsmethode
 addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Parkhausbesitzer
 addFeatures.LongTerm,LONG-TERM OR PERSONAL,DLOUHODOBÉ NEBO OSOBNÍ,DŁUGOTERMINOWO LUB PERSONALNIE,LANGFRISTIG ODER PERSÖNLICH
 addFeatures.Automation,AUTOMATION & ACCESS,AUTOMATIZACE A PŘÍSTUP,AUTOMATYZACJA I DOSTĘP,AUTOMATISIERUNG UND ZUGANG
@@ -1137,6 +1146,8 @@ invoices.invoicePaidLabel,Invoice paid,Faktura uhrazena,Faktura została zapłac
 invoices.invoiceIncorect,Cancel invoice,Stornovat fakturu,Anulować fakturę,Rechnung falsch
 invoices.donwloadExcel,Download Excel,Stáhnout excel,Ściągnąć excel,Excel herunterladen
 invoices.donwloadInvoices,Download invoices,Stáhnout faktury,Ściągnąć faktury,Rechnungen herunterladen
+invoices.donwloadXML,Pohoda XML,Pohoda XML,Pohoda XML,
+invoices.selectYourPohodaIc,Select IČ of company you are accounting for:,Zvolte IČ společnosti pro kterou účtujete:,"Wybierz REGON firmy, na którą wystawiona będzie faktura:",
 resetPassword.send,A password reset email has been sent to your address.,Obnova hesla byla odeslána na Váš e-mail.,Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.,Eine E-Mail zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse versendet.
 resetPassword.description,Please enter your email here and we will send you a description of the password reset process,Zde vložte svůj e-mail a my Vám zašleme popis procesu obnovení hesla,"Wpisz tutaj swój adres e-mail, a my prześlemy Ci instrukcje dotyczące odnowienia hasła.",Geben Sie hier Ihre E-Mail-Adresse ein. Wir senden Ihnen eine Anleitung zum Zurücksetzen des Passworts zu.
 resetPassword.email,email,e-mail,e-mail,E-Mail-Adresse
@@ -1153,7 +1164,8 @@ modules.Preview,Preview,Náhled,Podgląd,Vorschau
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,Rechnungsplan wird aktualisiert. Weiterleiten …
 modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen)."
 modules.flexiplace,Flexi place,Flexi místo,Miejsce Flexi,Flexi Platz
-modules.flexiplaceDescription,Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.,"Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu."
+modules.flexiplaceDescription,"Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.","Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.","Flexi Platz ist ein Unterstützungswerkzeug zur optimalen Nutzung 
+alle seine Plätze. Ihre Benutzer werden seinen Parkplatz bis zum Beginn der Reservierung nicht kennen. Reservierungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren."
 modules.showApiKey,Show API endpoint,Zobrazit API endpoint,Pokaż API endpoint,API Endpunkt zeigen
 modules.regenerateApiKey,Regenerate API endpoint,Vygenerovat nový API endpoint,Wygeneruj API endpoint,Einen neuen API Endpunkt erstellen
 modules.3rdPartyIntegration,3rd party integration,Integrace 3. stran,Integracja z osobami trzecimi,Integration von Dritten
@@ -1267,7 +1279,7 @@ languages.cs,Česky,Česky,Česky,Česky
 languages.de,Deutsch,Deutsch,Deutsch,Deutsch
 languages.pl,Polski,Polski,Polski,Polski
 recurringReservation.repeat,Repeat: disabled,Opakování: vypnuto,Powtarzanie: wyłączone,Wiederholen: aus
-recurringReservation.repeatEnabled,Repeat: enabled,Opakování: zapnuto,,
+recurringReservation.repeatEnabled,Repeat: enabled,Opakování: zapnuto,Powtarzanie: włączone,Wiederholen: ein
 recurringReservation.repeats,Repeats:,Opakuje se:,Powtarza się:,Wiederholt
 recurringReservation.daily,Daily,Denně,Codziennie,Täglich
 recurringReservation.weekly,Weekly,Týdně,Co tydzień,Wochentlich
@@ -1306,6 +1318,11 @@ mobileApp.page.logOut,log out,odhlásit,Wylogować,abmelden
 mobileApp.page.selectGarage,Select garage,Zvolte garáž,Wybierz garaż,Garage auswählen
 mobileApp.page.allGarages,All garages,Všechny garáže,Wszystkie garaże,Alle Garagen
 mobileApp.page.version,version,verze,wersja,Version
+mobileApp.page.resrevations,reservations,rezervace,rezerwacje,Buchungen
+mobileApp.page.notifications,notifications,notifikace,notyfikacje,Benachrichtigungen
+mobileApp.page.personal,personal,osobní,prywatne,Privat
+mobileApp.page.work,work,pracovní,służbowe,Arbeit
+mobileApp.notifications.noNewNotifications,No new notifications.,Žádné nové notifikace,Brak nowych notyfikacji,Keine neue Benachrichtigungen
 mobileApp.login.loading,Loading ...,Načítám ...,Ładowanie...,Laden...
 mobileApp.login.loginFailed,Login failed:,Špatné příhlášení:,Niepoprawny login:,Anmelden fehlgeschlagen:
 mobileApp.login.login,Please log in or,"Prosím, přihlaste se, nebo si",Zaloguj się lub,Melden Sie sich bitte an oder
@@ -1329,18 +1346,8 @@ mobileApp.signUp.passwordConfirmInvalid,Password does not match,Heslo se neshodu
 mobileApp.signUp.agreeWith,By creating a profile you agree with our,Registrací souhlasíte s našimi,Rejestracja oznacza zgodę z naszymi,Durch Registrierung stimmen Sie unseren
 mobileApp.signUp.terms,Terms of Service,podmínkami o poskytování služeb,warunkami korzystania z usług,Nutzungsbedingungen zu
 mobileApp.terms.content,You can find our Terms of Service on our website.,Podmínky používání naleznete na našich webových stránkách.,Warunki korzystania z usług znajdziesz na naszej stronie internetowej.,Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage
-mobileApp.menu.newNotifications,New notifications,Nová upozornění,Nowe powiadomienia,Neue Benachrichtigungen
-mobileApp.menu.access,Access,Přístup,Dostęp,Zugang
-mobileApp.menu.myReservations,My reservations,Moje rezervace,Moje rezerwacje,Meine Reservierungen
-mobileApp.menu.guestReservations,Regular guest,Pravidelný host,Regularny gość,Regelmäßiger Gast
-mobileApp.access.floor,Floor,Podlaží,Piętro,Etage
-mobileApp.access.place,Spot,Místo,Miejsce,Stellplatz
-mobileApp.access.noOngoingReservations,No ongoing reservations,Žádné probíhající rezervace,Nie masz żadnych trwających rezerwacji,Keine gültige Reservierung
-mobileApp.access.inSelectedGarage,in selected garage,ve zvolené garáži,w wybranym garażu,in gewählten Garage
-mobileApp.reservation.garage,Garage,Garáž,Garaż,Garage
+mobileApp.reservation.floor,Floor,Podlaží,Piętro,Etage
 mobileApp.reservation.place,Place,Místo,Miejsce,Platznummer
-mobileApp.reservation.begins,Begins,Začíná,Początek,Beginnt
-mobileApp.reservation.ends,Ends,Končí,Koniec,Endet
 mobileApp.newReservation.begins,Begins,Začíná,Początek,Beginnt
 mobileApp.newReservation.ends,Ends,Končí,Koniec,Endet
 mobileApp.newReservation.place,Place,Místo,Miejsce,Platznummer
