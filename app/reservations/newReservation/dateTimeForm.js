@@ -6,8 +6,8 @@ import moment                           from 'moment'
 import Dateinput   from '../../_shared/components/input/DateInput'
 import TimeInput   from '../../_shared/components/input/TimeInput'
 import RoundButton from '../../_shared/components/buttons/RoundButton'
-import Input            from '../../_shared/components/input/Input'
-import ButtonStack      from '../../_shared/components/buttonStack/ButtonStack'
+import Input       from '../../_shared/components/input/Input'
+import ButtonStack from '../../_shared/components/buttonStack/ButtonStack'
 
 import {
   beginsToNow,
@@ -26,6 +26,7 @@ import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT, MOMENT_TIME_FORMAT } from '
 import describeRule               from '../../_shared/helpers/recurringRuleToDescribtion'
 
 import styles from '../newReservation.page.scss'
+
 
 class DateTimeForm extends Component {
   static propTypes = {
@@ -136,16 +137,18 @@ export default connect(
     const { from, to, recurringRule, useRecurring } = state.newReservation
     return { state: { from, to, recurringRule, useRecurring } }
   },
-  dispatch => ({ actions: bindActionCreators({
-    beginsToNow,
-    formatFrom,
-    setFromDate,
-    setFromTime,
-    formatTo,
-    setToDate,
-    setToTime,
-    durationChange,
-    setShowRecurring
-  }, dispatch)
+  dispatch => ({ actions: bindActionCreators(
+    { beginsToNow,
+      formatFrom,
+      setFromDate,
+      setFromTime,
+      formatTo,
+      setToDate,
+      setToTime,
+      durationChange,
+      setShowRecurring
+    },
+    dispatch
+  )
   })
 )(DateTimeForm)

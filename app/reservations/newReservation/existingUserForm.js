@@ -1,13 +1,14 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
+import React, { Component, PropTypes } from 'react'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
 
-import Input         from '../../_shared/components/input/Input'
-import Dropdown      from '../../_shared/components/dropdown/Dropdown'
+import Input    from '../../_shared/components/input/Input'
+import Dropdown from '../../_shared/components/dropdown/Dropdown'
 
 import { setCarId, setCarLicencePlate } from '../../_shared/actions/newReservation.actions'
 
-import { t }         from '../../_shared/modules/localization/localization'
+import { t } from '../../_shared/modules/localization/localization'
+
 
 class ExistingUserForm extends Component {
   static propTypes = {

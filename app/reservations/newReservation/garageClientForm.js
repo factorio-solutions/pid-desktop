@@ -1,6 +1,6 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
+import React, { Component, PropTypes } from 'react'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
 
 import Dropdown from '../../_shared/components/dropdown/Dropdown'
 
@@ -11,6 +11,7 @@ import {
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
+
 
 class GarageClientForm extends Component {
   static propTypes = {
@@ -83,10 +84,12 @@ export default connect(
     const { user, highlight, paidByHost, garage, client_id } = state.newReservation
     return { state: { user, highlight, paidByHost, garage, client_id } }
   },
-  dispatch => ({ actions: bindActionCreators({
-    downloadGarage,
-    setPaidByHost,
-    setClientId
-  }, dispatch)
+  dispatch => ({ actions: bindActionCreators(
+    { downloadGarage,
+      setPaidByHost,
+      setClientId
+    },
+    dispatch
+  )
   })
 )(GarageClientForm)

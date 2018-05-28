@@ -1,10 +1,10 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
+import React, { Component, PropTypes } from 'react'
+import { connect }                     from 'react-redux'
+import { bindActionCreators }          from 'redux'
 
-import Input         from '../../_shared/components/input/Input'
-import PatternInput  from '../../_shared/components/input/PatternInput'
-import RoundButton   from '../../_shared/components/buttons/RoundButton'
+import Input        from '../../_shared/components/input/Input'
+import PatternInput from '../../_shared/components/input/PatternInput'
+import RoundButton  from '../../_shared/components/buttons/RoundButton'
 
 import {
   setHostName,
@@ -15,12 +15,10 @@ import {
   setCarLicencePlate
 } from '../../_shared/actions/newReservation.actions'
 
-import { AVAILABLE_LANGUAGES }    from '../../routes'
+import { AVAILABLE_LANGUAGES } from '../../routes'
+import { t }                   from '../../_shared/modules/localization/localization'
+import { languagesSelector }   from '../newReservation.page.scss'
 
-
-import { t } from '../../_shared/modules/localization/localization'
-
-import { languagesSelector } from '../newReservation.page.scss'
 
 class NewUserForm extends Component {
   static propTypes = {
@@ -106,13 +104,15 @@ export default connect(
     const { user, name, phone, email, note, highlight, language, carLicencePlate } = state.newReservation
     return { state: { user, name, phone, email, note, highlight, language, carLicencePlate } }
   },
-  dispatch => ({ actions: bindActionCreators({
-    setHostName,
-    setHostPhone,
-    setHostEmail,
-    setNote,
-    setLanguage,
-    setCarLicencePlate
-  }, dispatch)
+  dispatch => ({ actions: bindActionCreators(
+    { setHostName,
+      setHostPhone,
+      setHostEmail,
+      setNote,
+      setLanguage,
+      setCarLicencePlate
+    },
+    dispatch
+  )
   })
 )(NewUserForm)
