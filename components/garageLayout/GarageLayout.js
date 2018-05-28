@@ -176,7 +176,7 @@ class GarageLayout extends Component {
     .filter(place => place.group)
     .forEach(place => {
       const placeRect = currentSvg.getElementById('Place' + place.label)
-      if (!Array.isArray(place.group) || (Array.isArray(place.group) && place.group.length === 1)) { // colorize Place rect
+      if (!Array.isArray(place.group)) { // colorize Place rect
         placeRect && placeRect.classList.add('hasColorGroup')
         placeRect && placeRect.setAttribute('style', `fill: ${assignColors[Array.isArray(place.group) ? place.group[0] : place.group]};`)
       } else if (place.group.length >= 5) { // render circle with count in it
@@ -203,7 +203,7 @@ class GarageLayout extends Component {
       } else { // render multiple circles with coresponding colors
         const center = this.calculateCenter(placeRect)
         place.group.forEach((group, i, arr) => {
-          const x = arr.length === 3 && i === 2 ? // when count is three and group is tha last one
+          const x = (arr.length === 3 && i === 2) || arr.length === 1 ? // when count is three and group is tha last one or only one circle is being rendered
           0 :
           i % 2 === 0 ? // when is on the left
           -GROUP_OFFSET_X / 2 :
