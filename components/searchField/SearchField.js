@@ -6,13 +6,6 @@ import Input              from '../input/Input'
 import styles from './SearchField.scss'
 
 
-// label = button label if no item selected
-// content = dropdown content, structure: [{label: ..., onClick: ... }, ... ]
-// style = sets style, can be 'dark'/'light' (default is 'dark'), more can be created
-// selected = index of select item in content
-// fillParent = flag to indicate whenever or not to fill parent element widthvise
-// position 'fixed' / 'absolute' => default: 'absolute'
-
 export default class SearchField extends Component {
   static propTypes = {
     dropdownContent: PropTypes.array.isRequired,
@@ -23,7 +16,7 @@ export default class SearchField extends Component {
     placeholder:     PropTypes.string
   }
 
-  static defaultProps= {
+  static defaultProps = {
     buttons: []
   }
 
@@ -58,7 +51,7 @@ export default class SearchField extends Component {
       ...this.state,
       show: false
     }),
-    0
+    100
   )
 
   show = () => {
@@ -79,8 +72,8 @@ export default class SearchField extends Component {
 
   sorter = (a, b) => {
     if (a.order || b.order) { // sort by order
-      const aOrder = (a.order || Infinity)
-      const bOrder = (b.order || Infinity)
+      const aOrder = a.order || Infinity
+      const bOrder = b.order || Infinity
       return aOrder - bOrder
     } else { // sort by label
       const aLabel = (a.label.toString() || '').toLowerCase()
@@ -161,7 +154,7 @@ export default class SearchField extends Component {
           ref={component => this.filter = component}
         />
 
-        {this.state.show||true &&
+        {this.state.show &&
           <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
             <ul className={styles.scrollable}>
               {list}
