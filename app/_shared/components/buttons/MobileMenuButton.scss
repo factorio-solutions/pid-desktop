@@ -12,12 +12,12 @@ $size-collapsed-width:  150px;
   position:   relative;
   flex:       1 1;
   width:      $size-normal-width;
-  min-height: 100px;
+  min-height: 80px;
   padding:    18px 0 8px;
   transition: all .4s ease;
   border:     0;
   outline:    none;
-  color:   $white;
+  color:      $lightGray;
   font-size:  16px;
   text-align: center;
   cursor:  pointer;
@@ -103,9 +103,7 @@ $size-collapsed-width:  150px;
 
 // states
 .selected {
-  background: $selectedColor;
-  color:      $black;
-  // cursor:     default;
+  color: $selectedColor;
 }
 
 .disabled {
@@ -121,6 +119,6 @@ $size-collapsed-width:  150px;
   left:      50%;
   transform: translate(-50%, -50%);
   > .icon {
-    font-size: 36px;
+    font-size: 30px;
   }
 }

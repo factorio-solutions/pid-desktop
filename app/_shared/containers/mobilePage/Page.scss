@@ -1,5 +1,7 @@
 @import '../../styles/app.components';
 
+$bottomMenuHeight: 80px;
+
 .header {
   display:          block;
   position:         fixed;
@@ -29,6 +31,10 @@
   position: fixed;
   bottom:   $mobileNavigationBottomOffset;
   left:     $mobileNavigationSidesOffset;
+
+  &.addOffset {
+    bottom:   $mobileNavigationBottomOffset + $bottomMenuHeight;
+  }
 }
 
 .addButton {
@@ -36,12 +42,20 @@
   bottom:    $mobileNavigationBottomOffset;
   left:      50%;
   transform: translate(-50%, 0);
+
+  &.addOffset {
+    bottom:   $mobileNavigationBottomOffset + $bottomMenuHeight;
+  }
 }
 
 .okButton {
   position: fixed;
   right:    $mobileNavigationSidesOffset;
   bottom:   $mobileNavigationBottomOffset;
+
+  &.addOffset {
+    bottom:   $mobileNavigationBottomOffset + $bottomMenuHeight;
+  }
 }
 
 .app_page {
@@ -102,4 +116,23 @@
     color:      $white;
     text-align: center;
   }
+}
+
+.menu {
+  display: flex;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 0 12px 2px rgba($black, .75);
+}
+
+.buttonGroup {
+  padding:          12px;
+  background-color: $gray;
+  text-align:       center;
+}
+
+.page {
+  padding: 10px;
 }

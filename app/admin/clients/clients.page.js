@@ -54,8 +54,8 @@ class ClientsPage extends Component {
     const prepareContractButton = contract => {
       const onContractClick = () => nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`)
       return (<div
-        className={`${styles.contract} ${!pageBase.isGarageAdmin && styles.disabled}`}
-        onClick={pageBase.isGarageAdmin && onContractClick}
+        className={`${styles.contract} ${!(pageBase.isGarageAdmin || client.is_admin) && styles.disabled}`}
+        onClick={(pageBase.isGarageAdmin || client.is_admin) && onContractClick}
       >
         {contract.name}
       </div>)

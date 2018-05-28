@@ -7,7 +7,8 @@ import {
   MOBILE_MENU_SET_SHOW_MENU,
   MOBILE_MENU_SET_ERROR,
   MOBILE_MENU_SET_CUSTOM_MODAL,
-  SET_MOBILE_LANGUAGE
+  SET_MOBILE_LANGUAGE,
+  SET_MOBILE_PERSONAL
 } from '../actions/mobile.header.actions'
 
 import { SET_NOTIFICATIONS_COUNT } from '../actions/notifications.actions'
@@ -21,7 +22,8 @@ const defaultState = {
   error:              undefined,
   custom_modal:       undefined,
   notificationsCount: 0,
-  language:           'en'
+  language:           'en',
+  personal:           true
 }
 //  , headerHeight: 101 // px
 
@@ -76,6 +78,12 @@ export default function mobileHeader(state = defaultState, action) {
       return {
         ...state,
         language: action.value
+      }
+
+    case SET_MOBILE_PERSONAL:
+      return {
+        ...state,
+        personal: action.value
       }
 
     case 'MOBIE_MENU_SET_DEVICE_ONLINE':
