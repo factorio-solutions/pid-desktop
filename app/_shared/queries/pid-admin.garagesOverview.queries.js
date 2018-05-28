@@ -1,0 +1,35 @@
+export const GET_ADMIN_GARAGES = `query{
+  garages{
+    id
+    name
+    place_count
+    is_public
+    go_internal
+    flexiplace
+    third_party_integration
+    mr_parkit_integration
+    created_at
+    active_pid_tarif{
+      name
+    }
+    marketing{
+      id
+      active_marketing_launched
+    }
+    admins{
+      full_name
+      phone
+      email
+    }
+    managers{
+      full_name
+      phone
+      email
+    }
+    pid_tarif{
+      id
+      name
+    }      
+  }
+}
+`

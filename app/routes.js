@@ -118,6 +118,7 @@ import PidAdminFinancePage from './pidAdmin/finance/finance.page'
 
 import PidAdminLogsPage    from './pidAdmin/logs/logs.page'
 
+import PidAdminGaragesOverview from './pidAdmin/garagesOverview/garagesOverview.page'
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
 
@@ -141,6 +142,8 @@ export default function createRoutes() {
       <Route path="finance" component={PidAdminFinancePage} />
 
       <Route path="logs" component={PidAdminLogsPage} />
+
+      <Route path="garagesOverview" component={PidAdminGaragesOverview} />
     </Route>
   )
 
