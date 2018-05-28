@@ -222,10 +222,16 @@
 		"validtyCheck": "Performing validity check ...",
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
-		"newHost": "New regular guest",
+		"newHost": "Regular guest",
+		"newHostText": "may create reservations for himself, but need them to be approved by a secretary",
 		"newInternal": "New internal",
+		"newInternalText": "may create reservations for himself",
+		"dropButtonText": "New user with rights",
+		"dropButtonDescrText": "User with rights",
 		"hostsName": "Name of regular guest",
+		"phone": "Phone number",
 		"hostsPhone": "Phone of regular guest",
+		"email": "Email",
 		"hostsEmail": "Email of regular guest",
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
@@ -235,6 +241,7 @@
 		"noFreePlace": "No free place",
 		"note": "Note",
 		"onetimeVisit": "Onetime visitor",
+		"onetimeVisitText": "may create reservations for himself",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
 		"languageSelector": "Choose communication language",
@@ -926,7 +933,9 @@
 		"invoicePaidLabel": "Invoice paid",
 		"invoiceIncorect": "Cancel invoice",
 		"donwloadExcel": "Download Excel",
-		"donwloadInvoices": "Download invoices"
+		"donwloadInvoices": "Download invoices",
+		"donwloadXML": "Pohoda XML",
+		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
 	},
 	"resetPassword": {
 		"send": "A password reset email has been sent to your address.",
@@ -947,7 +956,7 @@
 		"startingMarketing": "Upgrading your billing plan. Redirecting...",
 		"cannotBeChanged": "You cannot go public until you set a payment method. To do this go to Admin/Finance.",
 		"flexiplace": "Flexi place",
-		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins",
+		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.",
 		"showApiKey": "Show API endpoint",
 		"regenerateApiKey": "Regenerate API endpoint",
 		"3rdPartyIntegration": "3rd party integration",
@@ -1169,25 +1178,9 @@
 		"terms": {
 			"content": "You can find our Terms of Service on our website."
 		},
-		"menu": {
-			"newNotifications": "New notifications",
-			"access": "Access",
-			"myReservations": "My reservations",
-			"guestReservations": "Regular guest"
-		},
-		"access": {
-			"floor": "Floor",
-			"place": "Spot",
-			"noOngoingReservations": "No ongoing reservations",
-			"inSelectedGarage": "in selected garage"
-		},
 		"reservation": {
-			"garage": "Garage",
-			"place": "Place",
-			"begins": "Begins",
-			"ends": "Ends",
-			"place": "Place",
-			"floor": "Floor"
+			"floor": "Floor",
+			"place": "Place"
 		},
 		"newReservation": {
 			"begins": "Begins",

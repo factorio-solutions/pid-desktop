@@ -1,48 +1,37 @@
 import React, { Component, PropTypes } from 'react'
 
 import CallToActionButton from '../buttons/CallToActionButton'
+import Input              from '../input/Input'
 
 import styles from './SearchField.scss'
 
 
-// label = button label if no item selected
-// content = dropdown content, structure: [{label: ..., onClick: ... }, ... ]
-// style = sets style, can be 'dark'/'light' (default is 'dark'), more can be created
-// selected = index of select item in content
-// fillParent = flag to indicate whenever or not to fill parent element widthvise
-// position 'fixed' / 'absolute' => default: 'absolute'
-
 export default class SearchField extends Component {
   static propTypes = {
-    label:       PropTypes.string.isRequired,
-    content:     PropTypes.array.isRequired,
-    style:       PropTypes.string,
-    selected:    PropTypes.number,
-    onChange:    PropTypes.func,
-    highlight:   PropTypes.bool,
-    position:    PropTypes.string,
-    editable:    PropTypes.bool,
-    order:       PropTypes.bool,
-    buttons:     PropTypes.array,
-    placeholder: PropTypes.string
+    dropdownContent: PropTypes.array.isRequired,
+    searchQuery:     PropTypes.string,
+    selected:        PropTypes.number,
+    onChange:        PropTypes.func,
+    buttons:         PropTypes.array,
+    placeholder:     PropTypes.string
   }
 
   static defaultProps = {
-    hover:    false,
-    style:    'dark',
-    editable: true,
-    order:    true
+    buttons: []
   }
 
   constructor(props) {
     super(props)
     this.state = {
       selected: this.props.selected,
-      filter:   ''
+      show:     true
     }
   }
 
   componentDidMount() {
+    if (!this.props.searchQuery) {
+      this.filter.input.focus()
+    }
     this.validateContent(this.props)
   }
 
@@ -50,70 +39,67 @@ export default class SearchField extends Component {
     this.validateContent(nextProps)
   }
 
-  handleSelection() {
-    const user = this.props.content[this.state.selected]
-    if (user) {
-      this.setState({ ...this.state, filter: user.label })
-    } else {
-      this.filter.focus()
-    }
-  }
-
   validateContent(nextProps) {
-    if (nextProps.content.length === 1) { // if only one item, autoselect it
-      this.setState({ ...this.state, selected: 0 }, this.handleSelection)
-    } else {
-      this.setState({ ...this.state, selected: nextProps.selected }, this.handleSelection)
+    this.setState({
+      ...this.state,
+      selected: nextProps.dropdownContent.length === 1 ? 0 : nextProps.selected
+    })
+  }
+
+  hide = () => setTimeout(
+    () => this.setState({
+      ...this.state,
+      show: false
+    }),
+    100
+  )
+
+  show = () => {
+    if (this.props.dropdownContent.length > 1) {
+      this.setState({
+        ...this.state,
+        show: true
+      })
     }
   }
 
-  toggleDropdown = () => {
-    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
-  }
+  generateButtons = item => (
+    <tr>
+      <td><CallToActionButton label={item.label} onClick={item.onClick} /></td>
+      <td>{item.text}</td>
+    </tr>
+  )
 
-  hide = () => {
-    this.ul.classList.add(styles.hidden)
-    this.timeout = setTimeout(() => {
-      this.ul && this.ul.classList.add(styles.displayNone)
-    }, 250)
-  }
+  sorter = (a, b) => {
+    if (a.order || b.order) { // sort by order
+      const aOrder = a.order || Infinity
+      const bOrder = b.order || Infinity
+      return aOrder - bOrder
+    } else { // sort by label
+      const aLabel = (a.label.toString() || '').toLowerCase()
+      const bLabel = (b.label.toString() || '').toLowerCase()
 
-  unhide = () => {
-    if (this.props.content.length > 1) {
-      this.ul.classList.remove(styles.displayNone)
-      this.ul.classList.remove(styles.hidden)
-      this.ul.style.width = this.filter.getBoundingClientRect().width + 'px'
-
-      if (this.props.filter) {
-        this.filter.focus()
+      if (aLabel < bLabel) {
+        return -1
+      } else if (aLabel > bLabel) {
+        return 1
+      } else {
+        return 0
       }
     }
   }
 
-  filterChange = event => this.setState({ ...this.state, filter: event.target.value })
-
   render() {
-    const { label, content, onChange, style, position, buttons, placeholder, editable } = this.props
-    let buttonsArray = []
+    const { dropdownContent, buttons, placeholder, searchQuery, onChange } = this.props
 
-    const sorter = (a, b) =>
-    (a.order || b.order) ?
-      ((a.order && !b.order) ? -1 : (!a.order && b.order) ? 1 : a.order - b.order) :
-      (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase() ?
-        -1 :
-        ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
-
-    let list = content.sort(sorter).map((item, index) => {
-      const onClick = e => {
-        e.stopPropagation()
+    let list = dropdownContent.map((item, index) => {
+      const onClick = () => {
         item.onClick && item.onClick()
-        onChange && onChange(index, true) // for form
-        // HACK: filter is not set without setTimeout.
-        setTimeout(() => this.setState({ ...this.state, selected: index, filter: item.label }), 0)
+        onChange && onChange(item.label) // for form
         this.hide()
       }
       const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-      const show = this.state.filter === '' ? true : lowercaseTrimmedLabel.includes(this.state.filter.toLowerCase())
+      const show = searchQuery === '' ? true : lowercaseTrimmedLabel.includes(searchQuery.toLowerCase())
 
       return {
         ...item,
@@ -123,62 +109,64 @@ export default class SearchField extends Component {
             className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`}
             onClick={onClick}
           >
-            <label>
-              {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
-                .split(this.state.filter.toLowerCase() || undefined) // split by filter
-                .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
-                .filter(o => o !== false)
-                .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
-                .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
-                .map((part, index) => (index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>))
-              }
-            </label>
+            <div>
+              <label className={styles.contactLabel}>
+                {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
+                  .split(searchQuery.toLowerCase() || undefined) // split by filter
+                  .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && searchQuery.length && searchQuery ], [])
+                  .filter(o => o !== false)
+                  .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
+                  .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
+                  .map((part, index) => (index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>))
+                }
+              </label>
+              <div className={styles.contactInfo}>
+                {item.email &&
+                  <div className={styles.contactInfoColumn}>
+                    {`@ ${item.email}`}
+                  </div>
+                }
+                {item.phone &&
+                  <div className={styles.contactInfoColumn}>
+                    <i className="fa fa-mobile" aria-hidden="true" /> {item.phone}
+                  </div>
+                }
+              </div>
+            </div>
           </li>)
       }
-    })
+    }).sort(this.sorter)
 
-    if (buttons) {
-      buttonsArray = buttons.map(item => {
-        return (
-          <div className={styles.line}>
-            <div className={styles.minWidthButton}>
-              <CallToActionButton
-                label={item.label}
-                onClick={item.onClick}
-              />
-            </div>
-            <div>{item.text}</div>
-          </div>
-        )
-      })
-    }
+
     list = list.map(o => o.render)
+
     return (
       <div>
-        <input
-          type="text"
-          value={this.state.filter}
+        <Input
+          onChange={onChange}
+          value={searchQuery}
+          label={placeholder}
           placeholder={placeholder}
-          onChange={this.filterChange}
-          ref={el => { this.filter = el }}
-          label={label}
-          className={`${styles.filter} ${!editable && styles.dimmer}`}
-          onFocus={this.toggleDropdown}
-          onBlur={this.toggleDropdown}
+          type="text"
+          align="left"
+          onFocus={this.show}
+          onBlur={this.hide}
+          ref={component => this.filter = component}
         />
-        <div
-          className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
-          ref={ul => { this.ul = ul }}
-        >
-          <ul className={styles.scrollable}>
-            {list}
-          </ul>
-          {buttonsArray.length > 0 &&
-            <div className={styles.buttons}>
-              {buttonsArray}
-            </div>
-          }
-        </div>
+
+        {this.state.show &&
+          <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
+            <ul className={styles.scrollable}>
+              {list}
+            </ul>
+
+            <table className={styles.buttons}>
+              <tbody>
+                {buttons.map(this.generateButtons)}
+              </tbody>
+            </table>
+          </div>
+        }
       </div>
     )
   }
