@@ -1,58 +1,56 @@
 @import '../../styles/app.components';
 
-.dropdownContainer {
-  position: relative;
-}
-
 .drop {
   overflow-x: hidden;
   text-align: left;
 }
 
 .drop > ul.scrollable {
-  max-height:       200px;
+  max-height:       54ex;
   overflow-y:       auto;
   overflow-x:       hidden;
   list-style-type:  none;
   padding:          0;
 }
 
-.filter {
-  padding:          10px;
-  // width:            100%;
-  border:           0;
-  border-bottom:    1px solid $gray;
-  outline:          none;
-  text-align:       center;
-  width: -webkit-fill-available;
-  // IPhone compatibility
-  -webkit-box-shadow:    none;
-  -webkit-border-radius: 0;
-}
-
 ul.scrollable > li {
-  padding: 14px 16px;
+  padding: 0.3em 0.5em;
   cursor:  pointer;
-}
+  width:   95%;
 
-.buttons {
-  border-top: 1px solid $black;
-  margin-top: 10px;
-  display: table;
+  &.displayNone {
+    display: none;
+  }
 
-  & div.minWidthButton {
-    max-width: 200px;
-    min-width: 150px;
-    display: table-cell;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 5px 5px 0px;
+  .contactLabel {
+    font-size: larger;
+  }
+
+  div.contactInfo {
+    font-size: smaller;
+    }
+  
+  .contactInfoColumn {
+    display:      inline-block;
+    padding-left: 1em;
+    white-space:  nowrap;
   }
 }
 
-.buttons > .line {
-  display: table-row;
-  margin: 15px 0px 15px 0px;
+.buttons {
+  table-layout: fixed;
+  width:        100%;
+
+  >tbody>tr>td {
+    &:last-child {
+      padding-left: 10px;
+    }
+
+    >button {
+      width:      100%;
+      min-height: 4em;
+    }
+  }
 }
 
 .drop > ul > li:not(.selected):not(.filter):hover {
@@ -60,42 +58,7 @@ ul.scrollable > li {
   color:            $white;
 }
 
-.hidden {
-  opacity: 0;
-}
-
 .selected {
   background-color: $yellow;
   color:            $black;
 }
-
-.float {
-  font-size: 16px;
-  opacity:   0;
-}
-
-.visible {
-  opacity: 1;
-}
-
-.singleItem > i {
-  display: none;
-}
-
-.singleItem {
-  cursor: default;
-}
-
-.dimmer {
-  background-color: $lightGray !important;
-  color:            $gray !important;
-  cursor:           default;
-}
-
-.displayNone {
-  display: none;
-}
-
-
-// -----------------------------------------
-// Custom styles

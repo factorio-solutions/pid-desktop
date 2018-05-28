@@ -95,6 +95,8 @@ export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NA
 export const setHostPhone = patternInputActionFactory(NEW_RESERVATION_SET_HOST_PHONE)
 export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_EMAIL)
 
+const hideLoading = dispatch => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
+
 export function setUser(value) {
   return (dispatch, getState) => {
     dispatch({ type: NEW_RESERVATION_SET_USER,
@@ -174,10 +176,9 @@ export function removeDiacritics() {
 
 export function setFromDate(value) {
   return (dispatch, getState) => {
-    
-    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let fromDate = moment(value, MOMENT_DATE_FORMAT)
-    let toValue = null
+    const from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const fromDate = moment(value, MOMENT_DATE_FORMAT)
+    const toValue = null
     from.set('year', fromDate.get('year'))
     from.set('month', fromDate.get('month'))
     from.set('date', fromDate.get('date'))
@@ -191,9 +192,9 @@ export function setFromDate(value) {
 
 export function setFromTime(value) {
   return (dispatch, getState) => {
-    let from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let fromTime = moment(value, MOMENT_TIME_FORMAT)
-    let toValue = null
+    const from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const fromTime = moment(value, MOMENT_TIME_FORMAT)
+    const toValue = null
     from.set('hour', fromTime.get('hour'))
     from.set('minute', fromTime.get('minute'))
     dispatch({ type:  NEW_RESERVATION_SET_FROM,
@@ -232,9 +233,9 @@ export function formatFrom() {
 
 export function setToDate(value) {
   return (dispatch, getState) => {
-    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let toDate = moment(value, MOMENT_DATE_FORMAT)
-    let fromValue = null
+    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const toDate = moment(value, MOMENT_DATE_FORMAT)
+    const fromValue = null
     to.set('year', toDate.get('year'))
     to.set('month', toDate.get('month'))
     to.set('date', toDate.get('date'))
@@ -248,14 +249,14 @@ export function setToDate(value) {
 
 export function setToTime(value) {
   return (dispatch, getState) => {
-    let to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-    let toTime = moment(value, MOMENT_TIME_FORMAT)
-    let fromValue = null
+    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const toTime = moment(value, MOMENT_TIME_FORMAT)
+    const fromValue = null
     to.set('hour', toTime.get('hour'))
     to.set('minute', toTime.get('minute'))
     dispatch({ type:  NEW_RESERVATION_SET_TO,
-      value:   to.format(MOMENT_DATETIME_FORMAT),
-      from:    fromValue
+      value: to.format(MOMENT_DATETIME_FORMAT),
+      from:  fromValue
     })
     dispatch(formatTo())
   }
@@ -341,16 +342,12 @@ export function roundTime(time) {
 export function setInitialStore(id) {
   return (dispatch, getState) => {
     dispatch(setLoading(true))
-    dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
-    dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
-    dispatch(formatFrom())
-    dispatch(formatTo())
-
+    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'loading' ])}</div>))
 
     const availableUsersPromise = new Promise((resolve, reject) => {
       dispatch(setLoading(true))
       const onSuccess = response => {
-        dispatch(setLoading(false))
+        // dispatch(setLoading(false))
         if (response.data !== undefined) {
           resolve(response.data)
         } else {
@@ -365,7 +362,7 @@ export function setInitialStore(id) {
       if (id) {
         dispatch(setLoading(true))
         const onSuccess = response => {
-          dispatch(setLoading(false))
+          // dispatch(setLoading(false))
           if (response.hasOwnProperty('data')) {
             resolve(response.data)
           } else {
@@ -407,7 +404,7 @@ export function setInitialStore(id) {
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(setNote(values[1].reservation.note))
         dispatch(setReservation(values[1].reservation))
-        dispatch(downloadUser(values[1].reservation.user_id))
+        dispatch(downloadUser(values[1].reservation.user_id, undefined, hideLoading))
         dispatch(setClientId(values[1].reservation.client_id))
         values[1].reservation.car.temporary ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate)) : dispatch(setCarId(values[1].reservation.car.id))
         dispatch(setFrom(moment(values[1].reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
@@ -415,12 +412,18 @@ export function setInitialStore(id) {
         dispatch(setPlace(values[1].reservation.place))
       } else {
         dispatch(setReservation(undefined))
+        dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
+        dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
+        dispatch(formatFrom())
+        dispatch(formatTo())
         if (users.length === 1) {
-          dispatch(downloadUser(users[0].id))
+          dispatch(downloadUser(users[0].id, undefined, hideLoading))
+        } else {  
+          hideLoading(dispatch)
         }
       }
     }).catch(error => { // error
-      dispatch(setLoading(false))
+      hideLoading(dispatch)
       throw (error)
     })
   }
@@ -463,30 +466,41 @@ export function downloadUser(id, rights) {
     Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
       values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-      dispatch(setUser({ ...(values[0].user && values[0].user.last_active ? values[0].user : { id, reservable_cars: [] }),
+      dispatch(setUser({ ...(values[0].user ? values[0].user : { id }),
         availableGarages: values[1].reservable_garages,
         availableClients: values[2].reservable_clients,
         rights // Client user rights
       }))
+      let hideLoadingCalled = false
       if (values[0].user && !values[0].user.last_active) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
         dispatch(setLanguage(values[0].user.language))
+        hideLoading(dispatch)
+        hideLoadingCalled = true
       }
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
+        hideLoadingCalled = true
+
       }
       if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
         dispatch(downloadGarage(values[1].reservable_garages[0].id))
+        hideLoadingCalled = true
       }
       if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
+        if (!hideLoadingCalled) {
+          hideLoading(dispatch)
+          hideLoadingCalled = true
+        }
       }
-
-      dispatch(setLoading(false))
+      if (!hideLoadingCalled) {
+        hideLoading(dispatch)
+      }
     }).catch(error => {
-      dispatch(setLoading(false))
+      hideLoading(dispatch)
       throw (error)
     })
   }
@@ -580,7 +594,10 @@ export function downloadGarage(id) {
         })
       })
       dispatch(setGarage(garage))
-      dispatch(autoSelectPlace())
+      if (!state.reservation) {
+        dispatch(autoSelectPlace())
+      }
+      hideLoading(dispatch)
     })
   }
 }
@@ -602,7 +619,6 @@ export function autoSelectPlace() {
           }
         }, highestPriorityPlace)
       }, undefined)
-
       dispatch(setPlace(selectedPlace))
     }
   }
