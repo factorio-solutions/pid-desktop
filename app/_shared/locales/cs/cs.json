@@ -1320,7 +1320,8 @@
 			"adminMode": "ADMIN MODE PARK-IT-DIRECTU",
 			"generator": "Generátor",
 			"news": "Novinky",
-			"finance": "Finance"
+			"finance": "Finance",
+			"garagesOverviev": "Přehled garáží"
 		},
 		"users": {
 			"id": "id",
@@ -1372,6 +1373,23 @@
 			"createdAt": "vytvořeno",
 			"editNews": "upravit novinky",
 			"deleteNews": "smazat novinky"
+		},
+		"garagesOverview": {
+			"createdAt": "Datum založení",
+			"admin": "Admin",
+			"manager": "Manager",
+			"garageName": "jméno garaže",
+			"places": "počet míst",
+			"tarif": "tarif",
+			"goPublic": "go public",
+			"goInternal": "go internal",
+			"flexiPlace": "flexi místo",
+			"marketing": "Marketingová stránka",
+			"thirdPartyIntegration": "Integrace 3. stran",
+			"mrParkitIntegration": "integrace MR.PARKIT",
+			"LongTerm": "LongTerm",
+			"Automation": "Automation",
+			"Integration": "Integration"
 		}
 	}
 }
