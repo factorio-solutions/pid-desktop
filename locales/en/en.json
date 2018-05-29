@@ -1169,7 +1169,10 @@
 		},
 		"reservation": {
 			"place": "Place",
-			"floor": "Floor"
+			"floor": "Floor",
+			"garage": "Garage",
+			"begins": "Begins",
+			"ends": "Ends"
 		},
 		"newReservation": {
 			"begins": "Begins",
