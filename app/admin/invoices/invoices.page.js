@@ -134,6 +134,7 @@ class InvoicesPage extends Component {
     }
 
     const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findById(state.client_id)} />
+
     const customModal = (<div>
       <Form
         submitable={state.reason !== '' && state.reason !== undefined}
@@ -157,7 +158,9 @@ class InvoicesPage extends Component {
       <PageBase>
         <Modal content={customModal} show={state.showModal} />
         <TabMenu left={<div className={styles.dropdownsContainer}>{clientSelector}</div>} right={filters} />
+
         <Table schema={schema} data={invoiceData} returnFiltered={actions.setFilteredInvoices} />
+
         <div className={styles.actionButtons}>
           <LabeledRoundButton label={t([ 'invoices', 'donwloadExcel' ])} content={<span className="fa fa-file-excel-o" aria-hidden="true" />} onClick={actions.generateCsv} type="action" />
           <LabeledRoundButton label={t([ 'invoices', 'donwloadXlsx' ])} content={<span className="fa fa-file-excel-o" aria-hidden="true" />} onClick={actions.generateXlsx} type="action" />
