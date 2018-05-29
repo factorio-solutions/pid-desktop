@@ -167,6 +167,7 @@ class ClientsPage extends Component {
         <div className={styles.tableContainer}>
           <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(this.addSpoiler).map(this.filterAttributes)} />
         </div>
+
         <div className={styles.addButton}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.addClient} type="action" size="big" />
           {pageBase.isGarageAdmin && <RoundButton content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>} onClick={this.addContract} type="action" size="big" />}
