@@ -27,11 +27,11 @@ export class ReservationCard extends Component {
     actions.openGarage(reservation, gate.id)
   }
 
-  editClick = () => {
+  toReservation = () => {
     const { router, reservation, mobileHeader } = this.props
     router.push((mobileHeader.personal ?
-      paths.RESERVATION_EDIT :
-      paths.GUEST_RESERVATION_EDIT
+      paths.RESERVATION_GET :
+      paths.GUEST_RESERVATION_GET
     ) + '/' + reservation.id)
   }
 
@@ -52,7 +52,7 @@ export class ReservationCard extends Component {
           </div>
 
           {reservation.client && reservation.client.is_secretary && to.isAfter(moment()) &&
-            <div className={`${styles.gray} ${styles.icon}`} onClick={this.editClick}><i className="fa fa-pencil" aria-hidden="true" /></div>
+            <div className={`${styles.gray} ${styles.icon}`} onClick={this.toReservation}><i className="icon-more" aria-hidden="true" /></div>
           }
         </div>
 

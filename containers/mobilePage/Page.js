@@ -161,13 +161,13 @@ export class Page extends Component {
 
     const menu = (<div className={styles.menu}>
       <MobileMenuButton
-        icon="icon-garage"
+        icon="icon-garage-mobile"
         label={t([ 'mobileApp', 'page', 'resrevations' ])}
         onClick={() => this.context.router.push(RESERVATIONS)}
         state={window.location.hash.includes(RESERVATIONS) && 'selected'}
       />
       <MobileMenuButton
-        icon="icon-message"
+        icon="icon-notification-mobile"
         label={t([ 'mobileApp', 'page', 'notifications' ])}
         onClick={() => this.context.router.push(NOTIFICATIONS)}
         state={window.location.hash.includes(NOTIFICATIONS) && 'selected'}
