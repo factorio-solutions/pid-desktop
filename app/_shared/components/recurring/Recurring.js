@@ -81,8 +81,9 @@ export default class Recurring extends Component {
     const filterWeeks = type => showWeeks ? true : type !== 'week'
     const toTypely = type => type === 'day' ? 'daily' : type + 'ly'
 
-    const toTypeDropdown = type => ({
+    const toTypeDropdown = (type, index) => ({
       label:   t([ 'recurringReservation', toTypely(type) ]),
+      order:   index + 1,
       onClick: () => this.setState({ ...this.state, type })
     })
 
@@ -90,6 +91,7 @@ export default class Recurring extends Component {
 
     const toIntervalDropdown = interval => ({
       label:   interval,
+      order:   interval,
       onClick: () => this.setState({ ...this.state, interval })
     })
 

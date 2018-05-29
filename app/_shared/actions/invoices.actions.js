@@ -1,12 +1,29 @@
-import { request }  from '../helpers/request'
-import { download, downloadMultiple } from '../helpers/download'
-import { downloadCSV } from '../helpers/downloadCSV'
-import { formatTime } from '../helpers/time'
-import { t }        from '../modules/localization/localization'
-import * as nav     from '../helpers/navigation'
+import React from 'react'
 
-import { GET_INVOICES, UPDATE_INVOICE, REMINDER_NOTIFICATION, GET_ACCOUNT_DETAILS, GET_CLIENT_DETAILS, DOWNLOAD_INVOICE, PAY_INVOICE } from '../queries/invoices.queries'
-import { toAccounts, toClients, setError, setCustomModal } from './pageBase.actions'
+import { request }      from '../helpers/request'
+import { downloadCSV }  from '../helpers/downloadCSV'
+import { downloadXLSX } from '../helpers/downloadXLSX'
+import { formatTime }   from '../helpers/time'
+import { t }            from '../modules/localization/localization'
+import actionFactory    from '../helpers/actionFactory'
+
+import {
+  download,
+  downloadMultiple
+} from '../helpers/download'
+
+import {
+  GET_INVOICES,
+  UPDATE_INVOICE,
+  REMINDER_NOTIFICATION,
+  DOWNLOAD_INVOICE,
+  PAY_INVOICE
+} from '../queries/invoices.queries'
+
+import {
+  setError,
+  setCustomModal
+} from './pageBase.actions'
 
 
 export const INVOICES_SET_INVOICES = 'INVOICES_SET_INVOICES'
@@ -19,53 +36,24 @@ export const INVOICES_TOGGLE_REASON_MODAL = 'INVOICES_TOGGLE_REASON_MODAL'
 export const INVOICSE_SET_FILTERED_INVOICES = 'INVOICSE_SET_FILTERED_INVOICES'
 
 
-export function setInvoices(value) {
-  return { type: INVOICES_SET_INVOICES,
-    value
-  }
-}
+export const setInvoices = actionFactory(INVOICES_SET_INVOICES)
+export const setClients = actionFactory(INVOICES_SET_CLIENTS)
+export const setClientId = actionFactory(INVOICES_SET_CLIENT_ID)
+export const setReason = actionFactory(INVOICES_SET_REASON)
+export const toggleReason = actionFactory(INVOICES_TOGGLE_REASON_MODAL)
+export const setFilteredInvoices = actionFactory(INVOICSE_SET_FILTERED_INVOICES)
 
-export function setClients(value) {
-  return { type: INVOICES_SET_CLIENTS,
-    value
-  }
-}
-
-export function setClientId(value) {
-  return { type: INVOICES_SET_CLIENT_ID,
-    value
-  }
-}
-
-export function setPast(value, garage_id) {
-  return (dispatch, getState) => {
+export function setPast(value, garageId) {
+  return dispatch => {
     dispatch({ type: INVOICES_SET_PAST,
       value
     })
-    dispatch(initInvoices(garage_id))
-  }
-}
-
-export function setReason(value) {
-  return { type: INVOICES_SET_REASON,
-    value
-  }
-}
-
-export function toggleReason(id) {
-  return { type:  INVOICES_TOGGLE_REASON_MODAL,
-    value: id
-  }
-}
-
-export function setFilteredInvoices(value) {
-  return { type: INVOICSE_SET_FILTERED_INVOICES,
-    value
+    dispatch(initInvoices(garageId))
   }
 }
 
 
-export function initInvoices(garage_id) {
+export function initInvoices(garageId) {
   return (dispatch, getState) => {
     const state = getState().invoices
 
@@ -84,69 +72,65 @@ export function initInvoices(garage_id) {
           clients.push(garagesClients.clients[key])
         }
       }
+
       dispatch(setClients(clients))
     }
 
-    request(onSuccess
-           , GET_INVOICES
-           , {
-             garage_id: garage_id && +garage_id,
-             past:      state.past
-           }
-           )
+    request(onSuccess,
+      GET_INVOICES,
+      { garage_id: garageId && +garageId,
+        past:      state.past
+      }
+    )
   }
 }
 
 export function payInvoice(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(setCustomModal(<div>{t([ 'invoices', 'redirecting' ])}</div>))
       window.location.replace(response.data.update_invoice.payment_url)
     }
 
     dispatch(setCustomModal(<div>{t([ 'invoices', 'initializingPayment' ])}</div>))
-    request(onSuccess
-           , UPDATE_INVOICE
-           , { id:      +id,
-             invoice: { url: window.location.href.split('?')[0] }
-           }
-           )
+    request(onSuccess,
+      UPDATE_INVOICE,
+      { id:      +id,
+        invoice: { url: window.location.href.split('?')[0] }
+      }
+    )
   }
 }
 
 export function paymentUnsucessfull() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setError(t([ 'invoices', 'paymentUnsucessfull' ])))
   }
 }
 
 export function payInvoiceFinish(token) {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
+  return dispatch => {
+    const onSuccess = () => {
       dispatch(setCustomModal(undefined))
     }
 
     dispatch(setCustomModal(<div>{t([ 'invoices', 'payingReservation' ])}</div>))
-    request(onSuccess
-           , PAY_INVOICE
-           , { token }
-           )
+    request(onSuccess, PAY_INVOICE, { token })
   }
 }
 
-export function invoicePayed(id, garage_id) {
-  return (dispatch, getState) => {
-    const state = getState().invoices
-    const onSuccess = response => {
-      dispatch(initInvoices(garage_id))
+export function invoicePayed(id, garageId) {
+  return dispatch => {
+    const onSuccess = () => {
+      dispatch(initInvoices(garageId))
     }
 
-    request(onSuccess
-           , UPDATE_INVOICE
-           , { id:      +id,
-             invoice: { payed: true }
-           }
-           )
+    request(onSuccess,
+      UPDATE_INVOICE,
+      { id:      +id,
+        invoice: { payed: true }
+      }
+    )
   }
 }
 
@@ -159,9 +143,9 @@ export function stornoInvoice(id, garage_id) {
 
     dispatch(toggleReason())
     if (state.reason !== undefined && state.reason !== '') {
-      request(onSuccess
-        , UPDATE_INVOICE
-        , { id:      +id,
+      request(onSuccess,
+        UPDATE_INVOICE,
+        { id:      +id,
           invoice: { canceled: true, reason: state.reason }
         }
       )
@@ -183,51 +167,60 @@ export function reminder(id) {
 
     const invoice = state.invoices.find(invoice => { return invoice.id === id })
     invoice.client != null && invoice.client.admins.forEach(admin => {
-      request(onSuccess
-             , REMINDER_NOTIFICATION
-             , { notification: { user_id:           admin.id,
-               notification_type: 'Yes',
-               message:           'invoiceReminder;' + invoice.account.garage.name
-             }
-             }
-             )
+      request(onSuccess,
+        REMINDER_NOTIFICATION,
+        { notification: {
+          user_id:           admin.id,
+          notification_type: 'Yes',
+          message:           'invoiceReminder;' + invoice.account.garage.name
+        } }
+      )
     })
   }
 }
 
+function invoicesToArray(getState) {
+  const invoices = getState().invoices.filteredInvoices
 
-export function generateExcel() {
+  const header = [ [
+    t([ 'invoices', 'invoiceNumber' ]),
+    'id',
+    t([ 'invoices', 'client' ]),
+    t([ 'invoices', 'invoiceDate' ]),
+    t([ 'invoices', 'dueDate' ]),
+    t([ 'invoices', 'type' ]),
+    t([ 'invoices', 'subject' ]),
+    t([ 'invoices', 'ammount' ]),
+    t([ 'invoices', 'paid' ]),
+    t([ 'invoices', 'invoiceCanceled' ])
+  ] ]
+
+  return invoices.reduce((acc, invoice) => {
+    return [ ...acc, [ invoice.invoice_number,
+      invoice.id,
+      invoice.client_name,
+      formatTime(invoice.invoice_date),
+      formatTime(invoice.due_date),
+      invoice.longterm_rent ? t([ 'garages', 'longterm' ]) : t([ 'garages', 'shortterm' ]),
+      invoice.subject,
+      invoice.price,
+      invoice.payed ? 'YES' : 'NO',
+      invoice.canceled ? 'YES' : 'NO'
+    ] ]
+  }, header)
+}
+
+export function generateCsv() {
   return (dispatch, getState) => {
-    const invoices = getState().invoices.filteredInvoices
-
-    const header = [ [ t([ 'invoices', 'invoiceNumber' ]),
-      'id',
-      t([ 'invoices', 'client' ]),
-      t([ 'invoices', 'invoiceDate' ]),
-      t([ 'invoices', 'dueDate' ]),
-      t([ 'invoices', 'type' ]),
-      t([ 'invoices', 'subject' ]),
-      t([ 'invoices', 'ammount' ]),
-      t([ 'invoices', 'paid' ]),
-      t([ 'invoices', 'invoiceCanceled' ])
-    ]
-    ]
-
-    const data = invoices.reduce((acc, invoice) => {
-      return [ ...acc, [ invoice.invoice_number,
-        invoice.id,
-        invoice.client_name,
-        formatTime(invoice.invoice_date),
-        formatTime(invoice.due_date),
-        invoice.longterm_rent ? t([ 'garages', 'longterm' ]) : t([ 'garages', 'shortterm' ]),
-        invoice.subject,
-        invoice.price,
-        invoice.payed ? 'YES' : 'NO',
-        invoice.canceled ? 'YES' : 'NO'
-      ] ]
-    }, header)
-
+    const data = invoicesToArray(getState)
     downloadCSV(data)
+  }
+}
+
+export function generateXlsx() {
+  return (dispatch, getState) => {
+    const data = invoicesToArray(getState)
+    downloadXLSX(data)
   }
 }
 

@@ -932,8 +932,9 @@
 		"sendReminder": "Send reminder",
 		"invoicePaidLabel": "Invoice paid",
 		"invoiceIncorect": "Cancel invoice",
-		"donwloadExcel": "Download Excel",
+		"donwloadExcel": "Download CSV",
 		"donwloadInvoices": "Download invoices",
+		"donwloadXlsx": "Download XLSX",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
 	},
