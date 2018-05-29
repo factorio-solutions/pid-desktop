@@ -107,7 +107,7 @@ export default class SearchField extends Component {
           <li
             key={index}
             className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`}
-            onClick={onClick}
+            onMouseDown={onClick}
           >
             <div>
               <label className={styles.contactLabel}>
