@@ -226,8 +226,8 @@
 		"newHostText": "may create reservations for himself, but need them to be approved by a secretary",
 		"newInternal": "New internal",
 		"newInternalText": "may create reservations for himself",
-		"dropButtonText": "New user with rights",
-		"dropButtonDescrText": "User with rights",
+		"dropButtonText": "New user with rights ",
+		"dropButtonDescrText": "User with rights ",
 		"hostsName": "Name of regular guest",
 		"phone": "Phone number",
 		"hostsPhone": "Phone of regular guest",
@@ -251,7 +251,9 @@
 		"character": "characters",
 		"removeDiacritics": "remove diacritics",
 		"perHour": " / hour",
-		"creatingReservationInPast": "You are creating reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?"
+		"creatingReservationInPast": "You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?",
+		"loading": "Loading ...",
+		"userName": "EN: newReservation.userName"
 	},
 	"clients": {
 		"name": "name",
@@ -317,7 +319,7 @@
 		"editReservation": "Edit reservation",
 		"editNote": "Edit note",
 		"newNote": "New note",
-		"interuptReservation": "Interupt reservation",
+		"interuptReservation": "Interrupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
 		"destroyReservation": "Cancel reservation",
@@ -935,8 +937,8 @@
 		"invoicePaidLabel": "Invoice paid",
 		"invoiceIncorect": "Cancel invoice",
 		"donwloadExcel": "Download CSV",
-		"donwloadInvoices": "Download invoices",
 		"donwloadXlsx": "Download XLSX",
+		"donwloadInvoices": "Download invoices",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
 	},
@@ -1183,7 +1185,10 @@
 		},
 		"reservation": {
 			"floor": "Floor",
-			"place": "Place"
+			"place": "Place",
+			"garage": "Garage",
+			"begins": "Begins",
+			"ends": "Ends"
 		},
 		"newReservation": {
 			"begins": "Begins",
@@ -1413,6 +1418,23 @@
 			"reservation": "reservation",
 			"noGate": "no gate configured",
 			"noReservation": "no valid reservation"
+		},
+		"garagesOverview": {
+			"createdAt": "Creation date",
+			"admin": "Admin",
+			"manager": "Manager",
+			"garageName": "name of garage",
+			"places": "place count",
+			"tarif": "tarif",
+			"is_public": "go public",
+			"go_internal": "go internal",
+			"flexiplace": "flexiplace",
+			"marketing": "Marketing page",
+			"third_party_integration": "3rd party integration",
+			"mr_parkit_integration": "Mr. Parkit integration",
+			"LongTerm": "LongTerm",
+			"Automation": "Automation",
+			"Integration": "Integration"
 		}
 	}
 }
