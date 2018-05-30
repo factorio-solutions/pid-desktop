@@ -10,6 +10,7 @@ import GarageLayout     from '../_shared/components/garageLayout/GarageLayout'
 import SearchField      from '../_shared/components/searchField/SearchField'
 import Form             from '../_shared/components/form/Form'
 import Modal            from '../_shared/components/modal/Modal'
+import Input            from '../_shared/components/input/Input'
 import ExistingUserForm from './newReservation/existingUserForm'
 import NewUserForm      from './newReservation/newUserForm'
 import GarageClientForm from './newReservation/garageClientForm'
@@ -209,6 +210,13 @@ class NewReservationPage extends Component {
                     {state.user &&
                       <SmsForm accentRegex={ACCENT_REGEX} />
                     }
+                    {/* Note input */}
+                    <Input
+                      onChange={actions.setNote}
+                      label={t([ 'newReservation', 'note' ])}
+                      value={state.note}
+                      align="left"
+                    />
                   </div>
                 }
               </Form>
