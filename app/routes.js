@@ -102,8 +102,11 @@ import TestingPage from './testing/testing.page'
 // //////////////////////////////////////////////////////////////////////////////
 // //////////////////////////PID ADMIN PAGES/////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////
-import PidAdminDashboardPage from './pidAdmin/dashboard/dashboard.page'
-import PidAdminUsersPage     from './pidAdmin/users/users.page'
+import PidAdminDashboardPage   from './pidAdmin/dashboard/dashboard.page'
+import PidAdminUsersPage       from './pidAdmin/users/users.page'
+import PidAdminFinancePage     from './pidAdmin/finance/finance.page'
+import PidAdminLogsPage        from './pidAdmin/logs/logs.page'
+import PidAdminGaragesOverview from './pidAdmin/garagesOverview/garagesOverview.page'
 
 import PidAdminGeneratorGaragesPage      from './pidAdmin/generator/generatorGarages.page'
 import PidAdminGeneratorClientsPage      from './pidAdmin/generator/generatorClients.page'
@@ -114,11 +117,6 @@ import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOve
 import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
 
-import PidAdminFinancePage from './pidAdmin/finance/finance.page'
-
-import PidAdminLogsPage    from './pidAdmin/logs/logs.page'
-
-
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
 
 
@@ -127,6 +125,9 @@ export default function createRoutes() {
     <Route>
       <IndexRoute component={PidAdminDashboardPage} />
       <Route path="users" component={PidAdminUsersPage} />
+      <Route path="finance" component={PidAdminFinancePage} />
+      <Route path="logs" component={PidAdminLogsPage} />
+      <Route path="garagesOverview" component={PidAdminGaragesOverview} />
 
       <Route path="generator" component={PidAdminGeneratorGaragesPage} />
       <Route path="generator/clients" component={PidAdminGeneratorClientsPage} />
@@ -137,10 +138,6 @@ export default function createRoutes() {
       <Route path="news" component={PidAdminNewsPage} />
       <Route path="news/newNews" component={PidAdminNewNewsPage} />
       <Route path="news/:id/edit" component={PidAdminNewNewsPage} />
-
-      <Route path="finance" component={PidAdminFinancePage} />
-
-      <Route path="logs" component={PidAdminLogsPage} />
     </Route>
   )
 
