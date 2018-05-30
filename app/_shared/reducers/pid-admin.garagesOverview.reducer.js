@@ -8,6 +8,7 @@ const defaultState = {
   garages: []
 }
 
+
 export default function garagesOverview(state = defaultState, action) {
   switch (action.type) {
     case SET_PID_ADMIN_GARAGESOVERVIEW_SET_GARAGES:
