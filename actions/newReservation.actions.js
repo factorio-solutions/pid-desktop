@@ -545,11 +545,12 @@ export function downloadGarage(id) {
 
       garage.floors.forEach(floor => {
         floor.places.map(place => {
-          if (state.reservation && state.reservation.ongoing) { // if ongoing reservation - only selected place might be available
-            place.available = floor.free_places.find(p => p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
-          } else {
-            place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
-          }
+          // if (state.reservation && state.reservation.ongoing) { // if ongoing reservation - only selected place might be available
+          //   place.available = floor.free_places.find(p => p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
+          // } else {
+          //   place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
+          // }
+          place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
 
           if (place.available && place.pricing) { // add tooltip to available places
             if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
