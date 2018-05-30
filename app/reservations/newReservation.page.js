@@ -232,9 +232,7 @@ class NewReservationPage extends Component {
               <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
               <GarageLayout
                 floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
-                // floors={[]}
-                onPlaceClick={ongoing ? () => {} : this.handlePlaceClick}
-                showEmptyFloors={state.reservation} // If reservation is set show Empty floors
+                onPlaceClick={this.handlePlaceClick}
               />
             }
           </div>
