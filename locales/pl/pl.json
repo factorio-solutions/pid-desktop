@@ -251,7 +251,9 @@
 		"character": "znaków",
 		"removeDiacritics": "usunąć polskie znaki",
 		"perHour": "PL: newReservation.perHour",
-		"creatingReservationInPast": "PL: newReservation.creatingReservationInPast"
+		"creatingReservationInPast": "PL: newReservation.creatingReservationInPast",
+		"loading": "PL: newReservation.loading",
+		"userName": "PL: newReservation.userName"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -391,6 +393,7 @@
 	"garageUsers": {
 		"noRights": "Nie posiadasz odpowiednich uprawnień.",
 		"admin": "admin",
+		"manager": "PL: garageUsers.manager",
 		"receptionist": "recepcjonist(k)a",
 		"security": "ochrona",
 		"pendingUsers": "Niepotwierdzeni użytkownicy",
@@ -602,6 +605,7 @@
 		"host": "regularny gość",
 		"internal": "wewnętrzny",
 		"security": "ochrona",
+		"manager": "PL: inviteUser.manager",
 		"receptionist": "recepcjonist(k)a",
 		"driver": "kierowca",
 		"clientRights": "Prawa klienta",
@@ -932,7 +936,8 @@
 		"sendReminder": "Wysłać przypomnienie",
 		"invoicePaidLabel": "Faktura została zapłacona",
 		"invoiceIncorect": "Anulować fakturę",
-		"donwloadExcel": "Ściągnąć excel",
+		"donwloadExcel": "Ściągnąć CSV",
+		"donwloadXlsx": "Ściągnąć XLSX",
 		"donwloadInvoices": "Ściągnąć faktury",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Wybierz REGON firmy, na którą wystawiona będzie faktura:"
@@ -1180,7 +1185,10 @@
 		},
 		"reservation": {
 			"floor": "Piętro",
-			"place": "Miejsce"
+			"place": "Miejsce",
+			"garage": "PL: mobileApp.reservation.garage",
+			"begins": "PL: mobileApp.reservation.begins",
+			"ends": "PL: mobileApp.reservation.ends"
 		},
 		"newReservation": {
 			"begins": "Początek",
@@ -1410,6 +1418,23 @@
 			"reservation": "rezerwacja",
 			"noGate": "brama nie została skonfigurowana",
 			"noReservation": "brak ważnej rezerwacji"
+		},
+		"garagesOverview": {
+			"createdAt": "netřeba překládat",
+			"admin": "netřeba překládat",
+			"manager": "netřeba překládat",
+			"garageName": "netřeba překládat",
+			"places": "netřeba překládat",
+			"tarif": "netřeba překládat",
+			"is_public": "netřeba překládat",
+			"go_internal": "netřeba překládat",
+			"flexiplace": "netřeba překládat",
+			"marketing": "netřeba překládat",
+			"third_party_integration": "netřeba překládat",
+			"mr_parkit_integration": "netřeba překládat",
+			"LongTerm": "netřeba překládat",
+			"Automation": "netřeba překládat",
+			"Integration": "netřeba překládat"
 		}
 	}
 }
