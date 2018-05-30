@@ -1355,7 +1355,8 @@
 			"adminMode": "ADMIN MODE PARK-IT-DIRECTU",
 			"generator": "Generátor",
 			"news": "Novinky",
-			"finance": "Finance"
+			"finance": "Finance",
+			"garagesOverview": "Přehled garáží"
 		},
 		"users": {
 			"id": "id",
