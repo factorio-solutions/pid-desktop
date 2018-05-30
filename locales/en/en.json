@@ -1355,7 +1355,8 @@
 			"adminMode": "ADMIN MODE OF PARK-IT-DIRECT",
 			"generator": "Generator",
 			"news": "News",
-			"finance": "Finance"
+			"finance": "Finance",
+			"garagesOverview": "Garage overview"
 		},
 		"users": {
 			"id": "id",
