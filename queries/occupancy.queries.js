@@ -16,6 +16,7 @@ export const GARAGE_DETAILS_QUERY = `query OccupancyGarage($id: Id!, $from: Date
       admin
       receptionist
       security
+      manager
     }
     floors {
       id

@@ -156,6 +156,7 @@ export function createNewManagebles() {
                     admin:          state.garage_admin,
                     receptionist:   state.garage_receptionist,
                     security:       state.garage_security,
+                    manager:        state.garage_manager,
                     message:        [ 'garageInvitationMessage', state.garages.find(garage => { return garage.id == state.garage_id }).name ].join(';'),
                     custom_message: state.message
                   }
