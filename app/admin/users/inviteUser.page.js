@@ -54,7 +54,7 @@ class inviteUserPage extends Component {
     if (!/\+[\d]{2,4}[\d\s]{3,}/.test(state.phone) && state.phone !== '') return false
     if (!/^(?!\s*$).+/.test(state.full_name) && state.phone !== '') return false
     if (state.client_id && !(state.client_admin || state.client_secretary || state.client_host || state.client_internal || state.client_contact_person)) return false
-    if (state.garage_id && !(state.garage_admin || state.garage_receptionist || state.garage_security)) return false
+    if (state.garage_id && !(state.garage_admin || state.garage_manager || state.garage_receptionist || state.garage_security)) return false
     if (state.car_id && !(state.car_admin || state.car_driver)) return false
     return true
   }
@@ -113,7 +113,7 @@ class inviteUserPage extends Component {
     const addSeparator = (acc, lang, index, array) => array.length - 1 !== index ? [ ...acc, lang, separator ] : [ ...acc, lang ]
 
     const highlightClientRoles = state.highlight && !(state.client_admin || state.client_secretary || state.client_host || state.client_internal || state.client_contact_person)
-    const highlightGarageRoles = state.highlight && !(state.garage_admin || state.garage_receptionist || state.garage_security)
+    const highlightGarageRoles = state.highlight && !(state.garage_admin || state.garage_manager || state.garage_receptionist || state.garage_security)
     const highlightCarRoles = state.highlight && !(state.car_admin || state.car_driver)
 
     const multipleUsers = state.email.value.includes(',')
@@ -222,6 +222,7 @@ class inviteUserPage extends Component {
                 <p>{t([ 'inviteUser', 'GarageRightsDesc' ])}</p>
                 <p className={styles.rights}>
                   <AttributeSpan state={state} attribute="garage_admin" actions={actions} label="admin" highlight={highlightGarageRoles} />|
+                  <AttributeSpan state={state} attribute="garage_manager" actions={actions} label="manager" highlight={highlightGarageRoles} />|
                   <AttributeSpan state={state} attribute="garage_receptionist" actions={actions} label="receptionist" highlight={highlightGarageRoles} />|
                   <AttributeSpan state={state} attribute="garage_security" actions={actions} label="security" highlight={highlightGarageRoles} />
                 </p>

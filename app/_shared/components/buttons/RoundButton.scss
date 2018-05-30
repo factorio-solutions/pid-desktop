@@ -11,6 +11,7 @@ $small:       .6;
   @include border-radius(240px);
   @include colorize($lightGray);
 
+  min-width:  $size-normal;
   width:      $size-normal;
   height:     $size-normal;
   margin:     5px;

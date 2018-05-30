@@ -49,10 +49,11 @@ class GarageSetupOrderPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state, pageBase, actions } = this.props
+    const readOnly = pageBase.isGarageManager && !pageBase.isGarageAdmin
 
-    const addPlaceToOrder = place => actions.addToOrder(place.label)
-    const makeButton = (label, index) => <CallToActionButton label={label} onClick={() => actions.removeFromOrder(index)} />
+    const addPlaceToOrder = place => !readOnly && actions.addToOrder(place.label)
+    const makeButton = (label, index) => <CallToActionButton label={label} state={readOnly && 'disabled'} onClick={() => actions.removeFromOrder(index)} />
 
     const allFloors = state.floors
     .filter(floor => floor.label.length > 0 && floor.scheme.length > 0)
@@ -73,28 +74,32 @@ class GarageSetupOrderPage extends Component {
       }
     }
 
+    const formContent = (<div className={styles.gates}>
+      <div className={styles.gatesForm}>
+        <h2>{t([ 'newGarage', 'placePriority' ])}</h2>
+        <p>{t([ 'newGarage', 'placePriorityDescription' ])}</p>
+        <p>
+          {state.order.length > 0 && t([ 'newGarage', 'highestPriority' ])}
+          {state.order.map(makeButton)}
+        </p>
+      </div>
+      <div className={styles.garageLayout}>
+        <GarageLayout
+          floors={allFloors}
+          onPlaceClick={addPlaceToOrder}
+          showEmptyFloors
+        />
+      </div>
+    </div>)
 
     return (
       <GarageSetupPage>
-        <Form onSubmit={submitForm} submitable onBack={this.goBack} onHighlight={actions.toggleHighlight}>
-          <div className={styles.gates}>
-            <div className={styles.gatesForm}>
-              <h2>{t([ 'newGarage', 'placePriority' ])}</h2>
-              <p>{t([ 'newGarage', 'placePriorityDescription' ])}</p>
-              <p>
-                {state.order.length > 0 && t([ 'newGarage', 'highestPriority' ])}
-                {state.order.map(makeButton)}
-              </p>
-            </div>
-            <div className={styles.garageLayout}>
-              <GarageLayout
-                floors={allFloors}
-                onPlaceClick={addPlaceToOrder}
-                showEmptyFloors
-              />
-            </div>
-          </div>
-        </Form>
+        {readOnly ?
+          formContent :
+          <Form onSubmit={submitForm} submitable onBack={this.goBack} onHighlight={actions.toggleHighlight}>
+            {formContent}
+          </Form>
+        }
       </GarageSetupPage>
     )
   }
