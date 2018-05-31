@@ -93,27 +93,24 @@ export function initClient(id) {
   }
 }
 
+export function ic2Info(ic, onSuccess) {
+  ic && requestPromise(LOAD_INFO_FROM_IC, { ic })
+  .then(response => onSuccess(JSON.parse(response.ares).Ares_odpovedi.Odpoved.VBAS))
+  .catch(e => console.log('not able to parse info from ICO', e))
+}
+
 export function loadFromIc() {
   return (dispatch, getState) => {
-    const onSuccess = response => {
-      try {
-        const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
-
-        dispatch(setName(res.OF))
-        dispatch(setLine1(res.AD.UC))
-        dispatch(setCity(res.AA.N))
-        dispatch(setPostalCode(res.AA.PSC))
-        dispatch(setCountry(res.AA.NS))
-        dispatch(setDIC(res.DIC))
-      } catch (e) {
-        console.log('not able to parse info from ICO', e)
-      }
+    const onSuccess = res => {
+      dispatch(setName(res.OF))
+      dispatch(setLine1(res.AD.UC))
+      dispatch(setCity(res.AA.N))
+      dispatch(setPostalCode(res.AA.PSC))
+      dispatch(setCountry(res.AA.NS))
+      dispatch(setDIC(res.DIC))
     }
 
-    request(onSuccess
-           , LOAD_INFO_FROM_IC
-           , { ic: getState().newClient.ic }
-           )
+    ic2Info(getState().newClient.ic, onSuccess)
   }
 }
 
