@@ -48,7 +48,7 @@ class PageBase extends Component {
 
     const callToAction = [
       { label: t([ 'pageBase', 'Create reservation' ]), onClick: () => nav.to('/reservations/newReservation') },
-      (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'Create contract' ]), onClick: () => nav.to(`/${state.garage}/admin/clients/newContract`) }
+      state.isGarageAdmin && { label: t([ 'pageBase', 'Create contract' ]), onClick: () => nav.to(`/${state.garage}/admin/clients/newContract`) }
       // { label: t([ 'pageBase', 'Add Features' ]), onClick: () => { nav.to('/addFeatures') } }
     ].filter(field => field)
 
