@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import moment                          from 'moment'
 
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
@@ -64,6 +65,8 @@ class NewContractPage extends Component {
 
   prepareRents = rent => ({ label: rent.name, onClick: () => this.props.actions.setRent(rent) })
 
+  currentContractsFilter = contract => moment().isBetween(moment(contract.from), moment(contract.to))
+
   render() {
     const { state, actions } = this.props
 
@@ -77,6 +80,7 @@ class NewContractPage extends Component {
       ...floor,
       places: floor.places.map(place => ({
         ...place,
+        group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
         selected: (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
         tooltip:  (<table className={styles.tooltip}>
           <tbody>
@@ -90,6 +94,7 @@ class NewContractPage extends Component {
                 {state.garage.is_public && place.pricing && !place.contracts.length ?
                   t([ 'newContract', 'goPublic' ]) :
                   place.contracts
+                    .filter(this.currentContractsFilter)
                     .map(contract => contract.client.name)
                     .filter((group, index, arr) => arr.indexOf(group) === index)
                     .join(', ')
@@ -138,7 +143,6 @@ class NewContractPage extends Component {
         </table>)
       }))
     })
-
 
     return (
       <PageBase>
