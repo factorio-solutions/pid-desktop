@@ -96,7 +96,7 @@ export class Page extends Component {
 
 
   render() {
-    const { actions, state, gray } = this.props
+    const { actions, reservationsActions, state, gray } = this.props
     const { hideDropdown, hideHamburger, hideHeader, margin } = this.props
     const { back, add, ok, outlineBack } = this.props
 
@@ -105,7 +105,10 @@ export class Page extends Component {
     const logOut = () => this.logout(true)
 
     const garageDropdown = (garage, index) => {
-      const garageSelected = () => actions.setGarage(state.garages[index].id)
+      const garageSelected = () => {
+        actions.setGarage(state.garages[index].id)
+        reservationsActions.initReservations()
+      }
       return { label: garage.name, onClick: garageSelected }
     }
 
