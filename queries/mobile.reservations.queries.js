@@ -1,6 +1,6 @@
 // get all reservations
-export const MOBILE_GET_RESERVATIONS_QUERY = `query MobileReservations($count: Int, $page: Int, $order_by: String, $search: String, $garage_id: Id, $user_id: Id, $secretary: Boolean) {
-  mobile_reservations(count: $count, page: $page, order_by: $order_by, search: $search, garage_id: $garage_id, user_id: $user_id, secretary: $secretary) {
+export const MOBILE_GET_RESERVATIONS_QUERY = `query MobileReservations($count: Int, $page: Int, $order_by: String, $search: String, $garage_id: Id, $user_id: Id, $secretary: Boolean, $no_include_me: Boolean) {
+  mobile_reservations(count: $count, page: $page, order_by: $order_by, search: $search, garage_id: $garage_id, user_id: $user_id, secretary: $secretary, no_include_me: $no_include_me) {
     id
     user {
       id

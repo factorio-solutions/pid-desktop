@@ -42,13 +42,14 @@ function createPaginationVariables(getState) {
   const reservations = getState().reservations
 
   return {
-    count:     RESERVATIONS_PER_PAGE,
-    page:      reservations.currentPage,
-    order_by:  'begins_at',
-    search:    reservations.find ? reservations.find : null,
-    garage_id: header.garage_id,
-    user_id:   header.personal && header.current_user ? header.current_user.id : null,
-    secretary: !header.personal
+    count:         RESERVATIONS_PER_PAGE,
+    page:          reservations.currentPage,
+    order_by:      'begins_at',
+    search:        reservations.find ? reservations.find : null,
+    garage_id:     header.garage_id,
+    user_id:       header.personal && header.current_user ? header.current_user.id : null,
+    secretary:     !header.personal,
+    no_include_me: !header.personal
   }
 }
 
