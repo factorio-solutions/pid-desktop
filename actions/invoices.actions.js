@@ -195,10 +195,10 @@ function invoicesToArray(getState) {
     t([ 'invoices', 'invoiceCanceled' ])
   ] ]
 
-  return invoices.reduce((acc, invoice) => {
-    return [ ...acc, [ invoice.invoice_number,
+  return invoices.reduce((acc, invoice) => [ ...acc,
+    [ invoice.invoice_number,
       invoice.id,
-      invoice.client_name,
+      invoice.client.name,
       formatTime(invoice.invoice_date),
       formatTime(invoice.due_date),
       invoice.longterm_rent ? t([ 'garages', 'longterm' ]) : t([ 'garages', 'shortterm' ]),
@@ -206,8 +206,8 @@ function invoicesToArray(getState) {
       invoice.price,
       invoice.payed ? 'YES' : 'NO',
       invoice.canceled ? 'YES' : 'NO'
-    ] ]
-  }, header)
+    ]
+  ], header)
 }
 
 export function generateCsv() {
