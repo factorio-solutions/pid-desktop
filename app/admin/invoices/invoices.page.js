@@ -32,6 +32,18 @@ class InvoicesPage extends Component {
     this.props.actions.initInvoices(this.props.params.id)
   }
 
+  clientSelected = index => {
+    const { actions, state, pageBase } = this.props
+    const clientId = state.clients[index].id
+
+    actions.setClientId(clientId)
+    actions.setFilteredInvoices(
+      state.invoices
+      .filter(invoice => invoice.account.garage.id === pageBase.garage || pageBase.garages.find(garage => garage.garage.id === invoice.account.garage.id) === undefined)
+      .filter(invoice => clientId === undefined ? true : invoice.client.id === clientId)
+    )
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
 
@@ -50,10 +62,7 @@ class InvoicesPage extends Component {
       }
     ]
 
-    const invoiceData = state.invoices
-     .filter(invoice => invoice.account.garage.id === pageBase.garage || pageBase.garages.find(garage => garage.garage.id === invoice.account.garage.id) === undefined)
-     // display Invoices of selected garage and Invoices of my clients (those would otherwise be filtered by selected garage)
-     .filter(invoice => state.client_id === undefined ? true : invoice.client.id === state.client_id)
+    const invoiceData = state.filteredInvoices
      .map(invoice => ({
        ...invoice,
        garage_name: invoice.account && invoice.account.garage.name,
@@ -125,15 +134,14 @@ class InvoicesPage extends Component {
     ]
 
     const clientDropdown = () => {
-      const clientSelected = index => actions.setClientId(state.clients[index].id)
       return state.clients.map((client, index) => ({
         label:   client.name,
         order:   client.id === undefined && 1,
-        onClick: () => clientSelected(index)
+        onClick: () => this.clientSelected(index)
       }))
     }
 
-    const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findById(state.client_id)} />
+    const clientSelector = <Dropdown label={t([ 'invoices', 'selectClient' ])} content={clientDropdown()} style="tabDropdown" selected={state.clients.findIndexById(state.client_id)} />
 
     const customModal = (<div>
       <Form
