@@ -23,7 +23,12 @@ class Place extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { rendered: false }
+    this.state = {
+      rendered:  false,
+      mouseDown: false,
+      left:      0,
+      width:     0
+    }
   }
 
   componentDidMount() {
@@ -31,6 +36,31 @@ class Place extends Component {
       ...this.state,
       rendered: true
     })
+
+    document.body.addEventListener('mousemove', this.onMouseMove)
+    document.body.addEventListener('mouseup', this.onMouseUp)
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('mousemove', this.onMouseMove)
+    document.body.removeEventListener('mouseup', this.onMouseUp)
+  }
+
+  onMouseDown = event => this.setState({
+    ...this.state,
+    mouseDown: true,
+    width:     0,
+    left:      event.clientX - this.td.getBoundingClientRect().left
+  })
+
+  onMouseMove = event => this.setState({
+    ...this.state,
+    width: event.clientX - this.td.getBoundingClientRect().left - this.state.left
+  })
+
+  onMouseUp = () => {
+    if (this.state.mouseDown) console.log('create reservation')
+    this.setState({ ...this.state, mouseDown: false })
   }
 
   isForCurrentUser = reservation => {
@@ -51,7 +81,7 @@ class Place extends Component {
   }
 
   render() {
-    const { place, duration, from, now, showDetails, onReservationClick } = this.props
+    const { place, duration, from, now, onReservationClick } = this.props
     const rowWidth = this.row ? this.row.getBoundingClientRect().width - 62 : 0 // width of time window
     const cellDuration = duration === 'day' ? 1 : 12 // hours
     const windowLength = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS) // in days
@@ -170,7 +200,16 @@ class Place extends Component {
       ]
       const renderderReservationFactory = reservation => renderReservation(reservation, index + 1)
 
-      return (<td key={`${place.floor}-${place.label}-${index}`} className={classes.filter(o => o).join(' ')} >
+      const style = {
+        left:  this.state.left + 'px',
+        width: this.state.width + 'px'
+      }
+
+      return (<td
+        key={`${place.floor}-${place.label}-${index}`}
+        className={classes.filter(o => o).join(' ')}
+        ref={td => { if (!index) this.td = td }}
+      >
         {!index && now > 0 && <div className={styles.now} style={{ left: now + 'px' }} />}
         {!index && this.state.rendered && newPlace.reservations
           .filter(reservation => moment(reservation.begins_at).isBefore(from) && !moment(reservation.ends_at).isSameOrBefore(from))
@@ -182,11 +221,18 @@ class Place extends Component {
             moment(reservation.begins_at).isBetween(date, date.clone().add(12, 'hours'), null, '[)'))
           .map(renderderReservationFactory)
         }
+
+        {this.state.mouseDown && !index && <div className={styles.newReservation} style={style} />}
       </td>)
     }
 
     return (
-      <tr key={`${place.floor}-${place.label}`} className={styles.bottomBorder} ref={row => { this.row = row }}>
+      <tr
+        key={`${place.floor}-${place.label}`}
+        className={styles.bottomBorder}
+        ref={row => { this.row = row }}
+        onMouseDown={this.onMouseDown}
+      >
         <td className={styles.rightBorder}>{`${place.floor}/${place.label}`}</td>
         {Array(...{ length: cellCount }).map(renderCells)}
       </tr>
