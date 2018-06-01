@@ -47,6 +47,7 @@
       display:      table;
       width:        100%;
       table-layout: fixed;
+      position:     relative;
 
       > td {
         position: relative;
@@ -90,6 +91,16 @@
   height:     100%;
   background: $red;
   z-index:    9;
+}
+
+.newReservation {
+  background:   $black;
+  z-index:      10;
+  position:     absolute;
+  top:          2px;
+  height:       calc(100% - 5px);
+  padding-top:  1px;
+  padding-left: 1px;
 }
 
 .reservation {

@@ -85,18 +85,20 @@ class Reservation extends Component {
         </tbody>
       </table>)
 
-    return <div>
-      <div onMouseEnter={this.mouseEnter} onMouseMove={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
-        <span>{text}</span>
+    return (
+      <div>
+        <div onMouseEnter={this.mouseEnter} onMouseMove={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
+          <span>{text}</span>
+        </div>
+        {this.state.visible && <Tooltip
+          content={content}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+          visible
+          height="500px"
+        />}
       </div>
-      {this.state.visible && <Tooltip
-        content={content}
-        mouseX={this.state.mouseX}
-        mouseY={this.state.mouseY}
-        visible
-        height="500px"
-      />}
-    </div>
+    )
   }
 }
 
