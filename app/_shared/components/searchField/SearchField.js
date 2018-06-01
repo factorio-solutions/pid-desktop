@@ -65,7 +65,7 @@ export default class SearchField extends Component {
 
   generateButtons = item => (
     <tr>
-      <td><CallToActionButton label={item.label} onClick={item.onClick} /></td>
+      <td><CallToActionButton label={item.label} onMouseDown={item.onClick} /></td>
       <td>{item.text}</td>
     </tr>
   )
