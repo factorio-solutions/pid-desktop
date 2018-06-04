@@ -102,9 +102,9 @@ class NewReservationPage extends Component {
   render() {
     const { state, pageBase, actions } = this.props
 
-    const ongoing = state.reservation !== undefined && state.reservation.ongoing
-
-    const onetime = state.reservation !== undefined && state.reservation.onetime
+    const ongoing = state.reservation && state.reservation.ongoing
+    const onetime = state.reservation && state.reservation.onetime
+    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.is_secretary
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
     // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
@@ -150,12 +150,15 @@ class NewReservationPage extends Component {
     const getUserToSelect = () => {
       if (state.reservation && state.reservation.onetime) {
         return state.availableUsers.findIndex(user => user.id === -2)
+      } else if (state.reservation && state.user) {
+        return state.availableUsers.findIndexById(state.user.id)
       } else if (state.user && state.user.id === -1) {
         return userDropdown.users.findIndex(user => state.user && user.id === state.user.id && user.rights && JSON.stringify(user.rights) === JSON.stringify(state.user.rights))
       } else {
         return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
       }
     }
+
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -164,9 +167,11 @@ class NewReservationPage extends Component {
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
               <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
-                {!(state.user && (state.user.id < 0 || onetime)) && ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) && !state.reservation && // (state.user && state.user.id > 0) &&
+                { !(state.user && (state.user.id < 0 || onetime)) &&
+                  ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
+                  // !state.reservation &&
                   <SearchField
-                    editable={!ongoing}
+                    editable={!ongoing || isSecretary}
                     placeholder={t([ 'newReservation', 'selectUser' ])}
                     dropdownContent={userDropdown.users}
                     selected={getUserToSelect()}
@@ -179,13 +184,13 @@ class NewReservationPage extends Component {
 
                 {state.user && state.user.id >= 0 &&
                   <ExistingUserForm
-                    ongoing={ongoing}
+                    editable={!ongoing || isSecretary}
                   />
                 }
 
                 {state.user && state.user.id < 0 &&
                   <NewUserForm
-                    ongoing={ongoing}
+                    editable={!ongoing || isSecretary}
                     onetime={onetime}
                   />
                 }
@@ -197,12 +202,12 @@ class NewReservationPage extends Component {
 
                 {state.user && ((state.email.valid && state.phone.valid && state.carLicencePlate) || state.user.id !== -1) &&
                   <GarageClientForm
-                    ongoing={ongoing}
+                    editable={!ongoing || isSecretary}
                   />
                 }
                 {state.garage &&
                   <div>
-                    <DateTimeForm ongoing={ongoing} />
+                    <DateTimeForm editable={!ongoing || isSecretary} />
                     {/* Place and price  */}
                     <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
                     <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
@@ -236,9 +241,7 @@ class NewReservationPage extends Component {
               <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
               <GarageLayout
                 floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
-                // floors={[]}
-                onPlaceClick={ongoing ? () => {} : this.handlePlaceClick}
-                showEmptyFloors={state.reservation} // If reservation is set show Empty floors
+                onPlaceClick={this.handlePlaceClick}
               />
             }
           </div>

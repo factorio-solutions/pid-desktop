@@ -15,9 +15,9 @@ import { t } from '../../_shared/modules/localization/localization'
 
 class GarageClientForm extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
-    ongoing: PropTypes.bool
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    editable: PropTypes.bool
   }
 
   garageDropdown = () => {
@@ -38,24 +38,15 @@ class GarageClientForm extends Component {
   }
 
   render() {
-    const { state, actions, ongoing } = this.props
+    const { state, actions, editable } = this.props
+
     const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
     const selectedPlace = places.findById(state.place_id)
-
-    console.log(state)
-
-    // console.log(
-    //   state.garage,
-    //   state.garage && state.garage.has_payment_gate,
-    //   state.client_id,
-    //   selectedPlace,
-    //   selectedPlace && selectedPlace.go_internal
-    // )
 
     return (
       <div>
         <Dropdown
-          editable={!ongoing}
+          editable={editable}
           label={t([ 'newReservation', 'selectGarage' ])}
           content={this.garageDropdown()}
           selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
@@ -65,7 +56,7 @@ class GarageClientForm extends Component {
         />
         {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
           <Dropdown
-            editable={!ongoing}
+            editable={editable}
             label={t([ 'newReservation', 'selectClient' ])}
             content={this.clientDropdown()}
             selected={state.user.availableClients.findIndexById(state.client_id)}

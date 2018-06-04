@@ -42,7 +42,10 @@ export default class SearchField extends Component {
   validateContent(nextProps) {
     this.setState({
       ...this.state,
-      selected: nextProps.dropdownContent.length === 1 ? nextProps.selected : 0
+      selected: nextProps.dropdownContent.length === 1 ? 0 : nextProps.selected,
+      show:     this.state.selected !== nextProps.selected && nextProps.selected >= 0 ?
+        false :
+        this.state.show
     })
   }
 
@@ -92,7 +95,7 @@ export default class SearchField extends Component {
   render() {
     const { dropdownContent, buttons, placeholder, searchQuery, onChange } = this.props
 
-    let list = dropdownContent.sort(this.sorter).map((item, index) => {
+    let list = dropdownContent.map((item, index) => {
       const onClick = () => {
         item.onClick && item.onClick()
         onChange && onChange(item.label) // for form
@@ -135,7 +138,7 @@ export default class SearchField extends Component {
             </div>
           </li>)
       }
-    })
+    }).sort(this.sorter)
 
 
     list = list.map(o => o.render)
