@@ -9,6 +9,8 @@ import OccupancyOverview from '../_shared/components/occupancyOverview/Occupancy
 import TabMenu           from '../_shared/components/tabMenu/TabMenu'
 import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
+import Modal             from '../_shared/components/modal/Modal'
+import Form              from '../_shared/components/form/Form'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
 import { setPast }        from '../_shared/actions/reservations.actions'
@@ -36,6 +38,8 @@ class OccupancyPage extends Component {
   }
 
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
+
+  submitNewReservation = () => console.log('TODO: go to new reservation form')
 
   render() {
     const { state, pageBase, actions } = this.props
@@ -79,8 +83,47 @@ class OccupancyPage extends Component {
       filter
     />)
 
+    const placeForNewReservation = garage &&
+      state.newReservation &&
+        garage.floors.reduce(preparePlaces, []).findById(state.newReservation.placeId)
+    
     return (
       <PageBase>
+        <Modal show={state.newReservation}>
+          <Form
+            onSubmit={this.submitNewReservation}
+            onBack={actions.unsetNewReservation}
+            submitable
+          >
+            {state.newReservation && [
+              <h4>{t([ 'occupancy', 'createNewReservation' ])}</h4>,
+              <table className={styles.newReservationTable}>
+                <tbody>
+                  <tr>
+                    <td>{t([ 'occupancy', 'garage' ])}</td>
+                    <td>{garage && garage.name}</td>
+                  </tr>
+                  <tr>
+                    <td>{t([ 'occupancy', 'place' ])}</td>
+                    <td>
+                    {placeForNewReservation && placeForNewReservation.floor}/
+                    {placeForNewReservation && placeForNewReservation.label}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>{t([ 'occupancy', 'from' ])}</td>
+                    <td>{state.newReservation.from}</td>
+                  </tr>
+                  <tr>
+                    <td>{t([ 'occupancy', 'to' ])}</td>
+                    <td>{state.newReservation.to}</td>
+                  </tr>
+                </tbody>
+              </table>
+            ]}
+          </Form>
+        </Modal>
+
         <TabMenu right={filters} left={clientSelector} />
         <div className={styles.occupancies}>
           <h2>{garage && garage.name}</h2>

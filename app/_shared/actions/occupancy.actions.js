@@ -2,10 +2,19 @@ import moment from 'moment'
 
 import { request }    from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
-import { timeToUTC }  from '../helpers/time'
 import actionFactory  from '../helpers/actionFactory'
 import { t }          from '../modules/localization/localization'
 import * as pageBase  from './pageBase.actions'
+
+import {
+  roundTime,
+  MIN_RESERVATION_DURATION
+}  from './newReservation.actions'
+
+import {
+  timeToUTC,
+  MOMENT_DATETIME_FORMAT
+}  from '../helpers/time'
 
 import { OCCUPANCY_GARAGES_QUERY, GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
 
@@ -26,15 +35,31 @@ export const setClients = actionFactory(OCCUPANCY_SET_CLIENTS)
 export const resetClients = actionFactory(OCCUPANCY_RESET_CLIENTS)
 export const setLoading = actionFactory(OCCUPANCY_SET_LOADING)
 
-export function setNewReservation(from, to, placeId) {
-  return dispatch => {
-    dispatch({
-      type: OCCUPANCY_SET_NEW_RESERVATION,
-      from,
-      to,
-      placeId
-    })
+export function setNewReservation(fromMoment, toMoment, placeId) {
+  let fromValue = moment(roundTime(fromMoment), MOMENT_DATETIME_FORMAT)
+  let toValue = moment(roundTime(toMoment), MOMENT_DATETIME_FORMAT)
+  const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
+
+  if (fromValue.diff(now, 'minutes') < 0) { // cannot create reservations in the past
+    fromValue = now
   }
+
+  if (toValue.diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+    toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
+  }
+
+  return {
+    type:  OCCUPANCY_SET_NEW_RESERVATION,
+    value: {
+      placeId,
+      from: fromValue.format(MOMENT_DATETIME_FORMAT),
+      to:   toValue.format(MOMENT_DATETIME_FORMAT)
+    }
+  }
+}
+
+export function unsetNewReservation() {
+  return { type: OCCUPANCY_SET_NEW_RESERVATION }
 }
 
 export function setClientId(id) {

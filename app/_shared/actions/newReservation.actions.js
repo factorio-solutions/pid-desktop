@@ -35,7 +35,7 @@ import {
   ADD_CLIENT_USER
 } from '../queries/inviteUser.queries'
 
-const MIN_RESERVATION_DURATION = 30 // minutes
+export const MIN_RESERVATION_DURATION = 30 // minutes
 
 
 export const NEW_RESERVATION_SET_USER = 'NEW_RESERVATION_SET_USER'
