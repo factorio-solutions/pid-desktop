@@ -80,7 +80,8 @@ class Place extends Component {
       this.props.actions.setNewReservation(
         beginsAt,
         endsAt,
-        this.props.place.id)
+        this.props.place.id
+      )
     }
     this.setState({ ...this.state, mouseDown: false })
   }
