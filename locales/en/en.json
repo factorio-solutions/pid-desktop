@@ -1030,6 +1030,7 @@
 		"invalidAccountNumber": "Invalid account number",
 		"paymentGates": "Payment gates",
 		"rents": "Rents",
+		"billingAddress": "Billing address",
 		"testPayment": "You can now perform a test payment to verify the correctness of the entered data.",
 		"testPaymentSuccessful": "Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.",
 		"testPaymentUnsuccessful": "Your test payment was unsuccessful."
@@ -1146,8 +1147,8 @@
 			"selectGarage": "Select garage",
 			"allGarages": "All garages",
 			"version": "version",
-			"resrevations": "reservations",
-			"notifications": "notifications",
+			"resrevations": "Reservations",
+			"notifications": "Notifications",
 			"personal": "personal",
 			"work": "work"
 		},

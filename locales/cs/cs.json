@@ -1030,6 +1030,7 @@
 		"invalidAccountNumber": "Nesprávné číslo účtu",
 		"paymentGates": "Platební brány",
 		"rents": "Nájmy",
+		"billingAddress": "Fakturační adresa",
 		"testPayment": "Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.",
 		"testPaymentSuccessful": "Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.",
 		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně."
@@ -1146,8 +1147,8 @@
 			"selectGarage": "Zvolte garáž",
 			"allGarages": "Všechny garáže",
 			"version": "verze",
-			"resrevations": "rezervace",
-			"notifications": "notifikace",
+			"resrevations": "Rezervace",
+			"notifications": "Notifikace",
 			"personal": "osobní",
 			"work": "pracovní"
 		},
