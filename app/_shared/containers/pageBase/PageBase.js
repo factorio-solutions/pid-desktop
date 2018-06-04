@@ -38,9 +38,9 @@ class PageBase extends Component {
       { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => nav.to('/dashboard') },
       { label: t([ 'pageBase', 'Reservation' ]), key: 'reservations', icon: 'icon-reservations', onClick: () => nav.to('/reservations') },
       { label: t([ 'pageBase', 'Occupancy' ]), key: 'occupancy', icon: 'icon-occupancy', onClick: () => nav.to('/occupancy') }, // edit preferences in pageBase.action too
-      (state.isGarageAdmin || state.isGarageReceptionist || state.isGarageSecurity) &&
+      (state.isGarageAdmin || state.isGarageManager || state.isGarageReceptionist || state.isGarageSecurity) &&
         { label: t([ 'pageBase', 'Garage' ]), key: 'garage', icon: 'icon-garage', onClick: () => nav.to(`/${state.garage}/garage`) }, // edit preferences in pageBase.action too
-      (state.isGarageAdmin && state.pid_tarif >= 2) &&
+      ((state.isGarageAdmin || state.isGarageManager) && state.pid_tarif >= 2) &&
         { label: t([ 'pageBase', 'analytics' ]), key: 'analytics', icon: 'icon-invoices', onClick: actions.analyticsClick }, // edit preferences in pageBase.action too
       // { label: t([ 'pageBase', 'Issues' ]), key: 'issues', icon: 'icon-issues', onClick: () => { nav.to(`/${state.garage}/issues`) } },
       { label: t([ 'pageBase', 'Admin' ]), key: 'admin', icon: 'icon-admin', onClick: actions.adminClick }

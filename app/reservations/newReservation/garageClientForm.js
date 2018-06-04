@@ -42,6 +42,7 @@ class GarageClientForm extends Component {
 
     const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
     const selectedPlace = places.findById(state.place_id)
+
     return (
       <div>
         <Dropdown
@@ -81,8 +82,8 @@ class GarageClientForm extends Component {
 
 export default connect(
   state => {
-    const { user, highlight, paidByHost, garage, client_id } = state.newReservation
-    return { state: { user, highlight, paidByHost, garage, client_id } }
+    const { user, highlight, paidByHost, garage, client_id, place_id } = state.newReservation
+    return { state: { user, highlight, paidByHost, garage, client_id, place_id } }
   },
   dispatch => ({ actions: bindActionCreators(
     { downloadGarage,

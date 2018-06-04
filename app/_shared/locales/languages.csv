@@ -497,12 +497,12 @@ newReservation.newHost,Regular guest,Pravidelný host,Nowy regularny gość,Neue
 newReservation.newHostText,"may create reservations for himself, but need them to be approved by a secretary"," si smí rezervace navrhovat, ale potřebuje schválení",,
 newReservation.newInternal,New internal,Nový internal,,
 newReservation.newInternalText,may create reservations for himself, si smí samostatně vytvářet rezervace.,,
-newReservation.dropButtonText,New user with rights,Nový uživatel s právy ,,
-newReservation.dropButtonDescrText,User with rights,Uživatel s právy,,
+newReservation.dropButtonText,New user with rights ,Nový uživatel s právy ,,Neuer Benutzer
+newReservation.dropButtonDescrText,User with rights ,Uživatel s právy ,,
 newReservation.hostsName,Name of regular guest,Jméno pravidelného hosta,Nazwisko regularnego gościa,Rgelmäßiger Gast - Name
-newReservation.phone,Phone number,Telefonní číslo,,
+newReservation.phone,Phone number,Telefonní číslo,,Telefonnummer
 newReservation.hostsPhone,Phone of regular guest,Telefon pravidelného hosta,Telefon regularnego gościa,Regelmäßiger Gast Telefonnummer
-newReservation.email,Email,E-mail,,
+newReservation.email,Email,E-mail,,E-Mail
 newReservation.hostsEmail,Email of regular guest,Email pravidelného hosta,E-mail regularnego gościa,Regelmäßiger Gast E-Mail
 newReservation.visitorsName,Visitors name,Jméno návštěvníka,Nazwisko odwiedzającego,Besucher Name
 newReservation.visitorsPhone,Visitors phone,Telefon návštěvníka,Telefon odwiedzającego,Besucher Telefonnummer
@@ -522,7 +522,9 @@ newReservation.smsText,SMS text,text SMS,Tekst SMS,Text der Nachricht
 newReservation.character,characters,znaků,znaków,Zeichen
 newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,usunąć polskie znaki,Diakritika entfernen
 newReservation.perHour, / hour, / hod.,,/ Std.
-newReservation.creatingReservationInPast,You are creating reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?,Vytváříte rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?,,
+newReservation.creatingReservationInPast,You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?,Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?,,
+newReservation.loading,Loading ...,Načítám ...,,
+newReservation.userName,,Jméno uživatele,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -582,7 +584,7 @@ reservations.mrParkit,Mr. Parkit,Mr. Parkit,,
 reservations.editReservation,Edit reservation,Upravit rezervaci,Edytuj rezerwację,Reservierung bearbeiten
 reservations.editNote,Edit note,Upravit poznámku,Edytuj notatkę,Notiz bearbeiten
 reservations.newNote,New note,Nová poznámka,Nowa notatka,Neue Notiz
-reservations.interuptReservation,Interupt reservation,Přerušit rezervaci,Przerwij rezerwację,Reservierung unterbrechen
+reservations.interuptReservation,Interrupt reservation,Přerušit rezervaci,Przerwij rezerwację,Reservierung unterbrechen
 reservations.payReservation,Pay reservation,Zaplatit rezervaci,Opłać rezerwację,Reservierung bezahlen
 reservations.downloadInvoice,Download invoice,Stáhnout fakturu,Ściągnij fakturę,Rechnung herunterladen
 reservations.destroyReservation,Cancel reservation,Zrušit rezervaci,Usuń rezerwację,Reservierung stornieren
@@ -646,6 +648,7 @@ occupancy.detailsInaccessible,Details inaccessible,Detaily nepřístupné,Szczeg
 occupancy.reservationNotApproved,Reservation not yet approved,Rezervace zatím neschválena,Rezerwacja nie została jeszcze potwierdzona.,Reservierung ist nicht bestätigt
 garageUsers.noRights,You do not have the right to do that.,Na tuto akci nemáte práva.,Nie posiadasz odpowiednich uprawnień.,Sie haben nicht die erforderlichen Berechtigungen.
 garageUsers.admin,admin,admin,admin,Administrator
+garageUsers.manager,manager,manažer,,Manager
 garageUsers.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
 garageUsers.security,security,ochranka,ochrona,Wachdienst
 garageUsers.pendingUsers,Pending users,Nepotvrzení uživatelé,Niepotwierdzeni użytkownicy,Nicht bestätigte Benutzer
@@ -846,6 +849,7 @@ inviteUser.secretary,secretary,sekretář/ka,Sekretarz/sekretarka,Sekretär/in
 inviteUser.host,regular guest,pravidelný host,regularny gość,Regelmäßiger Gast
 inviteUser.internal,internal,interní,wewnętrzny,intern
 inviteUser.security,security,ostraha,ochrona,Wachdienst
+inviteUser.manager,manager,manažer,,
 inviteUser.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
 inviteUser.driver,driver,řidič,kierowca,Fahrer
 inviteUser.clientRights,User rights,Práva uživatele,Prawa klienta,Benutzerrechte
@@ -1144,7 +1148,8 @@ invoices.payInvoice,Pay invoice,Uhradit fakturu,Opłacić fakturę,Rechnung begl
 invoices.sendReminder,Send reminder,Odeslat upomínku,Wysłać przypomnienie,Zahlungserinnerung senden
 invoices.invoicePaidLabel,Invoice paid,Faktura uhrazena,Faktura została zapłacona,Rechnung bezahlt
 invoices.invoiceIncorect,Cancel invoice,Stornovat fakturu,Anulować fakturę,Rechnung falsch
-invoices.donwloadExcel,Download Excel,Stáhnout excel,Ściągnąć excel,Excel herunterladen
+invoices.donwloadExcel,Download CSV,Stáhnout CSV,Ściągnąć CSV,CSV herunterladen
+invoices.donwloadXlsx,Download XLSX,Stáhnout XLSX,Ściągnąć XLSX,XLSX herunterladen
 invoices.donwloadInvoices,Download invoices,Stáhnout faktury,Ściągnąć faktury,Rechnungen herunterladen
 invoices.donwloadXML,Pohoda XML,Pohoda XML,Pohoda XML,
 invoices.selectYourPohodaIc,Select IČ of company you are accounting for:,Zvolte IČ společnosti pro kterou účtujete:,"Wybierz REGON firmy, na którą wystawiona będzie faktura:",
@@ -1164,7 +1169,7 @@ modules.Preview,Preview,Náhled,Podgląd,Vorschau
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,Rechnungsplan wird aktualisiert. Weiterleiten …
 modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen)."
 modules.flexiplace,Flexi place,Flexi místo,Miejsce Flexi,Flexi Platz
-modules.flexiplaceDescription,"Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.","Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.","Flexi Platz ist ein Unterstützungswerkzeug zur optimalen Nutzung 
+modules.flexiplaceDescription,"Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.","Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální.","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.","Flexi Platz ist ein Unterstützungswerkzeug zur optimalen Nutzung 
 alle seine Plätze. Ihre Benutzer werden seinen Parkplatz bis zum Beginn der Reservierung nicht kennen. Reservierungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren."
 modules.showApiKey,Show API endpoint,Zobrazit API endpoint,Pokaż API endpoint,API Endpunkt zeigen
 modules.regenerateApiKey,Regenerate API endpoint,Vygenerovat nový API endpoint,Wygeneruj API endpoint,Einen neuen API Endpunkt erstellen
@@ -1348,6 +1353,9 @@ mobileApp.signUp.terms,Terms of Service,podmínkami o poskytování služeb,waru
 mobileApp.terms.content,You can find our Terms of Service on our website.,Podmínky používání naleznete na našich webových stránkách.,Warunki korzystania z usług znajdziesz na naszej stronie internetowej.,Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage
 mobileApp.reservation.floor,Floor,Podlaží,Piętro,Etage
 mobileApp.reservation.place,Place,Místo,Miejsce,Platznummer
+mobileApp.reservation.garage,Garage,Garáž,,
+mobileApp.reservation.begins,Begins,Začíná,,
+mobileApp.reservation.ends,Ends,Končí,,
 mobileApp.newReservation.begins,Begins,Začíná,Początek,Beginnt
 mobileApp.newReservation.ends,Ends,Končí,Koniec,Endet
 mobileApp.newReservation.place,Place,Místo,Miejsce,Platznummer
@@ -1541,3 +1549,18 @@ pidAdmin.logs.gate,gate,brána,brama,
 pidAdmin.logs.reservation,reservation,rezervace,rezerwacja,
 pidAdmin.logs.noGate,no gate configured,není konfigurovaná brána,brama nie została skonfigurowana,
 pidAdmin.logs.noReservation,no valid reservation,nemá platnou rezervaci,brak ważnej rezerwacji,
+pidAdmin.garagesOverview.createdAt,Creation date,Datum založení,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.admin,Admin,Admin,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.manager,Manager,Manager,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.garageName,name of garage,jméno garaže,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.places,place count,počet míst,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.tarif,tarif,tarif,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.is_public,go public,go public,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.go_internal,go internal,go internal,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.flexiplace,flexiplace,flexi místo,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.marketing,Marketing page,Marketingová stránka,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.third_party_integration,3rd party integration,Integrace 3. stran,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.mr_parkit_integration,Mr. Parkit integration,integrace MR.PARKIT,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.LongTerm,LongTerm,LongTerm,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.Automation,Automation,Automation,netřeba překládat,netřeba překládat
+pidAdmin.garagesOverview.Integration,Integration,Integration,netřeba překládat,netřeba překládat

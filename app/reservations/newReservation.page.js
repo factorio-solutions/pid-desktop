@@ -10,6 +10,7 @@ import GarageLayout     from '../_shared/components/garageLayout/GarageLayout'
 import SearchField      from '../_shared/components/searchField/SearchField'
 import Form             from '../_shared/components/form/Form'
 import Modal            from '../_shared/components/modal/Modal'
+import Input            from '../_shared/components/input/Input'
 import ExistingUserForm from './newReservation/existingUserForm'
 import NewUserForm      from './newReservation/newUserForm'
 import GarageClientForm from './newReservation/garageClientForm'
@@ -46,10 +47,11 @@ class NewReservationPage extends Component {
     const makeButton = (user, label, text) => {
       return {
         label,
-        text:    [ t([ 'newReservation', 'dropButtonDescrText' ]), <b>{user.full_name}</b>, text ],
+        text:    [ t([ 'newReservation', 'dropButtonDescrText' ]), ' ', <b>{user.full_name}</b>, ' ', text ],
         onClick: () => { this.props.actions.downloadUser(user.id, user.rights) }
       }
     }
+
     const buttons = []
     const users = this.props.state.availableUsers.reduce((acc, user) => {
       if (user.id < 0) {
@@ -63,7 +65,7 @@ class NewReservationPage extends Component {
         } else {
           roleName = 'onetimeVisit'
         }
-        buttons.push(makeButton(user, [ t([ 'newReservation', 'dropButtonText' ]), <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
+        buttons.push(makeButton(user, [ t([ 'newReservation', 'dropButtonText' ]), ' ', <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
       } else {
         acc.push({
           label:   user.full_name,
@@ -213,6 +215,13 @@ class NewReservationPage extends Component {
                     {state.user &&
                       <SmsForm accentRegex={ACCENT_REGEX} />
                     }
+                    {/* Note input */}
+                    <Input
+                      onChange={actions.setNote}
+                      label={t([ 'newReservation', 'note' ])}
+                      value={state.note}
+                      align="left"
+                    />
                   </div>
                 }
               </Form>

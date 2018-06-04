@@ -35,14 +35,14 @@ class PidAdminDashboardPage extends Component {
 
     const transformData = data => data.users.map(user => ({
       ...user,
-      spoiler: <div>
+      spoiler: user.last_active ? <div>
         <LabeledRoundButton
           label={t([ 'pidAdmin', 'users', 'impersonate' ])}
           content={<span className="fa fa-user-secret" aria-hidden="true" />}
           onClick={() => actions.impersonate(user.id)}
           type="action"
         />
-      </div>
+      </div> : undefined
     }))
 
     return (

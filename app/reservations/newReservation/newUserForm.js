@@ -10,7 +10,6 @@ import {
   setHostName,
   setHostPhone,
   setHostEmail,
-  setNote,
   setLanguage,
   setCarLicencePlate
 } from '../../_shared/actions/newReservation.actions'
@@ -84,12 +83,6 @@ class NewUserForm extends Component {
           align="left"
           highlight={state.highlight && state.user.id !== -2}
         />
-        <Input
-          onChange={actions.setNote}
-          label={t([ 'newReservation', 'note' ])}
-          value={state.note}
-          align="left"
-        />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
           {AVAILABLE_LANGUAGES.map(this.renderLanguageButton)}
@@ -101,14 +94,13 @@ class NewUserForm extends Component {
 
 export default connect(
   state => {
-    const { user, name, phone, email, note, highlight, language, carLicencePlate } = state.newReservation
-    return { state: { user, name, phone, email, note, highlight, language, carLicencePlate } }
+    const { user, name, phone, email, highlight, language, carLicencePlate } = state.newReservation
+    return { state: { user, name, phone, email, highlight, language, carLicencePlate } }
   },
   dispatch => ({ actions: bindActionCreators(
     { setHostName,
       setHostPhone,
       setHostEmail,
-      setNote,
       setLanguage,
       setCarLicencePlate
     },

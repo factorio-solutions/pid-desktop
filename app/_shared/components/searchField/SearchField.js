@@ -65,7 +65,7 @@ export default class SearchField extends Component {
 
   generateButtons = item => (
     <tr>
-      <td><CallToActionButton label={item.label} onClick={item.onClick} /></td>
+      <td><CallToActionButton label={item.label} onMouseDown={item.onClick} /></td>
       <td>{item.text}</td>
     </tr>
   )
@@ -107,7 +107,7 @@ export default class SearchField extends Component {
           <li
             key={index}
             className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`}
-            onClick={onClick}
+            onMouseDown={onClick}
           >
             <div>
               <label className={styles.contactLabel}>
