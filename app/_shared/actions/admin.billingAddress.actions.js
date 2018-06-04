@@ -57,7 +57,7 @@ export function loadInfoFromIc() {
   return (dispatch, getState) => {
     const onSuccess = res => {
       dispatch(setName(res.OF))
-      dispatch(setLine1(res.AD.UC))
+      dispatch(setLine1([ res.AD.UC, res.AA.CO ].filter(o => o).join('/')))
       dispatch(setCity(res.AA.N))
       dispatch(setPostalCode(res.AA.PSC))
       dispatch(setCountry(res.AA.NS))
