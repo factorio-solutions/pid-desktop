@@ -39,9 +39,19 @@ class GarageClientForm extends Component {
 
   render() {
     const { state, actions, ongoing } = this.props
-
     const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
     const selectedPlace = places.findById(state.place_id)
+
+    console.log(state)
+
+    // console.log(
+    //   state.garage,
+    //   state.garage && state.garage.has_payment_gate,
+    //   state.client_id,
+    //   selectedPlace,
+    //   selectedPlace && selectedPlace.go_internal
+    // )
+
     return (
       <div>
         <Dropdown
@@ -81,8 +91,8 @@ class GarageClientForm extends Component {
 
 export default connect(
   state => {
-    const { user, highlight, paidByHost, garage, client_id } = state.newReservation
-    return { state: { user, highlight, paidByHost, garage, client_id } }
+    const { user, highlight, paidByHost, garage, client_id, place_id } = state.newReservation
+    return { state: { user, highlight, paidByHost, garage, client_id, place_id } }
   },
   dispatch => ({ actions: bindActionCreators(
     { downloadGarage,
