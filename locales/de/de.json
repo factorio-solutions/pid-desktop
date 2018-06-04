@@ -226,12 +226,12 @@
 		"newHostText": "DE: newReservation.newHostText",
 		"newInternal": "DE: newReservation.newInternal",
 		"newInternalText": "DE: newReservation.newInternalText",
-		"dropButtonText": "DE: newReservation.dropButtonText",
+		"dropButtonText": "Neuer Benutzer",
 		"dropButtonDescrText": "DE: newReservation.dropButtonDescrText",
 		"hostsName": "Rgelmäßiger Gast - Name",
-		"phone": "DE: newReservation.phone",
+		"phone": "Telefonnummer",
 		"hostsPhone": "Regelmäßiger Gast Telefonnummer",
-		"email": "DE: newReservation.email",
+		"email": "E-Mail",
 		"hostsEmail": "Regelmäßiger Gast E-Mail",
 		"visitorsName": "Besucher Name",
 		"visitorsPhone": "Besucher Telefonnummer",
@@ -251,7 +251,9 @@
 		"character": "Zeichen",
 		"removeDiacritics": "Diakritika entfernen",
 		"perHour": "/ Std.",
-		"creatingReservationInPast": "DE: newReservation.creatingReservationInPast"
+		"creatingReservationInPast": "DE: newReservation.creatingReservationInPast",
+		"loading": "DE: newReservation.loading",
+		"userName": "DE: newReservation.userName"
 	},
 	"clients": {
 		"name": "Name",
@@ -391,6 +393,7 @@
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
 		"admin": "Administrator",
+		"manager": "Manager",
 		"receptionist": "Rezeptionist/in",
 		"security": "Wachdienst",
 		"pendingUsers": "Nicht bestätigte Benutzer",
@@ -602,6 +605,7 @@
 		"host": "Regelmäßiger Gast",
 		"internal": "intern",
 		"security": "Wachdienst",
+		"manager": "DE: inviteUser.manager",
 		"receptionist": "Rezeptionist/in",
 		"driver": "Fahrer",
 		"clientRights": "Benutzerrechte",
@@ -932,7 +936,8 @@
 		"sendReminder": "Zahlungserinnerung senden",
 		"invoicePaidLabel": "Rechnung bezahlt",
 		"invoiceIncorect": "Rechnung falsch",
-		"donwloadExcel": "Excel herunterladen",
+		"donwloadExcel": "CSV herunterladen",
+		"donwloadXlsx": "XLSX herunterladen",
 		"donwloadInvoices": "Rechnungen herunterladen",
 		"donwloadXML": "DE: invoices.donwloadXML",
 		"selectYourPohodaIc": "DE: invoices.selectYourPohodaIc"
@@ -1180,7 +1185,10 @@
 		},
 		"reservation": {
 			"floor": "Etage",
-			"place": "Platznummer"
+			"place": "Platznummer",
+			"garage": "DE: mobileApp.reservation.garage",
+			"begins": "DE: mobileApp.reservation.begins",
+			"ends": "DE: mobileApp.reservation.ends"
 		},
 		"newReservation": {
 			"begins": "Beginnt",
@@ -1410,6 +1418,23 @@
 			"reservation": "DE: pidAdmin.logs.reservation",
 			"noGate": "DE: pidAdmin.logs.noGate",
 			"noReservation": "DE: pidAdmin.logs.noReservation"
+		},
+		"garagesOverview": {
+			"createdAt": "netřeba překládat",
+			"admin": "netřeba překládat",
+			"manager": "netřeba překládat",
+			"garageName": "netřeba překládat",
+			"places": "netřeba překládat",
+			"tarif": "netřeba překládat",
+			"is_public": "netřeba překládat",
+			"go_internal": "netřeba překládat",
+			"flexiplace": "netřeba překládat",
+			"marketing": "netřeba překládat",
+			"third_party_integration": "netřeba překládat",
+			"mr_parkit_integration": "netřeba překládat",
+			"LongTerm": "netřeba překládat",
+			"Automation": "netřeba překládat",
+			"Integration": "netřeba překládat"
 		}
 	}
 }

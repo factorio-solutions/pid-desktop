@@ -9,9 +9,9 @@ import Modal       from '../../components/modal/Modal'
 
 import styles   from './GarageSetupPage.scss'
 
-import { t }      from '../../modules/localization/localization'
+import { t }                from '../../modules/localization/localization'
 import * as pageBaseActions from '../../actions/pageBase.actions'
-import * as nav from '../../helpers/navigation'
+import * as nav             from '../../helpers/navigation'
 
 
 class GarageSetupPage extends Component {
