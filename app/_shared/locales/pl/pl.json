@@ -1030,6 +1030,7 @@
 		"invalidAccountNumber": "Niepoprawny numer konta",
 		"paymentGates": "Bramy płatnicze",
 		"rents": "Wynajmy",
+		"billingAddress": "PL: finance.billingAddress",
 		"testPayment": "Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",
 		"testPaymentSuccessful": "Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.",
 		"testPaymentUnsuccessful": "Transakcja próbna nie powiodła się."
@@ -1146,8 +1147,8 @@
 			"selectGarage": "Wybierz garaż",
 			"allGarages": "Wszystkie garaże",
 			"version": "wersja",
-			"resrevations": "rezerwacje",
-			"notifications": "notyfikacje",
+			"resrevations": "Rezerwacje",
+			"notifications": "Notyfikacje",
 			"personal": "prywatne",
 			"work": "służbowe"
 		},
@@ -1355,7 +1356,8 @@
 			"adminMode": "netřeba překládat",
 			"generator": "netřeba překládat",
 			"news": "netřeba překládat",
-			"finance": "netřeba překládat"
+			"finance": "netřeba překládat",
+			"garagesOverview": "PL: pidAdmin.pageBase.garagesOverview"
 		},
 		"users": {
 			"id": "netřeba překládat",
