@@ -245,7 +245,7 @@ export function setToDate(value) {
 
 export function setToTime(value) {
   return (dispatch, getState) => {
-    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const to = moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT)
     const toTime = moment(value, MOMENT_TIME_FORMAT)
     const fromValue = null
     to.set('hour', toTime.get('hour'))
@@ -462,19 +462,17 @@ export function downloadUser(id, rights) {
         rights // Client user rights
       }))
       let hideLoadingCalled = false
-      if (values[0].user && !values[0].user.last_active) {
-        dispatch(setHostName(values[0].user.full_name, true))
-        dispatch(setHostPhone(values[0].user.phone, true))
-        dispatch(setHostEmail(values[0].user.email, true))
-        dispatch(setLanguage(values[0].user.language))
-        hideLoading(dispatch)
-        hideLoadingCalled = true
-      }
+
+      dispatch(setHostName(values[0].user.full_name, true))
+      dispatch(setHostPhone(values[0].user.phone, true))
+      dispatch(setHostEmail(values[0].user.email, true))
+      dispatch(setLanguage(values[0].user.language))
+
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
         hideLoadingCalled = true
-
       }
+
       if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
         dispatch(downloadGarage(values[1].reservable_garages[0].id))
         hideLoadingCalled = true

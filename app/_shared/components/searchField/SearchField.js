@@ -42,7 +42,10 @@ export default class SearchField extends Component {
   validateContent(nextProps) {
     this.setState({
       ...this.state,
-      selected: nextProps.dropdownContent.length === 1 ? 0 : nextProps.selected
+      selected: nextProps.dropdownContent.length === 1 ? 0 : nextProps.selected,
+      show:     this.state.selected !== nextProps.selected && nextProps.selected >= 0 ?
+        false :
+        this.state.show
     })
   }
 

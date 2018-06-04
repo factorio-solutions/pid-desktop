@@ -242,14 +242,21 @@ class ReservationsPage extends Component {
                 type="action"
               />
               }
-              {moment(reservation.ends_at).isAfter(moment()) &&
-              <LabeledRoundButton
-                label={t([ 'reservations', moment(reservation.begins_at).isAfter(moment()) ? 'destroyReservation' : 'teminateEarly' ])}
-                content={<span className="fa fa-times" aria-hidden="true" />}
-                onClick={() => { moment(reservation.begins_at).isAfter(moment()) ? this.destroyClick(reservation) : interuptionActions.immediateReservationTermination(reservation) }}
-                type="remove"
-                question={t([ 'reservations', moment(reservation.begins_at).isAfter(moment()) ? 'removeReservationQuestion' : 'terminateEarlyQuestion' ])}
-              />
+              {moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ?
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'teminateEarly' ])}
+                  content={<span className="fa fa-times" aria-hidden="true" />}
+                  onClick={() => interuptionActions.immediateReservationTermination(reservation)}
+                  type="remove"
+                  question={t([ 'reservations', 'terminateEarlyQuestion' ])}
+                /> :
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'destroyReservation' ])}
+                  content={<span className="fa fa-times" aria-hidden="true" />}
+                  onClick={() => this.destroyClick(reservation)}
+                  type="remove"
+                  question={t([ 'reservations', 'removeReservationQuestion' ])}
+                />
               }
             </span>
           </div>
