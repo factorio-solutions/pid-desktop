@@ -34,7 +34,8 @@ class PageBase extends Component {
       { label: t([ 'pidAdmin', 'pageBase', 'generator' ]), key: 'generator', icon: 'fa fa-fighter-jet', onClick: () => nav.to('/pid-admin/generator') },
       { label: t([ 'pidAdmin', 'pageBase', 'news' ]), key: 'news', icon: 'fa fa-newspaper-o', onClick: () => nav.to('/pid-admin/news') },
       { label: t([ 'pidAdmin', 'pageBase', 'finance' ]), key: 'finance', icon: 'fa fa-money', onClick: () => nav.to('/pid-admin/finance') },
-      { label: t([ 'pageBase', 'Activity log' ]), key: 'logs', icon: 'fa fa-file-text', onClick: () => nav.to('/pid-admin/logs') }
+      { label: t([ 'pageBase', 'Activity log' ]), key: 'logs', icon: 'fa fa-file-text', onClick: () => nav.to('/pid-admin/logs') },
+      { label: t([ 'pidAdmin', 'pageBase', 'garagesOverview' ]), key: 'garages', icon: 'icon-garage', onClick: () => nav.to('/pid-admin/garagesOverview') }
     ]
 
     const profileDropdown = [

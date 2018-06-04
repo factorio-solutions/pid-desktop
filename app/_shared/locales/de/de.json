@@ -223,8 +223,15 @@
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
 		"newHost": "Neuer regelmäßiger Gast",
+		"newHostText": "DE: newReservation.newHostText",
+		"newInternal": "DE: newReservation.newInternal",
+		"newInternalText": "DE: newReservation.newInternalText",
+		"dropButtonText": "Neuer Benutzer",
+		"dropButtonDescrText": "DE: newReservation.dropButtonDescrText",
 		"hostsName": "Rgelmäßiger Gast - Name",
+		"phone": "Telefonnummer",
 		"hostsPhone": "Regelmäßiger Gast Telefonnummer",
+		"email": "E-Mail",
 		"hostsEmail": "Regelmäßiger Gast E-Mail",
 		"visitorsName": "Besucher Name",
 		"visitorsPhone": "Besucher Telefonnummer",
@@ -234,6 +241,7 @@
 		"noFreePlace": "Keine freie Plätze",
 		"note": "Notiz",
 		"onetimeVisit": "Einmaliger Besucher",
+		"onetimeVisitText": "DE: newReservation.onetimeVisitText",
 		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.",
 		"paidByHost": "Buchung wird vom Gast bezahlt",
 		"languageSelector": "Wählen Sie die Kommunikationssprache",
@@ -242,7 +250,10 @@
 		"smsText": "Text der Nachricht",
 		"character": "Zeichen",
 		"removeDiacritics": "Diakritika entfernen",
-		"perHour": "/ Std."
+		"perHour": "/ Std.",
+		"creatingReservationInPast": "DE: newReservation.creatingReservationInPast",
+		"loading": "DE: newReservation.loading",
+		"userName": "DE: newReservation.userName"
 	},
 	"clients": {
 		"name": "Name",
@@ -382,6 +393,7 @@
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
 		"admin": "Administrator",
+		"manager": "Manager",
 		"receptionist": "Rezeptionist/in",
 		"security": "Wachdienst",
 		"pendingUsers": "Nicht bestätigte Benutzer",
@@ -593,6 +605,7 @@
 		"host": "Regelmäßiger Gast",
 		"internal": "intern",
 		"security": "Wachdienst",
+		"manager": "DE: inviteUser.manager",
 		"receptionist": "Rezeptionist/in",
 		"driver": "Fahrer",
 		"clientRights": "Benutzerrechte",
@@ -923,7 +936,8 @@
 		"sendReminder": "Zahlungserinnerung senden",
 		"invoicePaidLabel": "Rechnung bezahlt",
 		"invoiceIncorect": "Rechnung falsch",
-		"donwloadExcel": "Excel herunterladen",
+		"donwloadExcel": "CSV herunterladen",
+		"donwloadXlsx": "XLSX herunterladen",
 		"donwloadInvoices": "Rechnungen herunterladen",
 		"donwloadXML": "DE: invoices.donwloadXML",
 		"selectYourPohodaIc": "DE: invoices.selectYourPohodaIc"
@@ -947,7 +961,7 @@
 		"startingMarketing": "Rechnungsplan wird aktualisiert. Weiterleiten …",
 		"cannotBeChanged": "Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen).",
 		"flexiplace": "Flexi Platz",
-		"flexiplaceDescription": "Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.",
+		"flexiplaceDescription": "Flexi Platz ist ein Unterstützungswerkzeug zur optimalen Nutzung \nalle seine Plätze. Ihre Benutzer werden seinen Parkplatz bis zum Beginn der Reservierung nicht kennen. Reservierungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren.",
 		"showApiKey": "API Endpunkt zeigen",
 		"regenerateApiKey": "Einen neuen API Endpunkt erstellen",
 		"3rdPartyIntegration": "Integration von Dritten",
@@ -1016,6 +1030,7 @@
 		"invalidAccountNumber": "Ungültige Kontonummer",
 		"paymentGates": "DE: finance.paymentGates",
 		"rents": "Mietverhältnisse",
+		"billingAddress": "DE: finance.billingAddress",
 		"testPayment": "DE: finance.testPayment",
 		"testPaymentSuccessful": "DE: finance.testPaymentSuccessful",
 		"testPaymentUnsuccessful": "DE: finance.testPaymentUnsuccessful"
@@ -1081,7 +1096,7 @@
 	},
 	"recurringReservation": {
 		"repeat": "Wiederholen: aus",
-		"repeatEnabled": "DE: recurringReservation.repeatEnabled",
+		"repeatEnabled": "Wiederholen: ein",
 		"repeats": "Wiederholt",
 		"daily": "Täglich",
 		"weekly": "Wochentlich",
@@ -1131,7 +1146,14 @@
 			"logOut": "abmelden",
 			"selectGarage": "Garage auswählen",
 			"allGarages": "Alle Garagen",
-			"version": "Version"
+			"version": "Version",
+			"resrevations": "Buchungen",
+			"notifications": "Benachrichtigungen",
+			"personal": "Privat",
+			"work": "Arbeit"
+		},
+		"notifications": {
+			"noNewNotifications": "Keine neue Benachrichtigungen"
 		},
 		"login": {
 			"loading": "Laden...",
@@ -1162,23 +1184,12 @@
 		"terms": {
 			"content": "Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage"
 		},
-		"menu": {
-			"newNotifications": "Neue Benachrichtigungen",
-			"access": "Zugang",
-			"myReservations": "Meine Reservierungen",
-			"guestReservations": "Regelmäßiger Gast"
-		},
-		"access": {
-			"floor": "Etage",
-			"place": "Stellplatz",
-			"noOngoingReservations": "Keine gültige Reservierung",
-			"inSelectedGarage": "in gewählten Garage"
-		},
 		"reservation": {
-			"garage": "Garage",
+			"floor": "Etage",
 			"place": "Platznummer",
-			"begins": "Beginnt",
-			"ends": "Endet"
+			"garage": "DE: mobileApp.reservation.garage",
+			"begins": "DE: mobileApp.reservation.begins",
+			"ends": "DE: mobileApp.reservation.ends"
 		},
 		"newReservation": {
 			"begins": "Beginnt",
@@ -1345,7 +1356,8 @@
 			"adminMode": "netřeba překládat",
 			"generator": "netřeba překládat",
 			"news": "netřeba překládat",
-			"finance": "netřeba překládat"
+			"finance": "netřeba překládat",
+			"garagesOverview": "DE: pidAdmin.pageBase.garagesOverview"
 		},
 		"users": {
 			"id": "netřeba překládat",
@@ -1408,6 +1420,23 @@
 			"reservation": "DE: pidAdmin.logs.reservation",
 			"noGate": "DE: pidAdmin.logs.noGate",
 			"noReservation": "DE: pidAdmin.logs.noReservation"
+		},
+		"garagesOverview": {
+			"createdAt": "netřeba překládat",
+			"admin": "netřeba překládat",
+			"manager": "netřeba překládat",
+			"garageName": "netřeba překládat",
+			"places": "netřeba překládat",
+			"tarif": "netřeba překládat",
+			"is_public": "netřeba překládat",
+			"go_internal": "netřeba překládat",
+			"flexiplace": "netřeba překládat",
+			"marketing": "netřeba překládat",
+			"third_party_integration": "netřeba překládat",
+			"mr_parkit_integration": "netřeba překládat",
+			"LongTerm": "netřeba překládat",
+			"Automation": "netřeba překládat",
+			"Integration": "netřeba překládat"
 		}
 	}
 }

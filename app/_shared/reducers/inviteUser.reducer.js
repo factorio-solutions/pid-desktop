@@ -27,6 +27,7 @@ const booleanAttributes = {
   garage_admin:          false,
   garage_receptionist:   false,
   garage_security:       false,
+  garage_manager:        false,
   car_admin:             false,
   car_driver:            false,
 

@@ -222,9 +222,16 @@
 		"validtyCheck": "Performing validity check ...",
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
-		"newHost": "New regular guest",
+		"newHost": "Regular guest",
+		"newHostText": "may create reservations for himself, but need them to be approved by a secretary",
+		"newInternal": "New internal",
+		"newInternalText": "may create reservations for himself",
+		"dropButtonText": "New user with rights ",
+		"dropButtonDescrText": "User with rights ",
 		"hostsName": "Name of regular guest",
+		"phone": "Phone number",
 		"hostsPhone": "Phone of regular guest",
+		"email": "Email",
 		"hostsEmail": "Email of regular guest",
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
@@ -234,6 +241,7 @@
 		"noFreePlace": "No free place",
 		"note": "Note",
 		"onetimeVisit": "Onetime visitor",
+		"onetimeVisitText": "may create reservations for himself",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
 		"languageSelector": "Choose communication language",
@@ -242,7 +250,10 @@
 		"smsText": "SMS text",
 		"character": "characters",
 		"removeDiacritics": "remove diacritics",
-		"perHour": " / hour"
+		"perHour": " / hour",
+		"creatingReservationInPast": "You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?",
+		"loading": "Loading ...",
+		"userName": "EN: newReservation.userName"
 	},
 	"clients": {
 		"name": "name",
@@ -308,7 +319,7 @@
 		"editReservation": "Edit reservation",
 		"editNote": "Edit note",
 		"newNote": "New note",
-		"interuptReservation": "Interupt reservation",
+		"interuptReservation": "Interrupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
 		"destroyReservation": "Cancel reservation",
@@ -382,6 +393,7 @@
 	"garageUsers": {
 		"noRights": "You do not have the right to do that.",
 		"admin": "admin",
+		"manager": "manager",
 		"receptionist": "receptionist",
 		"security": "security",
 		"pendingUsers": "Pending users",
@@ -593,6 +605,7 @@
 		"host": "regular guest",
 		"internal": "internal",
 		"security": "security",
+		"manager": "manager",
 		"receptionist": "receptionist",
 		"driver": "driver",
 		"clientRights": "User rights",
@@ -923,7 +936,8 @@
 		"sendReminder": "Send reminder",
 		"invoicePaidLabel": "Invoice paid",
 		"invoiceIncorect": "Cancel invoice",
-		"donwloadExcel": "Download Excel",
+		"donwloadExcel": "Download CSV",
+		"donwloadXlsx": "Download XLSX",
 		"donwloadInvoices": "Download invoices",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
@@ -947,7 +961,7 @@
 		"startingMarketing": "Upgrading your billing plan. Redirecting...",
 		"cannotBeChanged": "You cannot go public until you set a payment method. To do this go to Admin/Finance.",
 		"flexiplace": "Flexi place",
-		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins",
+		"flexiplaceDescription": "Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.",
 		"showApiKey": "Show API endpoint",
 		"regenerateApiKey": "Regenerate API endpoint",
 		"3rdPartyIntegration": "3rd party integration",
@@ -1016,6 +1030,7 @@
 		"invalidAccountNumber": "Invalid account number",
 		"paymentGates": "Payment gates",
 		"rents": "Rents",
+		"billingAddress": "Billing address",
 		"testPayment": "You can now perform a test payment to verify the correctness of the entered data.",
 		"testPaymentSuccessful": "Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.",
 		"testPaymentUnsuccessful": "Your test payment was unsuccessful."
@@ -1131,7 +1146,14 @@
 			"logOut": "log out",
 			"selectGarage": "Select garage",
 			"allGarages": "All garages",
-			"version": "version"
+			"version": "version",
+			"resrevations": "Reservations",
+			"notifications": "Notifications",
+			"personal": "personal",
+			"work": "work"
+		},
+		"notifications": {
+			"noNewNotifications": "No new notifications."
 		},
 		"login": {
 			"loading": "Loading ...",
@@ -1162,21 +1184,10 @@
 		"terms": {
 			"content": "You can find our Terms of Service on our website."
 		},
-		"menu": {
-			"newNotifications": "New notifications",
-			"access": "Access",
-			"myReservations": "My reservations",
-			"guestReservations": "Regular guest"
-		},
-		"access": {
-			"floor": "Floor",
-			"place": "Spot",
-			"noOngoingReservations": "No ongoing reservations",
-			"inSelectedGarage": "in selected garage"
-		},
 		"reservation": {
-			"garage": "Garage",
+			"floor": "Floor",
 			"place": "Place",
+			"garage": "Garage",
 			"begins": "Begins",
 			"ends": "Ends"
 		},
@@ -1345,7 +1356,8 @@
 			"adminMode": "ADMIN MODE OF PARK-IT-DIRECT",
 			"generator": "Generator",
 			"news": "News",
-			"finance": "Finance"
+			"finance": "Finance",
+			"garagesOverview": "Garage overview"
 		},
 		"users": {
 			"id": "id",
@@ -1408,6 +1420,23 @@
 			"reservation": "reservation",
 			"noGate": "no gate configured",
 			"noReservation": "no valid reservation"
+		},
+		"garagesOverview": {
+			"createdAt": "Creation date",
+			"admin": "Admin",
+			"manager": "Manager",
+			"garageName": "name of garage",
+			"places": "place count",
+			"tarif": "tarif",
+			"is_public": "go public",
+			"go_internal": "go internal",
+			"flexiplace": "flexiplace",
+			"marketing": "Marketing page",
+			"third_party_integration": "3rd party integration",
+			"mr_parkit_integration": "Mr. Parkit integration",
+			"LongTerm": "LongTerm",
+			"Automation": "Automation",
+			"Integration": "Integration"
 		}
 	}
 }

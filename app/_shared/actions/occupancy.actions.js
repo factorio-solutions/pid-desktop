@@ -98,9 +98,9 @@ export function loadClients(id) {
     }
 
     const garageId = id || getState().pageBase.garage
-    garageId && request(onClientsSuccess
-      , GARAGE_CLIENTS_QUERY
-      , { id: garageId }
+    garageId && request(onClientsSuccess,
+      GARAGE_CLIENTS_QUERY,
+      { id: garageId }
     )
   }
 }

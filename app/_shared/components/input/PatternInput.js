@@ -47,7 +47,7 @@ export default class PatternInput extends Component {
       }
     }
 
-    const isEmpty = () => { return this.input ? this.input.value === '' : true }
+    const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
       <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >

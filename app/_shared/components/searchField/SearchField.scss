@@ -1,0 +1,64 @@
+@import '../../styles/app.components';
+
+.drop {
+  overflow-x: hidden;
+  text-align: left;
+}
+
+.drop > ul.scrollable {
+  max-height:       54ex;
+  overflow-y:       auto;
+  overflow-x:       hidden;
+  list-style-type:  none;
+  padding:          0;
+}
+
+ul.scrollable > li {
+  padding: 0.3em 0.5em;
+  cursor:  pointer;
+  width:   95%;
+
+  &.displayNone {
+    display: none;
+  }
+
+  .contactLabel {
+    font-size: larger;
+  }
+
+  div.contactInfo {
+    font-size: smaller;
+    }
+  
+  .contactInfoColumn {
+    display:      inline-block;
+    padding-left: 1em;
+    white-space:  nowrap;
+  }
+}
+
+.buttons {
+  table-layout: fixed;
+  width:        100%;
+
+  >tbody>tr>td {
+    &:last-child {
+      padding-left: 10px;
+    }
+
+    >button {
+      width:      100%;
+      min-height: 4em;
+    }
+  }
+}
+
+.drop > ul > li:not(.selected):not(.filter):hover {
+  background-color: $gray;
+  color:            $white;
+}
+
+.selected {
+  background-color: $yellow;
+  color:            $black;
+}

@@ -1,99 +1,37 @@
-import actionFactory from '../helpers/actionFactory'
-import { request } from '../helpers/request'
-import requestPromise from '../helpers/requestPromise'
-import { download } from '../helpers/download'
-import { setCustomModal, setError } from './pageBase.actions'
-import { t } from '../modules/localization/localization'
+import actionFactory       from '../helpers/actionFactory'
+import { request }         from '../helpers/request'
+import requestPromise      from '../helpers/requestPromise'
+import { download }        from '../helpers/download'
 import { parseParameters } from '../helpers/parseUrlParameters'
 
-import { GET_RESERVATIONS_QUERY, GET_RESERVATIONS_PAGINATION_QUERY, DESTROY_RESERVATION, CHECK_VALIDITY, CREATE_CSOB_PAYMENT, DESTROY_RECURRING_RESERVATIONS } from '../queries/reservations.queries'
-import { DOWNLOAD_INVOICE } from '../queries/invoices.queries'
-import { PAY_RESREVATION, UPDATE_RESERVATION } from '../queries/newReservation.queries'
+import { setCustomModal, setError } from './pageBase.actions'
+import { t }                        from '../modules/localization/localization'
+
+import {
+  DESTROY_RESERVATION,
+  CHECK_VALIDITY,
+  CREATE_CSOB_PAYMENT,
+  DESTROY_RECURRING_RESERVATIONS
+} from '../queries/reservations.queries'
+import { UPDATE_RESERVATION } from '../queries/newReservation.queries'
+import { DOWNLOAD_INVOICE }   from '../queries/invoices.queries'
 
 import { mobile } from '../../index'
 
-
-export const RESERVATIONS_PER_PAGE = 5
-
-export const SET_ONGOING_RESERVATIONS = 'SET_ONGOING_RESERVATIONS'
-export const SET_RESERVATIONS = 'SET_RESERVATIONS'
-export const ADD_RESERVATIONS = 'ADD_RESERVATIONS'
-export const RESERVATIONS_SET_PAGE = 'RESERVATIONS_SET_PAGE'
 export const RESERVATIONS_SET_PAST = 'RESERVATIONS_SET_PAST'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 export const RESERVATIONS_SET_NEW_NOTE = 'RESERVATIONS_SET_NEW_NOTE'
 export const RESERVATIONS_SET_NEW_NOTE_RESERVATION = 'RESERVATIONS_SET_NEW_NOTE_RESERVATION'
 
-
-export const setOngoingReservations = actionFactory(SET_ONGOING_RESERVATIONS)
-export const setReservations = actionFactory(SET_RESERVATIONS)
-export const addReservations = actionFactory(ADD_RESERVATIONS)
-export const setPage = actionFactory(RESERVATIONS_SET_PAGE)
 export const setPast = actionFactory(RESERVATIONS_SET_PAST)
 export const togglePast = actionFactory(TOGGLE_RESERVATIONS_PAST)
 export const setNewNote = actionFactory(RESERVATIONS_SET_NEW_NOTE)
 export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RESERVATION)
 
 
-export function initOngoingReservations(callback) { // callback used by mobile access page
-  return (dispatch, getState) => {
-    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
-
-    const onSuccess = response => {
-      dispatch(setOngoingReservations(response.data.reservations))
-      dispatch(setCustomModal())
-      callback(response.data.reservations)
-    }
-    request(onSuccess, GET_RESERVATIONS_QUERY, {
-      past:      false,
-      ongoing:   true,
-      user_id:   getState().mobileHeader.current_user.id,
-      order_by:  'begins_at',
-      garage_id: getState().mobileHeader.garage_id
-    })
-  }
-}
-
 export function initReservations() { // will download first 5 reservations
   window.dispatchEvent(new Event('paginatedTableUpdate'))
-  return (dispatch, getState) => {
-    if (mobile) {
-      dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
-      const state = getState().reservations
-      const onSuccess = response => {
-        dispatch(setCustomModal(undefined))
-        dispatch(setReservations(response.data.reservations))
-      }
-      request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
-        past:      state.past,
-        user_id:   getState().mobileHeader.current_user.id,
-        count:     RESERVATIONS_PER_PAGE,
-        page:      1,
-        order_by:  'begins_at',
-        garage_id: getState().mobileHeader.garage_id
-      })
-    }
-  }
-}
-
-export function loadReservations() { // will load 5 more reservations
-  window.dispatchEvent(new Event('paginatedTableUpdate'))
-  return (dispatch, getState) => {
-    if (mobile) {
-      const state = getState().reservations
-      const onSuccess = response => {
-        dispatch(addReservations(response.data.reservations))
-      }
-      request(onSuccess, GET_RESERVATIONS_PAGINATION_QUERY, {
-        past:      state.past,
-        user_id:   getState().mobileHeader.current_user.id,
-        count:     RESERVATIONS_PER_PAGE,
-        page:      state.page + 1,
-        order_by:  'begins_at',
-        garage_id: getState().mobileHeader.garage_id
-      })
-    }
-  }
+  return () => {}
 }
 
 export function destroyReservation(id, callback) {
@@ -102,9 +40,11 @@ export function destroyReservation(id, callback) {
       if (mobile) {
         callback()
       } else {
+        dispatch(setCustomModal())
         dispatch(initReservations())
       }
     }
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     request(onSuccess, DESTROY_RESERVATION, { id })
   }
 }

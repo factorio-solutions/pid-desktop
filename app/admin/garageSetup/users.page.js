@@ -3,33 +3,33 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
-import Table              from '../../_shared/components/table/Table'
-import RoundButton        from '../../_shared/components/buttons/RoundButton'
-import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
+import GarageSetupPage          from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import Table                    from '../../_shared/components/table/Table'
+import RoundButton              from '../../_shared/components/buttons/RoundButton'
+import LabeledRoundButton       from '../../_shared/components/buttons/LabeledRoundButton'
 import InvitationReminderButton from '../../_shared/components/buttons/InvitationReminderButton'
 
-import * as garageUsersActions  from '../../_shared/actions/garageUsers.actions'
-import { setGarage }            from '../../_shared/actions/inviteUser.actions'
-import * as nav                 from '../../_shared/helpers/navigation'
-import { t }                    from '../../_shared/modules/localization/localization'
+import * as garageUsersActions from '../../_shared/actions/garageUsers.actions'
+import { setGarage }           from '../../_shared/actions/inviteUser.actions'
+import * as nav                from '../../_shared/helpers/navigation'
+import { t }                   from '../../_shared/modules/localization/localization'
 
 import styles from './users.page.scss'
 
 
 class GarageUsersPage extends Component {
   static propTypes = {
-    state:        PropTypes.object,
-    pageBase:     PropTypes.object,
-    actions:      PropTypes.object
+    state:    PropTypes.object,
+    pageBase: PropTypes.object,
+    actions:  PropTypes.object
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.actions.initGarageUsers(this.props.params.id)
   }
 
 
-  componentWillReceiveProps(nextProps){ // load garage if id changed
+  componentWillReceiveProps(nextProps) { // load garage if id changed
     if (nextProps.pageBase.garage !== this.props.pageBase.garage) {
       nextProps.pageBase.garage && this.props.actions.initGarageUsers(nextProps.pageBase.garage)
     }
@@ -38,63 +38,69 @@ class GarageUsersPage extends Component {
   render() {
     const { state, pageBase, actions } = this.props
 
-    const schema = [ { key: 'full_name',   title: t(['garageUsers','name']),        comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
-                   , { key: 'email',       title: t(['garageUsers','email']),       comparator: 'string' }
-                   , { key: 'phone',       title: t(['garageUsers','phone']),       comparator: 'number' }
-                   , { key: 'created_at',  title: t(['garageUsers','memberSince']), comparator: 'date',   representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span>, }
-                   ]
+    const schema = [
+      { key: 'full_name', title: t([ 'garageUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+      { key: 'email', title: t([ 'garageUsers', 'email' ]), comparator: 'string' },
+      { key: 'phone', title: t([ 'garageUsers', 'phone' ]), comparator: 'number' },
+      { key: 'created_at', title: t([ 'garageUsers', 'memberSince' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span> }
+    ]
 
-    const schemaPending = [ { key: 'full_name',  title: t(['garageUsers','name']),  comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' }
-                          , { key: 'email', title: t(['garageUsers','email']), comparator: 'string' }
-                          , { key: 'phone', title: t(['garageUsers','phone']), comparator: 'number' }
-                          ]
+    const schemaPending = [
+      { key: 'full_name', title: t([ 'garageUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+      { key: 'email', title: t([ 'garageUsers', 'email' ]), comparator: 'string' },
+      { key: 'phone', title: t([ 'garageUsers', 'phone' ]), comparator: 'number' }
+    ]
 
-    const isGarageAdmin = state.users.filter((user) => {return user.admin}).findIndex((user)=>{return pageBase.current_user ? user.user.id == pageBase.current_user.id : false}) == -1
+    const isGarageAdmin = state.users.filter(user => user.admin).findIndex(user => pageBase.current_user ? user.user.id === pageBase.current_user.id : false) === -1
 
     const addGarageUserClick = () => {
       actions.setGarage(pageBase.garage)
       nav.to(`/${pageBase.garage}/admin/users/invite`)
     }
 
-    const renderPendingSpoiler = (user) => {
-      let returnable = user.user
-      const destroyClick = () => { actions.destroyGarageUser(pageBase.garage, user.user.id ) }
-      returnable.spoiler = <div className={styles.float}>
+    const renderPendingSpoiler = user => {
+      const returnable = user.user
+      const destroyClick = () => { actions.destroyGarageUser(pageBase.garage, user.user.id) }
+      returnable.spoiler = (<div className={styles.float}>
         <InvitationReminderButton userId={user.user.id} garageId={parseInt(pageBase.garage, 10)} />
-        <LabeledRoundButton label={t(['garageUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])}/>
-      </div>
+        <LabeledRoundButton label={t([ 'garageUsers', 'removeUser' ])} content={<span className="fa fa-times" aria-hidden="true" />} onClick={destroyClick} type="remove" question={t([ 'garageUsers', 'removeGarageUser' ])} />
+      </div>)
       return returnable
     }
 
-    const renderSpoiler = (garage_user) => {
+    const renderSpoiler = garage_user => {
       const destroyClick = () => {
-        actions.destroyGarageUser(pageBase.garage, garage_user.user.id )
+        actions.destroyGarageUser(pageBase.garage, garage_user.user.id)
       }
 
       const adminClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id , {"admin": !garage_user.admin})
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { admin: !garage_user.admin })
+      }
+      const managerClick = () => {
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { manager: !garage_user.manager })
       }
       const receptionistClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id , {"receptionist": !garage_user.receptionist})
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { receptionist: !garage_user.receptionist })
       }
       const securityClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id , {"security": !garage_user.security})
+        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { security: !garage_user.security })
       }
 
-      return(<div className={styles.spoiler}>
-          <div className={styles.devider}>
-            <span className={garage_user.admin ? styles.boldText : styles.inactiveText}             onClick={adminClick}>{t(['garageUsers','admin'])}</span>|
-            <span className={`${garage_user.receptionist ? styles.boldText : styles.inactiveText}`} onClick={receptionistClick}>{t(['garageUsers','receptionist'])}</span>|
-            <span className={`${garage_user.security ? styles.boldText : styles.inactiveText}`}     onClick={securityClick}>{t(['garageUsers','security'])}</span>
-          </div>
-          <div className={styles.float}>
-            <LabeledRoundButton label={t(['garageUsers','removeUser'])} content={<span className='fa fa-times' aria-hidden="true"></span>} onClick={destroyClick} type='remove' question={t(['garageUsers','removeGarageUser'])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'}/>
-          </div>
+      return (<div className={styles.spoiler}>
+        <div className={styles.devider}>
+          <span className={garage_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'garageUsers', 'admin' ])}</span>|
+          <span className={garage_user.manager ? styles.boldText : styles.inactiveText} onClick={managerClick}>{t([ 'garageUsers', 'manager' ])}</span>|
+          <span className={`${garage_user.receptionist ? styles.boldText : styles.inactiveText}`} onClick={receptionistClick}>{t([ 'garageUsers', 'receptionist' ])}</span>|
+          <span className={`${garage_user.security ? styles.boldText : styles.inactiveText}`} onClick={securityClick}>{t([ 'garageUsers', 'security' ])}</span>
         </div>
+        <div className={styles.float}>
+          <LabeledRoundButton label={t([ 'garageUsers', 'removeUser' ])} content={<span className="fa fa-times" aria-hidden="true" />} onClick={destroyClick} type="remove" question={t([ 'garageUsers', 'removeGarageUser' ])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'} />
+        </div>
+      </div>
       )
     }
 
-    const data = state.users.sort((a,b) => { return a.user.id - b.user.id }).map((garage_user) => { // sort - data order has to stay the same
+    const data = state.users.sort((a, b) => { return a.user.id - b.user.id }).map(garage_user => { // sort - data order has to stay the same
       const { full_name, email, phone } = garage_user.user
       return { full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
     })
@@ -104,12 +110,12 @@ class GarageUsersPage extends Component {
         <Table schema={schema} data={data} />
 
         { state.pending_users.length > 0 && <div>
-          <h2>{t(['garageUsers','pendingUsers'])}</h2>
+          <h2>{t([ 'garageUsers', 'pendingUsers' ])}</h2>
           <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
         </div> }
 
         <div className={styles.addButton}>
-          <RoundButton content={<span className='fa fa-plus' aria-hidden="true"></span>} onClick={addGarageUserClick} type='action' size='big' state={isGarageAdmin && "disabled"}/>
+          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addGarageUserClick} type="action" size="big" state={isGarageAdmin && 'disabled'} />
         </div>
       </GarageSetupPage>
     )
@@ -117,6 +123,6 @@ class GarageUsersPage extends Component {
 }
 
 export default connect(
-  state    => ({ state: state.garageUsers, pageBase: state.pageBase }),
+  state => ({ state: state.garageUsers, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators({ ...garageUsersActions, setGarage }, dispatch) })
 )(GarageUsersPage)

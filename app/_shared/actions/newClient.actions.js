@@ -100,7 +100,7 @@ export function loadFromIc() {
         const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
 
         dispatch(setName(res.OF))
-        dispatch(setLine1(res.AD.UC))
+        dispatch(setLine1([ res.AD.UC, res.AA.CO ].filter(o => o).join('/')))
         dispatch(setCity(res.AA.N))
         dispatch(setPostalCode(res.AA.PSC))
         dispatch(setCountry(res.AA.NS))

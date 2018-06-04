@@ -35,6 +35,8 @@ class LoginPage extends Component {
     }
   }
 
+  home = () => window.location.href = 'https://www.park-it-direct.com';
+
   render() {
     const { actions, state } = this.props
 
@@ -70,7 +72,7 @@ class LoginPage extends Component {
           </div>
 
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
-          <Form onSubmit={onSubmit} submitable={isSubmitable()} center>
+          <Form onSubmit={onSubmit} onBack={this.home} submitable={isSubmitable()} center home>
             <PatternInput
               onChange={actions.setEmail}
               label={t([ 'login_page', 'email' ])}

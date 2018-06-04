@@ -222,9 +222,16 @@
 		"validtyCheck": "Provádím kontrolu platnosti ...",
 		"tokenInvalid": "Tato transakce již není platná a rezervace bude smazána",
 		"creatingNewPayment": "Vytvářím platbu ...",
-		"newHost": "Nový pravidelný host",
+		"newHost": "Pravidelný host",
+		"newHostText": " si smí rezervace navrhovat, ale potřebuje schválení",
+		"newInternal": "Nový internal",
+		"newInternalText": " si smí samostatně vytvářet rezervace.",
+		"dropButtonText": "Nový uživatel s právy ",
+		"dropButtonDescrText": "Uživatel s právy ",
 		"hostsName": "Jméno pravidelného hosta",
+		"phone": "Telefonní číslo",
 		"hostsPhone": "Telefon pravidelného hosta",
+		"email": "E-mail",
 		"hostsEmail": "Email pravidelného hosta",
 		"visitorsName": "Jméno návštěvníka",
 		"visitorsPhone": "Telefon návštěvníka",
@@ -234,6 +241,7 @@
 		"noFreePlace": "Žádná volná místa",
 		"note": "Poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
+		"onetimeVisitText": " si smí samostatně vytvářet rezervace.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
 		"languageSelector": "Zvolte jazyk komunikace",
@@ -242,7 +250,10 @@
 		"smsText": "text SMS",
 		"character": "znaků",
 		"removeDiacritics": "odstranit diakritiku",
-		"perHour": " / hod."
+		"perHour": " / hod.",
+		"creatingReservationInPast": "Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?",
+		"loading": "Načítám ...",
+		"userName": "Jméno uživatele"
 	},
 	"clients": {
 		"name": "jméno",
@@ -382,6 +393,7 @@
 	"garageUsers": {
 		"noRights": "Na tuto akci nemáte práva.",
 		"admin": "admin",
+		"manager": "manažer",
 		"receptionist": "recepční",
 		"security": "ochranka",
 		"pendingUsers": "Nepotvrzení uživatelé",
@@ -593,6 +605,7 @@
 		"host": "pravidelný host",
 		"internal": "interní",
 		"security": "ostraha",
+		"manager": "manažer",
 		"receptionist": "recepční",
 		"driver": "řidič",
 		"clientRights": "Práva uživatele",
@@ -923,7 +936,8 @@
 		"sendReminder": "Odeslat upomínku",
 		"invoicePaidLabel": "Faktura uhrazena",
 		"invoiceIncorect": "Stornovat fakturu",
-		"donwloadExcel": "Stáhnout excel",
+		"donwloadExcel": "Stáhnout CSV",
+		"donwloadXlsx": "Stáhnout XLSX",
 		"donwloadInvoices": "Stáhnout faktury",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Zvolte IČ společnosti pro kterou účtujete:"
@@ -947,7 +961,7 @@
 		"startingMarketing": "Aktualizuji Váš plán fakturace. Přesměrovávám ...",
 		"cannotBeChanged": "Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.",
 		"flexiplace": "Flexi místo",
-		"flexiplaceDescription": " reservations will be regrouped to maximize usage of parking places.",
+		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální.",
 		"showApiKey": "Zobrazit API endpoint",
 		"regenerateApiKey": "Vygenerovat nový API endpoint",
 		"3rdPartyIntegration": "Integrace 3. stran",
@@ -1016,6 +1030,7 @@
 		"invalidAccountNumber": "Nesprávné číslo účtu",
 		"paymentGates": "Platební brány",
 		"rents": "Nájmy",
+		"billingAddress": "Fakturační adresa",
 		"testPayment": "Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.",
 		"testPaymentSuccessful": "Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.",
 		"testPaymentUnsuccessful": "Vaše testovací platba neproběhla úspěšně."
@@ -1131,7 +1146,14 @@
 			"logOut": "odhlásit",
 			"selectGarage": "Zvolte garáž",
 			"allGarages": "Všechny garáže",
-			"version": "verze"
+			"version": "verze",
+			"resrevations": "Rezervace",
+			"notifications": "Notifikace",
+			"personal": "osobní",
+			"work": "pracovní"
+		},
+		"notifications": {
+			"noNewNotifications": "Žádné nové notifikace"
 		},
 		"login": {
 			"loading": "Načítám ...",
@@ -1162,21 +1184,10 @@
 		"terms": {
 			"content": "Podmínky používání naleznete na našich webových stránkách."
 		},
-		"menu": {
-			"newNotifications": "Nová upozornění",
-			"access": "Přístup",
-			"myReservations": "Moje rezervace",
-			"guestReservations": "Pravidelný host"
-		},
-		"access": {
+		"reservation": {
 			"floor": "Podlaží",
 			"place": "Místo",
-			"noOngoingReservations": "Žádné probíhající rezervace",
-			"inSelectedGarage": "ve zvolené garáži"
-		},
-		"reservation": {
 			"garage": "Garáž",
-			"place": "Místo",
 			"begins": "Začíná",
 			"ends": "Končí"
 		},
@@ -1345,7 +1356,8 @@
 			"adminMode": "ADMIN MODE PARK-IT-DIRECTU",
 			"generator": "Generátor",
 			"news": "Novinky",
-			"finance": "Finance"
+			"finance": "Finance",
+			"garagesOverview": "Přehled garáží"
 		},
 		"users": {
 			"id": "id",
@@ -1408,6 +1420,23 @@
 			"reservation": "rezervace",
 			"noGate": "není konfigurovaná brána",
 			"noReservation": "nemá platnou rezervaci"
+		},
+		"garagesOverview": {
+			"createdAt": "Datum založení",
+			"admin": "Admin",
+			"manager": "Manager",
+			"garageName": "jméno garaže",
+			"places": "počet míst",
+			"tarif": "tarif",
+			"is_public": "go public",
+			"go_internal": "go internal",
+			"flexiplace": "flexi místo",
+			"marketing": "Marketingová stránka",
+			"third_party_integration": "Integrace 3. stran",
+			"mr_parkit_integration": "integrace MR.PARKIT",
+			"LongTerm": "LongTerm",
+			"Automation": "Automation",
+			"Integration": "Integration"
 		}
 	}
 }

@@ -14,6 +14,7 @@ export const GET_GARAGEUSERS = `query ($id: Id!) {
     admin
     receptionist
     security
+    manager
     pending
     created_at
   }

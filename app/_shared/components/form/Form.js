@@ -7,7 +7,10 @@ import styles from './Form.scss'
 
 export default class Form extends Component {
   static propTypes = {
-    children:    PropTypes.object,
+    children: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     onSubmit:    PropTypes.func.isRequired,
     onHighlight: PropTypes.func,
     onBack:      PropTypes.func,
@@ -15,7 +18,8 @@ export default class Form extends Component {
     mobile:      PropTypes.bool,
     margin:      PropTypes.bool, // margin on the bottom
     modal:       PropTypes.bool, // is in modal, so no position fixed
-    center:      PropTypes.bool // center buttons
+    center:      PropTypes.bool, // center buttons
+    home:        PropTypes.bool  // show home button instead of chevron left
   }
 
   static defaultProps = {
@@ -32,7 +36,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal, center } = this.props
+    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal, center, home } = this.props
 
     const sendReservation = () => {
       if (submitable) {
@@ -52,7 +56,7 @@ export default class Form extends Component {
       `}
     >
       {onBack && <div className={styles.floatLeft}>
-        <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={onBack} />
+        <RoundButton content={<span className={`fa fa-${home ? 'home' : 'chevron-left'}`} aria-hidden="true" />} onClick={onBack} />
       </div>}
       <div className={onBack && styles.floatRight}>
         {this.state.submited ?

@@ -177,20 +177,9 @@ h2 {
   width: calc(100% - 120px);
 }
 
-.smallInputWidth {
-  width: calc(33.33% - 43.33px);
-}
 .middleMargin {
   margin-right: 5px;
   margin-left:  5px;
-}
-
-.latLngInputWidth {
-  width: calc(50% - 2.5px);
-}
-
-.gatePhoneInputWidth {
-  width: calc(50% - 33px);
 }
 
 .rightMargin {
@@ -219,8 +208,8 @@ h2 {
 
 .phoneNumberDropdown {
   >label {
-    margin-top:    -8px;
-    margin-bottom: -5px;
+    margin-top:    3px;
+    margin-bottom: -16px;
     float:         left;
     color:         $gray;
     font-size:     13px;

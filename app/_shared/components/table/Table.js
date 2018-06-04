@@ -107,7 +107,7 @@ export default class Table extends Component {
   }
 
   filterData(data) {
-    const { schema } = this.props
+    const { schema, searchBar } = this.props
 
     const stringifyElement = obj => {
       if (typeof obj === 'object') {
@@ -123,15 +123,33 @@ export default class Table extends Component {
 
     return data.map((object, index) => ({ ...object, key: object.key || index }))
     .filter(object => {
-      if (this.state.search === '') {
-        return true
-      } else {
-        return schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
+      let show = true
+      if (this.state.search !== '') {
+        show = show && schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
           .map(value => stringifyElement(value).toString().replace(/\s\s+/g, ' ').trim()
           .toLowerCase()
           .includes(this.state.search.toLowerCase())
        ).includes(true)
       }
+      if (searchBar) {
+        show = show && Object.keys(this.state.searchBar).map(key => ({ name: key, value: this.state.searchBar[key] }))
+        .reduce((acc, filter) => {
+          const compare = () => {
+            if (typeof filter.value === 'string' && isNaN(object[filter.name])) {
+              return (object[filter.name] + '').toLowerCase().includes(filter.value.toLocaleLowerCase())
+            } else if (!isNaN(object[filter.name])) {
+              return !isNaN(filter.value) && +object[filter.name] === +filter.value
+            } else {
+              return object[filter.name] == filter.value
+            }
+          }
+          if (filter.value === '') {
+            return acc
+          }
+          return acc && compare()
+        }, true)
+      }
+      return show
     })
   }
 

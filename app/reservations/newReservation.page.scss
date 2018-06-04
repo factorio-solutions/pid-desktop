@@ -116,3 +116,31 @@
 .redText {
   color: $red;
 }
+
+.dateTimeContainer {
+  display: flex;
+  flex-direction: row;
+  // align-items: stretch;
+  &>div.leftCollumn {
+    flex: 3 3;
+    min-width: 100px;
+    margin: auto;
+    margin-left: 0px;
+    order: 1;
+  }
+  &>div.middleCollumn {
+    flex: 1 1;
+    margin: auto;
+    order: 2;
+    min-width: 15px;
+    text-align: center;
+  }
+  // TODO: Rename
+  &>div.rightCcollumn {
+    flex: 3 3;
+    min-width: 100px;
+    margin: auto;
+    order: 3;
+    margin-right: 0px;
+  }
+}
