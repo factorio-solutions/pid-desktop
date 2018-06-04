@@ -1030,6 +1030,7 @@
 		"invalidAccountNumber": "Ungültige Kontonummer",
 		"paymentGates": "DE: finance.paymentGates",
 		"rents": "Mietverhältnisse",
+		"billingAddress": "DE: finance.billingAddress",
 		"testPayment": "DE: finance.testPayment",
 		"testPaymentSuccessful": "DE: finance.testPaymentSuccessful",
 		"testPaymentUnsuccessful": "DE: finance.testPaymentUnsuccessful"
@@ -1355,7 +1356,8 @@
 			"adminMode": "netřeba překládat",
 			"generator": "netřeba překládat",
 			"news": "netřeba překládat",
-			"finance": "netřeba překládat"
+			"finance": "netřeba překládat",
+			"garagesOverview": "DE: pidAdmin.pageBase.garagesOverview"
 		},
 		"users": {
 			"id": "netřeba překládat",

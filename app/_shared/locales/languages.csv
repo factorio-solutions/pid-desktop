@@ -1235,6 +1235,7 @@ finance.accountNumber,Account number,Číslo účtu,Numer konta,Kontonummer
 finance.invalidAccountNumber,Invalid account number,Nesprávné číslo účtu,Niepoprawny numer konta,Ungültige Kontonummer
 finance.paymentGates,Payment gates,Platební brány,Bramy płatnicze,
 finance.rents,Rents,Nájmy,Wynajmy,Mietverhältnisse
+finance.billingAddress,Billing address,Fakturační adresa,,
 finance.testPayment,You can now perform a test payment to verify the correctness of the entered data.,"Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.","Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",
 finance.testPaymentSuccessful,Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.,Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.,Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.,
 finance.testPaymentUnsuccessful,Your test payment was unsuccessful.,Vaše testovací platba neproběhla úspěšně.,Transakcja próbna nie powiodła się.,
@@ -1323,8 +1324,8 @@ mobileApp.page.logOut,log out,odhlásit,Wylogować,abmelden
 mobileApp.page.selectGarage,Select garage,Zvolte garáž,Wybierz garaż,Garage auswählen
 mobileApp.page.allGarages,All garages,Všechny garáže,Wszystkie garaże,Alle Garagen
 mobileApp.page.version,version,verze,wersja,Version
-mobileApp.page.resrevations,reservations,rezervace,rezerwacje,Buchungen
-mobileApp.page.notifications,notifications,notifikace,notyfikacje,Benachrichtigungen
+mobileApp.page.resrevations,Reservations,Rezervace,Rezerwacje,Buchungen
+mobileApp.page.notifications,Notifications,Notifikace,Notyfikacje,Benachrichtigungen
 mobileApp.page.personal,personal,osobní,prywatne,Privat
 mobileApp.page.work,work,pracovní,służbowe,Arbeit
 mobileApp.notifications.noNewNotifications,No new notifications.,Žádné nové notifikace,Brak nowych notyfikacji,Keine neue Benachrichtigungen
@@ -1495,6 +1496,7 @@ pidAdmin.pageBase.adminMode,ADMIN MODE OF PARK-IT-DIRECT,ADMIN MODE PARK-IT-DIRE
 pidAdmin.pageBase.generator,Generator,Generátor,netřeba překládat,netřeba překládat
 pidAdmin.pageBase.news,News,Novinky,netřeba překládat,netřeba překládat
 pidAdmin.pageBase.finance,Finance,Finance,netřeba překládat,netřeba překládat
+pidAdmin.pageBase.garagesOverview,Garage overview,Přehled garáží,,
 pidAdmin.users.id,id,id,netřeba překládat,netřeba překládat
 pidAdmin.users.name,name,jméno,netřeba překládat,netřeba překládat
 pidAdmin.users.appVersion,app version,verze appky,netřeba překládat,netřeba překládat
