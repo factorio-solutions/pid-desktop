@@ -206,7 +206,7 @@ export function loadAddressFromIc() {
         const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
 
         dispatch(setCompanyName(res.OF))
-        dispatch(setLine1(res.AD.UC))
+        dispatch(setLine1([ res.AD.UC, res.AA.CO ].filter(o => o).join('/')))
         dispatch(setLine2(''))
         dispatch(setCity(res.AA.N))
         dispatch(setPostalCode(res.AA.PSC))
