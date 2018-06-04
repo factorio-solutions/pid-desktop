@@ -1130,8 +1130,8 @@
 			"selectGarage": "Select garage",
 			"allGarages": "All garages",
 			"version": "version",
-			"resrevations": "reservations",
-			"notifications": "notifications",
+			"resrevations": "Reservations",
+			"notifications": "Notifications",
 			"personal": "personal",
 			"work": "work"
 		},
