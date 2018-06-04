@@ -170,6 +170,9 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
       temporary
     }
     client_id
+    client {
+      is_secretary
+    }
     place{
       id
       floor{
