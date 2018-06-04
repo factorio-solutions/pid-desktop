@@ -7,17 +7,19 @@ import {
   OCCUPANCY_SET_CLIENT_ID,
   OCCUPANCY_SET_DURATION,
   OCCUPANCY_SET_FROM,
-  OCCUPANCY_SET_LOADING
+  OCCUPANCY_SET_LOADING,
+  OCCUPANCY_SET_NEW_RESERVATION
 }  from '../actions/occupancy.actions'
 
 const defaultState = {
-  garages:    [],
-  garage:     undefined,
-  clients:    [],
-  client_ids: [],
-  duration:   'week',
-  from:       moment().startOf('day'),
-  loading:    false
+  garages:        [],
+  garage:         undefined,
+  clients:        [],
+  client_ids:     [],
+  duration:       'week',
+  from:           moment().startOf('day'),
+  loading:        false,
+  newReservation: undefined
 }
 
 
@@ -73,6 +75,11 @@ export default function occupancy(state = defaultState, action) {
     case OCCUPANCY_SET_LOADING:
       return { ...state,
         loading: action.value
+      }
+
+    case OCCUPANCY_SET_NEW_RESERVATION: 
+      return { ...state,
+        newReservation: action.value
       }
 
     default:
