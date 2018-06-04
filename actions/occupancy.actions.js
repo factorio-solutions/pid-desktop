@@ -17,6 +17,7 @@ export const OCCUPANCY_SET_CLIENT_ID = 'OCCUPANCY_SET_CLIENT_ID'
 export const OCCUPANCY_SET_DURATION = 'OCCUPANCY_SET_DURATION'
 export const OCCUPANCY_SET_FROM = 'OCCUPANCY_SET_FROM'
 export const OCCUPANCY_SET_LOADING = 'OCCUPANCY_SET_LOADING'
+export const OCCUPANCY_SET_NEW_RESERVATION = 'OCCUPANCY_SET_NEW_RESERVATION'
 
 
 export const setGarages = actionFactory(OCCUPANCY_SET_GARAGES)
@@ -25,6 +26,16 @@ export const setClients = actionFactory(OCCUPANCY_SET_CLIENTS)
 export const resetClients = actionFactory(OCCUPANCY_RESET_CLIENTS)
 export const setLoading = actionFactory(OCCUPANCY_SET_LOADING)
 
+export function setNewReservation(from, to, placeId) {
+  return dispatch => {
+    dispatch({
+      type: OCCUPANCY_SET_NEW_RESERVATION,
+      from,
+      to,
+      placeId
+    })
+  }
+}
 
 export function setClientId(id) {
   return dispatch => {
