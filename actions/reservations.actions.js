@@ -31,9 +31,7 @@ export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RES
 
 export function initReservations() { // will download first 5 reservations
   window.dispatchEvent(new Event('paginatedTableUpdate'))
-  return dispatch => {
-    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
-  }
+  return () => {}
 }
 
 export function destroyReservation(id, callback) {
@@ -42,9 +40,11 @@ export function destroyReservation(id, callback) {
       if (mobile) {
         callback()
       } else {
+        dispatch(setCustomModal())
         dispatch(initReservations())
       }
     }
+    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     request(onSuccess, DESTROY_RESERVATION, { id })
   }
 }
