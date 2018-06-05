@@ -30,8 +30,8 @@ import styles from '../newReservation.page.scss'
 
 class DateTimeForm extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
     editable: PropTypes.bool
   }
 
