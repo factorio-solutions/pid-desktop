@@ -13,7 +13,7 @@ import Modal             from '../_shared/components/modal/Modal'
 import Form              from '../_shared/components/form/Form'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { setPast }        from '../_shared/actions/reservations.actions'
+import { setPast }           from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
@@ -22,10 +22,9 @@ import styles from './occupancy.page.scss'
 
 class OccupancyPage extends Component {
   static propTypes = {
-    state:        PropTypes.object,
-    pageBase:     PropTypes.object,
-    reservations: PropTypes.object,
-    actions:      PropTypes.object
+    state:    PropTypes.object,
+    pageBase: PropTypes.object,
+    actions:  PropTypes.object
   }
 
   componentDidMount() {
@@ -153,6 +152,6 @@ class OccupancyPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.occupancy, pageBase: state.pageBase, reservations: state.reservations }),
+  state => ({ state: state.occupancy, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, setPast }, dispatch) })
 )(OccupancyPage)
