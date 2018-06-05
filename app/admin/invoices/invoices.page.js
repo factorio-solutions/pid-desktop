@@ -32,14 +32,14 @@ class InvoicesPage extends Component {
     this.props.actions.initInvoices(this.props.params.id)
   }
 
-  clientSelected = index => {
+  clientSelected = client => {
     const { actions, state, pageBase } = this.props
-    const clientId = state.clients[index].id
+    const clientId = client.id
 
     actions.setClientId(clientId)
     actions.setFilteredInvoices(
       state.invoices
-      .filter(invoice => invoice.account.garage.id === pageBase.garage || pageBase.garages.find(garage => garage.garage.id === invoice.account.garage.id) === undefined)
+      // .filter(invoice => invoice.account.garage.id === pageBase.garage || pageBase.garages.find(garage => garage.garage.id === invoice.account.garage.id) === undefined)
       .filter(invoice => clientId === undefined ? true : invoice.client.id === clientId)
     )
   }
@@ -134,10 +134,10 @@ class InvoicesPage extends Component {
     ]
 
     const clientDropdown = () => {
-      return state.clients.map((client, index) => ({
+      return state.clients.map(client => ({
         label:   client.name,
         order:   client.id === undefined && 1,
-        onClick: () => this.clientSelected(index)
+        onClick: () => this.clientSelected(client)
       }))
     }
 

@@ -47,7 +47,7 @@ class NewReservationPage extends Component {
     const makeButton = (user, label, text) => {
       return {
         label,
-        text:    [ t([ 'newReservation', 'dropButtonDescrText' ]), ' ', <b>{user.full_name}</b>, ' ', text ],
+        text:    [ <b>{user.full_name}</b>, ' ', text ],
         onClick: () => { this.props.actions.downloadUser(user.id, user.rights) }
       }
     }
@@ -65,7 +65,7 @@ class NewReservationPage extends Component {
         } else {
           roleName = 'onetimeVisit'
         }
-        buttons.push(makeButton(user, [ t([ 'newReservation', 'dropButtonText' ]), ' ', <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
+        buttons.push(makeButton(user, [ <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
       } else {
         acc.push({
           label:   user.full_name,
@@ -202,7 +202,7 @@ class NewReservationPage extends Component {
 
                 {state.user &&
                 ((state.email.valid && state.phone.valid && state.carLicencePlate && state.user.id === -1) ||
-                (state.name.valid && state.carLicencePlate && state.user.id === -2) ||
+                (state.name.valid && state.user.id === -2) ||
                 state.user.id > 0) &&
                   <GarageClientForm
                     editable={!ongoing || isSecretary}
