@@ -58,12 +58,10 @@ export default class SearchField extends Component {
   )
 
   show = () => {
-    if (this.props.dropdownContent.length > 1) {
-      this.setState({
-        ...this.state,
-        show: true
-      })
-    }
+    this.setState({
+      ...this.state,
+      show: true
+    })
   }
 
   generateButtons = item => (
@@ -94,6 +92,7 @@ export default class SearchField extends Component {
 
   render() {
     const { dropdownContent, buttons, placeholder, searchQuery, onChange } = this.props
+    console.log(this.state)
 
     let list = dropdownContent.map((item, index) => {
       const onClick = () => {

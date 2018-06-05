@@ -463,20 +463,23 @@ export function downloadUser(id, rights) {
       }))
       let hideLoadingCalled = false
 
-      dispatch(setHostName(values[0].user.full_name, true))
-      dispatch(setHostPhone(values[0].user.phone, true))
-      dispatch(setHostEmail(values[0].user.email, true))
-      dispatch(setLanguage(values[0].user.language))
+      if (values[0].user) {
+        dispatch(setHostName(values[0].user.full_name, true))
+        dispatch(setHostPhone(values[0].user.phone, true))
+        dispatch(setHostEmail(values[0].user.email, true))
+        dispatch(setLanguage(values[0].user.language))
+      }
 
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
         hideLoadingCalled = true
       }
 
-      if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-        dispatch(downloadGarage(values[1].reservable_garages[0].id))
-        hideLoadingCalled = true
-      }
+      // if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
+      //   dispatch(downloadGarage(values[1].reservable_garages[0].id))
+      //   hideLoadingCalled = true
+      // }
+
       if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
         if (!hideLoadingCalled) {
