@@ -200,7 +200,10 @@ class NewReservationPage extends Component {
                   </div>
                 }
 
-                {state.user && ((state.email.valid && state.phone.valid && state.carLicencePlate) || state.user.id !== -1) &&
+                {state.user &&
+                ((state.email.valid && state.phone.valid && state.carLicencePlate && state.user.id === -1) ||
+                (state.name.valid && state.carLicencePlate && state.user.id === -2) ||
+                state.user.id > 0) &&
                   <GarageClientForm
                     editable={!ongoing || isSecretary}
                   />
