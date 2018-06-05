@@ -92,8 +92,6 @@ export default class SearchField extends Component {
 
   render() {
     const { dropdownContent, buttons, placeholder, searchQuery, onChange } = this.props
-    console.log(this.state)
-
     let list = dropdownContent.map((item, index) => {
       const onClick = () => {
         item.onClick && item.onClick()
