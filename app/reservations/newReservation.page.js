@@ -101,6 +101,14 @@ class NewReservationPage extends Component {
     this.handleBack()
   }
 
+  clearForm = () => {
+    this.props.actions.clearForm()
+    this.props.actions.setInitialStore()
+    if (this.searchField) {
+      this.searchField.filter.input.focus()
+    }
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
 
@@ -172,16 +180,23 @@ class NewReservationPage extends Component {
                 { !(state.user && (state.user.id < 0 || onetime)) &&
                   ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
                   // !state.reservation &&
-                  <SearchField
-                    editable={!ongoing || isSecretary}
-                    placeholder={t([ 'newReservation', 'selectUser' ])}
-                    dropdownContent={userDropdown.users}
-                    selected={getUserToSelect()}
-                    highlight={state.highlight}
-                    searchQuery={state.name.value}
-                    onChange={actions.setHostName}
-                    buttons={userDropdown.buttons}
-                  />
+                  <div className={styles.searchField}>
+                    <span
+                      className={styles.resetButton}
+                      onClick={this.clearForm}
+                    ><i className="fa fa-times-circle" aria-hidden="true" /></span>
+                    <SearchField
+                      editable={!ongoing || isSecretary}
+                      placeholder={t([ 'newReservation', 'selectUser' ])}
+                      dropdownContent={userDropdown.users}
+                      selected={getUserToSelect()}
+                      highlight={state.highlight}
+                      searchQuery={state.name.value}
+                      onChange={actions.setHostName}
+                      buttons={userDropdown.buttons}
+                      ref={component => this.searchField = component}
+                    />
+                  </div>
                 }
 
                 {state.user && state.user.id >= 0 &&
@@ -194,6 +209,7 @@ class NewReservationPage extends Component {
                   <NewUserForm
                     editable={!ongoing || isSecretary}
                     onetime={onetime}
+                    clearForm={this.clearForm}
                   />
                 }
                 {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid &&

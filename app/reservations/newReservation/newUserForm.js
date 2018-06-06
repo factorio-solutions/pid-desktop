@@ -16,15 +16,20 @@ import {
 
 import { AVAILABLE_LANGUAGES } from '../../routes'
 import { t }                   from '../../_shared/modules/localization/localization'
-import { languagesSelector }   from '../newReservation.page.scss'
+
+import { languagesSelector,
+         searchField,
+         resetButton
+       } from '../newReservation.page.scss'
 
 
 class NewUserForm extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object,
-    editable: PropTypes.bool,
-    onetime:  PropTypes.bool
+    state:     PropTypes.object,
+    actions:   PropTypes.object,
+    editable:  PropTypes.bool,
+    onetime:   PropTypes.bool,
+    clearForm: PropTypes.func
   }
 
   renderLanguageButton = lang => {
@@ -39,19 +44,25 @@ class NewUserForm extends Component {
   }
 
   render() {
-    const { state, actions, editable, onetime } = this.props
+    const { state, actions, editable, onetime, clearForm } = this.props
     return (
       <div>
-        <PatternInput
-          readOnly={onetime || (state.user && state.user.id > -1)}
-          onChange={actions.setHostName}
-          label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
-          error={t([ 'signup_page', 'nameInvalid' ])}
-          pattern="^(?!\s*$).+"
-          value={state.name.value}
-          highlight={state.highlight}
-          align="left"
-        />
+        <div className={searchField}>
+          <span
+            className={resetButton}
+            onClick={clearForm}
+          ><i className={`fa fa-times-circle`} aria-hidden="true" /></span>
+          <PatternInput
+            readOnly={onetime || (state.user && state.user.id > -1)}
+            onChange={actions.setHostName}
+            label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
+            error={t([ 'signup_page', 'nameInvalid' ])}
+            pattern="^(?!\s*$).+"
+            value={state.name.value}
+            highlight={state.highlight}
+            align="left"
+          />
+        </div>
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
