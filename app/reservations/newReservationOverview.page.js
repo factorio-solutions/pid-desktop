@@ -120,7 +120,7 @@ class NewReservationOverviewPage extends Component {
 
           <div>
             <h4>{t([ 'newReservationOverview', 'price' ])}</h4>
-            <div className={styles.label}>{state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price}</div>
+            <div className={styles.label}>{`${state.price || ''} (${state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : t([ 'newReservation', 'onUsersExpenses' ])})`}</div>
           </div>
 
           {(!state.client_id ||
