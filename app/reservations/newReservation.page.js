@@ -17,7 +17,9 @@ import GarageClientForm from './newReservation/garageClientForm'
 import SmsForm          from './newReservation/smsForm'
 import DateTimeForm     from './newReservation/dateTimeForm'
 import Recurring        from '../_shared/components/recurring/Recurring'
-import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
+import {
+  MOMENT_DATETIME_FORMAT
+} from '../_shared/helpers/time'
 
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
@@ -213,7 +215,7 @@ class NewReservationPage extends Component {
                     <DateTimeForm editable={!ongoing || isSecretary} />
                     {/* Place and price  */}
                     <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
-                    <Uneditable label={t([ 'newReservation', 'price' ])} value={state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : state.price || ''} />
+                    <Uneditable label={t([ 'newReservation', 'price' ])} value={`${state.price || ''} (${state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : t([ 'newReservation', 'onUsersExpenses' ])})`} />
                     {/*  Sms Part  */}
                     {state.user &&
                       <SmsForm accentRegex={ACCENT_REGEX} />
