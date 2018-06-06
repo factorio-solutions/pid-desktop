@@ -171,54 +171,56 @@ class GarageLayout extends Component {
       })
   }
 
-  colorizeGroupedPlaces(currentSvg, assignColors, floor) { // colorizes place with group with according colors
-    floor.places
+  colorizeGroupedPlaces(currentSvg, assignColors, places) { // colorizes place with group with according colors
+    places
     .filter(place => place.group)
     .forEach(place => {
       const placeRect = currentSvg.getElementById('Place' + place.label)
-      if (!Array.isArray(place.group)) { // colorize Place rect
-        placeRect && placeRect.classList.add('hasColorGroup')
-        placeRect && placeRect.setAttribute('style', `fill: ${assignColors[Array.isArray(place.group) ? place.group[0] : place.group]};`)
-      } else if (place.group.length >= 5) { // render circle with count in it
-        const center = this.calculateCenter(placeRect)
-        const y = GROUP_OFFSET_Y * 2
-        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle') // circle for count
-        circle.setAttribute('r', 18)
-        circle.setAttribute('cx', center.x)
-        circle.setAttribute('cy', center.y + y)
-        circle.setAttribute('style', 'fill: #5a5a5a;')
-        circle.classList.add('groupCircle')
-        circle.classList.add(styles.text)
-        placeRect.parentNode.appendChild(circle)
-
-        const count = document.createElementNS('http://www.w3.org/2000/svg', 'text') // text with count
-        count.setAttribute('x', center.x)
-        count.setAttribute('y', center.y + y)
-        count.setAttribute('class', `${styles.gvText} ${styles.text} groupCircle`)
-        count.setAttribute('text-anchor', 'middle')
-        count.setAttribute('style', 'fill: white;')
-        count.setAttribute('dy', '0.35em')
-        count.appendChild(document.createTextNode(place.group.length))
-        placeRect.parentNode.appendChild(count)
-      } else { // render multiple circles with coresponding colors
-        const center = this.calculateCenter(placeRect)
-        place.group.forEach((group, i, arr) => {
-          const x = (arr.length === 3 && i === 2) || arr.length === 1 ? // when count is three and group is tha last one or only one circle is being rendered
-          0 :
-          i % 2 === 0 ? // when is on the left
-          -GROUP_OFFSET_X / 2 :
-          GROUP_OFFSET_X / 2
-          const y = i >= 2 ? GROUP_OFFSET_Y * 2 : GROUP_OFFSET_Y
-
-          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-          circle.setAttribute('style', `fill: ${assignColors[group]};`)
-          circle.classList.add('groupCircle')
-          circle.classList.add('text')
-          circle.setAttribute('r', 8)
-          circle.setAttribute('cx', center.x + x)
+      if (placeRect) {
+        if (!Array.isArray(place.group)) { // colorize Place rect
+          placeRect && placeRect.classList.add('hasColorGroup')
+          placeRect && placeRect.setAttribute('style', `fill: ${assignColors[Array.isArray(place.group) ? place.group[0] : place.group]};`)
+        } else if (place.group.length >= 5) { // render circle with count in it
+          const center = this.calculateCenter(placeRect)
+          const y = GROUP_OFFSET_Y * 2
+          const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle') // circle for count
+          circle.setAttribute('r', 18)
+          circle.setAttribute('cx', center.x)
           circle.setAttribute('cy', center.y + y)
+          circle.setAttribute('style', 'fill: #5a5a5a;')
+          circle.classList.add('groupCircle')
+          circle.classList.add(styles.text)
           placeRect.parentNode.appendChild(circle)
-        })
+  
+          const count = document.createElementNS('http://www.w3.org/2000/svg', 'text') // text with count
+          count.setAttribute('x', center.x)
+          count.setAttribute('y', center.y + y)
+          count.setAttribute('class', `${styles.gvText} ${styles.text} groupCircle`)
+          count.setAttribute('text-anchor', 'middle')
+          count.setAttribute('style', 'fill: white;')
+          count.setAttribute('dy', '0.35em')
+          count.appendChild(document.createTextNode(place.group.length))
+          placeRect.parentNode.appendChild(count)
+        } else { // render multiple circles with coresponding colors
+          const center = this.calculateCenter(placeRect)
+          place.group.forEach((group, i, arr) => {
+            const x = (arr.length === 3 && i === 2) || arr.length === 1 ? // when count is three and group is tha last one or only one circle is being rendered
+            0 :
+            i % 2 === 0 ? // when is on the left
+            -GROUP_OFFSET_X / 2 :
+            GROUP_OFFSET_X / 2
+            const y = i >= 2 ? GROUP_OFFSET_Y * 2 : GROUP_OFFSET_Y
+  
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+            circle.setAttribute('style', `fill: ${assignColors[group]};`)
+            circle.classList.add('groupCircle')
+            circle.classList.add('text')
+            circle.setAttribute('r', 8)
+            circle.setAttribute('cx', center.x + x)
+            circle.setAttribute('cy', center.y + y)
+            placeRect.parentNode.appendChild(circle)
+          })
+        }
       }
     })
   }
@@ -296,7 +298,8 @@ class GarageLayout extends Component {
 
         // colorize elements with their groups
         const assignColors = assignColorsToGroups(floors)
-        if (Object.keys(assignColors).length) this.colorizeGroupedPlaces(currentSvg, assignColors, floors[floor])
+        const places = floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+        if (Object.keys(assignColors).length) this.colorizeGroupedPlaces(currentSvg, assignColors, places)
 
         // add tooltip event listeners
         this.addTooltips(currentSvg, floors[floor])

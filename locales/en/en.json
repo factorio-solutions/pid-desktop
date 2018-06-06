@@ -212,7 +212,8 @@
 		"licencePlateInvalid": "License plate",
 		"licencePlatePlaceholder": "1A2 1234",
 		"price": "Price",
-		"onClientsExpenses": "At client's expense.",
+		"onClientsExpenses": "paid by our company",
+		"onUsersExpenses": "paid by parkee",
 		"loadingGarage": "Loading garage layout ...",
 		"creatingReservation": "Making reservation ...",
 		"updatingReservation": "Updating reservation ...",
@@ -1035,9 +1036,11 @@
 		"invalidAccountNumber": "Invalid account number",
 		"paymentGates": "Payment gates",
 		"rents": "Rents",
+		"billingAddress": "Billing address",
 		"testPayment": "You can now perform a test payment to verify the correctness of the entered data.",
 		"testPaymentSuccessful": "Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.",
-		"testPaymentUnsuccessful": "Your test payment was unsuccessful."
+		"testPaymentUnsuccessful": "Your test payment was unsuccessful.",
+		"billingAddress": "Billing address"
 	},
 	"analytics": {
 		"week": "week",
@@ -1151,8 +1154,8 @@
 			"selectGarage": "Select garage",
 			"allGarages": "All garages",
 			"version": "version",
-			"resrevations": "reservations",
-			"notifications": "notifications",
+			"resrevations": "Reservations",
+			"notifications": "Notifications",
 			"personal": "personal",
 			"work": "work"
 		},

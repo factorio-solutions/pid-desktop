@@ -207,13 +207,9 @@ export function setFromTime(value) {
 
 export function formatFrom() {
   return (dispatch, getState) => {
-    let fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
+    const fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
     let toValue = null
-    const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
 
-    if (fromValue.diff(now, 'minutes') < 0) { // cannot create reservations in the past
-      fromValue = now
-    }
 
     if (moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT).isValid() &&
         moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
@@ -249,7 +245,7 @@ export function setToDate(value) {
 
 export function setToTime(value) {
   return (dispatch, getState) => {
-    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const to = moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT)
     const toTime = moment(value, MOMENT_TIME_FORMAT)
     const fromValue = null
     to.set('hour', toTime.get('hour'))
@@ -319,12 +315,6 @@ export function setPrice() {
 export function toggleHighlight() {
   return (dispatch, getState) => {
     dispatch(setHighlight(!getState().newReservation.highlight))
-  }
-}
-
-export function beginsToNow() {
-  return dispatch => {
-    dispatch(setFrom(roundTime(moment())))
   }
 }
 
@@ -472,23 +462,24 @@ export function downloadUser(id, rights) {
         rights // Client user rights
       }))
       let hideLoadingCalled = false
-      if (values[0].user && !values[0].user.last_active) {
+
+      if (values[0].user) {
         dispatch(setHostName(values[0].user.full_name, true))
         dispatch(setHostPhone(values[0].user.phone, true))
         dispatch(setHostEmail(values[0].user.email, true))
         dispatch(setLanguage(values[0].user.language))
-        hideLoading(dispatch)
-        hideLoadingCalled = true
       }
+
       if (getState().newReservation.reservation) { // download garage
         dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
         hideLoadingCalled = true
+      }
 
-      }
-      if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-        dispatch(downloadGarage(values[1].reservable_garages[0].id))
-        hideLoadingCalled = true
-      }
+      // if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
+      //   dispatch(downloadGarage(values[1].reservable_garages[0].id))
+      //   hideLoadingCalled = true
+      // }
+
       if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
         if (!hideLoadingCalled) {
@@ -555,11 +546,12 @@ export function downloadGarage(id) {
 
       garage.floors.forEach(floor => {
         floor.places.map(place => {
-          if (state.reservation && state.reservation.ongoing) { // if ongoing reservation - only selected place might be available
-            place.available = floor.free_places.find(p => p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
-          } else {
-            place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
-          }
+          // if (state.reservation && state.reservation.ongoing) { // if ongoing reservation - only selected place might be available
+          //   place.available = floor.free_places.find(p => p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
+          // } else {
+          //   place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
+          // }
+          place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
 
           if (place.available && place.pricing) { // add tooltip to available places
             if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
@@ -658,16 +650,16 @@ export function submitReservation(id) {
       request(onSuccess
              , id ? UPDATE_RESERVATION : CREATE_RESERVATION
              , { reservation: {
-               user_id:                  ongoing ? undefined : user_id,
+               user_id:                  user_id,
                note:                     state.note ? state.note : undefined,
-               place_id:                 ongoing ? undefined : state.place_id,
+               place_id:                 state.place_id,
                garage_id:                state.garage.id,
-               client_id:                ongoing ? undefined : state.client_id,
+               client_id:                state.client_id,
                paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
-               car_id:                   ongoing ? undefined : state.car_id,
-               licence_plate:            ongoing ? undefined : state.carLicencePlate === '' ? undefined : state.carLicencePlate,
+               car_id:                   state.car_id,
+               licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
                url:                      ongoing ? undefined : window.location.href.split('?')[0],
-               begins_at:                ongoing ? undefined : timeToUTC(state.from),
+               begins_at:                timeToUTC(state.from),
                ends_at:                  timeToUTC(state.to),
                recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
                recurring_reservation_id: state.recurring_reservation_id,
@@ -681,50 +673,61 @@ export function submitReservation(id) {
              )
     }
 
-    if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
-      requestPromise(USER_AVAILABLE, {
-        user: {
-          email:     state.email.value.toLowerCase(),
-          full_name: state.name.value,
-          phone:     state.phone.value.replace(/\s/g, ''),
-          language:  state.language,
-          onetime:   state.user.id === -2
-        },
-        client_user: state.client_id && state.user.id === -1 ? {
-          client_id: +state.client_id,
-          ...state.user.rights,
-          message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
-        } : null
-      }).then(data => {
-        if (data.user_by_email !== null) { // if the user exists
-          // invite to client
-          if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
-            requestPromise(ADD_CLIENT_USER, {
-              user_id:     data.user_by_email.id,
-              client_user: {
-                client_id: +state.client_id,
-                ...state.user.rights,
-                message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
-              }
-            }).then(response => {
-              console.log('client successfully created', response)
+    const sendNewReservationRequest = () => {
+      if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
+        requestPromise(USER_AVAILABLE, {
+          user: {
+            email:     state.email.value.toLowerCase(),
+            full_name: state.name.value,
+            phone:     state.phone.value.replace(/\s/g, ''),
+            language:  state.language,
+            onetime:   state.user.id === -2
+          },
+          client_user: state.client_id && state.user.id === -1 ? {
+            client_id: +state.client_id,
+            ...state.user.rights,
+            message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
+          } : null
+        }).then(data => {
+          if (data.user_by_email !== null) { // if the user exists
+            // invite to client
+            if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
+              requestPromise(ADD_CLIENT_USER, {
+                user_id:     data.user_by_email.id,
+                client_user: {
+                  client_id: +state.client_id,
+                  ...state.user.rights,
+                  message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
+                }
+              }).then(response => {
+                console.log('client successfully created', response)
+                createTheReservation(data.user_by_email.id)
+              })
+            } else { // no client selected, create reservation
               createTheReservation(data.user_by_email.id)
-            })
-          } else { // no client selected, create reservation
-            createTheReservation(data.user_by_email.id)
+            }
+          } else { // user is current user
+            createTheReservation()
           }
-        } else { // user is current user
-          createTheReservation()
-        }
-      })
-    } else { // create reservation as normal
-      createTheReservation(state.user.id)
+        })
+      } else { // create reservation as normal
+        createTheReservation(state.user.id)
+      }
+    }
+
+    // check if reservation is being created in the past - warn user about it
+    const fromValue = moment(roundTime(state.from), MOMENT_DATETIME_FORMAT)
+    const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
+    if (fromValue.diff(now, 'minutes') < 0) {
+      dispatch(pageBaseActions.confirm(t([ 'newReservation', 'creatingReservationInPast' ]), sendNewReservationRequest))
+    } else {
+      sendNewReservationRequest()
     }
   }
 }
 
 export function paymentUnsucessfull() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(pageBaseActions.setError(t([ 'newReservation', 'paymentUnsucessfull' ])))
     nav.to('/reservations')
   }

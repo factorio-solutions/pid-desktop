@@ -11,7 +11,7 @@ import { confirm } from '../../actions/pageBase.actions'
 // question = text of confirm window when type == 'remove'
 
 
-function Button({ content, onClick, onDisabledClick, type, state, style, question, confirm }) {
+function Button({ content, onClick, onDisabledClick, type, state, style, question, confirm, onMouseDown }) {
   const handleClick = e => {
     e.stopPropagation()
     if (typeof onClick === 'function') { // if no fuction, do nothing
@@ -25,7 +25,7 @@ function Button({ content, onClick, onDisabledClick, type, state, style, questio
   }
 
   return (
-    <button className={style} onClick={state === 'disabled' ? onDisabledClick : handleClick} type="button">{content}</button>
+    <button className={style} type="button" onClick={state === 'disabled' ? onDisabledClick : handleClick} onMouseDown={state === 'disabled' ? onDisabledClick : onMouseDown}>{content}</button>
   )
 }
 

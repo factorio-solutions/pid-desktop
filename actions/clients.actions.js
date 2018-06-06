@@ -1,6 +1,9 @@
+import moment from 'moment'
+
 import { request } from '../helpers/request'
 
 import { GET_CLIENTS, GARAGE_CONTRACTS } from '../queries/clients.queries'
+
 
 export const SET_CLIENTS = 'SET_CLIENTS_CLIENTS_PAGE'
 export const SET_GARAGE_CONTRACTS = 'SET_GARAGE_CONTRACTS'
@@ -19,12 +22,19 @@ export function setGarageContracts(value) {
 }
 
 
+function currentContracts(contract) {
+  return moment().isBetween(moment(contract.from), moment(contract.to))
+}
+
 export function initClients() {
   return dispatch => {
     const onSuccess = response => {
       dispatch(setClients(response.data.clients.map(client => ({
         ...client,
-        userOfClient: true
+        userOfClient: true,
+        place_count:  client.contracts
+          .filter(currentContracts)
+          .reduce((acc, contract) => acc + contract.place_count, 0)
       }))))
     }
     request(onSuccess, GET_CLIENTS)
@@ -35,8 +45,19 @@ export function initGarageContracts() {
   return (dispatch, getState) => {
     const onSuccess = response => {
       const uniqueClients = response.data.garage.contracts.reduce((acc, contract) => {
-        if (!acc.hasOwnProperty(contract.client.id)) acc[contract.client.id] = { ...contract.client, userOfClient: false, is_admin: false, contracts: [] }
+        if (!acc.hasOwnProperty(contract.client.id)) {
+          acc[contract.client.id] = {
+            ...contract.client,
+            userOfClient: false,
+            is_admin:     false,
+            contracts:    [],
+            place_count:  0
+          }
+        }
         acc[contract.client.id].contracts.push(contract)
+        if (currentContracts(contract)) {
+          acc[contract.client.id].place_count += contract.place_count
+        }
         return acc
       }, [])
 
