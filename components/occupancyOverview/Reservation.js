@@ -33,6 +33,7 @@ class Reservation extends Component {
   }
 
   onReservationClick = () => this.props.onClick(this.props.reservation)
+  onReservationMouseDown = event => event.stopPropagation() // place blocked by reservation - dont propagate event
 
   mouseEnter = e => {
     this.setState({
@@ -87,7 +88,15 @@ class Reservation extends Component {
 
     return (
       <div>
-        <div onMouseEnter={this.mouseEnter} onMouseMove={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
+        <div
+          onMouseEnter={this.mouseEnter}
+          onMouseMove={this.mouseEnter}
+          onMouseLeave={this.mouseLeave}
+          onMouseDown={this.onReservationMouseDown}
+          className={classes}
+          style={style}
+          onClick={this.onReservationClick}
+        >
           <span>{text}</span>
         </div>
         {this.state.visible && <Tooltip
