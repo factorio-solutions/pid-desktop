@@ -10,6 +10,7 @@ import { getTextWidth14px }           from '../../helpers/estimateTextWidth'
 import { setNewReservation }          from '../../actions/occupancy.actions'
 
 import styles from './OccupancyOverview.scss'
+import { RESERVATION_INTERUPTION_FORMAT_FROM } from '../../actions/reservationInteruption.actions';
 
 
 class Place extends Component {
@@ -61,29 +62,55 @@ class Place extends Component {
     })
   }
 
-  onMouseMove = event => this.setState({
-    ...this.state,
-    width: event.clientX - this.td.getBoundingClientRect().left - this.state.left
-  })
+  onMouseMove = event => {
+    if (this.state.mouseDown) {
+      const newWidth = event.clientX - this.td.getBoundingClientRect().left - this.state.left
+      const range = this.calculateReservationFromDiv(undefined, newWidth)
+      const reservations = this.reservationsInRange(range.beginsAt, range.endsAt)
+
+      if (!reservations.length) {
+        this.setState({
+          ...this.state,
+          width: event.clientX - this.td.getBoundingClientRect().left - this.state.left
+        })
+      }
+    }
+  }
 
   onMouseUp = () => {
+    if (this.newReservationDiv) {
+      const range = this.calculateReservationFromDiv()
+      const reservations = this.reservationsInRange(range.beginsAt, range.endsAt)
+
+      this.props.actions.setNewReservation(
+        range.beginsAt,
+        reservations.length ? moment(reservations[0].begins_at) : range.endsAt,
+        this.props.place.id
+      )
+    }
+
+    this.setState({ ...this.state, mouseDown: false })
+  }
+
+  reservationsInRange = (from, to) => this.props.place.reservations
+    .filter(reservation => from.isBefore(moment(reservation.ends_at)))
+    .filter(reservation => to.isAfter(moment(reservation.begins_at)))
+    .sort((a, b) => moment(a.begins_at).diff(moment(b.begins_at)))
+
+  calculateReservationFromDiv = (left, width) => {
     if (this.newReservationDiv) {
       const { from, duration } = this.props
       const divDimensions = this.newReservationDiv.getBoundingClientRect()
       const dur = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS) // in days
       const rowWidth = this.td.parentElement.getBoundingClientRect().width - this.td.parentElement.children[0].getBoundingClientRect().width
-      const reservationStart = (divDimensions.left - this.td.getBoundingClientRect().left) / (rowWidth / dur)
-      const reservationDuration = divDimensions.width / (rowWidth / dur)
+      const reservationStart = ((left || divDimensions.left) - this.td.getBoundingClientRect().left) / (rowWidth / dur)
+      const reservationDuration = (width || divDimensions.width) / (rowWidth / dur)
       const beginsAt = from.clone().add(reservationStart * 24, 'hours')
       const endsAt = beginsAt.clone().add(reservationDuration * 24, 'hours')
 
-      this.props.actions.setNewReservation(
-        beginsAt,
-        endsAt,
-        this.props.place.id
-      )
+      return { beginsAt, endsAt }
     }
-    this.setState({ ...this.state, mouseDown: false })
+    return {}
   }
 
   isForCurrentUser = reservation => {

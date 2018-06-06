@@ -38,6 +38,8 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
   NEW_RESERVATION_SET_PAYMENT_METHOD,
+  NEW_RESERVATION_SET_PREFERED_GARAGE_ID,
+  NEW_RESERVATION_SET_PREFERED_PLACE_ID,
 
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
@@ -79,7 +81,9 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod: ''
+  paymentMethod:    '',
+  preferedGarageId: undefined,
+  preferedPlaceId:  undefined
 }
 
 function placeLabel(state) {
@@ -321,6 +325,17 @@ export default function newReservation(state = defaultState, action) {
         paymentMethod: action.value
       }
 
+    case NEW_RESERVATION_SET_PREFERED_GARAGE_ID:
+      return {
+        ...state,
+        preferedGarageId: action.value
+      }
+
+    case NEW_RESERVATION_SET_PREFERED_PLACE_ID:
+      return {
+        ...state,
+        preferedPlaceId: action.value
+      }
 
     case NEW_RESERVATION_CLEAR_FORM:
       return defaultState

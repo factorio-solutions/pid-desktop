@@ -68,6 +68,8 @@ export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_T
 export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
 export const NEW_RESERVATION_SET_PAYMENT_METHOD = 'NEW_RESERVATION_SET_PAYMENT_METHOD'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
+export const NEW_RESERVATION_SET_PREFERED_GARAGE_ID = 'NEW_RESERVATION_SET_PREFERED_GARAGE_ID'
+export const NEW_RESERVATION_SET_PREFERED_PLACE_ID = 'NEW_RESERVATION_SET_PREFERED_PLACE_ID'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -89,6 +91,8 @@ export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
+export const setPreferedGarageId = actionFactory(NEW_RESERVATION_SET_PREFERED_GARAGE_ID)
+export const setPreferedPlaceId = actionFactory(NEW_RESERVATION_SET_PREFERED_PLACE_ID)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -96,6 +100,7 @@ export const setHostPhone = patternInputActionFactory(NEW_RESERVATION_SET_HOST_P
 export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_EMAIL)
 
 const hideLoading = dispatch => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
+
 
 export function setUser(value) {
   return (dispatch, getState) => {
@@ -216,7 +221,8 @@ export function formatFrom() {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)
     }
 
-    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+    dispatch({
+      type:  NEW_RESERVATION_SET_FROM,
       value: fromValue.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
@@ -235,9 +241,10 @@ export function setToDate(value) {
     to.set('year', toDate.get('year'))
     to.set('month', toDate.get('month'))
     to.set('date', toDate.get('date'))
-    dispatch({ type:  NEW_RESERVATION_SET_TO,
-      value:   to.format(MOMENT_DATETIME_FORMAT),
-      from:    fromValue
+    dispatch({
+      type:  NEW_RESERVATION_SET_TO,
+      value: to.format(MOMENT_DATETIME_FORMAT),
+      from:  fromValue
     })
     dispatch(formatTo())
   }
@@ -250,7 +257,8 @@ export function setToTime(value) {
     const fromValue = null
     to.set('hour', toTime.get('hour'))
     to.set('minute', toTime.get('minute'))
-    dispatch({ type:  NEW_RESERVATION_SET_TO,
+    dispatch({
+      type:  NEW_RESERVATION_SET_TO,
       value: to.format(MOMENT_DATETIME_FORMAT),
       from:  fromValue
     })
@@ -267,7 +275,8 @@ export function formatTo() {
       toValue = fromValue.add(MIN_RESERVATION_DURATION, 'minutes')
     }
 
-    dispatch({ type:  NEW_RESERVATION_SET_TO,
+    dispatch({
+      type:  NEW_RESERVATION_SET_TO,
       value: toValue.format(MOMENT_DATETIME_FORMAT)
     })
 
@@ -401,14 +410,15 @@ export function setInitialStore(id) {
         dispatch(setTo(moment(values[1].reservation.ends_at).format(MOMENT_DATETIME_FORMAT)))
         dispatch(setPlace(values[1].reservation.place))
       } else {
+        const state = getState().newReservation
         dispatch(setReservation(undefined))
-        dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
-        dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
+        !state.from && dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
+        !state.to && dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
         dispatch(formatFrom())
         dispatch(formatTo())
         if (users.length === 1) {
           dispatch(downloadUser(users[0].id, undefined, hideLoading))
-        } else {  
+        } else {
           hideLoading(dispatch)
         }
       }

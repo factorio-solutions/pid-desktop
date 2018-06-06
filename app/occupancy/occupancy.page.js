@@ -12,19 +12,21 @@ import RoundButton       from '../_shared/components/buttons/RoundButton'
 import Modal             from '../_shared/components/modal/Modal'
 import Form              from '../_shared/components/form/Form'
 
-import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { setPast }           from '../_shared/actions/reservations.actions'
-import { t }                 from '../_shared/modules/localization/localization'
-import * as nav              from '../_shared/helpers/navigation'
+import * as OccupancyActions      from '../_shared/actions/occupancy.actions'
+import * as newReservationActions from '../_shared/actions/newReservation.actions'
+import { setPast }                from '../_shared/actions/reservations.actions'
+import { t }                      from '../_shared/modules/localization/localization'
+import * as nav                   from '../_shared/helpers/navigation'
 
 import styles from './occupancy.page.scss'
 
 
 class OccupancyPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    pageBase: PropTypes.object,
-    actions:  PropTypes.object
+    state:                 PropTypes.object,
+    pageBase:              PropTypes.object,
+    actions:               PropTypes.object,
+    newReservationActions: PropTypes.object
   }
 
   componentDidMount() {
@@ -38,7 +40,17 @@ class OccupancyPage extends Component {
 
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
 
-  submitNewReservation = () => console.log('TODO: go to new reservation form')
+  submitNewReservation = () => {
+    const { state, newReservationActions } = this.props
+    newReservationActions.clearForm()
+    nav.to('/reservations/newReservation')
+    this.props.actions.unsetNewReservation()
+
+    newReservationActions.setFrom(state.newReservation.from)
+    newReservationActions.setTo(state.newReservation.to)
+    newReservationActions.setPreferedGarageId(state.garage.id)
+    newReservationActions.setPreferedPlaceId(state.newReservation.placeId)
+  }
 
   render() {
     const { state, pageBase, actions } = this.props
@@ -153,5 +165,8 @@ class OccupancyPage extends Component {
 
 export default connect(
   state => ({ state: state.occupancy, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, setPast }, dispatch) })
+  dispatch => ({
+    actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
+    newReservationActions: bindActionCreators(newReservationActions, dispatch)
+  })
 )(OccupancyPage)
