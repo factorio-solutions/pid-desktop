@@ -1034,7 +1034,8 @@
 		"billingAddress": "Billing address",
 		"testPayment": "You can now perform a test payment to verify the correctness of the entered data.",
 		"testPaymentSuccessful": "Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.",
-		"testPaymentUnsuccessful": "Your test payment was unsuccessful."
+		"testPaymentUnsuccessful": "Your test payment was unsuccessful.",
+		"billingAddress": "Billing address"
 	},
 	"analytics": {
 		"week": "week",
