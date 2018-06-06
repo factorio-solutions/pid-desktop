@@ -27,15 +27,20 @@ export default class Swipe extends Component {
     }
   }
 
-  onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
+  onDragOrMoveStart = event => {
+    console.log('drag started!')
+    this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
+  }
 
   onDragOrMove = event => {
+    console.log('drag is moving!')
     const screenPosition = this.positionFromEvent(event)
     const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
 
   onDragOrMoveEnd = event => {
+    console.log('drag is ended!')
     if (this.state.sliderPosition / this.maxSliderLeft() > 0.95) {
       this.props.onSwipe()
       this.setState({ ...this.state, swiped: true, sliderPosition: this.maxSliderLeft() })
