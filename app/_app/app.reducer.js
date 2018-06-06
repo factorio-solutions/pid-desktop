@@ -56,6 +56,7 @@ import adminGoInternal            from '../_shared/reducers/admin.goInternal.red
 import adminFlexiplace            from '../_shared/reducers/admin.flexiplace.reducer'
 import adminThirdPartyIntegration from '../_shared/reducers/admin.thirdPartyIntegration.reducer'
 import adminFinance               from '../_shared/reducers/admin.finance.reducer'
+import adminBillingAddress        from '../_shared/reducers/admin.billingAddress.reducer'
 import adminActivityLog           from '../_shared/reducers/admin.activityLog.reducer'
 
 import pidAdminGenerator       from '../_shared/reducers/pid-admin.generator.reducer'
@@ -122,6 +123,7 @@ const appReducer = combineReducers({
   adminFlexiplace,
   adminThirdPartyIntegration,
   adminFinance,
+  adminBillingAddress,
   adminActivityLog,
 
   pidAdminGenerator,

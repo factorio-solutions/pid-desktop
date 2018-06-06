@@ -30,9 +30,9 @@ import styles from '../newReservation.page.scss'
 
 class DateTimeForm extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
-    ongoing: PropTypes.bool
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    editable: PropTypes.bool
   }
 
   handleDuration = () => this.props.actions.setDurationDate(true)
@@ -51,7 +51,7 @@ class DateTimeForm extends Component {
   showRecurring = () => this.props.actions.setShowRecurring(true)
 
   render() {
-    const { state, actions, ongoing } = this.props
+    const { state, actions, editable } = this.props
 
     const beginsInlineMenu = <span className={styles.clickable} onClick={actions.beginsToNow}>{t([ 'newReservation', 'now' ])}</span>
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
@@ -61,7 +61,7 @@ class DateTimeForm extends Component {
         <div className={styles.dateTimeContainer}>
           <div className={styles.leftCollumn}>
             <Dateinput
-              editable={!ongoing}
+              editable={editable}
               onBlur={actions.formatFrom}
               onChange={actions.setFromDate}
               label={t([ 'newReservation', 'begins' ])}
@@ -70,7 +70,7 @@ class DateTimeForm extends Component {
               inlineMenu={beginsInlineMenu}
             />
             <TimeInput
-              editable={!ongoing}
+              editable={editable}
               onBlur={actions.formatFrom}
               onChange={actions.setFromTime}
               label={t([ 'newReservation', 'begins' ])}

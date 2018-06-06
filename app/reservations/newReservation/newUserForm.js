@@ -21,10 +21,10 @@ import { languagesSelector }   from '../newReservation.page.scss'
 
 class NewUserForm extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
-    ongoing: PropTypes.bool,
-    onetime: PropTypes.bool
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    editable: PropTypes.bool,
+    onetime:  PropTypes.bool
   }
 
   renderLanguageButton = lang => {
@@ -39,7 +39,7 @@ class NewUserForm extends Component {
   }
 
   render() {
-    const { state, actions, ongoing, onetime } = this.props
+    const { state, actions, editable, onetime } = this.props
     return (
       <div>
         <PatternInput
@@ -73,7 +73,7 @@ class NewUserForm extends Component {
           align="left"
         />
         <Input
-          readOnly={ongoing}
+          readOnly={!editable}
           onChange={actions.setCarLicencePlate}
           value={state.carLicencePlate}
           label={t([ 'newReservation', 'licencePlate' ])}

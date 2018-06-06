@@ -12,9 +12,9 @@ import { t } from '../../_shared/modules/localization/localization'
 
 class ExistingUserForm extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
-    ongoing: PropTypes.bool
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    editable: PropTypes.bool
   }
 
   carDropdown = () => {
@@ -26,21 +26,21 @@ class ExistingUserForm extends Component {
   }
 
   render() {
-    const { state, actions, ongoing } = this.props
+    const { state, actions, editable } = this.props
     return (
       <div>
-        {state.reservation &&
+        { /* state.reservation && !editable &&
           <Input
-            readOnly="true"
+            readOnly
             value={state.user.full_name}
             type="text"
             align="left"
             label={t([ 'newReservation', 'userName' ])}
-          />
+          /> */
         }
         { state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
           <Input
-            readOnly={ongoing}
+            readOnly={!editable}
             onChange={actions.setCarLicencePlate}
             value={state.carLicencePlate}
             label={t([ 'newReservation', 'licencePlate' ])}
@@ -51,7 +51,7 @@ class ExistingUserForm extends Component {
             highlight={state.highlight && state.user.id !== -2}
           /> :
           <Dropdown
-            editable={!ongoing}
+            editable={editable}
             label={t([ 'newReservation', 'selectCar' ])}
             content={this.carDropdown()}
             selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}

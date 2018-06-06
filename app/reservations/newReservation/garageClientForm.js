@@ -15,13 +15,22 @@ import { t } from '../../_shared/modules/localization/localization'
 
 class GarageClientForm extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
-    ongoing: PropTypes.bool
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    editable: PropTypes.bool
+  }
+
+  componentDidMount() {
+    const { state, actions } = this.props
+    // set garage if there is only one
+    if (state.user && state.user.availableGarages.length) {
+      actions.downloadGarage(state.user.availableGarages[0].id)
+    }
   }
 
   garageDropdown = () => {
     const { state, actions } = this.props
+
     return (state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => ({
       label:   garage.name,
       onClick: () => actions.downloadGarage(state.user.availableGarages[index].id)
@@ -38,14 +47,15 @@ class GarageClientForm extends Component {
   }
 
   render() {
-    const { state, actions, ongoing } = this.props
+    const { state, actions, editable } = this.props
 
     const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
     const selectedPlace = places.findById(state.place_id)
+
     return (
       <div>
         <Dropdown
-          editable={!ongoing}
+          editable={editable}
           label={t([ 'newReservation', 'selectGarage' ])}
           content={this.garageDropdown()}
           selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
@@ -55,7 +65,7 @@ class GarageClientForm extends Component {
         />
         {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
           <Dropdown
-            editable={!ongoing}
+            editable={editable}
             label={t([ 'newReservation', 'selectClient' ])}
             content={this.clientDropdown()}
             selected={state.user.availableClients.findIndexById(state.client_id)}
@@ -81,8 +91,8 @@ class GarageClientForm extends Component {
 
 export default connect(
   state => {
-    const { user, highlight, paidByHost, garage, client_id } = state.newReservation
-    return { state: { user, highlight, paidByHost, garage, client_id } }
+    const { user, highlight, paidByHost, garage, client_id, place_id } = state.newReservation
+    return { state: { user, highlight, paidByHost, garage, client_id, place_id } }
   },
   dispatch => ({ actions: bindActionCreators(
     { downloadGarage,
