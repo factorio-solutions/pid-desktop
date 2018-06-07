@@ -146,9 +146,7 @@ export function refreshLogin(callback, errorCallback) {
         callback && callback(result)
         dispatch(resetLoginForm())
       } else {
-        console.log('TOKEN REVOKED, remove store')
-        dispatch(resetStore())
-        delete localStorage.jwt
+        localStorage.refresh_token && dispatch(logout())
         delete localStorage.refresh_token
         errorCallback && errorCallback()
       }
@@ -156,7 +154,7 @@ export function refreshLogin(callback, errorCallback) {
 
     const currentUser = getState().mobileHeader.current_user
     const onError = () => console.log('Error while refreshing token')
-    localStorage.refresh_token && request(
+    request(
       success,
       LOGIN_USER,
       { refresh_token:      localStorage.refresh_token,
