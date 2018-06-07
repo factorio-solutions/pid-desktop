@@ -77,7 +77,7 @@ export default class Swipe extends Component {
           <div><i className="fa fa-lock" aria-hidden="true" /></div>
           <div>{error || label}</div>
           <div><i className="fa fa-unlock-alt" aria-hidden="true" /></div>
-  
+
           <div
             className={`${styles.slider}
               ${this.state.swiped && !this.state.reseting && success === undefined && styles.rotating}
@@ -85,7 +85,7 @@ export default class Swipe extends Component {
             `}
             style={{ left: `${this.state.sliderPosition}px` }}
             ref={this.createDimensionsRef('sliderDimensions')}
-  
+
             onDragStart={this.onDragOrMoveStart}
             onTouchStart={this.onDragOrMoveStart}
             onDrag={this.onDragOrMove}
