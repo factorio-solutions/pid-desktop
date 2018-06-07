@@ -90,6 +90,12 @@ $swiper-transition-length: .3s;
   }
 }
 
+.button {
+  >button {
+    width: 100%;
+  }
+}
+
 .rotating {
   @include rotating(2s);
 

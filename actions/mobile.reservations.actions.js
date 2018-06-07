@@ -185,7 +185,10 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
       ble.setPassword(pwd);
 
       (!device ?
-      ble.intialize().then(() => ble.scan(name)).then(onDeviceFound) :
+      ble.intialize()
+      .catch(() => logError('Bluetooth not enabled'))
+      .then(() => ble.scan(name))
+      .then(onDeviceFound) :
       ble.connect(device.address))
       .then(() => ble.write(device.address, isRepeater, onOpen))
       .then(() => ble.close(device.address))
@@ -206,7 +209,7 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
 //     .catch(message => console.log('scan stop unsucessfull', message))
 //   }
 // }
-//
+
 // export function startScanning(back) {
 //   return dispatch => {
 //     if (window.bluetoothle) {
@@ -217,7 +220,7 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
 //           console.log('found device', result)
 //           result.name && dispatch(setBleDevice(result)) // only add device if has name
 //         }
-//
+
 //         ble.scanUnlimited(onDeviceFound, logError)
 //       })
 //       .catch(() => {

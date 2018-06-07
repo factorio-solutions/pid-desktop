@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+import CallToActionButton from '../buttons/CallToActionButton'
+
 import styles from './Swipe.scss'
 
 
@@ -68,38 +70,50 @@ export default class Swipe extends Component {
   render() {
     const { label, success, error } = this.props
 
-    return (
-      <div
-        className={`${styles.swipe}
-          ${this.state.swiped && success === true && styles.swipedSuccess}
-          ${this.state.swiped && success === false && styles.swipedError}
-        `}
-        ref={this.createDimensionsRef('trackDimensions')}
-      >
-        <div><i className="fa fa-lock" aria-hidden="true" /></div>
-        <div>{error || label}</div>
-        <div><i className="fa fa-unlock-alt" aria-hidden="true" /></div>
-
+    if ('ontouchstart' in document.documentElement) {
+      return (
         <div
-          className={`${styles.slider}
-            ${this.state.swiped && !this.state.reseting && success === undefined && styles.rotating}
-            ${this.state.reseting && styles.isReseting}
+          className={`${styles.swipe}
+            ${this.state.swiped && success === true && styles.swipedSuccess}
+            ${this.state.swiped && success === false && styles.swipedError}
           `}
-          style={{ left: `${this.state.sliderPosition}px` }}
-          ref={this.createDimensionsRef('sliderDimensions')}
-
-          onDragStart={this.onDragOrMoveStart}
-          onTouchStart={this.onDragOrMoveStart}
-          onDrag={this.onDragOrMove}
-          onTouchMove={this.onDragOrMove}
-          onTouchEnd={this.onDragOrMoveEnd}
-          onDragEnd={this.onDragOrMoveEnd}
+          ref={this.createDimensionsRef('trackDimensions')}
         >
-          <div>
-            <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
+          <div><i className="fa fa-lock" aria-hidden="true" /></div>
+          <div>{error || label}</div>
+          <div><i className="fa fa-unlock-alt" aria-hidden="true" /></div>
+
+          <div
+            className={`${styles.slider}
+              ${this.state.swiped && !this.state.reseting && success === undefined && styles.rotating}
+              ${this.state.reseting && styles.isReseting}
+            `}
+            style={{ left: `${this.state.sliderPosition}px` }}
+            ref={this.createDimensionsRef('sliderDimensions')}
+
+            onDragStart={this.onDragOrMoveStart}
+            onTouchStart={this.onDragOrMoveStart}
+            onDrag={this.onDragOrMove}
+            onTouchMove={this.onDragOrMove}
+            onTouchEnd={this.onDragOrMoveEnd}
+            onDragEnd={this.onDragOrMoveEnd}
+          >
+            <div>
+              <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
+            </div>
           </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div className={`${styles.button}`}>
+          <CallToActionButton
+            label={error || label}
+            onClick={this.props.onSwipe}
+            type={success === undefined ? '' : success ? 'success' : 'remove'}
+          />
+        </div>
+      )
+    }
   }
 }
