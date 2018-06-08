@@ -50,7 +50,7 @@ class NewReservationPage extends Component {
       return {
         label,
         text:    [ <b>{user.full_name}</b>, ' ', text ],
-        onClick: () => { this.props.actions.downloadUser(user.id, user.rights) }
+        onClick: () => this.props.actions.downloadUser(user.id, user.rights)
       }
     }
 
