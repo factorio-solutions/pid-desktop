@@ -4,12 +4,14 @@ import { t }                from '../modules/localization/localization'
 import * as ble             from '../modules/ble/ble'
 import { setCustomModal }   from './pageBase.actions'
 import { hideSplashscreen } from './mobile.header.actions'
+import { logout }           from './login.actions'
 
 import {
   MOBILE_GET_RESERVATIONS_QUERY,
   MOBILE_ACCESS_OPEN_GATE,
   MOBILE_ACCESS_LOG_ACCESS
 } from '../queries/mobile.reservations.queries'
+
 
 
 export const RESERVATIONS_PER_PAGE = 10
@@ -69,7 +71,9 @@ export function initReservations() {
 
       dispatch(setCustomModal())
       dispatch(hideSplashscreen())
-    })
+    }).catch(
+      e => dispatch(logout())
+    )
   }
 }
 

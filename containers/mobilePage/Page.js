@@ -69,7 +69,9 @@ export class Page extends Component {
     !hideHeader && !hideDropdown && actions.initGarages()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
-    actions.hideSplashscreen()
+
+    console.log('hide splashscreen')
+    // actions.hideSplashscreen()
   }
 
   componentWillReceiveProps(newProps) {
