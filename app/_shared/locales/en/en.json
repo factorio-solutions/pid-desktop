@@ -274,7 +274,8 @@
 		"monthlyTotal": "monthly total",
 		"invoices": "invoices",
 		"currentAgreements": "Active agreements:",
-		"oldAgreements": "Old agreements:"
+		"oldAgreements": "Old agreements:",
+		"modules": "Modules"
 	},
 	"clientUsers": {
 		"name": "username",

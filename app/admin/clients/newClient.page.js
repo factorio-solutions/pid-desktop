@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import Input             from '../../_shared/components/input/Input'
-import Form              from '../../_shared/components/form/Form'
-import NewClientPageBase from './components/newClientPageBase'
+import Input    from '../../_shared/components/input/Input'
+import Form     from '../../_shared/components/form/Form'
+import PageBase from '../../_shared/containers/pageBase/PageBase'
+// import NewClientPageBase from './components/newClientPageBase'
 
-import * as nav               from '../../_shared/helpers/navigation'
-import { t }                  from '../../_shared/modules/localization/localization'
-import * as newClientActions  from '../../_shared/actions/newClient.actions'
+import * as nav              from '../../_shared/helpers/navigation'
+import { t }                 from '../../_shared/modules/localization/localization'
+import * as newClientActions from '../../_shared/actions/newClient.actions'
 
 
 class NewClientPage extends Component {
@@ -35,7 +36,7 @@ class NewClientPage extends Component {
     const { state, actions } = this.props
 
     return (
-      <NewClientPageBase params={this.props.params}>
+      <PageBase params={this.props.params}>
         <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
           <Input
             onEnter={this.submitForm}
@@ -116,7 +117,7 @@ class NewClientPage extends Component {
             highlight={state.highlight}
           />
         </Form>
-      </NewClientPageBase>
+      </PageBase>
     )
   }
 }

@@ -58,7 +58,7 @@ import EditInvoicePage from './admin/invoices/editInvoice.page'
 import ClientsPage     from './admin/clients/clients.page'
 import ClientUsersPage from './admin/clients/users.page'
 import NewClientPage   from './admin/clients/newClient.page'
-import SmsSettingsPage from './admin/clients/smsSettings.page'
+import SmsSettingsPage from './admin/clients/modules/smsSettings.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules

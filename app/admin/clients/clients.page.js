@@ -41,6 +41,7 @@ class ClientsPage extends Component {
     const { actions, pageBase } = this.props
     const toClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)
     const toEditClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/edit`)
+    const toClientModules = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/smsSettings`)
     const toInvoices = () => {
       nav.to(`/${pageBase.garage}/admin/invoices`)
       actions.setClientId(client.id)
@@ -110,6 +111,13 @@ class ClientsPage extends Component {
           label={t([ 'clients', 'editClient' ])}
           content={<span className="fa fa-pencil" aria-hidden="true" />}
           onClick={toEditClient}
+          type="action"
+          state={client.is_admin ? '' : 'disabled'}
+        />
+        <LabeledRoundButton
+          label={t([ 'clients', 'modules' ])}
+          content={<span className="icon-plugins" aria-hidden="true" />}
+          onClick={toClientModules}
           type="action"
           state={client.is_admin ? '' : 'disabled'}
         />

@@ -11,7 +11,7 @@ import { t }                  from '../../../_shared/modules/localization/locali
 import * as newClientActions  from '../../../_shared/actions/newClient.actions'
 
 
-class NewClientPageBase extends Component {
+class ClientModules extends Component {
   static propTypes = {
     pageBase: PropTypes.object,
     actions:  PropTypes.object,
@@ -29,13 +29,13 @@ class NewClientPageBase extends Component {
   tabFactory = tab => (<TabButton
     label={t([ 'newClient', tab ])}
     onClick={this.selectTab(tab)}
-    state={this.props.params.client_id ? window.location.hash.includes(`/${tab}`) && 'selected' : 'disabled'}
+    state={window.location.hash.includes(`/${tab}`) && 'selected'}
   />)
 
   render() {
     const { children } = this.props
 
-    const tabs = [ 'edit', 'smsSettings' ].map(this.tabFactory)
+    const tabs = [ 'smsSettings' ].map(this.tabFactory)
 
     return (
       <PageBase>
@@ -49,4 +49,4 @@ class NewClientPageBase extends Component {
 export default connect(
   state => ({ pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators(newClientActions, dispatch) })
-)(NewClientPageBase)
+)(ClientModules)
