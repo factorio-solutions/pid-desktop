@@ -314,7 +314,6 @@ export function setPrice() {
       }, undefined)
     }
 
-
     dispatch({ type:  NEW_RESERVATION_SET_PRICE,
       value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` : undefined
     })
@@ -490,6 +489,11 @@ export function downloadUser(id, rights) {
       //   hideLoadingCalled = true
       // }
 
+      if (values[1].reservable_garages.findById(state.preferedGarageId)) {
+        dispatch(downloadGarage(state.preferedGarageId))
+        dispatch(setPreferedGarageId(undefined))
+      }
+
       if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
         dispatch(setCarId(values[0].user.reservable_cars[0].id))
         if (!hideLoadingCalled) {
@@ -607,8 +611,18 @@ export function downloadGarage(id) {
 export function autoSelectPlace() {
   return (dispatch, getState) => {
     const state = getState().newReservation
+    const allPlaces = state.garage.floors
+      .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+
     if (state.garage.flexiplace) {
       dispatch(setPlace(undefined))
+    } else if (
+      state.preferedPlaceId && allPlaces
+        .filter(place => place.available)
+        .findById(state.preferedPlaceId)
+    ) { // prefered place from occupancy was set
+      dispatch(setPlace(allPlaces.findById(state.preferedPlaceId)))
+      dispatch(setPreferedPlaceId())
     } else if (!(state.place_id && state.garage.floors.find(floor => {
       return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
     }) !== undefined)) { // if place not selected or selected place not found in this garage
