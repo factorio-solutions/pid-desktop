@@ -85,10 +85,16 @@ class NewReservationPage extends Component {
   handleBack = () => nav.to('/reservations')
 
   toOverview = () => {
+    const { state, pageBase } = this.props
+
     if (this.props.params.id) {
       this.props.actions.submitReservation(+this.props.params.id)
-    } else {
+    } else if (!state.client_id ||
+      (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id))
+    ) {
       nav.to('/reservations/newReservation/overview')
+    } else {
+      this.props.actions.submitReservation()
     }
   }
 
