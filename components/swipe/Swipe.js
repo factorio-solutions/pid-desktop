@@ -35,7 +35,7 @@ export default class Swipe extends Component {
   onDragOrMove = event => {
     const screenPosition = this.positionFromEvent(event)
     const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
-    this.props.onEvent([ screenPosition, newPosition ].join(', '))
+    this.props.onEvent([ this.trackDimensions.x, this.state.touchPoint ].join(', '))
 
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
