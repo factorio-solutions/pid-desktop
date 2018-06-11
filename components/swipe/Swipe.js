@@ -30,16 +30,13 @@ export default class Swipe extends Component {
     }
   }
 
-  logAndCall = (text, method) => event => {
-    this.props.onEvent(text)
-    method(event)
-  }
-
   onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
 
   onDragOrMove = event => {
     const screenPosition = this.positionFromEvent(event)
     const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
+    this.props.onEvent([ screenPosition, newPosition ].join(', '))
+
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
 
@@ -92,13 +89,13 @@ export default class Swipe extends Component {
             style={{ left: `${this.state.sliderPosition}px` }}
             ref={this.createDimensionsRef('sliderDimensions')}
 
-            onDragStart={this.logAndCall('drag start', this.onDragOrMoveStart)}
-            onDrag={this.logAndCall('drag move', this.onDragOrMove)}
-            onDragEnd={this.logAndCall('drag end', this.onDragOrMoveEnd)}
+            onDragStart={this.onDragOrMoveStart}
+            onDrag={this.onDragOrMove}
+            onDragEnd={this.onDragOrMoveEnd}
             
-            onTouchStart={this.logAndCall('touch start', this.onDragOrMoveStart)}
-            onTouchMove={this.logAndCall('touch move', this.onDragOrMove)}
-            onTouchEnd={this.logAndCall('touch end', this.onDragOrMoveEnd)}
+            onTouchStart={this.onDragOrMoveStart}
+            onTouchMove={this.onDragOrMove}
+            onTouchEnd={this.onDragOrMoveEnd}
           >
             <div>
               <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
