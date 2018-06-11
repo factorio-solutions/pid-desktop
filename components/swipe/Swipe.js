@@ -70,7 +70,7 @@ export default class Swipe extends Component {
   render() {
     const { label, success, error } = this.props
 
-    if ('ontouchstart' in document.documentElement) {
+    // if ('ontouchstart' in document.documentElement) {
       return (
         <div
           className={`${styles.swipe}
@@ -94,9 +94,14 @@ export default class Swipe extends Component {
             onDragStart={this.onDragOrMoveStart}
             onTouchStart={this.onDragOrMoveStart}
             onDrag={this.onDragOrMove}
+
             onTouchMove={this.onDragOrMove}
             onTouchEnd={this.onDragOrMoveEnd}
             onDragEnd={this.onDragOrMoveEnd}
+
+            onMouseDown={this.onDragOrMove}
+            onMouseMove={this.onDragOrMoveEnd}
+            onMouseUp={this.onDragOrMoveEnd}
           >
             <div>
               <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
@@ -104,16 +109,16 @@ export default class Swipe extends Component {
           </div>
         </div>
       )
-    } else {
-      return (
-        <div className={`${styles.button}`}>
-          <CallToActionButton
-            label={error || label}
-            onClick={this.props.onSwipe}
-            type={success === undefined ? '' : success ? 'success' : 'remove'}
-          />
-        </div>
-      )
-    }
+    // } else {
+    //   return (
+    //     <div className={`${styles.button}`}>
+    //       <CallToActionButton
+    //         label={error || label}
+    //         onClick={this.props.onSwipe}
+    //         type={success === undefined ? '' : success ? 'success' : 'remove'}
+    //       />
+    //     </div>
+    //   )
+    // }
   }
 }
