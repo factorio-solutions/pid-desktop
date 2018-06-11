@@ -9,7 +9,6 @@ export default class Swipe extends Component {
   static propTypes = {
     label:   PropTypes.string.isRequired,
     onSwipe: PropTypes.func.isRequired,
-    onEvent: PropTypes.func,
     success: PropTypes.bool,
     error:   PropTypes.string
   }
@@ -66,51 +65,39 @@ export default class Swipe extends Component {
   render() {
     const { label, success, error } = this.props
 
-    // if ('ontouchstart' in document.documentElement) {
-      return (
+    return (
+      <div
+        className={`${styles.swipe}
+          ${this.state.swiped && success === true && styles.swipedSuccess}
+          ${this.state.swiped && success === false && styles.swipedError}
+        `}
+        ref={this.createDimensionsRef('trackDimensions')}
+      >
+        <div><i className="fa fa-lock" aria-hidden="true" /></div>
+        <div>{error || label}</div>
+        <div><i className="fa fa-unlock-alt" aria-hidden="true" /></div>
+
         <div
-          className={`${styles.swipe}
-            ${this.state.swiped && success === true && styles.swipedSuccess}
-            ${this.state.swiped && success === false && styles.swipedError}
+          className={`${styles.slider}
+            ${this.state.swiped && !this.state.reseting && success === undefined && styles.rotating}
+            ${this.state.reseting && styles.isReseting}
           `}
-          ref={this.createDimensionsRef('trackDimensions')}
+          style={{ left: `${this.state.sliderPosition}px` }}
+          ref={this.createDimensionsRef('sliderDimensions')}
+
+          onDragStart={this.onDragOrMoveStart}
+          onDrag={this.onDragOrMove}
+          onDragEnd={this.onDragOrMoveEnd}
+          
+          onTouchStart={this.onDragOrMoveStart}
+          onTouchMove={this.onDragOrMove}
+          onTouchEnd={this.onDragOrMoveEnd}
         >
-          <div><i className="fa fa-lock" aria-hidden="true" /></div>
-          <div>{error || label}</div>
-          <div><i className="fa fa-unlock-alt" aria-hidden="true" /></div>
-
-          <div
-            className={`${styles.slider}
-              ${this.state.swiped && !this.state.reseting && success === undefined && styles.rotating}
-              ${this.state.reseting && styles.isReseting}
-            `}
-            style={{ left: `${this.state.sliderPosition}px` }}
-            ref={this.createDimensionsRef('sliderDimensions')}
-
-            onDragStart={this.onDragOrMoveStart}
-            onDrag={this.onDragOrMove}
-            onDragEnd={this.onDragOrMoveEnd}
-            
-            onTouchStart={this.onDragOrMoveStart}
-            onTouchMove={this.onDragOrMove}
-            onTouchEnd={this.onDragOrMoveEnd}
-          >
-            <div>
-              <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
-            </div>
+          <div>
+            <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
           </div>
         </div>
-      )
-    // } else {
-    //   return (
-    //     <div className={`${styles.button}`}>
-    //       <CallToActionButton
-    //         label={error || label}
-    //         onClick={this.props.onSwipe}
-    //         type={success === undefined ? '' : success ? 'success' : 'remove'}
-    //       />
-    //     </div>
-    //   )
-    // }
+      </div>
+    )
   }
 }

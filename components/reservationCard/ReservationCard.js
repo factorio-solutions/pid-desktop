@@ -89,7 +89,6 @@ export class ReservationCard extends Component {
                 onSwipe={this.onSwipe(gate)}
                 success={gate.success}
                 error={gate.error}
-                onEvent={this.props.actions.logErrorFactory(reservation.id, gate.id)}
               />)
             }
           </div>
