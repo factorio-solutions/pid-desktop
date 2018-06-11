@@ -428,13 +428,9 @@ export function updateGarageGeneral(id, backUrl) {
     const state = getState().garageSetup
 
     const onSuccess = response => {
-      if (response.data.update_garage.payment_url) {
-        window.location.replace(response.data.update_garage.payment_url)
-      } else {
-        dispatch(setFetching(false))
-        dispatch(fetchGarages())
-        nav.to(`/${id}/admin/garageSetup/floors`)
-      }
+      dispatch(setFetching(false))
+      dispatch(fetchGarages())
+      nav.to(`/${id}/admin/garageSetup/floors`)
     }
 
     const garage = { id:     +id,
