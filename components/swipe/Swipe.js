@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import CallToActionButton from '../buttons/CallToActionButton'
+// import CallToActionButton from '../buttons/CallToActionButton'
 
 import styles from './Swipe.scss'
 
@@ -9,6 +9,7 @@ export default class Swipe extends Component {
   static propTypes = {
     label:   PropTypes.string.isRequired,
     onSwipe: PropTypes.func.isRequired,
+    onEvent: PropTypes.func,
     success: PropTypes.bool,
     error:   PropTypes.string
   }
@@ -30,19 +31,19 @@ export default class Swipe extends Component {
   }
 
   onDragOrMoveStart = event => {
-    console.log('drag started!')
+    this.props.onEvent('drag started!')
     this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
   }
 
   onDragOrMove = event => {
-    console.log('drag is moving!')
+    this.props.onEvent('drag is moving!')
     const screenPosition = this.positionFromEvent(event)
     const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
 
   onDragOrMoveEnd = event => {
-    console.log('drag is ended!')
+    this.props.onEvent('drag is ended!')
     if (this.state.sliderPosition / this.maxSliderLeft() > 0.95) {
       this.props.onSwipe()
       this.setState({ ...this.state, swiped: true, sliderPosition: this.maxSliderLeft() })
@@ -99,9 +100,9 @@ export default class Swipe extends Component {
             onTouchEnd={this.onDragOrMoveEnd}
             onDragEnd={this.onDragOrMoveEnd}
 
-            onMouseDown={this.onDragOrMove}
-            onMouseMove={this.onDragOrMoveEnd}
-            onMouseUp={this.onDragOrMoveEnd}
+            // onMouseDown={this.onDragOrMove}
+            // onMouseMove={this.onDragOrMoveEnd}
+            // onMouseUp={this.onDragOrMoveEnd}
           >
             <div>
               <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
