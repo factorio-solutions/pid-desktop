@@ -30,15 +30,11 @@ export default class Swipe extends Component {
     }
   }
 
-  onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
+  onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - (this.trackDimensions.x || this.trackDimensions.left) })
 
   onDragOrMove = event => {
     const screenPosition = this.positionFromEvent(event)
-    const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
-    this.props.onEvent(JSON.stringify(this.trackDimensions))
-    // this.trackDimensions.x => undefined
-    // this.state.touchPoint = NaN
-
+    const newPosition = screenPosition - (this.trackDimensions.x || this.trackDimensions.left) - this.state.touchPoint
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
 
