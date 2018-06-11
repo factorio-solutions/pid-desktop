@@ -153,7 +153,7 @@ export function openGarageViaPhone(reservationId, gateId) {
   }
 }
 
-function logErrorFactory(reservationId, gateId) {
+export function logErrorFactory(reservationId, gateId) {
   return dispatch => {
     return result => {
       console.log('error occured:', result, reservationId, gateId)
