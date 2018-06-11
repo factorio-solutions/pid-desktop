@@ -30,20 +30,20 @@ export default class Swipe extends Component {
     }
   }
 
-  onDragOrMoveStart = event => {
-    this.props.onEvent('drag started!')
-    this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
+  logAndCall = (text, method) => event => {
+    this.props.onEvent(text)
+    method(event)
   }
 
+  onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
+
   onDragOrMove = event => {
-    this.props.onEvent('drag is moving!')
     const screenPosition = this.positionFromEvent(event)
     const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
 
   onDragOrMoveEnd = event => {
-    this.props.onEvent('drag is ended!')
     if (this.state.sliderPosition / this.maxSliderLeft() > 0.95) {
       this.props.onSwipe()
       this.setState({ ...this.state, swiped: true, sliderPosition: this.maxSliderLeft() })
@@ -92,17 +92,13 @@ export default class Swipe extends Component {
             style={{ left: `${this.state.sliderPosition}px` }}
             ref={this.createDimensionsRef('sliderDimensions')}
 
-            onDragStart={this.onDragOrMoveStart}
-            onTouchStart={this.onDragOrMoveStart}
-            onDrag={this.onDragOrMove}
-
-            onTouchMove={this.onDragOrMove}
-            onTouchEnd={this.onDragOrMoveEnd}
-            onDragEnd={this.onDragOrMoveEnd}
-
-            // onMouseDown={this.onDragOrMove}
-            // onMouseMove={this.onDragOrMoveEnd}
-            // onMouseUp={this.onDragOrMoveEnd}
+            onDragStart={this.logAndCall('drag start', this.onDragOrMoveStart)}
+            onDrag={this.logAndCall('drag move', this.onDragOrMove)}
+            onDragEnd={this.logAndCall('drag end', this.onDragOrMoveEnd)}
+            
+            onTouchStart={this.logAndCall('touch start', this.onDragOrMoveStart)}
+            onTouchMove={this.logAndCall('touch move', this.onDragOrMove)}
+            onTouchEnd={this.logAndCall('touch end', this.onDragOrMoveEnd)}
           >
             <div>
               <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
