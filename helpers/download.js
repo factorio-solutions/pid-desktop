@@ -1,18 +1,14 @@
-import JSZip    from 'jszip'
-import * as nav from './navigation'
+import FileSaver from 'file-saver'
+import JSZip     from 'jszip'
+import * as nav  from './navigation'
+
+import { binaryToOctetStream } from './downloadXLSX'
 
 // helper download file from API
 
 // import { download }  from '../_shared/helpers/download'
 // download ('HelloKity.pdf', "query { download_invoice }")
 
-export function createDownloadLink(data, filename) {
-  const a = document.createElement('a')
-  a.download = filename
-  a.href = data
-  a.target = '_blank'
-  return a
-}
 
 export function downloadData(onSuccess, query, variables = undefined) {
   const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/queries'
@@ -49,8 +45,8 @@ export function downloadMultiple(filename, query, ids) {
       zip.file(id + '.pdf', data.substring(data.indexOf(',') + 1), { base64: true })
 
       if (counter === ids.length) { // download zip
-        zip.generateAsync({ type: 'base64' }).then(base64 => {
-          createDownloadLink(('data:application/zip;base64,' + base64), filename).click()
+        zip.generateAsync({ type: 'blob' }).then(blob => {
+          FileSaver.saveAs(blob, filename)
         })
       }
     }, query, { id })
@@ -58,7 +54,11 @@ export function downloadMultiple(filename, query, ids) {
 }
 
 export function download(filename, query, variables = undefined) {
-  downloadData(data => {
-    createDownloadLink(data, filename).click()
+  downloadData(dataURI => {
+    const bytes = atob(dataURI.split(',')[1])
+    const mimeType = dataURI.split(',')[0].split(':')[1].split(';')[0]
+    const buffer = binaryToOctetStream(bytes)
+    const blob = new Blob([ buffer ], { type: mimeType })
+    FileSaver.saveAs(blob, filename)
   }, query, variables)
 }
