@@ -295,13 +295,17 @@ export default class Table extends Component {
     }
 
     return (
-      <div style={this.state.scale < 1 ? { height: `${this.table.offsetHeight * this.state.scale}px` } : {}}>
+      <div>
         {searchBox && <div className={styles.searchBox}>
           <input type="search" onChange={onFilterChange} value={this.state.search} />
           <i className="fa fa-search" aria-hidden="true" />
         </div>}
 
-        <table className={styles.rtTable} style={{ transform: `scale(${this.state.scale})`, transformOrigin: 'top left' }} ref={table => { this.table = table }}>
+        <table
+          className={styles.rtTable}
+          style={{ transform: `scale(${this.state.scale})` }}
+          ref={table => { this.table = table }}
+        >
           <thead>
             <tr>
               {schema.map(prepareHeader)}

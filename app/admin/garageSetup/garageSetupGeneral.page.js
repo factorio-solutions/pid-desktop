@@ -206,8 +206,8 @@ class GarageSetupGeneralPage extends Component {
         </div>
       </div>
       <div className={styles.imageSelector}>
-        <h2>{t([ 'newGarage', 'garagePicture' ])}</h2>
-        <img src={state.img} />
+        <div><h2>{t([ 'newGarage', 'garagePicture' ])}</h2></div>
+        <div><img src={state.img} /></div>
         {!readOnly && <div>
           <UploadButton
             label={t([ 'newGarage', 'addProfilePicture' ])}

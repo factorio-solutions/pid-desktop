@@ -97,3 +97,13 @@
     bottom: 10px;
   }
 }
+
+@mixin firefox-only {
+  @at-root {
+    @-moz-document url-prefix() {
+      & {
+        @content;
+      }
+    }
+  }
+}

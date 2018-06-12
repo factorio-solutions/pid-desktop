@@ -151,7 +151,7 @@ class GarageSetupFloorsPage extends Component {
         {state.floors.map(prepareFloors)}
         {!readOnly && <CallToActionButton label={t([ 'newGarage', 'addFloor' ])} onClick={actions.addFloor} /> }
 
-        <h2>{t([ 'newGarage', 'garageTemlates' ])}</h2>
+        <div><h2>{t([ 'newGarage', 'garageTemlates' ])}</h2></div>
         <div className={styles.line}>
           <div className={styles.layout} onClick={() => actions.addTemplate('/public/garages/garage1.svg', '1')}>
             <img src="./public/garages/garage1.svg" />

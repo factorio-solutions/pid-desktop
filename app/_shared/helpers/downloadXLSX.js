@@ -22,7 +22,7 @@ function generateXLSX(data) { // in binary
   return XLSX.write(workBook, { bookType: 'xlsx', type: 'binary' })
 }
 
-function binaryToOctetStream(binary) {
+export function binaryToOctetStream(binary) {
   const buffer = new ArrayBuffer(binary.length)
   const bufferContent = new Uint8Array(buffer) // cannot manipulate buffer directly
   for (let i = 0; i < binary.length; i++) {

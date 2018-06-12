@@ -52,7 +52,6 @@ class RentsTab extends Component {
 
     return (
       <div>
-        <h2>{t([ 'garages', 'placeRent' ])}</h2>
         <Table
           schema={[
             { key: 'name', title: t([ 'garages', 'rentName' ]), comparator: 'string', sort: 'asc' },
