@@ -117,7 +117,7 @@ import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOve
 import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
 
-export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
+export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
 
 export default function createRoutes() {
