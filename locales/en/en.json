@@ -1010,7 +1010,9 @@
 		"longterm": "Longterm",
 		"shortterm": "Shortterm",
 		"longtermPrice": "Longterm price:",
-		"shorttermPrice": "Shortterm price:"
+		"shorttermPrice": "Shortterm price:",
+		"removeReservations": "Remove reservations of removed places",
+		"doNotRemoveReservations": "Try replacing reservations of removed places"
 	},
 	"finance": {
 		"paypal": "Paypal",
