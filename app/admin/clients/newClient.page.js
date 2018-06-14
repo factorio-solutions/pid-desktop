@@ -20,6 +20,11 @@ class NewClientPage extends Component {
     params:   PropTypes.object
   }
 
+  componentDidMount() {
+    this.props.actions.clearForm()
+    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
+  }
+
   checkSubmitable = () => {
     if (this.props.state.name === '') return false
     if (this.props.state.line_1 === '') return false
