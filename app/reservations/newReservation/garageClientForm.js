@@ -23,14 +23,13 @@ class GarageClientForm extends Component {
   componentDidMount() {
     const { state, actions } = this.props
     // set garage if there is only one
-    if (state.user && state.user.availableGarages.length) {
+    if (state.user && state.user.availableGarages.length === 1) {
       actions.downloadGarage(state.user.availableGarages[0].id)
     }
   }
 
   garageDropdown = () => {
     const { state, actions } = this.props
-    console.log(state)
     
     return (state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => ({
       label:   garage.name,
