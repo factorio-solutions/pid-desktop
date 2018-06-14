@@ -56,12 +56,27 @@ export default class Form extends Component {
       `}
     >
       {onBack && <div className={styles.floatLeft}>
-        <RoundButton content={<span className={`fa fa-${home ? 'home' : 'chevron-left'}`} aria-hidden="true" />} onClick={onBack} />
+        <RoundButton
+          content={<span className={`fa fa-${home ? 'home' : 'chevron-left'}`} aria-hidden="true" />}
+          onClick={onBack}
+        />
       </div>}
       <div className={onBack && styles.floatRight}>
         {this.state.submited ?
-          <RoundButton content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />} onClick={() => {}} type="confirm" state={'loading'} onDisabledClick={highlightInputs} /> :
-          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={sendReservation} type="confirm" state={!submitable && 'disabled'} onDisabledClick={highlightInputs} />
+          <RoundButton
+            content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />}
+            onClick={() => {}}
+            type="confirm"
+            state={'loading'}
+            onDisabledClick={highlightInputs}
+          /> :
+          <RoundButton
+            content={<span className="fa fa-check" aria-hidden="true" />}
+            onClick={sendReservation}
+            type="confirm"
+            state={!submitable && 'disabled'}
+            onDisabledClick={highlightInputs}
+          />
         }
       </div>
     </div>)
