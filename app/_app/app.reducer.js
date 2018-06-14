@@ -27,6 +27,7 @@ import occupancy from '../_shared/reducers/occupancy.reducer'
 
 import clients     from '../_shared/reducers/clients.reducer'
 import newClient   from '../_shared/reducers/newClient.reducer'
+import timeCredit  from '../_shared/reducers/admin.timeCredit.reducer'
 import newContract from '../_shared/reducers/newContract.reducer'
 import clientUsers from '../_shared/reducers/clientUsers.reducer'
 
@@ -94,6 +95,7 @@ const appReducer = combineReducers({
 
   clients,
   newClient,
+  timeCredit,
   newContract,
   clientUsers,
 

@@ -35,7 +35,7 @@ class ClientModules extends Component {
   render() {
     const { children } = this.props
 
-    const tabs = [ 'smsSettings' ].map(this.tabFactory)
+    const tabs = [ 'smsSettings', 'timeCredit' ].map(this.tabFactory)
 
     return (
       <PageBase>
