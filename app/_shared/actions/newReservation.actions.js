@@ -26,7 +26,6 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  // PAY_RESREVATION,
   GET_RESERVATION
 } from '../queries/newReservation.queries'
 

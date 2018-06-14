@@ -100,7 +100,7 @@ class NewReservationPage extends Component {
 
   handlePlaceClick = place => this.props.actions.setPlace(place)
 
-  hightlightInputs = () => this.props.actions.toggleHighlight()
+  // hightlightInputs = () => this.props.actions.toggleHighlight()
 
   modalClick = () => {
     this.props.actions.setError(undefined)
@@ -182,18 +182,19 @@ class NewReservationPage extends Component {
 
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
-              <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
+              <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={actions.toggleHighlight}>
                 { !(state.user && (state.user.id < 0 || onetime)) &&
                   ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
-                  // !state.reservation &&
                   <div className={styles.searchField}>
                     <span
                       className={styles.resetButton}
                       onClick={this.clearForm}
-                    ><i className="fa fa-times-circle" aria-hidden="true" /></span>
+                    >
+                      <i className="fa fa-times-circle" aria-hidden="true" />
+                    </span>
                     <SearchField
                       editable={!ongoing || isSecretary}
-                      placeholder={t([ 'newReservation', 'selectUser' ])}
+                      placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
                       dropdownContent={userDropdown.users}
                       selected={getUserToSelect()}
                       highlight={state.highlight}

@@ -56,7 +56,7 @@ class GarageClientForm extends Component {
       <div>
         <Dropdown
           editable={editable}
-          label={t([ 'newReservation', 'selectGarage' ])}
+          label={`${t([ 'newReservation', 'selectGarage' ])} *`}
           content={this.garageDropdown()}
           selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
           style="reservation"

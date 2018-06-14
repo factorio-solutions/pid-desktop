@@ -32,6 +32,16 @@ class NewUserForm extends Component {
     clearForm: PropTypes.func
   }
 
+  hostEmailMandatoryCondition = () => {
+    const { state } = this.props
+    return state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid))
+  }
+
+  hostPhoneMandatoryCondition = () => {
+    const { state } = this.props
+    return state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid))
+  }
+
   renderLanguageButton = lang => {
     const { state, actions, onetime } = this.props
     const selectLanguage = state.user.language ? state.user.language : state.language
@@ -51,11 +61,13 @@ class NewUserForm extends Component {
           <span
             className={resetButton}
             onClick={clearForm}
-          ><i className={`fa fa-times-circle`} aria-hidden="true" /></span>
+          >
+            <i className="fa fa-times-circle" aria-hidden="true" />
+          </span>
           <PatternInput
             readOnly={onetime || (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
-            label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
+            label={`${t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])} *`}
             error={t([ 'signup_page', 'nameInvalid' ])}
             pattern="^(?!\s*$).+"
             value={state.name.value}
@@ -66,28 +78,37 @@ class NewUserForm extends Component {
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
-          label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
+          label={`
+            ${t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
+            ${this.hostEmailMandatoryCondition() ? ' *' : ''}
+          `}
           error={t([ 'signup_page', 'emailInvalid' ])}
           pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
           value={(state.email.value)}
-          highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
+          highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostPhone}
-          label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
+          label={`
+            ${t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
+            ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
+          `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
           pattern="\+[\d]{2,4}[\d\s]{3,}"
           value={state.phone.value}
-          highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
+          highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
         />
         <Input
           readOnly={!editable}
           onChange={actions.setCarLicencePlate}
           value={state.carLicencePlate}
-          label={t([ 'newReservation', 'licencePlate' ])}
+          label={`
+            ${t([ 'newReservation', 'licencePlate' ])}
+            ${state.user.id !== -2 ? ' *' : ''}
+          `}
           error={t([ 'newReservation', 'licencePlateInvalid' ])}
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"

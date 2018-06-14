@@ -191,10 +191,10 @@
 		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server"
 	},
 	"newReservation": {
-		"selectGarage": "Select garage *",
-		"selectUser": "Select user *",
+		"selectGarage": "Select garage",
+		"selectUser": "Select user",
 		"selectClient": "Select Client",
-		"selectCar": "Select car *",
+		"selectCar": "Select car",
 		"begins": "Begins",
 		"invalidaDate": "Invalid date",
 		"invalidPlace": "Invalid place",
