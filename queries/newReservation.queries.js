@@ -114,9 +114,6 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         label
       }
     }
-    greates_free_interval(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id) {
-      id
-    }
   }
 }
 `
@@ -131,11 +128,15 @@ export const GET_GARAGE_DETAILS_LIGHT = `query ($id: Id!, $begins_at: Datetime!,
         label
       }
     }
-    greates_free_interval(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id) {
-      id
-    }
   }
 }
+`
+
+export const GET_GARAGE_FREE_INTERVAL = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id, $reservation_id: Id) {
+  garage(id: $id) {
+    greates_free_interval(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id)
+  }
+} 
 `
 
 // create reservation mutation

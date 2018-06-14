@@ -253,7 +253,8 @@
 		"perHour": " / hod.",
 		"creatingReservationInPast": "Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?",
 		"loading": "Načítám ...",
-		"userName": "Jméno uživatele"
+		"userName": "Jméno uživatele",
+		"AlternativeInterval": "Všechan místa jsou v tomoto intervalu prázdná. Nejdelší možný interval je:"
 	},
 	"clients": {
 		"name": "jméno",

@@ -39,7 +39,9 @@ import {
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
   NEW_RESERVATION_SET_PAYMENT_METHOD,
 
-  NEW_RESERVATION_CLEAR_FORM
+  NEW_RESERVATION_CLEAR_FORM,
+
+  NEW_RESERVATION_SET_FREE_INTERVAL
 }  from '../actions/newReservation.actions'
 
 const defaultState = {
@@ -79,7 +81,9 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod: ''
+  paymentMethod: '',
+
+  freeInterval: ''
 }
 
 function placeLabel(state) {
@@ -321,9 +325,14 @@ export default function newReservation(state = defaultState, action) {
         paymentMethod: action.value
       }
 
-
     case NEW_RESERVATION_CLEAR_FORM:
       return defaultState
+
+    case NEW_RESERVATION_SET_FREE_INTERVAL:
+      return {
+        ...state,
+        freeInterval: action.value
+      }
 
     default:
       return state
