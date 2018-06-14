@@ -576,7 +576,8 @@
 		"edit": "Client",
 		"smsSettings": "SMS module",
 		"activate": "activate",
-		"deactivate": "deactivate"
+		"deactivate": "deactivate",
+		"timeCredit": "Time credit"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
