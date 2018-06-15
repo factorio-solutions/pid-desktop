@@ -1096,6 +1096,7 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
+		"repeatTitle": "Repeat settings",
 		"repeat": "Repeat: disabled",
 		"repeatEnabled": "Repeat: enabled",
 		"repeats": "Repeats:",
