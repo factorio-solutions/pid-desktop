@@ -1,0 +1,7 @@
+.management {
+  display: flex;
+
+  >div:first-child {
+    flex: 1 1;
+  }
+}
