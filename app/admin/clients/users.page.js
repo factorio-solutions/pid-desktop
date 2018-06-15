@@ -21,6 +21,7 @@ import styles from './users.page.scss'
 
 class ClientUsersPage extends Component {
   static propTypes = {
+    params:   PropTypes.object,
     state:    PropTypes.object,
     pageBase: PropTypes.object,
     actions:  PropTypes.object
@@ -37,8 +38,11 @@ class ClientUsersPage extends Component {
       { key: 'full_name', title: t([ 'clientUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' },
+      state.client && state.client.is_time_credit_active ?
+        { key: 'timeCredit', title: t([ 'clientUsers', 'timeCredit' ]), comparator: 'string' } :
+        {},
       { key: 'created_at', title: t([ 'clientUsers', 'memberSince' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span> }
-    ]
+    ].filter(o => o)
 
     const schemaPending = [
       { key: 'full_name', title: t([ 'clientUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
@@ -72,16 +76,16 @@ class ClientUsersPage extends Component {
     }
 
     const renderSpoiler = client_user => {
-      const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, client_user.user.id) }
+      const destroyClick = () => actions.destroyClientUser(this.props.params.client_id, client_user.user.id)
 
-      const secretaryPresetClick = () => { actions.setSecretary(this.props.params.client_id, client_user.user.id) }
-      const internalPresetClick = () => { actions.setInternal(this.props.params.client_id, client_user.user.id) }
+      const secretaryPresetClick = () => actions.setSecretary(this.props.params.client_id, client_user.user.id)
+      const internalPresetClick = () => actions.setInternal(this.props.params.client_id, client_user.user.id)
 
-      const adminClick = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { admin: !client_user.admin }) }
-      const contactPersonClick = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { contact_person: !client_user.contact_person }) }
-      const secretaryClick = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { secretary: !client_user.secretary }) }
-      const hostClick = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { host: !client_user.host }) }
-      const internalClick = () => { actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { internal: !client_user.internal }) }
+      const adminClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { admin: !client_user.admin })
+      const contactPersonClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { contact_person: !client_user.contact_person })
+      const secretaryClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { secretary: !client_user.secretary })
+      const hostClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { host: !client_user.host })
+      const internalClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { internal: !client_user.internal })
 
       return (<div className={styles.spoiler}>
         <div className={styles.devider}>
@@ -111,7 +115,13 @@ class ClientUsersPage extends Component {
       )
     }
 
-    const data = state.users.map(client_user => ({ ...client_user.user, created_at: client_user.created_at, spoiler: renderSpoiler(client_user), key: client_user.user.id }))
+    const data = state.users.map(client_user => ({
+      ...client_user.user,
+      timeCredit: [ client_user.current_time_credit_amount, client_user.client.time_credit_amount_per_month ].join(' / '),
+      created_at: client_user.created_at,
+      spoiler:    renderSpoiler(client_user),
+      key:        client_user.user.id
+    }))
 
     const filters = [
       <TabButton label={t([ 'clientUsers', 'confirmedUsers' ], { name: state.clientName })} onClick={() => { actions.allClicked() }} state={state.filter === 'all' && 'selected'} />,

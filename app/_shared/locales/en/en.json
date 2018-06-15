@@ -295,7 +295,8 @@
 		"removeUser": "Remove user",
 		"resendInvitation": "Resend email",
 		"resendSuccessfull": "Email was sucessfully send.",
-		"userNotFound": "Could not find this user."
+		"userNotFound": "Could not find this user.",
+		"timeCredit": "time credit"
 	},
 	"reservations": {
 		"name": "name",
@@ -577,7 +578,27 @@
 		"smsSettings": "SMS module",
 		"activate": "activate",
 		"deactivate": "deactivate",
-		"timeCredit": "Time credit"
+		"timeCredit": "Time credit",
+		"onetimeAddition": "Onetime addition of time credit",
+		"onetimeRemoval": "Onetime removal of time credit",
+		"amountToAdd": "Amount to add",
+		"amountToRemove": "Amount to remove",
+		"onetimeAdditionPlaceholder": "30",
+		"timeCreditDescription": "Module introduces time limitation of reservations of users in your client",
+		"timeCreditStatistics": "Statistics",
+		"hoursThatCanBeParked": "Hours that can be parked this month",
+		"creditsThatCanBeDistributed": "Credits that can be distributed this month",
+		"creditsDistributed": "Credits that were distributed",
+		"creditsDistributedOverMax": "Credits over maximum",
+		"cteditsOutOfBoundException": "Exceeded amount of credits possible to distribute",
+		"currencyName": "Currency name",
+		"currencyNamePlaceholder": "Parkee coins",
+		"pricePerHour": "Price per hour",
+		"pricePerHourPlaceholder": "1",
+		"monthlyAmount": "Monthly amount",
+		"monthlyAmountPlaceholder": "60",
+		"onetimeAdd": "Onetime addition",
+		"onetimeRemove": "Onetime removal"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",

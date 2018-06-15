@@ -1,7 +1,15 @@
+@import '../../../_styles/app.desktop';
+
+
 .management {
   display: flex;
 
   >div:first-child {
     flex: 1 1;
   }
+}
+
+.warning {
+  text-align: center;
+  color:      $red;
 }

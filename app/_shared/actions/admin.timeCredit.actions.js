@@ -30,6 +30,7 @@ export const setAmmountToAdd = actionFactory(TIME_CREDIT_SET_AMOUNT_TO_ADD)
 export function showAddRemoveModal(add) {
   return dispatch => {
     dispatch(setAdd(add))
+    dispatch(setAmmountToAdd(0))
     dispatch(setShowModal(true))
   }
 }
@@ -40,8 +41,8 @@ export function initTimeCredit(id) {
     .then(response => {
       dispatch(setActive(response.client.is_time_credit_active))
       dispatch(setCurrencyName(response.client.time_credit_currency))
-      dispatch(setPricePerHour(response.client.time_credit_amount_per_month))
-      dispatch(setMonthlyAmount(response.client.time_credit_price))
+      dispatch(setPricePerHour(response.client.time_credit_price))
+      dispatch(setMonthlyAmount(response.client.time_credit_amount_per_month))
     })
   }
 }
@@ -69,13 +70,12 @@ export function submitTimeCredit(id) {
     dispatch(updateTimeCredit(
       id,
       { time_credit_currency:         state.currencyName,
-        time_credit_price:            parsePrice(state.monthlyAmount),
-        time_credit_amount_per_month: parsePrice(state.pricePerHour)
+        time_credit_price:            parsePrice(state.pricePerHour),
+        time_credit_amount_per_month: parsePrice(state.monthlyAmount)
       }
     ))
   }
 }
-
 
 export function submitOnetimeAddition(id) {
   return (dispatch, getState) => {
@@ -84,5 +84,6 @@ export function submitOnetimeAddition(id) {
       id,
       { time_credit_add_amount: state.amountToAdd }
     ))
+    dispatch(setShowModal(false))
   }
 }
