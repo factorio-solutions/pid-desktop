@@ -68,7 +68,7 @@ export function disableGoInternal() {
   }
 }
 
-const parsePrice = value => parseFloat((value + '' || '').replace(',', '.')) || undefined
+export const parsePrice = value => parseFloat((value + '' || '').replace(',', '.')) || undefined
 
 export function submitGoInternal() {
   return (dispatch, getState) => {
