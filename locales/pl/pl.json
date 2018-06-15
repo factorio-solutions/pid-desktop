@@ -1,18 +1,18 @@
 {
 	"PID-RELEASE": "r20180209a",
 	"addresses": {
-		"name": "Imię i nazwisko *",
-		"line1": "Adres *",
+		"name": "Imię i nazwisko",
+		"line1": "Adres",
 		"line2": "Adres - cd.",
-		"city": "Miasto *",
-		"postalCode": "Kod pocztowy *",
+		"city": "Miasto",
+		"postalCode": "Kod pocztowy",
 		"state": "Państwo",
-		"country": "Kraj *",
+		"country": "Kraj",
 		"nameInvalid": "Niepoprawne imię i nazwisko",
 		"line1Invalid": "Niepoprawny adres",
 		"line2Invalid": "Niepoprawny adres",
 		"cityInvalid": "Niepoprawna nazwa miasta",
-		"postalCodeInvalid": "Kod pocztowy *",
+		"postalCodeInvalid": "Kod pocztowy",
 		"stateInvalid": "Niepoprawna nazwa państwa",
 		"countryInvalid": "Niepoprawna nazwa kraju",
 		"namePlaceholder": "Jan Kowalski",
@@ -35,11 +35,11 @@
 		"emailPlaceholder": "Mr@park.it"
 	},
 	"signup_page": {
-		"name": "Imię i nazwisko *",
-		"phone": "Numer telefonu *",
-		"email": "E-mail *",
-		"password": "Hasło *",
-		"confirmation": "Potwierdź hasło *",
+		"name": "Imię i nazwisko",
+		"phone": "Numer telefonu",
+		"email": "E-mail",
+		"password": "Hasło",
+		"confirmation": "Potwierdź hasło",
 		"nameInvalid": "Niepoprawne imię lub nazwisko",
 		"phoneInvalid": "Podaj bez spacji wraz z numerem kierunkowym",
 		"emailInvalid": "Niepoprawny adres e-mail",
@@ -191,8 +191,8 @@
 		"smsSettingsHint": "Na tej stronie możesz aktywować usługę SMS oraz zmienić jej ustawienia. Do pisania tekstów możesz wykorzystać wytłumaczone poniżej zmienne, które zostaną zastąpione odpowiednimi danymi:\n\n\"{{ garage }}\" = nazwa garażu\n\"{{ address }}\" = adres wjazdu\n\"{{ gps }}\" = parametry gps wjazdu\n\"{{ place }}\" = piętro / miejsce\n\"{{ begin }}\" = początek rezerwacji\n\"{{ end }}\" = koniec rezerwacji\n\"{{ gate }}\" = numer telefonu serwera"
 	},
 	"newReservation": {
-		"selectGarage": "Wybierz garaż *",
-		"selectUser": "Wybierz użytkownika *",
+		"selectGarage": "Wybierz garaż",
+		"selectUser": "Wybierz użytkownika",
 		"selectClient": "Wybierz klienta",
 		"selectCar": "Wybierz auto",
 		"begins": "Od",
@@ -213,6 +213,7 @@
 		"licencePlatePlaceholder": "1A2 1234",
 		"price": "Cena",
 		"onClientsExpenses": "Na koszt klienta.",
+		"onUsersExpenses": "PL: newReservation.onUsersExpenses",
 		"loadingGarage": "Ładuję podgląd garażu...",
 		"creatingReservation": "Wytwarzam rezerwację...",
 		"updatingReservation": "Aktualizuję rezerwację...",
@@ -226,8 +227,6 @@
 		"newHostText": "PL: newReservation.newHostText",
 		"newInternal": "PL: newReservation.newInternal",
 		"newInternalText": "PL: newReservation.newInternalText",
-		"dropButtonText": "PL: newReservation.dropButtonText",
-		"dropButtonDescrText": "PL: newReservation.dropButtonDescrText",
 		"hostsName": "Nazwisko regularnego gościa",
 		"phone": "PL: newReservation.phone",
 		"hostsPhone": "Telefon regularnego gościa",
@@ -253,7 +252,8 @@
 		"perHour": "PL: newReservation.perHour",
 		"creatingReservationInPast": "PL: newReservation.creatingReservationInPast",
 		"loading": "PL: newReservation.loading",
-		"userName": "PL: newReservation.userName"
+		"userName": "PL: newReservation.userName",
+		"AlternativeInterval": "PL: newReservation.AlternativeInterval"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -362,7 +362,6 @@
 		"licencePlate": "Nr rejestracyjny:",
 		"longterm": "Długoterminowo",
 		"shortterm": "Krótkoterminowo",
-		"placeRent": "Wynajmy",
 		"rentName": "Nazwa wynajmu",
 		"price": "Cena",
 		"places": "Miejsca",
@@ -491,13 +490,13 @@
 		"gsmNameInvalid": "Niepoprawne imię i nazwisko",
 		"gsmNamePlaceholder": "Jan Kowalski",
 		"gsmModulesDescription": "Moduły GSM umożliwią Ci automatyczne otwierania bram. Cena wynosi %(price)s za miejsce.",
-		"floorName": "Piętro *",
+		"floorName": "Piętro",
 		"placeholderFloor": "%(index)s",
 		"invalidFloorName": "Niepoprawna nazwa piętra",
 		"invalidName": "Niepoprawna nazwa garażu",
 		"removeFloorRowQuestion": "Czy na pewno chcesz usunąć to piętro?",
 		"removeGateRowQuestion": "Czy na pewno chcesz usunąć tę bramę?",
-		"street": "Ulica i numer domu *",
+		"street": "Ulica i numer domu",
 		"city": "Miasto",
 		"postalCode": "Kod pocztowy",
 		"country": "Kraj",
@@ -561,7 +560,7 @@
 		"invalidIC": "niepoprawny IČ",
 		"DIC": "DIČ",
 		"invalidDIC": "niepoprawny DIČ",
-		"IBAN": "IBAN *",
+		"IBAN": "IBAN",
 		"invalidIBAN": "Niepoprawny IBAN",
 		"IBANplaceholder": "CZ65 0800 0000 1920 0014 5401",
 		"SmsApiToken": "SMS API Token",
@@ -574,7 +573,8 @@
 		"edit": "Klient",
 		"smsSettings": "Moduł SMS",
 		"activate": "Aktywuj",
-		"deactivate": "Dezaktywuj"
+		"deactivate": "Dezaktywuj",
+		"timeCredit": "PL: newClient.timeCredit"
 	},
 	"inviteUser": {
 		"selectUser": "E-mail(e) użytkownika",
@@ -647,7 +647,7 @@
 		"profileSettings": "Ustawienia profilu",
 		"hints": "Chcę zobaczyć rady:",
 		"language": "Wybierz język:",
-		"resetPassword": "Zmień hasło:",
+		"resetPassword": "Zmień hasło",
 		"emailSent": "Otrzymasz e-mail z intrukcjami.",
 		"editUser": "Edytować profil użytkownika",
 		"email": "E-mail:",
@@ -1008,7 +1008,9 @@
 		"longterm": "Długoterminowy",
 		"shortterm": "Krótkoterminowy",
 		"longtermPrice": "Długoterminowa cena:",
-		"shorttermPrice": "Krótkoterminowa cena:"
+		"shorttermPrice": "Krótkoterminowa cena:",
+		"removeReservations": "PL: newContract.removeReservations",
+		"doNotRemoveReservations": "PL: newContract.doNotRemoveReservations"
 	},
 	"finance": {
 		"paypal": "PayPal",
@@ -1017,7 +1019,6 @@
 		"csobPayment": "Płatności ČSOB",
 		"gpWebpayPayment": "Raiffeisenbank‎",
 		"SelectPrivateKey": "Wybierz klucz osobisty",
-		"financeSettings": "Ustawienia finansów",
 		"vat": "Podatek VAT",
 		"invoiceRow": "Regularny rządek faktur",
 		"simplyfiedInvoiceRow": "Uproszczony rządek faktur",
@@ -1264,6 +1265,7 @@
 		"new_reservation_mail_subject": "%{user} utworzył(a) nową rezerwację.",
 		"reservation_confirmed_subject": "Rezerwacja w %{garage} została potwierdzona.",
 		"reservation_updated_subject": "Twora rezerwacja w %{garage} została zaktualizowana.",
+		"reservation_paid_subject": "PL: railsEmails.reservation_paid_subject",
 		"footer": {
 			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
 			"regards": "Pozdrawiamy",
@@ -1340,6 +1342,10 @@
 			"place": "Miejsce:",
 			"from": "Od:",
 			"to": "Do:"
+		},
+		"reservation_paid": {
+			"headline": "PL: railsEmails.reservation_paid.headline",
+			"body": "PL: railsEmails.reservation_paid.body"
 		}
 	},
 	"railsSMSs": {
