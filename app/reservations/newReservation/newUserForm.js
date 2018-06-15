@@ -42,6 +42,8 @@ class NewUserForm extends Component {
     return state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid))
   }
 
+  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
+
   renderLanguageButton = lang => {
     const { state, actions, onetime } = this.props
     const selectLanguage = state.user.language ? state.user.language : state.language
@@ -83,10 +85,11 @@ class NewUserForm extends Component {
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
-          pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
           value={(state.email.value)}
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
+          normalizeInput={this.normalizeEmail}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}

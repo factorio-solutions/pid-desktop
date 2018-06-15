@@ -28,6 +28,8 @@ class ResetPasswordPage extends Component {
 
   goBack = () => nav.to('/')
 
+  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
+
   render() {
     const { actions, state } = this.props
 
@@ -53,6 +55,7 @@ class ResetPasswordPage extends Component {
               error={t([ 'resetPassword', 'emailInvalid' ])}
               pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
               value={state.email.value}
+              normalizeInput={this.normalizeEmail}
             />
           </Form>
         </div>

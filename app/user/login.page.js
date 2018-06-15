@@ -35,6 +35,8 @@ class LoginPage extends Component {
     }
   }
 
+  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
+
   home = () => window.location.href = 'https://www.park-it-direct.com';
 
   render() {
@@ -81,6 +83,7 @@ class LoginPage extends Component {
               placeholder={t([ 'login_page', 'emailPlaceholder' ])}
               value={state.email.value}
               onEnter={onSubmit}
+              normalizeInput={this.normalizeEmail}
             />
             <PatternInput
               onChange={actions.setPassword}

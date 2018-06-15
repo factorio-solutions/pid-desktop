@@ -22,7 +22,7 @@ const MINIMUM_PASSWORD_LENGTH = 4
 
 const NAME_REGEX = '^(?!\\s*$).+'
 const PHONE_REGEX = '\\+[\\d]{2,4}[\\d\\s]{3,}'
-const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$'
+const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$'
 
 
 class SignUpPage extends Component {
@@ -37,6 +37,8 @@ class SignUpPage extends Component {
   }
 
   onSubmit = () => this.isSubmitable() && this.props.actions.register()
+
+  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
 
   isSubmitable = () => {
     const { state } = this.props
@@ -97,6 +99,7 @@ class SignUpPage extends Component {
                 error={t([ 'signup_page', 'emailInvalid' ])}
                 pattern={EMAIL_REGEX}
                 value={state.email.value}
+                normalizeInput={this.normalizeEmail}
               />
               <PatternInput
                 onEnter={this.onSubmit}
