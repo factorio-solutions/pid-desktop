@@ -4,9 +4,13 @@ import moment from 'moment'
 import { request }                       from '../helpers/request'
 import actionFactory                     from '../helpers/actionFactory'
 import requestPromise                    from '../helpers/requestPromise'
-import { calculatePrice, valueAddedTax } from '../helpers/calculatePrice'
 import * as nav                          from '../helpers/navigation'
 import { t }                             from '../modules/localization/localization'
+import {
+  calculatePrice,
+  valueAddedTax,
+  calculateDuration
+} from '../helpers/calculatePrice'
 
 import {
   MOMENT_DATETIME_FORMAT,
@@ -26,7 +30,6 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  // PAY_RESREVATION,
   GET_RESERVATION
 } from '../queries/newReservation.queries'
 
@@ -121,6 +124,7 @@ export function setClientId(value) {
       value
     })
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    dispatch(setPrice())
   }
 }
 
@@ -288,27 +292,45 @@ export function setPlace(place) {
   }
 }
 
+export function selectedClient() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
+  }
+}
+
 export function setPrice() {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const from = moment(state.from, MOMENT_DATETIME_FORMAT)
     const to = moment(state.to, MOMENT_DATETIME_FORMAT)
-    let selectedPlace = null
-    if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-      const freePlaces = state.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
-      selectedPlace = freePlaces.length && freePlaces[0]
+    const client = dispatch(selectedClient())
+
+    if (client && client.is_time_credit_active) {
+      dispatch({
+        type:  NEW_RESERVATION_SET_PRICE,
+        value: calculateDuration(from, to) * client.time_credit_price
+      })
     } else {
-      selectedPlace = state.garage && state.garage.floors.reduce((acc, floor) => {
-        return floor.places.reduce((acc, place) => {
-          return place.id === state.place_id ? place : acc
-        }, acc)
-      }, undefined)
+      let selectedPlace = null
+      if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
+        const freePlaces = state.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+        selectedPlace = freePlaces.length && freePlaces[0]
+      } else {
+        selectedPlace = state.garage && state.garage.floors.reduce((acc, floor) => {
+          return floor.places.reduce((acc, place) => {
+            return place.id === state.place_id ? place : acc
+          }, acc)
+        }, undefined)
+      }
+
+      dispatch({
+        type:  NEW_RESERVATION_SET_PRICE,
+        value: selectedPlace && selectedPlace.pricing ?
+          `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` :
+          undefined
+      })
     }
-
-
-    dispatch({ type:  NEW_RESERVATION_SET_PRICE,
-      value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` : undefined
-    })
   }
 }
 

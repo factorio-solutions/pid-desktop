@@ -17,8 +17,12 @@ export function valueAddedTax(price, vat = 0) {
   return Math.round((price) * (1 + vat))
 }
 
+export function calculateDuration(from, to) {
+  return to.diff(from) / (1000 * 60 * 60)
+}
+
 export function calculatePrice(pricing, from, to, vat = 0) {
-  const duration = to.diff(from) / (1000 * 60 * 60)
+  const duration = calculateDuration(from, to)
   const dates = [ from ]
   while (dates[dates.length - 1].clone().add(1, 'day').startOf('day').isBefore(to)) {
     dates.push(dates[dates.length - 1].clone().add(1, 'day').startOf('day'))
