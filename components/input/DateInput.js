@@ -17,7 +17,13 @@ export default class DateInput extends Component {
     value:       PropTypes.string,
     inlineMenu:  PropTypes.object,
     showInf:     PropTypes.bool,
-    flip:        PropTypes.bool
+    flip:        PropTypes.bool,
+    editable:    PropTypes.bool,
+    onBlur:      PropTypes.func
+  }
+
+  static defaultProps = {
+    editable: true
   }
 
   constructor(props) { // just to handle two way databinding
@@ -30,10 +36,12 @@ export default class DateInput extends Component {
   }
 
   render() {
-    const { label, error, placeholder, onChange, onEnter, inlineMenu, style, showInf, flip } = this.props
+    const { label, error, placeholder, onChange, onEnter, inlineMenu, style, showInf, flip, editable, onBlur } = this.props
 
     const handleChange = event => {
-      this.setState({ ...this.state, message: event.target.value })
+      if (editable) {
+        this.setState({ ...this.state, message: event.target.value })
+      }
     }
 
     const handlePick = date => {
@@ -41,6 +49,7 @@ export default class DateInput extends Component {
       if (typeof onChange === 'function') {
         onChange(date === '' ? '' : moment(date).format('DD.MM.YYYY'), moment(date).isValid())
       }
+      onBlur && onBlur()
     }
 
     const preventEnter = function (event) {
@@ -60,8 +69,16 @@ export default class DateInput extends Component {
     }
 
     return (
-      <div className={`${styles.customFormGroup} ${styles.center} ${style}`} >
-        <input type={'text'} value={this.state.message} onChange={handleChange} placeholder={placeholder} onKeyPress={preventEnter.bind(this)} pattern="(\d{1,2}).(\d{1,2}).(\d{4})" />
+      <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} >
+        <input
+          type={'text'}
+          value={this.state.message}
+          onChange={handleChange}
+          placeholder={placeholder}
+          onKeyPress={preventEnter.bind(this)}
+          pattern="(\d{1,2}).(\d{1,2}).(\d{4})"
+          onBlur={onBlur}
+        />
         <span className={styles.bar} />
         <label className={styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>

@@ -43,7 +43,6 @@ export function hideSplashscreen() {
   }
 }
 
-
 export function initGarages() {
   return dispatch => {
     const onGarageSuccess = response => {

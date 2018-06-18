@@ -206,7 +206,7 @@ export function loadAddressFromIc() {
         const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
 
         dispatch(setCompanyName(res.OF))
-        dispatch(setLine1(res.AD.UC))
+        dispatch(setLine1([ res.AD.UC, res.AA.CO ].filter(o => o).join('/')))
         dispatch(setLine2(''))
         dispatch(setCity(res.AA.N))
         dispatch(setPostalCode(res.AA.PSC))
@@ -224,10 +224,7 @@ export function loadAddressFromIc() {
       }
     }
 
-    request(onSuccess
-           , LOAD_INFO_FROM_IC
-           , { ic: getState().garageSetup.ic }
-           )
+    request(onSuccess, LOAD_INFO_FROM_IC, { ic: getState().garageSetup.ic })
   }
 }
 
@@ -236,7 +233,8 @@ function unique(value, index, array) {
 }
 
 export function scanSVG(fileContent, index) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const floor = getState().garageSetup.floors[index]
     const places = []
     let from
     let to
@@ -246,7 +244,12 @@ export function scanSVG(fileContent, index) {
       const label = splitedContent[i].substring(0, splitedContent[i].indexOf('"', 0))
       from = from ? from > parseInt(label, 10) ? parseInt(label, 10) : from : parseInt(label, 10)
       to = to ? to < parseInt(label, 10) ? parseInt(label, 10) : to : parseInt(label, 10)
-      places.push({ label })
+
+      const originalPlace = floor.places.find(place => place.label === label)
+      places.push({
+        id: originalPlace && originalPlace.id,
+        label
+      })
     }
 
     dispatch(setFloors(dispatch(changeFloors(index, 'places', places))))
@@ -282,7 +285,13 @@ function createFloor(index) {
       const x = (i % inRow) * (rectWidth + padding) + padding
       const y = ((Math.floor(i / inRow) + 1) * padding) + Math.floor(i / inRow) * rectHeight
       rects += `<rect id="Place${from + i}" x="${x}" y="${y}" class="st2" width="${rectWidth}" height="${rectHeight}"/>`
-      places.push({ label: (from + i) + '' }) // has to be string...
+
+      const label = (from + i) + '' // has to be string...
+      const originalPlace = floor.places.find(place => place.label === label)
+      places.push({
+        id: originalPlace && originalPlace.id,
+        label
+      })
     }
 
     dispatch(changeFloorScheme(newSVGHead + rects + newSVGEnd, index), false)
@@ -349,7 +358,12 @@ export function intiEditGarageFloors(id) {
       dispatch(setId(response.data.garage.id))
 
       dispatch(setFloors(response.data.garage.floors))
-      getState().garageSetup.floors.forEach((floor, index) => { dispatch(scanSVG(floor.scheme, index)) })
+      // getState().garageSetup.floors.forEach((floor, index) => dispatch(scanSVG(floor.scheme, index)))
+      getState().garageSetup.floors.forEach((floor, index) => {
+        const placeLabels = floor.places.map(place => parseInt(place.label, 10))
+        dispatch(setFloors(dispatch(changeFloors(index, 'from', Math.min(...placeLabels)))))
+        dispatch(setFloors(dispatch(changeFloors(index, 'to', Math.max(...placeLabels)))))
+      })
 
       dispatch(setLength(response.data.garage.length))
       dispatch(setHeight(response.data.garage.height))
@@ -414,13 +428,9 @@ export function updateGarageGeneral(id, backUrl) {
     const state = getState().garageSetup
 
     const onSuccess = response => {
-      if (response.data.update_garage.payment_url) {
-        window.location.replace(response.data.update_garage.payment_url)
-      } else {
-        dispatch(setFetching(false))
-        dispatch(fetchGarages())
-        nav.to(`/${id}/admin/garageSetup/floors`)
-      }
+      dispatch(setFetching(false))
+      dispatch(fetchGarages())
+      nav.to(`/${id}/admin/garageSetup/floors`)
     }
 
     const garage = { id:     +id,
@@ -464,6 +474,7 @@ export function updateGarageFloors(id, backUrl) {
 
     const garage = { id: +id, garage: { url: backUrl, floors: floorsForRequest(state) } }
 
+    // console.log(garage)
     dispatch(setFetching(true))
     request(onSuccess, UPDATE_GARAGE, garage, 'garageMutations')
   }
@@ -620,13 +631,12 @@ function prepareLayoutOrder() {
 function floorsForRequest(state) {
   return state.floors.map(floor => {
     floor.places = floor.places.map(place => {
-      const priority = state.order.findIndex(obj => obj === place.label)
-      return { label:    place.label,
-        priority: priority === -1 ? 0 : state.order.length - state.order.findIndex(obj => obj === place.label),
-        length:   +state.length || null,
-        height:   +state.height || null,
-        width:    +state.width || null,
-        weight:   +state.weight || null
+      return {
+        ...place,
+        length: +state.length || null,
+        height: +state.height || null,
+        width:  +state.width || null,
+        weight: +state.weight || null
       }
     })
     return removeKeys(floor, [ 'from', 'to' ])

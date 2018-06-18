@@ -81,8 +81,9 @@ export default class Recurring extends Component {
     const filterWeeks = type => showWeeks ? true : type !== 'week'
     const toTypely = type => type === 'day' ? 'daily' : type + 'ly'
 
-    const toTypeDropdown = type => ({
+    const toTypeDropdown = (type, index) => ({
       label:   t([ 'recurringReservation', toTypely(type) ]),
+      order:   index + 1,
       onClick: () => this.setState({ ...this.state, type })
     })
 
@@ -90,6 +91,7 @@ export default class Recurring extends Component {
 
     const toIntervalDropdown = interval => ({
       label:   interval,
+      order:   interval,
       onClick: () => this.setState({ ...this.state, interval })
     })
 
@@ -188,7 +190,7 @@ export default class Recurring extends Component {
     return (
       <Modal show={show}>
         <Form onSubmit={submit} onBack={onSubmit} submitable margin={false} modal>
-          <h2>{t([ 'recurringReservation', 'repeat' ])}</h2>
+          <h2>{t([ 'recurringReservation', 'repeatTitle' ])}</h2>
           <table className={styles.recurring}>
             <tbody>
               <tr>
