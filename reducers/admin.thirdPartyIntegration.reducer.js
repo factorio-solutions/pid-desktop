@@ -1,13 +1,15 @@
 import {
   ADMIN_THIRD_PARTY_INTEGRATION_SET_GARAGE,
   ADMIN_THIRD_PARTY_INTEGRATION_TOGGLE_PLACE,
-  ADMIN_THIRD_PARTY_INTEGRATION_SET_PLACES
+  ADMIN_THIRD_PARTY_INTEGRATION_SET_PLACES,
+  ADMIN_THIRD_PARTY_INTEGRATION_TOGGLE_HIGHLIGHT
 }  from '../actions/admin.thirdPartyIntegration.actions'
 
 
 const defaultState = {
-  garage: undefined,
-  places: []
+  garage:    undefined,
+  places:    [],
+  highlight: false
 }
 
 
@@ -28,8 +30,15 @@ export default function adminThirdPartyIntegration(state = defaultState, action)
     }
 
     case ADMIN_THIRD_PARTY_INTEGRATION_SET_PLACES:
-      return { ...state,
+      return {
+        ...state,
         places: action.value
+      }
+
+    case ADMIN_THIRD_PARTY_INTEGRATION_TOGGLE_HIGHLIGHT:
+      return {
+        ...state,
+        highlight: !state.highlight
       }
 
     default:
