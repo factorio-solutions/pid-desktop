@@ -13,6 +13,7 @@ import RoundButton  from '../_shared/components/buttons/RoundButton'
 import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav           from '../_shared/helpers/navigation'
+import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t }              from '../_shared/modules/localization/localization'
 import * as loginActions  from '../_shared/actions/login.actions'
 
@@ -34,8 +35,6 @@ class LoginPage extends Component {
       nav.to('/dashboard')
     }
   }
-
-  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
 
   home = () => window.location.href = 'https://www.park-it-direct.com';
 
@@ -83,7 +82,7 @@ class LoginPage extends Component {
               placeholder={t([ 'login_page', 'emailPlaceholder' ])}
               value={state.email.value}
               onEnter={onSubmit}
-              normalizeInput={this.normalizeEmail}
+              normalizeInput={normalizeEmail}
             />
             <PatternInput
               onChange={actions.setPassword}

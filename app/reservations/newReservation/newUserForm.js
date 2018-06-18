@@ -6,6 +6,7 @@ import Input        from '../../_shared/components/input/Input'
 import PatternInput from '../../_shared/components/input/PatternInput'
 import RoundButton  from '../../_shared/components/buttons/RoundButton'
 
+
 import {
   setHostName,
   setHostPhone,
@@ -16,11 +17,13 @@ import {
 
 import { AVAILABLE_LANGUAGES } from '../../routes'
 import { t }                   from '../../_shared/modules/localization/localization'
+import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
 
-import { languagesSelector,
-         searchField,
-         resetButton
-       } from '../newReservation.page.scss'
+import {
+  languagesSelector,
+  searchField,
+  resetButton
+} from '../newReservation.page.scss'
 
 
 class NewUserForm extends Component {
@@ -41,8 +44,6 @@ class NewUserForm extends Component {
     const { state } = this.props
     return state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid))
   }
-
-  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
 
   renderLanguageButton = lang => {
     const { state, actions, onetime } = this.props
@@ -89,7 +90,7 @@ class NewUserForm extends Component {
           value={(state.email.value)}
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
-          normalizeInput={this.normalizeEmail}
+          normalizeInput={normalizeEmail}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}

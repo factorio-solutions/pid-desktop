@@ -12,6 +12,7 @@ import Localization from '../_shared/components/localization/Localization'
 import Checkbox     from '../_shared/components/checkbox/Checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
+import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t, getLanguage } from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
@@ -37,8 +38,6 @@ class SignUpPage extends Component {
   }
 
   onSubmit = () => this.isSubmitable() && this.props.actions.register()
-
-  normalizeEmail = email => email.replace(/\s/g, '').toLowerCase()
 
   isSubmitable = () => {
     const { state } = this.props
@@ -99,7 +98,7 @@ class SignUpPage extends Component {
                 error={t([ 'signup_page', 'emailInvalid' ])}
                 pattern={EMAIL_REGEX}
                 value={state.email.value}
-                normalizeInput={this.normalizeEmail}
+                normalizeInput={normalizeEmail}
               />
               <PatternInput
                 onEnter={this.onSubmit}
