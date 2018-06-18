@@ -25,7 +25,6 @@ const defaultState = {
   language:           'en',
   personal:           true
 }
-//  , headerHeight: 101 // px
 
 
 export default function mobileHeader(state = defaultState, action) {

@@ -1,0 +1,25 @@
+@import '../../styles/app.components';
+
+.table {
+  width: 100%;
+}
+
+.reservationTime {
+  margin-left: 15px;
+  text-align:  right;
+}
+
+.place {
+  font-size:   35px;
+  font-weight: bold;
+}
+
+.disabled {
+  color: $lightGray;
+}
+
+.guestTitle {
+  margin-bottom: 4px;
+  font-size:     18px;
+  font-weight:   bold;
+}
