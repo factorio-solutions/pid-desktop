@@ -540,7 +540,7 @@ export function downloadGarage(id) {
     }).then(value => {
       const setFreeIntervalSuccess = response => {
         if (response.data !== undefined) {
-          dispatch(setFreeInterval(response.data.garage.greates_free_interval))
+          dispatch(setFreeInterval(response.data.garage.greatest_free_interval))
         }
       }
 
@@ -551,7 +551,7 @@ export function downloadGarage(id) {
           ...floor,
           free_places: value.garage.floors.findById(floor.id).free_places
         })),
-        greates_free_interval: value.garage.greates_free_interval
+        greatest_free_interval: value.garage.greatest_free_interval
       }
 
       garage.floors.forEach(floor => {
