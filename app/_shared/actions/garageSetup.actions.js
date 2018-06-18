@@ -672,7 +672,7 @@ function gatesForRequest(state) {
 
     return { ...gateWithoutPlaces,
       address: {
-        line_1:      state.line_1,
+        line_1:      gate.address.line_1,
         city:        state.city,
         postal_code: state.postal_code,
         state:       state.state || undefined,
