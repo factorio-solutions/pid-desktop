@@ -52,6 +52,7 @@ export const GET_GARAGES = `{
   }
   user_garages {
     admin
+    manager
     receptionist
     security
     pending

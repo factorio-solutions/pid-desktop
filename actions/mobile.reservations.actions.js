@@ -213,7 +213,6 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
 //     .catch(message => console.log('scan stop unsucessfull', message))
 //   }
 // }
-
 // export function startScanning(back) {
 //   return dispatch => {
 //     if (window.bluetoothle) {
@@ -224,7 +223,6 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
 //           console.log('found device', result)
 //           result.name && dispatch(setBleDevice(result)) // only add device if has name
 //         }
-
 //         ble.scanUnlimited(onDeviceFound, logError)
 //       })
 //       .catch(() => {

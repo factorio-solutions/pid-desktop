@@ -51,7 +51,8 @@ export class ReservationCard extends Component {
             <div>{reservation.place.floor.garage.name}</div>
           </div>
 
-          {reservation.client && reservation.client.is_secretary && to.isAfter(moment()) &&
+          {((reservation.client && reservation.client.is_secretary && to.isAfter(moment())) ||
+            (mobileHeader.current_user && mobileHeader.current_user.id === reservation.user.id)) &&
             <div className={`${styles.gray} ${styles.icon}`} onClick={this.toReservation}><i className="icon-more" aria-hidden="true" /></div>
           }
         </div>

@@ -4,6 +4,8 @@ export const GET_AVAILABLE_USERS = `{
   reservable_users {
     id
     full_name
+    phone
+    email
   }
 }
 `
@@ -168,6 +170,9 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
       temporary
     }
     client_id
+    client {
+      is_secretary
+    }
     place{
       id
       floor{

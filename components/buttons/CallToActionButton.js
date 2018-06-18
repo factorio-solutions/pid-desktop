@@ -8,7 +8,7 @@ import Button from './Button.js'
 // state = 'selected', 'disabled'
 
 
-export default function CallToActionButton({ label, onClick, state, type }) {
+export default function CallToActionButton({ label, onClick, state, type, onMouseDown }) {
   const style = [ styles.button,
     styles[state],
     styles[type]
@@ -17,6 +17,6 @@ export default function CallToActionButton({ label, onClick, state, type }) {
   const content = <span className={styles.label}>{label}</span>
 
   return (
-    <Button content={content} onClick={onClick} state={state} style={style} type={type} />
+    <Button content={content} onClick={onClick} state={state} style={style} type={type} onMouseDown={onMouseDown} />
   )
 }
