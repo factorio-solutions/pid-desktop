@@ -106,7 +106,7 @@ class BulkRemovalReservationPage extends Component {
           {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
             <div>
               <Dropdown
-                label={t([ 'newReservation', 'selectUser' ])}
+                label={t([ 'newReservation', 'selectUser' ]) + ' *'}
                 content={this.userDropdown()}
                 selected={state.availableUsers.findIndexById(state.userId)}
                 highlight={state.highlight}

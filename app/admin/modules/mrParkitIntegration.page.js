@@ -48,7 +48,11 @@ class MrParkitIntegrationPage extends Component {
         <div className={styles.flex}>
           <div className={styles.half}>
             <h2>{t([ 'modules', 'selectPlacesForMrParkit' ])}</h2>
-            <Form onSubmit={actions.submitMrParkitIntegration} submitable={state.places.length}>
+            <Form
+              onSubmit={actions.submitMrParkitIntegration}
+              submitable={state.places.length}
+              onHighlight={actions.toggleHighlight}
+            >
               <div className={styles.places}>
                 {state.places.length ?
                   state.garage && state.garage.floors.reduce(createPlaceButtons, []) :

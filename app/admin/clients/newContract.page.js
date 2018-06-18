@@ -154,7 +154,7 @@ class NewContractPage extends Component {
                 <div className={styles.twoButtons}>
                   <PatternInput
                     onChange={actions.setClientToken}
-                    label={t([ 'newContract', 'selectClient' ])}
+                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
                     error={t([ 'newContract', 'invalidToken' ])}
                     type="text"
                     placeholder={t([ 'newContract', 'tokenPlaceholder' ])}
@@ -165,13 +165,13 @@ class NewContractPage extends Component {
                   <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleAddClient} type="remove" />
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t([ 'newContract', 'selectClient' ])} content={state.clients.map(this.prepareClients)} style="light" selected={selectedClient} highlight={state.highlight} />
+                  <Dropdown label={t([ 'newContract', 'selectClient' ]) + ' *'} content={state.clients.map(this.prepareClients)} style="light" selected={selectedClient} highlight={state.highlight} />
                   <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleAddClient} type="action" />
                 </div>)
               }
 
               <div>
-                <div>{t([ 'newContract', 'selectedPlaces' ])}</div>
+                <div>{t([ 'newContract', 'selectedPlaces' ]) + ' *'}</div>
                 {state.places.length ? state.places.map(makeButton) : <b className={state.highlight && styles.red}>{t([ 'newContract', 'noSelectedPlaces' ])}</b>}
               </div>
 
@@ -179,7 +179,7 @@ class NewContractPage extends Component {
                 <div className={styles.oneButton}>
                   <Input
                     onChange={actions.setContractPrice}
-                    label={t([ 'newContract', 'contractPrice' ])}
+                    label={t([ 'newContract', 'contractPrice' ]) + ' *'}
                     error={t([ 'newContract', 'priceInvalid' ])}
                     type="number"
                     placeholder={t([ 'newContract', 'pricePlaceholder' ])}
@@ -188,7 +188,7 @@ class NewContractPage extends Component {
                     highlight={state.highlight}
                   />
                   <Dropdown
-                    label={t([ 'newContract', 'selectCurrency' ])}
+                    label={t([ 'newContract', 'selectCurrency' ]) + ' *'}
                     content={state.currencies.map(this.prepareCurrencies)}
                     style="light"
                     selected={selectedCurrency}

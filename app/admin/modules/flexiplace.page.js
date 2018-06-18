@@ -48,9 +48,18 @@ class FlexiplacePage extends Component {
 
     return (
       <ModulesPageBase>
-        <Form onSubmit={actions.sumbitFlexi} submitable={isSubmitable()}>
+        <Form
+          onSubmit={actions.sumbitFlexi}
+          submitable={isSubmitable()}
+          onHighlight={actions.toggleHighlight}
+        >
           <div>
-            <Dropdown label={t([ 'newPricing', 'selectCurrency' ])} content={currencies} style="light" selected={state.currencies.findIndexById(pricing && pricing.currency_id)} />
+            <Dropdown
+              label={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
+              content={currencies}
+              style="light"
+              selected={state.currencies.findIndexById(pricing && pricing.currency_id)}
+            />
           </div>
 
           <div>
@@ -58,10 +67,25 @@ class FlexiplacePage extends Component {
             <PatternInput
               onChange={actions.setFlatPrice}
               label={t([ 'newPricing', 'flatPrice' ])}
+              label={`
+                ${t([ 'newPricing', 'flatPrice' ])}
+                ${((pricing && pricing.exponential_12h_price) ||
+                  (pricing && pricing.exponential_day_price) ||
+                  (pricing && pricing.exponential_week_price) ||
+                  (pricing && pricing.exponential_month_price)) ?
+                  '' : ' *'
+                }`
+              }
               error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
               placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
               value={(pricing && pricing.flat_price) || ''}
+              highlight={state.highlight &&
+                !((pricing && pricing.exponential_12h_price) ||
+                (pricing && pricing.exponential_day_price) ||
+                (pricing && pricing.exponential_week_price) ||
+                (pricing && pricing.exponential_month_price))
+              }
             />
           </div>
 
@@ -69,35 +93,39 @@ class FlexiplacePage extends Component {
             <h2>{t([ 'newPricing', 'exponentialPrice' ])}</h2>
             <PatternInput
               onChange={actions.setExponential12hPrice}
-              label={t([ 'newPricing', '12hPrice' ])}
+              label={`${t([ 'newPricing', '12hPrice' ])} ${pricing && pricing.flat_price ? '' : ' *'}`}
               error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
               placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
               value={(pricing && pricing.exponential_12h_price) || ''}
+              highlight={ state.highlight && pricing && !pricing.flat_price }
             />
             <PatternInput
               onChange={actions.setExponentialDayPrice}
-              label={t([ 'newPricing', 'dayPrice' ])}
+              label={`${t([ 'newPricing', 'dayPrice' ])} ${pricing && pricing.flat_price ? '' : ' *'}`}
               error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
               placeholder={t([ 'newPricing', 'maxPlaceholder' ])}
               value={(pricing && pricing.exponential_day_price) || ''}
+              highlight={ state.highlight && pricing && !pricing.flat_price }
             />
             <PatternInput
               onChange={actions.setExponentialWeekPrice}
-              label={t([ 'newPricing', 'weekPrice' ])}
+              label={`${t([ 'newPricing', 'weekPrice' ])} ${pricing && pricing.flat_price ? '' : ' *'}`}
               error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
               placeholder={t([ 'newPricing', 'minPlaceholder' ])}
               value={(pricing && pricing.exponential_week_price) || ''}
+              highlight={ state.highlight && pricing && !pricing.flat_price }
             />
             <PatternInput
               onChange={actions.setExponentialMonthPrice}
-              label={t([ 'newPricing', 'monthPrice' ])}
+              label={`${t([ 'newPricing', 'monthPrice' ])} ${pricing && pricing.flat_price ? '' : ' *'}`}
               error={t([ 'newPricing', 'invalidPrice' ])}
               pattern="^[+]?\d+([,.]\d+)?$"
               placeholder={t([ 'newPricing', 'decayPlaceholder' ])}
               value={(pricing && pricing.exponential_month_price) || ''}
+              highlight={ state.highlight && pricing && !pricing.flat_price }
             />
           </div>
 

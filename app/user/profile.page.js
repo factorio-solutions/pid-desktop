@@ -85,7 +85,7 @@ class SettingsPage extends Component {
             <PatternInput
               onEnter={submitForm}
               onChange={actions.setName}
-              label={t([ 'signup_page', 'name' ])}
+              label={t([ 'signup_page', 'name' ]) + ' *'}
               error={t([ 'signup_page', 'nameInvalid' ])}
               pattern="^(?!\s*$).+"
               value={state.name.value}
@@ -94,7 +94,7 @@ class SettingsPage extends Component {
             <PatternInput
               onEnter={submitForm}
               onChange={actions.setPhone}
-              label={t([ 'signup_page', 'phone' ])}
+              label={t([ 'signup_page', 'phone' ]) + ' *'}
               error={t([ 'signup_page', 'phoneInvalid' ])}
               pattern="\+[\d]{2,4}[\d\s]{3,}"
               value={state.phone.value}

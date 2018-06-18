@@ -130,7 +130,7 @@ class inviteUserPage extends Component {
               <PatternInput
                 onEnter={this.submitForm}
                 onChange={this.emailChanged}
-                label={t([ 'inviteUser', 'selectUser' ])}
+                label={t([ 'inviteUser', 'selectUser' ]) + ' *'}
                 error={t([ 'signup_page', 'emailInvalid' ])}
                 pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$"
                 value={state.email.value}
@@ -188,7 +188,7 @@ class inviteUserPage extends Component {
                 {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
               </div>
               {state.client_id && <div>
-                <h3>{t([ 'inviteUser', 'clientRights' ])}</h3>
+                <h3>{t([ 'inviteUser', 'clientRights' ]) + ' *'}</h3>
                 <p>{t([ 'inviteUser', 'clientRightsDesc' ])}</p>
                 {currentClient && <p className={styles.rights}>
                   {currentClient.admin &&
@@ -218,7 +218,7 @@ class inviteUserPage extends Component {
               </div>}
 
               {state.garage_id && <div>
-                <h3>{t([ 'inviteUser', 'GarageRights' ])}</h3>
+                <h3>{t([ 'inviteUser', 'GarageRights' ]) + ' *'}</h3>
                 <p>{t([ 'inviteUser', 'GarageRightsDesc' ])}</p>
                 <p className={styles.rights}>
                   <AttributeSpan state={state} attribute="garage_admin" actions={actions} label="admin" highlight={highlightGarageRoles} />|
@@ -229,7 +229,7 @@ class inviteUserPage extends Component {
               </div>}
 
               {state.car_id && <div>
-                <h3>{t([ 'inviteUser', 'carRights' ])}</h3>
+                <h3>{t([ 'inviteUser', 'carRights' ]) + ' *'}</h3>
                 <p>{t([ 'inviteUser', 'carRightsDesc' ])}</p>
                 <p className={styles.rights}>
                   <AttributeSpan state={state} attribute="car_admin" actions={actions} label="admin" highlight={highlightCarRoles} />|

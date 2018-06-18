@@ -18,6 +18,7 @@ export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_DAY_PRICE = 'ADMIN_GO_INTERNAL_SE
 export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE = 'ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE'
 export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE = 'ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE'
 export const ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE = 'ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE'
+export const ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT = 'ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT'
 
 
 const patternInputActionFactory = type => (value, valid) => ({ type, valid, value })
@@ -32,6 +33,7 @@ export const setExponentialDayPrice = patternInputActionFactory(ADMIN_GO_INTERNA
 export const setExponentialWeekPrice = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE)
 export const setExponentialMonthPrice = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE)
 export const setWeekendPricing = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE)
+export const toggleHighlight = actionFactory(ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT)
 
 
 export function initGoInternal() {
