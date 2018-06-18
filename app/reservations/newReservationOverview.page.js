@@ -8,6 +8,7 @@ import Form     from '../_shared/components/form/Form'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t }                      from '../_shared/modules/localization/localization'
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
+import { setGarage }              from '../_shared/actions/pageBase.actions'
 
 import styles from './newReservationOverview.page.scss'
 
@@ -18,17 +19,22 @@ class NewReservationOverviewPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
+    pageBase: PropTypes.object
   }
 
   componentDidMount() {
-    const { location, actions } = this.props
+    const { location, actions, pageBase } = this.props
     if (location.query.hasOwnProperty('token')) {
       location.query.success !== 'true' && actions.paymentUnsucessfull()
     } else if (location.query.hasOwnProperty('csob') || location.query.hasOwnProperty('gp_webpay')) {
       location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
     } else {
       actions.overviewInit()
+    }
+
+    if (location.query.hasOwnProperty('garage_id')) {
+      pageBase.setGarage(+location.query.garage_id)
     }
   }
 
@@ -140,5 +146,5 @@ class NewReservationOverviewPage extends Component {
 
 export default connect(
   state => ({ state: state.newReservation }),
-  dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch), pageBase: bindActionCreators({ setGarage }, dispatch) })
 )(NewReservationOverviewPage)

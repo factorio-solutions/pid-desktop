@@ -657,7 +657,7 @@ export function submitReservation(id) {
                paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
                car_id:                   state.car_id,
                licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
-               url:                      ongoing ? undefined : window.location.href.split('?')[0],
+               url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
                begins_at:                timeToUTC(state.from),
                ends_at:                  timeToUTC(state.to),
                recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
