@@ -490,9 +490,11 @@ newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu pl
 newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
 newReservation.newHost,Regular guest,Pravidelný host,Nowy regularny gość,Neuer regelmäßiger Gast
-newReservation.newHostText,becomes a member of the client account and may request reservations.,může žádat o rezervace a stane se členem klientského účtu.,,
+newReservation.newHostText,"may create reservations for himself, but need them to be approved by a secretary"," si smí rezervace navrhovat, ale potřebuje schválení",,
 newReservation.newInternal,New internal,Nový internal,,
-newReservation.newInternalText,becomes a member of the client account and may create reservations for himself.,může si vytvářet rezervace a stane se členem klientského účtu.,,
+newReservation.newInternalText,may create reservations for himself, si smí samostatně vytvářet rezervace.,,
+newReservation.dropButtonText,New user with rights ,Nový uživatel s právy ,,Neuer Benutzer
+newReservation.dropButtonDescrText,User with rights ,Uživatel s právy ,,
 newReservation.hostsName,Name of regular guest,Jméno pravidelného hosta,Nazwisko regularnego gościa,Rgelmäßiger Gast - Name
 newReservation.phone,Phone number,Telefonní číslo,,Telefonnummer
 newReservation.hostsPhone,Phone of regular guest,Telefon pravidelného hosta,Telefon regularnego gościa,Regelmäßiger Gast Telefonnummer

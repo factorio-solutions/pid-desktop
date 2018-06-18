@@ -35,7 +35,7 @@ export class MobileNotification extends Component {
 
         <div className={styles.notificationsButtons}>
           {notification.notification_type.indexOf('No') !== -1 && <RoundButton
-            content={<span className="fa fa-times" aria-hidden="true"></span>}
+            content={<span className="fa fa-times" aria-hidden="true" />}
             onClick={() => { actions.decline(notification) }}
             type="remove"
             question={'Are you sure you want to decline?'}

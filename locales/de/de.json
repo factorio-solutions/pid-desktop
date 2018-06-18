@@ -227,6 +227,8 @@
 		"newHostText": "DE: newReservation.newHostText",
 		"newInternal": "DE: newReservation.newInternal",
 		"newInternalText": "DE: newReservation.newInternalText",
+		"dropButtonText": "Neuer Benutzer",
+		"dropButtonDescrText": "DE: newReservation.dropButtonDescrText",
 		"hostsName": "Rgelmäßiger Gast - Name",
 		"phone": "Telefonnummer",
 		"hostsPhone": "Regelmäßiger Gast Telefonnummer",
