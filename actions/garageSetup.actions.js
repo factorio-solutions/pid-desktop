@@ -167,7 +167,15 @@ export function addGate() {
 }
 export function addTemplate(file, label) {
   return (dispatch, getState) => {
-    dispatch(addFloor())
+    const floors = getState().garageSetup.floors
+    if (!( // If no othe places, make template first floor
+      floors.length === 1 &&
+      floors[0].from === '' &&
+      floors[0].label === '' &&
+      floors[0].places.length === 0 &&
+      floors[0].scheme === '' &&
+      floors[0].to === ''
+    )) dispatch(addFloor())
     get(file).then(data => {
       const index = getState().garageSetup.floors.length - 1
       dispatch(scanSVG(data, index))
