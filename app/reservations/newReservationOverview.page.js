@@ -17,14 +17,14 @@ const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'paypal', 'raiffeisenbank' ]
 
 class NewReservationOverviewPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object,
-    location: PropTypes.object,
-    pageBase: PropTypes.object
+    state:           PropTypes.object,
+    actions:         PropTypes.object,
+    location:        PropTypes.object,
+    pageBaseActions: PropTypes.object
   }
 
   componentDidMount() {
-    const { location, actions, pageBase } = this.props
+    const { location, actions, pageBaseActions } = this.props
     if (location.query.hasOwnProperty('token')) {
       location.query.success !== 'true' && actions.paymentUnsucessfull()
     } else if (location.query.hasOwnProperty('csob') || location.query.hasOwnProperty('gp_webpay')) {
@@ -34,7 +34,7 @@ class NewReservationOverviewPage extends Component {
     }
 
     if (location.query.hasOwnProperty('garage_id')) {
-      pageBase.setGarage(+location.query.garage_id)
+      pageBaseActions.setGarage(+location.query.garage_id)
     }
   }
 
@@ -146,5 +146,8 @@ class NewReservationOverviewPage extends Component {
 
 export default connect(
   state => ({ state: state.newReservation }),
-  dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch), pageBase: bindActionCreators({ setGarage }, dispatch) })
+  dispatch => ({
+    actions:         bindActionCreators(newReservationActions, dispatch),
+    pageBaseActions: bindActionCreators({ setGarage }, dispatch)
+  })
 )(NewReservationOverviewPage)
