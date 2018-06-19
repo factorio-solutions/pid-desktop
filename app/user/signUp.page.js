@@ -51,6 +51,18 @@ class SignUpPage extends Component {
 
   goBack = () => nav.to('/')
 
+  successConfirm = () => {
+    this.props.actions.clearForm()
+    this.goBack()
+  }
+
+  successContent = (
+    <div>
+      { t([ 'signup_page', 'success' ]) } <br />
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.successConfirm} type="confirm" />
+    </div>
+  )
+
   render() {
     const { actions, state } = this.props
 
@@ -72,6 +84,7 @@ class SignUpPage extends Component {
           <Localization />
 
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error !== undefined} />
+          <Modal show={state.success}>{this.successContent}</Modal>
           <div className={styles.signUpPage}>
             <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
               <PatternInput
