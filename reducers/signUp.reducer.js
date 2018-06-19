@@ -1,19 +1,21 @@
 import {
+  REGISTER_REQUEST,
+  REGISTER_FAILURE,
+  REGISTER_SUCCESS,
   REGISTER_SET_NAME,
   REGISTER_SET_PHONE,
   REGISTER_SET_EMAIL,
   REGISTER_SET_PASSWORD,
-  REGISTER_SET_CONFIRMATION,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
+  REGISTER_SET_CLEAR_FORM,
   REGISTER_SET_RESET_TOKEN,
+  REGISTER_SET_CONFIRMATION,
   REGISTER_SET_ACCEPT_TERMS_OF_SERVICE
 }  from '../actions/signUp.actions'
 
 const initialState = {
   fetching: false,
   error:    undefined,
+  success:  false,
 
   name:                 { value: '', valid: false },
   phone:                { value: '', valid: false },
@@ -31,7 +33,7 @@ export default function signUp(state = initialState, action) {
     case REGISTER_REQUEST:
       return {
         ...state,
-        fetching: true
+        fetching: !state.fetching
       }
 
     case REGISTER_FAILURE:
@@ -44,7 +46,7 @@ export default function signUp(state = initialState, action) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        fetching: false
+        success: true
       }
 
     case REGISTER_SET_NAME:
@@ -87,6 +89,11 @@ export default function signUp(state = initialState, action) {
       return {
         ...state,
         acceptTermsOfService: action.value
+      }
+
+    case REGISTER_SET_CLEAR_FORM:
+      return {
+        ...initialState
       }
 
     default:
