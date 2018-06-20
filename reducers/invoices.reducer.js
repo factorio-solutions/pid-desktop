@@ -5,17 +5,18 @@ import {
   INVOICES_SET_PAST,
   INVOICES_SET_REASON,
   INVOICES_TOGGLE_REASON_MODAL,
-  INVOICSE_SET_FILTERED_INVOICES
+  INVOICES_SET_USERS_INVOICES
 }  from '../actions/invoices.actions'
 
-const defaultState = { invoices:         [],
-  clients:          [],
-  client_id:        undefined,
-  past:             false,
-  reason:           '', // reason for cancelling invoice
-  invoice_id:       undefined, // currently canceling invoice
-  showModal:        false,
-  filteredInvoices: [] // invoices filtered by user via table
+const defaultState = {
+  invoices:      [],
+  clients:       [],
+  client_id:     undefined,
+  past:          false,
+  reason:        '', // reason for cancelling invoice
+  invoice_id:    undefined, // currently canceling invoice
+  showModal:     false,
+  usersInvoices: []
 }
 
 
@@ -60,10 +61,10 @@ export default function invoices(state = defaultState, action) {
         invoice_id: !state.showModal ? action.value : undefined
       }
 
-    case INVOICSE_SET_FILTERED_INVOICES:
+    case INVOICES_SET_USERS_INVOICES:
       return {
         ...state,
-        filteredInvoices: action.value
+        usersInvoices: action.value
       }
 
     default:

@@ -1,8 +1,8 @@
-import actionFactory       from '../helpers/actionFactory'
-import { request }         from '../helpers/request'
-import requestPromise      from '../helpers/requestPromise'
-import { download }        from '../helpers/download'
-import { parseParameters } from '../helpers/parseUrlParameters'
+import actionFactory                  from '../helpers/actionFactory'
+import { request }                    from '../helpers/request'
+import requestPromise                 from '../helpers/requestPromise'
+import { parseParameters }            from '../helpers/parseUrlParameters'
+import { download, downloadMultiple } from '../helpers/download'
 
 import { setCustomModal, setError } from './pageBase.actions'
 import { t }                        from '../modules/localization/localization'
@@ -58,9 +58,13 @@ export function destroyRecurringReservations(id) {
   }
 }
 
-export function downloadInvoice(id) {
+export function downloadInvoice(ids) {
   return () => {
-    download(`${id}.pdf`, DOWNLOAD_INVOICE, { id })
+    if (ids.length === 1) {
+      download(`${ids[0]}.pdf`, DOWNLOAD_INVOICE, { id: ids[0] })
+    } else {
+      downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, ids)
+    }
   }
 }
 
