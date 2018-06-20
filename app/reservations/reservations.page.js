@@ -100,7 +100,7 @@ class ReservationsPage extends Component {
     nav.to('/reservations/newReservation')
   }
 
-  downloadClick = id => this.props.actions.downloadInvoice(id)
+  // downloadClick = ids => this.props.actions.downloadInvoice(ids)
 
   interuptClick = reservation => this.props.interuptionActions.setReservation(reservation)
 
@@ -219,28 +219,28 @@ class ReservationsPage extends Component {
                 />
               }
               {reservation.approved && reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
-              <LabeledRoundButton
-                label={t([ 'reservations', 'interuptReservation' ])}
-                content={<span className="fa fa-pause" aria-hidden="true" />}
-                onClick={() => this.interuptClick(reservation)}
-                type="action"
-              />
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'interuptReservation' ])}
+                  content={<span className="fa fa-pause" aria-hidden="true" />}
+                  onClick={() => this.interuptClick(reservation)}
+                  type="action"
+                />
               }
               {!reservation.approved && reservation.client === null &&
-              <LabeledRoundButton
-                label={t([ 'reservations', 'payReservation' ])}
-                content={<i className="fa fa-credit-card" aria-hidden="true" />}
-                onClick={() => { actions.payReservation(reservation) }}
-                type="action"
-              />
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'payReservation' ])}
+                  content={<i className="fa fa-credit-card" aria-hidden="true" />}
+                  onClick={() => actions.payReservation(reservation)}
+                  type="action"
+                />
               }
-              {reservation.invoice_item && reservation.invoice_item.invoice && reservation.invoice_item.invoice.payed &&
-              <LabeledRoundButton
-                label={t([ 'reservations', 'downloadInvoice' ])}
-                content={<span className="fa fa-download" aria-hidden="true" />}
-                onClick={() => { this.downloadClick(reservation.invoice_item.invoice.id) }}
-                type="action"
-              />
+              {reservation.invoices.length > 0 &&
+                <LabeledRoundButton
+                  label={t([ 'reservations', 'downloadInvoice' ])}
+                  content={<span className="fa fa-download" aria-hidden="true" />}
+                  onClick={() => actions.downloadInvoice(reservation.invoices.map(invoice => invoice.id))}
+                  type="action"
+                />
               }
               {moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ?
                 <LabeledRoundButton

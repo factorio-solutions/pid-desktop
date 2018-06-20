@@ -148,7 +148,7 @@
 		"EditGarage": "Edit garage",
 		"EditGarageHint": "Here you can find a visual overview of your garage. You can select various modes in the upper left-hand corner.\n\nClients: individual clients are distinguished by color.\nAgreements: individual agreements are distinguished by color.\nReservations: individual reservations are distinguished by color.\nPrices: individual price settings are distinguished by color.\nCars: individual cars are distinguished by color.\n\nIn the upper right-hand corner you can choose either the current status or the situation on a specific date.",
 		"Occupancy": "Occupancy",
-		"Invoices": "Invoices",
+		"Invoices": "Accounting documents",
 		"tableView": "table view",
 		"cardView": "card view",
 		"marketing": "Marketing",
@@ -942,7 +942,11 @@
 		"donwloadXlsx": "Download XLSX",
 		"donwloadInvoices": "Download invoices",
 		"donwloadXML": "Pohoda XML",
-		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
+		"selectYourPohodaIc": "Select IČ of company you are accounting for:",
+		"invoices": "Invoices",
+		"simplifiedTaxReceipts": "Simplified tax receipts",
+		"canceledInvoices": "Canceled invoices",
+		"userName": "User"
 	},
 	"resetPassword": {
 		"send": "A password reset email has been sent to your address.",

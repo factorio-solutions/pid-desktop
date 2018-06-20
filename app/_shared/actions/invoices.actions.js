@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { request }      from '../helpers/request'
+import requestPromise   from '../helpers/requestPromise'
 import { downloadCSV }  from '../helpers/downloadCSV'
 import { downloadXLSX } from '../helpers/downloadXLSX'
 import { formatTime }   from '../helpers/time'
@@ -17,7 +18,8 @@ import {
   UPDATE_INVOICE,
   REMINDER_NOTIFICATION,
   DOWNLOAD_INVOICE,
-  PAY_INVOICE
+  PAY_INVOICE,
+  GET_USERS_INVOICES
 } from '../queries/invoices.queries'
 
 import {
@@ -33,7 +35,7 @@ export const INVOICES_SET_PAST = 'INVOICES_SET_PAST'
 export const INVOICES_SET_REASON = 'INVOICES_SET_REASON'
 export const INVOICES_SET_INVOICE_ID = 'INVOICES_SET_INVOICE_ID'
 export const INVOICES_TOGGLE_REASON_MODAL = 'INVOICES_TOGGLE_REASON_MODAL'
-export const INVOICSE_SET_FILTERED_INVOICES = 'INVOICSE_SET_FILTERED_INVOICES'
+export const INVOICES_SET_USERS_INVOICES = 'INVOICES_SET_USERS_INVOICES'
 
 
 export const setInvoices = actionFactory(INVOICES_SET_INVOICES)
@@ -41,14 +43,14 @@ export const setClients = actionFactory(INVOICES_SET_CLIENTS)
 export const setClientId = actionFactory(INVOICES_SET_CLIENT_ID)
 export const setReason = actionFactory(INVOICES_SET_REASON)
 export const toggleReason = actionFactory(INVOICES_TOGGLE_REASON_MODAL)
-export const setFilteredInvoices = actionFactory(INVOICSE_SET_FILTERED_INVOICES)
+export const setUsersInvoices = actionFactory(INVOICES_SET_USERS_INVOICES)
 
-export function setPast(value, garageId) {
+
+export function setPast(value) {
   return dispatch => {
     dispatch({ type: INVOICES_SET_PAST,
       value
     })
-    dispatch(initInvoices(garageId))
   }
 }
 
@@ -79,9 +81,16 @@ export function initInvoices(garageId) {
     request(onSuccess,
       GET_INVOICES,
       { garage_id: garageId && +garageId,
-        past:      state.past
+        past:      true
       }
     )
+  }
+}
+
+export function initUserInvoices() {
+  return dispatch => {
+    requestPromise(GET_USERS_INVOICES)
+    .then(data => dispatch(setUsersInvoices(data.users_invoices)))
   }
 }
 
@@ -155,8 +164,7 @@ export function stornoInvoice(id, garage_id) {
 
 export function downloadInvoice(id) {
   return (dispatch, getState) => {
-    const invoice = getState().invoices.invoices.find(invoice => invoice.id === id)
-    download(`${invoice.id}.pdf`, DOWNLOAD_INVOICE, { id })
+    download(`${id}.pdf`, DOWNLOAD_INVOICE, { id })
   }
 }
 
@@ -179,9 +187,7 @@ export function reminder(id) {
   }
 }
 
-function invoicesToArray(getState) {
-  const invoices = getState().invoices.filteredInvoices
-
+function invoicesToArray(invoices) {
   const header = [ [
     t([ 'invoices', 'invoiceNumber' ]),
     'id',
@@ -210,24 +216,22 @@ function invoicesToArray(getState) {
   ], header)
 }
 
-export function generateCsv() {
-  return (dispatch, getState) => {
-    const data = invoicesToArray(getState)
+export function generateCsv(invoices) {
+  return () => {
+    const data = invoicesToArray(invoices)
     downloadCSV(data)
   }
 }
 
-export function generateXlsx() {
-  return (dispatch, getState) => {
-    const data = invoicesToArray(getState)
+export function generateXlsx(invoices) {
+  return () => {
+    const data = invoicesToArray(invoices)
     downloadXLSX(data)
   }
 }
 
-
-export function downloadZip() {
-  return (dispatch, getState) => {
-    const invoices = getState().invoices.filteredInvoices
+export function downloadZip(invoices) {
+  return () => {
     downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, invoices.map(invoice => invoice.id))
   }
 }
