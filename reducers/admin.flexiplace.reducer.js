@@ -1,11 +1,11 @@
 import {
   ADMIN_FLEXIPLACE_PRESET_PRICING,
   ADMIN_FLEXIPLACE_SET_CURRENCIES,
-  ADMIN_FLEXIPLACE_SET_PRICING
+  ADMIN_FLEXIPLACE_SET_PRICING,
+  ADMIN_FLEXIPLACE_TOGGLE_HIGHLIGHT
 } from '../actions/admin.flexiplace.actions'
 
 const defaultState = {
-  // pricings:   [],
   currencies: [],
   pricing:    { // new pricing
     currency_id:             undefined, // selected currency
@@ -14,7 +14,9 @@ const defaultState = {
     exponential_day_price:   undefined,
     exponential_week_price:  undefined,
     exponential_month_price: undefined,
-    weekend_price:           undefined
+    weekend_price:           undefined,
+
+    highlight: false
   }
 }
 
@@ -23,12 +25,14 @@ export default function adminFlexiplace(state = defaultState, action) {
   switch (action.type) {
 
     case ADMIN_FLEXIPLACE_PRESET_PRICING:
-      return { ...state,
+      return {
+        ...state,
         pricing: action.value
       }
 
     case ADMIN_FLEXIPLACE_SET_CURRENCIES:
-      return { ...state,
+      return {
+        ...state,
         currencies: action.value
       }
 
@@ -58,6 +62,11 @@ export default function adminFlexiplace(state = defaultState, action) {
         }
       }
 
+    case ADMIN_FLEXIPLACE_TOGGLE_HIGHLIGHT:
+      return {
+        ...state,
+        highlight: !state.highlight
+      }
 
     default:
       return state
