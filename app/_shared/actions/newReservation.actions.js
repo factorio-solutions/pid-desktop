@@ -588,6 +588,17 @@ export function downloadGarage(id) {
       if (!state.reservation) {
         dispatch(autoSelectPlace())
       }
+
+      // Unselect place if it is no longer available
+      if (state.place_id) {
+        const selectedPlace = garage.floors.reduce((place, floor) => {
+          return place || floor.places.find(p => p.id === state.place_id)
+        }, undefined)
+        if (!selectedPlace.available) {
+          dispatch(setPlace({ id: undefined }))
+        }
+      }
+
       hideLoading(dispatch)
     })
   }
