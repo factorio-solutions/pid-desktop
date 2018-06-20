@@ -133,7 +133,7 @@ export class Page extends Component {
 
     const sideMenuContent = (<div>
       {state.current_user ? currentUserInfo : <div>{t([ 'mobileApp', 'page', 'userInfoUnavailable' ])}</div>}
-      {state.current_user && state.current_user.secretary && divider }
+      {state.current_user && state.current_user.secretary && divider}
       {state.current_user && state.current_user.secretary &&
         <div className={styles.buttonGroup}>
           <ButtonGroup
@@ -150,21 +150,6 @@ export class Page extends Component {
           />
         </div>
       }
-      {divider}
-      <div className={styles.buttonGroup}>
-        <ButtonGroup
-          buttons={[
-            { content:  t([ 'mobileApp', 'page', 'personal' ]),
-              onClick:  () => actions.setPersonal(true),
-              selected: state.personal
-            },
-            { content:  t([ 'mobileApp', 'page', 'work' ]),
-              onClick:  () => actions.setPersonal(false),
-              selected: !state.personal
-            }
-          ]}
-        />
-      </div>
       {divider}
       <ButtonStack divider={divider}>
         {[ <MobileMenuButton key="sign-out" icon="sign-out" label={t([ 'mobileApp', 'page', 'logOut' ])} onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]}
