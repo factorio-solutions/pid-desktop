@@ -8,7 +8,8 @@ import {
   ADMIN_GO_INTERNAL_SET_EXPONENTIAL_DAY_PRICE,
   ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE,
   ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE,
-  ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE
+  ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE,
+  ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT
 }  from '../actions/admin.goInternal.actions'
 
 const defaultState = {
@@ -23,7 +24,9 @@ const defaultState = {
   exponential_day_price:   { value: '', valid: false },
   exponential_week_price:  { value: '', valid: false },
   exponential_month_price: { value: '', valid: false },
-  weekend_price:           { value: '', valid: false }
+  weekend_price:           { value: '', valid: false },
+
+  highlight: false
 }
 
 
@@ -117,6 +120,12 @@ export default function adminGoInternal(state = defaultState, action) {
     case ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE:
       return { ...state,
         weekend_price: { value: action.value, valid: action.valid }
+      }
+
+    case ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT:
+      return {
+        ...state,
+        highlight: !state.highlight
       }
 
     default:

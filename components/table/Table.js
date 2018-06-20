@@ -173,7 +173,7 @@ export default class Table extends Component {
           case 'date':
             return sortType === 'asc' ? moment(a || '1970/1/1').diff(moment(b || '1970/1/1')) : moment(b || '1970/1/1').diff(moment(a || '1970/1/1'))
           case 'string':
-            return a.toLowerCase() < b.toLowerCase() ? (sortType === 'asc' ? -1 : 1) : (a.toLowerCase() > b.toLowerCase() ? (sortType === 'asc' ? 1 : -1) : 0)
+            return (a || '').toLowerCase() < (b || '').toLowerCase() ? (sortType === 'asc' ? -1 : 1) : ((a || '').toLowerCase() > (b || '').toLowerCase() ? (sortType === 'asc' ? 1 : -1) : 0)
           case 'number':
             return sortType === 'asc' ? (parseFloat(a) || 0) - (parseFloat(b) || 0) : (parseFloat(b) || 0) - (parseFloat(a) || 0)
           case 'boolean':

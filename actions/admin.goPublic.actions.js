@@ -1,10 +1,13 @@
 import { request }   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
-import * as nav      from '../helpers/navigation'
 import { t }         from '../modules/localization/localization'
 
 import { setCustomModal } from './pageBase.actions'
-import { GET_GARAGE, CREATE_PRICING, UPDATE_PRICING } from '../queries/admin.goPublic.queries.js'
+import {
+  GET_GARAGE,
+  CREATE_PRICING,
+  UPDATE_PRICING
+} from '../queries/admin.goPublic.queries.js'
 
 
 export const ADMIN_GO_PUBLIC_SET_GARAGE = 'ADMIN_GO_PUBLIC_SET_GARAGE'
@@ -17,6 +20,7 @@ export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_DAY_PRICE = 'ADMIN_GO_PUBLIC_SET_EX
 export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE = 'ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE'
 export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE = 'ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE'
 export const ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE = 'ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE'
+export const ADMIN_GO_PUBLIC_TOGGLE_HIGHLIGHT = 'ADMIN_GO_PUBLIC_TOGGLE_HIGHLIGHT'
 
 
 const patternInputActionFactory = type => (value, valid) => ({ type, valid, value: parseInt(value, 10) })
@@ -31,6 +35,7 @@ export const setExponentialDayPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_
 export const setExponentialWeekPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE)
 export const setExponentialMonthPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE)
 export const setWeekendPricing = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE)
+export const toggleHighlight = actionFactory(ADMIN_GO_PUBLIC_TOGGLE_HIGHLIGHT)
 
 
 export function initGoPublic() {
