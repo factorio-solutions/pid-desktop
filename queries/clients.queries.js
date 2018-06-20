@@ -9,6 +9,7 @@ export const GET_CLIENTS = `{
     all_invoices_paid
     created_at
     is_admin
+    is_pending
     contracts{
       from
       to
