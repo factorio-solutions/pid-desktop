@@ -575,7 +575,7 @@ export function downloadGarage(id) {
               </div>
               {pricing.weekend_price && <div>
                 <span>
-                  <b>{t([ 'newPricing', 'weekendPrice' ])}:</b> {pricing.weekend_price} {symbol}
+                  <b>{t([ 'newPricing', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol}
                 </span>
               </div>}
             </div>)
