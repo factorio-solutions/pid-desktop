@@ -419,7 +419,7 @@ export function intiEditGarageOrder(id) {
         response.data.garage.floors
         .reduce((arr, floor) => [ ...arr, ...floor.places ], [])
         .filter(place => place.priority !== 0)
-        .sort((a, b) => { return b.priority - a.priority })
+        .sort((a, b) => b.priority - a.priority)
         .map(place => place.label)
       ))
 
@@ -637,23 +637,16 @@ function prepareLayoutOrder() {
 }
 
 function floorsForRequest(state) {
+  const reverseOrder = [ ...state.order ].reverse()
   return state.floors.map(floor => {
-    floor.places = floor.places.map(place => {
-      let priority = state.order.findIndex(p => p === place.label)
-      if (priority === undefined) {
-        priority = 0
-      } else {
-        priority = state.order.length - priority
-      }
-      return {
-        ...place,
-        length:   +state.length || null,
-        height:   +state.height || null,
-        width:    +state.width || null,
-        weight:   +state.weight || null,
-        priority: priority
-      }
-    })
+    floor.places = floor.places.map(place => ({
+      ...place,
+      length:   +state.length || null,
+      height:   +state.height || null,
+      width:    +state.width || null,
+      weight:   +state.weight || null,
+      priority: reverseOrder.findIndex(p => p === place.label) + 1
+    }))
     return removeKeys(floor, [ 'from', 'to' ])
   })
 }
