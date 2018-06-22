@@ -639,12 +639,19 @@ function prepareLayoutOrder() {
 function floorsForRequest(state) {
   return state.floors.map(floor => {
     floor.places = floor.places.map(place => {
+      let priority = state.order.findIndex(p => p === place.label)
+      if (priority === undefined) {
+        priority = 0
+      } else {
+        priority = state.order.length - priority
+      }
       return {
         ...place,
-        length: +state.length || null,
-        height: +state.height || null,
-        width:  +state.width || null,
-        weight: +state.weight || null
+        length:   +state.length || null,
+        height:   +state.height || null,
+        width:    +state.width || null,
+        weight:   +state.weight || null,
+        priority: priority
       }
     })
     return removeKeys(floor, [ 'from', 'to' ])
