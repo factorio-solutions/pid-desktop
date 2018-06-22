@@ -34,6 +34,36 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
   }
 }
 `
+
+export const GET_USERS_INVOICES = `query {
+  users_invoices{
+    id
+    invoice_number
+    longterm_rent
+    invoice_date
+    due_date
+    payed
+    ammount
+    subject
+    canceled
+    is_storno_invoice
+    vat
+    currency{
+      symbol
+    }
+    account{
+      garage{
+        name
+        id
+        is_admin
+      }
+    }
+    user{
+      full_name
+    }
+  }
+}
+`
 // Get account details
 // export const GET_ACCOUNT_DETAILS = `query GetAccountDetails ($id: Id!) {
 //   accounts(id:$id){
