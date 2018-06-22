@@ -49,7 +49,8 @@
 		"userNotCreated": "Der Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon.",
 		"loading": "Laden",
 		"termsOfService": "Nutzungsbedingungen",
-		"acceptTerms": "Ich stimme den Nutzungsbedingungen zu. "
+		"acceptTerms": "Ich stimme den Nutzungsbedingungen zu. ",
+		"success": "DE: signup_page.success"
 	},
 	"pageBase": {
 		"noFileSelected": "Keine Datei ausgewählt",
@@ -96,22 +97,22 @@
 		"error": "Fehler",
 		"success": "Erfolg",
 		"inviteUser": "Neuen Benutzer einladen",
-		"dashboardHint": "Hier sehen Sie einen Überblick über alle wichtigen Kontoinformationen. <p>odstavec</p>\nAuf dem Parkhausplan sehen Sie die Stellplätze die gerade reserviert sind. <p>odstavec</p>\nIn den Neuigkeiten sehen Sie Aktuelles aus der Welt von Park-it-direct. <p>odstavec</p>\n\nUnter „Aktueller Zustand“ sehen Sie eine kurze Statistik zu den freien und belegten Stellplätzen.\n\n",
+		"dashboardHint": "Herzlich willkommen bei Park-it-direct!\n\nSie können diese blaue Spalte mit Hinweisen ausblenden, wenn Sie auf den Kreuz in der linken Ecke klicken. Um es wieder zu aktivieren, klicken Sie auf das blaue Informationssymbol, das in der oberen rechten Ecke erscheint.\n\nUm sich in Park-it-direct zu bewegen, benutzen Sie das Menü auf der linken Seite.\n\nDer schnellste Weg, um eine neue Reservierung zu erstellen, ist der blaue Knopf oben!\n\nBenötigen Sie weitere Hilfe? Nutzen Sie bitte unser Intercom - der Kommunikator finden Sie in der rechten unteren Ecke. Wir helfen Ihnen gerne weiter! :-)",
 		"issuesHint": "DE: pageBase.issuesHint",
 		"analyticsHint": "Hier können Sie verschiedene Statistiken überprüfen.",
-		"invoicesHint": "Hier finden Sie eine Liste der ausgestellten Rechnungen. \n\nLinks oben können Sie die Rechnungen nach Kunden filtern. Rechts oben können Sie zwischen der Anzeige aktueller Rechnungen und dem gesamten Verlauf umschalten.",
+		"invoicesHint": "Hier finden Sie eine Liste der ausgestellten Rechnungen. \n\nLinks oben können Sie auswählen, ob Sie Rechnungen, vereinfachte Steuerbelege oder Gutschriften / Korrektursteuerbelege anzeigen möchten.\n\nRechnungen beziehen sich auf langfristige Verträge für Parkplätze, vereinfachte Steuerdokumente beziehen sich auf vom Parker bezahlte Parkgebühren unter dem Betrag von 10.000 CZK, und Gutschriften / korrigierende Steuerdokumente beziehen sich auf stornierte Reservierungen, die von Parkern bezahlt werden.\n\nLinks oben können Sie die Dokumente auch nach Klienten filtern.\n\nRechts oben können Sie wählen, ob Sie aktuelle Dokumente oder den gesamten Verlauf anzeigen möchten.",
 		"newContractHint": "Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)",
 		"ReservationButtonHint": "DE: pageBase.ReservationButtonHint",
 		"mrParkitIntegrationHint": "DE: pageBase.mrParkitIntegrationHint",
-		"goPublicHint": "Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.\n\nSie können aus folgenden Berechnugsmögichkeiten wählen:\nPauschalpreis pro 1 Std.\nVariabler Preis (Preis ist von der Länge der Reservierung abhängig)\nWochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)\n\nWählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis.",
+		"goPublicHint": "Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.\n\nSie können aus folgenden Berechnugsmögichkeiten wählen:\nPauschalpreis pro 1 Std.\n\nVariabler Preis (Preis ist von der Länge der Reservierung abhängig)\n\nWochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)\n\n\nWählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis.",
 		"goInternalHint": "DE: pageBase.goInternalHint",
 		"financeHint": "Im oberen Bereich können Sie aktivieren und einrichten, wie Ihre Kunden für die Parkhausnutzung zahlen können.\n\nIm Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen langfristigen Mietverhältnisse, ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.\n\nIm Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.\n",
 		"financePaypalHint": "DE: pageBase.financePaypalHint",
 		"financeCSOBHint": "DE: pageBase.financeCSOBHint",
 		"pidSettingsHint": "DE: pageBase.pidSettingsHint",
 		"activityLogHint": "Hier finden Sie ein Verzeichnis aller Aktivitäten im Park-it-direct-System mit Angaben zum Charakter der Aktion, zum Urheber und zum Zeitpunkt.",
-		"reservationsHint": "Hier finden Sie eine Liste aller Reservierungen – Ihre eigenen Reservierungen und die Reservierungen, die andere Personen für Ihr Parkhaus vorgenommen haben.",
-		"newReservationHint": "Hier können Sie eine neue Reservierung erstellen. Wählen Sie zuerst den Benutzer und das Parkhaus aus, anschließend die Daten und schließlich den Stellplatz. Voilà.",
+		"reservationsHint": "Hier finden Sie die Liste der Reservierungen.\n\nAbhängig von Ihren Rechten sehen Sie entweder Ihre Reservierung oder die Reservierung aller Mitglieder Ihres Kunden oder der gesamten Garage. ",
+		"newReservationHint": "Hier können Sie eine neue Reservierung erstellen. Das Reservierungsformular wird in mehreren Schritten erweitert und die Optionen sind von Ihren Rechten und Garageneinstellungen abhängig.\n\nZuerst wählen Sie den Benutzer - entweder sich selbst, ein anders Mitglied des Kunden oder Sie können ein neues Internal oder Gast anlegen.\n\nIm nächsten Schritt wählen Sie eine Garage, den Kunden und einen Termin.\n\nWenn die Einstellung dies zulässt, können Sie wählen, wer für die Reservierung zahtl (ob Parker oder ausgewählter Kunde) und den Text der SMS-Reservierungsbenachrichtigung auswählen oder ändern.\n\nSobald Sie alle Details eingeben, können Sie Ihre Buchung bestätigen. Wenn die Reservierung vom Kunden bezahlt wird, wird die Reservierung abgeschlossen. Wenn es von einem Parker bezahlt wird, ist der nächste Schritt die Zahlung.\n\nWenn Sie für die Reservierung bezahlen, wird die Zahlung im nächsten Schritt erfolgen. Wenn es ein Gast ist, erhält er / sie Anweisungen in der E-Mail.",
 		"garagesHint": "Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.\nLinks oben können Sie auswählen, welcher Wert dargestellt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder für das aktuelle Datum angezeigt werden soll.",
 		"newGarageHint": "Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.",
 		"newGarageFloorsHint": "Hier können Sie die Stockwerke und jeweilige Parkplätze erstellen.\n\nZu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Herstellung. Sie können auch eine der Vorlagen verwenden.\n\nWeiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen.",
@@ -123,7 +124,7 @@
 		"newClientHint": "Hier können Sie ein neues Kundenkonto erstellen. Ein Kundenkonto ist eine Einheit, die Informationen über den Kunden, dessen Benutzer, zugewiesene Stellplätze usw. versammelt. Sie können diese Daten in den entsprechenden Abschnitten des Systems eingeben.",
 		"clientUsersHint": "In diesem Abschnitt können Sie die Benutzer eines bestimmten Kundenkontos verwalten. Durch die Auswahl des Benutzeres können Sie die Benutzerrechte anzeigen und ändern. Außerdem können Sie neue Benutzer zum ausgewählten Kundenkonto einladen. Versendete Einladungen, die noch bestätigt werden müssen, werden im Abschnitt „Ausstehende Einladungen“ unten angezeigt.",
 		"settingsHint": "In den Einstellungen können Sie Ihre eigenen Einstellungen vornehmen – Sie können die Anzeigesprache ändern und diese blaue Kontexthilfe in der gesamten Anwendung ein- bzw. ausblenden.",
-		"usersHint": "Hier sehen Sie eine Liste aller Benutzer. Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat.",
+		"usersHint": "Hier sehen Sie eine Liste aller Benutzer.\n\nWählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat.",
 		"allKnownUsers": "Alle bekannten Benutzer",
 		"editClientHint": "Hier können Sie die Kundendaten bearbeiten.",
 		"notificationsHint": "Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen.",
@@ -165,7 +166,7 @@
 		"garageGarageUsersHint": "Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann.",
 		"EditUserHint": "Hier können Sie die eigenen Angaben ändern.",
 		"orderGarageModuleHint": "Hier können Sie ein Zutritt- Modul bestellen.",
-		"reservationOverviewHint": "Hier können Sie kontrolieren, ob die Daten stimmen.",
+		"reservationOverviewHint": "Hier können Sie prüfen, ob die Reservierungsdaten korrekt sind. Die Reservierung  wird dann mit der Zahlung nebgeschlossen.\n\nDie Auswahl der Zahlungsmethoden kann man in der Einstellung der Garage anpassen.",
 		"editInvoiceHint": "Durch die OK Taste wird eine neue Rechnung mit korrigierten Daten erstellt.",
 		"editContractHint": "Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis.",
 		"unredNotifications": {
@@ -227,8 +228,6 @@
 		"newHostText": "DE: newReservation.newHostText",
 		"newInternal": "DE: newReservation.newInternal",
 		"newInternalText": "DE: newReservation.newInternalText",
-		"dropButtonText": "Neuer Benutzer",
-		"dropButtonDescrText": "DE: newReservation.dropButtonDescrText",
 		"hostsName": "Rgelmäßiger Gast - Name",
 		"phone": "Telefonnummer",
 		"hostsPhone": "Regelmäßiger Gast Telefonnummer",
@@ -295,7 +294,8 @@
 		"removeUser": "Benutzer entfernen",
 		"resendInvitation": "E-Mail erneut senden",
 		"resendSuccessfull": "E-Mail wurde erfolgreich gesendet.",
-		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden."
+		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden.",
+		"timeCredit": "DE: clientUsers.timeCredit"
 	},
 	"reservations": {
 		"name": "Name",
@@ -576,7 +576,27 @@
 		"smsSettings": "SMS Modul",
 		"activate": "Aktivieren",
 		"deactivate": "Deaktivieren",
-		"timeCredit": "DE: newClient.timeCredit"
+		"timeCredit": "DE: newClient.timeCredit",
+		"onetimeAddition": "DE: newClient.onetimeAddition",
+		"onetimeRemoval": "DE: newClient.onetimeRemoval",
+		"amountToAdd": "DE: newClient.amountToAdd",
+		"amountToRemove": "DE: newClient.amountToRemove",
+		"onetimeAdditionPlaceholder": "30",
+		"timeCreditDescription": "DE: newClient.timeCreditDescription",
+		"timeCreditStatistics": "DE: newClient.timeCreditStatistics",
+		"hoursThatCanBeParked": "DE: newClient.hoursThatCanBeParked",
+		"creditsThatCanBeDistributed": "DE: newClient.creditsThatCanBeDistributed",
+		"creditsDistributed": "DE: newClient.creditsDistributed",
+		"creditsDistributedOverMax": "DE: newClient.creditsDistributedOverMax",
+		"cteditsOutOfBoundException": "DE: newClient.cteditsOutOfBoundException",
+		"currencyName": "DE: newClient.currencyName",
+		"currencyNamePlaceholder": "DE: newClient.currencyNamePlaceholder",
+		"pricePerHour": "DE: newClient.pricePerHour",
+		"pricePerHourPlaceholder": "1",
+		"monthlyAmount": "DE: newClient.monthlyAmount",
+		"monthlyAmountPlaceholder": "60",
+		"onetimeAdd": "DE: newClient.onetimeAdd",
+		"onetimeRemove": "DE: newClient.onetimeRemove"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",
@@ -942,7 +962,11 @@
 		"donwloadXlsx": "XLSX herunterladen",
 		"donwloadInvoices": "Rechnungen herunterladen",
 		"donwloadXML": "DE: invoices.donwloadXML",
-		"selectYourPohodaIc": "DE: invoices.selectYourPohodaIc"
+		"selectYourPohodaIc": "DE: invoices.selectYourPohodaIc",
+		"invoices": "DE: invoices.invoices",
+		"simplifiedTaxReceipts": "DE: invoices.simplifiedTaxReceipts",
+		"canceledInvoices": "DE: invoices.canceledInvoices",
+		"userName": "DE: invoices.userName"
 	},
 	"resetPassword": {
 		"send": "Eine E-Mail zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse versendet.",
@@ -1015,6 +1039,7 @@
 		"doNotRemoveReservations": "DE: newContract.doNotRemoveReservations"
 	},
 	"finance": {
+		"financeSettings": "DE: finance.financeSettings",
 		"paypal": "Paypal",
 		"csob": "ČSOB",
 		"gpWebpay": "Raiffeisenbank",
@@ -1098,6 +1123,7 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
+		"repeatTitle": "Wiederholen Einstellung",
 		"repeat": "Wiederholen: aus",
 		"repeatEnabled": "Wiederholen: ein",
 		"repeats": "Wiederholt",
@@ -1445,6 +1471,15 @@
 			"LongTerm": "netřeba překládat",
 			"Automation": "netřeba překládat",
 			"Integration": "netřeba překládat"
+		}
+	},
+	"cs": {
+		"occupancy": {
+			"createNewReservation": "Neue Reservierung machen",
+			"garage": "DE: cs.occupancy.garage",
+			"place": "DE: cs.occupancy.place",
+			"from": "DE: cs.occupancy.from",
+			"to": "DE: cs.occupancy.to"
 		}
 	}
 }
