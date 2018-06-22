@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import moment                          from 'moment'
 
 import Table         from '../../../_shared/components/table/Table'
 import ExportButtons from '../components/ExportButtons'
