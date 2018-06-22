@@ -149,7 +149,7 @@
 		"EditGarage": "Upravit garáž",
 		"EditGarageHint": "Zde najdete vizuální přehledy Vaší garáže. Možná zobrazení si vyberete v levém horním rohu.\n\nKlienti: jednotliví klienti jsou odlišeni barvou.\nDohody: jednotlivé dohody jsou odlišeny barvou\nRezervace: jednotlivé rezervace jsou odlišeny barvou\nCeny: jednotlivá nastavení ceny jsou odlišena barvou\nAuta: jednotlivá auta jsou odlišena barvou\n\nV pravém horním rohu si lze vybrat buď aktuální zobrazení, nebo zobrazení ke konkrétnímu datu.",
 		"Occupancy": "Obsazenost",
-		"Invoices": "Accounting documents",
+		"Invoices": "Účetní doklady",
 		"tableView": "Náhled tabulky",
 		"cardView": "Náhled karty",
 		"marketing": "Marketing",
