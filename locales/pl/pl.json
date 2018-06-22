@@ -49,7 +49,8 @@
 		"userNotCreated": "Nie udało się wytworzyć konta, być może już istnieje",
 		"loading": "Ładowanie",
 		"termsOfService": "warunkami świadczenia usług",
-		"acceptTerms": "Zgadzam się z "
+		"acceptTerms": "Zgadzam się z ",
+		"success": "PL: signup_page.success"
 	},
 	"pageBase": {
 		"noFileSelected": "Wybierz plik.",
@@ -227,8 +228,6 @@
 		"newHostText": "PL: newReservation.newHostText",
 		"newInternal": "PL: newReservation.newInternal",
 		"newInternalText": "PL: newReservation.newInternalText",
-		"dropButtonText": "PL: newReservation.dropButtonText",
-		"dropButtonDescrText": "PL: newReservation.dropButtonDescrText",
 		"hostsName": "Nazwisko regularnego gościa",
 		"phone": "PL: newReservation.phone",
 		"hostsPhone": "Telefon regularnego gościa",
@@ -295,7 +294,8 @@
 		"removeUser": "Usuń użytkownika",
 		"resendInvitation": "Wyślij ponownie",
 		"resendSuccessfull": "E-mail został wysłany.",
-		"userNotFound": "Nie znaleziono użytkownika."
+		"userNotFound": "Nie znaleziono użytkownika.",
+		"timeCredit": "PL: clientUsers.timeCredit"
 	},
 	"reservations": {
 		"name": "Użytkownik",
@@ -576,7 +576,27 @@
 		"smsSettings": "Moduł SMS",
 		"activate": "Aktywuj",
 		"deactivate": "Dezaktywuj",
-		"timeCredit": "PL: newClient.timeCredit"
+		"timeCredit": "PL: newClient.timeCredit",
+		"onetimeAddition": "PL: newClient.onetimeAddition",
+		"onetimeRemoval": "PL: newClient.onetimeRemoval",
+		"amountToAdd": "PL: newClient.amountToAdd",
+		"amountToRemove": "PL: newClient.amountToRemove",
+		"onetimeAdditionPlaceholder": "30",
+		"timeCreditDescription": "PL: newClient.timeCreditDescription",
+		"timeCreditStatistics": "PL: newClient.timeCreditStatistics",
+		"hoursThatCanBeParked": "PL: newClient.hoursThatCanBeParked",
+		"creditsThatCanBeDistributed": "PL: newClient.creditsThatCanBeDistributed",
+		"creditsDistributed": "PL: newClient.creditsDistributed",
+		"creditsDistributedOverMax": "PL: newClient.creditsDistributedOverMax",
+		"cteditsOutOfBoundException": "PL: newClient.cteditsOutOfBoundException",
+		"currencyName": "PL: newClient.currencyName",
+		"currencyNamePlaceholder": "PL: newClient.currencyNamePlaceholder",
+		"pricePerHour": "PL: newClient.pricePerHour",
+		"pricePerHourPlaceholder": "1",
+		"monthlyAmount": "PL: newClient.monthlyAmount",
+		"monthlyAmountPlaceholder": "60",
+		"onetimeAdd": "PL: newClient.onetimeAdd",
+		"onetimeRemove": "PL: newClient.onetimeRemove"
 	},
 	"inviteUser": {
 		"selectUser": "E-mail(e) użytkownika",
@@ -942,7 +962,11 @@
 		"donwloadXlsx": "Ściągnąć XLSX",
 		"donwloadInvoices": "Ściągnąć faktury",
 		"donwloadXML": "Pohoda XML",
-		"selectYourPohodaIc": "Wybierz REGON firmy, na którą wystawiona będzie faktura:"
+		"selectYourPohodaIc": "Wybierz REGON firmy, na którą wystawiona będzie faktura:",
+		"invoices": "PL: invoices.invoices",
+		"simplifiedTaxReceipts": "PL: invoices.simplifiedTaxReceipts",
+		"canceledInvoices": "PL: invoices.canceledInvoices",
+		"userName": "PL: invoices.userName"
 	},
 	"resetPassword": {
 		"send": "Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.",
@@ -1015,6 +1039,7 @@
 		"doNotRemoveReservations": "PL: newContract.doNotRemoveReservations"
 	},
 	"finance": {
+		"financeSettings": "PL: finance.financeSettings",
 		"paypal": "PayPal",
 		"csob": "ČSOB",
 		"gpWebpay": "Raiffeisenbank",
@@ -1098,6 +1123,7 @@
 		"pl": "Polski"
 	},
 	"recurringReservation": {
+		"repeatTitle": "Powtarzanie",
 		"repeat": "Powtarzanie: wyłączone",
 		"repeatEnabled": "Powtarzanie: włączone",
 		"repeats": "Powtarza się:",
@@ -1445,6 +1471,15 @@
 			"LongTerm": "netřeba překládat",
 			"Automation": "netřeba překládat",
 			"Integration": "netřeba překládat"
+		}
+	},
+	"cs": {
+		"occupancy": {
+			"createNewReservation": "PL: cs.occupancy.createNewReservation",
+			"garage": "PL: cs.occupancy.garage",
+			"place": "PL: cs.occupancy.place",
+			"from": "PL: cs.occupancy.from",
+			"to": "PL: cs.occupancy.to"
 		}
 	}
 }
