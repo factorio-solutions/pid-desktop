@@ -190,7 +190,7 @@ export default class Recurring extends Component {
     return (
       <Modal show={show}>
         <Form onSubmit={submit} onBack={onSubmit} submitable margin={false} modal>
-          <h2>{t([ 'recurringReservation', 'repeat' ])}</h2>
+          <h2>{t([ 'recurringReservation', 'repeatTitle' ])}</h2>
           <table className={styles.recurring}>
             <tbody>
               <tr>

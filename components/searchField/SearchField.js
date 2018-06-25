@@ -13,7 +13,8 @@ export default class SearchField extends Component {
     selected:        PropTypes.number,
     onChange:        PropTypes.func,
     buttons:         PropTypes.array,
-    placeholder:     PropTypes.string
+    placeholder:     PropTypes.string,
+    highlight:       PropTypes.bool
   }
 
   static defaultProps = {
@@ -91,7 +92,7 @@ export default class SearchField extends Component {
   }
 
   render() {
-    const { dropdownContent, buttons, placeholder, searchQuery, onChange } = this.props
+    const { dropdownContent, buttons, placeholder, searchQuery, onChange, highlight } = this.props
     let list = dropdownContent.map((item, index) => {
       const onClick = () => {
         item.onClick && item.onClick()
@@ -152,6 +153,7 @@ export default class SearchField extends Component {
           onFocus={this.show}
           onBlur={this.hide}
           ref={component => this.filter = component}
+          highlight={highlight}
         />
 
         {this.state.show &&

@@ -16,8 +16,9 @@ export const REGISTER_SET_NAME = 'REGISTER_SET_NAME'
 export const REGISTER_SET_PHONE = 'REGISTER_SET_PHONE'
 export const REGISTER_SET_EMAIL = 'LOGIN_SET_EMAIL' // listen to the same event
 export const REGISTER_SET_PASSWORD = 'REGISTER_SET_PASSWORD'
-export const REGISTER_SET_CONFIRMATION = 'REGISTER_SET_CONFIRMATION'
+export const REGISTER_SET_CLEAR_FORM = 'REGISTER_SET_CLEAR_FORM'
 export const REGISTER_SET_RESET_TOKEN = 'REGISTER_SET_RESET_TOKEN'
+export const REGISTER_SET_CONFIRMATION = 'REGISTER_SET_CONFIRMATION'
 export const REGISTER_SET_ACCEPT_TERMS_OF_SERVICE = 'REGISTER_SET_ACCEPT_SERVICIES'
 
 
@@ -27,9 +28,10 @@ export const setError = actionFactory(REGISTER_FAILURE)
 export const setName = patternInputActionFactory(REGISTER_SET_NAME)
 export const setPhone = patternInputActionFactory(REGISTER_SET_PHONE)
 export const setEmail = patternInputActionFactory(REGISTER_SET_EMAIL)
+export const clearForm = actionFactory(REGISTER_SET_CLEAR_FORM)
 export const setPassword = patternInputActionFactory(REGISTER_SET_PASSWORD)
-export const setConfirmation = patternInputActionFactory(REGISTER_SET_CONFIRMATION)
 export const setResetToken = actionFactory(REGISTER_SET_RESET_TOKEN)
+export const setConfirmation = patternInputActionFactory(REGISTER_SET_CONFIRMATION)
 export const setAcceptTermsOfService = actionFactory(REGISTER_SET_ACCEPT_TERMS_OF_SERVICE)
 
 
@@ -47,21 +49,16 @@ export function init(params) {
   }
 }
 
-export function register(callback = () => {}) {
+export function register() {
   return (dispatch, getState) => {
     const state = getState().signUp
 
-    const auth0LoginSuccess = () => {
-      dispatch({ type: REGISTER_SUCCESS })
-      callback()
-    }
-
     const apiCreateOnSuccess = response => {
       if (response.data.create_user == null) {
-        dispatch({ type: REGISTER_SUCCESS })
+        dispatch({ type: REGISTER_REQUEST })
         dispatch(setError(t([ 'signup_page', 'userNotCreated' ])))
       } else {
-        dispatch(login(state.email.value, state.password.value, !mobile, auth0LoginSuccess))
+        dispatch({ type: REGISTER_SUCCESS })
       }
     }
 

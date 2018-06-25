@@ -121,7 +121,7 @@ export function initGarageTurnover() {
 export function currency() {
   return (dispatch, getState) => {
     const state = getState().analyticsGarage
-    return state.reservations.length ? state.reservations[0].currency.symbol : state.contracts.length ? state.contracts[0].rent.currency.symbol : ''
+    return state.reservations.length > 0 ? state.reservations[0].currency.symbol : state.contracts.length > 0 ? state.contracts[0].rent.currency.symbol : ''
   }
 }
 
@@ -139,6 +139,8 @@ function addProperty(acc, property) {
 export function stateToData() {
   return (dispatch, getState) => {
     const state = getState().analyticsGarage
+    const from = moment(state.from, 'DD. MM. YYYY')
+    const to = moment(state.to, 'DD. MM. YYYY')
 
     let currentDate = moment(state.from, 'DD. MM. YYYY')
     let initialState = {}
@@ -157,11 +159,13 @@ export function stateToData() {
 
       return acc
     }, initialState)
-
     return state.contracts.reduce((acc, contract) => {
-      let currentDate = moment(contract.from)
-      while (currentDate.isBefore(moment(contract.to)) && currentDate.isBefore(moment(state.to, 'DD. MM. YYYY'))) { // stop it as soon as possible
-        if (currentDate.isAfter(moment(state.from, 'M/YYYY')) && currentDate.isBefore(moment(state.to, 'M/YYYY').add(1, 'month'))) {
+      const contractFrom = moment(contract.from)
+      const contractTo = moment(contract.to)
+      let currentDate = (from.isAfter(contractFrom) ? from : contractFrom).clone()
+
+      while (currentDate.isBefore(contractTo) && currentDate.isBefore(to)) { // stop it as soon as possible
+        if (currentDate.isAfter(contractFrom) && currentDate.isBefore(contractTo)) {
           const property = getProperty(currentDate, state.period)
           acc[property].contracts.push(contract)
         }
@@ -200,7 +204,7 @@ export function dataToArray(chartData, tableData, schema) {
              }, 0))
     }, 0) / chartDataArray.length
 
-    chartDataArray = chartDataArray.sort((a, b) => a.date > b.date).reduce((arr, interval) => {
+    chartDataArray = chartDataArray.reduce((arr, interval) => {
       const currentDate = moment(interval.date, `${state.period === 'month' ? 'M/YYYY' : 'W/GGGG'}`)
       const startOfMonth = currentDate.clone().startOf('month')
       const endOfMonth = currentDate.clone().endOf('month')

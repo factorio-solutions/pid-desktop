@@ -26,7 +26,6 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  // PAY_RESREVATION,
   GET_RESERVATION,
   GET_GARAGE_FREE_INTERVAL
 } from '../queries/newReservation.queries'
@@ -586,7 +585,7 @@ export function downloadGarage(id) {
               </div>
               {pricing.weekend_price && <div>
                 <span>
-                  <b>{t([ 'newPricing', 'weekendPrice' ])}:</b> {pricing.weekend_price} {symbol}
+                  <b>{t([ 'newPricing', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol}
                 </span>
               </div>}
             </div>)
@@ -615,6 +614,17 @@ export function downloadGarage(id) {
       if (!state.reservation) {
         dispatch(autoSelectPlace())
       }
+
+      // Unselect place if it is no longer available
+      if (state.place_id) {
+        const selectedPlace = garage.floors.reduce((place, floor) => {
+          return place || floor.places.find(p => p.id === state.place_id)
+        }, undefined)
+        if (!selectedPlace.available) {
+          dispatch(setPlace({ id: undefined }))
+        }
+      }
+
       hideLoading(dispatch)
     })
   }
@@ -684,7 +694,7 @@ export function submitReservation(id) {
                paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
                car_id:                   state.car_id,
                licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
-               url:                      ongoing ? undefined : window.location.href.split('?')[0],
+               url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
                begins_at:                timeToUTC(state.from),
                ends_at:                  timeToUTC(state.to),
                recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,

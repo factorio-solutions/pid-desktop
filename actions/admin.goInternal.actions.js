@@ -18,9 +18,10 @@ export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_DAY_PRICE = 'ADMIN_GO_INTERNAL_SE
 export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE = 'ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE'
 export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE = 'ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE'
 export const ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE = 'ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE'
+export const ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT = 'ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT'
 
 
-const patternInputActionFactory = type => (value, valid) => ({ type, valid, value: parseInt(value, 10) })
+const patternInputActionFactory = type => (value, valid) => ({ type, valid, value })
 
 export const setGarage = actionFactory(ADMIN_GO_INTERNAL_SET_GARAGE)
 export const togglePlace = actionFactory(ADMIN_GO_INTERNAL_SET_PLACES)
@@ -32,6 +33,7 @@ export const setExponentialDayPrice = patternInputActionFactory(ADMIN_GO_INTERNA
 export const setExponentialWeekPrice = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE)
 export const setExponentialMonthPrice = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE)
 export const setWeekendPricing = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE)
+export const toggleHighlight = actionFactory(ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT)
 
 
 export function initGoInternal() {
@@ -68,6 +70,8 @@ export function disableGoInternal() {
   }
 }
 
+const parsePrice = value => parseFloat((value + '' || '').replace(',', '.')) || undefined
+
 export function submitGoInternal() {
   return (dispatch, getState) => {
     dispatch(setCustomModal(t([ 'newPricing', 'saving' ])))
@@ -81,12 +85,12 @@ export function submitGoInternal() {
           place_id:                place.id,
           currency_id:             state.currency_id,
           user_id:                 getState().pageBase.current_user.id,
-          flat_price:              state.flat_price.value || undefined,
-          exponential_12h_price:   state.exponential_12h_price.value || undefined,
-          exponential_day_price:   state.exponential_day_price.value || undefined,
-          exponential_month_price: state.exponential_month_price.value || undefined,
-          exponential_week_price:  state.exponential_week_price.value || undefined,
-          weekend_price:           state.weekend_price.value || undefined
+          flat_price:              parsePrice(state.flat_price.value),
+          exponential_12h_price:   parsePrice(state.exponential_12h_price.value),
+          exponential_day_price:   parsePrice(state.exponential_day_price.value),
+          exponential_month_price: parsePrice(state.exponential_month_price.value),
+          exponential_week_price:  parsePrice(state.exponential_week_price.value),
+          weekend_price:           parsePrice(state.weekend_price.value)
         }
       }))
     })

@@ -205,7 +205,10 @@ export function fetchGarages(goToDashboard = true) {
         .filter(userGarage => !userGarage.pending) // find only garages that are not pending
 
       dispatch(setGarages(userGarages))
-      dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined)) // parse current garage from  URL
+      const garageIdFromUrl = parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined
+      if (!getState().pageBase.garage || (garageIdFromUrl && getState().pageBase.garage !== garageIdFromUrl)) {
+        dispatch(setGarage(garageIdFromUrl)) // parse current garage from  URL
+      }
 
       if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
         // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
