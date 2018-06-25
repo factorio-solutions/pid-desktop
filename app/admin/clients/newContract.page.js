@@ -29,9 +29,8 @@ class NewContractPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.eraseForm()
     if (this.props.params.contract_id || this.props.pageBase.garage) {
-      setTimeout(() => this.props.actions.initContract(this.props.params.contract_id), 1000)
+      this.props.actions.initContract(this.props.params.contract_id)
     }
   }
 
@@ -88,70 +87,74 @@ class NewContractPage extends Component {
 
     const placeSelected = floor => ({
       ...floor,
-      places: floor.places.map(place => ({
-        ...place,
-        group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
-        selected: (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
-        tooltip:  (<table className={styles.tooltip}>
-          <tbody>
-            <tr>
-              <td>{t([ 'newContract', 'place' ])}</td>
-              <td>{place.label}</td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'usedBy' ])}</td>
-              <td>
-                {state.garage.is_public && place.pricing && !place.contracts.length ?
-                  t([ 'newContract', 'goPublic' ]) :
+      places: floor.places.map(place => {
+        const selected = state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined
+        return {
+          ...place,
+          selected,
+          group:     place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
+          available: place.available || selected,
+          tooltip:   (<table className={styles.tooltip}>
+            <tbody>
+              <tr>
+                <td>{t([ 'newContract', 'place' ])}</td>
+                <td>{place.label}</td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'usedBy' ])}</td>
+                <td>
+                  {state.garage.is_public && place.pricing && !place.contracts.length ?
+                    t([ 'newContract', 'goPublic' ]) :
+                    place.contracts
+                      .filter(this.currentContractsFilter)
+                      .map(contract => contract.client.name)
+                      .filter((group, index, arr) => arr.indexOf(group) === index)
+                      .join(', ')
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'rentyType' ])}</td>
+                <td>
+                  {place.contracts.length ?
+                    t([ 'newContract', 'longterm' ]) :
+                    place.pricing ?
+                      t([ 'newContract', 'shortterm' ]) :
+                      ''
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'longtermPrice' ])}</td>
+                <td>{
                   place.contracts
-                    .filter(this.currentContractsFilter)
-                    .map(contract => contract.client.name)
+                    .map(contract => `${contract.rent.price} ${contract.rent.currency.symbol}`)
                     .filter((group, index, arr) => arr.indexOf(group) === index)
                     .join(', ')
                 }
-              </td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'rentyType' ])}</td>
-              <td>
-                {place.contracts.length ?
-                  t([ 'newContract', 'longterm' ]) :
-                  place.pricing ?
-                    t([ 'newContract', 'shortterm' ]) :
-                    ''
-                }
-              </td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'longtermPrice' ])}</td>
-              <td>{
-                place.contracts
-                  .map(contract => `${contract.rent.price} ${contract.rent.currency.symbol}`)
-                  .filter((group, index, arr) => arr.indexOf(group) === index)
-                  .join(', ')
-              }
-              </td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'shorttermPrice' ])}</td>
-              <td>
-                <table className={styles.tooltip}>
-                  <tbody>
-                    {place.pricing && [
-                      place.pricing.exponential_12h_price && [ t([ 'garages', '12HourPrice' ]), `${place.pricing.exponential_12h_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.exponential_day_price && [ t([ 'garages', 'dayPrice' ]), `${place.pricing.exponential_day_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.exponential_week_price && [ t([ 'garages', 'weekPrice' ]), `${place.pricing.exponential_week_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${place.pricing.exponential_month_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${place.pricing.flat_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${place.pricing.weekend_price} ${place.pricing.currency.symbol}` ]
-                    ].filter(o => o).reduce((arr, o) => [ ...arr, <tr><td>{o[0]}</td><td>{o[1]}</td></tr> ], [])}
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>)
-      }))
+                </td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'shorttermPrice' ])}</td>
+                <td>
+                  <table className={styles.tooltip}>
+                    <tbody>
+                      {place.pricing && [
+                        place.pricing.exponential_12h_price && [ t([ 'garages', '12HourPrice' ]), `${place.pricing.exponential_12h_price} ${place.pricing.currency.symbol}` ],
+                        place.pricing.exponential_day_price && [ t([ 'garages', 'dayPrice' ]), `${place.pricing.exponential_day_price} ${place.pricing.currency.symbol}` ],
+                        place.pricing.exponential_week_price && [ t([ 'garages', 'weekPrice' ]), `${place.pricing.exponential_week_price} ${place.pricing.currency.symbol}` ],
+                        place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${place.pricing.exponential_month_price} ${place.pricing.currency.symbol}` ],
+                        place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${place.pricing.flat_price} ${place.pricing.currency.symbol}` ],
+                        place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${place.pricing.weekend_price} ${place.pricing.currency.symbol}` ]
+                      ].filter(o => o).reduce((arr, o) => [ ...arr, <tr><td>{o[0]}</td><td>{o[1]}</td></tr> ], [])}
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>)
+        }
+      })
     })
 
     return (
