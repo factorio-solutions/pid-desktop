@@ -157,7 +157,14 @@ export default class PaginatedTable extends Component {
         {loading && <div className={styles.loading}>
           <Loading show />
         </div>}
-        <Table schema={schema} data={data} filterClick={filterClick} searchBox={false} searchBar selectId={findId} />
+        <Table
+          schema={schema}
+          data={data}
+          filterClick={filterClick}
+          searchBox={false}
+          selectId={findId}
+          searchBar
+        />
         <div>
           <RoundButton
             content={<i className="fa fa-chevron-left" aria-hidden="true" />}

@@ -2,13 +2,14 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import Input             from '../../_shared/components/input/Input'
-import Form              from '../../_shared/components/form/Form'
-import NewClientPageBase from './components/newClientPageBase'
+import Input    from '../../_shared/components/input/Input'
+import Form     from '../../_shared/components/form/Form'
+import PageBase from '../../_shared/containers/pageBase/PageBase'
+// import NewClientPageBase from './components/newClientPageBase'
 
-import * as nav               from '../../_shared/helpers/navigation'
-import { t }                  from '../../_shared/modules/localization/localization'
-import * as newClientActions  from '../../_shared/actions/newClient.actions'
+import * as nav              from '../../_shared/helpers/navigation'
+import { t }                 from '../../_shared/modules/localization/localization'
+import * as newClientActions from '../../_shared/actions/newClient.actions'
 
 
 class NewClientPage extends Component {
@@ -17,6 +18,11 @@ class NewClientPage extends Component {
     pageBase: PropTypes.object,
     actions:  PropTypes.object,
     params:   PropTypes.object
+  }
+
+  componentDidMount() {
+    this.props.actions.clearForm()
+    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
   }
 
   checkSubmitable = () => {
@@ -35,7 +41,7 @@ class NewClientPage extends Component {
     const { state, actions } = this.props
 
     return (
-      <NewClientPageBase params={this.props.params}>
+      <PageBase params={this.props.params}>
         <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
           <Input
             onEnter={this.submitForm}
@@ -66,7 +72,7 @@ class NewClientPage extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setLine1}
-            label={t([ 'addresses', 'line1' ])}
+            label={t([ 'addresses', 'line1' ]) + ' *'}
             error={t([ 'addresses', 'line1Invalid' ])}
             value={state.line_1}
             placeholder={t([ 'addresses', 'line1Placeholder' ])}
@@ -83,7 +89,7 @@ class NewClientPage extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setCity}
-            label={t([ 'addresses', 'city' ])}
+            label={t([ 'addresses', 'city' ]) + ' *'}
             error={t([ 'addresses', 'cityInvalid' ])}
             value={state.city}
             placeholder={t([ 'addresses', 'cityPlaceholder' ])}
@@ -92,7 +98,7 @@ class NewClientPage extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setPostalCode}
-            label={t([ 'addresses', 'postalCode' ])}
+            label={t([ 'addresses', 'postalCode' ]) + ' *'}
             error={t([ 'addresses', 'postalCodeInvalid' ])}
             value={state.postal_code}
             placeholder={t([ 'addresses', 'postalCodePlaceholder' ])}
@@ -109,14 +115,14 @@ class NewClientPage extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setCountry}
-            label={t([ 'addresses', 'country' ])}
+            label={t([ 'addresses', 'country' ]) + ' *'}
             error={t([ 'addresses', 'countryInvalid' ])}
             value={state.country}
             placeholder={t([ 'addresses', 'countryPlaceholder' ])}
             highlight={state.highlight}
           />
         </Form>
-      </NewClientPageBase>
+      </PageBase>
     )
   }
 }

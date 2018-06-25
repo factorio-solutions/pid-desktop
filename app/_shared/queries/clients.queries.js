@@ -5,10 +5,11 @@ export const GET_CLIENTS = `{
     token
     id
     user_count
-    place_count
+
     all_invoices_paid
     created_at
     is_admin
+    is_pending
     contracts{
       from
       to
@@ -51,7 +52,7 @@ export const GARAGE_CONTRACTS = `query GargeContracts($id: Id!){
         token
         id
         user_count
-        place_count
+
         all_invoices_paid
         contact_persons{
           full_name

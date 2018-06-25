@@ -5,6 +5,7 @@
   padding:       5px;
   border:        1px solid $gray;
   border-radius: 5px;
+  color:         $white;
 
   .header {
     padding:     0 10px;
@@ -17,7 +18,6 @@
 
   .body {
     padding:    10px;
-    text-align: center;
   }
 
   .notificationsButtons {

@@ -146,6 +146,7 @@ export function refreshLogin(callback, errorCallback) {
         callback && callback(result)
         dispatch(resetLoginForm())
       } else {
+        localStorage.refresh_token && dispatch(logout())
         delete localStorage.refresh_token
         errorCallback && errorCallback()
       }

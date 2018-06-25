@@ -103,7 +103,7 @@ class DateTimeForm extends Component {
               editable={editable}
               onBlur={actions.formatFrom}
               onChange={actions.setFromDate}
-              label={t([ 'newReservation', 'begins' ])}
+              label={`${t([ 'newReservation', 'begins' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
               inlineMenu={beginsInlineMenu}
@@ -112,7 +112,7 @@ class DateTimeForm extends Component {
               editable={editable}
               onBlur={actions.formatFrom}
               onChange={actions.setFromTime}
-              label={t([ 'newReservation', 'begins' ])}
+              label={`${t([ 'newReservation', 'begins' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
               inlineMenu={beginsInlineMenu}
@@ -125,7 +125,7 @@ class DateTimeForm extends Component {
             <Dateinput
               onBlur={actions.formatTo}
               onChange={actions.setToDate}
-              label={t([ 'newReservation', 'ends' ])}
+              label={`${t([ 'newReservation', 'ends' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
               inlineMenu={beginsInlineMenu}
@@ -133,7 +133,7 @@ class DateTimeForm extends Component {
             <TimeInput
               onBlur={actions.formatTo}
               onChange={actions.setToTime}
-              label={t([ 'newReservation', 'ends' ])}
+              label={`${t([ 'newReservation', 'ends' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
               inlineMenu={beginsInlineMenu}

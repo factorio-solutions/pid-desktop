@@ -50,7 +50,11 @@ class ThirdPartyIntegrationPage extends Component {
         <div className={styles.flex}>
           <div className={styles.half}>
             <h2>{t([ 'modules', 'selectPlacesFor3rdParty' ])}</h2>
-            <Form onSubmit={actions.submitThirdPartyIntegration} submitable={state.places.length}>
+            <Form
+              onSubmit={actions.submitThirdPartyIntegration}
+              submitable={state.places.length}
+              onHighlight={actions.toggleHighlight}
+            >
               <div className={styles.places}>
                 {state.places.length ?
                   state.garage && state.garage.floors.reduce(createPlaceButtons, []) :

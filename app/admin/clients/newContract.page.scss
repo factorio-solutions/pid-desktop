@@ -1,5 +1,9 @@
 @import '../../_styles/app.desktop';
 
+.back {
+  text-align: left;
+}
+
 // -- Responsive Styles (Media Queries) -------------------------------------
 // -- Only apply on big window ----------------------------------------------
 @media (min-width: $collapseWidth) {

@@ -161,6 +161,7 @@ export const GET_GARAGE_DETAILS_ORDER = `query ($id: Id!) {
   garage(id: $id) {
     id
     floors {
+      id
       label
       scheme
       places {

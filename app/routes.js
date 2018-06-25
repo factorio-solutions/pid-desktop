@@ -58,7 +58,7 @@ import EditInvoicePage from './admin/invoices/editInvoice.page'
 import ClientsPage     from './admin/clients/clients.page'
 import ClientUsersPage from './admin/clients/users.page'
 import NewClientPage   from './admin/clients/newClient.page'
-import SmsSettingsPage from './admin/clients/smsSettings.page'
+import SmsSettingsPage from './admin/clients/modules/smsSettings.page'
 import NewContractPage from './admin/clients/newContract.page'
 
 // modules
@@ -117,7 +117,7 @@ import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOve
 import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
 
-export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
+export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
 
 export default function createRoutes() {

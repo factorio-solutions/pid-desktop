@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import moment                          from 'moment'
 
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
@@ -11,6 +12,7 @@ import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import DatetimeInput      from '../../_shared/components/input/DatetimeInput'
+import Modal              from '../../_shared/components/modal/Modal'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -51,7 +53,26 @@ class NewContractPage extends Component {
 
   handleTo = (value, valid) => valid && this.props.actions.setTo(value)
 
-  submitForm = () => this.checkSubmitable() && this.props.actions.submitNewContract(this.props.params.contract_id)
+  submitForm = () => {
+    if (this.checkSubmitable()) {
+      const { state, actions } = this.props
+      const placeIds = state.places.map(place => place.id)
+      const removedPlaces = state.originalPlaces.filter(place => !placeIds.includes(place.id))
+
+      removedPlaces.length ?
+        actions.setRemoveReservationsModal(true) :
+        actions.submitNewContract(this.props.params.contract_id)
+    }
+  }
+
+  onRemoveReservationsClick = () => this.setRemoveReservationsAndSubmit(true)
+  onDoNotRemoveReservationsClick = () => this.setRemoveReservationsAndSubmit(false)
+
+  setRemoveReservationsAndSubmit = action => {
+    const { actions } = this.props
+    actions.setRemoveReservations(action)
+    actions.submitNewContract(this.props.params.contract_id)
+  }
 
   goBack = () => {
     this.props.actions.eraseForm()
@@ -63,6 +84,8 @@ class NewContractPage extends Component {
   prepareCurrencies = currency => ({ label: currency.code, onClick: () => this.props.actions.setCurrency(currency.id) })
 
   prepareRents = rent => ({ label: rent.name, onClick: () => this.props.actions.setRent(rent) })
+
+  currentContractsFilter = contract => moment().isBetween(moment(contract.from), moment(contract.to))
 
   render() {
     const { state, actions } = this.props
@@ -77,6 +100,7 @@ class NewContractPage extends Component {
       ...floor,
       places: floor.places.map(place => ({
         ...place,
+        group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
         selected: (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
         tooltip:  (<table className={styles.tooltip}>
           <tbody>
@@ -90,6 +114,7 @@ class NewContractPage extends Component {
                 {state.garage.is_public && place.pricing && !place.contracts.length ?
                   t([ 'newContract', 'goPublic' ]) :
                   place.contracts
+                    .filter(this.currentContractsFilter)
                     .map(contract => contract.client.name)
                     .filter((group, index, arr) => arr.indexOf(group) === index)
                     .join(', ')
@@ -139,9 +164,28 @@ class NewContractPage extends Component {
       }))
     })
 
-
     return (
       <PageBase>
+        <Modal show={state.removedReservationsModal}>
+          <div>
+            <CallToActionButton
+              label={t([ 'newContract', 'removeReservations' ])}
+              onClick={this.onRemoveReservationsClick}
+            />
+          </div>
+          <div>
+            <CallToActionButton
+              label={t([ 'newContract', 'doNotRemoveReservations' ])}
+              onClick={this.onDoNotRemoveReservationsClick}
+            />
+          </div>
+          <div className={styles.back}>
+            <RoundButton
+              content={<i className="fa fa-chevron-left" aria-hidden="true" />}
+              onClick={actions.setRemoveReservationsModal}
+            />
+          </div>
+        </Modal>
         <div className={styles.flex}>
           <div>
             <Form onSubmit={state.garage && state.garage.is_admin ? this.submitForm : this.goBack} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
@@ -150,7 +194,7 @@ class NewContractPage extends Component {
                 <div className={styles.twoButtons}>
                   <PatternInput
                     onChange={actions.setClientToken}
-                    label={t([ 'newContract', 'selectClient' ])}
+                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
                     error={t([ 'newContract', 'invalidToken' ])}
                     type="text"
                     placeholder={t([ 'newContract', 'tokenPlaceholder' ])}
@@ -161,13 +205,13 @@ class NewContractPage extends Component {
                   <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleAddClient} type="remove" />
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t([ 'newContract', 'selectClient' ])} content={state.clients.map(this.prepareClients)} style="light" selected={selectedClient} highlight={state.highlight} />
+                  <Dropdown label={t([ 'newContract', 'selectClient' ]) + ' *'} content={state.clients.map(this.prepareClients)} style="light" selected={selectedClient} highlight={state.highlight} />
                   <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleAddClient} type="action" />
                 </div>)
               }
 
               <div>
-                <div>{t([ 'newContract', 'selectedPlaces' ])}</div>
+                <div>{t([ 'newContract', 'selectedPlaces' ]) + ' *'}</div>
                 {state.places.length ? state.places.map(makeButton) : <b className={state.highlight && styles.red}>{t([ 'newContract', 'noSelectedPlaces' ])}</b>}
               </div>
 
@@ -175,7 +219,7 @@ class NewContractPage extends Component {
                 <div className={styles.oneButton}>
                   <Input
                     onChange={actions.setContractPrice}
-                    label={t([ 'newContract', 'contractPrice' ])}
+                    label={t([ 'newContract', 'contractPrice' ]) + ' *'}
                     error={t([ 'newContract', 'priceInvalid' ])}
                     type="number"
                     placeholder={t([ 'newContract', 'pricePlaceholder' ])}
@@ -184,7 +228,7 @@ class NewContractPage extends Component {
                     highlight={state.highlight}
                   />
                   <Dropdown
-                    label={t([ 'newContract', 'selectCurrency' ])}
+                    label={t([ 'newContract', 'selectCurrency' ]) + ' *'}
                     content={state.currencies.map(this.prepareCurrencies)}
                     style="light"
                     selected={selectedCurrency}
@@ -230,7 +274,11 @@ class NewContractPage extends Component {
           </div>
 
           <div>
-            <GarageLayout floors={state.garage ? state.garage.floors.map(placeSelected) : []} showEmptyFloors onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}} />
+            <GarageLayout
+              floors={state.garage ? state.garage.floors.map(placeSelected) : []}
+              onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}}
+              showEmptyFloors
+            />
           </div>
         </div>
       </PageBase>

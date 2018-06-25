@@ -8,6 +8,7 @@ import TabButton       from '../../_shared/components/buttons/TabButton'
 import RentsTab        from './tabs/rents'
 import PaymentGatesTab from './tabs/paymentGates'
 import SettingsTab     from './tabs/settings'
+import BillingAddress  from './tabs/billingAddress'
 
 import { t }               from '../../_shared/modules/localization/localization'
 import * as financeActions from '../../_shared/actions/admin.finance.actions'
@@ -31,6 +32,10 @@ class FinancePage extends Component {
       pageBase.current_user && pageBase.current_user.garage_admin && {
         name:    'rents',
         content: <RentsTab />
+      },
+      pageBase.current_user && pageBase.current_user.garage_admin && {
+        name:    'billingAddress',
+        content: <BillingAddress />
       },
       { name:    'financeSettings',
         content: <SettingsTab params={params} />

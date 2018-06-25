@@ -60,7 +60,6 @@ class GarageSetupGeneralPage extends Component {
 
 
     const checkSubmitable = () => {
-      if (state.dic && !state.ic) return false
       if (state.tarif_id === undefined) return false
       if (state.name === '') return false
       if (state.company === '') return false
@@ -88,38 +87,11 @@ class GarageSetupGeneralPage extends Component {
         <h2>{t([ 'newGarage', 'garageAddress' ])}</h2>
         <Input
           onChange={actions.setName}
-          label={t([ 'newGarage', 'name' ])}
+          label={t([ 'newGarage', 'name' ]) + ' *'}
           error={t([ 'newGarage', 'invalidName' ])}
           value={state.name}
           placeholder={t([ 'newGarage', 'placeholder' ])}
           highlight={state.highlight}
-          readOnly={readOnly}
-        />
-        <Input
-          onChange={actions.setIc}
-          label={t([ 'newClient', 'IC' ])}
-          error={t([ 'newClient', 'invalidIC' ])}
-          value={state.ic}
-          placeholder={t([ 'newClient', 'ICplaceholder' ])}
-          highlight={state.dic && state.highlight}
-          onBlur={actions.loadAddressFromIc}
-          readOnly={readOnly}
-        />
-        <Input
-          onChange={actions.setCompanyName}
-          label={t([ 'newGarage', 'company' ])}
-          error={t([ 'newGarage', 'invalidCompany' ])}
-          value={state.company}
-          placeholder={t([ 'newGarage', 'placeholderCompany' ])}
-          highlight={state.highlight}
-          readOnly={readOnly}
-        />
-        <Input
-          onChange={actions.setDic}
-          label={t([ 'newClient', 'DIC' ])}
-          error={t([ 'newClient', 'invalidDIC' ])}
-          value={state.dic}
-          placeholder={t([ 'newClient', 'DICplaceholder' ])}
           readOnly={readOnly}
         />
 
@@ -129,7 +101,7 @@ class GarageSetupGeneralPage extends Component {
         <Input
           onChange={actions.setLine1}
           onBlur={geocode}
-          label={t([ 'newGarage', 'street' ])}
+          label={t([ 'newGarage', 'street' ]) + ' *'}
           error={t([ 'newGarage', 'invalidStreet' ])}
           value={state.line_1}
           placeholder={t([ 'newGarage', 'cityPlaceholder' ])}
@@ -148,7 +120,7 @@ class GarageSetupGeneralPage extends Component {
         <Input
           onChange={actions.setCity}
           onBlur={geocode}
-          label={t([ 'newGarage', 'city' ])}
+          label={t([ 'newGarage', 'city' ]) + ' *'}
           error={t([ 'newGarage', 'invalidCity' ])}
           value={state.city}
           placeholder={t([ 'newGarage', 'cityPlaceholder' ])}
@@ -158,7 +130,7 @@ class GarageSetupGeneralPage extends Component {
         <Input
           onChange={actions.setPostalCode}
           onBlur={geocode}
-          label={t([ 'newGarage', 'postalCode' ])}
+          label={t([ 'newGarage', 'postalCode' ]) + ' *'}
           error={t([ 'newGarage', 'invalidPostalCode' ])}
           value={state.postal_code}
           placeholder={t([ 'newGarage', 'postalCodePlaceholder' ])}
@@ -177,7 +149,7 @@ class GarageSetupGeneralPage extends Component {
         <Input
           onChange={actions.setCountry}
           onBlur={geocode}
-          label={t([ 'newGarage', 'country' ])}
+          label={t([ 'newGarage', 'country' ]) + ' *'}
           error={t([ 'newGarage', 'invalidState' ])}
           value={state.country}
           placeholder={t([ 'newGarage', 'countryPlaceholder' ])}
@@ -206,8 +178,8 @@ class GarageSetupGeneralPage extends Component {
         </div>
       </div>
       <div className={styles.imageSelector}>
-        <h2>{t([ 'newGarage', 'garagePicture' ])}</h2>
-        <img src={state.img} />
+        <div><h2>{t([ 'newGarage', 'garagePicture' ])}</h2></div>
+        <div><img src={state.img} /></div>
         {!readOnly && <div>
           <UploadButton
             label={t([ 'newGarage', 'addProfilePicture' ])}
