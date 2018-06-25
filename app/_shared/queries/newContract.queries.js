@@ -1,4 +1,4 @@
-export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!) {
+export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_id: Id, $contract_id: Id) {
   garage(id: $garage_id) {
     id
     is_admin
@@ -35,6 +35,10 @@ export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!) {
             price
           }
         }
+      }
+      contractable_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id, contract_id: $contract_id) {
+        id
+        label
       }
     }
   }

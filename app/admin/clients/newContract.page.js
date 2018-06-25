@@ -29,7 +29,10 @@ class NewContractPage extends Component {
   }
 
   componentDidMount() {
-    (this.props.params.contract_id || this.props.pageBase.garage) && this.props.actions.initContract(this.props.params.contract_id)
+    this.props.actions.eraseForm()
+    if (this.props.params.contract_id || this.props.pageBase.garage) {
+      setTimeout(() => this.props.actions.initContract(this.props.params.contract_id), 1000)
+    }
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
@@ -59,7 +62,14 @@ class NewContractPage extends Component {
     nav.to(`/${this.props.pageBase.garage}/admin/clients`)
   }
 
-  prepareClients = client => ({ label: client.name, onClick: () => this.props.actions.setClient(client.id) })
+  prepareClients = client => ({
+    label:   client.name,
+    onClick: () => {
+      const { state, actions } = this.props
+      actions.setClient(client.id)
+      actions.getGarage(state.garage.id)
+    }
+  })
 
   prepareCurrencies = currency => ({ label: currency.code, onClick: () => this.props.actions.setCurrency(currency.id) })
 
@@ -165,7 +175,13 @@ class NewContractPage extends Component {
                   <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleAddClient} type="remove" />
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t([ 'newContract', 'selectClient' ]) + ' *'} content={state.clients.map(this.prepareClients)} style="light" selected={selectedClient} highlight={state.highlight} />
+                  <Dropdown
+                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
+                    content={state.clients.map(this.prepareClients)}
+                    style="light"
+                    selected={selectedClient}
+                    highlight={state.highlight}
+                  />
                   <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleAddClient} type="action" />
                 </div>)
               }
@@ -234,7 +250,11 @@ class NewContractPage extends Component {
           </div>
 
           <div>
-            <GarageLayout floors={state.garage ? state.garage.floors.map(placeSelected) : []} showEmptyFloors onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}} />
+            <GarageLayout
+              floors={state.garage ? state.garage.floors.map(placeSelected) : []}
+              showEmptyFloors
+              onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}}
+            />
           </div>
         </div>
       </PageBase>
