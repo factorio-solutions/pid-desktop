@@ -12,6 +12,7 @@ export const INIT_DASHBOARD = `query{
 export const INIT_GARAGE = `query Garage($id: Id!) {
   garage(id: $id) {
     floors {
+      id
       label
       scheme
       places {
