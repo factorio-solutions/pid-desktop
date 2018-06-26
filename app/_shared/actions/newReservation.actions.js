@@ -298,9 +298,7 @@ export function setPrice() {
       selectedPlace = freePlaces.length && freePlaces[0]
     } else {
       selectedPlace = state.garage && state.garage.floors.reduce((acc, floor) => {
-        return floor.places.reduce((acc, place) => {
-          return place.id === state.place_id ? place : acc
-        }, acc)
+        return acc || floor.places.find(place => place.id === state.place_id)
       }, undefined)
     }
 
@@ -575,7 +573,7 @@ export function downloadGarage(id) {
               </div>
               {pricing.weekend_price && <div>
                 <span>
-                  <b>{t([ 'newPricing', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol}
+                  <b>{t([ 'newReservation', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol} {t([ 'newReservation', 'perHour' ])}
                 </span>
               </div>}
             </div>)
