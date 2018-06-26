@@ -14,6 +14,7 @@ import Form               from '../_shared/components/form/Form'
 import DatetimeInput      from '../_shared/components/input/DatetimeInput'
 import Input              from '../_shared/components/input/Input'
 import Modal              from '../_shared/components/modal/Modal'
+import { valueAddedTax }  from '../_shared/helpers/calculatePrice'
 
 import * as nav                                      from '../_shared/helpers/navigation'
 import * as reservationActions                       from '../_shared/actions/reservations.actions'
@@ -200,7 +201,7 @@ class ReservationsPage extends Component {
             {t([ 'reservations', 'createdAt' ])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)} - {reservation.creator.email}
           </div>
           {reservation.price > 0 && <div>
-            {reservation.price} {reservation.currency.symbol}
+            {valueAddedTax(reservation.price, reservation.place.floor.garage.dic ? reservation.place.floor.garage.vat : 0)} {reservation.currency.symbol}
           </div>}
           <div>
             <span className={styles.floatRight}>

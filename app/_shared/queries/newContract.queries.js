@@ -4,6 +4,8 @@ export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!) {
     is_admin
     is_public
     name
+    vat
+    dic
     floors {
       label
       scheme

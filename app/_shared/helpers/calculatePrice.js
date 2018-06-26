@@ -14,7 +14,7 @@
 // to = time in moment.js format
 
 export function valueAddedTax(price, vat = 0) {
-  return Math.round((price) * (1 + vat))
+  return ((price) * (1 + vat)).toFixed(2)
 }
 
 export function calculatePrice(pricing, from, to, vat = 0) {
