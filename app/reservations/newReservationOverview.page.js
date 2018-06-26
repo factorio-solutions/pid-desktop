@@ -13,7 +13,7 @@ import { setGarage }              from '../_shared/actions/pageBase.actions'
 
 import styles from './newReservationOverview.page.scss'
 
-const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'paypal', 'raiffeisenbank' ]
+const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'raiffeisenbank', 'paypal' ]
 
 
 class NewReservationOverviewPage extends Component {
@@ -84,7 +84,7 @@ class NewReservationOverviewPage extends Component {
       <td>
         {t([ 'newReservationOverview', gate ])}
         {gate === 'csob' && <Checkbox
-          checked={state.csobOneClick}
+          checked={state.csobOneClick && state.paymentMethod === 'csob'}
           onChange={() => this.props.actions.selectCsobOneClick(!state.csobOneClick)}
         >
           {t([ 'newReservationOverview', 'csobOneTimePayment' ])}
