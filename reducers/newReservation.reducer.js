@@ -81,7 +81,7 @@ const defaultState = {
   templateText:     '',
 
   paymentMethod: '',
-  csobOneClick:  true
+  csobOneClick:  false
 }
 
 function placeLabel(state) {
