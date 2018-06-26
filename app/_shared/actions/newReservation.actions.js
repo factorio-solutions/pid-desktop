@@ -66,6 +66,7 @@ export const NEW_RESERVATION_SET_SELECTED_TEMPLATE = 'NEW_RESERVATION_SET_SELECT
 export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_TEXT'
 export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
 export const NEW_RESERVATION_SET_PAYMENT_METHOD = 'NEW_RESERVATION_SET_PAYMENT_METHOD'
+export const NEW_RESERVATION_SET_CSOB_ONE_CLICK = 'NEW_RESERVATION_SET_CSOB_ONE_CLICK'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -88,6 +89,8 @@ export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
+export const selectCsobOneClick = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK)
+
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -675,7 +678,8 @@ export function submitReservation(id) {
                recurring_reservation_id: state.recurring_reservation_id,
                send_sms:                 state.sendSMS,
                sms_text:                 state.templateText,
-               payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod
+               payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
+               csob_one_click:           state.csobOneClick
              },
                id
              }

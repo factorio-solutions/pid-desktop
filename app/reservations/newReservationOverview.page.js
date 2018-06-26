@@ -4,6 +4,7 @@ import { bindActionCreators }          from 'redux'
 
 import PageBase from '../_shared/containers/pageBase/PageBase'
 import Form     from '../_shared/components/form/Form'
+import Checkbox from '../_shared/components/checkbox/Checkbox'
 
 import * as nav                   from '../_shared/helpers/navigation'
 import { t }                      from '../_shared/modules/localization/localization'
@@ -80,7 +81,15 @@ class NewReservationOverviewPage extends Component {
       <td>
         <input type="radio" name="payments" checked={this.props.state.paymentMethod === gate} />
       </td>
-      <td>{t([ 'newReservationOverview', gate ])}</td>
+      <td>
+        {t([ 'newReservationOverview', gate ])}
+        {gate === 'csob' && <Checkbox
+          checked={state.csobOneClick}
+          onChange={() => this.props.actions.selectCsobOneClick(!state.csobOneClick)}
+        >
+          {t([ 'newReservationOverview', 'csobOneTimePayment' ])}
+        </Checkbox>}
+      </td>
       <td><img src={`./public/logo/${gate}-logo.png`} alt={gate} /></td>
     </tr>)
   }
