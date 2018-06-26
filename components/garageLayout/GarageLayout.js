@@ -271,6 +271,7 @@ class GarageLayout extends Component {
 
   scanPlacesAddLabels() { // add labels to all places
     const elements = document.getElementsByTagName('svg') // go trough all svgs - can be multiple on page
+    // const elements = document.getElementsByClassName('svgFromText') // go trough all svgs - can be multiple on page
 
     for (let i = 0; i < elements.length; i++) {
       const currentSvg = elements[i]
@@ -298,8 +299,18 @@ class GarageLayout extends Component {
 
         // colorize elements with their groups
         const assignColors = assignColorsToGroups(floors)
-        const places = floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
-        if (Object.keys(assignColors).length) this.colorizeGroupedPlaces(currentSvg, assignColors, places)
+        
+        // const places = floors[floor].places
+        if (Object.keys(assignColors).length) {
+          let places = []
+          if (this.props.unfold) {
+            const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
+            places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
+          } else {
+            places = floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+          }
+          this.colorizeGroupedPlaces(currentSvg, assignColors, places)
+        }
 
         // add tooltip event listeners
         this.addTooltips(currentSvg, floors[floor])
@@ -335,7 +346,7 @@ class GarageLayout extends Component {
       )
     }
 
-    const prepareFloors = floor => <SvgFromText svg={floor.scheme || ''} svgClick={this.handleSVGClick} />
+    const prepareFloors = floor => <SvgFromText identfier={floor.id} svg={floor.scheme || ''} svgClick={this.handleSVGClick} />
 
     return (
       unfold ? <div className={styles.grayBackground}>
