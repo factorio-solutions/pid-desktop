@@ -239,14 +239,15 @@ class GarageLayout extends Component {
       const min = Math.min(...heatGroups)
       const max = Math.max(...heatGroups)
 
-      floors.reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
-        .filter(place => place.heat)
-        .forEach(place => {
-          const yellow = Math.round(this.mapValue(min, max, 255, 0, place.heat))
-          const placeRect = currentSvg.getElementById('Place' + place.label)
-          placeRect && placeRect.classList.add('hasHeatGroup')
-          placeRect && placeRect.setAttribute('style', `fill: rgb(255, ${yellow}, 70);`)
-        })
+      const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
+      const places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
+      places.filter(place => place.heat)
+      .forEach(place => {
+        const yellow = Math.round(this.mapValue(min, max, 255, 0, place.heat))
+        const placeRect = currentSvg.getElementById('Place' + place.label)
+        placeRect && placeRect.classList.add('hasHeatGroup')
+        placeRect && placeRect.setAttribute('style', `fill: rgb(255, ${yellow}, 70);`)
+      })
     }
   }
 
@@ -300,16 +301,12 @@ class GarageLayout extends Component {
 
         // colorize elements with their groups
         const assignColors = assignColorsToGroups(floors)
-        
-        // const places = floors[floor].places
+        // const places = floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
+        // if (Object.keys(assignColors).length) this.colorizeGroupedPlaces(currentSvg, assignColors, places)
+
         if (Object.keys(assignColors).length) {
-          let places = []
-          if (this.props.unfold) {
-            const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
-            places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
-          } else {
-            places = floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
-          }
+          const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
+          const places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
           this.colorizeGroupedPlaces(currentSvg, assignColors, places)
         }
 
@@ -363,7 +360,7 @@ class GarageLayout extends Component {
           }
         </div>
         <div className={styles.svgContainer}>
-          <SvgFromText svg={(floors[floor] && floors[floor].scheme) || ''} svgClick={this.handleSVGClick} rotate={this.state.rotate} />
+          <SvgFromText identfier={floors[floor] && floors[floor].id}  svg={(floors[floor] && floors[floor].scheme) || ''} svgClick={this.handleSVGClick} rotate={this.state.rotate} />
         </div>
 
         {Tooltip(this.state)}

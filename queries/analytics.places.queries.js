@@ -1,6 +1,7 @@
 export const PLACES_TURNOVER = `query Garage($id: Id!, $from: Datetime!, $to: Datetime!) {
   garage(id: $id) {
     floors {
+      id
       label
       scheme
       places {
