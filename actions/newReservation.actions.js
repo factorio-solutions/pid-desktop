@@ -393,7 +393,9 @@ export function setInitialStore(id) {
         dispatch(setReservation(values[1].reservation))
         dispatch(downloadUser(values[1].reservation.user_id, undefined, hideLoading))
         dispatch(setClientId(values[1].reservation.client_id))
-        values[1].reservation.car.temporary ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate)) : dispatch(setCarId(values[1].reservation.car.id))
+        if (values[1].reservation.car) {
+          values[1].reservation.car.temporary ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate)) : dispatch(setCarId(values[1].reservation.car.id))
+        }
         dispatch(setFrom(moment(values[1].reservation.begins_at).format(MOMENT_DATETIME_FORMAT)))
         dispatch(setTo(moment(values[1].reservation.ends_at).format(MOMENT_DATETIME_FORMAT)))
         dispatch(setPlace(values[1].reservation.place))
@@ -405,7 +407,7 @@ export function setInitialStore(id) {
         dispatch(formatTo())
         if (users.length === 1) {
           dispatch(downloadUser(users[0].id, undefined, hideLoading))
-        } else {  
+        } else {
           hideLoading(dispatch)
         }
       }
@@ -494,7 +496,7 @@ export function downloadUser(id, rights) {
   }
 }
 
-function clientsPromise(user_id, garage_id) {
+function clientsPromise(userId, garageId) {
   return new Promise((resolve, reject) => {
     const onSuccess = response => {
       if (response.data !== undefined) {
@@ -504,7 +506,7 @@ function clientsPromise(user_id, garage_id) {
       }
     }
 
-    request(onSuccess, GET_AVAILABLE_CLIENTS, { user_id, garage_id })
+    request(onSuccess, GET_AVAILABLE_CLIENTS, { userId, garageId })
   })
 }
 
