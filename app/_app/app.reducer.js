@@ -58,6 +58,7 @@ import adminThirdPartyIntegration from '../_shared/reducers/admin.thirdPartyInte
 import adminFinance               from '../_shared/reducers/admin.finance.reducer'
 import adminBillingAddress        from '../_shared/reducers/admin.billingAddress.reducer'
 import adminActivityLog           from '../_shared/reducers/admin.activityLog.reducer'
+import adminLegalDocuments        from '../_shared/reducers/admin.legalDocuments.reducer'
 
 import pidAdminGenerator       from '../_shared/reducers/pid-admin.generator.reducer'
 import pidAdminNews            from '../_shared/reducers/pid-admin.news.reducer'
@@ -125,6 +126,7 @@ const appReducer = combineReducers({
   adminFinance,
   adminBillingAddress,
   adminActivityLog,
+  adminLegalDocuments,
 
   pidAdminGenerator,
   pidAdminNews,

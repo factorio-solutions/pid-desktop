@@ -131,7 +131,9 @@ function prepareAdminSecondaryMenu() {
       { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/finance`) },
       //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/pidSettings`)} }
       state.isGarageAdmin &&
-      { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/activityLog`) }
+      { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/activityLog`) },
+      state.isGarageAdmin &&
+      { label: t([ 'pageBase', 'legalDocuments' ]), key: 'legalDocuments', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/legalDocuments`) }
     ].filter(field => field !== false)
   }
 }
@@ -578,6 +580,16 @@ export function toAdmin() {
           hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/dashboard') // not accessible for this user
+        }
+        break
+
+      case (contains(hash, 'legalDocuments')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'legalDocuments'
+          hint = t([ 'pageBase', 'legalDocuments' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard')
         }
         break
     }

@@ -54,6 +54,9 @@ import GateModuleOrderPage from './addFeatures/gateModuleOrder.page'
 import InvoicesPage    from './admin/invoices/invoices.page'
 import EditInvoicePage from './admin/invoices/editInvoice.page'
 
+// legal Documents
+import LegalDocuments  from './admin/legalDocuments/legalDocuments.page'
+
 // clients
 import ClientsPage     from './admin/clients/clients.page'
 import ClientUsersPage from './admin/clients/users.page'
@@ -208,6 +211,8 @@ export default function createRoutes() {
       <Route path=":id/admin/garageSetup/order" component={GarageSetupOrderPage} />
       <Route path=":id/admin/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/users" component={GarageUsersPage} />
+
+      <Route path=":id/admin/legalDocuments" component={LegalDocuments} />
 
       <Route path=":id/admin/users" component={UsersPage} />
       <Route path=":id/admin/users/invite" component={InviteUserPage} />
