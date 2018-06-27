@@ -43,11 +43,22 @@ export function initDashboard() {
 export function initGarage() {
   return (dispatch, getState) => {
     const onSuccess = response => {
-      response.data.garage.floors.forEach(floor => floor.places.forEach(place => {
-        if (response.data.reservations.find(res => res.place_id === place.id) !== undefined) { place.group = 1 }
-      }))
+      const garage = {
+        ...response.data.garage,
+        floors: response.data.garage.floors.map(floor => {
+          return {
+            ...floor,
+            places: floor.places.map(place => {
+              return {
+                ...place,
+                group: response.data.reservations.find(res => res.place_id === place.id) !== undefined ? 1 : undefined
+              }
+            })
+          }
+        })
+      }
 
-      dispatch(setGarage(response.data.garage))
+      dispatch(setGarage(garage))
     }
 
     getState().pageBase.garage && request(onSuccess, INIT_GARAGE, { id: getState().pageBase.garage })
