@@ -109,15 +109,11 @@ class NewUserForm extends Component {
           readOnly={!editable}
           onChange={actions.setCarLicencePlate}
           value={state.carLicencePlate}
-          label={`
-            ${t([ 'newReservation', 'licencePlate' ])}
-            ${state.user.id !== -2 ? ' *' : ''}
-          `}
+          label={t([ 'newReservation', 'licencePlate' ])}
           error={t([ 'newReservation', 'licencePlateInvalid' ])}
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
-          highlight={state.highlight && state.user.id !== -2}
         />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
