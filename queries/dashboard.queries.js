@@ -30,7 +30,7 @@ export const INIT_GARAGE = `query Garage($id: Id!) {
       }
     }
   }
-  reservations(garage_id: $id, ongoing: true){
+  reservations(garage_id: $id, ongoing: true, count: 99999 ){
     place_id
   }
 }
