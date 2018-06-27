@@ -34,15 +34,12 @@ class ExistingUserForm extends Component {
             readOnly={!editable}
             onChange={actions.setCarLicencePlate}
             value={state.carLicencePlate}
-            label={`
-              ${t([ 'newReservation', 'licencePlate' ])}
-              ${state.user.id === -2 ? '' : ' *'}
-            `}
+            label={t([ 'newReservation', 'licencePlate' ])}
             error={t([ 'newReservation', 'licencePlateInvalid' ])}
             placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
             type="text"
             align="left"
-            highlight={state.highlight && state.user.id !== -2}
+            // highlight={state.highlight && state.user.id !== -2}
           /> :
           <Dropdown
             editable={editable}

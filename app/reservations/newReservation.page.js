@@ -129,7 +129,6 @@ class NewReservationPage extends Component {
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
-      if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
       // if onetime visitor and he has to pay by himself, then the email is mandatory
       if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
@@ -226,7 +225,7 @@ class NewReservationPage extends Component {
                 }
 
                 {state.user &&
-                ((state.email.valid && state.phone.valid && state.carLicencePlate && state.user.id === -1) ||
+                ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
                 (state.name.valid && state.user.id === -2) ||
                 state.user.id > 0) &&
                   <GarageClientForm
