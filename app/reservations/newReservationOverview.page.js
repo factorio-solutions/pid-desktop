@@ -19,6 +19,7 @@ const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'raiffeisenbank', 'paypal' ]
 class NewReservationOverviewPage extends Component {
   static propTypes = {
     state:           PropTypes.object,
+    pageBase:        PropTypes.object,
     actions:         PropTypes.object,
     location:        PropTypes.object,
     pageBaseActions: PropTypes.object
@@ -72,7 +73,8 @@ class NewReservationOverviewPage extends Component {
   }
 
   renderPaymentRow = gate => {
-    const { state } = this.props
+    const { state, pageBase } = this.props
+    const userHasThisGate = pageBase.current_user && pageBase.current_user.merchant_ids.includes(state.garage.account.csob_merchant_id)
     const account = state.garage && state.garage.account
     if (!(account && account[`${gate}_is_active`])) return null
     if (!state.paymentMethod) this.selectPaymentMethod(gate)()
@@ -83,12 +85,23 @@ class NewReservationOverviewPage extends Component {
       </td>
       <td>
         {t([ 'newReservationOverview', gate ])}
-        {gate === 'csob' && <Checkbox
-          checked={state.csobOneClick && state.paymentMethod === 'csob'}
-          onChange={() => this.props.actions.selectCsobOneClick(!state.csobOneClick)}
-        >
-          {t([ 'newReservationOverview', 'csobOneTimePayment' ])}
-        </Checkbox>}
+        {state.paymentMethod === 'csob' && gate === 'csob' && [
+          <Checkbox
+            checked={state.paymentMethod === 'csob' && state.csobOneClick}
+            onChange={() => this.props.actions.selectCsobOneClick(!state.csobOneClick)}
+          >
+            {userHasThisGate ?
+              t([ 'newReservationOverview', 'csobOneTimePaymentUseCard' ]) :
+              t([ 'newReservationOverview', 'csobOneTimePayment' ])
+            }
+          </Checkbox>,
+          userHasThisGate && state.csobOneClick && state.paymentMethod === 'csob' && <Checkbox
+            checked={state.paymentMethod === 'csob' && state.csobOneClick && state.csobOneClickNewCard}
+            onChange={() => this.props.actions.selectCsobOneClickNewCard(!state.csobOneClickNewCard)}
+          >
+            {t([ 'newReservationOverview', 'csobOneTimePaymentNewCard' ])}
+          </Checkbox>
+      ]}
       </td>
       <td><img src={`./public/logo/${gate}-logo.png`} alt={gate} /></td>
     </tr>)
@@ -154,7 +167,7 @@ class NewReservationOverviewPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.newReservation }),
+  state => ({ state: state.newReservation, pageBase: state.pageBase }),
   dispatch => ({
     actions:         bindActionCreators(newReservationActions, dispatch),
     pageBaseActions: bindActionCreators({ setGarage }, dispatch)

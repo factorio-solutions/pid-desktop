@@ -847,7 +847,9 @@
 		"paypal": "PayPal",
 		"raiffeisenbank": "Raiffeisenbank - online payment",
 		"paymentMethod": "Payment method",
-		"csobOneTimePayment": "Save my card info"
+		"csobOneTimePayment": "Save my card info",
+		"csobOneTimePaymentUseCard": "Use my saved card",
+		"csobOneTimePaymentNewCard": "Save new card"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",
