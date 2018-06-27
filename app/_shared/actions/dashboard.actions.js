@@ -1,38 +1,38 @@
 import { request }  from '../helpers/request'
-import { download } from '../helpers/download'
-import { t }        from '../modules/localization/localization'
-import * as nav     from '../helpers/navigation'
 
 import { INIT_DASHBOARD, INIT_GARAGE } from '../queries/dashboard.queries'
 
 
-export const DASHBOARD_SET_NEWS   = 'DASHBOARD_SET_NEWS'
+export const DASHBOARD_SET_NEWS = 'DASHBOARD_SET_NEWS'
 export const DASHBOARD_SET_GARAGE = 'DASHBOARD_SET_GARAGE'
-export const DASHBOARD_SET_LOGS   = 'DASHBOARD_SET_LOGS'
+export const DASHBOARD_SET_LOGS = 'DASHBOARD_SET_LOGS'
 
 
-export function setNews (value) {
-  return { type: DASHBOARD_SET_NEWS
-         , value
-         }
+export function setNews(value) {
+  return {
+    type: DASHBOARD_SET_NEWS,
+    value
+  }
 }
 
-export function setGarage (value) {
-  return { type: DASHBOARD_SET_GARAGE
-         , value
-         }
+export function setGarage(value) {
+  return {
+    type: DASHBOARD_SET_GARAGE,
+    value
+  }
 }
 
-export function setLogs (value) {
-  return { type: DASHBOARD_SET_LOGS
-         , value
-         }
+export function setLogs(value) {
+  return {
+    type: DASHBOARD_SET_LOGS,
+    value
+  }
 }
 
 
-export function initDashboard (){
-  return (dispatch, getState) => {
-    const onSuccess = (response) => {
+export function initDashboard() {
+  return dispatch => {
+    const onSuccess = response => {
       dispatch(setNews(response.data.news))
     }
 
@@ -40,16 +40,27 @@ export function initDashboard (){
   }
 }
 
-export function initGarage () {
+export function initGarage() {
   return (dispatch, getState) => {
-    const onSuccess = (response) => {
-      response.data.garage.floors.forEach(floor => floor.places.forEach( place => {
-        if (response.data.reservations.find(res => res.place_id === place.id)!== undefined) { place.group = 1 }
-      }))
-      
-      dispatch(setGarage(response.data.garage))
+    const onSuccess = response => {
+      const garage = {
+        ...response.data.garage,
+        floors: response.data.garage.floors.map(floor => {
+          return {
+            ...floor,
+            places: floor.places.map(place => {
+              return {
+                ...place,
+                group: response.data.reservations.find(res => res.place_id === place.id) !== undefined ? 1 : undefined
+              }
+            })
+          }
+        })
+      }
+
+      dispatch(setGarage(garage))
     }
 
-    getState().pageBase.garage && request(onSuccess, INIT_GARAGE, {id: getState().pageBase.garage})
+    getState().pageBase.garage && request(onSuccess, INIT_GARAGE, { id: getState().pageBase.garage })
   }
 }
