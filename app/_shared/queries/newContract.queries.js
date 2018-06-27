@@ -7,6 +7,7 @@ export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!) {
     vat
     dic
     floors {
+      id
       label
       scheme
       places{
