@@ -135,6 +135,16 @@ class OccupancyPage extends Component {
           </Form>
         </Modal>
 
+        <Modal show={state.reservationNotPossible}>
+          <Form
+            onSubmit={actions.unsetNewReservation}
+            submitable
+            center
+          >
+            {t([ 'occupancy', 'placeNotAvailable' ])}
+          </Form>
+        </Modal>
+
         <TabMenu right={filters} left={clientSelector} />
         <div className={styles.occupancies}>
           <h2>{garage && garage.name}</h2>
