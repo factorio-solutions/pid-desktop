@@ -68,3 +68,21 @@ export const GARAGE_CLIENTS_QUERY = `query Garage($id: Id!) {
   }
 }
 `
+
+export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) {
+  reservable_clients(user_id: $user_id, garage_id: $garage_id) {
+    id
+  }
+}
+`
+
+export const CHECK_PLACE_AVAILABLE = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_ids: [Id]) {
+  garage(id: $id) {
+    floors {
+      free_places(begins_at: $begins_at, ends_at: $ends_at, client_ids: $client_ids, user_id: -1) {
+        id
+      }
+    }
+  }
+}
+`

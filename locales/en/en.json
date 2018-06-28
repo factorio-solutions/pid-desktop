@@ -394,7 +394,8 @@
 		"from": "from: ",
 		"to": "to: ",
 		"garage": "garage: ",
-		"place": "place: "
+		"place": "place: ",
+		"placeNotAvailable": "This place cannot be reserved."
 	},
 	"garageUsers": {
 		"noRights": "You do not have the right to do that.",
