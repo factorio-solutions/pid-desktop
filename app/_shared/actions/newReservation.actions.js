@@ -506,7 +506,7 @@ function clientsPromise(userId, garageId) {
       }
     }
 
-    request(onSuccess, GET_AVAILABLE_CLIENTS, { userId, garageId })
+    request(onSuccess, GET_AVAILABLE_CLIENTS, { user_id: userId, garage_id: garageId })
   })
 }
 
