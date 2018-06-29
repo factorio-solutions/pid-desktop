@@ -55,11 +55,12 @@ import InvoicesPage    from './admin/invoices/invoices.page'
 import EditInvoicePage from './admin/invoices/editInvoice.page'
 
 // clients
-import ClientsPage     from './admin/clients/clients.page'
-import ClientUsersPage from './admin/clients/users.page'
-import NewClientPage   from './admin/clients/newClient.page'
-import SmsSettingsPage from './admin/clients/modules/smsSettings.page'
-import NewContractPage from './admin/clients/newContract.page'
+import ClientsPage        from './admin/clients/clients.page'
+import ClientUsersPage    from './admin/clients/users.page'
+import NewClientPage      from './admin/clients/newClient.page'
+import SmsSettingsPage    from './admin/clients/modules/smsSettings.page'
+import MinMaxDurationPage from './admin/clients/modules/MinMaxDuration.page'
+import NewContractPage    from './admin/clients/newContract.page'
 
 // modules
 import MarketingSettingsPage     from './admin/modules/marketingSettings.page'
@@ -186,6 +187,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/newClient" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
+      <Route path=":id/admin/clients/:client_id/minMaxReservationDuration" component={MinMaxDurationPage} />
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 
