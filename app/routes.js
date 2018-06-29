@@ -119,6 +119,7 @@ import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOve
 
 import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
+import legalDocuments from './_shared/reducers/admin.legalDocuments.reducer';
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
@@ -211,8 +212,7 @@ export default function createRoutes() {
       <Route path=":id/admin/garageSetup/order" component={GarageSetupOrderPage} />
       <Route path=":id/admin/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/users" component={GarageUsersPage} />
-
-      <Route path=":id/admin/legalDocuments" component={LegalDocuments} />
+      <Route path=":id/admin/garageSetup/legalDocuments" component={LegalDocuments} />
 
       <Route path=":id/admin/users" component={UsersPage} />
       <Route path=":id/admin/users/invite" component={InviteUserPage} />

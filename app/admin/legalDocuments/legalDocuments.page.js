@@ -2,51 +2,44 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import * as legalDocumentsActions from '../../_shared/actions/legalDocuments.actions'
+import * as nav                   from '../../_shared/helpers/navigation'
 
-import PageBase  from '../../_shared/containers/pageBase/PageBase'
-import TabMenu   from '../../_shared/components/tabMenu/TabMenu'
-import TabButton from '../../_shared/components/buttons/TabButton'
-import Privacy   from './tabs/privacy'
-import Terms     from './tabs/terms'
-
-import { t }     from '../../_shared/modules/localization/localization'
+import Documents from './documents'
+import GarageSetupPage from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import Form from '../../_shared/components/form/Form'
 
 class LegalDocuments extends Component {
   static propTypes = {
     state:   PropTypes.object,
-    actions: PropTypes.object
+    actions: PropTypes.object,
+    params:  PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-
-    props.actions.setSelected(this.tabs[0].id)
+  componentDidMount() {
+    this.props.actions.initDocuments()
   }
 
-  tabs = [
-    { id:      'privacy',
-      content: <Privacy />
-    },
-    { id:      'terms',
-      content: <Terms />
+  onSubmit = () => {
+    if (this.props.params.id) {
+      this.props.actions.updateGarageDocuments()
+    } else {
+      nav.to('/addFeatures/garageSetup')
     }
-  ]
+  }
 
-  prepareTabs = tab => (<TabButton
-    label={t([ 'legalDocuments', tab.id ])}
-    onClick={() => this.props.actions.setSelected(tab.id)}
-    state={this.props.state.selected === tab.id && 'selected'}
-  />)
+  submitable = () => {
+    return this.props.state.privacyDocuments.length >= 1
+  }
 
   render() {
-    const { state } = this.props
-    const selectedTab = this.tabs.find(tab => tab.id === state.selected)
+    const { state, actions } = this.props
     return (
-      <PageBase>
-        <TabMenu left={this.tabs.map(this.prepareTabs)} />
-
-        {selectedTab && selectedTab.content}
-      </PageBase>
+      <GarageSetupPage>
+        <Form onSubmit={this.onSubmit} submitable={this.submitable()} onHighlight={actions.toggleHighlight}>
+          {state.documentsTypes &&
+           state.documentsTypes.map(type => <Documents type={type} highlight={state.highlight} />)}
+        </Form>
+      </GarageSetupPage>
     )
   }
 
