@@ -847,7 +847,10 @@
 		"csob": "ČSOB - online payment",
 		"paypal": "PayPal",
 		"raiffeisenbank": "Raiffeisenbank - online payment",
-		"paymentMethod": "Payment method"
+		"paymentMethod": "Payment method",
+		"csobOneTimePayment": "Save my card info",
+		"csobOneTimePaymentUseCard": "Use my saved card",
+		"csobOneTimePaymentNewCard": "Save new card"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",

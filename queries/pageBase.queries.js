@@ -19,6 +19,9 @@ export const GET_CURRENT_USER = `{
     has_client
     created_at
     hide_public_garages
+    csob_payment_templates{
+      merchant_id
+    }
   }
 }
 `

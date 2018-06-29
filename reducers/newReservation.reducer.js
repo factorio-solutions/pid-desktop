@@ -38,6 +38,8 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
   NEW_RESERVATION_SET_PAYMENT_METHOD,
+  NEW_RESERVATION_SET_CSOB_ONE_CLICK,
+  NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD,
 
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
@@ -79,7 +81,9 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod: ''
+  paymentMethod:       '',
+  csobOneClick:        false,
+  csobOneClickNewCard: false
 }
 
 function placeLabel(state) {
@@ -319,6 +323,18 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         paymentMethod: action.value
+      }
+
+    case NEW_RESERVATION_SET_CSOB_ONE_CLICK:
+      return {
+        ...state,
+        csobOneClick: action.value
+      }
+
+    case NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD:
+      return {
+        ...state,
+        csobOneClickNewCard: action.value
       }
 
 
