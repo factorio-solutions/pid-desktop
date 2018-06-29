@@ -66,6 +66,8 @@ export const NEW_RESERVATION_SET_SELECTED_TEMPLATE = 'NEW_RESERVATION_SET_SELECT
 export const NEW_RESERVATION_SET_TEMPLATE_TEXT = 'NEW_RESERVATION_SET_TEMPLATE_TEXT'
 export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
 export const NEW_RESERVATION_SET_PAYMENT_METHOD = 'NEW_RESERVATION_SET_PAYMENT_METHOD'
+export const NEW_RESERVATION_SET_CSOB_ONE_CLICK = 'NEW_RESERVATION_SET_CSOB_ONE_CLICK'
+export const NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD = 'NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -88,6 +90,9 @@ export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
+export const selectCsobOneClick = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK)
+export const selectCsobOneClickNewCard = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD)
+
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -657,30 +662,32 @@ export function submitReservation(id) {
     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', id ? 'updatingReservation' : 'creatingReservation' ])}</div>))
 
     const createTheReservation = user_id => {
-      request(onSuccess
-             , id ? UPDATE_RESERVATION : CREATE_RESERVATION
-             , { reservation: {
-               user_id:                  user_id,
-               note:                     state.note ? state.note : undefined,
-               place_id:                 state.place_id,
-               garage_id:                state.garage.id,
-               client_id:                state.client_id,
-               paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
-               car_id:                   state.car_id,
-               licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
-               url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
-               begins_at:                timeToUTC(state.from),
-               ends_at:                  timeToUTC(state.to),
-               recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
-               recurring_reservation_id: state.recurring_reservation_id,
-               send_sms:                 state.sendSMS,
-               sms_text:                 state.templateText,
-               payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod
-             },
-               id
-             }
-             , 'reservationMutation'
-             )
+      request(onSuccess,
+        id ? UPDATE_RESERVATION : CREATE_RESERVATION,
+        { reservation: {
+          user_id,
+          note:                     state.note ? state.note : undefined,
+          place_id:                 state.place_id,
+          garage_id:                state.garage.id,
+          client_id:                state.client_id,
+          paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
+          car_id:                   state.car_id,
+          licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
+          url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
+          begins_at:                timeToUTC(state.from),
+          ends_at:                  timeToUTC(state.to),
+          recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
+          recurring_reservation_id: state.recurring_reservation_id,
+          send_sms:                 state.sendSMS,
+          sms_text:                 state.templateText,
+          payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
+          csob_one_click:           state.csobOneClick,
+          csob_one_click_new_card:  state.csobOneClickNewCard
+        },
+          id
+        },
+        'reservationMutation'
+      )
     }
 
     const sendNewReservationRequest = () => {
