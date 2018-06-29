@@ -550,7 +550,13 @@
 		"passwordWasNotSet": "Password was not set!",
 		"addAllPalces": "Add all places",
 		"notAssignNumber": "Number not assigned",
-		"selcetNumber": "Number to open gate"
+		"selcetNumber": "Number to open gate",
+		"privacy": "privacy",
+		"terms": "terms",
+		"documents": "documents",
+		"legalDocuments": "Legal documents",
+		"documentName": "Name of document",
+		"lastChangeAt": "Last change at"
 	},
 	"newClient": {
 		"name": "Client name",

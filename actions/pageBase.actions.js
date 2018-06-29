@@ -131,9 +131,7 @@ function prepareAdminSecondaryMenu() {
       { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/finance`) },
       //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/pidSettings`)} }
       state.isGarageAdmin &&
-      { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/activityLog`) },
-      state.isGarageAdmin &&
-      { label: t([ 'pageBase', 'legalDocuments' ]), key: 'legalDocuments', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/legalDocuments`) }
+      { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/activityLog`) }
     ].filter(field => field !== false)
   }
 }
@@ -583,15 +581,6 @@ export function toAdmin() {
         }
         break
 
-      case (contains(hash, 'legalDocuments')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'legalDocuments'
-          hint = t([ 'pageBase', 'legalDocuments' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/dashboard')
-        }
-        break
     }
 
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo))
