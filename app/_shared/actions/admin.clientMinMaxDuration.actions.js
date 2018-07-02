@@ -2,7 +2,7 @@ import requestPromise      from '../helpers/requestPromise'
 import actionFactory       from '../helpers/actionFactory'
 import minMaxDurationCheck from '../helpers/minMaxDurationCheck'
 
-import { UPDATE_CLIENT_DURATIONS } from '../queries/admin.clientMinMaxDuration.queries'
+import { UPDATE_CLIENT_DURATIONS, CLIENT_MIN_MAX_DURATIONS } from '../queries/admin.clientMinMaxDuration.queries'
 
 export const ADMIN_CLIENT_SET_MIN_RESERVATION_DURATION = 'ADMIN_CLIENT_SET_MIN_RESERVATION_DURATION'
 export const ADMIN_CLIENT_SET_MAX_RESERVATION_DURATION = 'ADMIN_CLIENT_SET_MAX_RESERVATION_DURATION'
@@ -33,7 +33,7 @@ export function checkMaxReservationDuration() {
 
 export function initMinMaxDuration(id) {
   return dispatch => {
-    requestPromise(UPDATE_CLIENT_DURATIONS, { id })
+    requestPromise(CLIENT_MIN_MAX_DURATIONS, { id })
     .then(data => {
       dispatch(setMinReservationDuration(data.client.min_reservation_duration))
       dispatch(setMaxReservationDuration(data.client.max_reservation_duration))

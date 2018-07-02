@@ -19,10 +19,10 @@ class ClientModules extends Component {
     params:   PropTypes.object
   }
 
-  componentDidMount() {
-    this.props.actions.clearForm()
-    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
-  }
+  // componentDidMount() {
+  //   this.props.actions.clearForm()
+  //   this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
+  // }
 
   selectTab = tab => () => nav.to(`/${this.props.pageBase.garage}/admin/clients/${this.props.params.client_id}/${tab}`)
 
