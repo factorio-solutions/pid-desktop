@@ -119,6 +119,7 @@
 		"newGarageOrderHint": "Here you can set the order for filling up parking spots. Spots are taken in ascending order, starting with the lowest number. If spots have no specified order, the system sets the order automatically.",
 		"newGarageSubscribtionHint": "TODO: New garage subscribtion Hint",
 		"newGarageGatesHint": "Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.",
+		"newGarageLegalDocumentsHint": "TODO: Hint for Legal Documents",
 		"garageClientsHint": "Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.",
 		"clientsHint": "Here you can find a list of clients with whom you are in agreement. \n\nThe “client token” column shows the unique identifier for selecting the client when creating new agreements. \n\nThe “agreement” column shows a green check mark if the client has an agreement, or a red exclamation point if the client has no agreement. \n\nThe “Spots” column shows the total number of parking spots assigned to the client. \n\nThe “Monthly total” column shows the total monthly parking fees paid by the client. \n\nThe “Invoices” column shows payment status for invoices: green if all are paid, red if any are past due. \n\nClick on the client to show more details, such as contact person or list of agreements made. The buttons on the right can create new agreements, check invoices, edit the client or display all users who belong under that client. In this section you can also click on individual agreements and edit them.",
 		"newClientHint": "Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",
@@ -556,7 +557,12 @@
 		"documents": "documents",
 		"legalDocuments": "Legal documents",
 		"documentName": "Name of document",
-		"lastChangeAt": "Last change at"
+		"lastChangeAt": "Last change at",
+		"addDocument": "Add document",
+		"showDocument": "Show document",
+		"removeDocument": "Remove document",
+		"removeDocumentQuestion": "Do you want to delete document",
+		"privacyDocumentRule": "At least one document has to be uploaded"
 	},
 	"newClient": {
 		"name": "Client name",
