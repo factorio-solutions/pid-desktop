@@ -497,7 +497,7 @@ export function toAdmin() {
       case (contains(hash, 'garageSetup') && contains(hash, 'legalDocuments')):
         if (state.isGarageAdmin) {
           secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGaragelegalDocumentsHint' ])
+          hint = t([ 'pageBase', 'newGarageLegalDocumentsHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/dashboard') // not accessible for this user

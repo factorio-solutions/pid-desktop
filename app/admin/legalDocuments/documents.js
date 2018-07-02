@@ -29,18 +29,18 @@ class Documents extends Component {
     {t([ 'newGarage', 'lastChangeAt' ])}: {moment(document.updated_at).format(MOMENT_DATETIME_FORMAT)}
     <span style={{ float: 'right' }}>
       <LabeledRoundButton
-        label={t([ 'legalDocuments', 'showDocument' ])}
+        label={t([ 'newGarage', 'showDocument' ])}
         content={<span className="fa fa-download" aria-hidden="true" />}
         type="action"
         onClick={() => window.open(document.url)}
       />
       {this.props.pageBase.isGarageAdmin &&
         <LabeledRoundButton
-          label={t([ 'legalDocuments', 'removeDocument' ])}
+          label={t([ 'newGarage', 'removeDocument' ])}
           content={<span className="fa fa-times" aria-hidden="true" />}
           type="remove"
           onClick={() => this.props.actions.destroyDocument(document)}
-          question={`Do you want to delete document ${document.name}`} // TODO: To lang files.
+          question={`${t([ 'newGarage', 'removeDocumentQuestion' ])} ${document.name}`}
         />
       }
     </span>
@@ -62,7 +62,7 @@ class Documents extends Component {
       <div>
         <h2>{typeTranslation.firstToUpperCase()} {t([ 'newGarage', 'documents' ])}</h2>
         {highlight && type === 'privacy' &&
-          <h4>At least one document has to be uploaded</h4> // TODO: to lang files.
+          <h4>{t([ 'newGarage', 'privacyDocumentRule' ])}</h4>
         }
         <Table
           schema={schema}
