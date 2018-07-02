@@ -205,6 +205,7 @@ export default function createRoutes() {
       <Route path="addFeatures/garageSetup/floors" component={GarageSetupFloorsPage} />
       <Route path="addFeatures/garageSetup/gates" component={GarageSetupGatesPage} />
       <Route path="addFeatures/garageSetup/order" component={GarageSetupOrderPage} />
+      <Route path="addFeatures/garageSetup/legalDocuments" component={LegalDocuments} />
       <Route path="addFeatures/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/general" component={GarageSetupGeneralPage} />
       <Route path=":id/admin/garageSetup/floors" component={GarageSetupFloorsPage} />

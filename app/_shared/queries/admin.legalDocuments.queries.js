@@ -10,21 +10,23 @@ export const UPDATE_GARAGE = `mutation UpdateGarage($garage: GarageInput!, $id: 
 }
 `
 
-const documentParameters = `{
-  id
-  document
-  document_type
-  document_name
-  updated_at
+export const GET_GARAGE_DOCUMENTS = `query ($id: Id!) {
+  garage(id: $id) {
+    id
+    documents{
+      id
+      url
+      doc_type
+      name
+      lang
+      updated_at
+    }
+  }
 }
 `
 
-export const GET_GARAGE_DOCUMENTS = types => `query ($id: Id!) {
-  garage(id: $id) {
+export const DESTROY_DOCUMENTS = `mutation destroyDocuments($ids: [Id!])
+  destroy_documents(ids: $ids){
     id
-    ${types.reduce((acc, type) => {
-      return acc + `${type}_documents${documentParameters}`
-    }, '')}
   }
-}
 `
