@@ -65,6 +65,8 @@ export function initGoInternal() {
     .then(data => {
       dispatch(setGarage(data.garage))
       dispatch(setCurrencies(data.currencies))
+      dispatch(setMinReservationDuration(data.garage.min_reservation_duration_go_internal))
+      dispatch(setMaxReservationDuration(data.garage.max_reservation_duration_go_internal))
 
       const state = getState().adminGoInternal
       data.garage.floors

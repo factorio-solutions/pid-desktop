@@ -6,7 +6,7 @@ export const UPDATE_CLIENT_DURATIONS = `mutation UpdateClient($client: ClientInp
 `
 
 // fetches a name of client to rename
-export const EDIT_CLIENT_INIT = `query ($id: Id!) {
+export const CLIENT_MIN_MAX_DURATIONS = `query ($id: Id!) {
   client(id: $id) {
     id
     min_reservation_duration

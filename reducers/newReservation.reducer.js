@@ -41,8 +41,13 @@ import {
   NEW_RESERVATION_SET_CSOB_ONE_CLICK,
   NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD,
 
+  NEW_RESERVATION_SET_MIN_DURATION,
+  NEW_RESERVATION_SET_MAX_DURATION,
+
   NEW_RESERVATION_CLEAR_FORM
 }  from '../actions/newReservation.actions'
+
+const MIN_RESERVATION_DURATION = 30 // minutes
 
 const defaultState = {
   user:           undefined, // id of selected user reservation is for
@@ -83,7 +88,10 @@ const defaultState = {
 
   paymentMethod:       '',
   csobOneClick:        false,
-  csobOneClickNewCard: false
+  csobOneClickNewCard: false,
+
+  minDuration: MIN_RESERVATION_DURATION,
+  maxDuration: null
 }
 
 function placeLabel(state) {
@@ -337,6 +345,17 @@ export default function newReservation(state = defaultState, action) {
         csobOneClickNewCard: action.value
       }
 
+    case NEW_RESERVATION_SET_MIN_DURATION:
+      return {
+        ...state,
+        minDuration: action.value || MIN_RESERVATION_DURATION
+      }
+
+    case NEW_RESERVATION_SET_MAX_DURATION:
+      return {
+        ...state,
+        maxDuration: action.value || null
+      }
 
     case NEW_RESERVATION_CLEAR_FORM:
       return defaultState
