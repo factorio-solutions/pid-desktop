@@ -3,6 +3,7 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import * as legalDocumentsActions from '../../_shared/actions/legalDocuments.actions'
 import * as nav                   from '../../_shared/helpers/navigation'
+import { initTarif, intiEditGarageOrder } from '../../_shared/actions/garageSetup.actions'
 
 import Documents from './documents'
 import GarageSetupPage from '../../_shared/containers/garageSetupPage/GarageSetupPage'
@@ -10,32 +11,52 @@ import Form from '../../_shared/components/form/Form'
 
 class LegalDocuments extends Component {
   static propTypes = {
-    state:   PropTypes.object,
-    actions: PropTypes.object,
-    params:  PropTypes.object
+    state:       PropTypes.object,
+    actions:     PropTypes.object,
+    params:      PropTypes.object,
+    garageSetup: PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.initDocuments()
+    if (this.props.params.id) {
+      this.props.actions.initDocuments()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { garageSetup, actions, params } = this.props
+    if (nextProps.params.id !== params.id) {
+      this.props.actions.initDocuments()
+      garageSetup.availableTarifs.length === 0 && actions.initTarif()
+      nextProps.params.id && actions.intiEditGarageOrder(nextProps.params.id)
+    }
   }
 
   onSubmit = () => {
     if (this.props.params.id) {
       this.props.actions.updateGarageDocuments()
     } else {
-      nav.to('/addFeatures/garageSetup')
+      nav.to('/addFeatures/garageSetup/subscribtion')
+    }
+  }
+
+  goBack = () => {
+    if (this.props.params.id) {
+      nav.to(`/${this.props.params.id}/admin/garageSetup/order`)
+    } else {
+      nav.to('/addFeatures/garageSetup/order')
     }
   }
 
   submitable = () => {
-    return this.props.state.privacyDocuments.length >= 1
+    return this.props.state.documents.filter(doc => doc.doc_type === 'privacy' && !doc.remove).length >= 1
   }
 
   render() {
     const { state, actions } = this.props
     return (
       <GarageSetupPage>
-        <Form onSubmit={this.onSubmit} submitable={this.submitable()} onHighlight={actions.toggleHighlight}>
+        <Form onSubmit={this.onSubmit} submitable={this.submitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
           {state.documentsTypes &&
            state.documentsTypes.map(type => <Documents type={type} highlight={state.highlight} />)}
         </Form>
@@ -46,6 +67,6 @@ class LegalDocuments extends Component {
 }
 
 export default connect(
-  state => ({ state: state.adminLegalDocuments }),
-  dispatch => ({ actions: bindActionCreators(legalDocumentsActions, dispatch) })
+  state => ({ state: state.adminLegalDocuments, garageSetup: state.garageSetup }),
+  dispatch => ({ actions: bindActionCreators({ ...legalDocumentsActions, initTarif, intiEditGarageOrder }, dispatch) })
 )(LegalDocuments)
