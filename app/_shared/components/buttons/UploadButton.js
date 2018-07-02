@@ -43,7 +43,7 @@ export default class UploadButton extends Component {
         label={label}
         type={type}
         state={state}
-        onClick={() => { this.fileInput.click() }}
+        onClick={() => { if (type !== 'disabled') { this.fileInput.click() } }}
         content={<i className={`fa ${this.state.uploading ? 'fa-cloud-upload' : 'fa-file-text-o'} ${this.state.uploading && styles.pulsing}`} aria-hidden="true" />}
       />
     </span>)
