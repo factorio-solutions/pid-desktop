@@ -10,27 +10,32 @@ import Switch             from '../../../_shared/components/switch/Switch'
 import Input              from '../../../_shared/components/input/Input'
 import LabeledRoundButton from '../../../_shared/components/buttons/LabeledRoundButton'
 import Modal              from '../../../_shared/components/modal/Modal'
+import Checkbox           from '../../../_shared/components/checkbox/Checkbox'
 
 import * as nav               from '../../../_shared/helpers/navigation'
 import { t }                  from '../../../_shared/modules/localization/localization'
 import * as timeCreditActions from '../../../_shared/actions/admin.timeCredit.actions'
 import * as clientActions     from '../../../_shared/actions/clients.actions'
+import * as clientUserActions from '../../../_shared/actions/clientUsers.actions'
 
 import styles from './timeCredit.page.scss'
 
 
 class TimeCreditPage extends Component {
   static propTypes = {
-    state:         PropTypes.object,
-    pageBase:      PropTypes.object,
-    clients:       PropTypes.object,
-    actions:       PropTypes.object,
-    clientActions: PropTypes.object,
-    params:        PropTypes.object
+    state:              PropTypes.object,
+    pageBase:           PropTypes.object,
+    clients:            PropTypes.object,
+    users:              PropTypes.object,
+    actions:            PropTypes.object,
+    clientActions:      PropTypes.object,
+    clientUsersActions: PropTypes.object,
+    params:             PropTypes.object
   }
 
   componentDidMount() {
     this.props.actions.initTimeCredit(+this.props.params.client_id)
+    this.props.clientUsersActions.initClientUsers(+this.props.params.client_id)
 
     // init clients and get the place count
     if (!this.props.clients.clients.length) {
@@ -55,7 +60,7 @@ class TimeCreditPage extends Component {
   submitOnetimeAddition =() => this.checkOnetimeAdditionSubmitable() && this.props.actions.submitOnetimeAddition(+this.props.params.client_id)
 
   render() {
-    const { state, actions, clients } = this.props
+    const { state, actions, clients, users } = this.props
     const client = clients.clients.findById(+this.props.params.client_id)
     const hoursThisMonth = ((client && client.place_count) || 0) * 24 * moment().daysInMonth()
     const creditsPossibleToDistribute = hoursThisMonth * (state.pricePerHour <= 0 ? Infinity : state.pricePerHour)
@@ -78,6 +83,30 @@ class TimeCreditPage extends Component {
               placeholder={t([ 'newClient', 'onetimeAdditionPlaceholder' ])}
               highlight={state.highlight}
             />
+
+            <div className={styles.alignLeft}>
+              <Checkbox
+                checked={state.usersToAdd.length === 0}
+                onChange={state.usersToAdd.length && actions.eraseUsers}
+              >
+                {t([ 'newClient', state.add ? 'addToEveryone' : 'removeFromEveryone' ])}
+              </Checkbox>
+
+              <div className={styles.alignCenter}><h3>{t([ 'newClient', 'or' ])}</h3></div>
+
+              <h4 className={styles.noMarginBottom}>{t([ 'newClient', 'selectUsers' ])}</h4>
+              <div className={styles.users}>
+                {users.users.map(({ user }) => (<Checkbox
+                  checked={state.usersToAdd.includes(user.id)}
+                  onChange={() => actions.toggleUser(user.id)}
+                >
+                  {[ user.full_name,
+                    user.email,
+                    user.phone
+                  ].join(', ')}
+                </Checkbox>))}
+              </div>
+            </div>
           </Form>
         </Modal>
 
@@ -169,9 +198,10 @@ class TimeCreditPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.timeCredit, pageBase: state.pageBase, clients: state.clients }),
+  state => ({ state: state.timeCredit, pageBase: state.pageBase, clients: state.clients, users: state.clientUsers }),
   dispatch => ({
-    actions:       bindActionCreators(timeCreditActions, dispatch),
-    clientActions: bindActionCreators(clientActions, dispatch)
+    actions:            bindActionCreators(timeCreditActions, dispatch),
+    clientActions:      bindActionCreators(clientActions, dispatch),
+    clientUsersActions: bindActionCreators(clientUserActions, dispatch)
   })
 )(TimeCreditPage)

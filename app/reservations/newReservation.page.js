@@ -182,6 +182,7 @@ class NewReservationPage extends Component {
         return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
       }
     }
+    console.log(state)
 
     return (
       <PageBase>
@@ -253,7 +254,8 @@ class NewReservationPage extends Component {
                       <Uneditable
                         label={t([ 'newReservation', 'price' ])}
                         highlight={state.highlight && state.price > selectedClient.current_time_credit}
-                        value={`${state.price} / ${selectedClient.current_time_credit}
+                        value={`${(state.recurringRule ? state.recurringRule.count : 1) * state.price} /
+                          ${selectedClient.current_time_credit}
                           ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
                         `}
                       /> :

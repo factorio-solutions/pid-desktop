@@ -6,7 +6,9 @@ import {
   TIME_CREDIT_TOGGLE_HIGHLIGHT,
   TIME_CREDIT_SET_SHOW_MODAL,
   TIME_CREDIT_SET_ADD,
-  TIME_CREDIT_SET_AMOUNT_TO_ADD
+  TIME_CREDIT_SET_AMOUNT_TO_ADD,
+  TIME_CREDIT_SET_USERS_TO_ADD,
+  TIME_CREDIT_ERASE_USERS_TO_ADD
 }  from '../actions/admin.timeCredit.actions'
 
 
@@ -19,7 +21,8 @@ const defaultState = {
 
   showModal:   false,
   add:         true, // add or remove money
-  amountToAdd: 0
+  amountToAdd: 0,
+  usersToAdd:  []
 }
 
 
@@ -74,6 +77,23 @@ export default function timeCredit(state = defaultState, action) {
         ...state,
         amountToAdd: parseInt((state.add ? 1 : -1) * action.value, 10)
       }
+
+    case TIME_CREDIT_SET_USERS_TO_ADD: {
+      const index = state.usersToAdd.indexOf(action.value)
+      return {
+        ...state,
+        usersToAdd: index === -1 ?
+          [ ...state.usersToAdd, action.value ] :
+          [ ...state.usersToAdd.splice(0, index - 1), ...state.usersToAdd.splice(index + 1) ]
+      }
+    }
+
+    case TIME_CREDIT_ERASE_USERS_TO_ADD: {
+      return {
+        ...state,
+        usersToAdd: []
+      }
+    }
 
     default:
       return state
