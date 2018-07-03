@@ -2,8 +2,8 @@
 	"PID-RELEASE": "r20180209a",
 	"addresses": {
 		"name": "Name",
-		"line1": "Line 1",
-		"line2": "Line 2",
+		"line1": "Address 1",
+		"line2": "Address 2",
 		"city": "City",
 		"postalCode": "Postal code",
 		"state": "State",
@@ -49,7 +49,8 @@
 		"userNotCreated": "User not created, may already exist.",
 		"loading": "Loading",
 		"termsOfService": "Terms of Service",
-		"acceptTerms": "Accepting"
+		"acceptTerms": "Accepting",
+		"success": "Registration was successfull, confirm your email address and you can log in."
 	},
 	"pageBase": {
 		"noFileSelected": "No file selected",
@@ -96,34 +97,34 @@
 		"error": "Error",
 		"success": "Success",
 		"inviteUser": "Invite new user",
-		"dashboardHint": "\n\nHere you can see an overview of all important information\nabout your account.\n\nThe garage map shows spots with ongoing reservations.\n\nThe News section shares what is going on at Park-it-direct.\n\nCurrent Status gives brief statistics on available and\noccupied spots.\n\n\n",
+		"dashboardHint": "Welcome to Park-it-direct!\n\nYou can hide this blue column with hints by clicking a cross in its left corner. To activate it again click on the blue information icon that will appear in the top right corner.\n\nTo move around in Park-it-direct, use the menu on the left side.\n\nFastest way to create new reservation is the blue button at the top!\n\nNeed more help? Get in touch with us via Intercom - our communicator in the bottom right corner. We will be glad to help! :-)",
 		"issuesHint": "TODO: Issues hint",
-		"analyticsHint": "Here you can check various statistics.",
-		"invoicesHint": "Here is a list of issued invoices.\n\nIn the upper left-hand corner you can filter invoices by client. In the upper right-hand corner you can display current invoices or past invoices only.",
-		"newContractHint": "Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :)",
+		"analyticsHint": "Here you can check if the reservation details are correct and complete the reservation by paying it.\n\nThe selection of payment methods can be adjusted in the garage settings.",
+		"invoicesHint": "You can find all issued accounting documents here.\n\nIn the upper left corner, you can choose whether you want to see invoices, simplified tax documents, or credit notes / corrective tax documents.\n\nInvoices are related to long-term agreements for parking spaces, simplified tax documents are related to parking paid by the parker below the amount of CZK 10,000, and credit notes / corrective tax documents are related to canceled reservations paid by parkers.\n\nIn the upper left corner, you can also filter the documents by client.\n\nIn the top right corner, you can choose between displaying current documents or entire history.",
+		"newContractHint": "Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :-)",
 		"ReservationButtonHint": "TODO: reservation button hint",
 		"mrParkitIntegrationHint": "TODO: mrParkitIntegration hint",
-		"goPublicHint": "Here you can choose parking spots you want to offer to the public. You can also set the price for parking spots and choose from three options for calculating the parking price. \n\nThe methods for calculating price are: \nFixed hourly rate \nExponential price calculation (set different hourly rates at certain intervals) \nWeekend price (works only in combination with a fixed hourly rate, with a different price for weekends) \n\nChoose the spots on the garage map (available spots are blue, occupied are yellow). Then set the currency at the top of the form, choose one of the options for calculating the price, and set the price.",
+		"goPublicHint": "Here you can choose parking spots you want to offer to the public. You can also set the price for parking spots and choose from three options for calculating the parking price. \n\nThe methods for calculating price are:\nFixed hourly rate\n\nExponential price calculation (set different hourly rates at certain intervals)\n\nWeekend price (works only in combination with a fixed hourly rate, with a different price for weekends) \n\n\nChoose the spots on the garage map (available spots are blue, occupied are yellow). Then set the currency at the top of the form, choose one of the options for calculating the price, and set the price.",
 		"goInternalHint": "TODO: goInternalHint hint",
-		"financeHint": "In the top section you can turn on/off and change settings for how your customers can pay for parking.\n\nIn the “Rentals” section you will find a list of all current long-term rentals, including price and number of parking spots, which you can then click on to edit.\n\nIn the “Financing settings” section, you can change the settings for all invoicing.\n",
+		"financeHint": "In the top section you can turn on/off and change settings for how your customers can pay for parking.\n\nIn the “Rentals” section you will find a list of all current long-term rentals, including price and number of parking spots, which you can then click on to edit.\n\nIn the “Finance settings” section, you can change the settings for all invoicing.\n",
 		"financePaypalHint": "TODO: Paypal hint",
 		"financeCSOBHint": "TODO: CSOB hint",
 		"pidSettingsHint": "TODO: pidSettings Hint",
 		"activityLogHint": "Here you have records of all activities in the Park-it-direct system, including what was done, by whom, and when.",
-		"reservationsHint": "Here you have a list of all your reservations: those you made as well as those others made for your garages.",
-		"newReservationHint": "You can make a new reservation here. Depending on your rights, please select user, garage, client and vehicle. Then enter dates and parking place, if applicable. Voilà.",
+		"reservationsHint": "Here you can find a list of reservations.\n\nYou will see either your reservation only or the reservation of all members of your Client or the entire garage, depending on the rights you have.",
+		"newReservationHint": "You can create a new reservation here. The reservation form is expanded in several steps, and the options are affected by your rights and garage settings.\n\nFirst you choose the recipient of the reservation - either yourself, another member of the client, or you can create a new internala or guest.\n\nIn the next step, you choose a garage, a client, and a term.\n\nIf the setting allows it, you can choose who will pay for the reservation (whether a parker or the selected client) and select or modify the text of the SMS reservation notification.\n\nOnce you've filled in all the details, you can confirm your booking. If the reservation is paid by the client, the reservation is completed. If it is paid by a parker, the next step is a payment.\n\nIf its you who pay for the reservation, the payment will be in the next step. If its a guest, he/she will receive instructions in the email.",
 		"garagesHint": "Here you have a depiction of the clients, deals, reservations, prices and vehicles on your garage map. The same values are always shown with the same color. \nIn the upper left-hand corner you can choose which value you would like to display, while in the upper right-hand corner you can choose whether to display values for a certain date or for the current date.",
 		"newGarageHint": "Create new garage. Set the name and details, then follow by defining the floors and parking places. Two input options are available. You can load each floor plan as an SVG image with information about parking places. (We can help you to create this floor plan; see our website for more information.) The second option is to define a range of numbers for each level.",
 		"newGarageFloorsHint": "Here you can set the number of floors and number of parking spots on each floor. \n\nYou can upload a map of each floor as an .svg file, which we will be happy to help you create (or you can use one of our templates). \n\nYou can also set maximum vehicle dimensions here.",
 		"newGarageOrderHint": "Here you can set the order for filling up parking spots. Spots are taken in ascending order, starting with the lowest number. If spots have no specified order, the system sets the order automatically.",
-		"newGarageSubscribtionHint": "TODO: New garage subscribtion Hint",
 		"newGarageGatesHint": "Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.",
+		"newGarageLegalDocumentsHint": "TODO: Hint for Legal Documents",
 		"garageClientsHint": "Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.",
 		"clientsHint": "Here you can find a list of clients with whom you are in agreement. \n\nThe “client token” column shows the unique identifier for selecting the client when creating new agreements. \n\nThe “agreement” column shows a green check mark if the client has an agreement, or a red exclamation point if the client has no agreement. \n\nThe “Spots” column shows the total number of parking spots assigned to the client. \n\nThe “Monthly total” column shows the total monthly parking fees paid by the client. \n\nThe “Invoices” column shows payment status for invoices: green if all are paid, red if any are past due. \n\nClick on the client to show more details, such as contact person or list of agreements made. The buttons on the right can create new agreements, check invoices, edit the client or display all users who belong under that client. In this section you can also click on individual agreements and edit them.",
 		"newClientHint": "Here you are creating a new client account. A client account is a unit that gathers information about the client, its users, parking spots they are allowed to use, and so on. You will be able to set these in the relevant sections within the system.",
 		"clientUsersHint": "This section lets you manage users of a particular client account. Select a user to view and set up user rights. You can also invite new users to this selected client account. Invitations sent and waiting for confirmation are shown in the \"Pending invitations\" section below.",
 		"settingsHint": "In this section you can set your desired language and switch on and off these help boxes throughout the application.",
-		"usersHint": "Here you have a list of all known users. Select a user to see client accounts membership and their role therein. The detailed view also shows which vehicles are assigned to that user, which garages they have access to, and their role therein.",
+		"usersHint": "Here you have a list of all known users.\n\nSelect a user to see client accounts membership and their role therein. The detailed view also shows which vehicles are assigned to that user, which garages they have access to, and their role therein.",
 		"allKnownUsers": "All known users",
 		"editClientHint": "Here you can change information about this client.",
 		"notificationsHint": "This section displays all notifications that need to be resolved.",
@@ -148,7 +149,7 @@
 		"EditGarage": "Edit garage",
 		"EditGarageHint": "Here you can find a visual overview of your garage. You can select various modes in the upper left-hand corner.\n\nClients: individual clients are distinguished by color.\nAgreements: individual agreements are distinguished by color.\nReservations: individual reservations are distinguished by color.\nPrices: individual price settings are distinguished by color.\nCars: individual cars are distinguished by color.\n\nIn the upper right-hand corner you can choose either the current status or the situation on a specific date.",
 		"Occupancy": "Occupancy",
-		"Invoices": "Invoices",
+		"Invoices": "Accounting documents",
 		"tableView": "table view",
 		"cardView": "card view",
 		"marketing": "Marketing",
@@ -165,7 +166,7 @@
 		"garageGarageUsersHint": "Here you can manage who can use your garage and what rights they have.",
 		"EditUserHint": "Here you can change the data about yourself.",
 		"orderGarageModuleHint": "Here you can order a garage module.",
-		"reservationOverviewHint": "Here you can double check if everything is ok.",
+		"reservationOverviewHint": "Here you can check if the reservation details are correct and complete the reservation by paying it.\n\nThe selection of payment methods can be adjusted in the garage settings.\n\nOne Click Payment allows you to pay much more conveniently and faster. When making the first payment, the customer agrees to have her/his card saved on the payment gateway. This transaction is a standard payment transaction (customer is redirected to the gateway, enters card details, completes the 3D-Secure authentication and the transaction is then authorised) and will be stored by the payment gateway as template for one click payments. The subsequent transactions are way easier to pay - the customer just selects the \"saved card\" as payment option and the shop system executes the transaction call to the payment gateway - on the background, using the template for one click payment, without redirecting the customer to the gateway. As soon as the transaction is authorised, the customer is informed about successful payment in the last step of the merchant's checkout.\n\nBy selecting \"Remember card for One Click Payment\" your credit card info will be saved. For the next payment by selecting \"Use one click payment\" will be the payment made automatically. Selecting \"Use one click payment\" and \"Use a different card\" at the same time will save a new card and the original saved card will be deleted.",
 		"editInvoiceHint": "Afther clicking OK, a new invoice will be created with corrected data.",
 		"editContractHint": "Here you can edit the agreement - parking spots, duration or price.",
 		"unredNotifications": {
@@ -190,6 +191,7 @@
 		"bulkRemovalHint": "Here you can remove more of your reservations at once.",
 		"smsSettingsHint": "On this page you can activate and set sms service. To customize texts you can use variables explained here:\n\n\"{{ garage }}\" = garage name\n\"{{ address }}\" = address of entrance\n\"{{ gps }}\" = GPS coordinates\n\"{{ place }}\" = floor/place\n\"{{ begin }}\" = start of reservation\n\"{{ end }}\" = end of reservation\n\"{{ gate }}\" = phone of server"
 	},
+	"Legal documents": "TODO: New garage subscribtion Hint",
 	"newReservation": {
 		"selectGarage": "Select garage",
 		"selectUser": "Select user",
@@ -224,11 +226,9 @@
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
 		"newHost": "Regular guest",
-		"newHostText": "may create reservations for himself, but need them to be approved by a secretary",
+		"newHostText": "can request reservations, is member of the client account.",
 		"newInternal": "New internal",
-		"newInternalText": "may create reservations for himself",
-		"dropButtonText": "New user with rights ",
-		"dropButtonDescrText": "User with rights ",
+		"newInternalText": "can create reservations for himself, is member of the client account.",
 		"hostsName": "Name of regular guest",
 		"phone": "Phone number",
 		"hostsPhone": "Phone of regular guest",
@@ -242,7 +242,7 @@
 		"noFreePlace": "No free place",
 		"note": "Note",
 		"onetimeVisit": "Onetime visitor",
-		"onetimeVisitText": "may create reservations for himself",
+		"onetimeVisitText": "can't make or request reservation, isn't a member of the client account.",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
 		"languageSelector": "Choose communication language",
@@ -254,7 +254,9 @@
 		"perHour": " / hour",
 		"creatingReservationInPast": "You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?",
 		"loading": "Loading ...",
-		"userName": "EN: newReservation.userName"
+		"userName": "EN: newReservation.userName",
+		"AlternativeInterval": "EN: newReservation.AlternativeInterval",
+		"weekendPrice": "Weekend price:"
 	},
 	"clients": {
 		"name": "name",
@@ -294,7 +296,8 @@
 		"removeUser": "Remove user",
 		"resendInvitation": "Resend email",
 		"resendSuccessfull": "Email was sucessfully send.",
-		"userNotFound": "Could not find this user."
+		"userNotFound": "Could not find this user.",
+		"timeCredit": "time credit"
 	},
 	"reservations": {
 		"name": "name",
@@ -388,7 +391,13 @@
 		"noClientPlaces": "The selected client does not have any rented places in this time frame.",
 		"resetFilter": "Reset filter",
 		"detailsInaccessible": "Details inaccessible",
-		"reservationNotApproved": "Reservation not yet approved"
+		"reservationNotApproved": "Reservation not yet approved",
+		"createNewReservation": "Create new reservation",
+		"from": "from:",
+		"to": "to:",
+		"garage": "garage:",
+		"place": "place:",
+		"placeNotAvailable": "This place cannot be reserved."
 	},
 	"garageUsers": {
 		"noRights": "You do not have the right to do that.",
@@ -549,7 +558,18 @@
 		"passwordWasNotSet": "Password was not set!",
 		"addAllPalces": "Add all places",
 		"notAssignNumber": "Number not assigned",
-		"selcetNumber": "Number to open gate"
+		"selcetNumber": "Number to open gate",
+		"privacy": "privacy",
+		"terms": "terms",
+		"documents": "documents",
+		"documentName": "Name of document",
+		"lastChangeAt": "Last change at",
+		"addDocument": "Add document",
+		"showDocument": "Show document",
+		"removeDocument": "Remove document",
+		"removeDocumentQuestion": "Do you want to delete document",
+		"privacyDocumentRule": "At least one document has to be uploaded",
+		"legalDocuments": "Legal documents"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -575,7 +595,32 @@
 		"smsSettings": "SMS module",
 		"activate": "activate",
 		"deactivate": "deactivate",
-		"timeCredit": "Time credit"
+		"timeCredit": "Time credit",
+		"onetimeAddition": "Onetime addition of time credit",
+		"onetimeRemoval": "Onetime removal of time credit",
+		"amountToAdd": "Amount to add",
+		"amountToRemove": "Amount to remove",
+		"onetimeAdditionPlaceholder": "30",
+		"timeCreditDescription": "Module introduces time limitation of reservations of users in your client",
+		"timeCreditStatistics": "Statistics",
+		"hoursThatCanBeParked": "Hours that can be parked this month",
+		"creditsThatCanBeDistributed": "Credits that can be distributed this month",
+		"creditsDistributed": "Credits that were distributed",
+		"creditsDistributedOverMax": "Credits over maximum",
+		"cteditsOutOfBoundException": "Exceeded amount of credits possible to distribute",
+		"currencyName": "Currency name",
+		"currencyNamePlaceholder": "Parkee coins",
+		"pricePerHour": "Price per hour",
+		"pricePerHourPlaceholder": "1",
+		"monthlyAmount": "Monthly amount",
+		"monthlyAmountPlaceholder": "60",
+		"onetimeAdd": "Onetime addition",
+		"onetimeRemove": "Onetime removal",
+		"minMaxReservationDuration": "Min-Max duration",
+		"addToEveryone": "Add to everyone",
+		"removeFromEveryone": "Remove from everyone",
+		"or": "OR",
+		"selectUsers": "Select users"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -642,7 +687,8 @@
 		"verifyYourEmail": "Welcome to Park-it-direct! You have been sent a verification email to \"%(arg1)s\". You will not be able to log in again until your email is verified.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) just created a new reservation for you.",
 		"reservationUpdatedNotification": "%(arg1)s just updated your reservation. For more information go to reservations tab.",
-		"reservationRemovedDueToUnpaid": "Your reservation was canceled because it was not paid in last 15 minutes"
+		"reservationRemovedDueToUnpaid": "Your reservation was canceled because it was not paid in last 15 minutes",
+		"reservationContactPersonNotification": "Your reservation have not been approved yet, if it is urgent, you can contact one of the contact presons: %(arg1)s"
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -765,7 +811,12 @@
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency",
 		"selectPlace": "Start by selecting a spot",
-		"saving": "Saving..."
+		"saving": "Saving...",
+		"minReservationDuration": "Min reservation duration",
+		"minReservationDurationPlaceholder": "30",
+		"maxReservationDuration": "Max reservation duration",
+		"maxReservationDurationPlaceholder": "600",
+		"durationErr": "Wrong duration"
 	},
 	"newRent": {
 		"name": "Name",
@@ -778,7 +829,7 @@
 	},
 	"cars": {
 		"licencePlate": "license plate",
-		"color": "color",
+		"color": "Color",
 		"model": "Model",
 		"destroyCar": "Are you sure you want to remove this car?"
 	},
@@ -825,7 +876,10 @@
 		"csob": "ČSOB - online payment",
 		"paypal": "PayPal",
 		"raiffeisenbank": "Raiffeisenbank - online payment",
-		"paymentMethod": "Payment method"
+		"paymentMethod": "Payment method",
+		"csobOneTimePaymentUseCard": "Use One Click Payment",
+		"csobOneTimePaymentNewCard": "Use different credit card",
+		"csobOneTimePayment": "Remember card for One Click Payment"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "I am a garage owner",
@@ -941,7 +995,11 @@
 		"donwloadXlsx": "Download XLSX",
 		"donwloadInvoices": "Download invoices",
 		"donwloadXML": "Pohoda XML",
-		"selectYourPohodaIc": "Select IČ of company you are accounting for:"
+		"selectYourPohodaIc": "Select IČ of company you are accounting for:",
+		"invoices": "Faktury",
+		"simplifiedTaxReceipts": "Zjednodušené daňové doklady",
+		"canceledInvoices": "Zrušené faktury",
+		"userName": "User"
 	},
 	"resetPassword": {
 		"send": "A password reset email has been sent to your address.",
@@ -1014,6 +1072,7 @@
 		"doNotRemoveReservations": "Try replacing reservations of removed places"
 	},
 	"finance": {
+		"financeSettings": "Finance settings",
 		"paypal": "Paypal",
 		"csob": "ČSOB",
 		"gpWebpay": "Raiffeisenbank",
@@ -1268,6 +1327,7 @@
 		"reservation_confirmed_subject": "Reservation in %{garage} has been confirmed.",
 		"reservation_updated_subject": "Your reservation in %{garage} has been updated.",
 		"reservation_paid_subject": "Your reservation in %{garage} has been paid.",
+		"reservation_not_approved_yet_subject": "Your new reservation was not accepted yet",
 		"footer": {
 			"enjoy": "Enjoy your Park-it-direct experience!",
 			"regards": "Best Regards,",
@@ -1346,8 +1406,16 @@
 			"to": "To:"
 		},
 		"reservation_paid": {
-			"headline": "EN: railsEmails.reservation_paid.headline",
-			"body": "EN: railsEmails.reservation_paid.body"
+			"headline": "Thank you for your payment",
+			"body": "You can find invoice in email attachment."
+		},
+		"reservation_not_approved_yet": {
+			"reservation_was_not_yet_confirmed": "Your reservation was not yet approved:",
+			"garage": "Garage:",
+			"place": "Place:",
+			"from": "From:",
+			"to": "To:",
+			"you_can_contact_these_peope": "To speed up things, you can contact one of contact presons:"
 		}
 	},
 	"railsSMSs": {
@@ -1445,6 +1513,15 @@
 			"LongTerm": "LongTerm",
 			"Automation": "Automation",
 			"Integration": "Integration"
+		}
+	},
+	"cs": {
+		"occupancy": {
+			"createNewReservation": "Create new reservation",
+			"garage": "Garage",
+			"place": "Place",
+			"from": "From",
+			"to": "To"
 		}
 	}
 }

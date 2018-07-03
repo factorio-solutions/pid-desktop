@@ -30,6 +30,8 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
             name
             flexiplace
             id
+            dic
+            vat
           }
         }
       }
@@ -43,11 +45,9 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
     id
     note
     reservation_case
-    invoice_item {
-      invoice {
-        id
-        payed
-      }
+    invoices {
+      id
+      payed
     }
     client {
       name
@@ -68,6 +68,8 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
           name
           flexiplace
           id
+          dic
+          vat
         }
       }
     }
