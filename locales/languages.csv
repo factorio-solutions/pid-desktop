@@ -108,15 +108,17 @@ Rezervaci parkování nejrychleji vytvoříte kliknutím na tlačítko na horní
 
 Potřebujete daší pomoc? Napište nám na Intercom - náš komunikátor v pravém dolním rohu. Rádi Vám pomůžeme! :-)","Tutaj znajduje się przegląd wszystkich ważnych informacji o Twoim koncie. Na planie garażu widzisz, czy pojedyncze miejsca są wynajęte długoterminowo lub zarezerwowane. W Aktualnościach pokazują się wiadomości ze świata Park-it-direct. W Ostatnich aktywnościach zobaczysz niedawne zmiany w Twoim garaży oraz szczegóły na temat tego, kto i kiedy ich dokonał. W Stanie aktualnym możesz sprawdzić statystyki na temat wolnych i zajętych miejsc. W Przeglądzie finansowym pokazywane są aktualne statystyki finansowe. ","Herzlich willkommen bei Park-it-direct!
 
-Sie können diese blaue Spalte mit Hinweisen ausblenden, wenn Sie auf den Kreuz in der linken Ecke klicken. Um es wieder zu aktivieren, klicken Sie auf das blaue Informationssymbol, das in der oberen rechten Ecke erscheint.
+Mit dem Klicken auf den Kreuz in der linken Ecke können Sie diese blaue Spalte mit Hinweisen ausblenden. Um sie wieder zu aktivieren, klicken Sie auf das blaue Informationssymbol, das in der oberen rechten Ecke erscheint.
 
 Um sich in Park-it-direct zu bewegen, benutzen Sie das Menü auf der linken Seite.
 
 Der schnellste Weg, um eine neue Reservierung zu erstellen, ist der blaue Knopf oben!
 
-Benötigen Sie weitere Hilfe? Nutzen Sie bitte unser Intercom - der Kommunikator finden Sie in der rechten unteren Ecke. Wir helfen Ihnen gerne weiter! :-)"
+Hilfe nötig? Nutzen Sie bitte unser Intercom - den Kommunikator finden Sie in der rechten unteren Ecke. Wir helfen Ihnen gerne! :-)"
 pageBase.issuesHint,TODO: Issues hint,,,
-pageBase.analyticsHint,Here you can check various statistics.,Zde se můžete podívat na různé statistiky.,Tutaj możesz sprawdzić różne statystyki.,Hier können Sie verschiedene Statistiken überprüfen.
+pageBase.analyticsHint,"Here you can check if the reservation details are correct and complete the reservation by paying it.
+
+The selection of payment methods can be adjusted in the garage settings.",Zde se můžete podívat na různé statistiky.,Tutaj możesz sprawdzić różne statystyki.,Hier können Sie verschiedene Statistiken ansehen.
 pageBase.invoicesHint,"You can find all issued accounting documents here.
 
 In the upper left corner, you can choose whether you want to see invoices, simplified tax documents, or credit notes / corrective tax documents.
@@ -133,16 +135,16 @@ Faktury se váží k dohodám o dlouhodobém pronájmu parkovacích míst, zjedn
 
 V levém horním rohu si  také můžete doklady vyfiltrovat podle klienta.
 
-V pravém horním rohu si můžete vybrat mezi zobrazením aktuálních ¨dokladů nebo celé historie.",Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.,"Hier finden Sie eine Liste der ausgestellten Rechnungen. 
+V pravém horním rohu si můžete vybrat mezi zobrazením aktuálních dokladů nebo celé historie.",Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.,"Hier finden Sie eine Liste aller ausgestellten Rechnungen. 
 
-Links oben können Sie auswählen, ob Sie Rechnungen, vereinfachte Steuerbelege oder Gutschriften / Korrektursteuerbelege anzeigen möchten.
+Links oben können Sie auswählen, ob Sie Rechnungen, vereinfachte Steuerbelege oder Gutschriften / Korrektursteuerbelege anschauen wollen.
 
-Rechnungen beziehen sich auf langfristige Verträge für Parkplätze, vereinfachte Steuerdokumente beziehen sich auf vom Parker bezahlte Parkgebühren unter dem Betrag von 10.000 CZK, und Gutschriften / korrigierende Steuerdokumente beziehen sich auf stornierte Reservierungen, die von Parkern bezahlt werden.
+Rechnungen beziehen sich auf langfristige Parkplatzverträge, vereinfachte Steuerdokumente beziehen sich auf vom Parker bezahlte Parkgebühren unter dem Betrag von 10.000 CZK und Gutschriften / korrigierende Steuerdokumente beziehen sich auf stornierte Reservierungen, die von Parkern bezahlt werden.
 
-Links oben können Sie die Dokumente auch nach Klienten filtern.
+Links oben können Sie die Dokumente auch nach Klienten aufsuchen.
 
-Rechts oben können Sie wählen, ob Sie aktuelle Dokumente oder den gesamten Verlauf anzeigen möchten."
-pageBase.newContractHint,"Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :-)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :-)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!","Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine einzigartige Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Wert der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie anschließend die Stellplätze zu – fertig! :)"
+Rechts oben können Sie wählen, ob Sie aktuelle Dokumente oder den gesamten Verlauf anschauen wollen."
+pageBase.newContractHint,"Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :-)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :-)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!","Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einfach einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine spezielle Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Preis der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie schließlich die Stellplätze zu! :)"
 pageBase.ReservationButtonHint,TODO: reservation button hint,,,
 pageBase.mrParkitIntegrationHint,TODO: mrParkitIntegration hint,,,
 pageBase.goPublicHint,"Here you can choose parking spots you want to offer to the public. You can also set the price for parking spots and choose from three options for calculating the parking price. 
@@ -214,7 +216,7 @@ You will see either your reservation only or the reservation of all members of y
 
 V závislosti na přidělených právech uvidíte buď jen své rezervace, nebo i rezervace všech členů vašeho Klienta, popřípadě celé garáže.","Tutaj znajdziesz wszystkie swoje rezerwacje - zarówno te wytworzone przez Ciebie, jak i rezerwacje wytworzone przez innych w Twoich garażach.","Hier finden Sie die Liste der Reservierungen.
 
-Abhängig von Ihren Rechten sehen Sie entweder Ihre Reservierung oder die Reservierung aller Mitglieder Ihres Kunden oder der gesamten Garage. "
+Abhängig von Ihren Rechten sehen Sie entweder Ihre Reservierungen oder die Reservierungen aller Mitglieder Ihres Kunden oder der gesamten Garage. "
 pageBase.newReservationHint,"You can create a new reservation here. The reservation form is expanded in several steps, and the options are affected by your rights and garage settings.
 
 First you choose the recipient of the reservation - either yourself, another member of the client, or you can create a new internala or guest.
@@ -235,17 +237,17 @@ Pokud to nastavení umožňuje, můžete zvolit i kdo bude rezervaci hradit (zda
 
 Po vyplnění všech údajů můžete rezervaci potvrdit. Pokud rezervaci hradí klient, je tím rezervace dokončena. Pokud je placena parkujícím, je následujícím krokem platba.
 
-Pokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rezervaci platí host, obdrří pokyny do emailu.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!","Hier können Sie eine neue Reservierung erstellen. Das Reservierungsformular wird in mehreren Schritten erweitert und die Optionen sind von Ihren Rechten und Garageneinstellungen abhängig.
+Pokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rezervaci platí host, obdrží pokyny do emailu.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!","Hier können Sie eine neue Reservierung erstellen. Das Reservierungsformular erweitert sich in mehreren Schritten und das Angebot ist von Ihren Rechten und Garageneinstellungen abhängig.
 
-Zuerst wählen Sie den Benutzer - entweder sich selbst, ein anders Mitglied des Kunden oder Sie können ein neues Internal oder Gast anlegen.
+Zuerst wählen Sie den Benutzer - entweder sich selbst oder ein anderes Mitglied des Kunden oder Sie können einen neuen Internal oder Gast anlegen.
 
-Im nächsten Schritt wählen Sie eine Garage, den Kunden und einen Termin.
+Als Nächstes wählen Sie die Garage, den Kunden und den Termin.
 
-Wenn die Einstellung dies zulässt, können Sie wählen, wer für die Reservierung zahtl (ob Parker oder ausgewählter Kunde) und den Text der SMS-Reservierungsbenachrichtigung auswählen oder ändern.
+Lässt es die Einstellung zu, können Sie auch wählen, wer die Reservierung zahtl (ob Parker oder ausgewählter Kunde) und den Text der SMS-Reservierungsbenachrichtigung auswählen oder ändern.
 
-Sobald Sie alle Details eingeben, können Sie Ihre Buchung bestätigen. Wenn die Reservierung vom Kunden bezahlt wird, wird die Reservierung abgeschlossen. Wenn es von einem Parker bezahlt wird, ist der nächste Schritt die Zahlung.
+Nach der Angebung aller Details können Sie Ihre Buchung bestätigen. Wird die Reservierung vom Kunden bezahlt, schliesst sich die Reservierung ab. Wird sie von Ihrem Parker bezahlt, ist der nächste Schritt die Zahlung.
 
-Wenn Sie für die Reservierung bezahlen, wird die Zahlung im nächsten Schritt erfolgen. Wenn es ein Gast ist, erhält er / sie Anweisungen in der E-Mail."
+Bezahlen Sie die Reservierung, folgt die Zahlung gleich im nächsten Schritt. Bezahlt ein Gast die Reservierung, erhält er Anweisungen in die E-Mail."
 pageBase.garagesHint,"Here you have a depiction of the clients, deals, reservations, prices and vehicles on your garage map. The same values are always shown with the same color. 
 In the upper left-hand corner you can choose which value you would like to display, while in the upper right-hand corner you can choose whether to display values for a certain date or for the current date.","Zde najdete zobrazení klientů, dohod, rezervací, cen a aut na plánku Vaší garáže. Stejné hodnoty jsou vždy vyznačeny stejnou barvou.
 V levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.","Tutaj znajdziesz schemat klientów, umów, rezerwacji, cen i aut na planie Twojego garaży. Takie same wartości są zawsze oznaczone tym samym kolorem. W lewym górnym rogu wybierz, jaką wartość chcesz zobaczyć. W prawym górnym rogu ustaw datę, która Cię interesuje.","Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.
@@ -269,8 +271,9 @@ Zu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen
 
 Weiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen."
 pageBase.newGarageOrderHint,"Here you can set the order for filling up parking spots. Spots are taken in ascending order, starting with the lowest number. If spots have no specified order, the system sets the order automatically.","Zde můžete nastavit pořadí obsazování parkovacích míst. Místa se obsazují vzestupně, tedy od nejnižšího čísla. U míst bez nastaveného pořadí určí pořadí systém automaticky.","Tutaj ustawisz kolejność zajmowania miejsc parkingowych. Zajmowane są one rosnąco, tj. od najmniejszego do największego numeru. W przypadku miejsc bez określonego numeru system przydzieli je automatycznie.","Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteil."
-pageBase.newGarageSubscribtionHint,TODO: New garage subscribtion Hint,,,
+Legal documents,TODO: New garage subscribtion Hint,,,
 pageBase.newGarageGatesHint,Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.,"Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",Tutaj możesz ustawić poszczególne bramy (wjazdy i wyjazdy) oraz przyporządkować je do konkretnych miejsc.,"Hier können Sie die Tore bearbeiten (Ein- und Ausfahrten) und bestimmen, welche Tore zu welchen Plätzen gehören."
+pageBase.newGarageLegalDocumentsHint,TODO: Hint for Legal Documents,,,
 pageBase.garageClientsHint,Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.,"Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.","Tutaj możesz zarządzać przypidaniem miejsc parkingowych do konkretnego klienta w ramach określonego garażu. Wybierz konto klienta, aby zobaczyć plan garażu oraz dostępne ceny. Pamiętaj, że garaż może mieć więcej pięter. Wybierz odpowiednie piętro za pomocą przycisku po prawej stronie.","Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten im ausgewählten Parkhaus zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Parkhausgrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass das Parkhaus mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etage mit den Schaltflächen links aus."
 pageBase.clientsHint,"Here you can find a list of clients with whom you are in agreement. 
 
@@ -400,7 +403,7 @@ Fahrzeuge: Die einzelnen Fahrzeuge werden sind in verschiedenen Farben dargestel
 
 Rechts oben kann ausgewählt werden, ob der aktuelle Zeitraum oder ein bestimmtes Datum angezeigt werden soll."
 pageBase.Occupancy,Occupancy,Obsazenost,Zajętość,Belegung
-pageBase.Invoices,Účetní doklady,Accounting documents,Faktury,Rechnungen
+pageBase.Invoices,Accounting documents,Účetní doklady,Faktury,Rechnungen
 pageBase.tableView,table view,Náhled tabulky,Widok tabelki,Tabellenansicht
 pageBase.cardView,card view,Náhled karty,Widok karty,Kartenansicht
 pageBase.marketing,Marketing,Marketing,Marketing,Marketing
@@ -449,9 +452,17 @@ pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete 
 pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,Tutaj możesz zamówić moduł dostępu do garażu.,Hier können Sie ein Zutritt- Modul bestellen.
 pageBase.reservationOverviewHint,"Here you can check if the reservation details are correct and complete the reservation by paying it.
 
-The selection of payment methods can be adjusted in the garage settings.","Zde můžete zkontrolovat, zda jsou údaje rezervace správně, a dokončit rezervaci uhrazením-
+The selection of payment methods can be adjusted in the garage settings.
 
-Výběr platebních metod je možné upravit v nastavení garáže.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie prüfen, ob die Reservierungsdaten korrekt sind. Die Reservierung  wird dann mit der Zahlung nebgeschlossen.
+One Click Payment allows you to pay much more conveniently and faster. When making the first payment, the customer agrees to have her/his card saved on the payment gateway. This transaction is a standard payment transaction (customer is redirected to the gateway, enters card details, completes the 3D-Secure authentication and the transaction is then authorised) and will be stored by the payment gateway as template for one click payments. The subsequent transactions are way easier to pay - the customer just selects the ""saved card"" as payment option and the shop system executes the transaction call to the payment gateway - on the background, using the template for one click payment, without redirecting the customer to the gateway. As soon as the transaction is authorised, the customer is informed about successful payment in the last step of the merchant's checkout.
+
+By selecting ""Remember card for One Click Payment"" your credit card info will be saved. For the next payment by selecting ""Use one click payment"" will be the payment made automatically. Selecting ""Use one click payment"" and ""Use a different card"" at the same time will save a new card and the original saved card will be deleted.","Zde můžete zkontrolovat, zda jsou údaje rezervace správně, a dokončit rezervaci uhrazením-
+
+Výběr platebních metod je možné upravit v nastavení garáže.
+
+Platba Na klik umožňuje platit výrazně pohodlněji a rychleji. Při první transakci dává klient svolení s prováděním následných transakcí a provádí platbu standardním způsobem (přesměrování na bránu, zadání čísla karty, platnosti, CVC, 3D-Secure proces). Při každé následující transakci již klient jen řekne, že chce použít platbu na klik. Komunikace s platební bránou se provede na pozadí a přímo v e-shopu se klient dozvídá, zda bylo zaplaceno, či ne.
+
+Při označení ""Zapamatovat kartu pro platbu na klik"" se uloží údaje o vaší kartě. Při další platbě po označení ""Použít platbu na klik"" se platba provede automaticky. Při označení ""Použít platbu na klik"" a současně ""Použít jinou kartu"" se nová karta uloží a původní uložená karta bude smazána.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie prüfen, ob die Reservierungsdaten korrekt sind. Die Reservierung  wird dann mit der Zahlung nebgeschlossen.
 
 Die Auswahl der Zahlungsmethoden kann man in der Einstellung der Garage anpassen."
 pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.,Durch die OK Taste wird eine neue Rechnung mit korrigierten Daten erstellt.
@@ -594,6 +605,7 @@ newReservation.creatingReservationInPast,You are creating/ editing reservation i
 newReservation.loading,Loading ...,Načítám ...,,
 newReservation.userName,,Jméno uživatele,,
 newReservation.AlternativeInterval,,Všechan místa jsou v tomoto intervalu prázdná. Nejdelší možný interval je:,,
+newReservation.weekendPrice,Weekend price:,Víkendová cena:,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -715,6 +727,12 @@ occupancy.noClientPlaces,The selected client does not have any rented places in 
 occupancy.resetFilter,Reset filter,Resetuj filtr,Zresetować filtr,Filter zurücksetzen
 occupancy.detailsInaccessible,Details inaccessible,Detaily nepřístupné,Szczegóły niedostępne,Information nicht verfügbar
 occupancy.reservationNotApproved,Reservation not yet approved,Rezervace zatím neschválena,Rezerwacja nie została jeszcze potwierdzona.,Reservierung ist nicht bestätigt
+occupancy.createNewReservation,Create new reservation,Vytvořit novou rezervaci,,
+occupancy.from,from:,Od:,,
+occupancy.to,to:,Do:,,
+occupancy.garage,garage:,Garáž:,,
+occupancy.place,place:,Místo:,,
+occupancy.placeNotAvailable,This place cannot be reserved.,Toto místo není možné rezervovat.,,
 garageUsers.noRights,You do not have the right to do that.,Na tuto akci nemáte práva.,Nie posiadasz odpowiednich uprawnień.,Sie haben nicht die erforderlichen Berechtigungen.
 garageUsers.admin,admin,admin,admin,Administrator
 garageUsers.manager,manager,manažer,,Manager
@@ -869,6 +887,17 @@ newGarage.passwordWasNotSet,Password was not set!,Heslo není nastaveno!,Hasło 
 newGarage.addAllPalces,Add all places,Přidat všechna místa,Dodać wszystkie miejsca,Alle Stellplätze hinzufügen
 newGarage.notAssignNumber,Number not assigned,Číslo nepřiřazeno,Numer nie został przyporządkowany,Keine Nummer hinzugefügt
 newGarage.selcetNumber,Number to open gate,Číslo pro otevření brány,Numer do otwarcia bramy,Tel. Nummer für das öffnen
+newGarage.privacy,privacy,,,
+newGarage.terms,terms,,,
+newGarage.documents,documents,,,
+newGarage.documentName,Name of document,,,
+newGarage.lastChangeAt,Last change at,,,
+newGarage.addDocument,Add document,,,
+newGarage.showDocument,Show document,,,
+newGarage.removeDocument,Remove document,,,
+newGarage.removeDocumentQuestion,Do you want to delete document,,,
+newGarage.privacyDocumentRule,At least one document has to be uploaded,,,
+newGarage.legalDocuments,Legal documents,,,
 newClient.name,Client name,Jméno klienta,Nazwisko klienta,Name des Kunden
 newClient.placeholder,Company ltd.,Společnost s.r.o.,Spółka z o.o.,Unternehmen GmbH
 newClient.invalidName,Invalid client name,Neplatné jméno klienta,Niepoprawne nazwisko klienta,Kundennamen ist ungültig
@@ -913,6 +942,11 @@ newClient.monthlyAmount,Monthly amount,Měsíční příděl,,
 newClient.monthlyAmountPlaceholder,60,60,60,60
 newClient.onetimeAdd,Onetime addition,Jednorázový příděl,,
 newClient.onetimeRemove,Onetime removal,Jednorázové odebrání,,
+newClient.minMaxReservationDuration,Min-Max duration,Min-Max trvání,,
+newClient.addToEveryone,Add to everyone,Přidat všem,,
+newClient.removeFromEveryone,Remove from everyone,Odebrat všem,,
+newClient.or,OR,NEBO,,
+newClient.selectUsers,Select users,Zvolte uživatele,,
 inviteUser.selectUser,User email(s),Email(y) uživatele,E-mail(e) użytkownika,E-Mail-Adresse(n) des Benutzers
 inviteUser.connectionExists,This user is already in this client account.,Tento uživatel již je v tomto klientském účtu.,Użytkownik znajduje się już na tym koncie klienta.,Dieser Benutzer ist in diesem Kundenkonto bereits vorhanden.
 inviteUser.sendingInvitation,"Loading, inviting user","Načítám, zvu uživatele","Przetwarzam, zapraszam użytkownika.","Ladevorgang läuft, Benutzer wird eingeladen."
@@ -976,6 +1010,7 @@ notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created a new reserv
 notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"
 % (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Reservierungen""."
 notifications.reservationRemovedDueToUnpaid,Your reservation was canceled because it was not paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.",Da Ihre Reservierung innerhalb 15 Minuten nicht bezahlt wurden. Haben wir sie storniert.
+notifications.reservationContactPersonNotification,"Your reservation have not been approved yet, if it is urgent, you can contact one of the contact presons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,
 profile.profileSettings,Profile settings,Nastavení profilu,Ustawienia profilu,Profileinstellungen
 profile.hints,I want to see hints:,Chci vidět nápovědu:,Chcę zobaczyć rady:,Ich möchte Tipps sehen
 profile.language,Choose language:,Vyberte jazyk:,Wybierz język:,Sprache auswählen:
@@ -1085,6 +1120,11 @@ newPricing.invalidPrice,Invalid price,Neplatná cena,Niepoprawna cena,Preis ung�
 newPricing.selectCurrency,Select currency,Vyberte měnu,Wybierz walutę,Währung auswählen
 newPricing.selectPlace,Start by selecting a spot,Začněte výběrem místa,Zacznij od wybrania miejsca,Beginnen Sie mit der Auswahl des Stellplatzes
 newPricing.saving,Saving...,Ukládám...,Zapisuję...,Speichern...
+newPricing.minReservationDuration,Min reservation duration,Min délka rezervace,,
+newPricing.minReservationDurationPlaceholder,30,30,30,30
+newPricing.maxReservationDuration,Max reservation duration,Max délka rezervace,,
+newPricing.maxReservationDurationPlaceholder,600,600,600,600
+newPricing.durationErr,Wrong duration,Špatná délka,,
 newRent.name,Name,Název,Nazwa,Bezeichnung
 newRent.namePlaceholder,Parking spot rent,Nájemné místa,Miejsca do wynajęcia,Gemieteter Stellplatz
 newRent.invalidName,Invalid rent name,Neplatný název nájemného,Niepoprawna nazwa wynajmu,Eingegebene Bezeichnung für Mietverhältnis ungültig
@@ -1135,6 +1175,9 @@ newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,ČSOB -
 newReservationOverview.paypal,PayPal,PayPal,PayPal,PayPal
 newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,Raiffeisenbank - płatność online,Raiffeisenbank - Online- Zahlung
 newReservationOverview.paymentMethod,Payment method,Platební metoda,Metoda płatności,Zahlungsmethode
+newReservationOverview.csobOneTimePaymentUseCard,Use One Click Payment,Použít platbu na klik,,
+newReservationOverview.csobOneTimePaymentNewCard,Use different credit card,Použít jinou kartu,,
+newReservationOverview.csobOneTimePayment,Remember card for One Click Payment,Zapamatovat kartu pro platbu na klik,,
 addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Parkhausbesitzer
 addFeatures.LongTerm,LONG-TERM OR PERSONAL,DLOUHODOBÉ NEBO OSOBNÍ,DŁUGOTERMINOWO LUB PERSONALNIE,LANGFRISTIG ODER PERSÖNLICH
 addFeatures.Automation,AUTOMATION & ACCESS,AUTOMATIZACE A PŘÍSTUP,AUTOMATYZACJA I DOSTĘP,AUTOMATISIERUNG UND ZUGANG
@@ -1520,6 +1563,7 @@ railsEmails.new_reservation_mail_subject,%{user} has created new reservation for
 railsEmails.reservation_confirmed_subject,Reservation in %{garage} has been confirmed.,Rezervace v %{garage} byla potvrzena.,Rezerwacja w %{garage} została potwierdzona.,Buchung in der Garage: %{garage} wurde bestätigt.
 railsEmails.reservation_updated_subject,Your reservation in %{garage} has been updated.,Vaše rezervace v %{garage} byla aktualizována.,Twora rezerwacja w %{garage} została zaktualizowana.,Ihre Buchung in der Garage %{garage} wurde aktualisiert.
 railsEmails.reservation_paid_subject,Your reservation in %{garage} has been paid.,Vaše rezervace v %{garage} byla zaplacena.,,
+railsEmails.reservation_not_approved_yet_subject,Your new reservation was not accepted yet,Vaše nová rezervace nebyla zatím schválena,,
 railsEmails.footer.enjoy,Enjoy your Park-it-direct experience!,Užijte si Park-it-direct!,Dziękujemy za korzystanie z Park-it-direct!,Viel Spaß mit Park-it-direct!
 railsEmails.footer.regards,"Best Regards,","S pozdravem,",Pozdrawiamy,"Mit freundlichen Grüßen,"
 railsEmails.footer.team,the Park-it-direct team,tým Park-it-direct,Zespół Park-it-Direct,Park-it-direct Team
@@ -1587,6 +1631,12 @@ railsEmails.reservation_updated.from,From:,Od:,Od:,Von:
 railsEmails.reservation_updated.to,To:,Do:,Do:,Bis:
 railsEmails.reservation_paid.headline,Thank you for your payment,Děkujeme za zaplacení rezervace,,
 railsEmails.reservation_paid.body,You can find invoice in email attachment.,V příloze naleznete doklad o zaplacení.,,
+railsEmails.reservation_not_approved_yet.reservation_was_not_yet_confirmed,Your reservation was not yet approved:,Vaše rezervace nebyla zatím schválena:,,
+railsEmails.reservation_not_approved_yet.garage,Garage:,Garáž:,Garaż:,Garage
+railsEmails.reservation_not_approved_yet.place,Place:,Místo:,Miejsce:,Parkplatznummer:
+railsEmails.reservation_not_approved_yet.from,From:,Od:,Od:,Von:
+railsEmails.reservation_not_approved_yet.to,To:,Do:,Do:,Bis:
+railsEmails.reservation_not_approved_yet.you_can_contact_these_peope,"To speed up things, you can contact one of contact presons:",Pro uspíšení vašeho potrvrzení můžete kontaktovat kontaktní osoby:,,
 railsSMSs.reservation_sms.new_reservation,There has been a new reservation created for you,Byla Vám vytvořena nová rezervace,Masz nową rezerwacją w Park-it-direct!,Es wurde für Sie eine neue Buchung erstellt
 railsSMSs.reservation_sms.from,Begins at:,Začátek:,Od:,Von:
 railsSMSs.reservation_sms.to,Ends at:,Konec:,Do:,Bis:
