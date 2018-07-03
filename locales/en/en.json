@@ -562,7 +562,8 @@
 		"showDocument": "Show document",
 		"removeDocument": "Remove document",
 		"removeDocumentQuestion": "Do you want to delete document",
-		"privacyDocumentRule": "At least one document has to be uploaded"
+		"privacyDocumentRule": "At least one document has to be uploaded.",
+		"noDocument": "No document uploaded."
 	},
 	"newClient": {
 		"name": "Client name",
@@ -687,7 +688,8 @@
 		"email": "Email:",
 		"createdAt": "Profile created:",
 		"cars": "Cars",
-		"showPublicGarages": "Show me public garages"
+		"showPublicGarages": "Show me public garages",
+		"privacyDocuments": "All garages privacy documents"
 	},
 	"users": {
 		"username": "username",

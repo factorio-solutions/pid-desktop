@@ -12,6 +12,7 @@ export const PROFILE_EDIT_USER_SET_NAME = 'PROFILE_EDIT_USER_SET_NAME'
 export const PROFILE_EDIT_USER_SET_PHONE = 'PROFILE_EDIT_USER_SET_PHONE'
 export const PROFILE_SET_CARS = 'PROFILE_SET_CARS'
 export const PROFILE_TOGGLE_HIGHLIGHT = 'PROFILE_TOGGLE_HIGHLIGHT'
+export const PROFILE_SET_RELATED_GARAGES = 'PROFILE_SET_RELATED_GARAGES'
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 
@@ -19,6 +20,7 @@ export const setName = patternInputActionFactory(PROFILE_EDIT_USER_SET_NAME)
 export const setPhone = patternInputActionFactory(PROFILE_EDIT_USER_SET_PHONE)
 
 export const setCars = actionFactory(PROFILE_SET_CARS)
+export const setRelatedGarages = actionFactory(PROFILE_SET_RELATED_GARAGES)
 export const toggleHighlight = actionFactory(PROFILE_TOGGLE_HIGHLIGHT)
 
 export function initCars(id) {
@@ -37,6 +39,7 @@ export function initUser() {
       dispatch(initCars(response.data.current_user.id))
       dispatch(setName(response.data.current_user.full_name, true))
       dispatch(setPhone(response.data.current_user.phone, true))
+      dispatch(setRelatedGarages(response.data.current_user.all_related_garages))
     }
 
     request(onSuccess, GET_CURRENT_USER)

@@ -19,6 +19,18 @@ export const GET_CURRENT_USER = `{
     has_client
     created_at
     hide_public_garages
+    all_related_garages{
+      id
+      name
+      documents{
+        id
+        name
+        updated_at
+        lang
+        url
+        doc_type
+      }
+    }
   }
 }
 `

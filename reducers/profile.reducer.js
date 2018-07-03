@@ -2,14 +2,16 @@ import {
   PROFILE_EDIT_USER_SET_NAME,
   PROFILE_EDIT_USER_SET_PHONE,
   PROFILE_SET_CARS,
-  PROFILE_TOGGLE_HIGHLIGHT
+  PROFILE_TOGGLE_HIGHLIGHT,
+  PROFILE_SET_RELATED_GARAGES
 }  from '../actions/profile.actions'
 
 const defaultState = {
-  name:      { value: '', valid: false },
-  phone:     { value: '', valid: false },
-  cars:      [],
-  highlight: false
+  name:           { value: '', valid: false },
+  phone:          { value: '', valid: false },
+  cars:           [],
+  highlight:      false,
+  relatedGarages: []
 }
 
 
@@ -38,6 +40,12 @@ export default function profile(state = defaultState, action) {
       return {
         ...state,
         highlight: !state.highlight
+      }
+
+    case PROFILE_SET_RELATED_GARAGES:
+      return {
+        ...state,
+        relatedGarages: action.value
       }
 
     default:
