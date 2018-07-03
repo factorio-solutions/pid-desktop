@@ -5,6 +5,8 @@ import * as legalDocumentsActions from '../../_shared/actions/legalDocuments.act
 import * as nav                   from '../../_shared/helpers/navigation'
 import { initTarif, intiEditGarageOrder } from '../../_shared/actions/garageSetup.actions'
 
+import { t } from '../../_shared/modules/localization/localization'
+
 import Documents from './documents'
 import GarageSetupPage from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Form from '../../_shared/components/form/Form'
@@ -14,7 +16,8 @@ class LegalDocuments extends Component {
     state:       PropTypes.object,
     actions:     PropTypes.object,
     params:      PropTypes.object,
-    garageSetup: PropTypes.object
+    garageSetup: PropTypes.object,
+    pageBase:    PropTypes.object
   }
 
   componentDidMount() {
@@ -52,13 +55,35 @@ class LegalDocuments extends Component {
     return this.props.state.documents.filter(doc => doc.doc_type === 'privacy' && !doc.remove).length >= 1
   }
 
+  isGarageAdmin = () => {
+    const { pageBase, params } = this.props
+    if (!params.id) {
+      return true
+    }
+    const garage = pageBase.garages.find(g => g.garage.id === +params.id)
+    if (!garage) {
+      return false
+    }
+    return garage.admin
+  }
+
   render() {
     const { state, actions } = this.props
     return (
       <GarageSetupPage>
         <Form onSubmit={this.onSubmit} submitable={this.submitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
-          {state.documentsTypes &&
-           state.documentsTypes.map(type => <Documents type={type} highlight={state.highlight} />)}
+          { state.documentsTypes &&
+            state.documentsTypes.map(type => (
+              <Documents
+                header={`${t([ 'newGarage', type ]).firstToUpperCase()} ${t([ 'newGarage', 'documents' ])}`}
+                type={type}
+                documents={state.documents.filter(doc => doc.doc_type === type)}
+                highlight={state.highlight}
+                readOnly={false}
+                isGarageAdmin={this.isGarageAdmin()}
+              />)
+            )
+          }
         </Form>
       </GarageSetupPage>
     )
@@ -67,6 +92,6 @@ class LegalDocuments extends Component {
 }
 
 export default connect(
-  state => ({ state: state.adminLegalDocuments, garageSetup: state.garageSetup }),
+  state => ({ state: state.adminLegalDocuments, garageSetup: state.garageSetup, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators({ ...legalDocumentsActions, initTarif, intiEditGarageOrder }, dispatch) })
 )(LegalDocuments)

@@ -11,18 +11,20 @@ import { documentUploaded, destroyDocument }       from '../../_shared/actions/l
 
 import {
   PRESIGNE_GARAGE_DOCUMENT_QUERY
-} from '../../_shared/queries/admin.legalDocuments.queries'
+} from '../../_shared/queries/legalDocuments.queries'
 import Table                      from '../../_shared/components/table/Table'
 import { MOMENT_DATETIME_FORMAT } from '../../_shared/helpers/time'
 import LabeledRoundButton         from '../../_shared/components/buttons/LabeledRoundButton'
 
 class Documents extends Component {
   static propTypes = {
-    state:     PropTypes.object,
-    pageBase:  PropTypes.object,
-    actions:   PropTypes.object,
-    type:      PropTypes.string,
-    highlight: PropTypes.bool
+    actions:       PropTypes.object,
+    header:        PropTypes.string,
+    type:          PropTypes.string,
+    documents:     PropTypes.object,
+    isGarageAdmin: PropTypes.string,
+    readOnly:      PropTypes.bool,
+    highlight:     PropTypes.bool
   }
 
   makeSpoiler = document => (<div>
@@ -34,7 +36,7 @@ class Documents extends Component {
         type="action"
         onClick={() => window.open(document.url)}
       />
-      {this.props.pageBase.isGarageAdmin &&
+      {!this.props.readOnly && this.props.isGarageAdmin &&
         <LabeledRoundButton
           label={t([ 'newGarage', 'removeDocument' ])}
           content={<span className="fa fa-times" aria-hidden="true" />}
@@ -52,35 +54,37 @@ class Documents extends Component {
   })
 
   render() {
-    const { state, actions, type, highlight } = this.props
+    const { actions, type, highlight, readOnly, documents, header } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'newGarage', 'documentName' ]), comparator: 'string', sort: 'asc' }
     ]
-    const typeTranslation = t([ 'newGarage', type ])
+
     return (
       <div>
-        <h2>{typeTranslation.firstToUpperCase()} {t([ 'newGarage', 'documents' ])}</h2>
+        <h2>{header}</h2>
         {highlight && type === 'privacy' &&
           <h4>{t([ 'newGarage', 'privacyDocumentRule' ])}</h4>
         }
         <Table
           schema={schema}
-          data={state.documents.filter(doc => !doc.remove && doc.doc_type === type).map(this.transformDocument)}
+          data={documents.filter(doc => !doc.remove).map(this.transformDocument)}
           searchBox={false}
         />
-        <UploadButton
-          label={t([ 'newGarage', 'addDocument' ])}
-          type={this.props.state.documents.filter(doc => !doc.remove && doc.doc_type === this.props.type).length > 0 ? 'disabled' : 'action'}
-          onUpload={(documentUrl, fileName) => actions.documentUploaded(type, documentUrl, fileName)}
-          query={PRESIGNE_GARAGE_DOCUMENT_QUERY}
-          accept="application/pdf"
-        />
+        {!readOnly &&
+          <UploadButton
+            label={t([ 'newGarage', 'addDocument' ])}
+            type={documents.filter(doc => !doc.remove && doc.doc_type === type).length > 0 ? 'disabled' : 'action'}
+            onUpload={(documentUrl, fileName) => actions.documentUploaded(type, documentUrl, fileName)}
+            query={PRESIGNE_GARAGE_DOCUMENT_QUERY}
+            accept="application/pdf"
+          />
+        }
       </div>
     )
   }
 }
 export default connect(
-  state => ({ state: state.adminLegalDocuments, pageBase: state.pageBase }),
+  () => ({ }),
   dispatch => ({ actions: bindActionCreators({ documentUploaded, destroyDocument }, dispatch) })
 )(Documents)

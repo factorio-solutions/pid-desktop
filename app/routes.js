@@ -119,7 +119,6 @@ import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOve
 
 import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
-import legalDocuments from './_shared/reducers/admin.legalDocuments.reducer';
 
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
