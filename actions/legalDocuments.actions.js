@@ -1,4 +1,4 @@
-import { UPDATE_GARAGE, GET_GARAGE_DOCUMENTS } from '../queries/admin.legalDocuments.queries'
+import { UPDATE_GARAGE, GET_GARAGE_DOCUMENTS } from '../queries/legalDocuments.queries'
 
 import { request }      from '../helpers/request'
 import actionFactory    from '../helpers/actionFactory'
@@ -15,7 +15,7 @@ export const setDocuments = actionFactory(LEGAL_DOCUMENTS_SET_DOCUMENTS)
 export const toggleHighlight = actionFactory(LEGAL_DOCUMENTS_TOGGLE_HIGHLIGHT)
 export const clearLegalDocumentsForm = actionFactory(LEGAL_DOCUMENTS_CLEAR_FORM)
 
-const stateName = 'adminLegalDocuments'
+const stateName = 'legalDocuments'
 
 export function initDocuments() {
   return (dispatch, getState) => {
