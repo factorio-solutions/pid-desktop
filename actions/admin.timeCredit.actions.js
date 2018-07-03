@@ -16,6 +16,8 @@ export const TIME_CREDIT_TOGGLE_HIGHLIGHT = 'TIME_CREDIT_TOGGLE_HIGHLIGHT'
 export const TIME_CREDIT_SET_SHOW_MODAL = 'TIME_CREDIT_SET_SHOW_MODAL'
 export const TIME_CREDIT_SET_ADD = 'TIME_CREDIT_SET_ADD'
 export const TIME_CREDIT_SET_AMOUNT_TO_ADD = 'TIME_CREDIT_SET_AMOUNT_TO_ADD'
+export const TIME_CREDIT_SET_USERS_TO_ADD = 'TIME_CREDIT_SET_USERS_TO_ADD'
+export const TIME_CREDIT_ERASE_USERS_TO_ADD = 'TIME_CREDIT_ERASE_USERS_TO_ADD'
 
 export const setActive = actionFactory(TIME_CREDIT_SET_ACTIVE)
 export const setCurrencyName = actionFactory(TIME_CREDIT_SET_CURRENCY_NAME)
@@ -25,6 +27,8 @@ export const toggleHighlight = actionFactory(TIME_CREDIT_TOGGLE_HIGHLIGHT)
 export const setShowModal = actionFactory(TIME_CREDIT_SET_SHOW_MODAL)
 export const setAdd = actionFactory(TIME_CREDIT_SET_ADD)
 export const setAmmountToAdd = actionFactory(TIME_CREDIT_SET_AMOUNT_TO_ADD)
+export const toggleUser = actionFactory(TIME_CREDIT_SET_USERS_TO_ADD)
+export const eraseUsers = actionFactory(TIME_CREDIT_ERASE_USERS_TO_ADD)
 
 
 export function showAddRemoveModal(add) {
@@ -80,9 +84,12 @@ export function submitTimeCredit(id) {
 export function submitOnetimeAddition(id) {
   return (dispatch, getState) => {
     const state = getState().timeCredit
+
     dispatch(updateTimeCredit(
       id,
-      { time_credit_add_amount: state.amountToAdd }
+      { time_credit_add_amount:   state.amountToAdd,
+        time_credit_add_to_users: state.usersToAdd.length ? state.usersToAdd : null
+      }
     ))
     dispatch(setShowModal(false))
   }

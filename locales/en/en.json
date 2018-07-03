@@ -598,7 +598,11 @@
 		"monthlyAmount": "Monthly amount",
 		"monthlyAmountPlaceholder": "60",
 		"onetimeAdd": "Onetime addition",
-		"onetimeRemove": "Onetime removal"
+		"onetimeRemove": "Onetime removal",
+		"addToEveryone": "Add to everyone",
+		"removeFromEveryone": "Remove from everyone",
+		"or": "OR",
+		"selectUsers": "Select users"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
