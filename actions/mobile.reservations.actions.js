@@ -71,9 +71,10 @@ export function initReservations() {
 
       dispatch(setCustomModal())
       dispatch(hideSplashscreen())
-    }).catch(
-      e => dispatch(logout())
-    )
+    }).catch(() => {
+      dispatch(setCustomModal())
+      dispatch(hideSplashscreen())
+    })
   }
 }
 
@@ -149,6 +150,9 @@ export function openGarageViaPhone(reservationId, gateId) {
       } else {
         dispatch(setOpened(false, 'No reservation found', reservationId, gateId))
       }
+    })
+    .catch(() => {
+      dispatch(setOpened(false, 'No connection', reservationId, gateId))
     })
   }
 }
