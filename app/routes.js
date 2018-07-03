@@ -55,7 +55,7 @@ import InvoicesPage    from './admin/invoices/invoices.page'
 import EditInvoicePage from './admin/invoices/editInvoice.page'
 
 // legal Documents
-import LegalDocuments  from './admin/legalDocuments/legalDocuments.page'
+import LegalDocuments  from './admin/garageSetup/legalDocuments/legalDocuments.page'
 
 // clients
 import ClientsPage     from './admin/clients/clients.page'
