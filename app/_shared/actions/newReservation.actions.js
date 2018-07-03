@@ -34,7 +34,7 @@ import {
   ADD_CLIENT_USER
 } from '../queries/inviteUser.queries'
 
-const MIN_RESERVATION_DURATION = 30 // minutes
+// const MIN_RESERVATION_DURATION = 30 // minutes
 
 
 export const NEW_RESERVATION_SET_USER = 'NEW_RESERVATION_SET_USER'
@@ -68,6 +68,8 @@ export const NEW_RESERVATION_SET_SEND_SMS = 'NEW_RESERVATION_SET_SEND_SMS'
 export const NEW_RESERVATION_SET_PAYMENT_METHOD = 'NEW_RESERVATION_SET_PAYMENT_METHOD'
 export const NEW_RESERVATION_SET_CSOB_ONE_CLICK = 'NEW_RESERVATION_SET_CSOB_ONE_CLICK'
 export const NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD = 'NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD'
+export const NEW_RESERVATION_SET_MIN_DURATION = 'NEW_RESERVATION_SET_MIN_DURATION'
+export const NEW_RESERVATION_SET_MAX_DURATION = 'NEW_RESERVATION_SET_MAX_DURATION'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
 
 
@@ -92,7 +94,8 @@ export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
 export const selectCsobOneClick = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK)
 export const selectCsobOneClickNewCard = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD)
-
+export const setMinDuration = actionFactory(NEW_RESERVATION_SET_MIN_DURATION)
+export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -125,6 +128,7 @@ export function setClientId(value) {
       value
     })
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    dispatch(setMinMaxDuration())
   }
 }
 
@@ -178,6 +182,12 @@ export function removeDiacritics() {
   }
 }
 
+export function isPlaceGoInternal(state) {
+  const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
+  const selectedPlace = places.findById(state.place_id)
+  return state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal
+}
+
 export function setFromDate(value) {
   return (dispatch, getState) => {
     const from = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
@@ -186,7 +196,8 @@ export function setFromDate(value) {
     from.set('year', fromDate.get('year'))
     from.set('month', fromDate.get('month'))
     from.set('date', fromDate.get('date'))
-    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+    dispatch({
+      type:  NEW_RESERVATION_SET_FROM,
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
@@ -201,7 +212,8 @@ export function setFromTime(value) {
     const toValue = null
     from.set('hour', fromTime.get('hour'))
     from.set('minute', fromTime.get('minute'))
-    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+    dispatch({
+      type:  NEW_RESERVATION_SET_FROM,
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
@@ -211,18 +223,26 @@ export function setFromTime(value) {
 
 export function formatFrom() {
   return (dispatch, getState) => {
+    const state = getState().newReservation
     const fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
     let toValue = null
 
-
-    if (moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
-      toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)
+    const MIN_RESERVATION_DURATION = state.minDuration
+    const MAX_RESERVATION_DURATION = state.maxDuration
+    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
+        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+      toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
+    }
+    if (MAX_RESERVATION_DURATION &&
+        moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
+        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
+      toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
 
-    dispatch({ type:  NEW_RESERVATION_SET_FROM,
+    dispatch({
+      type:  NEW_RESERVATION_SET_FROM,
       value: fromValue.format(MOMENT_DATETIME_FORMAT),
-      to:    toValue
+      to:    toValue ? toValue.format(MOMENT_DATETIME_FORMAT) : toValue
     })
 
     moment(toValue, MOMENT_DATETIME_FORMAT).diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
@@ -239,7 +259,8 @@ export function setToDate(value) {
     to.set('year', toDate.get('year'))
     to.set('month', toDate.get('month'))
     to.set('date', toDate.get('date'))
-    dispatch({ type:  NEW_RESERVATION_SET_TO,
+    dispatch({
+      type:  NEW_RESERVATION_SET_TO,
       value:   to.format(MOMENT_DATETIME_FORMAT),
       from:    fromValue
     })
@@ -264,11 +285,20 @@ export function setToTime(value) {
 
 export function formatTo() {
   return (dispatch, getState) => {
-    let toValue = moment(roundTime(getState().newReservation.to), MOMENT_DATETIME_FORMAT)
-    const fromValue = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const state = getState().newReservation
+    let toValue = moment(roundTime(state.to), MOMENT_DATETIME_FORMAT)
+    const fromValue = moment(state.from, MOMENT_DATETIME_FORMAT)
 
-    if (toValue.diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
-      toValue = fromValue.add(MIN_RESERVATION_DURATION, 'minutes')
+    const MIN_RESERVATION_DURATION = state.minDuration
+    const MAX_RESERVATION_DURATION = state.maxDuration
+    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
+        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+      toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
+    }
+    if (MAX_RESERVATION_DURATION &&
+        moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
+        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
+      toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
 
     dispatch({ type:  NEW_RESERVATION_SET_TO,
@@ -287,8 +317,32 @@ export function setPlace(place) {
     dispatch({ type:  NEW_RESERVATION_SET_PLACE_ID,
       value: place ? place.id : undefined
     })
-
     dispatch(setPrice())
+    dispatch(setMinMaxDuration())
+  }
+}
+
+export function setMinMaxDuration() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    const isGoInternal = isPlaceGoInternal(state)
+    const client = state.user && state.user.availableClients.findById(state.client_id)
+
+    const determineDuration = minOrMax => (state.garage && (isGoInternal ?
+      state.garage[`${minOrMax}_reservation_duration_go_internal`] :
+      state.garage[`${minOrMax}_reservation_duration_go_public`])) ||
+      (client ? client[`${minOrMax}_reservation_duration`] : null)
+
+    const minDuration = determineDuration('min')
+    const maxDuration = determineDuration('max')
+
+    // set min/max duration of garage or of client
+    dispatch(setMinDuration(minDuration))
+    dispatch(setMaxDuration(maxDuration))
+
+    // does reservation meet min/max boundaries
+    const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
+    !(minDuration < diff && diff < maxDuration) && dispatch(formatTo())
   }
 }
 
@@ -407,7 +461,8 @@ export function setInitialStore(id) {
       } else {
         dispatch(setReservation(undefined))
         dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
-        dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(MIN_RESERVATION_DURATION, 'minutes').format(MOMENT_DATETIME_FORMAT)))
+        const state = getState().newReservation
+        dispatch(setTo(moment(state.from, MOMENT_DATETIME_FORMAT).add(state.minDuration, 'minutes').format(MOMENT_DATETIME_FORMAT)))
         dispatch(formatFrom())
         dispatch(formatTo())
         if (users.length === 1) {
@@ -589,6 +644,7 @@ export function downloadGarage(id) {
           return place
         })
       })
+
       dispatch(setGarage(garage))
       if (!state.reservation) {
         dispatch(autoSelectPlace())

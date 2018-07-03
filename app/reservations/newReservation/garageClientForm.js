@@ -7,7 +7,8 @@ import Dropdown from '../../_shared/components/dropdown/Dropdown'
 import {
   downloadGarage,
   setPaidByHost,
-  setClientId
+  setClientId,
+  isPlaceGoInternal
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
@@ -48,10 +49,6 @@ class GarageClientForm extends Component {
 
   render() {
     const { state, actions, editable } = this.props
-
-    const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
-    const selectedPlace = places.findById(state.place_id)
-
     return (
       <div>
         <Dropdown
@@ -74,7 +71,7 @@ class GarageClientForm extends Component {
             placeholder={t([ 'newReservation', 'selectClient' ])}
           />
         }
-        {state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal &&
+        {isPlaceGoInternal(state) &&
           <div>
             <input
               type="checkbox"

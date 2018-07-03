@@ -2,6 +2,8 @@
 export const GET_GARAGE = `query Garage($id: Id!) {
   garage(id: $id) {
     id
+    min_reservation_duration_go_internal
+    max_reservation_duration_go_internal
     floors {
       label
       scheme

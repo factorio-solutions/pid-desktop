@@ -596,7 +596,8 @@
 		"monthlyAmount": "Monthly amount",
 		"monthlyAmountPlaceholder": "60",
 		"onetimeAdd": "Onetime addition",
-		"onetimeRemove": "Onetime removal"
+		"onetimeRemove": "Onetime removal",
+		"minMaxReservationDuration": "Min-Max duration"
 	},
 	"inviteUser": {
 		"selectUser": "User email(s)",
@@ -787,7 +788,12 @@
 		"invalidPrice": "Invalid price",
 		"selectCurrency": "Select currency",
 		"selectPlace": "Start by selecting a spot",
-		"saving": "Saving..."
+		"saving": "Saving...",
+		"minReservationDuration": "Min reservation duration",
+		"minReservationDurationPlaceholder": "30",
+		"maxReservationDuration": "Max reservation duration",
+		"maxReservationDurationPlaceholder": "600",
+		"durationErr": "Wrong duration"
 	},
 	"newRent": {
 		"name": "Name",
