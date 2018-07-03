@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import * as legalDocumentsActions from '../../_shared/actions/legalDocuments.actions'
-import * as nav                   from '../../_shared/helpers/navigation'
-import { initTarif, intiEditGarageOrder } from '../../_shared/actions/garageSetup.actions'
+import * as legalDocumentsActions from '../../../_shared/actions/legalDocuments.actions'
+import * as nav                   from '../../../_shared/helpers/navigation'
+import { initTarif, intiEditGarageOrder } from '../../../_shared/actions/garageSetup.actions'
 
-import { t } from '../../_shared/modules/localization/localization'
+import { t } from '../../../_shared/modules/localization/localization'
 
 import Documents from './documents'
-import GarageSetupPage from '../../_shared/containers/garageSetupPage/GarageSetupPage'
-import Form from '../../_shared/components/form/Form'
+import GarageSetupPage from '../../../_shared/containers/garageSetupPage/GarageSetupPage'
+import Form from '../../../_shared/components/form/Form'
 
 class LegalDocuments extends Component {
   static propTypes = {
@@ -79,7 +79,6 @@ class LegalDocuments extends Component {
                 type={type}
                 documents={state.documents.filter(doc => doc.doc_type === type)}
                 highlight={state.highlight}
-                readOnly={false}
                 isGarageAdmin={this.isGarageAdmin()}
               />)
             )
@@ -92,6 +91,6 @@ class LegalDocuments extends Component {
 }
 
 export default connect(
-  state => ({ state: state.adminLegalDocuments, garageSetup: state.garageSetup, pageBase: state.pageBase }),
+  state => ({ state: state.legalDocuments, garageSetup: state.garageSetup, pageBase: state.pageBase }),
   dispatch => ({ actions: bindActionCreators({ ...legalDocumentsActions, initTarif, intiEditGarageOrder }, dispatch) })
 )(LegalDocuments)

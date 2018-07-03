@@ -3,18 +3,18 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import UploadButton               from '../../_shared/components/buttons/UploadButton'
+import UploadButton               from '../../../_shared/components/buttons/UploadButton'
 
-import { t } from '../../_shared/modules/localization/localization'
+import { t } from '../../../_shared/modules/localization/localization'
 
-import { documentUploaded, destroyDocument }       from '../../_shared/actions/legalDocuments.actions'
+import { documentUploaded, destroyDocument }       from '../../../_shared/actions/legalDocuments.actions'
 
 import {
   PRESIGNE_GARAGE_DOCUMENT_QUERY
-} from '../../_shared/queries/legalDocuments.queries'
-import Table                      from '../../_shared/components/table/Table'
-import { MOMENT_DATETIME_FORMAT } from '../../_shared/helpers/time'
-import LabeledRoundButton         from '../../_shared/components/buttons/LabeledRoundButton'
+} from '../../../_shared/queries/legalDocuments.queries'
+import Table                      from '../../../_shared/components/table/Table'
+import { MOMENT_DATETIME_FORMAT } from '../../../_shared/helpers/time'
+import LabeledRoundButton         from '../../../_shared/components/buttons/LabeledRoundButton'
 
 class Documents extends Component {
   static propTypes = {
@@ -22,7 +22,7 @@ class Documents extends Component {
     header:        PropTypes.string,
     type:          PropTypes.string,
     documents:     PropTypes.object,
-    isGarageAdmin: PropTypes.string,
+    isGarageAdmin: PropTypes.bool,
     readOnly:      PropTypes.bool,
     highlight:     PropTypes.bool
   }
@@ -66,11 +66,15 @@ class Documents extends Component {
         {highlight && type === 'privacy' &&
           <h4>{t([ 'newGarage', 'privacyDocumentRule' ])}</h4>
         }
-        <Table
-          schema={schema}
-          data={documents.filter(doc => !doc.remove).map(this.transformDocument)}
-          searchBox={false}
-        />
+        {documents.filter(doc => !doc.remove).length === 0 ?
+          <h3>{t([ 'newGarage', 'noDocument' ])} </h3>
+          :
+          <Table
+            schema={schema}
+            data={documents.filter(doc => !doc.remove).map(this.transformDocument)}
+            searchBox={false}
+          />
+        }
         {!readOnly &&
           <UploadButton
             label={t([ 'newGarage', 'addDocument' ])}
