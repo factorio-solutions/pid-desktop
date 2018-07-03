@@ -12,6 +12,7 @@ import Table              from '../_shared/components/table/Table'
 import RoundButton        from '../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../_shared/components/buttons/CallToActionButton'
 import Checkbox           from '../_shared/components/checkbox/Checkbox'
+import Documents          from '../admin/garageSetup/legalDocuments/documents'
 
 import * as nav            from '../_shared/helpers/navigation'
 import { t }               from '../_shared/modules/localization/localization'
@@ -125,6 +126,17 @@ class SettingsPage extends Component {
               <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addCar} type="action" size="big" />
             </div>
           </div>
+        </div>
+        <div>
+          <h2>{t([ 'profile', 'privacyDocuments' ])}</h2>
+          {state.relatedGarages.map(garage => (
+            <Documents
+              header={garage.name.firstToUpperCase()}
+              type="privacy"
+              documents={garage.documents.filter(doc => doc.doc_type === 'privacy')}
+              readOnly
+            />
+          ))}
         </div>
       </PageBase>
     )
