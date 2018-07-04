@@ -1251,7 +1251,11 @@
 			"place": "Place",
 			"garage": "Garage",
 			"begins": "Begins",
-			"ends": "Ends"
+			"ends": "Ends",
+			"issue": "Report issues",
+			"carOnMySpot": "There is a car in my spot.",
+			"reservationMoved": "Reservation moved to:",
+			"noFreePlaces": "There seem to by no other free places."
 		},
 		"newReservation": {
 			"begins": "Begins",

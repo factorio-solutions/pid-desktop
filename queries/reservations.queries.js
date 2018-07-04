@@ -118,3 +118,28 @@ export const DESTROY_RECURRING_RESERVATIONS = `mutation reservationMuation($id: 
   }
 }
 `
+
+// will shift reservation place
+export const SHIFT_RESERVATION_PLACE = `mutation ShiftReservationPlace($id: Id!) {
+  shift_reservation_place(id: $id) {
+    begins_at
+    place {
+      id
+      label
+      floor {
+        label
+        garage {
+          name
+          id
+        }
+      }
+      gates {
+        id
+        label
+        phone
+        password
+      }
+    }
+  }
+}
+`
