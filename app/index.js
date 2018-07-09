@@ -19,6 +19,12 @@ export const adminEntryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:
 
 
 const history = syncHistoryWithStore(hashHistory, store)
+// Force Monday as the first day of a week when English is set.
+require('moment').updateLocale('en', {
+  week: {
+    dow: 1
+  }
+})
 
 if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
   window.moment = require('moment')
