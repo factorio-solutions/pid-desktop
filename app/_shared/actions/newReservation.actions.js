@@ -342,7 +342,7 @@ export function setMinMaxDuration() {
 
     // does reservation meet min/max boundaries
     const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
-    !(minDuration < diff && diff < maxDuration) && dispatch(formatTo())
+    !(minDuration ? minDuration < diff : true && maxDuration ? diff < maxDuration : true) && dispatch(formatTo())
   }
 }
 
