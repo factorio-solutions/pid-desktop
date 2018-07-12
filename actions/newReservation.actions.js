@@ -342,7 +342,9 @@ export function setMinMaxDuration() {
 
     // does reservation meet min/max boundaries
     const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
-    !(minDuration ? minDuration < diff : true && maxDuration ? diff < maxDuration : true) && dispatch(formatTo())
+    if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
+      dispatch(formatTo())
+    }
   }
 }
 
@@ -655,7 +657,7 @@ export function downloadGarage(id) {
         const selectedPlace = garage.floors.reduce((place, floor) => {
           return place || floor.places.find(p => p.id === state.place_id)
         }, undefined)
-        if (!selectedPlace.available) {
+        if (selectedPlace && !selectedPlace.available) {
           dispatch(setPlace({ id: undefined }))
         }
       }
