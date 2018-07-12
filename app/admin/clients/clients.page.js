@@ -128,7 +128,7 @@ class ClientsPage extends Component {
           content={<span className="fa fa-child" aria-hidden="true" />}
           onClick={client.userOfClient && toClient}
           type="action"
-          state={currentUserIsAdmin ? '' : 'disabled'}
+          state={client.userOfClient ? '' : 'disabled'}
         />
       </div>
     </div>)
