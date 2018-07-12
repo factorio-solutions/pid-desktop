@@ -106,7 +106,7 @@ class ReservationsPage extends Component {
 
 
   render() {
-    const { state, actions, interuption, interuptionActions } = this.props
+    const { state, actions, interuption, interuptionActions, pageBase } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
@@ -204,7 +204,9 @@ class ReservationsPage extends Component {
           </div>}
           <div>
             <span className={styles.floatRight}>
-              {reservation.client && reservation.client.is_secretary ?
+              {reservation.client &&
+              (reservation.client.is_secretary ||
+              (reservation.client.is_internal && reservation.user.id === pageBase.current_user.id)) ? // Internal can edit his reservations
                 <LabeledRoundButton
                   label={t([ 'reservations', 'editReservation' ])}
                   content={<span className="fa fa-pencil" aria-hidden="true" />}
