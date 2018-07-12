@@ -17,8 +17,10 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
       client {
         name
         is_secretary
+        is_internal
       }
       user {
+        id
         full_name
         email
       }
@@ -52,8 +54,10 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
     client {
       name
       is_secretary
+      is_internal
     }
     user {
+      id
       full_name
       email
     }
