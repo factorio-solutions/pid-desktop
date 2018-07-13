@@ -249,12 +249,11 @@ class NewReservationPage extends Component {
                       label={t([ 'newReservation', 'place' ])}
                       value={placeLabel()}
                     />
-
                     {selectedClient && selectedClient.is_time_credit_active ?
                       <Uneditable
                         label={t([ 'newReservation', 'price' ])}
                         highlight={state.highlight && state.price > selectedClient.current_time_credit}
-                        value={`${(state.recurringRule ? state.recurringRule.count : 1) * state.price} /
+                        value={`${(state.recurringRule ? state.recurringRule.count || 1 : 1) * state.price} /
                           ${selectedClient.current_time_credit}
                           ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
                         `}
