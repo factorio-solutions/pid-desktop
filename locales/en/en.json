@@ -254,7 +254,8 @@
 		"perHour": " / hour",
 		"creatingReservationInPast": "You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?",
 		"loading": "Loading ...",
-		"userName": "EN: newReservation.userName"
+		"userName": "EN: newReservation.userName",
+		"notAbleToCreateReservation": "It was not possible to create this reservation"
 	},
 	"clients": {
 		"name": "name",

@@ -656,13 +656,18 @@ export function submitReservation(id) {
     const ongoing = state.reservation && state.reservation.ongoing
 
     const onSuccess = response => {
-      if (response.data.create_reservation && response.data.create_reservation.payment_url) {
-        dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
-        window.location.replace(response.data.create_reservation.payment_url)
-      } else {
-        dispatch(pageBaseActions.setCustomModal(undefined))
-        nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
-        dispatch(clearForm())
+      try {
+        if (response.data.create_reservation && response.data.create_reservation.payment_url) {
+          dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
+          window.location.replace(response.data.create_reservation.payment_url)
+        } else {
+          dispatch(pageBaseActions.setCustomModal(undefined))
+          nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
+          dispatch(clearForm())
+        }
+      } catch (err) {
+        dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
+        nav.to('/reservations')
       }
     }
 
