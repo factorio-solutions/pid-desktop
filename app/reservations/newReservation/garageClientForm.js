@@ -31,7 +31,7 @@ class GarageClientForm extends Component {
 
   garageDropdown = () => {
     const { state, actions } = this.props
-
+    
     return (state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => ({
       label:   garage.name,
       onClick: () => actions.downloadGarage(state.user.availableGarages[index].id)
