@@ -563,7 +563,10 @@
 		"removeDocument": "Remove document",
 		"removeDocumentQuestion": "Do you want to delete document",
 		"privacyDocumentRule": "At least one document has to be uploaded.",
-		"noDocument": "No document uploaded."
+		"noDocument": "No document uploaded.",
+		"or": "OR",
+		"uploadUrl": "Provide URL",
+		"documentURL": "Document URL"
 	},
 	"newClient": {
 		"name": "Client name",
