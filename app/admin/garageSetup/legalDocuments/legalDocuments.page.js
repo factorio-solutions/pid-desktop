@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
-import * as legalDocumentsActions from '../../../_shared/actions/legalDocuments.actions'
-import * as nav                   from '../../../_shared/helpers/navigation'
+
+import Documents       from './documents'
+import GarageSetupPage from '../../../_shared/containers/garageSetupPage/GarageSetupPage'
+import Form            from '../../../_shared/components/form/Form'
+
+import * as legalDocumentsActions         from '../../../_shared/actions/legalDocuments.actions'
+import * as nav                           from '../../../_shared/helpers/navigation'
+import { t }                              from '../../../_shared/modules/localization/localization'
 import { initTarif, intiEditGarageOrder } from '../../../_shared/actions/garageSetup.actions'
 
-import { t } from '../../../_shared/modules/localization/localization'
-
-import Documents from './documents'
-import GarageSetupPage from '../../../_shared/containers/garageSetupPage/GarageSetupPage'
-import Form from '../../../_shared/components/form/Form'
 
 class LegalDocuments extends Component {
   static propTypes = {
@@ -51,24 +52,25 @@ class LegalDocuments extends Component {
     }
   }
 
-  submitable = () => {
-    return this.props.state.documents.filter(doc => doc.doc_type === 'privacy' && !doc.remove).length >= 1
-  }
+  submitable = () => this.props.state.documents.filter(doc => doc.doc_type === 'privacy' && !doc.remove).length >= 1
 
   isGarageAdmin = () => {
     const { pageBase, params } = this.props
     if (!params.id) {
       return true
     }
+
     const garage = pageBase.garages.find(g => g.garage.id === +params.id)
     if (!garage) {
       return false
     }
+
     return garage.admin
   }
 
   render() {
     const { state, actions } = this.props
+
     return (
       <GarageSetupPage>
         <Form onSubmit={this.onSubmit} submitable={this.submitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>

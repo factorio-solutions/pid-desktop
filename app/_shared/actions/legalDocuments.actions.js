@@ -4,16 +4,26 @@ import { request }      from '../helpers/request'
 import actionFactory    from '../helpers/actionFactory'
 import { getLanguage }  from '../modules/localization/localization'
 
+
 export const LEGAL_DOCUMENTS_SET_DOCUMENTS_TYPES = 'LEGAL_DOCUMENTS_SET_DOCUMENTS_TYPES'
 export const LEGAL_DOCUMENTS_SET_DOCUMENTS = 'LEGAL_DOCUMENTS_SET_DOCUMENTS'
 export const LEGAL_DOCUMENTS_TOGGLE_HIGHLIGHT = 'LEGAL_DOCUMENTS_TOGGLE_HIGHLIGHT'
+export const LEGAL_DOCUMENTS_SHOW_MODAL = 'LEGAL_DOCUMENTS_SHOW_MODAL'
+export const LEGAL_DOCUMENTS_SET_DOCUMENTS_NAME = 'LEGAL_DOCUMENTS_SET_DOCUMENTS_NAME'
+export const LEGAL_DOCUMENTS_SET_DOCUMENTS_URL = 'LEGAL_DOCUMENTS_SET_DOCUMENTS_URL'
+export const LEGAL_DOCUMENTS_SUBMIT_DOCUMENT = 'LEGAL_DOCUMENTS_SUBMIT_DOCUMENT'
 export const LEGAL_DOCUMENTS_CLEAR_FORM = 'LEGAL_DOCUMENTS_CLEAR_FORM'
 
 
 export const setDocumentsTypes = actionFactory(LEGAL_DOCUMENTS_SET_DOCUMENTS_TYPES)
 export const setDocuments = actionFactory(LEGAL_DOCUMENTS_SET_DOCUMENTS)
 export const toggleHighlight = actionFactory(LEGAL_DOCUMENTS_TOGGLE_HIGHLIGHT)
+export const showModal = actionFactory(LEGAL_DOCUMENTS_SHOW_MODAL)
+export const setDocumentName = actionFactory(LEGAL_DOCUMENTS_SET_DOCUMENTS_NAME)
+export const setDocumentURL = actionFactory(LEGAL_DOCUMENTS_SET_DOCUMENTS_URL)
+export const submitDocument = actionFactory(LEGAL_DOCUMENTS_SUBMIT_DOCUMENT)
 export const clearLegalDocumentsForm = actionFactory(LEGAL_DOCUMENTS_CLEAR_FORM)
+
 
 const stateName = 'legalDocuments'
 
@@ -41,6 +51,7 @@ export function documentUploaded(documentType, documentUrl, fileName, lang = get
     }
     const documents = getState()[stateName].documents.concat(document)
     dispatch(setDocuments(documents))
+    dispatch(submitDocument())
   }
 }
 
