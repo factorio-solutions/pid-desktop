@@ -32,12 +32,21 @@ class LabeledRoundButton extends Component {
   render() {
     const { label, hint, content, onClick, onDisabledClick, type, state, question } = this.props
 
+    const button = (<RounButton
+      content={content}
+      onClick={onClick}
+      type={type}
+      state={state}
+      question={question}
+      onDisabledClick={onDisabledClick}
+    />)
+
     return (
       (label && hint) ? <div className={styles.labeledRoundButton}>
-        <RounButton content={content} onClick={onClick} type={type} state={state} question={question} onDisabledClick={onDisabledClick} />
+        { button }
         <div>{label}</div>
       </div>
-      : <RounButton content={content} onClick={onClick} type={type} state={state} question={question} onDisabledClick={onDisabledClick} />
+      : button
     )
   }
 }

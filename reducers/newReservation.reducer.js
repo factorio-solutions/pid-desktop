@@ -44,7 +44,9 @@ import {
   NEW_RESERVATION_SET_MIN_DURATION,
   NEW_RESERVATION_SET_MAX_DURATION,
 
-  NEW_RESERVATION_CLEAR_FORM
+  NEW_RESERVATION_CLEAR_FORM,
+
+  NEW_RESERVATION_SET_FREE_INTERVAL
 }  from '../actions/newReservation.actions'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -91,7 +93,9 @@ const defaultState = {
   csobOneClickNewCard: false,
 
   minDuration: MIN_RESERVATION_DURATION,
-  maxDuration: null
+  maxDuration: null,
+
+  freeInterval: ''
 }
 
 function placeLabel(state) {
@@ -359,6 +363,12 @@ export default function newReservation(state = defaultState, action) {
 
     case NEW_RESERVATION_CLEAR_FORM:
       return defaultState
+
+    case NEW_RESERVATION_SET_FREE_INTERVAL:
+      return {
+        ...state,
+        freeInterval: action.value
+      }
 
     default:
       return state

@@ -26,7 +26,8 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  GET_RESERVATION
+  GET_RESERVATION,
+  GET_GARAGE_FREE_INTERVAL
 } from '../queries/newReservation.queries'
 
 import {
@@ -71,6 +72,7 @@ export const NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD = 'NEW_RESERVATION_SET_
 export const NEW_RESERVATION_SET_MIN_DURATION = 'NEW_RESERVATION_SET_MIN_DURATION'
 export const NEW_RESERVATION_SET_MAX_DURATION = 'NEW_RESERVATION_SET_MAX_DURATION'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
+export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -96,6 +98,7 @@ export const selectCsobOneClick = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLI
 export const selectCsobOneClickNewCard = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD)
 export const setMinDuration = actionFactory(NEW_RESERVATION_SET_MIN_DURATION)
 export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
+export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -201,7 +204,7 @@ export function setFromDate(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
-    dispatch(formatFrom())
+    // dispatch(formatFrom())
   }
 }
 
@@ -217,7 +220,7 @@ export function setFromTime(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
-    dispatch(formatFrom())
+    // dispatch(formatFrom())
   }
 }
 
@@ -264,7 +267,7 @@ export function setToDate(value) {
       value:   to.format(MOMENT_DATETIME_FORMAT),
       from:    fromValue
     })
-    dispatch(formatTo())
+    // dispatch(formatTo())
   }
 }
 
@@ -279,7 +282,7 @@ export function setToTime(value) {
       value: to.format(MOMENT_DATETIME_FORMAT),
       from:  fromValue
     })
-    dispatch(formatTo())
+    // dispatch(formatTo())
   }
 }
 
@@ -342,7 +345,9 @@ export function setMinMaxDuration() {
 
     // does reservation meet min/max boundaries
     const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
-    !(minDuration < diff && diff < maxDuration) && dispatch(formatTo())
+    if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
+      dispatch(formatTo())
+    }
   }
 }
 
@@ -594,13 +599,20 @@ export function downloadGarage(id) {
         }
       )
     }).then(value => {
+      const setFreeIntervalSuccess = response => {
+        if (response.data !== undefined) {
+          dispatch(setFreeInterval(response.data.garage.greatest_free_interval))
+        }
+      }
+
       // if full download,then full garage, if light download, then garage from state with updated free places
       const garage = value.garage.name ? value.garage : {
         ...state.garage,
         floors: state.garage.floors.map(floor => ({
           ...floor,
           free_places: value.garage.floors.findById(floor.id).free_places
-        }))
+        })),
+        greatest_free_interval: value.garage.greatest_free_interval
       }
 
       garage.floors.forEach(floor => {
@@ -645,6 +657,21 @@ export function downloadGarage(id) {
         })
       })
 
+      const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
+      if (noFreePlaces) {
+        request(
+          setFreeIntervalSuccess,
+          GET_GARAGE_FREE_INTERVAL,
+          { id:             id || state.garage.id,
+            user_id:        state.user.id,
+            client_id:      state.client_id,
+            begins_at:      timeToUTC(state.from),
+            ends_at:        timeToUTC(state.to),
+            reservation_id: state.reservation ? state.reservation.id : null
+          }
+        )
+      }
+      
       dispatch(setGarage(garage))
       if (!state.reservation) {
         dispatch(autoSelectPlace())
@@ -655,7 +682,7 @@ export function downloadGarage(id) {
         const selectedPlace = garage.floors.reduce((place, floor) => {
           return place || floor.places.find(p => p.id === state.place_id)
         }, undefined)
-        if (!selectedPlace.available) {
+        if (selectedPlace && !selectedPlace.available) {
           dispatch(setPlace({ id: undefined }))
         }
       }
