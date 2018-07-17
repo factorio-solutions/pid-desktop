@@ -88,12 +88,12 @@ export function updateGarageDocuments() {
 export function destroyDocument(documentToRemove) {
   return (dispatch, getState) => {
     const state = getState()[stateName]
-    let document = state.documents.find(doc => doc.url === documentToRemove.url)
+    let document = state.documents.findById(documentToRemove.id) || state.documents.find(doc => doc.url === documentToRemove.url)
     document = {
       ...document,
       remove: true
     }
-    let documents = state.documents.filter(doc => doc.url !== documentToRemove.url)
+    let documents = state.documents.filter(doc => doc.id !== documentToRemove.id || doc.url !== documentToRemove.url)
     if (typeof document.id !== 'undefined') {
       documents = documents.concat(document)
     }
