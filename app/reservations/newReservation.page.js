@@ -143,7 +143,12 @@ class NewReservationPage extends Component {
       // if onetime visitor and we want to send him sms, then the phone is mandatory
       if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
       // user has enought time credit?
-      if (selectedClient && selectedClient.is_time_credit_active && state.price > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']) return false
+      if (selectedClient &&
+        selectedClient.is_time_credit_active &&
+        (state.recurringRule ? state.recurringRule.count || 1 : 1) * state.price > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']) {
+        return false
+      }
+
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
