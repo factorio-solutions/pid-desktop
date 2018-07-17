@@ -37,6 +37,7 @@ class GarageSetupPage extends Component {
       { label: t([ 'newGarage', 'places' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/floors`), state: createState('garageSetup/floors') },
       { label: t([ 'newGarage', 'gates' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/gates`), state: createState('garageSetup/gates') },
       { label: t([ 'newGarage', 'order' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/order`), state: createState('garageSetup/order') },
+      { label: t([ 'newGarage', 'legalDocuments' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/legalDocuments`), state: createState('garageSetup/legalDocuments') },
       window.location.hash.includes('admin') ?
         { label: t([ 'newGarage', 'users' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/users`), state: createState('garageSetup/users') } :
         { label: t([ 'newGarage', 'subscribtion' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/subscribtion`), state: createState('garageSetup/subscribtion') }

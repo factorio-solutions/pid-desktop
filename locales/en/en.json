@@ -562,6 +562,7 @@
 		"privacy": "privacy",
 		"terms": "terms",
 		"documents": "documents",
+		"legalDocuments": "Legal documents",
 		"documentName": "Name of document",
 		"lastChangeAt": "Last change at",
 		"addDocument": "Add document",
@@ -569,7 +570,10 @@
 		"removeDocument": "Remove document",
 		"removeDocumentQuestion": "Do you want to delete document",
 		"privacyDocumentRule": "At least one document has to be uploaded",
-		"legalDocuments": "Legal documents"
+		"noDocument": "No document uploaded.",
+		"or": "OR",
+		"uploadUrl": "Provide URL",
+		"documentURL": "Document URL"
 	},
 	"newClient": {
 		"name": "Client name",
@@ -688,7 +692,12 @@
 		"newReservationForYou": "%(arg1)s (%(arg2)s) just created a new reservation for you.",
 		"reservationUpdatedNotification": "%(arg1)s just updated your reservation. For more information go to reservations tab.",
 		"reservationRemovedDueToUnpaid": "Your reservation was canceled because it was not paid in last 15 minutes",
-		"reservationContactPersonNotification": "Your reservation have not been approved yet, if it is urgent, you can contact one of the contact presons: %(arg1)s"
+		"reservationContactPersonNotification": "Your reservation have not been approved yet, if it is urgent, you can contact one of the contact presons: %(arg1)s",
+		"clientLegalDocuments": "You can find new privacy documents in profile section because Client: '%(arg1)s' is in garage: '%(arg2)s'.",
+		"garageLegalDocuments": "You can find new privacy documents in profile section because you were add to '%(arg1)s' garage.",
+		"reservationLegalDocuments": "You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.",
+		"reservationUpdateLegalDocuments": "You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.",
+		"contractLegalDocuments": "You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'."
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -700,7 +709,8 @@
 		"email": "Email:",
 		"createdAt": "Profile created:",
 		"cars": "Cars",
-		"showPublicGarages": "Show me public garages"
+		"showPublicGarages": "Show me public garages",
+		"privacyDocuments": "All garages privacy documents"
 	},
 	"users": {
 		"username": "username",
