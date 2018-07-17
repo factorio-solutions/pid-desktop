@@ -42,6 +42,21 @@ export function initNotifications() {
   }
 }
 
+export function removeFromList(notification) {
+  return (dispatch, getState) => {
+    const notifications = getState().notifications.notifications
+    const index = notifications.findIndexById(notification.id)
+
+    if (index >= 0) {
+      dispatch(setNotifications(
+        [ ...notifications.slice(0, index),
+          ...notifications.slice(index + 1)
+        ]
+      ))
+    }
+  }
+}
+
 export function accept(notification) {
   return (dispatch, getState) => {
     const onSuccess = response => {
@@ -52,7 +67,9 @@ export function accept(notification) {
         dispatch(fetchGarages(false))
       }
     }
+
     request(onSuccess, ACCEPT_NOTIFICATION, { id: notification.id, notification: { confirmed: true } })
+    dispatch(removeFromList(notification))
   }
 }
 
@@ -61,6 +78,8 @@ export function decline(notification) {
     const onSuccess = response => {
       dispatch(initNotifications())
     }
+
     request(onSuccess, DECLINE_NOTIFICATION, { id: notification.id, notification: { confirmed: false } })
+    dispatch(removeFromList(notification))
   }
 }

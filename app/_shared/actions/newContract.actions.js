@@ -38,6 +38,9 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES = 'ADMIN_CLIENTS_NEW_CONTRACT
 export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT = 'ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
 
 
@@ -56,6 +59,9 @@ export const setGarage = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE)
 export const setPlaces = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES)
 export const toggleHighlight = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT)
 export const setIndefinitly = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY)
+export const setOriginalPlaces = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES)
+export const setRemoveReservationsModal = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL)
+export const setRemoveReservations = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS)
 export const eraseForm = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM)
 
 export function setSecurityInterval(value) {
@@ -157,13 +163,14 @@ export function initContract(id) {
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent))
       dispatch(setPlaces(response.data.contract.places))
+      dispatch(setOriginalPlaces(response.data.contract.places))
       dispatch(setSecurityInterval(response.data.contract.security_interval))
     }
 
     const garageId = getState().pageBase.garage
     if (!id) dispatch(getGarage(garageId)) // if id, then i have to download garage from contract, not this one
     request(onRentsSuccess, GET_RENTS)
-    garageId && request(onClientsSuccess, GARAGE_CONTRACTS, { id: garageId })
+    if (garageId) request(onClientsSuccess, GARAGE_CONTRACTS, { id: garageId })
     if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, { id: +id })
   }
 }
@@ -261,14 +268,23 @@ export function submitNewContract(id) {
     }
 
     if (state.newRent) {
-      variables.contract = { ...variables.contract,
+      variables.contract = {
+        ...variables.contract,
         rent: { currency_id: state.currency_id,
           price:       state.price / state.places.length
         }
       }
     } else {
-      variables.contract = { ...variables.contract,
+      variables.contract = {
+        ...variables.contract,
         rent_id: state.rent.id
+      }
+    }
+
+    if (id) { // edit contract
+      variables.contract = {
+        ...variables.contract,
+        remove_reservations: state.removeReservations
       }
     }
 

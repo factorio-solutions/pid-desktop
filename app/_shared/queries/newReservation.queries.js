@@ -32,6 +32,8 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     current_time_credit(user_id: $user_id)
     time_credit_price
     time_credit_currency
+    min_reservation_duration
+    max_reservation_duration
     sms_templates {
       name
       template
@@ -65,6 +67,10 @@ export const GET_USER = `query Query($id: Id!) {
 export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id, $reservation_id: Id) {
   garage(id: $id) {
     id
+    min_reservation_duration_go_public
+    max_reservation_duration_go_public
+    min_reservation_duration_go_internal
+    max_reservation_duration_go_internal
     name
     vat
     dic
@@ -75,6 +81,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       raiffeisenbank_is_active
       csob_is_active
       paypal_is_active
+      csob_merchant_id
     }
     address {
       line_1

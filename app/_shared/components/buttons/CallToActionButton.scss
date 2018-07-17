@@ -27,6 +27,11 @@
   color:            $white;
 }
 
+.success {
+  @include colorize($green);
+  color:            $white;
+}
+
 // states
 .selected {
   background-color: $yellow;
