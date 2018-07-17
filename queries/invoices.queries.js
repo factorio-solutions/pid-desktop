@@ -23,8 +23,10 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
       }
     }
     client{
-      is_admin
-      is_secretary
+      client_user{
+        admin
+        secretary
+      }
       name
       id
       admins{
