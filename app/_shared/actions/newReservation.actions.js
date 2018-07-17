@@ -132,6 +132,7 @@ export function setClientId(value) {
       value
     })
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    dispatch(setPrice())
     dispatch(setMinMaxDuration())
   }
 }
@@ -362,6 +363,7 @@ export function setPrice() {
     const state = getState().newReservation
     const from = moment(state.from, MOMENT_DATETIME_FORMAT)
     const to = moment(state.to, MOMENT_DATETIME_FORMAT)
+    const client = dispatch(selectedClient())
     let selectedPlace = null
     if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
       const freePlaces = state.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
@@ -850,17 +852,3 @@ export function paymentSucessfull() {
     dispatch(clearForm())
   }
 }
-
-// export function payReservation(token) {
-//   return (dispatch, getState) => {
-//     const onSuccess = response => {
-//       dispatch(paymentSucessfull())
-//     }
-//
-//     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
-//     request(onSuccess
-//            , PAY_RESREVATION
-//            , { token }
-//            )
-//   }
-// }

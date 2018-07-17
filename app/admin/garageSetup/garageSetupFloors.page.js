@@ -84,7 +84,7 @@ class GarageSetupFloorsPage extends Component {
           <div className={styles.inline}>
             <Input
               onChange={handleFloorNameChange}
-              label={t([ 'newGarage', 'floorName' ])}
+              label={t([ 'newGarage', 'floorName' ]) + ' *'}
               error={t([ 'newGarage', 'invalidFloorName' ])}
               value={state.floors[index].label}
               name={`floor${index}[name]`}
@@ -95,7 +95,7 @@ class GarageSetupFloorsPage extends Component {
             <Input
               style={styles.middleMargin}
               onChange={handleFloorFromChange}
-              label={t([ 'newGarage', 'from' ])}
+              label={t([ 'newGarage', 'from' ]) + ' *'}
               error={t([ 'newGarage', 'invalidFloorFrom' ])}
               value={floor.from}
               name={`floor${index}[from]`}
@@ -106,7 +106,7 @@ class GarageSetupFloorsPage extends Component {
             />
             <Input
               onChange={handleFloorToChange}
-              label={t([ 'newGarage', 'to' ])}
+              label={t([ 'newGarage', 'to' ]) + ' *'}
               error={t([ 'newGarage', 'invalidFloorTo' ])}
               value={floor.to}
               name={`floor${index}[to]`}

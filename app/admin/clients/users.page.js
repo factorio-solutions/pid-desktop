@@ -107,7 +107,13 @@ class ClientUsersPage extends Component {
               onClick={destroyClick}
               type="remove"
               question={t([ 'clientUsers', 'removeClientUser' ])}
-              state={((pageBase.current_user && pageBase.current_user.id !== client_user.user.id && currentClientUser && !currentClientUser.admin) || client_user.admin) && 'disabled'}
+              state={((pageBase.current_user &&
+                pageBase.current_user.id !== client_user.user.id &&
+                currentClientUser &&
+                !(currentClientUser.admin || currentClientUser.secretary)) ||
+                client_user.admin ||
+                (client_user.contact_person && currentClientUser.secretary)) &&
+                'disabled'}
             />
           </div>
         </div>

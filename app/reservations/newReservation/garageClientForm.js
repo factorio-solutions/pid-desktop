@@ -7,7 +7,8 @@ import Dropdown from '../../_shared/components/dropdown/Dropdown'
 import {
   downloadGarage,
   setPaidByHost,
-  setClientId
+  setClientId,
+  isPlaceGoInternal
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
@@ -30,7 +31,7 @@ class GarageClientForm extends Component {
 
   garageDropdown = () => {
     const { state, actions } = this.props
-
+    
     return (state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => ({
       label:   garage.name,
       onClick: () => actions.downloadGarage(state.user.availableGarages[index].id)
@@ -48,15 +49,11 @@ class GarageClientForm extends Component {
 
   render() {
     const { state, actions, editable } = this.props
-
-    const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
-    const selectedPlace = places.findById(state.place_id)
-
     return (
       <div>
         <Dropdown
           editable={editable}
-          label={t([ 'newReservation', 'selectGarage' ])}
+          label={`${t([ 'newReservation', 'selectGarage' ])} *`}
           content={this.garageDropdown()}
           selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
           style="reservation"
@@ -74,7 +71,7 @@ class GarageClientForm extends Component {
             placeholder={t([ 'newReservation', 'selectClient' ])}
           />
         }
-        {state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal &&
+        {isPlaceGoInternal(state) &&
           <div>
             <input
               type="checkbox"

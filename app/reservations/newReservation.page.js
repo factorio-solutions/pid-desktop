@@ -100,7 +100,7 @@ class NewReservationPage extends Component {
 
   handlePlaceClick = place => this.props.actions.setPlace(place)
 
-  hightlightInputs = () => this.props.actions.toggleHighlight()
+  // hightlightInputs = () => this.props.actions.toggleHighlight()
 
   modalClick = () => {
     this.props.actions.setError(undefined)
@@ -135,7 +135,6 @@ class NewReservationPage extends Component {
     const isSubmitable = () => {
       if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
       if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
-      if (state.car_id === undefined && state.carLicencePlate === '' && (state.user && state.user.id !== -2)) return false
       if (state.from === '' || state.to === '') return false
       // if onetime visitor and he has to pay by himself, then the email is mandatory
       if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
@@ -195,18 +194,19 @@ class NewReservationPage extends Component {
 
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
-              <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={this.hightlightInputs}>
+              <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={actions.toggleHighlight}>
                 { !(state.user && (state.user.id < 0 || onetime)) &&
                   ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
-                  // !state.reservation &&
                   <div className={styles.searchField}>
                     <span
                       className={styles.resetButton}
                       onClick={this.clearForm}
-                    ><i className="fa fa-times-circle" aria-hidden="true" /></span>
+                    >
+                      <i className="fa fa-times-circle" aria-hidden="true" />
+                    </span>
                     <SearchField
                       editable={!ongoing || isSecretary}
-                      placeholder={t([ 'newReservation', 'selectUser' ])}
+                      placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
                       dropdownContent={userDropdown.users}
                       selected={getUserToSelect()}
                       highlight={state.highlight}
@@ -238,7 +238,7 @@ class NewReservationPage extends Component {
                 }
 
                 {state.user &&
-                ((state.email.valid && state.phone.valid && state.carLicencePlate && state.user.id === -1) ||
+                ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
                 (state.name.valid && state.user.id === -2) ||
                 state.user.id > 0) &&
                   <GarageClientForm

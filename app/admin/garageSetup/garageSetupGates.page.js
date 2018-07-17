@@ -124,7 +124,7 @@ class GarageSetupGatesPage extends Component {
             <Input
               style={styles.rightMargin}
               onChange={handleGateLabelChange}
-              label={t([ 'newGarage', 'gateLabel' ], { index: index + 1 }) + (index !== arr.length - 1 ? ' *' : '')}
+              label={t([ 'newGarage', 'gateLabel' ], { index: index + 1 }) + ' *'}
               error={t([ 'newGarage', 'invalidGateLabel' ])}
               value={gate.label}
               name={`gate${index}[label]`}
@@ -180,7 +180,7 @@ class GarageSetupGatesPage extends Component {
           }
           <Input
             onChange={handleGatePlacesChange}
-            label={t([ 'newGarage', 'places' ]) + (index !== arr.length - 1 ? ' *' : '')}
+            label={t([ 'newGarage', 'places' ]) + ' *'}
             error={t([ 'newGarage', 'invalidPlaces' ])}
             value={gate.places}
             placeholder={t([ 'newGarage', 'placesPlaceholder' ])}
@@ -191,7 +191,7 @@ class GarageSetupGatesPage extends Component {
           />
           <Input
             onChange={handleGateAddressLine1Change}
-            label={t([ 'newGarage', 'street' ]) + (index !== arr.length - 1 ? ' *' : '')}
+            label={t([ 'newGarage', 'street' ]) + ' *'}
             error={t([ 'newGarage', 'invalidStreet' ])}
             value={gate.address.line_1}
             placeholder={t([ 'newGarage', 'streetPlaceholder' ])}
@@ -233,7 +233,6 @@ class GarageSetupGatesPage extends Component {
       <div className={styles.garageLayout}>
         <GarageLayout
           floors={allFloors}
-          onPlaceClick={place => { console.log('place clicked', place) }}
           showEmptyFloors
         />
       </div>

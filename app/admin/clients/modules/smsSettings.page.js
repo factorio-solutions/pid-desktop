@@ -24,6 +24,11 @@ class SmsSettingsPage extends Component {
     params:   PropTypes.object
   }
 
+  componentDidMount() {
+    this.props.actions.clearForm()
+    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
+  }
+
   onTextAreaChange = event => this.props.actions.setNewTemplateText(event.target.value)
   onUpdateTextAreaChange = event => this.props.actions.updateTemplateText(event.target.value)
 

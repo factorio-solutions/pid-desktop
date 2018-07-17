@@ -7,6 +7,7 @@ import createRoutes from './routes'
 import configureStore from './_store/configureStore'
 
 import './_shared/helpers/findById'
+import './_shared/helpers/stringOperations'
 import './_shared/styles/normalize.css'
 import './_shared/styles/fonts.scss'
 import './_styles/app.desktop.scss'
@@ -19,6 +20,12 @@ export const adminEntryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:
 
 
 const history = syncHistoryWithStore(hashHistory, store)
+// Force Monday as the first day of a week when English is set.
+require('moment').updateLocale('en', {
+  week: {
+    dow: 1
+  }
+})
 
 if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
   window.moment = require('moment')
