@@ -1,10 +1,16 @@
-import { request }   from '../helpers/request'
-import actionFactory from '../helpers/actionFactory'
-import * as nav      from '../helpers/navigation'
-import { t }         from '../modules/localization/localization'
+import { request }         from '../helpers/request'
+import requestPromise      from '../helpers/requestPromise'
+import actionFactory       from '../helpers/actionFactory'
+import { t }               from '../modules/localization/localization'
+import minMaxDurationCheck from '../helpers/minMaxDurationCheck'
 
 import { setCustomModal } from './pageBase.actions'
-import { GET_GARAGE, CREATE_PRICING, UPDATE_PRICING } from '../queries/admin.goPublic.queries.js'
+import {
+  GET_GARAGE,
+  CREATE_PRICING,
+  UPDATE_PRICING,
+  UPDATE_GARAGE_DURATIONS
+} from '../queries/admin.goPublic.queries.js'
 
 
 export const ADMIN_GO_PUBLIC_SET_GARAGE = 'ADMIN_GO_PUBLIC_SET_GARAGE'
@@ -17,6 +23,9 @@ export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_DAY_PRICE = 'ADMIN_GO_PUBLIC_SET_EX
 export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE = 'ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE'
 export const ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE = 'ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE'
 export const ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE = 'ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE'
+export const ADMIN_GO_PUBLIC_TOGGLE_HIGHLIGHT = 'ADMIN_GO_PUBLIC_TOGGLE_HIGHLIGHT'
+export const ADMIN_GO_PUBLIC_SET_MIN_RESERVATION_DURATION = 'ADMIN_GO_PUBLIC_SET_MIN_RESERVATION_DURATION'
+export const ADMIN_GO_PUBLIC_SET_MAX_RESERVATION_DURATION = 'ADMIN_GO_PUBLIC_SET_MAX_RESERVATION_DURATION'
 
 
 const patternInputActionFactory = type => (value, valid) => ({ type, valid, value: parseInt(value, 10) })
@@ -31,6 +40,27 @@ export const setExponentialDayPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_
 export const setExponentialWeekPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_WEEK_PRICE)
 export const setExponentialMonthPrice = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_EXPONENTIAL_MONTH_PRICE)
 export const setWeekendPricing = patternInputActionFactory(ADMIN_GO_PUBLIC_SET_WEEKEND_PRICE)
+export const toggleHighlight = actionFactory(ADMIN_GO_PUBLIC_TOGGLE_HIGHLIGHT)
+export const setMinReservationDuration = actionFactory(ADMIN_GO_PUBLIC_SET_MIN_RESERVATION_DURATION)
+export const setMaxReservationDuration = actionFactory(ADMIN_GO_PUBLIC_SET_MAX_RESERVATION_DURATION)
+
+
+function checkMinMaxReservationDuration(changeMin) {
+  return (dispatch, getState) => {
+    const state = getState().adminGoPublic
+
+    const { newMin, newMax } = minMaxDurationCheck(state.minReservationDuration, state.maxReservationDuration, changeMin)
+    dispatch(setMinReservationDuration(newMin))
+    dispatch(setMaxReservationDuration(newMax))
+  }
+}
+
+export function checkMinReservationDuration() {
+  return dispatch => dispatch(checkMinMaxReservationDuration(false))
+}
+export function checkMaxReservationDuration() {
+  return dispatch => dispatch(checkMinMaxReservationDuration(true))
+}
 
 
 export function initGoPublic() {
@@ -38,6 +68,8 @@ export function initGoPublic() {
     const onSuccess = response => {
       dispatch(setGarage(response.data.garage))
       dispatch(setCurrencies(response.data.currencies))
+      dispatch(setMinReservationDuration(response.data.garage.min_reservation_duration_go_public))
+      dispatch(setMaxReservationDuration(response.data.garage.max_reservation_duration_go_public))
     }
 
     getState().pageBase.garage && request(onSuccess, GET_GARAGE, { id: getState().pageBase.garage })
@@ -73,7 +105,18 @@ export function submitPricings() {
       }
     }))
 
-    Promise.all(promises).then(() => { // resolved
+    const updateDutationsPromise = requestPromise(
+      UPDATE_GARAGE_DURATIONS,
+      { id:     getState().pageBase.garage,
+        garage: {
+          min_reservation_duration_go_public: state.minReservationDuration,
+          max_reservation_duration_go_public: state.maxReservationDuration
+        }
+      }
+    )
+    
+
+    Promise.all([ ...promises, updateDutationsPromise ]).then(() => { // resolved
       dispatch(setCustomModal())
       // nav.to(`/${getState().pageBase.garage}/admin/modules`)
     })

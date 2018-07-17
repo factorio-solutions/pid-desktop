@@ -5,6 +5,8 @@ import { GET_CURRENT_USER, GET_RESERVABLE_GARAGES } from '../queries/mobile.head
 import { REVOKE_TOKEN }                             from '../queries/login.queries'
 import { t }                                        from '../modules/localization/localization'
 
+import { initReservations } from './mobile.reservations.actions'
+
 
 export const MOBILE_MENU_SET_GARAGES = 'MOBILE_MENU_SET_GARAGES'
 export const MOBILE_MENU_SET_GARAGE = 'MOBILE_MENU_SET_GARAGE'
@@ -24,15 +26,19 @@ export const setShowMenu = actionFactory(MOBILE_MENU_SET_SHOW_MENU)
 export const setError = actionFactory(MOBILE_MENU_SET_ERROR)
 export const setCustomModal = actionFactory(MOBILE_MENU_SET_CUSTOM_MODAL)
 export const setLanguage = actionFactory(SET_MOBILE_LANGUAGE)
-export const setPersonal = actionFactory(SET_MOBILE_PERSONAL)
+// export const setPersonal = actionFactory(SET_MOBILE_PERSONAL)
+export function setPersonal(value) {
+  return dispatch => {
+    dispatch({ type: SET_MOBILE_PERSONAL, value })
+    dispatch(initReservations())
+  }
+}
 
 
 export function hideSplashscreen() {
   return () => {
     if (navigator.splashscreen) {
-      setTimeout(() => {
-        navigator.splashscreen.hide()
-      }, 500)
+      setTimeout(navigator.splashscreen.hide, 1000)
     }
   }
 }

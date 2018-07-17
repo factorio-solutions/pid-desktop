@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+// import CallToActionButton from '../buttons/CallToActionButton'
+
 import styles from './Swipe.scss'
 
 
@@ -27,11 +29,11 @@ export default class Swipe extends Component {
     }
   }
 
-  onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - this.sliderDimensions.x })
+  onDragOrMoveStart = event => this.setState({ ...this.state, touchPoint: this.positionFromEvent(event) - (this.trackDimensions.x || this.trackDimensions.left) })
 
   onDragOrMove = event => {
     const screenPosition = this.positionFromEvent(event)
-    const newPosition = screenPosition - this.trackDimensions.x - this.state.touchPoint
+    const newPosition = screenPosition - (this.trackDimensions.x || this.trackDimensions.left) - this.state.touchPoint
     this.setState({ ...this.state, sliderPosition: this.limitValue(newPosition, 0, this.maxSliderLeft()) })
   }
 
@@ -84,16 +86,14 @@ export default class Swipe extends Component {
           ref={this.createDimensionsRef('sliderDimensions')}
 
           onDragStart={this.onDragOrMoveStart}
-          onTouchStart={this.onDragOrMoveStart}
           onDrag={this.onDragOrMove}
+          onDragEnd={this.onDragOrMoveEnd}
+          
+          onTouchStart={this.onDragOrMoveStart}
           onTouchMove={this.onDragOrMove}
           onTouchEnd={this.onDragOrMoveEnd}
-          onDragEnd={this.onDragOrMoveEnd}
         >
           <div>
-            {/* this.state.swiped && !this.state.reseting && success === undefined ?
-              <i className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" /> :
-            */}
             <i className={`fa fa-${this.state.swiped && success ? 'unlock-alt' : 'lock'}`} aria-hidden="true" />
           </div>
         </div>
