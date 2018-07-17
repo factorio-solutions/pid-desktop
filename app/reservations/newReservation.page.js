@@ -120,7 +120,7 @@ class NewReservationPage extends Component {
 
     const ongoing = state.reservation && state.reservation.ongoing
     const onetime = state.reservation && state.reservation.onetime
-    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.is_secretary
+    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
     // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal

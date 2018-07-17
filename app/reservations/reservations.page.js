@@ -206,8 +206,8 @@ class ReservationsPage extends Component {
           <div>
             <span className={styles.floatRight}>
               {reservation.client &&
-              (reservation.client.is_secretary ||
-              (reservation.client.is_internal && reservation.user.id === pageBase.current_user.id)) ? // Internal can edit his reservations
+              (reservation.client.client_user.secretary ||
+              (reservation.client.client_user.internal && reservation.user.id === pageBase.current_user.id)) ? // Internal can edit his reservations
                 <LabeledRoundButton
                   label={t([ 'reservations', 'editReservation' ])}
                   content={<span className="fa fa-pencil" aria-hidden="true" />}

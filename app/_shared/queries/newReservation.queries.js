@@ -26,7 +26,9 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     name
     has_sms_api_token
     is_sms_api_token_active
-    is_secretary
+    client_user{
+      secretary
+    }
     min_reservation_duration
     max_reservation_duration
     sms_templates {
@@ -178,7 +180,9 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     }
     client_id
     client {
-      is_secretary
+      client_user{
+        secretary
+      }
     }
     place{
       id

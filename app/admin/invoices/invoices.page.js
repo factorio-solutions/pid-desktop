@@ -76,7 +76,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
           onClick={() => actions.downloadInvoice(invoice.id)}
           type="action"
         />
-        {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin || invoice.client.is_secretary) &&
+        {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.client_user.admin || invoice.client.client_user.secretary) &&
           <LabeledRoundButton
             label={t([ 'invoices', 'payInvoice' ])}
             content={<i className="fa fa-credit-card" aria-hidden="true" />}

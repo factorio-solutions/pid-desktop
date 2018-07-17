@@ -55,8 +55,8 @@ class ClientsPage extends Component {
     const prepareContractButton = contract => {
       const onContractClick = () => nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`)
       return (<div
-        className={`${styles.contract} ${!(pageBase.isGarageAdmin || pageBase.isGarageManager || client.is_admin) && styles.disabled}`}
-        onClick={(pageBase.isGarageAdmin || pageBase.isGarageManager || client.is_admin) && onContractClick}
+        className={`${styles.contract} ${!(pageBase.isGarageAdmin || pageBase.isGarageManager || client.client_user.admin) && styles.disabled}`}
+        onClick={(pageBase.isGarageAdmin || pageBase.isGarageManager || client.client_user.admin) && onContractClick}
       >
         {contract.name}
       </div>)
@@ -80,7 +80,7 @@ class ClientsPage extends Component {
     const currentContracts = client.contracts ? client.contracts.filter(currentContractsFilter) : []
     const oldContracts = client.contracts ? client.contracts.filter(oldContractsFilter) : []
 
-    const currentUserIsAdmin = client.is_admin && !client.is_pending
+    const currentUserIsAdmin = client.client_user.admin && !client.is_pending
 
     const spoiler = (<div className={styles.spoiler}>
       <div>
@@ -88,7 +88,7 @@ class ClientsPage extends Component {
         <br />
         {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
       </div>
-      {(client.is_admin || pageBase.isGarageAdmin || pageBase.isGarageManager) && <div>
+      {(client.client_user.admin || pageBase.isGarageAdmin || pageBase.isGarageManager) && <div>
         {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
         {currentContracts.map(prepareContractButton)}
         {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
@@ -142,7 +142,7 @@ class ClientsPage extends Component {
 
   filterAttributes = client => {
     let newClient = { ...client }
-    if (!client.is_admin || client.is_pending) {
+    if (!client.client_user.admin || client.is_pending) {
       newClient.monthly_total = null
       newClient.all_invoices_paid = null
       newClient.token = null
