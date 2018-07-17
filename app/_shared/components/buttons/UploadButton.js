@@ -14,6 +14,7 @@ export default class UploadButton extends Component {
     variables: PropTypes.object,
     label:     PropTypes.string.isRequired,
     type:      PropTypes.string,
+    accept:    PropTypes.string,
     state:     PropTypes.number
   }
 
@@ -23,11 +24,12 @@ export default class UploadButton extends Component {
   }
 
   render() {
-    const { onUpload, query, variables, label, type, state } = this.props
+    const { onUpload, query, variables, label, type, state, accept } = this.props
 
     const uploadFinished = url => {
       this.setState({ uploading: false })
-      url && onUpload(url)
+      const fileName = this.fileInput.value.replace(/^.*[\\\/]/, '')
+      url && onUpload(url, fileName)
     }
 
     const onFileSelected = event => {
@@ -36,12 +38,12 @@ export default class UploadButton extends Component {
     }
 
     return (<span>
-      <input type="file" ref={input => { this.fileInput = input }} onChange={onFileSelected} className={styles.hide} />
+      <input type="file" ref={input => { this.fileInput = input }} onChange={onFileSelected} className={styles.hide} accept={accept} />
       <LabeledRoundButton
         label={label}
         type={type}
         state={state}
-        onClick={() => { this.fileInput.click() }}
+        onClick={() => { if (type !== 'disabled') { this.fileInput.click() } }}
         content={<i className={`fa ${this.state.uploading ? 'fa-cloud-upload' : 'fa-file-text-o'} ${this.state.uploading && styles.pulsing}`} aria-hidden="true" />}
       />
     </span>)
