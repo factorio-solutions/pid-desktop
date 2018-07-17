@@ -108,7 +108,7 @@ class Documents extends Component {
           <div className={styles.displayFlex}>
             <UploadButton
               label={t([ 'newGarage', 'addDocument' ])}
-              type={documents.filter(doc => !doc.remove && doc.doc_type === type).length > 0 ? 'disabled' : 'action'}
+              state={documents.filter(doc => !doc.remove && doc.doc_type === type).length > 0 ? 'disabled' : 'action'}
               onUpload={(documentUrl, fileName) => actions.documentUploaded(type, documentUrl, fileName)}
               query={PRESIGNE_GARAGE_DOCUMENT_QUERY}
               accept="application/pdf"
@@ -116,7 +116,7 @@ class Documents extends Component {
             <h2>{t([ 'newGarage', 'or' ])}</h2>
             <LabeledRoundButton
               label={t([ 'newGarage', 'uploadUrl' ])}
-              type={documents.filter(doc => !doc.remove && doc.doc_type === type).length > 0 ? 'disabled' : 'action'}
+              state={documents.filter(doc => !doc.remove && doc.doc_type === type).length > 0 ? 'disabled' : 'action'}
               content={<span className="fa fa-file-code-o" aria-hidden="true" />}
               onClick={() => actions.showModal(type)}
             />
