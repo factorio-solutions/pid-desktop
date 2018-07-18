@@ -1265,7 +1265,10 @@
 			"issue": "Report issues",
 			"carOnMySpot": "There is a car in my spot.",
 			"reservationMoved": "Reservation moved to:",
-			"noFreePlaces": "There seem to by no other free places."
+			"noFreePlaces": "There seem to by no other free places.",
+			"enterCarsLicencePlate": "Enter cars licence plate",
+			"clientContactPerson": "You can contact clients contact person:",
+			"garageSecurity": "Or garage security:"
 		},
 		"newReservation": {
 			"begins": "Begins",
