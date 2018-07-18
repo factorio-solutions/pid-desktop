@@ -163,15 +163,22 @@ export function setGarage(value) {
     dispatch({ type: NEW_RESERVATION_SET_GARAGE,
       value
     })
-
+    // There were two available Clients requests because line #497 and #525
     const state = getState().newReservation
-    const availableClientsPromise = clientsPromise(state.user && state.user.id, state.garage && state.garage.id)
-    availableClientsPromise.then(value => {
-      value.reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
-      state.user && dispatch(setUser({ ...state.user, availableClients: value.reservable_clients }))
-    }).catch(error => {
-      throw (error)
-    })
+    if (typeof value === 'undefined') {
+      state.user && dispatch(setUser({
+        ...state.user,
+        availableClients: [ { name: t([ 'newReservation', 'selectClient' ]), id: undefined } ]
+      }))
+    } else {
+      const availableClientsPromise = clientsPromise(state.user && state.user.id, state.garage && state.garage.id)
+      availableClientsPromise.then(value => {
+        value.reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
+        state.user && dispatch(setUser({ ...state.user, availableClients: value.reservable_clients }))
+      }).catch(error => {
+        throw (error)
+      })
+    }
   }
 }
 
@@ -201,7 +208,7 @@ export function setFromDate(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
-    dispatch(formatFrom())
+    dispatch(formatFrom(true))
   }
 }
 
@@ -217,14 +224,15 @@ export function setFromTime(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
-    dispatch(formatFrom())
+    dispatch(formatFrom(true))
   }
 }
 
-export function formatFrom() {
+export function formatFrom(loadGarage = false) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const fromValue = moment(roundTime(getState().newReservation.from), MOMENT_DATETIME_FORMAT)
+    const currentFrom = fromValue.clone()
     let toValue = null
 
     const MIN_RESERVATION_DURATION = state.minDuration
@@ -246,8 +254,11 @@ export function formatFrom() {
     })
 
     moment(toValue, MOMENT_DATETIME_FORMAT).diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
-    getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
-    dispatch(setPrice())
+
+    if (loadGarage || toValue || !currentFrom.isSame(fromValue)) {
+      getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+      dispatch(setPrice())
+    }
   }
 }
 
@@ -264,7 +275,7 @@ export function setToDate(value) {
       value:   to.format(MOMENT_DATETIME_FORMAT),
       from:    fromValue
     })
-    dispatch(formatTo())
+    dispatch(formatTo(true))
   }
 }
 
@@ -279,14 +290,15 @@ export function setToTime(value) {
       value: to.format(MOMENT_DATETIME_FORMAT),
       from:  fromValue
     })
-    dispatch(formatTo())
+    dispatch(formatTo(true))
   }
 }
 
-export function formatTo() {
+export function formatTo(loadGarage = false) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     let toValue = moment(roundTime(state.to), MOMENT_DATETIME_FORMAT)
+    const currentTo = toValue.clone()
     const fromValue = moment(state.from, MOMENT_DATETIME_FORMAT)
 
     const MIN_RESERVATION_DURATION = state.minDuration
@@ -306,8 +318,11 @@ export function formatTo() {
     })
 
     toValue.diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
-    getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
-    dispatch(setPrice())
+
+    if (loadGarage || !currentTo.isSame(toValue)) {
+      state.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+      dispatch(setPrice())
+    }
   }
 }
 
@@ -807,7 +822,7 @@ export function paymentUnsucessfull() {
 }
 
 export function paymentSucessfull() {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     nav.to('/reservations')
     dispatch(pageBaseActions.setCustomModal(undefined))
     dispatch(clearForm())
