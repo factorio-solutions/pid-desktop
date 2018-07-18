@@ -55,8 +55,13 @@ export const GARAGE_CONTRACTS = `query GargeContracts($id: Id!){
         user_count
 
         all_invoices_paid
+        created_at
+        is_admin
+        is_pending
         contact_persons{
           full_name
+          email
+          phone
         }
       }
     }
