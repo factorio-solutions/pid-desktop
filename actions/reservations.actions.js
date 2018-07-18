@@ -1,5 +1,3 @@
-import React from 'react'
-
 import actionFactory                  from '../helpers/actionFactory'
 import { request }                    from '../helpers/request'
 import requestPromise                 from '../helpers/requestPromise'
@@ -9,15 +7,11 @@ import { download, downloadMultiple } from '../helpers/download'
 import { setCustomModal, setError } from './pageBase.actions'
 import { t }                        from '../modules/localization/localization'
 
-import { setReservations }                        from './mobile.reservations.actions'
-import { setError as mobileSetModal } from './mobile.header.actions'
-
 import {
   DESTROY_RESERVATION,
   CHECK_VALIDITY,
   CREATE_CSOB_PAYMENT,
-  DESTROY_RECURRING_RESERVATIONS,
-  SHIFT_RESERVATION_PLACE
+  DESTROY_RECURRING_RESERVATIONS
 } from '../queries/reservations.queries'
 import { UPDATE_RESERVATION } from '../queries/newReservation.queries'
 import { DOWNLOAD_INVOICE }   from '../queries/invoices.queries'
@@ -117,32 +111,5 @@ export function editReservationNote() {
       dispatch(setNewNoteReservation())
       dispatch(initReservations())
     })
-  }
-}
-
-export function carOnMySpot(reservation) { // for mobiles
-  return async function (dispatch, getState) {
-    const { shift_reservation_place } = await requestPromise(SHIFT_RESERVATION_PLACE, { id: reservation.id })
-    const state = getState().reservations
-    const index = state.reservations.findIndexById(reservation.id)
-
-    if (shift_reservation_place.place.id === state.reservations[index].place.id) {
-      dispatch(mobileSetModal(<h3>{t([ 'mobileApp', 'reservation', 'noFreePlaces' ])}</h3>))
-    } else {
-      dispatch(setReservations(
-        [ ...state.reservations.slice(0, index),
-          { ...state.reservations[index],
-            begins_at: shift_reservation_place.begins_at,
-            place:     shift_reservation_place.place
-          },
-          ...state.reservations.slice(index + 1)
-        ]
-      ))
-
-      dispatch(mobileSetModal([
-        <h3 key="reservationMoved">{t([ 'mobileApp', 'reservation', 'reservationMoved' ])}</h3>,
-        <h1 key="floorPlace">{shift_reservation_place.place.floor.label} / {shift_reservation_place.place.label}</h1>
-      ]))
-    }
   }
 }
