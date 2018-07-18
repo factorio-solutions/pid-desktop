@@ -80,7 +80,7 @@ class ClientsPage extends Component {
     const currentContracts = client.contracts ? client.contracts.filter(currentContractsFilter) : []
     const oldContracts = client.contracts ? client.contracts.filter(oldContractsFilter) : []
 
-    const currentUserIsAdmin = client.client_user.admin && !client.is_pending
+    const currentUserIsAdmin = client.client_user.admin && !client.client_user.pending
 
     const spoiler = (<div className={styles.spoiler}>
       <div>

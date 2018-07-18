@@ -5,11 +5,12 @@ export const GET_CLIENTS = `{
     token
     id
     user_count
-
     all_invoices_paid
     created_at
-    is_admin
-    is_pending
+    client_user{
+      admin
+      pending
+    }
     contracts{
       from
       to
