@@ -13,6 +13,7 @@ export const MOBILE_GET_RESERVATIONS_QUERY = `query MobileReservations($count: I
       }
     }
     place {
+      id
       label
       floor {
         label

@@ -57,7 +57,6 @@ function createPaginationVariables(getState) {
 
 export function initReservations() {
   return (dispatch, getState) => {
-    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     dispatch(resetPagination())
 
     requestPromise(
@@ -69,10 +68,8 @@ export function initReservations() {
       dispatch(setReservations(response.mobile_reservations))
       dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
 
-      dispatch(setCustomModal())
       dispatch(hideSplashscreen())
     }).catch(() => {
-      dispatch(setCustomModal())
       dispatch(hideSplashscreen())
     })
   }

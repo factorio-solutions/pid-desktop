@@ -262,10 +262,11 @@ export function getAvailableClients() {
 
 export function getAvailableCars() {
   return (dispatch, getState) => {
-    const id = getState().mobileNewReservation.guestReservation ? getState().mobileNewReservation.user_id : (getState().mobileHeader.current_user && getState().mobileHeader.current_user.id)
+    const id = getState().mobileNewReservation.guestReservation ?
+      getState().mobileNewReservation.user_id :
+      getState().mobileHeader.current_user && getState().mobileHeader.current_user.id
+
     if (id) {
-      dispatch(setAvailableCars([]))
-    } else {
       const onCars = response => {
         dispatch(setAvailableCars(response.data.user.reservable_cars))
         dispatch(setCustomModal())
@@ -274,7 +275,9 @@ export function getAvailableCars() {
           dispatch(setCarId(undefined)))
       }
 
-      id && request(onCars, GET_USER, { id })
+      request(onCars, GET_USER, { id })
+    } else {
+      dispatch(setAvailableCars([]))
     }
   }
 }

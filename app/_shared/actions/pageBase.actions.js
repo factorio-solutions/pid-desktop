@@ -497,6 +497,15 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+      case (contains(hash, 'garageSetup') && contains(hash, 'legalDocuments')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'garageSetup'
+          hint = t([ 'pageBase', 'newGarageLegalDocumentsHint' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
       case (contains(hash, 'garageSetup') && contains(hash, 'users')):
         if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
@@ -583,6 +592,7 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+
     }
 
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo))
