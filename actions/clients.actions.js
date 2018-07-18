@@ -29,6 +29,7 @@ function currentContracts(contract) {
 export function initClients() {
   return dispatch => {
     const onSuccess = response => {
+      console.log(response)
       dispatch(setClients(response.data.clients.map(client => ({
         ...client,
         userOfClient: true,
@@ -44,6 +45,7 @@ export function initClients() {
 export function initGarageContracts() {
   return (dispatch, getState) => {
     const onSuccess = response => {
+      console.log(response)
       const uniqueClients = response.data.garage.contracts.reduce((acc, contract) => {
         if (!acc.hasOwnProperty(contract.client.id)) {
           acc[contract.client.id] = {
