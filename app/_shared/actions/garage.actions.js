@@ -50,7 +50,7 @@ export function setTime(time) {
 export function initGarage() {
   return (dispatch, getState) => {
     const garagePromise = createPromise(getState, onSuccess => {
-      request(onSuccess, GARAGE_DETAILS_QUERY, { id: getState().pageBase.garage })
+      request(onSuccess, GARAGE_DETAILS_QUERY, { id: getState().pageBase.garage, datetime: timeToUTC(getState().garage.time) })
     })
 
     const reservationsPromise = createPromise(getState, onSuccess => {

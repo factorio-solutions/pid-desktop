@@ -1,4 +1,4 @@
-export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
+export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $datetime: Datetime!) {
   garage(id: $id) {
     id
     name
@@ -25,7 +25,8 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
             symbol
           }
         }
-        contracts {
+        id
+        contracts_in_time(datetime: $datetime) {
           rent {
             id
             price
@@ -35,19 +36,23 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
             }
           }
         }
-      }
-    }
-    contracts {
-      id
-      from
-      to
-      name
-      client {
-        name
-        id
-      }
-      places {
-        id
+        reservations_in_time(datetime: $datetime) {
+          id
+          client {
+            id
+            name
+          }
+          car {
+            licence_plate
+          }
+          begins_at
+          ends_at
+          user {
+            full_name
+            email
+            phone
+          }
+        }
       }
     }
   }
