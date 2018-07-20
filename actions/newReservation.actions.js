@@ -75,6 +75,7 @@ export const NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD = 'NEW_RESERVATION_SET_
 export const NEW_RESERVATION_SET_MIN_DURATION = 'NEW_RESERVATION_SET_MIN_DURATION'
 export const NEW_RESERVATION_SET_MAX_DURATION = 'NEW_RESERVATION_SET_MAX_DURATION'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
+export const NEW_RESERVATION_SET_TIME_CREDIT_PRICE = 'NEW_RESERVATION_SET_TIME_CREDIT_PRICE'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -100,6 +101,7 @@ export const selectCsobOneClick = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLI
 export const selectCsobOneClickNewCard = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD)
 export const setMinDuration = actionFactory(NEW_RESERVATION_SET_MIN_DURATION)
 export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
+export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_PRICE)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -153,6 +155,7 @@ export function setRecurringRule(value) {
     dispatch({ type: NEW_RESERVATION_SET_RECURRING_RULE,
       value
     })
+    dispatch(setPrice())
   }
 }
 
@@ -344,10 +347,11 @@ export function setMinMaxDuration() {
     // set min/max duration of garage or of client
     dispatch(setMinDuration(minDuration))
     dispatch(setMaxDuration(maxDuration))
-
     // does reservation meet min/max boundaries
     const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
-    !(minDuration < diff && diff < maxDuration) && dispatch(formatTo())
+    if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
+      dispatch(formatTo())
+    }
   }
 }
 
@@ -374,31 +378,17 @@ export function setPrice() {
       }, undefined)
     }
 
-    if (client && client.is_time_credit_active) {
-      dispatch({
-        type:  NEW_RESERVATION_SET_PRICE,
-        value: calculateDuration(from, to) * client.time_credit_price
-      })
-    } else {
-      let selectedPlace = null
-      if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-        const freePlaces = state.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
-        selectedPlace = freePlaces.length && freePlaces[0]
-      } else {
-        selectedPlace = state.garage && state.garage.floors.reduce((acc, floor) => {
-          return floor.places.reduce((acc, place) => {
-            return place.id === state.place_id ? place : acc
-          }, acc)
-        }, undefined)
-      }
-
-      dispatch({
-        type:  NEW_RESERVATION_SET_PRICE,
-        value: selectedPlace && selectedPlace.pricing ?
-          `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` :
-          undefined
-      })
-    }
+    dispatch(setTimeCreditPrice(
+      client
+        ? (state.recurringRule ? state.recurringRule.count || 1 : 1) * calculateDuration(from, to) * client.time_credit_price
+        : undefined
+    ))
+    dispatch({
+      type:  NEW_RESERVATION_SET_PRICE,
+      value: selectedPlace && selectedPlace.pricing ?
+        `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` :
+        undefined
+    })
   }
 }
 

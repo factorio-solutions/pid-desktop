@@ -245,6 +245,7 @@
 		"onetimeVisitText": "can't make or request reservation, isn't a member of the client account.",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
+		"paidByHostsTimeCredit": "Reservation paid by users timecredit",
 		"languageSelector": "Choose communication language",
 		"selectTemplate": "Select template",
 		"sendSms": "Send notification about reservation via SMS",
