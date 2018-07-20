@@ -20,6 +20,30 @@ export const setSelected = actionFactory(GARAGE_SET_SELECTED)
 export const setGarage = actionFactory(GARAGE_SET_GARAGE)
 export const setSelector = actionFactory(GARAGE_SET_SHOW_SELECTOR)
 
+
+function updateGaragesPlaces(garage, data) {
+  return { ...garage,
+    floors: garage.floors.map(floor => {
+      return { ...floor,
+        places: floor.places.map(place => {
+          const reservations = data.reservations_in_time.filter(r => r.place.id === place.id)
+          const contracts = data.contracts_in_time.filter(con => !!con.places.find(p => p.id === place.id))
+          return { ...place,
+            reservations,
+            contracts
+          }
+        })
+      }
+    })
+  }
+}
+
+function onPromiseSuccess(resolve, reject) {
+  return response => {
+    response.data ? resolve(response.data) : reject(response)
+  }
+}
+
 function createPromise(getState, perform) {
   return new Promise((resolve, reject) => {
     if (getState().pageBase.garage) {
@@ -28,6 +52,24 @@ function createPromise(getState, perform) {
       reject('no garage in pageBase')
     }
   })
+}
+
+export function updateReservations() {
+  return (dispatch, getState) => {
+    createPromise(getState, onSuccess => {
+      request(
+        onSuccess,
+        GARAGE_RESERVATIONS,
+        { id:       getState().pageBase.garage,
+          datetime: timeToUTC(getState().garage.time)
+        }
+      )
+    }).then(data => {
+      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, { reservations_in_time: data.garage.reservations_in_time, contracts_in_time: data.garage.contracts_in_time })))
+    }).catch(error => {
+      console.error(error)
+    })
+  }
 }
 
 export function setNow() {
@@ -58,46 +100,5 @@ export function initGarage() {
     }).catch(error => {
       console.error(error)
     })
-  }
-}
-
-export function updateReservations() {
-  return (dispatch, getState) => {
-    createPromise(getState, onSuccess => {
-      request(
-        onSuccess,
-        GARAGE_RESERVATIONS,
-        { id:       getState().pageBase.garage,
-          datetime: timeToUTC(getState().garage.time)
-        }
-      )
-    }).then(data => {
-      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, { reservations_in_time: data.garage.reservations_in_time, contracts_in_time: data.garage.contracts_in_time })))
-    }).catch(error => {
-      console.error(error)
-    })
-  }
-}
-
-function updateGaragesPlaces(garage, data) {
-  return { ...garage,
-    floors: garage.floors.map(floor => {
-      return { ...floor,
-        places: floor.places.map(place => {
-          const reservations = data.reservations_in_time.filter(r => r.place.id === place.id)
-          const contracts = data.contracts_in_time.filter(con => !!con.places.find(p => p.id === place.id))
-          return { ...place,
-            reservations,
-            contracts
-          }
-        })
-      }
-    })
-  }
-}
-
-function onPromiseSuccess(resolve, reject) {
-  return response => {
-    response.data ? resolve(response.data) : reject(response)
   }
 }
