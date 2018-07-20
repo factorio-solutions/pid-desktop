@@ -127,6 +127,7 @@ class NewReservationPage extends Component {
     const onetime = state.reservation && state.reservation.onetime
     const isSecretary = state.reservation && state.reservation.client && state.reservation.client.is_secretary
     const selectedClient = actions.selectedClient()
+    const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
     // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
@@ -142,9 +143,7 @@ class NewReservationPage extends Component {
       // if onetime visitor and we want to send him sms, then the phone is mandatory
       if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
       // user has enought time credit?
-      if (selectedClient &&
-        selectedClient.is_time_credit_active &&
-        (state.recurringRule ? state.recurringRule.count || 1 : 1) * state.price > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']) {
+      if (selectedClient && selectedClient.is_time_credit_active && !newReservationActions.isPlaceGoInternal(state) && outOfTimeCredit) {
         return false
       }
 
@@ -253,15 +252,13 @@ class NewReservationPage extends Component {
                       label={t([ 'newReservation', 'place' ])}
                       value={placeLabel()}
                     />
-                    {selectedClient && selectedClient.is_time_credit_active ?
+
+                    {selectedClient && selectedClient.is_time_credit_active &&
+                    !newReservationActions.isPlaceGoInternal(state) ?
                       <Uneditable
                         label={t([ 'newReservation', 'price' ])}
-                        highlight={
-                          state.highlight &&
-                          (state.recurringRule ? state.recurringRule.count || 1 : 1) * state.price >
-                          selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']
-                        }
-                        value={`${(state.recurringRule ? state.recurringRule.count || 1 : 1) * state.price} /
+                        highlight={state.highlight && outOfTimeCredit}
+                        value={`${state.timeCreditPrice} /
                           ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
                           ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
                         `}
@@ -270,9 +267,9 @@ class NewReservationPage extends Component {
                         label={t([ 'newReservation', 'price' ])}
                         value={`
                           ${state.price || ''}
-                          (${state.client_id && !state.paidByHost ?
-                            t([ 'newReservation', 'onClientsExpenses' ]) :
-                            t([ 'newReservation', 'onUsersExpenses' ])
+                          (${state.client_id && !state.paidByHost
+                            ? t([ 'newReservation', 'onClientsExpenses' ])
+                            : t([ 'newReservation', 'onUsersExpenses' ])
                           })
                         `}
                       />
