@@ -72,9 +72,9 @@ export class ReservationCard extends Component {
 
           <div>
             <div>
-            {reservation.place.label}/{reservation.place.floor.label}
+            {reservation.place.floor.label}/{reservation.place.label}
             </div>
-            <div className={styles.gray}>{t([ 'mobileApp', 'reservation', 'place' ])}/{t([ 'mobileApp', 'reservation', 'floor' ])}</div>
+            <div className={styles.gray}>{t([ 'mobileApp', 'reservation', 'floor' ])}/{t([ 'mobileApp', 'reservation', 'place' ])}</div>
           </div>
         </div>
 

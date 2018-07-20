@@ -26,14 +26,14 @@ export const setShowMenu = actionFactory(MOBILE_MENU_SET_SHOW_MENU)
 export const setError = actionFactory(MOBILE_MENU_SET_ERROR)
 export const setCustomModal = actionFactory(MOBILE_MENU_SET_CUSTOM_MODAL)
 export const setLanguage = actionFactory(SET_MOBILE_LANGUAGE)
-// export const setPersonal = actionFactory(SET_MOBILE_PERSONAL)
+
+
 export function setPersonal(value) {
   return dispatch => {
     dispatch({ type: SET_MOBILE_PERSONAL, value })
     dispatch(initReservations())
   }
 }
-
 
 export function hideSplashscreen() {
   return () => {
