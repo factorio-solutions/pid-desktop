@@ -90,6 +90,9 @@ query GarageReservations($id: Id!, $datetime: Datetime!) {
           symbol
         }
       }
+      places {
+        id
+      }
     }
     reservations_in_time(datetime: $datetime) {
       id
@@ -106,6 +109,9 @@ query GarageReservations($id: Id!, $datetime: Datetime!) {
         full_name
         email
         phone
+      }
+      place {
+        id
       }
     }
   }

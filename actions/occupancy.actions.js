@@ -1,13 +1,12 @@
 import moment from 'moment'
 
-import { request }    from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
 import { timeToUTC }  from '../helpers/time'
 import actionFactory  from '../helpers/actionFactory'
 import { t }          from '../modules/localization/localization'
 import * as pageBase  from './pageBase.actions'
 
-import { OCCUPANCY_GARAGES_QUERY, GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
+import { OCCUPANCY_GARAGES_QUERY, GARAGE_DETAILS_QUERY } from '../queries/occupancy.queries'
 
 export const OCCUPANCY_SET_GARAGES = 'OCCUPANCY_SET_GARAGES'
 export const OCCUPANCY_SET_GARAGE = 'OCCUPANCY_SET_GARAGE'
@@ -74,6 +73,25 @@ export function resetClientsLoadGarage(id) {
   }
 }
 
+// It is time consuming on large garages but still faster then when it is handled on server.
+function updateGarage(garage) {
+  return {
+    ...garage,
+    floors: garage.floors.map(floor => ({
+      ...floor,
+      occupancy_places: floor.occupancy_places.map(place => {
+        const contracts_in_interval = garage.contracts_in_interval.filter(con => !!con.places.find(p => p.id === place.id))
+        const reservations_in_interval = garage.reservations_in_interval.filter(r => r.place.id === place.id)
+        return {
+          ...place,
+          contracts_in_interval,
+          reservations_in_interval
+        }
+      })
+    }))
+  }
+}
+
 export function loadGarage(id) {
   return (dispatch, getState) => {
     const state = getState().occupancy
@@ -84,24 +102,17 @@ export function loadGarage(id) {
       from:       timeToUTC(state.from),
       to:         timeToUTC(state.from.clone().add(1, state.duration)),
       client_ids: state.client_ids
-    }).then(data => dispatch(setGarage(data.garage)))
-
-    dispatch(loadClients(garageId))
+    }).then(data => {
+      dispatch(setGarage(updateGarage(data.garage)))
+      dispatch(loadClients(data.garage.clients))
+    })
   }
 }
 
-export function loadClients(id) {
-  return (dispatch, getState) => {
-    const onClientsSuccess = response => {
-      response.data.garage.clients.unshift({ name: t([ 'occupancy', 'allReservations' ]), id: undefined })
-      dispatch(setClients(response.data.garage.clients))
-    }
-
-    const garageId = id || getState().pageBase.garage
-    garageId && request(onClientsSuccess,
-      GARAGE_CLIENTS_QUERY,
-      { id: garageId }
-    )
+export function loadClients(clients) {
+  return dispatch => {
+    clients.unshift({ name: t([ 'occupancy', 'allReservations' ]), id: undefined })
+    dispatch(setClients(clients))
   }
 }
 
