@@ -5,6 +5,39 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $datetime: Datetime!
     dic
     vat
     iban
+    contracts_in_time(datetime: $datetime) {
+      rent {
+        id
+        price
+        currency {
+          code
+          symbol
+        }
+      }
+      places {
+        id
+      }
+    }
+    reservations_in_time(datetime: $datetime) {
+      id
+      client {
+        id
+        name
+      }
+      car {
+        licence_plate
+      }
+      begins_at
+      ends_at
+      user {
+        full_name
+        email
+        phone
+      }
+      place{
+        id
+      }
+    }
     floors {
       id
       label
@@ -26,33 +59,19 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $datetime: Datetime!
           }
         }
         id
-        contracts_in_time(datetime: $datetime) {
-          rent {
-            id
-            price
-            currency {
-              code
-              symbol
-            }
-          }
-        }
-        reservations_in_time(datetime: $datetime) {
-          id
-          client {
-            id
-            name
-          }
-          car {
-            licence_plate
-          }
-          begins_at
-          ends_at
-          user {
-            full_name
-            email
-            phone
-          }
-        }
+      }
+    }
+    contracts {
+      id
+      from
+      to
+      name
+      client {
+        name
+        id
+      }
+      places {
+        id
       }
     }
   }
@@ -62,36 +81,31 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $datetime: Datetime!
 export const GARAGE_RESERVATIONS = `
 query GarageReservations($id: Id!, $datetime: Datetime!) {
   garage(id: $id) {
-    floors{
-      places {
+    contracts_in_time(datetime: $datetime) {
+      rent {
         id
-        contracts_in_time(datetime: $datetime) {
-          rent {
-            id
-            price
-            currency {
-              code
-              symbol
-            }
-          }
+        price
+        currency {
+          code
+          symbol
         }
-        reservations_in_time(datetime: $datetime) {
-          id
-          client {
-            id
-            name
-          }
-          car {
-            licence_plate
-          }
-          begins_at
-          ends_at
-          user {
-            full_name
-            email
-            phone
-          }
-        }
+      }
+    }
+    reservations_in_time(datetime: $datetime) {
+      id
+      client {
+        id
+        name
+      }
+      car {
+        licence_plate
+      }
+      begins_at
+      ends_at
+      user {
+        full_name
+        email
+        phone
       }
     }
   }

@@ -53,13 +53,8 @@ export function initGarage() {
       request(onSuccess, GARAGE_DETAILS_QUERY, { id: getState().pageBase.garage, datetime: timeToUTC(getState().garage.time) })
     })
 
-    const reservationsPromise = createPromise(getState, onSuccess => {
-      request(onSuccess, GARAGE_RESERVATIONS, { id: getState().pageBase.garage, datetime: timeToUTC(getState().garage.time) })
-    })
-
-    Promise.all([ garagePromise, reservationsPromise ]).then(data => {
-      data[1].garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
-      dispatch(setGarage(updateGaragesPlaces(data[0].garage, { garage: { places: data[1].garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], []) } })))
+    Promise.all([ garagePromise ]).then(data => {
+      dispatch(setGarage(updateGaragesPlaces(data[0].garage, { reservations_in_time: data[0].garage.reservations_in_time, contracts_in_time: data[0].garage.contracts_in_time })))
     }).catch(error => {
       console.error(error)
     })
@@ -77,7 +72,7 @@ export function updateReservations() {
         }
       )
     }).then(data => {
-      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, { garage: { places: data.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], []) } })))
+      dispatch(setGarage(updateGaragesPlaces(getState().garage.garage, { reservations_in_time: data.garage.reservations_in_time, contracts_in_time: data.garage.contracts_in_time })))
     }).catch(error => {
       console.error(error)
     })
@@ -89,10 +84,11 @@ function updateGaragesPlaces(garage, data) {
     floors: garage.floors.map(floor => {
       return { ...floor,
         places: floor.places.map(place => {
-          const reservationContractPlace = data.garage.places.find(p => p.id === place.id)
+          const reservations = data.reservations_in_time.filter(r => r.place.id === place.id)
+          const contracts = data.contracts_in_time.filter(con => !!con.places.find(p => p.id === place.id))
           return { ...place,
-            reservations: reservationContractPlace ? reservationContractPlace.reservations_in_time : [],
-            contracts:    reservationContractPlace ? reservationContractPlace.contracts_in_time : []
+            reservations,
+            contracts
           }
         })
       }
