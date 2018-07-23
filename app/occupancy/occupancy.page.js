@@ -12,11 +12,13 @@ import RoundButton       from '../_shared/components/buttons/RoundButton'
 import IconWithCount     from '../_shared/components/iconWithCount/IconWithCount'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { setPast }        from '../_shared/actions/reservations.actions'
+import { setPast }           from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
 import styles from './occupancy.page.scss'
+
+const UPDATE_EVERY_X_MINUTES = 15
 
 
 class OccupancyPage extends Component {
@@ -28,7 +30,13 @@ class OccupancyPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initOccupancy()
+    const { actions } = this.props
+    actions.initOccupancy()
+    this.timerID = setInterval(actions.loadGarage, UPDATE_EVERY_X_MINUTES * 60 * 1000)
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.timerID)
   }
 
   onReservationClick = reservation => {

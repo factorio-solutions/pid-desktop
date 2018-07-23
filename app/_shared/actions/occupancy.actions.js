@@ -102,7 +102,6 @@ export function resetClientsLoadGarage(id) {
   return (dispatch, getState) => {
     const state = getState().occupancy
     if (getState().pageBase.garages.find(garage => garage.garage.id === id)) dispatch(pageBase.setGarage(id))
-    // dispatch(resetClients())
     dispatch(setAllClientIds(state.user.occupancy_client_filter[id] || []))
     dispatch(loadGarage(id))
   }
