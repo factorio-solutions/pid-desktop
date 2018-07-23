@@ -6,6 +6,7 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!) {
     vat
     iban
     floors {
+      id
       label
       scheme
       places {

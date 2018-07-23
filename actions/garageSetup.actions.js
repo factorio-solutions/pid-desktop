@@ -4,7 +4,6 @@ import { request }   from '../helpers/request'
 import { get }       from '../helpers/get'
 import * as nav      from '../helpers/navigation'
 import { t }         from '../modules/localization/localization'
-import geocode       from '../helpers/geocode'
 import actionFactory from '../helpers/actionFactory'
 
 import {
@@ -17,7 +16,8 @@ import {
   GET_GARAGE_DETAILS_ORDER
 } from '../queries/garageSetup.queries'
 
-import { LOAD_INFO_FROM_IC }                   from '../queries/newClient.queries'
+import { newDocuments, removedDocuments, clearLegalDocumentsForm } from '../actions/legalDocuments.actions'
+
 import { emptyGate, emptyFloor, defaultImage } from '../reducers/garageSetup.reducer'
 import { setGarage, fetchGarages }             from './pageBase.actions'
 
@@ -31,9 +31,6 @@ export const GARAGE_SETUP_SET_AVAILABLE_TARIFS = 'GARAGE_SETUP_SET_AVAILABLE_TAR
 export const GARAGE_SETUP_SET_TARIF_ID = 'GARAGE_SETUP_SET_TARIF_ID'
 export const GARAGE_SETUP_SET_IMG = 'GARAGE_SETUP_SET_IMG'
 export const GARAGE_SETUP_SET_NAME = 'GARAGE_SETUP_SET_NAME'
-export const GARAGE_SETUP_SET_COMPANY_NAME = 'GARAGE_SETUP_SET_COMPANY_NAME'
-export const GARAGE_SETUP_SET_IC = 'GARAGE_SETUP_SET_IC'
-export const GARAGE_SETUP_SET_DIC = 'GARAGE_SETUP_SET_DIC'
 export const GARAGE_SETUP_SET_LINE_1 = 'GARAGE_SETUP_SET_LINE_1'
 export const GARAGE_SETUP_SET_LINE_2 = 'GARAGE_SETUP_SET_LINE_2'
 export const GARAGE_SETUP_SET_CITY = 'GARAGE_SETUP_SET_CITY'
@@ -63,9 +60,6 @@ export const setAvailableTarifs = actionFactory(GARAGE_SETUP_SET_AVAILABLE_TARIF
 export const setTarif = actionFactory(GARAGE_SETUP_SET_TARIF_ID)
 export const setImage = actionFactory(GARAGE_SETUP_SET_IMG)
 export const setName = actionFactory(GARAGE_SETUP_SET_NAME)
-export const setCompanyName = actionFactory(GARAGE_SETUP_SET_COMPANY_NAME)
-export const setIc = actionFactory(GARAGE_SETUP_SET_IC)
-export const setDic = actionFactory(GARAGE_SETUP_SET_DIC)
 export const setLine1 = actionFactory(GARAGE_SETUP_SET_LINE_1)
 export const setLine2 = actionFactory(GARAGE_SETUP_SET_LINE_2)
 export const setCity = actionFactory(GARAGE_SETUP_SET_CITY)
@@ -84,7 +78,7 @@ export const setGates = actionFactory(GARAGE_SETUP_SET_GATES)
 export const setRegisteredNumbers = actionFactory(GARAGE_SETUP_SET_REGISTERED_NUMBERS)
 export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
-export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
+export const clearGarageSetupForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
 
 
 export function toggleHighlight() { return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
@@ -135,6 +129,13 @@ function changeGates(index, key, value) {
   }
 }
 
+export function clearForm() {
+  return dispatch => {
+    dispatch(clearGarageSetupForm())
+    dispatch(clearLegalDocumentsForm())
+  }
+}
+
 export function changeFloorLabel(value, index) { return dispatch => { dispatch(setFloors(dispatch(changeFloors(index, 'label', value)))) } }
 export function changeFloorPlaces(value, index) { return dispatch => { dispatch(setFloors(dispatch(changeFloors(index, 'places', value)))) } }
 export function changeFloorFrom(value, index) {
@@ -167,7 +168,15 @@ export function addGate() {
 }
 export function addTemplate(file, label) {
   return (dispatch, getState) => {
-    dispatch(addFloor())
+    const floors = getState().garageSetup.floors
+    if (!( // If no othe places, make template first floor
+      floors.length === 1 &&
+      floors[0].from === '' &&
+      floors[0].label === '' &&
+      floors[0].places.length === 0 &&
+      floors[0].scheme === '' &&
+      floors[0].to === ''
+    )) dispatch(addFloor())
     get(file).then(data => {
       const index = getState().garageSetup.floors.length - 1
       dispatch(scanSVG(data, index))
@@ -195,36 +204,6 @@ export function changeGateAddressLat(value, index) {
 export function changeGateAddressLng(value, index) {
   return (dispatch, getState) => {
     dispatch(setGates(dispatch(changeGates(index, 'address', updateKey(getState().garageSetup.gates[index].address, 'lng', value)))))
-  }
-}
-
-
-export function loadAddressFromIc() {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
-      try {
-        const res = JSON.parse(response.data.ares).Ares_odpovedi.Odpoved.VBAS
-
-        dispatch(setCompanyName(res.OF))
-        dispatch(setLine1([ res.AD.UC, res.AA.CO ].filter(o => o).join('/')))
-        dispatch(setLine2(''))
-        dispatch(setCity(res.AA.N))
-        dispatch(setPostalCode(res.AA.PSC))
-        dispatch(setState(''))
-        dispatch(setCountry(res.AA.NS))
-        dispatch(setDic(res.DIC))
-
-        const onCoordinatesFound = (lat, lng) => {
-          dispatch(setLat(lat))
-          dispatch(setLng(lng))
-        }
-        geocode(onCoordinatesFound, res.AD.UC, res.AA.N, res.AA.PSC, res.AA.NS)
-      } catch (e) {
-        console.log('not able to parse info from ICO', e)
-      }
-    }
-
-    request(onSuccess, LOAD_INFO_FROM_IC, { ic: getState().garageSetup.ic })
   }
 }
 
@@ -331,9 +310,6 @@ export function intiEditGarageGeneral(id) {
       response.data.garage.img && dispatch(setImage(response.data.garage.img))
 
       dispatch(setName(response.data.garage.name))
-      dispatch(setCompanyName(response.data.garage.company))
-      dispatch(setIc(response.data.garage.ic))
-      dispatch(setDic(response.data.garage.dic))
       dispatch(setLPG(response.data.garage.lpg))
       dispatch(setLine1(response.data.garage.address.line_1))
       dispatch(setLine2(response.data.garage.address.line_2))
@@ -411,7 +387,7 @@ export function intiEditGarageOrder(id) {
         response.data.garage.floors
         .reduce((arr, floor) => [ ...arr, ...floor.places ], [])
         .filter(place => place.priority !== 0)
-        .sort((a, b) => { return b.priority - a.priority })
+        .sort((a, b) => b.priority - a.priority)
         .map(place => place.label)
       ))
 
@@ -428,20 +404,14 @@ export function updateGarageGeneral(id, backUrl) {
     const state = getState().garageSetup
 
     const onSuccess = response => {
-      if (response.data.update_garage.payment_url) {
-        window.location.replace(response.data.update_garage.payment_url)
-      } else {
-        dispatch(setFetching(false))
-        dispatch(fetchGarages())
-        nav.to(`/${id}/admin/garageSetup/floors`)
-      }
+      dispatch(setFetching(false))
+      dispatch(fetchGarages())
+      nav.to(`/${id}/admin/garageSetup/floors`)
     }
 
     const garage = { id:     +id,
-      garage: { name:         state.name,
-        company:      state.company,
-        ic:           state.ic,
-        dic:          state.dic,
+      garage: {
+        name:         state.name,
         lpg:          state.lpg,
         img:          state.img === defaultImage ? null : state.img,
         pid_tarif_id: state.tarif_id,
@@ -539,59 +509,57 @@ export function submitGarage() {
 
     dispatch(setFetching(true))
     if (state.id === undefined) { // new garage
-      request(onSuccess
-             , CREATE_NEW_GARAGE
-             , { garage: { name:         state.name,
-               company:      state.company,
-               ic:           state.ic,
-               dic:          state.dic,
-               lpg:          state.lpg,
-               img:          state.img === defaultImage ? null : state.img,
-               floors:       newFloors,
-               gates:        newGates,
-               pid_tarif_id: state.tarif_id,
-               url:          window.location.href.split('?')[0],
-               marketing:    state.bookingPage,
-               address:      { line_1:      state.line_1,
-                 line_2:      state.line_2,
-                 city:        state.city,
-                 postal_code: state.postal_code,
-                 state:       state.state,
-                 country:     state.country,
-                 lat:         parseFloat(state.lat),
-                 lng:         parseFloat(state.lng)
-               }
-             }
-             }
-             , 'garageMutations'
-             )
+      request(onSuccess,
+        CREATE_NEW_GARAGE,
+        { garage: {
+          name:         state.name,
+          lpg:          state.lpg,
+          img:          state.img === defaultImage ? null : state.img,
+          floors:       newFloors,
+          gates:        newGates,
+          pid_tarif_id: state.tarif_id,
+          url:          window.location.href.split('?')[0],
+          marketing:    state.bookingPage,
+          address:      { line_1:      state.line_1,
+            line_2:      state.line_2,
+            city:        state.city,
+            postal_code: state.postal_code,
+            state:       state.state,
+            country:     state.country,
+            lat:         parseFloat(state.lat),
+            lng:         parseFloat(state.lng)
+          },
+          new_documents: newDocuments(getState)
+        }
+        },
+        'garageMutations'
+      )
     } else { // garage edit
-      request(onSuccess
-             , UPDATE_GARAGE
-             , { id:     state.id,
-               garage: { name:         state.name,
-                 company:      state.company,
-                 ic:           state.ic,
-                 dic:          state.dic,
-                 lpg:          state.lpg,
-                 img:          state.img === defaultImage ? null : state.img,
-                 floors:       newFloors,
-                 gates:        newGates,
-                 pid_tarif_id: state.tarif_id,
-                        //  , url:          window.location.href.split('?')[0]
-                 address:      { line_1:      state.line_1,
-                   line_2:      state.line_2,
-                   city:        state.city,
-                   postal_code: state.postal_code,
-                   state:       state.state,
-                   country:     state.country,
-                   lat:         parseFloat(state.lat),
-                   lng:         parseFloat(state.lng)
-                 }
-               }
-             }
-             , 'garageMutations'
-             )
+      request(onSuccess,
+        UPDATE_GARAGE,
+        { id:     state.id,
+          garage: {
+            name:         state.name,
+            lpg:          state.lpg,
+            img:          state.img === defaultImage ? null : state.img,
+            floors:       newFloors,
+            gates:        newGates,
+            pid_tarif_id: state.tarif_id,
+            address:      { line_1:      state.line_1,
+              line_2:      state.line_2,
+              city:        state.city,
+              postal_code: state.postal_code,
+              state:       state.state,
+              country:     state.country,
+              lat:         parseFloat(state.lat),
+              lng:         parseFloat(state.lng)
+            },
+            new_documents:     newDocuments(getState),
+            removed_documents: removedDocuments(getState)
+          }
+        },
+        'garageMutations'
+      )
     }
 
     // check if all places have gates
@@ -633,16 +601,16 @@ function prepareLayoutOrder() {
 }
 
 function floorsForRequest(state) {
+  const reverseOrder = [ ...state.order ].reverse()
   return state.floors.map(floor => {
-    floor.places = floor.places.map(place => {
-      return {
-        ...place,
-        length: +state.length || null,
-        height: +state.height || null,
-        width:  +state.width || null,
-        weight: +state.weight || null
-      }
-    })
+    floor.places = floor.places.map(place => ({
+      ...place,
+      length:   +state.length || null,
+      height:   +state.height || null,
+      width:    +state.width || null,
+      weight:   +state.weight || null,
+      priority: reverseOrder.findIndex(p => p === place.label) + 1
+    }))
     return removeKeys(floor, [ 'from', 'to' ])
   })
 }
@@ -676,7 +644,7 @@ function gatesForRequest(state) {
 
     return { ...gateWithoutPlaces,
       address: {
-        line_1:      state.line_1,
+        line_1:      gate.address.line_1,
         city:        state.city,
         postal_code: state.postal_code,
         state:       state.state || undefined,

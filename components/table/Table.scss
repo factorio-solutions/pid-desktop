@@ -66,8 +66,9 @@ $font-size: 16px;
 }
 
 .rtTable {
-  width:          100%;
-  border-spacing: 0;
+  width:            100%;
+  border-spacing:   0;
+  transform-origin: top left;
 
   > thead {
     > tr > td {
@@ -127,6 +128,7 @@ $font-size: 16px;
     bottom:     0;
     left:       0;
     background: rgba($white, .7);
+    z-index:    10;
 
     >span {
       display:   block;
@@ -136,4 +138,9 @@ $font-size: 16px;
       transform: translate(-50%, -50%);
     }
   }
+}
+
+.tableContainer {
+  transform-origin: top left;
+  width:            fit-content; 
 }

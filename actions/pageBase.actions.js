@@ -190,7 +190,10 @@ function contains(string, text) {
 export function fetchCurrentUser() {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(setCurrentUser(response.data.current_user))
+      const user = response.data.current_user
+      dispatch(setCurrentUser({ ...user,
+        merchant_ids: user.csob_payment_templates.map(template => template.merchant_id)
+      }))
       if (response.data.current_user.language !== translate.getLocale()) nav.changeLanguage(response.data.current_user.language)
     }
     request(onSuccess, GET_CURRENT_USER)
@@ -205,7 +208,10 @@ export function fetchGarages(goToDashboard = true) {
         .filter(userGarage => !userGarage.pending) // find only garages that are not pending
 
       dispatch(setGarages(userGarages))
-      dispatch(setGarage(parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined)) // parse current garage from  URL
+      const garageIdFromUrl = parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined
+      if (!getState().pageBase.garage || (garageIdFromUrl && getState().pageBase.garage !== garageIdFromUrl)) {
+        dispatch(setGarage(garageIdFromUrl)) // parse current garage from  URL
+      }
 
       if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
         // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
@@ -491,6 +497,15 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+      case (contains(hash, 'garageSetup') && contains(hash, 'legalDocuments')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'garageSetup'
+          hint = t([ 'pageBase', 'newGarageLegalDocumentsHint' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
       case (contains(hash, 'garageSetup') && contains(hash, 'users')):
         if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
@@ -577,6 +592,7 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+
     }
 
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo))

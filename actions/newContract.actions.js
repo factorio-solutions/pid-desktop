@@ -38,6 +38,9 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES = 'ADMIN_CLIENTS_NEW_CONTRACT
 export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT = 'ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
 
 
@@ -56,6 +59,9 @@ export const setGarage = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_GARAGE)
 export const setPlaces = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES)
 export const toggleHighlight = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT)
 export const setIndefinitly = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY)
+export const setOriginalPlaces = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES)
+export const setRemoveReservationsModal = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL)
+export const setRemoveReservations = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS)
 export const eraseForm = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM)
 
 export function setSecurityInterval(value) {
@@ -68,7 +74,7 @@ export function setSecurityInterval(value) {
 export function setFrom(value) {
   return (dispatch, getState) => {
     let fromValue = moment(value, MOMENT_DATETIME_FORMAT).startOf('day')
-    const now = moment(moment()).startOf('day')
+    const now = moment().startOf('day')
 
     if (getState().newContract.contract_id === undefined && fromValue.diff(now, 'minutes') < 0) { // cannot create reservations in the past
       fromValue = now
@@ -153,37 +159,68 @@ export function initContract(id) {
         dispatch(setIndefinitly(false))
         dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
       }
+      dispatch(setClient(response.data.contract.client.id))
+      dispatch(setPlaces(response.data.contract.places))
       dispatch(getGarage(response.data.contract.garage.id))
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setRent(response.data.contract.rent))
       dispatch(setPlaces(response.data.contract.places))
+      dispatch(setOriginalPlaces(response.data.contract.places))
       dispatch(setSecurityInterval(response.data.contract.security_interval))
     }
 
     const garageId = getState().pageBase.garage
-    if (!id) dispatch(getGarage(garageId)) // if id, then i have to download garage from contract, not this one
+    if (!id) {
+      dispatch(setFrom(moment().startOf('day')))
+      dispatch(setTo(moment().endOf('day')))
+      dispatch(getGarage(garageId)) // if id, then i have to download garage from contract, not this one
+    }
     request(onRentsSuccess, GET_RENTS)
-    garageId && request(onClientsSuccess, GARAGE_CONTRACTS, { id: garageId })
+    if (garageId) request(onClientsSuccess, GARAGE_CONTRACTS, { id: garageId })
     if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, { id: +id })
   }
 }
 
 export function getGarage(garageId) {
-  return dispatch => {
+  const removeFromArray = (array, index) => {
+    return array.slice(0, index).concat(array.slice(index + 1))
+  }
+
+  return (dispatch, getState) => {
+    const state = getState().newContract
     const onSuccess = response => {
+      // It is like that because removePlace() work weird in map callback bellow
+      let places = state.places
       dispatch(setGarage({
         ...response.data.garage,
         floors: response.data.garage.floors.map(floor => ({
           ...floor,
-          places: floor.places.map(place => ({ ...place, available: true }))
+          places: floor.places.map(place => {
+            const available = floor.contractable_places.find(p => p.id === place.id) !== undefined
+            // !state.contract_id is here for legacy reasons
+            // when a client has more then one contract at the same time.
+            if (!available && !state.contract_id) {
+              const index = places.findIndex(p => p.id === place.id)
+              if (index > -1) {
+                places = removeFromArray(places, index)
+              }
+            }
+            return { ...place, available }
+          })
         }))
       }))
+      dispatch(setPlaces(places))
     }
 
     request(
       onSuccess,
       GET_GARAGE_CLIENT,
-      { garage_id: garageId }
+      { garage_id:   +garageId,
+        begins_at:   state.from,
+        ends_at:     state.to,
+        client_id:   +state.client_id,
+        contract_id: +state.contract_id
+      }
     )
   }
 }
@@ -261,14 +298,23 @@ export function submitNewContract(id) {
     }
 
     if (state.newRent) {
-      variables.contract = { ...variables.contract,
+      variables.contract = {
+        ...variables.contract,
         rent: { currency_id: state.currency_id,
           price:       state.price / state.places.length
         }
       }
     } else {
-      variables.contract = { ...variables.contract,
+      variables.contract = {
+        ...variables.contract,
         rent_id: state.rent.id
+      }
+    }
+
+    if (id) { // edit contract
+      variables.contract = {
+        ...variables.contract,
+        remove_reservations: state.removeReservations
       }
     }
 

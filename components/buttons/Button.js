@@ -25,7 +25,14 @@ function Button({ content, onClick, onDisabledClick, type, state, style, questio
   }
 
   return (
-    <button className={style} type="button" onClick={state === 'disabled' ? onDisabledClick : handleClick} onMouseDown={state === 'disabled' ? onDisabledClick : onMouseDown}>{content}</button>
+    <button
+      className={style}
+      type="button"
+      onClick={state === 'disabled' ? onDisabledClick : handleClick}
+      onMouseDown={state !== 'disabled' && onMouseDown}
+    >
+      {content}
+    </button>
   )
 }
 
