@@ -7,23 +7,32 @@ import actionFactory  from '../helpers/actionFactory'
 import { t }          from '../modules/localization/localization'
 import * as pageBase  from './pageBase.actions'
 
-import { OCCUPANCY_GARAGES_QUERY, GARAGE_DETAILS_QUERY, GARAGE_CLIENTS_QUERY } from '../queries/occupancy.queries'
+import {
+  OCCUPANCY_GARAGES_QUERY,
+  GARAGE_DETAILS_QUERY,
+  GARAGE_CLIENTS_QUERY,
+  UPDATE_USERS_SETTINGS
+} from '../queries/occupancy.queries'
 
 export const OCCUPANCY_SET_GARAGES = 'OCCUPANCY_SET_GARAGES'
 export const OCCUPANCY_SET_GARAGE = 'OCCUPANCY_SET_GARAGE'
 export const OCCUPANCY_SET_CLIENTS = 'OCCUPANCY_SET_CLIENTS'
 export const OCCUPANCY_RESET_CLIENTS = 'OCCUPANCY_RESET_CLIENTS'
+export const OCCUPANCY_SET_ALL_CLIENT_IDS = 'OCCUPANCY_SET_ALL_CLIENT_IDS'
 export const OCCUPANCY_SET_CLIENT_ID = 'OCCUPANCY_SET_CLIENT_ID'
 export const OCCUPANCY_SET_DURATION = 'OCCUPANCY_SET_DURATION'
 export const OCCUPANCY_SET_FROM = 'OCCUPANCY_SET_FROM'
 export const OCCUPANCY_SET_LOADING = 'OCCUPANCY_SET_LOADING'
+export const OCCUPANCY_SET_USER = 'OCCUPANCY_SET_USER'
 
 
 export const setGarages = actionFactory(OCCUPANCY_SET_GARAGES)
 export const setGarage = actionFactory(OCCUPANCY_SET_GARAGE)
 export const setClients = actionFactory(OCCUPANCY_SET_CLIENTS)
+export const setAllClientIds = actionFactory(OCCUPANCY_SET_ALL_CLIENT_IDS)
 export const resetClients = actionFactory(OCCUPANCY_RESET_CLIENTS)
 export const setLoading = actionFactory(OCCUPANCY_SET_LOADING)
+export const setUser = actionFactory(OCCUPANCY_SET_USER)
 
 
 export function setClientId(id) {
@@ -33,6 +42,7 @@ export function setClientId(id) {
       value: id
     })
     dispatch(loadGarage())
+    dispatch(updateUsersSettings())
   }
 }
 
@@ -43,6 +53,7 @@ export function setDuration(duration) {
       value: duration
     })
     dispatch(loadGarage())
+    dispatch(updateUsersSettings())
   }
 }
 
@@ -61,6 +72,27 @@ export function loadGarages() {
     requestPromise(OCCUPANCY_GARAGES_QUERY)
     .then(data => {
       dispatch(setGarages(data.occupancy_garages))
+
+      try {
+        dispatch(setUser({
+          ...data.current_user,
+          occupancy_client_filter: JSON.parse(data.current_user.occupancy_client_filter)
+        }))
+      } catch (error) {
+        dispatch(setUser({
+          ...data.current_user,
+          occupancy_client_filter: {}
+        }))
+      }
+      dispatch({
+        type:  OCCUPANCY_SET_DURATION,
+        value: data.current_user.occupancy_duration
+      })
+      dispatch(setAllClientIds(
+        JSON.parse(data.current_user.occupancy_client_filter)[getState().pageBase.garage]
+        || []
+      ))
+
       dispatch(loadGarage(getState().pageBase.garage))
     })
   }
@@ -68,8 +100,10 @@ export function loadGarages() {
 
 export function resetClientsLoadGarage(id) {
   return (dispatch, getState) => {
+    const state = getState().occupancy
     if (getState().pageBase.garages.find(garage => garage.garage.id === id)) dispatch(pageBase.setGarage(id))
-    dispatch(resetClients())
+    // dispatch(resetClients())
+    dispatch(setAllClientIds(state.user.occupancy_client_filter[id] || []))
     dispatch(loadGarage(id))
   }
 }
@@ -108,7 +142,21 @@ export function loadClients(id) {
 export function initOccupancy() {
   return dispatch => {
     dispatch(loadGarages())
-    dispatch(resetClientClick())
+  }
+}
+
+function updateUsersSettings() {
+  return (dispatch, getState) => {
+    const state = getState().occupancy
+    requestPromise(
+      UPDATE_USERS_SETTINGS,
+      { id:   state.user.id,
+        user: {
+          occupancy_client_filter: JSON.stringify(state.user.occupancy_client_filter),
+          occupancy_duration:      state.user.occupancy_duration
+        }
+      }
+    )
   }
 }
 

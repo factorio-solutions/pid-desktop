@@ -9,6 +9,7 @@ import OccupancyOverview from '../_shared/components/occupancyOverview/Occupancy
 import TabMenu           from '../_shared/components/tabMenu/TabMenu'
 import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
+import IconWithCount     from '../_shared/components/iconWithCount/IconWithCount'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
 import { setPast }        from '../_shared/actions/reservations.actions'
@@ -77,6 +78,14 @@ class OccupancyPage extends Component {
       style="tabDropdown"
       selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
       filter
+      icon={ state.client_ids.length
+        ? <IconWithCount
+          icon="fa fa-filter"
+          count={state.client_ids.length}
+          type="light"
+        />
+        : undefined
+      }
     />)
 
     return (
