@@ -62,7 +62,8 @@
 
     >tr, td {
       &.weekend {
-        background: $tableSpoilerBackground;
+        background:      $tableSpoilerBackground;
+        background-clip: padding-box;
       }
 
       &.rightBorderDotted {

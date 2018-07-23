@@ -12,6 +12,7 @@ import Localization from '../_shared/components/localization/Localization'
 import Checkbox     from '../_shared/components/checkbox/Checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
+import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t, getLanguage } from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
@@ -22,7 +23,7 @@ const MINIMUM_PASSWORD_LENGTH = 4
 
 const NAME_REGEX = '^(?!\\s*$).+'
 const PHONE_REGEX = '\\+[\\d]{2,4}[\\d\\s]{3,}'
-const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$'
+const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$'
 
 
 class SignUpPage extends Component {
@@ -51,6 +52,18 @@ class SignUpPage extends Component {
 
   goBack = () => nav.to('/')
 
+  successConfirm = () => {
+    this.props.actions.clearForm()
+    this.goBack()
+  }
+
+  successContent = (
+    <div>
+      { t([ 'signup_page', 'success' ]) } <br />
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.successConfirm} type="confirm" />
+    </div>
+  )
+
   render() {
     const { actions, state } = this.props
 
@@ -72,6 +85,7 @@ class SignUpPage extends Component {
           <Localization />
 
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error !== undefined} />
+          <Modal show={state.success}>{this.successContent}</Modal>
           <div className={styles.signUpPage}>
             <Form onSubmit={this.onSubmit} onBack={this.goBack} submitable={this.isSubmitable()} center>
               <PatternInput
@@ -97,6 +111,7 @@ class SignUpPage extends Component {
                 error={t([ 'signup_page', 'emailInvalid' ])}
                 pattern={EMAIL_REGEX}
                 value={state.email.value}
+                normalizeInput={normalizeEmail}
               />
               <PatternInput
                 onEnter={this.onSubmit}

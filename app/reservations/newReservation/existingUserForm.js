@@ -29,15 +29,6 @@ class ExistingUserForm extends Component {
     const { state, actions, editable } = this.props
     return (
       <div>
-        { /* state.reservation && !editable &&
-          <Input
-            readOnly
-            value={state.user.full_name}
-            type="text"
-            align="left"
-            label={t([ 'newReservation', 'userName' ])}
-          /> */
-        }
         { state.user.reservable_cars && state.user.reservable_cars.length === 0 ?
           <Input
             readOnly={!editable}
@@ -48,11 +39,11 @@ class ExistingUserForm extends Component {
             placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
             type="text"
             align="left"
-            highlight={state.highlight && state.user.id !== -2}
+            // highlight={state.highlight && state.user.id !== -2}
           /> :
           <Dropdown
             editable={editable}
-            label={t([ 'newReservation', 'selectCar' ])}
+            label={`${t([ 'newReservation', 'selectCar' ])} *`}
             content={this.carDropdown()}
             selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
             style="reservation"

@@ -51,13 +51,13 @@ class CsobPage extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setCsobMerchantId}
-            label={t([ 'newAccount', 'csobMerchantID' ])}
+            label={t([ 'newAccount', 'csobMerchantID' ]) + ' *'}
             error={t([ 'newAccount', 'invalidMerchantId' ])}
             value={state.csob_merchant_id}
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
             highlight={state.highlight}
           />
-          <label className={state.highlight && styles.red}>{t([ 'finance', 'SelectPrivateKey' ])}: </label>
+          <label className={state.highlight && styles.red}>{t([ 'finance', 'SelectPrivateKey' ]) + ' *'}: </label>
           <Input
             style={styles.hidden}
             onChange={actions.setCsobPrivateKey}

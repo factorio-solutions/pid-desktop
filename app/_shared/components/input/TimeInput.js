@@ -51,8 +51,8 @@ export default class TimeInput extends Component {
 
     const handlePick = time => {
       const date = this.timeToDate(time)
-      this.setState({ ...this.state, message: moment(date).format(MOMENT_TIME_FORMAT) })
-      onChange && onChange(moment(date).format(MOMENT_TIME_FORMAT), moment(date).isValid())
+      this.setState({ ...this.state, message: moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT) })
+      onChange && onChange(moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT), moment(date).isValid())
       onBlur && onBlur()
     }
 

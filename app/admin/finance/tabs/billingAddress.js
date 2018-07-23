@@ -63,7 +63,7 @@ class BillingAddressTab extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setLine1}
-            label={t([ 'addresses', 'line1' ])}
+            label={t([ 'addresses', 'line1' ]) + ' *'}
             error={t([ 'addresses', 'line1Invalid' ])}
             value={state.line_1}
             placeholder={t([ 'addresses', 'line1Placeholder' ])}
@@ -80,7 +80,7 @@ class BillingAddressTab extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setCity}
-            label={t([ 'addresses', 'city' ])}
+            label={t([ 'addresses', 'city' ]) + ' *'}
             error={t([ 'addresses', 'cityInvalid' ])}
             value={state.city}
             placeholder={t([ 'addresses', 'cityPlaceholder' ])}
@@ -89,7 +89,7 @@ class BillingAddressTab extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setPostalCode}
-            label={t([ 'addresses', 'postalCode' ])}
+            label={t([ 'addresses', 'postalCode' ]) + ' *'}
             error={t([ 'addresses', 'postalCodeInvalid' ])}
             value={state.postal_code}
             placeholder={t([ 'addresses', 'postalCodePlaceholder' ])}
@@ -106,7 +106,7 @@ class BillingAddressTab extends Component {
           <Input
             onEnter={this.submitForm}
             onChange={actions.setCountry}
-            label={t([ 'addresses', 'country' ])}
+            label={t([ 'addresses', 'country' ]) + ' *'}
             error={t([ 'addresses', 'countryInvalid' ])}
             value={state.country}
             placeholder={t([ 'addresses', 'countryPlaceholder' ])}

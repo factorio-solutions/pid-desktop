@@ -6,6 +6,7 @@ import Input        from '../../_shared/components/input/Input'
 import PatternInput from '../../_shared/components/input/PatternInput'
 import RoundButton  from '../../_shared/components/buttons/RoundButton'
 
+
 import {
   setHostName,
   setHostPhone,
@@ -16,15 +17,32 @@ import {
 
 import { AVAILABLE_LANGUAGES } from '../../routes'
 import { t }                   from '../../_shared/modules/localization/localization'
-import { languagesSelector }   from '../newReservation.page.scss'
+import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
+
+import {
+  languagesSelector,
+  searchField,
+  resetButton
+} from '../newReservation.page.scss'
 
 
 class NewUserForm extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object,
-    editable: PropTypes.bool,
-    onetime:  PropTypes.bool
+    state:     PropTypes.object,
+    actions:   PropTypes.object,
+    editable:  PropTypes.bool,
+    onetime:   PropTypes.bool,
+    clearForm: PropTypes.func
+  }
+
+  hostEmailMandatoryCondition = () => {
+    const { state } = this.props
+    return state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid))
+  }
+
+  hostPhoneMandatoryCondition = () => {
+    const { state } = this.props
+    return state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid))
   }
 
   renderLanguageButton = lang => {
@@ -39,37 +57,52 @@ class NewUserForm extends Component {
   }
 
   render() {
-    const { state, actions, editable, onetime } = this.props
+    const { state, actions, editable, onetime, clearForm } = this.props
     return (
       <div>
-        <PatternInput
-          readOnly={onetime || (state.user && state.user.id > -1)}
-          onChange={actions.setHostName}
-          label={t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])}
-          error={t([ 'signup_page', 'nameInvalid' ])}
-          pattern="^(?!\s*$).+"
-          value={state.name.value}
-          highlight={state.highlight}
-          align="left"
-        />
+        <div className={searchField}>
+          <span
+            className={resetButton}
+            onClick={clearForm}
+          >
+            <i className="fa fa-times-circle" aria-hidden="true" />
+          </span>
+          <PatternInput
+            readOnly={onetime || (state.user && state.user.id > -1)}
+            onChange={actions.setHostName}
+            label={`${t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])} *`}
+            error={t([ 'signup_page', 'nameInvalid' ])}
+            pattern="^(?!\s*$).+"
+            value={state.name.value}
+            highlight={state.highlight}
+            align="left"
+          />
+        </div>
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
-          label={t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
+          label={`
+            ${t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
+            ${this.hostEmailMandatoryCondition() ? ' *' : ''}
+          `}
           error={t([ 'signup_page', 'emailInvalid' ])}
-          pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
           value={(state.email.value)}
-          highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)))}
+          highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
+          normalizeInput={normalizeEmail}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostPhone}
-          label={t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
+          label={`
+            ${t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
+            ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
+          `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
           pattern="\+[\d]{2,4}[\d\s]{3,}"
           value={state.phone.value}
-          highlight={state.highlight && (state.user.id === -1 || (state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)))}
+          highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
         />
         <Input
@@ -81,7 +114,6 @@ class NewUserForm extends Component {
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
-          highlight={state.highlight && state.user.id !== -2}
         />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>

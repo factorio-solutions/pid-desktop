@@ -2,7 +2,9 @@ import {
   MOBILE_RESERVATIONS_SET_RESERVATIONS,
   MOBILE_RESERVATIONS_SET_BLE_DEVICES,
   MOBILE_RESERVATIONS_SET_OPENED,
-  MOBILE_RESERVATIONS_SET_FIND
+  MOBILE_RESERVATIONS_SET_FIND,
+  MOBILE_RESERVATIONS_RESET_PAGINATION,
+  MOBILE_RESERVATIONS_SET_PAGINATION
 } from '../actions/mobile.reservations.actions'
 
 
@@ -35,7 +37,9 @@ function updateReservations(reservations, action) {
 const defaultState = {
   reservations: [],
   bleDevices:   {}, // {name: { address, name, rssi, advertisement }, ... }
-  find:         '' // by text
+  find:         '', // by text
+  currentPage:  1,
+  canLoadMore:  true
 }
 
 export default function mobileReservations(state = defaultState, action) {
@@ -63,6 +67,20 @@ export default function mobileReservations(state = defaultState, action) {
       return {
         ...state,
         find: action.value
+      }
+
+    case MOBILE_RESERVATIONS_SET_PAGINATION:
+      return {
+        ...state,
+        currentPage: action.page,
+        canLoadMore: action.canLoadMore
+      }
+
+    case MOBILE_RESERVATIONS_RESET_PAGINATION:
+      return {
+        ...state,
+        currentPage: 1,
+        canLoadMore: true
       }
 
     default:

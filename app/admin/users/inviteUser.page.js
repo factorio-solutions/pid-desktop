@@ -6,14 +6,15 @@ import * as nav                        from '../../_shared/helpers/navigation'
 import { t }                           from '../../_shared/modules/localization/localization'
 import { AVAILABLE_LANGUAGES }         from '../../routes'
 
-import PageBase      from '../../_shared/containers/pageBase/PageBase'
-import Dropdown      from '../../_shared/components/dropdown/Dropdown'
-import Form          from '../../_shared/components/form/Form'
-import PatternInput  from '../../_shared/components/input/PatternInput'
-import Modal         from '../../_shared/components/modal/Modal'
-import RoundButton   from '../../_shared/components/buttons/RoundButton'
-import AttributeSpan from './components/AttributeSpan'
-import LanguageSpan  from './components/LanguageSpan'
+import PageBase       from '../../_shared/containers/pageBase/PageBase'
+import Dropdown       from '../../_shared/components/dropdown/Dropdown'
+import Form           from '../../_shared/components/form/Form'
+import PatternInput   from '../../_shared/components/input/PatternInput'
+import Modal          from '../../_shared/components/modal/Modal'
+import RoundButton    from '../../_shared/components/buttons/RoundButton'
+import normalizeEmail from '../../_shared/helpers/normalizeEmail'
+import AttributeSpan  from './components/AttributeSpan'
+import LanguageSpan   from './components/LanguageSpan'
 
 import * as inviteUserActions from '../../_shared/actions/inviteUser.actions'
 
@@ -130,11 +131,12 @@ class inviteUserPage extends Component {
               <PatternInput
                 onEnter={this.submitForm}
                 onChange={this.emailChanged}
-                label={t([ 'inviteUser', 'selectUser' ])}
+                label={t([ 'inviteUser', 'selectUser' ]) + ' *'}
                 error={t([ 'signup_page', 'emailInvalid' ])}
                 pattern="^([a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3},*[\W]*)+$"
                 value={state.email.value}
                 highlight={state.highlight}
+                normalizeInput={normalizeEmail}
               />
               {clientDropdown.length > 1 && <Dropdown
                 label={t([ 'inviteUser', 'selectClient' ])}
@@ -188,7 +190,7 @@ class inviteUserPage extends Component {
                 {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
               </div>
               {state.client_id && <div>
-                <h3>{t([ 'inviteUser', 'clientRights' ])}</h3>
+                <h3>{t([ 'inviteUser', 'clientRights' ]) + ' *'}</h3>
                 <p>{t([ 'inviteUser', 'clientRightsDesc' ])}</p>
                 {currentClient && <p className={styles.rights}>
                   {currentClient.admin &&
@@ -218,7 +220,7 @@ class inviteUserPage extends Component {
               </div>}
 
               {state.garage_id && <div>
-                <h3>{t([ 'inviteUser', 'GarageRights' ])}</h3>
+                <h3>{t([ 'inviteUser', 'GarageRights' ]) + ' *'}</h3>
                 <p>{t([ 'inviteUser', 'GarageRightsDesc' ])}</p>
                 <p className={styles.rights}>
                   <AttributeSpan state={state} attribute="garage_admin" actions={actions} label="admin" highlight={highlightGarageRoles} />|
@@ -229,7 +231,7 @@ class inviteUserPage extends Component {
               </div>}
 
               {state.car_id && <div>
-                <h3>{t([ 'inviteUser', 'carRights' ])}</h3>
+                <h3>{t([ 'inviteUser', 'carRights' ]) + ' *'}</h3>
                 <p>{t([ 'inviteUser', 'carRightsDesc' ])}</p>
                 <p className={styles.rights}>
                   <AttributeSpan state={state} attribute="car_admin" actions={actions} label="admin" highlight={highlightCarRoles} />|

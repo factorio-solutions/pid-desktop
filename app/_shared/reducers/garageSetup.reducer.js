@@ -8,9 +8,6 @@ import {
   GARAGE_SETUP_SET_TARIF_ID,
   GARAGE_SETUP_SET_IMG,
   GARAGE_SETUP_SET_NAME,
-  GARAGE_SETUP_SET_COMPANY_NAME,
-  GARAGE_SETUP_SET_IC,
-  GARAGE_SETUP_SET_DIC,
   GARAGE_SETUP_SET_LINE_1,
   GARAGE_SETUP_SET_LINE_2,
   GARAGE_SETUP_SET_CITY,
@@ -70,9 +67,6 @@ const defaultState = {
   tarif_id:        undefined,
   img:             defaultImage,
   name:            '',
-  company:         '',
-  ic:              '',
-  dic:             '',
   line_1:          '',
   line_2:          '',
   city:            '',
@@ -153,24 +147,6 @@ export default function garageSetup(reducerState = defaultState, action) {
       return {
         ...reducerState,
         name: action.value
-      }
-
-    case GARAGE_SETUP_SET_COMPANY_NAME:
-      return {
-        ...reducerState,
-        company: action.value
-      }
-
-    case GARAGE_SETUP_SET_IC:
-      return {
-        ...reducerState,
-        ic: action.value
-      }
-
-    case GARAGE_SETUP_SET_DIC:
-      return {
-        ...reducerState,
-        dic: action.value
       }
 
     case GARAGE_SETUP_SET_LINE_1:

@@ -13,6 +13,7 @@ import RoundButton  from '../_shared/components/buttons/RoundButton'
 import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav           from '../_shared/helpers/navigation'
+import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t }              from '../_shared/modules/localization/localization'
 import * as loginActions  from '../_shared/actions/login.actions'
 
@@ -63,14 +64,6 @@ class LoginPage extends Component {
         <div className={styles.loginPage}>
           <Logo style="round" />
 
-          <div className={styles.signUpPage}>
-            {t([ 'login_page', 'please' ])} <Link to={nav.path('/signUpPage')} >{t([ 'login_page', 'Sign-Up' ])}</Link>
-          </div>
-
-          <div className={styles.resetPasswordPage}>
-            {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
-          </div>
-
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
           <Form onSubmit={onSubmit} onBack={this.home} submitable={isSubmitable()} center home>
             <PatternInput
@@ -81,6 +74,7 @@ class LoginPage extends Component {
               placeholder={t([ 'login_page', 'emailPlaceholder' ])}
               value={state.email.value}
               onEnter={onSubmit}
+              normalizeInput={normalizeEmail}
             />
             <PatternInput
               onChange={actions.setPassword}
@@ -91,6 +85,10 @@ class LoginPage extends Component {
               onEnter={onSubmit}
             />
           </Form>
+          <div className={styles.resetPasswordPage}>
+            {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
+          </div>
+
         </div>
       </MasterPage>
     )

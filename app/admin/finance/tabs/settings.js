@@ -56,7 +56,6 @@ class SettingsTab extends Component {
 
     return (
       <div className={styles.finance}>
-        <h2>{t([ 'finance', 'financeSettings' ])}</h2>
         <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onHighlight={actions.toggleHighlight}>
           <Input
             onChange={actions.setVat}

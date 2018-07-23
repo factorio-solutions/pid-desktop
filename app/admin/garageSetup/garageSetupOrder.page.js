@@ -69,8 +69,9 @@ class GarageSetupOrderPage extends Component {
     const submitForm = () => {
       if (this.props.params.id) {
         actions.updateGarageOrder(this.props.params.id)
+        nav.to(`/${this.props.params.id}/admin/garageSetup/legalDocuments`)
       } else {
-        nav.to('/addFeatures/garageSetup/subscribtion')
+        nav.to('/addFeatures/garageSetup/legalDocuments')
       }
     }
 

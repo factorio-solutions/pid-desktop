@@ -4,32 +4,39 @@ import { bindActionCreators }          from 'redux'
 
 import PageBase from '../_shared/containers/pageBase/PageBase'
 import Form     from '../_shared/components/form/Form'
+import Checkbox from '../_shared/components/checkbox/Checkbox'
 
 import * as nav                   from '../_shared/helpers/navigation'
 import { t }                      from '../_shared/modules/localization/localization'
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
+import { setGarage }              from '../_shared/actions/pageBase.actions'
 
 import styles from './newReservationOverview.page.scss'
 
-const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'paypal', 'raiffeisenbank' ]
+const AVAILABLE_PAYMENT_METHOD = [ 'csob', 'raiffeisenbank', 'paypal' ]
 
 
 class NewReservationOverviewPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object,
-    location: PropTypes.object,
-    pageBase: PropTypes.object
+    state:           PropTypes.object,
+    pageBase:        PropTypes.object,
+    actions:         PropTypes.object,
+    location:        PropTypes.object,
+    pageBaseActions: PropTypes.object
   }
 
   componentDidMount() {
-    const { location, actions } = this.props
+    const { location, actions, pageBaseActions } = this.props
     if (location.query.hasOwnProperty('token')) {
       location.query.success !== 'true' && actions.paymentUnsucessfull()
     } else if (location.query.hasOwnProperty('csob') || location.query.hasOwnProperty('gp_webpay')) {
       location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
     } else {
       actions.overviewInit()
+    }
+
+    if (location.query.hasOwnProperty('garage_id')) {
+      pageBaseActions.setGarage(+location.query.garage_id)
     }
   }
 
@@ -66,7 +73,8 @@ class NewReservationOverviewPage extends Component {
   }
 
   renderPaymentRow = gate => {
-    const { state } = this.props
+    const { state, pageBase } = this.props
+    const userHasThisGate = pageBase.current_user && pageBase.current_user.merchant_ids.includes(state.garage.account.csob_merchant_id)
     const account = state.garage && state.garage.account
     if (!(account && account[`${gate}_is_active`])) return null
     if (!state.paymentMethod) this.selectPaymentMethod(gate)()
@@ -75,13 +83,32 @@ class NewReservationOverviewPage extends Component {
       <td>
         <input type="radio" name="payments" checked={this.props.state.paymentMethod === gate} />
       </td>
-      <td>{t([ 'newReservationOverview', gate ])}</td>
+      <td>
+        {t([ 'newReservationOverview', gate ])}
+        {state.paymentMethod === 'csob' && gate === 'csob' && [
+          <Checkbox
+            checked={state.paymentMethod === 'csob' && state.csobOneClick}
+            onChange={() => this.props.actions.selectCsobOneClick(!state.csobOneClick)}
+          >
+            {userHasThisGate ?
+              t([ 'newReservationOverview', 'csobOneTimePaymentUseCard' ]) :
+              t([ 'newReservationOverview', 'csobOneTimePayment' ])
+            }
+          </Checkbox>,
+          userHasThisGate && state.csobOneClick && state.paymentMethod === 'csob' && <Checkbox
+            checked={state.paymentMethod === 'csob' && state.csobOneClick && state.csobOneClickNewCard}
+            onChange={() => this.props.actions.selectCsobOneClickNewCard(!state.csobOneClickNewCard)}
+          >
+            {t([ 'newReservationOverview', 'csobOneTimePaymentNewCard' ])}
+          </Checkbox>
+      ]}
+      </td>
       <td><img src={`./public/logo/${gate}-logo.png`} alt={gate} /></td>
     </tr>)
   }
 
   render() {
-    const { state, pageBase, actions } = this.props
+    const { state, actions } = this.props
 
     return (
       <PageBase>
@@ -120,11 +147,11 @@ class NewReservationOverviewPage extends Component {
 
           <div>
             <h4>{t([ 'newReservationOverview', 'price' ])}</h4>
-            <div className={styles.label}>{`${state.price || ''} (${state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : t([ 'newReservation', 'onUsersExpenses' ])})`}</div>
+            <div className={styles.label}>
+              {`${state.price || ''} (${state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : t([ 'newReservation', 'onUsersExpenses' ])})`}
+            </div>
           </div>
 
-          {(!state.client_id ||
-          (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id))) &&
           <div>
             <h4>{t([ 'newReservationOverview', 'paymentMethod' ])}</h4>
             <table className={styles.paymentMethods}>
@@ -132,7 +159,7 @@ class NewReservationOverviewPage extends Component {
                 {AVAILABLE_PAYMENT_METHOD.map(this.renderPaymentRow)}
               </tbody>
             </table>
-          </div>}
+          </div>
         </Form>
       </PageBase>
     )
@@ -141,5 +168,8 @@ class NewReservationOverviewPage extends Component {
 
 export default connect(
   state => ({ state: state.newReservation, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
+  dispatch => ({
+    actions:         bindActionCreators(newReservationActions, dispatch),
+    pageBaseActions: bindActionCreators({ setGarage }, dispatch)
+  })
 )(NewReservationOverviewPage)

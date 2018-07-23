@@ -2,16 +2,16 @@ import React, { Component, PropTypes } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import Input             from '../../_shared/components/input/Input'
-import Form              from '../../_shared/components/form/Form'
-import NewClientPageBase from './components/newClientPageBase'
-import Dropdown          from '../../_shared/components/dropdown/Dropdown'
-import RoundButton       from '../../_shared/components/buttons/RoundButton'
-import Modal             from '../../_shared/components/modal/Modal'
+import Input         from '../../../_shared/components/input/Input'
+import Form          from '../../../_shared/components/form/Form'
+import ClientModules from './clientModules.page'
+import Dropdown      from '../../../_shared/components/dropdown/Dropdown'
+import RoundButton   from '../../../_shared/components/buttons/RoundButton'
+import Modal         from '../../../_shared/components/modal/Modal'
 
-import * as nav              from '../../_shared/helpers/navigation'
-import { t }                 from '../../_shared/modules/localization/localization'
-import * as newClientActions from '../../_shared/actions/newClient.actions'
+import * as nav              from '../../../_shared/helpers/navigation'
+import { t }                 from '../../../_shared/modules/localization/localization'
+import * as newClientActions from '../../../_shared/actions/newClient.actions'
 
 import styles from './smsSettings.page.scss'
 
@@ -22,6 +22,11 @@ class SmsSettingsPage extends Component {
     pageBase: PropTypes.object,
     actions:  PropTypes.object,
     params:   PropTypes.object
+  }
+
+  componentDidMount() {
+    this.props.actions.clearForm()
+    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
   }
 
   onTextAreaChange = event => this.props.actions.setNewTemplateText(event.target.value)
@@ -60,7 +65,7 @@ class SmsSettingsPage extends Component {
     </span>
 
     return (
-      <NewClientPageBase params={this.props.params}>
+      <ClientModules params={this.props.params}>
         <Modal show={state.showNewTemplateModal}>
           <Form onSubmit={this.submitNewTemplateForm} submitable={this.checkNewTemplateSubmitable()} onBack={actions.clearNewTemplateForm} onHighlight={actions.toggleHighlight}>
             <Input
@@ -98,7 +103,7 @@ class SmsSettingsPage extends Component {
           </div>
           <textarea className={styles.editTemplateTextArea} onChange={this.onUpdateTextAreaChange} value={selectedTemplate && selectedTemplate.template} />
         </Form>
-      </NewClientPageBase>
+      </ClientModules>
     )
   }
 }

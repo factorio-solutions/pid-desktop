@@ -5,6 +5,7 @@ export const MOMENT_TIME_FORMAT = 'HH:mm'
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm'
 export const MOMENT_DATETIME_FORMAT_MOBILE = 'YYYY-MM-DDTHH:mm'
 export const MOMENT_UTC_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm ZZ'
+export const MOMENT_UTC_DATETIME_FORMAT_DASH = 'YYYY-MM-DD HH:mm Z'
 
 
 export function timeToUTC(value) {

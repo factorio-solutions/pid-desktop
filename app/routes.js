@@ -54,12 +54,16 @@ import GateModuleOrderPage from './addFeatures/gateModuleOrder.page'
 import InvoicesPage    from './admin/invoices/invoices.page'
 import EditInvoicePage from './admin/invoices/editInvoice.page'
 
+// legal Documents
+import LegalDocuments  from './admin/garageSetup/legalDocuments/legalDocuments.page'
+
 // clients
-import ClientsPage     from './admin/clients/clients.page'
-import ClientUsersPage from './admin/clients/users.page'
-import NewClientPage   from './admin/clients/newClient.page'
-import SmsSettingsPage from './admin/clients/smsSettings.page'
-import NewContractPage from './admin/clients/newContract.page'
+import ClientsPage        from './admin/clients/clients.page'
+import ClientUsersPage    from './admin/clients/users.page'
+import NewClientPage      from './admin/clients/newClient.page'
+import SmsSettingsPage    from './admin/clients/modules/smsSettings.page'
+import MinMaxDurationPage from './admin/clients/modules/MinMaxDuration.page'
+import NewContractPage    from './admin/clients/newContract.page'
 
 // modules
 import MarketingSettingsPage     from './admin/modules/marketingSettings.page'
@@ -117,7 +121,7 @@ import PidAdminGeneratorOverviewPage     from './pidAdmin/generator/generatorOve
 import PidAdminNewsPage    from './pidAdmin/news/news.page'
 import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
 
-export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'pl', 'de' ]
+export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
 
 export default function createRoutes() {
@@ -186,6 +190,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/newClient" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
+      <Route path=":id/admin/clients/:client_id/minMaxReservationDuration" component={MinMaxDurationPage} />
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 
@@ -201,6 +206,7 @@ export default function createRoutes() {
       <Route path="addFeatures/garageSetup/floors" component={GarageSetupFloorsPage} />
       <Route path="addFeatures/garageSetup/gates" component={GarageSetupGatesPage} />
       <Route path="addFeatures/garageSetup/order" component={GarageSetupOrderPage} />
+      <Route path="addFeatures/garageSetup/legalDocuments" component={LegalDocuments} />
       <Route path="addFeatures/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/general" component={GarageSetupGeneralPage} />
       <Route path=":id/admin/garageSetup/floors" component={GarageSetupFloorsPage} />
@@ -208,6 +214,7 @@ export default function createRoutes() {
       <Route path=":id/admin/garageSetup/order" component={GarageSetupOrderPage} />
       <Route path=":id/admin/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/users" component={GarageUsersPage} />
+      <Route path=":id/admin/garageSetup/legalDocuments" component={LegalDocuments} />
 
       <Route path=":id/admin/users" component={UsersPage} />
       <Route path=":id/admin/users/invite" component={InviteUserPage} />

@@ -41,6 +41,7 @@ class ClientsPage extends Component {
     const { actions, pageBase } = this.props
     const toClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)
     const toEditClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/edit`)
+    const toClientModules = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/smsSettings`)
     const toInvoices = () => {
       nav.to(`/${pageBase.garage}/admin/invoices`)
       actions.setClientId(client.id)
@@ -79,6 +80,8 @@ class ClientsPage extends Component {
     const currentContracts = client.contracts ? client.contracts.filter(currentContractsFilter) : []
     const oldContracts = client.contracts ? client.contracts.filter(oldContractsFilter) : []
 
+    const currentUserIsAdmin = client.is_admin && !client.is_pending
+
     const spoiler = (<div className={styles.spoiler}>
       <div>
         {t([ 'clients', 'contactPerson' ])}: {client.contact_persons.reduce(prepareContactPersons, [])}
@@ -103,21 +106,29 @@ class ClientsPage extends Component {
           label={t([ 'clients', 'goToInvoices' ])}
           content={<span className="fa fa-files-o" aria-hidden="true" />}
           onClick={toInvoices}
-          type={'action'}
-          state={client.is_admin ? '' : 'disabled'}
+          type="action"
+          state={currentUserIsAdmin ? '' : 'disabled'}
         />
         <LabeledRoundButton
           label={t([ 'clients', 'editClient' ])}
           content={<span className="fa fa-pencil" aria-hidden="true" />}
           onClick={toEditClient}
           type="action"
-          state={client.is_admin ? '' : 'disabled'}
+          state={currentUserIsAdmin ? '' : 'disabled'}
+        />
+        <LabeledRoundButton
+          label={t([ 'clients', 'modules' ])}
+          content={<span className="icon-plugins" aria-hidden="true" />}
+          onClick={toClientModules}
+          type="action"
+          state={currentUserIsAdmin ? '' : 'disabled'}
         />
         <LabeledRoundButton
           label={t([ 'clients', 'goToUsers' ])}
           content={<span className="fa fa-child" aria-hidden="true" />}
           onClick={client.userOfClient && toClient}
-          type={client.userOfClient ? 'action' : 'disabled'}
+          type="action"
+          state={client.userOfClient ? '' : 'disabled'}
         />
       </div>
     </div>)
@@ -131,10 +142,13 @@ class ClientsPage extends Component {
 
   filterAttributes = client => {
     let newClient = { ...client }
-    if (!client.is_admin) newClient.monthly_total = null
-    if (!client.is_admin) newClient.all_invoices_paid = null
-    if (!client.is_admin) newClient.token = null
-    if (!client.is_admin) newClient.hasContract = null
+    if (!client.is_admin || client.is_pending) {
+      newClient.monthly_total = null
+      newClient.all_invoices_paid = null
+      newClient.token = null
+      newClient.hasContract = null
+    }
+
     return newClient
   }
 

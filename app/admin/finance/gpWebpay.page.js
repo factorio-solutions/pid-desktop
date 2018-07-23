@@ -61,7 +61,7 @@ class GpWebpayPage extends Component {
           <Input
             onEnter={submitForm}
             onChange={actions.setGpWebpayMerchantId}
-            label={t([ 'newAccount', 'gpWebpayMerchantID' ])}
+            label={t([ 'newAccount', 'gpWebpayMerchantID' ]) + ' *'}
             error={t([ 'newAccount', 'invalidMerchantId' ])}
             value={state.gp_webpay_merchant_id}
             placeholder={t([ 'newAccount', 'csobMerchantIdplaceholder' ])}
@@ -71,7 +71,7 @@ class GpWebpayPage extends Component {
           <Input
             onEnter={submitForm}
             onChange={actions.setGpWebpayPassword}
-            label={t([ 'newAccount', 'gpWebpayPassword' ])}
+            label={t([ 'newAccount', 'gpWebpayPassword' ]) + ' *'}
             error={t([ 'newAccount', 'invalidGpWebpayPassword' ])}
             value={state.gp_webpay_password}
             placeholder={t([ 'newAccount', 'gpWebpayPasswordPlaceholder' ])}
@@ -80,7 +80,7 @@ class GpWebpayPage extends Component {
           />
 
           <label className={state.highlight && styles.red}>
-            {t([ 'finance', 'SelectPrivateKey' ])}:
+            {t([ 'finance', 'SelectPrivateKey' ]) + ' *'}:
           </label>
           <Input
             style={styles.hidden}

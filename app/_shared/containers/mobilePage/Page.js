@@ -64,9 +64,18 @@ export class Page extends Component {
 
   componentDidMount() {
     window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
-    const { actions, hideDropdown, hideHeader } = this.props
+    const { state, actions, hideDropdown, hideHeader } = this.props
     actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
     !hideHeader && !hideDropdown && actions.initGarages()
+
+    state.current_user && !state.current_user.secretary && actions.setPersonal(true)
+
+    console.log('hide splashscreen')
+    // actions.hideSplashscreen()
+  }
+
+  componentWillReceiveProps(newProps) {
+    document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'
   }
 
   componentWillReceiveProps(newProps) {
@@ -93,7 +102,7 @@ export class Page extends Component {
 
 
   render() {
-    const { actions, state, gray } = this.props
+    const { actions, reservationsActions, state, gray } = this.props
     const { hideDropdown, hideHamburger, hideHeader, margin } = this.props
     const { back, add, ok, outlineBack } = this.props
 
@@ -102,7 +111,10 @@ export class Page extends Component {
     const logOut = () => this.logout(true)
 
     const garageDropdown = (garage, index) => {
-      const garageSelected = () => actions.setGarage(state.garages[index].id)
+      const garageSelected = () => {
+        actions.setGarage(state.garages[index].id)
+        reservationsActions.initReservations()
+      }
       return { label: garage.name, onClick: garageSelected }
     }
 
@@ -121,21 +133,23 @@ export class Page extends Component {
 
     const sideMenuContent = (<div>
       {state.current_user ? currentUserInfo : <div>{t([ 'mobileApp', 'page', 'userInfoUnavailable' ])}</div>}
-      {divider}
-      <div className={styles.buttonGroup}>
-        <ButtonGroup
-          buttons={[
-            { content:  t([ 'mobileApp', 'page', 'personal' ]),
-              onClick:  () => actions.setPersonal(true),
-              selected: state.personal
-            },
-            { content:  t([ 'mobileApp', 'page', 'work' ]),
-              onClick:  () => actions.setPersonal(false),
-              selected: !state.personal
-            }
-          ]}
-        />
-      </div>
+      {state.current_user && state.current_user.secretary && divider}
+      {state.current_user && state.current_user.secretary &&
+        <div className={styles.buttonGroup}>
+          <ButtonGroup
+            buttons={[
+              { content:  t([ 'mobileApp', 'page', 'personal' ]),
+                onClick:  () => actions.setPersonal(true),
+                selected: state.personal
+              },
+              { content:  t([ 'mobileApp', 'page', 'work' ]),
+                onClick:  () => actions.setPersonal(false),
+                selected: !state.personal
+              }
+            ]}
+          />
+        </div>
+      }
       {divider}
       <ButtonStack divider={divider}>
         {[ <MobileMenuButton key="sign-out" icon="sign-out" label={t([ 'mobileApp', 'page', 'logOut' ])} onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]}
@@ -158,13 +172,13 @@ export class Page extends Component {
 
     const menu = (<div className={styles.menu}>
       <MobileMenuButton
-        icon="icon-garage"
+        icon="icon-garage-mobile"
         label={t([ 'mobileApp', 'page', 'resrevations' ])}
         onClick={() => this.context.router.push(RESERVATIONS)}
         state={window.location.hash.includes(RESERVATIONS) && 'selected'}
       />
       <MobileMenuButton
-        icon="icon-message"
+        icon="icon-notification-mobile"
         label={t([ 'mobileApp', 'page', 'notifications' ])}
         onClick={() => this.context.router.push(NOTIFICATIONS)}
         state={window.location.hash.includes(NOTIFICATIONS) && 'selected'}

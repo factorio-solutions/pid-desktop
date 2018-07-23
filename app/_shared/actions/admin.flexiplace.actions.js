@@ -3,26 +3,18 @@ import request from '../helpers/requestPromise'
 
 import { INIT_GARAGE_PRICINGS, CREATE_UNIFORM_PRICING } from '../queries/admin.flexiplace.queries'
 import { initModules } from './admin.modules.actions'
+import actionFactory from '../helpers/actionFactory'
 
 
 export const ADMIN_FLEXIPLACE_PRESET_PRICING = 'ADMIN_FLEXIPLACE_PRESET_PRICING'
 export const ADMIN_FLEXIPLACE_SET_CURRENCIES = 'ADMIN_FLEXIPLACE_SET_CURRENCIES'
 export const ADMIN_FLEXIPLACE_SET_PRICING = 'ADMIN_FLEXIPLACE_SET_PRICING'
+export const ADMIN_FLEXIPLACE_TOGGLE_HIGHLIGHT = 'ADMIN_FLEXIPLACE_TOGGLE_HIGHLIGHT'
 
 
-export function presetPricings(value) {
-  return {
-    type: ADMIN_FLEXIPLACE_PRESET_PRICING,
-    value
-  }
-}
-
-export function setCurrencies(value) {
-  return {
-    type: ADMIN_FLEXIPLACE_SET_CURRENCIES,
-    value
-  }
-}
+export const presetPricings = actionFactory(ADMIN_FLEXIPLACE_PRESET_PRICING)
+export const setCurrencies = actionFactory(ADMIN_FLEXIPLACE_SET_CURRENCIES)
+export const toggleHighlight = actionFactory(ADMIN_FLEXIPLACE_TOGGLE_HIGHLIGHT)
 
 function setPricing(key, value) {
   return {

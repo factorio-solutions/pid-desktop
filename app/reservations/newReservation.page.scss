@@ -144,3 +144,17 @@
     margin-right: 0px;
   }
 }
+
+.searchField {
+  position: relative;
+}
+
+.resetButton {
+  position: absolute;
+  right: 0.1em;
+  font-size: 1.6em;
+  cursor:  pointer;
+  padding-top: 0.3em;
+  z-index: 10;
+  color: #cacaca;
+}
