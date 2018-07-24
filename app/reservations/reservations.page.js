@@ -127,7 +127,7 @@ class ReservationsPage extends Component {
         representer: o => <i
           className={`fa
             ${o === undefined
-              ? 'fa-ban'
+              ? 'fa-times-circle'
               : o
                 ? 'fa-check-circle'
                 : 'fa-question-circle'}
