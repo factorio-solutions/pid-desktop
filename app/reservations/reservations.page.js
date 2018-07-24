@@ -124,9 +124,23 @@ class ReservationsPage extends Component {
       { key:         'state',
         title:       t([ 'reservations', 'state' ]),
         comparator:  'boolean',
-        representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-question-circle'} ${o ? styles.green : styles.yellow}`} aria-hidden="true" />,
-        orderBy:     'approved',
-        enum:        [ true, false ]
+        representer: o => <i
+          className={`fa
+            ${o === undefined
+              ? 'fa-ban'
+              : o
+                ? 'fa-check-circle'
+                : 'fa-question-circle'}
+            ${o === undefined
+              ? styles.red
+              : o
+                ? styles.green
+                : styles.yellow
+          }`}
+          aria-hidden="true"
+        />,
+        orderBy: 'approved',
+        enum:    [ true, false ]
       },
       { key: 'garage', title: t([ 'reservations', 'garage' ]), comparator: 'string', includes: 'place floor garage', orderBy: 'garages.name' },
       { key:         'place',
@@ -180,7 +194,7 @@ class ReservationsPage extends Component {
       note:          reservation.note,
       client:        reservation.client && reservation.client.name,
       licence_plate: reservation.car && reservation.car.licence_plate,
-      state:         reservation.approved,
+      state:         reservation.deleted_at ? undefined : reservation.approved,
       type:          reservation.reservation_case,
       from:          reservation.begins_at,
       to:            reservation.ends_at,
