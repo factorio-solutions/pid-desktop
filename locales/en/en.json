@@ -311,6 +311,7 @@
 		"creator": "Creator",
 		"garage": "Garage",
 		"createdAt": "created:",
+		"deletedAt": "deleted:",
 		"updatedAt": "updated:",
 		"removeReservationQuestion": "Are you sure you want to remove this reservation?",
 		"terminateEarlyQuestion": "Are you sure you want to terminate reservation right now?",
