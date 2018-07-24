@@ -1,7 +1,9 @@
 import React  from 'react'
-import styles from './ReservationRow.scss'
 import moment from 'moment'
-import { t }  from '../../modules/localization/localization'
+
+import { t } from '../../modules/localization/localization'
+
+import styles from './ReservationRow.scss'
 
 
 export function formatDate(date) {

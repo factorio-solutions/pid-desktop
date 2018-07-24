@@ -272,10 +272,11 @@ export default class Table extends Component {
           originalValues
         />
       ].filter(o => o)
+      console.log(value.deleted_at, !!value.deleted_at)
 
       return [ <TableRow
         key={key}
-        className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled}`}
+        className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled} ${value.deleted_at && styles.deleted}`}
         schema={schema}
         data={value}
         onClick={() => { handleRowClick(value.key) }}
