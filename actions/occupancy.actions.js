@@ -66,7 +66,10 @@ export function setNewReservation(fromMoment, toMoment, placeId) {
       }
     )
     .then(data => {
-      const clientIds = data.reservable_clients.map(client => client.id)
+      const clientIds = [
+        ...data.reservable_clients.map(client => client.id),
+        ...data.current_user.secretary_clients.map(client => client.id)
+      ]
 
       requestPromise(
         CHECK_PLACE_AVAILABLE,

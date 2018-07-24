@@ -73,6 +73,11 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
   reservable_clients(user_id: $user_id, garage_id: $garage_id) {
     id
   }
+  current_user {
+    secretary_clients {
+      id
+    }
+  }
 }
 `
 
