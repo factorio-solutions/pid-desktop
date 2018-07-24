@@ -18,7 +18,7 @@ import * as nav              from '../_shared/helpers/navigation'
 
 import styles from './occupancy.page.scss'
 
-const UPDATE_EVERY_X_MINUTES = 15
+const UPDATE_EVERY_X_MINUTES = 3
 
 
 class OccupancyPage extends Component {
