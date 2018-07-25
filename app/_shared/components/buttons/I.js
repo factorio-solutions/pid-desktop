@@ -1,32 +1,29 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
 import Button from '../buttons/Button'
 
 import styles from './I.scss'
 
 
-export default class I extends Component {
-  static propTypes = {
-    onClick: PropTypes.func,
-    size:    PropTypes.string
-  }
+export default function I({ onClick, size }) {
+  const style = [
+    styles.button,
+    onClick && styles.clickable,
+    styles[size]
+  ].join(' ')
 
-  static defaultProps = {
-    onClick: undefined,
-    size:    '' // or 'small'
-  }
+  const content = <i className="fa fa-info" aria-hidden="true" />
 
-  render() {
-    const { onClick, size } = this.props
+  return (
+    <Button
+      content={content}
+      onClick={onClick}
+      style={style}
+    />
+  )
+}
 
-    const style = [
-      styles.button,
-      onClick && styles.clickable,
-      styles[size]
-    ]
-
-    return (
-      <Button content={<i className="fa fa-info" aria-hidden="true" />} onClick={onClick} style={style.join(' ')} />
-    )
-  }
+I.propTypes = {
+  onClick: PropTypes.func,
+  size:    PropTypes.string
 }

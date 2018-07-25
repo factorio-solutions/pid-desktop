@@ -33,7 +33,7 @@ if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
 
 if (process.env.NODE_ENV !== 'production') {
   const { whyDidYouUpdate } = require('why-did-you-update')
-  whyDidYouUpdate(React)
+  whyDidYouUpdate(React, { exclude: [ /^Connect/ ] })
 }
 
 render(
