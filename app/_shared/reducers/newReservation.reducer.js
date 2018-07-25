@@ -38,6 +38,8 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
   NEW_RESERVATION_SET_PAYMENT_METHOD,
+  NEW_RESERVATION_SET_PREFERED_GARAGE_ID,
+  NEW_RESERVATION_SET_PREFERED_PLACE_ID,
   NEW_RESERVATION_SET_CSOB_ONE_CLICK,
   NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD,
 
@@ -90,7 +92,11 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod:       '',
+  paymentMethod:    '',
+
+  preferedGarageId: undefined,
+  preferedPlaceId:  undefined,
+
   csobOneClick:        false,
   csobOneClickNewCard: false,
 
@@ -337,6 +343,18 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         paymentMethod: action.value
+      }
+
+    case NEW_RESERVATION_SET_PREFERED_GARAGE_ID:
+      return {
+        ...state,
+        preferedGarageId: action.value
+      }
+
+    case NEW_RESERVATION_SET_PREFERED_PLACE_ID:
+      return {
+        ...state,
+        preferedPlaceId: action.value
       }
 
     case NEW_RESERVATION_SET_CSOB_ONE_CLICK:

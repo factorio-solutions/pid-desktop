@@ -78,7 +78,7 @@ function Button({ content, onClick, onDisabledClick, type, state, style, questio
 //   }
 // }
 
-s
+
 export default connect(
   () => ({}),
   { confirm }

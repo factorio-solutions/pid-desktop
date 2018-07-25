@@ -10,11 +10,14 @@ import TabMenu           from '../_shared/components/tabMenu/TabMenu'
 import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
 import IconWithCount     from '../_shared/components/iconWithCount/IconWithCount'
+import Modal             from '../_shared/components/modal/Modal'
+import Form              from '../_shared/components/form/Form'
 
-import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { setPast }           from '../_shared/actions/reservations.actions'
-import { t }                 from '../_shared/modules/localization/localization'
-import * as nav              from '../_shared/helpers/navigation'
+import * as OccupancyActions      from '../_shared/actions/occupancy.actions'
+import * as newReservationActions from '../_shared/actions/newReservation.actions'
+import { setPast }                from '../_shared/actions/reservations.actions'
+import { t }                      from '../_shared/modules/localization/localization'
+import * as nav                   from '../_shared/helpers/navigation'
 
 import styles from './occupancy.page.scss'
 
@@ -23,10 +26,10 @@ const UPDATE_EVERY_X_MINUTES = 3
 
 class OccupancyPage extends Component {
   static propTypes = {
-    state:        PropTypes.object,
-    pageBase:     PropTypes.object,
-    reservations: PropTypes.object,
-    actions:      PropTypes.object
+    state:                 PropTypes.object,
+    pageBase:              PropTypes.object,
+    actions:               PropTypes.object,
+    newReservationActions: PropTypes.object
   }
 
   componentDidMount() {
@@ -45,6 +48,18 @@ class OccupancyPage extends Component {
   }
 
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
+
+  submitNewReservation = () => {
+    const { state, newReservationActions } = this.props
+    newReservationActions.clearForm()
+    nav.to('/reservations/newReservation')
+    this.props.actions.unsetNewReservation()
+
+    newReservationActions.setFrom(state.newReservation.from)
+    newReservationActions.setTo(state.newReservation.to)
+    newReservationActions.setPreferedGarageId(state.garage.id)
+    newReservationActions.setPreferedPlaceId(state.newReservation.placeId)
+  }
 
   render() {
     const { state, pageBase, actions } = this.props
@@ -96,8 +111,57 @@ class OccupancyPage extends Component {
       }
     />)
 
+    const placeForNewReservation = garage &&
+      state.newReservation &&
+        garage.floors.reduce(preparePlaces, []).findById(state.newReservation.placeId)
+    
     return (
       <PageBase>
+        <Modal show={state.newReservation}>
+          <Form
+            onSubmit={this.submitNewReservation}
+            onBack={actions.unsetNewReservation}
+            submitable
+          >
+            {state.newReservation && [
+              <h4>{t([ 'occupancy', 'createNewReservation' ])}</h4>,
+              <table className={styles.newReservationTable}>
+                <tbody>
+                  <tr>
+                    <td>{t([ 'occupancy', 'garage' ])}</td>
+                    <td>{garage && garage.name}</td>
+                  </tr>
+                  <tr>
+                    <td>{t([ 'occupancy', 'place' ])}</td>
+                    <td>
+                    {placeForNewReservation && placeForNewReservation.floor}/
+                    {placeForNewReservation && placeForNewReservation.label}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>{t([ 'occupancy', 'from' ])}</td>
+                    <td>{state.newReservation.from}</td>
+                  </tr>
+                  <tr>
+                    <td>{t([ 'occupancy', 'to' ])}</td>
+                    <td>{state.newReservation.to}</td>
+                  </tr>
+                </tbody>
+              </table>
+            ]}
+          </Form>
+        </Modal>
+
+        <Modal show={state.reservationNotPossible}>
+          <Form
+            onSubmit={actions.unsetNewReservation}
+            submitable
+            center
+          >
+            {t([ 'occupancy', 'placeNotAvailable' ])}
+          </Form>
+        </Modal>
+
         <TabMenu right={filters} left={clientSelector} />
         <div className={styles.occupancies}>
           <h2>{garage && garage.name}</h2>
@@ -127,6 +191,9 @@ class OccupancyPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.occupancy, pageBase: state.pageBase, reservations: state.reservations }),
-  dispatch => ({ actions: bindActionCreators({ ...OccupancyActions, setPast }, dispatch) })
+  state => ({ state: state.occupancy, pageBase: state.pageBase }),
+  dispatch => ({
+    actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
+    newReservationActions: bindActionCreators(newReservationActions, dispatch)
+  })
 )(OccupancyPage)

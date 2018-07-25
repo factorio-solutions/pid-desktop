@@ -50,7 +50,7 @@ class NewReservationPage extends Component {
       return {
         label,
         text:    [ <b>{user.full_name}</b>, ' ', text ],
-        onClick: () => { this.props.actions.downloadUser(user.id, user.rights) }
+        onClick: () => this.props.actions.downloadUser(user.id, user.rights)
       }
     }
 
@@ -74,7 +74,12 @@ class NewReservationPage extends Component {
           phone:   user.phone,
           email:   user.email,
           order:   user.id === this.props.pageBase.current_user.id ? 1 : undefined,
-          onClick: () => this.props.actions.downloadUser(user.id, user.rights)
+          onClick: () => {
+            const { state } = this.props
+            if (state.user === undefined || state.user.id !== user.id) {
+              this.props.actions.downloadUser(user.id, user.rights)
+            }
+          }
         })
       }
       return acc
