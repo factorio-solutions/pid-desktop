@@ -4,9 +4,13 @@ import moment from 'moment'
 import { request }                       from '../helpers/request'
 import actionFactory                     from '../helpers/actionFactory'
 import requestPromise                    from '../helpers/requestPromise'
-import { calculatePrice, valueAddedTax } from '../helpers/calculatePrice'
 import * as nav                          from '../helpers/navigation'
 import { t }                             from '../modules/localization/localization'
+import {
+  calculatePrice,
+  valueAddedTax,
+  calculateDuration
+} from '../helpers/calculatePrice'
 
 import {
   MOMENT_DATETIME_FORMAT,
@@ -26,8 +30,7 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  GET_RESERVATION,
-  GET_GARAGE_FREE_INTERVAL
+  GET_RESERVATION
 } from '../queries/newReservation.queries'
 
 import {
@@ -72,7 +75,7 @@ export const NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD = 'NEW_RESERVATION_SET_
 export const NEW_RESERVATION_SET_MIN_DURATION = 'NEW_RESERVATION_SET_MIN_DURATION'
 export const NEW_RESERVATION_SET_MAX_DURATION = 'NEW_RESERVATION_SET_MAX_DURATION'
 export const NEW_RESERVATION_CLEAR_FORM = 'NEW_RESERVATION_CLEAR_FORM'
-export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
+export const NEW_RESERVATION_SET_TIME_CREDIT_PRICE = 'NEW_RESERVATION_SET_TIME_CREDIT_PRICE'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -98,7 +101,7 @@ export const selectCsobOneClick = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLI
 export const selectCsobOneClickNewCard = actionFactory(NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD)
 export const setMinDuration = actionFactory(NEW_RESERVATION_SET_MIN_DURATION)
 export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
-export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
+export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_PRICE)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -131,6 +134,7 @@ export function setClientId(value) {
       value
     })
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    dispatch(setPrice())
     dispatch(setMinMaxDuration())
   }
 }
@@ -151,6 +155,7 @@ export function setRecurringRule(value) {
     dispatch({ type: NEW_RESERVATION_SET_RECURRING_RULE,
       value
     })
+    dispatch(setPrice())
   }
 }
 
@@ -204,7 +209,7 @@ export function setFromDate(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
-    // dispatch(formatFrom())
+    dispatch(formatFrom())
   }
 }
 
@@ -220,7 +225,7 @@ export function setFromTime(value) {
       value: from.format(MOMENT_DATETIME_FORMAT),
       to:    toValue
     })
-    // dispatch(formatFrom())
+    dispatch(formatFrom())
   }
 }
 
@@ -267,7 +272,7 @@ export function setToDate(value) {
       value:   to.format(MOMENT_DATETIME_FORMAT),
       from:    fromValue
     })
-    // dispatch(formatTo())
+    dispatch(formatTo())
   }
 }
 
@@ -282,7 +287,7 @@ export function setToTime(value) {
       value: to.format(MOMENT_DATETIME_FORMAT),
       from:  fromValue
     })
-    // dispatch(formatTo())
+    dispatch(formatTo())
   }
 }
 
@@ -342,7 +347,6 @@ export function setMinMaxDuration() {
     // set min/max duration of garage or of client
     dispatch(setMinDuration(minDuration))
     dispatch(setMaxDuration(maxDuration))
-
     // does reservation meet min/max boundaries
     const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
     if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
@@ -351,11 +355,19 @@ export function setMinMaxDuration() {
   }
 }
 
+export function selectedClient() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
+  }
+}
+
 export function setPrice() {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const from = moment(state.from, MOMENT_DATETIME_FORMAT)
     const to = moment(state.to, MOMENT_DATETIME_FORMAT)
+    const client = dispatch(selectedClient())
     let selectedPlace = null
     if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
       const freePlaces = state.garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
@@ -366,9 +378,16 @@ export function setPrice() {
       }, undefined)
     }
 
-
-    dispatch({ type:  NEW_RESERVATION_SET_PRICE,
-      value: selectedPlace && selectedPlace.pricing ? `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` : undefined
+    dispatch(setTimeCreditPrice(
+      client
+        ? (state.recurringRule ? state.recurringRule.count || 1 : 1) * calculateDuration(from, to) * client.time_credit_price
+        : undefined
+    ))
+    dispatch({
+      type:  NEW_RESERVATION_SET_PRICE,
+      value: selectedPlace && selectedPlace.pricing ?
+        `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}` :
+        undefined
     })
   }
 }
@@ -599,20 +618,13 @@ export function downloadGarage(id) {
         }
       )
     }).then(value => {
-      const setFreeIntervalSuccess = response => {
-        if (response.data !== undefined) {
-          dispatch(setFreeInterval(response.data.garage.greatest_free_interval))
-        }
-      }
-
       // if full download,then full garage, if light download, then garage from state with updated free places
       const garage = value.garage.name ? value.garage : {
         ...state.garage,
         floors: state.garage.floors.map(floor => ({
           ...floor,
           free_places: value.garage.floors.findById(floor.id).free_places
-        })),
-        greatest_free_interval: value.garage.greatest_free_interval
+        }))
       }
 
       garage.floors.forEach(floor => {
@@ -657,21 +669,6 @@ export function downloadGarage(id) {
         })
       })
 
-      const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
-      if (noFreePlaces) {
-        request(
-          setFreeIntervalSuccess,
-          GET_GARAGE_FREE_INTERVAL,
-          { id:             id || state.garage.id,
-            user_id:        state.user.id,
-            client_id:      state.client_id,
-            begins_at:      timeToUTC(state.from),
-            ends_at:        timeToUTC(state.to),
-            reservation_id: state.reservation ? state.reservation.id : null
-          }
-        )
-      }
-      
       dispatch(setGarage(garage))
       if (!state.reservation) {
         dispatch(autoSelectPlace())
@@ -682,7 +679,7 @@ export function downloadGarage(id) {
         const selectedPlace = garage.floors.reduce((place, floor) => {
           return place || floor.places.find(p => p.id === state.place_id)
         }, undefined)
-        if (selectedPlace && !selectedPlace.available) {
+        if (!selectedPlace.available) {
           dispatch(setPlace({ id: undefined }))
         }
       }
@@ -732,13 +729,18 @@ export function submitReservation(id) {
     const ongoing = state.reservation && state.reservation.ongoing
 
     const onSuccess = response => {
-      if (response.data.create_reservation && response.data.create_reservation.payment_url) {
-        dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
-        window.location.replace(response.data.create_reservation.payment_url)
-      } else {
-        dispatch(pageBaseActions.setCustomModal(undefined))
-        nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
-        dispatch(clearForm())
+      try {
+        if (response.data.create_reservation && response.data.create_reservation.payment_url) {
+          dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
+          window.location.replace(response.data.create_reservation.payment_url)
+        } else {
+          dispatch(pageBaseActions.setCustomModal(undefined))
+          nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
+          dispatch(clearForm())
+        }
+      } catch (err) {
+        dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
+        nav.to('/reservations')
       }
     }
 
@@ -840,17 +842,3 @@ export function paymentSucessfull() {
     dispatch(clearForm())
   }
 }
-
-// export function payReservation(token) {
-//   return (dispatch, getState) => {
-//     const onSuccess = response => {
-//       dispatch(paymentSucessfull())
-//     }
-//
-//     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'payingReservation' ])}</div>))
-//     request(onSuccess
-//            , PAY_RESREVATION
-//            , { token }
-//            )
-//   }
-// }

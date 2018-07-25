@@ -255,8 +255,9 @@
 		"creatingReservationInPast": "Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?",
 		"loading": "Načítám ...",
 		"userName": "Jméno uživatele",
-		"AlternativeInterval": "Všechan místa jsou v tomoto intervalu prázdná. Nejdelší možný interval je:",
-		"weekendPrice": "Víkendová cena:"
+		"AlternativeInterval": "Všechna místa jsou v tomoto intervalu obsazená. Nejdelší možný interval je:",
+		"weekendPrice": "Víkendová cena:",
+		"notAbleToCreateReservation": "Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit"
 	},
 	"clients": {
 		"name": "jméno",
@@ -270,7 +271,7 @@
 		"createAgreement": "Vytvořit dohodu",
 		"editClient": "Upravit klienta",
 		"goToUsers": "Uživatelé",
-		"goToInvoices": "Faktury",
+		"goToInvoices": "Účetní dokumenty",
 		"places": "místa",
 		"contract": "dohoda",
 		"monthlyTotal": "celkem za měsíc",
@@ -284,10 +285,10 @@
 		"memberSince": "členem od",
 		"phone": "telefon",
 		"contact_person": "kontaktní osoba",
-		"admin": "je admin",
+		"admin": "admin",
 		"secretary": "Sekretář/ka",
 		"internal": "Interní",
-		"host": "je pravidelný host",
+		"host": "pravidelný host",
 		"driver": "řidič",
 		"presetAs": "Nastavit jako",
 		"removeClientUser": "Určitě chcete odstranit tohoto uživatele?",
@@ -569,7 +570,11 @@
 		"removeDocument": "CS: newGarage.removeDocument",
 		"removeDocumentQuestion": "CS: newGarage.removeDocumentQuestion",
 		"privacyDocumentRule": "CS: newGarage.privacyDocumentRule",
-		"legalDocuments": "CS: newGarage.legalDocuments"
+		"legalDocuments": "CS: newGarage.legalDocuments",
+		"noDocument": "CS: newGarage.noDocument",
+		"or": "NEBO",
+		"uploadUrl": "Přidal URL",
+		"documentURL": "URL dokumentu"
 	},
 	"newClient": {
 		"name": "Jméno klienta",
@@ -688,7 +693,12 @@
 		"newReservationForYou": "%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.",
 		"reservationUpdatedNotification": "%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.",
 		"reservationRemovedDueToUnpaid": "Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut",
-		"reservationContactPersonNotification": "Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s"
+		"reservationContactPersonNotification": "Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",
+		"clientLegalDocuments": "CS: notifications.clientLegalDocuments",
+		"garageLegalDocuments": "CS: notifications.garageLegalDocuments",
+		"reservationLegalDocuments": "CS: notifications.reservationLegalDocuments",
+		"reservationUpdateLegalDocuments": "CS: notifications.reservationUpdateLegalDocuments",
+		"contractLegalDocuments": "CS: notifications.contractLegalDocuments"
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -700,7 +710,8 @@
 		"email": "Email:",
 		"createdAt": "Profil vytvořen:",
 		"cars": "Auta",
-		"showPublicGarages": "Zobrazovat veřejné garáže"
+		"showPublicGarages": "Zobrazovat veřejné garáže",
+		"privacyDocuments": "CS: profile.privacyDocuments"
 	},
 	"users": {
 		"username": "uživatelské jméno",
@@ -1251,7 +1262,11 @@
 			"place": "Místo",
 			"garage": "Garáž",
 			"begins": "Začíná",
-			"ends": "Končí"
+			"ends": "Končí",
+			"issue": "Nahlásit problém",
+			"carOnMySpot": "Někdo mi stojí na místě",
+			"reservationMoved": "Rezervace přesunuta na:",
+			"noFreePlaces": "Nepodařilo se nám najít náhradní místo."
 		},
 		"newReservation": {
 			"begins": "Začíná",
@@ -1325,6 +1340,7 @@
 		"resend_invitation_mail_subject": "Připomínáme pozvánku v Park-It-Direct.",
 		"new_reservation_mail_subject": "%{user} Vám vytvořil(a) novou rezervaci.",
 		"reservation_confirmed_subject": "Rezervace v %{garage} byla potvrzena.",
+		"reservation_not_confirmed_subject": "Rezervace v %{garage} byla zamítnuta.",
 		"reservation_updated_subject": "Vaše rezervace v %{garage} byla aktualizována.",
 		"reservation_paid_subject": "Vaše rezervace v %{garage} byla zaplacena.",
 		"reservation_not_approved_yet_subject": "Vaše nová rezervace nebyla zatím schválena",
@@ -1393,6 +1409,7 @@
 		},
 		"reservation_confirmed": {
 			"reservation_confirmed": "Rezervace, o kterou jste požádali, byla schválena!",
+			"reservation_not_confirmed": "Rezervace, o kterou jste požádali, byla zamítnuta!",
 			"garage": "Garáž:",
 			"place": "Místo:",
 			"from": "Od:",

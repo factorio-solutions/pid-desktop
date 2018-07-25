@@ -63,6 +63,7 @@ import ClientUsersPage    from './admin/clients/users.page'
 import NewClientPage      from './admin/clients/newClient.page'
 import SmsSettingsPage    from './admin/clients/modules/smsSettings.page'
 import MinMaxDurationPage from './admin/clients/modules/MinMaxDuration.page'
+import TimeCreditPage     from './admin/clients/modules/timeCredit.page'
 import NewContractPage    from './admin/clients/newContract.page'
 
 // modules
@@ -190,6 +191,7 @@ export default function createRoutes() {
       <Route path=":id/admin/clients/newClient" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} />
       <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
+      <Route path=":id/admin/clients/:client_id/timeCredit" component={TimeCreditPage} />
       <Route path=":id/admin/clients/:client_id/minMaxReservationDuration" component={MinMaxDurationPage} />
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />

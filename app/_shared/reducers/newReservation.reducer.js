@@ -46,7 +46,8 @@ import {
 
   NEW_RESERVATION_CLEAR_FORM,
 
-  NEW_RESERVATION_SET_FREE_INTERVAL
+  NEW_RESERVATION_SET_FREE_INTERVAL,
+  NEW_RESERVATION_SET_TIME_CREDIT_PRICE
 }  from '../actions/newReservation.actions'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -74,10 +75,11 @@ const defaultState = {
 
   garage: undefined, // loaded garage details // GARAGE ID IS IN HERE
 
-  from:     '',
-  to:       '',
-  place_id: undefined, // if of selected place
-  price:    undefined,
+  from:            '',
+  to:              '',
+  place_id:        undefined, // if of selected place
+  price:           undefined,
+  timeCreditPrice: undefined,
 
   durationDate: false, // set duration or end of parking?
   loading:      false,
@@ -368,6 +370,12 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         freeInterval: action.value
+      }
+
+    case NEW_RESERVATION_SET_TIME_CREDIT_PRICE:
+      return {
+        ...state,
+        timeCreditPrice: action.value
       }
 
     default:

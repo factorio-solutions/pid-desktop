@@ -256,7 +256,8 @@
 		"loading": "DE: newReservation.loading",
 		"userName": "DE: newReservation.userName",
 		"AlternativeInterval": "DE: newReservation.AlternativeInterval",
-		"weekendPrice": "DE: newReservation.weekendPrice"
+		"weekendPrice": "DE: newReservation.weekendPrice",
+		"notAbleToCreateReservation": "DE: newReservation.notAbleToCreateReservation"
 	},
 	"clients": {
 		"name": "Name",
@@ -284,10 +285,10 @@
 		"memberSince": "Mitglied seit",
 		"phone": "Telefon",
 		"contact_person": "Ansprechpartner",
-		"admin": "ist Administrator",
+		"admin": "Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "Intern",
-		"host": "ist regelmäßiger Gast",
+		"host": "regelmäßiger Gast",
 		"driver": "Fahrer",
 		"presetAs": "Einstellen als",
 		"removeClientUser": "Möchten Sie diesen Benutzer wirklich entfernen?",
@@ -569,7 +570,11 @@
 		"removeDocument": "DE: newGarage.removeDocument",
 		"removeDocumentQuestion": "DE: newGarage.removeDocumentQuestion",
 		"privacyDocumentRule": "DE: newGarage.privacyDocumentRule",
-		"legalDocuments": "DE: newGarage.legalDocuments"
+		"legalDocuments": "DE: newGarage.legalDocuments",
+		"noDocument": "DE: newGarage.noDocument",
+		"or": "DE: newGarage.or",
+		"uploadUrl": "DE: newGarage.uploadUrl",
+		"documentURL": "DE: newGarage.documentURL"
 	},
 	"newClient": {
 		"name": "Name des Kunden",
@@ -688,7 +693,12 @@
 		"newReservationForYou": "%(arg1)s (%(arg2)s) hat für Sie eine Reservierung erstellt.",
 		"reservationUpdatedNotification": "\n% (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Reservierungen\".",
 		"reservationRemovedDueToUnpaid": "Da Ihre Reservierung innerhalb 15 Minuten nicht bezahlt wurden. Haben wir sie storniert.",
-		"reservationContactPersonNotification": "DE: notifications.reservationContactPersonNotification"
+		"reservationContactPersonNotification": "DE: notifications.reservationContactPersonNotification",
+		"clientLegalDocuments": "DE: notifications.clientLegalDocuments",
+		"garageLegalDocuments": "DE: notifications.garageLegalDocuments",
+		"reservationLegalDocuments": "DE: notifications.reservationLegalDocuments",
+		"reservationUpdateLegalDocuments": "DE: notifications.reservationUpdateLegalDocuments",
+		"contractLegalDocuments": "DE: notifications.contractLegalDocuments"
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -700,7 +710,8 @@
 		"email": "E-Mail-Adresse:",
 		"createdAt": "Profilerstellungsdatum:",
 		"cars": "Fahrzeuge",
-		"showPublicGarages": "Öffentlich angebotene Garagen anzeigen"
+		"showPublicGarages": "Öffentlich angebotene Garagen anzeigen",
+		"privacyDocuments": "DE: profile.privacyDocuments"
 	},
 	"users": {
 		"username": "Benutzername",
@@ -1251,7 +1262,11 @@
 			"place": "Platznummer",
 			"garage": "DE: mobileApp.reservation.garage",
 			"begins": "DE: mobileApp.reservation.begins",
-			"ends": "DE: mobileApp.reservation.ends"
+			"ends": "DE: mobileApp.reservation.ends",
+			"issue": "DE: mobileApp.reservation.issue",
+			"carOnMySpot": "DE: mobileApp.reservation.carOnMySpot",
+			"reservationMoved": "DE: mobileApp.reservation.reservationMoved",
+			"noFreePlaces": "DE: mobileApp.reservation.noFreePlaces"
 		},
 		"newReservation": {
 			"begins": "Beginnt",
@@ -1325,6 +1340,7 @@
 		"resend_invitation_mail_subject": "Park-it-direct Einladungserinnerung",
 		"new_reservation_mail_subject": "%{user} hat für Sie gebucht.",
 		"reservation_confirmed_subject": "Buchung in der Garage: %{garage} wurde bestätigt.",
+		"reservation_not_confirmed_subject": "DE: railsEmails.reservation_not_confirmed_subject",
 		"reservation_updated_subject": "Ihre Buchung in der Garage %{garage} wurde aktualisiert.",
 		"reservation_paid_subject": "DE: railsEmails.reservation_paid_subject",
 		"reservation_not_approved_yet_subject": "DE: railsEmails.reservation_not_approved_yet_subject",
@@ -1393,6 +1409,7 @@
 		},
 		"reservation_confirmed": {
 			"reservation_confirmed": "Ihre Buchungsanfrage wurde genehmigt!",
+			"reservation_not_confirmed": "DE: railsEmails.reservation_confirmed.reservation_not_confirmed",
 			"garage": "Garage",
 			"place": "Parkplatznummer:",
 			"from": "Von:",

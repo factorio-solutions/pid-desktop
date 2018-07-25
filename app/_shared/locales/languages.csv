@@ -603,9 +603,10 @@ newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,usunąć 
 newReservation.perHour, / hour, / hod.,,/ Std.
 newReservation.creatingReservationInPast,You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?,Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?,,
 newReservation.loading,Loading ...,Načítám ...,,
-newReservation.userName,,Jméno uživatele,,
-newReservation.AlternativeInterval,,Všechan místa jsou v tomoto intervalu prázdná. Nejdelší možný interval je:,,
+newReservation.userName,Username,Jméno uživatele,,
+newReservation.AlternativeInterval,"All places are full, maximum available duration is:",Všechna místa jsou v tomoto intervalu obsazená. Nejdelší možný interval je:,,
 newReservation.weekendPrice,Weekend price:,Víkendová cena:,,
+newReservation.notAbleToCreateReservation,It was not possible to create this reservation. Likely reason: low timecredit,Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -617,7 +618,7 @@ clients.createdAt,Created at,Klient vytvořen,Klient utworzony,Erstellungsort
 clients.createAgreement,Create agreement,Vytvořit dohodu,Utworzyć umowę,Vereinbarung erstellen
 clients.editClient,Edit client,Upravit klienta,Edytować klienta,Kunden bearbeiten
 clients.goToUsers,Go to users,Uživatelé,Użytkownicy,Benutzer
-clients.goToInvoices,Go to invoices,Faktury,Faktury,Rechnungen
+clients.goToInvoices,Accounting documents,Účetní dokumenty,Faktury,Rechnungen
 clients.places,places,místa,miejsca,Stellplätze
 clients.contract,agreement,dohoda,umowy,Vertrag
 clients.monthlyTotal,monthly total,celkem za měsíc,razem za miesiąc,Pro Monat insgesamt
@@ -629,10 +630,10 @@ clientUsers.email,email,e-mail,e-mail,E-Mail-Adresse
 clientUsers.memberSince,member since,členem od,członek od,Mitglied seit
 clientUsers.phone,phone,telefon,telefon,Telefon
 clientUsers.contact_person,contact person,kontaktní osoba,osoba kontaktowa,Ansprechpartner
-clientUsers.admin,is admin,je admin,jest adminem,ist Administrator
+clientUsers.admin,admin,admin,jest adminem,Administrator
 clientUsers.secretary,secretary,Sekretář/ka,Sekretarz/Sekretarka,Sekretär/in
 clientUsers.internal,internal,Interní,Wewnętrzny,Intern
-clientUsers.host,is a regular guest,je pravidelný host,jest regularnym gościem,ist regelmäßiger Gast
+clientUsers.host,regular guest,pravidelný host,jest regularnym gościem,regelmäßiger Gast
 clientUsers.driver,driver,řidič,kierowca,Fahrer
 clientUsers.presetAs,Preset as,Nastavit jako,Ustaw jako,Einstellen als
 clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć użytkownika?,Möchten Sie diesen Benutzer wirklich entfernen?
@@ -898,6 +899,10 @@ newGarage.removeDocument,Remove document,,,
 newGarage.removeDocumentQuestion,Do you want to delete document,,,
 newGarage.privacyDocumentRule,At least one document has to be uploaded,,,
 newGarage.legalDocuments,Legal documents,,,
+newGarage.noDocument,No document uploaded.,,,
+newGarage.or,OR,NEBO,,
+newGarage.uploadUrl,Provide URL,Přidal URL,,
+newGarage.documentURL,Document URL,URL dokumentu,,
 newClient.name,Client name,Jméno klienta,Nazwisko klienta,Name des Kunden
 newClient.placeholder,Company ltd.,Společnost s.r.o.,Spółka z o.o.,Unternehmen GmbH
 newClient.invalidName,Invalid client name,Neplatné jméno klienta,Niepoprawne nazwisko klienta,Kundennamen ist ungültig
@@ -1011,6 +1016,11 @@ notifications.reservationUpdatedNotification,%(arg1)s just updated your reservat
 % (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Reservierungen""."
 notifications.reservationRemovedDueToUnpaid,Your reservation was canceled because it was not paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.",Da Ihre Reservierung innerhalb 15 Minuten nicht bezahlt wurden. Haben wir sie storniert.
 notifications.reservationContactPersonNotification,"Your reservation have not been approved yet, if it is urgent, you can contact one of the contact presons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,
+notifications.clientLegalDocuments,You can find new privacy documents in profile section because Client: '%(arg1)s' is in garage: '%(arg2)s'.,,,
+notifications.garageLegalDocuments,You can find new privacy documents in profile section because you were add to '%(arg1)s' garage.,,,
+notifications.reservationLegalDocuments,You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.,,,
+notifications.reservationUpdateLegalDocuments,You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.,,,
+notifications.contractLegalDocuments,You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'.,,,
 profile.profileSettings,Profile settings,Nastavení profilu,Ustawienia profilu,Profileinstellungen
 profile.hints,I want to see hints:,Chci vidět nápovědu:,Chcę zobaczyć rady:,Ich möchte Tipps sehen
 profile.language,Choose language:,Vyberte jazyk:,Wybierz język:,Sprache auswählen:
@@ -1021,6 +1031,7 @@ profile.email,Email:,Email:,E-mail:,E-Mail-Adresse:
 profile.createdAt,Profile created:,Profil vytvořen:,Profil założony:,Profilerstellungsdatum:
 profile.cars,Cars,Auta,Auta,Fahrzeuge
 profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,Pokaż garaże oferowane publicznie,Öffentlich angebotene Garagen anzeigen
+profile.privacyDocuments,All garages privacy documents,,,
 users.username,username,uživatelské jméno,Nazwa użytkownika,Benutzername
 users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
@@ -1497,6 +1508,10 @@ mobileApp.reservation.place,Place,Místo,Miejsce,Platznummer
 mobileApp.reservation.garage,Garage,Garáž,,
 mobileApp.reservation.begins,Begins,Začíná,,
 mobileApp.reservation.ends,Ends,Končí,,
+mobileApp.reservation.issue,Report issues,Nahlásit problém,,
+mobileApp.reservation.carOnMySpot,There is a car in my spot.,Někdo mi stojí na místě,,
+mobileApp.reservation.reservationMoved,Reservation moved to:,Rezervace přesunuta na:,,
+mobileApp.reservation.noFreePlaces,There seem to by no other free places.,Nepodařilo se nám najít náhradní místo.,,
 mobileApp.newReservation.begins,Begins,Začíná,Początek,Beginnt
 mobileApp.newReservation.ends,Ends,Končí,Koniec,Endet
 mobileApp.newReservation.place,Place,Místo,Miejsce,Platznummer
@@ -1561,6 +1576,7 @@ railsEmails.invitation_mail_subject,You have been invited to Park-It-Direct!,Byl
 railsEmails.resend_invitation_mail_subject,Invitation reminder to Park-It-Direct.,Připomínáme pozvánku v Park-It-Direct.,Przypominamy o zaproszeniu do Park-It-Direct.,Park-it-direct Einladungserinnerung
 railsEmails.new_reservation_mail_subject,%{user} has created new reservation for you.,%{user} Vám vytvořil(a) novou rezervaci.,%{user} utworzył(a) nową rezerwację.,%{user} hat für Sie gebucht.
 railsEmails.reservation_confirmed_subject,Reservation in %{garage} has been confirmed.,Rezervace v %{garage} byla potvrzena.,Rezerwacja w %{garage} została potwierdzona.,Buchung in der Garage: %{garage} wurde bestätigt.
+railsEmails.reservation_not_confirmed_subject,Reservation in %{garage} has been declined.,Rezervace v %{garage} byla zamítnuta.,,
 railsEmails.reservation_updated_subject,Your reservation in %{garage} has been updated.,Vaše rezervace v %{garage} byla aktualizována.,Twora rezerwacja w %{garage} została zaktualizowana.,Ihre Buchung in der Garage %{garage} wurde aktualisiert.
 railsEmails.reservation_paid_subject,Your reservation in %{garage} has been paid.,Vaše rezervace v %{garage} byla zaplacena.,,
 railsEmails.reservation_not_approved_yet_subject,Your new reservation was not accepted yet,Vaše nová rezervace nebyla zatím schválena,,
@@ -1620,6 +1636,7 @@ railsEmails.resend_invitation_mail.issue,"In case of any issues, please","V př�
 railsEmails.resend_invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unser Kundenservice,"
 railsEmails.resend_invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,a my pomożemy Ci aktywować konto.,und wir helfen Ihnen Ihr Konto aktivieren.
 railsEmails.reservation_confirmed.reservation_confirmed,The reservation you requested was confirmed!,"Rezervace, o kterou jste požádali, byla schválena!",Żądana rezerwacja została potwierdzona!,Ihre Buchungsanfrage wurde genehmigt!
+railsEmails.reservation_confirmed.reservation_not_confirmed,The reservation you requested was declined!,"Rezervace, o kterou jste požádali, byla zamítnuta!",,
 railsEmails.reservation_confirmed.garage,Garage:,Garáž:,Garaż:,Garage
 railsEmails.reservation_confirmed.place,Place:,Místo:,Miejsce:,Parkplatznummer:
 railsEmails.reservation_confirmed.from,From:,Od:,Od:,Von:

@@ -115,12 +115,19 @@ class NewReservationPage extends Component {
     }
   }
 
+  // selectedClient = () => {
+  //   const { state } = this.props
+  //   return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
+  // }
+
   render() {
     const { state, pageBase, actions } = this.props
 
     const ongoing = state.reservation && state.reservation.ongoing
     const onetime = state.reservation && state.reservation.onetime
     const isSecretary = state.reservation && state.reservation.client && state.reservation.client.is_secretary
+    const selectedClient = actions.selectedClient()
+    const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
     // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
@@ -135,6 +142,11 @@ class NewReservationPage extends Component {
       if (ACCENT_REGEX.test(state.templateText) ? state.templateText.length > 140 : state.templateText.length > 320) return false
       // if onetime visitor and we want to send him sms, then the phone is mandatory
       if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
+      // user has enought time credit?
+      if (selectedClient && selectedClient.is_time_credit_active && !newReservationActions.isPlaceGoInternal(state) && outOfTimeCredit) {
+        return false
+      }
+
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
@@ -236,8 +248,32 @@ class NewReservationPage extends Component {
                   <div>
                     <DateTimeForm editable={!ongoing || isSecretary} />
                     {/* Place and price  */}
-                    <Uneditable label={t([ 'newReservation', 'place' ])} value={placeLabel()} />
-                    <Uneditable label={t([ 'newReservation', 'price' ])} value={`${state.price || ''} (${state.client_id && !state.paidByHost ? t([ 'newReservation', 'onClientsExpenses' ]) : t([ 'newReservation', 'onUsersExpenses' ])})`} />
+                    <Uneditable
+                      label={t([ 'newReservation', 'place' ])}
+                      value={placeLabel()}
+                    />
+
+                    {selectedClient && selectedClient.is_time_credit_active &&
+                    !newReservationActions.isPlaceGoInternal(state) ?
+                      <Uneditable
+                        label={t([ 'newReservation', 'price' ])}
+                        highlight={state.highlight && outOfTimeCredit}
+                        value={`${state.timeCreditPrice} /
+                          ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
+                          ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
+                        `}
+                      /> :
+                      <Uneditable
+                        label={t([ 'newReservation', 'price' ])}
+                        value={`
+                          ${state.price || ''}
+                          (${state.client_id && !state.paidByHost
+                            ? t([ 'newReservation', 'onClientsExpenses' ])
+                            : t([ 'newReservation', 'onUsersExpenses' ])
+                          })
+                        `}
+                      />
+                    }
                     {/*  Sms Part  */}
                     {state.user &&
                       <SmsForm accentRegex={ACCENT_REGEX} />
