@@ -36,7 +36,50 @@ function Button({ content, onClick, onDisabledClick, type, state, style, questio
   )
 }
 
+// class Button extends React.PureComponent {
+//   static propTypes = {
+//     content:         React.PropTypes.object,
+//     onClick:         React.PropTypes.func,
+//     onDisabledClick: React.PropTypes.func,
+//     type:            React.PropTypes.string,
+//     state:           React.PropTypes.string,
+//     style:           React.PropTypes.string,
+//     question:        React.PropTypes.string,
+//     confirm:         React.PropTypes.func,
+//     onMouseDown:     React.PropTypes.func
+//   }
+
+//   handleClick = e => {
+//     const { onClick, type, question, confirm } = this.props
+//     e.stopPropagation()
+//     if (typeof onClick === 'function') { // if no fuction, do nothing
+//       if (type === 'remove' && question !== 'No message') {
+//         // confirm(question || 'Are you sure?') && onClick()
+//         confirm(question || 'Are you sure?', onClick)
+//       } else {
+//         onClick()
+//       }
+//     }
+//   }
+
+//   render() {
+//     const { content, state, style, onMouseDown, onDisabledClick } = this.props
+
+//     return (
+//       <button
+//         className={style}
+//         type="button"
+//         onClick={state === 'disabled' ? onDisabledClick : this.handleClick}
+//         onMouseDown={state !== 'disabled' && onMouseDown}
+//       >
+//         {content}
+//       </button>
+//     )
+//   }
+// }
+
+s
 export default connect(
   () => ({}),
-  dispatch => ({ confirm: (question, onClick) => dispatch(confirm(question, onClick)) })
+  { confirm }
 )(Button)
