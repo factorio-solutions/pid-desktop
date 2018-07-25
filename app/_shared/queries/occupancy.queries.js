@@ -5,6 +5,11 @@ export const OCCUPANCY_GARAGES_QUERY = `query OccupancyGarages {
     name
     img
   }
+  current_user {
+    id
+    occupancy_client_filter
+    occupancy_duration
+  }
 }
 `
 
@@ -65,6 +70,13 @@ export const GARAGE_CLIENTS_QUERY = `query Garage($id: Id!) {
       name
       id
     }
+  }
+}
+`
+
+export const UPDATE_USERS_SETTINGS = `mutation UpdateUser($id:Id!, $user: UserInput!) {
+  update_user(id:$id, user: $user){
+    id
   }
 }
 `

@@ -9,13 +9,16 @@ import OccupancyOverview from '../_shared/components/occupancyOverview/Occupancy
 import TabMenu           from '../_shared/components/tabMenu/TabMenu'
 import TabButton         from '../_shared/components/buttons/TabButton'
 import RoundButton       from '../_shared/components/buttons/RoundButton'
+import IconWithCount     from '../_shared/components/iconWithCount/IconWithCount'
 
 import * as OccupancyActions from '../_shared/actions/occupancy.actions'
-import { setPast }        from '../_shared/actions/reservations.actions'
+import { setPast }           from '../_shared/actions/reservations.actions'
 import { t }                 from '../_shared/modules/localization/localization'
 import * as nav              from '../_shared/helpers/navigation'
 
 import styles from './occupancy.page.scss'
+
+const UPDATE_EVERY_X_MINUTES = 3
 
 
 class OccupancyPage extends Component {
@@ -27,7 +30,13 @@ class OccupancyPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initOccupancy()
+    const { actions } = this.props
+    actions.initOccupancy()
+    this.timerID = setInterval(actions.loadGarage, UPDATE_EVERY_X_MINUTES * 60 * 1000)
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.timerID)
   }
 
   onReservationClick = reservation => {
@@ -77,6 +86,14 @@ class OccupancyPage extends Component {
       style="tabDropdown"
       selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
       filter
+      icon={ state.client_ids.length
+        ? <IconWithCount
+          icon="fa fa-filter"
+          count={state.client_ids.length}
+          type="light"
+        />
+        : undefined
+      }
     />)
 
     return (

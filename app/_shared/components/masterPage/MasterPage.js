@@ -9,6 +9,7 @@ import GarageSelector        from '../garageSelector/GarageSelector'
 import VerticalMenu          from '../verticalMenu/VerticalMenu'
 import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
 import DropdownContent       from '../dropdown/DropdownContent'
+import IconWithCount         from '../iconWithCount/IconWithCount'
 
 import * as nav                 from '../../helpers/navigation'
 import { changeHints }          from '../../actions/profile.actions'
@@ -104,10 +105,12 @@ class MasterPage extends Component {
                   {!showHints && <I size="small" onClick={actions.changeHints} />}
                 </div>
 
-                <div className={styles.messages} onClick={this.onMessageClick}>
-                  <i className={'icon-message'} aria-hidden="true" />
-                  {messageCount > 0 && <div className={styles.count}>{messageCount}</div>}
-                </div>
+                <IconWithCount
+                  icon="icon-message"
+                  count={messageCount}
+                  onClick={this.onMessageClick}
+                  type="dark"
+                />
 
                 <DropdownContent content={profileDropdown} style={styles.profileDropdown}>
                   <div className={styles.profile} >
