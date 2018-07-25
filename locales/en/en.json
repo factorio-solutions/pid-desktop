@@ -216,6 +216,7 @@
 		"price": "Price",
 		"onClientsExpenses": "paid by the selected client",
 		"onUsersExpenses": "paid by the parkee",
+		"longtermRent": "longterm rent",
 		"loadingGarage": "Loading garage layout ...",
 		"creatingReservation": "Making reservation ...",
 		"updatingReservation": "Updating reservation ...",
