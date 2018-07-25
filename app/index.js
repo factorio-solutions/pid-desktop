@@ -31,10 +31,10 @@ if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
   window.moment = require('moment')
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  const { whyDidYouUpdate } = require('why-did-you-update')
-  whyDidYouUpdate(React, { exclude: [ /^Connect/ ] })
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   const { whyDidYouUpdate } = require('why-did-you-update')
+//   whyDidYouUpdate(React, { exclude: [ /^Connect/ ] })
+// }
 
 render(
   <Provider store={store}>

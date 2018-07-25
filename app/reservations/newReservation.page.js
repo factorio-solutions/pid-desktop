@@ -272,9 +272,12 @@ class NewReservationPage extends Component {
                         label={t([ 'newReservation', 'price' ])}
                         value={`
                           ${state.price || ''}
-                          (${state.client_id && !state.paidByHost
-                            ? t([ 'newReservation', 'onClientsExpenses' ])
-                            : t([ 'newReservation', 'onUsersExpenses' ])
+                          (${state.client_id &&
+                            !newReservationActions.isPlaceGoInternal(state)
+                            ? t([ 'newReservation', 'longtermRent' ])
+                            : !state.paidByHost
+                              ? t([ 'newReservation', 'onClientsExpenses' ])
+                              : t([ 'newReservation', 'onUsersExpenses' ])
                           })
                         `}
                       />
