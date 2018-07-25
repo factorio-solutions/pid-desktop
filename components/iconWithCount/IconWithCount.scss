@@ -1,0 +1,51 @@
+@import '../../styles/app.components';
+
+.messages {
+  display:      inline-block;
+  position:     relative;
+  margin-right: 20px;
+  cursor:       pointer;
+
+  &.dark {
+    >.count {
+      border:    3px solid $black;
+      min-width: 12px;
+    }
+    
+    >i {
+      color:     $white;
+      font-size: 32px;
+    }
+  }
+
+  &.light {
+    >.count {
+      // border: 3px solid $white;
+      font-size: 9px;
+    }
+
+    >i {
+      color: $black;
+    }
+  }
+
+  >.count {
+    position:  absolute;
+    top:       -10px;
+    right:     -10px;
+    padding:   3px 5px;
+
+    border-radius: 50%;
+    background:    $red;
+    color:         $white;
+
+    font-family: 'Roboto Condensed';
+    font-size:   13px;
+    text-align:  center;
+  }
+
+  >i {
+    padding:        0 5px;
+    vertical-align: middle;
+  }
+}
