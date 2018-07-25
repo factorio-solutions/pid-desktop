@@ -25,3 +25,8 @@
   white-space:    nowrap;
   pointer-events: none;
 }
+
+.highlight {
+  border-bottom: 1px solid $red;
+  background:    rgba($red, .5);
+}

@@ -104,7 +104,7 @@ export function resendInvitation(client_id, user_id) {
 }
 
 export function setSecretary(client_id, user_id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const relation = {
       // "admin": false,
       secretary: true,
@@ -116,7 +116,7 @@ export function setSecretary(client_id, user_id) {
 }
 
 export function setInternal(client_id, user_id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const relation = {
       // "admin": false,
       host:      true,
