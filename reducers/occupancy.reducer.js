@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import {
   OCCUPANCY_SET_GARAGES,
   OCCUPANCY_SET_GARAGE,
@@ -9,18 +10,22 @@ import {
   OCCUPANCY_SET_DURATION,
   OCCUPANCY_SET_FROM,
   OCCUPANCY_SET_LOADING,
-  OCCUPANCY_SET_USER
+  OCCUPANCY_SET_USER,
+  OCCUPANCY_SET_NEW_RESERVATION,
+  OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE
 }  from '../actions/occupancy.actions'
 
 const defaultState = {
-  garages:    [],
-  garage:     undefined,
-  clients:    [],
-  client_ids: [],
-  duration:   'week',
-  from:       moment().startOf('day'),
-  loading:    false,
-  user:       undefined
+  garages:                [],
+  garage:                 undefined,
+  clients:                [],
+  client_ids:             [],
+  duration:               'week',
+  from:                   moment().startOf('day'),
+  loading:                false,
+  user:                   undefined,
+  newReservation:         undefined,
+  reservationNotPossible: false
 }
 
 
@@ -100,6 +105,17 @@ export default function occupancy(state = defaultState, action) {
     case OCCUPANCY_SET_USER:
       return { ...state,
         user: action.value
+      }
+
+    case OCCUPANCY_SET_NEW_RESERVATION:
+      return { ...state,
+        newReservation:         action.value,
+        reservationNotPossible: false
+      }
+
+    case OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE:
+      return { ...state,
+        reservationNotPossible: action.value
       }
 
     default:
