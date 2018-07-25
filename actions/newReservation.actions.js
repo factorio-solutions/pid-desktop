@@ -472,8 +472,8 @@ export function setInitialStore(id) {
       } else {
         const state = getState().newReservation
         dispatch(setReservation(undefined))
-        dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
-        dispatch(setTo(moment(state.from, MOMENT_DATETIME_FORMAT).add(state.minDuration, 'minutes').format(MOMENT_DATETIME_FORMAT)))
+        !state.from && dispatch(setFrom(moment().format(MOMENT_DATETIME_FORMAT)))
+        !state.to && dispatch(setTo(moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT).add(state.minDuration, 'minutes').format(MOMENT_DATETIME_FORMAT)))
         dispatch(formatFrom())
         dispatch(formatTo())
         if (users.length === 1) {
