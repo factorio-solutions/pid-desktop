@@ -272,7 +272,6 @@ export default class Table extends Component {
           originalValues
         />
       ].filter(o => o)
-      console.log(value.deleted_at, !!value.deleted_at)
 
       return [ <TableRow
         key={key}
