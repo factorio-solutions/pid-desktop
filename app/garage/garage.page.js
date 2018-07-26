@@ -133,7 +133,7 @@ class GaragePage extends Component {
                 </tr>
                 <tr>
                   <td>{t([ 'garages', 'licencePlate' ])}</td>
-                  <td>{reservation && reservation.car.licence_plate}</td>
+                  <td>{reservation && reservation.car && reservation.car.licence_plate}</td>
                 </tr>
                 <tr>
                   <td>{t([ 'garages', 'contract' ])}</td>

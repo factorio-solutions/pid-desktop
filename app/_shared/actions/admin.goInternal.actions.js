@@ -1,11 +1,12 @@
-import request       from '../helpers/requestPromise'
-import actionFactory from '../helpers/actionFactory'
-import { t }         from '../modules/localization/localization'
-// import * as nav      from '../helpers/navigation'
+import request             from '../helpers/requestPromise'
+import actionFactory       from '../helpers/actionFactory'
+import { t }               from '../modules/localization/localization'
+import minMaxDurationCheck from '../helpers/minMaxDurationCheck'
 
 import { setCustomModal } from './pageBase.actions'
 import { initModules } from './admin.modules.actions'
 import { GET_GARAGE, UPDATE_ALL_PLACES } from '../queries/admin.goInternal.queries.js'
+import { UPDATE_GARAGE_DURATIONS } from '../queries/admin.goPublic.queries.js'
 
 
 export const ADMIN_GO_INTERNAL_SET_GARAGE = 'ADMIN_GO_INTERNAL_SET_GARAGE'
@@ -19,6 +20,8 @@ export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_WEEK_PRICE = 'ADMIN_GO_INTERNAL_S
 export const ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE = 'ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE'
 export const ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE = 'ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE'
 export const ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT = 'ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT'
+export const ADMIN_GO_INTERNAL_SET_MIN_RESERVATION_DURATION = 'ADMIN_GO_INTERNAL_SET_MIN_RESERVATION_DURATION'
+export const ADMIN_GO_INTERNAL_SET_MAX_RESERVATION_DURATION = 'ADMIN_GO_INTERNAL_SET_MAX_RESERVATION_DURATION'
 
 
 const patternInputActionFactory = type => (value, valid) => ({ type, valid, value })
@@ -34,6 +37,26 @@ export const setExponentialWeekPrice = patternInputActionFactory(ADMIN_GO_INTERN
 export const setExponentialMonthPrice = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_EXPONENTIAL_MONTH_PRICE)
 export const setWeekendPricing = patternInputActionFactory(ADMIN_GO_INTERNAL_SET_WEEKEND_PRICE)
 export const toggleHighlight = actionFactory(ADMIN_GO_INTERNAL_TOGGLE_HIGHLIGHT)
+export const setMinReservationDuration = actionFactory(ADMIN_GO_INTERNAL_SET_MIN_RESERVATION_DURATION)
+export const setMaxReservationDuration = actionFactory(ADMIN_GO_INTERNAL_SET_MAX_RESERVATION_DURATION)
+
+
+function checkMinMaxReservationDuration(changeMin) {
+  return (dispatch, getState) => {
+    const state = getState().adminGoInternal
+
+    const { newMin, newMax } = minMaxDurationCheck(state.minReservationDuration, state.maxReservationDuration, changeMin)
+    dispatch(setMinReservationDuration(newMin))
+    dispatch(setMaxReservationDuration(newMax))
+  }
+}
+
+export function checkMinReservationDuration() {
+  return dispatch => dispatch(checkMinMaxReservationDuration(false))
+}
+export function checkMaxReservationDuration() {
+  return dispatch => dispatch(checkMinMaxReservationDuration(true))
+}
 
 
 export function initGoInternal() {
@@ -42,6 +65,8 @@ export function initGoInternal() {
     .then(data => {
       dispatch(setGarage(data.garage))
       dispatch(setCurrencies(data.currencies))
+      dispatch(setMinReservationDuration(data.garage.min_reservation_duration_go_internal))
+      dispatch(setMaxReservationDuration(data.garage.max_reservation_duration_go_internal))
 
       const state = getState().adminGoInternal
       data.garage.floors
@@ -70,7 +95,7 @@ export function disableGoInternal() {
   }
 }
 
-const parsePrice = value => parseFloat((value + '' || '').replace(',', '.')) || undefined
+export const parsePrice = value => parseFloat((value + '' || '').replace(',', '.')) || undefined
 
 export function submitGoInternal() {
   return (dispatch, getState) => {
@@ -99,6 +124,16 @@ export function submitGoInternal() {
       // nav.to(`/${getState().pageBase.garage}/admin/modules`)
       dispatch(initModules())
     })
+
+    request(
+      UPDATE_GARAGE_DURATIONS,
+      { id:     getState().pageBase.garage,
+        garage: {
+          min_reservation_duration_go_internal: state.minReservationDuration,
+          max_reservation_duration_go_internal: state.maxReservationDuration
+        }
+      }
+    )
   }
 }
 

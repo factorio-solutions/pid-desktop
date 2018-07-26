@@ -7,6 +7,7 @@ import GarageLayout    from '../../_shared/components/garageLayout/GarageLayout'
 import Form            from '../../_shared/components/form/Form'
 import Dropdown        from '../../_shared/components/dropdown/Dropdown'
 import PatternInput    from '../../_shared/components/input/PatternInput'
+import Input           from '../../_shared/components/input/Input'
 
 import { t }                from '../../_shared/modules/localization/localization'
 import * as goPublicActions from '../../_shared/actions/admin.goPublic.actions'
@@ -62,6 +63,28 @@ class GoPublicPage extends Component {
               submitable={isSubmitable()}
               onHighlight={actions.toggleHighlight}
             >
+              <Input
+                onChange={actions.setMinReservationDuration}
+                value={state.minReservationDuration === null ? '' : String(state.minReservationDuration)}
+                label={t([ 'newPricing', 'minReservationDuration' ])}
+                error={t([ 'newPricing', 'durationErr' ])}
+                placeholder={t([ 'newPricing', 'minReservationDurationPlaceholder' ])}
+                type="number"
+                min="15"
+                step="15"
+                onBlur={actions.checkMinReservationDuration}
+              />
+              <Input
+                onChange={actions.setMaxReservationDuration}
+                value={state.maxReservationDuration}
+                label={t([ 'newPricing', 'maxReservationDuration' ])}
+                error={t([ 'newPricing', 'durationErr' ])}
+                placeholder={t([ 'newPricing', 'maxReservationDurationPlaceholder' ])}
+                type="number"
+                min="15"
+                step="15"
+                onBlur={actions.checkMaxReservationDuration}
+              />
               {state.places.length === 0 && <div className={styles.dimmer}>{t([ 'newPricing', 'selectPlace' ])}</div>}
               <div>
                 <Dropdown

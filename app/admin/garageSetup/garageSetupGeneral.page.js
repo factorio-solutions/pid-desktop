@@ -60,7 +60,6 @@ class GarageSetupGeneralPage extends Component {
 
 
     const checkSubmitable = () => {
-      if (state.dic && !state.ic) return false
       if (state.tarif_id === undefined) return false
       if (state.name === '') return false
       if (state.company === '') return false
@@ -93,33 +92,6 @@ class GarageSetupGeneralPage extends Component {
           value={state.name}
           placeholder={t([ 'newGarage', 'placeholder' ])}
           highlight={state.highlight}
-          readOnly={readOnly}
-        />
-        <Input
-          onChange={actions.setIc}
-          label={t([ 'newClient', 'IC' ])}
-          error={t([ 'newClient', 'invalidIC' ])}
-          value={state.ic}
-          placeholder={t([ 'newClient', 'ICplaceholder' ])}
-          highlight={state.dic && state.highlight}
-          onBlur={actions.loadAddressFromIc}
-          readOnly={readOnly}
-        />
-        <Input
-          onChange={actions.setCompanyName}
-          label={t([ 'newGarage', 'company' ]) + ' *'}
-          error={t([ 'newGarage', 'invalidCompany' ])}
-          value={state.company}
-          placeholder={t([ 'newGarage', 'placeholderCompany' ])}
-          highlight={state.highlight}
-          readOnly={readOnly}
-        />
-        <Input
-          onChange={actions.setDic}
-          label={t([ 'newClient', 'DIC' ])}
-          error={t([ 'newClient', 'invalidDIC' ])}
-          value={state.dic}
-          placeholder={t([ 'newClient', 'DICplaceholder' ])}
           readOnly={readOnly}
         />
 

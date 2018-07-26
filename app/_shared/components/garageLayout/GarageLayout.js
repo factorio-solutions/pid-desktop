@@ -177,10 +177,11 @@ class GarageLayout extends Component {
     .forEach(place => {
       const placeRect = currentSvg.getElementById('Place' + place.label)
       if (placeRect) {
-        if (!Array.isArray(place.group)) { // colorize Place rect
-          placeRect && placeRect.classList.add('hasColorGroup')
-          placeRect && placeRect.setAttribute('style', `fill: ${assignColors[Array.isArray(place.group) ? place.group[0] : place.group]};`)
-        } else if (place.group.length >= 5) { // render circle with count in it
+        if (!Array.isArray(place.group)) { // colorize Place rect 
+          place.group = [ place.group ]
+        }
+
+        if (place.group.length >= 5) { // render circle with count in it
           const center = this.calculateCenter(placeRect)
           const y = GROUP_OFFSET_Y * 2
           const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle') // circle for count
@@ -191,7 +192,6 @@ class GarageLayout extends Component {
           circle.classList.add('groupCircle')
           circle.classList.add(styles.text)
           placeRect.parentNode.appendChild(circle)
-  
           const count = document.createElementNS('http://www.w3.org/2000/svg', 'text') // text with count
           count.setAttribute('x', center.x)
           count.setAttribute('y', center.y + y)
@@ -210,7 +210,6 @@ class GarageLayout extends Component {
             -GROUP_OFFSET_X / 2 :
             GROUP_OFFSET_X / 2
             const y = i >= 2 ? GROUP_OFFSET_Y * 2 : GROUP_OFFSET_Y
-  
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
             circle.setAttribute('style', `fill: ${assignColors[group]};`)
             circle.classList.add('groupCircle')
@@ -272,6 +271,7 @@ class GarageLayout extends Component {
 
   scanPlacesAddLabels() { // add labels to all places
     const elements = document.getElementsByTagName('svg') // go trough all svgs - can be multiple on page
+    // const elements = document.getElementsByClassName('svgFromText') // go trough all svgs - can be multiple on page
 
     for (let i = 0; i < elements.length; i++) {
       const currentSvg = elements[i]
@@ -303,13 +303,6 @@ class GarageLayout extends Component {
         // if (Object.keys(assignColors).length) this.colorizeGroupedPlaces(currentSvg, assignColors, places)
 
         if (Object.keys(assignColors).length) {
-          // let places = []
-          // if (this.props.unfold) {
-          //   const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
-          //   places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
-          // } else {
-          //   places = floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
-          // }
           const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
           const places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
           this.colorizeGroupedPlaces(currentSvg, assignColors, places)

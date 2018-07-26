@@ -57,7 +57,6 @@ function createPaginationVariables(getState) {
 
 export function initReservations() {
   return (dispatch, getState) => {
-    dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     dispatch(resetPagination())
 
     requestPromise(
@@ -69,11 +68,10 @@ export function initReservations() {
       dispatch(setReservations(response.mobile_reservations))
       dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
 
-      dispatch(setCustomModal())
       dispatch(hideSplashscreen())
-    }).catch(
-      e => dispatch(logout())
-    )
+    }).catch(() => {
+      dispatch(hideSplashscreen())
+    })
   }
 }
 
@@ -149,6 +147,9 @@ export function openGarageViaPhone(reservationId, gateId) {
       } else {
         dispatch(setOpened(false, 'No reservation found', reservationId, gateId))
       }
+    })
+    .catch(() => {
+      dispatch(setOpened(false, 'No connection', reservationId, gateId))
     })
   }
 }

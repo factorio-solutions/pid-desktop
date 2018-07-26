@@ -12,6 +12,8 @@ import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import DatetimeInput      from '../../_shared/components/input/DatetimeInput'
+import Modal              from '../../_shared/components/modal/Modal'
+import { valueAddedTax }  from '../../_shared/helpers/calculatePrice'
 
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
@@ -29,7 +31,9 @@ class NewContractPage extends Component {
   }
 
   componentDidMount() {
-    (this.props.params.contract_id || this.props.pageBase.garage) && this.props.actions.initContract(this.props.params.contract_id)
+    if (this.props.params.contract_id || this.props.pageBase.garage) {
+      this.props.actions.initContract(this.props.params.contract_id)
+    }
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
@@ -52,14 +56,40 @@ class NewContractPage extends Component {
 
   handleTo = (value, valid) => valid && this.props.actions.setTo(value)
 
-  submitForm = () => this.checkSubmitable() && this.props.actions.submitNewContract(this.props.params.contract_id)
+  submitForm = () => {
+    if (this.checkSubmitable()) {
+      const { state, actions } = this.props
+      const placeIds = state.places.map(place => place.id)
+      const removedPlaces = state.originalPlaces.filter(place => !placeIds.includes(place.id))
+
+      removedPlaces.length ?
+        actions.setRemoveReservationsModal(true) :
+        actions.submitNewContract(this.props.params.contract_id)
+    }
+  }
+
+  onRemoveReservationsClick = () => this.setRemoveReservationsAndSubmit(true)
+  onDoNotRemoveReservationsClick = () => this.setRemoveReservationsAndSubmit(false)
+
+  setRemoveReservationsAndSubmit = action => {
+    const { actions } = this.props
+    actions.setRemoveReservations(action)
+    actions.submitNewContract(this.props.params.contract_id)
+  }
 
   goBack = () => {
     this.props.actions.eraseForm()
     nav.to(`/${this.props.pageBase.garage}/admin/clients`)
   }
 
-  prepareClients = client => ({ label: client.name, onClick: () => this.props.actions.setClient(client.id) })
+  prepareClients = client => ({
+    label:   client.name,
+    onClick: () => {
+      const { state, actions } = this.props
+      actions.setClient(client.id)
+      actions.getGarage(state.garage.id)
+    }
+  })
 
   prepareCurrencies = currency => ({ label: currency.code, onClick: () => this.props.actions.setCurrency(currency.id) })
 
@@ -76,76 +106,99 @@ class NewContractPage extends Component {
 
     const makeButton = (place, index) => <CallToActionButton label={place.label} onClick={() => { state.garage && state.garage.is_admin && actions.removePlace(index) }} />
 
-    const placeSelected = floor => ({
-      ...floor,
-      places: floor.places.map(place => ({
-        ...place,
-        group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
-        selected: (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
-        tooltip:  (<table className={styles.tooltip}>
-          <tbody>
-            <tr>
-              <td>{t([ 'newContract', 'place' ])}</td>
-              <td>{place.label}</td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'usedBy' ])}</td>
-              <td>
-                {state.garage.is_public && place.pricing && !place.contracts.length ?
-                  t([ 'newContract', 'goPublic' ]) :
+    const placeSelected = floor => {
+      const vat = state.garage.dic ? state.garage.vat : 0
+      return {
+        ...floor,
+        places: floor.places.map(place => ({
+          ...place,
+          group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
+          selected: (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
+          tooltip:  (<table className={styles.tooltip}>
+            <tbody>
+              <tr>
+                <td>{t([ 'newContract', 'place' ])}</td>
+                <td>{place.label}</td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'usedBy' ])}</td>
+                <td>
+                  {state.garage.is_public && place.pricing && !place.contracts.length ?
+                    t([ 'newContract', 'goPublic' ]) :
+                    place.contracts
+                      .filter(this.currentContractsFilter)
+                      .map(contract => contract.client.name)
+                      .filter((group, index, arr) => arr.indexOf(group) === index)
+                      .join(' | ')
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'rentyType' ])}</td>
+                <td>
+                  {place.contracts.length ?
+                    t([ 'newContract', 'longterm' ]) :
+                    place.pricing ?
+                      t([ 'newContract', 'shortterm' ]) :
+                      ''
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'longtermPrice' ])}</td>
+                <td>{
                   place.contracts
-                    .filter(this.currentContractsFilter)
-                    .map(contract => contract.client.name)
-                    .filter((group, index, arr) => arr.indexOf(group) === index)
-                    .join(', ')
+                    .filter((contract, index, arr) => arr.findIndex(c => c.client.name === contract.client.name) === index)
+                    .map(contract => `${valueAddedTax(contract.rent.price, vat)} ${contract.rent.currency.symbol}`)
+                    .join(' | ')
                 }
-              </td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'rentyType' ])}</td>
-              <td>
-                {place.contracts.length ?
-                  t([ 'newContract', 'longterm' ]) :
-                  place.pricing ?
-                    t([ 'newContract', 'shortterm' ]) :
-                    ''
-                }
-              </td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'longtermPrice' ])}</td>
-              <td>{
-                place.contracts
-                  .map(contract => `${contract.rent.price} ${contract.rent.currency.symbol}`)
-                  .filter((group, index, arr) => arr.indexOf(group) === index)
-                  .join(', ')
-              }
-              </td>
-            </tr>
-            <tr>
-              <td>{t([ 'newContract', 'shorttermPrice' ])}</td>
-              <td>
-                <table className={styles.tooltip}>
-                  <tbody>
-                    {place.pricing && [
-                      place.pricing.exponential_12h_price && [ t([ 'garages', '12HourPrice' ]), `${place.pricing.exponential_12h_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.exponential_day_price && [ t([ 'garages', 'dayPrice' ]), `${place.pricing.exponential_day_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.exponential_week_price && [ t([ 'garages', 'weekPrice' ]), `${place.pricing.exponential_week_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${place.pricing.exponential_month_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${place.pricing.flat_price} ${place.pricing.currency.symbol}` ],
-                      place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${place.pricing.weekend_price} ${place.pricing.currency.symbol}` ]
-                    ].filter(o => o).reduce((arr, o) => [ ...arr, <tr><td>{o[0]}</td><td>{o[1]}</td></tr> ], [])}
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>)
-      }))
-    })
+                </td>
+              </tr>
+              <tr>
+                <td>{t([ 'newContract', 'shorttermPrice' ])}</td>
+                <td>
+                  <table className={styles.tooltip}>
+                    <tbody>
+                      {place.pricing && [
+                        place.pricing.exponential_12h_price && [ t([ 'garages', '12HourPrice' ]), `${valueAddedTax(place.pricing.exponential_12h_price, vat)} ${place.pricing.currency.symbol}` ],
+                        place.pricing.exponential_day_price && [ t([ 'garages', 'dayPrice' ]), `${valueAddedTax(place.pricing.exponential_day_price, vat)} ${place.pricing.currency.symbol}` ],
+                        place.pricing.exponential_week_price && [ t([ 'garages', 'weekPrice' ]), `${valueAddedTax(place.pricing.exponential_week_price, vat)} ${place.pricing.currency.symbol}` ],
+                        place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${valueAddedTax(place.pricing.exponential_month_price, vat)} ${place.pricing.currency.symbol}` ],
+                        place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${valueAddedTax(place.pricing.flat_price, vat)} ${place.pricing.currency.symbol}` ],
+                        place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${valueAddedTax(place.pricing.weekend_price, vat)} ${place.pricing.currency.symbol}` ]
+                      ].filter(o => o).reduce((arr, o) => [ ...arr, <tr><td>{o[0]}</td><td>{o[1]}</td></tr> ], [])}
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>)
+        }))
+      }
+    }
 
     return (
       <PageBase>
+        <Modal show={state.removedReservationsModal}>
+          <div>
+            <CallToActionButton
+              label={t([ 'newContract', 'removeReservations' ])}
+              onClick={this.onRemoveReservationsClick}
+            />
+          </div>
+          <div>
+            <CallToActionButton
+              label={t([ 'newContract', 'doNotRemoveReservations' ])}
+              onClick={this.onDoNotRemoveReservationsClick}
+            />
+          </div>
+          <div className={styles.back}>
+            <RoundButton
+              content={<i className="fa fa-chevron-left" aria-hidden="true" />}
+              onClick={actions.setRemoveReservationsModal}
+            />
+          </div>
+        </Modal>
         <div className={styles.flex}>
           <div>
             <Form onSubmit={state.garage && state.garage.is_admin ? this.submitForm : this.goBack} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
@@ -165,7 +218,13 @@ class NewContractPage extends Component {
                   <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleAddClient} type="remove" />
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t([ 'newContract', 'selectClient' ]) + ' *'} content={state.clients.map(this.prepareClients)} style="light" selected={selectedClient} highlight={state.highlight} />
+                  <Dropdown
+                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
+                    content={state.clients.map(this.prepareClients)}
+                    style="light"
+                    selected={selectedClient}
+                    highlight={state.highlight}
+                  />
                   <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleAddClient} type="action" />
                 </div>)
               }
@@ -234,7 +293,11 @@ class NewContractPage extends Component {
           </div>
 
           <div>
-            <GarageLayout floors={state.garage ? state.garage.floors.map(placeSelected) : []} showEmptyFloors onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}} />
+            <GarageLayout
+              floors={state.garage ? state.garage.floors.map(placeSelected) : []}
+              onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}}
+              showEmptyFloors
+            />
           </div>
         </div>
       </PageBase>

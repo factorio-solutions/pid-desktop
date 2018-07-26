@@ -27,6 +27,13 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     has_sms_api_token
     is_sms_api_token_active
     is_secretary
+    is_time_credit_active
+    current_users_current_time_credit: current_time_credit
+    current_time_credit(user_id: $user_id)
+    time_credit_price
+    time_credit_currency
+    min_reservation_duration
+    max_reservation_duration
     sms_templates {
       name
       template
@@ -60,6 +67,10 @@ export const GET_USER = `query Query($id: Id!) {
 export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id, $reservation_id: Id) {
   garage(id: $id) {
     id
+    min_reservation_duration_go_public
+    max_reservation_duration_go_public
+    min_reservation_duration_go_internal
+    max_reservation_duration_go_internal
     name
     vat
     dic
@@ -70,6 +81,7 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       raiffeisenbank_is_active
       csob_is_active
       paypal_is_active
+      csob_merchant_id
     }
     address {
       line_1
@@ -130,6 +142,13 @@ export const GET_GARAGE_DETAILS_LIGHT = `query ($id: Id!, $begins_at: Datetime!,
     }
   }
 }
+`
+
+export const GET_GARAGE_FREE_INTERVAL = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $user_id: Id, $client_id: Id, $reservation_id: Id) {
+  garage(id: $id) {
+    greatest_free_interval(begins_at: $begins_at, ends_at: $ends_at, user_id: $user_id, client_id: $client_id, reservation_id: $reservation_id)
+  }
+} 
 `
 
 // create reservation mutation

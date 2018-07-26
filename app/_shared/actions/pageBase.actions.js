@@ -190,7 +190,10 @@ function contains(string, text) {
 export function fetchCurrentUser() {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(setCurrentUser(response.data.current_user))
+      const user = response.data.current_user
+      dispatch(setCurrentUser({ ...user,
+        merchant_ids: user.csob_payment_templates.map(template => template.merchant_id)
+      }))
       if (response.data.current_user.language !== translate.getLocale()) nav.changeLanguage(response.data.current_user.language)
     }
     request(onSuccess, GET_CURRENT_USER)
@@ -494,6 +497,15 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+      case (contains(hash, 'garageSetup') && contains(hash, 'legalDocuments')):
+        if (state.isGarageAdmin) {
+          secondarySelected = 'garageSetup'
+          hint = t([ 'pageBase', 'newGarageLegalDocumentsHint' ])
+          hintVideo = 'https://www.youtube.com/'
+        } else {
+          nav.to('/dashboard') // not accessible for this user
+        }
+        break
       case (contains(hash, 'garageSetup') && contains(hash, 'users')):
         if (state.isGarageAdmin || state.isGarageManager) {
           secondarySelected = 'garageSetup'
@@ -580,6 +592,7 @@ export function toAdmin() {
           nav.to('/dashboard') // not accessible for this user
         }
         break
+
     }
 
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo))

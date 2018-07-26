@@ -14,9 +14,16 @@
 }
 
 .dropdownsContainer {
+  float:      right;
+  text-align: left;
+
   >div {
     display: inline-block;
     margin-right: 5px;
+
+    >button {
+      margin-top: 6px;
+    }
   }
 }
 

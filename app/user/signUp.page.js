@@ -12,6 +12,7 @@ import Localization from '../_shared/components/localization/Localization'
 import Checkbox     from '../_shared/components/checkbox/Checkbox'
 
 import * as nav           from '../_shared/helpers/navigation'
+import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t, getLanguage } from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
@@ -22,7 +23,7 @@ const MINIMUM_PASSWORD_LENGTH = 4
 
 const NAME_REGEX = '^(?!\\s*$).+'
 const PHONE_REGEX = '\\+[\\d]{2,4}[\\d\\s]{3,}'
-const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}$'
+const EMAIL_REGEX = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}$'
 
 
 class SignUpPage extends Component {
@@ -110,6 +111,7 @@ class SignUpPage extends Component {
                 error={t([ 'signup_page', 'emailInvalid' ])}
                 pattern={EMAIL_REGEX}
                 value={state.email.value}
+                normalizeInput={normalizeEmail}
               />
               <PatternInput
                 onEnter={this.onSubmit}

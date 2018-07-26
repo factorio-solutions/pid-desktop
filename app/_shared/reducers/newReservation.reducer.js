@@ -38,9 +38,21 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
   NEW_RESERVATION_SET_PAYMENT_METHOD,
+  NEW_RESERVATION_SET_PREFERED_GARAGE_ID,
+  NEW_RESERVATION_SET_PREFERED_PLACE_ID,
+  NEW_RESERVATION_SET_CSOB_ONE_CLICK,
+  NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD,
 
-  NEW_RESERVATION_CLEAR_FORM
+  NEW_RESERVATION_SET_MIN_DURATION,
+  NEW_RESERVATION_SET_MAX_DURATION,
+
+  NEW_RESERVATION_CLEAR_FORM,
+
+  NEW_RESERVATION_SET_FREE_INTERVAL,
+  NEW_RESERVATION_SET_TIME_CREDIT_PRICE
 }  from '../actions/newReservation.actions'
+
+const MIN_RESERVATION_DURATION = 30 // minutes
 
 const defaultState = {
   user:           undefined, // id of selected user reservation is for
@@ -65,10 +77,11 @@ const defaultState = {
 
   garage: undefined, // loaded garage details // GARAGE ID IS IN HERE
 
-  from:     '',
-  to:       '',
-  place_id: undefined, // if of selected place
-  price:    undefined,
+  from:            '',
+  to:              '',
+  place_id:        undefined, // if of selected place
+  price:           undefined,
+  timeCreditPrice: undefined,
 
   durationDate: false, // set duration or end of parking?
   loading:      false,
@@ -79,7 +92,18 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod: ''
+  paymentMethod:    '',
+
+  preferedGarageId: undefined,
+  preferedPlaceId:  undefined,
+
+  csobOneClick:        false,
+  csobOneClickNewCard: false,
+
+  minDuration: MIN_RESERVATION_DURATION,
+  maxDuration: null,
+
+  freeInterval: ''
 }
 
 function placeLabel(state) {
@@ -321,9 +345,56 @@ export default function newReservation(state = defaultState, action) {
         paymentMethod: action.value
       }
 
+    case NEW_RESERVATION_SET_PREFERED_GARAGE_ID:
+      return {
+        ...state,
+        preferedGarageId: action.value
+      }
+
+    case NEW_RESERVATION_SET_PREFERED_PLACE_ID:
+      return {
+        ...state,
+        preferedPlaceId: action.value
+      }
+
+    case NEW_RESERVATION_SET_CSOB_ONE_CLICK:
+      return {
+        ...state,
+        csobOneClick: action.value
+      }
+
+    case NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD:
+      return {
+        ...state,
+        csobOneClickNewCard: action.value
+      }
+
+    case NEW_RESERVATION_SET_MIN_DURATION:
+      return {
+        ...state,
+        minDuration: action.value || MIN_RESERVATION_DURATION
+      }
+
+    case NEW_RESERVATION_SET_MAX_DURATION:
+      return {
+        ...state,
+        maxDuration: action.value || null
+      }
 
     case NEW_RESERVATION_CLEAR_FORM:
       return defaultState
+
+    case NEW_RESERVATION_SET_FREE_INTERVAL:
+      return {
+        ...state,
+        freeInterval: action.value
+      }
+
+    case NEW_RESERVATION_SET_TIME_CREDIT_PRICE:
+      return {
+        ...state,
+        timeCreditPrice: action.value
+      }
 
     default:
       return state

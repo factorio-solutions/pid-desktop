@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PureComponent, PropTypes } from 'react'
 
 import upload from '../../helpers/upload'
 
@@ -7,13 +7,14 @@ import LabeledRoundButton from './LabeledRoundButton.js'
 import styles from './UploadButton.scss'
 
 
-export default class UploadButton extends Component {
+export default class UploadButton extends PureComponent {
   static propTypes = {
     onUpload:  PropTypes.function.isRequired,
     query:     PropTypes.string.isRequired,
     variables: PropTypes.object,
     label:     PropTypes.string.isRequired,
     type:      PropTypes.string,
+    accept:    PropTypes.string,
     state:     PropTypes.number
   }
 
@@ -22,28 +23,50 @@ export default class UploadButton extends Component {
     this.state = { uploading: false }
   }
 
+  onFileSelected = event => {
+    const { query, variables } = this.props
+    this.setState({ uploading: true })
+    upload(this.uploadFinished, event, query, variables)
+  }
+
+  uploadFinished = url => {
+    const { onUpload } = this.props
+    this.setState({ uploading: false })
+    const fileName = this.fileInput.value.replace(/^.*[\\\/]/, '')
+    url && onUpload(url, fileName)
+  }
+
   render() {
-    const { onUpload, query, variables, label, type, state } = this.props
+    const { label, type, state, accept } = this.props
 
-    const uploadFinished = url => {
-      this.setState({ uploading: false })
-      url && onUpload(url)
-    }
-
-    const onFileSelected = event => {
-      this.setState({ uploading: true })
-      upload(uploadFinished, event, query, variables)
-    }
-
-    return (<span>
-      <input type="file" ref={input => { this.fileInput = input }} onChange={onFileSelected} className={styles.hide} />
-      <LabeledRoundButton
-        label={label}
-        type={type}
-        state={state}
-        onClick={() => { this.fileInput.click() }}
-        content={<i className={`fa ${this.state.uploading ? 'fa-cloud-upload' : 'fa-file-text-o'} ${this.state.uploading && styles.pulsing}`} aria-hidden="true" />}
+    const buttonContent = (
+      <i
+        className={`fa
+          ${this.state.uploading ? 'fa-cloud-upload' : 'fa-file-text-o'}
+          ${this.state.uploading && styles.pulsing}
+        `}
+        aria-hidden="true"
       />
-    </span>)
+    )
+
+    return (
+      <span>
+        <input
+          type="file"
+          ref={input => { this.fileInput = input }}
+          onChange={this.onFileSelected}
+          className={styles.hide}
+          accept={accept}
+        />
+
+        <LabeledRoundButton
+          label={label}
+          type={type}
+          state={state}
+          onClick={() => type !== 'disabled' && this.fileInput.click()}
+          content={buttonContent}
+        />
+      </span>
+    )
   }
 }

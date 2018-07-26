@@ -20,6 +20,9 @@ import {
   ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS,
   ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM
 } from '../actions/newContract.actions'
 
@@ -41,7 +44,12 @@ const defaultState = {
   places:           [],
   highlight:        false,
   indefinitly:      false,
-  securityInterval: 0
+  securityInterval: 0,
+
+  // determining what should happen to reservations of removed places
+  originalPlaces:           [],
+  removedReservationsModal: false,
+  removeReservations:       false
 }
 
 
@@ -154,6 +162,24 @@ export default function newContract(state = defaultState, action) {
       return {
         ...state,
         securityInterval: (action.value || 0) > 60 ? 60 : (action.value || 0)
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES:
+      return {
+        ...state,
+        originalPlaces: action.value
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL:
+      return {
+        ...state,
+        removedReservationsModal: !!action.value
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS:
+      return {
+        ...state,
+        removeReservations: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM:

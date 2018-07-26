@@ -11,6 +11,7 @@ export const MOBILE_GET_RESERVATIONS_QUERY = `query MobileReservations($count: I
       is_secretary
     }
     place {
+      id
       label
       floor {
         label

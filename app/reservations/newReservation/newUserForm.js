@@ -6,6 +6,7 @@ import Input        from '../../_shared/components/input/Input'
 import PatternInput from '../../_shared/components/input/PatternInput'
 import RoundButton  from '../../_shared/components/buttons/RoundButton'
 
+
 import {
   setHostName,
   setHostPhone,
@@ -16,11 +17,13 @@ import {
 
 import { AVAILABLE_LANGUAGES } from '../../routes'
 import { t }                   from '../../_shared/modules/localization/localization'
+import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
 
-import { languagesSelector,
-         searchField,
-         resetButton
-       } from '../newReservation.page.scss'
+import {
+  languagesSelector,
+  searchField,
+  resetButton
+} from '../newReservation.page.scss'
 
 
 class NewUserForm extends Component {
@@ -83,10 +86,11 @@ class NewUserForm extends Component {
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
-          pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
           value={(state.email.value)}
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
+          normalizeInput={normalizeEmail}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
@@ -105,15 +109,11 @@ class NewUserForm extends Component {
           readOnly={!editable}
           onChange={actions.setCarLicencePlate}
           value={state.carLicencePlate}
-          label={`
-            ${t([ 'newReservation', 'licencePlate' ])}
-            ${state.user.id !== -2 ? ' *' : ''}
-          `}
+          label={t([ 'newReservation', 'licencePlate' ])}
           error={t([ 'newReservation', 'licencePlateInvalid' ])}
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
-          highlight={state.highlight && state.user.id !== -2}
         />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>

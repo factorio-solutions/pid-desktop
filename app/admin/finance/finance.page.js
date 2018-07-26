@@ -8,7 +8,7 @@ import TabButton       from '../../_shared/components/buttons/TabButton'
 import RentsTab        from './tabs/rents'
 import PaymentGatesTab from './tabs/paymentGates'
 import SettingsTab     from './tabs/settings'
-import BillingAddress     from './tabs/billingAddress'
+import BillingAddress  from './tabs/billingAddress'
 
 import { t }               from '../../_shared/modules/localization/localization'
 import * as financeActions from '../../_shared/actions/admin.finance.actions'

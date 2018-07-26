@@ -1,6 +1,8 @@
 import React from 'react'
-import styles from './RoundButton.scss'
+
 import Button from './Button.js'
+
+import styles from './RoundButton.scss'
 
 // extends Button.js
 // type = undefined => default black, 'action' => blue, 'confirm' => green, 'remove' => red
@@ -8,7 +10,9 @@ import Button from './Button.js'
 // question = confirmation text for remove type button
 
 
-export default function RoundButton({ content, onClick, onDisabledClick, type, state, size, question }) {
+export default function RoundButton(props) {
+  const { state, size, type } = props
+
   const style = [
     styles.button,
     styles[state],
@@ -17,6 +21,19 @@ export default function RoundButton({ content, onClick, onDisabledClick, type, s
   ].join(' ')
 
   return (
-    <Button content={content} onClick={onClick} type={type} state={state} style={style} question={question} onDisabledClick={onDisabledClick} />
+    <Button
+      {...props}
+      style={style}
+    />
   )
+}
+
+RoundButton.propTypes = {
+  content:         React.PropTypes.object,
+  onClick:         React.PropTypes.func,
+  onDisabledClick: React.PropTypes.func,
+  type:            React.PropTypes.string,
+  state:           React.PropTypes.string,
+  size:            React.PropTypes.string,
+  question:        React.PropTypes.string
 }

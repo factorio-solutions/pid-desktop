@@ -10,6 +10,7 @@ import PatternInput from  '../_shared/components/input/PatternInput'
 import Form         from '../_shared/components/form/Form'
 
 import * as nav                  from '../_shared/helpers/navigation'
+import normalizeEmail            from '../_shared/helpers/normalizeEmail'
 import { t }                     from '../_shared/modules/localization/localization'
 import * as resetPasswordactions from '../_shared/actions/resetPassword.actions'
 
@@ -53,6 +54,7 @@ class ResetPasswordPage extends Component {
               error={t([ 'resetPassword', 'emailInvalid' ])}
               pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
               value={state.email.value}
+              normalizeInput={normalizeEmail}
             />
           </Form>
         </div>

@@ -13,6 +13,7 @@ import RoundButton  from '../_shared/components/buttons/RoundButton'
 import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav           from '../_shared/helpers/navigation'
+import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t }              from '../_shared/modules/localization/localization'
 import * as loginActions  from '../_shared/actions/login.actions'
 
@@ -73,6 +74,7 @@ class LoginPage extends Component {
               placeholder={t([ 'login_page', 'emailPlaceholder' ])}
               value={state.email.value}
               onEnter={onSubmit}
+              normalizeInput={normalizeEmail}
             />
             <PatternInput
               onChange={actions.setPassword}
