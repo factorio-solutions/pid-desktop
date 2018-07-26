@@ -44,21 +44,7 @@ export const GET_CURRENT_USER = `{
 // update UserSettings
 export const UPDATE_CURRENT_USER = `mutation UpdateUser($user: UserInput!, $id: Id!) {
   update_user(user: $user, id: $id) {
-    full_name
-    pid_admin
     id
-    email
-    phone
-    hint
-    garage_admin
-    receptionist
-    security
-    client_admin
-    secretary
-    has_garages
-    has_account
-    has_client
-    hide_public_garages
   }
 }
 `
