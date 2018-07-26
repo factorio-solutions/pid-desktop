@@ -1,5 +1,8 @@
 
 export const GET_CURRENT_USER = `{
+  occupancy_garages {
+    id
+  }
   current_user {
     language
     full_name
