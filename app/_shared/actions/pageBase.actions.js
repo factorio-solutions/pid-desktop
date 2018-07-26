@@ -191,7 +191,8 @@ export function fetchCurrentUser() {
   return dispatch => {
     const onSuccess = response => {
       const user = response.data.current_user
-      dispatch(setCurrentUser({ ...user,
+      dispatch(setCurrentUser({
+        ...user,
         merchant_ids:      user.csob_payment_templates.map(template => template.merchant_id),
         occupancy_garages: response.data.occupancy_garages
       }))
