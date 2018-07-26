@@ -271,7 +271,7 @@ class NewReservationPage extends Component {
                       <Uneditable
                         label={t([ 'newReservation', 'price' ])}
                         value={`
-                          ${state.price || ''}
+                          ${(newReservationActions.isPlaceGoInternal(state) && state.price) || ''}
                           (${state.client_id &&
                             !newReservationActions.isPlaceGoInternal(state)
                             ? t([ 'newReservation', 'longtermRent' ])
