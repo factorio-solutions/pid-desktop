@@ -271,13 +271,14 @@ class NewReservationPage extends Component {
                       <Uneditable
                         label={t([ 'newReservation', 'price' ])}
                         value={`
-                          ${(newReservationActions.isPlaceGoInternal(state) && state.price) || ''}
-                          (${state.client_id &&
-                            !newReservationActions.isPlaceGoInternal(state)
-                            ? t([ 'newReservation', 'longtermRent' ])
-                            : !state.paidByHost
-                              ? t([ 'newReservation', 'onClientsExpenses' ])
-                              : t([ 'newReservation', 'onUsersExpenses' ])
+                          ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
+                          (${!state.client_id
+                            ? t([ 'newReservation', 'onUsersExpenses' ])
+                            : !newReservationActions.isPlaceGoInternal(state)
+                              ? t([ 'newReservation', 'longtermRent' ])
+                              : state.paidByHost
+                                ? t([ 'newReservation', 'onUsersExpenses' ])
+                                : t([ 'newReservation', 'onClientsExpenses' ])
                           })
                         `}
                       />
