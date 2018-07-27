@@ -30,7 +30,8 @@ import {
   GET_GARAGE_DETAILS_LIGHT,
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
-  GET_RESERVATION
+  GET_RESERVATION,
+  GET_GARAGE_FREE_INTERVAL
 } from '../queries/newReservation.queries'
 
 import {
@@ -107,6 +108,7 @@ export const selectCsobOneClickNewCard = actionFactory(NEW_RESERVATION_SET_CSOB_
 export const setMinDuration = actionFactory(NEW_RESERVATION_SET_MIN_DURATION)
 export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
 export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_PRICE)
+export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -683,6 +685,27 @@ export function downloadGarage(id) {
         })
       })
 
+      const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
+      if (noFreePlaces) {
+        const setFreeIntervalSuccess = response => {
+          if (response.data !== undefined) {
+            dispatch(setFreeInterval(response.data.garage.greatest_free_interval))
+          }
+        }
+
+        request(
+          setFreeIntervalSuccess,
+          GET_GARAGE_FREE_INTERVAL,
+          { id:             id || state.garage.id,
+            user_id:        state.user.id,
+            client_id:      state.client_id,
+            begins_at:      timeToUTC(state.from),
+            ends_at:        timeToUTC(state.to),
+            reservation_id: state.reservation ? state.reservation.id : null
+          }
+        )
+      }
+
       dispatch(setGarage(garage))
       if (!state.reservation) {
         dispatch(autoSelectPlace())
@@ -693,7 +716,7 @@ export function downloadGarage(id) {
         const selectedPlace = garage.floors.reduce((place, floor) => {
           return place || floor.places.find(p => p.id === state.place_id)
         }, undefined)
-        if (!selectedPlace.available) {
+        if (selectedPlace && !selectedPlace.available) {
           dispatch(setPlace({ id: undefined }))
         }
       }
