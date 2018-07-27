@@ -36,7 +36,8 @@ class NewReservationOverviewPage extends Component {
     }
 
     if (location.query.hasOwnProperty('garage_id')) {
-      pageBaseActions.setGarage(+location.query.garage_id)
+      const garageId = parseInt(location.query.garage_id, 10)
+      !isNaN(garageId) && pageBaseActions.setGarage(garageId)
     }
   }
 
