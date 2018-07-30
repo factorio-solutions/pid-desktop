@@ -5,7 +5,6 @@ import actionFactory  from '../helpers/actionFactory'
 import { t }          from '../modules/localization/localization'
 import * as pageBase  from './pageBase.actions'
 
-import { OCCUPANCY_GARAGES_QUERY, GARAGE_DETAILS_QUERY } from '../queries/occupancy.queries'
 import {
   roundTime,
   MIN_RESERVATION_DURATION
@@ -170,6 +169,7 @@ export function loadGarages() {
       ))
 
       dispatch(loadGarage(getState().pageBase.garage))
+      dispatch(pageBase.setCustomModal())
     })
   }
 }
@@ -228,6 +228,7 @@ export function loadClients(clients) {
 
 export function initOccupancy() {
   return dispatch => {
+    dispatch(pageBase.setCustomModal('loading'))
     dispatch(loadGarages())
   }
 }
