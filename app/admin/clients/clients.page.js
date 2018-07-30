@@ -74,7 +74,7 @@ class ClientsPage extends Component {
     const contractSum = (sum, contract) => {
       const startOfMonth = moment(contract.from) < moment().startOf('month') ? moment().startOf('month') : moment(contract.from)
       const endOfMonth = moment().endOf('month') < moment(contract.to) ? moment().endOf('month') : moment(contract.to)
-      return sum + Math.round(contract.rent.price * contract.place_count * endOfMonth.diff(startOfMonth, 'days') / moment().daysInMonth())
+      return sum + Math.round(contract.rent.price * contract.contract_places.length * endOfMonth.diff(startOfMonth, 'days') / moment().daysInMonth())
     }
 
     const currentContracts = client.contracts ? client.contracts.filter(currentContractsFilter) : []
