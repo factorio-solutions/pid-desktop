@@ -6,7 +6,7 @@ export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $begins_at: D
     name
     vat
     dic
-    floors {
+    floors{
       id
       label
       scheme
@@ -24,24 +24,27 @@ export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $begins_at: D
           flat_price
           weekend_price
         }
-        contracts{
-          id
-          from 
-          to
-          client{
-            name
-          }
-          rent{
-            currency{
-              symbol
-            }
-            price
-          }
-        }
       }
       contractable_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id, contract_id: $contract_id) {
         id
         label
+      }
+    }
+    clients{
+      name
+      contracts{
+        id
+        from 
+        to
+        rent{
+          currency{
+            symbol
+          }
+          price
+        }
+        places{
+          id
+        }
       }
     }
   }
