@@ -58,6 +58,7 @@ class NewUserForm extends Component {
 
   render() {
     const { state, actions, editable, onetime, clearForm } = this.props
+    console.log(state, this.hostEmailMandatoryCondition())
     return (
       <div>
         <div className={searchField}>
@@ -126,8 +127,8 @@ class NewUserForm extends Component {
 
 export default connect(
   state => {
-    const { user, name, phone, email, highlight, language, carLicencePlate } = state.newReservation
-    return { state: { user, name, phone, email, highlight, language, carLicencePlate } }
+    const { user, name, phone, email, highlight, language, carLicencePlate, paidByHost } = state.newReservation
+    return { state: { user, name, phone, email, highlight, language, carLicencePlate, paidByHost } }
   },
   dispatch => ({ actions: bindActionCreators(
     { setHostName,
