@@ -10,6 +10,8 @@ export const GET_CLIENTUSERS = `query ($id: Id!) {
     client {
       id
       name
+      is_time_credit_active
+      time_credit_amount_per_month
     }
     admin
     host
@@ -18,6 +20,7 @@ export const GET_CLIENTUSERS = `query ($id: Id!) {
     internal
     contact_person
     created_at
+    current_time_credit_amount
   }
 }
 `
