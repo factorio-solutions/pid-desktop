@@ -8,6 +8,7 @@ import {
   downloadGarage,
   setPaidByHost,
   setClientId,
+  selectedClient,
   isPlaceGoInternal
 } from '../../_shared/actions/newReservation.actions'
 
@@ -49,6 +50,10 @@ class GarageClientForm extends Component {
 
   render() {
     const { state, actions, editable } = this.props
+    const selectedClient = actions.selectedClient()
+    
+
+
     return (
       <div>
         <Dropdown
@@ -71,14 +76,21 @@ class GarageClientForm extends Component {
             placeholder={t([ 'newReservation', 'selectClient' ])}
           />
         }
-        {isPlaceGoInternal(state) &&
+        {((state.user && state.current_user && state.user.id !== state.current_user.id &&
+            selectedClient && selectedClient.is_time_credit_active) ||
+          isPlaceGoInternal(state)) &&
           <div>
             <input
               type="checkbox"
               checked={state.paidByHost}
               onChange={() => actions.setPaidByHost(!state.paidByHost)}
             />
-            {t([ 'newReservation', 'paidByHost' ])}
+            {t([
+              'newReservation',
+              (selectedClient && selectedClient.is_time_credit_active) && !isPlaceGoInternal(state)
+                ? 'paidByHostsTimeCredit'
+                : 'paidByHost'
+            ])}
           </div>
         }
       </div>
@@ -89,12 +101,14 @@ class GarageClientForm extends Component {
 export default connect(
   state => {
     const { user, highlight, paidByHost, garage, client_id, place_id } = state.newReservation
-    return { state: { user, highlight, paidByHost, garage, client_id, place_id } }
+    const { current_user } = state.pageBase
+    return { state: { user, highlight, paidByHost, garage, client_id, place_id, current_user } }
   },
   dispatch => ({ actions: bindActionCreators(
     { downloadGarage,
       setPaidByHost,
-      setClientId
+      setClientId,
+      selectedClient
     },
     dispatch
   )

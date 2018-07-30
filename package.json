@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
@@ -33,7 +33,8 @@
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-dev-server": "^2.5.0",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack-hot-middleware": "^2.12.2",
+    "why-did-you-update": "^0.1.1"
   },
   "dependencies": {
     "babel-core": "^6.14.0",

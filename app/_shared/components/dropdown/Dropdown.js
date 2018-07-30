@@ -21,7 +21,8 @@ export default class Dropdown extends Component {
     position:  PropTypes.string,
     editable:  PropTypes.bool,
     filter:    PropTypes.bool,
-    order:     PropTypes.bool
+    order:     PropTypes.bool,
+    icon:      PropTypes.object
   }
 
   static defaultProps = {
@@ -81,7 +82,7 @@ export default class Dropdown extends Component {
   }
 
   render() {
-    const { label, content, style, onChange, highlight, position, editable, filter, order } = this.props
+    const { label, content, style, onChange, highlight, position, editable, filter, order, icon } = this.props
 
     let lis = content.map((item, index) => {
       const onClick = e => {
@@ -149,6 +150,7 @@ export default class Dropdown extends Component {
           onBlur={this.hide}
           ref={button => { this.button = button }}
         >
+          {icon}
           <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? label : content[this.state.selected].label} </span>
           <i className={`fa fa-caret-down ${styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
         </button>

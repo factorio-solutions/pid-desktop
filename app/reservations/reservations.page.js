@@ -124,9 +124,23 @@ class ReservationsPage extends Component {
       { key:         'state',
         title:       t([ 'reservations', 'state' ]),
         comparator:  'boolean',
-        representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-question-circle'} ${o ? styles.green : styles.yellow}`} aria-hidden="true" />,
-        orderBy:     'approved',
-        enum:        [ true, false ]
+        representer: o => <i
+          className={`fa
+            ${o === undefined
+              ? 'fa-times-circle'
+              : o
+                ? 'fa-check-circle'
+                : 'fa-question-circle'}
+            ${o === undefined
+              ? styles.red
+              : o
+                ? styles.green
+                : styles.yellow
+          }`}
+          aria-hidden="true"
+        />,
+        orderBy: 'approved',
+        enum:    [ true, false ]
       },
       { key: 'garage', title: t([ 'reservations', 'garage' ]), comparator: 'string', includes: 'place floor garage', orderBy: 'garages.name' },
       { key:         'place',
@@ -180,10 +194,11 @@ class ReservationsPage extends Component {
       note:          reservation.note,
       client:        reservation.client && reservation.client.name,
       licence_plate: reservation.car && reservation.car.licence_plate,
-      state:         reservation.approved,
+      state:         reservation.deleted_at ? undefined : reservation.approved,
       type:          reservation.reservation_case,
       from:          reservation.begins_at,
       to:            reservation.ends_at,
+      deleted_at:    reservation.deleted_at,
       garage:        reservation.place.floor.garage.name,
       place:         reservation.place.floor.garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
         t([ 'reservations', 'flexiblePlace' ]) :
@@ -198,12 +213,17 @@ class ReservationsPage extends Component {
         {!reservation.approved && <div><b>{ reservation.client === null ? t([ 'reservations', 'reservationNotPayed' ]) : t([ 'reservations', 'reservationApproved' ])}</b></div>}
         <div className={styles.flex}>
           <div>
-            {t([ 'reservations', 'createdAt' ])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)} - {reservation.creator.email}
+            <div>
+              {t([ 'reservations', 'createdAt' ])} {moment(reservation.created_at).format(MOMENT_DATETIME_FORMAT)} - {reservation.creator.email}
+            </div>
+            {reservation.deleted_at && <div>
+              {t([ 'reservations', 'deletedAt' ])} {moment(reservation.deleted_at).format(MOMENT_DATETIME_FORMAT)}
+            </div>}
           </div>
           {reservation.price > 0 && <div>
             {valueAddedTax(reservation.price, reservation.place.floor.garage.dic ? reservation.place.floor.garage.vat : 0)} {reservation.currency.symbol}
           </div>}
-          <div>
+          {!reservation.deleted_at && <div>
             <span className={styles.floatRight}>
               {reservation.client &&
               (reservation.client.client_user.secretary ||
@@ -262,7 +282,7 @@ class ReservationsPage extends Component {
                 />
               }
             </span>
-          </div>
+          </div>}
         </div>
       </div>)
     }))

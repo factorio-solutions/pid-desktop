@@ -14,15 +14,9 @@ import * as newClientActions  from '../../../_shared/actions/newClient.actions'
 class ClientModules extends Component {
   static propTypes = {
     pageBase: PropTypes.object,
-    actions:  PropTypes.object,
     children: PropTypes.object,
     params:   PropTypes.object
   }
-
-  // componentDidMount() {
-  //   this.props.actions.clearForm()
-  //   this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
-  // }
 
   selectTab = tab => () => nav.to(`/${this.props.pageBase.garage}/admin/clients/${this.props.params.client_id}/${tab}`)
 
@@ -35,7 +29,7 @@ class ClientModules extends Component {
   render() {
     const { children } = this.props
 
-    const tabs = [ 'smsSettings', 'minMaxReservationDuration' ].map(this.tabFactory)
+    const tabs = [ 'smsSettings', 'minMaxReservationDuration', 'timeCredit' ].map(this.tabFactory)
 
     return (
       <PageBase>

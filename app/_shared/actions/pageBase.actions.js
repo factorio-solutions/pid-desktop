@@ -191,8 +191,10 @@ export function fetchCurrentUser() {
   return dispatch => {
     const onSuccess = response => {
       const user = response.data.current_user
-      dispatch(setCurrentUser({ ...user,
-        merchant_ids: user.csob_payment_templates.map(template => template.merchant_id)
+      dispatch(setCurrentUser({
+        ...user,
+        merchant_ids:      user.csob_payment_templates.map(template => template.merchant_id),
+        occupancy_garages: response.data.occupancy_garages
       }))
       if (response.data.current_user.language !== translate.getLocale()) nav.changeLanguage(response.data.current_user.language)
     }

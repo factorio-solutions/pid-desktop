@@ -221,7 +221,9 @@ export function initReservation(id) {
   return (dispatch, getState) => {
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (id) {
-      getState().mobileNewReservation.reservation_id !== parseInt(id, 10) && dispatch(downloadReservation(id))
+      getState().mobileNewReservation.reservation_id !== parseInt(id, 10) ?
+        dispatch(downloadReservation(id)) :
+        dispatch(setCustomModal())
     } else {
       dispatch(setReservationId())
       dispatch(pickPlaces())

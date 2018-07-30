@@ -51,10 +51,7 @@ export function submitUser() {
     const state = getState().profile
     const base = getState().pageBase
 
-    const onSuccess = response => {
-      dispatch(setCurrentUser(response.data.update_user))
-      nav.to(`/${base.garage}/dashboard`)
-    }
+    const onSuccess = () => dispatch(fetchCurrentUser())
 
     request(onSuccess,
       UPDATE_CURRENT_USER,
@@ -86,9 +83,7 @@ export function toggleShowPublicGarages() {
 
 export function changeHints() {
   return (dispatch, getState) => {
-    const onSuccess = response => {
-      dispatch(setCurrentUser(response.data.update_user))
-    }
+    const onSuccess = () => dispatch(fetchCurrentUser())
 
     const current_user = getState().pageBase.current_user
     request(onSuccess, UPDATE_CURRENT_USER, { user: { hint: !current_user.hint }, id: current_user.id })

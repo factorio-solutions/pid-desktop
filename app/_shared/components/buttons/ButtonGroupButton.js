@@ -1,15 +1,24 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import Button from './Button.js'
 
 import styles from './ButtonGroup.scss'
 
 
-export default function ButtonGroupButton({ content, onClick, state }) {
+export default function ButtonGroupButton({ state, ...restOfProps }) {
   const style = [
     styles.button,
     styles[state]
   ].join(' ')
 
-  return <Button content={content} onClick={onClick} state={state} style={style} />
+  return (<Button
+    {...restOfProps}
+    style={style}
+  />)
+}
+
+ButtonGroupButton.propTypes = {
+  content: PropTypes.object,
+  onClick: PropTypes.func,
+  state:   PropTypes.string
 }

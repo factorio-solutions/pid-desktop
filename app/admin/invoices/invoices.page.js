@@ -94,7 +94,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
           <LabeledRoundButton
             label={t([ 'invoices', 'invoicePaidLabel' ])}
             content={<span className="fa fa-check" aria-hidden="true" />}
-            onClick={() => actions.invoicePayed(invoice.id, this.props.params.id)}
+            onClick={() => actions.invoicePayed(invoice.id, pageBase.garage)}
             type="remove"
             question={t([ 'invoices', 'invoicePaid' ])}
           />}
