@@ -115,7 +115,7 @@ class Place extends Component {
 
   isForCurrentUser = reservation => {
     const { pageBase } = this.props
-    return pageBase.current_user && pageBase.current_user.id === reservation.user.id
+    return pageBase.current_user && reservation.user && pageBase.current_user.id === reservation.user.id
   }
 
   shouldShowDetails = reservation => {
