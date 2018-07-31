@@ -15,9 +15,10 @@ import DatetimeInput      from '../../_shared/components/input/DatetimeInput'
 import Modal              from '../../_shared/components/modal/Modal'
 import { valueAddedTax }  from '../../_shared/helpers/calculatePrice'
 
-import * as nav                 from '../../_shared/helpers/navigation'
-import { t }                    from '../../_shared/modules/localization/localization'
-import * as newContractActions  from '../../_shared/actions/newContract.actions'
+import * as nav                   from '../../_shared/helpers/navigation'
+import { t }                      from '../../_shared/modules/localization/localization'
+import * as newContractActions    from '../../_shared/actions/newContract.actions'
+import { MOMENT_DATETIME_FORMAT } from '../../_shared/helpers/time'
 
 import styles from './newContract.page.scss'
 
@@ -62,9 +63,11 @@ class NewContractPage extends Component {
       const placeIds = state.places.map(place => place.id)
       const removedPlaces = state.originalPlaces.filter(place => !placeIds.includes(place.id))
 
-      removedPlaces.length ?
-        actions.setRemoveReservationsModal(true) :
-        actions.submitNewContract(this.props.params.contract_id)
+      removedPlaces.length ||
+      (state.originalIndefinitly && !state.indefinitly) ||
+      (!state.indefinitly && moment(state.to, MOMENT_DATETIME_FORMAT).isBefore(moment(state.originalTo, MOMENT_DATETIME_FORMAT)))
+        ? actions.setRemoveReservationsModal(true)
+        : actions.submitNewContract(this.props.params.contract_id)
     }
   }
 
