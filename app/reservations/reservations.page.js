@@ -225,7 +225,7 @@ class ReservationsPage extends Component {
           </div>}
           {!reservation.deleted_at && <div>
             <span className={styles.floatRight}>
-              {reservation.client &&
+              {reservation.client && reservation.client.client_user &&
               (reservation.client.client_user.secretary ||
               (reservation.client.client_user.internal && reservation.user.id === pageBase.current_user.id)) ? // Internal can edit his reservations
                 <LabeledRoundButton
