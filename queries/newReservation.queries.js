@@ -85,6 +85,15 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       paypal_is_active
       csob_merchant_id
     }
+    gates {
+      label
+      phone_number {
+        number
+      }
+      place_gates {
+        place_id
+      }
+    }
     address {
       line_1
       line_2
@@ -104,12 +113,6 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         label
         priority
         go_internal
-        gates {
-          label
-          phone_number{
-            number
-          }
-        }
         pricing{
           flat_price
           exponential_12h_price
