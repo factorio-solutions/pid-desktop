@@ -102,7 +102,6 @@ export function setNewReservation(fromMoment, toMoment, placeId) {
         }
       })
     })
-
   }
 }
 
@@ -170,6 +169,7 @@ export function loadGarages() {
 
       dispatch(loadGarage(getState().pageBase.garage))
       dispatch(pageBase.setCustomModal())
+      dispatch(setLoading(false))
     })
   }
 }
@@ -229,6 +229,7 @@ export function loadClients(clients) {
 export function initOccupancy() {
   return dispatch => {
     dispatch(pageBase.setCustomModal('loading'))
+    dispatch(setLoading(true))
     dispatch(loadGarages())
   }
 }
