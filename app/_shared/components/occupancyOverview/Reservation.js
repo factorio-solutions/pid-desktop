@@ -60,7 +60,7 @@ class Reservation extends Component {
         <tbody>
           {!reservation.approved && <tr><td colSpan={2} className={styles.notApprovedLabel}>{t([ 'occupancy', 'reservationNotApproved' ])}</td></tr>}
           <tr><td>{t([ 'occupancy', 'reservationsId' ])}</td><td>{reservation.id}</td></tr>
-          <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user.full_name}</td></tr>
+          <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user && reservation.user.full_name}</td></tr>
           {reservation.client && <tr><td>{t([ 'occupancy', 'client' ])}</td><td>{reservation.client.name}</td></tr>}
           <tr>
             <td>{t([ 'occupancy', 'type' ])}</td>

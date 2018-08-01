@@ -190,7 +190,7 @@ class ReservationsPage extends Component {
 
     const reservationTransformation = reservation => ({
       id:            reservation.id,
-      name:          reservation.user.full_name,
+      name:          reservation.user && reservation.user.full_name,
       note:          reservation.note,
       client:        reservation.client && reservation.client.name,
       licence_plate: reservation.car && reservation.car.licence_plate,
