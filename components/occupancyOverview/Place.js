@@ -115,7 +115,7 @@ class Place extends Component {
 
   isForCurrentUser = reservation => {
     const { pageBase } = this.props
-    return pageBase.current_user && pageBase.current_user.id === reservation.user.id
+    return pageBase.current_user && reservation.user && pageBase.current_user.id === reservation.user.id
   }
 
   shouldShowDetails = reservation => {
@@ -127,7 +127,7 @@ class Place extends Component {
 
   composeLabel = reservation => {
     const details = this.shouldShowDetails(reservation)
-    return details && [ reservation.car && reservation.car.licence_plate, reservation.user.full_name ].filter(o => o).join(' - ')
+    return details && [ reservation.car && reservation.car.licence_plate, reservation.user && reservation.user.full_name ].filter(o => o).join(' - ')
   }
 
   render() {
