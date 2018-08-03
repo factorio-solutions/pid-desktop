@@ -14,8 +14,8 @@ export const GARAGE_DETAILS_QUERY = `query Garage($id: Id!, $datetime: Datetime!
           symbol
         }
       }
-      places {
-        id
+      contract_places{
+        place_id
       }
     }
     reservations_in_time(datetime: $datetime) {
