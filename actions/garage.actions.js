@@ -27,7 +27,7 @@ function updateGaragesPlaces(garage, data) {
       return { ...floor,
         places: floor.places.map(place => {
           const reservations = data.reservations_in_time.filter(r => r.place.id === place.id)
-          const contracts = data.contracts_in_time.filter(con => !!con.places.find(p => p.id === place.id))
+          const contracts = data.contracts_in_time.filter(con => con.contract_places.find(p => p.place_id === place.id))
           return { ...place,
             reservations,
             contracts
