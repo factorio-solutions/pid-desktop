@@ -34,7 +34,7 @@ export function initClients() {
         userOfClient: true,
         place_count:  client.contracts
           .filter(currentContracts)
-          .reduce((acc, contract) => acc + contract.contract_places.length, 0)
+          .reduce((acc, contract) => acc + contract.place_count, 0)
       }))))
     }
     request(onSuccess, GET_CLIENTS)
@@ -56,7 +56,7 @@ export function initGarageContracts() {
         }
         acc[contract.client.id].contracts.push(contract)
         if (currentContracts(contract)) {
-          acc[contract.client.id].place_count += contract.contract_places.length
+          acc[contract.client.id].place_count += contract.place_count
         }
         return acc
       }, [])

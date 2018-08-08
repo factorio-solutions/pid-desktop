@@ -12,9 +12,7 @@ export const GET_CLIENTS = `{
       pending
     }
     contracts{
-      contract_places{
-        id
-      }
+      place_count
       from
       to
       name
@@ -43,9 +41,7 @@ export const GARAGE_CONTRACTS = `query GargeContracts($id: Id!){
       id
       from
       to
-      contract_places{
-        id
-      }
+      place_count
       rent{
         price
         currency{
