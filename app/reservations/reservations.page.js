@@ -188,22 +188,31 @@ class ReservationsPage extends Component {
       />
     </Form>)
 
-    const reservationTransformation = reservation => ({
-      id:            reservation.id,
-      name:          reservation.user && reservation.user.full_name,
-      note:          reservation.note,
-      client:        reservation.client && reservation.client.name,
-      licence_plate: reservation.car && reservation.car.licence_plate,
-      state:         reservation.deleted_at ? undefined : reservation.approved,
-      type:          reservation.reservation_case,
-      from:          reservation.begins_at,
-      to:            reservation.ends_at,
-      deleted_at:    reservation.deleted_at,
-      garage:        reservation.place.floor.garage.name,
-      place:         reservation.place.floor.garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
-        t([ 'reservations', 'flexiblePlace' ]) :
-        `${reservation.place.floor.label} / ${reservation.place.label}`
-    })
+    const reservationTransformation = reservation => {
+      const place = reservation.place
+      const garage = place && place.floor && place.floor.garage
+
+      let placeLabel = '-'
+      if (garage) {
+        placeLabel = garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
+          t([ 'reservations', 'flexiblePlace' ]) :
+          `${reservation.place.floor.label} / ${reservation.place.label}`
+      }
+      return {
+        id:            reservation.id,
+        name:          reservation.user && reservation.user.full_name,
+        note:          reservation.note,
+        client:        reservation.client && reservation.client.name,
+        licence_plate: reservation.car && reservation.car.licence_plate,
+        state:         reservation.deleted_at ? undefined : reservation.approved,
+        type:          reservation.reservation_case,
+        from:          reservation.begins_at,
+        to:            reservation.ends_at,
+        deleted_at:    reservation.deleted_at,
+        garage:        garage ? garage.name : '-',
+        place:         placeLabel
+      }
+    }
 
     const transformData = data => data.reservations.map(reservation => ({
       ...reservationTransformation(reservation),
