@@ -214,11 +214,10 @@ class ReservationsPage extends Component {
       }
     }
 
-    const transformData = data => data.reservations.map(reservation => ({
-      ...reservationTransformation(reservation),
-      history:        reservation.history.map(reservationTransformation),
-      record_updates: reservation.record_updates,
-      spoiler:        (<div className={styles.spoiler}>
+    const reservationSpolier = reservation => {
+      const garage = reservation.place && reservation.place.floor && reservation.place.floor.garage
+
+      return (<div className={styles.spoiler}>
         {!reservation.approved && <div><b>{ reservation.client === null ? t([ 'reservations', 'reservationNotPayed' ]) : t([ 'reservations', 'reservationApproved' ])}</b></div>}
         <div className={styles.flex}>
           <div>
@@ -230,7 +229,7 @@ class ReservationsPage extends Component {
             </div>}
           </div>
           {reservation.price > 0 && <div>
-            {valueAddedTax(reservation.price, reservation.place.floor.garage.dic ? reservation.place.floor.garage.vat : 0)} {reservation.currency.symbol}
+            {valueAddedTax(reservation.price, garage && garage.dic ? reservation.place.floor.garage.vat : 0)} {reservation.currency.symbol}
           </div>}
           {!reservation.deleted_at && <div>
             <span className={styles.floatRight}>
@@ -294,6 +293,13 @@ class ReservationsPage extends Component {
           </div>}
         </div>
       </div>)
+    }
+
+    const transformData = data => data.reservations.map(reservation => ({
+      ...reservationTransformation(reservation),
+      history:        reservation.history.map(reservationTransformation),
+      record_updates: reservation.record_updates,
+      spoiler:        reservationSpolier(reservation)
     }))
 
 
