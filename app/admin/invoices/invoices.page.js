@@ -45,7 +45,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
   garage_name: invoice.account && invoice.account.garage.name,
   client_name: invoice.client && invoice.client.name,
   user_name:   invoice.user && invoice.user.full_name,
-  price:       valueAddedTax(invoice.ammount, invoice.vat) + ' ' + invoice.currency.symbol,
+  price:       valueAddedTax(invoice.ammount, invoice.vat) + ' ' + invoice.currencies[0].symbol,
   disabled:    invoice.canceled,
   spoiler:     (<div>
     {invoice.canceled ? <div>
