@@ -72,71 +72,70 @@ class SettingsPage extends Component {
 
     return (
       <PageBase>
-        <div>
-          <h2>{t([ 'profile', 'profileSettings' ])}</h2>
-          <div>
-            <label>{t([ 'profile', 'email' ])}</label>
-            {pageBase.current_user && pageBase.current_user.email}
-          </div>
-          <div>
-            <label>{t([ 'profile', 'createdAt' ])}</label>
-            {pageBase.current_user && moment(pageBase.current_user.created_at).format('D. M. YYYY H:mm')}
-          </div>
-          <Form onSubmit={submitForm} submitable={checkSubmitable()} onHighlight={actions.toggleHighlight}>
-            <PatternInput
-              onEnter={submitForm}
-              onChange={actions.setName}
-              label={t([ 'signup_page', 'name' ]) + ' *'}
-              error={t([ 'signup_page', 'nameInvalid' ])}
-              pattern="^(?!\s*$).+"
-              value={state.name.value}
-              highlight={state.highlight}
-            />
-            <PatternInput
-              onEnter={submitForm}
-              onChange={actions.setPhone}
-              label={t([ 'signup_page', 'phone' ]) + ' *'}
-              error={t([ 'signup_page', 'phoneInvalid' ])}
-              pattern="\+[\d]{2,4}[\d\s]{3,}"
-              value={state.phone.value}
-              highlight={state.highlight}
-            />
-          </Form>
-
-          <div>
-            <CallToActionButton label={t([ 'profile', 'resetPassword' ])} onClick={() => actions.changePassword(emailSentModal)} />
-          </div>
-
-          <div>
-            <Checkbox checked={pageBase.current_user && !pageBase.current_user.hide_public_garages} onChange={actions.toggleShowPublicGarages}>
-              {<span>{t([ 'profile', 'showPublicGarages' ])}</span>}
-            </Checkbox>
-          </div>
-
-          <div>
-            {t([ 'profile', 'language' ])}
-            <Localization />
-          </div>
-        </div>
-        <div>
-          <h2>{t([ 'profile', 'cars' ])}</h2>
-          <div>
-            <Table schema={schema} data={state.cars.map(addSpoiler)} />
-            <div className={styles.addButton}>
-              <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addCar} type="action" size="big" />
+        <div className={styles.parent}>
+          <div className={styles.leftColumn}>
+            <h2>{t([ 'profile', 'profileSettings' ])}</h2>
+            <div>
+              <label>{t([ 'profile', 'email' ])}</label>
+              {pageBase.current_user && pageBase.current_user.email}
             </div>
+            <div>
+              <label>{t([ 'profile', 'createdAt' ])}</label>
+              {pageBase.current_user && moment(pageBase.current_user.created_at).format('D. M. YYYY H:mm')}
+            </div>
+            <Form onSubmit={submitForm} submitable={checkSubmitable()} onHighlight={actions.toggleHighlight} submitbtnRight>
+              <PatternInput
+                onEnter={submitForm}
+                onChange={actions.setName}
+                label={t([ 'signup_page', 'name' ]) + ' *'}
+                error={t([ 'signup_page', 'nameInvalid' ])}
+                pattern="^(?!\s*$).+"
+                value={state.name.value}
+                highlight={state.highlight}
+              />
+              <PatternInput
+                onEnter={submitForm}
+                onChange={actions.setPhone}
+                label={t([ 'signup_page', 'phone' ]) + ' *'}
+                error={t([ 'signup_page', 'phoneInvalid' ])}
+                pattern="\+[\d]{2,4}[\d\s]{3,}"
+                value={state.phone.value}
+                highlight={state.highlight}
+              />
+
+              <div>
+                <CallToActionButton label={t([ 'profile', 'resetPassword' ])} onClick={() => actions.changePassword(emailSentModal)} />
+              </div>
+
+              <div>
+                <Checkbox checked={pageBase.current_user && !pageBase.current_user.hide_public_garages} onChange={actions.toggleShowPublicGarages}>
+                  {<span>{t([ 'profile', 'showPublicGarages' ])}</span>}
+                </Checkbox>
+              </div>
+
+              <div>
+                {t([ 'profile', 'language' ])}
+                <Localization />
+              </div>
+              <h2>{t([ 'profile', 'cars' ])}</h2>
+              <div>
+                <Table schema={schema} data={state.cars.map(addSpoiler)} />
+                <div className={styles.addButton}>
+                  <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addCar} type="action" size="big" />
+                </div>
+              </div>
+              <h2>{t([ 'profile', 'privacyDocuments' ])}</h2>
+              {state.relatedGarages.map(garage => (
+                <Documents
+                  header={garage.name.firstToUpperCase()}
+                  type="privacy"
+                  documents={garage.documents.filter(doc => doc.doc_type === 'privacy')}
+                  readOnly
+                />
+              ))}
+            </Form>
           </div>
-        </div>
-        <div>
-          <h2>{t([ 'profile', 'privacyDocuments' ])}</h2>
-          {state.relatedGarages.map(garage => (
-            <Documents
-              header={garage.name.firstToUpperCase()}
-              type="privacy"
-              documents={garage.documents.filter(doc => doc.doc_type === 'privacy')}
-              readOnly
-            />
-          ))}
+          <div className={styles.rightColumn} />
         </div>
       </PageBase>
     )

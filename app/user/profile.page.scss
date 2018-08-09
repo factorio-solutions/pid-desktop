@@ -16,3 +16,22 @@
 .floatRight{
   float: right;
 }
+
+.rightColumn {
+  background-color: $tableSpoilerBackground;
+}
+
+@media (min-width: $collapseWidth) {
+  .parent {
+    display: flex;
+  }
+
+  .leftColumn {
+		flex: 1 1;
+  }
+
+  .rightColumn {
+		flex: 2 2;
+		margin-left: 20px;
+  }
+}
