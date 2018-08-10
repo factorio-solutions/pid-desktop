@@ -18,7 +18,7 @@ import * as signUpActions from '../_shared/actions/signUp.actions'
 
 import styles from './signUp.page.scss'
 
-const MINIMUM_PASSWORD_LENGTH = 4
+export const MINIMUM_PASSWORD_LENGTH = 4
 
 
 const NAME_REGEX = '^(?!\\s*$).+'

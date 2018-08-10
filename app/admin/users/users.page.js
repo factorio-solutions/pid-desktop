@@ -105,6 +105,7 @@ class UsersPage extends Component {
         {user.client && user.client.host && <span className={styles.rights}>{t([ 'users', 'host' ])}</span>}
         {user.garage && <b className={styles.pointer} onClick={() => { garageOnClick(user.garage.id) }}>{user.garage.name}</b>}
         {user.garage && user.garage.admin && <span className={styles.rights}>{t([ 'users', 'admin' ])}</span>}
+        {user.garage && user.garage.manager && <span className={styles.rights}>{t([ 'users', 'manager' ])}</span>}
         {user.garage && user.garage.security && <span className={styles.rights}>{t([ 'users', 'security' ])}</span>}
         {user.garage && user.garage.receptionist && <span className={styles.rights}>{t([ 'users', 'receptionist' ])}</span>}
         {user.car && <b className={styles.pointer} onClick={() => { this.carOnClick(user.car.id) }}>{user.car.model}</b>}

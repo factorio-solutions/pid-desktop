@@ -3,15 +3,20 @@ import {
   PROFILE_EDIT_USER_SET_PHONE,
   PROFILE_SET_CARS,
   PROFILE_TOGGLE_HIGHLIGHT,
-  PROFILE_SET_RELATED_GARAGES
+  PROFILE_SET_GARAGES,
+  PROFILE_SET_CLIENTS,
+  PROFILE_SET_CURRENT_PASSWORD,
+  PROFILE_SET_CHANGE_COMPLETE
 }  from '../actions/profile.actions'
 
 const defaultState = {
-  name:           { value: '', valid: false },
-  phone:          { value: '', valid: false },
-  cars:           [],
-  highlight:      false,
-  relatedGarages: []
+  name:            { value: '', valid: false },
+  phone:           { value: '', valid: false },
+  currentPassword: { value: '', valid: false },
+  cars:            [],
+  highlight:       false,
+  garages:         [],
+  clients:         []
 }
 
 
@@ -42,10 +47,22 @@ export default function profile(state = defaultState, action) {
         highlight: !state.highlight
       }
 
-    case PROFILE_SET_RELATED_GARAGES:
+    case PROFILE_SET_GARAGES:
       return {
         ...state,
-        relatedGarages: action.value
+        garages: action.value
+      }
+
+    case PROFILE_SET_CLIENTS:
+      return {
+        ...state,
+        clients: action.value
+      }
+
+    case PROFILE_SET_CURRENT_PASSWORD:
+      return {
+        ...state,
+        currentPassword: action.value
       }
 
     default:
