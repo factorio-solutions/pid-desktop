@@ -25,6 +25,7 @@ export const GET_KNOWN_USERS = `{
     admin
     security
     receptionist
+    manager
     garage{
       name
       id

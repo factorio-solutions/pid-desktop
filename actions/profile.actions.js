@@ -1,32 +1,61 @@
+import React        from 'react'
 import { request }  from '../helpers/request'
-import * as nav     from '../helpers/navigation'
 
-import { GET_CURRENT_USER, UPDATE_CURRENT_USER } from '../queries/pageBase.queries.js'
-import { GET_CARS, DESTROY_CAR } from '../queries/profile.queries'
-import { setCurrentUser, setCustomModal, fetchCurrentUser } from './pageBase.actions'
+import { UPDATE_CURRENT_USER } from '../queries/pageBase.queries.js'
+import { GET_CURRENT_USER, GET_CARS, DESTROY_CAR } from '../queries/profile.queries'
+import { LOGIN_USER } from '../queries/login.queries.js'
+import { setCustomModal, fetchCurrentUser } from './pageBase.actions'
 import { resetPassword }  from './resetPassword.actions'
 import actionFactory      from '../helpers/actionFactory'
+import { loginSuccess } from './login.actions'
+import RoundButton        from '../components/buttons/RoundButton'
+import { t }              from '../modules/localization/localization'
+
+import { mobile }    from '../../index'
+import { version }   from '../../../package'
 
 
 export const PROFILE_EDIT_USER_SET_NAME = 'PROFILE_EDIT_USER_SET_NAME'
 export const PROFILE_EDIT_USER_SET_PHONE = 'PROFILE_EDIT_USER_SET_PHONE'
 export const PROFILE_SET_CARS = 'PROFILE_SET_CARS'
 export const PROFILE_TOGGLE_HIGHLIGHT = 'PROFILE_TOGGLE_HIGHLIGHT'
-export const PROFILE_SET_RELATED_GARAGES = 'PROFILE_SET_RELATED_GARAGES'
+export const PROFILE_SET_GARAGES = 'PROFILE_SET_GARAGES'
+export const PROFILE_SET_CLIENTS = 'PROFILE_SET_CLIENTS'
+export const PROFILE_SET_CURRENT_PASSWORD = 'PROFILE_SET_CURRENT_PASSWORD'
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 
 export const setName = patternInputActionFactory(PROFILE_EDIT_USER_SET_NAME)
 export const setPhone = patternInputActionFactory(PROFILE_EDIT_USER_SET_PHONE)
+export const setCurrentPassword = patternInputActionFactory(PROFILE_SET_CURRENT_PASSWORD)
 
 export const setCars = actionFactory(PROFILE_SET_CARS)
-export const setRelatedGarages = actionFactory(PROFILE_SET_RELATED_GARAGES)
+export const setGarages = actionFactory(PROFILE_SET_GARAGES)
+export const setClients = actionFactory(PROFILE_SET_CLIENTS)
 export const toggleHighlight = actionFactory(PROFILE_TOGGLE_HIGHLIGHT)
+
+function formatCars(userCars) {
+  return userCars.map(userCar => ({ ...userCar.car, admin: userCar.admin }))
+}
+
+function fromatGarages(userGarages) {
+  return userGarages.map(userGarage => {
+    const { garage, ...userGarWithoutGar } = userGarage
+    return { ...garage, ...userGarWithoutGar }
+  })
+}
+
+function formatClients(clientUsers) {
+  return clientUsers.map(clientUser => {
+    const { client, ...clientUserWithoutClient } = clientUser
+    return { ...client, ...clientUserWithoutClient }
+  })
+}
 
 export function initCars(id) {
   return dispatch => {
     const onCarsSuccess = response => {
-      dispatch(setCars(response.data.user_cars.map(userCar => { return { ...userCar.car, admin: userCar.admin } })))
+      dispatch(setCars(formatCars(response.data.user_cars)))
     }
 
     request(onCarsSuccess, GET_CARS, { user_id: id })
@@ -36,10 +65,11 @@ export function initCars(id) {
 export function initUser() {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(initCars(response.data.current_user.id))
+      dispatch(setCars(formatCars(response.data.current_user.user_cars)))
       dispatch(setName(response.data.current_user.full_name, true))
       dispatch(setPhone(response.data.current_user.phone, true))
-      dispatch(setRelatedGarages(response.data.current_user.all_related_garages))
+      dispatch(setGarages(fromatGarages(response.data.current_user.user_garages)))
+      dispatch(setClients(formatClients(response.data.current_user.client_users)))
     }
 
     request(onSuccess, GET_CURRENT_USER)
@@ -99,9 +129,64 @@ export function destroyCar(id) {
   }
 }
 
+function login(callback) {
+  return (dispatch, getState) => {
+    const state = getState().profile
+
+    const onError = () => {
+      dispatch(setCustomModal((
+        <div style={{ textAlign: 'center' }}>
+          { t([ 'profile', 'authorisationServerError' ]) }
+          <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={() => dispatch(setCustomModal())} type="confirm" />
+        </div>
+      )))
+    }
+
+    request(
+      callback,
+      LOGIN_USER,
+      {
+        email:              getState().pageBase.current_user.email,
+        password:           state.currentPassword.value,
+        device_fingerprint: getState().login.deviceFingerprint,
+        mobile_app_version: mobile ? version : null
+      },
+      null,
+      onError
+    )
+  }
+}
+
+function afterResetRequest(modal) {
+  return dispatch => {
+    // After change request wait 3500 ms to login again.
+    setTimeout(() => dispatch(login(response => {
+      const results = JSON.parse(response.data.login)
+      dispatch(loginSuccess(results, false, () => dispatch(setCustomModal(modal(true)))))
+    })), 3500)
+  }
+}
+
+function afterTestLogin(response, modal) {
+  return (dispatch, getState) => {
+    const result = JSON.parse(response.data.login)
+    if (result.error) {
+      dispatch(toggleHighlight())
+    } else {
+      // If can login then restar password.
+      dispatch(resetPassword(getState().pageBase.current_user.email, dispatch(afterResetRequest(modal))))
+      dispatch(setCustomModal(modal(false)))
+    }
+  }
+}
+
 export function changePassword(modal) {
   return (dispatch, getState) => {
-    dispatch(resetPassword(getState().pageBase.current_user.email))
-    dispatch(setCustomModal(modal))
+    const state = getState().profile
+    if (state.currentPassword.valid) {
+      dispatch(login(response => dispatch(afterTestLogin(response, modal))))
+    } else {
+      dispatch(toggleHighlight())
+    }
   }
 }
