@@ -1,18 +1,10 @@
-import React        from 'react'
 import { request }  from '../helpers/request'
 
 import { UPDATE_CURRENT_USER } from '../queries/pageBase.queries.js'
 import { GET_CURRENT_USER, GET_CARS, DESTROY_CAR } from '../queries/profile.queries'
-import { LOGIN_USER } from '../queries/login.queries.js'
 import { setCustomModal, fetchCurrentUser } from './pageBase.actions'
 import { resetPassword }  from './resetPassword.actions'
 import actionFactory      from '../helpers/actionFactory'
-import { loginSuccess } from './login.actions'
-import RoundButton        from '../components/buttons/RoundButton'
-import { t }              from '../modules/localization/localization'
-
-import { mobile }    from '../../index'
-import { version }   from '../../../package'
 
 
 export const PROFILE_EDIT_USER_SET_NAME = 'PROFILE_EDIT_USER_SET_NAME'
@@ -21,13 +13,11 @@ export const PROFILE_SET_CARS = 'PROFILE_SET_CARS'
 export const PROFILE_TOGGLE_HIGHLIGHT = 'PROFILE_TOGGLE_HIGHLIGHT'
 export const PROFILE_SET_GARAGES = 'PROFILE_SET_GARAGES'
 export const PROFILE_SET_CLIENTS = 'PROFILE_SET_CLIENTS'
-export const PROFILE_SET_CURRENT_PASSWORD = 'PROFILE_SET_CURRENT_PASSWORD'
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 
 export const setName = patternInputActionFactory(PROFILE_EDIT_USER_SET_NAME)
 export const setPhone = patternInputActionFactory(PROFILE_EDIT_USER_SET_PHONE)
-export const setCurrentPassword = patternInputActionFactory(PROFILE_SET_CURRENT_PASSWORD)
 
 export const setCars = actionFactory(PROFILE_SET_CARS)
 export const setGarages = actionFactory(PROFILE_SET_GARAGES)
@@ -129,64 +119,9 @@ export function destroyCar(id) {
   }
 }
 
-function login(callback) {
-  return (dispatch, getState) => {
-    const state = getState().profile
-
-    const onError = () => {
-      dispatch(setCustomModal((
-        <div style={{ textAlign: 'center' }}>
-          { t([ 'profile', 'authorisationServerError' ]) }
-          <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={() => dispatch(setCustomModal())} type="confirm" />
-        </div>
-      )))
-    }
-
-    request(
-      callback,
-      LOGIN_USER,
-      {
-        email:              getState().pageBase.current_user.email,
-        password:           state.currentPassword.value,
-        device_fingerprint: getState().login.deviceFingerprint,
-        mobile_app_version: mobile ? version : null
-      },
-      null,
-      onError
-    )
-  }
-}
-
-function afterResetRequest(modal) {
-  return dispatch => {
-    // After change request wait 3500 ms to login again.
-    setTimeout(() => dispatch(login(response => {
-      const results = JSON.parse(response.data.login)
-      dispatch(loginSuccess(results, false, () => dispatch(setCustomModal(modal(true)))))
-    })), 3500)
-  }
-}
-
-function afterTestLogin(response, modal) {
-  return (dispatch, getState) => {
-    const result = JSON.parse(response.data.login)
-    if (result.error) {
-      dispatch(toggleHighlight())
-    } else {
-      // If can login then restar password.
-      dispatch(resetPassword(getState().pageBase.current_user.email, dispatch(afterResetRequest(modal))))
-      dispatch(setCustomModal(modal(false)))
-    }
-  }
-}
-
 export function changePassword(modal) {
   return (dispatch, getState) => {
-    const state = getState().profile
-    if (state.currentPassword.valid) {
-      dispatch(login(response => dispatch(afterTestLogin(response, modal))))
-    } else {
-      dispatch(toggleHighlight())
-    }
+    dispatch(resetPassword(getState().pageBase.current_user.email))
+    dispatch(setCustomModal(modal))
   }
 }

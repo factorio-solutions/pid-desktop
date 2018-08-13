@@ -4,9 +4,7 @@ import {
   PROFILE_SET_CARS,
   PROFILE_TOGGLE_HIGHLIGHT,
   PROFILE_SET_GARAGES,
-  PROFILE_SET_CLIENTS,
-  PROFILE_SET_CURRENT_PASSWORD,
-  PROFILE_SET_CHANGE_COMPLETE
+  PROFILE_SET_CLIENTS
 }  from '../actions/profile.actions'
 
 const defaultState = {
@@ -57,12 +55,6 @@ export default function profile(state = defaultState, action) {
       return {
         ...state,
         clients: action.value
-      }
-
-    case PROFILE_SET_CURRENT_PASSWORD:
-      return {
-        ...state,
-        currentPassword: action.value
       }
 
     default:

@@ -19,8 +19,6 @@ import { t }               from '../_shared/modules/localization/localization'
 import * as profileActions from '../_shared/actions/profile.actions'
 import { setCustomModal }  from '../_shared/actions/pageBase.actions'
 
-import { MINIMUM_PASSWORD_LENGTH } from '../user/signUp.page'
-
 import styles from './profile.page.scss'
 
 
@@ -33,10 +31,6 @@ class SettingsPage extends Component {
 
   componentDidMount() {
     this.props.actions.initUser()
-  }
-
-  componentWillUnmount() {
-    this.props.actions.setCurrentPassword('', false)
   }
 
   render() {
@@ -71,11 +65,9 @@ class SettingsPage extends Component {
       return update(car, { spoiler: { $set: spoiler } })
     }
 
-    const test = state.changeComplete
-
-    const emailSentModal = enabled => (<div style={{ textAlign: 'center' }}>
+    const emailSentModal = (<div style={{ textAlign: 'center' }}>
       { t([ 'profile', 'emailSent' ]) } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setCustomModal} type="confirm" state={enabled ? '' : 'disabled'} />
+      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setCustomModal} type="confirm" />
     </div>)
 
     return (
@@ -108,16 +100,6 @@ class SettingsPage extends Component {
                 error={t([ 'signup_page', 'phoneInvalid' ])}
                 pattern="\+[\d]{2,4}[\d\s]{3,}"
                 value={state.phone.value}
-                highlight={state.highlight}
-              />
-              <PatternInput
-                onEnter={() => actions.changePassword(emailSentModal)}
-                onChange={actions.setCurrentPassword}
-                label={t([ 'profile', 'currentPassword' ])}
-                error={`${t([ 'signup_page', 'minimumLength' ])} ${MINIMUM_PASSWORD_LENGTH}`}
-                type="password"
-                pattern={`\\S{${MINIMUM_PASSWORD_LENGTH},}`}
-                value={state.currentPassword.value}
                 highlight={state.highlight}
               />
               <div>
