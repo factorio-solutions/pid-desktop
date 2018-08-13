@@ -58,16 +58,12 @@ class LoginPage extends Component {
 
     const loadingContent = <Loading show />
 
-    const resetPasswordModal = content => (
+    const resetPasswordModalContent = success => (
       <div>
-        <div>{ content }</div>
+        <div>{ success ? t([ 'login_page', 'resetPasswordSuccessful' ]) : t([ 'login_page', 'resetPasswordUnsuccessful' ]) }</div>
         <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
       </div>
     )
-
-    const resetPasswordUnsuccessfulModal = resetPasswordModal(t([ 'login_page', 'resetPasswordUnsuccessful' ]))
-    const resetPasswordSuccessfulModal = resetPasswordModal(t([ 'login_page', 'resetPasswordSuccessful' ]))
-
 
     const errorContent = (<div className={styles.redFont}>
       <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
@@ -82,7 +78,7 @@ class LoginPage extends Component {
 
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
           <Modal
-            content={state.passwordResetSuccessful ? resetPasswordSuccessfulModal : resetPasswordUnsuccessfulModal}
+            content={resetPasswordModalContent(state.passwordResetSuccessful)}
             show={state.showResetPasswordModal}
           />
 
