@@ -34,6 +34,11 @@ class LoginPage extends Component {
       this.props.actions.resetStore()
       nav.to('/dashboard')
     }
+    if (this.props.location && this.props.location.query
+    && this.props.location.query.hasOwnProperty('password_reset_success')) {
+      this.props.actions.setShowPasswordResetModal(true)
+      this.props.actions.setPasswordResetSuccessful(this.props.location.query.password_reset_success === 'true')
+    }
   }
 
   home = () => window.location.href = 'https://www.park-it-direct.com';
@@ -53,6 +58,17 @@ class LoginPage extends Component {
 
     const loadingContent = <Loading show />
 
+    const resetPasswordModal = content => (
+      <div>
+        <div>{ content }</div>
+        <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
+      </div>
+    )
+
+    const resetPasswordUnsuccessfulModal = resetPasswordModal(t([ 'login_page', 'resetPasswordUnsuccessful' ]))
+    const resetPasswordSuccessfulModal = resetPasswordModal(t([ 'login_page', 'resetPasswordSuccessful' ]))
+
+
     const errorContent = (<div className={styles.redFont}>
       <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
       <div>{ state.error }</div>
@@ -65,6 +81,11 @@ class LoginPage extends Component {
           <Logo style="round" />
 
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
+          <Modal
+            content={state.passwordResetSuccessful ? resetPasswordSuccessfulModal : resetPasswordUnsuccessfulModal}
+            show={state.showResetPasswordModal}
+          />
+
           <Form onSubmit={onSubmit} onBack={this.home} submitable={isSubmitable()} center home>
             <PatternInput
               onChange={actions.setEmail}
