@@ -176,7 +176,7 @@
 }
 
 .garageSelector {
-  height:           52px;
+  height:           $garageSelecterDropdownHeight;
   padding:          8px 15px;
   background-color: $yellow;
   color:            $black;

@@ -6,16 +6,20 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_SET_DEVICE_FINGERPRINT,
-  LOGIN_FAILURE
+  LOGIN_FAILURE,
+  LOGIN_PASSWORD_RESET_SUCCESSFUL,
+  LOGIN_SHOW_PASSWORD_RESET_MODAL
 }  from '../actions/login.actions'
 
 const initialState = {
-  fetching:          false,
-  error:             undefined,
-  email:             { value: '', valid: false },
-  password:          { value: '', valid: false },
-  code:              { value: '', valid: false },
-  deviceFingerprint: undefined
+  fetching:                false,
+  error:                   undefined,
+  email:                   { value: '', valid: false },
+  password:                { value: '', valid: false },
+  code:                    { value: '', valid: false },
+  deviceFingerprint:       undefined,
+  passwordResetSuccessful: false,
+  showResetPasswordModal:  false
 }
 
 
@@ -60,6 +64,18 @@ export default function login(state = initialState, action) {
 
     case RESET_LOGIN_FORM:
       return initialState
+
+    case LOGIN_PASSWORD_RESET_SUCCESSFUL:
+      return {
+        ...state,
+        passwordResetSuccessful: action.value
+      }
+
+    case LOGIN_SHOW_PASSWORD_RESET_MODAL:
+      return {
+        ...state,
+        showResetPasswordModal: action.value
+      }
 
     default:
       return state
