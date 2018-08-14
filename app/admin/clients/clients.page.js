@@ -3,10 +3,10 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import Table       from '../../_shared/components/table/Table'
-import RoundButton from '../../_shared/components/buttons/RoundButton'
+import Table              from '../../_shared/components/table/Table'
+import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
-import PageBase    from '../../_shared/containers/pageBase/PageBase'
+import PageBase           from '../../_shared/containers/pageBase/PageBase'
 
 import * as clientActions         from '../../_shared/actions/clients.actions'
 import { setClient }              from '../../_shared/actions/newContract.actions'
@@ -154,6 +154,8 @@ class ClientsPage extends Component {
 
   render() {
     const { state, pageBase } = this.props
+
+    console.log(state)
 
     const schema = [
       { key: 'name', title: t([ 'clients', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },

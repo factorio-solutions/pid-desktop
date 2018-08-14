@@ -1,4 +1,5 @@
-import moment from 'moment'
+import moment        from 'moment'
+import actionFactory from '../helpers/actionFactory'
 
 import { t }                                 from '../modules/localization/localization'
 import { request }                           from '../helpers/request'
@@ -15,20 +16,13 @@ export const ANALYTICS_SET_PERIOD = 'ANALYTICS_SET_PERIOD'
 export const ANALYTICS_SET_LOADING = 'ANALYTICS_SET_LOADING'
 
 
-export function setReservations(value) {
-  return { type: ANALYTICS_SET_RESERVATIONS,
-    value
-  }
-}
-
-export function setContracts(value) {
-  return { type: ANALYTICS_SET_CONSTRACTS,
-    value
-  }
-}
+export const setReservations = actionFactory(ANALYTICS_SET_RESERVATIONS)
+export const setContracts = actionFactory(ANALYTICS_SET_CONSTRACTS)
+export const setPeriod = actionFactory(ANALYTICS_SET_PERIOD)
+export const setLoading = actionFactory(ANALYTICS_SET_LOADING)
 
 export function setFrom(value) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({ type: ANALYTICS_SET_FROM,
       value
     })
@@ -37,7 +31,7 @@ export function setFrom(value) {
 }
 
 export function setTo(value) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({ type: ANALYTICS_SET_TO,
       value
     })
@@ -45,42 +39,15 @@ export function setTo(value) {
   }
 }
 
-export function setPeriod(value) {
-  return { type: ANALYTICS_SET_PERIOD,
-    value
-  }
-}
-
-export function setLoading(value) {
-  return { type: ANALYTICS_SET_LOADING,
-    value
-  }
-}
-
-// export function formatDate(value){
-//   const split = value.split('/')
-//   if (split.length == 2 && split[0] !== "" && split[1] !== ""){
-//     let month = parseInt(split[0])
-//     let year = parseInt(split[1])
-//
-//     if (isNaN(year)) year=parseInt(moment().format('YYYY'))
-//     if (isNaN(month)) month=1
-//
-//     return `${month > 12 ? 12 : month}/${year > parseInt(moment().format('YYYY')) ? parseInt(moment().format('YYYY')) : year}`
-//   } else {
-//     return value
-//   }
-// }
-
 
 export function weekClick() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setPeriod('week'))
   }
 }
 
 export function monthClick() {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(setPeriod('month'))
   }
 }

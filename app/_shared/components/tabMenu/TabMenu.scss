@@ -5,7 +5,9 @@
   border-bottom: 1px solid $verticalMenuBorderColor;
 
   .left {
-    // display: inline-block;
+    @media (min-width: $collapseWidth) {
+      display: flex;
+    }
 
     :first-child {
       margin-left: 0;
@@ -13,8 +15,6 @@
   }
 
   .right {
-    // display: inline-block;
-    // float:   right;
     flex: 1 1;
     margin-left: 30px;
     text-align:  right;
