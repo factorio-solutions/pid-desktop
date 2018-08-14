@@ -14,11 +14,13 @@ export const GARAGE_SET_GARAGE = 'GARAGE_SET_GARAGE'
 export const GARAGE_SET_NOW = 'GARAGE_SET_NOW'
 export const GARAGE_SET_SHOW_SELECTOR = 'GARAGE_SET_SHOW_SELECTOR'
 export const GARAGE_SET_TIME = 'GARAGE_SET_TIME'
+export const GARAGE_SET_LOADING = 'GARAGE_SET_LOADING'
 
 
 export const setSelected = actionFactory(GARAGE_SET_SELECTED)
 export const setGarage = actionFactory(GARAGE_SET_GARAGE)
 export const setSelector = actionFactory(GARAGE_SET_SHOW_SELECTOR)
+export const setLoading = actionFactory(GARAGE_SET_LOADING)
 
 function createPromise(getState, perform) {
   return new Promise((resolve, reject) => {
@@ -49,6 +51,7 @@ export function setTime(time) {
 
 export function initGarage() {
   return (dispatch, getState) => {
+    dispatch(setLoading(true))
     const garagePromise = createPromise(getState, onSuccess => {
       request(onSuccess, GARAGE_DETAILS_QUERY, { id: getState().pageBase.garage })
     })
@@ -58,6 +61,7 @@ export function initGarage() {
     })
 
     Promise.all([ garagePromise, reservationsPromise ]).then(data => {
+      dispatch(setLoading(false))
       data[1].garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], [])
       dispatch(setGarage(updateGaragesPlaces(data[0].garage, { garage: { places: data[1].garage.floors.reduce((acc, floor) => [ ...acc, ...floor.places ], []) } })))
     }).catch(error => {
