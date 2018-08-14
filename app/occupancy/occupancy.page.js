@@ -12,6 +12,7 @@ import RoundButton       from '../_shared/components/buttons/RoundButton'
 import IconWithCount     from '../_shared/components/iconWithCount/IconWithCount'
 import Modal             from '../_shared/components/modal/Modal'
 import Form              from '../_shared/components/form/Form'
+import Loading           from '../_shared/components/loading/Loading'
 
 import * as OccupancyActions      from '../_shared/actions/occupancy.actions'
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
@@ -95,21 +96,26 @@ class OccupancyPage extends Component {
       <TabButton label={t([ 'occupancy', 'month' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
     ]
 
-    const clientSelector = (<Dropdown
-      label={t([ 'occupancy', 'selectClientClient' ])}
-      content={clientDropdown()}
-      style="tabDropdown"
-      selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
-      filter
-      icon={ state.client_ids.length
-        ? <IconWithCount
-          icon="fa fa-filter"
-          count={state.client_ids.length}
-          type="light"
-        />
-        : undefined
-      }
-    />)
+    const clientSelector = [
+      <Dropdown
+        label={t([ 'occupancy', 'selectClientClient' ])}
+        content={clientDropdown()}
+        style="tabDropdown"
+        selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
+        filter
+        icon={ state.client_ids.length
+          ? <IconWithCount
+            icon="fa fa-filter"
+            count={state.client_ids.length}
+            type="light"
+          />
+          : undefined
+        }
+      />,
+      <div className={styles.loading}>
+        <Loading show={state.refetching} />
+      </div>
+    ]
 
     const placeForNewReservation = garage &&
       state.newReservation &&
