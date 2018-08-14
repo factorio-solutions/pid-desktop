@@ -23,6 +23,13 @@ class GarageSelector extends Component {
 
   occupancySelected = object => this.props.occupancyAction.resetClientsLoadGarage(object.id)
 
+  emptyGarageSelector = (
+    <div>
+      <div className={styles.emptyImg} />
+      <div className={styles.emptyDropdown} />
+    </div>
+  )
+
   render() {
     const { state, occupancy } = this.props
 
@@ -34,7 +41,7 @@ class GarageSelector extends Component {
       content.findIndex(garage => garage.id === (occupancy.garage && occupancy.garage.id)) :
       content.findIndex(garage => garage.id === state.garage)
 
-    if (content === undefined || content.length === 0 || selectedIndex === -1) return null
+    if (content === undefined || content.length === 0 || selectedIndex === -1) return this.emptyGarageSelector
 
     const dropdownContent = window.location.hash.includes('occupancy') ?
       content.map(object => ({ label: object.name, onClick: () => this.occupancySelected(object) })) :

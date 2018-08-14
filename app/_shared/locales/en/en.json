@@ -715,7 +715,10 @@
 		"createdAt": "Profile created:",
 		"cars": "Cars",
 		"showPublicGarages": "Show me public garages",
-		"privacyDocuments": "All garages privacy documents"
+		"privacyDocuments": "All garages privacy documents",
+		"myGarages": "Garages you are in",
+		"myClients": "Clients you are in",
+		"currentPassword": "Current password"
 	},
 	"users": {
 		"username": "username",
@@ -737,6 +740,7 @@
 		"host": "regular guest",
 		"security": "security",
 		"receptionist": "receptionist",
+		"manager": "manager",
 		"invitedToClient": "Invited %(date)s to be member of client:",
 		"invitedToGarage": "Invited %(date)s to be member of garage:",
 		"invitedToCar": "Invited %(date)s to be member of car:"

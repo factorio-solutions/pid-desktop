@@ -187,28 +187,36 @@ class ReservationsPage extends Component {
       />
     </Form>)
 
-    const reservationTransformation = reservation => ({
-      id:            reservation.id,
-      name:          reservation.user && reservation.user.full_name,
-      note:          reservation.note,
-      client:        reservation.client && reservation.client.name,
-      licence_plate: reservation.car && reservation.car.licence_plate,
-      state:         reservation.deleted_at ? undefined : reservation.approved,
-      type:          reservation.reservation_case,
-      from:          reservation.begins_at,
-      to:            reservation.ends_at,
-      deleted_at:    reservation.deleted_at,
-      garage:        reservation.place.floor.garage.name,
-      place:         reservation.place.floor.garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
-        t([ 'reservations', 'flexiblePlace' ]) :
-        `${reservation.place.floor.label} / ${reservation.place.label}`
-    })
+    const reservationTransformation = reservation => {
+      const place = reservation.place
+      const garage = place && place.floor && place.floor.garage
 
-    const transformData = data => data.reservations.map(reservation => ({
-      ...reservationTransformation(reservation),
-      history:        reservation.history.map(reservationTransformation),
-      record_updates: reservation.record_updates,
-      spoiler:        (<div className={styles.spoiler}>
+      let placeLabel = '-'
+      if (garage) {
+        placeLabel = garage.flexiplace && moment(reservation.begins_at).isAfter(moment()) ?
+          t([ 'reservations', 'flexiblePlace' ]) :
+          `${reservation.place.floor.label} / ${reservation.place.label}`
+      }
+      return {
+        id:            reservation.id,
+        name:          reservation.user && reservation.user.full_name,
+        note:          reservation.note,
+        client:        reservation.client && reservation.client.name,
+        licence_plate: reservation.car && reservation.car.licence_plate,
+        state:         reservation.deleted_at ? undefined : reservation.approved,
+        type:          reservation.reservation_case,
+        from:          reservation.begins_at,
+        to:            reservation.ends_at,
+        deleted_at:    reservation.deleted_at,
+        garage:        garage ? garage.name : '-',
+        place:         placeLabel
+      }
+    }
+
+    const reservationSpolier = reservation => {
+      const garage = reservation.place && reservation.place.floor && reservation.place.floor.garage
+
+      return (<div className={styles.spoiler}>
         {!reservation.approved && <div><b>{ reservation.client === null ? t([ 'reservations', 'reservationNotPayed' ]) : t([ 'reservations', 'reservationApproved' ])}</b></div>}
         <div className={styles.flex}>
           <div>
@@ -220,7 +228,7 @@ class ReservationsPage extends Component {
             </div>}
           </div>
           {reservation.price > 0 && <div>
-            {valueAddedTax(reservation.price, reservation.place.floor.garage.dic ? reservation.place.floor.garage.vat : 0)} {reservation.currency.symbol}
+            {valueAddedTax(reservation.price, garage && garage.dic ? reservation.place.floor.garage.vat : 0)} {reservation.currency.symbol}
           </div>}
           {!reservation.deleted_at && <div>
             <span className={styles.floatRight}>
@@ -284,6 +292,13 @@ class ReservationsPage extends Component {
           </div>}
         </div>
       </div>)
+    }
+
+    const transformData = data => data.reservations.map(reservation => ({
+      ...reservationTransformation(reservation),
+      history:        reservation.history.map(reservationTransformation),
+      record_updates: reservation.record_updates,
+      spoiler:        reservationSpolier(reservation)
     }))
 
 
