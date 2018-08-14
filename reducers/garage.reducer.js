@@ -4,7 +4,8 @@ import {
   GARAGE_SET_GARAGE,
   GARAGE_SET_NOW,
   GARAGE_SET_SHOW_SELECTOR,
-  GARAGE_SET_TIME
+  GARAGE_SET_TIME,
+  GARAGE_SET_LOADING
 }  from '../actions/garage.actions'
 
 const defaultState = {
@@ -12,7 +13,8 @@ const defaultState = {
   garage:       undefined, // garage details
   now:          true, // is now selected
   showSelector: false, // show datetime selector?
-  time:         moment()
+  time:         moment(),
+  loading:      false
 }
 
 
@@ -49,6 +51,12 @@ export default function garage(state = defaultState, action) {
         ...state,
         time: action.value,
         now:  moment().isBetween(moment(action.value), moment(action.value).add(15, 'minutes'))
+      }
+
+    case GARAGE_SET_LOADING:
+      return {
+        ...state,
+        loading: action.value
       }
 
     default:

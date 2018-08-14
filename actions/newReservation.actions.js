@@ -117,6 +117,12 @@ export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_E
 
 const hideLoading = dispatch => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
 
+function showLoadingModal(show) {
+  return dispatch => {
+    dispatch(setLoading(show))
+    dispatch(pageBaseActions.setCustomModal(show ? (<div>{t([ 'newReservation', 'loading' ])}</div>) : undefined))
+  }
+}
 
 export function setUser(value) {
   return (dispatch, getState) => {
@@ -636,6 +642,9 @@ export function downloadGarage(id) {
           reject('Response has no data - available users')
         }
       }
+      if (!(id && id === (state.garage && state.garage.id))) {
+        dispatch(showLoadingModal(true))
+      }
 
       request(
         onSuccess,
@@ -699,7 +708,7 @@ export function downloadGarage(id) {
           return place
         })
       })
-
+      
       const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
       if (noFreePlaces) {
         const setFreeIntervalSuccess = response => {
@@ -736,7 +745,7 @@ export function downloadGarage(id) {
         }
       }
 
-      hideLoading(dispatch)
+      dispatch(showLoadingModal(false))
     })
   }
 }
