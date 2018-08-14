@@ -2,13 +2,15 @@ import {
   RESERVATIONS_SET_PAST,
   TOGGLE_RESERVATIONS_PAST,
   RESERVATIONS_SET_NEW_NOTE,
-  RESERVATIONS_SET_NEW_NOTE_RESERVATION
+  RESERVATIONS_SET_NEW_NOTE_RESERVATION,
+  RESERVATIONS_SET_STATE
 }  from '../actions/reservations.actions'
 
 const defaultState = {
   past:               false,
   newNoteReservation: undefined,
-  newNote:            ''
+  newNote:            '',
+  tableState:         undefined
 }
 
 export default function reservations(state = defaultState, action) {
@@ -36,6 +38,12 @@ export default function reservations(state = defaultState, action) {
       return {
         ...state,
         newNoteReservation: action.value
+      }
+
+    case RESERVATIONS_SET_STATE:
+      return {
+        ...state,
+        tableState: action.value
       }
 
     default:
