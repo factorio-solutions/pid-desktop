@@ -37,6 +37,7 @@ export const OCCUPANCY_SET_LOADING = 'OCCUPANCY_SET_LOADING'
 export const OCCUPANCY_SET_USER = 'OCCUPANCY_SET_USER'
 export const OCCUPANCY_SET_NEW_RESERVATION = 'OCCUPANCY_SET_NEW_RESERVATION'
 export const OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE = 'OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE'
+export const OCCUPANCY_SET_REFETCHING = 'OCCUPANCY_SET_REFETCHING'
 
 
 export const setGarages = actionFactory(OCCUPANCY_SET_GARAGES)
@@ -47,6 +48,7 @@ export const resetClients = actionFactory(OCCUPANCY_RESET_CLIENTS)
 export const setLoading = actionFactory(OCCUPANCY_SET_LOADING)
 export const setUser = actionFactory(OCCUPANCY_SET_USER)
 export const setReservationNotPossible = actionFactory(OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE)
+export const setRefetching = actionFactory(OCCUPANCY_SET_REFETCHING)
 
 export function setNewReservation(fromMoment, toMoment, placeId) {
   return (dispatch, getState) => {
@@ -145,6 +147,7 @@ export function setFrom(from) {
 
 export function loadGarages() {
   return (dispatch, getState) => {
+    dispatch(setRefetching(true))
     requestPromise(OCCUPANCY_GARAGES_QUERY)
     .then(data => {
       dispatch(setGarages(data.occupancy_garages))
@@ -193,7 +196,10 @@ export function loadGarage(id) {
       from:       timeToUTC(state.from),
       to:         timeToUTC(state.from.clone().add(1, state.duration)),
       client_ids: state.client_ids
-    }).then(data => dispatch(setGarage(data.garage)))
+    }).then(data => {
+      dispatch(setGarage(data.garage))
+      dispatch(setRefetching(false))
+    })
 
     dispatch(loadClients(garageId))
   }

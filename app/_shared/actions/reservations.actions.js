@@ -22,11 +22,13 @@ export const RESERVATIONS_SET_PAST = 'RESERVATIONS_SET_PAST'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 export const RESERVATIONS_SET_NEW_NOTE = 'RESERVATIONS_SET_NEW_NOTE'
 export const RESERVATIONS_SET_NEW_NOTE_RESERVATION = 'RESERVATIONS_SET_NEW_NOTE_RESERVATION'
+export const RESERVATIONS_SET_STATE = 'RESERVATIONS_SET_STATE'
 
 export const setPast = actionFactory(RESERVATIONS_SET_PAST)
 export const togglePast = actionFactory(TOGGLE_RESERVATIONS_PAST)
 export const setNewNote = actionFactory(RESERVATIONS_SET_NEW_NOTE)
 export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RESERVATION)
+export const setState = actionFactory(RESERVATIONS_SET_STATE)
 
 
 export function initReservations() { // will download first 5 reservations

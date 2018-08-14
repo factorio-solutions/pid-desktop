@@ -105,7 +105,6 @@ class ReservationsPage extends Component {
 
   interuptClick = reservation => this.props.interuptionActions.setReservation(reservation)
 
-
   render() {
     const { state, actions, interuption, interuptionActions, pageBase } = this.props
 
@@ -306,6 +305,8 @@ class ReservationsPage extends Component {
             schema={schema}
             variables={{ past: state.past }}
             findId={parseInt(this.props.params.id, 10)}
+            storeState={actions.setState}
+            state={state.tableState}
           />
         </div>
         <div className={styles.centerDiv}>

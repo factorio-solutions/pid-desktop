@@ -12,7 +12,8 @@ import {
   OCCUPANCY_SET_LOADING,
   OCCUPANCY_SET_USER,
   OCCUPANCY_SET_NEW_RESERVATION,
-  OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE
+  OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE,
+  OCCUPANCY_SET_REFETCHING
 }  from '../actions/occupancy.actions'
 
 const defaultState = {
@@ -25,7 +26,8 @@ const defaultState = {
   loading:                false,
   user:                   undefined,
   newReservation:         undefined,
-  reservationNotPossible: false
+  reservationNotPossible: false,
+  refetching:             false
 }
 
 
@@ -33,29 +35,34 @@ export default function occupancy(state = defaultState, action) {
   switch (action.type) {
 
     case OCCUPANCY_SET_GARAGES:
-      return { ...state,
+      return {
+        ...state,
         garages: action.value
       }
 
     case OCCUPANCY_SET_GARAGE:
-      return { ...state,
+      return {
+        ...state,
         garage:  action.value,
         loading: false
       }
 
     case OCCUPANCY_SET_CLIENTS:
-      return { ...state,
+      return {
+        ...state,
         clients: action.value
       }
 
     case OCCUPANCY_RESET_CLIENTS:
-      return { ...state,
+      return {
+        ...state,
         clients:    [],
         client_ids: []
       }
 
     case OCCUPANCY_SET_ALL_CLIENT_IDS:
-      return { ...state,
+      return {
+        ...state,
         client_ids: action.value
       }
 
@@ -67,7 +74,8 @@ export default function occupancy(state = defaultState, action) {
           ? [ ...state.client_ids.slice(0, indexOf), ...state.client_ids.slice(indexOf + 1) ]
           : [ ...state.client_ids, action.value ].sort((a, b) => a > b)
 
-      return { ...state,
+      return {
+        ...state,
         client_ids: newClientIds,
         loading:    true,
         user:       state.user
@@ -82,7 +90,8 @@ export default function occupancy(state = defaultState, action) {
     }
 
     case OCCUPANCY_SET_DURATION:
-      return { ...state,
+      return {
+        ...state,
         duration: action.value,
         loading:  true,
         user: {
@@ -92,30 +101,41 @@ export default function occupancy(state = defaultState, action) {
       }
 
     case OCCUPANCY_SET_FROM:
-      return { ...state,
+      return {
+        ...state,
         from:    action.value,
         loading: true
       }
 
     case OCCUPANCY_SET_LOADING:
-      return { ...state,
+      return {
+        ...state,
         loading: action.value
       }
 
     case OCCUPANCY_SET_USER:
-      return { ...state,
+      return {
+        ...state,
         user: action.value
       }
 
     case OCCUPANCY_SET_NEW_RESERVATION:
-      return { ...state,
+      return {
+        ...state,
         newReservation:         action.value,
         reservationNotPossible: false
       }
 
     case OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE:
-      return { ...state,
+      return {
+        ...state,
         reservationNotPossible: action.value
+      }
+
+    case OCCUPANCY_SET_REFETCHING:
+      return {
+        ...state,
+        refetching: action.value
       }
 
     default:

@@ -275,7 +275,12 @@ export default class Table extends Component {
 
       return [ <TableRow
         key={key}
-        className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled} ${value.deleted_at && styles.deleted}`}
+        className={`
+          ${(spoilerId === value.key) && styles.spoilerRow}
+          ${value.disabled && styles.disabled}
+          ${value.deleted_at && styles.deleted}
+          ${value.loading && styles.loading}
+        `}
         schema={schema}
         data={value}
         onClick={() => { handleRowClick(value.key) }}
