@@ -7,6 +7,7 @@ export const GET_KNOWN_USERS = `{
     secretary
     internal
     host
+    contact_person
     client {
       id
       name
