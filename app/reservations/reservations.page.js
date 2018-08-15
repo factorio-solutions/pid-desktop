@@ -275,7 +275,7 @@ class ReservationsPage extends Component {
                 <LabeledRoundButton
                   label={t([ 'reservations', 'downloadInvoice' ])}
                   content={<span className="fa fa-download" aria-hidden="true" />}
-                  onClick={() => actions.downloadInvoice(reservation.invoices.map(invoice => invoice.id))}
+                  onClick={() => actions.downloadInvoice(reservation.invoices)}
                   type="action"
                 />
               }

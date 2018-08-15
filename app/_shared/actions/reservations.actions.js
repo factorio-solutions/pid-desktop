@@ -60,12 +60,14 @@ export function destroyRecurringReservations(id) {
   }
 }
 
-export function downloadInvoice(ids) {
+export function downloadInvoice(invoices) {
   return () => {
-    if (ids.length === 1) {
-      download(`${ids[0]}.pdf`, DOWNLOAD_INVOICE, { id: ids[0] })
+    if (invoices.length === 1) {
+      download(`${invoices[0].invoice_number}.pdf`, DOWNLOAD_INVOICE, { id: invoices[0].id })
     } else {
-      downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, ids)
+      const ids = invoices.map(invoice => invoice.id)
+      const fileNames = invoices.map(invoice => invoice.invoice_number)
+      downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, ids, fileNames)
     }
   }
 }
