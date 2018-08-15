@@ -494,7 +494,7 @@ export function submitGarage() {
         dispatch(fetchGarages())
         dispatch(setGarage(response.data.create_garage.id))
         dispatch(clearForm())
-        nav.to('/dashboard')
+        nav.to('/occupancy')
       }
     }
 

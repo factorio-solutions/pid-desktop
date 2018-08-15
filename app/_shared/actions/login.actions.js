@@ -62,7 +62,7 @@ export function loginSuccess(result, redirect, callback) {
       callback(result)
       dispatch(resetLoginForm())
       if (redirect) {
-        const path = localStorage.redirect || '/dashboard'
+        const path = localStorage.redirect || '/occupancy'
         delete localStorage.redirect
         nav.to(path)
       }
