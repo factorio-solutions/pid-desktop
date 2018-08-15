@@ -55,7 +55,7 @@ class MasterPage extends Component {
     this.props.actions.setShowSecondaryMenu(false)
   }
 
-  onLogoClick = () => nav.to('/dashboard')
+  onLogoClick = () => nav.to('/occupancy')
   onMessageClick =() => nav.to('/notifications')
   verticalMenuClick = () => this.setState({ menu: false })
   secondaryVerticalMenuClick = () => {

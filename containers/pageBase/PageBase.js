@@ -35,10 +35,10 @@ class PageBase extends Component {
     const { state, actions, notifications } = this.props
 
     const vertical = [
-      { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => nav.to('/dashboard') },
+      // state.current_user && state.current_user.occupancy_garages.length &&
+      { label: t([ 'pageBase', 'Occupancy' ]), key: 'occupancy', icon: 'icon-occupancy', onClick: () => nav.to('/occupancy') }, // edit preferences in pageBase.action too
+      // { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => nav.to('/dashboard') },
       { label: t([ 'pageBase', 'Reservation' ]), key: 'reservations', icon: 'icon-reservations', onClick: () => nav.to('/reservations') },
-      state.current_user && state.current_user.occupancy_garages.length &&
-        { label: t([ 'pageBase', 'Occupancy' ]), key: 'occupancy', icon: 'icon-occupancy', onClick: () => nav.to('/occupancy') }, // edit preferences in pageBase.action too
       (state.isGarageAdmin || state.isGarageManager || state.isGarageReceptionist || state.isGarageSecurity) &&
         { label: t([ 'pageBase', 'Garage' ]), key: 'garage', icon: 'icon-garage', onClick: () => nav.to(`/${state.garage}/garage`) }, // edit preferences in pageBase.action too
       ((state.isGarageAdmin || state.isGarageManager) && state.pid_tarif >= 2) &&

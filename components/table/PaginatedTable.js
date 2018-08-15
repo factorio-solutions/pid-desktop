@@ -74,7 +74,9 @@ export default class PaginatedTable extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('paginatedTableUpdate', this.loadingRequest, true)
-    this.props.storeState(this.state)
+
+    const { storeState } = this.state
+    storeState && storeState(this.state)
   }
 
 
