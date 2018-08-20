@@ -32,7 +32,9 @@
 		"loginFailed": "Špatné přihlášení",
 		"forgot": "Zapomenuté heslo?",
 		"proceed": "Pokračujte zde",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "CS: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "CS: login_page.resetPasswordSuccessful"
 	},
 	"signup_page": {
 		"name": "Jméno",
@@ -50,10 +52,10 @@
 		"loading": "Načítám",
 		"termsOfService": "Podmínkami služby",
 		"acceptTerms": "Souhlasím s",
-		"success": "Registrace proběhla úspěšně, potvrďte svou emailovou adresy a můžete přejít k přihlášení."
+		"success": "Registrace proběhla úspěšně, můžete přejít k přihlášení. Pokud jste změnili svou emailovou adresu, prosím ověřte ji pomocí obdrženého emailu."
 	},
 	"pageBase": {
-		"noFileSelected": "CS: pageBase.noFileSelected",
+		"noFileSelected": "Nevybrali jste soubor",
 		"couldNotUpload": "Nepodařilo se nahrát soubor.",
 		"Dashboard": "Nástěnka",
 		"Issues": "CS: pageBase.Issues",
@@ -118,7 +120,7 @@
 		"newGarageFloorsHint": "Zde můžete nastavit počet podlaží a kolik je v každém podlaží parkovacích míst.\n\nKe každému podlaží je možné nahrát plánek ve formátu .svg. S jeho tvorbou Vám rádi pomůžeme, popřípadě si můžete vybrat z předpřipravených šablon.\n\nDále je zde možno nastavit maximální rozměry vozidel.",
 		"newGarageOrderHint": "Zde můžete nastavit pořadí obsazování parkovacích míst. Místa se obsazují vzestupně, tedy od nejnižšího čísla. U míst bez nastaveného pořadí určí pořadí systém automaticky.",
 		"newGarageGatesHint": "Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",
-		"newGarageLegalDocumentsHint": "CS: pageBase.newGarageLegalDocumentsHint",
+		"newGarageLegalDocumentsHint": "Zde naleznete právní dokumenty, které se vztahují k vašim garážím - provozní řády a další. Dokumenty, které se týkají ochrany osobních údajů naleznete v profilu uživatele.",
 		"garageClientsHint": "Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.",
 		"clientsHint": "Zde najdete seznam klientů, s kterými jste v kontaktu.\n\nVe sloupci \"token klienta\" najdete unikátní identifikátor, který slouží k jednoduchému výběru klienta při tvorbě nových dohod.\n\nVe sloupci \"dohoda\" je zobrazeno zeleným zatržením, má-li klient uzavřenou dohodu, nebo červeným vykřičníkem, pokud žádnou dohodu nemá.\n\nVe sloupci \"místa\" je uveden celkový počet míst, která má klient přiřazená.\n\nVe sloupci \"celkem za měsíc\" je zobrazeno celkové měsiční parkovné klienta.\n\nVe sloupci \"faktury\" je zobrazen stav úhrad faktur - zeleně pokud jsou všechny uhrazeny, červeně má-li klient jakoukoliv fakturu po splatnosti.\n\nPo kliknutí na klienta se zobrazí další detaily, např. kontaktní osoba nebo seznam uzavřených dohod. Tlačítky v pravé části pak můžete vytvářet nové dohody, kontrolovat faktury, upravovat klienta či zobrazit všechny uživatele, kteří pod klienta patří. V tomto zobrazení je možno kliknout i na jednotlivé dohody a ty pak upravovat.",
 		"newClientHint": "\nZde vytváříte nový klientský účet. Klientský účet shromažďuje informace o klientech, jejich uživatelích, parkovacích místech, která mohou používat, atd. Budete je moci nastavit v příslušných sekcích v systému.",
@@ -166,7 +168,7 @@
 		"garageGarageUsersHint": "Zde můžete spravovat uživatele garáže a jejich práva.",
 		"EditUserHint": "Zde můžete změnit svoje údaje.",
 		"orderGarageModuleHint": "Zde si můžete objednat modul pro přístup do garáže",
-		"reservationOverviewHint": "Zde můžete zkontrolovat, zda jsou údaje rezervace správně, a dokončit rezervaci uhrazením-\n\nVýběr platebních metod je možné upravit v nastavení garáže.\n\nPlatba Na klik umožňuje platit výrazně pohodlněji a rychleji. Při první transakci dává klient svolení s prováděním následných transakcí a provádí platbu standardním způsobem (přesměrování na bránu, zadání čísla karty, platnosti, CVC, 3D-Secure proces). Při každé následující transakci již klient jen řekne, že chce použít platbu na klik. Komunikace s platební bránou se provede na pozadí a přímo v e-shopu se klient dozvídá, zda bylo zaplaceno, či ne.\n\nPři označení \"Zapamatovat kartu pro platbu na klik\" se uloží údaje o vaší kartě. Při další platbě po označení \"Použít platbu na klik\" se platba provede automaticky. Při označení \"Použít platbu na klik\" a současně \"Použít jinou kartu\" se nová karta uloží a původní uložená karta bude smazána.",
+		"reservationOverviewHint": "Zde můžete zkontrolovat, zda jsou údaje rezervace správně, a dokončit rezervaci uhrazením.\n\nVýběr platebních metod je možné upravit v nastavení garáže.\n\nPlatba Na klik umožňuje platit výrazně pohodlněji a rychleji - brána si \"zapamatuje\" údaje a není je potřeba pokaždé zadávat znova.\n\nPro její použití je při první transakci nutné dát svolení s prováděním následných transakcí a provést platbu standardním způsobem (přesměrování na bránu, zadání čísla karty, platnosti, CVC, 3D-Secure proces). Při každé následující transakci již jen zvolíte, že chcete použít platbu na klik. Komunikace s platební bránou se provede na pozadí a hned se dozvíte, zda platba proběhla v pořádku, či nikoliv.\n\nPři označení \"Zapamatovat kartu pro platbu na klik\" se uloží údaje o Vaší kartě. Při další platbě po označení \"Použít platbu na klik\" se platba provede automaticky. Při označení \"Použít platbu na klik\" a současně \"Použít jinou kartu\" zadáte novou kartu, ta se uloží pro následující platby a původní uložená karta bude smazána.",
 		"editInvoiceHint": "Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.",
 		"editContractHint": "Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.",
 		"unredNotifications": {
@@ -188,7 +190,7 @@
 		"analyticsgatesHint": "CS: pageBase.analyticsgatesHint",
 		"flexiplaceHint": "Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.",
 		"pidAdmin": "PID admin",
-		"bulkRemovalHint": "Zde můžete smazat stornovat více rezervaci najednou.",
+		"bulkRemovalHint": "Zde můžete stornovat více rezervaci najednou.",
 		"smsSettingsHint": "Na této stránce si můžete aktivovat a nastavit sms-službu. Pro psaní textů můžete použít níže vysvětlené proměnné, které budou nahrazovány odpovídajícími údaji.\n\n\"{{ garage }}\" = jméno garáže\n\"{{ address }}\" = adresa vjezdu\n\"{{ gps }}\" = gps koordinaty vjezdu\n\"{{ place }}\" = patro / místo\n\"{{ begin }}\" = začátekrezervace\n\"{{ end }}\" = konec rezervace\n\"{{ gate }}\" = tel. číslo serveru"
 	},
 	"Legal documents": "CS: Legal documents",
@@ -216,6 +218,7 @@
 		"price": "Cena",
 		"onClientsExpenses": "hrazeno zvoleným klientem",
 		"onUsersExpenses": "hrazeno parkujícím",
+		"longtermRent": "dlouhodobý nájem",
 		"loadingGarage": "Načítám náhled garáže ...",
 		"creatingReservation": "Vytvářím rezervaci ...",
 		"updatingReservation": "Aktualizuji rezervaci ...",
@@ -245,6 +248,7 @@
 		"onetimeVisitText": "nemůže vytvářet ani žádat o rezervace, není členem klientského účtu.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí host",
+		"paidByHostsTimeCredit": "Rezervace placena z time creditu uživatele",
 		"languageSelector": "Zvolte jazyk komunikace",
 		"selectTemplate": "Zvolte šablonu",
 		"sendSms": "Odeslat upozornění o rezervaci pomocí SMS",
@@ -255,8 +259,9 @@
 		"creatingReservationInPast": "Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?",
 		"loading": "Načítám ...",
 		"userName": "Jméno uživatele",
-		"AlternativeInterval": "Všechan místa jsou v tomoto intervalu prázdná. Nejdelší možný interval je:",
-		"weekendPrice": "Víkendová cena:"
+		"AlternativeInterval": "Všechna místa jsou v tomto intervalu obsazená. Nejdelší možný interval je:",
+		"weekendPrice": "Víkendová cena:",
+		"notAbleToCreateReservation": "Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit"
 	},
 	"clients": {
 		"name": "jméno",
@@ -270,13 +275,14 @@
 		"createAgreement": "Vytvořit dohodu",
 		"editClient": "Upravit klienta",
 		"goToUsers": "Uživatelé",
-		"goToInvoices": "Faktury",
+		"goToInvoices": "Účetní doklady",
 		"places": "místa",
 		"contract": "dohoda",
 		"monthlyTotal": "celkem za měsíc",
 		"invoices": "faktury",
 		"currentAgreements": "Aktivní dohody:",
-		"oldAgreements": "Proběhlé dohody:"
+		"oldAgreements": "Proběhlé dohody:",
+		"modules": "Rozšířená nastavení"
 	},
 	"clientUsers": {
 		"name": "uživatelské jméno",
@@ -284,10 +290,10 @@
 		"memberSince": "členem od",
 		"phone": "telefon",
 		"contact_person": "kontaktní osoba",
-		"admin": "je admin",
+		"admin": "admin",
 		"secretary": "Sekretář/ka",
 		"internal": "Interní",
-		"host": "je pravidelný host",
+		"host": "pravidelný host",
 		"driver": "řidič",
 		"presetAs": "Nastavit jako",
 		"removeClientUser": "Určitě chcete odstranit tohoto uživatele?",
@@ -311,6 +317,7 @@
 		"creator": "Založil",
 		"garage": "garáž",
 		"createdAt": "vytvořeno:",
+		"deletedAt": "odstraněno:",
 		"updatedAt": "upraveno:",
 		"removeReservationQuestion": "Určitě chcete odstranit tuto rezervaci?",
 		"terminateEarlyQuestion": "Přejete si nyní ukončit rezervaci?",
@@ -319,7 +326,7 @@
 		"host": "Pravidelný host",
 		"visitor": "Návštěvník",
 		"internal": "Interní",
-		"mrParkit": "Mr. Parkit",
+		"mrParkit": "MR.PARKIT",
 		"editReservation": "Upravit rezervaci",
 		"editNote": "Upravit poznámku",
 		"newNote": "Nová poznámka",
@@ -559,17 +566,21 @@
 		"addAllPalces": "Přidat všechna místa",
 		"notAssignNumber": "Číslo nepřiřazeno",
 		"selcetNumber": "Číslo pro otevření brány",
-		"privacy": "CS: newGarage.privacy",
-		"terms": "CS: newGarage.terms",
-		"documents": "CS: newGarage.documents",
-		"documentName": "CS: newGarage.documentName",
-		"lastChangeAt": "CS: newGarage.lastChangeAt",
-		"addDocument": "CS: newGarage.addDocument",
-		"showDocument": "CS: newGarage.showDocument",
-		"removeDocument": "CS: newGarage.removeDocument",
-		"removeDocumentQuestion": "CS: newGarage.removeDocumentQuestion",
-		"privacyDocumentRule": "CS: newGarage.privacyDocumentRule",
-		"legalDocuments": "CS: newGarage.legalDocuments"
+		"privacy": "Ochrana osobních údajů",
+		"terms": "Obchodní podmínky",
+		"documents": "Dokumenty",
+		"documentName": "Název dokumentu",
+		"lastChangeAt": "Naposledy změněno",
+		"addDocument": "Přidat dokument",
+		"showDocument": "Náhled dokumentu",
+		"removeDocument": "Odstranit dokument",
+		"removeDocumentQuestion": "Opravdu chcete vymazat dokument?",
+		"privacyDocumentRule": "Nejméně jeden dokument musí být vybrán.",
+		"legalDocuments": "Právní dokumenty",
+		"noDocument": "Nebyl nahrán žádný dokument.",
+		"or": "NEBO",
+		"uploadUrl": "Přidal URL",
+		"documentURL": "URL dokumentu"
 	},
 	"newClient": {
 		"name": "Jméno klienta",
@@ -598,23 +609,23 @@
 		"timeCredit": "Časový kredit",
 		"onetimeAddition": "Jednorázové přidání časového kreditu",
 		"onetimeRemoval": "Jednorázové odebrání časového kreditu",
-		"amountToAdd": "Částka pro příděl",
+		"amountToAdd": "Částka pro přidání",
 		"amountToRemove": "Částka k odebrání",
 		"onetimeAdditionPlaceholder": "30",
-		"timeCreditDescription": "Modul představuje časové omezení rezervací uživatlů Vašho klienta",
+		"timeCreditDescription": "Modul umožňuje časové omezení rezervací uživatelů Vašeho klienta",
 		"timeCreditStatistics": "Statistiky",
-		"hoursThatCanBeParked": "Hodiny, která je možné odparkovat tento měsíc",
-		"creditsThatCanBeDistributed": "Kredity, která je možné odparkovat rozdat měsíc",
+		"hoursThatCanBeParked": "Hodiny, které je možné odparkovat tento měsíc",
+		"creditsThatCanBeDistributed": "Kredity, která je možné rozdat tento měsíc",
 		"creditsDistributed": "Kredity, která byly rozdány",
 		"creditsDistributedOverMax": "Kredity přes maximální počet",
-		"cteditsOutOfBoundException": "Překročena hodnota kreditů možných k dostribuci",
-		"currencyName": "Jméno mělny",
+		"cteditsOutOfBoundException": "Překročena maximální hodnota kreditů určených k distribuci",
+		"currencyName": "Jméno měny",
 		"currencyNamePlaceholder": "Parkovací mince",
 		"pricePerHour": "Cena za hodinu",
 		"pricePerHourPlaceholder": "1",
-		"monthlyAmount": "Měsíční příděl",
+		"monthlyAmount": "Počet na měsíc",
 		"monthlyAmountPlaceholder": "60",
-		"onetimeAdd": "Jednorázový příděl",
+		"onetimeAdd": "Jednorázové přidání",
 		"onetimeRemove": "Jednorázové odebrání",
 		"minMaxReservationDuration": "Min-Max trvání",
 		"addToEveryone": "Přidat všem",
@@ -688,7 +699,12 @@
 		"newReservationForYou": "%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.",
 		"reservationUpdatedNotification": "%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.",
 		"reservationRemovedDueToUnpaid": "Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut",
-		"reservationContactPersonNotification": "Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s"
+		"reservationContactPersonNotification": "Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",
+		"clientLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' působí v garáži '%(arg2)s'.",
+		"garageLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",
+		"reservationLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",
+		"reservationUpdateLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",
+		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'."
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -700,7 +716,10 @@
 		"email": "Email:",
 		"createdAt": "Profil vytvořen:",
 		"cars": "Auta",
-		"showPublicGarages": "Zobrazovat veřejné garáže"
+		"showPublicGarages": "Zobrazovat veřejné garáže",
+		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže",
+		"myGarages": "CS: profile.myGarages",
+		"myClients": "CS: profile.myClients"
 	},
 	"users": {
 		"username": "uživatelské jméno",
@@ -722,6 +741,7 @@
 		"host": "pravidelný host",
 		"security": "ostraha",
 		"receptionist": "recepční",
+		"manager": "CS: users.manager",
 		"invitedToClient": "Pozván %(date)s aby byl členem klienta:",
 		"invitedToGarage": "Pozván %(date)s aby byl členem garáže:",
 		"invitedToCar": "Pozván %(date)s aby byl členem auta"
@@ -812,11 +832,11 @@
 		"selectCurrency": "Vyberte měnu",
 		"selectPlace": "Začněte výběrem místa",
 		"saving": "Ukládám...",
-		"minReservationDuration": "Min délka rezervace",
-		"minReservationDurationPlaceholder": "30",
+		"minReservationDuration": "Min délka rezervace (minuty)",
+		"minReservationDurationPlaceholder": "15",
 		"maxReservationDuration": "Max délka rezervace",
 		"maxReservationDurationPlaceholder": "600",
-		"durationErr": "Špatná délka"
+		"durationErr": "Špatně zvolená délka"
 	},
 	"newRent": {
 		"name": "Název",
@@ -995,10 +1015,10 @@
 		"donwloadXlsx": "Stáhnout XLSX",
 		"donwloadInvoices": "Stáhnout faktury",
 		"donwloadXML": "Pohoda XML",
-		"selectYourPohodaIc": "Zvolte IČ společnosti pro kterou účtujete:",
-		"invoices": "Invoices",
-		"simplifiedTaxReceipts": "Simplified tax receipts",
-		"canceledInvoices": "Canceled invoices",
+		"selectYourPohodaIc": "Zvolte IČ společnosti, pro kterou účtujete:",
+		"invoices": "Faktury",
+		"simplifiedTaxReceipts": "Zjednodušené daňové doklady",
+		"canceledInvoices": "Zrušené faktury",
 		"userName": "Uživatel"
 	},
 	"resetPassword": {
@@ -1037,7 +1057,7 @@
 		"requestDesribtionPart1": "Použijte token tak, že přidáte header",
 		"requestDesribtionPart2": "Authorization:",
 		"requestDesribtionPart3": "do vašich graphQL requestů",
-		"selectPlaces": "Pro aktivaci modulu, prosím, vyplňte formulář."
+		"selectPlaces": "Pro aktivaci modulu, prosím, vyplňte formulář níže."
 	},
 	"newContract": {
 		"description": "Nová dohoda v",
@@ -1251,7 +1271,14 @@
 			"place": "Místo",
 			"garage": "Garáž",
 			"begins": "Začíná",
-			"ends": "Končí"
+			"ends": "Končí",
+			"issue": "Nahlásit problém",
+			"carOnMySpot": "Někdo mi stojí na místě",
+			"reservationMoved": "Rezervace přesunuta na:",
+			"noFreePlaces": "Nepodařilo se nám najít náhradní místo.",
+			"enterCarsLicencePlate": "Vložte SPZ auta",
+			"clientContactPerson": "Můžete kontaktovat kontaktní osoby klienta:",
+			"garageSecurity": "Nebo ochranku garáže:"
 		},
 		"newReservation": {
 			"begins": "Začíná",
@@ -1296,6 +1323,9 @@
 			"noGuestResrevations": "Žádné rezervace pravidelného hosta"
 		}
 	},
+	"auth0Errors": {
+		"emailNotVerified": "Prosím, před přihlášením ověřte svůj email. Verifikační email Vám byl zaslán na "
+	},
 	"auth0Emails": {
 		"verificationEmailSubject": "Ověřovací email",
 		"securityReasons": "Z bezpečnostních důvodů potřebujeme ověřit váš email",
@@ -1318,16 +1348,31 @@
 		"confirmPwdReset": "Dokončit změnu hesla",
 		"troubleWithAccount": "Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.",
 		"verificationCodeEmailSubject": "Ověřovací kód",
-		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!"
+		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!",
+		"blockedTitle": "Váš účet byl zablokován",
+		"blockedDescription": "Detekovali jsme podezřelou aktivitu na Vašem účtě, zaznamenali jsme deset neúspěšných příhlášení v řadě.",
+		"blockedUnblock": "Odblokovat!"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "Byl jste pozván do Park-It-Directu!",
 		"resend_invitation_mail_subject": "Připomínáme pozvánku v Park-It-Direct.",
 		"new_reservation_mail_subject": "%{user} Vám vytvořil(a) novou rezervaci.",
 		"reservation_confirmed_subject": "Rezervace v %{garage} byla potvrzena.",
+		"reservation_not_confirmed_subject": "Rezervace v %{garage} byla zamítnuta.",
 		"reservation_updated_subject": "Vaše rezervace v %{garage} byla aktualizována.",
 		"reservation_paid_subject": "Vaše rezervace v %{garage} byla zaplacena.",
 		"reservation_not_approved_yet_subject": "Vaše nová rezervace nebyla zatím schválena",
+		"car_on_my_spot_notify_driver_subject": "Byl jste nahlášen",
+		"car_on_my_spot_notify_secretary_subject": "Uživatel byl nahlášen",
+		"aliases": {
+			"garage_table": {
+				"user": "Uživatel:",
+				"garage": "Garáž:",
+				"place": "Místo:",
+				"from": "Od:",
+				"to": "Do:"
+			}
+		},
 		"footer": {
 			"enjoy": "Užijte si Park-it-direct!",
 			"regards": "S pozdravem,",
@@ -1360,7 +1405,7 @@
 			"go_pay_yourself": "Zaplatit",
 			"price": "Cena:",
 			"pay_in_24_hours": "Rezervaci je potřeba zaplatit do 24 hodin.",
-			"reservation_was_paid": "Rezervace byla zaplacena klientem.",
+			"reservation_was_paid": "Rezervace byla zaplacena hostitelem.",
 			"confirmed": "Potvrzeno",
 			"garage_address": "Adresa garáže",
 			"reservation_start": "Začátek rezervace",
@@ -1393,17 +1438,10 @@
 		},
 		"reservation_confirmed": {
 			"reservation_confirmed": "Rezervace, o kterou jste požádali, byla schválena!",
-			"garage": "Garáž:",
-			"place": "Místo:",
-			"from": "Od:",
-			"to": "Do:"
+			"reservation_not_confirmed": "Rezervace, o kterou jste požádali, byla zamítnuta!"
 		},
 		"reservation_updated": {
-			"reservation_updated": "Vaše rezervace byla upravena:",
-			"garage": "Garáž:",
-			"place": "Místo:",
-			"from": "Od:",
-			"to": "Do:"
+			"reservation_updated": "Vaše rezervace byla upravena:"
 		},
 		"reservation_paid": {
 			"headline": "Děkujeme za zaplacení rezervace",
@@ -1411,11 +1449,18 @@
 		},
 		"reservation_not_approved_yet": {
 			"reservation_was_not_yet_confirmed": "Vaše rezervace nebyla zatím schválena:",
-			"garage": "Garáž:",
-			"place": "Místo:",
-			"from": "Od:",
-			"to": "Do:",
 			"you_can_contact_these_peope": "Pro uspíšení vašeho potrvrzení můžete kontaktovat kontaktní osoby:"
+		},
+		"car_on_my_spot_notify_driver": {
+			"you_have_been_reported": "Bylo nám nahlášeno, že auto spojené s Vámi blokuje místo pro jinou rezervaci.",
+			"infor_about_car": "Informace o nahlášeném autě:",
+			"suspected_reservation": "Máme podezření, že problém nastal u této rezervace:",
+			"we_urge_you": "Žádáve Vás o nápravu situace"
+		},
+		"car_on_my_spot_notify_secretary_and_security": {
+			"user_has_been_reported": "Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",
+			"infor_about_car": "Další informace o autě:",
+			"infor_about_reservation": "Další informace o rezervaci:"
 		}
 	},
 	"railsSMSs": {
