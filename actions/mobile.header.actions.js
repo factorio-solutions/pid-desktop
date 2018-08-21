@@ -47,7 +47,8 @@ export function initGarages() {
   return dispatch => {
     const onGarageSuccess = response => {
       const garages = response.data.reservable_garages
-      garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]) })
+      garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })
+
       dispatch(setGarages(garages))
     }
 

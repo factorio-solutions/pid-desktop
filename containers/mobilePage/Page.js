@@ -115,7 +115,7 @@ export class Page extends Component {
         actions.setGarage(state.garages[index].id)
         reservationsActions.initReservations()
       }
-      return { label: garage.name, onClick: garageSelected }
+      return { label: garage.name, onClick: garageSelected, order: garage.order }
     }
 
     const divider = <div className={styles.divider}><div className={styles.line} /></div>
