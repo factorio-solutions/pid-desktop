@@ -32,7 +32,9 @@
 		"loginFailed": "Nie udało się zalogować",
 		"forgot": "Nie pamiętasz hasła?",
 		"proceed": "Przejdź dalej",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "PL: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "PL: login_page.resetPasswordSuccessful"
 	},
 	"signup_page": {
 		"name": "Imię i nazwisko",
@@ -238,6 +240,9 @@
 		"visitorsName": "Nazwisko odwiedzającego",
 		"visitorsPhone": "Telefon odwiedzającego",
 		"visitorsEmail": "E-mail odwiedzającego",
+		"internalsName": "PL: newReservation.internalsName",
+		"internalsPhone": "PL: newReservation.internalsPhone",
+		"internalsEmail": "PL: newReservation.internalsEmail",
 		"selectedUser": "Użytkownik",
 		"flexiblePlaceSelected": "elastyczne",
 		"noFreePlace": "Brak wolnych miejsc",
@@ -715,7 +720,9 @@
 		"createdAt": "Profil założony:",
 		"cars": "Auta",
 		"showPublicGarages": "Pokaż garaże oferowane publicznie",
-		"privacyDocuments": "PL: profile.privacyDocuments"
+		"privacyDocuments": "PL: profile.privacyDocuments",
+		"myGarages": "PL: profile.myGarages",
+		"myClients": "PL: profile.myClients"
 	},
 	"users": {
 		"username": "Nazwa użytkownika",
@@ -737,6 +744,7 @@
 		"host": "regularny gość",
 		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
+		"manager": "PL: users.manager",
 		"invitedToClient": "%(date)s zaproszony(-a) do uczestnictwa w:",
 		"invitedToGarage": "%(date)s zaproszony(-a) do garażu:",
 		"invitedToCar": "%(date)s zaproszony(-a) do auta:"
@@ -1343,7 +1351,10 @@
 		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
 		"verificationCodeEmailSubject": "Kod weryfikacyjny",
-		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
+		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!",
+		"blockedTitle": "PL: auth0Emails.blockedTitle",
+		"blockedDescription": "PL: auth0Emails.blockedDescription",
+		"blockedUnblock": "PL: auth0Emails.blockedUnblock"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "Zostałeś zaproszony do Park-It-Direct!",

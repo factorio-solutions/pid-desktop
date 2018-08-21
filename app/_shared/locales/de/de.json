@@ -32,7 +32,9 @@
 		"loginFailed": "Anmeldung fehlgeschlagen",
 		"forgot": "Passwort vergessen?",
 		"proceed": "Hier fortfahren",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "DE: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "Ihr Passwort wurde erfolgreich geändert."
 	},
 	"signup_page": {
 		"name": "Vor- und Nachname",
@@ -63,8 +65,8 @@
 		"reservationButton": "Reservierungsschaltfläche",
 		"mrParkitIntegration": "MR. PARKIT-Integration",
 		"goPublic": "Öffentlich anbieten",
-		"Garage setup": "Garageneinstellungen",
-		"garageSetupFloors": "Garagenetagen",
+		"Garage setup": "Garage einstellen",
+		"garageSetupFloors": "Etagen",
 		"garageSetupGates": "Garagentore",
 		"garageSetupOrder": "Reihenfolge der Belegung",
 		"garageSetupSubscribtion": "Abonnement",
@@ -149,7 +151,7 @@
 		"EditGarage": "Parkhaus bearbeiten",
 		"EditGarageHint": "Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.\n\nKunden: Die einzelnen Kunden werden in verschiedenen Farben dargestellt.\nVereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.\nReservierungen: Die einzelnen Reservierungen werden in verschiedenen Farben dargestellt.\nPreise: Die einzelnen Preiseinstellungen werden in verschiedenen Farben dargestellt.\nFahrzeuge: Die einzelnen Fahrzeuge werden sind in verschiedenen Farben dargestellt.\n\nRechts oben kann ausgewählt werden, ob der aktuelle Zeitraum oder ein bestimmtes Datum angezeigt werden soll.",
 		"Occupancy": "Belegung",
-		"Invoices": "Rechnungen",
+		"Invoices": "Buchhaltung",
 		"tableView": "Tabellenansicht",
 		"cardView": "Kartenansicht",
 		"marketing": "Marketing",
@@ -157,7 +159,7 @@
 		"editMarketing": "Marketing ändern",
 		"garageMarketingHint": "Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten. Klicken Sie auf „Einstellungen“ bei den einzelnen Modulen, um weitere Informationen anzuzeigen.",
 		"garageNewMarketingHint": "Hier können Sie ein neues Marketing einrichten.",
-		"garageEditMarketingHint": "Hier können Sie Marketing bearbeiten.",
+		"garageEditMarketingHint": "Dieses Modul dient dazu die Website zu bearbeiten, durch welche Sie  Ihre Garage propagieren können und Reservationen zum parken erhalten können.\n\nIm Feld \"URL Adresse Benennung\" stellen Sie ein, wie Ihr Link zur Garage aussehen wird.\nDas Format sieht \"URL Adresse Benennung.park-it-direct.com\".\n\nDie Notrufnummer und Notemail sind Kontaktdaten, welche auf der Webseite in der Sektion Kontakte angezeigt werden.\n\nIn der Garagenbeschreibung können Sie eine kurze Beschreibung in 4 Sprachen aufführen (zum ändern der Sprache benutzen Sie das Menü in der rechten Ecke dieses Feldes).\n\nNeben dem Feld der Beschreibung können Sie verschiedene Parameter einstellen, die in der Garagenbeschreibung angezeigt werden.\n\nIm Teil \"Garagenfotos\" können Sie Fotos von der Garage hochladen, welche auf der Webseite angezeigt werden. Wir empfehlen Fotos in einer Größe von bis zu maximal 1Mb .jpg Format.",
 		"garageNewPricingHint": "Hier können Sie neue Reservierungspreise einstellen.",
 		"garageEditPricingHint": "Hier können Sie Preiseigenschaften einstellen.",
 		"garageNewRentHint": "Hier können Sie ein neues Mietverhältnis einrichten.",
@@ -215,8 +217,8 @@
 		"licencePlatePlaceholder": "P-ID 1234",
 		"price": "Preis",
 		"onClientsExpenses": "Auf Kundenkosten.",
-		"onUsersExpenses": "DE: newReservation.onUsersExpenses",
-		"longtermRent": "DE: newReservation.longtermRent",
+		"onUsersExpenses": "Auf Fahrer-Kosten",
+		"longtermRent": "Langfristig vermietet",
 		"loadingGarage": "Parkhausgrundriss wird geladen …",
 		"creatingReservation": "Reservierung wird erstellt …",
 		"updatingReservation": "Reservierung wird aktualisiert …",
@@ -238,6 +240,9 @@
 		"visitorsName": "Besucher Name",
 		"visitorsPhone": "Besucher Telefonnummer",
 		"visitorsEmail": "Besucher E-Mail",
+		"internalsName": "DE: newReservation.internalsName",
+		"internalsPhone": "DE: newReservation.internalsPhone",
+		"internalsEmail": "DE: newReservation.internalsEmail",
 		"selectedUser": "Benutzer",
 		"flexiblePlaceSelected": "flexibel",
 		"noFreePlace": "Keine freie Plätze",
@@ -246,7 +251,7 @@
 		"onetimeVisitText": "kann keine Reservationen erstellen und Sie nichtmal anfragen, ist kein Mitglied des Klientenkontos.",
 		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.",
 		"paidByHost": "Buchung wird vom Gast bezahlt",
-		"paidByHostsTimeCredit": "DE: newReservation.paidByHostsTimeCredit",
+		"paidByHostsTimeCredit": "Mit Krediten des Fahrers bezahlen",
 		"languageSelector": "Wählen Sie die Kommunikationssprache",
 		"selectTemplate": "Wählen Sie eine Vorlage",
 		"sendSms": "Bestätigung per SMS schicken",
@@ -254,12 +259,12 @@
 		"character": "Zeichen",
 		"removeDiacritics": "Diakritika entfernen",
 		"perHour": "/ Std.",
-		"creatingReservationInPast": "DE: newReservation.creatingReservationInPast",
-		"loading": "DE: newReservation.loading",
-		"userName": "DE: newReservation.userName",
+		"creatingReservationInPast": "Sie erstellen eine Buchung die sich in der Vergangenheit befindet. Diese Buchung spiegelt sich in den Rechnungen nicht wieder. Wünschen Sie sich fortzufahren?",
+		"loading": "Laden ...",
+		"userName": "Name des Users",
 		"AlternativeInterval": "In dem gewählten Termin sind alle Parkplätze besetzt. Am längsten ist möglich:",
-		"weekendPrice": "DE: newReservation.weekendPrice",
-		"notAbleToCreateReservation": "DE: newReservation.notAbleToCreateReservation"
+		"weekendPrice": "Wochenendpreis:",
+		"notAbleToCreateReservation": "Es ist nicht möglich diese Buchung durchzuführen. Mögliche Ursache: Zu niedriger timecredit"
 	},
 	"clients": {
 		"name": "Name",
@@ -280,14 +285,14 @@
 		"invoices": "Rechnungen",
 		"currentAgreements": "Laufende Vereinbarungen",
 		"oldAgreements": "Beendete Vereinbarungen",
-		"modules": "DE: clients.modules"
+		"modules": "Erweiterte Einstellungen"
 	},
 	"clientUsers": {
 		"name": "Benutzername",
 		"email": "E-Mail-Adresse",
 		"memberSince": "Mitglied seit",
 		"phone": "Telefon",
-		"contact_person": "Ansprechpartner",
+		"contact_person": "Kontaktperson",
 		"admin": "Administrator",
 		"secretary": "Sekretär/in",
 		"internal": "Intern",
@@ -301,7 +306,7 @@
 		"resendInvitation": "E-Mail erneut senden",
 		"resendSuccessfull": "E-Mail wurde erfolgreich gesendet.",
 		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden.",
-		"timeCredit": "DE: clientUsers.timeCredit"
+		"timeCredit": "Zeit-Kredit"
 	},
 	"reservations": {
 		"name": "Name",
@@ -315,7 +320,7 @@
 		"creator": "Erstellt von",
 		"garage": "Parkhaus",
 		"createdAt": "erstellt:",
-		"deletedAt": "DE: reservations.deletedAt",
+		"deletedAt": "entfernt:",
 		"updatedAt": "aktualisiert:",
 		"removeReservationQuestion": "Möchten Sie diese Reservierung wirklich entfernen?",
 		"terminateEarlyQuestion": "Möchten Sie Ihre Reservierung sofort beenden?",
@@ -397,12 +402,12 @@
 		"resetFilter": "Filter zurücksetzen",
 		"detailsInaccessible": "Information nicht verfügbar",
 		"reservationNotApproved": "Reservierung ist nicht bestätigt",
-		"createNewReservation": "DE: occupancy.createNewReservation",
-		"from": "DE: occupancy.from",
-		"to": "DE: occupancy.to",
-		"garage": "DE: occupancy.garage",
-		"place": "DE: occupancy.place",
-		"placeNotAvailable": "DE: occupancy.placeNotAvailable"
+		"createNewReservation": "Neue Buchung erstellen",
+		"from": "Von:",
+		"to": "Bis:",
+		"garage": "Garage:",
+		"place": "Platz:",
+		"placeNotAvailable": "Diesen Platz können Sie nicht Buchen."
 	},
 	"garageUsers": {
 		"noRights": "Sie haben nicht die erforderlichen Berechtigungen.",
@@ -564,7 +569,7 @@
 		"addAllPalces": "Alle Stellplätze hinzufügen",
 		"notAssignNumber": "Keine Nummer hinzugefügt",
 		"selcetNumber": "Tel. Nummer für das öffnen",
-		"privacy": "DE: newGarage.privacy",
+		"privacy": "Datenschutz",
 		"terms": "Nutzungsbedingungen",
 		"documents": "Dokumente",
 		"documentName": "Dokumentbezeichnung",
@@ -604,32 +609,32 @@
 		"smsSettings": "SMS Modul",
 		"activate": "Aktivieren",
 		"deactivate": "Deaktivieren",
-		"timeCredit": "DE: newClient.timeCredit",
-		"onetimeAddition": "DE: newClient.onetimeAddition",
-		"onetimeRemoval": "DE: newClient.onetimeRemoval",
-		"amountToAdd": "DE: newClient.amountToAdd",
-		"amountToRemove": "DE: newClient.amountToRemove",
+		"timeCredit": "Zeitguthaben",
+		"onetimeAddition": "Einmaliges hinzufügen des Zeitguthabens",
+		"onetimeRemoval": "Einmaliges entfernen des Zeitguthabens.",
+		"amountToAdd": "Betrag zum Hinzufügen",
+		"amountToRemove": "Betrag zur Entnehmung",
 		"onetimeAdditionPlaceholder": "30",
-		"timeCreditDescription": "DE: newClient.timeCreditDescription",
-		"timeCreditStatistics": "DE: newClient.timeCreditStatistics",
-		"hoursThatCanBeParked": "DE: newClient.hoursThatCanBeParked",
-		"creditsThatCanBeDistributed": "DE: newClient.creditsThatCanBeDistributed",
-		"creditsDistributed": "DE: newClient.creditsDistributed",
-		"creditsDistributedOverMax": "DE: newClient.creditsDistributedOverMax",
-		"cteditsOutOfBoundException": "DE: newClient.cteditsOutOfBoundException",
-		"currencyName": "DE: newClient.currencyName",
-		"currencyNamePlaceholder": "DE: newClient.currencyNamePlaceholder",
-		"pricePerHour": "DE: newClient.pricePerHour",
+		"timeCreditDescription": "Das Modul ermöglicht eine zeitliche Beschränkung der Buchungen Ihrer Klienten",
+		"timeCreditStatistics": "Statistiken",
+		"hoursThatCanBeParked": "Stunden, die diesen Monat verparkt werden dürfen.",
+		"creditsThatCanBeDistributed": "Studen, die diesen Monat vergeben werden dürfen.",
+		"creditsDistributed": "Vergebens Guthaben.",
+		"creditsDistributedOverMax": "Guthaben über die Maximalgrenze.",
+		"cteditsOutOfBoundException": "Die oberste Grenze des Zeitguthabens ist überschritten.",
+		"currencyName": "Bennenung der Währung",
+		"currencyNamePlaceholder": "Parkmünzen",
+		"pricePerHour": "Preis pro Stunde",
 		"pricePerHourPlaceholder": "1",
-		"monthlyAmount": "DE: newClient.monthlyAmount",
+		"monthlyAmount": "Anzahl pro Monat",
 		"monthlyAmountPlaceholder": "60",
-		"onetimeAdd": "DE: newClient.onetimeAdd",
-		"onetimeRemove": "DE: newClient.onetimeRemove",
-		"minMaxReservationDuration": "DE: newClient.minMaxReservationDuration",
-		"addToEveryone": "DE: newClient.addToEveryone",
-		"removeFromEveryone": "DE: newClient.removeFromEveryone",
-		"or": "DE: newClient.or",
-		"selectUsers": "DE: newClient.selectUsers"
+		"onetimeAdd": "Einmaliges hinzufügen",
+		"onetimeRemove": "Einmaliges Entfernen",
+		"minMaxReservationDuration": "Min-Max Dauer",
+		"addToEveryone": "Allen hinzufügen",
+		"removeFromEveryone": "Allen Entfernen",
+		"or": "ODER",
+		"selectUsers": "User auswählen"
 	},
 	"inviteUser": {
 		"selectUser": "E-Mail-Adresse(n) des Benutzers",
@@ -660,7 +665,7 @@
 		"host": "Regelmäßiger Gast",
 		"internal": "intern",
 		"security": "Wachdienst",
-		"manager": "DE: inviteUser.manager",
+		"manager": "Manager",
 		"receptionist": "Rezeptionist/in",
 		"driver": "Fahrer",
 		"clientRights": "Benutzerrechte",
@@ -697,7 +702,7 @@
 		"newReservationForYou": "%(arg1)s (%(arg2)s) hat für Sie eine Reservierung erstellt.",
 		"reservationUpdatedNotification": "\n% (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Reservierungen\".",
 		"reservationRemovedDueToUnpaid": "Da Ihre Reservierung innerhalb 15 Minuten nicht bezahlt wurden. Haben wir sie storniert.",
-		"reservationContactPersonNotification": "Ihre reservation wurde nocht nicht bestätigt. Falls dringend, können Sie eine der befugten Personen kontaktieren.",
+		"reservationContactPersonNotification": "Ihre reservation wurde nocht nicht bestätigt. Falls dringend, können Sie eine der befugten Personen kontaktieren: %(arg1)s",
 		"clientLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert.",
 		"garageLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie zum Klienten '%(arg1)s' hinzugefügt wurden.",
 		"reservationLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie eine neue Reservation in der Garage '%(arg1)s' haben.",
@@ -715,7 +720,9 @@
 		"createdAt": "Profilerstellungsdatum:",
 		"cars": "Fahrzeuge",
 		"showPublicGarages": "Öffentlich angebotene Garagen anzeigen",
-		"privacyDocuments": "DE: profile.privacyDocuments"
+		"privacyDocuments": "GDPR Dokumente",
+		"myGarages": "DE: profile.myGarages",
+		"myClients": "DE: profile.myClients"
 	},
 	"users": {
 		"username": "Benutzername",
@@ -737,6 +744,7 @@
 		"host": "Regelmäßiger Gast",
 		"security": "Wachdienst",
 		"receptionist": "Rezeptionist/in",
+		"manager": "DE: users.manager",
 		"invitedToClient": "Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:",
 		"invitedToGarage": "Am %(date)s zur Mitgliedschaft beim Parkplatz eingeladen:",
 		"invitedToCar": "Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:"
@@ -827,11 +835,11 @@
 		"selectCurrency": "Währung auswählen",
 		"selectPlace": "Beginnen Sie mit der Auswahl des Stellplatzes",
 		"saving": "Speichern...",
-		"minReservationDuration": "DE: newPricing.minReservationDuration",
+		"minReservationDuration": "Mindestlänge der Buchung (Minuten)",
 		"minReservationDurationPlaceholder": "15",
-		"maxReservationDuration": "DE: newPricing.maxReservationDuration",
+		"maxReservationDuration": "Maximallänge der Buchung (Minuten)",
 		"maxReservationDurationPlaceholder": "600",
-		"durationErr": "DE: newPricing.durationErr"
+		"durationErr": "Falsche Länge"
 	},
 	"newRent": {
 		"name": "Bezeichnung",
@@ -892,9 +900,9 @@
 		"paypal": "PayPal",
 		"raiffeisenbank": "Raiffeisenbank - Online- Zahlung",
 		"paymentMethod": "Zahlungsmethode",
-		"csobOneTimePaymentUseCard": "DE: newReservationOverview.csobOneTimePaymentUseCard",
-		"csobOneTimePaymentNewCard": "DE: newReservationOverview.csobOneTimePaymentNewCard",
-		"csobOneTimePayment": "DE: newReservationOverview.csobOneTimePayment"
+		"csobOneTimePaymentUseCard": "Per Click Methode benutzen",
+		"csobOneTimePaymentNewCard": "Eine andere Bankkarte benutzen",
+		"csobOneTimePayment": "Ihre Bankarte für die \"per Click Zahlung\" speichern"
 	},
 	"addFeatures": {
 		"ImGarageOwner": "Ich bin ein Parkhausbesitzer",
@@ -966,10 +974,10 @@
 		"invalidMerchantId": "Die Händler-ID ist ungültig.",
 		"csobMerchantIdplaceholder": "A2411K3nLj",
 		"gpWebpayMerchantIdplaceholder": "1234567890",
-		"gpWebpayPassword": "DE: newAccount.gpWebpayPassword",
-		"gpWebpayPasswordPlaceholder": "DE: newAccount.gpWebpayPasswordPlaceholder",
+		"gpWebpayPassword": "Passwort zum privaten Schlüssel.",
+		"gpWebpayPasswordPlaceholder": "abcd1234",
 		"SelectPrivateKey": "Privaten Schlüssel auswählen:",
-		"invalidKeyPair": "DE: newAccount.invalidKeyPair"
+		"invalidKeyPair": "Die ID des Händlers oder der private Schlüssel ist Falsch."
 	},
 	"invoices": {
 		"invoiceDate": "Rechnungsdatum",
@@ -1010,11 +1018,11 @@
 		"donwloadXlsx": "XLSX herunterladen",
 		"donwloadInvoices": "Rechnungen herunterladen",
 		"donwloadXML": "Pohoda XML",
-		"selectYourPohodaIc": "DE: invoices.selectYourPohodaIc",
-		"invoices": "DE: invoices.invoices",
-		"simplifiedTaxReceipts": "DE: invoices.simplifiedTaxReceipts",
-		"canceledInvoices": "DE: invoices.canceledInvoices",
-		"userName": "DE: invoices.userName"
+		"selectYourPohodaIc": "Wählen Sie die Identifikationsnummer der Gesellschaft, für welche Sie die Rechnung erstellen.",
+		"invoices": "Rechnungen",
+		"simplifiedTaxReceipts": "Quittungen",
+		"canceledInvoices": "Stornierte Belege",
+		"userName": "Benutzer"
 	},
 	"resetPassword": {
 		"send": "Eine E-Mail zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse versendet.",
@@ -1083,11 +1091,11 @@
 		"shortterm": "Kurzzeit",
 		"longtermPrice": "Langzeit Preis:",
 		"shorttermPrice": "Kurzzeit Preis:",
-		"removeReservations": "DE: newContract.removeReservations",
-		"doNotRemoveReservations": "DE: newContract.doNotRemoveReservations"
+		"removeReservations": "Die Reservation auf den entfernten Plätzen löschen.",
+		"doNotRemoveReservations": "Die Reservation auf den entfernten Plätzen verschieben."
 	},
 	"finance": {
-		"financeSettings": "DE: finance.financeSettings",
+		"financeSettings": "Finanzeinstellungen",
 		"paypal": "Paypal",
 		"csob": "ČSOB",
 		"gpWebpay": "Raiffeisenbank",
@@ -1104,12 +1112,12 @@
 		"uploadKey": "RSA-Schlüssel hochladen",
 		"accountNumber": "Kontonummer",
 		"invalidAccountNumber": "Ungültige Kontonummer",
-		"paymentGates": "DE: finance.paymentGates",
+		"paymentGates": "Zahlungsportal",
 		"rents": "Mietverhältnisse",
-		"billingAddress": "DE: finance.billingAddress",
-		"testPayment": "DE: finance.testPayment",
-		"testPaymentSuccessful": "DE: finance.testPaymentSuccessful",
-		"testPaymentUnsuccessful": "DE: finance.testPaymentUnsuccessful"
+		"billingAddress": "Rechnungsadresse",
+		"testPayment": "Jetzt könne Sie eine zur Kontrolle geignete Testzahlung durchführen.",
+		"testPaymentSuccessful": "Ihre Testzahlung verlief in Ordnung. Bitte brechen Sie Ihre Zahlung in der Adminsektion im Zahlungsportal ab.",
+		"testPaymentUnsuccessful": "Ihre Testzahlung verlief nicht in Ordnung."
 	},
 	"analytics": {
 		"week": "Woche",
@@ -1264,16 +1272,16 @@
 		"reservation": {
 			"floor": "Etage",
 			"place": "Platznummer",
-			"garage": "DE: mobileApp.reservation.garage",
-			"begins": "DE: mobileApp.reservation.begins",
-			"ends": "DE: mobileApp.reservation.ends",
+			"garage": "Garage",
+			"begins": "Anfang",
+			"ends": "Ende",
 			"issue": "Problem melden",
 			"carOnMySpot": "Parkplatz besetzt",
-			"reservationMoved": "DE: mobileApp.reservation.reservationMoved",
-			"noFreePlaces": "DE: mobileApp.reservation.noFreePlaces",
-			"enterCarsLicencePlate": "Kennzeichen blockenden Autos",
-			"clientContactPerson": "DE: mobileApp.reservation.clientContactPerson",
-			"garageSecurity": "DE: mobileApp.reservation.garageSecurity"
+			"reservationMoved": "Reservation verschoben:",
+			"noFreePlaces": "Es gelang uns keinen freien Platz zu finden.",
+			"enterCarsLicencePlate": "Kennzeichen des blockierenden Autos",
+			"clientContactPerson": "Sie können die Kontaktperson des Klienten kontaktieren.",
+			"garageSecurity": "Oder die Garagewache."
 		},
 		"newReservation": {
 			"begins": "Beginnt",
@@ -1343,19 +1351,22 @@
 		"confirmPwdReset": "Kennwort ändern",
 		"troubleWithAccount": "Falls Sie Probleme mit Ihrem Konto haben, zweifeln Sie bitte nicht uns anzusprechen, indem Sie auf diese E-Mail antworten.",
 		"verificationCodeEmailSubject": "Verifizierungscode",
-		"verificationCode": "Weiter unten finden Sie Ihren Bestätigungscode für Park-it-direct!"
+		"verificationCode": "Weiter unten finden Sie Ihren Bestätigungscode für Park-it-direct!",
+		"blockedTitle": "Ihr Konto wurde gesperrt.",
+		"blockedDescription": "Es wurde eine auffällige Aktivität erkannt. Zehn unerfolgreiche Anmeldungen nacheinander wurden von uns bemerkt.",
+		"blockedUnblock": "Freischalten!"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "Sie wurden zu Park-it-direct eingeladen!",
 		"resend_invitation_mail_subject": "Park-it-direct Einladungserinnerung",
 		"new_reservation_mail_subject": "%{user} hat für Sie gebucht.",
-		"reservation_confirmed_subject": "Buchung in der Garage: %{garage} wurde bestätigt.",
-		"reservation_not_confirmed_subject": "DE: railsEmails.reservation_not_confirmed_subject",
+		"reservation_confirmed_subject": "Ihre Buchung in der Garage: %{garage} wurde bestätigt.",
+		"reservation_not_confirmed_subject": "Ihre Buchung in der Garage %{garage} wurde abgelehnt.",
 		"reservation_updated_subject": "Ihre Buchung in der Garage %{garage} wurde aktualisiert.",
-		"reservation_paid_subject": "DE: railsEmails.reservation_paid_subject",
-		"reservation_not_approved_yet_subject": "DE: railsEmails.reservation_not_approved_yet_subject",
-		"car_on_my_spot_notify_driver_subject": "DE: railsEmails.car_on_my_spot_notify_driver_subject",
-		"car_on_my_spot_notify_secretary_subject": "DE: railsEmails.car_on_my_spot_notify_secretary_subject",
+		"reservation_paid_subject": "Ihre Buchung in der Garage %{garage} wurde bezahlt.",
+		"reservation_not_approved_yet_subject": "Ihre Buchung wurde noch nicht bestätigt.",
+		"car_on_my_spot_notify_driver_subject": "Sie wurden gemeldet.",
+		"car_on_my_spot_notify_secretary_subject": "Der User wurde gemeldet.",
 		"aliases": {
 			"garage_table": {
 				"user": "Benutzer:",
@@ -1392,7 +1403,7 @@
 			"we_will_help": "und wir helfen Ihnen Ihr Konto aktivieren."
 		},
 		"new_reservation_mail": {
-			"new_reservation": "DE: railsEmails.new_reservation_mail.new_reservation",
+			"new_reservation": "Sie haben eine neue Reservation in %{garage}",
 			"reservation_for_you": "hat für Sie eine Buchung erstellt.",
 			"go_pay_yourself": "Zahlen",
 			"price": "Preis:",
@@ -1430,29 +1441,29 @@
 		},
 		"reservation_confirmed": {
 			"reservation_confirmed": "Ihre Buchungsanfrage wurde genehmigt!",
-			"reservation_not_confirmed": "DE: railsEmails.reservation_confirmed.reservation_not_confirmed"
+			"reservation_not_confirmed": "Ihre Buchungsanfrage wurde nicht genehmigt!"
 		},
 		"reservation_updated": {
 			"reservation_updated": "Ihre Reservierung wurde aktualisiert:"
 		},
 		"reservation_paid": {
-			"headline": "DE: railsEmails.reservation_paid.headline",
-			"body": "DE: railsEmails.reservation_paid.body"
+			"headline": "Vielen Dank für Ihre Zahlung",
+			"body": "Im Anhang finden Sie den Zahlungsbeleg."
 		},
 		"reservation_not_approved_yet": {
-			"reservation_was_not_yet_confirmed": "DE: railsEmails.reservation_not_approved_yet.reservation_was_not_yet_confirmed",
-			"you_can_contact_these_peope": "DE: railsEmails.reservation_not_approved_yet.you_can_contact_these_peope"
+			"reservation_was_not_yet_confirmed": "Ihre Reservation war bislang nicht genehmigt:",
+			"you_can_contact_these_peope": "Für die Beschleunigung Ihrer genehmigung können Sie Ihre Kontaktperson kontaktieren."
 		},
 		"car_on_my_spot_notify_driver": {
-			"you_have_been_reported": "DE: railsEmails.car_on_my_spot_notify_driver.you_have_been_reported",
-			"infor_about_car": "DE: railsEmails.car_on_my_spot_notify_driver.infor_about_car",
-			"suspected_reservation": "DE: railsEmails.car_on_my_spot_notify_driver.suspected_reservation",
-			"we_urge_you": "DE: railsEmails.car_on_my_spot_notify_driver.we_urge_you"
+			"you_have_been_reported": "Es wurde gemeldet, dass Ihr Wagen einen Platz, der für eine andere Reservation bestimmt ist, blockiert.",
+			"infor_about_car": "Information über den gemeldeten Wagen:",
+			"suspected_reservation": "Der Verdacht steht bei dieser Reservation.",
+			"we_urge_you": "Wir bitten Sie um die regelung der Situation."
 		},
 		"car_on_my_spot_notify_secretary_and_security": {
-			"user_has_been_reported": "DE: railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported",
-			"infor_about_car": "DE: railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_car",
-			"infor_about_reservation": "DE: railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_reservation"
+			"user_has_been_reported": "Der User %{user} meldete gerade, dass der Wagen mit dem Kennzeichen %{licence_plate} auf seinem Platz steht.",
+			"infor_about_car": "Weitere Informationen über den Wagen.",
+			"infor_about_reservation": "Weitere Informationen über die Reservation"
 		}
 	},
 	"railsSMSs": {
@@ -1470,7 +1481,7 @@
 			"generator": "netřeba překládat",
 			"news": "netřeba překládat",
 			"finance": "netřeba překládat",
-			"garagesOverview": "DE: pidAdmin.pageBase.garagesOverview"
+			"garagesOverview": "Garageübersicht"
 		},
 		"users": {
 			"id": "netřeba překládat",
@@ -1526,13 +1537,13 @@
 		"logs": {
 			"accessLogs": "netřeba překládat",
 			"garageLogs": "netřeba překládat",
-			"user": "DE: pidAdmin.logs.user",
-			"accessType": "DE: pidAdmin.logs.accessType",
-			"createdAt": "DE: pidAdmin.logs.createdAt",
-			"gate": "DE: pidAdmin.logs.gate",
-			"reservation": "DE: pidAdmin.logs.reservation",
-			"noGate": "DE: pidAdmin.logs.noGate",
-			"noReservation": "DE: pidAdmin.logs.noReservation"
+			"user": "User",
+			"accessType": "Typ des Zugangs",
+			"createdAt": "Zeit des Zugangs",
+			"gate": "Tor",
+			"reservation": "Reservation",
+			"noGate": "Kein Tor konfiguriert",
+			"noReservation": "Keine gültige Buchung"
 		},
 		"garagesOverview": {
 			"createdAt": "netřeba překládat",
@@ -1555,10 +1566,10 @@
 	"cs": {
 		"occupancy": {
 			"createNewReservation": "Neue Reservierung machen",
-			"garage": "DE: cs.occupancy.garage",
-			"place": "DE: cs.occupancy.place",
-			"from": "DE: cs.occupancy.from",
-			"to": "DE: cs.occupancy.to"
+			"garage": "Garage",
+			"place": "Platz",
+			"from": "Von",
+			"to": "Bis"
 		}
 	}
 }

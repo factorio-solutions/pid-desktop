@@ -58,7 +58,7 @@ class NewUserForm extends Component {
 
   render() {
     const { state, actions, editable, onetime, clearForm } = this.props
-    console.log(state, this.hostEmailMandatoryCondition())
+    console.log(state.user)
     return (
       <div>
         <div className={searchField}>
@@ -71,7 +71,14 @@ class NewUserForm extends Component {
           <PatternInput
             readOnly={onetime || (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
-            label={`${t([ 'newReservation', state.user.id === -1 ? 'hostsName' : 'visitorsName' ])} *`}
+            label={`${t([
+              'newReservation',
+              state.user.id === -1
+                ? state.user.rights.internal
+                  ? 'internalsName'
+                  : 'hostsName'
+                : 'visitorsName'
+            ])} *`}
             error={t([ 'signup_page', 'nameInvalid' ])}
             pattern="^(?!\s*$).+"
             value={state.name.value}
@@ -83,7 +90,14 @@ class NewUserForm extends Component {
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
           label={`
-            ${t([ 'newReservation', state.user.id === -1 ? 'hostsEmail' : 'visitorsEmail' ])}
+            ${t([
+              'newReservation',
+              state.user.id === -1
+                ? state.user.rights.internal
+                  ? 'internalsEmail'
+                  : 'hostsEmail'
+                : 'visitorsEmail'
+            ])}
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
@@ -97,7 +111,14 @@ class NewUserForm extends Component {
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostPhone}
           label={`
-            ${t([ 'newReservation', state.user.id === -1 ? 'hostsPhone' : 'visitorsPhone' ])}
+            ${t([
+              'newReservation',
+              state.user.id === -1
+                ? state.user.rights.internal
+                  ? 'internalsPhone'
+                  : 'hostsPhone'
+                : 'visitorsPhone'
+            ])}
             ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
