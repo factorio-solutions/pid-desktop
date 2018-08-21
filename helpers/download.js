@@ -35,14 +35,14 @@ export function downloadData(onSuccess, query, variables = undefined) {
   xmlHttp.send(JSON.stringify({ query, variables }))
 }
 
-export function downloadMultiple(filename, query, ids) {
+export function downloadMultiple(filename, query, ids, fileNames = []) {
   const zip = new JSZip()
   let counter = 0
 
-  ids.forEach(id => {
+  ids.forEach((id, index) => {
     downloadData(data => {
       counter++
-      zip.file(id + '.pdf', data.substring(data.indexOf(',') + 1), { base64: true })
+      zip.file((fileNames[index] || id) + '.pdf', data.substring(data.indexOf(',') + 1), { base64: true })
 
       if (counter === ids.length) { // download zip
         zip.generateAsync({ type: 'blob' }).then(blob => {
