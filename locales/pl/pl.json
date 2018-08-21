@@ -32,7 +32,9 @@
 		"loginFailed": "Nie udało się zalogować",
 		"forgot": "Nie pamiętasz hasła?",
 		"proceed": "Przejdź dalej",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "PL: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "PL: login_page.resetPasswordSuccessful"
 	},
 	"signup_page": {
 		"name": "Imię i nazwisko",
@@ -216,6 +218,7 @@
 		"price": "Cena",
 		"onClientsExpenses": "Na koszt klienta.",
 		"onUsersExpenses": "PL: newReservation.onUsersExpenses",
+		"longtermRent": "PL: newReservation.longtermRent",
 		"loadingGarage": "Ładuję podgląd garażu...",
 		"creatingReservation": "Wytwarzam rezerwację...",
 		"updatingReservation": "Aktualizuję rezerwację...",
@@ -245,6 +248,7 @@
 		"onetimeVisitText": "PL: newReservation.onetimeVisitText",
 		"fillInContact": "PL: newReservation.fillInContact",
 		"paidByHost": "Za rezerwację płaci gość",
+		"paidByHostsTimeCredit": "PL: newReservation.paidByHostsTimeCredit",
 		"languageSelector": "Wybierz język komunikacji",
 		"selectTemplate": "Wybierz szablon",
 		"sendSms": "Wysłać sms z potwierdzeniem rezerwacji",
@@ -256,7 +260,8 @@
 		"loading": "PL: newReservation.loading",
 		"userName": "PL: newReservation.userName",
 		"AlternativeInterval": "PL: newReservation.AlternativeInterval",
-		"weekendPrice": "PL: newReservation.weekendPrice"
+		"weekendPrice": "PL: newReservation.weekendPrice",
+		"notAbleToCreateReservation": "PL: newReservation.notAbleToCreateReservation"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -276,7 +281,8 @@
 		"monthlyTotal": "razem za miesiąc",
 		"invoices": "faktury",
 		"currentAgreements": "Aktywne umowy:",
-		"oldAgreements": "Stare umowy:"
+		"oldAgreements": "Stare umowy:",
+		"modules": "PL: clients.modules"
 	},
 	"clientUsers": {
 		"name": "nazwa użytkownika",
@@ -311,6 +317,7 @@
 		"creator": "utworzył",
 		"garage": "Garaż",
 		"createdAt": "utworzone:",
+		"deletedAt": "PL: reservations.deletedAt",
 		"updatedAt": "zaktualizowane:",
 		"removeReservationQuestion": "Czy na pewno chcesz usunąć rezerwację?",
 		"terminateEarlyQuestion": "Czy chcesz zakończyć rezerwację?",
@@ -319,7 +326,7 @@
 		"host": "Regularny gość",
 		"visitor": "Odwiedzający/a",
 		"internal": "Wewnętrzny",
-		"mrParkit": "PL: reservations.mrParkit",
+		"mrParkit": "MR.PARKIT",
 		"editReservation": "Edytuj rezerwację",
 		"editNote": "Edytuj notatkę",
 		"newNote": "Nowa notatka",
@@ -569,7 +576,11 @@
 		"removeDocument": "PL: newGarage.removeDocument",
 		"removeDocumentQuestion": "PL: newGarage.removeDocumentQuestion",
 		"privacyDocumentRule": "PL: newGarage.privacyDocumentRule",
-		"legalDocuments": "PL: newGarage.legalDocuments"
+		"legalDocuments": "PL: newGarage.legalDocuments",
+		"noDocument": "PL: newGarage.noDocument",
+		"or": "PL: newGarage.or",
+		"uploadUrl": "PL: newGarage.uploadUrl",
+		"documentURL": "PL: newGarage.documentURL"
 	},
 	"newClient": {
 		"name": "Nazwisko klienta",
@@ -688,7 +699,12 @@
 		"newReservationForYou": "%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.",
 		"reservationUpdatedNotification": "%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.",
 		"reservationRemovedDueToUnpaid": "Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.",
-		"reservationContactPersonNotification": "PL: notifications.reservationContactPersonNotification"
+		"reservationContactPersonNotification": "PL: notifications.reservationContactPersonNotification",
+		"clientLegalDocuments": "PL: notifications.clientLegalDocuments",
+		"garageLegalDocuments": "PL: notifications.garageLegalDocuments",
+		"reservationLegalDocuments": "PL: notifications.reservationLegalDocuments",
+		"reservationUpdateLegalDocuments": "PL: notifications.reservationUpdateLegalDocuments",
+		"contractLegalDocuments": "PL: notifications.contractLegalDocuments"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -700,7 +716,10 @@
 		"email": "E-mail:",
 		"createdAt": "Profil założony:",
 		"cars": "Auta",
-		"showPublicGarages": "Pokaż garaże oferowane publicznie"
+		"showPublicGarages": "Pokaż garaże oferowane publicznie",
+		"privacyDocuments": "PL: profile.privacyDocuments",
+		"myGarages": "PL: profile.myGarages",
+		"myClients": "PL: profile.myClients"
 	},
 	"users": {
 		"username": "Nazwa użytkownika",
@@ -722,6 +741,7 @@
 		"host": "regularny gość",
 		"security": "ochrona",
 		"receptionist": "recepcjonist(k)a",
+		"manager": "PL: users.manager",
 		"invitedToClient": "%(date)s zaproszony(-a) do uczestnictwa w:",
 		"invitedToGarage": "%(date)s zaproszony(-a) do garażu:",
 		"invitedToCar": "%(date)s zaproszony(-a) do auta:"
@@ -813,7 +833,7 @@
 		"selectPlace": "Zacznij od wybrania miejsca",
 		"saving": "Zapisuję...",
 		"minReservationDuration": "PL: newPricing.minReservationDuration",
-		"minReservationDurationPlaceholder": "30",
+		"minReservationDurationPlaceholder": "15",
 		"maxReservationDuration": "PL: newPricing.maxReservationDuration",
 		"maxReservationDurationPlaceholder": "600",
 		"durationErr": "PL: newPricing.durationErr"
@@ -1251,7 +1271,14 @@
 			"place": "Miejsce",
 			"garage": "PL: mobileApp.reservation.garage",
 			"begins": "PL: mobileApp.reservation.begins",
-			"ends": "PL: mobileApp.reservation.ends"
+			"ends": "PL: mobileApp.reservation.ends",
+			"issue": "PL: mobileApp.reservation.issue",
+			"carOnMySpot": "PL: mobileApp.reservation.carOnMySpot",
+			"reservationMoved": "PL: mobileApp.reservation.reservationMoved",
+			"noFreePlaces": "PL: mobileApp.reservation.noFreePlaces",
+			"enterCarsLicencePlate": "PL: mobileApp.reservation.enterCarsLicencePlate",
+			"clientContactPerson": "PL: mobileApp.reservation.clientContactPerson",
+			"garageSecurity": "PL: mobileApp.reservation.garageSecurity"
 		},
 		"newReservation": {
 			"begins": "Początek",
@@ -1296,6 +1323,9 @@
 			"noGuestResrevations": "Brak rezerwacji regularnych gości"
 		}
 	},
+	"auth0Errors": {
+		"emailNotVerified": "PL: auth0Errors.emailNotVerified"
+	},
 	"auth0Emails": {
 		"verificationEmailSubject": "E-mail kontrolny",
 		"securityReasons": "Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.",
@@ -1318,16 +1348,31 @@
 		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
 		"verificationCodeEmailSubject": "Kod weryfikacyjny",
-		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!"
+		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!",
+		"blockedTitle": "PL: auth0Emails.blockedTitle",
+		"blockedDescription": "PL: auth0Emails.blockedDescription",
+		"blockedUnblock": "PL: auth0Emails.blockedUnblock"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "Zostałeś zaproszony do Park-It-Direct!",
 		"resend_invitation_mail_subject": "Przypominamy o zaproszeniu do Park-It-Direct.",
 		"new_reservation_mail_subject": "%{user} utworzył(a) nową rezerwację.",
 		"reservation_confirmed_subject": "Rezerwacja w %{garage} została potwierdzona.",
+		"reservation_not_confirmed_subject": "PL: railsEmails.reservation_not_confirmed_subject",
 		"reservation_updated_subject": "Twora rezerwacja w %{garage} została zaktualizowana.",
 		"reservation_paid_subject": "PL: railsEmails.reservation_paid_subject",
 		"reservation_not_approved_yet_subject": "PL: railsEmails.reservation_not_approved_yet_subject",
+		"car_on_my_spot_notify_driver_subject": "PL: railsEmails.car_on_my_spot_notify_driver_subject",
+		"car_on_my_spot_notify_secretary_subject": "PL: railsEmails.car_on_my_spot_notify_secretary_subject",
+		"aliases": {
+			"garage_table": {
+				"user": "Użytkownik:",
+				"garage": "Garaż:",
+				"place": "Miejsce:",
+				"from": "Od:",
+				"to": "Do:"
+			}
+		},
 		"footer": {
 			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
 			"regards": "Pozdrawiamy",
@@ -1393,17 +1438,10 @@
 		},
 		"reservation_confirmed": {
 			"reservation_confirmed": "Żądana rezerwacja została potwierdzona!",
-			"garage": "Garaż:",
-			"place": "Miejsce:",
-			"from": "Od:",
-			"to": "Do:"
+			"reservation_not_confirmed": "PL: railsEmails.reservation_confirmed.reservation_not_confirmed"
 		},
 		"reservation_updated": {
-			"reservation_updated": "Twoja rezerwacja została zmieniona:",
-			"garage": "Garaż:",
-			"place": "Miejsce:",
-			"from": "Od:",
-			"to": "Do:"
+			"reservation_updated": "Twoja rezerwacja została zmieniona:"
 		},
 		"reservation_paid": {
 			"headline": "PL: railsEmails.reservation_paid.headline",
@@ -1411,11 +1449,18 @@
 		},
 		"reservation_not_approved_yet": {
 			"reservation_was_not_yet_confirmed": "PL: railsEmails.reservation_not_approved_yet.reservation_was_not_yet_confirmed",
-			"garage": "Garaż:",
-			"place": "Miejsce:",
-			"from": "Od:",
-			"to": "Do:",
 			"you_can_contact_these_peope": "PL: railsEmails.reservation_not_approved_yet.you_can_contact_these_peope"
+		},
+		"car_on_my_spot_notify_driver": {
+			"you_have_been_reported": "PL: railsEmails.car_on_my_spot_notify_driver.you_have_been_reported",
+			"infor_about_car": "PL: railsEmails.car_on_my_spot_notify_driver.infor_about_car",
+			"suspected_reservation": "PL: railsEmails.car_on_my_spot_notify_driver.suspected_reservation",
+			"we_urge_you": "PL: railsEmails.car_on_my_spot_notify_driver.we_urge_you"
+		},
+		"car_on_my_spot_notify_secretary_and_security": {
+			"user_has_been_reported": "PL: railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported",
+			"infor_about_car": "PL: railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_car",
+			"infor_about_reservation": "PL: railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_reservation"
 		}
 	},
 	"railsSMSs": {
