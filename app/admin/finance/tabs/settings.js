@@ -84,7 +84,7 @@ class SettingsTab extends Component {
             onEnter={this.submitForm}
             label={t([ 'finance', 'simplyfiedInvoiceRow' ])}
             error={t([ 'finance', 'invalidRow' ])}
-            value={state.simplyfiedInvoiceRow}
+            value={String(state.simplyfiedInvoiceRow)}
             type="number"
             min={0}
             step={1}

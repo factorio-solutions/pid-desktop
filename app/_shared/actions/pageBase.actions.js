@@ -217,7 +217,7 @@ export function fetchGarages(goToDashboard = true) {
 
       if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
         // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
-        goToDashboard && nav.to('/dashboard') // if no garage available from URL, select first and redirect to dashboard
+        goToDashboard && nav.to('/occupancy') // if no garage available from URL, select first and redirect to dashboard
         userGarages.length > 0 && dispatch(setGarage(userGarages[0].garage.id))
       }
     }
@@ -274,7 +274,7 @@ export function toGarage() {
     if (state.isGarageAdmin || state.isGarageManager || state.isGarageReceptionist || state.isGarageSecurity) {
       dispatch(setAll('garage', [], undefined, t([ 'pageBase', 'garagesHint' ]), 'https://www.youtube.com/'))
     } else {
-      nav.to('/dashboard')
+      nav.to('/occupancy')
     }
   }
 }
@@ -329,7 +329,7 @@ export function toAnalytics() {
 
       dispatch(setAll('analytics', dispatch(prepareAnalyticsSecondaryMenu()), secondarySelected, hint, hintVideo))
     } else {
-      nav.to('/dashboard') // not accessible for this user
+      nav.to('/occupancy') // not accessible for this user
     }
   }
 }
@@ -396,7 +396,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'garageNewMarketingHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'modules/') && contains(hash, 'reservationButton')):
@@ -405,7 +405,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'ReservationButtonHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'modules/') && contains(hash, 'mrParkitIntegration')):
@@ -414,7 +414,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'mrParkitIntegrationHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'modules/') && contains(hash, 'goPublic')):
@@ -423,7 +423,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'goPublicHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'modules/') && contains(hash, 'goInternal')):
@@ -432,7 +432,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'goInternalHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'modules/') && contains(hash, 'flexiplace')):
@@ -441,7 +441,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'flexiplaceHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'modules')):
@@ -450,7 +450,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'garageMarketingHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
 
@@ -460,7 +460,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'newGarageHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
@@ -469,7 +469,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'newGarageFloorsHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
@@ -478,7 +478,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'newGarageGatesHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'order')):
@@ -487,7 +487,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'newGarageOrderHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'subscribtion')):
@@ -496,7 +496,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'newGarageSubscribtionHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'legalDocuments')):
@@ -505,7 +505,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'newGarageLegalDocumentsHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'garageSetup') && contains(hash, 'users')):
@@ -514,7 +514,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'garageGarageUsersHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
 
@@ -535,7 +535,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'financePaypalHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'finance') && contains(hash, 'csob')):
@@ -544,7 +544,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'financeCSOBHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'finance') && contains(hash, 'newRent')):
@@ -553,7 +553,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'garageNewRentHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'finance') && contains(hash, 'editRent')):
@@ -562,7 +562,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'garageEditRentHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
       case (contains(hash, 'finance')):
@@ -571,7 +571,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'financeHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
 
@@ -581,7 +581,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'pidSettingsHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
 
@@ -591,7 +591,7 @@ export function toAdmin() {
           hint = t([ 'pageBase', 'activityLogHint' ])
           hintVideo = 'https://www.youtube.com/'
         } else {
-          nav.to('/dashboard') // not accessible for this user
+          nav.to('/occupancy') // not accessible for this user
         }
         break
 

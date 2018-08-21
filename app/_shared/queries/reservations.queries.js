@@ -51,6 +51,7 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
     reservation_case
     invoices {
       id
+      invoice_number
       payed
     }
     client {

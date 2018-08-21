@@ -23,7 +23,7 @@ export function setNotificationCount(count) {
 }
 
 export function setPast(past) {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch({ type:  SET_NOTIFICATIONS_PAST,
       value: past
     })
@@ -58,7 +58,7 @@ export function removeFromList(notification) {
 }
 
 export function accept(notification) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(initNotifications())
       if (mobile) {
@@ -74,7 +74,7 @@ export function accept(notification) {
 }
 
 export function decline(notification) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const onSuccess = response => {
       dispatch(initNotifications())
     }

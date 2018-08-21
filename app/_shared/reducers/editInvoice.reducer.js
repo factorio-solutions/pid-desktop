@@ -6,7 +6,7 @@ import {
   EDIT_INVOICE_SET_INVOICE_DATE,
   EDIT_INVOICE_SET_DUE_DATE,
   EDIT_INVOICE_SET_INOVICE_NUMBER,
-  EDIT_INVOICE_SET_ORIGINAl
+  EDIT_INVOICE_SET_ORIGINAL
 }  from '../actions/editInvoice.actions'
 
 const defaultState = { ammount:        '',
@@ -65,7 +65,7 @@ export default function editInvoice(state = defaultState, action) {
         invoice_number: action.value
       }
 
-    case EDIT_INVOICE_SET_ORIGINAl:
+    case EDIT_INVOICE_SET_ORIGINAL:
       return {
         ...state,
         original: action.value

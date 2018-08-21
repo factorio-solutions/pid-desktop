@@ -32,7 +32,7 @@ class LoginPage extends Component {
     if (this.props.location && this.props.location.query && this.props.location.query.token) {
       localStorage.jwt = this.props.location.query.token
       this.props.actions.resetStore()
-      nav.to('/dashboard')
+      nav.to('/occupancy')
     }
     if (this.props.location && this.props.location.query
     && this.props.location.query.hasOwnProperty('password_reset_success')) {
