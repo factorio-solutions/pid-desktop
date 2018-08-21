@@ -95,8 +95,8 @@ class NewReservationPage extends Component {
     if (this.props.params.id) {
       this.props.actions.submitReservation(+this.props.params.id)
     } else if (!state.client_id ||
-      (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id))
-    ) {
+      (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id)))
+    {
       nav.to('/reservations/newReservation/overview')
     } else {
       this.props.actions.submitReservation()

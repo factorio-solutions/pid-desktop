@@ -899,17 +899,16 @@ export function submitReservation(id) {
   }
 }
 
-export function paymentUnsucessfull() {
+export function afterPayment(id, success) {
   return dispatch => {
-    dispatch(pageBaseActions.setError(t([ 'newReservation', 'paymentUnsucessfull' ])))
-    nav.to('/reservations')
-  }
-}
-
-export function paymentSucessfull() {
-  return (dispatch) => {
-    nav.to('/reservations')
-    dispatch(pageBaseActions.setCustomModal(undefined))
-    dispatch(clearForm())
+    if (success === 'false') {
+      dispatch(pageBaseActions.setError(t([ 'newReservation', 'paymentUnsucessfull' ])))
+    }
+    const parsedId = parseInt(id, 10)
+    if (typeof(parsedId) === 'number' && parsedId > 0) {
+      nav.to(`/reservations/find/${parsedId}`)
+    } else {
+      nav.to('/reservations')
+    }
   }
 }
