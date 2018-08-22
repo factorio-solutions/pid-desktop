@@ -105,8 +105,8 @@ class ReservationsPage extends Component {
 
   interuptClick = reservation => this.props.interuptionActions.setReservation(reservation)
 
-  isSecretary = reservation => reservation.client && reservation.client.is_secretary
-  isInternal = reservation => reservation.client && reservation.client.is_internal
+  isSecretary = reservation => reservation.client && reservation.client.client_user && reservation.client.client_user.secretary
+  isInternal = reservation => reservation.client && reservation.client.client_user && reservation.client.client_user.internal
   ownsReservation = reservation => reservation.user.id === this.props.pageBase.current_user.id
 
   render() {
@@ -219,7 +219,7 @@ class ReservationsPage extends Component {
 
     const reservationSpolier = reservation => {
       const garage = reservation.place && reservation.place.floor && reservation.place.floor.garage
-      const canEdit = this.isSecretary(reservation) || (this.isInternal(reservation) && this.ownsReservation(reservation))
+      const canEdit = this.isSecretary(reservation) || (this.isInternal(reservation) && this.ownsReservation(reservation) && reservation.reservation_case != 'visitor')
       // reservation.client &&
       // (reservation.client.is_secretary ||
       // (reservation.client.is_internal && reservation.user.id === pageBase.current_user.id))
