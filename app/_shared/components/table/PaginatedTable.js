@@ -68,7 +68,7 @@ export default class PaginatedTable extends Component {
       nextState.count !== count ||
       nextState.ascDesc !== ascDesc ||
       nextState.key !== key) {
-      this.requestData({ ...nextProps.variables, ...this.keyToOrderByAndIncludes(nextState.key, nextState.ascDesc), page: nextState.page, count: nextState.count, search: nextState.search })
+      this.requestData({ ...nextProps.variables, ...this.keyToOrderByAndIncludes(nextState.key, nextState.ascDesc), page: nextState.page, count: nextState.count, search: nextState.search }, false, nextState)
     }
   }
 
@@ -91,10 +91,16 @@ export default class PaginatedTable extends Component {
     this.setState({ ...this.state, loading: true }, () => this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search }))
   }
 
-  requestData = (variables, calledOnMount = false) => { // requests data from server
+  requestData = (variables, calledOnMount = false, nextState) => { // requests data from server
     const { query, admin } = this.props
 
-    !(calledOnMount && this.state.data.length) && this.setState({ ...this.state, loading: true })
+    if (!(calledOnMount && this.state.data.length)) {
+      if (nextState) {
+        this.setState({ ...nextState, loading: true })
+      } else {
+        this.setState({ ...this.state, loading: true })
+      }
+    }
 
     if (admin) {
       requestAdmin(query, variables).then(this.transformData)
