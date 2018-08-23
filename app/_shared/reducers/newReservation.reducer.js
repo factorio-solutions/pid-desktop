@@ -316,8 +316,16 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         sendSMS:          action.value,
-        selectedTemplate: action.value ? client.sms_templates.length === 1 ? 0 : undefined : undefined,
-        templateText:     action.value ? client.sms_templates.length === 1 ? client.sms_templates[0].template : '' : ''
+        selectedTemplate: action.value
+                            ? client.sms_templates.length === 1
+                              ? 0
+                              : undefined
+                            : undefined,
+        templateText:     action.value
+                            ? client.sms_templates.length === 1
+                              ? substituteVariablesInTemplate(client.sms_templates[0].template, state)
+                              : ''
+                            : ''
       }
 
     case NEW_RESERVATION_SET_ERROR:
