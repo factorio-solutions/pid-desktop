@@ -59,16 +59,16 @@ export default class PaginatedTable extends Component {
     window.addEventListener('paginatedTableUpdate', this.loadingRequest, true)
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
     const { variables } = this.props
-    const { count, key, ascDesc, search } = this.state
+    const { count, key, ascDesc, search, page } = this.state
 
-    if (JSON.stringify(variables) !== JSON.stringify(nextProps.variables) ||
-      JSON.stringify(nextState.search) !== JSON.stringify(search) ||
-      nextState.count !== count ||
-      nextState.ascDesc !== ascDesc ||
-      nextState.key !== key) {
-      this.requestData({ ...nextProps.variables, ...this.keyToOrderByAndIncludes(nextState.key, nextState.ascDesc), page: nextState.page, count: nextState.count, search: nextState.search }, false, nextState)
+    if (JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
+      JSON.stringify(prevState.search) !== JSON.stringify(search) ||
+      prevState.count !== count ||
+      prevState.ascDesc !== ascDesc ||
+      prevState.key !== key) {
+      this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
     }
   }
 
@@ -91,15 +91,11 @@ export default class PaginatedTable extends Component {
     this.setState({ ...this.state, loading: true }, () => this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search }))
   }
 
-  requestData = (variables, calledOnMount = false, nextState) => { // requests data from server
+  requestData = (variables, calledOnMount = false) => { // requests data from server
     const { query, admin } = this.props
 
     if (!(calledOnMount && this.state.data.length)) {
-      if (nextState) {
-        this.setState({ ...nextState, loading: true })
-      } else {
-        this.setState({ ...this.state, loading: true })
-      }
+      this.setState({ ...this.state, loading: true })
     }
 
     if (admin) {
