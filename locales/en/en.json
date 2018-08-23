@@ -708,7 +708,8 @@
 		"reservationLegalDocuments": "You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.",
 		"reservationUpdateLegalDocuments": "You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.",
 		"contractLegalDocuments": "You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'.",
-		"reservationWasSuccessfullyPaid": "User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s"
+		"reservationWasSuccessfullyPaid": "User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s",
+		"reservationWillExpireSoon": "Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s"
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
