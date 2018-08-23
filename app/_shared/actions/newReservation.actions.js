@@ -109,6 +109,7 @@ export const setMinDuration = actionFactory(NEW_RESERVATION_SET_MIN_DURATION)
 export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
 export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_PRICE)
 export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
+export const setClientId = actionFactory(NEW_RESERVATION_SET_CLIENT_ID)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -130,7 +131,7 @@ export function setUser(value) {
       value
     })
     if (value.availableClients.find(client => client.id === getState().newReservation.client_id) === undefined) { // preselected client no longer available
-      dispatch(setClientId(undefined))
+      dispatch(setClient(undefined))
     }
   }
 }
@@ -142,11 +143,9 @@ export function setNote(value) {
   }
 }
 
-export function setClientId(value) {
+export function setClient(id) {
   return (dispatch, getState) => {
-    dispatch({ type: NEW_RESERVATION_SET_CLIENT_ID,
-      value
-    })
+    dispatch(setClientId(id))
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
     dispatch(setMinMaxDuration())
@@ -506,8 +505,8 @@ export function setInitialStore(id) {
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(setNote(values[1].reservation.note))
         dispatch(setReservation(values[1].reservation))
-        dispatch(downloadUser(values[1].reservation.user_id, undefined, hideLoading))
-        dispatch(setClientId(values[1].reservation.client_id))
+        dispatch(setClient(values[1].reservation.client_id))
+        dispatch(downloadUser(values[1].reservation.user_id, undefined, true))
         if (values[1].reservation.car) {
           values[1].reservation.car.temporary ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate)) : dispatch(setCarId(values[1].reservation.car.id))
         }
@@ -522,7 +521,7 @@ export function setInitialStore(id) {
         dispatch(formatFrom())
         dispatch(formatTo())
         if (users.length === 1) {
-          dispatch(downloadUser(users[0].id, undefined, hideLoading))
+          dispatch(downloadUser(users[0].id, undefined))
         } else {
           hideLoading(dispatch)
         }
@@ -534,12 +533,14 @@ export function setInitialStore(id) {
   }
 }
 
-export function downloadUser(id, rights) {
+export function downloadUser(id, rights, initEdit = false) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     dispatch(setLoading(true))
-    dispatch(setGarage(undefined)) // have to reset values set from previous user
-    dispatch(setClientId(undefined))
+    if (!initEdit) {
+      dispatch(setGarage(undefined)) // have to reset values set from previous user
+      dispatch(setClient(undefined))
+    }
     dispatch(setCarId(undefined))
 
     const userPromise = new Promise((resolve, reject) => {
@@ -645,7 +646,7 @@ export function downloadGarage(id) {
       if (!(id && id === (state.garage && state.garage.id))) {
         dispatch(showLoadingModal(true))
       }
-
+      console.log(state.client_id)
       request(
         onSuccess,
         (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
