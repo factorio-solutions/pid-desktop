@@ -49,6 +49,7 @@ export function setUserId(value) {
   return dispatch => {
     dispatch({ type: MOBILE_NEW_RESERVATION_SET_USER_ID, value })
     value && dispatch(getAvailableCars())
+    value && dispatch(getAvailableClients())
   }
 }
 
@@ -244,7 +245,8 @@ export function fromBeforeTo(from, to) {
 export function getAvailableClients() {
   return (dispatch, getState) => {
     const state = getState().mobileNewReservation
-    const garageId = getState().mobileHeader.garage_id
+    const { mobileHeader } = getState()
+
     const onClients = response => {
       if (response.data.last_reservation_client) { // I see client from last reservation
         const client = response.data.reservable_clients.findById(response.data.last_reservation_client.id)
@@ -256,8 +258,8 @@ export function getAvailableClients() {
     }
 
     request(onClients, GET_AVAILABLE_CLIENTS, {
-      user_id:   getState().mobileHeader.current_user.id,
-      garage_id: garageId
+      user_id:   state.guestReservation ? state.user_id : mobileHeader.current_user.id,
+      garage_id: mobileHeader.garage_id
     })
   }
 }
@@ -287,9 +289,14 @@ export function getAvailableCars() {
 export function getAvailableUsers() {
   return (dispatch, getState) => {
     if (getState().mobileNewReservation.guestReservation) {
-      requestPromise(GET_AVAILABLE_USERS)
+      const mobileHeader = getState().mobileHeader
+
+      requestPromise(
+        GET_AVAILABLE_USERS,
+        { garage_id: mobileHeader.garage_id }
+      )
       .then(data => {
-        dispatch(setAvailableUsers(data.reservable_users.filter(user => user.id !== getState().mobileHeader.current_user.id)))
+        dispatch(setAvailableUsers(data.reservable_users.filter(user => user.id !== mobileHeader.current_user.id)))
         dispatch(setCustomModal())
       })
     }
@@ -309,6 +316,7 @@ export function pickPlaces(noClientDownload) {
     }
 
     const variables = stateToVariables(getState)
+    const state = getState().mobileNewReservation
     if (variables.garage_id) {
       request(
         onSuccess,
@@ -316,7 +324,8 @@ export function pickPlaces(noClientDownload) {
         { id:        variables.garage_id,
           begins_at: variables.begins_at,
           ends_at:   variables.ends_at,
-          client_id: variables.client_id
+          client_id: variables.client_id,
+          user_id:   state.guestReservation ? state.user_id : null
         })
       !noClientDownload && dispatch(getAvailableClients())
     } else {
@@ -331,6 +340,8 @@ export function checkGarageChange(garageId, nextGarageId) {
   return dispatch => {
     if (garageId !== nextGarageId) {
       dispatch(pickPlaces())
+      dispatch(getAvailableClients())
+      dispatch(getAvailableUsers())
     }
   }
 }

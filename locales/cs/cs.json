@@ -1292,6 +1292,7 @@
 			"licencePlatePlaceholder": "1A2 1234",
 			"selectCar": "Zvolte auto",
 			"noAvailablePlaces": "Žádná místa nejsou dostupná",
+			"noClientAvailable": "Žádná dostupný klient",
 			"selectGarage": "Začněte volbou garáže",
 			"auto": "AUTO",
 			"now": "TEĎ",

@@ -1292,6 +1292,7 @@
 			"licencePlatePlaceholder": "1A2 3456",
 			"selectCar": "Select car",
 			"noAvailablePlaces": "No available places",
+			"noClientAvailable": "No available clients",
 			"selectGarage": "Select garage first",
 			"auto": "AUTO",
 			"now": "NOW",
