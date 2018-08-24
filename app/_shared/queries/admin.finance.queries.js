@@ -17,6 +17,8 @@ export const GET_GARAGE_PAYMENT_METHOD = `query ($id:Id!){
     vat
     invoice_row
     simplyfied_invoice_row
+    invoice_prefix
+    simplyfied_invoice_prefix
     account_number
     account{
       id

@@ -68,28 +68,49 @@ class SettingsTab extends Component {
             step={0.01}
             highlight={state.highlight}
           />
-          <Input
-            onChange={actions.setInvoiceRow}
-            onEnter={this.submitForm}
-            label={t([ 'finance', 'invoiceRow' ])}
-            error={t([ 'finance', 'invalidRow' ])}
-            value={state.invoiceRow}
-            type="number"
-            min={0}
-            step={1}
-            highlight={state.highlight}
-          />
-          <Input
-            onChange={actions.setSimplyfiedInvoiceRow}
-            onEnter={this.submitForm}
-            label={t([ 'finance', 'simplyfiedInvoiceRow' ])}
-            error={t([ 'finance', 'invalidRow' ])}
-            value={String(state.simplyfiedInvoiceRow)}
-            type="number"
-            min={0}
-            step={1}
-            highlight={state.highlight}
-          />
+
+          <div className={styles.flex}>
+            <Input
+              onChange={actions.setInvoicePrefix}
+              onEnter={this.submitForm}
+              label={t([ 'finance', 'invoicePrefix' ])}
+              error={t([ 'finance', 'invalidPrefix' ])}
+              value={state.invoicePrefix}
+            />
+            <Input
+              onChange={actions.setInvoiceRow}
+              onEnter={this.submitForm}
+              label={t([ 'finance', 'invoiceRow' ])}
+              error={t([ 'finance', 'invalidRow' ])}
+              value={state.invoiceRow}
+              type="number"
+              min={0}
+              step={1}
+              highlight={state.highlight}
+            />
+          </div>
+
+          <div className={styles.flex}>
+            <Input
+              onChange={actions.setSimplyfiedInvoicePrefix}
+              onEnter={this.submitForm}
+              label={t([ 'finance', 'invoicePrefix' ])}
+              error={t([ 'finance', 'invalidPrefix' ])}
+              value={state.simplyfiedInvoicePrefix}
+            />
+            <Input
+              onChange={actions.setSimplyfiedInvoiceRow}
+              onEnter={this.submitForm}
+              label={t([ 'finance', 'simplyfiedInvoiceRow' ])}
+              error={t([ 'finance', 'invalidRow' ])}
+              value={String(state.simplyfiedInvoiceRow)}
+              type="number"
+              min={0}
+              step={1}
+              highlight={state.highlight}
+            />
+          </div>
+
           <Input
             onChange={actions.setAccountNumber}
             onEnter={this.submitForm}
