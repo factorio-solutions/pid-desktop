@@ -32,7 +32,9 @@
 		"loginFailed": "Login failed",
 		"forgot": "Forgot password?",
 		"proceed": "Proceed here",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "EN: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "Your password has been successfully changed."
 	},
 	"signup_page": {
 		"name": "Name",
@@ -238,6 +240,9 @@
 		"visitorsName": "Visitors name",
 		"visitorsPhone": "Visitors phone",
 		"visitorsEmail": "Visitors email",
+		"internalsName": "Internals name",
+		"internalsPhone": "Internals phone",
+		"internalsEmail": "Internals email",
 		"selectedUser": "User",
 		"flexiblePlaceSelected": "flexible",
 		"noFreePlace": "No free place",
@@ -702,7 +707,9 @@
 		"garageLegalDocuments": "You can find new privacy documents in profile section because you were add to '%(arg1)s' garage.",
 		"reservationLegalDocuments": "You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.",
 		"reservationUpdateLegalDocuments": "You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.",
-		"contractLegalDocuments": "You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'."
+		"contractLegalDocuments": "You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'.",
+		"reservationWasSuccessfullyPaid": "User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s",
+		"reservationWillExpireSoon": "Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s"
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -717,8 +724,7 @@
 		"showPublicGarages": "Show me public garages",
 		"privacyDocuments": "All garages privacy documents",
 		"myGarages": "Garages you are in",
-		"myClients": "Clients you are in",
-		"currentPassword": "Current password"
+		"myClients": "Clients you are in"
 	},
 	"users": {
 		"username": "username",
@@ -831,7 +837,7 @@
 		"selectCurrency": "Select currency",
 		"selectPlace": "Start by selecting a spot",
 		"saving": "Saving...",
-		"minReservationDuration": "Min reservation duration",
+		"minReservationDuration": "Min reservation duration (minutes)",
 		"minReservationDurationPlaceholder": "15",
 		"maxReservationDuration": "Max reservation duration",
 		"maxReservationDurationPlaceholder": "600",
@@ -1015,7 +1021,7 @@
 		"donwloadInvoices": "Download invoices",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Select CIN of company you are accounting for:",
-		"invoices": "Faktury",
+		"invoices": "Invoices",
 		"simplifiedTaxReceipts": "Simplified tax receipts",
 		"canceledInvoices": "Canceled invoices",
 		"userName": "User"
@@ -1101,6 +1107,7 @@
 		"vat": "Value added tax",
 		"invoiceRow": "Regular invoice row",
 		"simplyfiedInvoiceRow": "Simplified invoice row",
+		"invoicePrefix": "Prefix",
 		"invalidVat": "Invalid VAT",
 		"invalidRow": "Invalid number",
 		"changeSuccess": "Values changed sucessfully.",
@@ -1347,7 +1354,10 @@
 		"confirmPwdReset": "Confirm the password change",
 		"troubleWithAccount": "If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.",
 		"verificationCodeEmailSubject": "Verification code",
-		"verificationCode": "Below you can find your verification code for Park-it-direct!"
+		"verificationCode": "Below you can find your verification code for Park-it-direct!",
+		"blockedTitle": "Blocked Access Attempt",
+		"blockedDescription": "We detected suspicious activity on your account, we have recorded ten unsuccessful login attempts in the row.",
+		"blockedUnblock": "Unblock!"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "You have been invited to Park-It-Direct!",
@@ -1401,7 +1411,7 @@
 			"go_pay_yourself": "Go pay",
 			"price": "Price:",
 			"pay_in_24_hours": "Reservation must be payed in 24 hours.",
-			"reservation_was_paid": "Reservation was paid by client.",
+			"reservation_was_paid": "Reservation was paid by host.",
 			"confirmed": "Confirmed",
 			"garage_address": "Garage address",
 			"reservation_start": "Reservation start",
