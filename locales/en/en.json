@@ -1107,6 +1107,7 @@
 		"vat": "Value added tax",
 		"invoiceRow": "Regular invoice row",
 		"simplyfiedInvoiceRow": "Simplified invoice row",
+		"invoicePrefix": "Prefix",
 		"invalidVat": "Invalid VAT",
 		"invalidRow": "Invalid number",
 		"changeSuccess": "Values changed sucessfully.",
