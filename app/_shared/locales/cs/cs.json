@@ -32,7 +32,9 @@
 		"loginFailed": "Špatné přihlášení",
 		"forgot": "Zapomenuté heslo?",
 		"proceed": "Pokračujte zde",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "CS: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "CS: login_page.resetPasswordSuccessful"
 	},
 	"signup_page": {
 		"name": "Jméno",
@@ -238,6 +240,9 @@
 		"visitorsName": "Jméno návštěvníka",
 		"visitorsPhone": "Telefon návštěvníka",
 		"visitorsEmail": "Email návštěvníka",
+		"internalsName": "Jméno internala",
+		"internalsPhone": "Telefon internala",
+		"internalsEmail": "Email internala",
 		"selectedUser": "Uživatel",
 		"flexiblePlaceSelected": "flexibilní",
 		"noFreePlace": "Žádná volná místa",
@@ -612,7 +617,7 @@
 		"onetimeAdditionPlaceholder": "30",
 		"timeCreditDescription": "Modul umožňuje časové omezení rezervací uživatelů Vašeho klienta",
 		"timeCreditStatistics": "Statistiky",
-		"hoursThatCanBeParked": "Hodiny, která je možné odparkovat tento měsíc",
+		"hoursThatCanBeParked": "Hodiny, které je možné odparkovat tento měsíc",
 		"creditsThatCanBeDistributed": "Kredity, která je možné rozdat tento měsíc",
 		"creditsDistributed": "Kredity, která byly rozdány",
 		"creditsDistributedOverMax": "Kredity přes maximální počet",
@@ -702,7 +707,9 @@
 		"garageLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",
 		"reservationLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",
 		"reservationUpdateLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",
-		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'."
+		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",
+		"reservationWasSuccessfullyPaid": "Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",
+		"reservationWillExpireSoon": "Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s"
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -715,7 +722,9 @@
 		"createdAt": "Profil vytvořen:",
 		"cars": "Auta",
 		"showPublicGarages": "Zobrazovat veřejné garáže",
-		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže"
+		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže",
+		"myGarages": "CS: profile.myGarages",
+		"myClients": "CS: profile.myClients"
 	},
 	"users": {
 		"username": "uživatelské jméno",
@@ -737,6 +746,7 @@
 		"host": "pravidelný host",
 		"security": "ostraha",
 		"receptionist": "recepční",
+		"manager": "CS: users.manager",
 		"invitedToClient": "Pozván %(date)s aby byl členem klienta:",
 		"invitedToGarage": "Pozván %(date)s aby byl členem garáže:",
 		"invitedToCar": "Pozván %(date)s aby byl členem auta"
@@ -827,7 +837,7 @@
 		"selectCurrency": "Vyberte měnu",
 		"selectPlace": "Začněte výběrem místa",
 		"saving": "Ukládám...",
-		"minReservationDuration": "Min délka rezervace",
+		"minReservationDuration": "Min délka rezervace (minuty)",
 		"minReservationDurationPlaceholder": "15",
 		"maxReservationDuration": "Max délka rezervace",
 		"maxReservationDurationPlaceholder": "600",
@@ -1011,7 +1021,7 @@
 		"donwloadInvoices": "Stáhnout faktury",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Zvolte IČ společnosti, pro kterou účtujete:",
-		"invoices": "Invoices",
+		"invoices": "Faktury",
 		"simplifiedTaxReceipts": "Zjednodušené daňové doklady",
 		"canceledInvoices": "Zrušené faktury",
 		"userName": "Uživatel"
@@ -1343,7 +1353,10 @@
 		"confirmPwdReset": "Dokončit změnu hesla",
 		"troubleWithAccount": "Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.",
 		"verificationCodeEmailSubject": "Ověřovací kód",
-		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!"
+		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!",
+		"blockedTitle": "Váš účet byl zablokován",
+		"blockedDescription": "Detekovali jsme podezřelou aktivitu na Vašem účtě, zaznamenali jsme deset neúspěšných příhlášení v řadě.",
+		"blockedUnblock": "Odblokovat!"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "Byl jste pozván do Park-It-Directu!",
@@ -1397,7 +1410,7 @@
 			"go_pay_yourself": "Zaplatit",
 			"price": "Cena:",
 			"pay_in_24_hours": "Rezervaci je potřeba zaplatit do 24 hodin.",
-			"reservation_was_paid": "Rezervace byla zaplacena klientem.",
+			"reservation_was_paid": "Rezervace byla zaplacena hostitelem.",
 			"confirmed": "Potvrzeno",
 			"garage_address": "Adresa garáže",
 			"reservation_start": "Začátek rezervace",
