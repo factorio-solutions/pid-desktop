@@ -59,16 +59,16 @@ export default class PaginatedTable extends Component {
     window.addEventListener('paginatedTableUpdate', this.loadingRequest, true)
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
     const { variables } = this.props
-    const { count, key, ascDesc, search } = this.state
+    const { count, key, ascDesc, search, page } = this.state
 
-    if (JSON.stringify(variables) !== JSON.stringify(nextProps.variables) ||
-      JSON.stringify(nextState.search) !== JSON.stringify(search) ||
-      nextState.count !== count ||
-      nextState.ascDesc !== ascDesc ||
-      nextState.key !== key) {
-      this.requestData({ ...nextProps.variables, ...this.keyToOrderByAndIncludes(nextState.key, nextState.ascDesc), page: nextState.page, count: nextState.count, search: nextState.search })
+    if (JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
+      JSON.stringify(prevState.search) !== JSON.stringify(search) ||
+      prevState.count !== count ||
+      prevState.ascDesc !== ascDesc ||
+      prevState.key !== key) {
+      this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
     }
   }
 
@@ -94,7 +94,9 @@ export default class PaginatedTable extends Component {
   requestData = (variables, calledOnMount = false) => { // requests data from server
     const { query, admin } = this.props
 
-    !(calledOnMount && this.state.data.length) && this.setState({ ...this.state, loading: true })
+    if (!(calledOnMount && this.state.data.length)) {
+      this.setState({ ...this.state, loading: true })
+    }
 
     if (admin) {
       requestAdmin(query, variables).then(this.transformData)
