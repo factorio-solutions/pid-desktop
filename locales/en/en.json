@@ -102,7 +102,7 @@
 		"dashboardHint": "Welcome to Park-it-direct!\n\nYou can hide this blue column with hints by clicking a cross in its left corner. To activate it again click on the blue information icon that will appear in the top right corner.\n\nTo move around in Park-it-direct, use the menu on the left side.\n\nFastest way to create new reservation is the blue button at the top!\n\nNeed more help? Get in touch with us via Intercom - our communicator in the bottom right corner. We will be glad to help! :-)",
 		"issuesHint": "TODO: Issues hint",
 		"analyticsHint": "Here you can check if the reservation details are correct and complete the reservation by paying it.\n\nThe selection of payment methods can be adjusted in the garage settings.",
-		"invoicesHint": "You can find all issued accounting documents here.\n\nIn the upper left corner, you can choose whether you want to see invoices, simplified tax documents, or credit notes / corrective tax documents.\n\nInvoices are related to long-term agreements for parking spaces, simplified tax documents are related to parking paid by the parker below the amount of CZK 10,000, and credit notes / corrective tax documents are related to canceled reservations paid by parkers.\n\nIn the upper left corner, you can also filter the documents by client.\n\nIn the top right corner, you can choose between displaying current documents or entire history.",
+		"invoicesHint": "You can find all issued accounting documents here.\r\n\r\nIn the upper left corner, you can choose whether you want to see invoices, simplified tax documents, or credit notes / corrective tax documents.\r\n\r\nInvoices are related to long-term agreements for parking spaces, simplified tax documents are related to parking paid by the parker below the amount of CZK 10,000, and credit notes / corrective tax documents are related to canceled reservations paid by parkers.\r\n\r\nIn the upper left corner, you can also filter the documents by client.\r\n\r\nIn the top right corner, you can choose between displaying current documents or entire history.",
 		"newContractHint": "Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :-)",
 		"ReservationButtonHint": "TODO: reservation button hint",
 		"mrParkitIntegrationHint": "TODO: mrParkitIntegration hint",
@@ -246,7 +246,7 @@
 		"selectedUser": "User",
 		"flexiblePlaceSelected": "flexible",
 		"noFreePlace": "No free place",
-		"note": "Note",
+		"note": "Public note",
 		"onetimeVisit": "Onetime visitor",
 		"onetimeVisitText": "can't make or request reservation, isn't a member of the client account.",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
@@ -332,7 +332,7 @@
 		"mrParkit": "MR.PARKIT",
 		"editReservation": "Edit reservation",
 		"editNote": "Edit note",
-		"newNote": "New note",
+		"newNote": "New public note",
 		"interuptReservation": "Interrupt reservation",
 		"payReservation": "Pay reservation",
 		"downloadInvoice": "Download invoice",
@@ -688,7 +688,7 @@
 		"garageInvitationMessage": "You have been invited to '%(arg1)s' garage. Do you want to accept?",
 		"carInvitationMessage": "You have been invited to use '%(arg1)s' car. Do you want to accept?",
 		"clientUserDestroyed": "You have been removed from client account '%(arg1)s'. All reservations associated with this client's account has been canceled.",
-		"accountPlaceDestroyed": "Your reservation has been canceled because the owner removed the parking spot from the client account.",
+		"reservationDestroyed": "Your reservation has been canceled.",
 		"past": "past",
 		"NotificationAccepted": "accepted on",
 		"NotificationDeclined": "declined on",
@@ -1298,6 +1298,7 @@
 			"licencePlatePlaceholder": "1A2 3456",
 			"selectCar": "Select car",
 			"noAvailablePlaces": "No available places",
+			"noClientAvailable": "No available clients",
 			"selectGarage": "Select garage first",
 			"auto": "AUTO",
 			"now": "NOW",
@@ -1370,6 +1371,10 @@
 		"reservation_not_approved_yet_subject": "Your new reservation was not accepted yet",
 		"car_on_my_spot_notify_driver_subject": "You have been reported",
 		"car_on_my_spot_notify_secretary_subject": "User has been reported",
+		"right_updated": "Your right has been updated",
+		"accept_new_reservation_secretary_notification2": "New reservation needs your decision",
+		"your_reservation_was_destroyed": "You reservation was canceled",
+		"reservation_will_expire_soon_subject": "Your reservation will expire soon",
 		"aliases": {
 			"garage_table": {
 				"user": "User:",
@@ -1467,6 +1472,34 @@
 			"user_has_been_reported": "User %{user} just reported that car with licence plate %{licence_plate} is standing on his spot.",
 			"infor_about_car": "Further information about suspected car:",
 			"infor_about_reservation": "Further information about suspected reservation:"
+		},
+		"updated_rights": {
+			"right_updated": "Your right has been updated",
+			"class_updated": "Admins of %{class} %{name} had updated your rights, here are the changes:",
+			"enabled": "You were granted role %{role}",
+			"disabled": "You were denied role %{role}",
+			"client_user": "client",
+			"user_car": "car",
+			"user_garage": "garage",
+			"admin": "admin",
+			"receptionist": "receptionist",
+			"security": "security",
+			"secretary": "secretary",
+			"manager": "manager",
+			"host": "regular host",
+			"internal": "internal",
+			"contact_person": "contact person",
+			"driver": "driver"
+		},
+		"accept_new_reservation_secretary_notification": {
+			"new_reservation_needs_confirmation": "There has been a new reservation created by %{creator} on %{client} expenses, you can now go to Park-it-direct to accept or decline this reservation.",
+			"to_pid": "To Park-it-direct!"
+		},
+		"reservation_destroyed_mail": {
+			"reservation_was_destroyed": "Your reservation had been canceled."
+		},
+		"reservation_will_expire_soon": {
+			"reservation_will_expire_soon": "Your reservation in %{garage} will expire in 30 minutes."
 		}
 	},
 	"railsSMSs": {
