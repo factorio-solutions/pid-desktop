@@ -7,7 +7,7 @@ import Dropdown from '../../_shared/components/dropdown/Dropdown'
 import {
   downloadGarage,
   setPaidByHost,
-  setClientId,
+  setClient,
   selectedClient,
   isPlaceGoInternal
 } from '../../_shared/actions/newReservation.actions'
@@ -44,7 +44,7 @@ class GarageClientForm extends Component {
     return state.user.availableClients.map((client, index) => ({
       label:   client.name,
       order:   client.id === undefined && 1,
-      onClick: () => actions.setClientId(state.user.availableClients[index].id)
+      onClick: () => actions.setClient(state.user.availableClients[index].id)
     })) || []
   }
 
@@ -107,7 +107,7 @@ export default connect(
   dispatch => ({ actions: bindActionCreators(
     { downloadGarage,
       setPaidByHost,
-      setClientId,
+      setClient,
       selectedClient
     },
     dispatch

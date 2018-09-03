@@ -45,7 +45,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
   garage_name: invoice.account && invoice.account.garage.name,
   client_name: invoice.client && invoice.client.name,
   user_name:   invoice.user && invoice.user.full_name,
-  price:       valueAddedTax(invoice.ammount, invoice.vat) + ' ' + invoice.currency.symbol,
+  price:       valueAddedTax(invoice.ammount, invoice.vat) + ' ' + invoice.currencies[0].symbol,
   disabled:    invoice.canceled,
   spoiler:     (<div>
     {invoice.canceled ? <div>
@@ -76,7 +76,8 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
           onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
           type="action"
         />
-        {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin || invoice.client.is_secretary) &&
+        {!invoice.payed && !invoice.is_storno_invoice && invoice.client && invoice.client.client_user &&
+        (invoice.client.client_user.admin || invoice.client.client_user.secretary) &&
           <LabeledRoundButton
             label={t([ 'invoices', 'payInvoice' ])}
             content={<i className="fa fa-credit-card" aria-hidden="true" />}

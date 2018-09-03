@@ -82,7 +82,7 @@ class GaragePage extends Component {
               undefined
             break
           case 'prices':
-            place.group = place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent' || place.pricing && place.pricing.id + 'price'
+            place.group = (place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent') || (place.pricing && place.pricing.id + 'price')
             break
           case 'cars':
           case 'reservations':

@@ -58,7 +58,7 @@ class UsersPage extends Component {
 
     const createClientLink = (client, index) => (<li key={index} className={styles.clickable} onClick={() => { this.clientOnClick(client.id) }}> {client.name}
       {client.admin && <span>{t([ 'users', 'admin' ])}</span>}
-      {client.contactPerson && <span>{t([ 'users', 'contactPerson' ])}</span>}
+      {client.contactPerson && <span>{t([ 'clientUsers', 'contact_person' ])}</span>}
       {client.secretary && <span>{t([ 'users', 'secretary' ])}</span>}
       {client.internal && <span>{t([ 'users', 'internal' ])}</span>}
       {client.host && <span>{t([ 'users', 'host' ])}</span>}
@@ -71,7 +71,7 @@ class UsersPage extends Component {
 
     const createGarageLink = (garage, index) => (<li key={index} className={styles.clickable} onClick={() => { this.garageOnClick(garage.id) }}>{garage.name}
       {garage.admin && <span>{t([ 'users', 'admin' ])}</span>}
-      {garage.manager && <span>{t([ 'users', 'manager' ])}</span>}
+      {garage.manager && <span>{t([ 'garageUsers', 'manager' ])}</span>}
       {garage.security && <span>{t([ 'users', 'security' ])}</span>}
       {garage.receptionist && <span>{t([ 'users', 'receptionist' ])}</span>}
     </li>)
