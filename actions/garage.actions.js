@@ -100,6 +100,7 @@ export function initGarage() {
 
     Promise.all([ garagePromise ]).then(data => {
       dispatch(setGarage(updateGaragesPlaces(data[0].garage, { reservations_in_time: data[0].garage.reservations_in_time, contracts_in_time: data[0].garage.contracts_in_time })))
+      dispatch(setLoading(false))
     }).catch(error => {
       console.error(error)
     })
