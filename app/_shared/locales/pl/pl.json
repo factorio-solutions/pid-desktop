@@ -688,7 +688,7 @@
 		"garageInvitationMessage": "Zostałeś(-aś) zaproszony(-a) do używania garaży '%(arg1)s'. Chcesz przyjąć zaproszenie?",
 		"carInvitationMessage": "Zostałeś(-aś) zaproszony(-a) do używania samochodu '%(arg1)s'. Chcesz przyjąć zaproszenie?",
 		"clientUserDestroyed": "Zostałeś(-aś) usunięty(-a) z konta klienta '%(arg1)s'. Wszystkie rezerwacje przypisane do tego konta zostaną usunięte.",
-		"accountPlaceDestroyed": "Twoje rezerwacje zostały anulowane, ponieważ administrator garażu usunął miejsce z konta klienta.",
+		"reservationDestroyed": "PL: notifications.reservationDestroyed",
 		"past": "historia",
 		"NotificationAccepted": "przyjęte dnia",
 		"NotificationDeclined": "odrzucone dnia",
@@ -707,7 +707,9 @@
 		"garageLegalDocuments": "PL: notifications.garageLegalDocuments",
 		"reservationLegalDocuments": "PL: notifications.reservationLegalDocuments",
 		"reservationUpdateLegalDocuments": "PL: notifications.reservationUpdateLegalDocuments",
-		"contractLegalDocuments": "PL: notifications.contractLegalDocuments"
+		"contractLegalDocuments": "PL: notifications.contractLegalDocuments",
+		"reservationWasSuccessfullyPaid": "PL: notifications.reservationWasSuccessfullyPaid",
+		"reservationWillExpireSoon": "PL: notifications.reservationWillExpireSoon"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -1059,7 +1061,7 @@
 		"toApiExplorer": "Przejdź do przeglądarki API",
 		"requestDesribtionPart1": "Aby użyć skrytego tokena, dodaj header",
 		"requestDesribtionPart2": "Authorization:",
-		"requestDesribtionPart3": "dla Twoich raphQL requests",
+		"requestDesribtionPart3": "dla Twoich graphQL requests",
 		"selectPlaces": "Żeby aktywować moduł, wypełnij formularz."
 	},
 	"newContract": {
@@ -1105,6 +1107,7 @@
 		"vat": "Podatek VAT",
 		"invoiceRow": "Regularny rządek faktur",
 		"simplyfiedInvoiceRow": "Uproszczony rządek faktur",
+		"invoicePrefix": "Prefix",
 		"invalidVat": "Niepoprawny VAT",
 		"invalidRow": "Niepoprawny numer",
 		"changeSuccess": "Wartości zostały zmienione.",
@@ -1295,6 +1298,7 @@
 			"licencePlatePlaceholder": "1A2 1234",
 			"selectCar": "Wybierz auto",
 			"noAvailablePlaces": "Nie ma dostępnych miejsc",
+			"noClientAvailable": "PL: mobileApp.newReservation.noClientAvailable",
 			"selectGarage": "Zacznij od wyboru garażu",
 			"auto": "AUTO",
 			"now": "TERAZ",
@@ -1367,6 +1371,10 @@
 		"reservation_not_approved_yet_subject": "PL: railsEmails.reservation_not_approved_yet_subject",
 		"car_on_my_spot_notify_driver_subject": "PL: railsEmails.car_on_my_spot_notify_driver_subject",
 		"car_on_my_spot_notify_secretary_subject": "PL: railsEmails.car_on_my_spot_notify_secretary_subject",
+		"right_updated": "PL: railsEmails.right_updated",
+		"accept_new_reservation_secretary_notification2": "PL: railsEmails.accept_new_reservation_secretary_notification2",
+		"your_reservation_was_destroyed": "PL: railsEmails.your_reservation_was_destroyed",
+		"reservation_will_expire_soon_subject": "PL: railsEmails.reservation_will_expire_soon_subject",
 		"aliases": {
 			"garage_table": {
 				"user": "Użytkownik:",
@@ -1464,6 +1472,34 @@
 			"user_has_been_reported": "PL: railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported",
 			"infor_about_car": "PL: railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_car",
 			"infor_about_reservation": "PL: railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_reservation"
+		},
+		"updated_rights": {
+			"right_updated": "PL: railsEmails.updated_rights.right_updated",
+			"class_updated": "PL: railsEmails.updated_rights.class_updated",
+			"enabled": "PL: railsEmails.updated_rights.enabled",
+			"disabled": "PL: railsEmails.updated_rights.disabled",
+			"client_user": "PL: railsEmails.updated_rights.client_user",
+			"user_car": "PL: railsEmails.updated_rights.user_car",
+			"user_garage": "PL: railsEmails.updated_rights.user_garage",
+			"admin": "PL: railsEmails.updated_rights.admin",
+			"receptionist": "PL: railsEmails.updated_rights.receptionist",
+			"security": "PL: railsEmails.updated_rights.security",
+			"secretary": "PL: railsEmails.updated_rights.secretary",
+			"manager": "PL: railsEmails.updated_rights.manager",
+			"host": "PL: railsEmails.updated_rights.host",
+			"internal": "PL: railsEmails.updated_rights.internal",
+			"contact_person": "PL: railsEmails.updated_rights.contact_person",
+			"driver": "PL: railsEmails.updated_rights.driver"
+		},
+		"accept_new_reservation_secretary_notification": {
+			"new_reservation_needs_confirmation": "PL: railsEmails.accept_new_reservation_secretary_notification.new_reservation_needs_confirmation",
+			"to_pid": "Do Park-it-direct!"
+		},
+		"reservation_destroyed_mail": {
+			"reservation_was_destroyed": "PL: railsEmails.reservation_destroyed_mail.reservation_was_destroyed"
+		},
+		"reservation_will_expire_soon": {
+			"reservation_will_expire_soon": "PL: railsEmails.reservation_will_expire_soon.reservation_will_expire_soon"
 		}
 	},
 	"railsSMSs": {
