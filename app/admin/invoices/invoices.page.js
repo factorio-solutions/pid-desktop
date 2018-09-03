@@ -55,7 +55,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
         <LabeledRoundButton
           label={t([ 'invoices', 'downloadInvoice' ])}
           content={<span className="fa fa-download" aria-hidden="true" />}
-          onClick={() => actions.downloadInvoice(invoice.id)}
+          onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
           type="action"
         />
         <LabeledRoundButton
@@ -73,7 +73,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
         <LabeledRoundButton
           label={t([ 'invoices', 'downloadInvoice' ])}
           content={<span className="fa fa-download" aria-hidden="true" />}
-          onClick={() => actions.downloadInvoice(invoice.id)}
+          onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
           type="action"
         />
         {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin || invoice.client.is_secretary) &&

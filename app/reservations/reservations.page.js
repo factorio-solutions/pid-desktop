@@ -105,6 +105,9 @@ class ReservationsPage extends Component {
 
   interuptClick = reservation => this.props.interuptionActions.setReservation(reservation)
 
+  isSecretary = reservation => reservation.client && reservation.client.is_secretary
+  isInternal = reservation => reservation.client && reservation.client.is_internal
+  ownsReservation = reservation => reservation.user.id === this.props.pageBase.current_user.id
 
   render() {
     const { state, actions, interuption, interuptionActions, pageBase } = this.props
@@ -216,6 +219,10 @@ class ReservationsPage extends Component {
 
     const reservationSpolier = reservation => {
       const garage = reservation.place && reservation.place.floor && reservation.place.floor.garage
+      const canEdit = this.isSecretary(reservation) || (this.isInternal(reservation) && this.ownsReservation(reservation))
+      // reservation.client &&
+      // (reservation.client.is_secretary ||
+      // (reservation.client.is_internal && reservation.user.id === pageBase.current_user.id))
 
       return (<div className={styles.spoiler}>
         {!reservation.approved && <div><b>{ reservation.client === null ? t([ 'reservations', 'reservationNotPayed' ]) : t([ 'reservations', 'reservationApproved' ])}</b></div>}
@@ -233,9 +240,8 @@ class ReservationsPage extends Component {
           </div>}
           {!reservation.deleted_at && <div>
             <span className={styles.floatRight}>
-              {reservation.client &&
-              (reservation.client.is_secretary ||
-              (reservation.client.is_internal && reservation.user.id === pageBase.current_user.id)) ? // Internal can edit his reservations
+            
+              {canEdit ? // Internal can edit his reservations
                 <LabeledRoundButton
                   label={t([ 'reservations', 'editReservation' ])}
                   content={<span className="fa fa-pencil" aria-hidden="true" />}
@@ -249,7 +255,7 @@ class ReservationsPage extends Component {
                   type="action"
                 />
               }
-              {reservation.approved && reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
+              {canEdit && reservation.approved && reservation.client && moment(reservation.ends_at).isAfter(moment()) &&
                 <LabeledRoundButton
                   label={t([ 'reservations', 'interuptReservation' ])}
                   content={<span className="fa fa-pause" aria-hidden="true" />}
@@ -269,11 +275,11 @@ class ReservationsPage extends Component {
                 <LabeledRoundButton
                   label={t([ 'reservations', 'downloadInvoice' ])}
                   content={<span className="fa fa-download" aria-hidden="true" />}
-                  onClick={() => actions.downloadInvoice(reservation.invoices.map(invoice => invoice.id))}
+                  onClick={() => actions.downloadInvoice(reservation.invoices)}
                   type="action"
                 />
               }
-              {moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ?
+              {canEdit && (moment().isBetween(moment(reservation.begins_at), moment(reservation.ends_at)) ?
                 <LabeledRoundButton
                   label={t([ 'reservations', 'teminateEarly' ])}
                   content={<span className="fa fa-times" aria-hidden="true" />}
@@ -288,7 +294,7 @@ class ReservationsPage extends Component {
                   type="remove"
                   question={t([ 'reservations', 'removeReservationQuestion' ])}
                 />
-              }
+              )}
             </span>
           </div>}
         </div>
@@ -321,6 +327,8 @@ class ReservationsPage extends Component {
             schema={schema}
             variables={{ past: state.past }}
             findId={parseInt(this.props.params.id, 10)}
+            storeState={actions.setState}
+            state={state.tableState}
           />
         </div>
         <div className={styles.centerDiv}>

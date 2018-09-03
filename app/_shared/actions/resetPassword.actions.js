@@ -35,10 +35,11 @@ export function sendPasswordReset(){
   }
 }
 
-export function resetPassword(email){
+export function resetPassword(email, callback = () => {}) {
   return (dispatch, getState) => {
     const onSuccess = (response) => {
       dispatch(setModal(t(['resetPassword', 'send'])))
+      callback()
     }
 
     request(onSuccess, RESET_PASSWORD, {email})

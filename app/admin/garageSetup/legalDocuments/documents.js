@@ -67,28 +67,30 @@ class Documents extends Component {
 
     return (
       <div>
-        <Modal show={state.showModal === type}>
-          <Form
-            onSubmit={() => actions.documentUploaded(type, state.documentURL, state.documentName)}
-            onHighlight={actions.toggleHighlight}
-            onBack={() => actions.showModal(false)}
-            submitable={state.documentName && state.documentURL}
-          >
-            <Input
-              onChange={actions.setDocumentName}
-              label={t([ 'newGarage', 'documentName' ])}
-              value={state.documentName}
-              highlight={state.highlight}
-            />
-            <Input
-              onChange={actions.setDocumentURL}
-              label={t([ 'newGarage', 'documentURL' ])}
-              value={state.documentURL}
-              highlight={state.highlight}
-              type="url"
-            />
-          </Form>
-        </Modal>
+        {!readOnly &&
+          <Modal show={state.showModal === type}>
+            <Form
+              onSubmit={() => actions.documentUploaded(type, state.documentURL, state.documentName)}
+              onHighlight={actions.toggleHighlight}
+              onBack={() => actions.showModal(false)}
+              submitable={state.documentName && state.documentURL}
+            >
+              <Input
+                onChange={actions.setDocumentName}
+                label={t([ 'newGarage', 'documentName' ])}
+                value={state.documentName}
+                highlight={state.highlight}
+              />
+              <Input
+                onChange={actions.setDocumentURL}
+                label={t([ 'newGarage', 'documentURL' ])}
+                value={state.documentURL}
+                highlight={state.highlight}
+                type="url"
+              />
+            </Form>
+          </Modal>
+        }
 
         <h2>{header}</h2>
         {highlight && type === 'privacy' &&

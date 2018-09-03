@@ -39,7 +39,7 @@ class PageBase extends Component {
     ]
 
     const profileDropdown = [
-      <div className={styles.dropdownContent} onClick={() => nav.to('/dashboard')}><i className="fa fa-backward" aria-hidden="true" />{t([ 'pidAdmin', 'pageBase', 'backToPid' ])}</div>,
+      <div className={styles.dropdownContent} onClick={() => nav.to('/occupancy')}><i className="fa fa-backward" aria-hidden="true" />{t([ 'pidAdmin', 'pageBase', 'backToPid' ])}</div>,
       <div className={styles.dropdownContent} onClick={() => actions.logout()}><i className="fa fa-sign-out" aria-hidden="true" />{t([ 'pageBase', 'Logout' ])}</div>
     ]
 

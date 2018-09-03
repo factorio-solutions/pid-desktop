@@ -50,7 +50,7 @@ class ClientUsersPage extends Component {
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' }
     ]
 
-    const currentClientUser = state.users.find(user => { return pageBase.current_user ? user.user.id === pageBase.current_user.id : false })
+    const currentClientUser = state.users.find(user => pageBase.current_user ? user.user.id === pageBase.current_user.id : false)
 
     const addClientUserClick = () => {
       actions.setClient(+this.props.params.client_id)
@@ -112,7 +112,7 @@ class ClientUsersPage extends Component {
                 currentClientUser &&
                 !(currentClientUser.admin || currentClientUser.secretary)) ||
                 client_user.admin ||
-                (client_user.contact_person && currentClientUser.secretary)) &&
+                (client_user.contact_person && currentClientUser && currentClientUser.secretary)) &&
                 'disabled'}
             />
           </div>

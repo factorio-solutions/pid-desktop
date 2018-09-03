@@ -21,7 +21,7 @@ import NewCarPage        from './user/cars/newCar.page'
 import NotificationsPage from './notifications/notifications.page'
 
 // dashboard
-import DashboardPage from './dashboard/dashboard.page'
+// import DashboardPage from './dashboard/dashboard.page'
 
 // reservations
 import ReservationsPage           from './reservations/reservations.page'
@@ -159,7 +159,7 @@ export default function createRoutes() {
       <Route path="profile/cars/:id/edit" component={NewCarPage} />
       <Route path="notifications" component={NotificationsPage} />
 
-      <Route path="dashboard" component={DashboardPage} />
+      {/* <Route path="dashboard" component={DashboardPage} /> */}
 
       <Route path="reservations" component={ReservationsPage} />
       <Route path="reservations/find/:id" component={ReservationsPage} />
@@ -245,7 +245,7 @@ export default function createRoutes() {
 
   return (
     <Route path="/" component={App}>
-      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${localStorage.jwt ? 'dashboard/' : ''}`} />
+      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${localStorage.jwt ? 'occupancy/' : ''}`} />
       {AVAILABLE_LANGUAGES.map(lang => (
         <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
           {subRoutes}

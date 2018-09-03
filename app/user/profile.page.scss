@@ -16,3 +16,34 @@
 .floatRight{
   float: right;
 }
+
+.rightColumn {
+  background-color: $tableSpoilerBackground;
+}
+
+@media (min-width: $collapseWidth) {
+  .parent {
+    display: flex;
+  }
+
+  .leftColumn {
+		flex: 1 1;
+  }
+
+  .rightColumn {
+		flex:         2 2;
+		margin-left:  20px;
+		padding-left: 20px;
+  }
+}
+
+.rights {
+  margin-left: 4px;
+  color:       $gray;
+  font-size:   14px;
+  font-weight: normal;
+}
+
+.rightColumn>div>ul {
+	list-style: none;
+}

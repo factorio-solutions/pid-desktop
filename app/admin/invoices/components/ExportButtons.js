@@ -8,6 +8,7 @@ import styles from '../invoices.page.scss'
 
 
 function ExportButtons({ invoices, actions }) {
+  invoices, actions
   return (
     <div className={styles.actionButtons}>
       <LabeledRoundButton

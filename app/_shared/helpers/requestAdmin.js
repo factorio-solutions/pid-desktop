@@ -21,7 +21,7 @@ export default function requestAdmin(query, variables = null) {
           nav.to('/')
           break
         default:
-          nav.to('/dashboard')
+          nav.to('/occupancy')
       }
     }
   }).catch(error => {
