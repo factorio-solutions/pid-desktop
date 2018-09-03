@@ -246,7 +246,7 @@
 		"selectedUser": "Uživatel",
 		"flexiblePlaceSelected": "flexibilní",
 		"noFreePlace": "Žádná volná místa",
-		"note": "Poznámka",
+		"note": "Veřejná poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
 		"onetimeVisitText": "nemůže vytvářet ani žádat o rezervace, není členem klientského účtu.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
@@ -332,7 +332,7 @@
 		"mrParkit": "MR.PARKIT",
 		"editReservation": "Upravit rezervaci",
 		"editNote": "Upravit poznámku",
-		"newNote": "Nová poznámka",
+		"newNote": "Nová veřejná poznámka",
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
@@ -688,7 +688,7 @@
 		"garageInvitationMessage": "Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?",
 		"carInvitationMessage": "Byl(a) jste pozván(a) pro použití '%(arg1)s' auta. Chcete přijmout?",
 		"clientUserDestroyed": "Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",
-		"accountPlaceDestroyed": "Vaše rezervace byly stornovány, jelikož správce garáže odstranil parkovací místo z Klientského účtu.",
+		"reservationDestroyed": "Vaše rezervace bylA stornována.",
 		"past": "minulost",
 		"NotificationAccepted": "přijato dne",
 		"NotificationDeclined": "odmítnuto dne",
@@ -1107,6 +1107,7 @@
 		"vat": "Daň z přidané hodnoty",
 		"invoiceRow": "Číselná řada faktur",
 		"simplyfiedInvoiceRow": "Číselná řada zjednodušených daňových dokladů",
+		"invoicePrefix": "Prefix",
 		"invalidVat": "Neplatné DPH",
 		"invalidRow": "Neplatné číslo",
 		"changeSuccess": "Hodnoty byly úspěšně změněny.",
@@ -1297,6 +1298,7 @@
 			"licencePlatePlaceholder": "1A2 1234",
 			"selectCar": "Zvolte auto",
 			"noAvailablePlaces": "Žádná místa nejsou dostupná",
+			"noClientAvailable": "Žádný dostupný klient",
 			"selectGarage": "Začněte volbou garáže",
 			"auto": "AUTO",
 			"now": "TEĎ",
@@ -1369,6 +1371,10 @@
 		"reservation_not_approved_yet_subject": "Vaše nová rezervace nebyla zatím schválena",
 		"car_on_my_spot_notify_driver_subject": "Byl jste nahlášen",
 		"car_on_my_spot_notify_secretary_subject": "Uživatel byl nahlášen",
+		"right_updated": "Vaše práva byla aktualizována",
+		"accept_new_reservation_secretary_notification2": "Nová rezervace potřebuje Vaše rozhodnutí",
+		"your_reservation_was_destroyed": "Vaše rezervace byla stornována",
+		"reservation_will_expire_soon_subject": "Vaše rezervace brzy propadne",
 		"aliases": {
 			"garage_table": {
 				"user": "Uživatel:",
@@ -1466,6 +1472,34 @@
 			"user_has_been_reported": "Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",
 			"infor_about_car": "Další informace o autě:",
 			"infor_about_reservation": "Další informace o rezervaci:"
+		},
+		"updated_rights": {
+			"right_updated": "Vaše práva byla aktualizována",
+			"class_updated": "Administrátoři %{class} %{name} Vám aktualizovali práva, zde jsou provedené změny:",
+			"enabled": "Byla Vám přidána role %{role}",
+			"disabled": "Byla Vám odebrána role %{role}",
+			"client_user": "Klienta",
+			"user_car": "Auta",
+			"user_garage": "Garáže",
+			"admin": "Admin",
+			"receptionist": "Recepční",
+			"security": "Ochranka",
+			"secretary": "Sekretářka",
+			"manager": "Manažer",
+			"host": "Pravidelný host",
+			"internal": "Interní",
+			"contact_person": "Kontaktní osoba",
+			"driver": "Řidič"
+		},
+		"accept_new_reservation_secretary_notification": {
+			"new_reservation_needs_confirmation": "%{creator} vytvořil novou rezervaci na náklady klienta %{client}, nyní můžete přejít do Park-it-direct a přijmout nebo zamítnout tuto rezervaci.",
+			"to_pid": "Do Park-it-direct!"
+		},
+		"reservation_destroyed_mail": {
+			"reservation_was_destroyed": "Vaše rezervace byla stornována."
+		},
+		"reservation_will_expire_soon": {
+			"reservation_will_expire_soon": "Vaše rezervace v garáži %{garage} propadne přibližně za 30 minut."
 		}
 	},
 	"railsSMSs": {
