@@ -58,7 +58,6 @@ class NewUserForm extends Component {
 
   render() {
     const { state, actions, editable, onetime, clearForm } = this.props
-    console.log(state.user)
     return (
       <div>
         <div className={searchField}>
@@ -69,7 +68,7 @@ class NewUserForm extends Component {
             <i className="fa fa-times-circle" aria-hidden="true" />
           </span>
           <PatternInput
-            readOnly={onetime || (state.user && state.user.id > -1)}
+            readOnly={!onetime && (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
             label={`${t([
               'newReservation',

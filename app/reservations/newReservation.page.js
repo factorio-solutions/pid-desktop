@@ -232,7 +232,7 @@ class NewReservationPage extends Component {
                   />
                 }
 
-                {state.user && state.user.id < 0 &&
+                {((state.user && state.user.id < 0) || (state.user && state.user.onetime)) &&
                   <NewUserForm
                     editable={!ongoing || isSecretary}
                     onetime={onetime}

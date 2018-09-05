@@ -800,6 +800,8 @@ export function submitReservation(id) {
     const state = getState().newReservation
     const ongoing = state.reservation && state.reservation.ongoing
 
+    const changeUserName = id && state.user && state.user.onetime
+
     const onSuccess = response => {
       try {
         if (response.data.create_reservation && response.data.create_reservation.payment_url) {
@@ -818,7 +820,7 @@ export function submitReservation(id) {
 
     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', id ? 'updatingReservation' : 'creatingReservation' ])}</div>))
 
-    const createTheReservation = user_id => {
+    const createTheReservation = (user_id, user_name) => {
       request(onSuccess,
         id ? UPDATE_RESERVATION : CREATE_RESERVATION,
         { reservation: {
@@ -839,7 +841,8 @@ export function submitReservation(id) {
           sms_text:                 state.templateText,
           payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
           csob_one_click:           state.csobOneClick,
-          csob_one_click_new_card:  state.csobOneClickNewCard
+          csob_one_click_new_card:  state.csobOneClickNewCard,
+          user_name
         },
           id
         },
@@ -878,14 +881,14 @@ export function submitReservation(id) {
                 createTheReservation(data.user_by_email.id)
               })
             } else { // no client selected, create reservation
-              createTheReservation(data.user_by_email.id)
+              createTheReservation(data.user_by_email.id, changeUserName ? state.name.value : undefined)
             }
           } else { // user is current user
             createTheReservation()
           }
         })
       } else { // create reservation as normal
-        createTheReservation(state.user.id)
+        createTheReservation(state.user.id, changeUserName ? state.name.value : undefined)
       }
     }
 
