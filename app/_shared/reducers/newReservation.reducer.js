@@ -121,8 +121,8 @@ function substituteVariablesInTemplate(template, state) {
     .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
     .findById(state.place_id)
 
-  const gates = place && place.gates
-    .filter(gate => gate.phone_number)
+  const gates = state.garage && state.garage.gates
+    .filter(gate => gate.phone_number && gate.place_gates.find(p => p.place_id === place.id))
     .map(gate => `${gate.label} (${gate.phone_number.number})`)
     .join(', ')
 

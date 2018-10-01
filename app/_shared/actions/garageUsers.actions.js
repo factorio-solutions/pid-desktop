@@ -1,6 +1,7 @@
 import { request }   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
+import { clearForm } from './newReservation.actions'
 
 import {
   GET_GARAGEUSERS,
@@ -54,6 +55,7 @@ export function setGarageUserRelation(garageId, userId, relation) {
         dispatch(setError(t([ 'garageUsers', 'noRights' ])))
       } else {
         dispatch(initGarageUsers(response.data.update_user_garage.garage_id))
+        dispatch(clearForm())
         dispatch(fetchGarages())
       }
     }

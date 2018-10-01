@@ -1,4 +1,4 @@
-﻿,en,cs,pl,de
+,en,cs,pl,de
 PID-RELEASE,r20180209a,r20180209a,r20180209a,r20180209a
 addresses.name,Name,Jméno,Imię i nazwisko,Name
 addresses.line1,Address 1,Adresa 1,Adres,Adresszeile 1
@@ -697,7 +697,7 @@ reservations.visitor,Visitor,Návštěvník,Odwiedzający/a,Besucher
 reservations.internal,Internal,Interní,Wewnętrzny,Intern
 reservations.mrParkit,MR.PARKIT,MR.PARKIT,MR.PARKIT,MR.PARKIT
 reservations.editReservation,Edit reservation,Upravit rezervaci,Edytuj rezerwację,Buchung bearbeiten
-reservations.editNote,Edit note,Upravit poznámku,Edytuj notatkę,Notiz bearbeiten
+reservations.editNote,Edit public note,Upravit veřejnou poznámku,Edytuj notatkę,Öffentliche Notiz bearbeiten
 reservations.newNote,New public note,Nová veřejná poznámka,Nowa notatka,Neue öffentliche Notiz
 reservations.interuptReservation,Interrupt reservation,Přerušit rezervaci,Przerwij rezerwację,Buchung unterbrechen
 reservations.payReservation,Pay reservation,Zaplatit rezervaci,Opłać rezerwację,Buchung bezahlen
@@ -1066,8 +1066,8 @@ profile.createdAt,Profile created:,Profil vytvořen:,Profil założony:,Profiler
 profile.cars,Cars,Auta,Auta,Fahrzeuge
 profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,Pokaż garaże oferowane publicznie,Öffentlich angebotene Garagen anzeigen
 profile.privacyDocuments,All garages privacy documents,Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže,,GDPR Dokumente
-profile.myGarages,Garages you are in,,,Mitglied von Garagen
-profile.myClients,Clients you are in,,,Mitglied von klienten
+profile.myGarages,Garages you are in,Garáže jejichž jste členem,,Mitglied von Garagen
+profile.myClients,Clients you are in,Klienti jejichž jste členem,,Mitglied von klienten
 users.username,username,uživatelské jméno,Nazwa użytkownika,Benutzername
 users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
@@ -1627,7 +1627,7 @@ railsEmails.reservation_not_approved_yet_subject,Your new reservation was not ac
 railsEmails.car_on_my_spot_notify_driver_subject,You have been reported,Byl jste nahlášen,,Sie wurden gemeldet.
 railsEmails.car_on_my_spot_notify_secretary_subject,User has been reported,Uživatel byl nahlášen,,Der User wurde gemeldet.
 railsEmails.right_updated,Your right has been updated,Vaše práva byla aktualizována,,Ihre Rechte wurden aktualisiert.
-railsEmails.accept_new_reservation_secretary_notification2,New reservation needs your decision,Nová rezervace potřebuje Vaše rozhodnutí,,Eine neue Buchung braucht Ihre Entscheidung.
+railsEmails.accept_new_reservation_secretary_notification_subject,New reservation needs your decision,Nová rezervace potřebuje Vaše rozhodnutí,,Eine neue Buchung braucht Ihre Entscheidung.
 railsEmails.your_reservation_was_destroyed,You reservation was canceled,Vaše rezervace byla stornována,,Ihre Buchung wurde storniert-
 railsEmails.reservation_will_expire_soon_subject,Your reservation will expire soon,Vaše rezervace brzy propadne,,Ihre Buchung läuft bald ab.
 railsEmails.aliases.garage_table.user,User:,Uživatel:,Użytkownik:,Benutzer:

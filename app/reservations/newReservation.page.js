@@ -40,7 +40,11 @@ class NewReservationPage extends Component {
   }
 
   componentDidMount() {
-    const { actions, params } = this.props
+    const { actions, params, state } = this.props
+    if (state.reservation && ((typeof(params.id) === 'undefined' && state.reservation.id)
+        || (state.reservation.id !== params.id))) {
+      actions.clearForm()
+    }
     actions.setInitialStore(params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
@@ -95,8 +99,8 @@ class NewReservationPage extends Component {
     if (this.props.params.id) {
       this.props.actions.submitReservation(+this.props.params.id)
     } else if (!state.client_id ||
-      (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id))
-    ) {
+      (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id)))
+    {
       nav.to('/reservations/newReservation/overview')
     } else {
       this.props.actions.submitReservation()
@@ -130,9 +134,9 @@ class NewReservationPage extends Component {
 
     const ongoing = state.reservation && state.reservation.ongoing
     const onetime = state.reservation && state.reservation.onetime
-    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.is_secretary
     const selectedClient = actions.selectedClient()
     const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']
+    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
     // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
@@ -228,7 +232,7 @@ class NewReservationPage extends Component {
                   />
                 }
 
-                {state.user && state.user.id < 0 &&
+                {((state.user && state.user.id < 0) || (state.user && state.user.onetime)) &&
                   <NewUserForm
                     editable={!ongoing || isSecretary}
                     onetime={onetime}

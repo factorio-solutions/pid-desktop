@@ -27,17 +27,16 @@ class NewReservationOverviewPage extends Component {
 
   componentDidMount() {
     const { location, actions, pageBaseActions } = this.props
-    if (location.query.hasOwnProperty('token')) {
-      location.query.success !== 'true' && actions.paymentUnsucessfull()
-    } else if (location.query.hasOwnProperty('csob') || location.query.hasOwnProperty('gp_webpay')) {
-      location.query.success === 'true' ? actions.paymentSucessfull() : actions.paymentUnsucessfull()
-    } else {
-      actions.overviewInit()
+    const query = location.query
+    if (query.hasOwnProperty('garage_id')) {
+      const garageId = parseInt(query.garage_id, 10)
+      !isNaN(garageId) && pageBaseActions.setGarage(garageId)
     }
 
-    if (location.query.hasOwnProperty('garage_id')) {
-      const garageId = parseInt(location.query.garage_id, 10)
-      !isNaN(garageId) && pageBaseActions.setGarage(garageId)
+    if (query.hasOwnProperty('token') || query.hasOwnProperty('csob') || query.hasOwnProperty('gp_webpay')) {
+      actions.afterPayment(query.id, query.success)
+    } else {
+      actions.overviewInit()
     }
   }
 
