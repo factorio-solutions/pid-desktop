@@ -155,8 +155,6 @@ class ClientsPage extends Component {
   render() {
     const { state, pageBase } = this.props
 
-    console.log(state)
-
     const schema = [
       { key: 'name', title: t([ 'clients', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
       { key: 'token', title: t([ 'clients', 'token' ]), comparator: 'string' },
