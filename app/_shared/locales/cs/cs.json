@@ -331,7 +331,7 @@
 		"internal": "Interní",
 		"mrParkit": "MR.PARKIT",
 		"editReservation": "Upravit rezervaci",
-		"editNote": "Upravit poznámku",
+		"editNote": "Upravit veřejnou poznámku",
 		"newNote": "Nová veřejná poznámka",
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
@@ -723,8 +723,8 @@
 		"cars": "Auta",
 		"showPublicGarages": "Zobrazovat veřejné garáže",
 		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže",
-		"myGarages": "CS: profile.myGarages",
-		"myClients": "CS: profile.myClients"
+		"myGarages": "Garáže jejichž jste členem",
+		"myClients": "Klienti jejichž jste členem"
 	},
 	"users": {
 		"username": "uživatelské jméno",
@@ -1372,7 +1372,7 @@
 		"car_on_my_spot_notify_driver_subject": "Byl jste nahlášen",
 		"car_on_my_spot_notify_secretary_subject": "Uživatel byl nahlášen",
 		"right_updated": "Vaše práva byla aktualizována",
-		"accept_new_reservation_secretary_notification2": "Nová rezervace potřebuje Vaše rozhodnutí",
+		"accept_new_reservation_secretary_notification_subject": "Nová rezervace potřebuje Vaše rozhodnutí",
 		"your_reservation_was_destroyed": "Vaše rezervace byla stornována",
 		"reservation_will_expire_soon_subject": "Vaše rezervace brzy propadne",
 		"aliases": {

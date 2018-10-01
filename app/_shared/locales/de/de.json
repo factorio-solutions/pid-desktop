@@ -331,7 +331,7 @@
 		"internal": "Intern",
 		"mrParkit": "MR.PARKIT",
 		"editReservation": "Buchung bearbeiten",
-		"editNote": "Notiz bearbeiten",
+		"editNote": "Öffentliche Notiz bearbeiten",
 		"newNote": "Neue öffentliche Notiz",
 		"interuptReservation": "Buchung unterbrechen",
 		"payReservation": "Buchung bezahlen",
@@ -1372,7 +1372,7 @@
 		"car_on_my_spot_notify_driver_subject": "Sie wurden gemeldet.",
 		"car_on_my_spot_notify_secretary_subject": "Der User wurde gemeldet.",
 		"right_updated": "Ihre Rechte wurden aktualisiert.",
-		"accept_new_reservation_secretary_notification2": "Eine neue Buchung braucht Ihre Entscheidung.",
+		"accept_new_reservation_secretary_notification_subject": "Eine neue Buchung braucht Ihre Entscheidung.",
 		"your_reservation_was_destroyed": "Ihre Buchung wurde storniert-",
 		"reservation_will_expire_soon_subject": "Ihre Buchung läuft bald ab.",
 		"aliases": {
