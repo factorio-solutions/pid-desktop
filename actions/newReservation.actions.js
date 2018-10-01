@@ -646,7 +646,7 @@ export function downloadGarage(id) {
       if (!(id && id === (state.garage && state.garage.id))) {
         dispatch(showLoadingModal(true))
       }
-      console.log(state.client_id)
+
       request(
         onSuccess,
         (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
