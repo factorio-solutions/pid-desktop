@@ -1372,7 +1372,7 @@
 		"car_on_my_spot_notify_driver_subject": "PL: railsEmails.car_on_my_spot_notify_driver_subject",
 		"car_on_my_spot_notify_secretary_subject": "PL: railsEmails.car_on_my_spot_notify_secretary_subject",
 		"right_updated": "PL: railsEmails.right_updated",
-		"accept_new_reservation_secretary_notification2": "PL: railsEmails.accept_new_reservation_secretary_notification2",
+		"accept_new_reservation_secretary_notification_subject": "PL: railsEmails.accept_new_reservation_secretary_notification_subject",
 		"your_reservation_was_destroyed": "PL: railsEmails.your_reservation_was_destroyed",
 		"reservation_will_expire_soon_subject": "PL: railsEmails.reservation_will_expire_soon_subject",
 		"aliases": {
