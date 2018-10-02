@@ -4,7 +4,7 @@ import {
 }  from '../actions/pid-admin.logs.actions'
 
 const defaultState = {
-  logs:       [],
+  logs:       undefined,
   accessLogs: []
 }
 
