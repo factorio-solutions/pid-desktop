@@ -26,10 +26,6 @@ export default class PaginatedTable extends Component {
     count:         PropTypes.number
   }
 
-  static defaultProps = {
-    admin: false
-  }
-
   constructor(props) {
     super(props)
 
