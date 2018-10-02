@@ -93,7 +93,7 @@ class AccessLogsTable extends Component {
       schema={schema}
       storeState={actions.setAccessLogs}
       state={state.accessLogs}
-      count={40}
+      count={50}
       admin
     />)
   }

@@ -46,7 +46,7 @@ class LogsTable extends Component {
       schema={schema}
       storeState={actions.setLogs}
       state={state.logs}
-      count={30}
+      count={50}
       admin
     />)
   }
