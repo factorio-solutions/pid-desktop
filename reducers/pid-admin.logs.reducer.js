@@ -5,7 +5,7 @@ import {
 
 const defaultState = {
   logs:       undefined,
-  accessLogs: []
+  accessLogs: undefined
 }
 
 export default function pidAdminLogs(state = defaultState, action) {
