@@ -22,7 +22,8 @@ export default class PaginatedTable extends Component {
     admin:         PropTypes.bool,
     findId:        PropTypes.number,
     storeState:    PropTypes.func,
-    state:         PropTypes.object
+    state:         PropTypes.object,
+    count:         PropTypes.number
   }
 
   static defaultProps = {
@@ -43,7 +44,7 @@ export default class PaginatedTable extends Component {
         data:      [],
         loading:   true,
         page:      1,
-        count:     10, // records per page
+        count:     props.count || 10, // records per page
         key:       sortedColumn.key, // sorting by this key
         ascDesc:   sortedColumn.sort,
         search:    {},
@@ -75,7 +76,7 @@ export default class PaginatedTable extends Component {
   componentWillUnmount() {
     window.removeEventListener('paginatedTableUpdate', this.loadingRequest, true)
 
-    const { storeState } = this.state
+    const { storeState } = this.props
     storeState && storeState(this.state)
   }
 
