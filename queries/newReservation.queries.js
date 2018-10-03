@@ -26,7 +26,14 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     name
     has_sms_api_token
     is_sms_api_token_active
-    is_secretary
+    client_user{
+      secretary
+    }
+    is_time_credit_active
+    current_users_current_time_credit: current_time_credit
+    current_time_credit(user_id: $user_id)
+    time_credit_price
+    time_credit_currency
     min_reservation_duration
     max_reservation_duration
     is_time_credit_active
@@ -82,6 +89,15 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
       paypal_is_active
       csob_merchant_id
     }
+    gates {
+      label
+      phone_number {
+        number
+      }
+      place_gates {
+        place_id
+      }
+    }
     address {
       line_1
       line_2
@@ -101,12 +117,6 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
         label
         priority
         go_internal
-        gates {
-          label
-          phone_number{
-            number
-          }
-        }
         pricing{
           flat_price
           exponential_12h_price
@@ -189,7 +199,9 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     }
     client_id
     client {
-      is_secretary
+      client_user{
+        secretary
+      }
     }
     place{
       id

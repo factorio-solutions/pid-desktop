@@ -53,7 +53,7 @@ export default class PatternInput extends Component {
     const key = (typeof event.which === 'number') ? event.which : event.keyCode
     if (key === 13) {
       event.preventDefault()
-      typeof (onEnter) === 'function' && this.props.onEnter()
+      typeof (this.props.onEnter) === 'function' && this.props.onEnter()
     }
   }
 

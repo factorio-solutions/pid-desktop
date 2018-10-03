@@ -110,6 +110,10 @@ $font-size: 16px;
   text-decoration: line-through;
 }
 
+.loading {
+  background: $lightLightGray;
+}
+
 .spoiler {
   background: $tableSpoilerBackground !important;
 }

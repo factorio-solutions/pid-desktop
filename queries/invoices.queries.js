@@ -12,7 +12,7 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
     canceled
     is_storno_invoice
     vat
-    currency{
+    currencies{
       symbol
     }
     account{
@@ -23,8 +23,10 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
       }
     }
     client{
-      is_admin
-      is_secretary
+      client_user{
+        admin
+        secretary
+      }
       name
       id
       admins{
@@ -48,7 +50,7 @@ export const GET_USERS_INVOICES = `query {
     canceled
     is_storno_invoice
     vat
-    currency{
+    currencies{
       symbol
     }
     account{

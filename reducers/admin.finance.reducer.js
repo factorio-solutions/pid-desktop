@@ -12,6 +12,8 @@ import {
   ADMIN_FINANCE_SET_VAT,
   ADMIN_FINANCE_SET_INVOICE_ROW,
   ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW,
+  ADMIN_FINANCE_SET_INVOICE_PREFIX,
+  ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_PREFIX,
   ADMIN_FINANCE_SET_ACCOUNT_NUMBER,
   ADMIN_FINANCE_SET_HIGHTLIGHT,
   ADMIN_FINANCE_SET_IBAN,
@@ -19,22 +21,24 @@ import {
 }  from '../actions/admin.finance.actions'
 
 const defaultState = {
-  rents:                 [],
-  paypal:                false,
-  csob:                  false,
-  gp_webpay:             false,
-  account_id:            undefined,
-  csob_merchant_id:      '',
-  csob_private_key:      '',
-  gp_webpay_merchant_id: '',
-  gp_webpay_password:    '',
-  gp_webpay_private_key: '',
-  vat:                   undefined,
-  invoiceRow:            undefined,
-  simplyfiedInvoiceRow:  undefined,
-  accountNumber:         undefined,
-  iban:                  '',
-  highlight:             false
+  rents:                   [],
+  paypal:                  false,
+  csob:                    false,
+  gp_webpay:               false,
+  account_id:              undefined,
+  csob_merchant_id:        '',
+  csob_private_key:        '',
+  gp_webpay_merchant_id:   '',
+  gp_webpay_password:      '',
+  gp_webpay_private_key:   '',
+  vat:                     undefined,
+  invoiceRow:              undefined,
+  simplyfiedInvoiceRow:    undefined,
+  invoicePrefix:           undefined,
+  simplyfiedInvoicePrefix: undefined,
+  accountNumber:           undefined,
+  iban:                    '',
+  highlight:               false
 }
 
 
@@ -116,6 +120,18 @@ export default function adminFinance(state = defaultState, action) {
       return {
         ...state,
         simplyfiedInvoiceRow: action.value
+      }
+
+    case ADMIN_FINANCE_SET_INVOICE_PREFIX:
+      return {
+        ...state,
+        invoicePrefix: action.value
+      }
+
+    case ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_PREFIX:
+      return {
+        ...state,
+        simplyfiedInvoicePrefix: action.value
       }
 
     case ADMIN_FINANCE_SET_ACCOUNT_NUMBER:

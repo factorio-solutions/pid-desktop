@@ -22,11 +22,13 @@ export const RESERVATIONS_SET_PAST = 'RESERVATIONS_SET_PAST'
 export const TOGGLE_RESERVATIONS_PAST = 'TOGGLE_RESERVATIONS_PAST'
 export const RESERVATIONS_SET_NEW_NOTE = 'RESERVATIONS_SET_NEW_NOTE'
 export const RESERVATIONS_SET_NEW_NOTE_RESERVATION = 'RESERVATIONS_SET_NEW_NOTE_RESERVATION'
+export const RESERVATIONS_SET_STATE = 'RESERVATIONS_SET_STATE'
 
 export const setPast = actionFactory(RESERVATIONS_SET_PAST)
 export const togglePast = actionFactory(TOGGLE_RESERVATIONS_PAST)
 export const setNewNote = actionFactory(RESERVATIONS_SET_NEW_NOTE)
 export const setNewNoteReservation = actionFactory(RESERVATIONS_SET_NEW_NOTE_RESERVATION)
+export const setState = actionFactory(RESERVATIONS_SET_STATE)
 
 
 export function initReservations() { // will download first 5 reservations
@@ -58,12 +60,14 @@ export function destroyRecurringReservations(id) {
   }
 }
 
-export function downloadInvoice(ids) {
+export function downloadInvoice(invoices) {
   return () => {
-    if (ids.length === 1) {
-      download(`${ids[0]}.pdf`, DOWNLOAD_INVOICE, { id: ids[0] })
+    if (invoices.length === 1) {
+      download(`${invoices[0].invoice_number}.pdf`, DOWNLOAD_INVOICE, { id: invoices[0].id })
     } else {
-      downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, ids)
+      const ids = invoices.map(invoice => invoice.id)
+      const fileNames = invoices.map(invoice => invoice.invoice_number)
+      downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, ids, fileNames)
     }
   }
 }

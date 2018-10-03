@@ -75,21 +75,40 @@ export default class Table extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
+  // Was moved to componentDidUpdate method. Calling setState in this method is no go according React doc.
+  //
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
+  //     this.setState({
+  //       ...this.state,
+  //       spoilerId: this.filterData(nextProps.data).findIndexById(nextProps.selectId)
+  //     })
+  //   }
+  // }
+
+  // Was moved to componentDidUpdate method. Calling setState in this method is no go according React doc.
+  //
+  // componentWillUpdate(nextProps) {
+  //   nextProps.deselect && this.state.spoilerId !== -1 && this.setState({ ...this.state, spoilerId: -1 })
+  // }
+
+  // According to React documentation calling setState is ok in this method if it is wrapped in condition.
+  componentDidUpdate(prevProps) {
+    this.updateScale()
+
+    // NaN === NaN is false
+    const bothSelectIdNan = isNaN(prevProps.selectId) && isNaN(this.props.selectId)
+    if ((!bothSelectIdNan && (prevProps.selectId !== this.props.selectId))
+        || (!prevProps.data.length && this.props.data.length)) {
       this.setState({
         ...this.state,
-        spoilerId: this.filterData(nextProps.data).findIndexById(nextProps.selectId)
+        spoilerId: this.filterData(this.props.data).findIndexById(this.props.selectId)
       })
     }
-  }
 
-  componentWillUpdate(nextProps) {
-    nextProps.deselect && this.state.spoilerId !== -1 && this.setState({ ...this.state, spoilerId: -1 })
-  }
-
-  componentDidUpdate() {
-    this.updateScale()
+    if (this.props.deselect && this.state.spoilerId !== -1) {
+      this.setState({ ...this.state, spoilerId: -1 })
+    }
   }
 
   componentWillUnmount() {
@@ -140,7 +159,7 @@ export default class Table extends Component {
             } else if (!isNaN(object[filter.name])) {
               return !isNaN(filter.value) && +object[filter.name] === +filter.value
             } else {
-              return object[filter.name] == filter.value
+              return object[filter.name] === filter.value
             }
           }
           if (filter.value === '') {
@@ -272,11 +291,15 @@ export default class Table extends Component {
           originalValues
         />
       ].filter(o => o)
-      console.log(value.deleted_at, !!value.deleted_at)
 
       return [ <TableRow
         key={key}
-        className={`${(spoilerId === value.key) && styles.spoilerRow} ${value.disabled && styles.disabled} ${value.deleted_at && styles.deleted}`}
+        className={`
+          ${(spoilerId === value.key) && styles.spoilerRow}
+          ${value.disabled && styles.disabled}
+          ${value.deleted_at && styles.deleted}
+          ${value.loading && styles.loading}
+        `}
         schema={schema}
         data={value}
         onClick={() => { handleRowClick(value.key) }}

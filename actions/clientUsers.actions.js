@@ -1,6 +1,7 @@
 import { request } from '../helpers/request'
 import { t } from '../modules/localization/localization'
 import { setError, setSuccess } from './pageBase.actions'
+import { clearForm } from './newReservation.actions'
 
 import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS, RESEND_INVITATION } from '../queries/clientUsers.queries'
 
@@ -104,7 +105,7 @@ export function resendInvitation(client_id, user_id) {
 }
 
 export function setSecretary(client_id, user_id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const relation = {
       // "admin": false,
       secretary: true,
@@ -116,7 +117,7 @@ export function setSecretary(client_id, user_id) {
 }
 
 export function setInternal(client_id, user_id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     const relation = {
       // "admin": false,
       host:      true,
@@ -134,6 +135,7 @@ export function setClientUserRelation(client_id, user_id, relation) {
         dispatch(setError(t([ 'inviteUser', 'noRights' ])))
       } else {
         dispatch(initClientUsers(response.data.update_client_user.client_id))
+        dispatch(clearForm())
       }
     }
     request(onSuccess, UPDATE_CLIENTUSERS, {

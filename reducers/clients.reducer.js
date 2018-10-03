@@ -1,6 +1,7 @@
 import {
   SET_CLIENTS,
-  SET_GARAGE_CONTRACTS
+  SET_GARAGE_CONTRACTS,
+  ADMIN_CLIENT_SET_LOADING
 }  from '../actions/clients.actions'
 
 import {
@@ -42,6 +43,13 @@ export default function clients(state = defaultState, action) {
       return {
         ...state,
         maxReservationDuration: action.value
+      }
+
+    case ADMIN_CLIENT_SET_LOADING:
+      return {
+        ...state,
+        clients:         state.clients.map(client => ({ ...client, loading: true })),
+        garageContracts: state.garageContracts.map(client => ({ ...client, loading: true }))
       }
 
     default:

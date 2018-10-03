@@ -4,8 +4,8 @@ import {
 }  from '../actions/pid-admin.logs.actions'
 
 const defaultState = {
-  logs:       [],
-  accessLogs: []
+  logs:       undefined,
+  accessLogs: undefined
 }
 
 export default function pidAdminLogs(state = defaultState, action) {

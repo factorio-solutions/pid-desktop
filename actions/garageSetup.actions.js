@@ -16,8 +16,6 @@ import {
   GET_GARAGE_DETAILS_ORDER
 } from '../queries/garageSetup.queries'
 
-import { newDocuments, removedDocuments, clearLegalDocumentsForm } from '../actions/legalDocuments.actions'
-
 import { emptyGate, emptyFloor, defaultImage } from '../reducers/garageSetup.reducer'
 import { setGarage, fetchGarages }             from './pageBase.actions'
 
@@ -78,7 +76,7 @@ export const setGates = actionFactory(GARAGE_SETUP_SET_GATES)
 export const setRegisteredNumbers = actionFactory(GARAGE_SETUP_SET_REGISTERED_NUMBERS)
 export const setOrder = actionFactory(GARAGE_SETUP_SET_ORDER)
 export const setBookingPage = actionFactory(GARAGE_SETUP_SET_BOOKING_PAGE)
-export const clearGarageSetupForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
+export const clearForm = actionFactory(GARAGE_SETUP_CLEAR_FORM)
 
 
 export function toggleHighlight() { return (dispatch, getState) => { dispatch(setHighlight(!getState().garageSetup.highlight)) } }
@@ -126,13 +124,6 @@ function changeFloors(index, key, value) {
 function changeGates(index, key, value) {
   return dispatch => {
     return dispatch(updateValue('gates', index, key, value))
-  }
-}
-
-export function clearForm() {
-  return dispatch => {
-    dispatch(clearGarageSetupForm())
-    dispatch(clearLegalDocumentsForm())
   }
 }
 
@@ -503,7 +494,7 @@ export function submitGarage() {
         dispatch(fetchGarages())
         dispatch(setGarage(response.data.create_garage.id))
         dispatch(clearForm())
-        nav.to('/dashboard')
+        nav.to('/occupancy')
       }
     }
 
@@ -528,8 +519,7 @@ export function submitGarage() {
             country:     state.country,
             lat:         parseFloat(state.lat),
             lng:         parseFloat(state.lng)
-          },
-          new_documents: newDocuments(getState)
+          }
         }
         },
         'garageMutations'
@@ -553,9 +543,7 @@ export function submitGarage() {
               country:     state.country,
               lat:         parseFloat(state.lat),
               lng:         parseFloat(state.lng)
-            },
-            new_documents:     newDocuments(getState),
-            removed_documents: removedDocuments(getState)
+            }
           }
         },
         'garageMutations'

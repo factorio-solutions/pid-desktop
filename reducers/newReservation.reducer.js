@@ -38,6 +38,8 @@ import {
   NEW_RESERVATION_SET_SELECTED_TEMPLATE,
   NEW_RESERVATION_SET_TEMPLATE_TEXT,
   NEW_RESERVATION_SET_PAYMENT_METHOD,
+  NEW_RESERVATION_SET_PREFERED_GARAGE_ID,
+  NEW_RESERVATION_SET_PREFERED_PLACE_ID,
   NEW_RESERVATION_SET_CSOB_ONE_CLICK,
   NEW_RESERVATION_SET_CSOB_ONE_CLICK_NEW_CARD,
 
@@ -46,7 +48,8 @@ import {
 
   NEW_RESERVATION_CLEAR_FORM,
 
-  NEW_RESERVATION_SET_FREE_INTERVAL
+  NEW_RESERVATION_SET_FREE_INTERVAL,
+  NEW_RESERVATION_SET_TIME_CREDIT_PRICE
 }  from '../actions/newReservation.actions'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -74,10 +77,11 @@ const defaultState = {
 
   garage: undefined, // loaded garage details // GARAGE ID IS IN HERE
 
-  from:     '',
-  to:       '',
-  place_id: undefined, // if of selected place
-  price:    undefined,
+  from:            '',
+  to:              '',
+  place_id:        undefined, // if of selected place
+  price:           undefined,
+  timeCreditPrice: undefined,
 
   durationDate: false, // set duration or end of parking?
   loading:      false,
@@ -88,7 +92,11 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod:       '',
+  paymentMethod:    '',
+
+  preferedGarageId: undefined,
+  preferedPlaceId:  undefined,
+
   csobOneClick:        false,
   csobOneClickNewCard: false,
 
@@ -113,8 +121,8 @@ function substituteVariablesInTemplate(template, state) {
     .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
     .findById(state.place_id)
 
-  const gates = place && place.gates
-    .filter(gate => gate.phone_number)
+  const gates = state.garage && state.garage.gates
+    .filter(gate => gate.phone_number && gate.place_gates.find(p => p.place_id === place.id))
     .map(gate => `${gate.label} (${gate.phone_number.number})`)
     .join(', ')
 
@@ -308,8 +316,16 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         sendSMS:          action.value,
-        selectedTemplate: action.value ? client.sms_templates.length === 1 ? 0 : undefined : undefined,
-        templateText:     action.value ? client.sms_templates.length === 1 ? client.sms_templates[0].template : '' : ''
+        selectedTemplate: action.value
+                            ? client.sms_templates.length === 1
+                              ? 0
+                              : undefined
+                            : undefined,
+        templateText:     action.value
+                            ? client.sms_templates.length === 1
+                              ? substituteVariablesInTemplate(client.sms_templates[0].template, state)
+                              : ''
+                            : ''
       }
 
     case NEW_RESERVATION_SET_ERROR:
@@ -335,6 +351,18 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         paymentMethod: action.value
+      }
+
+    case NEW_RESERVATION_SET_PREFERED_GARAGE_ID:
+      return {
+        ...state,
+        preferedGarageId: action.value
+      }
+
+    case NEW_RESERVATION_SET_PREFERED_PLACE_ID:
+      return {
+        ...state,
+        preferedPlaceId: action.value
       }
 
     case NEW_RESERVATION_SET_CSOB_ONE_CLICK:
@@ -368,6 +396,12 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         freeInterval: action.value
+      }
+
+    case NEW_RESERVATION_SET_TIME_CREDIT_PRICE:
+      return {
+        ...state,
+        timeCreditPrice: action.value
       }
 
     default:

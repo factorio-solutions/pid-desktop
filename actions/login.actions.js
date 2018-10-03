@@ -14,12 +14,16 @@ export const LOGIN_SET_PASSWORD = 'LOGIN_SET_PASSWORD'
 export const LOGIN_SET_CODE = 'LOGIN_SET_CODE'
 export const RESET_LOGIN_FORM = 'RESET_LOGIN_FORM'
 export const LOGIN_SET_DEVICE_FINGERPRINT = 'LOGIN_SET_DEVICE_FINGERPRINT'
+export const LOGIN_PASSWORD_RESET_SUCCESSFUL = 'LOGIN_PASSWORD_RESET_SUCCESSFUL'
+export const LOGIN_SHOW_PASSWORD_RESET_MODAL = 'LOGIN_SHOW_PASSWORD_RESET_MODAL'
 
 
 export const setError = actionFactory(LOGIN_FAILURE)
 export const setDeviceFingerprint = actionFactory(LOGIN_SET_DEVICE_FINGERPRINT)
 export const resetLoginForm = actionFactory(RESET_LOGIN_FORM)
 export const resetStore = actionFactory('RESET')
+export const setPasswordResetSuccessful = actionFactory(LOGIN_PASSWORD_RESET_SUCCESSFUL)
+export const setShowPasswordResetModal = actionFactory(LOGIN_SHOW_PASSWORD_RESET_MODAL)
 
 export function setEmail(value, valid) {
   return { type:  LOGIN_SET_EMAIL,
@@ -43,6 +47,7 @@ export function setCode(value, valid) {
 export function dismissModal() {
   return dispatch => {
     dispatch(setError(undefined))
+    dispatch(setShowPasswordResetModal(false))
   }
 }
 
@@ -57,7 +62,7 @@ export function loginSuccess(result, redirect, callback) {
       callback(result)
       dispatch(resetLoginForm())
       if (redirect) {
-        const path = localStorage.redirect || '/dashboard'
+        const path = localStorage.redirect || '/occupancy'
         delete localStorage.redirect
         nav.to(path)
       }

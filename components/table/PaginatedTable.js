@@ -20,73 +20,81 @@ export default class PaginatedTable extends Component {
     transformData: PropTypes.func, // if set to true, will reset selected item
     variables:     PropTypes.object,
     admin:         PropTypes.bool,
-    findId:        PropTypes.number
-  }
-
-  static defaultProps = {
-    admin: false
+    findId:        PropTypes.number,
+    storeState:    PropTypes.func,
+    state:         PropTypes.object,
+    count:         PropTypes.number
   }
 
   constructor(props) {
     super(props)
 
-    this.requestData = this.requestData.bind(this)
-    this.transformData = this.transformData.bind(this)
-    this.keyToOrderByAndIncludes = this.keyToOrderByAndIncludes.bind(this)
-    this.loadingRequest = this.loadingRequest.bind(this)
-
-    const sortedColumn = props.schema.find(column => column.sort !== undefined)
-    this.state = {
-      data:      [],
-      loading:   true,
-      page:      1,
-      count:     10, // records per page
-      key:       sortedColumn.key, // sorting by this key
-      ascDesc:   sortedColumn.sort,
-      search:    {},
-      pageCount: 0
+    if (props.state) {
+      this.state = {
+        ...props.state,
+        data: props.state.data.map(row => ({ ...row, loading: true }))
+      }
+    } else {
+      const sortedColumn = props.schema.find(column => column.sort !== undefined)
+      this.state = {
+        data:      [],
+        loading:   true,
+        page:      1,
+        count:     props.count || 10, // records per page
+        key:       sortedColumn.key, // sorting by this key
+        ascDesc:   sortedColumn.sort,
+        search:    {},
+        pageCount: 0
+      }
     }
   }
 
   componentDidMount() {
     const { variables, findId } = this.props
     const { page, count, key, ascDesc, search } = this.state
-    this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search, find_by_id: findId })
+    this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search, find_by_id: findId }, true)
     window.addEventListener('paginatedTableUpdate', this.loadingRequest, true)
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps, prevState) {
     const { variables } = this.props
-    const { page, count, key, ascDesc, search } = this.state
+    const { count, key, ascDesc, search, page } = this.state
 
-    if (JSON.stringify(variables) !== JSON.stringify(nextProps.variables) ||
-      JSON.stringify(nextState.search) !== JSON.stringify(search) ||
-      // nextState.page !== page ||
-      nextState.count !== count ||
-      nextState.ascDesc !== ascDesc ||
-      nextState.key !== key) {
-      this.requestData({ ...nextProps.variables, ...this.keyToOrderByAndIncludes(nextState.key, nextState.ascDesc), page: nextState.page, count: nextState.count, search: nextState.search })
+    if (JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
+      JSON.stringify(prevState.search) !== JSON.stringify(search) ||
+      prevState.count !== count ||
+      prevState.ascDesc !== ascDesc ||
+      prevState.key !== key) {
+      this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('paginatedTableUpdate', this.loadingRequest, true)
+
+    const { storeState } = this.props
+    storeState && storeState(this.state)
   }
 
 
-  keyToOrderByAndIncludes(key, ascDesc) { // constructs orderBy and includes keys from selected column
+  keyToOrderByAndIncludes = (key, ascDesc) => { // constructs orderBy and includes keys from selected column
     const column = this.props.schema.find(col => col.key === key)
     return { order_by: `${column.orderBy} ${ascDesc.toUpperCase()}`, includes: column.includes }
   }
 
-  loadingRequest() {
+  loadingRequest = () => {
     const { variables } = this.props
     const { page, count, key, ascDesc, search } = this.state
     this.setState({ ...this.state, loading: true }, () => this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search }))
   }
 
-  requestData(variables) { // requests data from server
+  requestData = (variables, calledOnMount = false) => { // requests data from server
     const { query, admin } = this.props
+
+    if (!(calledOnMount && this.state.data.length)) {
+      this.setState({ ...this.state, loading: true })
+    }
+
     if (admin) {
       requestAdmin(query, variables).then(this.transformData)
     } else {
@@ -94,7 +102,7 @@ export default class PaginatedTable extends Component {
     }
   }
 
-  transformData(data) { // takes care of transforming data and setting the state when data downloads
+  transformData = data => { // takes care of transforming data and setting the state when data downloads
     const { transformData, parseMetadata } = this.props
     const transformedData = transformData ? transformData(data) : data
     const parsedMetadata = parseMetadata(data)
@@ -119,7 +127,6 @@ export default class PaginatedTable extends Component {
   render() {
     const { schema, findId } = this.props
     const { data, page, pageCount, loading } = this.state
-
 
     const prevPage = () => !this.state.loading && this.setState({ ...this.state, page: page - 1, loading: true }, this.requestPage(page - 1))
     const nextPage = () => !this.state.loading && this.setState({ ...this.state, page: page + 1, loading: true }, this.requestPage(page + 1))

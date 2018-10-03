@@ -30,51 +30,53 @@ login_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalo
 login_page.forgot,Forgot password?,Zapomenuté heslo?,Nie pamiętasz hasła?,Passwort vergessen?
 login_page.proceed,Proceed here,Pokračujte zde,Przejdź dalej,Hier fortfahren
 login_page.emailPlaceholder,Mr@park.it,Mr@park.it,Mr@park.it,Mr@park.it
+login_page.resetPasswordUnsuccessful,,,,Ihr Passwort gelang es nicht zu ändern.
+login_page.resetPasswordSuccessful,Your password has been successfully changed.,,,Ihr Passwort wurde erfolgreich geändert.
 signup_page.name,Name,Jméno,Imię i nazwisko,Vor- und Nachname
 signup_page.phone,Phone number,Telefonní číslo,Numer telefonu,Telefonnummer
 signup_page.email,E-mail,E-mail,E-mail,E-Mail-Adresse
 signup_page.password,Password,Heslo,Hasło,Passwort
 signup_page.confirmation,Confirm password,Potvrzení hesla,Potwierdź hasło,Passwort bestätigen
 signup_page.nameInvalid,Invalid name,Neplatné jméno,Niepoprawne imię lub nazwisko,Name ungültig
-signup_page.phoneInvalid,Enter without blank space with dialling code,Zadejte bez mezer s předvolbou daného státu,Podaj bez spacji wraz z numerem kierunkowym,Geben Sie ohne Leerzeichen mit der Vorwahl ein
+signup_page.phoneInvalid,Enter without blank space with dialling code,Zadejte bez mezer s předvolbou daného státu,Podaj bez spacji wraz z numerem kierunkowym,Geben Sie ohne Leerzeichen mit der Landesvorwahl ein
 signup_page.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
 signup_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalogować,Anmeldung fehlgeschlagen
-signup_page.minimumLength,Minimum length is,Minimální délka je,Długość minimum,Mindestlänge ist
+signup_page.minimumLength,Minimum length is,Minimální délka je,Długość minimum,Die Mindestlänge beträgt
 signup_page.noMatching,Password does not match,Heslo se neshoduje,Hasło się nie zgadza,Passwort und Bestätigungspasswort stimmen nicht überein.
-signup_page.userNotCreated,"User not created, may already exist.","Uživatel nebyl vytvořen, možná již existuje","Nie udało się wytworzyć konta, być może już istnieje","Der Benutzer wurde nicht erstellt, wahrscheinlich gibt es ihn schon."
+signup_page.userNotCreated,"User not created, may already exist.","Uživatel nebyl vytvořen, možná již existuje","Nie udało się wytworzyć konta, być może już istnieje","Der Benutzer wurde nicht erstellt, wahrscheinlich existiert er bereits."
 signup_page.loading,Loading,Načítám,Ładowanie,Laden
 signup_page.termsOfService,Terms of Service,Podmínkami služby,warunkami świadczenia usług,Nutzungsbedingungen
 signup_page.acceptTerms,Accepting,Souhlasím s,Zgadzam się z ,Ich stimme den Nutzungsbedingungen zu. 
-signup_page.success,"Registration was successfull, confirm your email address and you can log in.","Registrace proběhla úspěšně, potvrďte svou emailovou adresy a můžete přejít k přihlášení.",,
-pageBase.noFileSelected,No file selected,,Wybierz plik.,Keine Datei ausgewählt
+signup_page.success,"Registration has been successful, you can log in. If you have changed your email address, please verify it using the email we sent you.","Registrace proběhla úspěšně, můžete přejít k přihlášení. Pokud jste změnili svou emailovou adresu, prosím ověřte ji pomocí obdrženého emailu.",,"Die Registration verlief erfolgreich, Sie können sich jetzt anmelden. Falls Sie Ihre Email geändert haben, verifizieren Sie die in Ihrer neu enthaltenen Email."
+pageBase.noFileSelected,No file selected,Nevybrali jste soubor,Wybierz plik.,Keine Datei ausgewählt
 pageBase.couldNotUpload,Could not upload,Nepodařilo se nahrát soubor.,Nie udało się wgrać pliku.,Fehler beim Hochladen.
 pageBase.Dashboard,Dashboard,Nástěnka,Tablica,Pinnwand
 pageBase.Issues,Issues,,Problemy,Probleme
 pageBase.Admin,Admin,Admin,Admin,Administrator
 pageBase.Modules,Modules,Moduly,Moduły,Module
 pageBase.marketingSettings,Marketing Settings,Marketingové nastavení,Ustawienia marketingowe,Marketing-Einstellungen
-pageBase.reservationButton,Reservation Button,Tlačitko rezervace,Przycisk rezerwacji,Reservierungsschaltfläche
+pageBase.reservationButton,Reservation Button,Tlačitko rezervace,Przycisk rezerwacji,Buchungsschaltfläche
 pageBase.mrParkitIntegration,Mr. Parkit Integration,Integrace MR.PARKIT,Integracja MR.PARKIT,MR. PARKIT-Integration
 pageBase.goPublic,Go Public,Nabídnout veřejnosti,Zaoferować publicznie,Öffentlich anbieten
-pageBase.Garage setup,Garage setup,Nastavení garáže,Ustawienia garażu,Garageneinstellungen
-pageBase.garageSetupFloors,Garage floors,Patra garáže,Piętra garażu,Garagenetagen
+pageBase.Garage setup,Garage setup,Nastavení garáže,Ustawienia garażu,Garage einstellen
+pageBase.garageSetupFloors,Garage floors,Patra garáže,Piętra garażu,Etagen
 pageBase.garageSetupGates,Garage gates,Brány garáže,Bramy garażu,Garagentore
 pageBase.garageSetupOrder,Garage order,Pořadí obsazování,Kolejność zajmowania miejsc,Reihenfolge der Belegung
 pageBase.garageSetupSubscribtion,Garage subscribtion,Předplatné garáže,Abonament,Abonnement
 pageBase.Finance,Finance,Finance,Finanse,Finanzen
 pageBase.PID settings,PID settings,Nastavení PID,Ustawienia PID,PID-Einstellungen
-pageBase.Activity log,Activity log,Záznam aktivit,Dziennik aktywności,Aktivitätsprotokoll
+pageBase.Activity log,Activity log,Záznam aktivit,Dziennik aktywności,Aktivitätenprotokoll
 pageBase.Create reservation,Create reservation,Vytvořte rezervaci,Wytworzyć rezerwację,Buchung erstellen
 pageBase.Create contract,Create agreement,Vytvořte dohodu,Wytworzyć umowę,Vereinbarung erstellen
 pageBase.Add Features,Add features,Přidat funkce,Dodać funkcje,Funktionen hinzufügen
-pageBase.Reservation,Reservation,Rezervace,Rezerwacja,Reservierung
-pageBase.Reservations,Reservations,Rezervace,Rezerwacje,Reservierungen
+pageBase.Reservation,Reservation,Rezervace,Rezerwacja,Buchung
+pageBase.Reservations,Reservations,Rezervace,Rezerwacje,Buchungen
 pageBase.Clients,Clients,Klienti,Klienci,Kunden
 pageBase.Client & Users,Client accounts,Klientské účty,Konta klientów,Kundenkonten
 pageBase.NewClient,New client,Nový klient,Nowy klient,Neuer Kunde
 pageBase.NewContract,New agreement,Nová dohoda,Nowa umowa,Neue Vereinbarung
 pageBase.EditClient,Edit client,Upravit klienta,Edytować klienta,Kunden bearbeiten
-pageBase.New Reservation,New reservation,Nová rezervace,Nowa rezerwacja,Neue Reservierung
+pageBase.New Reservation,New reservation,Nová rezervace,Nowa rezerwacja,Neue Buchung
 pageBase.NewGarage,Set up new garage,Vytvoření nové garáže,Utworzyć nowy garaż,Neues Parkhaus einrichten
 pageBase.newPricing,New pricing,Nový ceník,Nowy cennik,Neue Preisliste
 pageBase.Pricings,Edit pricing,Upravit ceník,Edytować cennik,Preisliste bearbeiten
@@ -108,11 +110,11 @@ Rezervaci parkování nejrychleji vytvoříte kliknutím na tlačítko na horní
 
 Potřebujete daší pomoc? Napište nám na Intercom - náš komunikátor v pravém dolním rohu. Rádi Vám pomůžeme! :-)","Tutaj znajduje się przegląd wszystkich ważnych informacji o Twoim koncie. Na planie garażu widzisz, czy pojedyncze miejsca są wynajęte długoterminowo lub zarezerwowane. W Aktualnościach pokazują się wiadomości ze świata Park-it-direct. W Ostatnich aktywnościach zobaczysz niedawne zmiany w Twoim garaży oraz szczegóły na temat tego, kto i kiedy ich dokonał. W Stanie aktualnym możesz sprawdzić statystyki na temat wolnych i zajętych miejsc. W Przeglądzie finansowym pokazywane są aktualne statystyki finansowe. ","Herzlich willkommen bei Park-it-direct!
 
-Mit dem Klicken auf den Kreuz in der linken Ecke können Sie diese blaue Spalte mit Hinweisen ausblenden. Um sie wieder zu aktivieren, klicken Sie auf das blaue Informationssymbol, das in der oberen rechten Ecke erscheint.
+Mit dem Klicken auf das Kreuz in der linken Ecke können Sie diese blaue Spalte mit Hinweisen ausblenden. Um sie wieder zu aktivieren, klicken Sie auf das blaue Informationssymbol, das in der oberen rechten Ecke erscheint.
 
-Um sich in Park-it-direct zu bewegen, benutzen Sie das Menü auf der linken Seite.
+Um Park-it-direct zu gebrauchen, benutzen Sie das Menü auf der linken Seite.
 
-Der schnellste Weg, um eine neue Reservierung zu erstellen, ist der blaue Knopf oben!
+Der schnellste Weg, um eine neue Buchung zu erstellen, ist der blaue Knopf oben!
 
 Hilfe nötig? Nutzen Sie bitte unser Intercom - den Kommunikator finden Sie in der rechten unteren Ecke. Wir helfen Ihnen gerne! :-)"
 pageBase.issuesHint,TODO: Issues hint,,,
@@ -135,16 +137,16 @@ Faktury se váží k dohodám o dlouhodobém pronájmu parkovacích míst, zjedn
 
 V levém horním rohu si  také můžete doklady vyfiltrovat podle klienta.
 
-V pravém horním rohu si můžete vybrat mezi zobrazením aktuálních dokladů nebo celé historie.",Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.,"Hier finden Sie eine Liste aller ausgestellten Rechnungen. 
+V pravém horním rohu si můžete vybrat mezi zobrazením aktuálních dokladů nebo celé historie.",Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.,"""Hier finden Sie eine Liste aller ausgestellten Rechnungen. 
 
-Links oben können Sie auswählen, ob Sie Rechnungen, vereinfachte Steuerbelege oder Gutschriften / Korrektursteuerbelege anschauen wollen.
+Links oben können Sie auswählen, ob Sie Rechnungen, vereinfachte Steuerbelege oder Gutschriften / Korrektursteuerbelege einsehen möchten.
 
-Rechnungen beziehen sich auf langfristige Parkplatzverträge, vereinfachte Steuerdokumente beziehen sich auf vom Parker bezahlte Parkgebühren unter dem Betrag von 10.000 CZK und Gutschriften / korrigierende Steuerdokumente beziehen sich auf stornierte Reservierungen, die von Parkern bezahlt werden.
+Rechnungen beziehen sich auf langfristige Parkplatzverträge, vereinfachte Steuerdokumente beziehen sich auf vom Parkenden bezahlte Parkgebühren bis zu einer Höhe von 10.000 CZK und Gutschriften / korrigierende Steuerdokumente beziehen sich auf stornierte Buchungen, die von den parkenden bezahlt werden.
 
 Links oben können Sie die Dokumente auch nach Klienten aufsuchen.
 
-Rechts oben können Sie wählen, ob Sie aktuelle Dokumente oder den gesamten Verlauf anschauen wollen."
-pageBase.newContractHint,"Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :-)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :-)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!","Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einfach einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine spezielle Kunden-ID eingeben. Wählen Sie ein Mietverhältnis aus der Dropdown-Liste aus oder erstellen Sie ein neues Mietverhältnis, indem Sie den Preis der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie schließlich die Stellplätze zu! :)"
+Rechts oben können Sie wählen, ob Sie aktuelle Dokumente oder den gesamten Verlauf einsehen möchten."""
+pageBase.newContractHint,"Here you can create a new deal. Just pick a client from the dropdown, or add a new one by entering their unique client ID. Pick a rent from the dropdown or create a new one by entering the value of the whole deal and choose the currency. Now assign parking places and you're done! :-)","Zde můžete založit novou dohodu. Jednoduše vyberte klienta ze seznamu, nebo přidejte nového pomocí jeho unikátního ID. Vyberte nájem ze seznamu, nebo založte nový vyplněním ceny za celkovou dohodu a vyberte měnu. Nakonec vyberte místa a je to. :-)","Tutaj możesz wytworzyć nową umowę. Wystarczy wybrać z listy klienta lub dodać nowego za pomocą unikalnego ID. Wybierz wynajem z listy albo załóż nowy, wypełniając cenę za umowę, a następnie wybierz walutę. Na końcu wybierz miejsca... i gotowe!","Hier können Sie eine neue Vereinbarung erstellen. Wählen Sie einfach einen Kunden aus der Dropdown-Liste aus oder fügen Sie einen neuen Kunden hinzu, indem Sie seine spezielle Kunden-ID eingeben. Wählen Sie eine Vereinbarung aus der Dropdown-Liste aus oder erstellen Sie eine neue Vereinbarung, indem Sie den Preis der gesamten Vereinbarung eingeben und eine Währung auswählen. Weisen Sie schließlich die Stellplätze zu! :)"
 pageBase.ReservationButtonHint,TODO: reservation button hint,,,
 pageBase.mrParkitIntegrationHint,TODO: mrParkitIntegration hint,,,
 pageBase.goPublicHint,"Here you can choose parking spots you want to offer to the public. You can also set the price for parking spots and choose from three options for calculating the parking price. 
@@ -175,17 +177,17 @@ Cena rosnąca wykładniczo (żeby obliczyć ją, ustaw różne stawki dla poszcz
 Cena weekendowa (działa jedynie w połączeniu ze stałą stawką godzinową, umożliwia ustawienie innej ceny na weekend)
 
 Na planie garażu wybierz miejsca: niebieskim kolorem oznaczone są dostępne miejsca, żółtym - zajęte. W górnej części formularza ustaw walutę, wybierz jeden ze sposobów obliczania ceny oraz wpisz kwotę.
-","Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie könne hier auch den Preis und die Berechnung einstellen.
+","Hier können Sie Parkplätze wählen, die Sie der Öffentlichkeit zum Parken anbieten möchten. Sie können hier auch den Preis und die Berechnung der Parkplatzgebühren einstellen.
 
-Sie können aus folgenden Berechnugsmögichkeiten wählen:
+Sie können aus folgenden Gebührmögichkeiten wählen:
 Pauschalpreis pro 1 Std.
 
-Variabler Preis (Preis ist von der Länge der Reservierung abhängig)
+Variabler Preis (Preis ist von der Länge der Buchung abhängig)
 
 Wochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)
 
 
-Wählen Sie bitte die gewünschten Parkplätze auf dem Parhausplan echts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis."
+Wählen Sie bitte die gewünschten Parkplätze auf dem Parkhausplan rechts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis."
 pageBase.goInternalHint,TODO: goInternalHint hint,,,
 pageBase.financeHint,"In the top section you can turn on/off and change settings for how your customers can pay for parking.
 
@@ -200,23 +202,23 @@ V sekci ""Nastavení financí"" můžete upravit nastavení, které je společn�
 
 W sekcji „Wynajmy” znajdziesz listę wszystkich aktualnych wynajmów długoterminowych, ich cenę, liczbę miejsc parkingowych, jakiej dotyczą, a po kliknięciu możesz je edytować.
 
-W sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.","Im oberen Bereich können Sie aktivieren und einrichten, wie Ihre Kunden für die Parkhausnutzung zahlen können.
+W sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.","Im oberen Bereich können Sie einstellen, wie Ihre Kunden für die Parkhausnutzung zahlen sollen.
 
-Im Abschnitt „Mietverhältnisse“ finden Sie ein Verzeichnis aller aktuellen langfristigen Mietverhältnisse, ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.
+Im Abschnitt ,,Vereinbarungen“ finden Sie ein Verzeichnis aller aktuellen langfristigen Vereinbarungen, Ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.
 
 Im Abschnitt „Finanzeinstellungen“ können Sie die Einstellungen anpassen, die für die gesamte Rechnungsstellung gelten.
 "
 pageBase.financePaypalHint,TODO: Paypal hint,,,
 pageBase.financeCSOBHint,TODO: CSOB hint,,,
 pageBase.pidSettingsHint,TODO: pidSettings Hint,,,
-pageBase.activityLogHint,"Here you have records of all activities in the Park-it-direct system, including what was done, by whom, and when.","Zde najdete záznam veškerých aktivit v systému Park-it-direct, včetně toho, o jakou akci se jednalo a kdo a kdy ji provedl.","Tutaj znajdziesz dziennik wszystkich aktywności w systemie Park-it-direct, włącznie z tym, o jaką akcję chodziło oraz kto i kiedy jej dokonał.","Hier finden Sie ein Verzeichnis aller Aktivitäten im Park-it-direct-System mit Angaben zum Charakter der Aktion, zum Urheber und zum Zeitpunkt."
+pageBase.activityLogHint,"Here you have records of all activities in the Park-it-direct system, including what was done, by whom, and when.","Zde najdete záznam veškerých aktivit v systému Park-it-direct, včetně toho, o jakou akci se jednalo a kdo a kdy ji provedl.","Tutaj znajdziesz dziennik wszystkich aktywności w systemie Park-it-direct, włącznie z tym, o jaką akcję chodziło oraz kto i kiedy jej dokonał.",Hier finden Sie ein Verzeichnis aller Aktivitäten im Park-it-direct-System mit allen detailierten Angaben wer und wann die Aktion durgeführt hat.
 pageBase.reservationsHint,"Here you can find a list of reservations.
 
 You will see either your reservation only or the reservation of all members of your Client or the entire garage, depending on the rights you have.","Zde najdete přehled rezervací.
 
-V závislosti na přidělených právech uvidíte buď jen své rezervace, nebo i rezervace všech členů vašeho Klienta, popřípadě celé garáže.","Tutaj znajdziesz wszystkie swoje rezerwacje - zarówno te wytworzone przez Ciebie, jak i rezerwacje wytworzone przez innych w Twoich garażach.","Hier finden Sie die Liste der Reservierungen.
+V závislosti na přidělených právech uvidíte buď jen své rezervace, nebo i rezervace všech členů vašeho Klienta, popřípadě celé garáže.","Tutaj znajdziesz wszystkie swoje rezerwacje - zarówno te wytworzone przez Ciebie, jak i rezerwacje wytworzone przez innych w Twoich garażach.","Hier finden Sie die Liste der Buchungen.
 
-Abhängig von Ihren Rechten sehen Sie entweder Ihre Reservierungen oder die Reservierungen aller Mitglieder Ihres Kunden oder der gesamten Garage. "
+Abhängig von Ihren Rechten sehen Sie entweder nur die von Ihnen erstellte Buchungen, alle andere Buchungen des selben Kunden, oder die Buchungen der gesamten Garage. "
 pageBase.newReservationHint,"You can create a new reservation here. The reservation form is expanded in several steps, and the options are affected by your rights and garage settings.
 
 First you choose the recipient of the reservation - either yourself, another member of the client, or you can create a new internala or guest.
@@ -237,21 +239,21 @@ Pokud to nastavení umožňuje, můžete zvolit i kdo bude rezervaci hradit (zda
 
 Po vyplnění všech údajů můžete rezervaci potvrdit. Pokud rezervaci hradí klient, je tím rezervace dokončena. Pokud je placena parkujícím, je následujícím krokem platba.
 
-Pokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rezervaci platí host, obdrží pokyny do emailu.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!","Hier können Sie eine neue Reservierung erstellen. Das Reservierungsformular erweitert sich in mehreren Schritten und das Angebot ist von Ihren Rechten und Garageneinstellungen abhängig.
+Pokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rezervaci platí host, obdrží pokyny do emailu.","Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!","Hier können Sie neue Buchungen erstellen. Das Buchungsformular erweitert sich Schritt nach Schritt und das Angebot ist von Ihren Rechten und Garageneinstellungen abhängig.
 
 Zuerst wählen Sie den Benutzer - entweder sich selbst oder ein anderes Mitglied des Kunden oder Sie können einen neuen Internal oder Gast anlegen.
 
 Als Nächstes wählen Sie die Garage, den Kunden und den Termin.
 
-Lässt es die Einstellung zu, können Sie auch wählen, wer die Reservierung zahtl (ob Parker oder ausgewählter Kunde) und den Text der SMS-Reservierungsbenachrichtigung auswählen oder ändern.
+Lässt es die Einstellung zu, können Sie wählen, wer die Buchung bezahlt (ob der Parkende oder der ausgewählte Kunde) und dazu noch den Text der optionalen SMS-Buchungsbenachrichtigung auswählen oder ändern.
 
-Nach der Angebung aller Details können Sie Ihre Buchung bestätigen. Wird die Reservierung vom Kunden bezahlt, schliesst sich die Reservierung ab. Wird sie von Ihrem Parker bezahlt, ist der nächste Schritt die Zahlung.
+Nach der Angabe aller Details können Sie Ihre Buchung bestätigen. Wird die Buchung vom Kunden bezahlt, gilt die Buchung als abgeschlossen. Wird sie von Ihrem Gast bezahlt, ist der nächste Schritt die Zahlung.
 
-Bezahlen Sie die Reservierung, folgt die Zahlung gleich im nächsten Schritt. Bezahlt ein Gast die Reservierung, erhält er Anweisungen in die E-Mail."
+Wird die Zahlung von Ihnen durchgeführt, folgt die Zahlung gleich im nächsten Schritt. Bezahlt ein Gast die Buchung, erhält er seine Anweisungen per E-Mail, damit er seine Buchung abschließen kann."
 pageBase.garagesHint,"Here you have a depiction of the clients, deals, reservations, prices and vehicles on your garage map. The same values are always shown with the same color. 
 In the upper left-hand corner you can choose which value you would like to display, while in the upper right-hand corner you can choose whether to display values for a certain date or for the current date.","Zde najdete zobrazení klientů, dohod, rezervací, cen a aut na plánku Vaší garáže. Stejné hodnoty jsou vždy vyznačeny stejnou barvou.
-V levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.","Tutaj znajdziesz schemat klientów, umów, rezerwacji, cen i aut na planie Twojego garaży. Takie same wartości są zawsze oznaczone tym samym kolorem. W lewym górnym rogu wybierz, jaką wartość chcesz zobaczyć. W prawym górnym rogu ustaw datę, która Cię interesuje.","Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Reservierungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.
-Links oben können Sie auswählen, welcher Wert dargestellt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder für das aktuelle Datum angezeigt werden soll."
+V levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.","Tutaj znajdziesz schemat klientów, umów, rezerwacji, cen i aut na planie Twojego garaży. Takie same wartości są zawsze oznaczone tym samym kolorem. W lewym górnym rogu wybierz, jaką wartość chcesz zobaczyć. W prawym górnym rogu ustaw datę, która Cię interesuje.","Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Buchungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.
+Links oben können Sie auswählen, welcher Wert angezeigt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder zum aktuellen Zeitpunkt angezeigt werden soll."
 pageBase.newGarageHint,"Create new garage. Set the name and details, then follow by defining the floors and parking places. Two input options are available. You can load each floor plan as an SVG image with information about parking places. (We can help you to create this floor plan; see our website for more information.) The second option is to define a range of numbers for each level.","Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.","Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.
 pageBase.newGarageFloorsHint,"Here you can set the number of floors and number of parking spots on each floor. 
 
@@ -267,13 +269,13 @@ Do każdego piętra możesz wgrać plan w formacie .svg. Chętnie pomożemy Ci g
 
 Oprócz tego ustawisz tu również maksymalne rozmiary pojazdów.","Hier können Sie die Stockwerke und jeweilige Parkplätze erstellen.
 
-Zu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Herstellung. Sie können auch eine der Vorlagen verwenden.
+Zu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Darstellung der Parkplätze im Stockwerk. Sie können auch eine der Vorlagen verwenden.
 
 Weiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen."
-pageBase.newGarageOrderHint,"Here you can set the order for filling up parking spots. Spots are taken in ascending order, starting with the lowest number. If spots have no specified order, the system sets the order automatically.","Zde můžete nastavit pořadí obsazování parkovacích míst. Místa se obsazují vzestupně, tedy od nejnižšího čísla. U míst bez nastaveného pořadí určí pořadí systém automaticky.","Tutaj ustawisz kolejność zajmowania miejsc parkingowych. Zajmowane są one rosnąco, tj. od najmniejszego do największego numeru. W przypadku miejsc bez określonego numeru system przydzieli je automatycznie.","Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteil."
+pageBase.newGarageOrderHint,"Here you can set the order for filling up parking spots. Spots are taken in ascending order, starting with the lowest number. If spots have no specified order, the system sets the order automatically.","Zde můžete nastavit pořadí obsazování parkovacích míst. Místa se obsazují vzestupně, tedy od nejnižšího čísla. U míst bez nastaveného pořadí určí pořadí systém automaticky.","Tutaj ustawisz kolejność zajmowania miejsc parkingowych. Zajmowane są one rosnąco, tj. od najmniejszego do największego numeru. W przypadku miejsc bez określonego numeru system przydzieli je automatycznie.","Hier bestimmen Sie die Reihenfolge, in der die Parkplätze verteilt werden sollen. Solange Sie keine Reihenfolge eingestellt haben, werden die Parkplätze der Parkplatznummer nach aufwärts verteilt."
 Legal documents,TODO: New garage subscribtion Hint,,,
-pageBase.newGarageGatesHint,Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.,"Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",Tutaj możesz ustawić poszczególne bramy (wjazdy i wyjazdy) oraz przyporządkować je do konkretnych miejsc.,"Hier können Sie die Tore bearbeiten (Ein- und Ausfahrten) und bestimmen, welche Tore zu welchen Plätzen gehören."
-pageBase.newGarageLegalDocumentsHint,TODO: Hint for Legal Documents,,,
+pageBase.newGarageGatesHint,Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.,"Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",Tutaj możesz ustawić poszczególne bramy (wjazdy i wyjazdy) oraz przyporządkować je do konkretnych miejsc.,"Hier können Sie die Tore bearbeiten (für Ein- und Ausfahrt) und bestimmen, welche Tore zu welchen Plätzen gehören."
+pageBase.newGarageLegalDocumentsHint,Here you can find legal documents related to your garages - operating rules and such. Documents related to user privacy can be found your profile.,"Zde naleznete právní dokumenty, které se vztahují k vašim garážím - provozní řády a další. Dokumenty, které se týkají ochrany osobních údajů naleznete v profilu uživatele.",,"Hier finden Sie rechtliche Unterlagen, welche sich auf unsere Garagen beziehen - Betriebsregeln und weiteres. Unterlagen die sich auf den Datenschutz beziehen befinden sich im Profil des Nutzers. "
 pageBase.garageClientsHint,Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.,"Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.","Tutaj możesz zarządzać przypidaniem miejsc parkingowych do konkretnego klienta w ramach określonego garażu. Wybierz konto klienta, aby zobaczyć plan garażu oraz dostępne ceny. Pamiętaj, że garaż może mieć więcej pięter. Wybierz odpowiednie piętro za pomocą przycisku po prawej stronie.","Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten im ausgewählten Parkhaus zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Parkhausgrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass das Parkhaus mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etage mit den Schaltflächen links aus."
 pageBase.clientsHint,"Here you can find a list of clients with whom you are in agreement. 
 
@@ -333,17 +335,17 @@ Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört u
 pageBase.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani użytkownicy,Alle bekannten Benutzer
 pageBase.editClientHint,Here you can change information about this client.,Zde můžete upravit údaje klienta.,Tutaj możesz edytować dane klienta.,Hier können Sie die Kundendaten bearbeiten.
 pageBase.notificationsHint,This section displays all notifications that need to be resolved.,"Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.","Tutaj ukazują się wszystkie wiadomości, na które musisz odpowiedzieć.","Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen."
-pageBase.inviteUsersHint,"Invite a new user to connect with the selected Client Account. Please provide an email address and send the invitation. After the user accepts the invitation, he or she automatically becomes a member of the selected Client Account.",Pozvěte do klientského účtu nového uživatele. Zadejte jeho e-mailovou adresu a odešlete pozvánku. Po přijetí pozvánky se uživatel automaticky připojí k vybranému klientskému účtu.,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.","Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. sie automatisch Mitglied des ausgewählten Kundenkontos."
+pageBase.inviteUsersHint,"Invite a new user to connect with the selected Client Account. Please provide an email address and send the invitation. After the user accepts the invitation, he or she automatically becomes a member of the selected Client Account.",Pozvěte do klientského účtu nového uživatele. Zadejte jeho e-mailovou adresu a odešlete pozvánku. Po přijetí pozvánky se uživatel automaticky připojí k vybranému klientskému účtu.,"Zaproś nowego użytkownika, aby połączyć się z wybranym kontem klienta. Podaj proszę e-mail i wyślij zaproszenie. Po zaakceptowaniu zaproszenia użytkownik staje się automatycznie członkiem wybranego Konta klienta.","Laden Sie neue Benutzer ein, die mit dem ausgewählten Kundenkonto verknüpft werden sollen. Geben Sie die E-Mail-Adresse an und verschicken Sie die Einladung. Wenn der Benutzer die Einladung annimmt, wird er bzw. werden sie automatisch Mitglied des ausgewählten Kundenkontos."
 pageBase.addFeaturesHint,Here you can add functionality to your system.,Zde můžete přidat funkce do tvého systému.,Tutaj możesz dodaj funkcje do swojego systemu.,Hier können Sie Funktionen zum System hinzufügen.
 pageBase.addFeatures,Add features,Přidat funkce,Dodać funkcje,Funktionen hinzufügen
-pageBase.newAccountHint,"Here you can create customer accounts, which contain information about the customer, users, parking spots assigned, etc. You can change these settings in the relevant section.","Zde můžete vytvářet zákaznické účty. Ty v sobě obsahují informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Toto vše lze nastavit v patřičné sekci systému.","Tutaj utworzyć możesz konto klienta. Konto zawiera informacje o kliencie, użytkownikach, przyporządkowanych im miejscach parkingowych itp. Ustawienia znajdziesz w odpowiedniej sekcji systemu.","Hier können Sie die Kundenkonten verwalten. Das Kundenkonto enthält Informationen zum Kunden, seinen Benutzern, den zugewiesenen Stellplätzen usw. Wenn ein Konto ausgewählt wird, werden Schaltflächen zum Bearbeiten und Verwalten von Benutzern angezeigt. "
+pageBase.newAccountHint,"Here you can create customer accounts, which contain information about the customer, users, parking spots assigned, etc. You can change these settings in the relevant section.","Zde můžete vytvářet zákaznické účty. Ty v sobě obsahují informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Toto vše lze nastavit v patřičné sekci systému.","Tutaj utworzyć możesz konto klienta. Konto zawiera informacje o kliencie, użytkownikach, przyporządkowanych im miejscach parkingowych itp. Ustawienia znajdziesz w odpowiedniej sekcji systemu.","Hier können Sie die Kundenkonten erstellen. Das Kundenkonto enthält Informationen zum Kunden, seinen Benutzern, den zugewiesenen Stellplätzen usw. Dies lässt sich alles in der dazugehörigen Sektion im System einstellen."
 pageBase.editAccountHint,Here you can edit the name and details of Client Accounts.,Zde můžete změnit údaje a název Klientského účtu.,Tutaj możesz zmienić dane i nazwę Konta klienta.,Hier können Sie die Angaben und den Namen des Kundenkontos ändern.
-pageBase.accountsHint,"In this section you can manage customer accounts. The customer account shows information about the customer, users, parking spots assigned, etc. Select the account to display buttons for editing and managing users.","V této sekci můžete spravovat zákaznické účty. V zákaznickém účtu naleznete informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Po zvolení účtu se zobrazí tlačítka pro editaci a správu uživatelů.","W tej sekcji możesz zarządzać kontami klienta. Znajdziesz w nich informacje o kliencie, użytkownikach, przyporządkowanych do nich miejscach parkingowych itp. Po wybraniu konta pojawią się przyciski umożliwiające edytowanie i zarządzanie użytkownikami.","Hier können Sie die Kundenkonten verwalten. Das Kundenkonto enthält Informationen zum Kunden, seinen Benutzern, den zugewiesenen Stellplätzen usw. Wenn ein Konto ausgewählt wird, werden Schaltflächen zum Bearbeiten und "
+pageBase.accountsHint,"In this section you can manage customer accounts. The customer account shows information about the customer, users, parking spots assigned, etc. Select the account to display buttons for editing and managing users.","V této sekci můžete spravovat zákaznické účty. V zákaznickém účtu naleznete informace o zákazníkovi, jeho uživatelích, k nim přiřazeným parkovacím místům atp. Po zvolení účtu se zobrazí tlačítka pro editaci a správu uživatelů.","W tej sekcji możesz zarządzać kontami klienta. Znajdziesz w nich informacje o kliencie, użytkownikach, przyporządkowanych do nich miejscach parkingowych itp. Po wybraniu konta pojawią się przyciski umożliwiające edytowanie i zarządzanie użytkownikami.","Hier können Sie die Kundenkonten verwalten. Das Kundenkonto enthält Informationen zum Kunden, seinen Benutzern, den zugewiesenen Stellplätzen usw. Wenn ein Konto ausgewählt wird, werden Schaltflächen zum Bearbeiten und Verwalten der Nutzer freigeschaltet."
 pageBase.accounts,Accounts,Účty,Konta,Konten
 pageBase.newAccount,New account,Nový účet,Nowe konto,Neues Konto
 pageBase.editAccount,Edit account,Upravit účet,Edytuj konto,Konto bearbeiten
 pageBase.carUsersHint,Here you can manage the people using cars.,"Zde můžete spravovat lidi, kteří používají auta.","Tutaj możesz zarządzać ludźmi, którzy korzystają z aut.",Hier können Sie Fahrzeugbenutzer verwalten.
-pageBase.newCarHint,Here you can add a new car. This will make creating a new reservation easier.,Zde můžete vytvořit nové auto. Vytvoření nové rezervace bude poté jednodušší.,Tutaj możesz wytworzyć nowe auto. Dzięki temu dokonanie nowej rezerwacji będzie łatwiejsze.,Hier können Sie ein neues Fahrzeug erstellen. Dadurch können Reservierungen anschließend einfacher erstellt werden.
+pageBase.newCarHint,Here you can add a new car. This will make creating a new reservation easier.,Zde můžete vytvořit nové auto. Vytvoření nové rezervace bude poté jednodušší.,Tutaj możesz wytworzyć nowe auto. Dzięki temu dokonanie nowej rezerwacji będzie łatwiejsze.,Hier können Sie ein neues Fahrzeug erstellen. Dadurch können Buchungen anschließend einfacher erstellt werden.
 pageBase.editCarHint,Here you can edit car properties.,Zde můžete upravit vlastnosti auta.,Tutaj możesz edytować właściwości auta.,Hier können Sie die Fahrzeugeigenschaften anpassen.
 pageBase.carsHint,This is list of all cars assigned to you.,"Toto je seznam všech aut, která jsou k Vám přiřazena.",Lista wszystkich przypisanych do Ciebie aut,"Eine Liste aller Fahrzeuge, die Ihnen zugewiesen sind."
 pageBase.cars,Cars,Auta,Auta,Fahrzeuge
@@ -363,11 +365,11 @@ Stan rezerwacji jest wyróżniony kolorami:
 szary kolor – miniona rezerwacja
 czarny kolor – rezerwacja właśnie przebiega
 niebieski kolor – rezerwacja jeszcze się nie rozpoczęła
-","Hier wird ein Überblick über alle Reservierungen angezeigt. Rechts oben kann der Zeitraum eingestellt werden, links oben kann nach Kunden gefiltert werden.
+","Hier wird ein Überblick über alle Buchungen angezeigt. Rechts oben kann der Zeitraum eingestellt werden, links oben kann nach Kunden gefiltert werden.
 
-Grau - Reservierung liegt in der Vergangenheit
-Grün - Reservierung ist gerade aktiv
-Blau - ihre Reservierung "
+Grau - Buchung liegt in der Vergangenheit
+Grün - Buchung ist gerade aktiv
+Blau - ihre Buchung "
 pageBase.EditGarage,Edit garage,Upravit garáž,Edytować garaż,Parkhaus bearbeiten
 pageBase.EditGarageHint,"Here you can find a visual overview of your garage. You can select various modes in the upper left-hand corner.
 
@@ -393,23 +395,23 @@ Rezerwacje: poszczególne rezerwacje są odróżnione za pomocą różnych kolor
 Ceny: poszczególne ceny są odróżnione za pomocą różnych kolorów.
 Auta:  poszczególne autasą odróżnione za pomocą różnych kolorów.
 
-W prawym górnym rogu można wybrać aktualny podgląd lub podgląd w określonym dniu.","Hier wird eine Karte des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
+W prawym górnym rogu można wybrać aktualny podgląd lub podgląd w określonym dniu.","Hier wird eine Übersicht des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
 
 Kunden: Die einzelnen Kunden werden in verschiedenen Farben dargestellt.
 Vereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.
-Reservierungen: Die einzelnen Reservierungen werden in verschiedenen Farben dargestellt.
+Buchungen: Die einzelnen Buchungen werden in verschiedenen Farben dargestellt.
 Preise: Die einzelnen Preiseinstellungen werden in verschiedenen Farben dargestellt.
 Fahrzeuge: Die einzelnen Fahrzeuge werden sind in verschiedenen Farben dargestellt.
 
 Rechts oben kann ausgewählt werden, ob der aktuelle Zeitraum oder ein bestimmtes Datum angezeigt werden soll."
 pageBase.Occupancy,Occupancy,Obsazenost,Zajętość,Belegung
-pageBase.Invoices,Accounting documents,Účetní doklady,Faktury,Rechnungen
+pageBase.Invoices,Accounting documents,Účetní doklady,Faktury,Buchhaltung
 pageBase.tableView,table view,Náhled tabulky,Widok tabelki,Tabellenansicht
 pageBase.cardView,card view,Náhled karty,Widok karty,Kartenansicht
 pageBase.marketing,Marketing,Marketing,Marketing,Marketing
 pageBase.newMarketing,New marketing,Nový marketing,Nowy marketing,Neues Marketing
 pageBase.editMarketing,Edit marketing,Upravit marketing,Edytować marketing,Marketing ändern
-pageBase.garageMarketingHint,"Here you can activate/deactivate and change settings for each module. For more information click on the ""Settings"" button for individual modules.","Zde můžete aktivovat/deaktivovat a spravovat jednotlivé moduly. Více informací se dozvíte po kliknutí na tlačítko ""Nastavení"" u jednotlivých modulů.",Tutaj możesz aktywować/dezaktywować poszczególne moduły oraz zarządzać nimi. Więcej informacji uzyskasz po kliknięciu na „Ustawienia” przy poszczególnych modułach. ,"Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten. Klicken Sie auf „Einstellungen“ bei den einzelnen Modulen, um weitere Informationen anzuzeigen."
+pageBase.garageMarketingHint,"Here you can activate/deactivate and change settings for each module. For more information click on the ""Settings"" button for individual modules.","Zde můžete aktivovat/deaktivovat a spravovat jednotlivé moduly. Více informací se dozvíte po kliknutí na tlačítko ""Nastavení"" u jednotlivých modulů.",Tutaj możesz aktywować/dezaktywować poszczególne moduły oraz zarządzać nimi. Więcej informacji uzyskasz po kliknięciu na „Ustawienia” przy poszczególnych modułach. ,"Hier können Sie die einzelnen Module aktivieren bzw. deaktivieren und verwalten. Klicken Sie auf „Einstellungen“ bei den einzelnen Modulen, um weitere Informationen zu erfahren."
 pageBase.garageNewMarketingHint,Here you can set up new marketing.,Zde můžete nastavit nový marketing.,Tutaj możesz ustawić nowy marketing.,Hier können Sie ein neues Marketing einrichten.
 pageBase.garageEditMarketingHint,"This module is for setting up the website where you can promote your garage and accept parking reservations.
 
@@ -441,8 +443,19 @@ W opisie garaży możesz podać krótki opis w 4 językach (zmienisz je w prawym
 
 Obok pola z opisem możesz wybrać dowolną liczbę parametrów, które pojawią się w opisie garażu.
 
-W części ""Zdjęcia garaży"" możesz wgrać fotografie, które pojawią się na stronie internetowej. Polecamy zdjęcia o rozmiarze do 1MB w formacie .jpg.",Hier können Sie Marketing bearbeiten.
-pageBase.garageNewPricingHint,Here you can set up new reservation pricing.,Zde můžete nastavit novou cenu rezervace,Tutaj możesz ustawić nową cenę rezerwacji.,Hier können Sie neue Reservierungspreise einstellen.
+W części ""Zdjęcia garaży"" możesz wgrać fotografie, które pojawią się na stronie internetowej. Polecamy zdjęcia o rozmiarze do 1MB w formacie .jpg.","Dieses Modul dient dazu die Website zu bearbeiten, durch welche Sie  Ihre Garage propagieren können und Buchungen zum parken erhalten können.
+
+Im Feld ""URL Adresse Benennung"" stellen Sie ein, wie Ihr Link zur Garage aussehen wird.
+Das Format sieht ""URL Adresse Benennung.park-it-direct.com"".
+
+Die Notrufnummer und Notemail sind Kontaktdaten, welche auf der Webseite in der Sektion Kontakte angezeigt werden.
+
+In der Garagenbeschreibung können Sie eine kurze Beschreibung in 4 Sprachen aufführen (zum ändern der Sprache benutzen Sie das Menü in der rechten Ecke dieses Feldes).
+
+Neben dem Feld der Beschreibung können Sie verschiedene Parameter einstellen, die in der Garagenbeschreibung angezeigt werden.
+
+Im Teil ""Garagenfotos"" können Sie Fotos von der Garage hochladen, welche auf der Webseite angezeigt werden. Wir empfehlen Fotos in einer Größe von bis zu maximal 1Mb .jpg Format."
+pageBase.garageNewPricingHint,Here you can set up new reservation pricing.,Zde můžete nastavit novou cenu rezervace,Tutaj możesz ustawić nową cenę rezerwacji.,Hier können Sie neue Buchungspreise einstellen.
 pageBase.garageEditPricingHint,Here you can edit pricing properties.,Zde můžete upravit vlastnosti ceny,Tutaj możesz edytować właściwości ceny.,Hier können Sie Preiseigenschaften einstellen.
 pageBase.garageNewRentHint,Here you can set up new rent for your parking spots.,Zde můžete nastavit nový nájem za svoje místa,Tutaj możesz ustawić nowy wynajem swoich miejsc.,Hier können Sie ein neues Mietverhältnis einrichten.
 pageBase.garageEditRentHint,Now you can edit rent properties.,Zde můžete upravit vlastnosti nájmu,Tutaj możesz edytować właściwości wynajmu.,Hier können Sie die Mieteigenschaften bearbeiten.
@@ -454,17 +467,29 @@ pageBase.reservationOverviewHint,"Here you can check if the reservation details 
 
 The selection of payment methods can be adjusted in the garage settings.
 
-One Click Payment allows you to pay much more conveniently and faster. When making the first payment, the customer agrees to have her/his card saved on the payment gateway. This transaction is a standard payment transaction (customer is redirected to the gateway, enters card details, completes the 3D-Secure authentication and the transaction is then authorised) and will be stored by the payment gateway as template for one click payments. The subsequent transactions are way easier to pay - the customer just selects the ""saved card"" as payment option and the shop system executes the transaction call to the payment gateway - on the background, using the template for one click payment, without redirecting the customer to the gateway. As soon as the transaction is authorised, the customer is informed about successful payment in the last step of the merchant's checkout.
+One Click Payment allows you to pay much more conveniently and faster - the payment gate will ""remember"" your last payment details, so you won't have to input them again.
 
-By selecting ""Remember card for One Click Payment"" your credit card info will be saved. For the next payment by selecting ""Use one click payment"" will be the payment made automatically. Selecting ""Use one click payment"" and ""Use a different card"" at the same time will save a new card and the original saved card will be deleted.","Zde můžete zkontrolovat, zda jsou údaje rezervace správně, a dokončit rezervaci uhrazením-
+During the first payment you agree to have the payment card details saved on the payment gate. This transaction proceeds as usual (customer is redirected to the gateway, enters card details, completes the 3D-Secure authentication and the transaction is then authorised) and all payment details are stored by the payment gate as a template for future one click payments. Subsequent transactions are way easier to pay - you just select the ""saved card"" option during the payment and the website will complete the payment on the background using the template for one click payment. As soon as the transaction is authorised, you will be informed about the successful payment in the checkout.
+
+By selecting ""Remember card for One Click Payment"" your credit card info will be saved. Next time you will just select ""Use one click payment"" and the payment will be processed automatically. You can save a new card and delete the previous one by selecting ""Use one click payment"" and ""Use a different card"" at the same time.","Zde můžete zkontrolovat, zda jsou údaje rezervace správně, a dokončit rezervaci uhrazením.
 
 Výběr platebních metod je možné upravit v nastavení garáže.
 
-Platba Na klik umožňuje platit výrazně pohodlněji a rychleji. Při první transakci dává klient svolení s prováděním následných transakcí a provádí platbu standardním způsobem (přesměrování na bránu, zadání čísla karty, platnosti, CVC, 3D-Secure proces). Při každé následující transakci již klient jen řekne, že chce použít platbu na klik. Komunikace s platební bránou se provede na pozadí a přímo v e-shopu se klient dozvídá, zda bylo zaplaceno, či ne.
+Platba Na klik umožňuje platit výrazně pohodlněji a rychleji - brána si ""zapamatuje"" údaje a není je potřeba pokaždé zadávat znova.
 
-Při označení ""Zapamatovat kartu pro platbu na klik"" se uloží údaje o vaší kartě. Při další platbě po označení ""Použít platbu na klik"" se platba provede automaticky. Při označení ""Použít platbu na klik"" a současně ""Použít jinou kartu"" se nová karta uloží a původní uložená karta bude smazána.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie prüfen, ob die Reservierungsdaten korrekt sind. Die Reservierung  wird dann mit der Zahlung nebgeschlossen.
+Pro její použití je při první transakci nutné dát svolení s prováděním následných transakcí a provést platbu standardním způsobem (přesměrování na bránu, zadání čísla karty, platnosti, CVC, 3D-Secure proces). Při každé následující transakci již jen zvolíte, že chcete použít platbu na klik. Komunikace s platební bránou se provede na pozadí a hned se dozvíte, zda platba proběhla v pořádku, či nikoliv.
 
-Die Auswahl der Zahlungsmethoden kann man in der Einstellung der Garage anpassen."
+Při označení ""Zapamatovat kartu pro platbu na klik"" se uloží údaje o Vaší kartě. Při další platbě po označení ""Použít platbu na klik"" se platba provede automaticky. Při označení ""Použít platbu na klik"" a současně ""Použít jinou kartu"" zadáte novou kartu, ta se uloží pro následující platby a původní uložená karta bude smazána.","Tutaj możesz skontrolować, czy dane dot. rezerwacji są poprawne.","Hier können Sie prüfen, ob die Buchungsdaten korrekt sind. Die Buchung  wird dann mit der Zahlung abgeschlossen.
+
+Die Auswahl der Zahlungsmethoden kann man in der Einstellung der Garage anpassen.
+
+Die Auswahl der zahlungsmethoden sind in der Einstellung der Garage aufzufinden. 
+
+Die Zahlung per Click ermöglicht Ihnen bequemer und schneller zu zahlen, weil sie sich Ihre Zahlungsdetails merkt und es nicht nötig ist alle Zahlungsdetaills nochmal eingeben zu müssen.
+
+Für Ihre Nutzung ist es bei der ersten Transaktion nötig eine Erlaubniss für solch eine Art von Transaktion zu erteilen und die Zahlung normal durchzuführen (Umleitung auf das Zahlungsportal, die Nummer der Karte eingeben, die Gültigkeit, CVC, 3D-Secure proces). Bei jeder solch einer darauffolgenden Transaktion wählen Sie dann nur, ob Sie die Zahlung per Click durchführen möchten. Die Kommunikation mit derm zahlungsportal verläuft im Hintergrund und dazu wissen Sie sofort, ob die Zahlung erfolgreich durchgeführt wurde.
+
+Bei der Markierung von ""Ihre Kreditkarte für die Zahlung per Click merken"" werden die Detaills Ihrer Kreditkarte gespeichert. Bei der nächsten ""per Click"" Zahlung wird die Zahlung automatisch durchgeführt. Bei der gleichzeitigen markierung von ""Per Click Zahlen"" und ""Eine Andere Kreditkarte benutzen"" geben Sie die Angaben Ihrer anderen Kreditkarte ein. Diese Kreditkarte wird für die darauffolgenden Zahlungen angewendet, und die ursprüngliche wird gelöscht."
 pageBase.editInvoiceHint,"Afther clicking OK, a new invoice will be created with corrected data.",Kliknutím na tlačítko OK vytvoříte novou fakturu s opravenými daty.,Żeby utworzyć nową fakturę z poprawionymi danymi kliknij przycisk OK.,Durch die OK Taste wird eine neue Rechnung mit korrigierten Daten erstellt.
 pageBase.editContractHint,"Here you can edit the agreement - parking spots, duration or price.","Zde můžete upravit dohodu - parkovací místa, platnost, nebo cenu.","Tutaj możesz edytować umowę - miejsca parkingowe, czas trwania rezerwacji lub cenę.","Hier können Sie die Vereinbarung bearbeiten - Parkplätze, Dauer oder Preis."
 pageBase.unredNotifications.one,You have one unread notification,Máte jedno nepřečtené upozornění,Masz jedną nieprzeczytaną wiadomość.,Sie haben eine ungelesene Nachricht
@@ -473,7 +498,7 @@ pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,M
 pageBase.unredNotifications.other,You have %(count)s unread notifications,Máte %(count)s nepřečtených upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesene Nachrichten.
 pageBase.analytics,Analytics,Analýza,Analiza,Analyse
 pageBase.garageTurnover,Garage turnover,Obrat garáže,Rotacja garażu,Parkhausumsatz
-pageBase.reservations,Reservations,Rezervace,Rezerwacje,Reservierungen
+pageBase.reservations,Reservations,Rezervace,Rezerwacje,Buchungen
 pageBase.places,Parking spot turnover,Obrat míst,Rotacja miejsc parkingowych,Stellplätze
 pageBase.payments,Payments,Platby,Płatności,Zahlungen
 pageBase.gates,Gates,Brány,Bramy,Tore
@@ -484,7 +509,7 @@ V levém horním rohu lze vybrat měsíční nebo týdenní zobrazení. V pravé
 W tabelce pod grafem zobaczysz liczbę rezerwacji w poszczególnych dniach oraz całościową rotację garażu.
 W lewym górnym rogu możesz wybrać podgląd krótkoterminowych lub długoterminowych wynajmów.
 W prawym górnym rogu możesz dokładnie ustawić rozpiętość pokazywanego terminu. 
-","Hier werden der Parkhausumsatz und die Anzahl der Reservierungen für den ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Reservierungen und der Gesamtumsatz des Parkhauses angezeigt.
+","Hier werden der Parkhausumsatz und die Anzahl der Buchungen für den ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Buchungen und der Gesamtumsatz des Parkhauses angezeigt.
 
 Links oben kann die Anzeige für Monate oder für Wochen eingestellt werden. Rechts oben kann der genaue Zeitraum ausgewählt werden."
 pageBase.analyticsreservationsHint,"Here you can see total turnover for the garage within the selected term. In the spreadsheet below the graph you can see reservation count per day and total turnover of the garage.
@@ -495,9 +520,9 @@ V levém horním rohu lze vybrat mezi zobrazením krátkodobých rezervací nebo
 W tabelce pod grafem zobaczysz liczbę rezerwacji w poszczególnych dniach oraz całościową rotację garażu.
 W lewym górnym rogu możesz wybrać podgląd krótkoterminowych lub długoterminowych wynajmów.
 W prawym górnym rogu możesz dokładnie ustawić rozpiętość pokazywanego terminu. 
-","Hier wird der Gesamtumsatz für das Parkhaus im ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Reservierungen pro Tag und der Gesamtumsatz des Parkhauses angezeigt.
+","Hier wird der Gesamtumsatz für das Parkhaus im ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Buchungen pro Tag und der Gesamtumsatz des Parkhauses angezeigt.
 
-Oben links können Sie zwischen kurzfristigen Reservierungen und Langzeitvermietungen auswählen. Oben rechts kann der genaue Anzeigezeitraum eingestellt werden."
+Oben links können Sie zwischen kurzfristigen Buchungen und Langzeitvermietungen auswählen. Oben rechts kann der genaue Anzeigezeitraum eingestellt werden."
 pageBase.analyticsplacesHint,"Here you can see turnover statistics for parking spots: average, maximum, minimum and total turnover, all displayed separately for short-term and long-term reservations. In the upper left corner you can choose to display a heat map with color coding (the lowest values are yellow, while the highest are red).
 In the upper right corner you can select the exact period you want to view.","Zde můžete vidět statistiky obratu míst - průměrný, maximální, minimální a celkový obrat, to vše rozděleno podle toho, zda je místo pronajímáno dlouhodobě či krátkodobě. V levém horním rohu si lze vybrat zobrazení na heatmapě, kde jsou hodnoty zobrazeny v barevném spektru (žlutě jsou nejnižší hodnoty, červeně nejvyšší).
 V pravém horním rohu lze nastavit přesné rozpětí zobrazeného období.","
@@ -508,7 +533,7 @@ pageBase.analyticspaymentsHint,TODO: payments Hint,,,
 pageBase.analyticsgatesHint,TODO: gates Hint,,,
 pageBase.flexiplaceHint,"I you want to use flexiplace and goPublic modules, you have to set one price for all places, this is what this form is for.","Pokud chcete využívat fleximísto ve veřejném provozu, musíte nastavit jednotnou cenu všem místům. K tomu slouží tento formulář.","Jeśli chcesz korzystać z opcji Miejsce Flexi i Zaoferuj publicznie, musisz ustawić taką samą cenę dla wszystkich miejsc. Do tego służy niniejszy formularz.","Wenn Sie Flexiplatz für öffentlich angebotene Parkplätze einstellen möchten, müssen diese alle Plätze gleichen Preis haben. Dazu dient dieses Formular."
 pageBase.pidAdmin,PID admin,PID admin,PID admin,PID admin
-pageBase.bulkRemovalHint,Here you can remove more of your reservations at once.,Zde můžete smazat stornovat více rezervaci najednou.,,
+pageBase.bulkRemovalHint,Here you can remove more of your reservations at once.,Zde můžete stornovat více rezervaci najednou.,,Hier können Sie mehrere Buchungen stornieren.
 pageBase.smsSettingsHint,"On this page you can activate and set sms service. To customize texts you can use variables explained here:
 
 ""{{ garage }}"" = garage name
@@ -533,7 +558,7 @@ pageBase.smsSettingsHint,"On this page you can activate and set sms service. To 
 ""{{ place }}"" = piętro / miejsce
 ""{{ begin }}"" = początek rezerwacji
 ""{{ end }}"" = koniec rezerwacji
-""{{ gate }}"" = numer telefonu serwera","Auf dieser Seite können Sie den SMS Dienst aktivieren. Bei schreiben der Texte können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.
+""{{ gate }}"" = numer telefonu serwera","Auf dieser Seite können Sie den SMS Dienst aktivieren. Zum erstellen der zu versendenden SMS können Sie folgende Variable verwenden. Diese werden durch passende Daten ersetzt.
 
 ""{{ garage }}"" = Garagenname
 ""{{ address }}"" = Einfahrtsadresse
@@ -557,27 +582,28 @@ newReservation.place,Place,Místo,Miejsce,Stellplatz
 newReservation.auto,auto,Automaticky,automatycznie,Automatisch
 newReservation.Auto,Auto,Automaticky,Automatycznie,Automatisch
 newReservation.now,now,nyní,teraz,jetzt
-newReservation.fail,Reservation error,Chyba při vytváření rezervace,Podczas rezerwacji pojawił się błąd,Reservierungsfehler
-newReservation.noAvailableGarages,There are currently no available garages where you can make a reservation.,"Momentálně nejsou dostupné žádné garáže, kde můžete vytvořtit novou rezervaci.","Obecnie nie ma żadnych dostępnych garaży, aby utworzyć nową rezerwację.","Zurzeit gibt es keine Garagen, in denen Sie eine Reservierung vornehmen können."
+newReservation.fail,Reservation error,Chyba při vytváření rezervace,Podczas rezerwacji pojawił się błąd,Buchungsfehler
+newReservation.noAvailableGarages,There are currently no available garages where you can make a reservation.,"Momentálně nejsou dostupné žádné garáže, kde můžete vytvořtit novou rezervaci.","Obecnie nie ma żadnych dostępnych garaży, aby utworzyć nową rezerwację.","Zurzeit gibt es keine Garagen, in denen Sie eine Buchung vornehmen können."
 newReservation.licencePlate,License plate,SPZ,Nr rejestracyjny,Kennzeichen
 newReservation.licencePlateInvalid,License plate,SPZ,Nr rejestracyjny,Kennzeichen
 newReservation.licencePlatePlaceholder,1A2 1234,1A2 1234,1A2 1234,P-ID 1234
 newReservation.price,Price,Cena,Cena,Preis
 newReservation.onClientsExpenses,paid by the selected client,hrazeno zvoleným klientem,Na koszt klienta.,Auf Kundenkosten.
-newReservation.onUsersExpenses,paid by the parkee,hrazeno parkujícím,,
+newReservation.onUsersExpenses,paid by the driver,hrazeno parkujícím,,Auf Fahrer-Kosten
+newReservation.longtermRent,longterm rent,dlouhodobý nájem,,Langfristig vermietet
 newReservation.loadingGarage,Loading garage layout ...,Načítám náhled garáže ...,Ładuję podgląd garażu...,Parkhausgrundriss wird geladen …
-newReservation.creatingReservation,Making reservation ...,Vytvářím rezervaci ...,Wytwarzam rezerwację...,Reservierung wird erstellt …
-newReservation.updatingReservation,Updating reservation ...,Aktualizuji rezervaci ...,Aktualizuję rezerwację...,Reservierung wird aktualisiert …
+newReservation.creatingReservation,Making reservation ...,Vytvářím rezervaci ...,Wytwarzam rezerwację...,Buchung wird erstellt …
+newReservation.updatingReservation,Updating reservation ...,Aktualizuji rezervaci ...,Aktualizuję rezerwację...,Buchung wird aktualisiert …
 newReservation.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,Umleitung …
-newReservation.payingReservation,Paying reservation ...,Platím rezervaci ...,Opłacam rezerwację...,Reservierung wird bezahlt …
+newReservation.payingReservation,Paying reservation ...,Platím rezervaci ...,Opłacam rezerwację...,Buchung wird bezahlt …
 newReservation.paymentUnsucessfull,Payment was canceled and not completed.,Platba byla zrušena a neúspěšná,Płatność została anulowana.,Die Zahlung wurde unterbrochen und nicht erfolgreich abgeschlossen.
-newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu platnosti ...,Kontroluję płatność...,Validierung läuft …
-newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Reservierung wird gelöscht.
+newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu platnosti ...,Kontroluję płatność...,Gültigkeit wird überprüft
+newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Buchung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
 newReservation.newHost,Regular guest,Pravidelný host,Nowy regularny gość,Neuer regelmäßiger Gast
-newReservation.newHostText,"can request reservations, is member of the client account.","může žádat o rezervace, je členem klientského účtu.",,
-newReservation.newInternal,New internal,Nový internal,,
-newReservation.newInternalText,"can create reservations for himself, is member of the client account.","si může vytvářet rezervace, je členem klientského účtu.",,
+newReservation.newHostText,"can request reservations, is member of the client account.","může žádat o rezervace, je členem klientského účtu.",,"kann Buchungen anfragen, ist ein Mtiglied des Klientenkontos."
+newReservation.newInternal,New internal,Nový internal,,Neuer Internal
+newReservation.newInternalText,"can create reservations for himself, is member of the client account.","si může vytvářet rezervace, je členem klientského účtu.",,"kann Buchungen erstellen, ist ein Mitglied des Klientenkontos."
 newReservation.hostsName,Name of regular guest,Jméno pravidelného hosta,Nazwisko regularnego gościa,Rgelmäßiger Gast - Name
 newReservation.phone,Phone number,Telefonní číslo,,Telefonnummer
 newReservation.hostsPhone,Phone of regular guest,Telefon pravidelného hosta,Telefon regularnego gościa,Regelmäßiger Gast Telefonnummer
@@ -586,14 +612,18 @@ newReservation.hostsEmail,Email of regular guest,Email pravidelného hosta,E-mai
 newReservation.visitorsName,Visitors name,Jméno návštěvníka,Nazwisko odwiedzającego,Besucher Name
 newReservation.visitorsPhone,Visitors phone,Telefon návštěvníka,Telefon odwiedzającego,Besucher Telefonnummer
 newReservation.visitorsEmail,Visitors email,Email návštěvníka,E-mail odwiedzającego,Besucher E-Mail
+newReservation.internalsName,Internals name,Jméno internala,,Internal Name
+newReservation.internalsPhone,Internals phone,Telefon internala,,Internal Telefon
+newReservation.internalsEmail,Internals email,Email internala,,Internal Email
 newReservation.selectedUser,User,Uživatel,Użytkownik,Benutzer
 newReservation.flexiblePlaceSelected,flexible,flexibilní,elastyczne,flexibel
 newReservation.noFreePlace,No free place,Žádná volná místa,Brak wolnych miejsc,Keine freie Plätze
-newReservation.note,Note,Poznámka,Uwagi,Notiz
+newReservation.note,Public note,Veřejná poznámka,Uwagi,Öffentliche Notiz
 newReservation.onetimeVisit,Onetime visitor,Jednorázový návštěvník,Jednorazowe odwiedziny,Einmaliger Besucher
-newReservation.onetimeVisitText,"can't make or request reservation, isn't a member of the client account.","nemůže vytvářet ani žádat o rezervace, není členem klientského účtu.",,
-newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.,,Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Reservierung zu informieren.
+newReservation.onetimeVisitText,"can't make or request reservation, isn't a member of the client account.","nemůže vytvářet ani žádat o rezervace, není členem klientského účtu.",,"kann keine Buchungen erstellen und Sie nichtmal anfragen, ist kein Mitglied des Klientenkontos."
+newReservation.fillInContact,Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.,Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.,,Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Buchung zu informieren.
 newReservation.paidByHost,Reservation paid by guest,Rezervaci platí host,Za rezerwację płaci gość,Buchung wird vom Gast bezahlt
+newReservation.paidByHostsTimeCredit,Reservation paid by users timecredit,Rezervace placena z time creditu uživatele,,Mit Timecredit des Fahrers bezahlen
 newReservation.languageSelector,Choose communication language,Zvolte jazyk komunikace,Wybierz język komunikacji,Wählen Sie die Kommunikationssprache
 newReservation.selectTemplate,Select template,Zvolte šablonu,Wybierz szablon,Wählen Sie eine Vorlage
 newReservation.sendSms,Send notification about reservation via SMS,Odeslat upozornění o rezervaci pomocí SMS,Wysłać sms z potwierdzeniem rezerwacji,Bestätigung per SMS schicken
@@ -601,11 +631,12 @@ newReservation.smsText,SMS text,text SMS,Tekst SMS,Text der Nachricht
 newReservation.character,characters,znaků,znaków,Zeichen
 newReservation.removeDiacritics,remove diacritics,odstranit diakritiku,usunąć polskie znaki,Diakritika entfernen
 newReservation.perHour, / hour, / hod.,,/ Std.
-newReservation.creatingReservationInPast,You are creating/ editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you want to continue?,Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?,,
-newReservation.loading,Loading ...,Načítám ...,,
-newReservation.userName,,Jméno uživatele,,
-newReservation.AlternativeInterval,,Všechan místa jsou v tomoto intervalu prázdná. Nejdelší možný interval je:,,
-newReservation.weekendPrice,Weekend price:,Víkendová cena:,,
+newReservation.creatingReservationInPast,You are creating / editing reservation in the past. This reservation will not be reflected in already generated invoices. Do you wish to continue?,Vytváříte/ upravujete rezervaci v minulosti. Tato rezervace se nepromítne do již vygenerovaných faktur. Přejete si pokračovat?,,Sie erstellen eine Buchung die sich in der Vergangenheit befindet. Diese Buchung spiegelt sich in den Rechnungen nicht wieder. Wünschen Sie sich fortzufahren?
+newReservation.loading,Loading ...,Načítám ...,,Laden ...
+newReservation.userName,Username,Jméno uživatele,,Name des Users
+newReservation.AlternativeInterval,"All places are full, maximum available duration is:",Všechna místa jsou v tomto intervalu obsazená. Nejdelší možný interval je:,,In dem gewählten Termin sind alle Parkplätze besetzt. Am längsten ist möglich:
+newReservation.weekendPrice,Weekend price:,Víkendová cena:,,Wochenendpreis:
+newReservation.notAbleToCreateReservation,It was not possible to create this reservation. Likely reason: low timecredit,Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit,,Es ist nicht möglich diese Buchung durchzuführen. Mögliche Ursache: Zu niedriger timecredit
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -617,22 +648,23 @@ clients.createdAt,Created at,Klient vytvořen,Klient utworzony,Erstellungsort
 clients.createAgreement,Create agreement,Vytvořit dohodu,Utworzyć umowę,Vereinbarung erstellen
 clients.editClient,Edit client,Upravit klienta,Edytować klienta,Kunden bearbeiten
 clients.goToUsers,Go to users,Uživatelé,Użytkownicy,Benutzer
-clients.goToInvoices,Go to invoices,Faktury,Faktury,Rechnungen
+clients.goToInvoices,Accounting documents,Účetní doklady,Faktury,Rechnungen
 clients.places,places,místa,miejsca,Stellplätze
 clients.contract,agreement,dohoda,umowy,Vertrag
 clients.monthlyTotal,monthly total,celkem za měsíc,razem za miesiąc,Pro Monat insgesamt
 clients.invoices,invoices,faktury,faktury,Rechnungen
 clients.currentAgreements,Active agreements:,Aktivní dohody:,Aktywne umowy:,Laufende Vereinbarungen
 clients.oldAgreements,Old agreements:,Proběhlé dohody:,Stare umowy:,Beendete Vereinbarungen
+clients.modules,Advanced setup,Rozšířená nastavení,,Erweiterte Einstellungen
 clientUsers.name,username,uživatelské jméno,nazwa użytkownika,Benutzername
 clientUsers.email,email,e-mail,e-mail,E-Mail-Adresse
 clientUsers.memberSince,member since,členem od,członek od,Mitglied seit
 clientUsers.phone,phone,telefon,telefon,Telefon
-clientUsers.contact_person,contact person,kontaktní osoba,osoba kontaktowa,Ansprechpartner
-clientUsers.admin,is admin,je admin,jest adminem,ist Administrator
+clientUsers.contact_person,contact person,kontaktní osoba,osoba kontaktowa,Kontaktperson
+clientUsers.admin,admin,admin,jest adminem,Administrator
 clientUsers.secretary,secretary,Sekretář/ka,Sekretarz/Sekretarka,Sekretär/in
 clientUsers.internal,internal,Interní,Wewnętrzny,Intern
-clientUsers.host,is a regular guest,je pravidelný host,jest regularnym gościem,ist regelmäßiger Gast
+clientUsers.host,regular guest,pravidelný host,jest regularnym gościem,regelmäßiger Gast
 clientUsers.driver,driver,řidič,kierowca,Fahrer
 clientUsers.presetAs,Preset as,Nastavit jako,Ustaw jako,Einstellen als
 clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć użytkownika?,Möchten Sie diesen Benutzer wirklich entfernen?
@@ -642,7 +674,7 @@ clientUsers.removeUser,Remove user,Odstranit uživatele,Usuń użytkownika,Benut
 clientUsers.resendInvitation,Resend email,Znovu odeslat,Wyślij ponownie,E-Mail erneut senden
 clientUsers.resendSuccessfull,Email was sucessfully send.,Email úspěšně odeslán.,E-mail został wysłany.,E-Mail wurde erfolgreich gesendet.
 clientUsers.userNotFound,Could not find this user.,Uživatel nenalezen.,Nie znaleziono użytkownika.,Dieser Benutzer konnte nicht gefunden werden.
-clientUsers.timeCredit,time credit,časový kredit,,
+clientUsers.timeCredit,time credit,časový kredit,,Zeit-Kredit
 reservations.name,name,jméno,Użytkownik,Name
 reservations.from,from,od,od,von
 reservations.to,to,do,do,bis
@@ -654,35 +686,36 @@ reservations.type,type,typ,Typ,Typ
 reservations.creator,Creator,Založil,utworzył,Erstellt von
 reservations.garage,Garage,garáž,Garaż,Parkhaus
 reservations.createdAt,created:,vytvořeno:,utworzone:,erstellt:
+reservations.deletedAt,deleted:,odstraněno:,,entfernt:
 reservations.updatedAt,updated:,upraveno:,zaktualizowane:,aktualisiert:
-reservations.removeReservationQuestion,Are you sure you want to remove this reservation?,Určitě chcete odstranit tuto rezervaci?,Czy na pewno chcesz usunąć rezerwację?,Möchten Sie diese Reservierung wirklich entfernen?
-reservations.terminateEarlyQuestion,Are you sure you want to terminate reservation right now?,Přejete si nyní ukončit rezervaci?,Czy chcesz zakończyć rezerwację?,Möchten Sie Ihre Reservierung sofort beenden?
-reservations.reservationApproved,This reservation has not been approved yet.,Rezervace zatím nebyla schválena.,Rezerwacja nie została jeszcze zaakceptowana.,Die Reservierung ist noch nicht bestätigt worden.
-reservations.reservationNotPayed,This reservation has not been paid.,Rezervace nebyla zaplacena.,Rezerwacja nie została opłacona.,Die Reservierung ist noch nicht bezahlt worden.
+reservations.removeReservationQuestion,Are you sure you want to remove this reservation?,Určitě chcete odstranit tuto rezervaci?,Czy na pewno chcesz usunąć rezerwację?,Möchten Sie diese Buchung wirklich entfernen?
+reservations.terminateEarlyQuestion,Are you sure you want to terminate reservation right now?,Přejete si nyní ukončit rezervaci?,Czy chcesz zakończyć rezerwację?,Möchten Sie Ihre Buchung sofort beenden?
+reservations.reservationApproved,This reservation has not been approved yet.,Rezervace zatím nebyla schválena.,Rezerwacja nie została jeszcze zaakceptowana.,Die Buchung ist noch nicht bestätigt worden.
+reservations.reservationNotPayed,This reservation has not been paid.,Rezervace nebyla zaplacena.,Rezerwacja nie została opłacona.,Die Buchung ist noch nicht bezahlt worden.
 reservations.host,Regular host,Pravidelný host,Regularny gość,Regelmäßiger Gast
 reservations.visitor,Visitor,Návštěvník,Odwiedzający/a,Besucher
 reservations.internal,Internal,Interní,Wewnętrzny,Intern
-reservations.mrParkit,Mr. Parkit,Mr. Parkit,,
-reservations.editReservation,Edit reservation,Upravit rezervaci,Edytuj rezerwację,Reservierung bearbeiten
-reservations.editNote,Edit note,Upravit poznámku,Edytuj notatkę,Notiz bearbeiten
-reservations.newNote,New note,Nová poznámka,Nowa notatka,Neue Notiz
-reservations.interuptReservation,Interrupt reservation,Přerušit rezervaci,Przerwij rezerwację,Reservierung unterbrechen
-reservations.payReservation,Pay reservation,Zaplatit rezervaci,Opłać rezerwację,Reservierung bezahlen
+reservations.mrParkit,MR.PARKIT,MR.PARKIT,MR.PARKIT,MR.PARKIT
+reservations.editReservation,Edit reservation,Upravit rezervaci,Edytuj rezerwację,Buchung bearbeiten
+reservations.editNote,Edit public note,Upravit veřejnou poznámku,Edytuj notatkę,Öffentliche Notiz bearbeiten
+reservations.newNote,New public note,Nová veřejná poznámka,Nowa notatka,Neue öffentliche Notiz
+reservations.interuptReservation,Interrupt reservation,Přerušit rezervaci,Przerwij rezerwację,Buchung unterbrechen
+reservations.payReservation,Pay reservation,Zaplatit rezervaci,Opłać rezerwację,Buchung bezahlen
 reservations.downloadInvoice,Download invoice,Stáhnout fakturu,Ściągnij fakturę,Rechnung herunterladen
-reservations.destroyReservation,Cancel reservation,Zrušit rezervaci,Usuń rezerwację,Reservierung stornieren
+reservations.destroyReservation,Cancel reservation,Zrušit rezervaci,Usuń rezerwację,Buchung stornieren
 reservations.teminateEarly,Terminate early,Předčasně ukončit,Ukończ przedwcześnie,Sofort beenden
-reservations.destroyAllReservation.one,Archive only selected reservation.,Zrušit pouze vybranou rezervaci.,Usuń wybraną rezerwację.,Nur gewählte Reservierung stornieren.
-reservations.destroyAllReservation.few,Archive all %(count)s reservations in set repeat.,Zrušit %(count)s rezervace v nastaveném opakování.,Usuń %(count)s rezerwacji w ustawionej powtórce.,%(count)s Reservierungen der Serie stornieren.
-reservations.destroyAllReservation.many,Archive all %(count)s reservations in set repeat.,Zrušit všech %(count)s rezervací v nastaveném opakování.,Usuń wszystkie %(count)s rezerwacje w ustawionej powtórce.,Alle %(count)s Reservierungen der Serie beenden.
-reservations.destroyAllReservation.other,Archive all %(count)s reservations in set repeat.,Zrušit %(count)s rezervace v nastaveném opakování.,Usuń %(count)s rezerwacji w ustawionej powtórce.,%(count)s Reservierungen der Serie stornieren.
-reservations.updateAllReservation.one,Update only selected reservation.,Upravit pouze zvolenou rezervaci,Edytuj jedynie wybraną rezerwację.,Nur gewählte Reservierung bearbeiten.
-reservations.updateAllReservation.few,Update all %(count)s reservations in set repeat.,Upravit %(count)s rezervace v nastaveném opakování., Edytuj %(count)s rezerwacje w ustawionej powtórce.,%(count)s Reservierungen der Serie bearbeiten.
-reservations.updateAllReservation.many,Update all %(count)s reservations in set repeat.,Upravit všech %(count)s rezervací v nastaveném opakování., Edytuj wszystkie %(count)s rezerwacje w ustawionej powtórce.,Alle %(count)s Reservierungen der Serie bearbeiten.
-reservations.updateAllReservation.other,Update all %(count)s reservations in set repeat.,Upravit %(count)s rezervace v nastaveném opakování.,  Edytuj %(count)s rezerwacje w ustawionej powtórce.,%(count)s Reservierungen der Serie bearbeiten.
+reservations.destroyAllReservation.one,Archive only selected reservation.,Zrušit pouze vybranou rezervaci.,Usuń wybraną rezerwację.,Nur gewählte Buchung stornieren.
+reservations.destroyAllReservation.few,Archive all %(count)s reservations in set repeat.,Zrušit %(count)s rezervace v nastaveném opakování.,Usuń %(count)s rezerwacji w ustawionej powtórce.,%(count)s Buchungen der Serie stornieren.
+reservations.destroyAllReservation.many,Archive all %(count)s reservations in set repeat.,Zrušit všech %(count)s rezervací v nastaveném opakování.,Usuń wszystkie %(count)s rezerwacje w ustawionej powtórce.,Alle %(count)s Buchungen der Serie beenden.
+reservations.destroyAllReservation.other,Archive all %(count)s reservations in set repeat.,Zrušit %(count)s rezervace v nastaveném opakování.,Usuń %(count)s rezerwacji w ustawionej powtórce.,%(count)s Buchungen der Serie stornieren.
+reservations.updateAllReservation.one,Update only selected reservation.,Upravit pouze zvolenou rezervaci,Edytuj jedynie wybraną rezerwację.,Nur gewählte Buchungen bearbeiten.
+reservations.updateAllReservation.few,Update all %(count)s reservations in set repeat.,Upravit %(count)s rezervace v nastaveném opakování., Edytuj %(count)s rezerwacje w ustawionej powtórce.,%(count)s Buchungen der Serie bearbeiten.
+reservations.updateAllReservation.many,Update all %(count)s reservations in set repeat.,Upravit všech %(count)s rezervací v nastaveném opakování., Edytuj wszystkie %(count)s rezerwacje w ustawionej powtórce.,Alle %(count)s Buchungen der Serie bearbeiten.
+reservations.updateAllReservation.other,Update all %(count)s reservations in set repeat.,Upravit %(count)s rezervace v nastaveném opakování.,  Edytuj %(count)s rezerwacje w ustawionej powtórce.,%(count)s Buchungen der Serie bearbeiten.
 reservations.flexiblePlace,flexiplace,fleximísto,Miejsce Flexi,Flexiplatz
 garages.clients,Clients,Klienti,Klienci,Kunden
 garages.contracts,Agreements,Dohody,Umowy,Vereinbarungen
-garages.reservations,Reservations,Rezervace,Rezerwacje,Reservierungen
+garages.reservations,Reservations,Rezervace,Rezerwacje,Buchungen
 garages.prices,Prices,Ceny,Ceny,Preise
 garages.cars,Cars,Auta,Auta,Fahrzeuge
 garages.now,Now,Nyní,Teraz,Jetzt
@@ -697,7 +730,7 @@ garages.weekPrice,week price:,týdenní cena:,Cena za tydzień:,Preis für eine 
 garages.monthPrice,month price:,měsíční cena:,Cena za miesiąc:,Preis für einen Monat:
 garages.weekendPrice,weekend price:,víkendová cena,Weekendowa cena:,Preis für Wochenende:
 garages.flatPrice,flat price:,pevná cena:,Stała cena:,Festpreis:
-garages.reservationId,Reservation ID:,Id rezervace:,ID rezerwacji:,Reservierungsnummer:
+garages.reservationId,Reservation ID:,Id rezervace:,ID rezerwacji:,Buchungsnummer:
 garages.driver,Driver:,Řidič:,Kierowca:,Fahrer:
 garages.period,Period:,Období:,Okres:,Termin:
 garages.licencePlate,License plate:,SPZ:,Nr rejestracyjny:,Kennzeichen
@@ -708,7 +741,7 @@ garages.price,Price,Cena,Cena,Preis
 garages.places,Places,Místa,Miejsca,Plätze
 garages.editRent,Edit rent,Upravit nájem,Edytuj wynajem,Mietverhältnis bearbeiten
 occupancy.selectClientClient,Select client,Vybrat klienta,Wybrać klienta,Kunden auswählen
-occupancy.allReservations,All reservations,Všechny rezervace,Wszystkie rezerwacje,Alle Reservierungen
+occupancy.allReservations,All reservations,Všechny rezervace,Wszystkie rezerwacje,Alle Buchungen
 occupancy.dayShortcut,D,D,D,T
 occupancy.weekShortcut,W,T,T,W
 occupancy.monthShortcut,M,M,M,M
@@ -717,7 +750,7 @@ occupancy.selectGarage,Select garage,Vyberte garáž,Wybrać garaż,Parkhaus aus
 occupancy.day,day,den,dzień,Tag
 occupancy.week,week,týden,tydzień,Woche
 occupancy.month,month,měsíc,miesiąc,Monat
-occupancy.reservationsId,Reservations ID:,Id rezervace:,ID rezerwacji:,Reservierungsnummer:
+occupancy.reservationsId,Reservations ID:,Id rezervace:,ID rezerwacji:,Buchungsnummer:
 occupancy.driver,Driver:,Řidič:,Kierowca:,Fahrer:
 occupancy.client,Client:,Klient:,Klient:,Kunde:
 occupancy.type,Type:,Typ:,Typ:,Typ:
@@ -726,13 +759,13 @@ occupancy.licencePlate,License plate:,SPZ:,Nr rejestracyjny:,Kennzeichen:
 occupancy.noClientPlaces,The selected client does not have any rented places in this time frame.,Zvolený klient nemá žádná pronajatá místa v tomto časovém intervalu.,Wybrany klient nie ma żadnych wynajętych miejsc w określonym czasie.,Der ausgewählte Kunde hat in diesem Zeitraum keine gemieteten Plätze.
 occupancy.resetFilter,Reset filter,Resetuj filtr,Zresetować filtr,Filter zurücksetzen
 occupancy.detailsInaccessible,Details inaccessible,Detaily nepřístupné,Szczegóły niedostępne,Information nicht verfügbar
-occupancy.reservationNotApproved,Reservation not yet approved,Rezervace zatím neschválena,Rezerwacja nie została jeszcze potwierdzona.,Reservierung ist nicht bestätigt
-occupancy.createNewReservation,Create new reservation,Vytvořit novou rezervaci,,
-occupancy.from,from:,Od:,,
-occupancy.to,to:,Do:,,
-occupancy.garage,garage:,Garáž:,,
-occupancy.place,place:,Místo:,,
-occupancy.placeNotAvailable,This place cannot be reserved.,Toto místo není možné rezervovat.,,
+occupancy.reservationNotApproved,Reservation not yet approved,Rezervace zatím neschválena,Rezerwacja nie została jeszcze potwierdzona.,Buchung ist nicht bestätigt
+occupancy.createNewReservation,Create new reservation,Vytvořit novou rezervaci,,Neue Buchung erstellen
+occupancy.from,from:,Od:,,Von:
+occupancy.to,to:,Do:,,Bis:
+occupancy.garage,garage:,Garáž:,,Garage:
+occupancy.place,place:,Místo:,,Platz:
+occupancy.placeNotAvailable,This place cannot be reserved.,Toto místo není možné rezervovat.,,Diesen Platz können Sie nicht Buchen.
 garageUsers.noRights,You do not have the right to do that.,Na tuto akci nemáte práva.,Nie posiadasz odpowiednich uprawnień.,Sie haben nicht die erforderlichen Berechtigungen.
 garageUsers.admin,admin,admin,admin,Administrator
 garageUsers.manager,manager,manažer,,Manager
@@ -807,7 +840,7 @@ newGarage.weightPlaceholder,5000,5000,5000,5000
 newGarage.tarif,Tariff:,Tarif:,Taryfa:,Tarif:
 newGarage.summaryPlace,Spots:,Místa:,Miejsca:,Stellplätze:
 newGarage.gsmModule,GSM module:,GSM modul:,Moduł GSM:,GSM-Modul:
-newGarage.bookingPage,My own booking page:,Moje vlastní stránka rezervace:,Moja strona rezerwacji:,Meine Reservierungsseite:
+newGarage.bookingPage,My own booking page:,Moje vlastní stránka rezervace:,Moja strona rezerwacji:,Meine Buchungsseite:
 newGarage.price,Price:,Cena:,Cena:,Preis:
 newGarage.subscribe,Subscribe,Odebírat,Subskrybuj,Abonnieren
 newGarage.count,count,spočítat,policzyć,Berechnen
@@ -852,7 +885,7 @@ newGarage.placeholderFloorFrom,3,3,3,3
 newGarage.placeholderFloorTo,12,12,12,12
 newGarage.streetPlaceholder,Martense Avenue 526,Vinohradská 1,Martense Avenue 526,Neue Straße 123
 newGarage.cityPlaceholder,Pittsburgh,Praha,Česká republika,Dresden
-newGarage.postalCodePlaceholder,7666,12000,7666,1127
+newGarage.postalCodePlaceholder,7666,12000,7666,01127
 newGarage.statePlaceholder,Pennsylvania,-,New Jersey,Sachsen
 newGarage.countryPlaceholder,USA,Česká republika,USA,Deutschland
 newGarage.lat,Latitude,Zeměpisná šířka,Szerokość geograficzna,Geographische Breite
@@ -887,17 +920,21 @@ newGarage.passwordWasNotSet,Password was not set!,Heslo není nastaveno!,Hasło 
 newGarage.addAllPalces,Add all places,Přidat všechna místa,Dodać wszystkie miejsca,Alle Stellplätze hinzufügen
 newGarage.notAssignNumber,Number not assigned,Číslo nepřiřazeno,Numer nie został przyporządkowany,Keine Nummer hinzugefügt
 newGarage.selcetNumber,Number to open gate,Číslo pro otevření brány,Numer do otwarcia bramy,Tel. Nummer für das öffnen
-newGarage.privacy,privacy,,,
-newGarage.terms,terms,,,
-newGarage.documents,documents,,,
-newGarage.documentName,Name of document,,,
-newGarage.lastChangeAt,Last change at,,,
-newGarage.addDocument,Add document,,,
-newGarage.showDocument,Show document,,,
-newGarage.removeDocument,Remove document,,,
-newGarage.removeDocumentQuestion,Do you want to delete document,,,
-newGarage.privacyDocumentRule,At least one document has to be uploaded,,,
-newGarage.legalDocuments,Legal documents,,,
+newGarage.privacy,privacy,Ochrana osobních údajů,,Datenschutz
+newGarage.terms,Terms of service,Obchodní podmínky,,Nutzungsbedingungen
+newGarage.documents,documents,Dokumenty,,Dokumente
+newGarage.documentName,Name of document,Název dokumentu,,Dokumentbezeichnung
+newGarage.lastChangeAt,Last change at,Naposledy změněno,,Letzte Änderung
+newGarage.addDocument,Add document,Přidat dokument,,Dokument hinzufügen 
+newGarage.showDocument,Show document,Náhled dokumentu,,Vorschau
+newGarage.removeDocument,Remove document,Odstranit dokument,,Dokument löschen
+newGarage.removeDocumentQuestion,Do you want to delete document,Opravdu chcete vymazat dokument?,,Wollen Sie das gewählte Dokument wirklich löschen?
+newGarage.privacyDocumentRule,At least one document has to be uploaded,Nejméně jeden dokument musí být vybrán.,,Mindestens ein Dokument muss ausgewählt sein.
+newGarage.legalDocuments,Legal documents,Právní dokumenty,,Rechtliche Grundlagen
+newGarage.noDocument,No document uploaded.,Nebyl nahrán žádný dokument.,,Kein Dokument wurde ausgewählt.
+newGarage.or,OR,NEBO,,ODER
+newGarage.uploadUrl,Provide URL,Přidal URL,,URL hinzufügen
+newGarage.documentURL,Document URL,URL dokumentu,,URL des Dokuments
 newClient.name,Client name,Jméno klienta,Nazwisko klienta,Name des Kunden
 newClient.placeholder,Company ltd.,Společnost s.r.o.,Spółka z o.o.,Unternehmen GmbH
 newClient.invalidName,Invalid client name,Neplatné jméno klienta,Niepoprawne nazwisko klienta,Kundennamen ist ungültig
@@ -921,32 +958,32 @@ newClient.edit,Client,Klient,Klient,Kunde
 newClient.smsSettings,SMS module,SMS modul,Moduł SMS,SMS Modul
 newClient.activate,activate,aktivovat,Aktywuj,Aktivieren
 newClient.deactivate,deactivate,deaktivovat,Dezaktywuj,Deaktivieren
-newClient.timeCredit,Time credit,Časový kredit,,
-newClient.onetimeAddition,Onetime addition of time credit,Jednorázové přidání časového kreditu,,
-newClient.onetimeRemoval,Onetime removal of time credit,Jednorázové odebrání časového kreditu,,
-newClient.amountToAdd,Amount to add,Částka pro příděl,,
-newClient.amountToRemove,Amount to remove,Částka k odebrání,,
+newClient.timeCredit,Time credit,Časový kredit,,Zeitguthaben
+newClient.onetimeAddition,One-time addition of time credit,Jednorázové přidání časového kreditu,,Einmaliges hinzufügen des Zeitguthabens
+newClient.onetimeRemoval,One-time removal of time credit,Jednorázové odebrání časového kreditu,,Einmaliges entfernen des Zeitguthabens.
+newClient.amountToAdd,Amount to add,Částka pro přidání,,Betrag zum Hinzufügen
+newClient.amountToRemove,Amount to remove,Částka k odebrání,,Betrag zur Entnehmung
 newClient.onetimeAdditionPlaceholder,30,30,30,30
-newClient.timeCreditDescription,Module introduces time limitation of reservations of users in your client,Modul představuje časové omezení rezervací uživatlů Vašho klienta,,
-newClient.timeCreditStatistics,Statistics,Statistiky,,
-newClient.hoursThatCanBeParked,Hours that can be parked this month,"Hodiny, která je možné odparkovat tento měsíc",,
-newClient.creditsThatCanBeDistributed,Credits that can be distributed this month,"Kredity, která je možné odparkovat rozdat měsíc",,
-newClient.creditsDistributed,Credits that were distributed,"Kredity, která byly rozdány",,
-newClient.creditsDistributedOverMax,Credits over maximum,Kredity přes maximální počet,,
-newClient.cteditsOutOfBoundException,Exceeded amount of credits possible to distribute,Překročena hodnota kreditů možných k dostribuci,,
-newClient.currencyName,Currency name,Jméno mělny,,
-newClient.currencyNamePlaceholder,Parkee coins,Parkovací mince,,
-newClient.pricePerHour,Price per hour,Cena za hodinu,,
+newClient.timeCreditDescription,Module introduces time limitation of reservations of users in your client,Modul umožňuje časové omezení rezervací uživatelů Vašeho klienta,,Das Modul ermöglicht eine zeitliche Beschränkung der Buchungen Ihrer Klienten
+newClient.timeCreditStatistics,Statistics,Statistiky,,Statistiken
+newClient.hoursThatCanBeParked,Hours that can be parked this month,"Hodiny, které je možné odparkovat tento měsíc",,"Stunden, die diesen Monat verparkt werden dürfen."
+newClient.creditsThatCanBeDistributed,Credits that can be distributed this month,"Kredity, která je možné rozdat tento měsíc",,"Studen, die diesen Monat vergeben werden dürfen."
+newClient.creditsDistributed,Credits that were distributed,"Kredity, která byly rozdány",,Vergebens Guthaben.
+newClient.creditsDistributedOverMax,Credits over maximum,Kredity přes maximální počet,,Guthaben über die Maximalgrenze.
+newClient.cteditsOutOfBoundException,Exceeded amount of credits available to distribute,Překročena maximální hodnota kreditů určených k distribuci,,Die oberste Grenze des Zeitguthabens ist überschritten.
+newClient.currencyName,Currency name,Jméno měny,,Bennenung der Währung
+newClient.currencyNamePlaceholder,Parkee coins,Parkovací mince,,Parkmünzen
+newClient.pricePerHour,Price per hour,Cena za hodinu,,Preis pro Stunde
 newClient.pricePerHourPlaceholder,1,1,1,1
-newClient.monthlyAmount,Monthly amount,Měsíční příděl,,
+newClient.monthlyAmount,Monthly amount,Počet na měsíc,,Anzahl pro Monat
 newClient.monthlyAmountPlaceholder,60,60,60,60
-newClient.onetimeAdd,Onetime addition,Jednorázový příděl,,
-newClient.onetimeRemove,Onetime removal,Jednorázové odebrání,,
-newClient.minMaxReservationDuration,Min-Max duration,Min-Max trvání,,
-newClient.addToEveryone,Add to everyone,Přidat všem,,
-newClient.removeFromEveryone,Remove from everyone,Odebrat všem,,
-newClient.or,OR,NEBO,,
-newClient.selectUsers,Select users,Zvolte uživatele,,
+newClient.onetimeAdd,One-time addition,Jednorázové přidání,,Einmaliges hinzufügen
+newClient.onetimeRemove,One-time removal,Jednorázové odebrání,,Einmaliges Entfernen
+newClient.minMaxReservationDuration,Min-Max duration,Min-Max trvání,,Min-Max Dauer
+newClient.addToEveryone,Add to everyone,Přidat všem,,Allen hinzufügen
+newClient.removeFromEveryone,Remove from everyone,Odebrat všem,,Allen Entfernen
+newClient.or,OR,NEBO,,ODER
+newClient.selectUsers,Select users,Zvolte uživatele,,User auswählen
 inviteUser.selectUser,User email(s),Email(y) uživatele,E-mail(e) użytkownika,E-Mail-Adresse(n) des Benutzers
 inviteUser.connectionExists,This user is already in this client account.,Tento uživatel již je v tomto klientském účtu.,Użytkownik znajduje się już na tym koncie klienta.,Dieser Benutzer ist in diesem Kundenkonto bereits vorhanden.
 inviteUser.sendingInvitation,"Loading, inviting user","Načítám, zvu uživatele","Przetwarzam, zapraszam użytkownika.","Ladevorgang läuft, Benutzer wird eingeladen."
@@ -973,7 +1010,7 @@ inviteUser.secretary,secretary,sekretář/ka,Sekretarz/sekretarka,Sekretär/in
 inviteUser.host,regular guest,pravidelný host,regularny gość,Regelmäßiger Gast
 inviteUser.internal,internal,interní,wewnętrzny,intern
 inviteUser.security,security,ostraha,ochrona,Wachdienst
-inviteUser.manager,manager,manažer,,
+inviteUser.manager,manager,manažer,,Manager
 inviteUser.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
 inviteUser.driver,driver,řidič,kierowca,Fahrer
 inviteUser.clientRights,User rights,Práva uživatele,Prawa klienta,Benutzerrechte
@@ -993,24 +1030,31 @@ notifications.expiration,Notification will expire on,Upozornění vyprší dne,P
 notifications.clientInvitationMessage,You have been invited to '%(arg1)s' client account. Do you want to accept?,Byl(a) jste pozván(a) na klientský účet '%(arg1)s'. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania konta klienta '%(client)s'. Chcesz przyjąć zaproszenie?,Sie wurden zum Kundenkonto „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
 notifications.garageInvitationMessage,You have been invited to '%(arg1)s' garage. Do you want to accept?,Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania garaży '%(arg1)s'. Chcesz przyjąć zaproszenie?,Sie wurden zum Parkhaus „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
 notifications.carInvitationMessage,You have been invited to use '%(arg1)s' car. Do you want to accept?,Byl(a) jste pozván(a) pro použití '%(arg1)s' auta. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania samochodu '%(arg1)s'. Chcesz przyjąć zaproszenie?,Sie wurden zum Fahrzeug „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
-notifications.clientUserDestroyed,You have been removed from client account '%(arg1)s'. All reservations associated with this client's account has been canceled.,"Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",Zostałeś(-aś) usunięty(-a) z konta klienta '%(arg1)s'. Wszystkie rezerwacje przypisane do tego konta zostaną usunięte.,Sie wurden vom Kundenkonto „%(arg1)s“ entfernt. Alle mit diesem Kundenkonto verknüpften Reservierungen wurden gelöscht.
-notifications.accountPlaceDestroyed,Your reservation has been canceled because the owner removed the parking spot from the client account.,"Vaše rezervace byly stornovány, jelikož správce garáže odstranil parkovací místo z Klientského účtu.","Twoje rezerwacje zostały anulowane, ponieważ administrator garażu usunął miejsce z konta klienta.","Ihre Reservierung wurde storniert, weil der Eigentümer den Stellplatz aus dem Kundenkonto gelöscht hat."
+notifications.clientUserDestroyed,You have been removed from client account '%(arg1)s'. All reservations associated with this client's account has been canceled.,"Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",Zostałeś(-aś) usunięty(-a) z konta klienta '%(arg1)s'. Wszystkie rezerwacje przypisane do tego konta zostaną usunięte.,Sie wurden vom Kundenkonto „%(arg1)s“ entfernt. Alle mit diesem Kundenkonto verknüpften Buchungen wurden gelöscht.
+notifications.reservationDestroyed,Your reservation has been canceled.,Vaše rezervace bylA stornována.,,Ihre Buchung wurde storniert.
 notifications.past,past,minulost,historia,Vergangenheit
 notifications.NotificationAccepted,accepted on,přijato dne,przyjęte dnia,Angenommen am
 notifications.NotificationDeclined,declined on,odmítnuto dne,odrzucone dnia,Abgelehnt am
 notifications.current,current,aktuální,aktualnie,aktuell
 notifications.sais,says,vzkazuje,pokazuje,sagt
-notifications.accpetReservationNotification,Regular guest %(arg2)s would like to create a reservation on %(arg1)s expenses.,Pravidelný host %(arg2)s by chtěl vytvořtit rezervaci na %(arg1)s náklady.,Regularny gość %(arg2)s chce utworzyć rezerwację na koszt %(arg1)s.,Regelmäßiger Gast %(arg2)s möchte eine Reservierung auf Kosten von %(arg1)s erstellen.
-notifications.invoiceReminder,Account %(arg1)s would like to inform you that you have unpaid invoices to settle.,"Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.","Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.","Konto %(arg1)s möchten Sie darüber informieren, dass Rechnungen noch nicht beglichen wurden."
-notifications.reservationAccepted,"Your reservation on ""%(arg1)s""s spot was accepted.","Vaše rezervace na ""%(arg1)s místo byla akceptována.","Twoja rezerwacja na miejsce ""%(arg1)s"" została zaakceptowana.",Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde angenommen.
-notifications.reservationDeclined,"Your reservation on ""%(arg1)s""s place was declined.","Vaše rezervace na ""%(arg1)s místo byla zrušena.","Twoja rezerwacja na miejsce ""%(arg1)s"" została odrzucona.",Ihre Reservierung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.
-notifications.verifyYourEmail,"Welcome to Park-it-direct! You have been sent a verification email to ""%(arg1)s"". You will not be able to log in again until your email is verified.","Vítejte v Park-it-direct! Na adresu ""%(arg1)s""s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.","Witaj w Park-it-direct! Na adres ""%(arg1)s""s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.","Wilkommen in Park-it-direct! Wir haben eine Bestätigungs-E-Mail an ""%(arg1)s""s geschickt.
+notifications.accpetReservationNotification,Regular guest %(arg2)s would like to create a reservation on %(arg1)s expenses.,Pravidelný host %(arg2)s by chtěl vytvořtit rezervaci na %(arg1)s náklady.,Regularny gość %(arg2)s chce utworzyć rezerwację na koszt %(arg1)s.,Der Regelmäßige Gast %(arg2)s möchte eine Buchung auf Kosten von %(arg1)s erstellen.
+notifications.invoiceReminder,Account %(arg1)s would like to inform you that you have unpaid invoices to settle.,"Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.","Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.","Konto %(arg1)s möchten Sie darüber informieren, dass einige Rechnungen noch nicht beglichen wurden."
+notifications.reservationAccepted,"Your reservation on ""%(arg1)s""s spot was accepted.","Vaše rezervace na ""%(arg1)s místo byla akceptována.","Twoja rezerwacja na miejsce ""%(arg1)s"" została zaakceptowana.",Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde angenommen.
+notifications.reservationDeclined,"Your reservation on ""%(arg1)s""s place was declined.","Vaše rezervace na ""%(arg1)s místo byla zrušena.","Twoja rezerwacja na miejsce ""%(arg1)s"" została odrzucona.",Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.
+notifications.verifyYourEmail,"Welcome to Park-it-direct! You have been sent a verification email to ""%(arg1)s"". You will not be able to log in again until your email is verified.","Vítejte v Park-it-direct! Na adresu ""%(arg1)s""s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.","Witaj w Park-it-direct! Na adres ""%(arg1)s""s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.","Wilkommen bei Park-it-direct! Wir haben eine Bestätigungs-E-Mail an ""%(arg1)s""s geschickt.
 Nachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen."
-notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created a new reservation for you.,%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.,%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.,%(arg1)s (%(arg2)s) hat für Sie eine Reservierung erstellt.
+notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created a new reservation for you.,%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.,%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.,%(arg1)s (%(arg2)s) hat für Sie eine Buchung erstellt.
 notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"
-% (arg1) hat gerade Ihre Reservierung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Reservierungen""."
-notifications.reservationRemovedDueToUnpaid,Your reservation was canceled because it was not paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.",Da Ihre Reservierung innerhalb 15 Minuten nicht bezahlt wurden. Haben wir sie storniert.
-notifications.reservationContactPersonNotification,"Your reservation have not been approved yet, if it is urgent, you can contact one of the contact presons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,
+% (arg1) hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Buchungen""."
+notifications.reservationRemovedDueToUnpaid,Your reservation has been canceled because it hasn't been paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.","Da Ihre Buchung innerhalb 15 Minuten nicht bezahlt wurde, haben wir sie storniert."
+notifications.reservationContactPersonNotification,"Your reservation has not been approved yet, if it is urgent you can contact one of the contact persons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,"Ihre Buchung wurde nocht nicht bestätigt. Falls dringend, können Sie eine der dazu befugten Personen kontaktieren: %(arg1)s"
+notifications.clientLegalDocuments,You can find new privacy documents in profile section because Client: '%(arg1)s' is in garage: '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' působí v garáži '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert."
+notifications.garageLegalDocuments,You can find new privacy documents in profile section because you were add to '%(arg1)s' garage.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie zum Klienten '%(arg1)s' hinzugefügt wurden."
+notifications.reservationLegalDocuments,You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie eine neue Buchung in der Garage '%(arg1)s' haben."
+notifications.reservationUpdateLegalDocuments,You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil in Ihrer Buchung Nr. '%(arg1)s' eine Änderung der Garage auf '%(arg2)s' vorgenommen wurde."
+notifications.contractLegalDocuments,You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. "
+notifications.reservationWasSuccessfullyPaid,"User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s","Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",,"Das Mitglied %(arg1)s, welchem Sie eine Buchung erstellt haben, hat sie gerade bezahlt. Detail der Buchung: %(arg2)s"
+notifications.reservationWillExpireSoon,Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s,"Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s",,"Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s"
 profile.profileSettings,Profile settings,Nastavení profilu,Ustawienia profilu,Profileinstellungen
 profile.hints,I want to see hints:,Chci vidět nápovědu:,Chcę zobaczyć rady:,Ich möchte Tipps sehen
 profile.language,Choose language:,Vyberte jazyk:,Wybierz język:,Sprache auswählen:
@@ -1021,6 +1065,9 @@ profile.email,Email:,Email:,E-mail:,E-Mail-Adresse:
 profile.createdAt,Profile created:,Profil vytvořen:,Profil założony:,Profilerstellungsdatum:
 profile.cars,Cars,Auta,Auta,Fahrzeuge
 profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,Pokaż garaże oferowane publicznie,Öffentlich angebotene Garagen anzeigen
+profile.privacyDocuments,All garages privacy documents,Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže,,GDPR Dokumente
+profile.myGarages,Garages you are in,Garáže jejichž jste členem,,Mitglied von Garagen
+profile.myClients,Clients you are in,Klienti jejichž jste členem,,Mitglied von klienten
 users.username,username,uživatelské jméno,Nazwa użytkownika,Benutzername
 users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
@@ -1040,6 +1087,7 @@ users.internal,internal,interní,wewnętrzny,intern
 users.host,regular guest,pravidelný host,regularny gość,Regelmäßiger Gast
 users.security,security,ostraha,ochrona,Wachdienst
 users.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
+users.manager,manager,,,Manager
 users.invitedToClient,Invited %(date)s to be member of client:,Pozván %(date)s aby byl členem klienta:,%(date)s zaproszony(-a) do uczestnictwa w:,Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:
 users.invitedToGarage,Invited %(date)s to be member of garage:,Pozván %(date)s aby byl členem garáže:,%(date)s zaproszony(-a) do garażu:,Am %(date)s zur Mitgliedschaft beim Parkplatz eingeladen:
 users.invitedToCar,Invited %(date)s to be member of car:,Pozván %(date)s aby byl členem auta,%(date)s zaproszony(-a) do auta:,Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:
@@ -1082,8 +1130,8 @@ newMarketing.selectTag,Select image tag,Vyberte označení obrázku,Wybierz tag 
 newMarketing.description,Garage description,Popis garáže,Opis garażu,Beschreibung des Parkhauses
 newMarketing.images,Garage images,Fotky garáže,Zdjęcia garażu,Bilder des Parkhauses
 newMarketing.uploading,Uploading...,Nahrávám ...,Wgrywam...,Wird hochgeladen …
-newMarketing.notCreated,Marketing not created. The short name you selected is already taken.,"Marketing nebyl vytvořen, vybrané zkrácené jméno už bylo provedeno.","Nie można było utworzyć marketingu, ponieważ wybrana nazwa jest już zajęta.","Marketing wurde nicht erstellt, der ausgewählte kurze Name wird bereits verwendet."
-newMarketing.notUpdated,Marketing not updated. The short name you selected is already taken.,"Marketing nebyl aktualizován, vybrané krátké jméno je již použito.","Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta.","Marketing wurde nicht geändert, der ausgewählte kurze Name wird bereits verwendet."
+newMarketing.notCreated,Marketing not created. The short name you selected is already taken.,"Marketing nebyl vytvořen, vybrané zkrácené jméno už bylo provedeno.","Nie można było utworzyć marketingu, ponieważ wybrana nazwa jest już zajęta.","Das Marketing wurde nicht erstellt, der ausgewählte kurze Name wird bereits verwendet."
+newMarketing.notUpdated,Marketing not updated. The short name you selected is already taken.,"Marketing nebyl aktualizován, vybrané krátké jméno je již použito.","Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta.","Das Marketing wurde nicht geändert, der ausgewählte kurze Name wird bereits verwendet."
 newMarketing.addImage,Add image,Přidat obrázek,Dodaj obrazek,Bild hinzufügen
 newMarketing.editImage,Edit image,Upravit obrázek,Edytuj obrazek,Bild ändern
 newMarketing.removeImage,Remove image,Odstranit obrázek,Usuń obrazek,Bild löschen
@@ -1107,10 +1155,10 @@ newPricing.name,Name,Název,Nazwa,Bezeichnung
 newPricing.flatPrice,"Flat price (per hour, not including VAT)","Cena za místo (za hodinu, bez DPH)","Cena za miejsce (za godzinę, bez VAT)","Preis pro Stellplatz (pro Stunde, zzgl. MwSt.)"
 newPricing.exponentialPrice,"Variable price (per hour, not including VAT)","Proměnlivá cena (za hodinu, bez DPH)","Cena zmienna (za godzinę, bez VAT)","Variabler Preis (pro Stunde, zzgl. MwSt.)"
 newPricing.weekendPrice,"Weekend price (per hour, not including VAT)","Cena o víkendu (za hodinu, bez DPH)","Cena weekendowa (za godzinę, bez VAT)","Wochenendpreis (pro Stunde, zzgl. MwSt.)"
-newPricing.12hPrice,Reservations to 12 hours,Rezervace do 12 hodin,Rezerwacja do 12 godzin,Reservierung für 12 Stunden
-newPricing.dayPrice,Reservations from 12 hours to 1 day,Rezervace od 12 hodin do 1 dne,Rezerwacja od 12 godzin do 1 dnia,Reservierung ab 12 Stunden bis 1 Tag
-newPricing.weekPrice,Reservations from 1 day to 1 week,Rezervace od 1 dne do 1 týdne,Rezerwacja od 1 dnia do 1 tygodnia,Reservierung ab 1 Tag bis 1 Woche
-newPricing.monthPrice,Reservations longer than 7 days,Rezervace delší než 7 dní,Rezerwacja dłuższa niż 7 dni,Reservierung für mehr als 7 Tage
+newPricing.12hPrice,Reservations to 12 hours,Rezervace do 12 hodin,Rezerwacja do 12 godzin,Buchung für 12 Stunden
+newPricing.dayPrice,Reservations from 12 hours to 1 day,Rezervace od 12 hodin do 1 dne,Rezerwacja od 12 godzin do 1 dnia,Buchung ab 12 Stunden bis 1 Tag
+newPricing.weekPrice,Reservations from 1 day to 1 week,Rezervace od 1 dne do 1 týdne,Rezerwacja od 1 dnia do 1 tygodnia,Buchung ab 1 Tag bis 1 Woche
+newPricing.monthPrice,Reservations longer than 7 days,Rezervace delší než 7 dní,Rezerwacja dłuższa niż 7 dni,Buchung für mehr als 7 Tage
 newPricing.namePlaceholder,Pricing,Ceny,Ceny,Preise
 newPricing.maxPlaceholder,500,500,500,500
 newPricing.minPlaceholder,300,300,300,300
@@ -1120,11 +1168,11 @@ newPricing.invalidPrice,Invalid price,Neplatná cena,Niepoprawna cena,Preis ung�
 newPricing.selectCurrency,Select currency,Vyberte měnu,Wybierz walutę,Währung auswählen
 newPricing.selectPlace,Start by selecting a spot,Začněte výběrem místa,Zacznij od wybrania miejsca,Beginnen Sie mit der Auswahl des Stellplatzes
 newPricing.saving,Saving...,Ukládám...,Zapisuję...,Speichern...
-newPricing.minReservationDuration,Min reservation duration,Min délka rezervace,,
-newPricing.minReservationDurationPlaceholder,30,30,30,30
-newPricing.maxReservationDuration,Max reservation duration,Max délka rezervace,,
+newPricing.minReservationDuration,Min reservation duration (minutes),Min délka rezervace (minuty),,Mindestlänge der Buchung (Minuten)
+newPricing.minReservationDurationPlaceholder,15,15,15,15
+newPricing.maxReservationDuration,Max reservation duration,Max délka rezervace,,Maximallänge der Buchung (Minuten)
 newPricing.maxReservationDurationPlaceholder,600,600,600,600
-newPricing.durationErr,Wrong duration,Špatná délka,,
+newPricing.durationErr,Wrongly selected duration,Špatně zvolená délka,,Falsche Länge
 newRent.name,Name,Název,Nazwa,Bezeichnung
 newRent.namePlaceholder,Parking spot rent,Nájemné místa,Miejsca do wynajęcia,Gemieteter Stellplatz
 newRent.invalidName,Invalid rent name,Neplatný název nájemného,Niepoprawna nazwa wynajmu,Eingegebene Bezeichnung für Mietverhältnis ungültig
@@ -1162,7 +1210,7 @@ carUsers.name,name,název,nazwa,Bezeichnung
 carUsers.email,email,email,e-mail,E-Mail-Adresse
 carUsers.phone,phone,telefon,telefon,Telefonnummer
 carUsers.admin,admin,správce,admin,Administrator
-newReservationOverview.overview,Reservation overview,Přehled rezervací,Podgląd rezerwacji,Reservierungsübersicht
+newReservationOverview.overview,Reservation overview,Přehled rezervací,Podgląd rezerwacji,Buchungsübersicht
 newReservationOverview.selectedPlace,Selected spot,Vybrané místo,Wybrane miejsce,Ausgewählter Stellplatz
 newReservationOverview.duration,Duration,Doba trvání,Okres,Dauer
 newReservationOverview.from,from,od ,od,von
@@ -1175,9 +1223,9 @@ newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,ČSOB -
 newReservationOverview.paypal,PayPal,PayPal,PayPal,PayPal
 newReservationOverview.raiffeisenbank,Raiffeisenbank - online payment,Raiffeisenbank - online platba,Raiffeisenbank - płatność online,Raiffeisenbank - Online- Zahlung
 newReservationOverview.paymentMethod,Payment method,Platební metoda,Metoda płatności,Zahlungsmethode
-newReservationOverview.csobOneTimePaymentUseCard,Use One Click Payment,Použít platbu na klik,,
-newReservationOverview.csobOneTimePaymentNewCard,Use different credit card,Použít jinou kartu,,
-newReservationOverview.csobOneTimePayment,Remember card for One Click Payment,Zapamatovat kartu pro platbu na klik,,
+newReservationOverview.csobOneTimePaymentUseCard,Use One Click Payment,Použít platbu na klik,,Per Click Methode benutzen
+newReservationOverview.csobOneTimePaymentNewCard,Use different credit card,Použít jinou kartu,,Eine andere Bankkarte benutzen
+newReservationOverview.csobOneTimePayment,Remember card for One Click Payment,Zapamatovat kartu pro platbu na klik,,"Ihre Bankarte für die ""per Click Zahlung"" speichern"
 addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Parkhausbesitzer
 addFeatures.LongTerm,LONG-TERM OR PERSONAL,DLOUHODOBÉ NEBO OSOBNÍ,DŁUGOTERMINOWO LUB PERSONALNIE,LANGFRISTIG ODER PERSÖNLICH
 addFeatures.Automation,AUTOMATION & ACCESS,AUTOMATIZACE A PŘÍSTUP,AUTOMATYZACJA I DOSTĘP,AUTOMATISIERUNG UND ZUGANG
@@ -1185,7 +1233,7 @@ addFeatures.Integration,INTEGRATION,INTEGRACE,INTEGRACJA,INTEGRATION
 addFeatures.custom,CUSTOM,VLASTNÍ,WŁASNY,INDIVIDUELL
 addFeatures.canAddGarage,garages and spots,Garáže a místa,Garaże i miejsca,Parkhaus und Stellplätze
 addFeatures.users,users,uživatelé,użytkownicy,Benutzer
-addFeatures.reservations,reservations,rezervace,rezerwacje,Reservierungen
+addFeatures.reservations,reservations,rezervace,rezerwacje,Buchungen
 addFeatures.saveContracts,save agreements,uložte dohody,zapisz umowy,Vereinbarungen speichern
 addFeatures.hosts,regular guests,pravidelní hosté,regularni goście,Regelmäßige Gäste
 addFeatures.occupancy,occupancy overview,přehled obsazenosti,przegląd zajętych miejsc,Belegungsübersicht
@@ -1204,7 +1252,7 @@ addFeatures.perMonth,/ month,/ měsíc,/ miesiąc,/ Monat
 addFeatures.free,Available,Volno,Wolne,Frei
 addFeatures.customPrice,Custom pricing,Vlastní cena,Cena osobista,Eigener Preis
 addFeatures.additionalGoods,Additional goods,Dodatečné zboží,Dodatkowe produkty,Zusätzliche Waren
-addFeatures.bookingPage,MY OWN BOOKING PAGE,MOJE VLASTNÍ REZERVAČNÍ STRÁNKA,MOJA OSOBISTA STRONA REZERWACJI,MEINE EIGENE RESERVIERUNGSSEITE
+addFeatures.bookingPage,MY OWN BOOKING PAGE,MOJE VLASTNÍ REZERVAČNÍ STRÁNKA,MOJA OSOBISTA STRONA REZERWACJI,MEINE EIGENE BUCHUNGSSEITE
 addFeatures.advertisement,,,,
 addFeatures.gateModule,GATE MODULE,MODUL BRÁNY,MODUŁ BRAMY,TORMODUL
 addFeatures.openGate,Opens gate via app,Otevře bránu pomocí aplikaci,Otwórz bramę za pomocą aplikacji,Tor wird über App geöffnet
@@ -1224,10 +1272,10 @@ newAccount.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,U
 newAccount.creatingAccount,Creating account ...,Vytvářím účet ...,Tworzę konto...,Konto wird erstellt …
 newAccount.updatingAccount,Updating account ...,Aktualizuji účet ...,Aktualizuję konto...,Konto wird aktualisiert …
 newAccount.CSOBcreating,"Verifying information, creating account ...","Potvrzuji informace, vytvářím účet ...","Potwierdzam informacje, tworzę konto...","Daten werden geprüft, Konto wird erstellt …"
-newAccount.CSOBnotValid,Private key and Merchant ID pair is not valid.,Osobní klíč a id obchodníka není platné.,Klucz osobisty i id handlowe są niepoprawne.,Wertepaar von privatem Schlüssel und Händler-ID ist ungültig
+newAccount.CSOBnotValid,Private key and Merchant ID pair is not valid.,Osobní klíč a id obchodníka není platné.,Klucz osobisty i id handlowe są niepoprawne.,Privater Schlüssel und Händler-ID ist ungültig
 newAccount.permissionNotGranted,Paypal did not grant permission to process payment on your behalf. Please try again.,Povolení pro Paypal aby zpracovával platby Vaším jménem nebylo uděleno. Prosím zkuste znovu.,Nie udało się dokonać płatności przez Paypal. Spróbuj ponownie.,Die Verarbeitung der Zahlung wurde von Paypal abgelehnt. Versuchen Sie es erneut.
 newAccount.whatIsMerchant,Process of creating account,Proces vytváření účtu,Proces tworzenia konta,Vorgang der Kontoerstellung
-newAccount.start,"Start by selecting the kind of payment method you prefer. If you would like us to implement another payment method, please contact Park-it-direct support.","Začněte výběrem způsobu platby, který byste preferoval. Pokud byste chtěl, abychom zavedli jiný způsob platby, kontaktujte podporu Park-it-direct.","Zacznij od wybrania preferowanego sposobu płatności. Jeśli chcesz, żebyśmy wprowadzili nowy sposób płatności, skontaktuj się z naszym serwisem Park-it-direct.","Wählen Sie zuerst das gewünschte Zahlungsverfahren aus. Wenn Sie ein anderes Zahlungsverfahren benötigen, wenden Sie sich bitte an den Support von Park-it-direct."
+newAccount.start,"Start by selecting the kind of payment method you prefer. If you would like us to implement another payment method, please contact Park-it-direct support.","Začněte výběrem způsobu platby, který byste preferoval. Pokud byste chtěl, abychom zavedli jiný způsob platby, kontaktujte podporu Park-it-direct.","Zacznij od wybrania preferowanego sposobu płatności. Jeśli chcesz, żebyśmy wprowadzili nowy sposób płatności, skontaktuj się z naszym serwisem Park-it-direct.","Wählen Sie zuerst die gewünschte Zahlungsmethode aus. Wenn Sie ein anderes Zahlungsverfahren benötigen, wenden Sie sich bitte an den Support von Park-it-direct."
 newAccount.merchantDesc,"We use Paypal to take care of your money. If you want to accept money, you have to have your own Paypal business account and provide us permission to process payments for you. Go to paypal.com and sign up for a business account! Once you have a Paypal business account we can continue with this form.","Používáme Paypal, aby se staral o Vaše peníze. Pokud chcete přijímat peníze, musíte mít svůj vlastní obchodní účet Paypal a poskytnout nám povolení ke zpracování plateb. Jděte na paypal.com a zaregistrujte si obchodní účet! Jakmile získáte svůj obchodní účet Paypal, můžeme s daným formulářem pokračovat.","Używamy Paypal, żeby dbał o Twoje finanse. Jeśli chcesz otrzymywać pieniądze, musisz posiadać własne konto firmowe Paypal i dać nam pozwolenie na przetwarzanie płatności. Wejdź na paypal.com i zarejestruj swoje konto firmowe! Jak tylko dostaniesz własne konto firmowe Paypal, możesz kontynuować wypełnianie formularza.","Wir verwenden Paypal. Wenn Sie Zahlungen entgegennehmen möchten, benötigen Sie ein eigenes Paypal-Geschäftskonto. Wir benötigen die Berechtigung, Zahlungen für Sie zu verarbeiten. Öffnen Sie paypal.com und registrieren Sie ein Geschäftskonto! Sobald Sie ein Paypal-Geschäftskonto haben, können wir mit diesem Formular fortfahren."
 newAccount.merchantDesc2,"Fill in the form and click OK. You will be automatically redirected to Paypal's website, where you can log in to the Paypal account you want to use with this Park-it-direct account. Then just click the ""Grant Permission"" button.","Vyplňte formulář a klikněte na tlačítko OK. Budete automaticky přesměrováni na webovou stránku paypal, kde se přihlásíte do paypalu, který chcete použít s tímto účtem Park-it-direct. Pak klikněte na tlačítko ""udělit povolení"".","Wypełnij formularz i kliknij przycisk OK. Nastąpi automatyczne przekierowanie na stronę paypal, gdzie zalogujesz się na konto paypal, które chcesz używać wraz z tym kontem Park-it-direct. Następnie kliknij na ""Dać pozwolenie"".","Füllen Sie dieses Formular aus und klicken Sie auf „OK“. Sie werden automatisch auf die Paypal-Website weitergeleitet, auf der Sie sich bei dem Paypal-Konto für dieses Park-it-direct-Konto anmelden können. Klicken Sie dann einfach auf die Schaltfläche „Berechtigung erteilen“."
 newAccount.csobMerchantDesc,"To use the ČSOB payment gateway, you first have to visit your local ČSOB branch office, where they will provide you with a new merchant ID and private key. For more information contact ČSOB support.","Chcete-li použít platební bránu ČSOB, musíte nejdřív navštívit místní pobočku ČSOB, poskytnou Vám nové id obchodníka a vlastní klíč. Pro více informací kontaktujte podporu ČSOB.","Jeśli chcesz skorzystać z bramki płatniczej ČSOB, musisz najpierw odwiedzić oddział ČSOB, gdzie otrzymasz nowe id oraz klucz osobisty. Skontaktuje się z ČSOB, aby uzyskać więcej informacji.",Zur Verwendung des ČSOB-Zahlungsgateways müssen Sie zuerst eine neue Händler-ID und einen privaten Schlüssel in Ihrer ČSOB-Filiale beantragen. Weitere Informationen erhalten Sie beim ČSOB-Kundendienst.
@@ -1235,18 +1283,18 @@ newAccount.csobMerchantDesc2,"If you already have your identifiers, please enter
 newAccount.updateProcess,Process of updating the account,Proces aktualizace účtu,Proces aktualizacji konta,Vorgang der Kontoaktualisierung
 newAccount.merchantUpdateDesc,"After clicking OK, you will be redirected to Paypal. To change your current Paypal account, simply log in with another Paypal account and click the ""Grant Permission"" button.","Po kliknutí na tlačítko OK budete přesměrován na paypal. Chcete-li změnit svůj aktuální účet paypal, jednoduše se přihlaste s jiným PayPal účtem a klikni na tlačítko ""udělit povolení"".","Po kliknięciu na przycisk OK nastąpi przekierowanie na paypal. Jeśli chcesz zmienić swoje aktualne konto paypal, po prostu zaloguj się przez inne konto PayPal i kliknij na przycisk ""Dać pozwolenie"".","Klicken Sie auf „OK“. Sie werden zu Paypal umgeleitet. Wenn Sie das aktuelle Paypal-Konto ändern möchten, melden Sie sich mit einem anderen Paypal-Konto an und klicken Sie auf die Schaltfläche „Berechtigung erteilen“."
 newAccount.merchantUpdateCsobDesc,"To change your current ČSOB account, simply provide us with a new merchant ID and private key.","Chceš-li změnit stávající účet ČSOB, jednoduše nám poskytni nové id obchodníka a vlastní klíč.","Jeśli chcesz zmienić obecne konto ČSOB, po prostu wpisz nowe id i klucz osobisty.","Wenn Sie Ihr aktuelles ČSOB-Konto ändern möchten, geben Sie einfach Ihre neue Händler-ID und Ihren neuen privaten Schlüssel an."
-newAccount.selectPaymentMethod,Select payment method,Vyberte způsob platby,Wybierz sposób płatności,Zahlungsverfahren auswählen
+newAccount.selectPaymentMethod,Select payment method,Vyberte způsob platby,Wybierz sposób płatności,Zahlungsmethode auswählen
 newAccount.csobPayment,ČSOB payment information,Platební informace ČSOB,Informacje płatnicze ČSOB,ČSOB-Zahlungsdaten
 newAccount.paypalPayment,Paypal selected. You will be redirected after clicking OK.,Paypal vybrán - budete přesměrováni po kliknutí na tlačítko OK.,PayPal został wybrany -- po kliknięciu na przycisk OK nastąpi przekierowanie.,"Paypal wurde ausgewählt – Sie werden weitergeleitet, wenn Sie auf „OK“ klicken."
 newAccount.csobMerchantID,ČSOB merchant ID,Id obchodníka ČSOB,ID firmowe ČSOB,ČSOB-Händler-ID
-newAccount.gpWebpayMerchantID,Raiffeisenbank‎ merchant ID,ID obchodníka Raiffeisenbank‎,,
+newAccount.gpWebpayMerchantID,Raiffeisenbank‎ merchant ID,ID obchodníka Raiffeisenbank‎,,Raiffeisenbank-Händler ID
 newAccount.invalidMerchantId,Merchant ID invalid,Id obchodníka je neplatné,Niepoprawne ID firmowe,Die Händler-ID ist ungültig.
 newAccount.csobMerchantIdplaceholder,A2411K3nLj,A2411K3nLj,A2411K3nLj,A2411K3nLj
 newAccount.gpWebpayMerchantIdplaceholder,1234567890,1234567890,1234567890,1234567890
-newAccount.gpWebpayPassword,Private key password,Heslo k soukromému klíči,Hasło do klucza prywatnego,
-newAccount.gpWebpayPasswordPlaceholder,abcd1234,abcd1234,abcd1234,
+newAccount.gpWebpayPassword,Private key password,Heslo k soukromému klíči,Hasło do klucza prywatnego,Passwort zum privaten Schlüssel.
+newAccount.gpWebpayPasswordPlaceholder,abcd1234,abcd1234,abcd1234,abcd1234
 newAccount.SelectPrivateKey,Select private key:,Zvolte soukromý klíč:,Wybierz klucz osobisty:,Privaten Schlüssel auswählen:
-newAccount.invalidKeyPair,Merchant id or key is invalid,Id obchodníka nebo soukromý klíč jsou špatně,Niepoprawne ID firmy lub klucz prywatny,
+newAccount.invalidKeyPair,Merchant id or private key is invalid,Id obchodníka nebo soukromý klíč jsou špatně,Niepoprawne ID firmy lub klucz prywatny,Die ID des Händlers oder der private Schlüssel ist Falsch.
 invoices.invoiceDate,Issued,datum faktury,data wystawienia faktury,Rechnungsdatum
 invoices.dueDate,Due date,datum splatnosti,termin spłaty,Fälligkeitsdatum
 invoices.account,Account,účet,konto,Konto
@@ -1261,7 +1309,7 @@ invoices.invoicePaid,Are you sure you want to mark this invoice as paid?,Opravdu
 invoices.initializingPayment,Initiating payment ...,Inicializuji platby ...,Inicjalizuję płatności...,Zahlung wird initialisiert …
 invoices.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,Weiterleitung …
 invoices.paymentUnsucessfull,Payment was canceled and unsucessful.,Platba byla zrušena a neúspěšná.,Płatność została anulowana. Nie powiodła się.,Die Zahlung wurde abgebrochen und nicht durchgeführt.
-invoices.payingReservation,Paying reservation,Placení rezervace,Opłata rezerwacji,Reservierung wird gezahlt
+invoices.payingReservation,Paying reservation,Placení rezervace,Opłata rezerwacji,Buchung wird gezahlt
 invoices.selectClient,Select client,Vyberte klienta,Wybierz klienta,Kunden auswählen
 invoices.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Parkhaus auswählen
 invoices.invoiceNumber,Invoice No.,faktura č.,Faktura nr,Rechnungsnr.
@@ -1284,50 +1332,49 @@ invoices.invoiceIncorect,Cancel invoice,Stornovat fakturu,Anulować fakturę,Rec
 invoices.donwloadExcel,Download CSV,Stáhnout CSV,Ściągnąć CSV,CSV herunterladen
 invoices.donwloadXlsx,Download XLSX,Stáhnout XLSX,Ściągnąć XLSX,XLSX herunterladen
 invoices.donwloadInvoices,Download invoices,Stáhnout faktury,Ściągnąć faktury,Rechnungen herunterladen
-invoices.donwloadXML,Pohoda XML,Pohoda XML,Pohoda XML,
-invoices.selectYourPohodaIc,Select IČ of company you are accounting for:,Zvolte IČ společnosti pro kterou účtujete:,"Wybierz REGON firmy, na którą wystawiona będzie faktura:",
-invoices.invoices,Faktury,Invoices,,
-invoices.simplifiedTaxReceipts,Zjednodušené daňové doklady,Simplified tax receipts,,
-invoices.canceledInvoices,Zrušené faktury,Canceled invoices,,
-invoices.userName,User,Uživatel,,
+invoices.donwloadXML,Pohoda XML,Pohoda XML,Pohoda XML,Pohoda XML
+invoices.selectYourPohodaIc,Select CIN of company you are accounting for:,"Zvolte IČ společnosti, pro kterou účtujete:","Wybierz REGON firmy, na którą wystawiona będzie faktura:","Wählen Sie die Identifikationsnummer der Gesellschaft, für welche Sie die Rechnung erstellen."
+invoices.invoices,Invoices,Faktury,,Rechnungen
+invoices.simplifiedTaxReceipts,Simplified tax receipts,Zjednodušené daňové doklady,,Quittungen
+invoices.canceledInvoices,Canceled invoices,Zrušené faktury,,Stornierte Belege
+invoices.userName,User,Uživatel,,Benutzer
 resetPassword.send,A password reset email has been sent to your address.,Obnova hesla byla odeslána na Váš e-mail.,Informacje dotyczące nowego hasła zostały przesłane na Twój e-mail.,Eine E-Mail zum Zurücksetzen des Passworts wurde an Ihre E-Mail-Adresse versendet.
 resetPassword.description,Please enter your email here and we will send you a description of the password reset process,Zde vložte svůj e-mail a my Vám zašleme popis procesu obnovení hesla,"Wpisz tutaj swój adres e-mail, a my prześlemy Ci instrukcje dotyczące odnowienia hasła.",Geben Sie hier Ihre E-Mail-Adresse ein. Wir senden Ihnen eine Anleitung zum Zurücksetzen des Passworts zu.
 resetPassword.email,email,e-mail,e-mail,E-Mail-Adresse
 resetPassword.emailInvalid,Invalid email,Neplatný e-mail,Niepoprawny e-mail,Ungültige E-Mail-Adresse
 modules.marketingPage,Marketing page,Marketingová stránka,Strona marketingu,Marketing-Seite
 modules.connectWithMrParkit,Connect with MR.PARKIT,Spojte se s MR.PARKIT,Skontaktuj się z MR.PARKIT,Mit MR. PARKIT verbinden
-modules.reservationForm,Reservation form,Rezervační formulář,Formularz rezerwacji,Reservierungsformular
+modules.reservationForm,Reservation form,Rezervační formulář,Formularz rezerwacji,Buchungsformular
 modules.goPublic,Go public,Zveřejněte,Zaoferuj publicznie,Veröffentlichen
 modules.goPublicDescription,Offer short-term parking to the PiD community,Nabídněte krátkodobé parkování pro komunitu PiD,Zaoferuj krótkoterminowe parkowanie dla grupy PiD,Kurzfristige Parkplätze für die PiD-Community anbieten
-modules.goInternal,Internal paid reservations,Interní placené rezervace,Wewnętrzne płatne rezerwacje,Interne bezahlte Buchungen
+modules.goInternal,Internal paid reservations,Interní placené rezervace,Wewnętrzne płatne rezerwacje,Intern bezahlte Buchungen
 modules.goInternalDescription,Offer short-term parking to your tenants,Nabídněte krátkodobé parkování Vašim nájemcům,Zaoferuj swoim najemcom krótkoterminowe parkowanie,Bieten Sie Ihren Mietern bezahltes Kurzzeit-Parken
 modules.setting,Settings,Nastavení,Ustawienia,Einstellungen
 modules.Preview,Preview,Náhled,Podgląd,Vorschau
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,Rechnungsplan wird aktualisiert. Weiterleiten …
-modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie ein Zahlungsverfahren festgelegt haben (unter Administration > Finanzen)."
+modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie eine Zahlungsmöglichkeit festgelegt haben (unter Administration > Finanzen)."
 modules.flexiplace,Flexi place,Flexi místo,Miejsce Flexi,Flexi Platz
-modules.flexiplaceDescription,"Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.","Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální.","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.","Flexi Platz ist ein Unterstützungswerkzeug zur optimalen Nutzung 
-alle seine Plätze. Ihre Benutzer werden seinen Parkplatz bis zum Beginn der Reservierung nicht kennen. Reservierungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren."
-modules.showApiKey,Show API endpoint,Zobrazit API endpoint,Pokaż API endpoint,API Endpunkt zeigen
-modules.regenerateApiKey,Regenerate API endpoint,Vygenerovat nový API endpoint,Wygeneruj API endpoint,Einen neuen API Endpunkt erstellen
-modules.3rdPartyIntegration,3rd party integration,Integrace 3. stran,Integracja z osobami trzecimi,Integration von Dritten
-modules.thirdPartyIntegrationDescription,"By activating this function, we will give you your own API with actions that will allow you to create reservations from another system.","Aktivací této funkce obdržíte vlastní API s akcemi, které vám umožní spravovat rezervace pomocí dalších systémů",Aktywując tę funkcję otrzymasz własny API z opcjami umożliwiającymi zarządzanie rezerwacjami za pomocą innych systemów,"Durch aktivierung dieser Funktion, bekommen Sie eine eigene API mit Aktionen, die Ihnen Verwaltung der Reservierungen durch Dritte ermöglichen"
+modules.flexiplaceDescription,"Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.","Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální.","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.","Der Flexi Platz ist ein Unterstützungstool zur optimalen Nutzung Ihrer Plätze. Ihre Benutzer werden ihren Parkplatz bis zum Beginn der Buchung nicht kennen. Die Buchungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren."
+modules.showApiKey,Show API endpoint,Zobrazit API endpoint,Pokaż API endpoint,API Endpoint zeigen
+modules.regenerateApiKey,Regenerate API endpoint,Vygenerovat nový API endpoint,Wygeneruj API endpoint,Einen neuen API Endpoint erstellen
+modules.3rdPartyIntegration,3rd party integration,Integrace 3. stran,Integracja z osobami trzecimi,Integration von dritten Seiten
+modules.thirdPartyIntegrationDescription,"By activating this function, we will give you your own API with actions that will allow you to create reservations from another system.","Aktivací této funkce obdržíte vlastní API s akcemi, které vám umožní spravovat rezervace pomocí dalších systémů",Aktywując tę funkcję otrzymasz własny API z opcjami umożliwiającymi zarządzanie rezerwacjami za pomocą innych systemów,"Durch aktivierung dieser Funktion, bekommen Sie eine eigene API mit Aktionen, die Ihnen die Verwaltung von Buchungen durch dritte Seiten ermöglicht"
 modules.mrParkitIntegration,Integration by MR.PARKIT,Integrace MR.PARKIT,Integracja MR.PARKIT,MR.PARKIT Integration
-modules.mrParkitIntegrationDescription,"This is simmilar to 3rd party integration, the difference is, your places will be automatically taken care of by Mr. Parkit resrevation system.","Tato funkce je podobná integraci 3. stran, rozdílem je, že o místa se automaticky postará Mr. Parkit","Funkcja podobna do Integracji z osobami trzecimi. Różnica polega na tym, że miejscami automatycznie zajmie się Mr.Parkit.","Ähnlich der Funktion ""Integration von Dritten"". Reservierungen werden über MR.PARKIT ermittelt."
+modules.mrParkitIntegrationDescription,"This is simmilar to 3rd party integration, the difference is, your places will be automatically taken care of by Mr. Parkit resrevation system.","Tato funkce je podobná integraci 3. stran, rozdílem je, že o místa se automaticky postará Mr. Parkit","Funkcja podobna do Integracji z osobami trzecimi. Różnica polega na tym, że miejscami automatycznie zajmie się Mr.Parkit.","Diese Funktion ist ähnlich zur Integration von 3. Seiten mit dem Unterschied, dass sich MR.PARKIT automatisch um die Parkplätze kümmert."
 modules.selectPlacesFor3rdParty,places for third party,Místa pro třetí strany,Miejsca dla osób trzecich,Plätze für die Dritten
 modules.selectPlacesForMrParkit,places for MR.PARKIT,Místa pro MR.PARKIT,Miejsca dla MR.PARKIT,Plätze für MR.PARKIT
 modules.token,Secret token,Tajný token,Skryty token,Security Token
 modules.apiEndpoint,Api endpoint,Api endpoint,Api endpoint,Api endpoint
 modules.warning,Keep it secret!,Držte ho v tajnosti!,Nie dziel się nim!,Halten Sie es geheim!
-modules.warningDesribtion,"Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible.","Tajný token je unikátní identifikátor Vaší garáže. Nikomu ho nesdělujte, jinak daná osoba bude moci provádět změny ve Vaší garáži. V případě úniku tokenu co nejrychleji vygenerujte nový endpoint.","Skryty token to unikalny identyfikator Twojego garażu. Nie dziel się nim z nikim, w przeciwnym razie ktoś inny będzie mógł dokonywać zmian w Twoim garażu. W przypadku zgubienie tokena szybko wygeneruj nowy endpoint.","Security Token dient zu einzigartiger Identifizierung Ihrer Parkfläche. Behalten Sie es geheim und sagen es niemandem. Falls jemand Ihr Security Token erfahren hat, erstellen Sie sofort einen neuen Endpunkt."
+modules.warningDesribtion,"Secret token identifies your garage. Do not share your token with anybody otherwise they will be able to make changes in your garage. In case of token was compromised, please regenerate your API endpoint as soon as possible.","Tajný token je unikátní identifikátor Vaší garáže. Nikomu ho nesdělujte, jinak daná osoba bude moci provádět změny ve Vaší garáži. V případě úniku tokenu co nejrychleji vygenerujte nový endpoint.","Skryty token to unikalny identyfikator Twojego garażu. Nie dziel się nim z nikim, w przeciwnym razie ktoś inny będzie mógł dokonywać zmian w Twoim garażu. W przypadku zgubienie tokena szybko wygeneruj nowy endpoint.","Der security Token dient zur einzigartigen Identifizierung Ihrer Parkfläche. Behalten Sie ihn geheim und sagen Sie ihn niemandem. Falls jemand Ihr Security Token erfahren hat, erstellen Sie sofort einen neuen Endpoint."
 modules.toApiExplorer,Go to API explorer!,Přejít do API prohlížeče!,Przejdź do przeglądarki API,Gehe zu API-Browser!
 modules.requestDesribtionPart1,"To use your secret token, add header","Použijte token tak, že přidáte header","Aby użyć skrytego tokena, dodaj header","Verwenden Sie dasToken, indem Sie den Header einfügen"
-modules.requestDesribtionPart2,Authorization:,Authorization:,Authorization:,Authorization:
-modules.requestDesribtionPart3,to your graphQL requests.,do vašich graphQL requestů,dla Twoich raphQL requests,für Ihre graphQL Aufträge
-modules.selectPlaces,"To activate this module, please, fill the form bellow","Pro aktivaci modulu, prosím, vyplňte formulář.","Żeby aktywować moduł, wypełnij formularz.","Füllen Sie bitte das Formular aus, bevor Sie das Modul aktivieren."
+modules.requestDesribtionPart2,Authorization:,Authorization:,Authorization:,Authorisation:
+modules.requestDesribtionPart3,to your graphQL requests.,do vašich graphQL requestů,dla Twoich graphQL requests,für Ihre graphQL Aufträge
+modules.selectPlaces,Please fill the form below to activate this module.,"Pro aktivaci modulu, prosím, vyplňte formulář níže.","Żeby aktywować moduł, wypełnij formularz.","Füllen Sie bitte das Formular aus, bevor Sie das Modul aktivieren."
 newContract.description,New Agreement in,Nová dohoda v,Nowa umowa w,Neue Vereinbarung in
 newContract.edit,Editing agreement in,Úprava dohody v,Edycja umowy w,Vereinbarung bearbeiten in
-newContract.yourContract,Your agreement in,Vaše dohoda v,Twoja umowa w,Ihr Vertrag in
+newContract.yourContract,Your agreement in,Vaše dohoda v,Twoja umowa w,Ihre Vereinbarung in
 newContract.selectClient,Select client,Vyberte klienta,Wybierz klienta,Kunden auswählen
 newContract.invalidToken,Token invalid,Neplatný token,Niepoprawny token,Token ungültig
 newContract.tokenPlaceholder,gaZJBS,gaZJBS,gaZJBS,gaZJBS
@@ -1340,22 +1387,22 @@ newContract.priceInvalid,Price invalid,Cena je neplatná,Kwota jest niepoprawna,
 newContract.pricePlaceholder,10000,10000,10000,10000
 newContract.selectCurrency,Select currency,Zvolte měnu,Wybierz walutę,Währung auswählen
 newContract.placePrice,Price per spot per month,Cena za místo za měsíc,Cena za miejsce na miesiąc,Preis pro Stellplatz pro Monat
-newContract.indefinitContract,Create agreement indefinitely.,Uzavřít dohodu na dobu neurčitou.,Zawrzeć umowę na czas nieokreślony,Unbefristeten Vertrag abschließen
+newContract.indefinitContract,Create agreement indefinitely.,Uzavřít dohodu na dobu neurčitou.,Zawrzeć umowę na czas nieokreślony,Unbefristete Vereinbarung abschließen
 newContract.indefinite,Indefinite,Na dobu neurčitou,Na czas nieokreślony,Unbefristet
 newContract.securityInterval,Security interval,Ochranný interval,Interwał bezpieczeństwa,Sicherheitsintervall
 newContract.inMinutes,in minutes,v minutách,w minutach,in Minuten
-newContract.securityIntervalInvalid,Wrong interval,Špatný interval,Niepoprawny interwał,Intervall falsch
+newContract.securityIntervalInvalid,Wrong interval,Špatný interval,Niepoprawny interwał,Falscher Intervall
 newContract.place,Place:,Místo:,Miejsce:,Platz:
 newContract.usedBy,Used by:,Pronajato:,Wynajęte:,Verwendet von:
 newContract.goPublic,Go public,Pro veřejnost,Publiczne,Öffentlich
 newContract.rentyType,Renty type:,Typ nájmu,Rodzaj wynajmu,Mietzeit:
 newContract.longterm,Longterm,Dlouhodobý,Długoterminowy,Langzeit
 newContract.shortterm,Shortterm,Krátkodobý,Krótkoterminowy,Kurzzeit
-newContract.longtermPrice,Longterm price:,Dlouhodobá cena:,Długoterminowa cena:,Langzeit Preis:
-newContract.shorttermPrice,Shortterm price:,Krátkodobá cena:,Krótkoterminowa cena:,Kurzzeit Preis:
-newContract.removeReservations,Remove reservations of removed places,Smazat rezervace na odebraných místech,,
-newContract.doNotRemoveReservations,Try replacing reservations of removed places,Zkusit přemístit rezervace na odebraných místech,,
-finance.financeSettings,Finance settings,Nastavení financí,,
+newContract.longtermPrice,Longterm price:,Dlouhodobá cena:,Długoterminowa cena:,Langfristiger Preis:
+newContract.shorttermPrice,Shortterm price:,Krátkodobá cena:,Krótkoterminowa cena:,Kurfristiger Preis:
+newContract.removeReservations,Remove reservations of removed places,Smazat rezervace na odebraných místech,,Die Buchung auf den entfernten Plätzen löschen.
+newContract.doNotRemoveReservations,Try replacing reservations of removed places,Zkusit přemístit rezervace na odebraných místech,,Die Buchung auf den entfernten Plätzen verschieben.
+finance.financeSettings,Finance settings,Nastavení financí,,Finanzeinstellungen
 finance.paypal,Paypal,Paypal,PayPal,Paypal
 finance.csob,ČSOB,ČSOB,ČSOB,ČSOB
 finance.gpWebpay,Raiffeisenbank,Raiffeisenbank,Raiffeisenbank,Raiffeisenbank
@@ -1365,6 +1412,7 @@ finance.SelectPrivateKey,Select private key,Zvolte soukromý klíč:,Wybierz klu
 finance.vat,Value added tax,Daň z přidané hodnoty,Podatek VAT,Mehrwertsteuer
 finance.invoiceRow,Regular invoice row,Číselná řada faktur,Regularny rządek faktur,Fortlaufende Rechnungsnummer
 finance.simplyfiedInvoiceRow,Simplified invoice row,Číselná řada zjednodušených daňových dokladů,Uproszczony rządek faktur,Fortlaufende Kassenbonnummer
+finance.invoicePrefix,Prefix,Prefix,Prefix,Prefix
 finance.invalidVat,Invalid VAT,Neplatné DPH,Niepoprawny VAT,Ungültige Mehrwertsteuer
 finance.invalidRow,Invalid number,Neplatné číslo,Niepoprawny numer,Ungültige Nummer
 finance.changeSuccess,Values changed sucessfully.,Hodnoty byly úspěšně změněny.,Wartości zostały zmienione.,Die Werte wurden erfolgreich geändert.
@@ -1372,21 +1420,21 @@ finance.changeFailed,An error occurred. Values were not changed.,"Došlo k chyb�
 finance.uploadKey,Upload RSA key,Nahrát RSA klíč,Wgrać klucz RSA,RSA-Schlüssel hochladen
 finance.accountNumber,Account number,Číslo účtu,Numer konta,Kontonummer
 finance.invalidAccountNumber,Invalid account number,Nesprávné číslo účtu,Niepoprawny numer konta,Ungültige Kontonummer
-finance.paymentGates,Payment gates,Platební brány,Bramy płatnicze,
+finance.paymentGates,Payment gates,Platební brány,Bramy płatnicze,Zahlungsportal
 finance.rents,Rents,Nájmy,Wynajmy,Mietverhältnisse
-finance.billingAddress,Billing address,Fakturační adresa,,
-finance.testPayment,You can now perform a test payment to verify the correctness of the entered data.,"Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.","Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",
-finance.testPaymentSuccessful,Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.,Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.,Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.,
-finance.testPaymentUnsuccessful,Your test payment was unsuccessful.,Vaše testovací platba neproběhla úspěšně.,Transakcja próbna nie powiodła się.,
+finance.billingAddress,Billing address,Fakturační adresa,,Rechnungsadresse
+finance.testPayment,You can now perform a test payment to verify the correctness of the entered data.,"Nyní můžete provést testovací platbu, pro ověření správnosti zadaných údajů.","Teraz możesz przeprowadzić próbną transakcję, żeby sprawdzić, czy podane dane są poprawne.",Jetzt können Sie eine zur Kontrolle geignete Testzahlung durchführen.
+finance.testPaymentSuccessful,Your test payment was succesful. Please cancel this payment in the administration of the payment gateway.,Vaše testovcací platba proběhla v pořádku. Prosím zrušte tuto platbu v administraci platební brány.,Transakcja próbna zakończyła się powodzeniem. Usuń ją w panelu administracji bramy płatniczej.,Ihre Testzahlung verlief in Ordnung. Bitte brechen Sie Ihre Zahlung in der Adminsektion des Zahlungsportal ab.
+finance.testPaymentUnsuccessful,Your test payment was unsuccessful.,Vaše testovací platba neproběhla úspěšně.,Transakcja próbna nie powiodła się.,Ihre Testzahlung verlief nicht in Ordnung.
 analytics.week,week,týden,tydzień,Woche
 analytics.month,month,měsíc,miesiąc,Monat
 analytics.turnover,turnover,obrat,obrót,Umsatz
 analytics.average,Average,průměrný,średnio,Durchschnitt
-analytics.reservations,reservations,rezervace,rezerwacja,Reservierungen
+analytics.reservations,reservations,rezervace,rezerwacja,Buchungen
 analytics.noData,No data to be rendered,Žádná data k poskytnutí,Nie istnieją żadne dane,Keine Daten zur Anzeige
 analytics.placeTurnover,Spot turnover,Obrat místa,Rotacja miejsca,Stellplatzumsatz
 analytics.period,Period,Období,Okres,Zeitraum
-analytics.reservationCount,reservation count,počet rezervací,Liczba rezerwacji,Anzahl Reservierungen
+analytics.reservationCount,reservation count,počet rezervací,Liczba rezerwacji,Anzahl Buchungen
 analytics.contractCount,agreement count,počet dohod,Liczba umów,Vertragsanzahl
 analytics.date,date,datum,Data,Datum
 analytics.shortterm,Short-term,Krátkodobé,Termin,Kurzfristig
@@ -1415,7 +1463,7 @@ dashboard.garage,Garage,Garáž,Garaż,Garage
 loginVerification.description,Multifactor authorization has been triggered. We will now send you a code by email %(email)s,Spuštěna vícefázová autorizace. Na email %(email)s vám zašleme ověřovací kód.,Wprowadzono autoryzację wieloczynnikową. Na adres %(email) wyślemy Ci kod weryfikacyjny.,Zwei-Faktor-Autorisierung aktiviert. Bestätigungscode wurde an %(email)s gesendet.
 loginVerification.code,code,Ověřovací kód,Kod weryfikacyjny,Bestätigungscode
 loginVerification.codeInvalid,Code invalid,Neplatný kód,Niepoprawny kod,Code ungültig
-reservationInteruption.describtion,Interrupt reservation,Přerušení rezervace,Przerwij rezerwację,Reservierung unterbrechen
+reservationInteruption.describtion,Interrupt reservation,Přerušení rezervace,Przerwij rezerwację,Buchungen unterbrechen
 reservationInteruption.from,Interrupt from,Přerušit od,Przerwać od,Unterbrechen ab
 reservationInteruption.to,Interrupt to,Přerušit do,Przerwać do,Unterbrechen bis
 languages.language,Language,Jazyk,Język,Sprache
@@ -1428,7 +1476,7 @@ recurringReservation.repeat,Repeat: disabled,Opakování: vypnuto,Powtarzanie: w
 recurringReservation.repeatEnabled,Repeat: enabled,Opakování: zapnuto,Powtarzanie: włączone,Wiederholen: ein
 recurringReservation.repeats,Repeats:,Opakuje se:,Powtarza się:,Wiederholt
 recurringReservation.daily,Daily,Denně,Codziennie,Täglich
-recurringReservation.weekly,Weekly,Týdně,Co tydzień,Wochentlich
+recurringReservation.weekly,Weekly,Týdně,Co tydzień,Wöchentlich
 recurringReservation.monthly,Monthly,Měsíčně,Co miesiąc,Monatlich
 recurringReservation.repeatEvery,Repeat every:,Opakovat jednou za:,Powtrzać raz na:,Wiederholen einmal in:
 recurringReservation.week.one,week,týden,tydzień,Woche
@@ -1444,16 +1492,15 @@ recurringReservation.day.few,days,dny,dni,Tage
 recurringReservation.day.many,days,dní,dni,Tage
 recurringReservation.day.other,days,dne,dni,Tage
 recurringReservation.repeatOn,Repeat on:,Opakovat v:,Powtarzać w:,Wiederholen am:
-recurringReservation.startsOn,Starts on:,Datum zahájení:,Data rozpoczęcia:,Beginn am
-recurringReservation.ends,Ends:,Konec:,Koniec:,"
-Enden:"
+recurringReservation.startsOn,Starts on:,Datum zahájení:,Data rozpoczęcia:,Beginn am:
+recurringReservation.ends,Ends:,Konec:,Koniec:,Ende:
 recurringReservation.after,After,Po,Po,Nach
 recurringReservation.occurence.one,occurrence,výskytu,rezerwacji,Wiederholung
 recurringReservation.occurence.few,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.many,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.occurence.other,occurrences,výskytech,rezerwacjach,Wiederholungen
 recurringReservation.on,On,Dne,Dnia,Am
-bulkCancellation.bulkCancellation,Bulk cancellation,Hromadné rušení,Usuń zbiorowo,Massenstornierung
+bulkCancellation.bulkCancellation,Bulk cancellation,Hromadné rušení,Usuń zbiorowo,Mehrfachstornierung
 bulkCancellation.findReservations,Find reservations,Najít rezervace,Znajdź rezerwacje,Buchungen finden
 bulkCancellation.cancelReservations,Cancel reservations,Zrušit vybrané rezervace,Usuń wybrane rezerwacje,Ausgewählte Buchungen stornieren
 bulkCancellation.allUsers,All users,Všichni uživatelé,Wszyscy użytkownicy,Alle Benutzer
@@ -1494,9 +1541,16 @@ mobileApp.signUp.terms,Terms of Service,podmínkami o poskytování služeb,waru
 mobileApp.terms.content,You can find our Terms of Service on our website.,Podmínky používání naleznete na našich webových stránkách.,Warunki korzystania z usług znajdziesz na naszej stronie internetowej.,Bitte finden Sie die Nutzungsbedingungen auf unserer Homepage
 mobileApp.reservation.floor,Floor,Podlaží,Piętro,Etage
 mobileApp.reservation.place,Place,Místo,Miejsce,Platznummer
-mobileApp.reservation.garage,Garage,Garáž,,
-mobileApp.reservation.begins,Begins,Začíná,,
-mobileApp.reservation.ends,Ends,Končí,,
+mobileApp.reservation.garage,Garage,Garáž,,Garage
+mobileApp.reservation.begins,Begins,Začíná,,Anfang
+mobileApp.reservation.ends,Ends,Končí,,Ende
+mobileApp.reservation.issue,Report issues,Nahlásit problém,,Problem melden
+mobileApp.reservation.carOnMySpot,There is a car in my spot.,Někdo mi stojí na místě,,Parkplatz besetzt
+mobileApp.reservation.reservationMoved,Reservation moved to:,Rezervace přesunuta na:,,Buchung verschoben:
+mobileApp.reservation.noFreePlaces,There seem to by no other free places.,Nepodařilo se nám najít náhradní místo.,,Es gelang uns keinen freien Platz zu finden.
+mobileApp.reservation.enterCarsLicencePlate,Enter cars licence plate,Vložte SPZ auta,,Kennzeichen des blockierenden Autos
+mobileApp.reservation.clientContactPerson,You can contact clients contact person:,Můžete kontaktovat kontaktní osoby klienta:,,Sie können die Kontaktperson des Klienten kontaktieren.
+mobileApp.reservation.garageSecurity,Or garage security:,Nebo ochranku garáže:,,Oder die Garagewache.
 mobileApp.newReservation.begins,Begins,Začíná,Początek,Beginnt
 mobileApp.newReservation.ends,Ends,Končí,Koniec,Endet
 mobileApp.newReservation.place,Place,Místo,Miejsce,Platznummer
@@ -1508,6 +1562,7 @@ mobileApp.newReservation.licencePlateInvalid,Invalid license plate,Neplatná SPZ
 mobileApp.newReservation.licencePlatePlaceholder,1A2 3456,1A2 1234,1A2 1234,DBD2408
 mobileApp.newReservation.selectCar,Select car,Zvolte auto,Wybierz auto,Fahrzeug auswählen
 mobileApp.newReservation.noAvailablePlaces,No available places,Žádná místa nejsou dostupná,Nie ma dostępnych miejsc,Kein freier Parkplatz
+mobileApp.newReservation.noClientAvailable,No available clients,Žádný dostupný klient,,Kein freier Klient
 mobileApp.newReservation.selectGarage,Select garage first,Začněte volbou garáže,Zacznij od wyboru garażu,Zuerst wählen Sie eine Garage
 mobileApp.newReservation.auto,AUTO,AUTO,AUTO,AUTO
 mobileApp.newReservation.now,NOW,TEĎ,TERAZ,JETZT
@@ -1516,10 +1571,10 @@ mobileApp.newReservation.other,OTHER,JINDY,INNE,ANDERS
 mobileApp.newReservation.later,LATER,POZDĚJI,PÓŹNIEJ,SPÄTER
 mobileApp.newReservation.hourShortcut,h,h,h,Std
 mobileApp.newReservation.me,Me,Já,Ja,Ich
-mobileApp.newReservation.creatingReservation,Creating reservation,Vytvářím rezervaci,Utworzyć rezerwację,Reservierung erstellen
-mobileApp.newReservation.updatingReservation,Updating reservation,Upravuji rezervaci,Trwa edytowanie rezerwacji,Reservierung wird bearbeitet
+mobileApp.newReservation.creatingReservation,Creating reservation,Vytvářím rezervaci,Utworzyć rezerwację,Buchung erstellen
+mobileApp.newReservation.updatingReservation,Updating reservation,Upravuji rezervaci,Trwa edytowanie rezerwacji,Buchung wird bearbeitet
 mobileApp.newReservation.creatingPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzanie płatności...,Zahlung erstellen
-mobileApp.newReservation.tokenNoLongerValid,"Token of payment is no longer valid, reservation will be deleted.","Identifikátor platby už není platný, rezervace bude odstraněna.",Identyfikator płatności nie jest już ważny. Rezerwacja zostanie usunięta.,Zahlungstoken ist weiter ungültig. Reservierung wird gelöscht.
+mobileApp.newReservation.tokenNoLongerValid,"Token of payment is no longer valid, reservation will be deleted.","Identifikátor platby už není platný, rezervace bude odstraněna.",Identyfikator płatności nie jest już ważny. Rezerwacja zostanie usunięta.,Zahlungstoken ist nichtmehr gültig. Buchung wird gelöscht.
 mobileApp.newReservation.checkingToken,Checking token validity.,Kontroluji identifikátor platby.,Sprawdzam ważność identyfikatora.,Prüfen der gültigkeit des Zahlungtokens.
 mobileApp.newReservation.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,Weiterleiten ...
 mobileApp.newReservation.paymentUnsucessfull,Payment was unsuccessful.,Platba byla neúspěšná.,Płatność nie powiodła się.,Zahlung ist fehlgeschlagen.
@@ -1534,7 +1589,8 @@ mobileApp.guest.phone,Regular guests phone,Telefon pravidelného hosta,Telefon r
 mobileApp.guest.invalidName,Invalid name,Špatné jméno,Niepoprawna nazwa,Name falsch
 mobileApp.guest.invalidEmail,Invalid email,Špatný email,Niepoprawny e-mail,E-Mail falsch
 mobileApp.guest.invalidPhone,Invalid phone,Špatný telefon,Niepoprawny telefon,Telefonnummer falsch
-mobileApp.guest.noGuestResrevations,No regular guests reservations,Žádné rezervace pravidelného hosta,Brak rezerwacji regularnych gości,Keine Reservierung für regelmäßige Gäßte
+mobileApp.guest.noGuestResrevations,No regular guests reservations,Žádné rezervace pravidelného hosta,Brak rezerwacji regularnych gości,Keine Buchungen für regelmäßige Gäßte
+auth0Errors.emailNotVerified,Please verify your email before logging in. Verification email was send to ,"Prosím, před přihlášením ověřte svůj email. Verifikační email Vám byl zaslán na ",,"Bevor Sie sich einloggen können, müssen Sie Ihre E-Mail Adresse verifizieren. Eine Verifizierungs-E-Mail wurde an <mail> gesendet."
 auth0Emails.verificationEmailSubject,Verification email,Ověřovací email,E-mail kontrolny,Verifizierungs-E-Mail
 auth0Emails.securityReasons,For security reasons we need you to verify your email,Z bezpečnostních důvodů potřebujeme ověřit váš email,Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.,Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse
 auth0Emails.easyAsClickingButton,It's as easy as clicking the link below:,Jednoduše klikněte na toto tlačítko:,Wystarczy kliknąć na poniższy przycisk:,Einfach diese Taste drücken:
@@ -1544,12 +1600,12 @@ auth0Emails.bestRegards,"Best Regards,","S pozdravem,",Pozdrawiamy,"Mit freundli
 auth0Emails.PidTeam,the Park-it-direct team,tým Park-it-direct,Zespół Park-it-Direct,Team Park-it-direct
 auth0Emails.welcome,Welcome to Park-it-direct!,Vítejte v Park-it-direct,Witamy w Park-it-Direct!,Wilkommen bei Park-it-direct
 auth0Emails.thankYou,Thank you for using our management tool. Let’s take a look at how Park-it-direct can help you manage your parking.,"Děkujeme, že používáte náš nástroj pro správu. Pojďme se podívat, jak může Park-it-direct pomoci při správe vašeho parkování","Dziękujemy za korzystanie z naszego narzędzia do zarządzania. Sprawdź, w jaki sposób Park-it-direct może Ci pomóc w zarządzaniu parkingiem.","Vielen Dank, dass Sie sich für unser Verwaltungssystem entschieden haben. Schauen wir mal, wie Ihnen Park-it-direct bei dem Verwalten Ihrer Parkflächen helfen kann."
-auth0Emails.howToStart, How to start with PID?,Jak začít s PID?,Jak zacząć przygodę z PID?,Wie fängt man an?
+auth0Emails.howToStart, How to start with PID?,Jak začít s PID?,Jak zacząć przygodę z PID?,Wie fängt man mit PID an?
 auth0Emails.pleasantExperience,Are you looking for a good parking experience? Or you want to organize parking for your company? Or perhaps providing parking for others is your business?,Hledáte příjemné parkování? Nebo chcete organizovat parkování vaší firmy? Nebo se živíte pronájmem parkovacích míst?,Szukasz przyjemnego parkingu? Nie chce Ci się organizoać miejsc parkingowych dla całej firmy? A może zarabiasz wynajmowaniem miejsc parkingowych?,Möchten Sie bequem ein Parkplatz finden? Würden Sie gerne das Parken in Ihrem Unternehmen verwalten? Möchten Sie den Gewinn von Ihren Parkflächen erhöhen? 
 auth0Emails.helpForHelp,A blue help window on the top or right side of each screen explains the content. You can turn this help on or off at any time in your account settings.,"Na každé stránce najdete modrý pruh s nápovědou, ten vysvětluje obsah stránky. Nápovědu můžete kdykoliv vypnout/zapnout v nastavení vašeho účtu.","Na każdej stronie na górze lub po prawej stronie znajdziesz niebieskie okienko pomocy, które wyjaśnia zawartość strony. W ustawieniach konta możesz w każdym momencie możesz włączyć/wyłączyć pomoc. ",Auf jeder Seite befinden sich rechts Hinweise in blauen Feldern. Hinweise können Sie in Ihrem Profil immer wieder ein- oder ausschlaten.
 auth0Emails.garageSetup,"Would you like to set up your garage? We will gladly help you. Just let us know and we will give you a call! Together we can go through all the settings and make sure you benefit from using Park-it-direct as much as possible, while saving your valuable time.","Chtěli byste založit garáž? S tím Vám rádi pomůžeme, dejte nám vědět a my Vám zavoláme! Spolu projdeme všechna nastavení a ujistíme se, že Vám Park-it-direct zajistí maximální prospěch a úsporu času.","Chcesz założyć garaż? Pomożemy Ci w tym! Daj nam znać, a zadzwonimy do Ciebie. Omówimy razem wszystki ustawienia i dostosujemy je do Twoich potrzeb, żeby zagwarantować Ci jak największy zysk i oszczędność czasu.","Möchten Sie eine Garage Erstellen, und alle Funktionen von Park-it-direct ausprobieren? Da helfen wir Ihnen gerne weiter. Schreiben Sie uns einfach eine Nachricht. Gemeinsam gehen wir das System durch, sodass alles richtig eingestellt ist, und Sie auch wirklich alle Möglichkeiten nutzen können."
 auth0Emails.getInTouch, Need to get in touch with us?,Chcete nás kontaktovat?,Chcesz skontaktować się z nami?,Möchten Sie uns kontaktieren?
-auth0Emails.website,"We are always here for you. You can find contact details on our <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">website</a> or you can use the chat button on our website and in the app.","Jsme tu pro vás pořád. Kontakt najdete na <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.","Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.","Wir sind immer für Sie da! Kontakt finden Sie auf <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales""> unserer Webseite</a>, oder schreiben Sie uns einfach im Chat unten rechts an."
+auth0Emails.website,"We are always here for you. You can find contact details on our <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">website</a> or you can use the chat button on our website and in the app.","Jsme tu pro vás pořád. Kontakt najdete na <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.","Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales"">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.","Wir sind immer für Sie da! Den Kontakt finden Sie auf <a href=""https://www.park-it-direct.com/en/get-in-touch-with-sales""> unserer Webseite</a>, oder schreiben Sie uns einfach im Chat unten rechts an."
 auth0Emails.passwordResetSubject,Password reset,Reset hesla,,Passwort zurücksetzen
 auth0Emails.passwordResetSubmited,You have submitted a password change request!,Požádali jste o změnu hesla!,Poprosiłeś/-aś o zmianę hasła!,Sie haben eine Kennwortänderung verlangt!
 auth0Emails.pwdResetDescr,"If it wasn't you, please disregard this email and make sure you can still log in to your account. If it was you, then ","Pokud jste o změnu hesla nepožádali, můžete tuto zprávu ignorovat. Pokud jste to byli vy, pak ","Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,","Falls Sie eine Kennwortänderung nicht verlangt haben, können Sie diese Nachricht ignorieren. Falls Sie eine verlangt haben, dann"
@@ -1557,13 +1613,28 @@ auth0Emails.confirmPwdReset,Confirm the password change,Dokončit změnu hesla,D
 auth0Emails.troubleWithAccount,"If you are having any issues with your account, please don't hesitate to contact us by replying to this mail.","Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.","W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.","Falls Sie Probleme mit Ihrem Konto haben, zweifeln Sie bitte nicht uns anzusprechen, indem Sie auf diese E-Mail antworten."
 auth0Emails.verificationCodeEmailSubject,Verification code,Ověřovací kód,Kod weryfikacyjny,Verifizierungscode
 auth0Emails.verificationCode,Below you can find your verification code for Park-it-direct!,Níže najdete Váš ověřovací kód pro Park-it-direct!,Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!,Weiter unten finden Sie Ihren Bestätigungscode für Park-it-direct!
+auth0Emails.blockedTitle,Blocked Access Attempt,Váš účet byl zablokován,,Ihr Konto wurde gesperrt.
+auth0Emails.blockedDescription,"We detected suspicious activity on your account, we have recorded ten unsuccessful login attempts in the row.","Detekovali jsme podezřelou aktivitu na Vašem účtě, zaznamenali jsme deset neúspěšných příhlášení v řadě.",,Es wurde eine auffällige Aktivität erkannt. Zehn unerfolgreiche Anmeldungen nacheinander wurden von uns bemerkt.
+auth0Emails.blockedUnblock,Unblock!,Odblokovat!,,Freischalten!
 railsEmails.invitation_mail_subject,You have been invited to Park-It-Direct!,Byl jste pozván do Park-It-Directu!,Zostałeś zaproszony do Park-It-Direct!,Sie wurden zu Park-it-direct eingeladen!
 railsEmails.resend_invitation_mail_subject,Invitation reminder to Park-It-Direct.,Připomínáme pozvánku v Park-It-Direct.,Przypominamy o zaproszeniu do Park-It-Direct.,Park-it-direct Einladungserinnerung
 railsEmails.new_reservation_mail_subject,%{user} has created new reservation for you.,%{user} Vám vytvořil(a) novou rezervaci.,%{user} utworzył(a) nową rezerwację.,%{user} hat für Sie gebucht.
-railsEmails.reservation_confirmed_subject,Reservation in %{garage} has been confirmed.,Rezervace v %{garage} byla potvrzena.,Rezerwacja w %{garage} została potwierdzona.,Buchung in der Garage: %{garage} wurde bestätigt.
+railsEmails.reservation_confirmed_subject,Reservation in %{garage} has been confirmed.,Rezervace v %{garage} byla potvrzena.,Rezerwacja w %{garage} została potwierdzona.,Ihre Buchung in der Garage: %{garage} wurde bestätigt.
+railsEmails.reservation_not_confirmed_subject,Reservation in %{garage} has been declined.,Rezervace v %{garage} byla zamítnuta.,,Ihre Buchung in der Garage %{garage} wurde abgelehnt.
 railsEmails.reservation_updated_subject,Your reservation in %{garage} has been updated.,Vaše rezervace v %{garage} byla aktualizována.,Twora rezerwacja w %{garage} została zaktualizowana.,Ihre Buchung in der Garage %{garage} wurde aktualisiert.
-railsEmails.reservation_paid_subject,Your reservation in %{garage} has been paid.,Vaše rezervace v %{garage} byla zaplacena.,,
-railsEmails.reservation_not_approved_yet_subject,Your new reservation was not accepted yet,Vaše nová rezervace nebyla zatím schválena,,
+railsEmails.reservation_paid_subject,Your reservation in %{garage} has been paid.,Vaše rezervace v %{garage} byla zaplacena.,,Ihre Buchung in der Garage %{garage} wurde bezahlt.
+railsEmails.reservation_not_approved_yet_subject,Your new reservation was not accepted yet,Vaše nová rezervace nebyla zatím schválena,,Ihre Buchung wurde noch nicht bestätigt.
+railsEmails.car_on_my_spot_notify_driver_subject,You have been reported,Byl jste nahlášen,,Sie wurden gemeldet.
+railsEmails.car_on_my_spot_notify_secretary_subject,User has been reported,Uživatel byl nahlášen,,Der User wurde gemeldet.
+railsEmails.right_updated,Your right has been updated,Vaše práva byla aktualizována,,Ihre Rechte wurden aktualisiert.
+railsEmails.accept_new_reservation_secretary_notification_subject,New reservation needs your decision,Nová rezervace potřebuje Vaše rozhodnutí,,Eine neue Buchung braucht Ihre Entscheidung.
+railsEmails.your_reservation_was_destroyed,You reservation was canceled,Vaše rezervace byla stornována,,Ihre Buchung wurde storniert-
+railsEmails.reservation_will_expire_soon_subject,Your reservation will expire soon,Vaše rezervace brzy propadne,,Ihre Buchung läuft bald ab.
+railsEmails.aliases.garage_table.user,User:,Uživatel:,Użytkownik:,Benutzer:
+railsEmails.aliases.garage_table.garage,Garage:,Garáž:,Garaż:,Garage
+railsEmails.aliases.garage_table.place,Place:,Místo:,Miejsce:,Parkplatznummer:
+railsEmails.aliases.garage_table.from,From:,Od:,Od:,Von:
+railsEmails.aliases.garage_table.to,To:,Do:,Do:,Bis:
 railsEmails.footer.enjoy,Enjoy your Park-it-direct experience!,Užijte si Park-it-direct!,Dziękujemy za korzystanie z Park-it-direct!,Viel Spaß mit Park-it-direct!
 railsEmails.footer.regards,"Best Regards,","S pozdravem,",Pozdrawiamy,"Mit freundlichen Grüßen,"
 railsEmails.footer.team,the Park-it-direct team,tým Park-it-direct,Zespół Park-it-Direct,Park-it-direct Team
@@ -1579,19 +1650,19 @@ railsEmails.invitation_mail.contact_person,contact person,kontaktní osoba,osoba
 railsEmails.invitation_mail.receptionist,receptionist,recepční,recepcja,Rezeptionist/in
 railsEmails.invitation_mail.security,security,ochranka,ochrona,Wachdienst
 railsEmails.invitation_mail.invited_to,just invited you to join a client account,Vás pozval do klienta,zaprosił/a Cię do klienta,Hat Sie zum folgenden Kunden eingeladen
-railsEmails.invitation_mail.invited_to_garage,just invited you to join garage,Vás pozval do garáže,zaprosił/a Cię do garażu,Hat Sie in folgende Garage eingeladen
-railsEmails.invitation_mail.invited_to_car,just invited you to join car,Vás pozval do auta,zaprosił/a Cię do auta,Hat Sie in folgendes Auto eingeladen
+railsEmails.invitation_mail.invited_to_garage,just invited you to join garage,Vás pozval do garáže,zaprosił/a Cię do garażu,Hat Sie in die folgende Garage eingeladen
+railsEmails.invitation_mail.invited_to_car,just invited you to join car,Vás pozval do auta,zaprosił/a Cię do auta,Hat Sie in das folgende Auto eingeladen
 railsEmails.invitation_mail.as,as,jako,jako,als
 railsEmails.invitation_mail.to_sign_up,Sign me up!,Registrovat se!,Zarejestruj się!,Registrieren!
-railsEmails.invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",W przypadku jakichkolwiek problemów,"Falls Sie Fragen oder Probleme hätten,"
-railsEmails.invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unser Kundenservice,"
+railsEmails.invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",W przypadku jakichkolwiek problemów,"Falls Sie Fragen oder Probleme haben,"
+railsEmails.invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unseren Kundenservice,"
 railsEmails.invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,a my pomożemy Ci aktywować konto.,und wir helfen Ihnen Ihr Konto aktivieren.
-railsEmails.new_reservation_mail.new_reservation,You have a new reservation in %{garage},Máte novou rezervaci v %{garage},,
+railsEmails.new_reservation_mail.new_reservation,You have a new reservation in %{garage},Máte novou rezervaci v %{garage},,Sie haben eine neue Buchung in %{garage}
 railsEmails.new_reservation_mail.reservation_for_you,has created a new reservation for you.,pro Vás vytvořil novou rezervaci.,utworzył dla Ciebie nową rezerwację.,hat für Sie eine Buchung erstellt.
 railsEmails.new_reservation_mail.go_pay_yourself,Go pay,Zaplatit,Zapłać,Zahlen
 railsEmails.new_reservation_mail.price,Price:,Cena:,Cena:,Preis:
-railsEmails.new_reservation_mail.pay_in_24_hours,Reservation must be payed in 24 hours.,Rezervaci je potřeba zaplatit do 24 hodin.,Rezerwację należy opłacić w ciągu 24 godzin.,Buchung muss innerhalb 24 Stunden bezahlt werden.
-railsEmails.new_reservation_mail.reservation_was_paid,Reservation was paid by client.,Rezervace byla zaplacena klientem.,Rezerwacja została zapłacona przez klienta.,Buchung wurde von dem Gastgeber bezahlt.
+railsEmails.new_reservation_mail.pay_in_24_hours,Reservation must be payed in 24 hours.,Rezervaci je potřeba zaplatit do 24 hodin.,Rezerwację należy opłacić w ciągu 24 godzin.,Die Buchung muss innerhalb 24 Stunden bezahlt werden.
+railsEmails.new_reservation_mail.reservation_was_paid,Reservation was paid by host.,Rezervace byla zaplacena hostitelem.,Rezerwacja została zapłacona przez klienta.,Die Buchung wurde von dem Gastgeber bezahlt.
 railsEmails.new_reservation_mail.confirmed,Confirmed,Potvrzeno,Potwierdzone,Bestätigt
 railsEmails.new_reservation_mail.garage_address,Garage address,Adresa garáže,Adres garażu,Adresse der Garage
 railsEmails.new_reservation_mail.reservation_start,Reservation start,Začátek rezervace,Początek rezerwacji:,Gebucht ab:
@@ -1607,36 +1678,52 @@ railsEmails.resend_invitation_mail.admin,admin,administrátor,administrator/ka,A
 railsEmails.resend_invitation_mail.secretary,secretary,sekretář/ka,sekretarz/sekretarka,Sekretär/in
 railsEmails.resend_invitation_mail.host,pravidelný  host,pravidelný host,regularny gość,Regelmäßiger Gast
 railsEmails.resend_invitation_mail.internal,internal,interní,wewnętrzny,Intern
-railsEmails.resend_invitation_mail.contact_person,contact person,kontaktní osoba,osoba kontaktowa,Ansprechpartner
+railsEmails.resend_invitation_mail.contact_person,contact person,kontaktní osoba,osoba kontaktowa,Kontaktperson
 railsEmails.resend_invitation_mail.receptionist,receptionist,recepční,recepcja,Receptionist/in
 railsEmails.resend_invitation_mail.security,security,ostraha,ochrona,Wachdienst
 railsEmails.resend_invitation_mail.invited_to,invited you to join a client account,Vás pozval do klienta,zaprosił Cię do klienta,Hat Sie zum folgenden Kunden eingeladen
-railsEmails.resend_invitation_mail.invited_to_garage,just invited you to join garage,Vás pozval do garáže,zaprosił/a Cię do garażu,Hat Sie in folgende Garage eingeladen
+railsEmails.resend_invitation_mail.invited_to_garage,just invited you to join garage,Vás pozval do garáže,zaprosił/a Cię do garażu,Hat Sie in die folgende Garage eingeladen
 railsEmails.resend_invitation_mail.invited_to_car,just invited you to join car,Vás pozval do auta,zaprosił/a Cię do auta,Hat Sie in folgendes Auto eingeladen
 railsEmails.resend_invitation_mail.as,as,jako,jako,als
 railsEmails.resend_invitation_mail.to_sign_up,Sign me up!,Registrovat se!,Zarejestruj się!,Registrieren!
-railsEmails.resend_invitation_mail.to_pid,To Park-it-direct!,Do Park-it-direct!,Do Park-it-direct!,Bei Park-it-direct!
+railsEmails.resend_invitation_mail.to_pid,To Park-it-direct!,Do Park-it-direct!,Do Park-it-direct!,Zu Park-it-direct!
 railsEmails.resend_invitation_mail.issue,"In case of any issues, please","V případě jakýchkoliv problémů nás, prosím,",W przypadku jakichkolwiek problemów,"Falls Sie Fragen oder Probleme hätten,"
-railsEmails.resend_invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unser Kundenservice,"
+railsEmails.resend_invitation_mail.let_us_know,let us know,kontaktujte mailem,"skontaktuj się z nami mailowo,","wenden Sie sich bitte an unseren Kundenservice,"
 railsEmails.resend_invitation_mail.we_will_help,and we will help you with your account activation.,a my Vám pomůžeme s aktivací účtu.,a my pomożemy Ci aktywować konto.,und wir helfen Ihnen Ihr Konto aktivieren.
 railsEmails.reservation_confirmed.reservation_confirmed,The reservation you requested was confirmed!,"Rezervace, o kterou jste požádali, byla schválena!",Żądana rezerwacja została potwierdzona!,Ihre Buchungsanfrage wurde genehmigt!
-railsEmails.reservation_confirmed.garage,Garage:,Garáž:,Garaż:,Garage
-railsEmails.reservation_confirmed.place,Place:,Místo:,Miejsce:,Parkplatznummer:
-railsEmails.reservation_confirmed.from,From:,Od:,Od:,Von:
-railsEmails.reservation_confirmed.to,To:,Do:,Do:,Bis:
-railsEmails.reservation_updated.reservation_updated,Your reservation had been updated:,Vaše rezervace byla upravena:,Twoja rezerwacja została zmieniona:,Ihre Reservierung wurde aktualisiert:
-railsEmails.reservation_updated.garage,Garage:,Garáž:,Garaż:,Garage:
-railsEmails.reservation_updated.place,Place:,Místo:,Miejsce:,Platz:
-railsEmails.reservation_updated.from,From:,Od:,Od:,Von:
-railsEmails.reservation_updated.to,To:,Do:,Do:,Bis:
-railsEmails.reservation_paid.headline,Thank you for your payment,Děkujeme za zaplacení rezervace,,
-railsEmails.reservation_paid.body,You can find invoice in email attachment.,V příloze naleznete doklad o zaplacení.,,
-railsEmails.reservation_not_approved_yet.reservation_was_not_yet_confirmed,Your reservation was not yet approved:,Vaše rezervace nebyla zatím schválena:,,
-railsEmails.reservation_not_approved_yet.garage,Garage:,Garáž:,Garaż:,Garage
-railsEmails.reservation_not_approved_yet.place,Place:,Místo:,Miejsce:,Parkplatznummer:
-railsEmails.reservation_not_approved_yet.from,From:,Od:,Od:,Von:
-railsEmails.reservation_not_approved_yet.to,To:,Do:,Do:,Bis:
-railsEmails.reservation_not_approved_yet.you_can_contact_these_peope,"To speed up things, you can contact one of contact presons:",Pro uspíšení vašeho potrvrzení můžete kontaktovat kontaktní osoby:,,
+railsEmails.reservation_confirmed.reservation_not_confirmed,The reservation you requested was declined!,"Rezervace, o kterou jste požádali, byla zamítnuta!",,Ihre Buchungsanfrage wurde nicht genehmigt!
+railsEmails.reservation_updated.reservation_updated,Your reservation had been updated:,Vaše rezervace byla upravena:,Twoja rezerwacja została zmieniona:,Ihre Buchung wurde aktualisiert:
+railsEmails.reservation_paid.headline,Thank you for your payment,Děkujeme za zaplacení rezervace,,Vielen Dank für Ihre Zahlung
+railsEmails.reservation_paid.body,You can find invoice in email attachment.,V příloze naleznete doklad o zaplacení.,,Im Anhang finden Sie den Zahlungsbeleg.
+railsEmails.reservation_not_approved_yet.reservation_was_not_yet_confirmed,Your reservation was not yet approved:,Vaše rezervace nebyla zatím schválena:,,Ihre Buchung war bislang nicht genehmigt:
+railsEmails.reservation_not_approved_yet.you_can_contact_these_peope,"To speed up things, you can contact one of contact presons:",Pro uspíšení vašeho potrvrzení můžete kontaktovat kontaktní osoby:,,Für die Beschleunigung Ihrer Genehmigung können Sie Ihre Kontaktperson kontaktieren.
+railsEmails.car_on_my_spot_notify_driver.you_have_been_reported,We were reported that a car associated with you is blocking another reservation's place.,"Bylo nám nahlášeno, že auto spojené s Vámi blokuje místo pro jinou rezervaci.",,"Es wurde gemeldet, dass Ihr Wagen einen Platz, der für eine andere Buchung bestimmt ist, blockiert."
+railsEmails.car_on_my_spot_notify_driver.infor_about_car,Information about reported car:,Informace o nahlášeném autě:,,Information über den gemeldeten Wagen:
+railsEmails.car_on_my_spot_notify_driver.suspected_reservation,We suspects tha this reservation might be a problem:,"Máme podezření, že problém nastal u této rezervace:",,"Wir haben einen Verdacht, dass das Problem bei dieser Buchung entstanden ist."
+railsEmails.car_on_my_spot_notify_driver.we_urge_you,We urge you to remedy the situation.,Žádáve Vás o nápravu situace,,Wir bitten Sie um die regelung der Situation.
+railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported,User %{user} just reported that car with licence plate %{licence_plate} is standing on his spot.,"Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",,"Der User %{user} meldete gerade, dass der Wagen mit dem Kennzeichen %{licence_plate} auf seinem Platz steht."
+railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_car,Further information about suspected car:,Další informace o autě:,,Weitere Informationen über den Wagen.
+railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_reservation,Further information about suspected reservation:,Další informace o rezervaci:,,Weitere Informationen über die Buchung
+railsEmails.updated_rights.right_updated,Your right has been updated,Vaše práva byla aktualizována,,Ihre Rechte wurden aktualisiert.
+railsEmails.updated_rights.class_updated,"Admins of %{class} %{name} had updated your rights, here are the changes:","Administrátoři %{class} %{name} Vám aktualizovali práva, zde jsou provedené změny:",,"Die Administratoren von%{class} %{name} haben Ihre Rechte aktualisiert, hier sind die durchgeführten Änderungen."
+railsEmails.updated_rights.enabled,You were granted role %{role},Byla Vám přidána role %{role},,Die Rolle %{role} wurde Ihnen hinzugefügt
+railsEmails.updated_rights.disabled,You were denied role %{role},Byla Vám odebrána role %{role},,Die Rolle %{role} wurde Ihnen entnommen
+railsEmails.updated_rights.client_user,client,Klienta,,Kunde
+railsEmails.updated_rights.user_car,car,Auta,,Autos
+railsEmails.updated_rights.user_garage,garage,Garáže,,Garage
+railsEmails.updated_rights.admin,admin,Admin,,Admin
+railsEmails.updated_rights.receptionist,receptionist,Recepční,,Rezeptionist
+railsEmails.updated_rights.security,security,Ochranka,,Wache
+railsEmails.updated_rights.secretary,secretary,Sekretářka,,Sekretärin
+railsEmails.updated_rights.manager,manager,Manažer,,Manager
+railsEmails.updated_rights.host,regular host,Pravidelný host,,Regelmäßiger Gast.
+railsEmails.updated_rights.internal,internal,Interní,,Intern
+railsEmails.updated_rights.contact_person,contact person,Kontaktní osoba,,Kontaktperson
+railsEmails.updated_rights.driver,driver,Řidič,,Fahrer
+railsEmails.accept_new_reservation_secretary_notification.new_reservation_needs_confirmation,"There has been a new reservation created by %{creator} on %{client} expenses, you can now go to Park-it-direct to accept or decline this reservation.","%{creator} vytvořil novou rezervaci na náklady klienta %{client}, nyní můžete přejít do Park-it-direct a přijmout nebo zamítnout tuto rezervaci.",,"%{creator} erstellte eine Buchung auf Kosten des Kunden %{client}, jetzt können Sie zu Park-it-direct gehen und die Buchung bestätigen oder ablehnen."
+railsEmails.accept_new_reservation_secretary_notification.to_pid,To Park-it-direct!,Do Park-it-direct!,Do Park-it-direct!,Zu Park-it-direct!
+railsEmails.reservation_destroyed_mail.reservation_was_destroyed,Your reservation had been canceled.,Vaše rezervace byla stornována.,,Ihre Buchung wurde storniert
+railsEmails.reservation_will_expire_soon.reservation_will_expire_soon,Your reservation in %{garage} will expire in 30 minutes.,Vaše rezervace v garáži %{garage} propadne přibližně za 30 minut.,,Ihre Buchung in Garage %{garage} läuft in 30 Minuten ab.
 railsSMSs.reservation_sms.new_reservation,There has been a new reservation created for you,Byla Vám vytvořena nová rezervace,Masz nową rezerwacją w Park-it-direct!,Es wurde für Sie eine neue Buchung erstellt
 railsSMSs.reservation_sms.from,Begins at:,Začátek:,Od:,Von:
 railsSMSs.reservation_sms.to,Ends at:,Konec:,Do:,Bis:
@@ -1646,7 +1733,7 @@ pidAdmin.pageBase.adminMode,ADMIN MODE OF PARK-IT-DIRECT,ADMIN MODE PARK-IT-DIRE
 pidAdmin.pageBase.generator,Generator,Generátor,netřeba překládat,netřeba překládat
 pidAdmin.pageBase.news,News,Novinky,netřeba překládat,netřeba překládat
 pidAdmin.pageBase.finance,Finance,Finance,netřeba překládat,netřeba překládat
-pidAdmin.pageBase.garagesOverview,Garage overview,Přehled garáží,,
+pidAdmin.pageBase.garagesOverview,Garage overview,Přehled garáží,,Garageübersicht
 pidAdmin.users.id,id,id,netřeba překládat,netřeba překládat
 pidAdmin.users.name,name,jméno,netřeba překládat,netřeba překládat
 pidAdmin.users.appVersion,app version,verze appky,netřeba překládat,netřeba překládat
@@ -1694,13 +1781,13 @@ pidAdmin.news.editNews,edit news,upravit novinky,netřeba překládat,netřeba p
 pidAdmin.news.deleteNews,delete news,smazat novinky,netřeba překládat,netřeba překládat
 pidAdmin.logs.accessLogs,Access logs,Log vjezdů,netřeba překládat,netřeba překládat
 pidAdmin.logs.garageLogs,Garage logs,Log garáží,netřeba překládat,netřeba překládat
-pidAdmin.logs.user,user,uživatel,użytkownik,
-pidAdmin.logs.accessType,access type,typ přístupu,rodzaj dostępu,
-pidAdmin.logs.createdAt,created at,čas přístupu,czas dostępu,
-pidAdmin.logs.gate,gate,brána,brama,
-pidAdmin.logs.reservation,reservation,rezervace,rezerwacja,
-pidAdmin.logs.noGate,no gate configured,není konfigurovaná brána,brama nie została skonfigurowana,
-pidAdmin.logs.noReservation,no valid reservation,nemá platnou rezervaci,brak ważnej rezerwacji,
+pidAdmin.logs.user,user,uživatel,użytkownik,User
+pidAdmin.logs.accessType,access type,typ přístupu,rodzaj dostępu,Typ des Zugangs
+pidAdmin.logs.createdAt,created at,čas přístupu,czas dostępu,Zeit des Zugangs
+pidAdmin.logs.gate,gate,brána,brama,Tor
+pidAdmin.logs.reservation,reservation,rezervace,rezerwacja,Buchung
+pidAdmin.logs.noGate,no gate configured,není konfigurovaná brána,brama nie została skonfigurowana,Kein Tor konfiguriert
+pidAdmin.logs.noReservation,no valid reservation,nemá platnou rezervaci,brak ważnej rezerwacji,Keine gültige Buchung
 pidAdmin.garagesOverview.createdAt,Creation date,Datum založení,netřeba překládat,netřeba překládat
 pidAdmin.garagesOverview.admin,Admin,Admin,netřeba překládat,netřeba překládat
 pidAdmin.garagesOverview.manager,Manager,Manager,netřeba překládat,netřeba překládat
@@ -1716,8 +1803,8 @@ pidAdmin.garagesOverview.mr_parkit_integration,Mr. Parkit integration,integrace 
 pidAdmin.garagesOverview.LongTerm,LongTerm,LongTerm,netřeba překládat,netřeba překládat
 pidAdmin.garagesOverview.Automation,Automation,Automation,netřeba překládat,netřeba překládat
 pidAdmin.garagesOverview.Integration,Integration,Integration,netřeba překládat,netřeba překládat
-cs.occupancy.createNewReservation,Create new reservation,Vytvořit novou rezervaci,,Neue Reservierung machen
-cs.occupancy.garage,Garage,Garáž,,
-cs.occupancy.place,Place,Místo,,
-cs.occupancy.from,From,Od,,
-cs.occupancy.to,To,Do,,
+cs.occupancy.createNewReservation,Create new reservation,Vytvořit novou rezervaci,,Neue Buchung erstellen
+cs.occupancy.garage,Garage,Garáž,,Garage
+cs.occupancy.place,Place,Místo,,Platz
+cs.occupancy.from,From,Od,,Von
+cs.occupancy.to,To,Do,,Bis

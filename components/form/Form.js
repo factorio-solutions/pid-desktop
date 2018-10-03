@@ -11,15 +11,16 @@ export default class Form extends Component {
       PropTypes.object,
       PropTypes.array
     ]),
-    onSubmit:    PropTypes.func.isRequired,
-    onHighlight: PropTypes.func,
-    onBack:      PropTypes.func,
-    submitable:  PropTypes.bool,
-    mobile:      PropTypes.bool,
-    margin:      PropTypes.bool, // margin on the bottom
-    modal:       PropTypes.bool, // is in modal, so no position fixed
-    center:      PropTypes.bool, // center buttons
-    home:        PropTypes.bool  // show home button instead of chevron left
+    onSubmit:       PropTypes.func.isRequired,
+    onHighlight:    PropTypes.func,
+    onBack:         PropTypes.func,
+    submitable:     PropTypes.bool,
+    mobile:         PropTypes.bool,
+    margin:         PropTypes.bool, // margin on the bottom
+    modal:          PropTypes.bool, // is in modal, so no position fixed
+    center:         PropTypes.bool, // center buttons
+    home:           PropTypes.bool,  // show home button instead of chevron left
+    submitbtnRight: PropTypes.bool
   }
 
   static defaultProps = {
@@ -36,7 +37,7 @@ export default class Form extends Component {
   }
 
   render() {
-    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal, center, home } = this.props
+    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal, center, home, submitbtnRight } = this.props
 
     const sendReservation = () => {
       if (submitable) {
@@ -61,7 +62,7 @@ export default class Form extends Component {
           onClick={onBack}
         />
       </div>}
-      <div className={onBack && styles.floatRight}>
+      <div className={(onBack || submitbtnRight) && styles.floatRight}>
         {this.state.submited ?
           <RoundButton
             content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />}

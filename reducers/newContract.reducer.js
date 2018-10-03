@@ -21,6 +21,8 @@ import {
   ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_INDEFINITLY,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS,
   ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM
@@ -48,6 +50,8 @@ const defaultState = {
 
   // determining what should happen to reservations of removed places
   originalPlaces:           [],
+  originalIndefinitly:      false,
+  originalTo:               moment().endOf('day').format(MOMENT_DATETIME_FORMAT),
   removedReservationsModal: false,
   removeReservations:       false
 }
@@ -155,7 +159,8 @@ export default function newContract(state = defaultState, action) {
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY:
       return {
         ...state,
-        indefinitly: action.value
+        indefinitly: action.value,
+        to:          action.value ? state.to : moment().endOf('day').format(MOMENT_DATETIME_FORMAT)
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL:
@@ -168,6 +173,18 @@ export default function newContract(state = defaultState, action) {
       return {
         ...state,
         originalPlaces: action.value
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_INDEFINITLY:
+      return {
+        ...state,
+        originalIndefinitly: action.value
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO:
+      return {
+        ...state,
+        originalTo: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL:

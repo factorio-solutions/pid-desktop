@@ -33,6 +33,7 @@ class Reservation extends Component {
   }
 
   onReservationClick = () => this.props.onClick(this.props.reservation)
+  onReservationMouseDown = event => event.stopPropagation() // place blocked by reservation - dont propagate event
 
   mouseEnter = e => {
     this.setState({
@@ -59,7 +60,7 @@ class Reservation extends Component {
         <tbody>
           {!reservation.approved && <tr><td colSpan={2} className={styles.notApprovedLabel}>{t([ 'occupancy', 'reservationNotApproved' ])}</td></tr>}
           <tr><td>{t([ 'occupancy', 'reservationsId' ])}</td><td>{reservation.id}</td></tr>
-          <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user.full_name}</td></tr>
+          <tr><td>{t([ 'occupancy', 'driver' ])}</td><td>{reservation.user && reservation.user.full_name}</td></tr>
           {reservation.client && <tr><td>{t([ 'occupancy', 'client' ])}</td><td>{reservation.client.name}</td></tr>}
           <tr>
             <td>{t([ 'occupancy', 'type' ])}</td>
@@ -85,18 +86,28 @@ class Reservation extends Component {
         </tbody>
       </table>)
 
-    return <div>
-      <div onMouseEnter={this.mouseEnter} onMouseMove={this.mouseEnter} onMouseLeave={this.mouseLeave} className={classes} style={style} onClick={this.onReservationClick}>
-        <span>{text}</span>
+    return (
+      <div>
+        <div
+          onMouseEnter={this.mouseEnter}
+          onMouseMove={this.mouseEnter}
+          onMouseLeave={this.mouseLeave}
+          onMouseDown={this.onReservationMouseDown}
+          className={classes}
+          style={style}
+          onClick={this.onReservationClick}
+        >
+          <span>{text}</span>
+        </div>
+        {this.state.visible && <Tooltip
+          content={content}
+          mouseX={this.state.mouseX}
+          mouseY={this.state.mouseY}
+          visible
+          height="500px"
+        />}
       </div>
-      {this.state.visible && <Tooltip
-        content={content}
-        mouseX={this.state.mouseX}
-        mouseY={this.state.mouseY}
-        visible
-        height="500px"
-      />}
-    </div>
+    )
   }
 }
 

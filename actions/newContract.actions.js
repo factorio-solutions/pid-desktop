@@ -39,6 +39,8 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT = 'ADMIN_CLIENTS_NEW_CO
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_SECURITY_INTERVAL'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_INDEFINITLY = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_INDEFINITLY'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
@@ -60,6 +62,8 @@ export const setPlaces = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_PLACES)
 export const toggleHighlight = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_TOGGLE_HIGHLIGHT)
 export const setIndefinitly = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_INDEFINITLY)
 export const setOriginalPlaces = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_PLACES)
+export const setOriginalIndefinitly = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_INDEFINITLY)
+export const setOriginalTo = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO)
 export const setRemoveReservationsModal = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL)
 export const setRemoveReservations = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS)
 export const eraseForm = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM)
@@ -71,7 +75,7 @@ export function setSecurityInterval(value) {
   }
 }
 
-export function setFrom(value) {
+export function setFrom(value, refreshGarage = true) {
   return (dispatch, getState) => {
     let fromValue = moment(value, MOMENT_DATETIME_FORMAT).startOf('day')
     const now = moment().startOf('day')
@@ -82,7 +86,7 @@ export function setFrom(value) {
 
     if (moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).isValid() &&
         moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < 0) {
-      dispatch(setTo(fromValue.clone().endOf('day').format(MOMENT_DATETIME_FORMAT)))
+      dispatch(setTo(fromValue.clone().endOf('day').format(MOMENT_DATETIME_FORMAT), refreshGarage))
     }
 
     dispatch({
@@ -90,11 +94,11 @@ export function setFrom(value) {
       value: fromValue.format(MOMENT_DATETIME_FORMAT)
     })
 
-    getState().newContract.garage && dispatch(getGarage(getState().newContract.garage.id))
+    refreshGarage && getState().newContract.garage && dispatch(getGarage(getState().newContract.garage.id))
   }
 }
 
-export function setTo(value) {
+export function setTo(value, refreshGarage = true) {
   return (dispatch, getState) => {
     if (value === '') { // can be empty value
       dispatch({
@@ -115,7 +119,7 @@ export function setTo(value) {
       })
     }
 
-    getState().newContract.garage && dispatch(getGarage(getState().newContract.garage.id))
+    refreshGarage && getState().newContract.garage && dispatch(getGarage(getState().newContract.garage.id))
   }
 }
 
@@ -151,14 +155,18 @@ export function initContract(id) {
 
     const onDetailsSuccess = response => {
       const to = moment(response.data.contract.to)
-      dispatch(setFrom(moment(response.data.contract.from).format(MOMENT_DATETIME_FORMAT)))
-      if (to.year() === 9999) { // then is infinite
-        dispatch(setIndefinitly(true))
-        // dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
-      } else {
-        dispatch(setIndefinitly(false))
-        dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
-      }
+      dispatch(setFrom(moment(response.data.contract.from).format(MOMENT_DATETIME_FORMAT), false))
+      // if (to.year() === 9999) { // then is infinite
+      //   dispatch(setIndefinitly(true))
+      //   dispatch(setOriginalIndefinitly(true))
+      //   // dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
+      // } else {
+      const isIndefinite = to.year() === 9999
+      dispatch(setIndefinitly(isIndefinite))
+      dispatch(setOriginalIndefinitly(isIndefinite))
+      dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : '', false))
+      dispatch(setOriginalTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
+      // }
       dispatch(setClient(response.data.contract.client.id))
       dispatch(setPlaces(response.data.contract.places))
       dispatch(getGarage(response.data.contract.garage.id))
@@ -171,8 +179,8 @@ export function initContract(id) {
 
     const garageId = getState().pageBase.garage
     if (!id) {
-      dispatch(setFrom(moment().startOf('day')))
-      dispatch(setTo(moment().endOf('day')))
+      dispatch(setFrom(moment().startOf('day'), false))
+      dispatch(setTo(moment().endOf('day'), false))
       dispatch(getGarage(garageId)) // if id, then i have to download garage from contract, not this one
     }
     request(onRentsSuccess, GET_RENTS)
@@ -205,7 +213,16 @@ export function getGarage(garageId) {
                 places = removeFromArray(places, index)
               }
             }
-            return { ...place, available }
+            return {
+              ...place,
+              available,
+              // contracts: response.garage.clients.filter(client => client.contracts.find(contract => contract.places.find(p => p.id === place.id))),
+              contracts: response.data.garage.clients.reduce((acc, client) => {
+                let contracts = client.contracts.filter(contract => contract.places.find(p => p.id === place.id))
+                contracts = contracts.map(contract => ({ ...contract, client }))
+                return acc.concat(contracts)
+              }, [])
+            }
           })
         }))
       }))

@@ -192,7 +192,6 @@ class GarageLayout extends Component {
           circle.classList.add('groupCircle')
           circle.classList.add(styles.text)
           placeRect.parentNode.appendChild(circle)
-
           const count = document.createElementNS('http://www.w3.org/2000/svg', 'text') // text with count
           count.setAttribute('x', center.x)
           count.setAttribute('y', center.y + y)
@@ -211,7 +210,6 @@ class GarageLayout extends Component {
             -GROUP_OFFSET_X / 2 :
             GROUP_OFFSET_X / 2
             const y = i >= 2 ? GROUP_OFFSET_Y * 2 : GROUP_OFFSET_Y
-
             const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
             circle.setAttribute('style', `fill: ${assignColors[group]};`)
             circle.classList.add('groupCircle')

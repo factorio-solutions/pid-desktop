@@ -55,10 +55,11 @@ export function initUsers() {
       let users = response.data.client_users.filter(filterNotPending).reduce((acc, cu) => { // cu == clietn user
         acc = addKey(acc, cu.user)
         acc[cu.user.id].clients.push({ ...cu.client,
-          admin:     cu.admin,
-          secretary: cu.secretary,
-          internal:  cu.internal,
-          host:      cu.host
+          admin:         cu.admin,
+          secretary:     cu.secretary,
+          internal:      cu.internal,
+          host:          cu.host,
+          contactPerson: cu.contact_person
         })
         return acc
       }, {}) // find users and their clients
@@ -77,9 +78,10 @@ export function initUsers() {
         acc[ug.user.id].garages.push({ ...ug.garage,
           admin:        ug.admin,
           receptionist: ug.secretary,
-          security:     ug.internal
+          security:     ug.internal,
+          manager:      ug.manager
         })
-        return acc
+        return acc  
       }, users)// find users and their garages
 
       users = Object.keys(users).map(key => users[key]) // object to array
