@@ -145,7 +145,7 @@ export default class PaginatedTable extends Component {
         }
       }, {})
 
-      this.setState({ ...this.state, key, ascDesc, loading: true, search })
+      this.setState({ ...this.state, key, ascDesc, loading: true, search, page: 1 })
     }
 
     const pages = new Array(pageCount)
@@ -168,7 +168,6 @@ export default class PaginatedTable extends Component {
           schema={schema}
           data={data}
           filterClick={filterClick}
-          searchBox={false}
           selectId={findId}
           searchBar
         />
