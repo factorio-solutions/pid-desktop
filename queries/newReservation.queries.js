@@ -37,7 +37,6 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     min_reservation_duration
     max_reservation_duration
     is_time_credit_active
-    current_time_credit
     time_credit_price
     time_credit_currency
     sms_templates {
