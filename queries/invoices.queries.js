@@ -37,8 +37,8 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
 }
 `
 
-export const GET_USERS_INVOICES = `query {
-  users_invoices{
+export const GET_USERS_INVOICES = `query Query($garage_id: Id) {
+  users_invoices (garage_id:$garage_id) {
     id
     invoice_number
     longterm_rent
