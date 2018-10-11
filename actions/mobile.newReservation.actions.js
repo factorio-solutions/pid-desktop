@@ -361,7 +361,7 @@ export function submitGuestReservation(callback) {
   return (dispatch, getState) => {
     const newGuest = getState().newGuest
     const state = getState().mobileNewReservation
-    if (state.user_id === undefined) {
+    if (state.user_id === -1) {
       requestPromise(USER_AVAILABLE, {
         user: {
           email:     newGuest.email.value.toLowerCase(),
