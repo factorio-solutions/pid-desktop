@@ -766,12 +766,13 @@ export function autoSelectPlace() {
     ) { // prefered place from occupancy was set
       dispatch(setPlace(allPlaces.findById(state.preferedPlaceId)))
       dispatch(setPreferedPlaceId())
-    } else if (!(state.place_id && state.garage.floors.find(floor => {
-      return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
-    }) !== undefined)) { // if place not selected or selected place not found in this garage
+    } else if (!(state.place_id && state.garage.floors.some(floor => {
+      return floor.places.some(place => place.available && place.id === state.place_id)
+    }))) { // if place not selected or selected place not found in this garage
       const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
         return floor.places.reduce((highestPriorityPlace, place) => {
-          if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority)) {
+          if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority
+                || (highestPriorityPlace.priority === place.priority && highestPriorityPlace.label > place.label))) {
             return place
           } else {
             return highestPriorityPlace
