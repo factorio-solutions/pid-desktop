@@ -39,7 +39,7 @@ const defaultState = {
   bleDevices:   {}, // {name: { address, name, rssi, advertisement }, ... }
   find:         '', // by text
   currentPage:  1,
-  canLoadMore:  true
+  canLoadMore:  false
 }
 
 export default function mobileReservations(state = defaultState, action) {
@@ -80,7 +80,7 @@ export default function mobileReservations(state = defaultState, action) {
       return {
         ...state,
         currentPage: 1,
-        canLoadMore: true
+        canLoadMore: false
       }
 
     default:
