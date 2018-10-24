@@ -772,7 +772,7 @@ export function autoSelectPlace() {
       const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
         return floor.places.reduce((highestPriorityPlace, place) => {
           if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority
-                || (highestPriorityPlace.priority === place.priority && highestPriorityPlace.label > place.label))) {
+                || (highestPriorityPlace.priority === place.priority && +highestPriorityPlace.label > +place.label))) {
             return place
           } else {
             return highestPriorityPlace
