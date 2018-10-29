@@ -16,8 +16,10 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
       reservation_case
       client {
         name
-        is_secretary
-        is_internal
+        client_user{
+          secretary
+          internal
+        }
       }
       user {
         id
@@ -49,12 +51,15 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
     reservation_case
     invoices {
       id
+      invoice_number
       payed
     }
     client {
       name
-      is_secretary
-      is_internal
+      client_user{
+        secretary
+        internal
+      }
     }
     user {
       id

@@ -8,6 +8,7 @@ import TabMenu                                from '../_shared/components/tabMen
 import TabButton                              from '../_shared/components/buttons/TabButton'
 import PopupDatetimepicker                    from '../_shared/components/datetimepicker/PopupDatetimepicker'
 import GarageLayout, { assignColorsToGroups } from '../_shared/components/garageLayout/GarageLayout'
+import Loading                                from '../_shared/components/loading/Loading'
 
 import { t }              from '../_shared/modules/localization/localization'
 import * as garageActions from '../_shared/actions/garage.actions'
@@ -44,7 +45,13 @@ class GaragePage extends Component {
 
     const onDateSelectorClick = () => actions.setSelector(true)
 
-    const left = [ 'clients', 'contracts', 'reservations', 'prices', 'cars' ].map(this.tabFactory)
+    const left = [ 'clients', 'contracts', 'reservations', 'prices', 'cars' ]
+    .map(this.tabFactory)
+    .concat(
+      <div className={styles.loading}>
+        <Loading show={state.loading} />
+      </div>
+    )
 
     const right = [
       <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
@@ -75,7 +82,7 @@ class GaragePage extends Component {
               undefined
             break
           case 'prices':
-            place.group = place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent' || place.pricing && place.pricing.id + 'price'
+            place.group = (place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent') || (place.pricing && place.pricing.id + 'price')
             break
           case 'cars':
           case 'reservations':

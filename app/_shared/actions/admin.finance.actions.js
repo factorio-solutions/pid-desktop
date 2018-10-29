@@ -27,6 +27,8 @@ export const ADMIN_FINANCE_SET_CSOB_PRIVATE_KEY = 'ADMIN_FINANCE_SET_CSOB_PRIVAT
 export const ADMIN_FINANCE_SET_VAT = 'ADMIN_FINANCE_SET_VAT'
 export const ADMIN_FINANCE_SET_INVOICE_ROW = 'ADMIN_FINANCE_SET_INVOICE_ROW'
 export const ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW = 'ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_ROW'
+export const ADMIN_FINANCE_SET_INVOICE_PREFIX = 'ADMIN_FINANCE_SET_INVOICE_PREFIX'
+export const ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_PREFIX = 'ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_PREFIX'
 export const ADMIN_FINANCE_SET_ACCOUNT_NUMBER = 'ADMIN_FINANCE_SET_ACCOUNT_NUMBER'
 export const ADMIN_FINANCE_SET_HIGHTLIGHT = 'ADMIN_FINANCE_SET_HIGHTLIGHT'
 export const ADMIN_FINANCE_SET_IBAN = 'ADMIN_FINANCE_SET_IBAN'
@@ -47,6 +49,8 @@ export const setAccountNumber = actionFactory(ADMIN_FINANCE_SET_ACCOUNT_NUMBER)
 export const setHighlight = actionFactory(ADMIN_FINANCE_SET_HIGHTLIGHT)
 export const setIban = actionFactory(ADMIN_FINANCE_SET_IBAN)
 export const setIbanPattern = actionFactory(ADMIN_FINANCE_SET_IBAN_PATTERN)
+export const setInvoicePrefix = actionFactory(ADMIN_FINANCE_SET_INVOICE_PREFIX)
+export const setSimplyfiedInvoicePrefix = actionFactory(ADMIN_FINANCE_SET_SIMPLYFIED_INVOICE_PREFIX)
 
 
 export function setVat(value) {
@@ -100,6 +104,8 @@ export function initFinance(id) {
       dispatch(setVat(response.data.garage.vat))
       dispatch(setInvoiceRow(response.data.garage.invoice_row))
       dispatch(setSimplyfiedInvoiceRow(response.data.garage.simplyfied_invoice_row))
+      dispatch(setInvoicePrefix(response.data.garage.invoice_prefix))
+      dispatch(setSimplyfiedInvoicePrefix(response.data.garage.simplyfied_invoice_prefix))
       dispatch(setAccountNumber(response.data.garage.account_number))
       dispatch(setIban(response.data.garage.account.iban))
       dispatch(setIbanPattern())
@@ -259,11 +265,13 @@ export function submitGarage(id) {
       UPDATE_GARAGE,
       { id:     +id,
         garage: {
-          vat:                    state.vat,
-          invoice_row:            state.invoiceRow,
-          simplyfied_invoice_row: state.simplyfiedInvoiceRow,
-          account_number:         state.accountNumber,
-          iban:                   state.iban
+          vat:                       state.vat,
+          invoice_row:               state.invoiceRow,
+          simplyfied_invoice_row:    state.simplyfiedInvoiceRow,
+          invoice_prefix:            state.invoicePrefix,
+          simplyfied_invoice_prefix: state.simplyfiedInvoicePrefix,
+          account_number:            state.accountNumber,
+          iban:                      state.iban
         }
       })
   }

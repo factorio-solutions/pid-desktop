@@ -32,7 +32,9 @@
 		"loginFailed": "Špatné přihlášení",
 		"forgot": "Zapomenuté heslo?",
 		"proceed": "Pokračujte zde",
-		"emailPlaceholder": "Mr@park.it"
+		"emailPlaceholder": "Mr@park.it",
+		"resetPasswordUnsuccessful": "CS: login_page.resetPasswordUnsuccessful",
+		"resetPasswordSuccessful": "CS: login_page.resetPasswordSuccessful"
 	},
 	"signup_page": {
 		"name": "Jméno",
@@ -238,10 +240,13 @@
 		"visitorsName": "Jméno návštěvníka",
 		"visitorsPhone": "Telefon návštěvníka",
 		"visitorsEmail": "Email návštěvníka",
+		"internalsName": "Jméno internala",
+		"internalsPhone": "Telefon internala",
+		"internalsEmail": "Email internala",
 		"selectedUser": "Uživatel",
 		"flexiblePlaceSelected": "flexibilní",
 		"noFreePlace": "Žádná volná místa",
-		"note": "Poznámka",
+		"note": "Veřejná poznámka",
 		"onetimeVisit": "Jednorázový návštěvník",
 		"onetimeVisitText": "nemůže vytvářet ani žádat o rezervace, není členem klientského účtu.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
@@ -326,8 +331,8 @@
 		"internal": "Interní",
 		"mrParkit": "MR.PARKIT",
 		"editReservation": "Upravit rezervaci",
-		"editNote": "Upravit poznámku",
-		"newNote": "Nová poznámka",
+		"editNote": "Upravit veřejnou poznámku",
+		"newNote": "Nová veřejná poznámka",
 		"interuptReservation": "Přerušit rezervaci",
 		"payReservation": "Zaplatit rezervaci",
 		"downloadInvoice": "Stáhnout fakturu",
@@ -612,7 +617,7 @@
 		"onetimeAdditionPlaceholder": "30",
 		"timeCreditDescription": "Modul umožňuje časové omezení rezervací uživatelů Vašeho klienta",
 		"timeCreditStatistics": "Statistiky",
-		"hoursThatCanBeParked": "Hodiny, která je možné odparkovat tento měsíc",
+		"hoursThatCanBeParked": "Hodiny, které je možné odparkovat tento měsíc",
 		"creditsThatCanBeDistributed": "Kredity, která je možné rozdat tento měsíc",
 		"creditsDistributed": "Kredity, která byly rozdány",
 		"creditsDistributedOverMax": "Kredity přes maximální počet",
@@ -683,7 +688,7 @@
 		"garageInvitationMessage": "Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?",
 		"carInvitationMessage": "Byl(a) jste pozván(a) pro použití '%(arg1)s' auta. Chcete přijmout?",
 		"clientUserDestroyed": "Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",
-		"accountPlaceDestroyed": "Vaše rezervace byly stornovány, jelikož správce garáže odstranil parkovací místo z Klientského účtu.",
+		"reservationDestroyed": "Vaše rezervace bylA stornována.",
 		"past": "minulost",
 		"NotificationAccepted": "přijato dne",
 		"NotificationDeclined": "odmítnuto dne",
@@ -702,7 +707,9 @@
 		"garageLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",
 		"reservationLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",
 		"reservationUpdateLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",
-		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'."
+		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",
+		"reservationWasSuccessfullyPaid": "Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",
+		"reservationWillExpireSoon": "Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s"
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -715,7 +722,9 @@
 		"createdAt": "Profil vytvořen:",
 		"cars": "Auta",
 		"showPublicGarages": "Zobrazovat veřejné garáže",
-		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže"
+		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže",
+		"myGarages": "Garáže jejichž jste členem",
+		"myClients": "Klienti jejichž jste členem"
 	},
 	"users": {
 		"username": "uživatelské jméno",
@@ -737,6 +746,7 @@
 		"host": "pravidelný host",
 		"security": "ostraha",
 		"receptionist": "recepční",
+		"manager": "CS: users.manager",
 		"invitedToClient": "Pozván %(date)s aby byl členem klienta:",
 		"invitedToGarage": "Pozván %(date)s aby byl členem garáže:",
 		"invitedToCar": "Pozván %(date)s aby byl členem auta"
@@ -827,7 +837,7 @@
 		"selectCurrency": "Vyberte měnu",
 		"selectPlace": "Začněte výběrem místa",
 		"saving": "Ukládám...",
-		"minReservationDuration": "Min délka rezervace",
+		"minReservationDuration": "Min délka rezervace (minuty)",
 		"minReservationDurationPlaceholder": "15",
 		"maxReservationDuration": "Max délka rezervace",
 		"maxReservationDurationPlaceholder": "600",
@@ -1011,7 +1021,7 @@
 		"donwloadInvoices": "Stáhnout faktury",
 		"donwloadXML": "Pohoda XML",
 		"selectYourPohodaIc": "Zvolte IČ společnosti, pro kterou účtujete:",
-		"invoices": "Invoices",
+		"invoices": "Faktury",
 		"simplifiedTaxReceipts": "Zjednodušené daňové doklady",
 		"canceledInvoices": "Zrušené faktury",
 		"userName": "Uživatel"
@@ -1097,6 +1107,7 @@
 		"vat": "Daň z přidané hodnoty",
 		"invoiceRow": "Číselná řada faktur",
 		"simplyfiedInvoiceRow": "Číselná řada zjednodušených daňových dokladů",
+		"invoicePrefix": "Prefix",
 		"invalidVat": "Neplatné DPH",
 		"invalidRow": "Neplatné číslo",
 		"changeSuccess": "Hodnoty byly úspěšně změněny.",
@@ -1287,6 +1298,7 @@
 			"licencePlatePlaceholder": "1A2 1234",
 			"selectCar": "Zvolte auto",
 			"noAvailablePlaces": "Žádná místa nejsou dostupná",
+			"noClientAvailable": "Žádný dostupný klient",
 			"selectGarage": "Začněte volbou garáže",
 			"auto": "AUTO",
 			"now": "TEĎ",
@@ -1343,7 +1355,10 @@
 		"confirmPwdReset": "Dokončit změnu hesla",
 		"troubleWithAccount": "Pokud máte s problém s účtem, neváhejte nás kontaktovat tím, že odpovíte na tento mail.",
 		"verificationCodeEmailSubject": "Ověřovací kód",
-		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!"
+		"verificationCode": "Níže najdete Váš ověřovací kód pro Park-it-direct!",
+		"blockedTitle": "Váš účet byl zablokován",
+		"blockedDescription": "Detekovali jsme podezřelou aktivitu na Vašem účtě, zaznamenali jsme deset neúspěšných příhlášení v řadě.",
+		"blockedUnblock": "Odblokovat!"
 	},
 	"railsEmails": {
 		"invitation_mail_subject": "Byl jste pozván do Park-It-Directu!",
@@ -1356,6 +1371,10 @@
 		"reservation_not_approved_yet_subject": "Vaše nová rezervace nebyla zatím schválena",
 		"car_on_my_spot_notify_driver_subject": "Byl jste nahlášen",
 		"car_on_my_spot_notify_secretary_subject": "Uživatel byl nahlášen",
+		"right_updated": "Vaše práva byla aktualizována",
+		"accept_new_reservation_secretary_notification_subject": "Nová rezervace potřebuje Vaše rozhodnutí",
+		"your_reservation_was_destroyed": "Vaše rezervace byla stornována",
+		"reservation_will_expire_soon_subject": "Vaše rezervace brzy propadne",
 		"aliases": {
 			"garage_table": {
 				"user": "Uživatel:",
@@ -1397,7 +1416,7 @@
 			"go_pay_yourself": "Zaplatit",
 			"price": "Cena:",
 			"pay_in_24_hours": "Rezervaci je potřeba zaplatit do 24 hodin.",
-			"reservation_was_paid": "Rezervace byla zaplacena klientem.",
+			"reservation_was_paid": "Rezervace byla zaplacena hostitelem.",
 			"confirmed": "Potvrzeno",
 			"garage_address": "Adresa garáže",
 			"reservation_start": "Začátek rezervace",
@@ -1453,6 +1472,34 @@
 			"user_has_been_reported": "Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",
 			"infor_about_car": "Další informace o autě:",
 			"infor_about_reservation": "Další informace o rezervaci:"
+		},
+		"updated_rights": {
+			"right_updated": "Vaše práva byla aktualizována",
+			"class_updated": "Administrátoři %{class} %{name} Vám aktualizovali práva, zde jsou provedené změny:",
+			"enabled": "Byla Vám přidána role %{role}",
+			"disabled": "Byla Vám odebrána role %{role}",
+			"client_user": "Klienta",
+			"user_car": "Auta",
+			"user_garage": "Garáže",
+			"admin": "Admin",
+			"receptionist": "Recepční",
+			"security": "Ochranka",
+			"secretary": "Sekretářka",
+			"manager": "Manažer",
+			"host": "Pravidelný host",
+			"internal": "Interní",
+			"contact_person": "Kontaktní osoba",
+			"driver": "Řidič"
+		},
+		"accept_new_reservation_secretary_notification": {
+			"new_reservation_needs_confirmation": "%{creator} vytvořil novou rezervaci na náklady klienta %{client}, nyní můžete přejít do Park-it-direct a přijmout nebo zamítnout tuto rezervaci.",
+			"to_pid": "Do Park-it-direct!"
+		},
+		"reservation_destroyed_mail": {
+			"reservation_was_destroyed": "Vaše rezervace byla stornována."
+		},
+		"reservation_will_expire_soon": {
+			"reservation_will_expire_soon": "Vaše rezervace v garáži %{garage} propadne přibližně za 30 minut."
 		}
 	},
 	"railsSMSs": {

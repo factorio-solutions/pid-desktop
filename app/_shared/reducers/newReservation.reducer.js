@@ -121,8 +121,8 @@ function substituteVariablesInTemplate(template, state) {
     .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
     .findById(state.place_id)
 
-  const gates = place && place.gates
-    .filter(gate => gate.phone_number)
+  const gates = state.garage && state.garage.gates
+    .filter(gate => gate.phone_number && gate.place_gates.find(p => p.place_id === place.id))
     .map(gate => `${gate.label} (${gate.phone_number.number})`)
     .join(', ')
 
@@ -316,8 +316,16 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         sendSMS:          action.value,
-        selectedTemplate: action.value ? client.sms_templates.length === 1 ? 0 : undefined : undefined,
-        templateText:     action.value ? client.sms_templates.length === 1 ? client.sms_templates[0].template : '' : ''
+        selectedTemplate: action.value
+                            ? client.sms_templates.length === 1
+                              ? 0
+                              : undefined
+                            : undefined,
+        templateText:     action.value
+                            ? client.sms_templates.length === 1
+                              ? substituteVariablesInTemplate(client.sms_templates[0].template, state)
+                              : ''
+                            : ''
       }
 
     case NEW_RESERVATION_SET_ERROR:

@@ -14,9 +14,14 @@ const BabelPolyfill = require('babel-polyfill')
 * */
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+let env = process.env.RAILS_ENV
+if (!env || env === 'alpha') {
+  env = 'production'
+}
+
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'nosources-source-map',
 
   entry: [ 'babel-polyfill', './app/index' ],
 
@@ -37,7 +42,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV:       JSON.stringify(process.env.RAILS_ENV || 'production'), // Heroku will have RAILS_ENV variable for Rails server
+        NODE_ENV:       JSON.stringify(env), // Heroku will have RAILS_ENV variable for Rails server
         API_ENTRYPOINT: JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
     }),

@@ -33,7 +33,7 @@ class SmsForm extends Component {
           state.user.availableClients.findById(state.client_id) &&
           state.user.availableClients.findById(state.client_id).has_sms_api_token &&
           state.user.availableClients.findById(state.client_id).is_sms_api_token_active &&
-          state.user.availableClients.findById(state.client_id).is_secretary &&
+          state.user.availableClients.findById(state.client_id).client_user.secretary &&
           <div>
             <div className={styles.endSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
               <input type="checkbox" checked={state.sendSMS} align="left" />

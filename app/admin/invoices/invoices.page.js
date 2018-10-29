@@ -55,7 +55,7 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
         <LabeledRoundButton
           label={t([ 'invoices', 'downloadInvoice' ])}
           content={<span className="fa fa-download" aria-hidden="true" />}
-          onClick={() => actions.downloadInvoice(invoice.id)}
+          onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
           type="action"
         />
         <LabeledRoundButton
@@ -73,10 +73,14 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
         <LabeledRoundButton
           label={t([ 'invoices', 'downloadInvoice' ])}
           content={<span className="fa fa-download" aria-hidden="true" />}
-          onClick={() => actions.downloadInvoice(invoice.id)}
+          onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
           type="action"
         />
-        {!invoice.payed && !invoice.is_storno_invoice && (invoice.client.is_admin || invoice.client.is_secretary) &&
+        {!invoice.payed && ((!invoice.is_storno_invoice && invoice.client && invoice.client.client_user &&
+        (invoice.client.client_user.admin || invoice.client.client_user.secretary)) ||
+          (invoice.payer_type === 'User' && invoice.invoice_item && invoice.invoice_item.invoiceable_type === 'Reservation'
+          && invoice.user.id === pageBase.current_user.id))
+        &&
           <LabeledRoundButton
             label={t([ 'invoices', 'payInvoice' ])}
             content={<i className="fa fa-credit-card" aria-hidden="true" />}

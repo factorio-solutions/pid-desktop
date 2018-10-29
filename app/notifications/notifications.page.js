@@ -35,19 +35,19 @@ class NotificationsPage extends Component {
       { key: 'created_at', title: t([ 'notifications', 'sent' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span>, sort: 'desc' }
     ]
 
-    // const confirmClick = notification => {
-    //   actions.accept(notification)
-    // }
-
-    // const destroyClick = notification => {
-    //   actions.decline(notification)
-    // }
-
     const data = state.notifications.map(notification => {
       const createSpoiler = () => {
         const returnMessage = () => {
           const parts = notification.message ? notification.message.split(';') : [ 'noMessage' ] // if no message comes
-          return t([ 'notifications', parts[0] ], { arg1: parts[1] || '', arg2: parts[2] || '' })
+          const translation = t([ 'notifications', parts[0] ], { arg1: parts[1] || '', arg2: parts[2] || '' })
+
+          if (translation.includes('missing translation:')) { // news are not ment to be translated.
+            return parts[1]
+              ? <a href={parts[1]}>{parts[0]}</a>
+              : parts[0]
+          } else {
+            return translation
+          }
         }
 
         const confirm = () => actions.accept(notification)
@@ -57,13 +57,6 @@ class NotificationsPage extends Component {
           <span>{returnMessage()}</span> <br />
           {notification.custom_message && <span>{notification.creator.full_name} {t([ 'notifications', 'sais' ])}: {notification.custom_message}</span>}{notification.custom_message && <br />}
           {!notification.confirmed ?
-            // <Form
-            //   onSubmit={confirm}
-            //   onBack={notification.notification_type.indexOf('No') === -1 ? undefined : decline}
-            //   submitable
-            // >
-
-            // </Form> :
             <span className={styles.floatRight}>
               {notification.notification_type.indexOf('No') !== -1 && <RoundButton
                 content={<span className="fa fa-times" aria-hidden="true" />}

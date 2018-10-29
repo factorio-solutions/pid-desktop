@@ -23,8 +23,10 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
       }
     }
     client{
-      is_admin
-      is_secretary
+      client_user{
+        admin
+        secretary
+      }
       name
       id
       admins{
@@ -35,8 +37,8 @@ export const GET_INVOICES = `query Query($past: Boolean!, $garage_id: Id) {
 }
 `
 
-export const GET_USERS_INVOICES = `query {
-  users_invoices{
+export const GET_USERS_INVOICES = `query Query($garage_id: Id) {
+  users_invoices (garage_id:$garage_id) {
     id
     invoice_number
     longterm_rent
@@ -48,8 +50,12 @@ export const GET_USERS_INVOICES = `query {
     canceled
     is_storno_invoice
     vat
+    payer_type
     currency{
       symbol
+    }
+    invoice_item{
+      invoiceable_type
     }
     account{
       garage{
@@ -59,6 +65,7 @@ export const GET_USERS_INVOICES = `query {
       }
     }
     user{
+      id
       full_name
     }
   }

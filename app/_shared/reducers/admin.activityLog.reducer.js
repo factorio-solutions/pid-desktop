@@ -1,15 +1,19 @@
-import { SET_ADMIN_ACTIVITY_LOGS_LOGS }  from '../actions/admin.activityLog.actions'
+import {
+  SET_ADMIN_ACTIVITY_LOGS_TABLE_STATE
+} from '../actions/admin.activityLog.actions'
 
-const defaultState = { logs: [] }
+const defaultState = {
+  tableState: undefined
+}
 
 
 export default function adminActivityLog(state = defaultState, action) {
   switch (action.type) {
 
-    case SET_ADMIN_ACTIVITY_LOGS_LOGS:
+    case SET_ADMIN_ACTIVITY_LOGS_TABLE_STATE:
       return {
         ...state,
-        logs: action.value
+        tableState: action.value
       }
 
     default:

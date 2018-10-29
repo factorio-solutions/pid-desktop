@@ -32,7 +32,12 @@ class LoginPage extends Component {
     if (this.props.location && this.props.location.query && this.props.location.query.token) {
       localStorage.jwt = this.props.location.query.token
       this.props.actions.resetStore()
-      nav.to('/dashboard')
+      nav.to('/occupancy')
+    }
+    if (this.props.location && this.props.location.query
+    && this.props.location.query.hasOwnProperty('password_reset_success')) {
+      this.props.actions.setShowPasswordResetModal(true)
+      this.props.actions.setPasswordResetSuccessful(this.props.location.query.password_reset_success === 'true')
     }
   }
 
@@ -53,6 +58,13 @@ class LoginPage extends Component {
 
     const loadingContent = <Loading show />
 
+    const resetPasswordModalContent = success => (
+      <div>
+        <div>{ success ? t([ 'login_page', 'resetPasswordSuccessful' ]) : t([ 'login_page', 'resetPasswordUnsuccessful' ]) }</div>
+        <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
+      </div>
+    )
+
     const errorContent = (<div className={styles.redFont}>
       <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
       <div>{ state.error }</div>
@@ -65,6 +77,11 @@ class LoginPage extends Component {
           <Logo style="round" />
 
           <Modal content={state.fetching ? loadingContent : errorContent} show={state.fetching || state.error} />
+          <Modal
+            content={resetPasswordModalContent(state.passwordResetSuccessful)}
+            show={state.showResetPasswordModal}
+          />
+
           <Form onSubmit={onSubmit} onBack={this.home} submitable={isSubmitable()} center home>
             <PatternInput
               onChange={actions.setEmail}

@@ -23,8 +23,10 @@ export const GET_UNPAID_INVOICES = `query{
       }
     }
     client{
-      is_admin
-      is_secretary
+      client_user{
+        admin
+        secretary
+      }
       name
       id
       admins{

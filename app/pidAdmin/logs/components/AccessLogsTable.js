@@ -3,10 +3,11 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
-import Table from '../../../_shared/components/table/Table'
+import { GET_ADMIN_ACCESS_LOGS } from '../../../_shared/queries/pid-admin.logs.queries'
 
 import { t }            from '../../../_shared/modules/localization/localization'
 import * as logsActions from '../../../_shared/actions/pid-admin.logs.actions'
+import PaginatedTable from '../../../_shared/components/table/PaginatedTable'
 
 
 class AccessLogsTable extends Component {
@@ -15,15 +16,11 @@ class AccessLogsTable extends Component {
     actions: PropTypes.object
   }
 
-  componentDidMount() {
-    this.props.actions.initAccessLogs()
-  }
-
   formatUser = user => user ?
     <div>
       {user.full_name && <div>{user.full_name}</div>}
       {user.email && <div>{user.email}</div>}
-      <div>{user.user_phone || user.phone}</div>
+      <div>{user.used_phone || user.phone}</div>
     </div> :
     ''
 
@@ -43,39 +40,62 @@ class AccessLogsTable extends Component {
     </div> :
     t([ 'pidAdmin', 'logs', 'noReservation' ])
 
+  transformData = data => data.gate_access_logs.map(log => ({
+    ...log,
+    user: {
+      ...log.user,
+      used_phone: log.user_phone
+    }
+  }))
+
   render() {
-    const { state } = this.props
+    const { state, actions } = this.props
 
     const schema = [
       { key:         'user',
         title:       t([ 'pidAdmin', 'logs', 'user' ]),
-        comparator:  'string',
-        representer: this.formatUser
+        representer: this.formatUser,
+        includes:    'user',
+        orderBy:     'users.full_name'
       },
       { key:        'access_type',
         title:      t([ 'pidAdmin', 'logs', 'accessType' ]),
-        comparator: 'string'
+        comparator: 'string',
+        orderBy:    'access_type'
       },
       { key:         'created_at',
         title:       t([ 'pidAdmin', 'logs', 'createdAt' ]),
         comparator:  'date',
         representer: o => <span>{ moment(o).format('DD.MM.YYYY')} <br /> {moment(o).format('H:mm:ss')}</span>,
         orderBy:     'created_at',
-        sort:        'asc'
+        sort:        'DESC'
       },
       { key:         'gate',
         title:       t([ 'pidAdmin', 'logs', 'gate' ]),
-        comparator:  'string',
-        representer: this.formatGate
+        comparator:  (sortType, a, b) => (a.label || '').toLowerCase() < (b.label || '').toLowerCase() ? (sortType === 'asc' ? -1 : 1) : ((a.label || '').toLowerCase() > (b.label || '').toLowerCase() ? (sortType === 'asc' ? 1 : -1) : 0),
+        representer: this.formatGate,
+        includes:    'gate',
+        orderBy:     'gates.label'
       },
       { key:         'reservation',
         title:       t([ 'pidAdmin', 'logs', 'reservation' ]),
-        comparator:  'string',
-        representer: this.formatReservation
+        representer: this.formatReservation,
+        includes:    'reservation place floor garage',
+        orderBy:     'garages.name'
       }
     ]
 
-    return <Table schema={schema} data={state.accessLogs} />
+    // return <Table schema={schema} data={state.accessLogs} />
+    return (<PaginatedTable
+      query={GET_ADMIN_ACCESS_LOGS}
+      parseMetadata={data => data.gate_access_logs_metadata}
+      transformData={this.transformData}
+      schema={schema}
+      storeState={actions.setAccessLogs}
+      state={state.accessLogs}
+      count={50}
+      admin
+    />)
   }
 }
 

@@ -58,6 +58,7 @@ class UsersPage extends Component {
 
     const createClientLink = (client, index) => (<li key={index} className={styles.clickable} onClick={() => { this.clientOnClick(client.id) }}> {client.name}
       {client.admin && <span>{t([ 'users', 'admin' ])}</span>}
+      {client.contactPerson && <span>{t([ 'clientUsers', 'contact_person' ])}</span>}
       {client.secretary && <span>{t([ 'users', 'secretary' ])}</span>}
       {client.internal && <span>{t([ 'users', 'internal' ])}</span>}
       {client.host && <span>{t([ 'users', 'host' ])}</span>}
@@ -70,6 +71,7 @@ class UsersPage extends Component {
 
     const createGarageLink = (garage, index) => (<li key={index} className={styles.clickable} onClick={() => { this.garageOnClick(garage.id) }}>{garage.name}
       {garage.admin && <span>{t([ 'users', 'admin' ])}</span>}
+      {garage.manager && <span>{t([ 'garageUsers', 'manager' ])}</span>}
       {garage.security && <span>{t([ 'users', 'security' ])}</span>}
       {garage.receptionist && <span>{t([ 'users', 'receptionist' ])}</span>}
     </li>)
@@ -100,11 +102,13 @@ class UsersPage extends Component {
         {t([ 'users', user.client && 'invitedToClient' || user.garage && 'invitedToGarage' || user.car && 'invitedToCar' ], { date: moment(user.created_at).format('DD.MM.YYYY HH:mm') })}
         {user.client && <b className={styles.pointer} onClick={() => { this.clientOnClick(user.client.id) }}>{user.client.name}</b>}
         {user.client && user.client.admin && <span className={styles.rights}>{t([ 'users', 'admin' ])}</span>}
+        {user.client && user.client.contactPerson && <span className={styles.rights}>{t([ 'users', 'contactPerson' ])}</span>}
         {user.client && user.client.secretary && <span className={styles.rights}>{t([ 'users', 'secretary' ])}</span>}
         {user.client && user.client.internal && <span className={styles.rights}>{t([ 'users', 'internal' ])}</span>}
         {user.client && user.client.host && <span className={styles.rights}>{t([ 'users', 'host' ])}</span>}
         {user.garage && <b className={styles.pointer} onClick={() => { garageOnClick(user.garage.id) }}>{user.garage.name}</b>}
         {user.garage && user.garage.admin && <span className={styles.rights}>{t([ 'users', 'admin' ])}</span>}
+        {user.garage && user.garage.manager && <span className={styles.rights}>{t([ 'users', 'manager' ])}</span>}
         {user.garage && user.garage.security && <span className={styles.rights}>{t([ 'users', 'security' ])}</span>}
         {user.garage && user.garage.receptionist && <span className={styles.rights}>{t([ 'users', 'receptionist' ])}</span>}
         {user.car && <b className={styles.pointer} onClick={() => { this.carOnClick(user.car.id) }}>{user.car.model}</b>}

@@ -87,7 +87,7 @@ class DateTimeForm extends Component {
     actions.setFrom(interval[0].format(MOMENT_DATETIME_FORMAT))
     actions.setTo(interval[1].format(MOMENT_DATETIME_FORMAT))
     actions.formatFrom()
-    actions.formatTo()
+    actions.formatTo(true)
   }
   render() {
     const { state, actions, editable } = this.props

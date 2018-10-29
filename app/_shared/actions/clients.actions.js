@@ -1,12 +1,14 @@
 import moment from 'moment'
 
-import { request } from '../helpers/request'
+import { request }   from '../helpers/request'
+import actionFactory from '../helpers/actionFactory'
 
 import { GET_CLIENTS, GARAGE_CONTRACTS } from '../queries/clients.queries'
 
 
 export const SET_CLIENTS = 'SET_CLIENTS_CLIENTS_PAGE'
 export const SET_GARAGE_CONTRACTS = 'SET_GARAGE_CONTRACTS'
+export const ADMIN_CLIENT_SET_LOADING = 'ADMIN_CLIENT_SET_LOADING'
 
 
 export function setClients(clients) {
@@ -20,6 +22,8 @@ export function setGarageContracts(value) {
     value
   }
 }
+
+export const setLoading = actionFactory(ADMIN_CLIENT_SET_LOADING)
 
 
 function currentContracts(contract) {
@@ -37,6 +41,8 @@ export function initClients() {
           .reduce((acc, contract) => acc + contract.place_count, 0)
       }))))
     }
+
+    dispatch(setLoading())
     request(onSuccess, GET_CLIENTS)
   }
 }

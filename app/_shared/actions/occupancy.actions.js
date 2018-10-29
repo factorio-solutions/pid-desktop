@@ -1,6 +1,5 @@
 import moment from 'moment'
 
-import { request }    from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
 import actionFactory  from '../helpers/actionFactory'
 import { t }          from '../modules/localization/localization'
@@ -37,6 +36,7 @@ export const OCCUPANCY_SET_LOADING = 'OCCUPANCY_SET_LOADING'
 export const OCCUPANCY_SET_USER = 'OCCUPANCY_SET_USER'
 export const OCCUPANCY_SET_NEW_RESERVATION = 'OCCUPANCY_SET_NEW_RESERVATION'
 export const OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE = 'OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE'
+export const OCCUPANCY_SET_REFETCHING = 'OCCUPANCY_SET_REFETCHING'
 
 
 export const setGarages = actionFactory(OCCUPANCY_SET_GARAGES)
@@ -47,6 +47,7 @@ export const resetClients = actionFactory(OCCUPANCY_RESET_CLIENTS)
 export const setLoading = actionFactory(OCCUPANCY_SET_LOADING)
 export const setUser = actionFactory(OCCUPANCY_SET_USER)
 export const setReservationNotPossible = actionFactory(OCCUPANCY_SET_NEW_RESERVATION_NOT_POSSIBLE)
+export const setRefetching = actionFactory(OCCUPANCY_SET_REFETCHING)
 
 export function setNewReservation(fromMoment, toMoment, placeId) {
   return (dispatch, getState) => {
@@ -103,7 +104,6 @@ export function setNewReservation(fromMoment, toMoment, placeId) {
         }
       })
     })
-
   }
 }
 
@@ -145,6 +145,7 @@ export function setFrom(from) {
 
 export function loadGarages() {
   return (dispatch, getState) => {
+    dispatch(setRefetching(true))
     requestPromise(OCCUPANCY_GARAGES_QUERY)
     .then(data => {
       dispatch(setGarages(data.occupancy_garages))
@@ -170,6 +171,8 @@ export function loadGarages() {
       ))
 
       dispatch(loadGarage(getState().pageBase.garage))
+      dispatch(pageBase.setCustomModal())
+      dispatch(setLoading(false))
     })
   }
 }
@@ -183,6 +186,25 @@ export function resetClientsLoadGarage(id) {
   }
 }
 
+// It is time consuming on large garages but still faster then when it is handled on server.
+function updateGarage(garage) {
+  return {
+    ...garage,
+    floors: garage.floors.map(floor => ({
+      ...floor,
+      occupancy_places: floor.occupancy_places.map(place => {
+        const contracts_in_interval = garage.contracts_in_interval.filter(con => !!con.places.find(p => p.id === place.id))
+        const reservations_in_interval = garage.reservations_in_interval.filter(r => r.place.id === place.id)
+        return {
+          ...place,
+          contracts_in_interval,
+          reservations_in_interval
+        }
+      })
+    }))
+  }
+}
+
 export function loadGarage(id) {
   return (dispatch, getState) => {
     const state = getState().occupancy
@@ -193,29 +215,26 @@ export function loadGarage(id) {
       from:       timeToUTC(state.from),
       to:         timeToUTC(state.from.clone().add(1, state.duration)),
       client_ids: state.client_ids
-    }).then(data => dispatch(setGarage(data.garage)))
-
-    dispatch(loadClients(garageId))
+    }).then(data => {
+      dispatch(setGarage(updateGarage(data.garage)))
+      dispatch(loadClients(data.garage.clients))
+      dispatch(setRefetching(false))
+    })
+      
   }
 }
 
-export function loadClients(id) {
-  return (dispatch, getState) => {
-    const onClientsSuccess = response => {
-      response.data.garage.clients.unshift({ name: t([ 'occupancy', 'allReservations' ]), id: undefined })
-      dispatch(setClients(response.data.garage.clients))
-    }
-
-    const garageId = id || getState().pageBase.garage
-    garageId && request(onClientsSuccess,
-      GARAGE_CLIENTS_QUERY,
-      { id: garageId }
-    )
+export function loadClients(clients) {
+  return dispatch => {
+    clients.unshift({ name: t([ 'occupancy', 'allReservations' ]), id: undefined })
+    dispatch(setClients(clients))
   }
 }
 
 export function initOccupancy() {
   return dispatch => {
+    dispatch(pageBase.setCustomModal('loading'))
+    dispatch(setLoading(true))
     dispatch(loadGarages())
   }
 }

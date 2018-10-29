@@ -87,9 +87,11 @@ export function initInvoices(garageId) {
   }
 }
 
-export function initUserInvoices() {
+export function initUserInvoices(garageId) {
   return dispatch => {
-    requestPromise(GET_USERS_INVOICES)
+    requestPromise(GET_USERS_INVOICES, {
+      garage_id: garageId && +garageId
+    })
     .then(data => dispatch(setUsersInvoices(data.users_invoices)))
   }
 }
@@ -162,9 +164,9 @@ export function stornoInvoice(id, garage_id) {
   }
 }
 
-export function downloadInvoice(id) {
-  return (dispatch, getState) => {
-    download(`${id}.pdf`, DOWNLOAD_INVOICE, { id })
+export function downloadInvoice(id, filename) {
+  return () => {
+    download(`${filename}.pdf`, DOWNLOAD_INVOICE, { id })
   }
 }
 
@@ -232,6 +234,11 @@ export function generateXlsx(invoices) {
 
 export function downloadZip(invoices) {
   return () => {
-    downloadMultiple('invoices.zip', DOWNLOAD_INVOICE, invoices.map(invoice => invoice.id))
+    downloadMultiple(
+      'invoices.zip',
+      DOWNLOAD_INVOICE,
+      invoices.map(invoice => invoice.id),
+      invoices.map(invoice => invoice.invoice_number)
+    )
   }
 }

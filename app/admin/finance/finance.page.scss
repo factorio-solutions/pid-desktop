@@ -28,3 +28,12 @@
 .finance {
   margin-bottom: 100px;
 }
+
+
+.flex {
+  display: flex;
+
+  >div:last-child {
+    flex: 1 1;
+  }
+}
