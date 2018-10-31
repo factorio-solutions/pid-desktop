@@ -377,7 +377,7 @@
 		"longterm": "Langfristig",
 		"shortterm": "Kurzfristig",
 		"rentName": "Name des Mietverhältnisses",
-		"price": "Preis",
+		"price": "Preis (Platz pro Monat)",
 		"places": "Plätze",
 		"editRent": "Mietverhältnis bearbeiten"
 	},
@@ -1047,7 +1047,7 @@
 		"flexiplace": "Flexi Platz",
 		"flexiplaceDescription": "Der Flexi Platz ist ein Unterstützungstool zur optimalen Nutzung Ihrer Plätze. Ihre Benutzer werden ihren Parkplatz bis zum Beginn der Buchung nicht kennen. Die Buchungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren.",
 		"showApiKey": "API Endpoint zeigen",
-		"regenerateApiKey": "Einen neuen API Endpoint erstellen",
+		"regenerateApiKey": "Einen neuen geheimen Token generieren",
 		"3rdPartyIntegration": "Integration von dritten Seiten",
 		"thirdPartyIntegrationDescription": "Durch aktivierung dieser Funktion, bekommen Sie eine eigene API mit Aktionen, die Ihnen die Verwaltung von Buchungen durch dritte Seiten ermöglicht",
 		"mrParkitIntegration": "MR.PARKIT Integration",
@@ -1463,7 +1463,7 @@
 			"you_can_contact_these_peope": "Für die Beschleunigung Ihrer Genehmigung können Sie Ihre Kontaktperson kontaktieren."
 		},
 		"car_on_my_spot_notify_driver": {
-			"you_have_been_reported": "Es wurde gemeldet, dass Ihr Wagen einen Platz, der für eine andere Buchung bestimmt ist, blockiert.",
+			"you_have_been_reported": "Es wurde gemeldet, dass ein Wagen, der mit Ihrem Konto verknüpft ist, den Parkplatz einer anderen Buchung blockiert. ",
 			"infor_about_car": "Information über den gemeldeten Wagen:",
 			"suspected_reservation": "Wir haben einen Verdacht, dass das Problem bei dieser Buchung entstanden ist.",
 			"we_urge_you": "Wir bitten Sie um die regelung der Situation."
