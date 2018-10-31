@@ -96,10 +96,16 @@ export default class Table extends Component {
   componentDidUpdate(prevProps) {
     this.updateScale()
 
+    const prevFirstItem = prevProps.data[0]
+    const firstItem = this.props.data[0]
     // NaN === NaN is false
     const bothSelectIdNan = isNaN(prevProps.selectId) && isNaN(this.props.selectId)
-    if ((!bothSelectIdNan && (prevProps.selectId !== this.props.selectId))
-        || (!prevProps.data.length && this.props.data.length)) {
+
+    if (
+      (!bothSelectIdNan && (prevProps.selectId !== this.props.selectId)) ||
+      (!prevProps.data.length && this.props.data.length) ||
+      (prevFirstItem !== firstItem && this.props.selectId !== -1 && !isNaN(this.props.selectId))
+    ) {
       this.setState({
         ...this.state,
         spoilerId: this.filterData(this.props.data).findIndexById(this.props.selectId)
