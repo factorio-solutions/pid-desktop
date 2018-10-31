@@ -321,11 +321,12 @@ export function pickPlaces(noClientDownload) {
       request(
         onSuccess,
         GET_AVAILABLE_FLOORS,
-        { id:        variables.garage_id,
-          begins_at: variables.begins_at,
-          ends_at:   variables.ends_at,
-          client_id: variables.client_id,
-          user_id:   state.guestReservation ? state.user_id : null
+        { id:             variables.garage_id,
+          begins_at:      variables.begins_at,
+          ends_at:        variables.ends_at,
+          client_id:      variables.client_id,
+          user_id:        state.guestReservation ? state.user_id : null,
+          reservation_id: state.reservation_id
         })
       !noClientDownload && dispatch(getAvailableClients())
     } else {
