@@ -377,7 +377,7 @@
 		"longterm": "Long-term",
 		"shortterm": "Short-term",
 		"rentName": "Rent name",
-		"price": "Price",
+		"price": "Price (place per month)",
 		"places": "Places",
 		"editRent": "Edit rent"
 	},
@@ -1463,7 +1463,7 @@
 			"you_can_contact_these_peope": "To speed up things, you can contact one of contact presons:"
 		},
 		"car_on_my_spot_notify_driver": {
-			"you_have_been_reported": "We were reported that a car associated with you is blocking another reservation's place.",
+			"you_have_been_reported": "We were reported that a car associated with your account is blocking another reservation's place.",
 			"infor_about_car": "Information about reported car:",
 			"suspected_reservation": "We suspects tha this reservation might be a problem:",
 			"we_urge_you": "We urge you to remedy the situation."
