@@ -78,10 +78,6 @@ export class Page extends Component {
     document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'
   }
 
-  componentWillReceiveProps(newProps) {
-    document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'
-  }
-
   componentWillUnmount() {
     window.removeEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
   }
