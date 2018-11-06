@@ -22,11 +22,8 @@ export default class PaginatedTable extends Component {
     admin:         PropTypes.bool,
     findId:        PropTypes.number,
     storeState:    PropTypes.func,
-    state:         PropTypes.object
-  }
-
-  static defaultProps = {
-    admin: false
+    state:         PropTypes.object,
+    count:         PropTypes.number
   }
 
   constructor(props) {
@@ -43,7 +40,7 @@ export default class PaginatedTable extends Component {
         data:      [],
         loading:   true,
         page:      1,
-        count:     10, // records per page
+        count:     props.count || 10, // records per page
         key:       sortedColumn.key, // sorting by this key
         ascDesc:   sortedColumn.sort,
         search:    {},
@@ -63,11 +60,13 @@ export default class PaginatedTable extends Component {
     const { variables } = this.props
     const { count, key, ascDesc, search, page } = this.state
 
-    if (JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
+    if (
+      JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
       JSON.stringify(prevState.search) !== JSON.stringify(search) ||
       prevState.count !== count ||
       prevState.ascDesc !== ascDesc ||
-      prevState.key !== key) {
+      prevState.key !== key
+    ) {
       this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
     }
   }
@@ -75,7 +74,7 @@ export default class PaginatedTable extends Component {
   componentWillUnmount() {
     window.removeEventListener('paginatedTableUpdate', this.loadingRequest, true)
 
-    const { storeState } = this.state
+    const { storeState } = this.props
     storeState && storeState(this.state)
   }
 
@@ -148,7 +147,7 @@ export default class PaginatedTable extends Component {
         }
       }, {})
 
-      this.setState({ ...this.state, key, ascDesc, loading: true, search })
+      this.setState({ ...this.state, key, ascDesc, loading: true, search, page: 1 })
     }
 
     const pages = new Array(pageCount)
@@ -171,7 +170,6 @@ export default class PaginatedTable extends Component {
           schema={schema}
           data={data}
           filterClick={filterClick}
-          searchBox={false}
           selectId={findId}
           searchBar
         />

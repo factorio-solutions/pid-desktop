@@ -34,7 +34,7 @@
 		"proceed": "Pokračujte zde",
 		"emailPlaceholder": "Mr@park.it",
 		"resetPasswordUnsuccessful": "CS: login_page.resetPasswordUnsuccessful",
-		"resetPasswordSuccessful": "CS: login_page.resetPasswordSuccessful"
+		"resetPasswordSuccessful": "Vaše heslo bylo úspěšně změněno."
 	},
 	"signup_page": {
 		"name": "Jméno",
@@ -377,7 +377,7 @@
 		"longterm": "Dlouhodobý",
 		"shortterm": "Krátkodobý",
 		"rentName": "Název nájmu",
-		"price": "Cena",
+		"price": "Cena (místo za měsíc)",
 		"places": "Místa",
 		"editRent": "Upravit nájem"
 	},
@@ -688,7 +688,7 @@
 		"garageInvitationMessage": "Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?",
 		"carInvitationMessage": "Byl(a) jste pozván(a) pro použití '%(arg1)s' auta. Chcete přijmout?",
 		"clientUserDestroyed": "Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",
-		"reservationDestroyed": "Vaše rezervace bylA stornována.",
+		"reservationDestroyed": "Vaše rezervace byla stornována.",
 		"past": "minulost",
 		"NotificationAccepted": "přijato dne",
 		"NotificationDeclined": "odmítnuto dne",
@@ -1047,7 +1047,7 @@
 		"flexiplace": "Flexi místo",
 		"flexiplaceDescription": "Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální.",
 		"showApiKey": "Zobrazit API endpoint",
-		"regenerateApiKey": "Vygenerovat nový API endpoint",
+		"regenerateApiKey": "Vygenerovat nový tajný token",
 		"3rdPartyIntegration": "Integrace 3. stran",
 		"thirdPartyIntegrationDescription": "Aktivací této funkce obdržíte vlastní API s akcemi, které vám umožní spravovat rezervace pomocí dalších systémů",
 		"mrParkitIntegration": "Integrace MR.PARKIT",
@@ -1463,10 +1463,10 @@
 			"you_can_contact_these_peope": "Pro uspíšení vašeho potrvrzení můžete kontaktovat kontaktní osoby:"
 		},
 		"car_on_my_spot_notify_driver": {
-			"you_have_been_reported": "Bylo nám nahlášeno, že auto spojené s Vámi blokuje místo pro jinou rezervaci.",
+			"you_have_been_reported": "Bylo nám nahlášeno, že auto spojené s Vaším účtem, blokuje místo pro jinou rezervaci.",
 			"infor_about_car": "Informace o nahlášeném autě:",
 			"suspected_reservation": "Máme podezření, že problém nastal u této rezervace:",
-			"we_urge_you": "Žádáve Vás o nápravu situace"
+			"we_urge_you": "Prověřte prosím situaci a případně zjednejte okamžitou nápravu."
 		},
 		"car_on_my_spot_notify_secretary_and_security": {
 			"user_has_been_reported": "Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",

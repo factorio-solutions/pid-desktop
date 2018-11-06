@@ -41,7 +41,7 @@ class NewReservationPage extends Component {
 
   componentDidMount() {
     const { actions, params, state } = this.props
-    if (state.reservation && ((typeof(params.id) === 'undefined' && state.reservation.id)
+    if (state.reservation && ((typeof params.id === 'undefined' && state.reservation.id)
         || (state.reservation.id !== params.id))) {
       actions.clearForm()
     }

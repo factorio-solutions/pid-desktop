@@ -8,7 +8,7 @@ import ExportButtons from '../components/ExportButtons'
 
 import { t }                from '../../../_shared/modules/localization/localization'
 import * as invoicesActions from '../../../_shared/actions/invoices.actions'
-import { prepareInvoice }   from '../invoices.page'
+import { prepareInvoice, filterByClient }   from '../invoices.page'
 
 import styles from '../invoices.page.scss'
 
@@ -21,7 +21,7 @@ class SimplifiedTaxReceipts extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initUserInvoices()
+    this.props.actions.initUserInvoices(this.props.pageBase.garage)
   }
 
   render() {
@@ -41,6 +41,9 @@ class SimplifiedTaxReceipts extends Component {
     ]
 
     const invoiceData = state.usersInvoices
+      .filter(invoice => !invoice.canceled)
+      .filter(invoice => invoice.payed === state.past)
+      .filter(invoice => filterByClient(invoice, state.client_id))
       .map(invoice => prepareInvoice(invoice, actions, pageBase))
 
     return (<div>

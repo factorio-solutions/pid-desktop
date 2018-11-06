@@ -87,9 +87,11 @@ export function initInvoices(garageId) {
   }
 }
 
-export function initUserInvoices() {
+export function initUserInvoices(garageId) {
   return dispatch => {
-    requestPromise(GET_USERS_INVOICES)
+    requestPromise(GET_USERS_INVOICES, {
+      garage_id: garageId && +garageId
+    })
     .then(data => dispatch(setUsersInvoices(data.users_invoices)))
   }
 }
