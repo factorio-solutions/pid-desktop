@@ -60,11 +60,13 @@ export default class PaginatedTable extends Component {
     const { variables } = this.props
     const { count, key, ascDesc, search, page } = this.state
 
-    if (JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
+    if (
+      JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
       JSON.stringify(prevState.search) !== JSON.stringify(search) ||
       prevState.count !== count ||
       prevState.ascDesc !== ascDesc ||
-      prevState.key !== key) {
+      prevState.key !== key
+    ) {
       this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
     }
   }
