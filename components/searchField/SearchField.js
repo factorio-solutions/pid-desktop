@@ -14,7 +14,8 @@ export default class SearchField extends Component {
     onChange:        PropTypes.func,
     buttons:         PropTypes.array,
     placeholder:     PropTypes.string,
-    highlight:       PropTypes.bool
+    highlight:       PropTypes.bool,
+    separateFirst:   PropTypes.bool
   }
 
   static defaultProps = {
@@ -92,7 +93,7 @@ export default class SearchField extends Component {
   }
 
   render() {
-    const { dropdownContent, buttons, placeholder, searchQuery, onChange, highlight } = this.props
+    const { dropdownContent, buttons, placeholder, searchQuery, onChange, highlight, separateFirst } = this.props
     let list = dropdownContent.map((item, index) => {
       const onClick = () => {
         item.onClick && item.onClick()
@@ -141,8 +142,10 @@ export default class SearchField extends Component {
 
     list = list.map(o => o.render)
 
+    let showList = list.filter(i => !i.props.className.includes('displayNone')).length
+    showList = showList > 1 || (showList > 0 && !separateFirst)
     return (
-      <div>
+      <div className={styles.searchField}>
         <Input
           onChange={onChange}
           value={searchQuery}
@@ -157,16 +160,25 @@ export default class SearchField extends Component {
         />
 
         {this.state.show &&
-          <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
-            <ul className={styles.scrollable}>
-              {list}
-            </ul>
+          <div>
+            {separateFirst &&
+              <ul>
+                {list.shift()}
+              </ul>
+            }
+            <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
+              {showList &&
+                <ul className={styles.scrollable}>
+                  {list}
+                </ul>
+              }
 
-            <table className={styles.buttons}>
-              <tbody>
-                {buttons.map(this.generateButtons)}
-              </tbody>
-            </table>
+              <table className={styles.buttons}>
+                <tbody>
+                  {buttons.map(this.generateButtons)}
+                </tbody>
+              </table>
+            </div>
           </div>
         }
       </div>
