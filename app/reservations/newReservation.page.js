@@ -124,6 +124,16 @@ class NewReservationPage extends Component {
     }
   }
 
+  placeLabel = (state, freePlaces) => {
+    if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
+      return freePlaces.length ? 'flexiblePlaceSelected' : 'noFreePlace'
+    } else {
+      const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
+      const place = floor && floor.places.findById(state.place_id)
+      return floor && place ? `${floor.label} / ${place.label}` : 'noFreePlace'
+    }
+  }
+
   // selectedClient = () => {
   //   const { state } = this.props
   //   return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
@@ -159,16 +169,6 @@ class NewReservationPage extends Component {
       return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
     }
 
-    const placeLabel = () => {
-      if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'noFreePlace' ])
-      } else {
-        const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
-        const place = floor && floor.places.findById(state.place_id)
-        return floor && place ? `${floor.label} / ${place.label}` : t([ 'newReservation', 'noFreePlace' ])
-      }
-    }
-
     const highlightSelected = floor => ({
       ...floor,
       places: floor.places.map(place => ({
@@ -194,6 +194,8 @@ class NewReservationPage extends Component {
         return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
       }
     }
+
+    const placeLabelKey = this.placeLabel(state, freePlaces)
 
     return (
       <PageBase>
@@ -259,7 +261,8 @@ class NewReservationPage extends Component {
                     {/* Place and price  */}
                     <Uneditable
                       label={t([ 'newReservation', 'place' ])}
-                      value={placeLabel()}
+                      value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
+                      highlight={placeLabelKey === 'noFreePlace'}
                     />
 
                     {selectedClient && selectedClient.is_time_credit_active &&
