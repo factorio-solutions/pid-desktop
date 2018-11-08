@@ -31,6 +31,15 @@ class ClientUsersPage extends Component {
     this.props.actions.initClientUsers(this.props.params.client_id)
   }
 
+  onRowSelect = data => {
+    const { actions } = this.props
+    if (data) {
+      actions.setSelectedId(data.id)
+    } else {
+      actions.setSelectedId(undefined)
+    }
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
 
@@ -129,8 +138,7 @@ class ClientUsersPage extends Component {
       ...client_user.user,
       timeCredit: [ client_user.current_time_credit_amount, client_user.client.time_credit_amount_per_month ].join(' / '),
       created_at: client_user.created_at,
-      spoiler:    renderSpoiler(client_user),
-      key:        client_user.user.id
+      spoiler:    renderSpoiler(client_user)
     }))
 
     const filters = [
@@ -143,7 +151,14 @@ class ClientUsersPage extends Component {
         <TabMenu left={filters} />
 
         <div className={styles.tableContainer}>
-          {state.filter === 'all' && <Table schema={schema} data={data} />}
+          {state.filter === 'all' &&
+            <Table
+              schema={schema}
+              data={data}
+              onRowSelect={this.onRowSelect}
+              selectId={state.selectedId}
+            />
+          }
           {state.filter === 'pending' && <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />}
         </div>
 

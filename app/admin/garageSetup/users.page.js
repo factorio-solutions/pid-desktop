@@ -35,6 +35,15 @@ class GarageUsersPage extends Component {
     }
   }
 
+  onRowSelect = data => {
+    const { actions } = this.props
+    if (data) {
+      actions.setSelectedId(data.id)
+    } else {
+      actions.setSelectedId(undefined)
+    }
+  }
+
   render() {
     const { state, pageBase, actions } = this.props
 
@@ -101,18 +110,28 @@ class GarageUsersPage extends Component {
     }
 
     const data = state.users.sort((a, b) => { return a.user.id - b.user.id }).map(garage_user => { // sort - data order has to stay the same
-      const { full_name, email, phone } = garage_user.user
-      return { full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
+      const { id, full_name, email, phone } = garage_user.user
+      return { id, full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
     })
 
     return (
       <GarageSetupPage>
-        <Table schema={schema} data={data} />
+        <Table
+          schema={schema}
+          data={data}
+          onRowSelect={this.onRowSelect}
+          selectId={state.selectedId}
+        />
 
-        { state.pending_users.length > 0 && <div>
-          <h2>{t([ 'garageUsers', 'pendingUsers' ])}</h2>
-          <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
-        </div> }
+        { state.pending_users.length > 0 &&
+          <div>
+            <h2>{t([ 'garageUsers', 'pendingUsers' ])}</h2>
+            <Table
+              schema={schemaPending}
+              data={state.pending_users.map(renderPendingSpoiler)}
+            />
+          </div>
+        }
 
         <div className={styles.addButton}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addGarageUserClick} type="action" size="big" state={isGarageAdmin && 'disabled'} />
