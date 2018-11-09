@@ -81,6 +81,10 @@ export default class Dropdown extends Component {
     }
   }
 
+  ucFirst = string => {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+  }
+
   render() {
     const { label, content, style, onChange, highlight, position, editable, filter, order, icon } = this.props
 
@@ -156,7 +160,7 @@ export default class Dropdown extends Component {
         </button>
 
         <ul
-          className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
+          className={`${styles[`drop${this.ucFirst(style)}`]} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
           ref={ul => { this.ul = ul }}
         >
           {lis}

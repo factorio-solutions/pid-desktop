@@ -83,6 +83,7 @@ class NewUserForm extends Component {
             value={state.name.value}
             highlight={state.highlight}
             align="left"
+            style="gray"
           />
         </div>
         <PatternInput
@@ -105,6 +106,7 @@ class NewUserForm extends Component {
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
           normalizeInput={normalizeEmail}
+          style="gray"
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
@@ -125,6 +127,7 @@ class NewUserForm extends Component {
           value={state.phone.value}
           highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
+          style="gray"
         />
         <Input
           readOnly={!editable}
@@ -135,6 +138,7 @@ class NewUserForm extends Component {
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
+          style="gray"
         />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>

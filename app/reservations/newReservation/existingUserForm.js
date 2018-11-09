@@ -40,6 +40,7 @@ class ExistingUserForm extends Component {
             type="text"
             align="left"
             // highlight={state.highlight && state.user.id !== -2}
+            style="gray"
           /> :
           <Dropdown
             editable={editable}

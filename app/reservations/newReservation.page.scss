@@ -132,7 +132,8 @@
     flex: 1 1;
     margin: auto;
     order: 2;
-    min-width: 15px;
+    min-width: 5px;
+    max-width: 5px;
     text-align: center;
   }
   // TODO: Rename
@@ -154,7 +155,7 @@
   right: 0.1em;
   font-size: 1.6em;
   cursor:  pointer;
-  padding-top: 0.3em;
+  padding-top: 0.4em;
   z-index: 10;
   color: #cacaca;
 }

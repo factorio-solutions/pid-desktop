@@ -107,6 +107,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
               inlineMenu={beginsInlineMenu}
+              style="reservation"
             />
             <TimeInput
               editable={editable}
@@ -116,11 +117,10 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
               inlineMenu={beginsInlineMenu}
+              style="reservation"
             />
           </div>
-          <div className={styles.middleCollumn} >
-            <i className="fa fa-arrow-right" aria-hidden="true" />
-          </div>
+          <div className={styles.middleCollumn} />
           <div className={styles.rightCcollumn}>
             <Dateinput
               onBlur={actions.formatTo}
@@ -129,6 +129,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
               inlineMenu={beginsInlineMenu}
+              style="reservation"
             />
             <TimeInput
               onBlur={actions.formatTo}
@@ -137,6 +138,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
               inlineMenu={beginsInlineMenu}
+              style="reservation"
             />
           </div>
         </div>
@@ -162,6 +164,7 @@ class DateTimeForm extends Component {
             min={0.25}
             step={0.25}
             align="left"
+            style="gray"
           />
         }
 

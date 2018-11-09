@@ -91,7 +91,7 @@ class PickUserForm extends Component {
     const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
 
     return (
-      <SectionWithHeader header='Uzivatel'>
+      <SectionWithHeader header={t([ 'newReservation', 'userSection' ])}>
         { !(state.user && (state.user.id < 0 || onetime)) &&
           ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
           <div className={styles.searchField}>

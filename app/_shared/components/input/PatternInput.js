@@ -18,7 +18,8 @@ export default class PatternInput extends Component {
     inlineMenu:     PropTypes.object,
     highlight:      PropTypes.bool,
     readOnly:       PropTypes.bool,
-    normalizeInput: PropTypes.func
+    normalizeInput: PropTypes.func,
+    style:          PropTypes.string
   }
 
   constructor(props) { // just to handle two way databinding
@@ -58,13 +59,13 @@ export default class PatternInput extends Component {
   }
 
   render() {
-    const { label, error, pattern, placeholder, inlineMenu, type, highlight, readOnly, align } = this.props
+    const { label, error, pattern, placeholder, inlineMenu, type, highlight, readOnly, align, style } = this.props
 
 
     const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
-      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${styles[style]} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
         <input
           pattern={pattern}
           type={type || 'text'}

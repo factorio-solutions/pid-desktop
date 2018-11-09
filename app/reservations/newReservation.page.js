@@ -23,6 +23,8 @@ import {
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t, getLanguage }         from '../_shared/modules/localization/localization'
+import SectionWithHeader          from '../_shared/components/wrapers/SectionWithHeader'
+
 
 import styles from './newReservation.page.scss'
 
@@ -157,62 +159,65 @@ class NewReservationPage extends Component {
                 <PickUserForm
                   clearForm={this.clearForm}
                 />
-
-                {state.user &&
-                ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
-                (state.name.valid && state.user.id === -2) ||
-                state.user.id > 0) &&
-                  <GarageClientForm
-                    editable={!ongoing || isSecretary}
-                  />
-                }
-                {state.garage &&
-                  <div>
-                    <DateTimeForm editable={!ongoing || isSecretary} />
-                    {/* Place and price  */}
-                    <Uneditable
-                      label={t([ 'newReservation', 'place' ])}
-                      value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
-                      highlight={placeLabelKey === 'noFreePlace'}
+                <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
+                  {state.user &&
+                  ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
+                  (state.name.valid && state.user.id === -2) ||
+                  state.user.id > 0) &&
+                    <GarageClientForm
+                      editable={!ongoing || isSecretary}
                     />
-
-                    {selectedClient && selectedClient.is_time_credit_active &&
-                    !newReservationActions.isPlaceGoInternal(state) ?
+                  }
+                  {state.garage &&
+                    <div>
+                      <DateTimeForm editable={!ongoing || isSecretary} />
+                      {/* Place and price  */}
                       <Uneditable
-                        label={t([ 'newReservation', 'price' ])}
-                        highlight={state.highlight && outOfTimeCredit}
-                        value={`${state.timeCreditPrice} /
-                          ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
-                          ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
-                        `}
-                      /> :
-                      <Uneditable
-                        label={t([ 'newReservation', 'price' ])}
-                        value={`
-                          ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                          (${!state.client_id
-                            ? t([ 'newReservation', 'onUsersExpenses' ])
-                            : !newReservationActions.isPlaceGoInternal(state)
-                              ? t([ 'newReservation', 'longtermRent' ])
-                              : state.paidByHost
-                                ? t([ 'newReservation', 'onUsersExpenses' ])
-                                : t([ 'newReservation', 'onClientsExpenses' ])
-                          })
-                        `}
+                        label={t([ 'newReservation', 'place' ])}
+                        value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
+                        highlight={placeLabelKey === 'noFreePlace'}
                       />
-                    }
-                    {/*  Sms Part  */}
-                    {state.user &&
-                      <SmsForm accentRegex={ACCENT_REGEX} />
-                    }
-                    {/* Note input */}
-                    <Input
-                      onChange={actions.setNote}
-                      label={t([ 'newReservation', 'note' ])}
-                      value={state.note}
-                      align="left"
-                    />
-                  </div>
+
+                      {selectedClient && selectedClient.is_time_credit_active &&
+                      !newReservationActions.isPlaceGoInternal(state) ?
+                        <Uneditable
+                          label={t([ 'newReservation', 'price' ])}
+                          highlight={state.highlight && outOfTimeCredit}
+                          value={`${state.timeCreditPrice} /
+                            ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
+                            ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
+                          `}
+                        /> :
+                        <Uneditable
+                          label={t([ 'newReservation', 'price' ])}
+                          value={`
+                            ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
+                            (${!state.client_id
+                              ? t([ 'newReservation', 'onUsersExpenses' ])
+                              : !newReservationActions.isPlaceGoInternal(state)
+                                ? t([ 'newReservation', 'longtermRent' ])
+                                : state.paidByHost
+                                  ? t([ 'newReservation', 'onUsersExpenses' ])
+                                  : t([ 'newReservation', 'onClientsExpenses' ])
+                            })
+                          `}
+                        />
+                      }
+                    </div>
+                  }
+                </SectionWithHeader>
+                {/*  Sms Part  */}
+                {state.user && state.garage &&
+                  <SmsForm accentRegex={ACCENT_REGEX} />
+                }
+                {/* Note input */}
+                {state.garage &&
+                  <Input
+                    onChange={actions.setNote}
+                    label={t([ 'newReservation', 'note' ])}
+                    value={state.note}
+                    align="left"
+                  />
                 }
               </Form>
               {/* Has to be outside of Form tag because it contains Form */}
