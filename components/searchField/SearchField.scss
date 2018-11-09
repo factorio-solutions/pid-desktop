@@ -6,7 +6,7 @@
   background-color: $inputsBackGround;
 }
 
-ul {
+ul.separated {
   max-height:       28ex;
   list-style-type:  none;
   background-color: $inputsBackGround;
@@ -81,10 +81,10 @@ li:not(.selected):not(.filter):hover {
   color:            $black;
 }
 
-.searchField {
-  input {
-    background-color: $inputsBackGround;
-    // margin-bottom: 5px;
-    border-radius: 7px;
-  }
-}
+  // .searchField {
+  //   input {
+  //     background-color: $inputsBackGround;
+  //     // margin-bottom: 5px;
+  //     border-radius: 7px;
+  //   }
+  // }

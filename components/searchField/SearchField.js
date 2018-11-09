@@ -157,12 +157,13 @@ export default class SearchField extends Component {
           onBlur={this.hide}
           ref={component => this.filter = component}
           highlight={highlight}
+          style="reservation"
         />
 
         {this.state.show &&
           <div>
             {separateFirst &&
-              <ul>
+              <ul className={styles.separated}>
                 {list.shift()}
               </ul>
             }
