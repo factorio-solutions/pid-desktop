@@ -5,7 +5,7 @@ import { MOMENT_DATETIME_FORMAT, MOMENT_TIME_FORMAT } from '../../helpers/time'
 
 import PopupTimepicker from '../timepicker/PopupTimepicker'
 
-import styles from './Input.scss'
+import defaultStyles from './Input.scss'
 
 
 // this component has to know its state, so it can be passed to \the value attribute of input
@@ -15,14 +15,17 @@ export default class TimeInput extends Component {
     label:       PropTypes.string.isRequired, // is the placeholder
     error:       PropTypes.string, // error message if patern not met
     placeholder: PropTypes.string,
-    style:       PropTypes.string,
-    onChange:    PropTypes.func, // use if you want to pass value to parent
-    onEnter:     PropTypes.func, // called when enter pressed
-    onBlur:      PropTypes.func, // called when enter pressed
-    value:       PropTypes.string,
-    align:       PropTypes.string,
-    inlineMenu:  PropTypes.object,
-    editable:    PropTypes.bool // can be turned off
+    style:       PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+    onChange:   PropTypes.func, // use if you want to pass value to parent
+    onEnter:    PropTypes.func, // called when enter pressed
+    onBlur:     PropTypes.func, // called when enter pressed
+    value:      PropTypes.string,
+    align:      PropTypes.string,
+    inlineMenu: PropTypes.object,
+    editable:   PropTypes.bool // can be turned off
   }
 
   static defaultProps = {
@@ -42,6 +45,8 @@ export default class TimeInput extends Component {
 
   render() {
     const { label, error, placeholder, onChange, onEnter, onBlur, inlineMenu, style, editable, align } = this.props
+
+    const styles = typeof style === 'object' ? style : defaultStyles
 
     const handleChange = event => {
       editable && this.setState({ ...this.state, message: event.target.value })
@@ -91,6 +96,7 @@ export default class TimeInput extends Component {
           time={moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ? moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') : undefined}
           show={this.state.focus}
           okClick={hideDatepicker}
+          gray={style === 'gray'}
         />
       </div>
     )

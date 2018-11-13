@@ -49,7 +49,8 @@ import {
   NEW_RESERVATION_CLEAR_FORM,
 
   NEW_RESERVATION_SET_FREE_INTERVAL,
-  NEW_RESERVATION_SET_TIME_CREDIT_PRICE
+  NEW_RESERVATION_SET_TIME_CREDIT_PRICE,
+  NEW_RESERVATION_SHOW_MAP
 }  from '../actions/newReservation.actions'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -103,7 +104,9 @@ const defaultState = {
   minDuration: MIN_RESERVATION_DURATION,
   maxDuration: null,
 
-  freeInterval: ''
+  freeInterval: '',
+
+  showMap: false
 }
 
 function placeLabel(state) {
@@ -402,6 +405,12 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         timeCreditPrice: action.value
+      }
+
+    case NEW_RESERVATION_SHOW_MAP:
+      return {
+        ...state,
+        showMap: action.value
       }
 
     default:

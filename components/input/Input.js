@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import styles                          from './Input.scss'
+import defaultStyles                          from './Input.scss'
 
 // this component has to know its state, so it can be passed to the value attribute of input
 // this way scss can validate if input has something in it
@@ -25,7 +25,10 @@ export default class Input extends Component {
       PropTypes.number
     ]),
     inlineMenu: PropTypes.object,
-    style:      PropTypes.string,
+    style:      PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
     min:        PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -34,8 +37,9 @@ export default class Input extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
-    highlight: PropTypes.bool,
-    isValid:   PropTypes.func
+    highlight:   PropTypes.bool,
+    isValid:     PropTypes.func,
+    reservation: PropTypes.bool
   }
 
   constructor(props) { // just to handle two way databinding
@@ -48,8 +52,32 @@ export default class Input extends Component {
   }
 
   render() {
-    const { label, name, type, error, pattern, autocomplete, placeholder, accept, align, onChange, onBlur, onEnter, onFocus, inlineMenu, style, min, step, highlight, readOnly, required, isValid } = this.props
+    const {
+      label,
+      name,
+      type,
+      error,
+      pattern,
+      autocomplete,
+      placeholder,
+      accept,
+      align,
+      onChange,
+      onBlur,
+      onEnter,
+      onFocus,
+      inlineMenu,
+      style,
+      min,
+      step,
+      highlight,
+      readOnly,
+      required,
+      isValid
+    } = this.props
     const message = this.state.message
+
+    const styles = style && typeof style !== 'string' ? style : defaultStyles
 
     const handleChange = event => {
       if (type === 'file') {

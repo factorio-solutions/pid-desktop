@@ -5,6 +5,8 @@ import Input              from '../input/Input'
 
 import styles from './SearchField.scss'
 
+import inputStyles from '../input/ReservationInput.scss'
+
 
 export default class SearchField extends Component {
   static propTypes = {
@@ -157,7 +159,7 @@ export default class SearchField extends Component {
           onBlur={this.hide}
           ref={component => this.filter = component}
           highlight={highlight}
-          style="reservation"
+          style={inputStyles}
         />
 
         {this.state.show &&

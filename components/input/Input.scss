@@ -275,12 +275,3 @@ $placeholder-delay:            .1s;
   left:       100%;
   transform:  translate(-100%, 0);
 }
-
-.gray {
-  >input {
-    background-color: $inputsBackGround;
-    border-radius: 5px;
-    color:  $black;
-    min-height: 1.7em;
-  }
-}
