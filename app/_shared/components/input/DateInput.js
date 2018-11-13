@@ -3,7 +3,7 @@ import moment                          from 'moment'
 
 import PopupDatepicker from '../datepicker/PopupDatepicker'
 
-import styles from './Input.scss'
+import defaultStyles from './Input.scss'
 
 
 export default class DateInput extends Component {
@@ -11,15 +11,18 @@ export default class DateInput extends Component {
     label:       PropTypes.string.isRequired, // is the placeholder
     error:       PropTypes.string, // error message if patern not met
     placeholder: PropTypes.string,
-    style:       PropTypes.string,
-    onChange:    PropTypes.func, // use if you want to pass value to parent
-    onEnter:     PropTypes.func, // called when enter pressed
-    value:       PropTypes.string,
-    inlineMenu:  PropTypes.object,
-    showInf:     PropTypes.bool,
-    flip:        PropTypes.bool,
-    editable:    PropTypes.bool,
-    onBlur:      PropTypes.func
+    style:       PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+    onChange:   PropTypes.func, // use if you want to pass value to parent
+    onEnter:    PropTypes.func, // called when enter pressed
+    value:      PropTypes.string,
+    inlineMenu: PropTypes.object,
+    showInf:    PropTypes.bool,
+    flip:       PropTypes.bool,
+    editable:   PropTypes.bool,
+    onBlur:     PropTypes.func
   }
 
   static defaultProps = {
@@ -37,6 +40,8 @@ export default class DateInput extends Component {
 
   render() {
     const { label, error, placeholder, onChange, onEnter, inlineMenu, style, showInf, flip, editable, onBlur } = this.props
+
+    const styles = typeof style === 'object' ? style : defaultStyles
 
     const handleChange = event => {
       if (editable) {
@@ -92,6 +97,7 @@ export default class DateInput extends Component {
           show={this.state.focus}
           flip={flip}
           okClick={hideDatepicker}
+          gray={style === 'gray'}
         />
       </div>
     )

@@ -1,0 +1,62 @@
+@import './Input';
+
+$label-font-size: 11px;
+
+.customFormGroup {
+  > input {
+    font-size:        $font-size;
+    border-radius:    5px;
+    color:            $black;
+    min-height:       1.7em;
+    background-color: $inputsBackGround;
+
+    &:focus ~ .label, &:not([value='']) ~ .label {
+      top: 5px !important;
+      left: 5px !important;
+      // -- Responsive Styles (Media Queries) -------------------------------------
+      // -- Only apply on big window ----------------------------------------------
+      @media (min-width: $collapseWidth) {
+        font-size: $label-font-size;
+      }
+  
+      // -- Only apply on small window --------------------------------------------
+      @media (max-width: $collapseWidth) {
+        font-size: $mobile-font-size-accessories;
+      }
+    }
+  }
+
+  // Start - place holder is shown without focus.
+  ::-webkit-input-placeholder { // Chrome/Opera/Safari
+    opacity: 1;
+  }
+  
+  ::-moz-placeholder {
+    opacity: 1;
+  }
+
+  :-ms-input-placeholder {
+    color: $lightGray;
+  }
+
+  :-moz-placeholder {
+    opacity: 1;
+  }
+  // End - place holder is shown without focus.
+
+  >label { 
+    top: 5px;
+    left: 5px;
+
+    // -- Responsive Styles (Media Queries) -------------------------------------
+    // -- Only apply on big window ----------------------------------------------
+    @media (min-width: $collapseWidth) {
+      font-size: $label-font-size;
+    }
+    // -- Only apply on small window --------------------------------------------
+    @media (max-width: $collapseWidth) {
+      font-size: $mobile-font-size-accessories;
+    }
+  }
+
+}

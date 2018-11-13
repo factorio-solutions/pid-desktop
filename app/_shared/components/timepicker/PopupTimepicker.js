@@ -13,7 +13,8 @@ export default class PopupTimepicker extends Component {
     time:     PropTypes.string, // moment compatible format
     show:     PropTypes.bool,
     flip:     PropTypes.bool,
-    showInf:  PropTypes.bool
+    showInf:  PropTypes.bool,
+    gray:     PropTypes.bool
   }
 
   componentDidUpdate(prevProps) {
@@ -23,11 +24,11 @@ export default class PopupTimepicker extends Component {
   }
 
   render() {
-    const { onSelect, time, show, okClick, showInf, flip } = this.props
+    const { onSelect, time, show, okClick, showInf, flip, gray } = this.props
 
     return (
       <div
-        className={`${styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
+        className={`${gray ? styles.popupGray : styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
         ref={div => { this.container = div }}
         onBlur={okClick}
         tabIndex={0}

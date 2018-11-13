@@ -30,7 +30,7 @@ import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT, MOMENT_TIME_FORMAT, MOMENT_
 import describeRule               from '../../_shared/helpers/recurringRuleToDescribtion'
 
 import styles from '../newReservation.page.scss'
-
+import inputStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class DateTimeForm extends Component {
   static propTypes = {
@@ -107,7 +107,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
               inlineMenu={beginsInlineMenu}
-              style="reservation"
+              style={inputStyles}
             />
             <TimeInput
               editable={editable}
@@ -117,7 +117,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
               inlineMenu={beginsInlineMenu}
-              style="reservation"
+              style={inputStyles}
             />
           </div>
           <div className={styles.middleCollumn} />
@@ -129,7 +129,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
               inlineMenu={beginsInlineMenu}
-              style="reservation"
+              style={inputStyles}
             />
             <TimeInput
               onBlur={actions.formatTo}
@@ -138,7 +138,7 @@ class DateTimeForm extends Component {
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
               inlineMenu={beginsInlineMenu}
-              style="reservation"
+              style={inputStyles}
             />
           </div>
         </div>

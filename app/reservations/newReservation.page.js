@@ -12,6 +12,7 @@ import Modal            from '../_shared/components/modal/Modal'
 import Input            from '../_shared/components/input/Input'
 import PickUserForm     from './newReservation/pickUserForm'
 import GarageClientForm from './newReservation/garageClientForm'
+import PlaceForm        from './newReservation/placeForm'
 import SmsForm          from './newReservation/smsForm'
 import DateTimeForm     from './newReservation/dateTimeForm'
 import Recurring        from '../_shared/components/recurring/Recurring'
@@ -84,16 +85,6 @@ class NewReservationPage extends Component {
     }
   }
 
-  placeLabel = (state, freePlaces) => {
-    if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-      return freePlaces.length ? 'flexiblePlaceSelected' : 'noFreePlace'
-    } else {
-      const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
-      const place = floor && floor.places.findById(state.place_id)
-      return floor && place ? `${floor.label} / ${place.label}` : 'noFreePlace'
-    }
-  }
-
   // selectedClient = () => {
   //   const { state } = this.props
   //   return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
@@ -141,8 +132,6 @@ class NewReservationPage extends Component {
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.modalClick} type="confirm" />
     </div>)
 
-    const placeLabelKey = this.placeLabel(state, freePlaces)
-
     return (
       <PageBase>
         <div className={styles.parent}>
@@ -159,53 +148,54 @@ class NewReservationPage extends Component {
                 <PickUserForm
                   clearForm={this.clearForm}
                 />
-                <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
-                  {state.user &&
+                {state.user &&
                   ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
                   (state.name.valid && state.user.id === -2) ||
                   state.user.id > 0) &&
+                  <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
+
                     <GarageClientForm
                       editable={!ongoing || isSecretary}
                     />
-                  }
-                  {state.garage &&
-                    <div>
-                      <DateTimeForm editable={!ongoing || isSecretary} />
-                      {/* Place and price  */}
-                      <Uneditable
-                        label={t([ 'newReservation', 'place' ])}
-                        value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
-                        highlight={placeLabelKey === 'noFreePlace'}
-                      />
 
-                      {selectedClient && selectedClient.is_time_credit_active &&
-                      !newReservationActions.isPlaceGoInternal(state) ?
-                        <Uneditable
-                          label={t([ 'newReservation', 'price' ])}
-                          highlight={state.highlight && outOfTimeCredit}
-                          value={`${state.timeCreditPrice} /
-                            ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
-                            ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
-                          `}
-                        /> :
-                        <Uneditable
-                          label={t([ 'newReservation', 'price' ])}
-                          value={`
-                            ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                            (${!state.client_id
-                              ? t([ 'newReservation', 'onUsersExpenses' ])
-                              : !newReservationActions.isPlaceGoInternal(state)
-                                ? t([ 'newReservation', 'longtermRent' ])
-                                : state.paidByHost
-                                  ? t([ 'newReservation', 'onUsersExpenses' ])
-                                  : t([ 'newReservation', 'onClientsExpenses' ])
-                            })
-                          `}
-                        />
-                      }
-                    </div>
-                  }
-                </SectionWithHeader>
+                    {state.garage &&
+                      <div>
+                        <DateTimeForm editable={!ongoing || isSecretary} />
+
+                        <PlaceForm freePlaces={freePlaces} />
+                      </div>
+                    }
+                  </SectionWithHeader>
+                }
+                {state.garage &&
+                  <SectionWithHeader header={t([ 'newReservation', 'priceAndOthers' ])}>
+                    {selectedClient && selectedClient.is_time_credit_active &&
+                    !newReservationActions.isPlaceGoInternal(state) ?
+                      <Uneditable
+                        label={t([ 'newReservation', 'price' ])}
+                        highlight={state.highlight && outOfTimeCredit}
+                        value={`${state.timeCreditPrice} /
+                          ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
+                          ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
+                        `}
+                      /> :
+                      <Uneditable
+                        label={t([ 'newReservation', 'price' ])}
+                        value={`
+                          ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
+                          (${!state.client_id
+                            ? t([ 'newReservation', 'onUsersExpenses' ])
+                            : !newReservationActions.isPlaceGoInternal(state)
+                              ? t([ 'newReservation', 'longtermRent' ])
+                              : state.paidByHost
+                                ? t([ 'newReservation', 'onUsersExpenses' ])
+                                : t([ 'newReservation', 'onClientsExpenses' ])
+                          })
+                        `}
+                      />
+                    }
+                  </SectionWithHeader>
+                }
                 {/*  Sms Part  */}
                 {state.user && state.garage &&
                   <SmsForm accentRegex={ACCENT_REGEX} />
@@ -232,13 +222,15 @@ class NewReservationPage extends Component {
           </div>
 
           <div className={styles.rightCollumn}>
-            {state.loading ?
-              <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
-              <GarageLayout
-                floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
-                onPlaceClick={this.handlePlaceClick}
-              />
-            }
+            <div className={!state.showMap && styles.displayNone}>
+              {state.loading ?
+                <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
+                <GarageLayout
+                  floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
+                  onPlaceClick={this.handlePlaceClick}
+                />
+              }
+            </div>
           </div>
         </div>
       </PageBase>

@@ -25,6 +25,7 @@ import {
   resetButton
 } from '../newReservation.page.scss'
 
+import reservationStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class NewUserForm extends Component {
   static propTypes = {
@@ -83,7 +84,7 @@ class NewUserForm extends Component {
             value={state.name.value}
             highlight={state.highlight}
             align="left"
-            style="gray"
+            style={reservationStyles}
           />
         </div>
         <PatternInput
@@ -106,7 +107,7 @@ class NewUserForm extends Component {
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
           normalizeInput={normalizeEmail}
-          style="gray"
+          style={reservationStyles}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
@@ -127,7 +128,7 @@ class NewUserForm extends Component {
           value={state.phone.value}
           highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
-          style="gray"
+          style={reservationStyles}
         />
         <Input
           readOnly={!editable}
@@ -138,7 +139,7 @@ class NewUserForm extends Component {
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
-          style="gray"
+          style={reservationStyles}
         />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>

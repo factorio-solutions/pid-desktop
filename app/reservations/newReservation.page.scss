@@ -132,8 +132,8 @@
     flex: 1 1;
     margin: auto;
     order: 2;
-    min-width: 5px;
-    max-width: 5px;
+    min-width: 10px;
+    max-width: 10px;
     text-align: center;
   }
   // TODO: Rename
@@ -158,4 +158,47 @@
   padding-top: 0.4em;
   z-index: 10;
   color: #cacaca;
+}
+
+.textArea {
+  margin-top:         22px;
+  border-radius:      5px;
+  background-color:   $inputsBackGround;
+
+  >textarea {
+    background-color: transparent;
+    color:            black;
+    width:            100%;
+    padding: 12px 12px 8px;
+    border-color:     transparent;
+  }
+
+  >label {
+    top:         18px;
+    left:        5px;
+    float:       left;
+    font-size:   11px;
+    white-space: nowrap;
+  }
+}
+
+.placeLabelArea {
+  @extend .textArea;
+  text-align:       center;
+  background-color: transparent;
+  >textarea {
+    vertical-align: center;
+    font-size:      35px;
+    font-weight:    bold;
+    resize:         none;
+    padding:        0;
+
+
+    background-color: transparent;
+    text-align:       center;
+  }
+}
+
+.displayNone {
+  display: none;
 }

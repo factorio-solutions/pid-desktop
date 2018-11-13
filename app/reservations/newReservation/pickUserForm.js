@@ -128,7 +128,7 @@ class PickUserForm extends Component {
           <NewUserForm
             editable={!ongoing || isSecretary}
             onetime={onetime}
-            clearForm={this.clearForm}
+            clearForm={clearForm}
           />
         }
         {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid &&
