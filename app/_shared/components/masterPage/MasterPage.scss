@@ -173,6 +173,10 @@ $hintWidth:          180px;
         }
       }
 
+      >.scrollbarVisible {
+        overflow-y: scroll;
+      }
+
       >.hint {
         position: fixed;
         top:      0;

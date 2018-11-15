@@ -52,9 +52,13 @@ class SmsForm extends Component {
                 />
                 <div className={styles.textLabel}>
                   <label>{t([ 'newReservation', 'smsText' ])}</label>
-                  <span className={styles.removeDiacritics} onClick={actions.removeDiacritics}>{t([ 'newReservation', 'removeDiacritics' ])}</span>
+                  <span role="button" tabIndex="0" className={styles.removeDiacritics} onClick={actions.removeDiacritics}>{t([ 'newReservation', 'removeDiacritics' ])}</span>
                 </div>
-                <textarea value={state.templateText} onChange={this.onTextAreaChange} />
+                <textarea
+                  value={state.templateText}
+                  onChange={this.onTextAreaChange}
+                  placeholder="Text sablony"
+                />
                 <div className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}>
                   {state.templateText.length}/{accentRegex.test(state.templateText) ? 140 : 320}
                   {t([ 'newReservation', 'character' ])}

@@ -28,6 +28,7 @@ import SectionWithHeader          from '../_shared/components/wrapers/SectionWit
 
 
 import styles from './newReservation.page.scss'
+import inputStyle from '../_shared/components/input/ReservationInput.scss'
 
 const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤ]')
 
@@ -133,7 +134,7 @@ class NewReservationPage extends Component {
     </div>)
 
     return (
-      <PageBase>
+      <PageBase scrollbarVisible>
         <div className={styles.parent}>
           <Modal content={errorContent} show={state.error !== undefined} />
 
@@ -179,36 +180,48 @@ class NewReservationPage extends Component {
                           ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
                         `}
                       /> :
-                      <Uneditable
-                        label={t([ 'newReservation', 'price' ])}
-                        value={`
-                          ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                          (${!state.client_id
-                            ? t([ 'newReservation', 'onUsersExpenses' ])
-                            : !newReservationActions.isPlaceGoInternal(state)
-                              ? t([ 'newReservation', 'longtermRent' ])
-                              : state.paidByHost
-                                ? t([ 'newReservation', 'onUsersExpenses' ])
-                                : t([ 'newReservation', 'onClientsExpenses' ])
-                          })
+                      <div className={styles.price}>
+                        {t([ 'newReservation', 'price' ])}
+                        {`
+                            ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
+                            (${!state.client_id
+                              ? t([ 'newReservation', 'onUsersExpenses' ])
+                              : !newReservationActions.isPlaceGoInternal(state)
+                                ? t([ 'newReservation', 'longtermRent' ])
+                                : state.paidByHost
+                                  ? t([ 'newReservation', 'onUsersExpenses' ])
+                                  : t([ 'newReservation', 'onClientsExpenses' ])
+                            })
                         `}
-                      />
+                        {/* <Uneditable
+                          // label={t([ 'newReservation', 'price' ])}
+                          value={`
+                            ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
+                            (${!state.client_id
+                              ? t([ 'newReservation', 'onUsersExpenses' ])
+                              : !newReservationActions.isPlaceGoInternal(state)
+                                ? t([ 'newReservation', 'longtermRent' ])
+                                : state.paidByHost
+                                  ? t([ 'newReservation', 'onUsersExpenses' ])
+                                  : t([ 'newReservation', 'onClientsExpenses' ])
+                            })
+                          `}
+                        /> */}
+                      </div>
                     }
+                    {state.user &&
+                      <SmsForm accentRegex={ACCENT_REGEX} />
+                    }
+                    <Input
+                      onChange={actions.setNote}
+                      label={t([ 'newReservation', 'note' ])}
+                      value={state.note}
+                      align="left"
+                      style={inputStyle}
+                    />
                   </SectionWithHeader>
                 }
                 {/*  Sms Part  */}
-                {state.user && state.garage &&
-                  <SmsForm accentRegex={ACCENT_REGEX} />
-                }
-                {/* Note input */}
-                {state.garage &&
-                  <Input
-                    onChange={actions.setNote}
-                    label={t([ 'newReservation', 'note' ])}
-                    value={state.note}
-                    align="left"
-                  />
-                }
               </Form>
               {/* Has to be outside of Form tag because it contains Form */}
               <Recurring
