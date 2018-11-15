@@ -86,6 +86,7 @@ class ClientUsersPage extends Component {
 
     const renderSpoiler = client_user => {
       const destroyClick = () => actions.destroyClientUser(this.props.params.client_id, client_user.user.id)
+      const userId = client_user.user.id
 
       const secretaryPresetClick = () => actions.setSecretary(this.props.params.client_id, client_user.user.id)
       const internalPresetClick = () => actions.setInternal(this.props.params.client_id, client_user.user.id)
@@ -118,7 +119,7 @@ class ClientUsersPage extends Component {
               question={t([ 'clientUsers', 'removeClientUser' ])}
               state={
                 ((pageBase.current_user &&
-                  pageBase.current_user.id !== client_user.user_id &&
+                  pageBase.current_user.id !== userId &&
                   currentClientUser &&
                   !(currentClientUser.admin || currentClientUser.secretary)
                  ) ||
