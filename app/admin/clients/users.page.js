@@ -85,30 +85,67 @@ class ClientUsersPage extends Component {
     }
 
     const renderSpoiler = client_user => {
-      const destroyClick = () => actions.destroyClientUser(this.props.params.client_id, client_user.user.id)
+      const clientId = this.props.params.client_id
       const userId = client_user.user.id
 
-      const secretaryPresetClick = () => actions.setSecretary(this.props.params.client_id, client_user.user.id)
-      const internalPresetClick = () => actions.setInternal(this.props.params.client_id, client_user.user.id)
+      const onClicks = []
+      const destroyClick = () => actions.destroyClientUser(clientId, userId)
 
-      const adminClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { admin: !client_user.admin })
-      const contactPersonClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { contact_person: !client_user.contact_person })
-      const secretaryClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { secretary: !client_user.secretary })
-      const hostClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { host: !client_user.host })
-      const internalClick = () => actions.setClientUserRelation(this.props.params.client_id, client_user.user.id, { internal: !client_user.internal })
+      const secretaryPresetClick = () => actions.setSecretary(clientId, userId)
+      const internalPresetClick = () => actions.setInternal(clientId, userId)
+
+      onClicks.adminClick = () => actions.setClientUserRelation(clientId, userId, { admin: !client_user.admin })
+      onClicks.contactPersonClick = () => actions.setClientUserRelation(clientId, userId, { contact_person: !client_user.contact_person })
+      onClicks.secretaryClick = () => actions.setClientUserRelation(clientId, userId, { secretary: !client_user.secretary })
+      onClicks.hostClick = () => actions.setClientUserRelation(clientId, userId, { host: !client_user.host })
+      onClicks.internalClick = () => actions.setClientUserRelation(clientId, userId, { internal: !client_user.internal })
+
+      const roles = [ 'admin', 'contact_person', 'secretary', 'host', 'internal' ]
+
+      const mapRoleButtons = role => {
+        const snakeToCamel = value => {
+          return value.replace(/_\w/g, m => {
+            return m[1].toUpperCase()
+          })
+        }
+
+        return (
+          <span
+            className={client_user[role] ? styles.boldText : styles.inactiveText}
+            onClick={onClicks[`${snakeToCamel(role)}Click`]}
+            role="button"
+            tabIndex="0"
+          >
+            {t([ 'clientUsers', role ])}
+          </span>
+        )
+      }
 
       return (<div className={styles.spoiler}>
         <div className={styles.devider}>
-          <span className={client_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'clientUsers', 'admin' ])}</span>|
-          <span className={`${client_user.contact_person ? styles.boldText : styles.inactiveText}`} onClick={contactPersonClick}>{t([ 'clientUsers', 'contact_person' ])}</span>|
-          <span className={`${client_user.secretary ? styles.boldText : styles.inactiveText}`} onClick={secretaryClick}>{t([ 'clientUsers', 'secretary' ])}</span>|
-          <span className={`${client_user.host ? styles.boldText : styles.inactiveText}`} onClick={hostClick}>{t([ 'clientUsers', 'host' ])}</span>|
-          <span className={`${client_user.internal ? styles.boldText : styles.inactiveText}`} onClick={internalClick}>{t([ 'clientUsers', 'internal' ])}</span>
+          {roles.map(mapRoleButtons)
+                .reduce((acc, value) => {
+                  return acc === null ? [ value ] : [ ...acc, '|', value ]
+                }, null)}
         </div>
         <div>
           {t([ 'clientUsers', 'presetAs' ])}
-          <span className={styles.clickable} onClick={internalPresetClick}>{t([ 'clientUsers', 'internal' ])}</span>|
-          <span className={styles.clickable} onClick={secretaryPresetClick}>{t([ 'clientUsers', 'secretary' ])}</span>
+          <span
+            className={styles.clickable}
+            onClick={internalPresetClick}
+            role="button"
+            tabIndex="0"
+          >
+            {t([ 'clientUsers', 'internal' ])}
+          </span>|
+          <span
+            className={styles.clickable}
+            onClick={secretaryPresetClick}
+            role="button"
+            tabIndex="0"
+          >
+            {t([ 'clientUsers', 'secretary' ])}
+          </span>
 
           <div className={styles.float}>
             <LabeledRoundButton
@@ -137,7 +174,7 @@ class ClientUsersPage extends Component {
 
     const data = state.users.map(client_user => ({
       ...client_user.user,
-      timeCredit: [ client_user.current_time_credit_amount, client_user.client.time_credit_amount_per_month ].join(' / '),
+      timeCredit: client_user.current_time_credit_amount + ' / ' + client_user.client.time_credit_amount_per_month,
       created_at: client_user.created_at,
       spoiler:    renderSpoiler(client_user)
     }))

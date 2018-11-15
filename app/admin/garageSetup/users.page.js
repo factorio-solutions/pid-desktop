@@ -82,30 +82,63 @@ class GarageUsersPage extends Component {
         actions.destroyGarageUser(pageBase.garage, garage_user.user.id)
       }
 
-      const adminClick = () => {
+      const onClicks = []
+
+      onClicks.adminClick = () => {
         actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { admin: !garage_user.admin })
       }
-      const managerClick = () => {
+      onClicks.managerClick = () => {
         actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { manager: !garage_user.manager })
       }
-      const receptionistClick = () => {
+      onClicks.receptionistClick = () => {
         actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { receptionist: !garage_user.receptionist })
       }
-      const securityClick = () => {
+      onClicks.securityClick = () => {
         actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { security: !garage_user.security })
       }
 
-      return (<div className={styles.spoiler}>
-        <div className={styles.devider}>
-          <span className={garage_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'garageUsers', 'admin' ])}</span>|
-          <span className={garage_user.manager ? styles.boldText : styles.inactiveText} onClick={managerClick}>{t([ 'garageUsers', 'manager' ])}</span>|
-          <span className={`${garage_user.receptionist ? styles.boldText : styles.inactiveText}`} onClick={receptionistClick}>{t([ 'garageUsers', 'receptionist' ])}</span>|
-          <span className={`${garage_user.security ? styles.boldText : styles.inactiveText}`} onClick={securityClick}>{t([ 'garageUsers', 'security' ])}</span>
+      const roles = [ 'admin', 'manager', 'receptionist', 'security' ]
+
+      const mapRoleButtons = role => {
+        const snakeToCamel = value => {
+          return value.replace(/_\w/g, m => {
+            return m[1].toUpperCase()
+          })
+        }
+
+        return (
+          <span
+            className={garage_user[role] ? styles.boldText : styles.inactiveText}
+            onClick={onClicks[`${snakeToCamel(role)}Click`]}
+            role="button"
+            tabIndex="0"
+          >
+            {t([ 'clientUsers', role ])}
+          </span>
+        )
+      }
+
+      return (
+        <div className={styles.spoiler}>
+          <div className={styles.devider}>
+            {
+              roles.map(mapRoleButtons)
+                  .reduce((acc, value) => {
+                    return acc === null ? [ value ] : [ ...acc, '|', value ]
+                  }, null)
+            }
+          </div>
+          <div className={styles.float}>
+            <LabeledRoundButton
+              label={t([ 'garageUsers', 'removeUser' ])}
+              content={<span className="fa fa-times" aria-hidden="true" />}
+              onClick={destroyClick}
+              type="remove"
+              question={t([ 'garageUsers', 'removeGarageUser' ])}
+              state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'}
+            />
+          </div>
         </div>
-        <div className={styles.float}>
-          <LabeledRoundButton label={t([ 'garageUsers', 'removeUser' ])} content={<span className="fa fa-times" aria-hidden="true" />} onClick={destroyClick} type="remove" question={t([ 'garageUsers', 'removeGarageUser' ])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'} />
-        </div>
-      </div>
       )
     }
 
