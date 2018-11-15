@@ -88,31 +88,22 @@ class ClientUsersPage extends Component {
       const clientId = this.props.params.client_id
       const userId = client_user.user.id
 
-      const onClicks = []
       const destroyClick = () => actions.destroyClientUser(clientId, userId)
 
       const secretaryPresetClick = () => actions.setSecretary(clientId, userId)
       const internalPresetClick = () => actions.setInternal(clientId, userId)
 
-      onClicks.adminClick = () => actions.setClientUserRelation(clientId, userId, { admin: !client_user.admin })
-      onClicks.contactPersonClick = () => actions.setClientUserRelation(clientId, userId, { contact_person: !client_user.contact_person })
-      onClicks.secretaryClick = () => actions.setClientUserRelation(clientId, userId, { secretary: !client_user.secretary })
-      onClicks.hostClick = () => actions.setClientUserRelation(clientId, userId, { host: !client_user.host })
-      onClicks.internalClick = () => actions.setClientUserRelation(clientId, userId, { internal: !client_user.internal })
-
       const roles = [ 'admin', 'contact_person', 'secretary', 'host', 'internal' ]
 
       const mapRoleButtons = role => {
-        const snakeToCamel = value => {
-          return value.replace(/_\w/g, m => {
-            return m[1].toUpperCase()
-          })
+        const onClick = () => {
+          actions.setClientUserRelation(clientId, userId, { [role]: !client_user[role] })
         }
 
         return (
           <span
             className={client_user[role] ? styles.boldText : styles.inactiveText}
-            onClick={onClicks[`${snakeToCamel(role)}Click`]}
+            onClick={onClick}
             role="button"
             tabIndex="0"
           >

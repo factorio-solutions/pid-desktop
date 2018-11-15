@@ -82,38 +82,21 @@ class GarageUsersPage extends Component {
         actions.destroyGarageUser(pageBase.garage, garage_user.user.id)
       }
 
-      const onClicks = []
-
-      onClicks.adminClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { admin: !garage_user.admin })
-      }
-      onClicks.managerClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { manager: !garage_user.manager })
-      }
-      onClicks.receptionistClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { receptionist: !garage_user.receptionist })
-      }
-      onClicks.securityClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { security: !garage_user.security })
-      }
-
       const roles = [ 'admin', 'manager', 'receptionist', 'security' ]
 
       const mapRoleButtons = role => {
-        const snakeToCamel = value => {
-          return value.replace(/_\w/g, m => {
-            return m[1].toUpperCase()
-          })
+        const onClick = () => {
+          actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { [role]: !garage_user[role] })
         }
 
         return (
           <span
             className={garage_user[role] ? styles.boldText : styles.inactiveText}
-            onClick={onClicks[`${snakeToCamel(role)}Click`]}
+            onClick={onClick}
             role="button"
             tabIndex="0"
           >
-            {t([ 'clientUsers', role ])}
+            {t([ 'garageUsers', role ])}
           </span>
         )
       }
@@ -123,9 +106,9 @@ class GarageUsersPage extends Component {
           <div className={styles.devider}>
             {
               roles.map(mapRoleButtons)
-                  .reduce((acc, value) => {
-                    return acc === null ? [ value ] : [ ...acc, '|', value ]
-                  }, null)
+                   .reduce((acc, value) => {
+                     return acc === null ? [ value ] : [ ...acc, '|', value ]
+                   }, null)
             }
           </div>
           <div className={styles.float}>
