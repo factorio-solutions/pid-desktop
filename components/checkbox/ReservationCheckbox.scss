@@ -1,0 +1,23 @@
+@import './Checkbox.scss';
+
+$backgroundUnchecked: #fff;
+$backgroundChecked:   #818181;
+$colorChecked:        #fff;
+$border:              0.1em solid #989898;
+
+
+.checkbox {
+  >input[type=checkbox]:checked + label:before {
+    background-color: $backgroundChecked;
+    color:            $colorChecked;
+  }
+
+  >input[type=checkbox]:not(:checked) + label:hover:before {
+    background: $backgroundHover;
+  }
+
+  >input[type=checkbox] + label:before {
+    border:           $border;
+    background-color: $backgroundUnchecked;
+  }
+}
