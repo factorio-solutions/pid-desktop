@@ -5,11 +5,10 @@ import moment                           from 'moment'
 
 import Dateinput          from '../../_shared/components/input/DateInput'
 import TimeInput          from '../../_shared/components/input/TimeInput'
-import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import Input              from '../../_shared/components/input/Input'
 import ButtonStack        from '../../_shared/components/buttonStack/ButtonStack'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
-
+import Checkbox from '../../_shared/components/checkbox/Checkbox'
 
 import {
   beginsToNow,
@@ -31,6 +30,7 @@ import describeRule               from '../../_shared/helpers/recurringRuleToDes
 
 import styles from '../newReservation.page.scss'
 import inputStyles from '../../_shared/components/input/ReservationInput.scss'
+import checkboxStyles     from '../../_shared/components/checkbox/ReservationCheckbox.scss'
 
 class DateTimeForm extends Component {
   static propTypes = {
@@ -172,10 +172,17 @@ class DateTimeForm extends Component {
         {/* Recurring modal is in newReservationPage because Recurring component contains Form */}
         {state.reservation === undefined &&
           <div className={`${styles.recurringForm} ${overMonth && styles.hidden}`}>
-            <span className={`${styles.rule} ${!state.useRecurring && styles.disabled}`} onClick={this.showRecurring}>
-              {(state.useRecurring) ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}
-            </span>
-            <RoundButton content={<i className="fa fa-repeat" aria-hidden="true" />} onClick={this.showRecurring} type="action" size="small" />
+            <div>
+              <Checkbox
+                onChange={this.showRecurring}
+                checked={state.useRecurring}
+                style={checkboxStyles}
+              >
+                <span className={`${styles.rule} ${!state.useRecurring && styles.disabled}`} onClick={this.showRecurring}>
+                  {(state.useRecurring) ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}
+                </span>
+              </Checkbox>
+            </div>
           </div>
         }
       </div>

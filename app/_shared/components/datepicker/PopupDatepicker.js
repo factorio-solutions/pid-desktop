@@ -13,7 +13,8 @@ export default class PopupDatepicker extends Component {
     date:     PropTypes.string, // moment compatible format
     show:     PropTypes.bool,
     flip:     PropTypes.bool,
-    showInf:  PropTypes.bool
+    showInf:  PropTypes.bool,
+    gray:     PropTypes.bool
   }
 
   componentDidUpdate(prevProps) {
@@ -23,11 +24,11 @@ export default class PopupDatepicker extends Component {
   }
 
   render() {
-    const { onSelect, date, show, okClick, showInf, flip } = this.props
+    const { onSelect, date, show, okClick, showInf, flip, gray } = this.props
 
     return (
       <div
-        className={`${styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
+        className={`${gray ? styles.grayPopup : styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
         ref={div => { this.container = div }}
         onBlur={okClick}
         tabIndex={0}

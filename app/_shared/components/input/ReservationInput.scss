@@ -9,6 +9,7 @@ $label-font-size: 11px;
     color:            $black;
     min-height:       1.7em;
     background-color: $inputsBackGround;
+    padding: 18px 12px 0px;
 
     &:focus ~ .label, &:not([value='']) ~ .label {
       top: 5px !important;

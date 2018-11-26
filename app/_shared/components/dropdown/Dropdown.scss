@@ -41,10 +41,6 @@
   background-color: $inputsBackGround;
 }
 
-.dropReservation {
-  @extend .dropGray
-}
-
 .drop > li {
   padding: 14px 16px;
   cursor:  pointer;
@@ -88,8 +84,13 @@
 }
 
 .float {
-  font-size: 30px;
+  font-size: 16px;
   opacity:   0;
+}
+
+.reservationFloat {
+  @extend .float;
+  font-size: 30px;
 }
 
 .visible {
@@ -150,6 +151,7 @@
   >span {
     flex:       1 1;
     text-align: initial;
+    line-height: 30px;
   }
 }
 
@@ -191,7 +193,7 @@
 }
 
 .garageSelector {
-  height:           $garageSelecterDropdownHeight;
+  height:           $garageSelectorDropdownHeight;
   padding:          8px 15px;
   background-color: $yellow;
   color:            $black;

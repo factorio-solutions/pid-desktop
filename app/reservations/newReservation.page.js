@@ -193,20 +193,6 @@ class NewReservationPage extends Component {
                                   : t([ 'newReservation', 'onClientsExpenses' ])
                             })
                         `}
-                        {/* <Uneditable
-                          // label={t([ 'newReservation', 'price' ])}
-                          value={`
-                            ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                            (${!state.client_id
-                              ? t([ 'newReservation', 'onUsersExpenses' ])
-                              : !newReservationActions.isPlaceGoInternal(state)
-                                ? t([ 'newReservation', 'longtermRent' ])
-                                : state.paidByHost
-                                  ? t([ 'newReservation', 'onUsersExpenses' ])
-                                  : t([ 'newReservation', 'onClientsExpenses' ])
-                            })
-                          `}
-                        /> */}
                       </div>
                     }
                     {state.user &&
