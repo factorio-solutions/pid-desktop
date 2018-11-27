@@ -96,11 +96,9 @@
 .smsTemplates {
   >.textLabel {
     margin: 5px 0 3px;
+    font-size: 13px;
 
     >.removeDiacritics {
-      float:     right;
-      color:     $gray;
-      font-size: 13px;
       cursor:    pointer;
     }
   }
