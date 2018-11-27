@@ -31,12 +31,14 @@ $border:              0.1em solid #000;
     border-radius:    0.2em;
     display:          inline-block;
     width:            1em;
-    height:           1em;
+    height:           1.1em;
     margin-right:     0.3em;
     vertical-align:   middle;
     color:            transparent;
     transition:       .2s;
     background-color: $backgroundUnchecked;
+    padding-left:     0.1em;
+    padding-top:      0.01em;
   }
 
   >input[type=checkbox]:checked + label:before {
@@ -50,5 +52,9 @@ $border:              0.1em solid #000;
 
   >input[type=checkbox]:not(:checked) + label:hover:before {
     background: $backgroundHover;
+  }
+
+  >label>div {
+    vertical-align: bottom;
   }
 }

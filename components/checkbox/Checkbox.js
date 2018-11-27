@@ -26,7 +26,7 @@ export default class Checkbox extends Component {
     return (
       <div role="presentation" className={styles.checkbox} onClick={this.onClick} onKeyUp={this.onEnter} >
         <input type="checkbox" checked={checked} />
-        <label>{children}</label>
+        <label><span style={{ verticalAlign: 'bottom' }}>{children}</span></label>
       </div>
     )
   }
