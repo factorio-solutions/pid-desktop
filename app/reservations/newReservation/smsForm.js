@@ -29,8 +29,6 @@ class SmsForm extends Component {
     accentRegex: PropTypes.object
   }
 
-  onTextAreaChange = event => this.props.actions.setTemplateText(event.target.value)
-
   render() {
     const { state, actions, accentRegex } = this.props
 
@@ -83,17 +81,29 @@ class SmsForm extends Component {
                 <div className={styles.smsText} >
                   <TextArea
                     placeholder={t([ 'newReservation', 'smsTextPlaceholder' ])}
-                    onChange={this.onTextAreaChange}
+                    onChange={actions.setTemplateText}
                     value={state.templateText}
                   />
                 </div>
                 <div className={styles.textLabel}>
-                  <span role="button" tabIndex="0" className={styles.removeDiacritics} onClick={actions.removeDiacritics}>{t([ 'newReservation', 'removeDiacritics' ])}</span>
+                  <span
+                    className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}
+                  >
+                    {state.templateText.length}/{accentRegex.test(state.templateText) ? 140 : 320}
+                    {t([ 'newReservation', 'character' ])}
+                  </span> / <span
+                    role="button"
+                    tabIndex="0"
+                    className={styles.removeDiacritics}
+                    onClick={actions.removeDiacritics}
+                  >
+                    {t([ 'newReservation', 'removeDiacritics' ])}
+                  </span>
                 </div>
-                <div className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}>
+                {/* <div className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}>
                   {state.templateText.length}/{accentRegex.test(state.templateText) ? 140 : 320}
                   {t([ 'newReservation', 'character' ])}
-                </div>
+                </div> */}
               </div>
             }
           </div>

@@ -30,7 +30,7 @@ import SectionWithHeader          from '../_shared/components/wrapers/SectionWit
 import styles from './newReservation.page.scss'
 import inputStyle from '../_shared/components/input/ReservationInput.scss'
 
-const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤ]')
+const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤůŮúÚóÓ]')
 
 
 class NewReservationPage extends Component {
