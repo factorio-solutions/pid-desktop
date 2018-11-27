@@ -14,15 +14,12 @@ export default class TextArea extends Component {
     onChange:    PropTypes.func, // use if you want to pass value to parent
     onBlur:      PropTypes.func,
     onFocus:     PropTypes.func, // called when enter pressed
-    value:       PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
-    style:      PropTypes.oneOfType([
+    value:       PropTypes.string,
+    style: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
     ]),
-    highlight:   PropTypes.bool
+    highlight: PropTypes.bool
   }
 
   constructor(props) { // just to handle two way databinding
@@ -32,6 +29,10 @@ export default class TextArea extends Component {
 
   componentWillReceiveProps(newProps) {
     newProps.value !== undefined && this.setState({ message: newProps.value })
+  }
+
+  onChange = event => {
+    this.props.onChange(event.target.value)
   }
 
   render() {
@@ -46,7 +47,7 @@ export default class TextArea extends Component {
       style,
       highlight,
       readOnly,
-      onChange
+      value
     } = this.props
     const styles = style && typeof style !== 'string' ? style : defaultStyles
 
@@ -60,10 +61,11 @@ export default class TextArea extends Component {
           onFocus={onFocus}
           pattern={pattern}
           name={name}
-          onChange={onChange}
+          onChange={this.onChange}
           placeholder={placeholder}
           ref={input => { this.input = input }}
           readOnly={readOnly}
+          value={value}
         />
         <span className={styles.bar} />
       </div>
