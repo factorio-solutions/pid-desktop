@@ -32,17 +32,15 @@ class SmsForm extends Component {
   render() {
     const { state, actions, accentRegex } = this.props
 
-    const client = state.user && state.user.availableClients && state.user.availableClients.findById(state.client_id)
     const selectedClient = actions.selectedClientImported()
-
     return (
       <div>
         {
           state.client_id &&
-          client &&
-          client.has_sms_api_token &&
-          client.is_sms_api_token_active &&
-          client.client_user.secretary &&
+          selectedClient &&
+          selectedClient.has_sms_api_token &&
+          selectedClient.is_sms_api_token_active &&
+          selectedClient.client_user.secretary &&
           <div>
             {((state.user && state.current_user && state.user.id !== state.current_user.id &&
               selectedClient && selectedClient.is_time_credit_active) ||
@@ -100,10 +98,6 @@ class SmsForm extends Component {
                     {t([ 'newReservation', 'removeDiacritics' ])}
                   </span>
                 </div>
-                {/* <div className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}>
-                  {state.templateText.length}/{accentRegex.test(state.templateText) ? 140 : 320}
-                  {t([ 'newReservation', 'character' ])}
-                </div> */}
               </div>
             }
           </div>

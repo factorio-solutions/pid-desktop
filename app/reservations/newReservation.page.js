@@ -3,32 +3,29 @@ import { connect }                      from 'react-redux'
 import { bindActionCreators }           from 'redux'
 import moment                           from 'moment'
 
-import PageBase         from '../_shared/containers/pageBase/PageBase'
-import Uneditable       from '../_shared/components/input/Uneditable'
-import RoundButton      from '../_shared/components/buttons/RoundButton'
-import GarageLayout     from '../_shared/components/garageLayout/GarageLayout'
-import Form             from '../_shared/components/form/Form'
-import Modal            from '../_shared/components/modal/Modal'
-import Input            from '../_shared/components/input/Input'
-import PickUserForm     from './newReservation/pickUserForm'
-import GarageClientForm from './newReservation/garageClientForm'
-import PlaceForm        from './newReservation/placeForm'
-import SmsForm          from './newReservation/smsForm'
-import DateTimeForm     from './newReservation/dateTimeForm'
-import Recurring        from '../_shared/components/recurring/Recurring'
+import PageBase          from '../_shared/containers/pageBase/PageBase'
+import RoundButton       from '../_shared/components/buttons/RoundButton'
+import GarageLayout      from '../_shared/components/garageLayout/GarageLayout'
+import Form              from '../_shared/components/form/Form'
+import Modal             from '../_shared/components/modal/Modal'
+import PickUserForm      from './newReservation/pickUserForm'
+import GarageClientForm  from './newReservation/garageClientForm'
+import PlaceForm         from './newReservation/placeForm'
+import PriceSmsNote      from './newReservation/priceSmsNote'
+import DateTimeForm      from './newReservation/dateTimeForm'
+import Recurring         from '../_shared/components/recurring/Recurring'
+import SectionWithHeader from '../_shared/components/wrapers/SectionWithHeader'
+
 import {
   MOMENT_DATETIME_FORMAT
 } from '../_shared/helpers/time'
 
-
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t, getLanguage }         from '../_shared/modules/localization/localization'
-import SectionWithHeader          from '../_shared/components/wrapers/SectionWithHeader'
 
 
 import styles from './newReservation.page.scss'
-import inputStyle from '../_shared/components/input/ReservationInput.scss'
 
 const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤůŮúÚóÓ]')
 
@@ -168,46 +165,11 @@ class NewReservationPage extends Component {
                     }
                   </SectionWithHeader>
                 }
-                {state.garage &&
-                  <SectionWithHeader header={t([ 'newReservation', 'priceAndOthers' ])}>
-                    {selectedClient && selectedClient.is_time_credit_active &&
-                    !newReservationActions.isPlaceGoInternal(state) ?
-                      <Uneditable
-                        label={t([ 'newReservation', 'price' ])}
-                        highlight={state.highlight && outOfTimeCredit}
-                        value={`${state.timeCreditPrice} /
-                          ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
-                          ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
-                        `}
-                      /> :
-                      <div className={styles.price}>
-                        {t([ 'newReservation', 'price' ])}
-                        {`
-                            ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                            (${!state.client_id
-                              ? t([ 'newReservation', 'onUsersExpenses' ])
-                              : !newReservationActions.isPlaceGoInternal(state)
-                                ? t([ 'newReservation', 'longtermRent' ])
-                                : state.paidByHost
-                                  ? t([ 'newReservation', 'onUsersExpenses' ])
-                                  : t([ 'newReservation', 'onClientsExpenses' ])
-                            })
-                        `}
-                      </div>
-                    }
-                    {state.user &&
-                      <SmsForm accentRegex={ACCENT_REGEX} />
-                    }
-                    <Input
-                      onChange={actions.setNote}
-                      label={t([ 'newReservation', 'note' ])}
-                      value={state.note}
-                      align="left"
-                      style={inputStyle}
-                    />
-                  </SectionWithHeader>
-                }
-                {/*  Sms Part  */}
+                <PriceSmsNote
+                  accentRegex={ACCENT_REGEX}
+                  selectedClient={selectedClient}
+                  outOfTimeCredit={outOfTimeCredit}
+                />
               </Form>
               {/* Has to be outside of Form tag because it contains Form */}
               <Recurring
