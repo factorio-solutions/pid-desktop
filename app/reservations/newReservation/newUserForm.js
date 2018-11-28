@@ -4,7 +4,7 @@ import { bindActionCreators }          from 'redux'
 
 import Input        from '../../_shared/components/input/Input'
 import PatternInput from '../../_shared/components/input/PatternInput'
-import RoundButton  from '../../_shared/components/buttons/RoundButton'
+import CallToActionButton  from '../../_shared/components/buttons/CallToActionButton'
 
 
 import {
@@ -25,6 +25,7 @@ import {
   resetButton
 } from '../newReservation.page.scss'
 
+import reservationStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class NewUserForm extends Component {
   static propTypes = {
@@ -48,11 +49,11 @@ class NewUserForm extends Component {
   renderLanguageButton = lang => {
     const { state, actions, onetime } = this.props
     const selectLanguage = state.user.language ? state.user.language : state.language
-    return (<RoundButton
+    return (<CallToActionButton
       state={(selectLanguage === lang && 'selected') || ((onetime || state.user.language) && 'disabled')}
-      content={lang.toUpperCase()}
+      label={lang.toUpperCase()}
       onClick={() => actions.setLanguage(lang)}
-      type="action"
+      type="reservationLangWith"
     />)
   }
 
@@ -83,6 +84,8 @@ class NewUserForm extends Component {
             value={state.name.value}
             highlight={state.highlight}
             align="left"
+            style={reservationStyles}
+            placeholder={t([ 'signup_page', 'namePlaceholder' ])}
           />
         </div>
         <PatternInput
@@ -105,6 +108,8 @@ class NewUserForm extends Component {
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
           normalizeInput={normalizeEmail}
+          style={reservationStyles}
+          placeholder={t([ 'signup_page', 'emailPlaceholder' ])}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
@@ -125,6 +130,8 @@ class NewUserForm extends Component {
           value={state.phone.value}
           highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
+          style={reservationStyles}
+          placeholder={t([ 'signup_page', 'phonePlaceholder' ])}
         />
         <Input
           readOnly={!editable}
@@ -135,6 +142,7 @@ class NewUserForm extends Component {
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
+          style={reservationStyles}
         />
         <div className={languagesSelector}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>

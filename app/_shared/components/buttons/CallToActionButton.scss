@@ -53,3 +53,7 @@
   @include colorize($lightGray);
   color:   $gray;
 }
+
+.reservationLangWith {
+  min-width: 6em;
+}

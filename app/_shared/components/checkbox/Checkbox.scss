@@ -1,9 +1,60 @@
 @import '../../styles/app.components';
 
-.checkbox {
-  margin-top: 20px;
-}
+// .checkbox {
+//   margin-top: 20px;
+// }
+
+$backgroundUnchecked: transparent;
+$backgroundChecked:   #fff;
+$colorChecked:        #000;
+$backgroundHover:     lightgray;
+$border:              0.1em solid #000;
 
 .highlight {
   background: rgba($red, .5);
+}
+
+.checkbox {
+
+  >input[type=checkbox] + label {
+    display: block;
+    margin:  0.2em;
+  }
+
+  >input[type=checkbox] {
+    display: none;
+  }
+
+  >input[type=checkbox] + label:before {
+    content:          "\2714";
+    border:           $border;
+    border-radius:    0.2em;
+    display:          inline-block;
+    width:            1em;
+    height:           1.1em;
+    margin-right:     0.3em;
+    vertical-align:   middle;
+    color:            transparent;
+    transition:       .2s;
+    background-color: $backgroundUnchecked;
+    padding-left:     0.1em;
+    padding-top:      0.01em;
+  }
+
+  >input[type=checkbox]:checked + label:before {
+    background-color: $backgroundChecked;
+    color:            $colorChecked;
+  }
+
+  >input[type=checkbox] + label:hover {
+    cursor: pointer;
+  }
+
+  >input[type=checkbox]:not(:checked) + label:hover:before {
+    background: $backgroundHover;
+  }
+
+  >label>div {
+    vertical-align: bottom;
+  }
 }

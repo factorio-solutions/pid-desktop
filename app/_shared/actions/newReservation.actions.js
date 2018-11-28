@@ -80,6 +80,7 @@ export const NEW_RESERVATION_SET_TIME_CREDIT_PRICE = 'NEW_RESERVATION_SET_TIME_C
 export const NEW_RESERVATION_SET_PREFERED_GARAGE_ID = 'NEW_RESERVATION_SET_PREFERED_GARAGE_ID'
 export const NEW_RESERVATION_SET_PREFERED_PLACE_ID = 'NEW_RESERVATION_SET_PREFERED_PLACE_ID'
 export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
+export const NEW_RESERVATION_SHOW_MAP = 'NEW_RESERVATION_SHOW_MAP'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -110,6 +111,7 @@ export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
 export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_PRICE)
 export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
 export const setClientId = actionFactory(NEW_RESERVATION_SET_CLIENT_ID)
+export const showMap = actionFactory(NEW_RESERVATION_SHOW_MAP)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)

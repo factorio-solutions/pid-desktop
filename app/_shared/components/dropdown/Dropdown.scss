@@ -36,6 +36,11 @@
   }
 }
 
+.dropGray {
+  @extend .drop;
+  background-color: $inputsBackGround;
+}
+
 .drop > li {
   padding: 14px 16px;
   cursor:  pointer;
@@ -83,6 +88,11 @@
   opacity:   0;
 }
 
+.reservationFloat {
+  @extend .float;
+  font-size: 30px;
+}
+
 .visible {
   opacity: 1;
 }
@@ -113,6 +123,12 @@
   color:            $white;
 }
 
+.gray {
+  background-color: $inputsBackGround;
+  color:            $black;
+  border-bottom:    1px solid $verticalMenuBorderColor;
+}
+
 .mobileDark {
   background-color: $black;
   color:            $white;
@@ -127,7 +143,7 @@
 }
 
 .reservation {
-  @extend  .light;
+  @extend  .gray;
   display: flex;
   height:  50px;
   padding: 0 12px;
@@ -135,6 +151,7 @@
   >span {
     flex:       1 1;
     text-align: initial;
+    line-height: 30px;
   }
 }
 
@@ -176,7 +193,7 @@
 }
 
 .garageSelector {
-  height:           $garageSelecterDropdownHeight;
+  height:           $garageSelectorDropdownHeight;
   padding:          8px 15px;
   background-color: $yellow;
   color:            $black;

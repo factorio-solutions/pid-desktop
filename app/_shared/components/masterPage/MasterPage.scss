@@ -83,7 +83,11 @@ $hintWidth:          180px;
     }
 
     >.children {
-      padding: 0 20px;
+      padding-left:  20px;
+
+      // padding-right: 100px;
+
+      margin-right: auto;
     }
   }
 }
@@ -171,6 +175,10 @@ $hintWidth:          180px;
         &.hashHint {
           margin-right: $hintWidth;
         }
+      }
+
+      >.scrollbarVisible {
+        overflow-y: scroll;
       }
 
       >.hint {

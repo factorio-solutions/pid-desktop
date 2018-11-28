@@ -8,8 +8,7 @@ import {
   downloadGarage,
   setPaidByHost,
   setClient,
-  selectedClient,
-  isPlaceGoInternal
+  selectedClient
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
@@ -75,23 +74,6 @@ class GarageClientForm extends Component {
             filter
             placeholder={t([ 'newReservation', 'selectClient' ])}
           />
-        }
-        {((state.user && state.current_user && state.user.id !== state.current_user.id &&
-            selectedClient && selectedClient.is_time_credit_active) ||
-          isPlaceGoInternal(state)) &&
-          <div>
-            <input
-              type="checkbox"
-              checked={state.paidByHost}
-              onChange={() => actions.setPaidByHost(!state.paidByHost)}
-            />
-            {t([
-              'newReservation',
-              (selectedClient && selectedClient.is_time_credit_active) && !isPlaceGoInternal(state)
-                ? 'paidByHostsTimeCredit'
-                : 'paidByHost'
-            ])}
-          </div>
         }
       </div>
     )

@@ -152,11 +152,11 @@ export default class Dropdown extends Component {
         >
           {icon}
           <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? label : content[this.state.selected].label} </span>
-          <i className={`fa fa-caret-down ${styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
+          <i className={`fa fa-caret-down ${style === 'reservation' ? styles.reservationFloat : styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
         </button>
 
         <ul
-          className={`${styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
+          className={`${style === 'reservation' ? styles.dropGray : styles.drop} ${styles.hidden} ${styles.displayNone} ${position === 'fixed' ? styles.fixed : styles.absolute}`}
           ref={ul => { this.ul = ul }}
         >
           {lis}

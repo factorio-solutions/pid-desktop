@@ -41,8 +41,9 @@ class MasterPage extends Component {
     showHints: PropTypes.bool,
     hint:      PropTypes.object, // {hint, href}
 
-    profileDropdown: PropTypes.object, // [ DOMelement, ... ]
-    children:        PropTypes.object
+    profileDropdown:  PropTypes.object, // [ DOMelement, ... ]
+    children:         PropTypes.object,
+    scrollbarVisible: PropTypes.bool
   }
 
   constructor(props) {
@@ -78,7 +79,8 @@ class MasterPage extends Component {
       showHints,
       hint,
       profileDropdown,
-      children
+      children,
+      scrollbarVisible
     } = this.props
 
 
@@ -145,7 +147,7 @@ class MasterPage extends Component {
               <I />
               <div dangerouslySetInnerHTML={{ __html: hint.hint }} />
             </div>}
-            <div className={`${styles.children} ${showHints && hint && styles.hashHint}`}>
+            <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${scrollbarVisible && styles.scrollbarVisible}`}>
               {children}
             </div>
           </div>

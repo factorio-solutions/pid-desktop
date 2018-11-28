@@ -9,6 +9,7 @@ import { setCarId, setCarLicencePlate } from '../../_shared/actions/newReservati
 
 import { t } from '../../_shared/modules/localization/localization'
 
+import inputStyle from '../../_shared/components/input/ReservationInput.scss'
 
 class ExistingUserForm extends Component {
   static propTypes = {
@@ -40,6 +41,7 @@ class ExistingUserForm extends Component {
             type="text"
             align="left"
             // highlight={state.highlight && state.user.id !== -2}
+            style={inputStyle}
           /> :
           <Dropdown
             editable={editable}

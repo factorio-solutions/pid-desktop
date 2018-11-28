@@ -96,11 +96,9 @@
 .smsTemplates {
   >.textLabel {
     margin: 5px 0 3px;
+    font-size: 13px;
 
     >.removeDiacritics {
-      float:     right;
-      color:     $gray;
-      font-size: 13px;
       cursor:    pointer;
     }
   }
@@ -108,7 +106,8 @@
   >textarea {
     width:  100%;
     height: 100px;
-    border: 1px solid $verticalMenuBorderColor;
+    border-bottom: 1px solid $gray;
+    background-color: $inputsBackGround;
     resize: none;
   }
 }
@@ -132,7 +131,8 @@
     flex: 1 1;
     margin: auto;
     order: 2;
-    min-width: 15px;
+    min-width: 10px;
+    max-width: 10px;
     text-align: center;
   }
   // TODO: Rename
@@ -154,7 +154,59 @@
   right: 0.1em;
   font-size: 1.6em;
   cursor:  pointer;
-  padding-top: 0.3em;
+  padding-top: 0.4em;
   z-index: 10;
   color: #cacaca;
+}
+
+.textArea {
+  margin-top:         22px;
+  border-radius:      5px;
+  background-color:   $inputsBackGround;
+
+  >textarea {
+    background-color: transparent;
+    color:            black;
+    width:            100%;
+    padding: 12px 12px 8px;
+    border-color:     transparent;
+  }
+
+  >label {
+    top:         18px;
+    left:        5px;
+    float:       left;
+    font-size:   11px;
+    white-space: nowrap;
+  }
+}
+
+.placeLabelArea {
+  @extend .textArea;
+  text-align:       center;
+  background-color: transparent;
+  >textarea {
+    vertical-align: center;
+    font-size:      35px;
+    font-weight:    bold;
+    resize:         none;
+    padding:        0;
+
+
+    background-color: transparent;
+    text-align:       center;
+  }
+}
+
+.displayNone {
+  display: none;
+}
+
+.price {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.smsText {
+  height: 10em;
 }
