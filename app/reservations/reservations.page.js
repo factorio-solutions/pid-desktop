@@ -34,8 +34,8 @@ class ReservationsPage extends Component {
     state:               PropTypes.object,
     actions:             PropTypes.object,
     params:              PropTypes.object,
-    interuption:         PropTypes.object,
-    interuptionActions:  PropTypes.object,
+    interruption:        PropTypes.object,
+    interruptionActions: PropTypes.object,
     newReservationState: PropTypes.object,
     pageBase:            PropTypes.object
   }
@@ -103,14 +103,14 @@ class ReservationsPage extends Component {
 
   // downloadClick = ids => this.props.actions.downloadInvoice(ids)
 
-  interuptClick = reservation => this.props.interuptionActions.setReservation(reservation)
+  interuptClick = reservation => this.props.interruptionActions.setReservation(reservation)
 
   isSecretary = reservation => reservation.client && reservation.client.client_user && reservation.client.client_user.secretary
   isInternal = reservation => reservation.client && reservation.client.client_user && reservation.client.client_user.internal
   ownsReservation = reservation => reservation.user.id === this.props.pageBase.current_user.id
 
   render() {
-    const { state, actions, interuption, interuptionActions, pageBase } = this.props
+    const { state, actions, interruption, interruptionActions, pageBase } = this.props
 
     const schema = [
       { key: 'name', title: t([ 'reservations', 'name' ]), comparator: 'string', includes: 'user', orderBy: 'users.full_name' },
@@ -163,21 +163,21 @@ class ReservationsPage extends Component {
     ]
 
     const reservationIteruptionModal = (<div>
-      <Form onSubmit={interuptionActions.interuptReservation} onBack={interuptionActions.setReservation} submitable margin={false} modal>
+      <Form onSubmit={interruptionActions.interuptReservation} onBack={interruptionActions.setReservation} submitable margin={false} modal>
         <h2>{t([ 'reservationInteruption', 'describtion' ])}</h2>
         <DatetimeInput
-          onChange={interuptionActions.setFrom}
+          onChange={interruptionActions.setFrom}
           label={t([ 'reservationInteruption', 'from' ])}
           error={t([ 'reservationInteruption', 'invalidaDate' ])}
-          value={interuption.from}
-          onBlur={interuptionActions.formatFrom}
+          value={interruption.from}
+          onBlur={interruptionActions.formatFrom}
         />
         <DatetimeInput
-          onChange={interuptionActions.setTo}
+          onChange={interruptionActions.setTo}
           label={t([ 'reservationInteruption', 'to' ])}
           error={t([ 'reservationInteruption', 'invalidaDate' ])}
-          value={interuption.to}
-          onBlur={interuptionActions.formatTo}
+          value={interruption.to}
+          onBlur={interruptionActions.formatTo}
         />
       </Form>
     </div>)
@@ -283,7 +283,7 @@ class ReservationsPage extends Component {
                 <LabeledRoundButton
                   label={t([ 'reservations', 'teminateEarly' ])}
                   content={<span className="fa fa-times" aria-hidden="true" />}
-                  onClick={() => interuptionActions.immediateReservationTermination(reservation)}
+                  onClick={() => interruptionActions.immediateReservationTermination(reservation)}
                   type="remove"
                   question={t([ 'reservations', 'terminateEarlyQuestion' ])}
                 /> :
@@ -316,7 +316,7 @@ class ReservationsPage extends Component {
 
     return (
       <PageBase>
-        <Modal content={reservationIteruptionModal} show={interuption.reservation} />
+        <Modal content={reservationIteruptionModal} show={interruption.reservation} />
         <Modal content={reservationNewNoteModal} show={state.newNoteReservation} />
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
@@ -346,9 +346,9 @@ class ReservationsPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.reservations, interuption: state.reservationInteruption, newReservationState: state.newReservation, pageBase: state.pageBase }),
+  state => ({ state: state.reservations, interruption: state.reservationInteruption, newReservationState: state.newReservation, pageBase: state.pageBase }),
   dispatch => ({
     actions:            bindActionCreators({ ...reservationActions, setCustomModal, setRecurringReservationId, clearForm }, dispatch),
-    interuptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
+    interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
   })
 )(ReservationsPage)
