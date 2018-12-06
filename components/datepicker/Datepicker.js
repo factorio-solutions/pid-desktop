@@ -29,39 +29,65 @@ export default class Datepicker extends Component {
     })
   }
 
+  onDayClick = day => {
+    const { onSelect } = this.props
+    this.setState({ ...this.state, selected: moment(day) })
+    onSelect(day)
+  }
+
+  decreaseMonth = () => {
+    this.setState({ ...this.state, view: moment(this.state.view).subtract(1, 'month') })
+  }
+
+  increaseMonth = () => {
+    this.setState({ ...this.state, view: moment(this.state.view).add(1, 'month') })
+  }
+
+  todayClick = () => {
+    const { onSelect } = this.props
+    onSelect(moment().format('YYYY-MM-DD'))
+    this.setState({ selected: moment(), view: moment() })
+  }
+
+  infClick = () => {
+    const { onSelect } = this.props
+    onSelect('')
+    this.setState({ selected: '', view: moment() })
+  }
+
+
   render() {
-    const { onSelect, showInf } = this.props
-
-    const decreaseMonth = () => {
-      this.setState({ ...this.state, view: moment(this.state.view).subtract(1, 'month') })
-    }
-
-    const increaseMonth = () => {
-      this.setState({ ...this.state, view: moment(this.state.view).add(1, 'month') })
-    }
-
-    const onDayClick = day => {
-      this.setState({ ...this.state, selected: moment(day) })
-      onSelect(day)
-    }
-
-    const todayClick = () => {
-      onSelect(moment().format('YYYY-MM-DD'))
-      this.setState({ selected: moment(), view: moment() })
-    }
-
-    const infClick = () => {
-      onSelect('')
-      this.setState({ selected: '', view: moment() })
-    }
+    const { showInf } = this.props
 
     return (
       <div className={styles.datepickerContainer}>
-        <Month date={this.state.view} leftClick={decreaseMonth} rightClick={increaseMonth} />
-        <Days month={this.state.view} selected={this.state.selected} onClick={onDayClick} />
+        <Month
+          date={this.state.view}
+          leftClick={this.decreaseMonth}
+          rightClick={this.increaseMonth}
+        />
+        <Days
+          month={this.state.view}
+          selected={this.state.selected}
+          onClick={this.onDayClick}
+        />
         <div className={styles.buttonContainer}>
-          <span onClick={todayClick}>{t([ 'datetimepicker', 'today' ])}</span>
-          {showInf && <span onClick={infClick}>{t([ 'datetimepicker', 'inf' ])}</span>}
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={this.todayClick}
+          >
+            {t([ 'datetimepicker', 'today' ])}
+          </span>
+          {showInf &&
+            <span
+              role="button"
+              tabIndex={0}
+              onClick={this.infClick}
+            >
+              {t([ 'datetimepicker', 'inf' ])}
+            </span>
+          }
         </div>
       </div>
     )

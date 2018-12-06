@@ -43,59 +43,110 @@ export default class TimeInput extends Component {
 
   timeToDate = time => `1.1.9999 ${time}` // will add some day to it, so moment can handle it
 
+  handleChange = event => {
+    const { editable, onChange } = this.props
+    editable && this.setState({
+      ...this.state,
+      message: event.target.value
+    })
+
+    onChange && onChange(
+      event.target.value,
+      moment(event.target.value, MOMENT_TIME_FORMAT).isValid()
+    )
+  }
+
+  handlePick = time => {
+    const { onBlur, onChange } = this.props
+    const date = this.timeToDate(time)
+
+    this.setState({
+      ...this.state,
+      message: moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)
+    })
+
+    onChange && onChange(
+      moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT),
+      moment(date).isValid()
+    )
+
+    onBlur && onBlur()
+  }
+
+  preventEnter = event => {
+    const { onEnter } = this.props
+    const key = (typeof event.which === 'number') ? event.which : event.keyCode
+    if (key === 13) {
+      event.preventDefault()
+      typeof (onEnter) === 'function' && onEnter()
+    }
+  }
+
+  showDatepicker = () => this.setState({ ...this.state, focus: true })
+
+  hideDatepicker = () => this.setState({ ...this.state, focus: false })
+
   render() {
-    const { label, error, placeholder, onChange, onEnter, onBlur, inlineMenu, style, editable, align } = this.props
+    const {
+      label,
+      error,
+      placeholder,
+      onBlur,
+      inlineMenu,
+      style,
+      editable,
+      align
+    } = this.props
 
     const styles = typeof style === 'object' ? style : defaultStyles
-
-    const handleChange = event => {
-      editable && this.setState({ ...this.state, message: event.target.value })
-      // onChange && onChange(moment(event.target.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT), moment(event.target.value, MOMENT_DATETIME_FORMAT).isValid())
-      onChange && onChange(event.target.value, moment(event.target.value, MOMENT_TIME_FORMAT).isValid())
-    }
-
-    const handlePick = time => {
-      const date = this.timeToDate(time)
-      this.setState({ ...this.state, message: moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT) })
-      onChange && onChange(moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT), moment(date).isValid())
-      onBlur && onBlur()
-    }
-
-    const preventEnter = function (event) {
-      const key = (typeof event.which === 'number') ? event.which : event.keyCode
-      if (key === 13) {
-        event.preventDefault()
-        typeof (onEnter) === 'function' && onEnter()
-      }
-    }
-
-
-    const showDatepicker = () => this.setState({ ...this.state, focus: true })
-
-    const hideDatepicker = () => this.setState({ ...this.state, focus: false })
-
 
     return (
       <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`} >
         <input
           type={'text'}
           value={this.state.message}
-          onChange={handleChange}
+          onChange={this.handleChange}
           placeholder={placeholder}
-          onKeyPress={preventEnter.bind(this)}
+          onKeyPress={this.preventEnter}
           pattern="(\d{1,2}):(\d{2})"
           onBlur={onBlur}
         />
         <span className={styles.bar} />
-        <label className={styles.label}>{label}</label>
-        <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
-        <label className={`${styles.customFormGroup}  ${styles.error}`} style={{ opacity: moment(this.state.message, MOMENT_TIME_FORMAT).isValid() ? 0 : 1 }}>{error}</label>
-        <label className={`${styles.customFormGroup}  ${styles.callendar}`} onClick={editable && showDatepicker}><i className="fa fa-clock-o" aria-hidden="true" /></label>
+
+        <label
+          className={styles.label}
+        >
+          {label}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.inlineMenu}`}
+        >
+          {inlineMenu}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.error}`}
+          style={{ opacity: moment(this.state.message, MOMENT_TIME_FORMAT).isValid() ? 0 : 1 }}
+        >
+          {error}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.callendar}`}
+          onClick={editable && this.showDatepicker}
+        >
+          <i className="fa fa-clock-o" aria-hidden="true" />
+        </label>
+
         <PopupTimepicker
-          onSelect={handlePick}
-          time={moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ? moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') : undefined}
+          onSelect={this.handlePick}
+          time={moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ?
+            moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') :
+            undefined
+          }
           show={this.state.focus}
-          okClick={hideDatepicker}
+          okClick={this.hideDatepicker}
           gray={style === 'gray'}
         />
       </div>

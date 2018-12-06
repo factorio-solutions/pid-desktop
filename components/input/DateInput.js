@@ -38,39 +38,69 @@ export default class DateInput extends Component {
     newProps.value !== undefined && this.setState({ message: newProps.value })
   }
 
+  handleChange = event => {
+    const { editable } = this.props
+    if (editable) {
+      this.setState({ ...this.state, message: event.target.value })
+    }
+  }
+
+  handlePick = date => {
+    const { onChange, onBlur } = this.props
+    const convertedDate = date === '' ? '' : moment(date).format('DD.MM.YYYY')
+
+    this.setState({
+      ...this.state,
+      message: convertedDate
+    })
+
+    if (typeof onChange === 'function') {
+      onChange(convertedDate, moment(date).isValid())
+    }
+
+    onBlur && onBlur()
+  }
+
+  preventEnter = event => {
+    const { onEnter } = this.props
+    const key = (typeof event.which === 'number') ? event.which : event.keyCode
+    if (key === 13) {
+      event.preventDefault()
+      typeof (onEnter) === 'function' && onEnter()
+    }
+  }
+
+  showDatepicker = () => {
+    this.setState({ ...this.state, focus: true })
+  }
+
+  hideDatepicker = () => {
+    this.setState({ ...this.state, focus: false })
+  }
+
   render() {
-    const { label, error, placeholder, onChange, onEnter, inlineMenu, style, showInf, flip, editable, onBlur } = this.props
+    const {
+      label,
+      error,
+      placeholder,
+      inlineMenu,
+      style,
+      showInf,
+      flip,
+      editable,
+      onBlur
+    } = this.props
 
     const styles = typeof style === 'object' ? style : defaultStyles
 
-    const handleChange = event => {
-      if (editable) {
-        this.setState({ ...this.state, message: event.target.value })
-      }
-    }
+    const messageIsValidDate = moment(this.state.message, 'DD.MM.YYYY').isValid()
 
-    const handlePick = date => {
-      this.setState({ ...this.state, message: date === '' ? '' : moment(date).format('DD.MM.YYYY') })
-      if (typeof onChange === 'function') {
-        onChange(date === '' ? '' : moment(date).format('DD.MM.YYYY'), moment(date).isValid())
-      }
-      onBlur && onBlur()
-    }
-
-    const preventEnter = function (event) {
-      const key = (typeof event.which === 'number') ? event.which : event.keyCode
-      if (key === 13) {
-        event.preventDefault()
-        typeof (onEnter) === 'function' && onEnter()
-      }
-    }
-
-    const showDatepicker = () => {
-      this.setState({ ...this.state, focus: true })
-    }
-
-    const hideDatepicker = () => {
-      this.setState({ ...this.state, focus: false })
+    const errorStyle = {
+      opacity: this.state.message === undefined ||
+               this.state.message === '' ||
+               messageIsValidDate ?
+                 0 :
+                 1
     }
 
     return (
@@ -78,25 +108,53 @@ export default class DateInput extends Component {
         <input
           type={'text'}
           value={this.state.message}
-          onChange={handleChange}
+          onChange={this.handleChange}
           placeholder={placeholder}
-          onKeyPress={preventEnter.bind(this)}
+          onKeyPress={this.preventEnter}
           pattern="(\d{1,2}).(\d{1,2}).(\d{4})"
           onBlur={onBlur}
         />
         <span className={styles.bar} />
-        <label className={styles.label}>{label}</label>
-        <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
-        <label className={`${styles.customFormGroup}  ${styles.error}`} style={{ opacity: this.state.message === undefined || this.state.message === '' || moment(this.state.message, 'DD.MM.YYYY').isValid() ? 0 : 1 }}>{error}</label>
-        <label className={`${styles.customFormGroup}  ${styles.callendar}`} onClick={showDatepicker}><i className="fa fa-calendar" aria-hidden="true" /></label>
+
+        <label
+          className={styles.label}
+        >
+          {label}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.inlineMenu}`}
+        >
+          {inlineMenu}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.error}`}
+          style={errorStyle}
+        >
+          {error}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.callendar}`}
+          onClick={this.showDatepicker}
+        >
+          <i
+            className="fa fa-calendar"
+            aria-hidden="true"
+          />
+        </label>
 
         <PopupDatepicker
           showInf={showInf}
-          onSelect={handlePick}
-          date={moment(this.state.message, 'DD.MM.YYYY').isValid() ? moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD') : undefined}
+          onSelect={this.handlePick}
+          date={messageIsValidDate ?
+            moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD') :
+            undefined
+          }
           show={this.state.focus}
           flip={flip}
-          okClick={hideDatepicker}
+          okClick={this.hideDatepicker}
           gray={style === 'gray'}
         />
       </div>
