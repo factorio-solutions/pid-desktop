@@ -3,12 +3,12 @@ import { connect }                      from 'react-redux'
 import { bindActionCreators }           from 'redux'
 import moment                           from 'moment'
 
-import Dateinput          from '../../_shared/components/input/DateInput'
+import DateInput          from '../../_shared/components/input/DateInput'
 import TimeInput          from '../../_shared/components/input/TimeInput'
 import Input              from '../../_shared/components/input/Input'
 import ButtonStack        from '../../_shared/components/buttonStack/ButtonStack'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
-import Checkbox from '../../_shared/components/checkbox/Checkbox'
+import Checkbox           from '../../_shared/components/checkbox/Checkbox'
 
 import {
   beginsToNow,
@@ -25,7 +25,13 @@ import {
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
-import { MOMENT_DATETIME_FORMAT, MOMENT_DATE_FORMAT, MOMENT_TIME_FORMAT, MOMENT_UTC_DATETIME_FORMAT_DASH } from '../../_shared/helpers/time'
+
+import {
+  MOMENT_DATETIME_FORMAT,
+  MOMENT_DATE_FORMAT, MOMENT_TIME_FORMAT,
+  MOMENT_UTC_DATETIME_FORMAT_DASH
+} from '../../_shared/helpers/time'
+
 import describeRule               from '../../_shared/helpers/recurringRuleToDescribtion'
 
 import styles from '../newReservation.page.scss'
@@ -39,6 +45,16 @@ class DateTimeForm extends Component {
     editable: PropTypes.bool
   }
 
+
+  setGreatestFreeInterval = () => {
+    const { state, actions } = this.props
+    const interval = state.freeInterval.split(', ').map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
+    actions.setFrom(interval[0].format(MOMENT_DATETIME_FORMAT))
+    actions.setTo(interval[1].format(MOMENT_DATETIME_FORMAT))
+    actions.formatFrom()
+    actions.formatTo(true)
+  }
+
   handleDuration = () => this.props.actions.setDurationDate(true)
 
   handleDate = () => this.props.actions.setDurationDate(false)
@@ -47,15 +63,30 @@ class DateTimeForm extends Component {
     const { state } = this.props
     return (
       <ButtonStack style="horizontal" divider={<span> | </span>}>
-        <span className={`${state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDuration} >{t([ 'newReservation', 'duration' ])}</span>
-        <span className={`${!state.durationDate ? styles.selected : styles.clickable}`} onClick={this.handleDate} >{t([ 'newReservation', 'date' ])}</span>
+        <span
+          role="button"
+          tabIndex={0}
+          className={`${state.durationDate ? styles.selected : styles.clickable}`}
+          onClick={this.handleDuration}
+        >
+          {t([ 'newReservation', 'duration' ])}
+        </span>
+        <span
+          role="button"
+          tabIndex={0}
+          className={`${!state.durationDate ? styles.selected : styles.clickable}`}
+          onClick={this.handleDate}
+        >
+          {t([ 'newReservation', 'date' ])}
+        </span>
       </ButtonStack>)
   }
 
   showRecurring = () => this.props.actions.setShowRecurring(true)
 
   freeIntervalLabel = () => {
-    const interval = this.props.state.freeInterval.split(', ').map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
+    const { state: { freeInterval } } = this.props
+    const interval = freeInterval.split(', ').map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
     const dateFrom = interval[0].format(MOMENT_DATE_FORMAT)
     const timeForm = interval[0].format(MOMENT_TIME_FORMAT)
     const dateTo = interval[1].format(MOMENT_DATE_FORMAT)
@@ -81,25 +112,28 @@ class DateTimeForm extends Component {
     )
   }
 
-  setGreatestFreeInterval = () => {
-    const { state, actions } = this.props
-    const interval = state.freeInterval.split(', ').map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
-    actions.setFrom(interval[0].format(MOMENT_DATETIME_FORMAT))
-    actions.setTo(interval[1].format(MOMENT_DATETIME_FORMAT))
-    actions.formatFrom()
-    actions.formatTo(true)
-  }
   render() {
     const { state, actions, editable } = this.props
 
-    const beginsInlineMenu = <span className={styles.clickable} onClick={actions.beginsToNow}>{t([ 'newReservation', 'now' ])}</span>
-    const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
+    const beginsInlineMenu = (
+      <span
+        role="button"
+        tabIndex={0}
+        className={styles.clickable}
+        onClick={actions.beginsToNow}
+      >
+        {t([ 'newReservation', 'now' ])}
+      </span>
+    )
+
+    const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT)
+                        .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
     return (
       <div>
         <div className={styles.dateTimeContainer}>
           <div className={styles.leftCollumn}>
-            <Dateinput
+            <DateInput
               editable={editable}
               onBlur={actions.formatFrom}
               onChange={actions.setFromDate}
@@ -122,7 +156,7 @@ class DateTimeForm extends Component {
           </div>
           <div className={styles.middleCollumn} />
           <div className={styles.rightCcollumn}>
-            <Dateinput
+            <DateInput
               onBlur={actions.formatTo}
               onChange={actions.setToDate}
               label={`${t([ 'newReservation', 'ends' ])} *`}
@@ -143,7 +177,9 @@ class DateTimeForm extends Component {
           </div>
         </div>
 
-        {state.garage && state.freeInterval && state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true) &&
+        {state.garage &&
+        state.freeInterval &&
+        state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true) &&
           <CallToActionButton
             label={this.freeIntervalLabel()}
             type="alternativeTime"
@@ -178,7 +214,12 @@ class DateTimeForm extends Component {
                 checked={state.useRecurring}
                 style={checkboxStyles}
               >
-                <span className={`${styles.rule} ${!state.useRecurring && styles.disabled}`} onClick={this.showRecurring}>
+                <span
+                  role="button"
+                  tabIndex={0}
+                  className={`${styles.rule} ${!state.useRecurring && styles.disabled}`}
+                  onClick={this.showRecurring}
+                >
                   {(state.useRecurring) ? describeRule(state.recurringRule) : t([ 'recurringReservation', 'repeat' ])}
                 </span>
               </Checkbox>
@@ -195,8 +236,9 @@ export default connect(
     const { from, to, recurringRule, useRecurring, garage, freeInterval } = state.newReservation
     return { state: { from, to, recurringRule, useRecurring, garage, freeInterval } }
   },
-  dispatch => ({ actions: bindActionCreators(
-    { beginsToNow,
+  dispatch => ({
+    actions: bindActionCreators({
+      beginsToNow,
       formatFrom,
       setFromDate,
       setFromTime,
