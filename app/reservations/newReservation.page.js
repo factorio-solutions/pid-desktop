@@ -24,7 +24,6 @@ import * as newReservationActions from '../_shared/actions/newReservation.action
 import * as nav                   from '../_shared/helpers/navigation'
 import { t, getLanguage }         from '../_shared/modules/localization/localization'
 
-
 import styles from './newReservation.page.scss'
 
 const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤůŮúÚóÓ]')

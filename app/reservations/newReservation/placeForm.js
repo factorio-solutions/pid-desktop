@@ -38,11 +38,6 @@ class PlaceForm extends Component {
     return (
       <div className={`${styles.dateTimeContainer}`}>
         <div className={`${styles.leftCollumn} ${styles.placeLabelArea}`}>
-          {/* <Uneditable
-            label={t([ 'newReservation', 'place' ])}
-            value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
-            highlight={placeLabelKey === 'noFreePlace'}
-          /> */}
           <label>{t([ 'newReservation', 'place' ])}</label>
           <textarea
             value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}

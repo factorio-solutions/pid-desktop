@@ -54,13 +54,13 @@ class PriceSmsNote extends Component {
                 {t([ 'newReservation', 'price' ])}
                 {`
                     ${((isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                    (${!state.client_id
-                      ? t([ 'newReservation', 'onUsersExpenses' ])
-                      : !isPlaceGoInternal(state)
-                        ? t([ 'newReservation', 'longtermRent' ])
-                        : state.paidByHost
-                          ? t([ 'newReservation', 'onUsersExpenses' ])
-                          : t([ 'newReservation', 'onClientsExpenses' ])
+                    (${!state.client_id ?
+                      t([ 'newReservation', 'onUsersExpenses' ]) :
+                      !isPlaceGoInternal(state) ?
+                        t([ 'newReservation', 'longtermRent' ]) :
+                        state.paidByHost ?
+                          t([ 'newReservation', 'onUsersExpenses' ]) :
+                          t([ 'newReservation', 'onClientsExpenses' ])
                     })
                 `}
               </div>
