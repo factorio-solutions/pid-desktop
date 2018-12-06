@@ -59,15 +59,14 @@ export default class TimeInput extends Component {
   handlePick = time => {
     const { onBlur, onChange } = this.props
     const date = this.timeToDate(time)
+    const formatedDate = moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)
 
     this.setState({
       ...this.state,
-      message: moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)
+      message: formatedDate
     })
 
-    onChange && onChange(
-      moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT),
-      moment(date).isValid()
+    onChange && onChange(formatedDate, moment(date).isValid()
     )
 
     onBlur && onBlur()
@@ -141,9 +140,10 @@ export default class TimeInput extends Component {
 
         <PopupTimepicker
           onSelect={this.handlePick}
-          time={moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ?
-            moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') :
-            undefined
+          time={
+            moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ?
+              moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') :
+              undefined
           }
           show={this.state.focus}
           okClick={this.hideDatepicker}
