@@ -140,8 +140,8 @@ class DateTimeForm extends Component {
               label={`${t([ 'newReservation', 'begins' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
-              inlineMenu={beginsInlineMenu}
               style={inputStyles}
+              pickerOnFocus
             />
             <TimeInput
               editable={editable}
@@ -150,8 +150,8 @@ class DateTimeForm extends Component {
               label={`${t([ 'newReservation', 'begins' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
-              inlineMenu={beginsInlineMenu}
               style={inputStyles}
+              pickerOnFocus
             />
           </div>
           <div className={styles.middleCollumn} />
@@ -162,8 +162,8 @@ class DateTimeForm extends Component {
               label={`${t([ 'newReservation', 'ends' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
-              inlineMenu={beginsInlineMenu}
               style={inputStyles}
+              pickerOnFocus
             />
             <TimeInput
               onBlur={actions.formatTo}
@@ -171,8 +171,8 @@ class DateTimeForm extends Component {
               label={`${t([ 'newReservation', 'ends' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
-              inlineMenu={beginsInlineMenu}
               style={inputStyles}
+              pickerOnFocus
             />
           </div>
         </div>

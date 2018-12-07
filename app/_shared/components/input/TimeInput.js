@@ -19,13 +19,14 @@ export default class TimeInput extends Component {
       PropTypes.string,
       PropTypes.object
     ]),
-    onChange:   PropTypes.func, // use if you want to pass value to parent
-    onEnter:    PropTypes.func, // called when enter pressed
-    onBlur:     PropTypes.func, // called when enter pressed
-    value:      PropTypes.string,
-    align:      PropTypes.string,
-    inlineMenu: PropTypes.object,
-    editable:   PropTypes.bool // can be turned off
+    onChange:      PropTypes.func, // use if you want to pass value to parent
+    onEnter:       PropTypes.func, // called when enter pressed
+    onBlur:        PropTypes.func, // called when enter presseds
+    value:         PropTypes.string,
+    align:         PropTypes.string,
+    inlineMenu:    PropTypes.object,
+    editable:      PropTypes.bool, // can be turned off
+    pickerOnFocus: PropTypes.bool
   }
 
   static defaultProps = {
@@ -66,9 +67,7 @@ export default class TimeInput extends Component {
       message: formatedDate
     })
 
-    onChange && onChange(formatedDate, moment(date).isValid()
-    )
-
+    onChange && onChange(formatedDate, moment(date).isValid())
     onBlur && onBlur()
   }
 
@@ -81,26 +80,43 @@ export default class TimeInput extends Component {
     }
   }
 
-  showDatepicker = () => this.setState({ ...this.state, focus: true })
+  showDatepicker = () => {
+    this.setState({ ...this.state, focus: true })
+  }
 
-  hideDatepicker = () => this.setState({ ...this.state, focus: false })
+  hideDatepicker = () => {
+    this.setState({ ...this.state, focus: false }, () => console.log('HideDatepicker. Focus: false.'))
+  }
+
+  handleFocus = event => {
+    const { pickerOnFocus } = this.props
+
+    if (!pickerOnFocus) return
+
+    if (!this.state.focus) {
+      this.showDatepicker()
+      event.target.select()
+    }
+  }
 
   render() {
     const {
       label,
       error,
       placeholder,
-      onBlur,
       inlineMenu,
       style,
       editable,
-      align
+      align,
+      pickerOnFocus
     } = this.props
 
     const styles = typeof style === 'object' ? style : defaultStyles
 
     return (
-      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`} >
+      <div
+        className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`}
+      >
         <input
           type={'text'}
           value={this.state.message}
@@ -108,7 +124,7 @@ export default class TimeInput extends Component {
           placeholder={placeholder}
           onKeyPress={this.preventEnter}
           pattern="(\d{1,2}):(\d{2})"
-          onBlur={onBlur}
+          onFocus={this.handleFocus}
         />
         <span className={styles.bar} />
 
@@ -131,13 +147,15 @@ export default class TimeInput extends Component {
           {error}
         </label>
 
-        <label
-          className={`${styles.customFormGroup}  ${styles.callendar}`}
-          onClick={editable && this.showDatepicker}
-        >
-          <i className="fa fa-clock-o" aria-hidden="true" />
-        </label>
-
+        {
+          !pickerOnFocus &&
+            <label
+              className={`${styles.customFormGroup}  ${styles.callendar}`}
+              onClick={editable && this.showDatepicker}
+            >
+              <i className="fa fa-clock-o" aria-hidden="true" />
+            </label>
+        }
         <PopupTimepicker
           onSelect={this.handlePick}
           time={
