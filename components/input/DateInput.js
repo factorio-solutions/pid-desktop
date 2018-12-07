@@ -15,14 +15,15 @@ export default class DateInput extends Component {
       PropTypes.string,
       PropTypes.object
     ]),
-    onChange:   PropTypes.func, // use if you want to pass value to parent
-    onEnter:    PropTypes.func, // called when enter pressed
-    value:      PropTypes.string,
-    inlineMenu: PropTypes.object,
-    showInf:    PropTypes.bool,
-    flip:       PropTypes.bool,
-    editable:   PropTypes.bool,
-    onBlur:     PropTypes.func
+    onChange:      PropTypes.func, // use if you want to pass value to parent
+    onEnter:       PropTypes.func, // called when enter pressed
+    value:         PropTypes.string,
+    inlineMenu:    PropTypes.object,
+    showInf:       PropTypes.bool,
+    flip:          PropTypes.bool,
+    editable:      PropTypes.bool,
+    onBlur:        PropTypes.func,
+    pickerOnFocus: PropTypes.bool
   }
 
   static defaultProps = {
@@ -78,6 +79,17 @@ export default class DateInput extends Component {
     this.setState({ ...this.state, focus: false })
   }
 
+  handleInputFocus = event => {
+    const { pickerOnFocus } = this.props
+
+    if (!pickerOnFocus) return
+
+    if (!this.state.focus) {
+      this.showDatepicker()
+      event.target.select()
+    }
+  }
+
   render() {
     const {
       label,
@@ -88,7 +100,8 @@ export default class DateInput extends Component {
       showInf,
       flip,
       editable,
-      onBlur
+      onBlur,
+      pickerOnFocus
     } = this.props
 
     const styles = typeof style === 'object' ? style : defaultStyles
@@ -112,6 +125,7 @@ export default class DateInput extends Component {
           placeholder={placeholder}
           onKeyPress={this.preventEnter}
           pattern="(\d{1,2}).(\d{1,2}).(\d{4})"
+          onFocus={this.handleInputFocus}
           onBlur={onBlur}
         />
         <span className={styles.bar} />
@@ -134,16 +148,18 @@ export default class DateInput extends Component {
         >
           {error}
         </label>
-
-        <label
-          className={`${styles.customFormGroup}  ${styles.callendar}`}
-          onClick={this.showDatepicker}
-        >
-          <i
-            className="fa fa-calendar"
-            aria-hidden="true"
-          />
-        </label>
+        {
+          !pickerOnFocus &&
+            <label
+              className={`${styles.customFormGroup}  ${styles.callendar}`}
+              onClick={this.showDatepicker}
+            >
+              <i
+                className="fa fa-calendar"
+                aria-hidden="true"
+              />
+            </label>
+        }
 
         <PopupDatepicker
           showInf={showInf}

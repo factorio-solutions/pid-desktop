@@ -24,7 +24,15 @@ export default class PopupTimepicker extends Component {
   }
 
   render() {
-    const { onSelect, time, show, okClick, showInf, flip, gray } = this.props
+    const {
+      onSelect,
+      time,
+      show,
+      okClick,
+      showInf,
+      flip,
+      gray
+    } = this.props
 
     return (
       <div
@@ -33,9 +41,17 @@ export default class PopupTimepicker extends Component {
         onBlur={okClick}
         tabIndex={0}
       >
-        <Timepicker onSelect={onSelect} time={time} showInf={showInf} />
+        <Timepicker
+          onSelect={onSelect}
+          time={time}
+          showInf={showInf}
+        />
         <div className={styles.buttonContainer}>
-          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={okClick} type="confirm" />
+          <RoundButton
+            content={<span className="fa fa-check" aria-hidden="true" />}
+            onClick={okClick}
+            type="confirm"
+          />
         </div>
       </div>
     )

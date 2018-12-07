@@ -24,7 +24,15 @@ export default class PopupDatepicker extends Component {
   }
 
   render() {
-    const { onSelect, date, show, okClick, showInf, flip, gray } = this.props
+    const {
+      onSelect,
+      date,
+      show,
+      okClick,
+      showInf,
+      flip,
+      gray
+    } = this.props
 
     return (
       <div
@@ -33,9 +41,17 @@ export default class PopupDatepicker extends Component {
         onBlur={okClick}
         tabIndex={0}
       >
-        <Datepicker onSelect={onSelect} date={date} showInf={showInf} />
+        <Datepicker
+          onSelect={onSelect}
+          date={date}
+          showInf={showInf}
+        />
         <div className={styles.buttonContainer}>
-          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={okClick} type="confirm" />
+          <RoundButton
+            content={<span className="fa fa-check" aria-hidden="true" />}
+            onClick={okClick}
+            type="confirm"
+          />
         </div>
       </div>
     )
