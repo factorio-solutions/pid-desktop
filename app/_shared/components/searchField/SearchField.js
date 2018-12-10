@@ -44,13 +44,18 @@ export default class SearchField extends Component {
   }
 
   validateContent(nextProps) {
-    this.setState({
-      ...this.state,
-      selected: nextProps.dropdownContent.length === 1 ? 0 : nextProps.selected,
-      show:     this.state.selected !== nextProps.selected && nextProps.selected >= 0 ?
-        false :
-        this.state.show
-    })
+    const selected = nextProps.dropdownContent.length === 1 ? 0 : nextProps.selected
+    const show = this.state.selected !== nextProps.selected && nextProps.selected >= 0 ?
+      false :
+      this.state.show
+
+    if (selected !== this.state.selected || show !== this.state.show) {
+      this.setState({
+        ...this.state,
+        selected,
+        show
+      })
+    }
   }
 
   hide = () => setTimeout(
@@ -94,58 +99,93 @@ export default class SearchField extends Component {
     }
   }
 
-  render() {
-    const { dropdownContent, buttons, placeholder, searchQuery, onChange, highlight, separateFirst } = this.props
-    let list = dropdownContent.map((item, index) => {
-      const onClick = () => {
-        item.onClick && item.onClick()
-        onChange && onChange(item.label) // for form
-        this.hide()
-      }
-      const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-      const show = searchQuery === '' ? true : lowercaseTrimmedLabel.includes(searchQuery.toLowerCase())
+  highlightSearchQueryInText = (text, searchQuery) => {
+    const lowercaseTrimmedText = text.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
 
-      return {
-        ...item,
-        render: (
-          <li
-            key={index}
-            className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`}
-            onMouseDown={onClick}
-          >
-            <div>
-              <label className={styles.contactLabel}>
-                {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
-                  .split(searchQuery.toLowerCase() || undefined) // split by filter
-                  .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && searchQuery.length && searchQuery ], [])
-                  .filter(o => o !== false)
-                  .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
-                  .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
-                  .map((part, index) => (index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>))
-                }
-              </label>
-              <div className={styles.contactInfo}>
-                {item.email &&
-                  <div className={styles.contactInfoColumn}>
-                    {`@ ${item.email}`}
-                  </div>
-                }
-                {item.phone &&
-                  <div className={styles.contactInfoColumn}>
-                    <i className="fa fa-mobile" aria-hidden="true" /> {item.phone}
-                  </div>
-                }
-              </div>
+    return lowercaseTrimmedText
+      .split(searchQuery.toLowerCase() || undefined) // split by filter
+      .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && searchQuery.length && searchQuery ], [])
+      .filter(o => o !== false)
+      .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
+      .map((length, index, arr) => String(text).substring(arr[index - 1] || 0, length))
+      .map((part, index) => (index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>))
+  }
+
+  mapContentToList = (item, index) => {
+    const { onChange, searchQuery } = this.props
+    const onClick = () => {
+      item.onClick && item.onClick()
+      onChange && onChange(item.label) // for form
+      this.hide()
+    }
+
+    const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
+    const lowercaseEmailLabel = item.email.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
+    const lowercasePhone = item.phone.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
+
+    const searchQueryHit = () => {
+      return lowercaseTrimmedLabel.includes(searchQuery.toLowerCase()) ||
+        lowercaseEmailLabel.includes(searchQuery.toLowerCase()) ||
+        lowercasePhone.includes(searchQuery.toLowerCase())
+    }
+
+    const show = searchQuery === '' ? true : searchQueryHit()
+
+    return {
+      ...item,
+      render: (
+        <li
+          key={index}
+          className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`}
+          onMouseDown={onClick}
+        >
+          <div>
+            <label className={styles.contactLabel}>
+              {this.highlightSearchQueryInText(
+                item.representer ? item.representer(item.label) : item.label,
+                searchQuery
+              )
+              }
+            </label>
+            <div className={styles.contactInfo}>
+              {item.email &&
+                <div className={styles.contactInfoColumn}>
+                  @ {this.highlightSearchQueryInText(item.email, searchQuery)}
+                </div>
+              }
+              {item.phone &&
+                <div className={styles.contactInfoColumn}>
+                  <i className="fa fa-mobile" aria-hidden="true" /> {this.highlightSearchQueryInText(
+                                                                      item.phone,
+                                                                      searchQuery
+                                                                    )}
+                </div>
+              }
             </div>
-          </li>)
-      }
-    }).sort(this.sorter)
+          </div>
+        </li>)
+    }
+  }
 
+  render() {
+    const {
+      dropdownContent,
+      buttons,
+      placeholder,
+      searchQuery,
+      onChange,
+      highlight,
+      separateFirst
+    } = this.props
+
+    let list = dropdownContent.map(this.mapContentToList).sort(this.sorter)
 
     list = list.map(o => o.render)
 
-    let showList = list.filter(i => !i.props.className.includes('displayNone')).length
-    showList = showList > 1 || (showList > 0 && !separateFirst)
+    const showFirst = !list[0].props.className.includes('displayNone') && separateFirst
+
+    list = list.filter(i => !i.props.className.includes('displayNone'))
+    const showList = list.length > 0 && !(showFirst && list.length === 1)
     return (
       <div className={styles.searchField}>
         <Input
@@ -164,7 +204,7 @@ export default class SearchField extends Component {
 
         {this.state.show &&
           <div>
-            {separateFirst &&
+            {showFirst &&
               <ul className={styles.separated}>
                 {list.shift()}
               </ul>

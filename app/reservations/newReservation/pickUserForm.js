@@ -8,9 +8,8 @@ import NewUserForm      from './newUserForm'
 import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeader'
 
 import {
-  setCarId,
-  setCarLicencePlate,
-  downloadUser
+  downloadUser,
+  setHostName
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
@@ -143,5 +142,5 @@ class PickUserForm extends Component {
 
 export default connect(
   state => ({ state: state.newReservation, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ setCarId, setCarLicencePlate, downloadUser }, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ downloadUser, setHostName }, dispatch) })
 )(PickUserForm)
