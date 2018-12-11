@@ -536,7 +536,7 @@ export function setInitialStore(id) {
 }
 
 export function downloadUser(id, rights, initEdit = false) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState().newReservation
     dispatch(setLoading(true))
     if (!initEdit) {
@@ -569,54 +569,76 @@ export function downloadUser(id, rights, initEdit = false) {
       request(onSuccess, GET_AVAILABLE_GARAGES, { user_id: id })
     })
 
-    const availableClientsPromise = clientsPromise(id, state.garage && state.garage.id)
+    let userResult
+    let garagesResult
 
-    Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
-      values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
+    try {
+      [ userResult, garagesResult ] = [
+        await userPromise,
+        await availableGaragesPromise
+      ]
+    } catch (error) {
+      // [urgent]TODO: Change or remove error handling.
+      hideLoading(dispatch)
+      console.log(error)
+      throw error
+    }
 
-      dispatch(setUser({ ...(values[0].user ? values[0].user : { id }),
-        availableGarages: values[1].reservable_garages,
-        availableClients: values[2].reservable_clients,
-        rights // Client user rights
-      }))
-      let hideLoadingCalled = false
+    const availableGarages = garagesResult.reservable_garages
+    let availableClients
 
-      if (values[0].user) {
-        dispatch(setHostName(values[0].user.full_name, true))
-        dispatch(setHostPhone(values[0].user.phone, true))
-        dispatch(setHostEmail(values[0].user.email, true))
-        dispatch(setLanguage(values[0].user.language))
-      }
+    if (state.garage && availableGarages.some(gar => gar.id === (state.garage && state.garage.id))) {
+      availableClients = (await clientsPromise(id, state.garage && state.garage.id)).reservable_clients
+    } else {
+      dispatch(setGarage())
+      availableClients = (await clientsPromise()).reservable_clients
+    }
 
-      if (getState().newReservation.reservation) { // download garage
-        dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
-        hideLoadingCalled = true
-      }
+    if (!state.client_id || !availableClients.some(client => client.id === state.client_id)) {
+      dispatch(setClientId())
+    }
 
-      // if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-      //   dispatch(downloadGarage(values[1].reservable_garages[0].id))
-      //   hideLoadingCalled = true
-      // }
+    availableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-      if (values[1].reservable_garages.findById(state.preferedGarageId)) {
-        dispatch(downloadGarage(state.preferedGarageId))
-        dispatch(setPreferedGarageId(undefined))
-      }
+    dispatch(setUser({ ...(userResult.user ? userResult.user : { id }),
+      availableGarages,
+      availableClients,
+      rights // Client user rights
+    }))
+    let hideLoadingCalled = false
 
-      if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
-        dispatch(setCarId(values[0].user.reservable_cars[0].id))
-        if (!hideLoadingCalled) {
-          hideLoading(dispatch)
-          hideLoadingCalled = true
-        }
-      }
+    if (userResult.user) {
+      dispatch(setHostName(userResult.user.full_name, true))
+      dispatch(setHostPhone(userResult.user.phone, true))
+      dispatch(setHostEmail(userResult.user.email, true))
+      dispatch(setLanguage(userResult.user.language))
+    }
+
+    if (getState().newReservation.reservation) { // download garage
+      dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
+      hideLoadingCalled = true
+    }
+
+    // if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
+    //   dispatch(downloadGarage(values[1].reservable_garages[0].id))
+    //   hideLoadingCalled = true
+    // }
+
+    if (garagesResult.reservable_garages.findById(state.preferedGarageId)) {
+      dispatch(downloadGarage(state.preferedGarageId))
+      dispatch(setPreferedGarageId(undefined))
+    }
+
+    if (userResult.user && userResult.user.reservable_cars.length === 1) { // if only one car available
+      dispatch(setCarId(userResult.user.reservable_cars[0].id))
       if (!hideLoadingCalled) {
         hideLoading(dispatch)
+        hideLoadingCalled = true
       }
-    }).catch(error => {
+    }
+    if (!hideLoadingCalled) {
       hideLoading(dispatch)
-      throw (error)
-    })
+    }
   }
 }
 
