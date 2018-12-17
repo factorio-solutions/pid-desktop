@@ -72,6 +72,14 @@ class NewReservationPage extends Component {
     this.handleBack()
   }
 
+  clearForm = () => {
+    this.props.actions.clearForm()
+    this.props.actions.setInitialStore()
+    if (this.searchField) {
+      this.searchField.filter.input.focus()
+    }
+  }
+
   render() {
     const { state, actions } = this.props
 
@@ -127,7 +135,7 @@ class NewReservationPage extends Component {
             <div className={styles.padding}>
               <Form
                 onSubmit={this.toOverview}
-                onBack={this.handleBack}
+                onReset={this.clearForm}
                 submitable={isSubmitable()}
                 onHighlight={actions.toggleHighlight}
               >

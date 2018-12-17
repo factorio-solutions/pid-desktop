@@ -14,6 +14,7 @@ export default class Form extends Component {
     onSubmit:       PropTypes.func.isRequired,
     onHighlight:    PropTypes.func,
     onBack:         PropTypes.func,
+    onReset:        PropTypes.func,
     submitable:     PropTypes.bool,
     mobile:         PropTypes.bool,
     margin:         PropTypes.bool, // margin on the bottom
@@ -37,7 +38,20 @@ export default class Form extends Component {
   }
 
   render() {
-    const { children, onSubmit, onHighlight, onBack, submitable, mobile, margin, modal, center, home, submitbtnRight } = this.props
+    const {
+      children,
+      onSubmit,
+      onHighlight,
+      onBack,
+      onReset,
+      submitable,
+      mobile,
+      margin,
+      modal,
+      center,
+      home,
+      submitbtnRight
+    } = this.props
 
     const sendReservation = () => {
       if (submitable) {
@@ -62,6 +76,14 @@ export default class Form extends Component {
           onClick={onBack}
         />
       </div>}
+      {onReset &&
+        <div className={styles.floatLeft}>
+          <RoundButton
+            content={<span className={`fa fa-times-circle ${styles.resetButton}`}  />}
+            onClick={onReset}
+          />
+        </div>
+      }
       <div className={(onBack || submitbtnRight) && styles.floatRight}>
         {this.state.submited ?
           <RoundButton

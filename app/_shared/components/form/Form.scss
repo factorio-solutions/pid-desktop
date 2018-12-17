@@ -43,6 +43,10 @@
   }
 }
 
+.resetButton {
+  color: $red;
+}
+
 // -- Responsive Styles (Media Queries) -------------------------------------
 // -- Only apply on big window ----------------------------------------------
 @media (min-width: $collapseWidth) {
