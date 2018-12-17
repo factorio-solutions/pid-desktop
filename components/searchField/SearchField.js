@@ -186,6 +186,7 @@ export default class SearchField extends Component {
 
     list = list.filter(i => !i.props.className.includes('displayNone'))
     const showList = list.length > 0 && !(showFirst && list.length === 1)
+
     return (
       <div className={styles.searchField}>
         <Input

@@ -50,7 +50,9 @@ import {
 
   NEW_RESERVATION_SET_FREE_INTERVAL,
   NEW_RESERVATION_SET_TIME_CREDIT_PRICE,
-  NEW_RESERVATION_SHOW_MAP
+  NEW_RESERVATION_SHOW_MAP,
+
+  NEW_RESERVATION_LAST_USER_WAS_SAVED
 }  from '../actions/newReservation.actions'
 
 const MIN_RESERVATION_DURATION = 30 // minutes
@@ -106,7 +108,9 @@ const defaultState = {
 
   freeInterval: '',
 
-  showMap: false
+  showMap: false,
+
+  lastUserWasSaved: false
 }
 
 function placeLabel(state) {
@@ -115,17 +119,25 @@ function placeLabel(state) {
   } else {
     const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
     const place = floor && floor.places.findById(state.place_id)
+    if (!floor || !place) {
+      return 'unknown'
+    }
     return `${floor.label} / ${place.label}`
   }
 }
 
 function substituteVariablesInTemplate(template, state) {
-  const place = state.garage.floors
+  if (template.length < 9) {
+    return template
+  }
+
+  const garage = state.garage
+  const place = garage && garage.floors
     .reduce((acc, floor) => [ ...acc, ...floor.places ], [])
     .findById(state.place_id)
 
-  const gates = state.garage && state.garage.gates
-    .filter(gate => gate.phone_number && gate.place_gates.find(p => p.place_id === place.id))
+  const gates = place && garage && garage.gates
+    .filter(gate => gate.phone_number && gate.place_gates.find(p => place && p.place_id === place.id))
     .map(gate => `${gate.label} (${gate.phone_number.number})`)
     .join(', ')
 
@@ -315,20 +327,9 @@ export default function newReservation(state = defaultState, action) {
       }
 
     case NEW_RESERVATION_SET_SEND_SMS:
-      const client = state.user.availableClients.findById(state.client_id)
       return {
         ...state,
-        sendSMS:          action.value,
-        selectedTemplate: action.value
-                            ? client.sms_templates.length === 1
-                              ? 0
-                              : undefined
-                            : undefined,
-        templateText:     action.value
-                            ? client.sms_templates.length === 1
-                              ? substituteVariablesInTemplate(client.sms_templates[0].template, state)
-                              : ''
-                            : ''
+        sendSMS: action.value
       }
 
     case NEW_RESERVATION_SET_ERROR:
@@ -411,6 +412,12 @@ export default function newReservation(state = defaultState, action) {
       return {
         ...state,
         showMap: action.value
+      }
+
+    case NEW_RESERVATION_LAST_USER_WAS_SAVED:
+      return {
+        ...state,
+        lastUserWasSaved: action.value
       }
 
     default:

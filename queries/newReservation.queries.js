@@ -37,6 +37,7 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     min_reservation_duration
     max_reservation_duration
     sms_templates {
+      id
       name
       template
     }
