@@ -156,7 +156,7 @@
   cursor:  pointer;
   padding-top: 0.4em;
   z-index: 10;
-  color: #cacaca;
+  color: $red;
 }
 
 .textArea {
@@ -192,7 +192,6 @@
     font-weight:    bold;
     resize:         none;
     padding:        0;
-
 
     background-color: transparent;
     text-align:       center;

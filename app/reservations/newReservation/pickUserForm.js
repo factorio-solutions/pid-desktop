@@ -9,7 +9,9 @@ import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeade
 
 import {
   downloadUser,
-  setHostName
+  setHostName,
+  clearForm,
+  cancelUser
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
@@ -19,10 +21,9 @@ import styles from '../newReservation.page.scss'
 
 class PickUserForm extends Component {
   static propTypes = {
-    state:     PropTypes.object,
-    actions:   PropTypes.object,
-    pageBase:  PropTypes.object,
-    clearForm: PropTypes.func
+    state:    PropTypes.object,
+    actions:  PropTypes.object,
+    pageBase: PropTypes.object
   }
 
   getUserToSelect = userDropdown => {
@@ -35,6 +36,15 @@ class PickUserForm extends Component {
       return userDropdown.users.findIndex(user => state.user && user.id === state.user.id && user.rights && JSON.stringify(user.rights) === JSON.stringify(state.user.rights))
     } else {
       return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
+    }
+  }
+
+  cancelUser = event => {
+    this.props.actions.cancelUser()
+    event.stopPropagation()
+    if (this.searchField) {
+      // HACK: Is not focus when call immediately.
+      setTimeout(() => this.searchField.filter.input.focus(), 0)
     }
   }
 
@@ -82,7 +92,7 @@ class PickUserForm extends Component {
   }
 
   render() {
-    const { state, actions, pageBase, clearForm } = this.props
+    const { state, actions, pageBase } = this.props
 
     const userDropdown = this.userDropdown()
     const ongoing = state.reservation && state.reservation.ongoing
@@ -94,14 +104,16 @@ class PickUserForm extends Component {
         { !(state.user && (state.user.id < 0 || onetime)) &&
           ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
           <div className={styles.searchField}>
-            <span
-              className={styles.resetButton}
-              onClick={clearForm}
-              role="button"
-              tabIndex={0}
-            >
-              <i className="fa fa-times-circle" aria-hidden="true" />
-            </span>
+            {state.user &&
+              <span
+                className={styles.resetButton}
+                onClick={this.cancelUser}
+                role="button"
+                tabIndex={0}
+              >
+                <i className="fa fa-times-circle" aria-hidden="true" />
+              </span>
+            }
             <SearchField
               editable={!ongoing || isSecretary}
               placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
@@ -127,7 +139,7 @@ class PickUserForm extends Component {
           <NewUserForm
             editable={!ongoing || isSecretary}
             onetime={onetime}
-            clearForm={clearForm}
+            clearForm={this.cancelUser}
           />
         }
         {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid &&
@@ -141,6 +153,20 @@ class PickUserForm extends Component {
 }
 
 export default connect(
-  state => ({ state: state.newReservation, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ downloadUser, setHostName }, dispatch) })
+  state => ({
+    state:    state.newReservation,
+    pageBase: state.pageBase
+  }),
+  dispatch => (
+    {
+      actions: bindActionCreators(
+        {
+          downloadUser,
+          setHostName,
+          clearForm,
+          cancelUser
+        },
+        dispatch
+      )
+    })
 )(PickUserForm)

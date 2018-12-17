@@ -67,32 +67,21 @@ class NewReservationPage extends Component {
 
   handlePlaceClick = place => this.props.actions.setPlace(place)
 
-  // hightlightInputs = () => this.props.actions.toggleHighlight()
-
   modalClick = () => {
     this.props.actions.setError(undefined)
     this.handleBack()
   }
-
-  clearForm = () => {
-    this.props.actions.clearForm()
-    this.props.actions.setInitialStore()
-    if (this.searchField) {
-      this.searchField.filter.input.focus()
-    }
-  }
-
-  // selectedClient = () => {
-  //   const { state } = this.props
-  //   return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
-  // }
 
   render() {
     const { state, actions } = this.props
 
     const ongoing = state.reservation && state.reservation.ongoing
     const selectedClient = actions.selectedClient()
-    const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']
+    const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[
+      state.paidByHost ?
+        'current_time_credit' :
+        'current_users_current_time_credit'
+    ]
     const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
 
     const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
@@ -142,9 +131,7 @@ class NewReservationPage extends Component {
                 submitable={isSubmitable()}
                 onHighlight={actions.toggleHighlight}
               >
-                <PickUserForm
-                  clearForm={this.clearForm}
-                />
+                <PickUserForm />
                 {state.user &&
                   ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
                   (state.name.valid && state.user.id === -2) ||
@@ -164,11 +151,13 @@ class NewReservationPage extends Component {
                     }
                   </SectionWithHeader>
                 }
-                <PriceSmsNote
-                  accentRegex={ACCENT_REGEX}
-                  selectedClient={selectedClient}
-                  outOfTimeCredit={outOfTimeCredit}
-                />
+                {state.user && state.garage &&
+                  <PriceSmsNote
+                    accentRegex={ACCENT_REGEX}
+                    selectedClient={selectedClient}
+                    outOfTimeCredit={outOfTimeCredit}
+                  />
+                }
               </Form>
               {/* Has to be outside of Form tag because it contains Form */}
               <Recurring

@@ -5,7 +5,7 @@ import { request }                       from '../helpers/request'
 import actionFactory                     from '../helpers/actionFactory'
 import requestPromise                    from '../helpers/requestPromise'
 import * as nav                          from '../helpers/navigation'
-import { t }                             from '../modules/localization/localization'
+import { t, getLanguage }                from '../modules/localization/localization'
 import {
   calculatePrice,
   valueAddedTax,
@@ -81,6 +81,7 @@ export const NEW_RESERVATION_SET_PREFERED_GARAGE_ID = 'NEW_RESERVATION_SET_PREFE
 export const NEW_RESERVATION_SET_PREFERED_PLACE_ID = 'NEW_RESERVATION_SET_PREFERED_PLACE_ID'
 export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
 export const NEW_RESERVATION_SHOW_MAP = 'NEW_RESERVATION_SHOW_MAP'
+export const NEW_RESERVATION_LAST_USER_WAS_SAVED = 'NEW_RESERVATION_LAST_USER_WAS_SAVED'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -98,7 +99,6 @@ export const setPaidByHost = actionFactory(NEW_RESERVATION_SET_PAID_BY_HOST)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
 export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
-export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
@@ -112,6 +112,7 @@ export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_
 export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
 export const setClientId = actionFactory(NEW_RESERVATION_SET_CLIENT_ID)
 export const showMap = actionFactory(NEW_RESERVATION_SHOW_MAP)
+export const setLastUserWasSaved = actionFactory(NEW_RESERVATION_LAST_USER_WAS_SAVED)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -132,8 +133,8 @@ export function setUser(value) {
     dispatch({ type: NEW_RESERVATION_SET_USER,
       value
     })
-    if (value.availableClients.find(client => client.id === getState().newReservation.client_id) === undefined) { // preselected client no longer available
-      dispatch(setClient(undefined))
+    if (!value.availableClients.some(client => client.id === getState().newReservation.client_id)) { // preselected client no longer available
+      dispatch(setClient())
     }
   }
 }
@@ -147,7 +148,25 @@ export function setNote(value) {
 
 export function setClient(id) {
   return (dispatch, getState) => {
+    const {
+      user: {
+        availableClients
+      },
+      selectedTemplate
+    } = getState().newReservation
+
+    const client = availableClients && availableClients.findById(id)
+    let template
+    if (client && client.sms_templates && selectedTemplate) {
+      template = client.sms_templates.findById(selectedTemplate)
+    }
+
+    if (!template && selectedTemplate) {
+      dispatch(setSendSms(false))
+    }
+
     dispatch(setClientId(id))
+    // TODO: Why download garage every time?
     getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
     dispatch(setMinMaxDuration())
@@ -202,6 +221,25 @@ export function setGarage(value) {
         throw (error)
       })
     }
+  }
+}
+
+export function setSendSms(sendSms) {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    const client = dispatch(selectedClient())
+    let templateIndex
+    let templateText = ''
+
+    if (sendSms && client.sms_templates.length === 1) {
+      templateIndex = 0
+      templateText = client.sms_templates[0].template
+    } else if (!state.selectedTemplate) {
+      templateText = state.templateText
+    }
+
+    dispatch({ type: NEW_RESERVATION_SET_SEND_SMS, value: sendSms })
+    dispatch(setSelectedTemplate(templateIndex, templateText))
   }
 }
 
@@ -366,7 +404,7 @@ export function setMinMaxDuration() {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const isGoInternal = isPlaceGoInternal(state)
-    const client = state.user && state.user.availableClients.findById(state.client_id)
+    const client = dispatch(selectedClient())
 
     const determineDuration = minOrMax => (state.garage && (isGoInternal ?
       state.garage[`${minOrMax}_reservation_duration_go_internal`] :
@@ -390,7 +428,10 @@ export function setMinMaxDuration() {
 export function selectedClient() {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
+    return state.user &&
+      state.client_id &&
+      state.user.availableClients &&
+      state.user.availableClients.findById(state.client_id)
   }
 }
 
@@ -442,24 +483,44 @@ export function roundTime(time) {
 }
 
 
+export function availableUsers(currentUser) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        const users = response.data.reservable_users
+        if (currentUser && currentUser.secretary) { // if is secretary then can create new host
+          users.push({
+            full_name: t([ 'newReservation', 'newHost' ]),
+            rights:    { host: true },
+            id:        -1
+          })
+          users.push({
+            full_name: t([ 'newReservation', 'newInternal' ]),
+            rights:    { internal: true },
+            id:        -1
+          })
+          users.push({
+            full_name: t([ 'newReservation', 'onetimeVisit' ]),
+            id:        -2
+          })
+        }
+
+        resolve(users)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_AVAILABLE_USERS)
+  })
+}
+
 export function setInitialStore(id) {
   return (dispatch, getState) => {
     dispatch(setLoading(true))
     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'loading' ])}</div>))
 
-    const availableUsersPromise = new Promise((resolve, reject) => {
-      dispatch(setLoading(true))
-      const onSuccess = response => {
-        // dispatch(setLoading(false))
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
-
-      request(onSuccess, GET_AVAILABLE_USERS)
-    })
+    const availableUsersPromise = availableUsers(getState().pageBase.current_user)
 
     const editReservationPromise = new Promise((resolve, reject) => {
       if (id) {
@@ -480,26 +541,7 @@ export function setInitialStore(id) {
     })
 
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
-      const users = values[0].reservable_users
-
-      const currentUser = getState().pageBase.current_user
-      if (currentUser && currentUser.secretary) { // if is secretary then can create new host
-        users.push({
-          full_name: t([ 'newReservation', 'newHost' ]),
-          rights:    { host: true },
-          id:        -1
-        })
-        users.push({
-          full_name: t([ 'newReservation', 'newInternal' ]),
-          rights:    { internal: true },
-          id:        -1
-        })
-        users.push({
-          full_name: t([ 'newReservation', 'onetimeVisit' ]),
-          id:        -2
-        })
-      }
-
+      const users = values[0]
       dispatch(setAvailableUsers(users))
       dispatch(setLoading(false))
 
@@ -538,12 +580,8 @@ export function setInitialStore(id) {
 export function downloadUser(id, rights, initEdit = false) {
   return async (dispatch, getState) => {
     const state = getState().newReservation
-    dispatch(setLoading(true))
-    if (!initEdit) {
-      dispatch(setGarage(undefined)) // have to reset values set from previous user
-      dispatch(setClient(undefined))
-    }
-    dispatch(setCarId(undefined))
+    const { lastUserWasSaved } = state
+    dispatch(showLoadingModal(true))
 
     const userPromise = new Promise((resolve, reject) => {
       const onSuccess = response => {
@@ -569,76 +607,77 @@ export function downloadUser(id, rights, initEdit = false) {
       request(onSuccess, GET_AVAILABLE_GARAGES, { user_id: id })
     })
 
-    let userResult
-    let garagesResult
+    let user
+    let availableGarages
 
     try {
-      [ userResult, garagesResult ] = [
-        await userPromise,
-        await availableGaragesPromise
+      [ user, availableGarages ] = [
+        (await userPromise).user,
+        (await availableGaragesPromise).reservable_garages
       ]
     } catch (error) {
       // [urgent]TODO: Change or remove error handling.
-      hideLoading(dispatch)
       console.log(error)
+      dispatch(showLoadingModal(false))
       throw error
     }
 
-    const availableGarages = garagesResult.reservable_garages
     let availableClients
 
-    if (state.garage && availableGarages.some(gar => gar.id === (state.garage && state.garage.id))) {
+    if (state.garage && availableGarages.some(gar => gar.id === state.garage.id)) {
       availableClients = (await clientsPromise(id, state.garage && state.garage.id)).reservable_clients
     } else {
       dispatch(setGarage())
       availableClients = (await clientsPromise()).reservable_clients
     }
 
-    if (!state.client_id || !availableClients.some(client => client.id === state.client_id)) {
+    if (!availableClients.some(client => client.id === state.client_id)) {
       dispatch(setClientId())
     }
 
     availableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-    dispatch(setUser({ ...(userResult.user ? userResult.user : { id }),
+    dispatch(setUser({ ...(user || { id }),
       availableGarages,
       availableClients,
       rights // Client user rights
     }))
-    let hideLoadingCalled = false
 
-    if (userResult.user) {
-      dispatch(setHostName(userResult.user.full_name, true))
-      dispatch(setHostPhone(userResult.user.phone, true))
-      dispatch(setHostEmail(userResult.user.email, true))
-      dispatch(setLanguage(userResult.user.language))
+    if (user) {
+      dispatch(setHostName(user.full_name, true))
+      dispatch(setHostPhone(user.phone, true))
+      dispatch(setHostEmail(user.email, true))
+      dispatch(setLanguage(user.language))
+    }
+
+    if (lastUserWasSaved && id < 0) {
+      dispatch(setHostPhone('', false))
+      dispatch(setHostEmail('', false))
+      dispatch(setLanguage(getLanguage()))
+      dispatch(setCarLicencePlate(''))
+      dispatch(setCarId())
     }
 
     if (getState().newReservation.reservation) { // download garage
       dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
-      hideLoadingCalled = true
     }
 
-    // if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-    //   dispatch(downloadGarage(values[1].reservable_garages[0].id))
-    //   hideLoadingCalled = true
-    // }
-
-    if (garagesResult.reservable_garages.findById(state.preferedGarageId)) {
+    if (availableGarages && availableGarages.findById(state.preferedGarageId)) {
       dispatch(downloadGarage(state.preferedGarageId))
-      dispatch(setPreferedGarageId(undefined))
+      dispatch(setPreferedGarageId())
     }
 
-    if (userResult.user && userResult.user.reservable_cars.length === 1) { // if only one car available
-      dispatch(setCarId(userResult.user.reservable_cars[0].id))
-      if (!hideLoadingCalled) {
-        hideLoading(dispatch)
-        hideLoadingCalled = true
-      }
+    if (user && user.reservable_cars.length === 1) { // if only one car available
+      dispatch(setCarId(user.reservable_cars[0].id))
+    } else if (!user ||
+      !user.reservable_cars ||
+      !user.reservable_cars.some(car => car.id === state.car_id)
+    ) {
+      dispatch(setCarId())
     }
-    if (!hideLoadingCalled) {
-      hideLoading(dispatch)
-    }
+
+    dispatch(setLastUserWasSaved(id > 0))
+    dispatch(showLoadingModal(false))
   }
 }
 
@@ -733,7 +772,7 @@ export function downloadGarage(id) {
           return place
         })
       })
-      
+
       const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
       if (noFreePlaces) {
         const setFreeIntervalSuccess = response => {
@@ -939,5 +978,17 @@ export function afterPayment(id, success) {
     } else {
       nav.to('/reservations')
     }
+  }
+}
+
+export function cancelUser() {
+  return (dispatch, getState) => {
+    const { user: id } = getState().newReservation
+    if (id < 0) {
+      dispatch(setHostName(''))
+    }
+    dispatch({ type:  NEW_RESERVATION_SET_USER,
+      value: undefined
+    })
   }
 }
