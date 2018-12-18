@@ -983,7 +983,7 @@ export function afterPayment(id, success) {
 
 export function cancelUser() {
   return (dispatch, getState) => {
-    const { user: id } = getState().newReservation
+    const { user: { id } } = getState().newReservation
     if (id < 0) {
       dispatch(setHostName(''))
     }
