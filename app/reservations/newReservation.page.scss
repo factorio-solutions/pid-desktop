@@ -152,11 +152,14 @@
 .resetButton {
   position: absolute;
   right: 0.4em;
-  font-size: 1.6em;
-  cursor:  pointer;
-  padding-top: 0.4em;
+  font-size: 1em;
+  cursor: pointer;
   z-index: 10;
-  color: $red;
+  top: 0.4em;
+  border-radius: 100%;
+  min-width: 1em;
+  width: 1.5em;
+  height: 1.5em;
 }
 
 .textArea {

@@ -6,6 +6,7 @@ import SearchField      from '../../_shared/components/searchField/SearchField'
 import ExistingUserForm from './existingUserForm'
 import NewUserForm      from './newUserForm'
 import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeader'
+import RoundButton       from '../../_shared/components/buttons/RoundButton'
 
 import {
   downloadUser,
@@ -91,6 +92,17 @@ class PickUserForm extends Component {
     return { users, buttons }
   }
 
+  resetButton = (
+    <RoundButton
+      className={styles.resetButton}
+      content={<span className={'fa fa-times'} />}
+      onClick={this.cancelUser}
+      type="remove"
+      question="No message"
+      size="small"
+    />
+  )
+
   render() {
     const { state, actions, pageBase } = this.props
 
@@ -104,16 +116,7 @@ class PickUserForm extends Component {
         { !(state.user && (state.user.id < 0 || onetime)) &&
           ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
           <div className={styles.searchField}>
-            {state.user &&
-              <span
-                className={styles.resetButton}
-                onClick={this.cancelUser}
-                role="button"
-                tabIndex={0}
-              >
-                <i className="fa fa-times-circle" aria-hidden="true" />
-              </span>
-            }
+            {state.user && this.resetButton}
             <SearchField
               editable={!ongoing || isSecretary}
               placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
@@ -139,7 +142,7 @@ class PickUserForm extends Component {
           <NewUserForm
             editable={!ongoing || isSecretary}
             onetime={onetime}
-            clearForm={this.cancelUser}
+            resetButton={this.resetButton}
           />
         }
         {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid &&

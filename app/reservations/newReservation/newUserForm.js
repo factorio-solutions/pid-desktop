@@ -21,19 +21,18 @@ import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
 
 import {
   languagesSelector,
-  searchField,
-  resetButton
+  searchField
 } from '../newReservation.page.scss'
 
 import reservationStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class NewUserForm extends Component {
   static propTypes = {
-    state:     PropTypes.object,
-    actions:   PropTypes.object,
-    editable:  PropTypes.bool,
-    onetime:   PropTypes.bool,
-    clearForm: PropTypes.func
+    state:       PropTypes.object,
+    actions:     PropTypes.object,
+    editable:    PropTypes.bool,
+    onetime:     PropTypes.bool,
+    resetButton: PropTypes.func
   }
 
   hostEmailMandatoryCondition = () => {
@@ -58,16 +57,11 @@ class NewUserForm extends Component {
   }
 
   render() {
-    const { state, actions, editable, onetime, clearForm } = this.props
+    const { state, actions, editable, onetime, resetButton } = this.props
     return (
       <div>
         <div className={searchField}>
-          <span
-            className={resetButton}
-            onClick={clearForm}
-          >
-            <i className="fa fa-times-circle" aria-hidden="true" />
-          </span>
+          {resetButton}
           <PatternInput
             readOnly={!onetime && (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
