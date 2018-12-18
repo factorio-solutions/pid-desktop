@@ -42,10 +42,12 @@ class PickUserForm extends Component {
 
   cancelUser = event => {
     this.props.actions.cancelUser()
-    event.stopPropagation()
     if (this.searchField) {
       // HACK: Is not focus when call immediately.
-      setTimeout(() => this.searchField.filter.input.focus(), 0)
+      setTimeout(() => {
+        this.searchField.filter.input.focus()
+        this.searchField.filter.input.select()
+      }, 0)
     }
   }
 
