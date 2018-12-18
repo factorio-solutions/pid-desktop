@@ -9,7 +9,8 @@ import { t, getLanguage }                from '../modules/localization/localizat
 import {
   calculatePrice,
   valueAddedTax,
-  calculateDuration
+  calculateDuration,
+  convertPriceToString
 } from '../helpers/calculatePrice'
 
 import {
@@ -457,10 +458,16 @@ export function setPrice() {
         : undefined
     ))
 
+    let price
+
+    if (selectedPlace && selectedPlace.pricing) {
+      price = calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)
+    }
+
     dispatch({
       type:  NEW_RESERVATION_SET_PRICE,
       value: selectedPlace && selectedPlace.pricing
-        ? `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}`
+        ? `${price} ${selectedPlace.pricing.currency.symbol}`
         : undefined
     })
   }

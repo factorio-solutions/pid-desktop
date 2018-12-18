@@ -7,13 +7,15 @@ import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeade
 import Uneditable        from '../../_shared/components/input/Uneditable'
 import SmsForm           from './smsForm'
 
+import { convertPriceToString } from '../../_shared/helpers/calculatePrice'
+
 
 import {
   setNote,
   isPlaceGoInternal
 } from '../../_shared/actions/newReservation.actions'
 
-import { t } from '../../_shared/modules/localization/localization'
+import { t, getLanguage } from '../../_shared/modules/localization/localization'
 
 import styles         from '../newReservation.page.scss'
 
@@ -35,6 +37,31 @@ class PriceSmsNote extends Component {
       outOfTimeCredit
     } = this.props
 
+    let price = ((isPlaceGoInternal(state) || !state.client_id) && state.price) ? state.price : ''
+
+    if (!price && state.place_id) {
+      price = convertPriceToString(0)
+      const place = state.garage && state.garage.floors.reduce((acc, floor) => {
+        return acc || floor.places.find(p => p.id === state.place_id)
+      }, undefined)
+      // Place.pricing.currency.symbol
+      if (place) {
+        price += ` ${place.pricing.currency.symbol}`
+      }
+    }
+
+    let expenseOn
+
+    if (!state.client_id) {
+      expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
+    } else if (!isPlaceGoInternal(state)) {
+      expenseOn = t([ 'newReservation', 'longtermRent' ])
+    } else if (state.paidByHost) {
+      expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
+    } else {
+      expenseOn = t([ 'newReservation', 'onClientsExpenses' ])
+    }
+
     return (
       <div>
         {state.garage &&
@@ -51,18 +78,13 @@ class PriceSmsNote extends Component {
                 `}
               /> :
               <div className={styles.price}>
-                {t([ 'newReservation', 'price' ])}
-                {`
-                    ${((isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                    (${!state.client_id ?
-                      t([ 'newReservation', 'onUsersExpenses' ]) :
-                      !isPlaceGoInternal(state) ?
-                        t([ 'newReservation', 'longtermRent' ]) :
-                        state.paidByHost ?
-                          t([ 'newReservation', 'onUsersExpenses' ]) :
-                          t([ 'newReservation', 'onClientsExpenses' ])
-                    })
-                `}
+                <div className={`${styles.floatLeft} ${styles.priceTag}`} >
+                  {`${t([ 'newReservation', 'price' ])} ${price}`}
+                </div>
+
+                <div className={`${styles.floatRight} ${styles.expenseOn}`} >
+                  {expenseOn}
+                </div>
               </div>
             }
             {/* SMS */}

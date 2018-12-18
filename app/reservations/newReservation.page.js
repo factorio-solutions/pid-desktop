@@ -140,6 +140,7 @@ class NewReservationPage extends Component {
                 onHighlight={actions.toggleHighlight}
               >
                 <PickUserForm />
+
                 {state.user &&
                   ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
                   (state.name.valid && state.user.id === -2) ||

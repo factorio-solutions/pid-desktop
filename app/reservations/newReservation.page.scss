@@ -1,5 +1,7 @@
 @import '../_styles/app.desktop';
 
+$priceFontSize: 30px;
+
 .padding {
   padding-top:   30px;
   padding-right: 25px;
@@ -13,6 +15,10 @@
 }
 .hidden {
   display: none;
+}
+
+.floatLeft {
+  float: left;
 }
 
 .floatRight {
@@ -206,8 +212,20 @@
 }
 
 .price {
-  font-size: 30px;
+  font-size: $priceFontSize;
   font-weight: 600;
+  display: flex;
+}
+
+.priceTag {
+  min-width: 10em;
+}
+
+.expenseOn{
+  font-size: 20px;
+  font-weight: normal;
+  line-height: $priceFontSize + 4px;
+  margin-left: 10px;
 }
 
 .smsText {
