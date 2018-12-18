@@ -79,8 +79,10 @@ export default class Form extends Component {
       {onReset &&
         <div className={styles.floatLeft}>
           <RoundButton
-            content={<span className={`fa fa-times-circle ${styles.resetButton}`}  />}
+            content={<span className={'fa fa-times'} />}
             onClick={onReset}
+            type="remove"
+            question="No message"
           />
         </div>
       }
