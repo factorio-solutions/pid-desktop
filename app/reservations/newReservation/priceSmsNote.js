@@ -15,7 +15,7 @@ import {
   isPlaceGoInternal
 } from '../../_shared/actions/newReservation.actions'
 
-import { t, getLanguage } from '../../_shared/modules/localization/localization'
+import { t } from '../../_shared/modules/localization/localization'
 
 import styles         from '../newReservation.page.scss'
 
@@ -45,7 +45,7 @@ class PriceSmsNote extends Component {
         return acc || floor.places.find(p => p.id === state.place_id)
       }, undefined)
       // Place.pricing.currency.symbol
-      if (place) {
+      if (place && place.pricing) {
         price += ` ${place.pricing.currency.symbol}`
       }
     }
