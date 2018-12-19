@@ -1,7 +1,8 @@
 .labeledRoundButton {
   display: inline-block;
-  width: 60px;
+  min-width: 60px;
   vertical-align: top;
+  padding: 5px;
 
   >div {
     padding: 2px;
@@ -11,6 +12,6 @@
   }
 
   >button {
-    margin-bottom: 0;
+    margin: 0;
   }
 }
