@@ -326,7 +326,7 @@ export function formatFrom(loadGarage = false) {
 
 export function setToDate(value) {
   return (dispatch, getState) => {
-    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const to = moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT)
     const toDate = moment(value, MOMENT_DATE_FORMAT)
     const fromValue = null
     to.set('year', toDate.get('year'))
@@ -367,12 +367,14 @@ export function formatTo(loadGarage = false) {
     const MIN_RESERVATION_DURATION = state.minDuration
     const MAX_RESERVATION_DURATION = state.maxDuration
     if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION
+    ) {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
     }
     if (MAX_RESERVATION_DURATION &&
         moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
+        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION
+    ) {
       toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
 
@@ -384,7 +386,7 @@ export function formatTo(loadGarage = false) {
     toValue.diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
 
     if (loadGarage || !currentTo.isSame(toValue)) {
-      state.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+      state.garage && dispatch(downloadGarage(state.garage.id))
       dispatch(setPrice())
     }
   }
