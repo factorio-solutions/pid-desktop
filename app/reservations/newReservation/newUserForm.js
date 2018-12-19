@@ -79,7 +79,7 @@ class NewUserForm extends Component {
             highlight={state.highlight}
             align="left"
             style={reservationStyles}
-            placeholder={t([ 'signup_page', 'namePlaceholder' ])}
+            placeholder={t([ 'newReservation', 'namePlaceholder' ])}
           />
         </div>
         <PatternInput
@@ -103,7 +103,7 @@ class NewUserForm extends Component {
           align="left"
           normalizeInput={normalizeEmail}
           style={reservationStyles}
-          placeholder={t([ 'signup_page', 'emailPlaceholder' ])}
+          placeholder={t([ 'newReservation', 'emailPlaceholder' ])}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
@@ -125,7 +125,7 @@ class NewUserForm extends Component {
           highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
           style={reservationStyles}
-          placeholder={t([ 'signup_page', 'phonePlaceholder' ])}
+          placeholder={t([ 'newReservation', 'phonePlaceholder' ])}
         />
         <Input
           readOnly={!editable}
