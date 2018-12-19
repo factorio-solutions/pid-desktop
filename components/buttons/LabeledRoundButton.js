@@ -1,23 +1,30 @@
 import React, { PropTypes } from 'react'
 import { connect }          from 'react-redux'
 
-import RounButton from './RoundButton.js'
+import RoundButton from './RoundButton.js'
 
 import styles from './LabeledRoundButton.scss'
+import { small, big, normal } from './RoundButton.scss'
 
 // extends RoundButton.js
 // label = label to be displayed below the button
 
 
-function LabeledRoundButton({ label, hint, ...buttonProps }) {
-  const button = <RounButton {...buttonProps} />
-
-  return label && hint
-    ? <div className={styles.labeledRoundButton}>
-      { button }
-      <div>{label}</div>
+function LabeledRoundButton({ label, hint, size, ...buttonProps }) {
+  const allStyles = {
+    ...styles,
+    small,
+    big,
+    normal
+  }
+  return (
+    <div className={`${size ? allStyles[size] : allStyles.normal} ${allStyles.labeledRoundButton}`}>
+      <RoundButton {...buttonProps} size={size} />
+      {label && hint &&
+        <div>{label}</div>
+      }
     </div>
-    : button
+  )
 }
 
 LabeledRoundButton.propTypes = {
@@ -28,7 +35,8 @@ LabeledRoundButton.propTypes = {
   onDisabledClick: PropTypes.func,
   type:            PropTypes.string,
   state:           PropTypes.string,
-  question:        PropTypes.string
+  question:        PropTypes.string,
+  size:            PropTypes.string
 }
 
 export default connect(
