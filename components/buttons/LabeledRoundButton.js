@@ -4,24 +4,22 @@ import { connect }          from 'react-redux'
 import RoundButton from './RoundButton.js'
 
 import styles from './LabeledRoundButton.scss'
-import { small, big, normal } from './RoundButton.scss'
 
 // extends RoundButton.js
 // label = label to be displayed below the button
 
 
 function LabeledRoundButton({ label, hint, size, ...buttonProps }) {
-  const allStyles = {
-    ...styles,
-    small,
-    big,
-    normal
-  }
   return (
-    <div className={`${size ? allStyles[size] : allStyles.normal} ${allStyles.labeledRoundButton}`}>
+    <div className={` ${styles.labeledRoundButton}`}>
       <RoundButton {...buttonProps} size={size} />
-      {label && hint &&
-        <div>{label}</div>
+      {/* {label && hint && */}
+      {label &&
+        <div
+          className={size ? styles[`${size}Text`] : styles.normalText}
+        >
+          {label}
+        </div>
       }
     </div>
   )
