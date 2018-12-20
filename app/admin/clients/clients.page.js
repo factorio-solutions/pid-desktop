@@ -4,7 +4,6 @@ import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
 import Table              from '../../_shared/components/table/Table'
-import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 import PageBase           from '../../_shared/containers/pageBase/PageBase'
 
@@ -183,8 +182,22 @@ class ClientsPage extends Component {
         </div>
 
         <div className={styles.addButton}>
-          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.addClient} type="action" size="big" />
-          {pageBase.isGarageAdmin && <RoundButton content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>} onClick={this.addContract} type="action" size="big" />}
+          <LabeledRoundButton
+            content={<span className="fa fa-plus" aria-hidden="true" />}
+            onClick={this.addClient}
+            type="action"
+            size="big"
+            label={t([ 'clients', 'addClientLabel' ])}
+          />
+          {pageBase.isGarageAdmin &&
+            <LabeledRoundButton
+              content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
+              onClick={this.addContract}
+              type="action"
+              size="big"
+              label={t([ 'clients', 'addContractLabel' ])}
+            />
+          }
         </div>
       </PageBase>
     )

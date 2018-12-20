@@ -240,7 +240,7 @@ class ReservationsPage extends Component {
           </div>}
           {!reservation.deleted_at && <div>
             <span className={styles.floatRight}>
-            
+
               {canEdit ? // Internal can edit his reservations
                 <LabeledRoundButton
                   label={t([ 'reservations', 'editReservation' ])}
