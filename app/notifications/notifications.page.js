@@ -3,6 +3,8 @@ import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
 
+import { MOMENT_DATETIME_FORMAT }      from '../_shared/helpers/time'
+
 import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Table            from '../_shared/components/table/Table'
 // import Form             from '../_shared/components/form/Form'
@@ -25,6 +27,17 @@ class NotificationsPage extends Component {
     this.props.actions.initNotifications()
   }
 
+  makeReservation(reservationArray) {
+    return {
+      full_name:   reservationArray[0],
+      client_name: reservationArray[1],
+      garage_name: reservationArray[2],
+      place:       `${reservationArray[3]}/${reservationArray[4]}`,
+      begins_at:   moment(reservationArray[5]).format(MOMENT_DATETIME_FORMAT),
+      ends_at:     moment(reservationArray[6]).format(MOMENT_DATETIME_FORMAT)
+    }
+  }
+
   render() {
     const { state, actions } = this.props
 
@@ -41,12 +54,61 @@ class NotificationsPage extends Component {
           const parts = notification.message ? notification.message.split(';') : [ 'noMessage' ] // if no message comes
           const translation = t([ 'notifications', parts[0] ], { arg1: parts[1] || '', arg2: parts[2] || '' })
 
+          const isReservation = parts[3] || undefined
+
+          let reservationInfo
+          if (isReservation === 'reservation') {
+            const reservation = this.makeReservation(parts.slice(4))
+
+            reservationInfo = (
+              <table>
+                <tr>
+                  <td>
+                    <div>{`Name: ${reservation.full_name}`}</div>
+                  </td>
+                  <td>
+                    <div>{`Garage: ${reservation.garage_name}`}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div>{`Client: ${reservation.client_name}`}</div>
+                  </td>
+                  <td>
+                    <div>{`Place: ${reservation.place}`}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <tr>
+                      <div>{`Begins at: ${reservation.begins_at}`}</div>
+                    </tr>
+                  </td>
+                  <td>
+                    <div>{`Ends at: ${reservation.ends_at}`}</div>
+                  </td>
+                </tr>
+              </table>
+            )
+          }
+
           if (translation.includes('missing translation:')) { // news are not ment to be translated.
             return parts[1]
               ? <a href={parts[1]}>{parts[0]}</a>
               : parts[0]
           } else {
-            return translation
+            return (
+              <div>
+                <div>
+                  {translation}
+                </div>
+                {reservationInfo &&
+                  <div>
+                    {reservationInfo}
+                  </div>
+                }
+              </div>
+            )
           }
         }
 
