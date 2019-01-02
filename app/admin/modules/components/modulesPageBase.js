@@ -62,8 +62,8 @@ class ModulesPageBase extends Component {
   }
 
   toggleMrParkitIntegration = () => {
-    const { actions } = this.props
-    if (this.props.state.mrParkitIntegration) {
+    const { state, actions } = this.props
+    if (state.mrParkitIntegration) {
       actions.disableMrParkitIntegration()
       actions.setMrParkitIntegration(false)
     } else {

@@ -9,8 +9,7 @@ import { t, getLanguage }                from '../modules/localization/localizat
 import {
   calculatePrice,
   valueAddedTax,
-  calculateDuration,
-  convertPriceToString
+  calculateDuration
 } from '../helpers/calculatePrice'
 
 import {

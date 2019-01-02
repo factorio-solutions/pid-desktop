@@ -115,17 +115,6 @@ class DateTimeForm extends Component {
   render() {
     const { state, actions, editable } = this.props
 
-    const beginsInlineMenu = (
-      <span
-        role="button"
-        tabIndex={0}
-        className={styles.clickable}
-        onClick={actions.beginsToNow}
-      >
-        {t([ 'newReservation', 'now' ])}
-      </span>
-    )
-
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT)
                         .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
@@ -179,7 +168,7 @@ class DateTimeForm extends Component {
 
         {state.garage &&
         state.freeInterval &&
-        state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true) &&
+        !state.garage.floors.some(floor => floor.free_places.length > 0) &&
           <CallToActionButton
             label={this.freeIntervalLabel()}
             type="alternativeTime"
