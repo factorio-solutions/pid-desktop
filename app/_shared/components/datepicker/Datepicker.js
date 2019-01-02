@@ -74,7 +74,6 @@ export default class Datepicker extends Component {
         <div className={styles.buttonContainer}>
           <span
             role="button"
-            tabIndex={0}
             onClick={this.todayClick}
           >
             {t([ 'datetimepicker', 'today' ])}
