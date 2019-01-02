@@ -150,13 +150,11 @@ export function setNote(value) {
 export function setClient(id) {
   return (dispatch, getState) => {
     const {
-      user: {
-        availableClients
-      },
+      user,
       selectedTemplate
     } = getState().newReservation
 
-    const client = availableClients && availableClients.findById(id)
+    const client = user && user.availableClients && user.availableClients.findById(id)
     let template
     if (client && client.sms_templates && selectedTemplate) {
       template = client.sms_templates.findById(selectedTemplate)
@@ -552,7 +550,6 @@ export function setInitialStore(id) {
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
       const users = values[0]
       dispatch(setAvailableUsers(users))
-      dispatch(setLoading(false))
 
       if (values[1] !== undefined) { // if reservation edit set details
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
@@ -579,6 +576,7 @@ export function setInitialStore(id) {
           hideLoading(dispatch)
         }
       }
+      dispatch(setLoading(false))
     }).catch(error => { // error
       hideLoading(dispatch)
       throw (error)
@@ -586,10 +584,9 @@ export function setInitialStore(id) {
   }
 }
 
-export function downloadUser(id, rights, initEdit = false) {
+export function downloadUser(id, rights) {
   return async (dispatch, getState) => {
-    const state = getState().newReservation
-    const { lastUserWasSaved } = state
+    const { lastUserWasSaved } = getState().newReservation
     dispatch(showLoadingModal(true))
 
     const userPromise = new Promise((resolve, reject) => {
@@ -632,14 +629,14 @@ export function downloadUser(id, rights, initEdit = false) {
     }
 
     let availableClients
-
+    let state = getState().newReservation
     if (state.garage && availableGarages.some(gar => gar.id === state.garage.id)) {
       availableClients = (await clientsPromise(id, state.garage && state.garage.id)).reservable_clients
     } else {
       dispatch(setGarage())
       availableClients = (await clientsPromise()).reservable_clients
     }
-
+    state = getState().newReservation
     if (!availableClients.some(client => client.id === state.client_id)) {
       dispatch(setClientId())
     }
@@ -667,15 +664,18 @@ export function downloadUser(id, rights, initEdit = false) {
       dispatch(setCarId())
     }
 
+    state = getState().newReservation
     if (getState().newReservation.reservation) { // download garage
-      dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
+      await downloadGarage(state.reservation.place.floor.garage.id, dispatch, state, false)
     }
 
+    state = getState().newReservation
     if (availableGarages && availableGarages.findById(state.preferedGarageId)) {
-      dispatch(downloadGarage(state.preferedGarageId))
+      await downloadGarage(state.preferedGarageId, dispatch, state, false)
       dispatch(setPreferedGarageId())
     }
 
+    state = getState().newReservation
     if (user && user.reservable_cars.length === 1) { // if only one car available
       dispatch(setCarId(user.reservable_cars[0].id))
     } else if (!user ||
@@ -704,122 +704,139 @@ function clientsPromise(userId, garageId) {
   })
 }
 
-export function downloadGarage(id) {
-  return (dispatch, getState) => {
-    const state = getState().newReservation
-    new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
+function downloadGaragePromise(id, state) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
       }
-      if (!(id && id === (state.garage && state.garage.id))) {
-        dispatch(showLoadingModal(true))
+    }
+
+    request(
+      onSuccess,
+      (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
+      { id:             id || state.garage.id,
+        user_id:        state.user.id,
+        client_id:      state.client_id,
+        begins_at:      timeToUTC(state.from),
+        ends_at:        timeToUTC(state.to),
+        reservation_id: state.reservation ? state.reservation.id : null
       }
+    )
+  })
+}
 
-      request(
-        onSuccess,
-        (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
-        { id:             id || state.garage.id,
-          user_id:        state.user.id,
-          client_id:      state.client_id,
-          begins_at:      timeToUTC(state.from),
-          ends_at:        timeToUTC(state.to),
-          reservation_id: state.reservation ? state.reservation.id : null
-        }
-      )
-    }).then(value => {
-      // if full download,then full garage, if light download, then garage from state with updated free places
-      const garage = value.garage.name ? value.garage : {
-        ...state.garage,
-        floors: state.garage.floors.map(floor => ({
-          ...floor,
-          free_places: value.garage.floors.findById(floor.id).free_places
-        }))
+function freeIntervalPromise(id, state) {
+  return new Promise((resolve, reject) => {
+    const setFreeIntervalSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - free interval')
       }
+    }
 
-      garage.floors.forEach(floor => {
-        floor.places.map(place => {
-          // if (state.reservation && state.reservation.ongoing) { // if ongoing reservation - only selected place might be available
-          //   place.available = floor.free_places.find(p => p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
-          // } else {
-          //   place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
-          // }
-          place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
+    request(
+      setFreeIntervalSuccess,
+      GET_GARAGE_FREE_INTERVAL,
+      { id:             id || state.garage.id,
+        user_id:        state.user.id,
+        client_id:      state.client_id,
+        begins_at:      timeToUTC(state.from),
+        ends_at:        timeToUTC(state.to),
+        reservation_id: state.reservation ? state.reservation.id : null
+      }
+    )
+  })
+}
 
-          if (place.available && place.pricing) { // add tooltip to available places
-            if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
-            const pricing = place.pricing
-            const symbol = pricing.currency.symbol
-            const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
-            const pricePerHour = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
+async function downloadGarageMain(id, dispatch, state, hideLoadingAfterRuntime = true) {
+  if (!(id && id === (state.garage && state.garage.id))) {
+    dispatch(showLoadingModal(true))
+  }
 
-            place.tooltip = (<div>
-              <div>
-                <span>
-                  <b>{t([ 'newReservation', 'price' ])}: </b>
-                  { pricing.flat_price ? pricePerHour(pricing.flat_price) :
-                    duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
-                    duration < 24 ? pricePerHour(pricing.exponential_day_price) :
-                    duration < 168 ? pricePerHour(pricing.exponential_week_price) :
-                    pricePerHour(pricing.exponential_month_price)
-                  }
-                  {symbol}
-                  {t([ 'newReservation', 'perHour' ])}
-                </span>
-              </div>
-              {pricing.weekend_price && <div>
-                <span>
-                  <b>{t([ 'newReservation', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol} {t([ 'newReservation', 'perHour' ])}
-                </span>
-              </div>}
-            </div>)
-          }
+  const result = await downloadGaragePromise(id, state)
+  // if full download,then full garage, if light download, then garage from state with updated free places
+  const garage = result.garage.name ? result.garage : {
+    ...state.garage,
+    floors: state.garage.floors.map(floor => ({
+      ...floor,
+      free_places: result.garage.floors.findById(floor.id).free_places
+    }))
+  }
 
-          return place
-        })
-      })
+  garage.floors.forEach(floor => {
+    floor.places.map(place => {
+      place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
 
-      const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
-      if (noFreePlaces) {
-        const setFreeIntervalSuccess = response => {
-          if (response.data !== undefined) {
-            dispatch(setFreeInterval(response.data.garage.greatest_free_interval))
-          }
-        }
+      if (place.available && place.pricing) { // add tooltip to available places
+        if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
+        const pricing = place.pricing
+        const symbol = pricing.currency.symbol
+        const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
+        const pricePerHour = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
 
-        request(
-          setFreeIntervalSuccess,
-          GET_GARAGE_FREE_INTERVAL,
-          { id:             id || state.garage.id,
-            user_id:        state.user.id,
-            client_id:      state.client_id,
-            begins_at:      timeToUTC(state.from),
-            ends_at:        timeToUTC(state.to),
-            reservation_id: state.reservation ? state.reservation.id : null
-          }
-        )
+        place.tooltip = (<div>
+          <div>
+            <span>
+              <b>{t([ 'newReservation', 'price' ])}: </b>
+              { pricing.flat_price ? pricePerHour(pricing.flat_price) :
+                duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
+                duration < 24 ? pricePerHour(pricing.exponential_day_price) :
+                duration < 168 ? pricePerHour(pricing.exponential_week_price) :
+                pricePerHour(pricing.exponential_month_price)
+              }
+              {symbol}
+              {t([ 'newReservation', 'perHour' ])}
+            </span>
+          </div>
+          {pricing.weekend_price && <div>
+            <span>
+              <b>{t([ 'newReservation', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol} {t([ 'newReservation', 'perHour' ])}
+            </span>
+          </div>}
+        </div>)
       }
 
-      dispatch(setGarage(garage))
-      if (!state.reservation) {
-        dispatch(autoSelectPlace())
-      }
-
-      // Unselect place if it is no longer available
-      if (state.place_id) {
-        const selectedPlace = garage.floors.reduce((place, floor) => {
-          return place || floor.places.find(p => p.id === state.place_id)
-        }, undefined)
-        if (selectedPlace && !selectedPlace.available) {
-          dispatch(setPlace({ id: undefined }))
-        }
-      }
-
-      dispatch(showLoadingModal(false))
+      return place
     })
+  })
+
+  const noFreePlaces = !garage.floors.some(floor => floor.free_places.length > 0)
+  if (noFreePlaces) {
+    const freeIntervalResult = await freeIntervalPromise(id, state)
+    if (freeIntervalResult !== undefined) {
+      dispatch(setFreeInterval(freeIntervalResult.garage.greatest_free_interval))
+    }
+  }
+
+  dispatch(setGarage(garage))
+  if (!state.reservation) {
+    dispatch(autoSelectPlace())
+  }
+
+  // Unselect place if it is no longer available
+  if (state.place_id) {
+    const selectedPlace = garage.floors.reduce((place, floor) => {
+      return place || floor.places.find(p => p.id === state.place_id)
+    }, undefined)
+    if (selectedPlace && !selectedPlace.available) {
+      dispatch(setPlace({ id: undefined }))
+    }
+  }
+
+  hideLoadingAfterRuntime && dispatch(showLoadingModal(false))
+}
+
+export function downloadGarage(id, givenDispatch, state, hideLoadingAfterRuntime) {
+  if (givenDispatch == null) {
+    return (dispatch, getState) => {
+      downloadGarageMain(id, dispatch, getState().newReservation, hideLoadingAfterRuntime)
+    }
+  } else {
+    return downloadGarageMain(id, givenDispatch, state, hideLoadingAfterRuntime)
   }
 }
 
