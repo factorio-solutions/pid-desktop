@@ -769,7 +769,7 @@ async function downloadGarageMain(id, dispatch, state, hideLoadingAfterRuntime =
 
   garage.floors.forEach(floor => {
     floor.places.map(place => {
-      place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
+      place.available = floor.free_places.some(p => p.id === place.id) // set availability
 
       if (place.available && place.pricing) { // add tooltip to available places
         if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
