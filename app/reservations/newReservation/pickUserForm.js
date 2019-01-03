@@ -40,7 +40,7 @@ class PickUserForm extends Component {
     }
   }
 
-  cancelUser = event => {
+  cancelUser = () => {
     this.props.actions.cancelUser()
     if (this.searchField) {
       // HACK: Is not focus when call immediately.
@@ -123,7 +123,7 @@ class PickUserForm extends Component {
               editable={!ongoing || isSecretary}
               placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
               dropdownContent={userDropdown.users}
-              selected={() => this.getUserToSelect(userDropdown)}
+              selected={this.getUserToSelect(userDropdown)}
               highlight={state.highlight}
               searchQuery={state.name.value}
               onChange={actions.setHostName}
