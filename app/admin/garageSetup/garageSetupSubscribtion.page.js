@@ -61,7 +61,7 @@ class GarageSetupSubscribtionPage extends Component {
               <div>{t([ 'newGarage', 'tarif' ])}</div>
               <div>
                 <Dropdown
-                  label={t([ 'newGarage', 'selectTarif' ])}
+                  placeholder={t([ 'newGarage', 'selectTarif' ])}
                   content={tarifDropdown}
                   style="light"
                   selected={state.availableTarifs.findIndex(tarif => tarif.id === state.tarif_id)}

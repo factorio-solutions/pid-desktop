@@ -2,6 +2,12 @@
 
 .dropdownContainter {
   position: relative;
+  >label {
+    top: 18px;
+    left: 5px;
+    position: relative;
+    font-size: 11px;
+  }
 }
 
 .button {
@@ -91,6 +97,7 @@
 .reservationFloat {
   @extend .float;
   font-size: 30px;
+  margin-top: 9px;
 }
 
 .visible {
@@ -152,6 +159,7 @@
     flex:       1 1;
     text-align: initial;
     line-height: 30px;
+    padding-top: 18px;
   }
 }
 

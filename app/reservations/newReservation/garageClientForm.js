@@ -31,7 +31,7 @@ class GarageClientForm extends Component {
 
   garageDropdown = () => {
     const { state, actions } = this.props
-    
+
     return (state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => ({
       label:   garage.name,
       onClick: () => actions.downloadGarage(state.user.availableGarages[index].id)
@@ -50,14 +50,12 @@ class GarageClientForm extends Component {
   render() {
     const { state, actions, editable } = this.props
     const selectedClient = actions.selectedClient()
-    
-
 
     return (
       <div>
         <Dropdown
           editable={editable}
-          label={`${t([ 'newReservation', 'selectGarage' ])} *`}
+          label={`${t([ 'newReservation', 'garageDropdownLabel' ])} *`}
           content={this.garageDropdown()}
           selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
           style="reservation"
@@ -67,7 +65,7 @@ class GarageClientForm extends Component {
         {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
           <Dropdown
             editable={editable}
-            label={t([ 'newReservation', 'selectClient' ])}
+            label={t([ 'newReservation', 'clientDropdownLabel' ])}
             content={this.clientDropdown()}
             selected={state.user.availableClients.findIndexById(state.client_id)}
             style="reservation"

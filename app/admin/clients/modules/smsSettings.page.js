@@ -67,7 +67,12 @@ class SmsSettingsPage extends Component {
     return (
       <ClientModules params={this.props.params}>
         <Modal show={state.showNewTemplateModal}>
-          <Form onSubmit={this.submitNewTemplateForm} submitable={this.checkNewTemplateSubmitable()} onBack={actions.clearNewTemplateForm} onHighlight={actions.toggleHighlight}>
+          <Form
+            onSubmit={this.submitNewTemplateForm}
+            submitable={this.checkNewTemplateSubmitable()}
+            onBack={actions.clearNewTemplateForm}
+            onHighlight={actions.toggleHighlight}
+          >
             <Input
               onEnter={this.submitNewTemplateForm}
               onChange={actions.setNewTemplateName}
@@ -83,7 +88,12 @@ class SmsSettingsPage extends Component {
             </div>
           </Form>
         </Modal>
-        <Form onSubmit={this.submitForm} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
+        <Form
+          onSubmit={this.submitForm}
+          submitable={this.checkSubmitable()}
+          onBack={this.goBack}
+          onHighlight={actions.toggleHighlight}
+        >
           <Input
             onEnter={this.submitForm}
             onChange={actions.setSmsApiToken}
@@ -94,7 +104,12 @@ class SmsSettingsPage extends Component {
             inlineMenu={state.smsApiToken && beginsInlineMenu}
           />
           <div className={styles.dropdownAdd}>
-            <Dropdown content={state.templates.map(this.templatesDropdown)} label={t([ 'newClient', 'selectTemplate' ])} style="light" selected={selectedTemplateIndex} />
+            <Dropdown
+              content={state.templates.map(this.templatesDropdown)}
+              placeholder={t([ 'newClient', 'selectTemplate' ])}
+              style="light"
+              selected={selectedTemplateIndex}
+            />
             <RoundButton
               content={<i className="fa fa-plus" aria-hidden="true" />}
               onClick={() => actions.setShowModalSmsTemplate(true)}

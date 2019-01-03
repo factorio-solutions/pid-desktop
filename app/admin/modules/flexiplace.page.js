@@ -55,7 +55,7 @@ class FlexiplacePage extends Component {
         >
           <div>
             <Dropdown
-              label={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
+              placeholder={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
               content={currencies}
               style="light"
               selected={state.currencies.findIndexById(pricing && pricing.currency_id)}

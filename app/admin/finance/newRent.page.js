@@ -57,7 +57,7 @@ class NewRentPage extends Component {
               highlight={state.highlight}
             />
             <Dropdown
-              label={t([ 'newRent', 'selectCurrency' ]) + ' *'}
+              placeholder={t([ 'newRent', 'selectCurrency' ]) + ' *'}
               content={currencies()}
               style="light"
               selected={state.selectedCurrency}

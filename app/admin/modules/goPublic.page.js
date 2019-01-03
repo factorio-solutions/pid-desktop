@@ -88,7 +88,7 @@ class GoPublicPage extends Component {
               {state.places.length === 0 && <div className={styles.dimmer}>{t([ 'newPricing', 'selectPlace' ])}</div>}
               <div>
                 <Dropdown
-                  label={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
+                  placeholder={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
                   content={currencies()}
                   style="light"
                   selected={state.currencies.findIndexById(state.currency_id)}

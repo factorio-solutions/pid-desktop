@@ -138,24 +138,30 @@ class inviteUserPage extends Component {
                 highlight={state.highlight}
                 normalizeInput={normalizeEmail}
               />
-              {clientDropdown.length > 1 && <Dropdown
-                label={t([ 'inviteUser', 'selectClient' ])}
-                content={clientDropdown}
-                style="light"
-                selected={state.clients.findIndexById(state.client_id)}
-              />}
-              {garageDropdown.length > 1 && <Dropdown
-                label={t([ 'inviteUser', 'selectGarage' ])}
-                content={garageDropdown}
-                style="light"
-                selected={state.garages.findIndexById(state.garage_id)}
-              />}
-              {carDropdown.length > 1 && <Dropdown
-                label={t([ 'inviteUser', 'selectCar' ])}
-                content={carDropdown}
-                style="light"
-                selected={state.cars.findIndexById(state.car_id)}
-              />}
+              {clientDropdown.length > 1 &&
+                <Dropdown
+                  placeholder={t([ 'inviteUser', 'selectClient' ])}
+                  content={clientDropdown}
+                  style="light"
+                  selected={state.clients.findIndexById(state.client_id)}
+                />
+              }
+              {garageDropdown.length > 1 &&
+                <Dropdown
+                  placeholder={t([ 'inviteUser', 'selectGarage' ])}
+                  content={garageDropdown}
+                  style="light"
+                  selected={state.garages.findIndexById(state.garage_id)}
+                />
+              }
+              {carDropdown.length > 1 &&
+                <Dropdown
+                  placeholder={t([ 'inviteUser', 'selectCar' ])}
+                  content={carDropdown}
+                  style="light"
+                  selected={state.cars.findIndexById(state.car_id)}
+                />
+              }
               <div>
                 <label>{t([ 'inviteUser', 'inviteMessage' ])}</label>
               </div>

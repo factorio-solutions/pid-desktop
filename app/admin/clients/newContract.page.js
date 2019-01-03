@@ -222,7 +222,7 @@ class NewContractPage extends Component {
                 </div> :
                 <div className={styles.oneButton}>
                   <Dropdown
-                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
+                    placeholder={t([ 'newContract', 'selectClient' ]) + ' *'}
                     content={state.clients.map(this.prepareClients)}
                     style="light"
                     selected={selectedClient}
@@ -250,7 +250,7 @@ class NewContractPage extends Component {
                     highlight={state.highlight}
                   />
                   <Dropdown
-                    label={t([ 'newContract', 'selectCurrency' ]) + ' *'}
+                    placeholder={t([ 'newContract', 'selectCurrency' ]) + ' *'}
                     content={state.currencies.map(this.prepareCurrencies)}
                     style="light"
                     selected={selectedCurrency}
@@ -259,8 +259,18 @@ class NewContractPage extends Component {
                   <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleNewRent} type="remove" />
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t([ 'newContract', 'selectRent' ])} content={state.rents.map(this.prepareRents)} style="light" selected={selectedRent} highlight={state.highlight} />
-                  <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleNewRent} type="action" />
+                  <Dropdown
+                    placeholder={t([ 'newContract', 'selectRent' ])}
+                    content={state.rents.map(this.prepareRents)}
+                    style="light"
+                    selected={selectedRent}
+                    highlight={state.highlight}
+                  />
+                  <RoundButton
+                    content={<i className="fa fa-plus" aria-hidden="true" />}
+                    onClick={actions.toggleNewRent}
+                    type="action"
+                  />
                 </div>) :
                 <div> {t([ 'newContract', 'placePrice' ])} {state.rent && `${Math.round(state.rent.price * 10) / 10} ${state.rent.currency.symbol}`} </div>)
               }

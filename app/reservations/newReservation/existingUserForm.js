@@ -45,7 +45,7 @@ class ExistingUserForm extends Component {
           /> :
           <Dropdown
             editable={editable}
-            label={`${t([ 'newReservation', 'selectCar' ])} *`}
+            placeholder={`${t([ 'newReservation', 'selectCar' ])} *`}
             content={this.carDropdown()}
             selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
             style="reservation"

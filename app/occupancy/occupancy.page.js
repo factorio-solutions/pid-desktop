@@ -98,7 +98,7 @@ class OccupancyPage extends Component {
 
     const clientSelector = [
       <Dropdown
-        label={t([ 'occupancy', 'selectClientClient' ])}
+        placeholder={t([ 'occupancy', 'selectClientClient' ])}
         content={clientDropdown()}
         style="tabDropdown"
         selected={state.clients.findIndex(client => client.id === state.client_ids[0])}

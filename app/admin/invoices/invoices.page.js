@@ -173,7 +173,7 @@ class InvoicesPage extends Component {
       <TabButton label={t([ 'notifications', 'current' ])} onClick={() => actions.setPast(false)} state={!state.past && 'selected'} />,
       <div className={styles.dropdownsContainer}>
         <Dropdown
-          label={t([ 'invoices', 'selectClient' ])}
+          placeholder={t([ 'invoices', 'selectClient' ])}
           content={clientDropdown()}
           selected={state.clients.findIndexById(state.client_id)}
           style="tabDropdown"

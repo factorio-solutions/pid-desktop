@@ -153,7 +153,7 @@ class GarageSetupGatesPage extends Component {
           <div className={styles.phoneNumberDropdown}>
             <label>{t([ 'newGarage', 'selcetNumber' ])}</label>
             <Dropdown
-              label={t([ 'newGarage', 'selcetNumber' ])}
+              placeholder={t([ 'newGarage', 'selcetNumber' ])}
               content={availableNumbers.map(availableNumbersDropdown)}
               selected={availableNumbers.findIndexById(gate.phone_number_id)}
               style="garageSetupGates"
