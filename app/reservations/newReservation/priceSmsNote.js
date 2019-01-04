@@ -45,19 +45,17 @@ class PriceSmsNote extends Component {
         return acc || floor.places.find(p => p.id === state.place_id)
       }, undefined)
       // Place.pricing.currency.symbol
-      if (place && place.pricing) {
+      if (place && place.pricing && place.pricing.currency) {
         price += ` ${place.pricing.currency.symbol}`
       }
     }
 
     let expenseOn
 
-    if (!state.client_id) {
+    if (!state.client_id || state.paidByHost) {
       expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
     } else if (!isPlaceGoInternal(state)) {
       expenseOn = t([ 'newReservation', 'longtermRent' ])
-    } else if (state.paidByHost) {
-      expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
     } else {
       expenseOn = t([ 'newReservation', 'onClientsExpenses' ])
     }
