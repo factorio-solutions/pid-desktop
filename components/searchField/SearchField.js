@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react'
 
-import CallToActionButton from '../buttons/CallToActionButton'
-import Input              from '../input/Input'
+import Input        from '../input/Input'
+import UsersList    from './usersList'
+import ButtonsTable from './buttonsTable'
 
-import styles from './SearchField.scss'
-
+import styles      from './SearchField.scss'
 import inputStyles from '../input/ReservationInput.scss'
 
 
@@ -17,7 +17,9 @@ export default class SearchField extends Component {
     buttons:         PropTypes.array,
     placeholder:     PropTypes.string,
     highlight:       PropTypes.bool,
-    separateFirst:   PropTypes.bool
+    separateFirst:   PropTypes.bool,
+    user:            PropTypes.object,
+    downloadUser:    PropTypes.func
   }
 
   static defaultProps = {
@@ -73,97 +75,9 @@ export default class SearchField extends Component {
     })
   }
 
-  generateButtons = item => (
-    <tr>
-      <td><CallToActionButton label={item.label} onMouseDown={item.onClick} /></td>
-      <td>{item.text}</td>
-    </tr>
-  )
-
-  sorter = (a, b) => {
-    if (a.order || b.order) { // sort by order
-      const aOrder = a.order || Infinity
-      const bOrder = b.order || Infinity
-      return aOrder - bOrder
-    } else { // sort by label
-      const aLabel = (a.label.toString() || '').toLowerCase()
-      const bLabel = (b.label.toString() || '').toLowerCase()
-
-      if (aLabel < bLabel) {
-        return -1
-      } else if (aLabel > bLabel) {
-        return 1
-      } else {
-        return 0
-      }
-    }
-  }
-
-  highlightSearchQueryInText = (text, searchQuery) => {
-    const lowercaseTrimmedText = text.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-
-    return lowercaseTrimmedText
-      .split(searchQuery.toLowerCase() || undefined) // split by filter
-      .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && searchQuery.length && searchQuery ], [])
-      .filter(o => o !== false)
-      .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
-      .map((length, index, arr) => String(text).substring(arr[index - 1] || 0, length))
-      .map((part, index) => (index % 2 === 0 ? <span>{part}</span> : <b>{part}</b>))
-  }
-
-  mapContentToList = (item, index) => {
-    const { onChange, searchQuery } = this.props
-    const onClick = () => {
-      item.onClick && item.onClick()
-      onChange && onChange(item.label) // for form
-      this.hide()
-    }
-
-    const lowercaseTrimmedLabel = item.label.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-    const lowercaseEmailLabel = item.email.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-    const lowercasePhone = item.phone.toString().replace(/\s\s+/g, ' ').trim().toLowerCase()
-
-    const searchQueryHit = () => {
-      return lowercaseTrimmedLabel.includes(searchQuery.toLowerCase()) ||
-        lowercaseEmailLabel.includes(searchQuery.toLowerCase()) ||
-        lowercasePhone.includes(searchQuery.toLowerCase())
-    }
-
-    const show = searchQuery === '' ? true : searchQueryHit()
-
-    return {
-      ...item,
-      render: (
-        <li
-          key={index}
-          className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`}
-          onMouseDown={onClick}
-        >
-          <div>
-            <label className={styles.contactLabel}>
-              {this.highlightSearchQueryInText(
-                item.representer ? item.representer(item.label) : item.label,
-                searchQuery
-              )
-              }
-            </label>
-            <div className={styles.contactInfo}>
-              {item.email &&
-                <div className={styles.contactInfoColumn}>
-                  @ {this.highlightSearchQueryInText(item.email, searchQuery)}
-                </div>
-              }
-              {item.phone &&
-                <div className={styles.contactInfoColumn}>
-                  <i className="fa fa-mobile" aria-hidden="true" /> {this.highlightSearchQueryInText(
-                                                                      item.phone,
-                                                                      searchQuery
-                                                                    )}
-                </div>
-              }
-            </div>
-          </div>
-        </li>)
+  onUserClick = user => {
+    if (this.props.user === undefined || this.props.user.id !== user.id) {
+      this.props.downloadUser(user.id, user.rights)
     }
   }
 
@@ -175,16 +89,21 @@ export default class SearchField extends Component {
       searchQuery,
       onChange,
       highlight,
-      separateFirst
+      separateFirst,
+      selected,
+      downloadUser
     } = this.props
 
-    let list = dropdownContent.map(this.mapContentToList).sort(this.sorter)
+    const list = dropdownContent.filter((_, index) => {
+      if (selected >= 0) {
+        return index === selected
+      } else {
+        return true
+      }
+    })
 
-    list = list.map(o => o.render)
+    const showFirst = separateFirst
 
-    const showFirst = !list[0].props.className.includes('displayNone') && separateFirst
-
-    list = list.filter(i => !i.props.className.includes('displayNone'))
     const showList = list.length > 0 && !(showFirst && list.length === 1)
 
     return (
@@ -206,22 +125,30 @@ export default class SearchField extends Component {
         {this.state.show &&
           <div>
             {showFirst &&
-              <ul className={styles.separated}>
-                {list.shift()}
-              </ul>
+              <UsersList
+                className={styles.separated}
+                users={[ list.shift() ]}
+                onClick={this.onUserClick}
+                searchQuery={searchQuery}
+                selectedIndex={selected}
+              />
             }
             <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
               {showList &&
-                <ul className={styles.scrollable}>
-                  {list}
-                </ul>
+                <UsersList
+                  className={styles.scrollable}
+                  users={list}
+                  onClick={this.onUserClick}
+                  searchQuery={searchQuery}
+                  selectedIndex={selected}
+                />
               }
 
-              <table className={styles.buttons}>
-                <tbody>
-                  {buttons.map(this.generateButtons)}
-                </tbody>
-              </table>
+              <ButtonsTable
+                className={styles.buttons}
+                buttons={buttons}
+                onClick={downloadUser}
+              />
             </div>
           </div>
         }
