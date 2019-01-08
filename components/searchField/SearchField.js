@@ -92,14 +92,16 @@ export default class SearchField extends Component {
       downloadUser
     } = this.props
 
-    const list = dropdownContent.filter((_, index) => {
-      if (selected >= 0) {
-        return index === selected
-      } else {
-        return true
-      }
-    })
+    const list = dropdownContent.map(cont => cont)
+    // dropdownContent.filter((_, index) => {
+    //   if (selected >= 0) {
+    //     return index === selected
+    //   } else {
+    //     return true
+    //   }
+    // })
 
+    // TODO: When the list is split and user selected -> line is selected in both lists.
     const show = (selected < 0 || this.state.show) && list.length > 0
 
     const showFirst = separateFirst
