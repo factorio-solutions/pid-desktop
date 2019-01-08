@@ -21,7 +21,8 @@ import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
 
 import {
   languagesSelector,
-  searchField
+  searchField,
+  actionButton
 } from '../newReservation.page.scss'
 
 import reservationStyles from '../../_shared/components/input/ReservationInput.scss'
@@ -138,7 +139,7 @@ class NewUserForm extends Component {
           align="left"
           style={reservationStyles}
         />
-        <div className={languagesSelector}>
+        <div className={`${languagesSelector} ${actionButton}`}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
           {AVAILABLE_LANGUAGES.map(this.renderLanguageButton)}
         </div>

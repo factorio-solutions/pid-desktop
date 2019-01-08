@@ -198,11 +198,11 @@ $expenseOnPadding: (($priceFontSize + 4 - $expenseOnFontSize) / 2);
   text-align:       center;
   background-color: transparent;
   >textarea {
-    vertical-align: center;
     font-size:      35px;
     font-weight:    bold;
     resize:         none;
     padding:        0;
+    height:         1.3em;
 
     background-color: transparent;
     text-align:       center;
@@ -233,4 +233,17 @@ $expenseOnPadding: (($priceFontSize + 4 - $expenseOnFontSize) / 2);
 
 .smsText {
   height: 10em;
+}
+
+.showMap {
+  >button {
+    text-align: center;
+    width:      100%;
+  }
+}
+
+.actionButton {
+  >button {
+    padding: 0.5em 0.7em;
+  }
 }

@@ -46,9 +46,9 @@ class PlaceForm extends Component {
           />
         </div>
         <div className={styles.middleCollumn} />
-        <div className={styles.rightCcollumn}>
+        <div className={`${styles.rightCcollumn} ${styles.showMap} ${styles.actionButton}`}>
           <CallToActionButton
-            label={t([ 'newReservation', 'showMap' ])}
+            label={/*t([ 'newReservation', 'showMap' ])*/'Vyberte misto'}
             onClick={showMap}
           />
         </div>
