@@ -50,6 +50,7 @@ class ExistingUserForm extends Component {
             selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
             style="reservation"
             highlight={state.highlight}
+            label={`${t([ 'newReservation', 'selectCarLabel' ])} *`}
           />
         }
       </div>
