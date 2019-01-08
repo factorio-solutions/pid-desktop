@@ -264,7 +264,8 @@
 		"userName": "Jméno uživatele",
 		"AlternativeInterval": "Všechna místa jsou v tomto intervalu obsazená. Nejdelší možný interval je:",
 		"weekendPrice": "Víkendová cena:",
-		"notAbleToCreateReservation": "Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit"
+		"notAbleToCreateReservation": "Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit",
+		"showMap": "Vyberte místo"
 	},
 	"clients": {
 		"name": "jméno",
