@@ -153,14 +153,16 @@ export class Page extends Component {
       }
       {divider}
       <ButtonStack divider={divider}>
-        <MobileMenuButton
-          key="sign-out"
-          icon="sign-out"
-          label={t([ 'mobileApp', 'page', 'logOut' ])}
-          onClick={logOut}
-          state={!state.online ? 'disabled' : undefined}
-          size={'75'}
-        />
+        {[
+          <MobileMenuButton
+            key="sign-out"
+            icon="sign-out"
+            label={t([ 'mobileApp', 'page', 'logOut' ])}
+            onClick={logOut}
+            state={!state.online ? 'disabled' : undefined}
+            size={'75'}
+          />
+        ]}
       </ButtonStack>
 
       <div className={styles.bottom}>
