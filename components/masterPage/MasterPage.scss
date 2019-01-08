@@ -150,6 +150,7 @@ $hintWidth:          180px;
 
       &.shift {
         transform: translate($secondaryMenuWidth, 0);
+        -webkit-transform: translate($secondaryMenuWidth, 0);
       }
     }
 
@@ -161,6 +162,7 @@ $hintWidth:          180px;
 
       &.shift {
         transform: translate($secondaryMenuWidth, 0);
+        -webkit-transform: translate($secondaryMenuWidth, 0);
       }
 
       >.children {
@@ -209,6 +211,7 @@ $hintWidth:          180px;
     >.content {
       &.shift {
         transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
       }
     }
   }
@@ -249,6 +252,7 @@ $hintWidth:          180px;
 
       &.active:not(.shift) {
         transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
       }
     }
 
@@ -260,6 +264,7 @@ $hintWidth:          180px;
 
       &.shift {
         transform: translate(0, 0);
+        -webkit-transform: translate(0, 0);
       }
     }
 
