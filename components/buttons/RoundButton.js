@@ -29,7 +29,10 @@ export default function RoundButton(props) {
 }
 
 RoundButton.propTypes = {
-  content:         React.PropTypes.object,
+  content: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object
+  ]),
   onClick:         React.PropTypes.func,
   onDisabledClick: React.PropTypes.func,
   type:            React.PropTypes.string,

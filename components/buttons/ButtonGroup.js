@@ -17,7 +17,7 @@ export default function ButtonGroup({ buttons }) {
       {buttons.map((button, index) => (<ButtonGroupButton
         {...button}
         key={index}
-        state={button.selected && 'selected'}
+        state={button.selected ? 'selected' : undefined}
       />))}
     </span>
   )

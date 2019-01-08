@@ -75,7 +75,7 @@ export default class Form extends Component {
             content={<span className="fa fa-check" aria-hidden="true" />}
             onClick={sendReservation}
             type="confirm"
-            state={!submitable && 'disabled'}
+            state={!submitable ? 'disabled' : undefined}
             onDisabledClick={highlightInputs}
           />
         }
