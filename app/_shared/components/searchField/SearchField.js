@@ -59,7 +59,7 @@ export default class SearchField extends Component {
     if (
       this.outerDiv &&
       !this.outerDiv.contains(event.target) &&
-        this.state.show
+      this.state.show
     ) {
       this.hide()
     }

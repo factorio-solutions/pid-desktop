@@ -63,12 +63,12 @@ class NewUserForm extends Component {
 
     if (state.user.id === -1) {
       if (state.user.rights.internal) {
-        userType = 'internalsName'
+        userType = 'internal'
       } else {
-        userType = 'hostsName'
+        userType = 'host'
       }
     } else {
-      userType = 'visitorsName'
+      userType = 'visitor'
     }
 
     return (
@@ -78,7 +78,7 @@ class NewUserForm extends Component {
           <PatternInput
             readOnly={!onetime && (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
-            label={`${t([ 'newReservation', userType ])} *`}
+            label={`${t([ 'newReservation', `${userType}sName` ])} *`}
             error={t([ 'signup_page', 'nameInvalid' ])}
             pattern="^(?!\s*$).+"
             value={state.name.value}
@@ -92,7 +92,7 @@ class NewUserForm extends Component {
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
           label={`
-            ${t([ 'newReservation', userType ])}
+            ${t([ 'newReservation', `${userType}sEmail` ])}
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
@@ -108,7 +108,7 @@ class NewUserForm extends Component {
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostPhone}
           label={`
-            ${t([ 'newReservation', userType ])}
+            ${t([ 'newReservation', `${userType}sPhone` ])}
             ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
