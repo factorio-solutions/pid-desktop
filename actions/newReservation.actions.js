@@ -643,18 +643,18 @@ export function downloadUser(id, rights) {
 
     availableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-    dispatch(setUser({ ...(user || { id }),
-      availableGarages,
-      availableClients,
-      rights // Client user rights
-    }))
-
     if (user) {
       dispatch(setHostName(user.full_name, true))
       dispatch(setHostPhone(user.phone, true))
       dispatch(setHostEmail(user.email, true))
       dispatch(setLanguage(user.language))
     }
+
+    dispatch(setUser({ ...(user || { id }),
+      availableGarages,
+      availableClients,
+      rights // Client user rights
+    }))
 
     if (lastUserWasSaved && id < 0) {
       dispatch(setHostPhone('', false))
