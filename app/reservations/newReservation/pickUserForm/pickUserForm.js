@@ -93,7 +93,7 @@ class PickUserForm extends Component {
           </div>
         }
 
-        {state.user && state.user.id >= 0 &&
+        {state.user && state.user.id >= 0 && !state.user.onetime &&
           <ExistingUserForm
             editable={!ongoing || isSecretary}
           />
