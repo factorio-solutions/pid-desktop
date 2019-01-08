@@ -22,61 +22,18 @@ export default class SearchField extends Component {
     downloadUser:    PropTypes.func
   }
 
-  static defaultProps = {
-    buttons: []
-  }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      selected: this.props.selected,
-      show:     true
-    }
-  }
-
   componentDidMount() {
     if (!this.props.searchQuery) {
       this.filter.input.focus()
     } else {
       this.filter.input.blur()
-      this.hide()
     }
-    document.addEventListener('mousedown', this.handleClick)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClick)
   }
 
   onUserClick = user => {
     if (this.props.user === undefined || this.props.user.id !== user.id) {
       this.props.downloadUser(user.id, user.rights)
-      this.hide()
     }
-  }
-
-  handleClick = event => {
-    if (
-      this.outerDiv &&
-      !this.outerDiv.contains(event.target) &&
-      this.state.show
-    ) {
-      this.hide()
-    }
-  }
-
-  hide = () => {
-    this.setState({
-      ...this.state,
-      show: false
-    })
-  }
-
-  show = () => {
-    this.setState({
-      ...this.state,
-      show: true
-    })
   }
 
   render() {
@@ -93,17 +50,8 @@ export default class SearchField extends Component {
     } = this.props
 
     const list = dropdownContent.map(cont => cont)
-    // dropdownContent.filter((_, index) => {
-    //   if (selected >= 0) {
-    //     return index === selected
-    //   } else {
-    //     return true
-    //   }
-    // })
 
-    // TODO: When the list is split and user selected -> line is selected in both lists.
-    const show = (selected < 0 || this.state.show) && list.length > 0
-
+    const show = selected < 0
     const showFirst = separateFirst
 
     const showList = list.length > 0 && !(showFirst && list.length === 1)
@@ -121,6 +69,7 @@ export default class SearchField extends Component {
           ref={component => this.filter = component}
           highlight={highlight}
           style={inputStyles}
+          readOnly={!show}
         />
 
         {show &&
