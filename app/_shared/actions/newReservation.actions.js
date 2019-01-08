@@ -584,42 +584,64 @@ export function setInitialStore(id) {
   }
 }
 
+function clientsPromise(userId, garageId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_AVAILABLE_CLIENTS, { user_id: userId, garage_id: garageId })
+  })
+}
+
+function userPromise(userId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_USER, { id: userId })
+  })
+}
+
+function availableGaragesPromise(userId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_AVAILABLE_GARAGES, { user_id: userId })
+  })
+}
+
 export function downloadUser(id, rights) {
   return async (dispatch, getState) => {
     const { lastUserWasSaved } = getState().newReservation
     dispatch(showLoadingModal(true))
 
-    const userPromise = new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
+    const getUser = userPromise(id)
 
-      request(onSuccess, GET_USER, { id })
-    })
-
-    const availableGaragesPromise = new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
-
-      request(onSuccess, GET_AVAILABLE_GARAGES, { user_id: id })
-    })
+    const getAvailableGarages = availableGaragesPromise(id)
 
     let user
     let availableGarages
 
     try {
       [ user, availableGarages ] = [
-        (await userPromise).user,
-        (await availableGaragesPromise).reservable_garages
+        (await getUser).user,
+        (await getAvailableGarages).reservable_garages
       ]
     } catch (error) {
       // [urgent]TODO: Change or remove error handling.
@@ -687,20 +709,6 @@ export function downloadUser(id, rights) {
     dispatch(setLastUserWasSaved(id > 0))
     dispatch(showLoadingModal(false))
   }
-}
-
-function clientsPromise(userId, garageId) {
-  return new Promise((resolve, reject) => {
-    const onSuccess = response => {
-      if (response.data !== undefined) {
-        resolve(response.data)
-      } else {
-        reject('Response has no data - available users')
-      }
-    }
-
-    request(onSuccess, GET_AVAILABLE_CLIENTS, { user_id: userId, garage_id: garageId })
-  })
 }
 
 function downloadGaragePromise(id, state) {

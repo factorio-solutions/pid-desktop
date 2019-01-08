@@ -122,7 +122,9 @@ const mapStateToProps = state => {
     availableUsers,
     reservation,
     highlight,
-    name
+    name,
+    email,
+    phone
   } = state.newReservation
   const { current_user } = state.pageBase
 
@@ -133,7 +135,9 @@ const mapStateToProps = state => {
       reservation,
       highlight,
       name,
-      current_user
+      current_user,
+      email,
+      phone
     },
     usersDropdown:   getUsers(state),
     buttonsDropdown: getButtons(state),
