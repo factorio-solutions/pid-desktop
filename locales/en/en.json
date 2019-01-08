@@ -264,7 +264,8 @@
 		"userName": "Username",
 		"AlternativeInterval": "All places are full, maximum available duration is:",
 		"weekendPrice": "Weekend price:",
-		"notAbleToCreateReservation": "It was not possible to create this reservation. Likely reason: low timecredit"
+		"notAbleToCreateReservation": "It was not possible to create this reservation. Likely reason: low timecredit",
+		"showMap": "Pick a place"
 	},
 	"clients": {
 		"name": "name",
