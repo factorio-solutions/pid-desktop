@@ -40,6 +40,8 @@ export class ReservationCard extends Component {
     const from = moment(reservation.begins_at)
     const to = moment(reservation.ends_at)
 
+    const clientUser = reservation.client && reservation.client.client_user
+
     return (
       <div className={styles.reservationCard}>
         <div className={styles.title}>
@@ -51,7 +53,7 @@ export class ReservationCard extends Component {
             <div>{reservation.place.floor.garage.name}</div>
           </div>
 
-          {((reservation.client && reservation.client.client_user.secretary && to.isAfter(moment())) ||
+          {((clientUser && clientUser.secretary && to.isAfter(moment())) ||
             (mobileHeader.current_user && mobileHeader.current_user.id === reservation.user.id)) &&
             <div className={`${styles.gray} ${styles.icon}`} onClick={this.toReservation}><i className="icon-more" aria-hidden="true" /></div>
           }

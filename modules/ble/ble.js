@@ -105,7 +105,8 @@ function startScan(name) { // use when you know the device you are looking for
         console.log('found', device, 'but i am looking for', name)
         scanBetweenDevices = !found && setTimeout(
           onBetweenDevicesTimeOut,
-          MAX_SCANNING_BETWEEN_DEVICES_TIME)
+          MAX_SCANNING_BETWEEN_DEVICES_TIME
+        )
       }
     }
 

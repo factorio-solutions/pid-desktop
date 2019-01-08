@@ -164,7 +164,9 @@ export class Page extends Component {
       </ButtonStack>
 
       <div className={styles.bottom}>
-        <div className={styles.appVersion}> {t([ 'mobileApp', 'page', 'version' ])} {version} </div>
+        <div className={styles.appVersion}>
+          {t([ 'mobileApp', 'page', 'version' ])} {version}
+        </div>
         <Localization afterChange={actions.initGarages} />
       </div>
     </div>)
@@ -172,10 +174,29 @@ export class Page extends Component {
     const header = (<div className={styles.header}>
       <div className={styles.logo}><Logo /></div>
       <div className={styles.content}>
-        {!hideDropdown && <Dropdown label={t([ 'mobileApp', 'page', 'selectGarage' ])} content={state.garages.map(garageDropdown)} style="mobileDark" selected={selectedGarage()} fixed />}
+        {!hideDropdown &&
+          <Dropdown
+            label={t([ 'mobileApp', 'page', 'selectGarage' ])}
+            content={state.garages.map(garageDropdown)}
+            style="mobileDark"
+            selected={selectedGarage()}
+            fixed
+          />
+        }
       </div>
-      {!hideHamburger && <button onClick={actions.toggleMenu} className={styles.menuButton}> <i className="fa fa-bars" aria-hidden="true"></i> </button>}
-      <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={actions.toggleMenu} />
+      {!hideHamburger &&
+        <button
+          onClick={actions.toggleMenu}
+          className={styles.menuButton}
+        >
+          <i className="fa fa-bars" aria-hidden="true" />
+        </button>
+      }
+      <MobileSlideMenu
+        content={sideMenuContent}
+        show={state.showMenu}
+        dimmerClick={actions.toggleMenu}
+      />
     </div>)
 
     const menu = (<div className={styles.menu}>

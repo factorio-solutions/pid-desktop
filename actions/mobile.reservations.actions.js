@@ -13,7 +13,6 @@ import {
 } from '../queries/mobile.reservations.queries'
 
 
-
 export const RESERVATIONS_PER_PAGE = 10
 export const MOBILE_RESERVATIONS_SET_RESERVATIONS = 'MOBILE_RESERVATIONS_SET_RESERVATIONS'
 export const MOBILE_RESERVATIONS_SET_BLE_DEVICES = 'MOBILE_RESERVATIONS_SET_BLE_DEVICES'
@@ -99,19 +98,23 @@ export function loadAnotherReservationsPage() {
   }
 }
 
-export function createGateAccessLog(reservationId, gateId) {
-  return (dispatch, getState) => {
+function createGateAccessLog(reservationId, gateId, currentUser) {
+  return new Promise(resolve => {
     requestPromise(
-      MOBILE_ACCESS_LOG_ACCESS,
-      { gate_access_log: {
-        user_id:        getState().mobileHeader.current_user.id,
-        reservation_id: reservationId,
-        gate_id:        gateId,
-        access_type:    'Bluetooth'
-      } }
+    MOBILE_ACCESS_LOG_ACCESS,
+    { gate_access_log: {
+      user_id:        currentUser.id,
+      reservation_id: reservationId,
+      gate_id:        gateId,
+      access_type:    'Bluetooth'
+    } }
     )
-    .then(data => console.log(data))
-  }
+    .then(data => {
+      console.log(data)
+      resolve(data)
+    })
+    .catch(resolve)
+  })
 }
 
 
@@ -159,7 +162,9 @@ function logErrorFactory(reservationId, gateId) {
     return result => {
       console.log('error occured:', result, reservationId, gateId)
       if (reservationId !== undefined && gateId !== undefined) {
-        dispatch(setOpened(false, result.message || result, reservationId, gateId))
+        const message = result && result.message
+
+        dispatch(setOpened(false, message || result, reservationId, gateId))
       }
     }
   }
@@ -176,30 +181,42 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
       let isRepeater = device && device.name[0] === 'r'
 
       const onDeviceFound = dev => {
-        console.log('Scan sucessfull, found device: ', dev)
+        console.log('Scan successful, found device:', dev)
         device = dev
         isRepeater = dev.name[0] === 'r'
         return ble.connect(device.address)
       }
 
       const onOpen = () => {
-        console.log('Opening successfull')
+        console.log('Opening successful')
         dispatch(setOpened(true, undefined, reservationId, gateId))
       }
 
-      ble.setPassword(pwd);
+      ble.setPassword(pwd)
 
-      (!device ?
-      ble.intialize()
-      .catch(() => logError('Bluetooth not enabled'))
-      .then(() => ble.scan(name))
-      .then(onDeviceFound) :
-      ble.connect(device.address))
+      let connectionAction
+
+      if (device) {
+        connectionAction = ble.connect(device.address)
+      } else {
+        connectionAction = ble.initialize()
+        .catch(() => logError('Bluetooth not enabled'))
+        .then(() => ble.scan(name))
+        .then(onDeviceFound)
+      }
+
+      connectionAction
       .then(() => ble.write(device.address, isRepeater, onOpen))
       .then(() => ble.close(device.address))
       .catch(error => {
         logError(error)
-        return device ? ble.close(device.address) : ble.stopScan()
+        if (device) {
+          ble.close(device.address)
+          .catch(e => console.log('Disconnecting cannot be performed:', e))
+        } else {
+          ble.stopScan()
+          .catch(e => console.log('Scanning cannot be stopped because:', e))
+        }
       })
     } else {
       logError('Cannot see bluetoothLE library')
@@ -207,42 +224,13 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
   }
 }
 
-// export function stopScanning() {
-//   return (dispatch, getState) => {
-//     window.bluetoothle && ble.stopScan()
-//     .then(message => console.log('scanning stoped', message, getState().reservations.bleDevices))
-//     .catch(message => console.log('scan stop unsucessfull', message))
-//   }
-// }
-// export function startScanning(back) {
-//   return dispatch => {
-//     if (window.bluetoothle) {
-//       window.bluetoothle && ble.intialize() // 1. init bluetooth (if has plugin)
-//       .then(() => {
-//         const logError = dispatch(logErrorFactory())
-//         const onDeviceFound = result => {
-//           console.log('found device', result)
-//           result.name && dispatch(setBleDevice(result)) // only add device if has name
-//         }
-//         ble.scanUnlimited(onDeviceFound, logError)
-//       })
-//       .catch(() => {
-//         back()
-//         dispatch(setError('Bluetooth not enabled'))
-//       })
-//     } else {
-//       console.log('Cannot see bluetoothLE library')
-//     }
-//   }
-// }
-
 export function openGarage(reservation, gateId) {
-  return dispatch => {
+  return async (dispatch, getState) => {
     const gate = reservation.place.gates.findById(gateId)
     console.log('opening gate')
     // dispatch(stopScanning()) // stop previous scanning
     if (gate.phone.match(/[A-Z]/i)) {
-      dispatch(createGateAccessLog(reservation.id, gateId))
+      await createGateAccessLog(reservation.id, gateId, getState().mobileHeader.current_user)
       dispatch(openGarageViaBluetooth(gate.phone, gate.password, reservation.id, gateId))
     } else {
       dispatch(openGarageViaPhone(reservation.id, gateId))
