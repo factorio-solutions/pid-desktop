@@ -75,12 +75,12 @@ class PriceSmsNote extends Component {
                   ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
                 `}
               /> :
-              <div className={styles.price}>
-                <div className={`${styles.floatLeft} ${styles.priceTag}`} >
+              <div className={`${styles.price} ${styles.dateTimeContainer}`}>
+                <div className={` ${styles.priceTag} ${styles.leftCollumn}`} >
                   {`${t([ 'newReservation', 'price' ])} ${price}`}
                 </div>
-
-                <div className={`${styles.floatRight} ${styles.expenseOn}`} >
+                <div className={styles.middleCollumn} />
+                <div className={` ${styles.expenseOn} ${styles.rightCcollumn}`} >
                   {expenseOn}
                 </div>
               </div>
