@@ -68,6 +68,7 @@ class SmsForm extends Component {
             {state.sendSMS &&
               <div className={styles.smsTemplates}>
                 <Dropdown
+                  label={t([ 'newReservation', 'smsTemplateLabel' ])}
                   placeholder={t([ 'newReservation', 'selectTemplate' ])}
                   content={state.user.availableClients.findById(state.client_id).sms_templates.map((template, index) => ({
                     label:   template.name,
