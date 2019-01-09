@@ -10,12 +10,15 @@ import Table            from '../_shared/components/table/Table'
 // import Form             from '../_shared/components/form/Form'
 import RoundButton      from '../_shared/components/buttons/RoundButton'
 
+import ReservationInfo from './notificationReservationInfo'
+
 import { t }       from '../_shared/modules/localization/localization'
 
 import styles from './notifications.page.scss'
 
 import * as notificationsActions from '../_shared/actions/notifications.actions'
 
+import { convertPriceToString } from '../_shared/helpers/calculatePrice'
 
 class NotificationsPage extends Component {
   static propTypes = {
@@ -29,12 +32,15 @@ class NotificationsPage extends Component {
 
   makeReservation(reservationArray) {
     return {
-      full_name:   reservationArray[0],
-      client_name: reservationArray[1],
-      garage_name: reservationArray[2],
-      place:       `${reservationArray[3]}/${reservationArray[4]}`,
-      begins_at:   moment(reservationArray[5]).format(MOMENT_DATETIME_FORMAT),
-      ends_at:     moment(reservationArray[6]).format(MOMENT_DATETIME_FORMAT)
+      userName:   reservationArray[0],
+      clientName: reservationArray[1],
+      garageName: reservationArray[2],
+      placeLabel: `${reservationArray[3]}/${reservationArray[4]}`,
+      beginsAt:   moment(reservationArray[5]).format(MOMENT_DATETIME_FORMAT),
+      endsAt:     moment(reservationArray[6]).format(MOMENT_DATETIME_FORMAT),
+      price:      convertPriceToString(parseFloat(reservationArray[7], 10)),
+      currency:   reservationArray[8],
+      payedBy:    reservationArray[9]
     }
   }
 
@@ -54,42 +60,9 @@ class NotificationsPage extends Component {
           const parts = notification.message ? notification.message.split(';') : [ 'noMessage' ] // if no message comes
           const translation = t([ 'notifications', parts[0] ], { arg1: parts[1] || '', arg2: parts[2] || '' })
 
-          const isReservation = parts[3] || undefined
-
-          let reservationInfo
-          if (isReservation === 'reservation') {
-            const reservation = this.makeReservation(parts.slice(4))
-
-            reservationInfo = (
-              <table>
-                <tr>
-                  <td>
-                    <div>{`Name: ${reservation.full_name}`}</div>
-                  </td>
-                  <td>
-                    <div>{`Garage: ${reservation.garage_name}`}</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div>{`Client: ${reservation.client_name}`}</div>
-                  </td>
-                  <td>
-                    <div>{`Place: ${reservation.place}`}</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <tr>
-                      <div>{`Begins at: ${reservation.begins_at}`}</div>
-                    </tr>
-                  </td>
-                  <td>
-                    <div>{`Ends at: ${reservation.ends_at}`}</div>
-                  </td>
-                </tr>
-              </table>
-            )
+          let reservation
+          if (parts[3] === 'reservation') {
+            reservation = this.makeReservation(parts.slice(4))
           }
 
           if (translation.includes('missing translation:')) { // news are not ment to be translated.
@@ -102,10 +75,8 @@ class NotificationsPage extends Component {
                 <div>
                   {translation}
                 </div>
-                {reservationInfo &&
-                  <div>
-                    {reservationInfo}
-                  </div>
+                {reservation &&
+                  <ReservationInfo reservation={reservation} />
                 }
               </div>
             )
@@ -118,20 +89,26 @@ class NotificationsPage extends Component {
         return (<div>
           <span>{returnMessage()}</span> <br />
           {notification.custom_message && <span>{notification.creator.full_name} {t([ 'notifications', 'sais' ])}: {notification.custom_message}</span>}{notification.custom_message && <br />}
-          {!notification.confirmed ?
+          {!notification.confirmed &&
             <span className={styles.floatRight}>
-              {notification.notification_type.indexOf('No') !== -1 && <RoundButton
-                content={<span className="fa fa-times" aria-hidden="true" />}
-                onClick={decline}
-                type="remove"
-                question={t([ 'notifications', 'declineQuestion' ])}
-              />}
-              {notification.notification_type.indexOf('Yes') !== -1 && <RoundButton
-                content={<span className="fa fa-check" aria-hidden="true" />}
-                onClick={confirm}
-                type="confirm"
-              />}
-            </span> :
+              {notification.notification_type.indexOf('No') !== -1 &&
+                <RoundButton
+                  content={<span className="fa fa-times" aria-hidden="true" />}
+                  onClick={decline}
+                  type="remove"
+                  question={t([ 'notifications', 'declineQuestion' ])}
+                />
+              }
+              {notification.notification_type.indexOf('Yes') !== -1 &&
+                <RoundButton
+                  content={<span className="fa fa-check" aria-hidden="true" />}
+                  onClick={confirm}
+                  type="confirm"
+                />
+              }
+            </span>
+          }
+          {notification.confirmed &&
             <span>
               {notification.confirmed ? t([ 'notifications', 'NotificationAccepted' ]) : t([ 'notifications', 'NotificationDeclined' ]) }
               {moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}
