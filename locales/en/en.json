@@ -265,7 +265,19 @@
 		"AlternativeInterval": "All places are full, maximum available duration is:",
 		"weekendPrice": "Weekend price:",
 		"notAbleToCreateReservation": "It was not possible to create this reservation. Likely reason: low timecredit",
-		"showMap": "Pick a place"
+		"userSection": "For whom is the reservation",
+		"placeSelector": "Where & when",
+		"priceAndOthers": "Payment and other options",
+		"notePlaceholder": "Public note",
+		"showMap": "Show garage map",
+		"smsTextPlaceholder": "SMS Message",
+		"namePlaceholder": "Name",
+		"emailPlaceholder": "Email",
+		"phonePlaceholder": "Phone number",
+		"garageDropdownLabel": "Garage",
+		"clientDropdownLabel": "Client",
+		"selectCarLabel": "Select car",
+		"smsTemplateLabel": "SMS template"
 	},
 	"clients": {
 		"name": "name",
@@ -286,7 +298,9 @@
 		"invoices": "invoices",
 		"currentAgreements": "Active agreements:",
 		"oldAgreements": "Old agreements:",
-		"modules": "Advanced setup"
+		"modules": "Advanced setup",
+		"addClientLabel": "New client",
+		"addContractLabel": "New contract"
 	},
 	"clientUsers": {
 		"name": "username",
@@ -351,7 +365,9 @@
 			"many": "Update all %(count)s reservations in set repeat.",
 			"other": "Update all %(count)s reservations in set repeat."
 		},
-		"flexiblePlace": "flexiplace"
+		"flexiblePlace": "flexiplace",
+		"createReservationLabel": "Create reservation",
+		"bulkRemovalLabel": "Cancellation of reservations"
 	},
 	"garages": {
 		"clients": "Clients",
@@ -710,7 +726,8 @@
 		"reservationUpdateLegalDocuments": "You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.",
 		"contractLegalDocuments": "You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'.",
 		"reservationWasSuccessfullyPaid": "User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s",
-		"reservationWillExpireSoon": "Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s"
+		"reservationWillExpireSoon": "Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s",
+		"expensesOn": "EN: notifications.expensesOn"
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -1173,7 +1190,8 @@
 	"reservationInteruption": {
 		"describtion": "Interrupt reservation",
 		"from": "Interrupt from",
-		"to": "Interrupt to"
+		"to": "Interrupt to",
+		"invalidaDate": "Invalid date"
 	},
 	"languages": {
 		"language": "Language",
