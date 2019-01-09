@@ -249,10 +249,13 @@ export function removeDiacritics() {
   }
 }
 
-export function isPlaceGoInternal(state) {
-  const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
-  const selectedPlace = places.findById(state.place_id)
-  return state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal
+export function isPlaceGoInternal() {
+  return (_, getState) => {
+    const state = getState().newReservation
+    const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
+    const selectedPlace = places.findById(state.place_id)
+    return state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal
+  }
 }
 
 export function setFromDate(value) {

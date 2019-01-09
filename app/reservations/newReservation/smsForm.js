@@ -11,9 +11,7 @@ import {
   setSelectedTemplate,
   removeDiacritics,
   setTemplateText,
-  selectedClient as selectedClientImported,
-  isPlaceGoInternal,
-  setPaidByHost
+  selectedClient as selectedClientImported
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
@@ -42,22 +40,6 @@ class SmsForm extends Component {
           selectedClient.is_sms_api_token_active &&
           selectedClient.client_user.secretary &&
           <div>
-            {((state.user && state.current_user && state.user.id !== state.current_user.id &&
-              selectedClient && selectedClient.is_time_credit_active) ||
-              isPlaceGoInternal(state)) &&
-              <Checkbox
-                onChange={() => actions.setPaidByHost(!state.paidByHost)}
-                checked={state.paidByHost}
-                style={checkboxStyles}
-              >
-                {t([
-                  'newReservation',
-                  (selectedClient && selectedClient.is_time_credit_active) && !isPlaceGoInternal(state)
-                    ? 'paidByHostsTimeCredit'
-                    : 'paidByHost'
-                ])}
-              </Checkbox>
-            }
             <Checkbox
               onChange={() => actions.setSendSms(!state.sendSMS)}
               checked={state.sendSMS}
@@ -115,8 +97,7 @@ export default connect(
     setSelectedTemplate,
     removeDiacritics,
     setTemplateText,
-    selectedClientImported,
-    setPaidByHost
+    selectedClientImported
   }, dispatch)
   })
 )(SmsForm)

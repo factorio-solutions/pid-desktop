@@ -2,9 +2,10 @@ import React, { Component, PropTypes }  from 'react'
 import { connect }                      from 'react-redux'
 import { bindActionCreators }           from 'redux'
 
-import Input          from '../../_shared/components/input/Input'
+import Input             from '../../_shared/components/input/Input'
 import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeader'
 import Uneditable        from '../../_shared/components/input/Uneditable'
+import Checkbox          from '../../_shared/components/checkbox/Checkbox'
 import SmsForm           from './smsForm'
 
 import { convertPriceToString } from '../../_shared/helpers/calculatePrice'
@@ -12,14 +13,17 @@ import { convertPriceToString } from '../../_shared/helpers/calculatePrice'
 
 import {
   setNote,
-  isPlaceGoInternal
+  isPlaceGoInternal,
+  setPaidByHost
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
 
 import styles         from '../newReservation.page.scss'
 
-import inputStyles from '../../_shared/components/input/ReservationInput.scss'
+import inputStyles    from '../../_shared/components/input/ReservationInput.scss'
+import checkboxStyles from '../../_shared/components/checkbox/ReservationCheckbox.scss'
+
 
 class PriceSmsNote extends Component {
   static propTypes = {
@@ -39,7 +43,11 @@ class PriceSmsNote extends Component {
       outOfTimeCredit
     } = this.props
 
-    let price = ((isPlaceGoInternal(state) || !state.client_id) && state.price) ? state.price : ''
+    const placeIsGoInternal = actions.isPlaceGoInternal()
+    const timeCreditActive = selectedClient && selectedClient.is_time_credit_active &&
+                              placeIsGoInternal
+
+    let price = ((placeIsGoInternal || !state.client_id) && state.price) ? state.price : ''
 
     if (!price && state.place_id) {
       price = convertPriceToString(0)
@@ -67,8 +75,7 @@ class PriceSmsNote extends Component {
         {state.garage &&
           <SectionWithHeader header={t([ 'newReservation', 'priceAndOthers' ])}>
             {/* Price */}
-            {selectedClient && selectedClient.is_time_credit_active &&
-            isPlaceGoInternal(state) ?
+            {timeCreditActive &&
               <Uneditable
                 label={t([ 'newReservation', 'price' ])}
                 highlight={state.highlight && outOfTimeCredit}
@@ -76,7 +83,9 @@ class PriceSmsNote extends Component {
                   ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
                   ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
                 `}
-              /> :
+              />
+            }
+            {!timeCreditActive &&
               <div className={`${styles.price} ${styles.dateTimeContainer}`}>
                 <div className={` ${styles.priceTag} ${styles.leftCollumn}`} >
                   {`${t([ 'newReservation', 'price' ])} ${price}`}
@@ -86,6 +95,21 @@ class PriceSmsNote extends Component {
                   {expenseOn}
                 </div>
               </div>
+            }
+            {((state.user && state.current_user && state.user.id !== state.current_user.id) ||
+              placeIsGoInternal) && !state.reservation &&
+              <Checkbox
+                onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                checked={state.paidByHost}
+                style={checkboxStyles}
+              >
+                {t([
+                  'newReservation',
+                  (selectedClient && selectedClient.is_time_credit_active) && !placeIsGoInternal
+                    ? 'paidByHostsTimeCredit'
+                    : 'paidByHost'
+                ])}
+              </Checkbox>
             }
             {/* SMS */}
             {state.user &&
@@ -109,10 +133,44 @@ class PriceSmsNote extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const {
+    note,
+    user,
+    timeCreditPrice,
+    highlight,
+    paidByHost,
+    client_id,
+    place_id,
+    garage,
+    price,
+    reservation
+  } = state.newReservation
+  const { current_user } = state.pageBase
+
+  return {
+    state: {
+      note,
+      user,
+      timeCreditPrice,
+      highlight,
+      paidByHost,
+      client_id,
+      place_id,
+      garage,
+      price,
+      current_user,
+      reservation
+    }
+  }
+}
+
 export default connect(
-  state => ({ state: state.newReservation }),
+  mapStateToProps,
   dispatch => ({ actions: bindActionCreators({
-    setNote
+    setNote,
+    isPlaceGoInternal,
+    setPaidByHost
   }, dispatch)
   })
 )(PriceSmsNote)
