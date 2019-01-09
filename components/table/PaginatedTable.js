@@ -172,6 +172,7 @@ export default class PaginatedTable extends Component {
           filterClick={filterClick}
           selectId={findId}
           searchBar
+          dontFilter
         />
         <div>
           <RoundButton

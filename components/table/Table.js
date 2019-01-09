@@ -42,7 +42,8 @@ export default class Table extends Component {
     searchBar:      PropTypes.bool,
     returnFiltered: PropTypes.func,
     filterClick:    PropTypes.func, // will return key and ASC or DESC
-    selectId:       PropTypes.number
+    selectId:       PropTypes.number,
+    dontFilter:     PropTypes.bool
   }
 
   static defaultProps = {
@@ -74,23 +75,6 @@ export default class Table extends Component {
       })
     }
   }
-
-  // Was moved to componentDidUpdate method. Calling setState in this method is no go according React doc.
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
-  //     this.setState({
-  //       ...this.state,
-  //       spoilerId: this.filterData(nextProps.data).findIndexById(nextProps.selectId)
-  //     })
-  //   }
-  // }
-
-  // Was moved to componentDidUpdate method. Calling setState in this method is no go according React doc.
-  //
-  // componentWillUpdate(nextProps) {
-  //   nextProps.deselect && this.state.spoilerId !== -1 && this.setState({ ...this.state, spoilerId: -1 })
-  // }
 
   // According to React documentation calling setState is ok in this method if it is wrapped in condition.
   componentDidUpdate(prevProps) {
@@ -212,7 +196,7 @@ export default class Table extends Component {
   }
 
   render() {
-    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
+    const { schema, data, searchBox, searchBar, returnFiltered, filterClick, dontFilter } = this.props
     const { sortKey, sortType, spoilerId } = this.state
 
     const handleHeadClick = index => {
@@ -226,7 +210,12 @@ export default class Table extends Component {
       }
     }
 
-    const newData = this.filterData(data).sort(this.createComparator())
+    let newData = data
+    if (!dontFilter) {
+      newData = this.filterData(newData)
+    }
+
+    newData = newData.sort(this.createComparator())
 
     const handleRowClick = spoilerId => {
       const { onRowSelect } = this.props
