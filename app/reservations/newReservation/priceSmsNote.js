@@ -2,7 +2,7 @@ import React, { Component, PropTypes }  from 'react'
 import { connect }                      from 'react-redux'
 import { bindActionCreators }           from 'redux'
 
-import TextArea          from '../../_shared/components/input/TextArea'
+import Input          from '../../_shared/components/input/Input'
 import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeader'
 import Uneditable        from '../../_shared/components/input/Uneditable'
 import SmsForm           from './smsForm'
@@ -18,6 +18,8 @@ import {
 import { t } from '../../_shared/modules/localization/localization'
 
 import styles         from '../newReservation.page.scss'
+
+import inputStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class PriceSmsNote extends Component {
   static propTypes = {
@@ -93,11 +95,12 @@ class PriceSmsNote extends Component {
               />
             }
             {/* Note */}
-            <TextArea
+            <Input
               placeholder={t([ 'newReservation', 'notePlaceholder' ])}
               onChange={actions.setNote}
               label={t([ 'newReservation', 'note' ])}
               value={state.note}
+              style={inputStyles}
             />
           </SectionWithHeader>
         }
