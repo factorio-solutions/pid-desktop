@@ -130,12 +130,12 @@ function showLoadingModal(show) {
 }
 
 export function setUser(value) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({ type: NEW_RESERVATION_SET_USER,
       value
     })
     if (!value.availableClients.some(client => client.id === getState().newReservation.client_id)) { // preselected client no longer available
-      dispatch(setClient())
+      await dispatch(setClient())
     }
   }
 }
@@ -148,7 +148,7 @@ export function setNote(value) {
 }
 
 export function setClient(id) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       user,
       selectedTemplate
@@ -166,7 +166,7 @@ export function setClient(id) {
 
     dispatch(setClientId(id))
     // TODO: Why download garage every time?
-    getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    getState().newReservation.garage && await dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
     dispatch(setMinMaxDuration())
   }
@@ -200,7 +200,7 @@ export function setUseRecurring(event) {
 }
 
 export function setGarage(value) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({ type: NEW_RESERVATION_SET_GARAGE,
       value
     })
@@ -212,13 +212,10 @@ export function setGarage(value) {
         availableClients: [ { name: t([ 'newReservation', 'selectClient' ]), id: undefined } ]
       }))
     } else {
-      const availableClientsPromise = clientsPromise(state.user && state.user.id, state.garage && state.garage.id)
-      availableClientsPromise.then(value => {
-        value.reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
-        state.user && dispatch(setUser({ ...state.user, availableClients: value.reservable_clients }))
-      }).catch(error => {
-        throw (error)
-      })
+      const reservationId = state.reservation && state.reservation.id
+      const reservableClients = (await clientsPromise(state.user && state.user.id, state.garage && state.garage.id, reservationId)).reservable_clients
+      reservableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
+      state.user && dispatch(setUser({ ...state.user, availableClients: reservableClients }))
     }
   }
 }
@@ -586,7 +583,7 @@ export function setInitialStore(id) {
 
 export function downloadUser(id, rights) {
   return async (dispatch, getState) => {
-    const { lastUserWasSaved } = getState().newReservation
+    const { lastUserWasSaved, reservation } = getState().newReservation
     dispatch(showLoadingModal(true))
 
     const userPromise = new Promise((resolve, reject) => {
@@ -610,7 +607,10 @@ export function downloadUser(id, rights) {
         }
       }
 
-      request(onSuccess, GET_AVAILABLE_GARAGES, { user_id: id })
+      request(onSuccess, GET_AVAILABLE_GARAGES, {
+        user_id:        id,
+        reservation_id: reservation && reservation.id
+      })
     })
 
     let user
@@ -631,7 +631,7 @@ export function downloadUser(id, rights) {
     let availableClients
     let state = getState().newReservation
     if (state.garage && availableGarages.some(gar => gar.id === state.garage.id)) {
-      availableClients = (await clientsPromise(id, state.garage && state.garage.id)).reservable_clients
+      availableClients = (await clientsPromise(id, state.garage && state.garage.id, state.reservation && state.reservation.id)).reservable_clients
     } else {
       dispatch(setGarage())
       availableClients = (await clientsPromise()).reservable_clients
@@ -689,7 +689,7 @@ export function downloadUser(id, rights) {
   }
 }
 
-function clientsPromise(userId, garageId) {
+function clientsPromise(userId, garageId, reservationId) {
   return new Promise((resolve, reject) => {
     const onSuccess = response => {
       if (response.data !== undefined) {
@@ -699,7 +699,11 @@ function clientsPromise(userId, garageId) {
       }
     }
 
-    request(onSuccess, GET_AVAILABLE_CLIENTS, { user_id: userId, garage_id: garageId })
+    request(onSuccess, GET_AVAILABLE_CLIENTS, {
+      user_id:        userId,
+      garage_id:      garageId,
+      reservation_id: reservationId
+    })
   })
 }
 
@@ -753,7 +757,7 @@ function freeIntervalPromise(id, state) {
 
 export function downloadGarage(id, hideLoadingAfterRuntime = true) {
   return async (dispatch, getState) => {
-    const state = getState().newReservation
+    let state = getState().newReservation
     if (!(id && id === (state.garage && state.garage.id))) {
       dispatch(showLoadingModal(true))
     }
@@ -813,7 +817,8 @@ export function downloadGarage(id, hideLoadingAfterRuntime = true) {
       }
     }
 
-    dispatch(setGarage(garage))
+    await dispatch(setGarage(garage))
+    state = getState().newReservation
     if (!state.reservation) {
       dispatch(autoSelectPlace())
     }
