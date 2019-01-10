@@ -130,8 +130,7 @@ export default class Table extends Component {
       }
     }
 
-    return data.map((object, index) => ({ ...object, key: object.key || index }))
-    .filter(object => {
+    return data.filter(object => {
       let show = true
       if (this.state.search !== '') {
         show = show && schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
@@ -195,6 +194,10 @@ export default class Table extends Component {
     }
   }
 
+  normalizeData(data) {
+    return data.map((obj, index) => ({ ...obj, key: obj.key || index }))
+  }
+
   render() {
     const { schema, data, searchBox, searchBar, returnFiltered, filterClick, dontFilter } = this.props
     const { sortKey, sortType, spoilerId } = this.state
@@ -210,7 +213,7 @@ export default class Table extends Component {
       }
     }
 
-    let newData = data
+    let newData = this.normalizeData(data)
     if (!dontFilter) {
       newData = this.filterData(newData)
     }
