@@ -581,45 +581,71 @@ export function setInitialStore(id) {
   }
 }
 
+function clientsPromise(userId, garageId, reservationId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_AVAILABLE_CLIENTS, {
+      user_id:        userId,
+      garage_id:      garageId,
+      reservation_id: reservationId
+    })
+  })
+}
+
+function userPromise(userId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_USER, { id: userId })
+  })
+}
+
+function availableGaragesPromise(userId, reservationId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_AVAILABLE_GARAGES, {
+      user_id: userId,
+      reservation_id: reservationId
+    })
+  })
+}
+
 export function downloadUser(id, rights) {
   return async (dispatch, getState) => {
     const { lastUserWasSaved, reservation } = getState().newReservation
     dispatch(showLoadingModal(true))
 
-    const userPromise = new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
+    const getUser = userPromise(id)
 
-      request(onSuccess, GET_USER, { id })
-    })
-
-    const availableGaragesPromise = new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
-
-      request(onSuccess, GET_AVAILABLE_GARAGES, {
-        user_id:        id,
-        reservation_id: reservation && reservation.id
-      })
-    })
+    const getAvailableGarages = availableGaragesPromise(id, reservation && reservation.id)
 
     let user
     let availableGarages
 
     try {
       [ user, availableGarages ] = [
-        (await userPromise).user,
-        (await availableGaragesPromise).reservable_garages
+        (await getUser).user,
+        (await getAvailableGarages).reservable_garages
       ]
     } catch (error) {
       // [urgent]TODO: Change or remove error handling.
@@ -643,18 +669,18 @@ export function downloadUser(id, rights) {
 
     availableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
-    dispatch(setUser({ ...(user || { id }),
-      availableGarages,
-      availableClients,
-      rights // Client user rights
-    }))
-
     if (user) {
       dispatch(setHostName(user.full_name, true))
       dispatch(setHostPhone(user.phone, true))
       dispatch(setHostEmail(user.email, true))
       dispatch(setLanguage(user.language))
     }
+
+    dispatch(setUser({ ...(user || { id }),
+      availableGarages,
+      availableClients,
+      rights // Client user rights
+    }))
 
     if (lastUserWasSaved && id < 0) {
       dispatch(setHostPhone('', false))
@@ -687,24 +713,6 @@ export function downloadUser(id, rights) {
     dispatch(setLastUserWasSaved(id > 0))
     dispatch(showLoadingModal(false))
   }
-}
-
-function clientsPromise(userId, garageId, reservationId) {
-  return new Promise((resolve, reject) => {
-    const onSuccess = response => {
-      if (response.data !== undefined) {
-        resolve(response.data)
-      } else {
-        reject('Response has no data - available users')
-      }
-    }
-
-    request(onSuccess, GET_AVAILABLE_CLIENTS, {
-      user_id:        userId,
-      garage_id:      garageId,
-      reservation_id: reservationId
-    })
-  })
 }
 
 function downloadGaragePromise(id, state) {

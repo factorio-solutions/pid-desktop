@@ -8,13 +8,20 @@ import RoundButton       from '../_shared/components/buttons/RoundButton'
 import GarageLayout      from '../_shared/components/garageLayout/GarageLayout'
 import Form              from '../_shared/components/form/Form'
 import Modal             from '../_shared/components/modal/Modal'
-import PickUserForm      from './newReservation/pickUserForm'
+import PickUserForm      from './newReservation/pickUserForm/pickUserForm'
 import GarageClientForm  from './newReservation/garageClientForm'
 import PlaceForm         from './newReservation/placeForm'
 import PriceSmsNote      from './newReservation/priceSmsNote'
 import DateTimeForm      from './newReservation/dateTimeForm'
 import Recurring         from '../_shared/components/recurring/Recurring'
 import SectionWithHeader from '../_shared/components/wrapers/SectionWithHeader'
+import {
+  getIsSubmittable,
+  getFreePlaces,
+  getSelectedClient,
+  getOutOfTimeCredit,
+  getFloors
+} from './selectors/newReservation.selectors'
 
 import {
   MOMENT_DATETIME_FORMAT
@@ -26,15 +33,19 @@ import { t, getLanguage }         from '../_shared/modules/localization/localiza
 
 import styles from './newReservation.page.scss'
 
-const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤůŮúÚóÓ]')
+export const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤůŮúÚóÓ]')
 
 
 class NewReservationPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    params:   PropTypes.object,
-    pageBase: PropTypes.object,
-    actions:  PropTypes.object
+    state:           PropTypes.object,
+    params:          PropTypes.object,
+    actions:         PropTypes.object,
+    isSubmittable:   PropTypes.bool,
+    freePlaces:      PropTypes.array,
+    selectedClient:  PropTypes.object,
+    outOfTimeCredit: PropTypes.bool,
+    floors:          PropTypes.array
   }
 
   componentDidMount() {
@@ -50,14 +61,14 @@ class NewReservationPage extends Component {
   handleBack = () => nav.to('/reservations')
 
   toOverview = () => {
-    const { state, pageBase } = this.props
+    const { state } = this.props
 
     if (this.props.params.id) {
       this.props.actions.submitReservation(+this.props.params.id)
     } else if (
       !state.client_id ||
       (state.paidByHost &&
-        (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id))
+        (state.user && state.user.id) === (state.current_user && state.current_user.id))
     ) {
       nav.to('/reservations/newReservation/overview')
     } else {
@@ -81,44 +92,18 @@ class NewReservationPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const {
+      state,
+      actions,
+      isSubmittable,
+      freePlaces,
+      selectedClient,
+      outOfTimeCredit,
+      floors
+    } = this.props
 
     const ongoing = state.reservation && state.reservation.ongoing
-    const selectedClient = actions.selectedClient()
-    const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[
-      state.paidByHost ?
-        'current_time_credit' :
-        'current_users_current_time_credit'
-    ]
     const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
-
-    const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
-    // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
-
-    const isSubmitable = () => {
-      if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
-      if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
-      if (state.from === '' || state.to === '') return false
-      // if onetime visitor and he has to pay by himself, then the email is mandatory
-      if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
-      if (ACCENT_REGEX.test(state.templateText) ? state.templateText.length > 140 : state.templateText.length > 320) return false
-      // if onetime visitor and we want to send him sms, then the phone is mandatory
-      if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
-      // user has enought time credit?
-      if (selectedClient && selectedClient.is_time_credit_active && !newReservationActions.isPlaceGoInternal(state) && outOfTimeCredit) {
-        return false
-      }
-
-      return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
-    }
-
-    const highlightSelected = floor => ({
-      ...floor,
-      places: floor.places.map(place => ({
-        ...place,
-        selected: place.id === state.place_id
-      }))
-    })
 
     const errorContent = (<div className={styles.floatCenter}>
       {t([ 'newReservation', 'fail' ])}: <br />
@@ -136,7 +121,7 @@ class NewReservationPage extends Component {
               <Form
                 onSubmit={this.toOverview}
                 onReset={this.clearForm}
-                submitable={isSubmitable()}
+                submitable={isSubmittable}
                 onHighlight={actions.toggleHighlight}
               >
                 <PickUserForm />
@@ -184,7 +169,7 @@ class NewReservationPage extends Component {
               {state.loading ?
                 <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
                 <GarageLayout
-                  floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
+                  floors={floors}
                   onPlaceClick={this.handlePlaceClick}
                 />
               }
@@ -196,7 +181,54 @@ class NewReservationPage extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const {
+    reservation,
+    client_id,
+    user,
+    paidByHost,
+    error,
+    name,
+    email,
+    phone,
+    garage,
+    showRecurring,
+    recurringRule,
+    from,
+    to,
+    showMap,
+    loading
+  } = state.newReservation
+  const { current_user } = state.pageBase
+
+  return {
+    state: {
+      reservation,
+      client_id,
+      user,
+      paidByHost,
+      error,
+      name,
+      email,
+      phone,
+      garage,
+      showRecurring,
+      recurringRule,
+      from,
+      to,
+      showMap,
+      loading,
+      current_user
+    },
+    isSubmittable:   getIsSubmittable(state),
+    freePlaces:      getFreePlaces(state),
+    selectedClient:  getSelectedClient(state),
+    outOfTimeCredit: getOutOfTimeCredit(state),
+    floors:          getFloors(state)
+  }
+}
+
 export default connect(
-  state => ({ state: state.newReservation, pageBase: state.pageBase }),
+  mapStateToProps,
   dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
 )(NewReservationPage)
