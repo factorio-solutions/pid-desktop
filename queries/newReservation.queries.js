@@ -11,8 +11,8 @@ export const GET_AVAILABLE_USERS = `{
 `
 
 // get available garages for this reservation form
-export const GET_AVAILABLE_GARAGES = `query Query($user_id: Id) {
-  reservable_garages(user_id: $user_id) {
+export const GET_AVAILABLE_GARAGES = `query Query($user_id: Id, $reservation_id: Id) {
+  reservable_garages(user_id: $user_id, reservation_id: $reservation_id) {
     id
     name
   }
@@ -20,8 +20,8 @@ export const GET_AVAILABLE_GARAGES = `query Query($user_id: Id) {
 `
 
 // get available garages for this reservation form
-export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) {
-  reservable_clients(user_id: $user_id, garage_id: $garage_id) {
+export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id, $reservation_id: Id) {
+  reservable_clients(user_id: $user_id, garage_id: $garage_id, reservation_id: $reservation_id) {
     id
     name
     has_sms_api_token
