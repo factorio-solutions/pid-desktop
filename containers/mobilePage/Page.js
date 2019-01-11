@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
+import moment                          from 'moment'
 
 import Logo             from '../../components/logo/Logo'
 import Dropdown         from '../../components/dropdown/Dropdown'
@@ -68,11 +69,30 @@ export class Page extends Component {
     actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
     !hideHeader && !hideDropdown && actions.initGarages()
 
+    const platform = (window.cordova && window.cordova.platformId) || 'android'
+
+    if (
+      state.currentVersion.lastCheckAt &&
+      !moment(state.currentVersion.lastCheckAt).isSame(moment(), 'day')
+    ) {
+      actions.getCurrentMobileVersion(platform)
+      .then(({ mobile_app_version }) => {
+        actions.setCurrentVersion(mobile_app_version)
+
+        if (mobile_app_version !== version) {
+          actions.showOlderVersionModal()
+        } else {
+          console.log('Dobra verze')
+        }
+      })
+    }
+
+
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
 
     console.log('hide splashscreen')
     // actions.hideSplashscreen()
-  }
+}
 
   componentWillReceiveProps(newProps) {
     document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'

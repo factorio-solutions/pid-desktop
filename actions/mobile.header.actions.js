@@ -1,11 +1,19 @@
+import React         from 'react'
 import { request }   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
+import moment from 'moment'
 
-import { GET_CURRENT_USER, GET_RESERVABLE_GARAGES } from '../queries/mobile.header.queries'
+import {
+  GET_CURRENT_USER,
+  GET_RESERVABLE_GARAGES,
+  GET_CURRENT_MOBILE_VERSION
+} from '../queries/mobile.header.queries'
 import { REVOKE_TOKEN }                             from '../queries/login.queries'
 import { t }                                        from '../modules/localization/localization'
 
 import { initReservations } from './mobile.reservations.actions'
+import requestPromise from '../helpers/requestPromise'
+import RoundButton from '../components/buttons/RoundButton'
 
 
 export const MOBILE_MENU_SET_GARAGES = 'MOBILE_MENU_SET_GARAGES'
@@ -16,6 +24,7 @@ export const MOBILE_MENU_SET_ERROR = 'MOBILE_MENU_SET_ERROR'
 export const MOBILE_MENU_SET_CUSTOM_MODAL = 'PAGE_BASE_SET_CUSTOM_MODAL'
 export const SET_MOBILE_LANGUAGE = 'SET_MOBILE_LANGUAGE'
 export const SET_MOBILE_PERSONAL = 'SET_MOBILE_PERSONAL'
+export const SET_CURRENT_VERSION = 'SET_CURRENT_VERSION'
 
 
 export const resetStore = actionFactory('RESET')
@@ -33,6 +42,18 @@ export function setPersonal(value) {
     dispatch({ type: SET_MOBILE_PERSONAL, value })
     dispatch(initReservations())
     dispatch(initGarages())
+  }
+}
+
+export function setCurrentVersion(version) {
+  return dispatch => {
+    dispatch({
+      type:  SET_CURRENT_VERSION,
+      value: {
+        currentVersion: version,
+        lastCheckAt:    moment()
+      }
+    })
   }
 }
 
@@ -86,4 +107,23 @@ export function logout(revoke, callback) { // delete JWToken and current store
       onSuccess()
     }
   }
+}
+
+export function getCurrentMobileVersion(platform) {
+  return () => {
+    return requestPromise(GET_CURRENT_MOBILE_VERSION, { platform })
+  }
+}
+
+export function showOlderVersionModal() {
+  return dispatch => dispatch(setCustomModal(
+    <div>
+      <div>Spatna veze. Prosim aktualizujte.</div>
+      <RoundButton
+        content={<span className="fa fa-check" aria-hidden="true" />}
+        onClick={() => dispatch(setCustomModal())}
+        type="confirm"
+      />
+    </div>
+  ))
 }
