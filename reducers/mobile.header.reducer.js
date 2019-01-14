@@ -9,7 +9,11 @@ import {
   MOBILE_MENU_SET_CUSTOM_MODAL,
   SET_MOBILE_LANGUAGE,
   SET_MOBILE_PERSONAL,
-  SET_CURRENT_VERSION
+  SET_CURRENT_VERSION,
+  SET_SHOW_DROPDOWN,
+  SET_SHOW_HAMBURGER,
+  SET_SHOW_HEADER,
+  SET_HEADER
 } from '../actions/mobile.header.actions'
 
 import { SET_NOTIFICATIONS_COUNT } from '../actions/notifications.actions'
@@ -20,6 +24,9 @@ const defaultState = {
   current_user:       undefined,
   online:             navigator.connection ? navigator.connection.type !== 'none' : true,
   showMenu:           false,
+  showDropdown:       false,
+  showHeader:         false,
+  showHamburger:      false,
   error:              undefined,
   custom_modal:       undefined,
   notificationsCount: 0,
@@ -97,6 +104,30 @@ export default function mobileHeader(state = defaultState, action) {
       return {
         ...state,
         currentVersion: action.value
+      }
+
+    case SET_SHOW_DROPDOWN:
+      return {
+        ...state,
+        showDropdown: action.value
+      }
+
+    case SET_SHOW_HEADER:
+      return {
+        ...state,
+        showHeader: action.value
+      }
+
+    case SET_SHOW_HAMBURGER:
+      return {
+        ...state,
+        showHamburger: action.value
+      }
+
+    case SET_HEADER:
+      return {
+        ...state,
+        ...action.value
       }
 
     default:

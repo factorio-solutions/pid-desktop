@@ -2,31 +2,6 @@
 
 $bottomMenuHeight: 80px;
 
-.header {
-  display:          block;
-  position:         fixed;
-  top:              0;
-  right:            0;
-  left:             0;
-  background-color: $black;
-
-  .logo {
-    height:        35px;
-    margin:        0 15px;
-    border-bottom: 1px solid $yellow;
-
-    > img {
-      height: 100%;
-    }
-  }
-
-  .content {
-    padding:    5px 0;
-    color:      $white;
-    text-align: center;
-  }
-}
-
 .backButton {
   position: fixed;
   bottom:   $mobileNavigationBottomOffset;
@@ -68,55 +43,8 @@ $bottomMenuHeight: 80px;
   margin-top: 82px;
 }
 
-.menuButton {
-  position:   fixed;
-  top:        6px;
-  left:       6px;
-  border:     0;
-  outline:    none;
-  background: none;
-  color:      $gray;
-  font-size:  22px;
-}
-
-.divider {
-  width:            100%;
-  height:           1px;
-  background-color: $gray;
-}
-
-.line {
-  width:            calc(100%-30px);
-  height:           1px;
-  margin:           0 15px;
-  background-color: $yellow;
-}
-
-.currentUserInfo {
-  padding:          15px;
-  background-color: $gray;
-  color:            $white;
-
-  > .buttonContainer {
-    padding-bottom: 15px;
-  }
-}
-
-
 .errorContent {
   text-align: center;
-}
-
-.bottom {
-  position: absolute;
-  right:    0;
-  bottom:   0;
-  left:     0;
-
-  > .appVersion {
-    color:      $white;
-    text-align: center;
-  }
 }
 
 .menu {
@@ -126,12 +54,6 @@ $bottomMenuHeight: 80px;
   bottom: 0;
   left: 0;
   box-shadow: 0 0 12px 2px rgba($black, .75);
-}
-
-.buttonGroup {
-  padding:          12px;
-  background-color: $gray;
-  text-align:       center;
 }
 
 .page {

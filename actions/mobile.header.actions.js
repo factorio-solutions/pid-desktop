@@ -10,6 +10,7 @@ import {
 } from '../queries/mobile.header.queries'
 import { REVOKE_TOKEN }                             from '../queries/login.queries'
 import { t }                                        from '../modules/localization/localization'
+import { version }                                  from '../../../package.json'
 
 import { initReservations } from './mobile.reservations.actions'
 import requestPromise from '../helpers/requestPromise'
@@ -25,6 +26,10 @@ export const MOBILE_MENU_SET_CUSTOM_MODAL = 'PAGE_BASE_SET_CUSTOM_MODAL'
 export const SET_MOBILE_LANGUAGE = 'SET_MOBILE_LANGUAGE'
 export const SET_MOBILE_PERSONAL = 'SET_MOBILE_PERSONAL'
 export const SET_CURRENT_VERSION = 'SET_CURRENT_VERSION'
+export const SET_SHOW_DROPDOWN = 'SET_SHOW_DROPDOWN'
+export const SET_SHOW_HAMBURGER = 'SET_SHOW_HAMBURGER'
+export const SET_SHOW_HEADER = 'SET_SHOW_HEADER'
+export const SET_HEADER = 'SET_HEADER'
 
 
 export const resetStore = actionFactory('RESET')
@@ -35,6 +40,10 @@ export const setShowMenu = actionFactory(MOBILE_MENU_SET_SHOW_MENU)
 export const setError = actionFactory(MOBILE_MENU_SET_ERROR)
 export const setCustomModal = actionFactory(MOBILE_MENU_SET_CUSTOM_MODAL)
 export const setLanguage = actionFactory(SET_MOBILE_LANGUAGE)
+export const setShowDropdown = actionFactory(SET_SHOW_DROPDOWN)
+export const setShowHamburger = actionFactory(SET_SHOW_HAMBURGER)
+export const setShowHeader = actionFactory(SET_SHOW_HEADER)
+const setHeader = actionFactory(SET_HEADER)
 
 
 export function setPersonal(value) {
@@ -45,13 +54,13 @@ export function setPersonal(value) {
   }
 }
 
-export function setCurrentVersion(version) {
+export function setCurrentVersion(currentVersion) {
   return dispatch => {
     dispatch({
       type:  SET_CURRENT_VERSION,
       value: {
-        currentVersion: version,
-        lastCheckAt:    moment()
+        currentVersion,
+        lastCheckAt: moment()
       }
     })
   }
@@ -126,4 +135,42 @@ export function showOlderVersionModal() {
       />
     </div>
   ))
+}
+
+export function checkCurrentVersion() {
+  return async (dispatch, getState) => {
+    const { currentVersion } = getState().mobileHeader
+    const platform = (window.cordova && window.cordova.platformId) || 'android'
+    if (
+      currentVersion.lastCheckAt &&
+      !moment(currentVersion.lastCheckAt).isSame(moment(), 'day')
+    ) {
+      const mobileAppVersion = await dispatch(getCurrentMobileVersion(platform)).mobile_app_version
+
+      dispatch(setCurrentVersion(mobileAppVersion))
+
+      if (mobileAppVersion !== version) {
+        dispatch(showOlderVersionModal())
+      } else {
+        console.log('Dobra verze')
+      }
+    }
+  }
+}
+
+export function setAllHeader(newShowHeader, newShowHamburger, newShowDropdown) {
+  return (dispatch, getState) => {
+    const { showHeader, showHamburger, showDropdown } = getState().mobileHeader
+
+    const checkUpdate = (newValue, value) => {
+      return newValue !== value && newValue != undefined && typeof newValue === 'boolean'
+    }
+
+    const newSettings = {
+      showHeader:    newShowHeader || false,
+      showHamburger: newShowHamburger || false,
+      showDropdown:  newShowDropdown || false
+    }
+    dispatch(setHeader(newSettings))
+  }
 }

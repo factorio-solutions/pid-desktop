@@ -1,0 +1,32 @@
+@import '../../styles/app.components';
+
+.buttonGroup {
+  padding:          12px;
+  background-color: $gray;
+  text-align:       center;
+}
+
+.bottom {
+  position: absolute;
+  right:    0;
+  bottom:   0;
+  left:     0;
+
+  > .appVersion {
+    color:      $white;
+    text-align: center;
+  }
+}
+
+.divider {
+  width:            100%;
+  height:           1px;
+  background-color: $gray;
+}
+
+.line {
+  width:            calc(100%-30px);
+  height:           1px;
+  margin:           0 15px;
+  background-color: $yellow;
+}
