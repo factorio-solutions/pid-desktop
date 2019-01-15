@@ -125,8 +125,10 @@ export default class Table extends Component {
             obj.props.children :
             obj.props.children.map(child => stringifyElement(child)).join(' ')) :
             ''
-      } else {
+      } else if (obj) {
         return obj
+      } else {
+        return ''
       }
     }
 
