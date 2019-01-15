@@ -15,7 +15,6 @@ import { LOGIN } from '../../../_resources/constants/RouterPaths'
 
 
 import styles from './MobileHeader.scss'
-import { version }   from '../../../../package.json'
 
 
 // ({
@@ -90,7 +89,7 @@ class MobileHeader extends Component {
           currentUser={state.current_user}
           onUserClick={state.current_user}
           personal={state.personal}
-          version={version}
+          version={state.appVersion}
           online={state.online}
           onLogoutClick={this.onLogoutClick}
           onPersonalWorkChange={actions.setPersonal}
@@ -101,11 +100,27 @@ class MobileHeader extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const {
+    showMenu, current_user, personal, online,
+    showDropdown, showHamburger, garages,
+    garage_id, showHeader
+  } = state.mobileHeader
+  const { appVersion } = state.mobileVersion
+  return {
+    state: {
+      showMenu, current_user, personal, online,
+      showDropdown, showHamburger, garages,
+      garage_id, showHeader, appVersion
+    }
+  }
+}
+
+const mapActionsToProps = dispatch => ({
+  actions: bindActionCreators({ ...headerActions, initReservations }, dispatch)
+})
+
 export default connect(
-  state => ({
-    state: state.mobileHeader
-  }),
-  dispatch => ({
-    actions: bindActionCreators({ ...headerActions, initReservations }, dispatch)
-  })
+  mapStateToProps,
+  mapActionsToProps
 )(MobileHeader)
