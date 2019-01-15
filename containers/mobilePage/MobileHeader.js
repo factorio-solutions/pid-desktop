@@ -16,20 +16,6 @@ import { LOGIN } from '../../../_resources/constants/RouterPaths'
 
 import styles from './MobileHeader.scss'
 
-
-// ({
-//   hideHeader,
-//   hideDropdown,
-//   hideHamburger,
-//   garages,
-//   setGarage,
-//   initReservations,
-//   toggleMenu,
-//   garageId,
-//   ...props
-// }) =>
-
-
 class MobileHeader extends Component {
   static propTypes = {
     actions: PropTypes.object,
@@ -40,6 +26,8 @@ class MobileHeader extends Component {
     router: PropTypes.object
   }
 
+  onLogoutClick = () => this.logout(true)
+
   garageDropdown = garage => {
     const { actions } = this.props
     const garageSelected = () => {
@@ -48,8 +36,6 @@ class MobileHeader extends Component {
     }
     return { label: garage.name, onClick: garageSelected, order: garage.order }
   }
-
-  onLogoutClick = () => this.logout(true)
 
   logout = revoke => { // private method
     this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
@@ -87,7 +73,6 @@ class MobileHeader extends Component {
           showSlideMenu={state.showMenu}
           dimmerClick={actions.toggleMenu}
           currentUser={state.current_user}
-          onUserClick={state.current_user}
           personal={state.personal}
           version={state.appVersion}
           online={state.online}

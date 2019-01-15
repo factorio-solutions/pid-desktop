@@ -13,7 +13,8 @@ import {
   SET_SHOW_DROPDOWN,
   SET_SHOW_HAMBURGER,
   SET_SHOW_HEADER,
-  SET_HEADER
+  SET_HEADER,
+  SET_SHOW_BOTTOM_MENU
 } from '../actions/mobile.header.actions'
 
 import { SET_NOTIFICATIONS_COUNT } from '../actions/notifications.actions'
@@ -27,6 +28,7 @@ const defaultState = {
   showDropdown:       false,
   showHeader:         false,
   showHamburger:      false,
+  showBottomMenu:     false,
   error:              undefined,
   custom_modal:       undefined,
   notificationsCount: 0,
@@ -128,6 +130,12 @@ export default function mobileHeader(state = defaultState, action) {
       return {
         ...state,
         ...action.value
+      }
+
+    case SET_SHOW_BOTTOM_MENU:
+      return {
+        ...state,
+        showBottomMenu: action.value
       }
 
     default:

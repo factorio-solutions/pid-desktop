@@ -3,7 +3,6 @@ import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
 
 import RoundButton      from '../../components/buttons/RoundButton'
-import MobileMenuButton from '../../components/buttons/MobileMenuButton'
 import Modal            from '../../components/modal/Modal'
 
 import styles from './Page.scss'
@@ -11,9 +10,8 @@ import styles from './Page.scss'
 import * as headerActions   from '../../actions/mobile.header.actions'
 import * as loginActions    from '../../actions/login.actions'
 import { initReservations } from '../../actions/mobile.reservations.actions'
-import { t }                from '../../modules/localization/localization'
 
-import { LOGIN, RESERVATIONS, NOTIFICATIONS } from '../../../_resources/constants/RouterPaths'
+import { LOGIN, RESERVATIONS } from '../../../_resources/constants/RouterPaths'
 
 export class Page extends Component {
   static propTypes = {
@@ -50,7 +48,9 @@ export class Page extends Component {
 
   componentDidMount() {
     window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
-    const { state, actions, hideDropdown, hideHeader } = this.props
+    const { state, actions, hideDropdown, hideHeader, hideHamburger, gray } = this.props
+    actions.setAllHeader(!hideHeader, !hideHamburger, !hideDropdown)
+    actions.setShowBottomMenu(gray)
     !hideHeader && !hideDropdown && actions.initGarages()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
@@ -84,24 +84,16 @@ export class Page extends Component {
   }
 
   render() {
-    const { actions, state, gray } = this.props
-    const { margin } = this.props
-    const { back, add, ok, outlineBack } = this.props
-
-    const menu = (<div className={styles.menu}>
-      <MobileMenuButton
-        icon="icon-garage-mobile"
-        label={t([ 'mobileApp', 'page', 'resrevations' ])}
-        onClick={() => this.context.router.push(RESERVATIONS)}
-        state={window.location.hash.includes(RESERVATIONS) ? 'selected' : undefined}
-      />
-      <MobileMenuButton
-        icon="icon-notification-mobile"
-        label={t([ 'mobileApp', 'page', 'notifications' ])}
-        onClick={() => this.context.router.push(NOTIFICATIONS)}
-        state={window.location.hash.includes(NOTIFICATIONS) ? 'selected' : undefined}
-      />
-    </div>)
+    const {
+      actions,
+      state,
+      gray,
+      margin,
+      back,
+      add,
+      ok,
+      outlineBack
+    } = this.props
 
     const errorContent = (<div className={styles.errorContent}>
       <div>{state.error}</div>
@@ -113,13 +105,11 @@ export class Page extends Component {
     </div>)
 
     return (
-      <div className={`${margin && styles.app_page} ${styles.page}`}>
+      <div className={styles.page}>
         <Modal content={errorContent} show={state.error} />
         <Modal content={state.custom_modal} show={state.custom_modal} zindex={100} />
 
-        <div className={state.showHeader && styles.pageContent}>
-          {this.props.children}
-        </div>
+        {this.props.children}
 
         {back &&
           <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
@@ -159,8 +149,6 @@ export class Page extends Component {
             />
           </div>
         }
-
-        {gray && menu}
       </div>
     )
   }
