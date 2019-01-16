@@ -4,6 +4,7 @@ import moment                          from 'moment'
 import PopupDatepicker from '../datepicker/PopupDatepicker'
 
 import defaultStyles from './Input.scss'
+import { setTime } from '../../actions/garage.actions';
 
 
 export default class DateInput extends Component {
@@ -35,8 +36,22 @@ export default class DateInput extends Component {
     this.state = { message: props.value || '', focus: false }
   }
 
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClick, false)
+  }
+
   componentWillReceiveProps(newProps) {
     newProps.value !== undefined && this.setState({ message: newProps.value })
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false)
+  }
+
+  handleClick = e => {
+    if (this.container && !this.container.contains(e.target)) {
+      this.hideDatepicker()
+    }
   }
 
   handleChange = event => {
@@ -55,6 +70,8 @@ export default class DateInput extends Component {
       message: convertedDate
     })
 
+
+    this.hideDatepicker()
     if (typeof onChange === 'function') {
       onChange(convertedDate, moment(date).isValid())
     }
@@ -117,7 +134,10 @@ export default class DateInput extends Component {
     }
 
     return (
-      <div className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`} >
+      <div
+        className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`}
+        ref={div => this.container = div}
+      >
         <input
           type={'text'}
           value={this.state.message}
