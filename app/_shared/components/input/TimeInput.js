@@ -38,8 +38,22 @@ export default class TimeInput extends Component {
     this.state = { message: props.value || '', focus: false }
   }
 
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClick, false)
+  }
+
   componentWillReceiveProps(newProps) {
     newProps.value !== undefined && this.setState({ message: newProps.value })
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false)
+  }
+
+  handleClick = e => {
+    if (this.container && !this.container.contains(e.target)) {
+      this.hideDatepicker()
+    }
   }
 
   timeToDate = time => `1.1.9999 ${time}` // will add some day to it, so moment can handle it
@@ -67,6 +81,7 @@ export default class TimeInput extends Component {
       message: formatedDate
     })
 
+    this.hideDatepicker()
     onChange && onChange(formatedDate, moment(date).isValid())
     onBlur && onBlur()
   }
@@ -116,6 +131,7 @@ export default class TimeInput extends Component {
     return (
       <div
         className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`}
+        ref={div => this.container = div}
       >
         <input
           type={'text'}

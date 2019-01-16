@@ -38,8 +38,6 @@ export default class PopupDatepicker extends Component {
       <div
         className={`${gray ? styles.grayPopup : styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
         ref={div => { this.container = div }}
-        onBlur={okClick}
-        tabIndex={0}
       >
         <Datepicker
           onSelect={onSelect}

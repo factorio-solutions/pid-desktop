@@ -38,7 +38,6 @@ export default class PopupTimepicker extends Component {
       <div
         className={`${gray ? styles.popupGray : styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
         ref={div => { this.container = div }}
-        onBlur={okClick}
         tabIndex={0}
       >
         <Timepicker
