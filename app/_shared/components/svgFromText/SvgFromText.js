@@ -6,13 +6,13 @@ import styles from './SvgFromText.scss'
 export default function SvgFromText({ identfier, svg, svgClick, rotate }) {
   const setSvgWidth = containerDiv => {
     if (containerDiv) {
-      if (rotate) {
-        if (containerDiv.children[0]) {
-          containerDiv.children[0].style.height = `${containerDiv.getBoundingClientRect().width}px`
-        }
-      } else {
-        containerDiv.children[0] && containerDiv.children[0].removeAttribute('style')
+      if (containerDiv.children[0]) {
+        containerDiv.children[0].style.height = '1350px'
       }
+      // if (rotate) {
+      // } else {
+      //   containerDiv.children[0] && containerDiv.children[0].removeAttribute('style')
+      // }
     }
   }
 
