@@ -1,6 +1,7 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import RandomColor                      from 'randomcolor'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import RandomColor from 'randomcolor'
 
 import detectIE from '../../helpers/internetExplorer'
 

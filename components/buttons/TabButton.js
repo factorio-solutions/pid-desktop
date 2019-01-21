@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from './Button.js'
@@ -31,8 +32,8 @@ export default function TabButton({ label, onClick, onDisabledClick, state }) {
 }
 
 TabButton.propTypes = {
-  label:           React.PropTypes.string,
-  onClick:         React.PropTypes.func,
-  onDisabledClick: React.PropTypes.func,
-  state:           React.PropTypes.string
+  label:           PropTypes.string,
+  onClick:         PropTypes.func,
+  onDisabledClick: PropTypes.func,
+  state:           PropTypes.string
 }

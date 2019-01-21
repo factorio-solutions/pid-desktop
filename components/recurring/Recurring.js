@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import moment from 'moment'
 
 import Modal     from '../modal/Modal'
 import Dropdown  from '../dropdown/Dropdown'
