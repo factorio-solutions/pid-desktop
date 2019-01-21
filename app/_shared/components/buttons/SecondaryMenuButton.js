@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from './Button.js'
@@ -32,8 +33,8 @@ export default function SecondaryMenuButton({ label, ...restOfProps }) {
 }
 
 SecondaryMenuButton.propTypes = {
-  label:   React.PropTypes.string,
-  onClick: React.PropTypes.func,
-  type:    React.PropTypes.string,
-  state:   React.PropTypes.string
+  label:   PropTypes.string,
+  onClick: PropTypes.func,
+  type:    PropTypes.string,
+  state:   PropTypes.string
 }

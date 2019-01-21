@@ -9,8 +9,7 @@ import { t, getLanguage }                from '../modules/localization/localizat
 import {
   calculatePrice,
   valueAddedTax,
-  calculateDuration,
-  convertPriceToString
+  calculateDuration
 } from '../helpers/calculatePrice'
 
 import {
@@ -131,7 +130,8 @@ function showLoadingModal(show) {
 
 export function setUser(value) {
   return async (dispatch, getState) => {
-    dispatch({ type: NEW_RESERVATION_SET_USER,
+    dispatch({
+      type: NEW_RESERVATION_SET_USER,
       value
     })
     if (!value.availableClients.some(client => client.id === getState().newReservation.client_id)) { // preselected client no longer available
@@ -178,14 +178,15 @@ export function setRecurringRule(value) {
       const start = moment(value.starts, MOMENT_DATE_FORMAT)
       dispatch(setFrom(
         moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-        .year(start.year())
-        .month(start.month())
-        .date(start.date())
-        .format(MOMENT_DATETIME_FORMAT)
+          .year(start.year())
+          .month(start.month())
+          .date(start.date())
+          .format(MOMENT_DATETIME_FORMAT)
       ))
       dispatch(formatFrom())
     }
-    dispatch({ type: NEW_RESERVATION_SET_RECURRING_RULE,
+    dispatch({
+      type: NEW_RESERVATION_SET_RECURRING_RULE,
       value
     })
     dispatch(setPrice())
@@ -201,7 +202,8 @@ export function setUseRecurring(event) {
 
 export function setGarage(value) {
   return async (dispatch, getState) => {
-    dispatch({ type: NEW_RESERVATION_SET_GARAGE,
+    dispatch({
+      type: NEW_RESERVATION_SET_GARAGE,
       value
     })
     // There were two available Clients requests because line #497 and #525
@@ -294,13 +296,13 @@ export function formatFrom(loadGarage = false) {
 
     const MIN_RESERVATION_DURATION = state.minDuration
     const MAX_RESERVATION_DURATION = state.maxDuration
-    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
     }
-    if (MAX_RESERVATION_DURATION &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
+    if (MAX_RESERVATION_DURATION
+        && moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
       toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
 
@@ -361,14 +363,14 @@ export function formatTo(loadGarage = false) {
 
     const MIN_RESERVATION_DURATION = state.minDuration
     const MAX_RESERVATION_DURATION = state.maxDuration
-    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION
+    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION
     ) {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
     }
-    if (MAX_RESERVATION_DURATION &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION
+    if (MAX_RESERVATION_DURATION
+        && moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION
     ) {
       toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
@@ -390,7 +392,8 @@ export function formatTo(loadGarage = false) {
 
 export function setPlace(place) {
   return dispatch => {
-    dispatch({ type:  NEW_RESERVATION_SET_PLACE_ID,
+    dispatch({
+      type:  NEW_RESERVATION_SET_PLACE_ID,
       value: place ? place.id : undefined
     })
     dispatch(setPrice())
@@ -404,10 +407,10 @@ export function setMinMaxDuration() {
     const isGoInternal = isPlaceGoInternal(state)
     const client = dispatch(selectedClient())
 
-    const determineDuration = minOrMax => (state.garage && (isGoInternal ?
-      state.garage[`${minOrMax}_reservation_duration_go_internal`] :
-      state.garage[`${minOrMax}_reservation_duration_go_public`])) ||
-      (client ? client[`${minOrMax}_reservation_duration`] : null)
+    const determineDuration = minOrMax => (state.garage && (isGoInternal
+      ? state.garage[`${minOrMax}_reservation_duration_go_internal`]
+      : state.garage[`${minOrMax}_reservation_duration_go_public`]))
+      || (client ? client[`${minOrMax}_reservation_duration`] : null)
 
     const minDuration = determineDuration('min')
     const maxDuration = determineDuration('max')
@@ -426,10 +429,10 @@ export function setMinMaxDuration() {
 export function selectedClient() {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    return state.user &&
-      state.client_id &&
-      state.user.availableClients &&
-      state.user.availableClients.findById(state.client_id)
+    return state.user
+      && state.client_id
+      && state.user.availableClients
+      && state.user.availableClients.findById(state.client_id)
   }
 }
 
@@ -624,7 +627,7 @@ function availableGaragesPromise(userId, reservationId) {
     }
 
     request(onSuccess, GET_AVAILABLE_GARAGES, {
-      user_id: userId,
+      user_id:        userId,
       reservation_id: reservationId
     })
   })
@@ -676,7 +679,8 @@ export function downloadUser(id, rights) {
       dispatch(setLanguage(user.language))
     }
 
-    dispatch(setUser({ ...(user || { id }),
+    dispatch(setUser({
+      ...(user || { id }),
       availableGarages,
       availableClients,
       rights // Client user rights
@@ -703,9 +707,9 @@ export function downloadUser(id, rights) {
     state = getState().newReservation
     if (user && user.reservable_cars.length === 1) { // if only one car available
       dispatch(setCarId(user.reservable_cars[0].id))
-    } else if (!user ||
-      !user.reservable_cars ||
-      !user.reservable_cars.some(car => car.id === state.car_id)
+    } else if (!user
+      || !user.reservable_cars
+      || !user.reservable_cars.some(car => car.id === state.car_id)
     ) {
       dispatch(setCarId())
     }
@@ -728,7 +732,8 @@ function downloadGaragePromise(id, state) {
     request(
       onSuccess,
       (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
-      { id:             id || state.garage.id,
+      {
+        id:             id || state.garage.id,
         user_id:        state.user.id,
         client_id:      state.client_id,
         begins_at:      timeToUTC(state.from),
@@ -752,7 +757,8 @@ function freeIntervalPromise(id, state) {
     request(
       setFreeIntervalSuccess,
       GET_GARAGE_FREE_INTERVAL,
-      { id:             id || state.garage.id,
+      {
+ id:             id || state.garage.id,
         user_id:        state.user.id,
         client_id:      state.client_id,
         begins_at:      timeToUTC(state.from),
@@ -786,31 +792,47 @@ export function downloadGarage(id, hideLoadingAfterRuntime = true) {
 
         if (place.available && place.pricing) { // add tooltip to available places
           if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
-          const pricing = place.pricing
-          const symbol = pricing.currency.symbol
+          const { pricing } = place
+          const { symbol } = pricing.currency
           const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
           const pricePerHour = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
 
-          place.tooltip = (<div>
+          place.tooltip = (
             <div>
-              <span>
-                <b>{t([ 'newReservation', 'price' ])}: </b>
-                { pricing.flat_price ? pricePerHour(pricing.flat_price) :
-                  duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
-                  duration < 24 ? pricePerHour(pricing.exponential_day_price) :
-                  duration < 168 ? pricePerHour(pricing.exponential_week_price) :
-                  pricePerHour(pricing.exponential_month_price)
-                }
-                {symbol}
-                {t([ 'newReservation', 'perHour' ])}
-              </span>
+              <div>
+                <span>
+                  <b>
+                    {`${t([ 'newReservation', 'price' ])}: `}
+                  </b>
+                  { pricing.flat_price ? pricePerHour(pricing.flat_price)
+                    : duration < 12 ? pricePerHour(pricing.exponential_12h_price)
+                      : duration < 24 ? pricePerHour(pricing.exponential_day_price)
+                        : duration < 168 ? pricePerHour(pricing.exponential_week_price)
+                          : pricePerHour(pricing.exponential_month_price)
+                  }
+                  {symbol}
+                  {t([ 'newReservation', 'perHour' ])}
+                </span>
+              </div>
+              {pricing.weekend_price
+              && (
+                <div>
+                  <span>
+                    <b>
+{t([ 'newReservation', 'weekendPrice' ])}
+:
+</b> 
+{' '}
+{pricePerHour(pricing.weekend_price)} 
+{' '}
+{symbol} 
+{' '}
+{t([ 'newReservation', 'perHour' ])}
+                  </span>
+                </div>
+              )}
             </div>
-            {pricing.weekend_price && <div>
-              <span>
-                <b>{t([ 'newReservation', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol} {t([ 'newReservation', 'perHour' ])}
-              </span>
-            </div>}
-          </div>)
+          )
         }
 
         return place
@@ -918,31 +940,31 @@ export function submitReservation(id) {
     const createTheReservation = (user_id, user_name) => {
       request(onSuccess,
         id ? UPDATE_RESERVATION : CREATE_RESERVATION,
-        { reservation: {
-          user_id,
-          note:                     state.note ? state.note : undefined,
-          place_id:                 state.place_id,
-          garage_id:                state.garage.id,
-          client_id:                state.client_id,
-          paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
-          car_id:                   state.car_id,
-          licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
-          url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
-          begins_at:                timeToUTC(state.from),
-          ends_at:                  timeToUTC(state.to),
-          recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
-          recurring_reservation_id: state.recurring_reservation_id,
-          send_sms:                 state.sendSMS,
-          sms_text:                 state.templateText,
-          payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
-          csob_one_click:           state.csobOneClick,
-          csob_one_click_new_card:  state.csobOneClickNewCard,
-          user_name
-        },
+        {
+          reservation: {
+            user_id,
+            note:                     state.note ? state.note : undefined,
+            place_id:                 state.place_id,
+            garage_id:                state.garage.id,
+            client_id:                state.client_id,
+            paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
+            car_id:                   state.car_id,
+            licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
+            url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
+            begins_at:                timeToUTC(state.from),
+            ends_at:                  timeToUTC(state.to),
+            recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
+            recurring_reservation_id: state.recurring_reservation_id,
+            send_sms:                 state.sendSMS,
+            sms_text:                 state.templateText,
+            payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
+            csob_one_click:           state.csobOneClick,
+            csob_one_click_new_card:  state.csobOneClickNewCard,
+            user_name
+          },
           id
         },
-        'reservationMutation'
-      )
+        'reservationMutation')
     }
 
     const sendNewReservationRequest = () => {
@@ -1004,7 +1026,7 @@ export function afterPayment(id, success) {
       dispatch(pageBaseActions.setError(t([ 'newReservation', 'paymentUnsucessfull' ])))
     }
     const parsedId = parseInt(id, 10)
-    if (typeof(parsedId) === 'number' && parsedId > 0) {
+    if (typeof (parsedId) === 'number' && parsedId > 0) {
       nav.to(`/reservations/find/${parsedId}`)
     } else {
       nav.to('/reservations')
@@ -1018,7 +1040,8 @@ export function cancelUser() {
     if (id < 0) {
       dispatch(setHostName(''))
     }
-    dispatch({ type:  NEW_RESERVATION_SET_USER,
+    dispatch({
+      type:  NEW_RESERVATION_SET_USER,
       value: undefined
     })
   }

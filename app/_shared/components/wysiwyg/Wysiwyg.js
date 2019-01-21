@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import ReactQuill                      from 'react-quill'
 
 import { AVAILABLE_LANGUAGES }         from '../../../routes.js'

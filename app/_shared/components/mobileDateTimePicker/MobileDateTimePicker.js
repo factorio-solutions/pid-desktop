@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import Swiper from 'swiper/dist/js/swiper.min.js'
 import moment from 'moment'
 import 'swiper/dist/css/swiper.min.css'

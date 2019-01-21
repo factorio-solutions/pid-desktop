@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { request } from '../_shared/helpers/request'
 
 
@@ -32,8 +33,10 @@ export default class App extends Component {
   }
 
   render() {
-    return (<div>
-      {this.props.children}
-    </div>)
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    )
   }
 }

@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import * as nav                        from '../../_shared/helpers/navigation'
-import { t }                           from '../../_shared/modules/localization/localization'
-import { AVAILABLE_LANGUAGES }         from '../../routes'
+import * as nav from '../../_shared/helpers/navigation'
+import { t } from '../../_shared/modules/localization/localization'
+import { AVAILABLE_LANGUAGES } from '../../routes'
 
 import PageBase       from '../../_shared/containers/pageBase/PageBase'
 import Dropdown       from '../../_shared/components/dropdown/Dropdown'

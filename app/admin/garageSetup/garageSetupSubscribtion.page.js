@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Form               from '../../_shared/components/form/Form'

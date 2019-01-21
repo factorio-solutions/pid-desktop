@@ -1,7 +1,8 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
-import moment                           from 'moment'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import PageBase          from '../_shared/containers/pageBase/PageBase'
 import RoundButton       from '../_shared/components/buttons/RoundButton'

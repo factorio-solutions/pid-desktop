@@ -63,6 +63,7 @@
     "node-libs-browser": "^2.0.0",
     "node-sass": "^4.7.2",
     "npm": "^4.6.1",
+    "prop-types": "^15.6.2",
     "randomcolor": "^0.5.3",
     "react": "^15.6.1",
     "react-addons-update": "^15.6.0",

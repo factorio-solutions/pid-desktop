@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
-import { MOMENT_DATETIME_FORMAT }      from '../_shared/helpers/time'
+import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
 
 import PageBase         from '../_shared/containers/pageBase/PageBase'
 import Table            from '../_shared/components/table/Table'

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
 
@@ -53,7 +54,7 @@ export class Page extends Component {
   }
 
   static contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
   }
 
   constructor(props) {
