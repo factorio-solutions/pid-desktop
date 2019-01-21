@@ -160,8 +160,13 @@ export const GET_GARAGE_FREE_INTERVAL = `query ($id: Id!, $begins_at: Datetime!,
 // create reservation mutation
 export const CREATE_RESERVATION = `mutation createReservation($reservation: ReservationInput!) {
   create_reservation(reservation: $reservation) {
-    id
-    payment_url
+    new_reservation {
+      id
+      payment_url
+    }
+    errors {
+      message
+    }
   }
 }
 `

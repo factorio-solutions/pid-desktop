@@ -919,16 +919,40 @@ export function submitReservation(id) {
 
     const changeUserName = id && state.user && state.user.onetime
 
-    const onSuccess = response => {
+    const onCreateSuccess = async response => {
       try {
-        if (response.data.create_reservation && response.data.create_reservation.payment_url) {
+        const { new_reservation: newReservation, errors } = response.data.create_reservation
+        if (errors.length >= 1) {
+          const reservationOnPlace = errors.find(e => e.message === 'Place is occupied')
+          if (reservationOnPlace) {
+            // Some modal and update accessible places.
+            dispatch(pageBaseActions.setError(t([ 'newReservation', 'reservationOnThePlace' ])))
+            dispatch(setPlace())
+            await dispatch(downloadGarage(state.garage.id))
+            dispatch(autoSelectPlace())
+          } else {
+            throw Error('Cannot create reservation')
+          }
+        } else if (newReservation && newReservation.payment_url) {
           dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
-          window.location.replace(response.data.create_reservation.payment_url)
+          window.location.replace(newReservation.payment_url)
         } else {
           dispatch(pageBaseActions.setCustomModal(undefined))
-          nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
+          nav.to(`/reservations/find/${newReservation.id}`)
           dispatch(clearForm())
         }
+      } catch (err) {
+        dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
+        nav.to('/reservations')
+      }
+    }
+
+    const onUpdateSuccess = response => {
+      try {
+        const { update_reservation: updateReservation } = response.data
+        dispatch(pageBaseActions.setCustomModal(undefined))
+        nav.to(`/reservations/find/${updateReservation.id}`)
+        dispatch(clearForm())
       } catch (err) {
         dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
         nav.to('/reservations')
@@ -938,7 +962,7 @@ export function submitReservation(id) {
     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', id ? 'updatingReservation' : 'creatingReservation' ])}</div>))
 
     const createTheReservation = (user_id, user_name) => {
-      request(onSuccess,
+      request(id ? onUpdateSuccess : onCreateSuccess,
         id ? UPDATE_RESERVATION : CREATE_RESERVATION,
         {
           reservation: {
