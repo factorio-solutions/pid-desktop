@@ -819,15 +819,11 @@ export function downloadGarage(id, hideLoadingAfterRuntime = true) {
                 <div>
                   <span>
                     <b>
-{t([ 'newReservation', 'weekendPrice' ])}
-:
-</b> 
-{' '}
-{pricePerHour(pricing.weekend_price)} 
-{' '}
-{symbol} 
-{' '}
-{t([ 'newReservation', 'perHour' ])}
+                      {`${t([ 'newReservation', 'weekendPrice' ])}: `}
+                    </b>
+                    {`${pricePerHour(pricing.weekend_price)} `}
+                    {`${symbol} `}
+                    {t([ 'newReservation', 'perHour' ])}
                   </span>
                 </div>
               )}
