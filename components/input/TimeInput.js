@@ -61,10 +61,10 @@ export default class TimeInput extends Component {
 
   handleChange = event => {
     const { editable, onChange } = this.props
-    editable && this.setState({
-      ...this.state,
+    editable && this.setState(state => ({
+      ...state,
       message: event.target.value
-    })
+    }))
 
     onChange && onChange(
       event.target.value,
@@ -77,10 +77,10 @@ export default class TimeInput extends Component {
     const date = this.timeToDate(time)
     const formatedDate = moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)
 
-    this.setState({
-      ...this.state,
+    this.setState(state => ({
+      ...state,
       message: formatedDate
-    })
+    }))
 
     this.hideDatepicker()
     onChange && onChange(formatedDate, moment(date).isValid())
@@ -97,19 +97,20 @@ export default class TimeInput extends Component {
   }
 
   showDatepicker = () => {
-    this.setState({ ...this.state, focus: true })
+    this.setState(state => ({ ...state, focus: true }))
   }
 
   hideDatepicker = () => {
-    this.setState({ ...this.state, focus: false }, () => console.log('HideDatepicker. Focus: false.'))
+    this.setState(state => ({ ...state, focus: false }))
   }
 
   handleFocus = event => {
     const { pickerOnFocus } = this.props
+    const { focus } = this.state
 
     if (!pickerOnFocus) return
 
-    if (!this.state.focus) {
+    if (!focus) {
       this.showDatepicker()
       event.target.select()
     }
@@ -127,7 +128,14 @@ export default class TimeInput extends Component {
       pickerOnFocus
     } = this.props
 
+    const {
+      focus, message
+    } = this.state
+
     const styles = typeof style === 'object' ? style : defaultStyles
+    const inputId = 'TimeInput'
+    const date = moment(this.timeToDate(message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ])
+    const dateIsValid = date.isValid()
 
     return (
       <div
@@ -135,52 +143,56 @@ export default class TimeInput extends Component {
         ref={div => this.container = div}
       >
         <input
-          type={'text'}
-          value={this.state.message}
+          type="text"
+          value={message}
           onChange={this.handleChange}
           placeholder={placeholder}
           onKeyPress={this.preventEnter}
           pattern="(\d{1,2}):(\d{2})"
           onFocus={this.handleFocus}
+          id={inputId}
         />
         <span className={styles.bar} />
 
         <label
           className={styles.label}
+          htmlFor={inputId}
         >
           {label}
         </label>
 
         <label
           className={`${styles.customFormGroup}  ${styles.inlineMenu}`}
+          htmlFor={inputId}
         >
           {inlineMenu}
         </label>
 
         <label
           className={`${styles.customFormGroup}  ${styles.error}`}
-          style={{ opacity: moment(this.state.message, MOMENT_TIME_FORMAT).isValid() ? 0 : 1 }}
+          style={{ opacity: dateIsValid ? 0 : 1 }}
+          htmlFor={inputId}
         >
           {error}
         </label>
 
+        {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
         {
-          !pickerOnFocus &&
+          !pickerOnFocus
+          && (
             <label
               className={`${styles.customFormGroup}  ${styles.callendar}`}
               onClick={editable && this.showDatepicker}
+              htmlFor={inputId}
             >
               <i className="fa fa-clock-o" aria-hidden="true" />
             </label>
+          )
         }
         <PopupTimepicker
           onSelect={this.handlePick}
-          time={
-            moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ?
-              moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') :
-              undefined
-          }
-          show={this.state.focus}
+          time={dateIsValid ? date.format('HH:mm') : undefined}
+          show={focus}
           okClick={this.hideDatepicker}
           gray={style === 'gray'}
         />
