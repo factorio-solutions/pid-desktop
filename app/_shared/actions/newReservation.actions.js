@@ -758,7 +758,7 @@ function freeIntervalPromise(id, state) {
       setFreeIntervalSuccess,
       GET_GARAGE_FREE_INTERVAL,
       {
- id:             id || state.garage.id,
+        id:             id || state.garage.id,
         user_id:        state.user.id,
         client_id:      state.client_id,
         begins_at:      timeToUTC(state.from),
@@ -912,57 +912,52 @@ export function submitReservation(id) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const ongoing = state.reservation && state.reservation.ongoing
+    const updatingReservation = id !== undefined
 
     const changeUserName = id && state.user && state.user.onetime
 
-    const onCreateSuccess = async response => {
+    const onSuccess = async response => {
+      dispatch(pageBaseActions.setCustomModal(undefined))
       try {
-        const { new_reservation: newReservation, errors } = response.data.create_reservation
+        const { reservation, errors } = response.data[updatingReservation ? 'update_reservation' : 'create_reservation']
         if (errors.length >= 1) {
           const reservationOnPlace = errors.find(e => e.message === 'Place is occupied')
           if (reservationOnPlace) {
             // Some modal and update accessible places.
-            dispatch(pageBaseActions.setError(t([ 'newReservation', 'reservationOnThePlace' ])))
+            dispatch(pageBaseActions.setError(t([ 'newReservation', 'reservationOnPlace' ])))
             dispatch(setPlace())
             await dispatch(downloadGarage(state.garage.id))
-            dispatch(autoSelectPlace())
+            if (updatingReservation) {
+              dispatch(autoSelectPlace())
+            }
           } else {
             throw Error('Cannot create reservation')
           }
-        } else if (newReservation && newReservation.payment_url) {
+        } else if (reservation && reservation.payment_url) {
           dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
-          window.location.replace(newReservation.payment_url)
+          window.location.replace(reservation.payment_url)
         } else {
-          dispatch(pageBaseActions.setCustomModal(undefined))
-          nav.to(`/reservations/find/${newReservation.id}`)
+          nav.to(`/reservations/find/${reservation.id}`)
           dispatch(clearForm())
         }
       } catch (err) {
+        console.log(err)
         dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
         nav.to('/reservations')
       }
     }
 
-    const onUpdateSuccess = response => {
-      try {
-        const { update_reservation: updateReservation } = response.data
-        dispatch(pageBaseActions.setCustomModal(undefined))
-        nav.to(`/reservations/find/${updateReservation.id}`)
-        dispatch(clearForm())
-      } catch (err) {
-        dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
-        nav.to('/reservations')
-      }
-    }
+    dispatch(pageBaseActions.setCustomModal(
+      <div>{t([ 'newReservation', updatingReservation ? 'updatingReservation' : 'creatingReservation' ])}</div>
+    ))
 
-    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', id ? 'updatingReservation' : 'creatingReservation' ])}</div>))
-
-    const createTheReservation = (user_id, user_name) => {
-      request(id ? onUpdateSuccess : onCreateSuccess,
-        id ? UPDATE_RESERVATION : CREATE_RESERVATION,
+    const createTheReservation = (userId, userName) => {
+      request(
+        onSuccess,
+        updatingReservation ? UPDATE_RESERVATION : CREATE_RESERVATION,
         {
           reservation: {
-            user_id,
+            user_id:                  userId,
             note:                     state.note ? state.note : undefined,
             place_id:                 state.place_id,
             garage_id:                state.garage.id,
@@ -980,11 +975,12 @@ export function submitReservation(id) {
             payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
             csob_one_click:           state.csobOneClick,
             csob_one_click_new_card:  state.csobOneClickNewCard,
-            user_name
+            user_name:                userName
           },
           id
         },
-        'reservationMutation')
+        'reservationMutation'
+      )
     }
 
     const sendNewReservationRequest = () => {
