@@ -12,7 +12,6 @@ import CallToActionButton from '../../_shared/components/buttons/CallToActionBut
 import Checkbox           from '../../_shared/components/checkbox/Checkbox'
 
 import {
-  beginsToNow,
   formatFrom,
   setFromDate,
   setFromTime,
@@ -116,19 +115,8 @@ class DateTimeForm extends Component {
   render() {
     const { state, actions, editable } = this.props
 
-    const beginsInlineMenu = (
-      <span
-        role="button"
-        tabIndex={0}
-        className={styles.clickable}
-        onClick={actions.beginsToNow}
-      >
-        {t([ 'newReservation', 'now' ])}
-      </span>
-    )
-
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT)
-                        .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
+      .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
     return (
       <div>
@@ -178,14 +166,16 @@ class DateTimeForm extends Component {
           </div>
         </div>
 
-        {state.garage &&
-        state.freeInterval &&
-        state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true) &&
+        {state.garage
+        && state.freeInterval
+        && state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true)
+        && (
           <CallToActionButton
             label={this.freeIntervalLabel()}
             type="alternativeTime"
             onClick={this.setGreatestFreeInterval}
           />
+        )
         }
 
 
@@ -234,12 +224,17 @@ class DateTimeForm extends Component {
 
 export default connect(
   state => {
-    const { from, to, recurringRule, useRecurring, garage, freeInterval } = state.newReservation
-    return { state: { from, to, recurringRule, useRecurring, garage, freeInterval } }
+    const {
+      from, to, recurringRule, useRecurring, garage, freeInterval
+    } = state.newReservation
+    return {
+      state: {
+        from, to, recurringRule, useRecurring, garage, freeInterval
+      }
+    }
   },
   dispatch => ({
     actions: bindActionCreators({
-      beginsToNow,
       formatFrom,
       setFromDate,
       setFromTime,
@@ -251,7 +246,6 @@ export default connect(
       setFrom,
       setTo
     },
-    dispatch
-  )
+    dispatch)
   })
 )(DateTimeForm)
