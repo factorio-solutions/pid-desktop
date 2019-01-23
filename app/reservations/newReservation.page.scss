@@ -217,6 +217,7 @@ $expenseOnPadding: (($priceFontSize + 4 - $expenseOnFontSize) / 2);
   font-size: $priceFontSize;
   font-weight: 600;
   display: flex;
+  text-align: center;
 }
 
 .priceTag {
@@ -229,7 +230,8 @@ $expenseOnPadding: (($priceFontSize + 4 - $expenseOnFontSize) / 2);
   line-height: $expenseOnFontSize;
   padding: $expenseOnPadding 0px;
   margin-left: 10px;
-}$expenseOnFontSize: 20px;
+  text-align: center;
+}
 
 .smsText {
   height: 10em;
