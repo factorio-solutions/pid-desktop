@@ -24,7 +24,8 @@ export default class SearchField extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.searchQuery) {
+    const { searchQuery } = this.props
+    if (!searchQuery) {
       this.filter.input.focus()
     } else {
       this.filter.input.blur()
@@ -32,8 +33,9 @@ export default class SearchField extends Component {
   }
 
   onUserClick = user => {
-    if (this.props.user === undefined || this.props.user.id !== user.id) {
-      this.props.downloadUser(user.id, user.rights)
+    const { user: propsUser, downloadUser } = this.props
+    if (propsUser === undefined || propsUser.id !== user.id) {
+      downloadUser(user.id, user.rights)
     }
   }
 
@@ -73,9 +75,11 @@ export default class SearchField extends Component {
           readOnly={!show}
         />
 
-        {show &&
+        {show
+        && (
           <div>
-            {showFirst &&
+            {showFirst
+            && (
               <UsersList
                 className={styles.separated}
                 users={[ list.shift() ]}
@@ -83,9 +87,11 @@ export default class SearchField extends Component {
                 searchQuery={searchQuery}
                 selectedIndex={selected}
               />
+            )
             }
             <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
-              {showList &&
+              {showList
+              && (
                 <UsersList
                   className={styles.scrollable}
                   users={list}
@@ -93,8 +99,8 @@ export default class SearchField extends Component {
                   searchQuery={searchQuery}
                   selectedIndex={selected}
                 />
+              )
               }
-
               <ButtonsTable
                 className={styles.buttons}
                 buttons={buttons}
@@ -102,6 +108,7 @@ export default class SearchField extends Component {
               />
             </div>
           </div>
+        )
         }
       </div>
     )
