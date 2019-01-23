@@ -58,8 +58,11 @@ class MasterPage extends Component {
   }
 
   onLogoClick = () => nav.to('/occupancy')
+
   onMessageClick =() => nav.to('/notifications')
+
   verticalMenuClick = () => this.setState({ menu: false })
+
   secondaryVerticalMenuClick = () => {
     this.setState({ menu: true })
     this.props.secondaryMenuBackButton.onClick()

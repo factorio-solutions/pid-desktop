@@ -20,16 +20,24 @@ class GarageSelector extends Component {
     occupancyAction: PropTypes.object
   }
 
-  selected = object => this.props.actions.setGarage(object.id)
-
-  occupancySelected = object => this.props.occupancyAction.resetClientsLoadGarage(object.id)
-
   emptyGarageSelector = (
     <div>
       <div className={styles.emptyImg} />
       <div className={styles.emptyDropdown} />
     </div>
   )
+
+  selected = object => {
+    const {
+      occupancyAction: { resetClientsLoadGarage },
+      actions:         { setGarage }
+    } = this.props
+    if (window.location.hash.includes('occupancy')) {
+      resetClientsLoadGarage(object.id)
+    } else {
+      setGarage(object.id)
+    }
+  }
 
   render() {
     const { state, occupancy } = this.props
@@ -44,9 +52,7 @@ class GarageSelector extends Component {
 
     if (content === undefined || content.length === 0 || selectedIndex === -1) return this.emptyGarageSelector
 
-    const dropdownContent = window.location.hash.includes('occupancy') ?
-      content.map(object => ({ label: object.name, onClick: () => this.occupancySelected(object) })) :
-      content.map(object => ({ label: object.name, onClick: () => this.selected(object) }))
+    const dropdownContent = content.map(object => ({ label: object.name, onClick: () => this.selected(object) }))
 
     return (
       <div>
