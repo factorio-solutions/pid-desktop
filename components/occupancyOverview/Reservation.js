@@ -25,7 +25,8 @@ class Reservation extends Component {
     left:        PropTypes.number,
     width:       PropTypes.number,
     text:        PropTypes.string,
-    onClick:     PropTypes.func
+    onClick:     PropTypes.func,
+    height:      PropTypes.string
   }
 
   constructor(props) {
@@ -47,11 +48,14 @@ class Reservation extends Component {
   mouseLeave = () => this.setState(INIT_STATE)
 
   render() {
-    const { classes, left, width, text, reservation, pageBase, showDetails } = this.props
+    const {
+      classes, left, width, text, reservation, pageBase, showDetails, height
+    } = this.props
 
     const style = {
       left:  left + 'px',
-      width: width <= 0 ? 1 : width + 'px'
+      width: width <= 0 ? 1 : width + 'px',
+      height
     }
 
     const clientUser = reservation.client ? reservation.client.client_user : {}
