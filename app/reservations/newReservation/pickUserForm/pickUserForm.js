@@ -37,20 +37,19 @@ class PickUserForm extends Component {
   }
 
   cancelUser = () => {
-    this.props.actions.cancelUser()
+    const {
+      actions: { cancelUser: cancelUserAction }
+    } = this.props
+    cancelUserAction()
     if (this.searchField) {
-      // HACK: Is not focus when call immediately.
-      setTimeout(() => {
-        this.searchField.filter.input.focus()
-        this.searchField.filter.input.select()
-      }, 0)
+      this.searchField.filter.input.focus()
     }
   }
 
-  resetButton = (
+  renderResetButton = (
     <RoundButton
       className={styles.resetButton}
-      content={<span className={'fa fa-times'} />}
+      content={<span className="fa fa-times" />}
       onClick={this.cancelUser}
       type="remove"
       question="No message"
@@ -73,10 +72,11 @@ class PickUserForm extends Component {
 
     return (
       <SectionWithHeader header={t([ 'newReservation', 'userSection' ])}>
-        { !(state.user && (state.user.id < 0 || onetime)) &&
-          ((state.user && state.current_user && state.user.id !== state.current_user.id) || state.availableUsers.length > 1) &&
+        { !(state.user && (state.user.id < 0 || onetime))
+        && ((state.user && state.currentUser && state.user.id !== state.currentUser.id) || state.availableUsers.length > 1)
+        && (
           <div className={styles.searchField}>
-            {state.user && this.resetButton}
+            {state.user && this.renderResetButton}
             <SearchField
               editable={!ongoing || isSecretary}
               placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
@@ -87,30 +87,37 @@ class PickUserForm extends Component {
               onChange={actions.setHostName}
               buttons={buttonsDropdown}
               ref={component => this.searchField = component}
-              separateFirst={usersDropdown.some(user => user.id === state.current_user.id)}
+              separateFirst={usersDropdown.some(user => user.id === state.currentUser.id)}
               user={state.user}
               downloadUser={actions.downloadUser}
             />
           </div>
+        )
         }
 
-        {state.user && state.user.id >= 0 && !state.user.onetime &&
+        {state.user && state.user.id >= 0 && !state.user.onetime
+        && (
           <ExistingUserForm
             editable={!ongoing || isSecretary}
           />
+        )
         }
 
-        {((state.user && state.user.id < 0) || (state.user && state.user.onetime)) &&
+        {((state.user && state.user.id < 0) || (state.user && state.user.onetime))
+        && (
           <NewUserForm
             editable={!ongoing || isSecretary}
             onetime={onetime}
-            resetButton={this.resetButton}
+            resetButton={this.renderResetButton}
           />
+        )
         }
-        {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid &&
+        {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid
+        && (
           <div className={styles.fillInContact}>
             {t([ 'newReservation', 'fillInContact' ])}
           </div>
+        )
         }
       </SectionWithHeader>
     )
@@ -127,7 +134,7 @@ const mapStateToProps = state => {
     email,
     phone
   } = state.newReservation
-  const { current_user } = state.pageBase
+  const { current_user: currentUser } = state.pageBase
 
   return {
     state: {
@@ -136,7 +143,7 @@ const mapStateToProps = state => {
       reservation,
       highlight,
       name,
-      current_user,
+      currentUser,
       email,
       phone
     },

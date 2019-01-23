@@ -65,35 +65,42 @@ class PriceSmsNote extends Component {
 
     return (
       <div>
-        {state.garage &&
+        {state.garage
+        && (
           <SectionWithHeader header={t([ 'newReservation', 'priceAndOthers' ])}>
             {/* Price */}
-            {selectedClient && selectedClient.is_time_credit_active &&
-            isPlaceGoInternal(state) ?
-              <Uneditable
-                label={t([ 'newReservation', 'price' ])}
-                highlight={state.highlight && outOfTimeCredit}
-                value={`${state.timeCreditPrice} /
-                  ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
-                  ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
-                `}
-              /> :
-              <div className={`${styles.price} ${styles.dateTimeContainer}`}>
-                <div className={` ${styles.priceTag} ${styles.leftCollumn}`} >
-                  {`${t([ 'newReservation', 'price' ])} ${price}`}
+            {selectedClient && selectedClient.is_time_credit_active
+            && isPlaceGoInternal(state)
+              ? (
+                <Uneditable
+                  label={t([ 'newReservation', 'price' ])}
+                  highlight={state.highlight && outOfTimeCredit}
+                  value={`${state.timeCreditPrice} /
+                    ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
+                    ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
+                  `}
+                />
+              )
+              : (
+                <div className={`${styles.price} ${styles.dateTimeContainer}`}>
+                  <div className={` ${styles.priceTag} ${styles.leftCollumn}`}>
+                    {`${t([ 'newReservation', 'price' ])} ${price}`}
+                  </div>
+                  <div className={styles.middleCollumn} />
+                  <div className={` ${styles.expenseOn} ${styles.rightCcollumn}`}>
+                    {expenseOn}
+                  </div>
                 </div>
-                <div className={styles.middleCollumn} />
-                <div className={` ${styles.expenseOn} ${styles.rightCcollumn}`} >
-                  {expenseOn}
-                </div>
-              </div>
+              )
             }
             {/* SMS */}
-            {state.user &&
+            {state.user
+            && (
               <SmsForm
                 accentRegex={accentRegex}
                 selectedClient={selectedClient}
               />
+            )
             }
             {/* Note */}
             <Input
@@ -104,6 +111,7 @@ class PriceSmsNote extends Component {
               style={inputStyles}
             />
           </SectionWithHeader>
+        )
         }
       </div>
     )
@@ -112,8 +120,9 @@ class PriceSmsNote extends Component {
 
 export default connect(
   state => ({ state: state.newReservation }),
-  dispatch => ({ actions: bindActionCreators({
-    setNote
-  }, dispatch)
+  dispatch => ({
+    actions: bindActionCreators({
+      setNote
+    }, dispatch)
   })
 )(PriceSmsNote)
