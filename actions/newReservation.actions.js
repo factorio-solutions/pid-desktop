@@ -1051,11 +1051,8 @@ export function afterPayment(id, success) {
 }
 
 export function cancelUser() {
-  return (dispatch, getState) => {
-    const { user: { id } } = getState().newReservation
-    if (id < 0) {
-      dispatch(setHostName(''))
-    }
+  return dispatch => {
+    dispatch(setHostName(''))
     dispatch({
       type:  NEW_RESERVATION_SET_USER,
       value: undefined
