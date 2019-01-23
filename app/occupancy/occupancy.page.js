@@ -29,7 +29,7 @@ const UPDATE_EVERY_X_MINUTES = 3
 class OccupancyPage extends Component {
   static propTypes = {
     state:                 PropTypes.object,
-    pageBase:              PropTypes.object,
+    currentUser:           PropTypes.object,
     actions:               PropTypes.object,
     newReservationActions: PropTypes.object
   }
@@ -64,7 +64,7 @@ class OccupancyPage extends Component {
   }
 
   render() {
-    const { state, pageBase, actions } = this.props
+    const { state, currentUser, actions } = this.props
     const { garage } = state
 
     const clientDropdown = () => {
@@ -180,10 +180,12 @@ class OccupancyPage extends Component {
             resetClientClick={actions.resetClientClick}
             loading={!state.garages.length || state.loading}
             onReservationClick={this.onReservationClick}
+            currentUser={currentUser}
+            setNewReservation={actions.setNewReservation}
           />
         </div>
 
-        <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
+        <div className={`${styles.controlls} ${currentUser && !currentUser.hint && styles.rightOffset}`}>
           <div> <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.subtract} /> </div>
           <div className={`${styles.flex} ${styles.hideOnSmallDisplays}`}>
             <RoundButton content={t([ 'occupancy', 'dayShortcut' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />
@@ -198,7 +200,10 @@ class OccupancyPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.occupancy, pageBase: state.pageBase }),
+  state => ({
+    state:       state.occupancy,
+    currentUser: state.pageBase.current_user
+  }),
   dispatch => ({
     actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
     newReservationActions: bindActionCreators(newReservationActions, dispatch)

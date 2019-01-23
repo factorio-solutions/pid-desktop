@@ -4,6 +4,7 @@ import reduxReset                                 from 'redux-reset'
 import { createLogger }                           from 'redux-logger'
 import { hashHistory }                            from 'react-router'
 import { routerMiddleware, push }                 from 'react-router-redux'
+import { enableBatching }                         from 'redux-batched-actions'
 
 import rootReducer from '../_app/app.reducer'
 
@@ -27,7 +28,7 @@ const enhancer = compose(
 )
 
 export default function configureStore(initialState) {
-  const store = createStore(rootReducer, initialState, enhancer)
+  const store = createStore(enableBatching(rootReducer), initialState, enhancer)
 
   if (window.devToolsExtension) {
     window.devToolsExtension.updateStore(store)
