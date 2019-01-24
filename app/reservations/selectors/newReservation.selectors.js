@@ -80,8 +80,12 @@ const getIsSelectedPlaceGoInternal = createSelector(
 
 // TODO: Separate to smaller methods
 export const getIsSubmittable = createSelector(
-  [ getUser, getEmail, getPhone, getName, getClientId, getPaidByHost, getFrom, getTo, getTemplateText, getSendSMS, getSelectedClient, getGarage, getIsSelectedPlaceGoInternal, getPlaceId, getFreePlaces, getOutOfTimeCredit ],
-  (user, email, phone, name, clientId, paidByHost, from, to, templateText, sendSMS, selectedClient, garage, isSelectedPlaceGoInternal, placeId, freePlaces, outOfTimeCredit) => {
+  [ getUser, getEmail, getPhone, getName, getClientId, getPaidByHost, getFrom, getTo, getTemplateText, getSendSMS,
+    getSelectedClient, getGarage, getIsSelectedPlaceGoInternal, getPlaceId, getFreePlaces, getOutOfTimeCredit ],
+  (
+    user, email, phone, name, clientId, paidByHost, from, to, templateText, sendSMS, selectedClient, garage,
+    isSelectedPlaceGoInternal, placeId, freePlaces, outOfTimeCredit
+  ) => {
     if ((user && user.id === -1) && (!email.valid || !phone.valid || !name.valid)) return false
     if ((user && user.id === -2) && (!clientId || !name.valid)) return false
     if (from === '' || to === '') return false
