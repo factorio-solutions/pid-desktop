@@ -193,20 +193,20 @@ $expenseOnPadding: (($priceFontSize + 4 - $expenseOnFontSize) / 2);
   }
 }
 
-.placeLabelArea {
-  @extend .textArea;
-  text-align:       center;
-  background-color: transparent;
-  >textarea {
-    font-size:      35px;
-    font-weight:    bold;
-    resize:         none;
-    padding:        0;
-    height:         1.3em;
+.label {
+  left:        5px;
+  font-size:   11px;
+  white-space: nowrap;
+  min-height:  14px;
+  width:       100%;
+  text-align:  left;
+  position:    relative;
+}
 
-    background-color: transparent;
-    text-align:       center;
-  }
+.placeLabel {
+  font-size:      35px;
+  font-weight:    bold;
+  text-align:     center;
 }
 
 .displayNone {

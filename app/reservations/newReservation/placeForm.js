@@ -32,25 +32,26 @@ class PlaceForm extends Component {
     const { state, actions, freePlaces } = this.props
     const placeLabelKey = this.placeLabel(state, freePlaces)
 
-    const showMap = () => {
+    const showMapOnClick = () => {
       actions.showMap(!state.showMap)
     }
 
     return (
-      <div className={`${styles.dateTimeContainer}`}>
-        <div className={`${styles.leftCollumn} ${styles.placeLabelArea}`}>
-          <label>{t([ 'newReservation', 'place' ])}</label>
-          <textarea
-            value={placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
-            readOnly
-            disabled
-          />
+      <div className={styles.dateTimeContainer}>
+        <div className={styles.leftCollumn}>
+          <div className={styles.label}>
+            {t([ 'newReservation', 'place' ])}
+          </div>
+          <div className={styles.placeLabel}>
+            {placeLabelKey.includes('/') ? placeLabelKey : t([ 'newReservation', placeLabelKey ])}
+          </div>
         </div>
         <div className={styles.middleCollumn} />
         <div className={`${styles.rightCcollumn} ${styles.showMap} ${styles.actionButton}`}>
+          <div className={styles.label} />
           <CallToActionButton
             label={t([ 'newReservation', 'showMap' ])}
-            onClick={showMap}
+            onClick={showMapOnClick}
           />
         </div>
       </div>
@@ -60,10 +61,12 @@ class PlaceForm extends Component {
 
 export default connect(
   state => ({ state: state.newReservation }),
-  dispatch => ({ actions: bindActionCreators(
-    { showMap
-    },
-    dispatch
-  )
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        showMap
+      },
+      dispatch
+    )
   })
 )(PlaceForm)
