@@ -175,8 +175,6 @@ export function loadGarages() {
   }
 }
 
-
-
 export function resetClientsLoadGarage(id) {
   return async (dispatch, getState) => {
     const state = getState().occupancy
