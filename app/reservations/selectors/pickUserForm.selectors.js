@@ -47,15 +47,17 @@ export const getUsers = createSelector(
     const searchQueryHit = (searchQuery, ...props) => {
       if (searchQuery === '') return true
 
-      const valuesToCompare = props.map(prop => prop.toString().replace(/\s\s+/g, ' ').trim().toLowerCase())
-
-      return valuesToCompare.some(value => value.includes(searchQuery.toLowerCase()))
+      return props
+        .filter(prop => prop)
+        .map(prop => prop.toString().replace(/\s\s+/g, ' ').trim().toLowerCase())
+        .some(value => value.includes(searchQuery.toLowerCase()))
     }
 
-    return availableUsers.filter(
-      user => user.id > 0 &&
-           searchQueryHit(nameInput.value, user.full_name, user.email, user.phone)
-    )
+    return availableUsers.filter(user => {
+      if (user.id < 0) return false
+
+      return searchQueryHit(nameInput.value, user.full_name, user.email, user.phone)
+    })
   }
 )
 
