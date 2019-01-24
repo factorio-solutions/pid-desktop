@@ -25,7 +25,8 @@ import {
   ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL,
   ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS,
-  ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM
+  ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM,
+  ADMIN_CLIENTS_NEW_CONTRACT_SET_GENERATE_INVOICE
 } from '../actions/newContract.actions'
 
 const defaultState = {
@@ -46,6 +47,7 @@ const defaultState = {
   places:           [],
   highlight:        false,
   indefinitly:      false,
+  generateInvoice:  false,
   securityInterval: 0,
 
   // determining what should happen to reservations of removed places
@@ -197,6 +199,12 @@ export default function newContract(state = defaultState, action) {
       return {
         ...state,
         removeReservations: action.value
+      }
+
+    case ADMIN_CLIENTS_NEW_CONTRACT_SET_GENERATE_INVOICE:
+      return {
+        ...state,
+        generateInvoice: action.value
       }
 
     case ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM:

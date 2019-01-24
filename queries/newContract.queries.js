@@ -45,6 +45,7 @@ export const GET_GARAGE_CLIENT = `query GetGarage($garage_id: Id!, $begins_at: D
         places{
           id
         }
+        generate_invoice
       }
     }
   }
@@ -105,6 +106,7 @@ export const GET_CONTRACT_DETAILS = `query ($id:Id!) {
         symbol
       }
     }
+    generate_invoice
   }
 }
 `
