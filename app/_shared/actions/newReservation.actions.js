@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { batchActions } from 'redux-batched-actions'
 
 import { request }                       from '../helpers/request'
 import actionFactory                     from '../helpers/actionFactory'
@@ -660,10 +661,13 @@ export function downloadUser(id, rights) {
     let availableClients
     let state = getState().newReservation
     if (state.garage && availableGarages.some(gar => gar.id === state.garage.id)) {
-      availableClients = (await clientsPromise(id, state.garage && state.garage.id, state.reservation && state.reservation.id)).reservable_clients
+      ({ reservable_clients: availableClients } = (await clientsPromise(
+        id,
+        state.garage && state.garage.id, state.reservation && state.reservation.id
+      )))
     } else {
-      dispatch(setGarage())
-      availableClients = (await clientsPromise()).reservable_clients
+      dispatch(setGarage());
+      ({ reservable_clients: availableClients } = (await clientsPromise()))
     }
     state = getState().newReservation
     if (!availableClients.some(client => client.id === state.client_id)) {
@@ -673,10 +677,12 @@ export function downloadUser(id, rights) {
     availableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
 
     if (user) {
-      dispatch(setHostName(user.full_name, true))
-      dispatch(setHostPhone(user.phone, true))
-      dispatch(setHostEmail(user.email, true))
-      dispatch(setLanguage(user.language))
+      dispatch(batchActions([
+        setHostName(user.full_name, true),
+        setHostPhone(user.phone, true),
+        setHostEmail(user.email, true),
+        setLanguage(user.language)
+      ]))
     }
 
     dispatch(setUser({
@@ -687,11 +693,13 @@ export function downloadUser(id, rights) {
     }))
 
     if (lastUserWasSaved && id < 0) {
-      dispatch(setHostPhone('', false))
-      dispatch(setHostEmail('', false))
-      dispatch(setLanguage(getLanguage()))
-      dispatch(setCarLicencePlate(''))
-      dispatch(setCarId())
+      dispatch(batchActions([
+        setHostPhone('', false),
+        setHostEmail('', false),
+        setLanguage(getLanguage()),
+        setCarLicencePlate(''),
+        setCarId()
+      ]))
     }
 
     state = getState().newReservation
