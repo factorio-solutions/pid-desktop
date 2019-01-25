@@ -14,7 +14,7 @@ import { initReservations } from '../../actions/mobile.reservations.actions'
 
 import { LOGIN, RESERVATIONS } from '../../../_resources/constants/RouterPaths'
 
-export class Page extends Component {
+class Page extends Component {
   static propTypes = {
     actions:             PropTypes.object,
     reservationsActions: PropTypes.object,
