@@ -25,7 +25,7 @@ export const hideModal = () => dispatch => dispatch(setShowModal(false))
 
 
 export function carOnMySpot(reservation) { // for mobiles
-  return async function (dispatch, getState) {
+  return async (dispatch, getState) => {
     const { shift_reservation_place } = await requestPromise(SHIFT_RESERVATION_PLACE, { id: reservation.id, licence_plate: getState().carOnMySpot.licencePlate })
     const state = getState().reservations
     const index = state.reservations.findIndexById(reservation.id)

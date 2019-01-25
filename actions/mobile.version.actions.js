@@ -1,7 +1,7 @@
 import React from 'react'
+import moment from 'moment'
 import requestPromise from '../helpers/requestPromise'
 import actionFactory from '../helpers/actionFactory'
-import moment from 'moment'
 
 import RoundButton from '../components/buttons/RoundButton'
 
@@ -49,10 +49,10 @@ export function checkCurrentVersion() {
     const { currentVersion, appVersion } = getState().mobileVersion
     const platform = (window.cordova && window.cordova.platformId) || 'android'
     if (
-      !currentVersion.lastCheckAt ||
-      !moment(currentVersion.lastCheckAt).isSame(moment(), 'day')
+      !currentVersion.lastCheckAt
+      || !moment(currentVersion.lastCheckAt).isSame(moment(), 'day')
     ) {
-      const mobileAppVersion = (await getCurrentMobileVersion(platform)).mobile_app_version
+      const { mobile_app_version: mobileAppVersion } = await getCurrentMobileVersion(platform)
 
       dispatch(setCurrentVersion(mobileAppVersion))
 
