@@ -276,7 +276,8 @@ export function addClient() {
       }
     }
 
-    request(onSuccess,
+    request(
+      onSuccess,
       ADD_CLIENT,
       { token: getState().newContract.client_token }
     )
