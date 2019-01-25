@@ -503,8 +503,9 @@ export function submitReservation(callback) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       const res = response.data.create_reservation || response.data.update_reservation
-      if (res.payment_url) {
-        dispatch(payReservation(res.payment_url, callback))
+      const { payment_url: paymentUrl } = res.reservation
+      if (paymentUrl) {
+        dispatch(payReservation(paymentUrl, callback))
       } else {
         dispatch(setCustomModal())
         dispatch(clearForm())
