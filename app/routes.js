@@ -107,11 +107,12 @@ import TestingPage from './testing/testing.page'
 // //////////////////////////////////////////////////////////////////////////////
 // //////////////////////////PID ADMIN PAGES/////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////
-import PidAdminDashboardPage   from './pidAdmin/dashboard/dashboard.page'
-import PidAdminUsersPage       from './pidAdmin/users/users.page'
-import PidAdminFinancePage     from './pidAdmin/finance/finance.page'
-import PidAdminLogsPage        from './pidAdmin/logs/logs.page'
-import PidAdminGaragesOverview from './pidAdmin/garagesOverview/garagesOverview.page'
+import PidAdminDashboardPage    from './pidAdmin/dashboard/dashboard.page'
+import PidAdminUsersPage        from './pidAdmin/users/users.page'
+import PidAdminFinancePage      from './pidAdmin/finance/finance.page'
+import PidAdminLogsPage         from './pidAdmin/logs/logs.page'
+import PidAdminGaragesOverview  from './pidAdmin/garagesOverview/garagesOverview.page'
+import PidAdminMobileAppVersion from './pidAdmin/mobileAppVersion/mobileAppVersion.page'
 
 import PidAdminGeneratorGaragesPage      from './pidAdmin/generator/generatorGarages.page'
 import PidAdminGeneratorClientsPage      from './pidAdmin/generator/generatorClients.page'
@@ -133,6 +134,7 @@ export default function createRoutes() {
       <Route path="finance" component={PidAdminFinancePage} />
       <Route path="logs" component={PidAdminLogsPage} />
       <Route path="garagesOverview" component={PidAdminGaragesOverview} />
+      <Route path="mobileAppVersion" component={PidAdminMobileAppVersion} />
 
       <Route path="generator" component={PidAdminGeneratorGaragesPage} />
       <Route path="generator/clients" component={PidAdminGeneratorClientsPage} />
