@@ -51,16 +51,13 @@ export default class Dropdown extends Component {
     this.validateContent(nextProps)
   }
 
-  validateContent(nextProps) {
-    if (nextProps.content.length === 1) { // if only one item, autoselect it
-      this.setState({ ...this.state, selected: 0 })
-    } else {
-      this.setState({ ...this.state, selected: nextProps.selected })
-    }
-  }
 
   toggleDropdown = () => {
-    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
+    if (this.ul.classList.contains(styles.hidden)) {
+      this.unhide()
+    } else {
+      this.hide()
+    }
   }
 
   hide = () => {
@@ -80,6 +77,14 @@ export default class Dropdown extends Component {
       if (this.props.filter) {
         this.filter.focus()
       }
+    }
+  }
+
+  validateContent(nextProps) {
+    if (nextProps.content.length === 1) { // if only one item, autoselect it
+      this.setState({ ...this.state, selected: 0 })
+    } else {
+      this.setState({ ...this.state, selected: nextProps.selected })
     }
   }
 

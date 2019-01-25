@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
@@ -38,7 +39,9 @@ class MobileHeader extends Component {
   }
 
   logout = revoke => { // private method
-    this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
+    const { actions: { logout } } = this.props
+    const { router } = this.context
+    logout(revoke, () => router.push(LOGIN))
   }
 
   render() {
@@ -51,23 +54,28 @@ class MobileHeader extends Component {
       <div className={styles.header}>
         <div className={styles.logo}><Logo /></div>
         <div className={styles.content}>
-          {state.showDropdown &&
-            <Dropdown
-              label={t([ 'mobileApp', 'page', 'selectGarage' ])}
-              content={state.garages.map(this.garageDropdown)}
-              style="mobileDark"
-              selected={selectedGarage}
-              fixed
-            />
+          {
+            state.showDropdown && (
+              <Dropdown
+                placeholder={t([ 'mobileApp', 'page', 'selectGarage' ])}
+                content={state.garages.map(this.garageDropdown)}
+                style="mobileDark"
+                selected={selectedGarage}
+                fixed
+              />
+            )
           }
         </div>
-        {state.showHamburger &&
-          <button
-            onClick={actions.toggleMenu}
-            className={styles.menuButton}
-          >
-            <i className="fa fa-bars" aria-hidden="true" />
-          </button>
+        {
+          state.showHamburger && (
+            <button
+              onClick={actions.toggleMenu}
+              className={styles.menuButton}
+              type="button"
+            >
+              <i className="fa fa-bars" aria-hidden="true" />
+            </button>
+          )
         }
         <MobileSlideMenu
           showSlideMenu={state.showMenu}
