@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 
 import styles from './Swipe.scss'
 
+const TRANSITION_TIME = 700
 
 export default class Swipe extends Component {
   static propTypes = {
@@ -39,9 +40,13 @@ export default class Swipe extends Component {
   }
 
   onDragOrMoveEnd = event => {
-    if (this.state.sliderPosition / this.maxSliderLeft() > 0.95) {
-      this.props.onSwipe()
-      this.setState({ ...this.state, swiped: true, sliderPosition: this.maxSliderLeft() })
+    if (this.state.sliderPosition / this.maxSliderLeft() > 0.5) {
+      this.setState({ ...this.state, reseting: true, sliderPosition: this.maxSliderLeft() })
+      setTimeout(() => this.setState(
+        { ...this.state, swiped: true, reseting: false },
+        this.props.onSwipe
+      ),
+      TRANSITION_TIME)
     } else {
       this.resetSlider()
     }
@@ -53,8 +58,6 @@ export default class Swipe extends Component {
       sliderPosition: 0,
       reseting:       true
     })
-
-    const TRANSITION_TIME = 700
     setTimeout(() => this.setState({ ...this.state, swiped: false, reseting: false }), TRANSITION_TIME)
   }
 

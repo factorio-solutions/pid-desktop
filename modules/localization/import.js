@@ -59,7 +59,7 @@ for (var i = 1; i < languages.length; i++) {
 
   if (lang[0] != ""){
     !fs.existsSync(path.join(dest, lang[0])) && fs.mkdirSync(path.join(dest, lang[0]))
-    fs.writeFile(fileDest, JSON.stringify(unflatten(flatLang), null, '\t'), function(err){console.log(err);})
+    fs.writeFile(fileDest, JSON.stringify(unflatten(flatLang), null, '\t'), err => console.log(err))
   }
 
 }
