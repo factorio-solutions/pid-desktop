@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import { connect }          from 'react-redux'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 
 import { confirm } from '../../actions/pageBase.actions'
 
@@ -12,7 +13,18 @@ import { confirm } from '../../actions/pageBase.actions'
 // question = text of confirm window when type == 'remove'
 
 
-function Button({ content, onClick, onDisabledClick, type, state, style, question, confirm, onMouseDown }) {
+function Button({
+  content,
+  onClick,
+  onDisabledClick,
+  type,
+  state,
+  style,
+  question,
+  confirm,
+  onMouseDown,
+  className
+}) {
   const handleClick = e => {
     e.stopPropagation()
     onClick && (type === 'remove' && question !== 'No message'
@@ -23,7 +35,7 @@ function Button({ content, onClick, onDisabledClick, type, state, style, questio
 
   return (
     <button
-      className={style}
+      className={`${style} ${className}`}
       type="button"
       onClick={state === 'disabled'
         ? onDisabledClick
@@ -48,7 +60,8 @@ Button.propTypes = {
   style:           PropTypes.string,
   question:        PropTypes.string,
   confirm:         PropTypes.func,
-  onMouseDown:     PropTypes.func
+  onMouseDown:     PropTypes.func,
+  className:       PropTypes.string
 }
 
 export default connect(

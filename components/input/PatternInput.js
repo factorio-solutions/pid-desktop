@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import styles                          from './Input.scss'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import defaultStyles from './Input.scss'
 
 
 // this component has to know its state, so it can be passed to the value attribute of input
@@ -18,7 +19,12 @@ export default class PatternInput extends Component {
     inlineMenu:     PropTypes.object,
     highlight:      PropTypes.bool,
     readOnly:       PropTypes.bool,
-    normalizeInput: PropTypes.func
+    normalizeInput: PropTypes.func,
+    style:          PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+    reservation:    PropTypes.bool
   }
 
   constructor(props) { // just to handle two way databinding
@@ -58,13 +64,14 @@ export default class PatternInput extends Component {
   }
 
   render() {
-    const { label, error, pattern, placeholder, inlineMenu, type, highlight, readOnly, align } = this.props
+    const { label, error, pattern, placeholder, inlineMenu, type, highlight, readOnly, align, style, reservation } = this.props
 
+    const styles = style && typeof style !== 'string' ? style : defaultStyles
 
     const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
-      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${styles[style]} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
         <input
           pattern={pattern}
           type={type || 'text'}
@@ -76,7 +83,7 @@ export default class PatternInput extends Component {
           readOnly={readOnly}
         />
         <span className={styles.bar} />
-        <label className={styles.label}>{label}</label>
+        <label className={reservation ? styles.reservationLabel : styles.label}>{label}</label>
         <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
         <label className={`${styles.customFormGroup}  ${styles.error}`}>
           {error}

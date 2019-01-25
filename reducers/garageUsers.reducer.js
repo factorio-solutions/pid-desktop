@@ -1,13 +1,15 @@
 import {
   SET_GARAGE_USERS,
   SET_GARAGE_PENDING_USERS,
-  SET_GARAGE_USER_GARAGE
+  SET_GARAGE_USER_GARAGE,
+  SET_GARAGE_USERS_SELECTED_ID
 }  from '../actions/garageUsers.actions'
 
 const defaultState = {
   users:         [],
   pending_users: [],
-  garage:        undefined
+  garage:        undefined,
+  selectedId:    undefined
 }
 
 
@@ -30,6 +32,12 @@ export default function garageUsers(state = defaultState, action) {
       return {
         ...state,
         garage: action.value
+      }
+
+    case SET_GARAGE_USERS_SELECTED_ID:
+      return {
+        ...state,
+        selectedId: action.value
       }
 
     default:

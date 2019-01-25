@@ -1,11 +1,12 @@
 import React from 'react'
 import moment from 'moment'
+import { batchActions } from 'redux-batched-actions'
 
 import { request }                       from '../helpers/request'
 import actionFactory                     from '../helpers/actionFactory'
 import requestPromise                    from '../helpers/requestPromise'
 import * as nav                          from '../helpers/navigation'
-import { t }                             from '../modules/localization/localization'
+import { t, getLanguage }                from '../modules/localization/localization'
 import {
   calculatePrice,
   valueAddedTax,
@@ -80,6 +81,8 @@ export const NEW_RESERVATION_SET_TIME_CREDIT_PRICE = 'NEW_RESERVATION_SET_TIME_C
 export const NEW_RESERVATION_SET_PREFERED_GARAGE_ID = 'NEW_RESERVATION_SET_PREFERED_GARAGE_ID'
 export const NEW_RESERVATION_SET_PREFERED_PLACE_ID = 'NEW_RESERVATION_SET_PREFERED_PLACE_ID'
 export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
+export const NEW_RESERVATION_SHOW_MAP = 'NEW_RESERVATION_SHOW_MAP'
+export const NEW_RESERVATION_LAST_USER_WAS_SAVED = 'NEW_RESERVATION_LAST_USER_WAS_SAVED'
 
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
@@ -97,7 +100,6 @@ export const setPaidByHost = actionFactory(NEW_RESERVATION_SET_PAID_BY_HOST)
 export const setError = actionFactory(NEW_RESERVATION_SET_ERROR)
 export const clearForm = actionFactory(NEW_RESERVATION_CLEAR_FORM)
 export const setLanguage = actionFactory(NEW_RESERVATION_SET_HOST_LANGUAGE)
-export const setSendSms = actionFactory(NEW_RESERVATION_SET_SEND_SMS)
 export const setSelectedTemplate = (value, template) => ({ type: NEW_RESERVATION_SET_SELECTED_TEMPLATE, value, template })
 export const setTemplateText = actionFactory(NEW_RESERVATION_SET_TEMPLATE_TEXT)
 export const selectPaymentMethod = actionFactory(NEW_RESERVATION_SET_PAYMENT_METHOD)
@@ -110,6 +112,8 @@ export const setMaxDuration = actionFactory(NEW_RESERVATION_SET_MAX_DURATION)
 export const setTimeCreditPrice = actionFactory(NEW_RESERVATION_SET_TIME_CREDIT_PRICE)
 export const setFreeInterval = actionFactory(NEW_RESERVATION_SET_FREE_INTERVAL)
 export const setClientId = actionFactory(NEW_RESERVATION_SET_CLIENT_ID)
+export const showMap = actionFactory(NEW_RESERVATION_SHOW_MAP)
+export const setLastUserWasSaved = actionFactory(NEW_RESERVATION_LAST_USER_WAS_SAVED)
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NAME)
@@ -126,12 +130,13 @@ function showLoadingModal(show) {
 }
 
 export function setUser(value) {
-  return (dispatch, getState) => {
-    dispatch({ type: NEW_RESERVATION_SET_USER,
+  return async (dispatch, getState) => {
+    dispatch({
+      type: NEW_RESERVATION_SET_USER,
       value
     })
-    if (value.availableClients.find(client => client.id === getState().newReservation.client_id) === undefined) { // preselected client no longer available
-      dispatch(setClient(undefined))
+    if (!value.availableClients.some(client => client.id === getState().newReservation.client_id)) { // preselected client no longer available
+      await dispatch(setClient())
     }
   }
 }
@@ -144,9 +149,25 @@ export function setNote(value) {
 }
 
 export function setClient(id) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
+    const {
+      user,
+      selectedTemplate
+    } = getState().newReservation
+
+    const client = user && user.availableClients && user.availableClients.findById(id)
+    let template
+    if (client && client.sms_templates && selectedTemplate) {
+      template = client.sms_templates.findById(selectedTemplate)
+    }
+
+    if (!template && selectedTemplate) {
+      dispatch(setSendSms(false))
+    }
+
     dispatch(setClientId(id))
-    getState().newReservation.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+    // TODO: Why download garage every time?
+    getState().newReservation.garage && await dispatch(downloadGarage(getState().newReservation.garage.id))
     dispatch(setPrice())
     dispatch(setMinMaxDuration())
   }
@@ -158,14 +179,15 @@ export function setRecurringRule(value) {
       const start = moment(value.starts, MOMENT_DATE_FORMAT)
       dispatch(setFrom(
         moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
-        .year(start.year())
-        .month(start.month())
-        .date(start.date())
-        .format(MOMENT_DATETIME_FORMAT)
+          .year(start.year())
+          .month(start.month())
+          .date(start.date())
+          .format(MOMENT_DATETIME_FORMAT)
       ))
       dispatch(formatFrom())
     }
-    dispatch({ type: NEW_RESERVATION_SET_RECURRING_RULE,
+    dispatch({
+      type: NEW_RESERVATION_SET_RECURRING_RULE,
       value
     })
     dispatch(setPrice())
@@ -180,8 +202,9 @@ export function setUseRecurring(event) {
 }
 
 export function setGarage(value) {
-  return (dispatch, getState) => {
-    dispatch({ type: NEW_RESERVATION_SET_GARAGE,
+  return async (dispatch, getState) => {
+    dispatch({
+      type: NEW_RESERVATION_SET_GARAGE,
       value
     })
     // There were two available Clients requests because line #497 and #525
@@ -192,14 +215,30 @@ export function setGarage(value) {
         availableClients: [ { name: t([ 'newReservation', 'selectClient' ]), id: undefined } ]
       }))
     } else {
-      const availableClientsPromise = clientsPromise(state.user && state.user.id, state.garage && state.garage.id)
-      availableClientsPromise.then(value => {
-        value.reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
-        state.user && dispatch(setUser({ ...state.user, availableClients: value.reservable_clients }))
-      }).catch(error => {
-        throw (error)
-      })
+      const reservationId = state.reservation && state.reservation.id
+      const reservableClients = (await clientsPromise(state.user && state.user.id, state.garage && state.garage.id, reservationId)).reservable_clients
+      reservableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
+      state.user && dispatch(setUser({ ...state.user, availableClients: reservableClients }))
     }
+  }
+}
+
+export function setSendSms(sendSms) {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    const client = dispatch(selectedClient())
+    let templateIndex
+    let templateText = ''
+
+    if (sendSms && client.sms_templates.length === 1) {
+      templateIndex = 0
+      templateText = client.sms_templates[0].template
+    } else if (!state.selectedTemplate) {
+      templateText = state.templateText
+    }
+
+    dispatch({ type: NEW_RESERVATION_SET_SEND_SMS, value: sendSms })
+    dispatch(setSelectedTemplate(templateIndex, templateText))
   }
 }
 
@@ -258,13 +297,13 @@ export function formatFrom(loadGarage = false) {
 
     const MIN_RESERVATION_DURATION = state.minDuration
     const MAX_RESERVATION_DURATION = state.maxDuration
-    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
     }
-    if (MAX_RESERVATION_DURATION &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
+    if (MAX_RESERVATION_DURATION
+        && moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
       toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
 
@@ -285,7 +324,7 @@ export function formatFrom(loadGarage = false) {
 
 export function setToDate(value) {
   return (dispatch, getState) => {
-    const to = moment(getState().newReservation.from, MOMENT_DATETIME_FORMAT)
+    const to = moment(getState().newReservation.to, MOMENT_DATETIME_FORMAT)
     const toDate = moment(value, MOMENT_DATE_FORMAT)
     const fromValue = null
     to.set('year', toDate.get('year'))
@@ -325,13 +364,15 @@ export function formatTo(loadGarage = false) {
 
     const MIN_RESERVATION_DURATION = state.minDuration
     const MAX_RESERVATION_DURATION = state.maxDuration
-    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION) {
+    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION
+    ) {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
     }
-    if (MAX_RESERVATION_DURATION &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION) {
+    if (MAX_RESERVATION_DURATION
+        && moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION
+    ) {
       toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
 
@@ -343,7 +384,7 @@ export function formatTo(loadGarage = false) {
     toValue.diff(fromValue, 'months') >= 1 && dispatch(setUseRecurring(false))
 
     if (loadGarage || !currentTo.isSame(toValue)) {
-      state.garage && dispatch(downloadGarage(getState().newReservation.garage.id))
+      state.garage && dispatch(downloadGarage(state.garage.id))
       dispatch(setPrice())
     }
   }
@@ -352,7 +393,8 @@ export function formatTo(loadGarage = false) {
 
 export function setPlace(place) {
   return dispatch => {
-    dispatch({ type:  NEW_RESERVATION_SET_PLACE_ID,
+    dispatch({
+      type:  NEW_RESERVATION_SET_PLACE_ID,
       value: place ? place.id : undefined
     })
     dispatch(setPrice())
@@ -364,12 +406,12 @@ export function setMinMaxDuration() {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const isGoInternal = isPlaceGoInternal(state)
-    const client = state.user && state.user.availableClients.findById(state.client_id)
+    const client = dispatch(selectedClient())
 
-    const determineDuration = minOrMax => (state.garage && (isGoInternal ?
-      state.garage[`${minOrMax}_reservation_duration_go_internal`] :
-      state.garage[`${minOrMax}_reservation_duration_go_public`])) ||
-      (client ? client[`${minOrMax}_reservation_duration`] : null)
+    const determineDuration = minOrMax => (state.garage && (isGoInternal
+      ? state.garage[`${minOrMax}_reservation_duration_go_internal`]
+      : state.garage[`${minOrMax}_reservation_duration_go_public`]))
+      || (client ? client[`${minOrMax}_reservation_duration`] : null)
 
     const minDuration = determineDuration('min')
     const maxDuration = determineDuration('max')
@@ -388,7 +430,10 @@ export function setMinMaxDuration() {
 export function selectedClient() {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
+    return state.user
+      && state.client_id
+      && state.user.availableClients
+      && state.user.availableClients.findById(state.client_id)
   }
 }
 
@@ -414,10 +459,16 @@ export function setPrice() {
         : undefined
     ))
 
+    let price
+
+    if (selectedPlace && selectedPlace.pricing) {
+      price = calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)
+    }
+
     dispatch({
       type:  NEW_RESERVATION_SET_PRICE,
       value: selectedPlace && selectedPlace.pricing
-        ? `${calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)} ${selectedPlace.pricing.currency.symbol}`
+        ? `${price} ${selectedPlace.pricing.currency.symbol}`
         : undefined
     })
   }
@@ -440,24 +491,44 @@ export function roundTime(time) {
 }
 
 
+export function availableUsers(currentUser) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        const users = response.data.reservable_users
+        if (currentUser && currentUser.secretary) { // if is secretary then can create new host
+          users.push({
+            full_name: t([ 'newReservation', 'newHost' ]),
+            rights:    { host: true },
+            id:        -1
+          })
+          users.push({
+            full_name: t([ 'newReservation', 'newInternal' ]),
+            rights:    { internal: true },
+            id:        -1
+          })
+          users.push({
+            full_name: t([ 'newReservation', 'onetimeVisit' ]),
+            id:        -2
+          })
+        }
+
+        resolve(users)
+      } else {
+        reject('Response has no data - available users')
+      }
+    }
+
+    request(onSuccess, GET_AVAILABLE_USERS)
+  })
+}
+
 export function setInitialStore(id) {
   return (dispatch, getState) => {
     dispatch(setLoading(true))
     dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'loading' ])}</div>))
 
-    const availableUsersPromise = new Promise((resolve, reject) => {
-      dispatch(setLoading(true))
-      const onSuccess = response => {
-        // dispatch(setLoading(false))
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
-
-      request(onSuccess, GET_AVAILABLE_USERS)
-    })
+    const availableUsersPromise = availableUsers(getState().pageBase.current_user)
 
     const editReservationPromise = new Promise((resolve, reject) => {
       if (id) {
@@ -478,28 +549,8 @@ export function setInitialStore(id) {
     })
 
     Promise.all([ availableUsersPromise, editReservationPromise ]).then(values => { // resolve
-      const users = values[0].reservable_users
-
-      const currentUser = getState().pageBase.current_user
-      if (currentUser && currentUser.secretary) { // if is secretary then can create new host
-        users.push({
-          full_name: t([ 'newReservation', 'newHost' ]),
-          rights:    { host: true },
-          id:        -1
-        })
-        users.push({
-          full_name: t([ 'newReservation', 'newInternal' ]),
-          rights:    { internal: true },
-          id:        -1
-        })
-        users.push({
-          full_name: t([ 'newReservation', 'onetimeVisit' ]),
-          id:        -2
-        })
-      }
-
+      const users = values[0]
       dispatch(setAvailableUsers(users))
-      dispatch(setLoading(false))
 
       if (values[1] !== undefined) { // if reservation edit set details
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
@@ -526,6 +577,7 @@ export function setInitialStore(id) {
           hideLoading(dispatch)
         }
       }
+      dispatch(setLoading(false))
     }).catch(error => { // error
       hideLoading(dispatch)
       throw (error)
@@ -533,92 +585,7 @@ export function setInitialStore(id) {
   }
 }
 
-export function downloadUser(id, rights, initEdit = false) {
-  return (dispatch, getState) => {
-    const state = getState().newReservation
-    dispatch(setLoading(true))
-    if (!initEdit) {
-      dispatch(setGarage(undefined)) // have to reset values set from previous user
-      dispatch(setClient(undefined))
-    }
-    dispatch(setCarId(undefined))
-
-    const userPromise = new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
-
-      request(onSuccess, GET_USER, { id })
-    })
-
-    const availableGaragesPromise = new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
-      }
-
-      request(onSuccess, GET_AVAILABLE_GARAGES, { user_id: id })
-    })
-
-    const availableClientsPromise = clientsPromise(id, state.garage && state.garage.id)
-
-    Promise.all([ userPromise, availableGaragesPromise, availableClientsPromise ]).then(values => {
-      values[2].reservable_clients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
-
-      dispatch(setUser({ ...(values[0].user ? values[0].user : { id }),
-        availableGarages: values[1].reservable_garages,
-        availableClients: values[2].reservable_clients,
-        rights // Client user rights
-      }))
-      let hideLoadingCalled = false
-
-      if (values[0].user) {
-        dispatch(setHostName(values[0].user.full_name, true))
-        dispatch(setHostPhone(values[0].user.phone, true))
-        dispatch(setHostEmail(values[0].user.email, true))
-        dispatch(setLanguage(values[0].user.language))
-      }
-
-      if (getState().newReservation.reservation) { // download garage
-        dispatch(downloadGarage(getState().newReservation.reservation.place.floor.garage.id))
-        hideLoadingCalled = true
-      }
-
-      // if (values[1].reservable_garages.length === 1) { // if only one garage, download the garage
-      //   dispatch(downloadGarage(values[1].reservable_garages[0].id))
-      //   hideLoadingCalled = true
-      // }
-
-      if (values[1].reservable_garages.findById(state.preferedGarageId)) {
-        dispatch(downloadGarage(state.preferedGarageId))
-        dispatch(setPreferedGarageId(undefined))
-      }
-
-      if (values[0].user && values[0].user.reservable_cars.length === 1) { // if only one car available
-        dispatch(setCarId(values[0].user.reservable_cars[0].id))
-        if (!hideLoadingCalled) {
-          hideLoading(dispatch)
-          hideLoadingCalled = true
-        }
-      }
-      if (!hideLoadingCalled) {
-        hideLoading(dispatch)
-      }
-    }).catch(error => {
-      hideLoading(dispatch)
-      throw (error)
-    })
-  }
-}
-
-function clientsPromise(userId, garageId) {
+function clientsPromise(userId, garageId, reservationId) {
   return new Promise((resolve, reject) => {
     const onSuccess = response => {
       if (response.data !== undefined) {
@@ -628,126 +595,279 @@ function clientsPromise(userId, garageId) {
       }
     }
 
-    request(onSuccess, GET_AVAILABLE_CLIENTS, { user_id: userId, garage_id: garageId })
+    request(onSuccess, GET_AVAILABLE_CLIENTS, {
+      user_id:        userId,
+      garage_id:      garageId,
+      reservation_id: reservationId
+    })
   })
 }
 
-export function downloadGarage(id) {
-  return (dispatch, getState) => {
-    const state = getState().newReservation
-    new Promise((resolve, reject) => {
-      const onSuccess = response => {
-        if (response.data !== undefined) {
-          resolve(response.data)
-        } else {
-          reject('Response has no data - available users')
-        }
+function userPromise(userId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
       }
-      if (!(id && id === (state.garage && state.garage.id))) {
-        dispatch(showLoadingModal(true))
+    }
+
+    request(onSuccess, GET_USER, { id: userId })
+  })
+}
+
+function availableGaragesPromise(userId, reservationId) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
       }
+    }
 
-      request(
-        onSuccess,
-        (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
-        { id:             id || state.garage.id,
-          user_id:        state.user.id,
-          client_id:      state.client_id,
-          begins_at:      timeToUTC(state.from),
-          ends_at:        timeToUTC(state.to),
-          reservation_id: state.reservation ? state.reservation.id : null
-        }
-      )
-    }).then(value => {
-      // if full download,then full garage, if light download, then garage from state with updated free places
-      const garage = value.garage.name ? value.garage : {
-        ...state.garage,
-        floors: state.garage.floors.map(floor => ({
-          ...floor,
-          free_places: value.garage.floors.findById(floor.id).free_places
-        }))
+    request(onSuccess, GET_AVAILABLE_GARAGES, {
+      user_id:        userId,
+      reservation_id: reservationId
+    })
+  })
+}
+
+export function downloadUser(id, rights) {
+  return async (dispatch, getState) => {
+    const { lastUserWasSaved, reservation } = getState().newReservation
+    dispatch(showLoadingModal(true))
+
+    const getUser = userPromise(id)
+
+    const getAvailableGarages = availableGaragesPromise(id, reservation && reservation.id)
+
+    let user
+    let availableGarages
+
+    try {
+      [ user, availableGarages ] = [
+        (await getUser).user,
+        (await getAvailableGarages).reservable_garages
+      ]
+    } catch (error) {
+      // [urgent]TODO: Change or remove error handling.
+      console.log(error)
+      dispatch(showLoadingModal(false))
+      throw error
+    }
+
+    let availableClients
+    let state = getState().newReservation
+    if (state.garage && availableGarages.some(gar => gar.id === state.garage.id)) {
+      ({ reservable_clients: availableClients } = (await clientsPromise(
+        id,
+        state.garage && state.garage.id, state.reservation && state.reservation.id
+      )))
+    } else {
+      dispatch(setGarage());
+      ({ reservable_clients: availableClients } = (await clientsPromise()))
+    }
+    state = getState().newReservation
+    if (!availableClients.some(client => client.id === state.client_id)) {
+      dispatch(setClientId())
+    }
+
+    availableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
+
+    if (user) {
+      dispatch(batchActions([
+        setHostName(user.full_name, true),
+        setHostPhone(user.phone, true),
+        setHostEmail(user.email, true),
+        setLanguage(user.language)
+      ]))
+    }
+
+    dispatch(setUser({
+      ...(user || { id }),
+      availableGarages,
+      availableClients,
+      rights // Client user rights
+    }))
+
+    if (lastUserWasSaved && id < 0) {
+      dispatch(batchActions([
+        setHostPhone('', false),
+        setHostEmail('', false),
+        setLanguage(getLanguage()),
+        setCarLicencePlate(''),
+        setCarId()
+      ]))
+    }
+
+    state = getState().newReservation
+    if (state.reservation) { // download garage
+      await dispatch(downloadGarage(state.reservation.place.floor.garage.id, false))
+    }
+
+    if (availableGarages && availableGarages.findById(state.preferedGarageId)) {
+      await dispatch(downloadGarage(state.preferedGarageId, false))
+      dispatch(setPreferedGarageId())
+    }
+
+    state = getState().newReservation
+    if (user && user.reservable_cars.length === 1) { // if only one car available
+      dispatch(setCarId(user.reservable_cars[0].id))
+    } else if (!user
+      || !user.reservable_cars
+      || !user.reservable_cars.some(car => car.id === state.car_id)
+    ) {
+      dispatch(setCarId())
+    }
+
+    dispatch(setLastUserWasSaved(id > 0))
+    dispatch(showLoadingModal(false))
+  }
+}
+
+function downloadGaragePromise(id, state) {
+  return new Promise((resolve, reject) => {
+    const onSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - available users')
       }
+    }
 
-      garage.floors.forEach(floor => {
-        floor.places.map(place => {
-          // if (state.reservation && state.reservation.ongoing) { // if ongoing reservation - only selected place might be available
-          //   place.available = floor.free_places.find(p => p.id === place.id && p.id === state.reservation.place.id) !== undefined // set avilability
-          // } else {
-          //   place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
-          // }
-          place.available = floor.free_places.find(p => p.id === place.id) !== undefined // set avilability
+    request(
+      onSuccess,
+      (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
+      {
+        id:             id || state.garage.id,
+        user_id:        state.user.id,
+        client_id:      state.client_id,
+        begins_at:      timeToUTC(state.from),
+        ends_at:        timeToUTC(state.to),
+        reservation_id: state.reservation ? state.reservation.id : null
+      }
+    )
+  })
+}
 
-          if (place.available && place.pricing) { // add tooltip to available places
-            if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
-            const pricing = place.pricing
-            const symbol = pricing.currency.symbol
-            const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
-            const pricePerHour = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
+function freeIntervalPromise(id, state) {
+  return new Promise((resolve, reject) => {
+    const setFreeIntervalSuccess = response => {
+      if (response.data !== undefined) {
+        resolve(response.data)
+      } else {
+        reject('Response has no data - free interval')
+      }
+    }
 
-            place.tooltip = (<div>
+    request(
+      setFreeIntervalSuccess,
+      GET_GARAGE_FREE_INTERVAL,
+      {
+        id:             id || state.garage.id,
+        user_id:        state.user.id,
+        client_id:      state.client_id,
+        begins_at:      timeToUTC(state.from),
+        ends_at:        timeToUTC(state.to),
+        reservation_id: state.reservation ? state.reservation.id : null
+      }
+    )
+  })
+}
+
+export function downloadGarage(id, hideLoadingAfterRuntime = true) {
+  return async (dispatch, getState) => {
+    let state = getState().newReservation
+    if (!(id && id === (state.garage && state.garage.id))) {
+      dispatch(showLoadingModal(true))
+    }
+
+    const result = await downloadGaragePromise(id, state)
+    // if full download,then full garage, if light download, then garage from state with updated free places
+    const garage = result.garage.name ? result.garage : {
+      ...state.garage,
+      floors: state.garage.floors.map(floor => ({
+        ...floor,
+        free_places: result.garage.floors.findById(floor.id).free_places
+      }))
+    }
+
+    garage.floors.forEach(floor => {
+      floor.places.map(place => {
+        place.available = floor.free_places.some(p => p.id === place.id) // set availability
+
+        if (place.available && place.pricing) { // add tooltip to available places
+          if (!place.go_internal && !garage.is_public) return place // dont add tooltip if not internal or public
+          const { pricing } = place
+          const { symbol } = pricing.currency
+          const duration = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'hours')
+          const pricePerHour = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
+
+          place.tooltip = (
+            <div>
               <div>
                 <span>
-                  <b>{t([ 'newReservation', 'price' ])}: </b>
-                  { pricing.flat_price ? pricePerHour(pricing.flat_price) :
-                    duration < 12 ? pricePerHour(pricing.exponential_12h_price) :
-                    duration < 24 ? pricePerHour(pricing.exponential_day_price) :
-                    duration < 168 ? pricePerHour(pricing.exponential_week_price) :
-                    pricePerHour(pricing.exponential_month_price)
+                  <b>
+                    {`${t([ 'newReservation', 'price' ])}: `}
+                  </b>
+                  { pricing.flat_price ? pricePerHour(pricing.flat_price)
+                    : duration < 12 ? pricePerHour(pricing.exponential_12h_price)
+                      : duration < 24 ? pricePerHour(pricing.exponential_day_price)
+                        : duration < 168 ? pricePerHour(pricing.exponential_week_price)
+                          : pricePerHour(pricing.exponential_month_price)
                   }
                   {symbol}
                   {t([ 'newReservation', 'perHour' ])}
                 </span>
               </div>
-              {pricing.weekend_price && <div>
-                <span>
-                  <b>{t([ 'newReservation', 'weekendPrice' ])}:</b> {pricePerHour(pricing.weekend_price)} {symbol} {t([ 'newReservation', 'perHour' ])}
-                </span>
-              </div>}
-            </div>)
-          }
+              {pricing.weekend_price
+              && (
+                <div>
+                  <span>
+                    <b>
+                      {`${t([ 'newReservation', 'weekendPrice' ])}: `}
+                    </b>
+                    {`${pricePerHour(pricing.weekend_price)} `}
+                    {`${symbol} `}
+                    {t([ 'newReservation', 'perHour' ])}
+                  </span>
+                </div>
+              )}
+            </div>
+          )
+        }
 
-          return place
-        })
+        return place
       })
-      
-      const noFreePlaces = garage.floors.find(floor => floor.free_places.length !== 0) === undefined
-      if (noFreePlaces) {
-        const setFreeIntervalSuccess = response => {
-          if (response.data !== undefined) {
-            dispatch(setFreeInterval(response.data.garage.greatest_free_interval))
-          }
-        }
-
-        request(
-          setFreeIntervalSuccess,
-          GET_GARAGE_FREE_INTERVAL,
-          { id:             id || state.garage.id,
-            user_id:        state.user.id,
-            client_id:      state.client_id,
-            begins_at:      timeToUTC(state.from),
-            ends_at:        timeToUTC(state.to),
-            reservation_id: state.reservation ? state.reservation.id : null
-          }
-        )
-      }
-
-      dispatch(setGarage(garage))
-      if (!state.reservation) {
-        dispatch(autoSelectPlace())
-      }
-
-      // Unselect place if it is no longer available
-      if (state.place_id) {
-        const selectedPlace = garage.floors.reduce((place, floor) => {
-          return place || floor.places.find(p => p.id === state.place_id)
-        }, undefined)
-        if (selectedPlace && !selectedPlace.available) {
-          dispatch(setPlace({ id: undefined }))
-        }
-      }
-
-      dispatch(showLoadingModal(false))
     })
+
+    const noFreePlaces = !garage.floors.some(floor => floor.free_places.length > 0)
+    if (noFreePlaces) {
+      const freeIntervalResult = await freeIntervalPromise(id, state)
+      if (freeIntervalResult !== undefined) {
+        dispatch(setFreeInterval(freeIntervalResult.garage.greatest_free_interval))
+      }
+    }
+
+    await dispatch(setGarage(garage))
+    state = getState().newReservation
+    if (!state.reservation) {
+      dispatch(autoSelectPlace())
+    }
+
+    // Unselect place if it is no longer available
+    if (state.place_id) {
+      const selectedPlace = garage.floors.reduce((place, floor) => {
+        return place || floor.places.find(p => p.id === state.place_id)
+      }, undefined)
+      if (selectedPlace && !selectedPlace.available) {
+        dispatch(setPlace({ id: undefined }))
+      }
+    }
+
+    hideLoadingAfterRuntime && dispatch(showLoadingModal(false))
   }
 }
 
@@ -766,12 +886,14 @@ export function autoSelectPlace() {
     ) { // prefered place from occupancy was set
       dispatch(setPlace(allPlaces.findById(state.preferedPlaceId)))
       dispatch(setPreferedPlaceId())
-    } else if (!(state.place_id && state.garage.floors.find(floor => {
-      return floor.places.find(place => place.available && place.id === state.place_id) !== undefined
-    }) !== undefined)) { // if place not selected or selected place not found in this garage
+    } else if (!(state.place_id && state.garage.floors.some(floor => {
+      return floor.places.some(place => place.available && place.id === state.place_id)
+    }))) { // if place not selected or selected place not found in this garage
       const selectedPlace = state.garage.floors.reduce((highestPriorityPlace, floor) => {
         return floor.places.reduce((highestPriorityPlace, place) => {
-          if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority)) {
+          if (place.available && (highestPriorityPlace === undefined || highestPriorityPlace.priority < place.priority
+                || (highestPriorityPlace.priority === place.priority && +highestPriorityPlace.label > +place.label))
+          ) {
             return place
           } else {
             return highestPriorityPlace
@@ -782,7 +904,6 @@ export function autoSelectPlace() {
     }
   }
 }
-
 
 // Reservation overview ///////////////////////////////////////////////////////
 export function overviewInit() {
@@ -799,51 +920,71 @@ export function submitReservation(id) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const ongoing = state.reservation && state.reservation.ongoing
+    const updatingReservation = id !== undefined
 
     const changeUserName = id && state.user && state.user.onetime
 
-    const onSuccess = response => {
+    const onSuccess = async response => {
+      dispatch(pageBaseActions.setCustomModal(undefined))
       try {
-        if (response.data.create_reservation && response.data.create_reservation.payment_url) {
+        const { reservation, errors } = response.data[updatingReservation ? 'update_reservation' : 'create_reservation']
+        if (errors.length >= 1) {
+          const reservationOnPlace = errors.find(e => e.message === 'Place is occupied')
+          if (reservationOnPlace) {
+            // Some modal and update accessible places.
+            dispatch(pageBaseActions.setError(t([ 'newReservation', 'reservationOnPlace' ])))
+            dispatch(setPlace())
+            await dispatch(downloadGarage(state.garage.id))
+            if (updatingReservation) {
+              dispatch(autoSelectPlace())
+            }
+          } else {
+            throw Error('Cannot create reservation')
+          }
+        } else if (reservation && reservation.payment_url) {
           dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
-          window.location.replace(response.data.create_reservation.payment_url)
+          window.location.replace(reservation.payment_url)
         } else {
-          dispatch(pageBaseActions.setCustomModal(undefined))
-          nav.to(`/reservations/find/${(response.data.update_reservation || response.data.create_reservation).id}`)
+          nav.to(`/reservations/find/${reservation.id}`)
           dispatch(clearForm())
         }
       } catch (err) {
+        console.log(err)
         dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
         nav.to('/reservations')
       }
     }
 
-    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', id ? 'updatingReservation' : 'creatingReservation' ])}</div>))
+    dispatch(pageBaseActions.setCustomModal(
+      <div>{t([ 'newReservation', updatingReservation ? 'updatingReservation' : 'creatingReservation' ])}</div>
+    ))
 
-    const createTheReservation = (user_id, user_name) => {
-      request(onSuccess,
-        id ? UPDATE_RESERVATION : CREATE_RESERVATION,
-        { reservation: {
-          user_id,
-          note:                     state.note ? state.note : undefined,
-          place_id:                 state.place_id,
-          garage_id:                state.garage.id,
-          client_id:                state.client_id,
-          paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
-          car_id:                   state.car_id,
-          licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
-          url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
-          begins_at:                timeToUTC(state.from),
-          ends_at:                  timeToUTC(state.to),
-          recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
-          recurring_reservation_id: state.recurring_reservation_id,
-          send_sms:                 state.sendSMS,
-          sms_text:                 state.templateText,
-          payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
-          csob_one_click:           state.csobOneClick,
-          csob_one_click_new_card:  state.csobOneClickNewCard,
-          user_name
-        },
+    const createTheReservation = (userId, userName) => {
+      request(
+        onSuccess,
+        updatingReservation ? UPDATE_RESERVATION : CREATE_RESERVATION,
+        {
+          reservation: {
+            user_id:                  userId,
+            note:                     state.note ? state.note : undefined,
+            place_id:                 state.place_id,
+            garage_id:                state.garage.id,
+            client_id:                state.client_id,
+            paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
+            car_id:                   state.car_id,
+            licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
+            url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
+            begins_at:                timeToUTC(state.from),
+            ends_at:                  timeToUTC(state.to),
+            recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
+            recurring_reservation_id: state.recurring_reservation_id,
+            send_sms:                 state.sendSMS,
+            sms_text:                 state.templateText,
+            payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
+            csob_one_click:           state.csobOneClick,
+            csob_one_click_new_card:  state.csobOneClickNewCard,
+            user_name:                userName
+          },
           id
         },
         'reservationMutation'
@@ -909,10 +1050,20 @@ export function afterPayment(id, success) {
       dispatch(pageBaseActions.setError(t([ 'newReservation', 'paymentUnsucessfull' ])))
     }
     const parsedId = parseInt(id, 10)
-    if (typeof(parsedId) === 'number' && parsedId > 0) {
+    if (typeof (parsedId) === 'number' && parsedId > 0) {
       nav.to(`/reservations/find/${parsedId}`)
     } else {
       nav.to('/reservations')
     }
+  }
+}
+
+export function cancelUser() {
+  return dispatch => {
+    dispatch(setHostName(''))
+    dispatch({
+      type:  NEW_RESERVATION_SET_USER,
+      value: undefined
+    })
   }
 }

@@ -264,7 +264,20 @@
 		"userName": "Name des Users",
 		"AlternativeInterval": "In dem gewählten Termin sind alle Parkplätze besetzt. Am längsten ist möglich:",
 		"weekendPrice": "Wochenendpreis:",
-		"notAbleToCreateReservation": "Es ist nicht möglich diese Buchung durchzuführen. Mögliche Ursache: Zu niedriger timecredit"
+		"notAbleToCreateReservation": "Es ist nicht möglich diese Buchung durchzuführen. Mögliche Ursache: Zu niedriger timecredit",
+		"userSection": "Fahrer",
+		"placeSelector": "Wo und wann",
+		"priceAndOthers": "Zahlung und weitere Optionen",
+		"notePlaceholder": "Öffentliche Notiz",
+		"showMap": "Garagenplan Ansicht",
+		"smsTextPlaceholder": "SMS Nachricht",
+		"namePlaceholder": "DE: newReservation.namePlaceholder",
+		"emailPlaceholder": "DE: newReservation.emailPlaceholder",
+		"phonePlaceholder": "DE: newReservation.phonePlaceholder",
+		"garageDropdownLabel": "Parkhaus",
+		"clientDropdownLabel": "Kunde",
+		"selectCarLabel": "DE: newReservation.selectCarLabel",
+		"smsTemplateLabel": "DE: newReservation.smsTemplateLabel"
 	},
 	"clients": {
 		"name": "Name",
@@ -285,7 +298,9 @@
 		"invoices": "Rechnungen",
 		"currentAgreements": "Laufende Vereinbarungen",
 		"oldAgreements": "Beendete Vereinbarungen",
-		"modules": "Erweiterte Einstellungen"
+		"modules": "Erweiterte Einstellungen",
+		"addClientLabel": "Neuer Kunde",
+		"addContractLabel": "Neuer Vertrag"
 	},
 	"clientUsers": {
 		"name": "Benutzername",
@@ -350,7 +365,9 @@
 			"many": "Alle %(count)s Buchungen der Serie bearbeiten.",
 			"other": "%(count)s Buchungen der Serie bearbeiten."
 		},
-		"flexiblePlace": "Flexiplatz"
+		"flexiblePlace": "Flexiplatz",
+		"createReservationLabel": "Buchung erstellen",
+		"bulkRemovalLabel": "Buchungen stornieren"
 	},
 	"garages": {
 		"clients": "Kunden",
@@ -377,7 +394,7 @@
 		"longterm": "Langfristig",
 		"shortterm": "Kurzfristig",
 		"rentName": "Name des Mietverhältnisses",
-		"price": "Preis",
+		"price": "Preis (Platz pro Monat)",
 		"places": "Plätze",
 		"editRent": "Mietverhältnis bearbeiten"
 	},
@@ -709,7 +726,8 @@
 		"reservationUpdateLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil in Ihrer Buchung Nr. '%(arg1)s' eine Änderung der Garage auf '%(arg2)s' vorgenommen wurde.",
 		"contractLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. ",
 		"reservationWasSuccessfullyPaid": "Das Mitglied %(arg1)s, welchem Sie eine Buchung erstellt haben, hat sie gerade bezahlt. Detail der Buchung: %(arg2)s",
-		"reservationWillExpireSoon": "Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s"
+		"reservationWillExpireSoon": "Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s",
+		"expensesOn": "DE: notifications.expensesOn"
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -1047,7 +1065,7 @@
 		"flexiplace": "Flexi Platz",
 		"flexiplaceDescription": "Der Flexi Platz ist ein Unterstützungstool zur optimalen Nutzung Ihrer Plätze. Ihre Benutzer werden ihren Parkplatz bis zum Beginn der Buchung nicht kennen. Die Buchungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren.",
 		"showApiKey": "API Endpoint zeigen",
-		"regenerateApiKey": "Einen neuen API Endpoint erstellen",
+		"regenerateApiKey": "Einen neuen geheimen Token generieren",
 		"3rdPartyIntegration": "Integration von dritten Seiten",
 		"thirdPartyIntegrationDescription": "Durch aktivierung dieser Funktion, bekommen Sie eine eigene API mit Aktionen, die Ihnen die Verwaltung von Buchungen durch dritte Seiten ermöglicht",
 		"mrParkitIntegration": "MR.PARKIT Integration",
@@ -1172,7 +1190,8 @@
 	"reservationInteruption": {
 		"describtion": "Buchungen unterbrechen",
 		"from": "Unterbrechen ab",
-		"to": "Unterbrechen bis"
+		"to": "Unterbrechen bis",
+		"invalidaDate": "Ungültiges Datum"
 	},
 	"languages": {
 		"language": "Sprache",
@@ -1463,7 +1482,7 @@
 			"you_can_contact_these_peope": "Für die Beschleunigung Ihrer Genehmigung können Sie Ihre Kontaktperson kontaktieren."
 		},
 		"car_on_my_spot_notify_driver": {
-			"you_have_been_reported": "Es wurde gemeldet, dass Ihr Wagen einen Platz, der für eine andere Buchung bestimmt ist, blockiert.",
+			"you_have_been_reported": "Es wurde gemeldet, dass ein Wagen, der mit Ihrem Konto verknüpft ist, den Parkplatz einer anderen Buchung blockiert. ",
 			"infor_about_car": "Information über den gemeldeten Wagen:",
 			"suspected_reservation": "Wir haben einen Verdacht, dass das Problem bei dieser Buchung entstanden ist.",
 			"we_urge_you": "Wir bitten Sie um die regelung der Situation."

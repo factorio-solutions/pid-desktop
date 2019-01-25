@@ -84,3 +84,8 @@ $small:       .6;
   height:    $small * $size-normal;
   font-size: $small * 24px;
 }
+
+.normal {
+  width: $size-normal;
+  height: $size-normal;
+}

@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { batchActions } from 'redux-batched-actions'
 
 import requestPromise from '../helpers/requestPromise'
 import actionFactory  from '../helpers/actionFactory'
@@ -50,9 +51,9 @@ export const setReservationNotPossible = actionFactory(OCCUPANCY_SET_NEW_RESERVA
 export const setRefetching = actionFactory(OCCUPANCY_SET_REFETCHING)
 
 export function setNewReservation(fromMoment, toMoment, placeId) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState().occupancy
-    const pageBase = getState().pageBase
+    const { pageBase: pageBaseState } = getState()
     let fromValue = moment(roundTime(fromMoment), MOMENT_DATETIME_FORMAT)
     let toValue = moment(roundTime(toMoment), MOMENT_DATETIME_FORMAT)
     const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
@@ -66,44 +67,44 @@ export function setNewReservation(fromMoment, toMoment, placeId) {
     }
 
 
-    requestPromise(GET_AVAILABLE_CLIENTS,
-      { garage_id: (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage,
-        user_id:   pageBase.current_user.id
+    const data = await requestPromise(
+      GET_AVAILABLE_CLIENTS,
+      {
+        garage_id: (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage,
+        user_id:   pageBaseState.current_user.id
       }
     )
-    .then(data => {
-      const clientIds = [
-        ...data.reservable_clients.map(client => client.id),
-        ...data.current_user.secretary_clients.map(client => client.id)
-      ]
+    const clientIds = [
+      ...data.reservable_clients.map(client => client.id),
+      ...data.current_user.secretary_clients.map(client => client.id)
+    ]
 
-      requestPromise(
-        CHECK_PLACE_AVAILABLE,
-        { id:         (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage,
-          begins_at:  timeToUTC(fromValue),
-          ends_at:    timeToUTC(toValue),
-          client_ids: clientIds
-        }
-      )
-      .then(data => {
-        const places = data.garage.floors
-        .reduce((places, floor) => [ ...places, ...floor.free_places ], [])
-        .map(place => place.id)
+    const { garage: { floors } } = await requestPromise(
+      CHECK_PLACE_AVAILABLE,
+      {
+        id:         (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage,
+        begins_at:  timeToUTC(fromValue),
+        ends_at:    timeToUTC(toValue),
+        client_ids: clientIds
+      }
+    )
 
-        if (places.includes(placeId)) {
-          dispatch({
-            type:  OCCUPANCY_SET_NEW_RESERVATION,
-            value: {
-              placeId,
-              from: fromValue.format(MOMENT_DATETIME_FORMAT),
-              to:   toValue.format(MOMENT_DATETIME_FORMAT)
-            }
-          })
-        } else {
-          dispatch(setReservationNotPossible(true))
+    const places = floors
+      .reduce((acc, floor) => [ ...acc, ...floor.free_places ], [])
+      .map(place => place.id)
+
+    if (places.includes(placeId)) {
+      dispatch({
+        type:  OCCUPANCY_SET_NEW_RESERVATION,
+        value: {
+          placeId,
+          from: fromValue.format(MOMENT_DATETIME_FORMAT),
+          to:   toValue.format(MOMENT_DATETIME_FORMAT)
         }
       })
-    })
+    } else {
+      dispatch(setReservationNotPossible(true))
+    }
   }
 }
 
@@ -144,45 +145,44 @@ export function setFrom(from) {
 }
 
 export function loadGarages() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(setRefetching(true))
-    requestPromise(OCCUPANCY_GARAGES_QUERY)
-    .then(data => {
-      dispatch(setGarages(data.occupancy_garages))
+    const data = await requestPromise(OCCUPANCY_GARAGES_QUERY)
 
-      try {
-        dispatch(setUser({
-          ...data.current_user,
-          occupancy_client_filter: JSON.parse(data.current_user.occupancy_client_filter)
-        }))
-      } catch (error) {
-        dispatch(setUser({
-          ...data.current_user,
-          occupancy_client_filter: {}
-        }))
-      }
-      dispatch({
-        type:  OCCUPANCY_SET_DURATION,
-        value: data.current_user.occupancy_duration
-      })
-      dispatch(setAllClientIds(
-        JSON.parse(data.current_user.occupancy_client_filter)[getState().pageBase.garage]
-        || []
-      ))
+    dispatch(setGarages(data.occupancy_garages))
 
-      dispatch(loadGarage(getState().pageBase.garage))
-      dispatch(pageBase.setCustomModal())
-      dispatch(setLoading(false))
+    try {
+      dispatch(setUser({
+        ...data.current_user,
+        occupancy_client_filter: JSON.parse(data.current_user.occupancy_client_filter)
+      }))
+    } catch (error) {
+      dispatch(setUser({
+        ...data.current_user,
+        occupancy_client_filter: {}
+      }))
+    }
+    dispatch({
+      type:  OCCUPANCY_SET_DURATION,
+      value: data.current_user.occupancy_duration
     })
+    dispatch(setAllClientIds(
+      JSON.parse(data.current_user.occupancy_client_filter)[getState().pageBase.garage]
+      || []
+    ))
+
+    await dispatch(loadGarage(getState().pageBase.garage))
   }
 }
 
 export function resetClientsLoadGarage(id) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState().occupancy
+    dispatch(setLoading(true))
     if (getState().pageBase.garages.find(garage => garage.garage.id === id)) dispatch(pageBase.setGarage(id))
     dispatch(setAllClientIds(state.user.occupancy_client_filter[id] || []))
-    dispatch(loadGarage(id))
+    await dispatch(loadGarage(id))
+    dispatch(setLoading(false))
   }
 }
 
@@ -206,21 +206,22 @@ function updateGarage(garage) {
 }
 
 export function loadGarage(id) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState().occupancy
     const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage
-
-    garageId && requestPromise(GARAGE_DETAILS_QUERY, {
-      id:         garageId,
-      from:       timeToUTC(state.from),
-      to:         timeToUTC(state.from.clone().add(1, state.duration)),
-      client_ids: state.client_ids
-    }).then(data => {
-      dispatch(setGarage(updateGarage(data.garage)))
-      dispatch(loadClients(data.garage.clients))
-      dispatch(setRefetching(false))
-    })
-      
+    if (garageId) {
+      const data = await requestPromise(GARAGE_DETAILS_QUERY, {
+        id:         garageId,
+        from:       timeToUTC(state.from),
+        to:         timeToUTC(state.from.clone().add(1, state.duration)),
+        client_ids: state.client_ids
+      })
+      dispatch(batchActions([
+        setGarage(updateGarage(data.garage)),
+        loadClients(data.garage.clients),
+        setRefetching(false)
+      ], 'OCCUPANCY_LOAD_GARAGE'))
+    }
   }
 }
 
@@ -232,10 +233,10 @@ export function loadClients(clients) {
 }
 
 export function initOccupancy() {
-  return dispatch => {
-    dispatch(pageBase.setCustomModal('loading'))
+  return async dispatch => {
     dispatch(setLoading(true))
-    dispatch(loadGarages())
+    await dispatch(loadGarages())
+    dispatch(setLoading(false))
   }
 }
 
@@ -244,7 +245,8 @@ function updateUsersSettings() {
     const state = getState().occupancy
     requestPromise(
       UPDATE_USERS_SETTINGS,
-      { id:   state.user.id,
+      {
+        id:   state.user.id,
         user: {
           occupancy_client_filter: JSON.stringify(state.user.occupancy_client_filter),
           occupancy_duration:      state.user.occupancy_duration

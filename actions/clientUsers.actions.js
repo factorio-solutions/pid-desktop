@@ -3,7 +3,12 @@ import { t } from '../modules/localization/localization'
 import { setError, setSuccess } from './pageBase.actions'
 import { clearForm } from './newReservation.actions'
 
-import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS, RESEND_INVITATION } from '../queries/clientUsers.queries'
+import {
+  GET_CLIENTUSERS,
+  UPDATE_CLIENTUSERS,
+  DESTROY_CLIENTUSERS,
+  RESEND_INVITATION
+} from '../queries/clientUsers.queries'
 
 
 export const SET_CLIENT_USERS = 'SET_CLIENT_USERS'
@@ -11,6 +16,7 @@ export const SET_CLIENT_USER_CLIENT = 'SET_CLIENT_USER_CLIENT'
 export const SET_CLIENT_PENDING_USERS = 'SET_CLIENT_PENDING_USERS'
 export const SET_CLIENT_USERS_FILTER = 'SET_CLIENT_USERS_FILTER'
 export const SET_CLIENT_USERS_NAME = 'SET_CLIENT_USERS_NAME'
+export const SET_CLIENT_USERS_SELECTED_ID = 'SET_CLIENT_USERS_SELECTED_ID'
 
 
 export function setClientUsersUsers(users) {
@@ -52,6 +58,13 @@ export function pendingClicked() {
 export function setClientName(value) {
   return {
     type: SET_CLIENT_USERS_NAME,
+    value
+  }
+}
+
+export function setSelectedId(value) {
+  return {
+    type: SET_CLIENT_USERS_SELECTED_ID,
     value
   }
 }
