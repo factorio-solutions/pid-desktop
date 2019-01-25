@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import moment                          from 'moment'
 
 import TableRow          from '../tableRow/TableRow'
@@ -42,7 +43,8 @@ export default class Table extends Component {
     searchBar:      PropTypes.bool,
     returnFiltered: PropTypes.func,
     filterClick:    PropTypes.func, // will return key and ASC or DESC
-    selectId:       PropTypes.number
+    selectId:       PropTypes.number,
+    dontFilter:     PropTypes.bool
   }
 
   static defaultProps = {
@@ -75,31 +77,20 @@ export default class Table extends Component {
     }
   }
 
-  // Was moved to componentDidUpdate method. Calling setState in this method is no go according React doc.
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.selectId !== nextProps.selectId || (!this.props.data.length && nextProps.data.length)) {
-  //     this.setState({
-  //       ...this.state,
-  //       spoilerId: this.filterData(nextProps.data).findIndexById(nextProps.selectId)
-  //     })
-  //   }
-  // }
-
-  // Was moved to componentDidUpdate method. Calling setState in this method is no go according React doc.
-  //
-  // componentWillUpdate(nextProps) {
-  //   nextProps.deselect && this.state.spoilerId !== -1 && this.setState({ ...this.state, spoilerId: -1 })
-  // }
-
   // According to React documentation calling setState is ok in this method if it is wrapped in condition.
   componentDidUpdate(prevProps) {
     this.updateScale()
 
+    const prevFirstItem = prevProps.data[0]
+    const firstItem = this.props.data[0]
     // NaN === NaN is false
     const bothSelectIdNan = isNaN(prevProps.selectId) && isNaN(this.props.selectId)
-    if ((!bothSelectIdNan && (prevProps.selectId !== this.props.selectId))
-        || (!prevProps.data.length && this.props.data.length)) {
+
+    if (
+      (!bothSelectIdNan && (prevProps.selectId !== this.props.selectId)) ||
+      (!prevProps.data.length && this.props.data.length) ||
+      (prevFirstItem !== firstItem && this.props.selectId !== -1 && !isNaN(this.props.selectId))
+    ) {
       this.setState({
         ...this.state,
         spoilerId: this.filterData(this.props.data).findIndexById(this.props.selectId)
@@ -135,13 +126,14 @@ export default class Table extends Component {
             obj.props.children :
             obj.props.children.map(child => stringifyElement(child)).join(' ')) :
             ''
-      } else {
+      } else if (obj) {
         return obj
+      } else {
+        return ''
       }
     }
 
-    return data.map((object, index) => ({ ...object, key: object.key || index }))
-    .filter(object => {
+    return data.filter(object => {
       let show = true
       if (this.state.search !== '') {
         show = show && schema.map(value => value.representer ? value.representer(object[value.key]) : object[value.key])
@@ -205,8 +197,12 @@ export default class Table extends Component {
     }
   }
 
+  normalizeData(data) {
+    return data.map((obj, index) => ({ ...obj, key: obj.key || index }))
+  }
+
   render() {
-    const { schema, data, searchBox, searchBar, returnFiltered, filterClick } = this.props
+    const { schema, data, searchBox, searchBar, returnFiltered, filterClick, dontFilter } = this.props
     const { sortKey, sortType, spoilerId } = this.state
 
     const handleHeadClick = index => {
@@ -220,7 +216,12 @@ export default class Table extends Component {
       }
     }
 
-    const newData = this.filterData(data).sort(this.createComparator())
+    let newData = this.normalizeData(data)
+    if (!dontFilter) {
+      newData = this.filterData(newData)
+    }
+
+    newData = newData.sort(this.createComparator())
 
     const handleRowClick = spoilerId => {
       const { onRowSelect } = this.props

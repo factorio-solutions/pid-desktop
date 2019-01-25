@@ -1,16 +1,31 @@
+@import './RoundButton';
+
 .labeledRoundButton {
   display: inline-block;
-  width: 60px;
+  min-width: 50px;
   vertical-align: top;
+  padding: 5px;
 
   >div {
-    padding: 2px;
+    padding: 2px 0px;
     font-size: 12px;
     text-align: center;
     word-wrap: break-word;
   }
 
   >button {
-    margin-bottom: 0;
+    margin: 0;
   }
+}
+
+.bigText {
+  width: $big * $size-normal;
+}
+
+.smallText {
+  width: $small * $size-normal;
+}
+
+.normalText {
+  width: $size-normal;
 }

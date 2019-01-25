@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
-import { connect }                     from 'react-redux'
-import { withRouter }                  from 'react-router'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import Swipe from '../swipe/Swipe'
 

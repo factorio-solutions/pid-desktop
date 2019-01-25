@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import Table from './Table'
 import RoundButton from '../buttons/RoundButton'
@@ -60,11 +61,13 @@ export default class PaginatedTable extends Component {
     const { variables } = this.props
     const { count, key, ascDesc, search, page } = this.state
 
-    if (JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
+    if (
+      JSON.stringify(variables) !== JSON.stringify(prevProps.variables) ||
       JSON.stringify(prevState.search) !== JSON.stringify(search) ||
       prevState.count !== count ||
       prevState.ascDesc !== ascDesc ||
-      prevState.key !== key) {
+      prevState.key !== key
+    ) {
       this.requestData({ ...variables, ...this.keyToOrderByAndIncludes(key, ascDesc), page, count, search })
     }
   }
@@ -145,7 +148,7 @@ export default class PaginatedTable extends Component {
         }
       }, {})
 
-      this.setState({ ...this.state, key, ascDesc, loading: true, search })
+      this.setState({ ...this.state, key, ascDesc, loading: true, search, page: 1 })
     }
 
     const pages = new Array(pageCount)
@@ -168,9 +171,9 @@ export default class PaginatedTable extends Component {
           schema={schema}
           data={data}
           filterClick={filterClick}
-          searchBox={false}
           selectId={findId}
           searchBar
+          dontFilter
         />
         <div>
           <RoundButton

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import ButtonGroupButton from './ButtonGroupButton'
 
@@ -17,7 +18,9 @@ export default function ButtonGroup({ buttons }) {
       {buttons.map((button, index) => (<ButtonGroupButton
         {...button}
         key={index}
-        state={button.selected ? 'selected' : undefined}
+        content={button.content}
+        onClick={button.onClick}
+        state={button.selected && 'selected'}
       />))}
     </span>
   )

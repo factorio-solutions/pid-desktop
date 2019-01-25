@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
@@ -41,8 +42,9 @@ class MasterPage extends Component {
     showHints: PropTypes.bool,
     hint:      PropTypes.object, // {hint, href}
 
-    profileDropdown: PropTypes.object, // [ DOMelement, ... ]
-    children:        PropTypes.object
+    profileDropdown:  PropTypes.object, // [ DOMelement, ... ]
+    children:         PropTypes.object,
+    scrollbarVisible: PropTypes.bool
   }
 
   constructor(props) {
@@ -56,8 +58,11 @@ class MasterPage extends Component {
   }
 
   onLogoClick = () => nav.to('/occupancy')
+
   onMessageClick =() => nav.to('/notifications')
+
   verticalMenuClick = () => this.setState({ menu: false })
+
   secondaryVerticalMenuClick = () => {
     this.setState({ menu: true })
     this.props.secondaryMenuBackButton.onClick()
@@ -78,7 +83,8 @@ class MasterPage extends Component {
       showHints,
       hint,
       profileDropdown,
-      children
+      children,
+      scrollbarVisible
     } = this.props
 
 
@@ -145,7 +151,7 @@ class MasterPage extends Component {
               <I />
               <div dangerouslySetInnerHTML={{ __html: hint.hint }} />
             </div>}
-            <div className={`${styles.children} ${showHints && hint && styles.hashHint}`}>
+            <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${scrollbarVisible && styles.scrollbarVisible}`}>
               {children}
             </div>
           </div>

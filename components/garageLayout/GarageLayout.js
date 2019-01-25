@@ -1,6 +1,9 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import RandomColor                      from 'randomcolor'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import RandomColor from 'randomcolor'
+
+import detectIE from '../../helpers/internetExplorer'
 
 import SvgFromText from '../svgFromText/SvgFromText'
 import Tooltip     from '../tooltip/Tooltip'
@@ -49,6 +52,30 @@ class GarageLayout extends Component {
       ...INIT_STATE,
       floor: props.showEmptyFloors ? 0 : INIT_STATE.floor
     }
+    this.isInternetExplorer = detectIE()
+    this.purgeElements = this.purgeElements.bind(this)
+    this.scanPlacesAddLabels = this.scanPlacesAddLabels.bind(this)
+    this.removeElementClass = this.removeElementClass.bind(this)
+    this.colorizeSelectedPlaces = this.colorizeSelectedPlaces.bind(this)
+    this.colorizeAvailablePlaces = this.colorizeAvailablePlaces.bind(this)
+  }
+
+  removeElementClass(element, className) {
+    const removeFromArray = (array, toFind) => {
+      let index = array.indexOf(toFind)
+      while (index > -1) {
+        array.splice(index, 1)
+        index = array.indexOf(toFind)
+      }
+    }
+
+    if (this.isInternetExplorer) {
+      const classes = element.className.baseVal.split(' ')
+      removeFromArray(classes, className)
+      element.className.baseVal = classes.join(' ')
+    } else {
+      element.classList.remove(className)
+    }
   }
 
   componentDidMount() {
@@ -70,7 +97,7 @@ class GarageLayout extends Component {
   }
 
   prefixStyles(currentSvg, i) { // will go trought svg styles, prefixing them
-    for (const styleTag of currentSvg.getElementsByTagName('style')) {
+    Array.prototype.forEach.call(currentSvg.getElementsByTagName('style'), styleTag => {
       styleTag.innerHTML.split('{')
       .reduce((acc, str) => [ ...acc, ...str.split('}') ], [])
       .map(str => str.trim())
@@ -78,36 +105,40 @@ class GarageLayout extends Component {
       .forEach(selector => {
         const newName = selector[0] + 'SVG_' + i + '_' + selector.substring(1)
         const className = selector.substring(1)
-        while (currentSvg.getElementsByClassName(className)[0] !== undefined) {
-          currentSvg.getElementsByClassName(className)[0].classList.add(newName.substring(1))
-          currentSvg.getElementsByClassName(className)[0].classList.remove(className)
-        }
+        Array.prototype.forEach.call(currentSvg.getElementsByClassName(className), element => {
+          element.classList.add(newName.substring(1))
+          this.removeElementClass(element, className)
+        })
         styleTag.innerHTML = styleTag.innerHTML.replace(selector, newName)
       })
-    }
+    })
   }
 
   purgeElements(currentSvg) { // will remove elements that will be rerendered
     // remove free and selected classes
-    while (currentSvg.getElementsByClassName(styles.gvFree).length >= 1) {
-      currentSvg.getElementsByClassName(styles.gvFree)[0].classList.remove(styles.gvFree)
-    }
-    while (currentSvg.getElementsByClassName(styles.gvSelected).length >= 1) {
-      currentSvg.getElementsByClassName(styles.gvSelected)[0].classList.remove(styles.gvSelected)
-    }
-    while (currentSvg.getElementsByClassName('hasColorGroup').length >= 1) {
-      const element = currentSvg.getElementsByClassName('hasColorGroup')[0]
-      element.classList.remove('hasColorGroup')
+    const mainElement = this.isInternetExplorer ? document : currentSvg
+    let elements = mainElement.getElementsByClassName(styles.gvFree)
+    Array.prototype.forEach.call(elements, element => {
+      this.removeElementClass(element, styles.gvFree)
+    })
+    elements = mainElement.getElementsByClassName(styles.gvSelected)
+    Array.prototype.forEach.call(elements, element => {
+      this.removeElementClass(element, styles.gvSelected)
+    })
+    elements = mainElement.getElementsByClassName('hasColorGroup')
+    Array.prototype.forEach.call(elements, element => {
+      this.removeElementClass(element, 'hasColorGroup')
       element.removeAttribute('style')
-    }
-    while (currentSvg.getElementsByClassName('hasHeatGroup').length >= 1) {
-      const element = currentSvg.getElementsByClassName('hasHeatGroup')[0]
-      element.classList.remove('hasHeatGroup')
+    })
+    elements = mainElement.getElementsByClassName('hasHeatGroup')
+    Array.prototype.forEach.call(elements, element => {
+      this.removeElementClass(element, 'hasHeatGroup')
       element.removeAttribute('style')
-    }
-    while (currentSvg.getElementsByClassName('groupCircle').length >= 1) {
-      currentSvg.getElementsByClassName('groupCircle')[0].remove()
-    }
+    })
+    elements = mainElement.getElementsByClassName('groupCircle')
+    Array.prototype.forEach.call(elements, element => {
+      element.remove()
+    })
   }
 
   addLabel(place, label, el) {
@@ -158,7 +189,11 @@ class GarageLayout extends Component {
       .filter(place => place.selected)
       .forEach(place => {
         const placeRect = currentSvg.getElementById('Place' + place.label)
-        placeRect && placeRect.classList.add(styles.gvSelected)
+        if (this.isInternetExplorer) {
+          if (placeRect) { placeRect.className.baseVal += ` ${styles.gvSelected}` }
+        } else {
+          placeRect && placeRect.classList.add(styles.gvSelected)
+        }
       })
   }
 
@@ -167,7 +202,11 @@ class GarageLayout extends Component {
       .filter(place => place.available && !place.selected)
       .forEach(place => {
         const placeRect = currentSvg.getElementById('Place' + place.label)
-        placeRect && placeRect.classList.add(styles.gvFree)
+        if (this.isInternetExplorer) {
+          if (placeRect) { placeRect.className.baseVal += ` ${styles.gvFree}` }
+        } else {
+          placeRect && placeRect.classList.add(styles.gvFree)
+        }
       })
   }
 
@@ -177,7 +216,7 @@ class GarageLayout extends Component {
     .forEach(place => {
       const placeRect = currentSvg.getElementById('Place' + place.label)
       if (placeRect) {
-        if (!Array.isArray(place.group)) { // colorize Place rect 
+        if (!Array.isArray(place.group)) { // colorize Place rect
           place.group = [ place.group ]
         }
 
@@ -273,8 +312,7 @@ class GarageLayout extends Component {
     const elements = document.getElementsByTagName('svg') // go trough all svgs - can be multiple on page
     // const elements = document.getElementsByClassName('svgFromText') // go trough all svgs - can be multiple on page
 
-    for (let i = 0; i < elements.length; i++) {
-      const currentSvg = elements[i]
+    Array.prototype.forEach.call(elements, (currentSvg, i) => {
       const gControl = currentSvg.getElementById('Gcontrol')
       const { floors } = this.props
       const { floor } = this.state
@@ -303,7 +341,13 @@ class GarageLayout extends Component {
         // if (Object.keys(assignColors).length) this.colorizeGroupedPlaces(currentSvg, assignColors, places)
 
         if (Object.keys(assignColors).length) {
-          const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
+          const floorOfCurrentSvg = floors.find(floor => {
+            if (this.isInternetExplorer) {
+              return currentSvg.parentElement.className.baseVal.includes(`id-${floor.id}`)
+            } else {
+              return currentSvg.parentElement.classList.contains(`id-${floor.id}`)
+            }
+          })
           const places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
           this.colorizeGroupedPlaces(currentSvg, assignColors, places)
         }
@@ -311,7 +355,7 @@ class GarageLayout extends Component {
         // add tooltip event listeners
         this.addTooltips(currentSvg, floors[floor])
       }
-    }
+    })
   }
 
   handleSVGClick = ({ target }) => {
