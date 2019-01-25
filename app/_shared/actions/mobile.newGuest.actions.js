@@ -18,5 +18,5 @@ export const undo = actionFactory(NEW_GUEST_UNDO)
 
 
 export function submitGuest() {
-  return dispatch => dispatch(setUserId())
+  return dispatch => dispatch(setUserId(-1))
 }

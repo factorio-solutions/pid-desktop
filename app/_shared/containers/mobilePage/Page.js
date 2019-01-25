@@ -79,10 +79,6 @@ export class Page extends Component {
     document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'
   }
 
-  componentWillReceiveProps(newProps) {
-    document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'
-  }
-
   componentWillUnmount() {
     window.removeEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
   }
@@ -116,14 +112,19 @@ export class Page extends Component {
         actions.setGarage(state.garages[index].id)
         reservationsActions.initReservations()
       }
-      return { label: garage.name, onClick: garageSelected }
+      return { label: garage.name, onClick: garageSelected, order: garage.order }
     }
 
     const divider = <div className={styles.divider}><div className={styles.line} /></div>
 
     const currentUserInfo = (state.current_user && <div className={styles.currentUserInfo}> {/* currently singned in user information */}
       <div className={styles.buttonContainer}>
-        <RoundButton content={<span className="fa fa-user" aria-hidden="true"></span>} onClick={currentUser} type="action" />
+        <RoundButton
+          content={<span className="fa fa-user" aria-hidden="true" />}
+          onClick={currentUser}
+          type="action"
+          state={undefined}
+        />
       </div>
       <div>
         <div><b> {state.current_user.full_name} </b></div>
@@ -153,11 +154,22 @@ export class Page extends Component {
       }
       {divider}
       <ButtonStack divider={divider}>
-        {[ <MobileMenuButton key="sign-out" icon="sign-out" label={t([ 'mobileApp', 'page', 'logOut' ])} onClick={logOut} state={!state.online && 'disabled'} size={75} /> ]}
+        {[
+          <MobileMenuButton
+            key="sign-out"
+            icon="sign-out"
+            label={t([ 'mobileApp', 'page', 'logOut' ])}
+            onClick={logOut}
+            state={!state.online ? 'disabled' : undefined}
+            size={'75'}
+          />
+        ]}
       </ButtonStack>
 
       <div className={styles.bottom}>
-        <div className={styles.appVersion}> {t([ 'mobileApp', 'page', 'version' ])} {version} </div>
+        <div className={styles.appVersion}>
+          {t([ 'mobileApp', 'page', 'version' ])} {version}
+        </div>
         <Localization afterChange={actions.initGarages} />
       </div>
     </div>)
@@ -165,10 +177,29 @@ export class Page extends Component {
     const header = (<div className={styles.header}>
       <div className={styles.logo}><Logo /></div>
       <div className={styles.content}>
-        {!hideDropdown && <Dropdown label={t([ 'mobileApp', 'page', 'selectGarage' ])} content={state.garages.map(garageDropdown)} style="mobileDark" selected={selectedGarage()} fixed />}
+        {!hideDropdown &&
+          <Dropdown
+            label={t([ 'mobileApp', 'page', 'selectGarage' ])}
+            content={state.garages.map(garageDropdown)}
+            style="mobileDark"
+            selected={selectedGarage()}
+            fixed
+          />
+        }
       </div>
-      {!hideHamburger && <button onClick={actions.toggleMenu} className={styles.menuButton}> <i className="fa fa-bars" aria-hidden="true"></i> </button>}
-      <MobileSlideMenu content={sideMenuContent} show={state.showMenu} dimmerClick={actions.toggleMenu} />
+      {!hideHamburger &&
+        <button
+          onClick={actions.toggleMenu}
+          className={styles.menuButton}
+        >
+          <i className="fa fa-bars" aria-hidden="true" />
+        </button>
+      }
+      <MobileSlideMenu
+        content={sideMenuContent}
+        show={state.showMenu}
+        dimmerClick={actions.toggleMenu}
+      />
     </div>)
 
     const menu = (<div className={styles.menu}>
@@ -176,19 +207,23 @@ export class Page extends Component {
         icon="icon-garage-mobile"
         label={t([ 'mobileApp', 'page', 'resrevations' ])}
         onClick={() => this.context.router.push(RESERVATIONS)}
-        state={window.location.hash.includes(RESERVATIONS) && 'selected'}
+        state={window.location.hash.includes(RESERVATIONS) ? 'selected' : undefined}
       />
       <MobileMenuButton
         icon="icon-notification-mobile"
         label={t([ 'mobileApp', 'page', 'notifications' ])}
         onClick={() => this.context.router.push(NOTIFICATIONS)}
-        state={window.location.hash.includes(NOTIFICATIONS) && 'selected'}
+        state={window.location.hash.includes(NOTIFICATIONS) ? 'selected' : undefined}
       />
     </div>)
 
     const errorContent = (<div className={styles.errorContent}>
       <div>{state.error}</div>
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true"></i>} onClick={actions.setError} type="confirm" />
+      <RoundButton
+        content={<i className="fa fa-check" aria-hidden="true" />}
+        onClick={actions.setError} type="confirm"
+        state={undefined}
+      />
     </div>)
 
     return (<div className={`${margin && styles.app_page} ${styles.page}`}>
@@ -199,10 +234,44 @@ export class Page extends Component {
         {this.props.children}
       </div>
 
-      {back &&        <div className={`${styles.backButton} ${gray && styles.addOffset}`}><RoundButton content={<span className="fa fa-chevron-left"></span>} onClick={back} /></div>}
-      {outlineBack && <div className={`${styles.backButton} ${gray && styles.addOffset}`}><RoundButton content={<span className="fa fa-chevron-left"></span>} onClick={outlineBack} type="whiteBorder" /></div>}
-      {add &&         <div className={`${styles.addButton} ${gray && styles.addOffset}`}> <RoundButton content={<span className="fa fa-plus"></span>} onClick={add} type="action" state={!state.online && 'disabled'} /></div>}
-      {ok &&          <div className={`${styles.okButton} ${gray && styles.addOffset}`}> <RoundButton content={<span className="fa fa-check"></span>} onClick={ok} type="confirm" state={!state.online && 'disabled'} /></div>}
+      {back &&
+        <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
+          <RoundButton
+            content={<span className="fa fa-chevron-left" />}
+            onClick={back}
+            state={undefined}
+          />
+        </div>
+      }
+      {outlineBack &&
+        <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
+          <RoundButton
+            content={<span className="fa fa-chevron-left" />}
+            onClick={outlineBack}
+            type="whiteBorder"
+            state={undefined}
+          />
+        </div>
+      }
+      {add &&
+        <div className={`${styles.addButton} ${gray && styles.addOffset}`}>
+          <RoundButton
+            content={<span className="fa fa-plus" />}
+            onClick={add} type="action"
+            state={!state.online ? 'disabled' : undefined}
+          />
+        </div>
+      }
+      {ok &&
+        <div className={`${styles.okButton} ${gray && styles.addOffset}`}>
+          <RoundButton
+            content={<span className="fa fa-check" />}
+            onClick={ok}
+            type="confirm"
+            state={!state.online ? 'disabled' : undefined}
+          />
+        </div>
+      }
 
       {gray && menu}
       {!hideHeader && header}

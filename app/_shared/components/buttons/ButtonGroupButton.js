@@ -19,7 +19,7 @@ export default function ButtonGroupButton({ state, ...restOfProps }) {
 }
 
 ButtonGroupButton.propTypes = {
-  content: PropTypes.object,
+  content: PropTypes.string,
   onClick: PropTypes.func,
   state:   PropTypes.string
 }

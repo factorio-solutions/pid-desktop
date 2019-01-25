@@ -49,7 +49,10 @@ function Button({
 }
 
 Button.propTypes = {
-  content:         PropTypes.object,
+  content: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object
+  ]),
   onClick:         PropTypes.func,
   onDisabledClick: PropTypes.func,
   type:            PropTypes.string,

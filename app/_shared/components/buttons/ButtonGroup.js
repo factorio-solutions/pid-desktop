@@ -18,6 +18,8 @@ export default function ButtonGroup({ buttons }) {
       {buttons.map((button, index) => (<ButtonGroupButton
         {...button}
         key={index}
+        content={button.content}
+        onClick={button.onClick}
         state={button.selected && 'selected'}
       />))}
     </span>

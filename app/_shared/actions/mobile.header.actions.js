@@ -32,6 +32,7 @@ export function setPersonal(value) {
   return dispatch => {
     dispatch({ type: SET_MOBILE_PERSONAL, value })
     dispatch(initReservations())
+    dispatch(initGarages())
   }
 }
 
@@ -44,17 +45,20 @@ export function hideSplashscreen() {
 }
 
 export function initGarages() {
-  return dispatch => {
+  return (dispatch, getState) => {
     const onGarageSuccess = response => {
       const garages = response.data.reservable_garages
-      garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]) })
+      garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })
+
       dispatch(setGarages(garages))
     }
 
     const onSuccess = response => {
       dispatch(setLanguage(response.data.current_user.language))
       dispatch(setCurrentUser(response.data.current_user))
-      request(onGarageSuccess, GET_RESERVABLE_GARAGES, { user_id: response.data.current_user.id })
+      request(onGarageSuccess, GET_RESERVABLE_GARAGES, {
+        user_id: getState().mobileHeader.personal ? response.data.current_user.id : -1
+      })
     }
     request(onSuccess, GET_CURRENT_USER)
   }
