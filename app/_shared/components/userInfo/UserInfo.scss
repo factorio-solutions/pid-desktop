@@ -1,0 +1,11 @@
+@import '../../styles/app.components';
+
+.currentUserInfo {
+  padding:          15px;
+  background-color: $gray;
+  color:            $white;
+
+  > .buttonContainer {
+    padding-bottom: 15px;
+  }
+}

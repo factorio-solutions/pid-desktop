@@ -3,28 +3,18 @@ import React, { Component } from 'react'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
 
-import Logo             from '../../components/logo/Logo'
-import Dropdown         from '../../components/dropdown/Dropdown'
 import RoundButton      from '../../components/buttons/RoundButton'
-import MobileSlideMenu  from '../../components/mobileSlideMenu/MobileSlideMenu'
-import ButtonStack      from '../../components/buttonStack/ButtonStack'
-import ButtonGroup      from '../../components/buttons/ButtonGroup'
-import MobileMenuButton from '../../components/buttons/MobileMenuButton'
 import Modal            from '../../components/modal/Modal'
-import Localization     from '../../components/localization/Localization'
 
 import styles from './Page.scss'
 
 import * as headerActions   from '../../actions/mobile.header.actions'
 import * as loginActions    from '../../actions/login.actions'
 import { initReservations } from '../../actions/mobile.reservations.actions'
-import { t }                from '../../modules/localization/localization'
 
-import { LOGIN, RESERVATIONS, NOTIFICATIONS } from '../../../_resources/constants/RouterPaths'
-import { version }                            from '../../../../package.json'
+import { LOGIN, RESERVATIONS } from '../../../_resources/constants/RouterPaths'
 
-
-export class Page extends Component {
+class Page extends Component {
   static propTypes = {
     actions:             PropTypes.object,
     reservationsActions: PropTypes.object,
@@ -57,16 +47,11 @@ export class Page extends Component {
     router: PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-
-    this.unauthorizedHandler = this.unauthorizedHandler.bind(this)
-  }
-
   componentDidMount() {
     window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
-    const { state, actions, hideDropdown, hideHeader } = this.props
-    actions.setCustomModal(undefined) // will avoid situations when lost custom modal cannot be removed
+    const { state, actions, hideDropdown, hideHeader, hideHamburger, gray } = this.props
+    actions.setAllHeader(!hideHeader, !hideHamburger, !hideDropdown)
+    actions.setShowBottomMenu(gray)
     !hideHeader && !hideDropdown && actions.initGarages()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
@@ -83,7 +68,13 @@ export class Page extends Component {
     window.removeEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
   }
 
-  unauthorizedHandler() {
+  onLogoutClick = () => this.logout(true)
+
+  logout = revoke => { // private method
+    this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
+  }
+
+  unauthorizedHandler = () => {
     this.props.loginActions.refreshLogin(
       () => {
         this.context.router.push(RESERVATIONS)
@@ -93,129 +84,17 @@ export class Page extends Component {
     )
   }
 
-  logout(revoke) { // private method
-    this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
-  }
-
-
   render() {
-    const { actions, reservationsActions, state, gray } = this.props
-    const { hideDropdown, hideHamburger, hideHeader, margin } = this.props
-    const { back, add, ok, outlineBack } = this.props
-
-    const selectedGarage = () => state.garages.findIndex(garage => garage.id === state.garage_id)
-    const currentUser = () => console.log('TODO: current user profile')
-    const logOut = () => this.logout(true)
-
-    const garageDropdown = (garage, index) => {
-      const garageSelected = () => {
-        actions.setGarage(state.garages[index].id)
-        reservationsActions.initReservations()
-      }
-      return { label: garage.name, onClick: garageSelected, order: garage.order }
-    }
-
-    const divider = <div className={styles.divider}><div className={styles.line} /></div>
-
-    const currentUserInfo = (state.current_user && <div className={styles.currentUserInfo}> {/* currently singned in user information */}
-      <div className={styles.buttonContainer}>
-        <RoundButton
-          content={<span className="fa fa-user" aria-hidden="true" />}
-          onClick={currentUser}
-          type="action"
-          state={undefined}
-        />
-      </div>
-      <div>
-        <div><b> {state.current_user.full_name} </b></div>
-        <div> {state.current_user.email} </div>
-        {state.current_user.phone && <div>{state.current_user.phone}</div>}
-      </div>
-    </div>)
-
-    const sideMenuContent = (<div>
-      {state.current_user ? currentUserInfo : <div>{t([ 'mobileApp', 'page', 'userInfoUnavailable' ])}</div>}
-      {state.current_user && state.current_user.secretary && divider}
-      {state.current_user && state.current_user.secretary &&
-        <div className={styles.buttonGroup}>
-          <ButtonGroup
-            buttons={[
-              { content:  t([ 'mobileApp', 'page', 'personal' ]),
-                onClick:  () => actions.setPersonal(true),
-                selected: state.personal
-              },
-              { content:  t([ 'mobileApp', 'page', 'work' ]),
-                onClick:  () => actions.setPersonal(false),
-                selected: !state.personal
-              }
-            ]}
-          />
-        </div>
-      }
-      {divider}
-      <ButtonStack divider={divider}>
-        {[
-          <MobileMenuButton
-            key="sign-out"
-            icon="sign-out"
-            label={t([ 'mobileApp', 'page', 'logOut' ])}
-            onClick={logOut}
-            state={!state.online ? 'disabled' : undefined}
-            size={'75'}
-          />
-        ]}
-      </ButtonStack>
-
-      <div className={styles.bottom}>
-        <div className={styles.appVersion}>
-          {t([ 'mobileApp', 'page', 'version' ])} {version}
-        </div>
-        <Localization afterChange={actions.initGarages} />
-      </div>
-    </div>)
-
-    const header = (<div className={styles.header}>
-      <div className={styles.logo}><Logo /></div>
-      <div className={styles.content}>
-        {!hideDropdown &&
-          <Dropdown
-            label={t([ 'mobileApp', 'page', 'selectGarage' ])}
-            content={state.garages.map(garageDropdown)}
-            style="mobileDark"
-            selected={selectedGarage()}
-            fixed
-          />
-        }
-      </div>
-      {!hideHamburger &&
-        <button
-          onClick={actions.toggleMenu}
-          className={styles.menuButton}
-        >
-          <i className="fa fa-bars" aria-hidden="true" />
-        </button>
-      }
-      <MobileSlideMenu
-        content={sideMenuContent}
-        show={state.showMenu}
-        dimmerClick={actions.toggleMenu}
-      />
-    </div>)
-
-    const menu = (<div className={styles.menu}>
-      <MobileMenuButton
-        icon="icon-garage-mobile"
-        label={t([ 'mobileApp', 'page', 'resrevations' ])}
-        onClick={() => this.context.router.push(RESERVATIONS)}
-        state={window.location.hash.includes(RESERVATIONS) ? 'selected' : undefined}
-      />
-      <MobileMenuButton
-        icon="icon-notification-mobile"
-        label={t([ 'mobileApp', 'page', 'notifications' ])}
-        onClick={() => this.context.router.push(NOTIFICATIONS)}
-        state={window.location.hash.includes(NOTIFICATIONS) ? 'selected' : undefined}
-      />
-    </div>)
+    const {
+      actions,
+      state,
+      gray,
+      margin,
+      back,
+      add,
+      ok,
+      outlineBack
+    } = this.props
 
     const errorContent = (<div className={styles.errorContent}>
       <div>{state.error}</div>
@@ -226,56 +105,52 @@ export class Page extends Component {
       />
     </div>)
 
-    return (<div className={`${margin && styles.app_page} ${styles.page}`}>
-      <Modal content={errorContent} show={state.error} />
-      <Modal content={state.custom_modal} show={state.custom_modal} zindex={100} />
+    return (
+      <div className={styles.page}>
+        <Modal content={errorContent} show={state.error} />
+        <Modal content={state.custom_modal} show={state.custom_modal} zindex={100} />
 
-      <div className={!hideHeader && styles.pageContent}>
         {this.props.children}
+
+        {back &&
+          <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
+            <RoundButton
+              content={<span className="fa fa-chevron-left" />}
+              onClick={back}
+              state={undefined}
+            />
+          </div>
+        }
+        {outlineBack &&
+          <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
+            <RoundButton
+              content={<span className="fa fa-chevron-left" />}
+              onClick={outlineBack}
+              type="whiteBorder"
+              state={undefined}
+            />
+          </div>
+        }
+        {add &&
+          <div className={`${styles.addButton} ${gray && styles.addOffset}`}>
+            <RoundButton
+              content={<span className="fa fa-plus" />}
+              onClick={add} type="action"
+              state={!state.online ? 'disabled' : undefined}
+            />
+          </div>
+        }
+        {ok &&
+          <div className={`${styles.okButton} ${gray && styles.addOffset}`}>
+            <RoundButton
+              content={<span className="fa fa-check" />}
+              onClick={ok}
+              type="confirm"
+              state={!state.online ? 'disabled' : undefined}
+            />
+          </div>
+        }
       </div>
-
-      {back &&
-        <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
-          <RoundButton
-            content={<span className="fa fa-chevron-left" />}
-            onClick={back}
-            state={undefined}
-          />
-        </div>
-      }
-      {outlineBack &&
-        <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
-          <RoundButton
-            content={<span className="fa fa-chevron-left" />}
-            onClick={outlineBack}
-            type="whiteBorder"
-            state={undefined}
-          />
-        </div>
-      }
-      {add &&
-        <div className={`${styles.addButton} ${gray && styles.addOffset}`}>
-          <RoundButton
-            content={<span className="fa fa-plus" />}
-            onClick={add} type="action"
-            state={!state.online ? 'disabled' : undefined}
-          />
-        </div>
-      }
-      {ok &&
-        <div className={`${styles.okButton} ${gray && styles.addOffset}`}>
-          <RoundButton
-            content={<span className="fa fa-check" />}
-            onClick={ok}
-            type="confirm"
-            state={!state.online ? 'disabled' : undefined}
-          />
-        </div>
-      }
-
-      {gray && menu}
-      {!hideHeader && header}
-    </div>
     )
   }
 }

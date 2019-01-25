@@ -59,8 +59,8 @@ export function loginSuccess(result, redirect, callback) {
       localStorage.refresh_token = result.refresh_token
       dispatch({ type: LOGIN_SUCCESS })
 
-      callback(result)
       dispatch(resetLoginForm())
+      callback(result)
       if (redirect) {
         const path = localStorage.redirect || '/occupancy'
         delete localStorage.redirect
