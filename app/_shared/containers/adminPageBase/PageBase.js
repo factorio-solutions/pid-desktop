@@ -37,7 +37,7 @@ class PageBase extends Component {
       { label: t([ 'pidAdmin', 'pageBase', 'finance' ]), key: 'finance', icon: 'fa fa-money', onClick: () => nav.to('/pid-admin/finance') },
       { label: t([ 'pageBase', 'Activity log' ]), key: 'logs', icon: 'fa fa-file-text', onClick: () => nav.to('/pid-admin/logs') },
       { label: t([ 'pidAdmin', 'pageBase', 'garagesOverview' ]), key: 'garages', icon: 'icon-garage', onClick: () => nav.to('/pid-admin/garagesOverview') },
-      { label: t([ 'pidAdmin', 'pageBase', 'mobileAppVersion' ]), key: 'mobileAppVersion', icon: 'icon-phone', onClick: () => nav.to('/pid-admin/mobileAppVersion') }
+      { label: t([ 'pidAdmin', 'pageBase', 'mobileAppVersion' ]), key: 'mobileAppVersion', icon: 'fa fa-mobile', onClick: () => nav.to('/pid-admin/mobileAppVersion') }
     ]
 
     const profileDropdown = [

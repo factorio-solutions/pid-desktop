@@ -61,12 +61,13 @@ import adminBillingAddress        from '../_shared/reducers/admin.billingAddress
 import adminActivityLog           from '../_shared/reducers/admin.activityLog.reducer'
 import legalDocuments             from '../_shared/reducers/legalDocuments.reducer'
 
-import pidAdminGenerator       from '../_shared/reducers/pid-admin.generator.reducer'
-import pidAdminNews            from '../_shared/reducers/pid-admin.news.reducer'
-import pidAdminNewNews         from '../_shared/reducers/pid-admin.newNews.reducer'
-import pidAdminFinance         from '../_shared/reducers/pid-admin.finance.reducer'
-import pidAdminLogs            from '../_shared/reducers/pid-admin.logs.reducer'
-import pidAdminGaragesOverview from '../_shared/reducers/pid-admin.garagesOverview.reducer'
+import pidAdminGenerator        from '../_shared/reducers/pid-admin.generator.reducer'
+import pidAdminNews             from '../_shared/reducers/pid-admin.news.reducer'
+import pidAdminNewNews          from '../_shared/reducers/pid-admin.newNews.reducer'
+import pidAdminFinance          from '../_shared/reducers/pid-admin.finance.reducer'
+import pidAdminLogs             from '../_shared/reducers/pid-admin.logs.reducer'
+import pidAdminGaragesOverview  from '../_shared/reducers/pid-admin.garagesOverview.reducer'
+import pidAdminMobileAppVersion from '../_shared/reducers/pid-admin.mobileAppVersion.reducer'
 
 const appReducer = combineReducers({
   routing,
@@ -135,7 +136,8 @@ const appReducer = combineReducers({
   pidAdminNewNews,
   pidAdminFinance,
   pidAdminLogs,
-  pidAdminGaragesOverview
+  pidAdminGaragesOverview,
+  pidAdminMobileAppVersion
 })
 
 const rootReducer = (state, action) => { // app reducer container reducer
