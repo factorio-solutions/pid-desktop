@@ -204,17 +204,17 @@ export function initUsers() {
     const clientIds = getState().pidAdminGenerator.clients.filter(c => c.selected).map(c => c.id)
     if (clientIds.length) {
       request(GET_PID_ADMIN_GARAGE_CLIENTS_USERS, { ids: clientIds, internal: getState().pidAdminGenerator.internal })
-      .then(data => dispatch(setUsers(data.garages_clients_users.reduce((acc, user) => {
-        return [
-          ...acc,
-          ...user.clients
-            .filter(client => {
-              const clientFromState = getState().pidAdminGenerator.clients.find(c => c.id === client.id)
-              return clientFromState && clientFromState.selected
-            })
-            .map(client => ({ ...user, client_name: client.name, client_id: client.id }))
-        ]
-      }, []))))
+        .then(data => dispatch(setUsers(data.garages_clients_users.reduce((acc, user) => {
+          return [
+            ...acc,
+            ...user.clients
+              .filter(client => {
+                const clientFromState = getState().pidAdminGenerator.clients.find(c => c.id === client.id)
+                return clientFromState && clientFromState.selected
+              })
+              .map(client => ({ ...user, client_name: client.name, client_id: client.id }))
+          ]
+        }, []))))
     } else {
       dispatch(setUsers([]))
     }
