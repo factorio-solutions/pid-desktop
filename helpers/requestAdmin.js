@@ -12,8 +12,8 @@ export default function requestAdmin(query, variables = null) {
   }).then(response => {
     if (response.ok) {
       return response
-      .json()
-      .then(resp => resp.data)
+        .json()
+        .then(resp => resp.data)
     } else {
       switch (response.status) {
         case 401:

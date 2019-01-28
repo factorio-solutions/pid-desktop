@@ -8,7 +8,7 @@ import RoundButton from '../components/buttons/RoundButton'
 import { GET_CURRENT_MOBILE_VERSION } from '../queries/mobile.header.queries'
 
 import { setCustomModal } from './mobile.header.actions'
-import { t } from '../modules/localization/localization';
+import { t } from '../modules/localization/localization'
 
 export const SET_CURRENT_VERSION = 'SET_CURRENT_VERSION'
 export const SET_APP_VERSION = 'SET_APP_VERSION'
