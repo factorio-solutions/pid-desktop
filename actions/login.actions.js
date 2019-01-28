@@ -16,7 +16,7 @@ export const RESET_LOGIN_FORM = 'RESET_LOGIN_FORM'
 export const LOGIN_SET_DEVICE_FINGERPRINT = 'LOGIN_SET_DEVICE_FINGERPRINT'
 export const LOGIN_PASSWORD_RESET_SUCCESSFUL = 'LOGIN_PASSWORD_RESET_SUCCESSFUL'
 export const LOGIN_SHOW_PASSWORD_RESET_MODAL = 'LOGIN_SHOW_PASSWORD_RESET_MODAL'
-
+export const LOGIN_SET_REFRESHING_LOGIN = 'LOGIN_SET_REFRESHING_LOGIN'
 
 export const setError = actionFactory(LOGIN_FAILURE)
 export const setDeviceFingerprint = actionFactory(LOGIN_SET_DEVICE_FINGERPRINT)
@@ -24,6 +24,7 @@ export const resetLoginForm = actionFactory(RESET_LOGIN_FORM)
 export const resetStore = actionFactory('RESET')
 export const setPasswordResetSuccessful = actionFactory(LOGIN_PASSWORD_RESET_SUCCESSFUL)
 export const setShowPasswordResetModal = actionFactory(LOGIN_SHOW_PASSWORD_RESET_MODAL)
+export const setRefreshingLogin = actionFactory(LOGIN_SET_REFRESHING_LOGIN)
 
 export function setEmail(value, valid) {
   return { type:  LOGIN_SET_EMAIL,
@@ -143,11 +144,15 @@ export function logout() {
 
 export function refreshLogin(callback, errorCallback) {
   return (dispatch, getState) => {
+    const { refreshingLogin } = getState().login
+    if (refreshingLogin) { return }
+    dispatch(setRefreshingLogin(true))
     const success = response => {
       const result = JSON.parse(response.data.login)
       if (result && result.id_token) {
         localStorage.jwt = result.id_token
         dispatch({ type: LOGIN_SUCCESS })
+        dispatch(setRefreshingLogin(false))
         callback && callback(result)
         dispatch(resetLoginForm())
       } else {
@@ -159,10 +164,12 @@ export function refreshLogin(callback, errorCallback) {
 
     const currentUser = getState().mobileHeader.current_user
     const onError = () => console.log('Error while refreshing token')
+    console.log('RefreshLogin request')
     request(
       success,
       LOGIN_USER,
-      { refresh_token:      localStorage.refresh_token,
+      {
+        refresh_token:      localStorage.refresh_token,
         email:              currentUser ? currentUser.email : null,
         mobile_app_version: version
       },

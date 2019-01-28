@@ -47,12 +47,12 @@ class Page extends Component {
     router: PropTypes.object
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
     const { state, actions, hideDropdown, hideHeader, hideHamburger, gray } = this.props
     actions.setAllHeader(!hideHeader, !hideHamburger, !hideDropdown)
     actions.setShowBottomMenu(gray)
-    !hideHeader && !hideDropdown && actions.initGarages()
+    !hideHeader && !hideDropdown && await actions.initGarages()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
 
@@ -75,10 +75,23 @@ class Page extends Component {
   }
 
   unauthorizedHandler = () => {
-    this.props.loginActions.refreshLogin(
-      () => {
-        this.context.router.push(RESERVATIONS)
-        this.props.reservationsActions.initReservations()
+    const {
+      state,
+      actions,
+      loginActions: login,
+      reservationsActions
+    } = this.props
+    const { router } = this.context
+    console.log('unauthorizedAccess')
+    login.refreshLogin(
+      async () => {
+        router.push(RESERVATIONS)
+        await actions.initGarages()
+        if (state.current_user && !state.current_user.secretary) {
+          actions.setPersonal(true)
+        } else {
+          reservationsActions.initReservations()
+        }
       },
       () => this.logout(false)
     )
@@ -89,30 +102,33 @@ class Page extends Component {
       actions,
       state,
       gray,
-      margin,
+      children,
       back,
       add,
       ok,
       outlineBack
     } = this.props
 
-    const errorContent = (<div className={styles.errorContent}>
-      <div>{state.error}</div>
-      <RoundButton
-        content={<i className="fa fa-check" aria-hidden="true" />}
-        onClick={actions.setError} type="confirm"
-        state={undefined}
-      />
-    </div>)
+    const errorContent = (
+      <div className={styles.errorContent}>
+        <div>{state.error}</div>
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={actions.setError}
+          type="confirm"
+          state={undefined}
+        />
+      </div>
+    )
 
     return (
       <div className={styles.page}>
         <Modal content={errorContent} show={state.error} />
         <Modal content={state.custom_modal} show={state.custom_modal} zindex={100} />
 
-        {this.props.children}
+        {children}
 
-        {back &&
+        {back && (
           <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
             <RoundButton
               content={<span className="fa fa-chevron-left" />}
@@ -120,8 +136,8 @@ class Page extends Component {
               state={undefined}
             />
           </div>
-        }
-        {outlineBack &&
+        )}
+        {outlineBack && (
           <div className={`${styles.backButton} ${gray && styles.addOffset}`}>
             <RoundButton
               content={<span className="fa fa-chevron-left" />}
@@ -130,17 +146,18 @@ class Page extends Component {
               state={undefined}
             />
           </div>
-        }
-        {add &&
+        )}
+        {add && (
           <div className={`${styles.addButton} ${gray && styles.addOffset}`}>
             <RoundButton
               content={<span className="fa fa-plus" />}
-              onClick={add} type="action"
+              onClick={add}
+              type="action"
               state={!state.online ? 'disabled' : undefined}
             />
           </div>
-        }
-        {ok &&
+        )}
+        {ok && (
           <div className={`${styles.okButton} ${gray && styles.addOffset}`}>
             <RoundButton
               content={<span className="fa fa-check" />}
@@ -149,7 +166,7 @@ class Page extends Component {
               state={!state.online ? 'disabled' : undefined}
             />
           </div>
-        }
+        )}
       </div>
     )
   }

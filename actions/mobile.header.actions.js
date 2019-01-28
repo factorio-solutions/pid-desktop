@@ -1,4 +1,4 @@
-import { request }   from '../helpers/request'
+import requestPromise   from '../helpers/requestPromise'
 import actionFactory from '../helpers/actionFactory'
 
 import {
@@ -42,10 +42,10 @@ const setHeader = actionFactory(SET_HEADER)
 
 
 export function setPersonal(value) {
-  return dispatch => {
+  return async dispatch => {
     dispatch({ type: SET_MOBILE_PERSONAL, value })
     dispatch(initReservations())
-    dispatch(initGarages())
+    await dispatch(initGarages())
   }
 }
 
@@ -58,23 +58,24 @@ export function hideSplashscreen() {
 }
 
 export function initGarages() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     console.log('InitGarage')
-    const onGarageSuccess = response => {
-      const garages = response.data.reservable_garages
-      garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })
+    const currentUserData = await requestPromise(GET_CURRENT_USER)
+    console.log('Current user request OK.')
 
-      dispatch(setGarages(garages))
-    }
+    dispatch(setLanguage(currentUserData.current_user.language))
+    dispatch(setCurrentUser(currentUserData.current_user))
 
-    const onSuccess = response => {
-      dispatch(setLanguage(response.data.current_user.language))
-      dispatch(setCurrentUser(response.data.current_user))
-      request(onGarageSuccess, GET_RESERVABLE_GARAGES, {
-        user_id: getState().mobileHeader.personal ? response.data.current_user.id : -1
-      })
-    }
-    request(onSuccess, GET_CURRENT_USER)
+    const garagesData = await requestPromise(GET_RESERVABLE_GARAGES, {
+      user_id: getState().mobileHeader.personal ? currentUserData.current_user.id : -1
+    })
+    console.log('Garage request OK.')
+
+
+    const garages = garagesData.reservable_garages
+    garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })
+
+    dispatch(setGarages(garages))
   }
 }
 
@@ -85,20 +86,16 @@ export function toggleMenu() {
 }
 
 export function logout(revoke, callback) { // delete JWToken and current store
-  return dispatch => {
-    const onSuccess = () => {
-      delete localStorage.jwt
-      revoke && delete localStorage.store
-      revoke && delete localStorage.refresh_token
-      revoke && dispatch(resetStore())
-      callback()
+  return async dispatch => {
+    if (revoke) {
+      await requestPromise(REVOKE_TOKEN, { refresh_token: localStorage.refresh_token })
     }
 
-    if (revoke) {
-      request(onSuccess, REVOKE_TOKEN, { refresh_token: localStorage.refresh_token })
-    } else {
-      onSuccess()
-    }
+    delete localStorage.jwt
+    revoke && delete localStorage.store
+    revoke && delete localStorage.refresh_token
+    revoke && dispatch(resetStore())
+    callback()
   }
 }
 
