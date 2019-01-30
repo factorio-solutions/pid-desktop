@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
 
@@ -24,6 +25,7 @@ class MobileBottomMenu extends Component {
 
   render() {
     const { showMenu, selectResButton } = this.props
+    const { router } = this.context
     if (!showMenu) { return null }
 
     return (
@@ -31,13 +33,13 @@ class MobileBottomMenu extends Component {
         <MobileMenuButton
           icon="icon-garage-mobile"
           label={t([ 'mobileApp', 'page', 'resrevations' ])}
-          onClick={() => this.context.router.push(RESERVATIONS)}
+          onClick={() => router.push(RESERVATIONS)}
           state={selectResButton ? 'selected' : undefined}
         />
         <MobileMenuButton
           icon="icon-notification-mobile"
           label={t([ 'mobileApp', 'page', 'notifications' ])}
-          onClick={() => this.context.router.push(NOTIFICATIONS)}
+          onClick={() => router.push(NOTIFICATIONS)}
           state={!selectResButton ? 'selected' : undefined}
         />
       </div>
@@ -46,6 +48,6 @@ class MobileBottomMenu extends Component {
 }
 
 export default connect(
-  state => ({ showMenu: state.mobileHeader.showBottomMenu }),
+  state => ({ showMenu: state.mobileHeader.showBottomMenu, language: state.mobileHeader.language }),
   dispatch => ({ actions: bindActionCreators({ setShowBottomMenu }, dispatch) })
 )(MobileBottomMenu)
