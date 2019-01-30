@@ -1,3 +1,5 @@
+import localforage from 'localforage'
+
 import FileSaver from 'file-saver'
 import JSZip     from 'jszip'
 import * as nav  from './navigation'
@@ -10,16 +12,17 @@ import { binaryToOctetStream } from './downloadXLSX'
 // download ('HelloKity.pdf', "query { download_invoice }")
 
 
-export function downloadData(onSuccess, query, variables = undefined) {
+export async function downloadData(onSuccess, query, variables = undefined) {
   const entryPoint = (process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/queries'
 
   const xmlHttp = new XMLHttpRequest()
 
-  xmlHttp.onreadystatechange = function () {
+  xmlHttp.onreadystatechange = async () => {
     if (xmlHttp.status === 401) { // unauthorized, navivate home
-      delete localStorage.jwt
-      if (localStorage.redirect === undefined) {
-        localStorage.redirect = window.location.hash.substring(4, window.location.hash.indexOf('?'))
+      localforage.removeItem('jwt')
+      const redirect = await localforage.getItem('redirect')
+      if (!redirect) {
+        localforage.setItem('redirect', window.location.hash.substring(4, window.location.hash.indexOf('?')))
       }
       nav.to('/')
     }
@@ -31,7 +34,7 @@ export function downloadData(onSuccess, query, variables = undefined) {
 
   xmlHttp.open('POST', entryPoint, true)
   xmlHttp.setRequestHeader('Content-type', 'application/json')
-  xmlHttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt)
+  xmlHttp.setRequestHeader('Authorization', 'Bearer ' + await localforage.getItem('jwt'))
   xmlHttp.send(JSON.stringify({ query, variables }))
 }
 

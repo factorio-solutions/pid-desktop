@@ -8,7 +8,8 @@ import {
   LOGIN_SET_DEVICE_FINGERPRINT,
   LOGIN_FAILURE,
   LOGIN_PASSWORD_RESET_SUCCESSFUL,
-  LOGIN_SHOW_PASSWORD_RESET_MODAL
+  LOGIN_SHOW_PASSWORD_RESET_MODAL,
+  LOGIN_SET_REFRESHING_LOGIN
 }  from '../actions/login.actions'
 
 const initialState = {
@@ -19,46 +20,53 @@ const initialState = {
   code:                    { value: '', valid: false },
   deviceFingerprint:       undefined,
   passwordResetSuccessful: false,
-  showResetPasswordModal:  false
+  showResetPasswordModal:  false,
+  refreshingLogin:         false
 }
 
 
 export default function login(state = initialState, action) {
   switch (action.type) {
-
     case LOGIN_REQUEST:
-      return { ...state,
+      return {
+        ...state,
         fetching: true
       }
 
     case LOGIN_FAILURE:
-      return { ...state,
+      return {
+        ...state,
         fetching: false,
         error:    action.value
       }
 
     case LOGIN_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         fetching: false
       }
 
     case LOGIN_SET_EMAIL:
-      return { ...state,
+      return {
+        ...state,
         email: action.value
       }
 
     case LOGIN_SET_PASSWORD:
-      return { ...state,
+      return {
+        ...state,
         password: action.value
       }
 
     case LOGIN_SET_CODE:
-      return { ...state,
+      return {
+        ...state,
         code: action.value
       }
 
     case LOGIN_SET_DEVICE_FINGERPRINT:
-      return { ...state,
+      return {
+        ...state,
         deviceFingerprint: action.value
       }
 
@@ -75,6 +83,12 @@ export default function login(state = initialState, action) {
       return {
         ...state,
         showResetPasswordModal: action.value
+      }
+
+    case LOGIN_SET_REFRESHING_LOGIN:
+      return {
+        ...state,
+        refreshingLogin: action.value
       }
 
     default:

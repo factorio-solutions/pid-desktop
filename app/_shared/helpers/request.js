@@ -1,3 +1,5 @@
+import localforage from 'localforage'
+
 import * as nav from './navigation'
 import { store, mobile, entryPoint } from '../../index'
 import { setNotificationCount } from '../actions/notifications.actions'
@@ -8,7 +10,7 @@ import { setNotificationCount } from '../actions/notifications.actions'
 // import { request }  from '../_shared/helpers/request'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
-export function request(onSuccess, query, variables = null, operationName = null, onError) {
+export async function request(onSuccess, query, variables = null, operationName = null, onError) {
   const data = { query,
     operationName,
     variables
@@ -16,14 +18,15 @@ export function request(onSuccess, query, variables = null, operationName = null
 
   const xmlHttp = new XMLHttpRequest()
 
-  xmlHttp.onreadystatechange = () => {
+  xmlHttp.onreadystatechange = async () => {
     if (xmlHttp.status === 401) { // unauthorized
       if (mobile) { // mobile handle 401 error
         window.dispatchEvent(new Event('unauthorizedAccess'))
       } else { // desktop handle
-        delete localStorage.jwt
-        if (localStorage.redirect === undefined) {
-          localStorage.redirect = window.location.hash.substring(4, window.location.hash.indexOf('?'))
+        localforage.removeIterm('jwt')
+        const redirect = await localforage.getItem('redirect')
+        if (!redirect) {
+          await localforage.setItem('redirect', window.location.hash.substring(4, window.location.hash.indexOf('?')))
         }
         nav.to('/')
       }
@@ -36,7 +39,7 @@ export function request(onSuccess, query, variables = null, operationName = null
         if (onError === undefined) {
           throw (e)
         } else {
-          onError()
+          onError(e)
         }
       }
     }
@@ -44,6 +47,6 @@ export function request(onSuccess, query, variables = null, operationName = null
 
   xmlHttp.open('POST', entryPoint, true)
   xmlHttp.setRequestHeader('Content-type', 'application/json')
-  xmlHttp.setRequestHeader('Authorization', 'Bearer ' + localStorage.jwt)
+  xmlHttp.setRequestHeader('Authorization', 'Bearer ' + await localforage.getItem('jwt'))
   xmlHttp.send(JSON.stringify(data))
 }
