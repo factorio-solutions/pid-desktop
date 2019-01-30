@@ -1,3 +1,5 @@
+import localforage from 'localforage'
+
 import requestPromise   from '../helpers/requestPromise'
 import actionFactory from '../helpers/actionFactory'
 
@@ -88,25 +90,23 @@ export function toggleMenu() {
 export function logout(revoke, callback) { // delete JWToken and current store
   return async dispatch => {
     if (revoke) {
-      await requestPromise(REVOKE_TOKEN, { refresh_token: localStorage.refresh_token })
+      await requestPromise(REVOKE_TOKEN, {
+        refresh_token: await localforage.getItem('refresh_token')
+      })
     }
 
-    delete localStorage.jwt
-    revoke && delete localStorage.store
-    revoke && delete localStorage.refresh_token
-    revoke && dispatch(resetStore())
+    if (revoke) {
+      await localforage.clear()
+      dispatch(resetStore())
+    } else {
+      await localforage.removeItem('jwt')
+    }
     callback()
   }
 }
 
 export function setAllHeader(newShowHeader, newShowHamburger, newShowDropdown) {
-  return (dispatch, getState) => {
-    const { showHeader, showHamburger, showDropdown } = getState().mobileHeader
-
-    const checkUpdate = (newValue, value) => {
-      return newValue !== value && newValue != undefined && typeof newValue === 'boolean'
-    }
-
+  return dispatch => {
     const newSettings = {
       showHeader:    newShowHeader || false,
       showHamburger: newShowHamburger || false,
