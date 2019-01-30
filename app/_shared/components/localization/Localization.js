@@ -9,6 +9,7 @@ import { changeLanguage } from '../../modules/localization/localization'
 import request from '../../helpers/requestPromise'
 import { AVAILABLE_LANGUAGES } from '../../../routes'
 import { mobile } from '../../../index'
+import { setLanguage } from '../../actions/mobile.header.actions'
 
 
 const CHANGE_USERS_LANGUAGE = `mutation UpdateUserLanguage($user_id: Id!, $language: String!) {
@@ -21,31 +22,44 @@ const CHANGE_USERS_LANGUAGE = `mutation UpdateUserLanguage($user_id: Id!, $langu
 
 class Localization extends Component {
   static propTypes = {
-    user:        PropTypes.object,
-    afterChange: PropTypes.func
+    user:              PropTypes.object,
+    afterChange:       PropTypes.func,
+    setMobileLanguage: PropTypes.func
   }
 
-  render() {
-    const { user, afterChange } = this.props
-
-    const prepareButtons = (language, i) => {
-      const langClick = () => {
-        mobile ? changeLanguage(language) : nav.changeLanguage(language)
-
-        user && request(CHANGE_USERS_LANGUAGE, { // if user exists then update language on server
-          language,
-          user_id: user.id
-        }).then(response => console.log(response))
-
-        afterChange && afterChange()
-      }
-
-      return <RoundButton key={i} content={language.toUpperCase()} onClick={langClick} type="action" />
+  langClick = async language => {
+    const { user, afterChange, setMobileLanguage } = this.props
+    if (mobile) {
+      changeLanguage(language)
+      setMobileLanguage(language)
+    } else {
+      nav.changeLanguage(language)
     }
 
+    if (user) {
+      await request(CHANGE_USERS_LANGUAGE, { // if user exists then update language on server
+        language,
+        user_id: user.id
+      })
+
+      afterChange && afterChange()
+    }
+  }
+
+  prepareButtons = (language, i) => (
+    <RoundButton
+      key={i}
+      content={language.toUpperCase()}
+      onClick={() => this.langClick(language)}
+      type="action"
+    />
+  )
+
+
+  render() {
     return (
       <div>
-        { AVAILABLE_LANGUAGES.map(prepareButtons) }
+        { AVAILABLE_LANGUAGES.map(this.prepareButtons) }
       </div>
     )
   }
@@ -53,5 +67,5 @@ class Localization extends Component {
 
 export default connect(
   state => ({ user: state[mobile ? 'mobileHeader' : 'pageBase'].current_user }),
-  {}
+  { setMobileLanguage: setLanguage }
 )(Localization)
