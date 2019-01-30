@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { bindActionCreators }          from 'redux'
 import { connect }                     from 'react-redux'
 
+import RequestInProgressError from '../../errors/requestInProgress.error'
+
 import RoundButton      from '../../components/buttons/RoundButton'
 import Modal            from '../../components/modal/Modal'
 
@@ -29,7 +31,6 @@ class Page extends Component {
     hideHeader:    PropTypes.bool,
     hideDropdown:  PropTypes.bool,
     hideHamburger: PropTypes.bool,
-    margin:        PropTypes.bool, // will give page 10px margin to offset content
     gray:          PropTypes.bool, // will be gray background and menu
 
     // navigation functions
@@ -48,10 +49,12 @@ class Page extends Component {
   }
 
   async componentDidMount() {
-    window.addEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
+    // 401 status, redirect to login
+    window.addEventListener('unauthorizedAccess', this.unauthorizedHandler)
     const { state, actions, hideDropdown, hideHeader, hideHamburger, gray } = this.props
     actions.setAllHeader(!hideHeader, !hideHamburger, !hideDropdown)
     actions.setShowBottomMenu(gray)
+    console.log('init garages call')
     !hideHeader && !hideDropdown && await actions.initGarages()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
@@ -61,20 +64,25 @@ class Page extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    document.getElementsByTagName('body')[0].style.backgroundColor = newProps.gray ? '#292929' : 'white'
+    document.getElementsByTagName('body')[0]
+      .style.backgroundColor = newProps.gray ? '#292929' : 'white'
   }
 
   componentWillUnmount() {
-    window.removeEventListener('unauthorizedAccess', this.unauthorizedHandler) // 401 status, redirect to login
+    // 401 status, redirect to login
+    window.removeEventListener('unauthorizedAccess', this.unauthorizedHandler)
   }
 
   onLogoutClick = () => this.logout(true)
 
-  logout = revoke => { // private method
-    this.props.actions.logout(revoke, () => this.context.router.push(LOGIN))
+  // private method
+  logout = revoke => {
+    const { actions } = this.props
+    const { router } = this.context
+    actions.logout(revoke, () => router.push(LOGIN))
   }
 
-  unauthorizedHandler = () => {
+  unauthorizedHandler = async () => {
     const {
       state,
       actions,
@@ -83,18 +91,27 @@ class Page extends Component {
     } = this.props
     const { router } = this.context
     console.log('unauthorizedAccess')
-    login.refreshLogin(
-      async () => {
-        router.push(RESERVATIONS)
-        await actions.initGarages()
-        if (state.current_user && !state.current_user.secretary) {
-          actions.setPersonal(true)
-        } else {
-          reservationsActions.initReservations()
-        }
-      },
-      () => this.logout(false)
-    )
+    try {
+      await login.refreshLogin()
+    } catch (e) {
+      if (e instanceof RequestInProgressError) {
+        console.log('Refreshing in progress')
+        // console.error(e)
+      } else {
+        console.log('Error while refreshing token. Error:')
+        console.error(e)
+        this.logout(false)
+      }
+      return
+    }
+
+    router.push(RESERVATIONS)
+    await actions.initGarages()
+    if (state.current_user && !state.current_user.secretary) {
+      actions.setPersonal(true)
+    } else {
+      reservationsActions.initReservations()
+    }
   }
 
   render() {
