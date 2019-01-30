@@ -3,8 +3,10 @@ import {
   SET_APP_VERSION
 } from '../actions/mobile.version.actions'
 
+import { version } from '../../../package.json'
+
 const defaultState = {
-  appVersion:     undefined,
+  appVersion:     version,
   currentVersion: { version: undefined, lastCheckAt: undefined }
 }
 

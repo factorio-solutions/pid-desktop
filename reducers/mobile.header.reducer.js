@@ -9,7 +9,6 @@ import {
   MOBILE_MENU_SET_CUSTOM_MODAL,
   SET_MOBILE_LANGUAGE,
   SET_MOBILE_PERSONAL,
-  SET_CURRENT_VERSION,
   SET_SHOW_DROPDOWN,
   SET_SHOW_HAMBURGER,
   SET_SHOW_HEADER,
@@ -21,20 +20,20 @@ import { SET_NOTIFICATIONS_COUNT } from '../actions/notifications.actions'
 
 const defaultState = {
   garages:            [],
-  garage_id:          undefined,
-  current_user:       undefined,
+  garage_id:          null,
+  current_user:       null,
   online:             navigator.connection ? navigator.connection.type !== 'none' : true,
   showMenu:           false,
   showDropdown:       false,
   showHeader:         false,
   showHamburger:      false,
   showBottomMenu:     false,
-  error:              undefined,
-  custom_modal:       undefined,
+  error:              null,
+  custom_modal:       null,
   notificationsCount: 0,
   language:           'en',
   personal:           true,
-  currentVersion:     { version: undefined, lastCheckAt: undefined }
+  currentVersion:     { version: null, lastCheckAt: null }
 }
 
 
@@ -100,12 +99,6 @@ export default function mobileHeader(state = defaultState, action) {
       return {
         ...state,
         online: action.value
-      }
-
-    case SET_CURRENT_VERSION:
-      return {
-        ...state,
-        currentVersion: action.value
       }
 
     case SET_SHOW_DROPDOWN:
