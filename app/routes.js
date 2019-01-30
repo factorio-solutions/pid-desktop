@@ -1,4 +1,4 @@
-import React                                from 'react'
+import React from 'react'
 import { Route, IndexRoute, IndexRedirect } from 'react-router'
 
 import * as localization from './_shared/modules/localization/localization'
@@ -126,7 +126,7 @@ import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
 
-export default function createRoutes() {
+export default function createRoutes(jwt) {
   const adminSubRoutes = (
     <Route>
       <IndexRoute component={PidAdminDashboardPage} />
@@ -247,13 +247,12 @@ export default function createRoutes() {
 
   return (
     <Route path="/" component={App}>
-      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${localStorage.jwt ? 'occupancy/' : ''}`} />
+      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} />
       {AVAILABLE_LANGUAGES.map(lang => (
         <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
           {subRoutes}
         </Route>
       ))}
-
     </Route>
   )
 }

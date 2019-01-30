@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router'
 import Fingerprint2 from 'fingerprintjs2'
+import localforage from 'localforage'
 
 import MasterPage   from '../_shared/components/masterLoginPage/MasterPage'
 import Logo         from '../_shared/components/logo/Logo'
@@ -28,17 +29,18 @@ class LoginPage extends Component {
     location: PropTypes.object
   }
 
-  componentDidMount() {
-    new Fingerprint2().get(this.props.actions.setDeviceFingerprint)
-    if (this.props.location && this.props.location.query && this.props.location.query.token) {
-      localStorage.jwt = this.props.location.query.token
-      this.props.actions.resetStore()
+  async componentDidMount() {
+    const { actions, location } = this.props
+    new Fingerprint2().get(actions.setDeviceFingerprint)
+    if (location && location.query && location.query.token) {
+      actions.resetStore()
+      await localforage.setItem('jwt', location.query.token)
       nav.to('/occupancy')
     }
-    if (this.props.location && this.props.location.query
-    && this.props.location.query.hasOwnProperty('password_reset_success')) {
-      this.props.actions.setShowPasswordResetModal(true)
-      this.props.actions.setPasswordResetSuccessful(this.props.location.query.password_reset_success === 'true')
+    if (location && location.query
+    && location.query.hasOwnProperty('password_reset_success')) {
+      actions.setShowPasswordResetModal(true)
+      actions.setPasswordResetSuccessful(location.query.password_reset_success === 'true')
     }
   }
 
