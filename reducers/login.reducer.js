@@ -27,40 +27,46 @@ const initialState = {
 
 export default function login(state = initialState, action) {
   switch (action.type) {
-
     case LOGIN_REQUEST:
-      return { ...state,
+      return {
+        ...state,
         fetching: true
       }
 
     case LOGIN_FAILURE:
-      return { ...state,
+      return {
+        ...state,
         fetching: false,
         error:    action.value
       }
 
     case LOGIN_SUCCESS:
-      return { ...state,
+      return {
+        ...state,
         fetching: false
       }
 
     case LOGIN_SET_EMAIL:
-      return { ...state,
+      return {
+        ...state,
         email: action.value
       }
 
     case LOGIN_SET_PASSWORD:
-      return { ...state,
+      return {
+        ...state,
         password: action.value
       }
 
     case LOGIN_SET_CODE:
-      return { ...state,
+      return {
+        ...state,
         code: action.value
       }
 
     case LOGIN_SET_DEVICE_FINGERPRINT:
-      return { ...state,
+      return {
+        ...state,
         deviceFingerprint: action.value
       }
 

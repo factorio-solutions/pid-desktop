@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { setCustomModal } from '../actions/mobile.header.actions'
+import { setCustomModal, initGarages } from '../actions/mobile.header.actions'
 import { checkCurrentVersion } from '../actions/mobile.version.actions'
 import MobileHeader from './mobilePage/MobileHeader'
 import MobileBottomMenu from '../components/mobileBottomMenu/MobileBottomMenu'
@@ -10,7 +11,6 @@ import { RESERVATIONS } from '../../_resources/constants/RouterPaths'
 
 import styles from './MobileApp.scss'
 
-const emptyObject = {}
 class MobileApp extends Component {
   static propTypes = {
     showHeader:     PropTypes.bool,
@@ -20,19 +20,28 @@ class MobileApp extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.setCustomModal()
-    this.props.actions.checkCurrentVersion()
+    const { actions } = this.props
+    actions.setCustomModal()
+    actions.checkCurrentVersion()
+  }
+
+  afterLanguageChange = () => {
+    const { actions } = this.props
+    actions.initGarages()
   }
 
   render() {
-    const { showHeader, showBottomMenu } = this.props
+    const { showHeader, showBottomMenu, children } = this.props
     return (
       <div>
-        <MobileHeader />
+        <MobileHeader afterLanguageChange={this.afterLanguageChange} />
         <div className={`${showHeader && styles.pageContent} ${showBottomMenu && styles.app_page}`}>
-          {this.props.children}
+          {children}
         </div>
-        <MobileBottomMenu selectResButton={window.location.hash.includes(RESERVATIONS)} />
+        <MobileBottomMenu
+          selectResButton={window.location.hash.includes(RESERVATIONS)}
+          ref={ref => this.bottomMenu = ref}
+        />
       </div>
     )
   }
@@ -44,6 +53,6 @@ export default connect(
     showBottomMenu: state.mobileHeader.showBottomMenu
   }),
   dispatch => ({
-    actions: bindActionCreators({ checkCurrentVersion, setCustomModal }, dispatch)
+    actions: bindActionCreators({ checkCurrentVersion, setCustomModal, initGarages }, dispatch)
   })
 )(MobileApp)

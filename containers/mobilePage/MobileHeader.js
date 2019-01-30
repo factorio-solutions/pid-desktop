@@ -19,8 +19,9 @@ import styles from './MobileHeader.scss'
 
 class MobileHeader extends Component {
   static propTypes = {
-    actions: PropTypes.object,
-    state:   PropTypes.object
+    actions:             PropTypes.object,
+    state:               PropTypes.object,
+    afterLanguageChange: PropTypes.func
   }
 
   static contextTypes = {
@@ -45,7 +46,7 @@ class MobileHeader extends Component {
   }
 
   render() {
-    const { actions, state } = this.props
+    const { actions, state, afterLanguageChange } = this.props
     if (!state.showHeader) { return null }
 
     const selectedGarage = state.garages.findIndex(garage => garage.id === state.garage_id)
@@ -86,7 +87,7 @@ class MobileHeader extends Component {
           online={state.online}
           onLogoutClick={this.onLogoutClick}
           onPersonalWorkChange={actions.setPersonal}
-          onLocalizationChange={actions.initGarages}
+          onLocalizationChange={afterLanguageChange}
         />
       </div>
     )

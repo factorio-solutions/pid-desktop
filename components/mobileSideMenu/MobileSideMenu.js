@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { t } from '../../modules/localization/localization'
 
@@ -28,22 +29,24 @@ const MobileSideMenu = ({
       {...props}
     />
     {currentUser && currentUser.secretary && divider}
-    {currentUser && currentUser.secretary &&
+    {currentUser && currentUser.secretary && (
       <div className={styles.buttonGroup}>
         <ButtonGroup
           buttons={[
-            { content:  t([ 'mobileApp', 'page', 'personal' ]),
+            {
+              content:  t([ 'mobileApp', 'page', 'personal' ]),
               onClick:  () => onPersonalWorkChange(true),
               selected: personal
             },
-            { content:  t([ 'mobileApp', 'page', 'work' ]),
+            {
+              content:  t([ 'mobileApp', 'page', 'work' ]),
               onClick:  () => onPersonalWorkChange(false),
               selected: !personal
             }
           ]}
         />
       </div>
-    }
+    )}
     {divider}
     <ButtonStack divider={divider}>
       {[
@@ -53,14 +56,16 @@ const MobileSideMenu = ({
           label={t([ 'mobileApp', 'page', 'logOut' ])}
           onClick={onLogoutClick}
           state={!online ? 'disabled' : undefined}
-          size={'75'}
+          size="75"
         />
       ]}
     </ButtonStack>
 
     <div className={styles.bottom}>
       <div className={styles.appVersion}>
-        {t([ 'mobileApp', 'page', 'version' ])} {version}
+        {t([ 'mobileApp', 'page', 'version' ])}
+        {' '}
+        {version}
       </div>
       <Localization afterChange={onLocalizationChange} />
     </div>
