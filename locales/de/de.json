@@ -718,7 +718,7 @@
 		"reservationDeclined": "Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
 		"verifyYourEmail": "Wilkommen bei Park-it-direct! Wir haben eine Bestätigungs-E-Mail an \"%(arg1)s\"s geschickt.\nNachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) hat für Sie eine Buchung erstellt.",
-		"reservationUpdatedNotification": "\n% (arg1) hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Buchungen\".",
+		"reservationUpdatedNotification": "%(arg1)s hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Buchungen\".",
 		"reservationRemovedDueToUnpaid": "Da Ihre Buchung innerhalb 15 Minuten nicht bezahlt wurde, haben wir sie storniert.",
 		"reservationContactPersonNotification": "Ihre Buchung wurde nocht nicht bestätigt. Falls dringend, können Sie eine der dazu befugten Personen kontaktieren: %(arg1)s",
 		"clientLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert.",
