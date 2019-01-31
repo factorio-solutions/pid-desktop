@@ -277,7 +277,8 @@
 		"garageDropdownLabel": "Garaż",
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "PL: newReservation.selectCarLabel",
-		"smsTemplateLabel": "PL: newReservation.smsTemplateLabel"
+		"smsTemplateLabel": "PL: newReservation.smsTemplateLabel",
+		"reservationOnPlace": "PL: newReservation.reservationOnPlace"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -1112,6 +1113,7 @@
 		"longtermPrice": "Długoterminowa cena:",
 		"shorttermPrice": "Krótkoterminowa cena:",
 		"removeReservations": "PL: newContract.removeReservations",
+		"generateInvoice": "PL: newContract.generateInvoice",
 		"doNotRemoveReservations": "PL: newContract.doNotRemoveReservations"
 	},
 	"finance": {
@@ -1536,6 +1538,7 @@
 			"generator": "netřeba překládat",
 			"news": "netřeba překládat",
 			"finance": "netřeba překládat",
+			"mobileAppVersion": "PL: pidAdmin.pageBase.mobileAppVersion",
 			"garagesOverview": "PL: pidAdmin.pageBase.garagesOverview"
 		},
 		"users": {
