@@ -63,8 +63,10 @@ export function dismissModal() {
 export function loginSuccess(result, redirect, callback) {
   return async dispatch => {
     if ('id_token' in result) {
-      localforage.setItem('jwt', result.id_token)
-      localforage.setItem('refresh_token', result.refresh_token)
+      await Promise.all([
+        localforage.setItem('jwt', result.id_token),
+        localforage.setItem('refresh_token', result.refresh_token)
+      ])
       dispatch({ type: LOGIN_SUCCESS })
 
       dispatch(resetLoginForm())
