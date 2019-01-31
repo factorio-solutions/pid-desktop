@@ -264,7 +264,21 @@
 		"userName": "PL: newReservation.userName",
 		"AlternativeInterval": "PL: newReservation.AlternativeInterval",
 		"weekendPrice": "PL: newReservation.weekendPrice",
-		"notAbleToCreateReservation": "PL: newReservation.notAbleToCreateReservation"
+		"notAbleToCreateReservation": "PL: newReservation.notAbleToCreateReservation",
+		"userSection": "PL: newReservation.userSection",
+		"placeSelector": "PL: newReservation.placeSelector",
+		"priceAndOthers": "PL: newReservation.priceAndOthers",
+		"notePlaceholder": "PL: newReservation.notePlaceholder",
+		"showMap": "PL: newReservation.showMap",
+		"smsTextPlaceholder": "PL: newReservation.smsTextPlaceholder",
+		"namePlaceholder": "PL: newReservation.namePlaceholder",
+		"emailPlaceholder": "PL: newReservation.emailPlaceholder",
+		"phonePlaceholder": "PL: newReservation.phonePlaceholder",
+		"garageDropdownLabel": "Garaż",
+		"clientDropdownLabel": "Klient",
+		"selectCarLabel": "PL: newReservation.selectCarLabel",
+		"smsTemplateLabel": "PL: newReservation.smsTemplateLabel",
+		"reservationOnPlace": "PL: newReservation.reservationOnPlace"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -1094,6 +1108,7 @@
 		"longtermPrice": "Długoterminowa cena:",
 		"shorttermPrice": "Krótkoterminowa cena:",
 		"removeReservations": "PL: newContract.removeReservations",
+		"generateInvoice": "PL: newContract.generateInvoice",
 		"doNotRemoveReservations": "PL: newContract.doNotRemoveReservations"
 	},
 	"finance": {
@@ -1517,6 +1532,7 @@
 			"generator": "netřeba překládat",
 			"news": "netřeba překládat",
 			"finance": "netřeba překládat",
+			"mobileAppVersion": "PL: pidAdmin.pageBase.mobileAppVersion",
 			"garagesOverview": "PL: pidAdmin.pageBase.garagesOverview"
 		},
 		"users": {
