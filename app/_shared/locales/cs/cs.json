@@ -264,7 +264,21 @@
 		"userName": "Jméno uživatele",
 		"AlternativeInterval": "Všechna místa jsou v tomto intervalu obsazená. Nejdelší možný interval je:",
 		"weekendPrice": "Víkendová cena:",
-		"notAbleToCreateReservation": "Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit"
+		"notAbleToCreateReservation": "Nebylo možné vytvořit tuto rezervaci. Možné důvody: nízký timecredit",
+		"userSection": "Pro koho je rezervace",
+		"placeSelector": "Kde a kdy",
+		"priceAndOthers": "Platba a další možnosti",
+		"notePlaceholder": "Veřejná poznámka k rezervaci",
+		"showMap": "Zobrazit mapu garáže",
+		"smsTextPlaceholder": "SMS zpráva",
+		"namePlaceholder": "Jméno",
+		"emailPlaceholder": "Email",
+		"phonePlaceholder": "Telefonní číslo",
+		"garageDropdownLabel": "Garáž",
+		"clientDropdownLabel": "Klient",
+		"selectCarLabel": "Vyberte auto",
+		"smsTemplateLabel": "SMS šablona",
+		"reservationOnPlace": "CS: newReservation.reservationOnPlace"
 	},
 	"clients": {
 		"name": "jméno",
@@ -1094,6 +1108,7 @@
 		"longtermPrice": "Dlouhodobá cena:",
 		"shorttermPrice": "Krátkodobá cena:",
 		"removeReservations": "Smazat rezervace na odebraných místech",
+		"generateInvoice": "CS: newContract.generateInvoice",
 		"doNotRemoveReservations": "Zkusit přemístit rezervace na odebraných místech"
 	},
 	"finance": {
@@ -1517,6 +1532,7 @@
 			"generator": "Generátor",
 			"news": "Novinky",
 			"finance": "Finance",
+			"mobileAppVersion": "CS: pidAdmin.pageBase.mobileAppVersion",
 			"garagesOverview": "Přehled garáží"
 		},
 		"users": {
