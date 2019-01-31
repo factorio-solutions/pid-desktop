@@ -30,9 +30,10 @@ export class ReservationCard extends Component {
 
   toReservation = () => {
     const { router, reservation, mobileHeader } = this.props
-    router.push((mobileHeader.personal ?
-      paths.RESERVATION_GET :
-      paths.GUEST_RESERVATION_GET
+    router.push((
+      mobileHeader.personal
+        ? paths.RESERVATION_GET
+        : paths.GUEST_RESERVATION_GET
     ) + '/' + reservation.id)
   }
 

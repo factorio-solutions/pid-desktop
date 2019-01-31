@@ -159,8 +159,6 @@ export function refreshLogin() {
     dispatch(setRefreshingLogin(true))
     const { current_user: currentUser } = getState().mobileHeader
     const refreshToken = await localforage.getItem('refresh_token')
-    console.log('Current user:', currentUser)
-    console.log('refresh_token:', refreshToken)
     // if (!currentUser) { throw new Error('Current user is not set.') }
     if (!refreshToken) {
       throw new Error('refresh token is not set.')
@@ -176,8 +174,6 @@ export function refreshLogin() {
         },
       )
       const result = JSON.parse(data.login)
-      console.log('Data:', data)
-      console.log('Result of refreshing:', result)
       if (result && result.id_token) {
         localforage.setItem('jwt', result.id_token)
         dispatch({ type: LOGIN_SUCCESS })

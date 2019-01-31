@@ -63,7 +63,6 @@ export function initGarages() {
   return async (dispatch, getState) => {
     console.log('InitGarage')
     const currentUserData = await requestPromise(GET_CURRENT_USER)
-    console.log('Current user request OK.')
 
     dispatch(setLanguage(currentUserData.current_user.language))
     dispatch(setCurrentUser(currentUserData.current_user))
@@ -75,7 +74,7 @@ export function initGarages() {
 
 
     const garages = garagesData.reservable_garages
-    garages.unshift({ id: undefined, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })
+    garages.unshift({ id: null, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })
 
     dispatch(setGarages(garages))
   }
