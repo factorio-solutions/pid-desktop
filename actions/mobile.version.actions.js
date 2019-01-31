@@ -48,7 +48,6 @@ export function checkCurrentVersion() {
   return async (dispatch, getState) => {
     const { currentVersion, appVersion } = getState().mobileVersion
     const platform = (window.cordova && window.cordova.platformId) || 'android'
-    currentVersion.lastCheckAt = undefined
     if (
       !currentVersion.lastCheckAt
       || !moment(currentVersion.lastCheckAt).isSame(moment(), 'day')
