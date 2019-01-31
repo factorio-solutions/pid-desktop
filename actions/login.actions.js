@@ -61,7 +61,7 @@ export function dismissModal() {
 
 
 export function loginSuccess(result, redirect, callback) {
-  return dispatch => {
+  return async dispatch => {
     if ('id_token' in result) {
       localforage.setItem('jwt', result.id_token)
       localforage.setItem('refresh_token', result.refresh_token)
@@ -70,7 +70,7 @@ export function loginSuccess(result, redirect, callback) {
       dispatch(resetLoginForm())
       callback(result)
       if (redirect) {
-        const path = localforage.getItem('redirect') || '/occupancy'
+        const path = await localforage.getItem('redirect') || '/occupancy'
         localforage.removeItem('redirect')
         nav.to(path)
       }
