@@ -192,7 +192,8 @@ export default class Place extends Component {
 
     return {
       ...reserOfReservation,
-      displayTextRight: right
+      displayTextRight: right,
+      estimatedTextWidth
     }
   }
 

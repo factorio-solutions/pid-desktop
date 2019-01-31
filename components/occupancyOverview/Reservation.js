@@ -26,7 +26,8 @@ class Reservation extends Component {
     width:       PropTypes.number,
     text:        PropTypes.string,
     onClick:     PropTypes.func,
-    height:      PropTypes.string
+    height:      PropTypes.string,
+    isIe:        PropTypes.bool
   }
 
   constructor(props) {
@@ -90,6 +91,15 @@ class Reservation extends Component {
           <tr><td>{t([ 'occupancy', 'period' ])}</td><td>{moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')} - {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}</td></tr>
         </tbody>
       </table>)
+    const spanStyle = {}
+    // IE do not handles relative units.
+    if (isIe) {
+      if (reservation.displayTextRight) {
+        spanStyle.transform = `translateX(${width + 3}px)`
+      } else if (reservation.displayTextLeft) {
+        spanStyle.transform = `translateX(${-reservation.estimatedTextWidth + 5}px)`
+      }
+    }
 
     return (
       <div>
