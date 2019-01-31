@@ -277,7 +277,8 @@
 		"garageDropdownLabel": "Garage",
 		"clientDropdownLabel": "Client",
 		"selectCarLabel": "Select car",
-		"smsTemplateLabel": "SMS template"
+		"smsTemplateLabel": "SMS template",
+		"reservationOnPlace": "EN: newReservation.reservationOnPlace"
 	},
 	"clients": {
 		"name": "name",
@@ -1112,6 +1113,7 @@
 		"longtermPrice": "Longterm price:",
 		"shorttermPrice": "Shortterm price:",
 		"removeReservations": "Remove reservations of removed places",
+		"generateInvoice": "EN: newContract.generateInvoice",
 		"doNotRemoveReservations": "Try replacing reservations of removed places"
 	},
 	"finance": {
@@ -1484,7 +1486,7 @@
 		"car_on_my_spot_notify_driver": {
 			"you_have_been_reported": "We were reported that a car associated with your account is blocking another reservation's place.",
 			"infor_about_car": "Information about reported car:",
-			"suspected_reservation": "We suspects tha this reservation might be a problem:",
+			"suspected_reservation": "We suspect that this reservation might be a problem:",
 			"we_urge_you": "We urge you to remedy the situation."
 		},
 		"car_on_my_spot_notify_secretary_and_security": {
@@ -1536,6 +1538,7 @@
 			"generator": "Generator",
 			"news": "News",
 			"finance": "Finance",
+			"mobileAppVersion": "EN: pidAdmin.pageBase.mobileAppVersion",
 			"garagesOverview": "Garage overview"
 		},
 		"users": {
