@@ -277,7 +277,8 @@
 		"garageDropdownLabel": "Garáž",
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "Vyberte auto",
-		"smsTemplateLabel": "SMS šablona"
+		"smsTemplateLabel": "SMS šablona",
+		"reservationOnPlace": "CS: newReservation.reservationOnPlace"
 	},
 	"clients": {
 		"name": "jméno",
@@ -1112,6 +1113,7 @@
 		"longtermPrice": "Dlouhodobá cena:",
 		"shorttermPrice": "Krátkodobá cena:",
 		"removeReservations": "Smazat rezervace na odebraných místech",
+		"generateInvoice": "CS: newContract.generateInvoice",
 		"doNotRemoveReservations": "Zkusit přemístit rezervace na odebraných místech"
 	},
 	"finance": {
@@ -1536,6 +1538,7 @@
 			"generator": "Generátor",
 			"news": "Novinky",
 			"finance": "Finance",
+			"mobileAppVersion": "CS: pidAdmin.pageBase.mobileAppVersion",
 			"garagesOverview": "Přehled garáží"
 		},
 		"users": {

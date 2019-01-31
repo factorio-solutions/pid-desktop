@@ -77,13 +77,13 @@ pageBase.NewClient,New client,Nový klient,Nowy klient,Neuer Kunde
 pageBase.NewContract,New agreement,Nová dohoda,Nowa umowa,Neue Vereinbarung
 pageBase.EditClient,Edit client,Upravit klienta,Edytować klienta,Kunden bearbeiten
 pageBase.New Reservation,New reservation,Nová rezervace,Nowa rezerwacja,Neue Buchung
-pageBase.NewGarage,Set up new garage,Vytvoření nové garáže,Utworzyć nowy garaż,Neues Parkhaus einrichten
+pageBase.NewGarage,Set up new garage,Vytvoření nové garáže,Utworzyć nowy garaż,Neue Garage einrichten
 pageBase.newPricing,New pricing,Nový ceník,Nowy cennik,Neue Preisliste
 pageBase.Pricings,Edit pricing,Upravit ceník,Edytować cennik,Preisliste bearbeiten
 pageBase.newRent,New rent,Nový nájem,Nowy najem,Neues Mietverhältnis
 pageBase.Rents,Edit rent,Upravit nájem,Edytować najem,Mietverhältnis bearbeiten
-pageBase.Garages,Garages,Garáže,Garaże,Parkhäuser
-pageBase.Garage,Garage,Garáž,Garaż,Parkhaus
+pageBase.Garages,Garages,Garáže,Garaże,Garagen
+pageBase.Garage,Garage,Garáž,Garaż,Garage
 pageBase.Cars,Cars,Auta,Samochody,Fahrzeuge
 pageBase.Profile,Profile,Profil,Profil,Profil
 pageBase.Users,Users,Uživatelé,Użytkownicy,Benutzer
@@ -187,7 +187,7 @@ Variabler Preis (Preis ist von der Länge der Buchung abhängig)
 Wochenendepreis (funktioniert nur in Kombination mit Pauschalpreis)
 
 
-Wählen Sie bitte die gewünschten Parkplätze auf dem Parkhausplan rechts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis."
+Wählen Sie bitte die gewünschten Parkplätze in der Garage rechts. Die blau markierte Parkplätze sind frei, gelb markierte sind gewählt. Wählen Sie bitte die Währung, Berechnungsmethode, und den Preis."
 pageBase.goInternalHint,TODO: goInternalHint hint,,,
 pageBase.financeHint,"In the top section you can turn on/off and change settings for how your customers can pay for parking.
 
@@ -202,7 +202,7 @@ V sekci ""Nastavení financí"" můžete upravit nastavení, které je společn�
 
 W sekcji „Wynajmy” znajdziesz listę wszystkich aktualnych wynajmów długoterminowych, ich cenę, liczbę miejsc parkingowych, jakiej dotyczą, a po kliknięciu możesz je edytować.
 
-W sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.","Im oberen Bereich können Sie einstellen, wie Ihre Kunden für die Parkhausnutzung zahlen sollen.
+W sekcji „Ustawienia finansów” możesz zmienić ustawienia dotyczące fakturowania.","Im oberen Bereich können Sie einstellen, wie Ihre Kunden für die Garagenutzung zahlen sollen.
 
 Im Abschnitt ,,Vereinbarungen“ finden Sie ein Verzeichnis aller aktuellen langfristigen Vereinbarungen, Ihre Preise und die Anzahl der zugehörigen Stellplätze. Klicken Sie darauf, um sie zu bearbeiten.
 
@@ -252,9 +252,9 @@ Nach der Angabe aller Details können Sie Ihre Buchung bestätigen. Wird die Buc
 Wird die Zahlung von Ihnen durchgeführt, folgt die Zahlung gleich im nächsten Schritt. Bezahlt ein Gast die Buchung, erhält er seine Anweisungen per E-Mail, damit er seine Buchung abschließen kann."
 pageBase.garagesHint,"Here you have a depiction of the clients, deals, reservations, prices and vehicles on your garage map. The same values are always shown with the same color. 
 In the upper left-hand corner you can choose which value you would like to display, while in the upper right-hand corner you can choose whether to display values for a certain date or for the current date.","Zde najdete zobrazení klientů, dohod, rezervací, cen a aut na plánku Vaší garáže. Stejné hodnoty jsou vždy vyznačeny stejnou barvou.
-V levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.","Tutaj znajdziesz schemat klientów, umów, rezerwacji, cen i aut na planie Twojego garaży. Takie same wartości są zawsze oznaczone tym samym kolorem. W lewym górnym rogu wybierz, jaką wartość chcesz zobaczyć. W prawym górnym rogu ustaw datę, która Cię interesuje.","Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Buchungen, Preise und Autos auf dem Parkhausplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.
+V levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.","Tutaj znajdziesz schemat klientów, umów, rezerwacji, cen i aut na planie Twojego garaży. Takie same wartości są zawsze oznaczone tym samym kolorem. W lewym górnym rogu wybierz, jaką wartość chcesz zobaczyć. W prawym górnym rogu ustaw datę, która Cię interesuje.","Hier finden Sie eine Darstellung der Kunden, Vereinbarungen, Buchungen, Preise und Autos auf dem Garagenplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.
 Links oben können Sie auswählen, welcher Wert angezeigt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder zum aktuellen Zeitpunkt angezeigt werden soll."
-pageBase.newGarageHint,"Create new garage. Set the name and details, then follow by defining the floors and parking places. Two input options are available. You can load each floor plan as an SVG image with information about parking places. (We can help you to create this floor plan; see our website for more information.) The second option is to define a range of numbers for each level.","Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.","Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",Erstellen Sie ein neues Parkhaus. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.
+pageBase.newGarageHint,"Create new garage. Set the name and details, then follow by defining the floors and parking places. Two input options are available. You can load each floor plan as an SVG image with information about parking places. (We can help you to create this floor plan; see our website for more information.) The second option is to define a range of numbers for each level.","Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.","Utwórz nowy garaż. Wprowadź nazwę i szczegóły, a następnie wybierz piętro i miejsce parkingowe. Informacje wprowadzić możesz za pomocą dwóch sposobów. Plan każdego piętra (floorplan) możesz wczytać z pliku SVG z informacjami o miejscach parkingowych (możemy Ci w tym pomóc - szczegóły na naszej stronie). Drugą możliwością jest zdefiniowanie numerów miejsc, które znajdują się na konkretnym piętrze.",Erstellen Sie eine neue Garage. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.
 pageBase.newGarageFloorsHint,"Here you can set the number of floors and number of parking spots on each floor. 
 
 You can upload a map of each floor as an .svg file, which we will be happy to help you create (or you can use one of our templates). 
@@ -276,7 +276,7 @@ pageBase.newGarageOrderHint,"Here you can set the order for filling up parking s
 Legal documents,TODO: New garage subscribtion Hint,,,
 pageBase.newGarageGatesHint,Here you can set up individual garage gates (entrance and exit) and designate which spots they go with.,"Zde můžete nastavit jednotlivé brány (vjezdy a výjezdy) a určit, ke kterým místům patří.",Tutaj możesz ustawić poszczególne bramy (wjazdy i wyjazdy) oraz przyporządkować je do konkretnych miejsc.,"Hier können Sie die Tore bearbeiten (für Ein- und Ausfahrt) und bestimmen, welche Tore zu welchen Plätzen gehören."
 pageBase.newGarageLegalDocumentsHint,Here you can find legal documents related to your garages - operating rules and such. Documents related to user privacy can be found your profile.,"Zde naleznete právní dokumenty, které se vztahují k vašim garážím - provozní řády a další. Dokumenty, které se týkají ochrany osobních údajů naleznete v profilu uživatele.",,"Hier finden Sie rechtliche Unterlagen, welche sich auf unsere Garagen beziehen - Betriebsregeln und weiteres. Unterlagen die sich auf den Datenschutz beziehen befinden sich im Profil des Nutzers. "
-pageBase.garageClientsHint,Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.,"Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.","Tutaj możesz zarządzać przypidaniem miejsc parkingowych do konkretnego klienta w ramach określonego garażu. Wybierz konto klienta, aby zobaczyć plan garażu oraz dostępne ceny. Pamiętaj, że garaż może mieć więcej pięter. Wybierz odpowiednie piętro za pomocą przycisku po prawej stronie.","Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten im ausgewählten Parkhaus zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Parkhausgrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass das Parkhaus mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etage mit den Schaltflächen links aus."
+pageBase.garageClientsHint,Here you can manage which parking spots are assigned to which client account within the selected garage. Just select client account to see the garage map and available places. Keep in mind that the garage might have more than one level. Select desired level using the buttons on the right side.,"Zde můžete nastavit, která parkovací místa jsou ve vybrané garáži přiřazena ke kterému klientskému účtu. Po zvolení klientského účtu se zobrazí mapa garáže a dostupná místa. Mějte na paměti, že garáž může mít více než jedno patro. Požadované patro vyberete pomocí tlačítek na pravé straně obrazovky.","Tutaj możesz zarządzać przypidaniem miejsc parkingowych do konkretnego klienta w ramach określonego garażu. Wybierz konto klienta, aby zobaczyć plan garażu oraz dostępne ceny. Pamiętaj, że garaż może mieć więcej pięter. Wybierz odpowiednie piętro za pomocą przycisku po prawej stronie.","Hier können Sie verwalten, welche Stellplätze welchen Kundenkonten in der ausgewählten Garage zugewiesen wurden. Wählen Sie einfach das Kundenkonto aus, um den Garagegrundriss und die verfügbaren Stellplätze anzuzeigen. Beachten Sie, dass die Garage mehrere Etagen umfassen kann. Wählen Sie die gewünschte Etage mit den Schaltflächen links aus."
 pageBase.clientsHint,"Here you can find a list of clients with whom you are in agreement. 
 
 The “client token” column shows the unique identifier for selecting the client when creating new agreements. 
@@ -316,7 +316,7 @@ In der Spalte „Vertrag“ wird durch eine grüne Markierung angezeigt, wenn de
 
 In der Spalte „Stellplätze“ wird die Gesamtanzahl der dem Kunden zugewiesenen Stellplätze angezeigt.
 
-In der Spalte „Pro Monat insgesamt“ werden die monatlichen Parkhausgebühren des Kunden insgesamt angezeigt.
+In der Spalte „Pro Monat insgesamt“ werden die monatlichen Garagegebühren des Kunden insgesamt angezeigt.
 
 In der Spalte „Rechnungen“ wird der Rechnungsstatus angezeigt – wenn alle Rechnungen beglichen sind = grün; wenn eine Rechnung überfällig ist = rot.
 
@@ -331,7 +331,7 @@ Select a user to see client accounts membership and their role therein. The deta
 
 Po zvolení uživatele se zobrazí, ve kterých klientských účtech je členem a jaké v nich má role. Dále se v detailu zobrazí, jaká má přiřazená auta, kterých garáží je členem a jaké v nich má role.","Tutaj znajdziesz listę wszystkich użytkowników. Po wybraniu użytkownika zobaczysz, członkiem których kont klienta jest oraz jakie ma w nich role. W szczegółach ukażą się również przyporządkowane do niego auta, garaże których jest członkiem oraz jego rola w nich. ","Hier sehen Sie eine Liste aller Benutzer.
 
-Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Parkhäusern er Mitglied ist und welche Rollen er dort hat."
+Wählen Sie einen Benutzer aus, um zu sehen, zu welchem Kundenkonto er gehört und welche Rolle er dort hat. Außerdem wird angezeigt, welche Autos ihm zugewiesen wurden, bei welchen Garagen er Mitglied ist und welche Rollen er dort hat."
 pageBase.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani użytkownicy,Alle bekannten Benutzer
 pageBase.editClientHint,Here you can change information about this client.,Zde můžete upravit údaje klienta.,Tutaj możesz edytować dane klienta.,Hier können Sie die Kundendaten bearbeiten.
 pageBase.notificationsHint,This section displays all notifications that need to be resolved.,"Zde se zobrazují všechna upozornění, na které je potřeba odpovědět.","Tutaj ukazują się wszystkie wiadomości, na które musisz odpowiedzieć.","Hier werden Benachrichtigungen angezeigt, die beantwortet werden müssen."
@@ -370,7 +370,7 @@ niebieski kolor – rezerwacja jeszcze się nie rozpoczęła
 Grau - Buchung liegt in der Vergangenheit
 Grün - Buchung ist gerade aktiv
 Blau - ihre Buchung "
-pageBase.EditGarage,Edit garage,Upravit garáž,Edytować garaż,Parkhaus bearbeiten
+pageBase.EditGarage,Edit garage,Upravit garáž,Edytować garaż,Garage bearbeiten
 pageBase.EditGarageHint,"Here you can find a visual overview of your garage. You can select various modes in the upper left-hand corner.
 
 Clients: individual clients are distinguished by color.
@@ -395,7 +395,7 @@ Rezerwacje: poszczególne rezerwacje są odróżnione za pomocą różnych kolor
 Ceny: poszczególne ceny są odróżnione za pomocą różnych kolorów.
 Auta:  poszczególne autasą odróżnione za pomocą różnych kolorów.
 
-W prawym górnym rogu można wybrać aktualny podgląd lub podgląd w określonym dniu.","Hier wird eine Übersicht des Parkhauses angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
+W prawym górnym rogu można wybrać aktualny podgląd lub podgląd w określonym dniu.","Hier wird eine Übersicht der Garage angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
 
 Kunden: Die einzelnen Kunden werden in verschiedenen Farben dargestellt.
 Vereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.
@@ -459,8 +459,8 @@ pageBase.garageNewPricingHint,Here you can set up new reservation pricing.,Zde m
 pageBase.garageEditPricingHint,Here you can edit pricing properties.,Zde můžete upravit vlastnosti ceny,Tutaj możesz edytować właściwości ceny.,Hier können Sie Preiseigenschaften einstellen.
 pageBase.garageNewRentHint,Here you can set up new rent for your parking spots.,Zde můžete nastavit nový nájem za svoje místa,Tutaj możesz ustawić nowy wynajem swoich miejsc.,Hier können Sie ein neues Mietverhältnis einrichten.
 pageBase.garageEditRentHint,Now you can edit rent properties.,Zde můžete upravit vlastnosti nájmu,Tutaj możesz edytować właściwości wynajmu.,Hier können Sie die Mieteigenschaften bearbeiten.
-pageBase.garageAddClientHint,Here you can add a client to the garage management page.,Zde můžete přidat klienta na stránky se správou garáží,Tutaj możesz dodać klienta do strony zarządzania garażem.,Hier können Sie einen Kunden zum Parkhaus-Management hinzufügen.
-pageBase.garageGarageUsersHint,Here you can manage who can use your garage and what rights they have.,Zde můžete spravovat uživatele garáže a jejich práva.,"Tutaj możesz wybrać, kto może zarządzać twoim garażem.","Hier können Sie verwalten, wer Ihr Parkhaus verwalten kann."
+pageBase.garageAddClientHint,Here you can add a client to the garage management page.,Zde můžete přidat klienta na stránky se správou garáží,Tutaj możesz dodać klienta do strony zarządzania garażem.,Hier können Sie einen Kunden zum Garage-Management hinzufügen.
+pageBase.garageGarageUsersHint,Here you can manage who can use your garage and what rights they have.,Zde můžete spravovat uživatele garáže a jejich práva.,"Tutaj możesz wybrać, kto może zarządzać twoim garażem.","Hier können Sie verwalten, wer Ihe Garage verwalten kann."
 pageBase.EditUserHint,Here you can change the data about yourself.,Zde můžete změnit svoje údaje.,Tutaj możesz zmienić swoje dane.,Hier können Sie die eigenen Angaben ändern.
 pageBase.orderGarageModuleHint,Here you can order a garage module.,Zde si můžete objednat modul pro přístup do garáže,Tutaj możesz zamówić moduł dostępu do garażu.,Hier können Sie ein Zutritt- Modul bestellen.
 pageBase.reservationOverviewHint,"Here you can check if the reservation details are correct and complete the reservation by paying it.
@@ -497,7 +497,7 @@ pageBase.unredNotifications.few,,Máte %(count)s nepřečtená upozornění,Masz
 pageBase.unredNotifications.many,,Máte %(count)s nepřečteného upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesener Nachricht
 pageBase.unredNotifications.other,You have %(count)s unread notifications,Máte %(count)s nepřečtených upozornění,Masz %(count)s nieprzeczytanych wiadomości.,Sie haben %(count)s ungelesene Nachrichten.
 pageBase.analytics,Analytics,Analýza,Analiza,Analyse
-pageBase.garageTurnover,Garage turnover,Obrat garáže,Rotacja garażu,Parkhausumsatz
+pageBase.garageTurnover,Garage turnover,Obrat garáže,Rotacja garażu,Garagenumsatz
 pageBase.reservations,Reservations,Rezervace,Rezerwacje,Buchungen
 pageBase.places,Parking spot turnover,Obrat míst,Rotacja miejsc parkingowych,Stellplätze
 pageBase.payments,Payments,Platby,Płatności,Zahlungen
@@ -509,7 +509,7 @@ V levém horním rohu lze vybrat měsíční nebo týdenní zobrazení. V pravé
 W tabelce pod grafem zobaczysz liczbę rezerwacji w poszczególnych dniach oraz całościową rotację garażu.
 W lewym górnym rogu możesz wybrać podgląd krótkoterminowych lub długoterminowych wynajmów.
 W prawym górnym rogu możesz dokładnie ustawić rozpiętość pokazywanego terminu. 
-","Hier werden der Parkhausumsatz und die Anzahl der Buchungen für den ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Buchungen und der Gesamtumsatz des Parkhauses angezeigt.
+","Hier werden der Garagenumsatz und die Anzahl der Buchungen für den ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Buchungen und der Gesamtumsatz der Garage angezeigt.
 
 Links oben kann die Anzeige für Monate oder für Wochen eingestellt werden. Rechts oben kann der genaue Zeitraum ausgewählt werden."
 pageBase.analyticsreservationsHint,"Here you can see total turnover for the garage within the selected term. In the spreadsheet below the graph you can see reservation count per day and total turnover of the garage.
@@ -520,7 +520,7 @@ V levém horním rohu lze vybrat mezi zobrazením krátkodobých rezervací nebo
 W tabelce pod grafem zobaczysz liczbę rezerwacji w poszczególnych dniach oraz całościową rotację garażu.
 W lewym górnym rogu możesz wybrać podgląd krótkoterminowych lub długoterminowych wynajmów.
 W prawym górnym rogu możesz dokładnie ustawić rozpiętość pokazywanego terminu. 
-","Hier wird der Gesamtumsatz für das Parkhaus im ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Buchungen pro Tag und der Gesamtumsatz des Parkhauses angezeigt.
+","Hier wird der Gesamtumsatz für die Garage im ausgewählten Zeitraum angezeigt. In der Tabelle unter dem Diagramm wird die Anzahl der Buchungen pro Tag und der Gesamtumsatz der Garage angezeigt.
 
 Oben links können Sie zwischen kurzfristigen Buchungen und Langzeitvermietungen auswählen. Oben rechts kann der genaue Anzeigezeitraum eingestellt werden."
 pageBase.analyticsplacesHint,"Here you can see turnover statistics for parking spots: average, maximum, minimum and total turnover, all displayed separately for short-term and long-term reservations. In the upper left corner you can choose to display a heat map with color coding (the lowest values are yellow, while the highest are red).
@@ -567,7 +567,7 @@ pageBase.smsSettingsHint,"On this page you can activate and set sms service. To 
 ""{{ begin }}"" = Buchungsanfang
 ""{{ end }}"" = Buchungsende
 ""{{ gate }}"" = Telefonnummer des Servers"
-newReservation.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Wählen Sie ein Parkhaus aus
+newReservation.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Wählen Sie eine Garage aus
 newReservation.selectUser,Select user,Vyberte uživatele,Wybierz użytkownika,Wählen Sie einen Benutzer aus
 newReservation.selectClient,Select Client,Vyberte klienta,Wybierz klienta,Wählen Sie einen Kunden aus
 newReservation.selectCar,Select car,Vyberte auto,Wybierz auto,Wählen sie ein Fahrzeug aus
@@ -591,7 +591,7 @@ newReservation.price,Price,Cena,Cena,Preis
 newReservation.onClientsExpenses,paid by the selected client,hrazeno zvoleným klientem,Na koszt klienta.,Auf Kundenkosten.
 newReservation.onUsersExpenses,paid by the driver,hrazeno parkujícím,,Auf Fahrer-Kosten
 newReservation.longtermRent,longterm rent,dlouhodobý nájem,,Langfristig vermietet
-newReservation.loadingGarage,Loading garage layout ...,Načítám náhled garáže ...,Ładuję podgląd garażu...,Parkhausgrundriss wird geladen …
+newReservation.loadingGarage,Loading garage layout ...,Načítám náhled garáže ...,Ładuję podgląd garażu...,Garagengrundriss wird geladen …
 newReservation.creatingReservation,Making reservation ...,Vytvářím rezervaci ...,Wytwarzam rezerwację...,Buchung wird erstellt …
 newReservation.updatingReservation,Updating reservation ...,Aktualizuji rezervaci ...,Aktualizuję rezerwację...,Buchung wird aktualisiert …
 newReservation.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,Umleitung …
@@ -646,10 +646,11 @@ newReservation.smsTextPlaceholder,SMS Message,SMS zpráva,,SMS Nachricht
 newReservation.namePlaceholder,Name,Jméno,,
 newReservation.emailPlaceholder,Email,Email,,
 newReservation.phonePlaceholder,Phone number,Telefonní číslo,,
-newReservation.garageDropdownLabel,Garage,Garáž,Garaż,Parkhaus
+newReservation.garageDropdownLabel,Garage,Garáž,Garaż,Garage
 newReservation.clientDropdownLabel,Client,Klient,Klient,Kunde
 newReservation.selectCarLabel,Select car,Vyberte auto,,
 newReservation.smsTemplateLabel,SMS template,SMS šablona,,
+newReservation.reservationOnPlace,,,,
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -699,7 +700,7 @@ reservations.licencePlate,license plate,SPZ,Numer rejestracyjny,Kennzeichen
 reservations.state,state,stav,status,Status
 reservations.type,type,typ,Typ,Typ
 reservations.creator,Creator,Založil,utworzył,Erstellt von
-reservations.garage,Garage,garáž,Garaż,Parkhaus
+reservations.garage,Garage,garáž,Garaż,Garage
 reservations.createdAt,created:,vytvořeno:,utworzone:,erstellt:
 reservations.deletedAt,deleted:,odstraněno:,,entfernt:
 reservations.updatedAt,updated:,upraveno:,zaktualizowane:,aktualisiert:
@@ -763,7 +764,7 @@ occupancy.dayShortcut,D,D,D,T
 occupancy.weekShortcut,W,T,T,W
 occupancy.monthShortcut,M,M,M,M
 occupancy.places,spots,Místa,Miejsca,Plätze
-occupancy.selectGarage,Select garage,Vyberte garáž,Wybrać garaż,Parkhaus auswählen
+occupancy.selectGarage,Select garage,Vyberte garáž,Wybrać garaż,Garage auswählen
 occupancy.day,day,den,dzień,Tag
 occupancy.week,week,týden,tydzień,Woche
 occupancy.month,month,měsíc,miesiąc,Monat
@@ -795,7 +796,7 @@ garageUsers.email,email,e-mail,e-mail,E-Mail-Adresse
 garageUsers.memberSince,member since,členem od,członek od,Mitglied seit
 garageUsers.phone,phone,telefon,telefon,Telefon
 garageUsers.removeUser,Remove user,Odstranit uživatele,Usunąć użytkownika,Benutzer löschen
-garageManagement.garageManagement,Garage management,Správa garáže,Zarząd garażu,Parkhaus-Management
+garageManagement.garageManagement,Garage management,Správa garáže,Zarząd garażu,Garage Management
 garageManagement.begins,from,od,od,von
 garageManagement.ends,to,do,do,bis
 garageManagement.invalidaDate,"Wrong date, format: 20.5.2016","Špatné datum, formát: 20.5.2016","Nieproprawna data, format: 20.5.2016","Falsches Datum, Format: 20.5.2017"
@@ -811,9 +812,9 @@ garageManagement.places,Spots,Místa,Miejsca,Plätze
 garageManagement.newClientId,Insert new client ID,Vlož id nového klienta,Wklej ID nowego klienta,Neue Kunden-ID einfügen
 garageManagement.newClientIdInvalid,Invalid ID,Neplatné id,Niepoprawne ID,ID nicht gültig
 garageManagement.newClientIdPlaceholder,12345,12345,12345,12345
-orderGarageModule.garageModule,Garage module,Modul garáže,Moduł garażu,"Parkhausmodul
+orderGarageModule.garageModule,Garage module,Modul garáže,Moduł garażu,"Garagemodul
 "
-orderGarageModule.garageModuleDescription,Garage modules will allow you to automatically open the garage gate for your customers.,Modul garáže Vám umožní automaticky otevřít bránu garáže pro Vaše zákazníky.,Moduł garażu umożliwi Ci automatyczne otwieranie bramy garażu dla klientów.,Mit dem Parkhausmodul wird das Parkhaustor automatisch für Kunden geöffnet.
+orderGarageModule.garageModuleDescription,Garage modules will allow you to automatically open the garage gate for your customers.,Modul garáže Vám umožní automaticky otevřít bránu garáže pro Vaše zákazníky.,Moduł garażu umożliwi Ci automatyczne otwieranie bramy garażu dla klientów.,Mit dem Garagemodul wird das Garagentor automatisch für Kunden geöffnet.
 orderGarageModule.shippingAddress,Correspondence address,Doručovací adresa,Adres korespondencyjny,Lieferadresse
 orderGarageModule.invoiceAddress,Invoice address,Fakturační adresa,Adres do faktury,Rechnungsadresse
 orderGarageModule.equalAddresses,Invoice address is the same as the correspondence address,Fakturační adresa je stejná jako doručovací adresa,Adres do faktury jest taki sam jak adres korespondencyjny.,Die Rechnungsadresse stimmt mit der Lieferadresse überein.
@@ -823,7 +824,7 @@ orderGarageModule.amountPlaceholder,1,1,1,1
 orderGarageModule.placingOrder,Creating order ...,Vytvářím objednávku ...,Wytwarzam zamówienie...,Bestellung wird erstellt …
 orderGarageModule.orderSuccessfull,Order successfully completed,Objednávka byla úspěšně dokončena,Wytwrzanie zamówienia przebiegło poprawnie.,Die Bestellung wurde erfolgreich abgeschlossen.
 orderGarageModule.orderFailed,"Payment failed, try again later.","Platba selhala, zkuste to později.","Płatność się nie powiodła, spróbuj później.","Die Zahlung ist fehlgeschlagen, versuchen Sie es bitte später erneut."
-newGarage.garage,Garage,Garáž,Garaż,Parkhaus
+newGarage.garage,Garage,Garáž,Garaż,Garage
 newGarage.company,Company name,Firma,Firma,Unternehmensname
 newGarage.placeholderCompany,MR.PARKIT s.r.o.,MR.PARKIT s.r.o.,MR.PARKIT s.r.o.,MR.PARKIT s.r.o.
 newGarage.invalidCompany,Invalid company name,Neplatné jméno firmy,Niepoprawna nazwa firmy,Unternehmensname ungültig
@@ -831,13 +832,13 @@ newGarage.places,Spots,Místa,Miejsca,Plätze
 newGarage.gates,Gates,Brány,Bramy,Tore
 newGarage.order,Order,Pořadí,Zamówienie,Reihenfolge
 newGarage.subscribtion,Subscription,Předplatné,Abonament,Abonnement
-newGarage.selectImage,Select garage image,Vyberte obrázek garáže,Wybierz zdjęcie garażu,Parkhausbild auswählen
-newGarage.garagePicture,Garage picture,Fotka garáže,Zdjęcie garażu,Parkhausfoto
-newGarage.garageAddress,Garage address,Adresa garáže,Adres garażu,Parkhausadresse
-newGarage.garageFloors,Garage floors,Podlaží garáže,Piętro garażu,Parkhausetagen
+newGarage.selectImage,Select garage image,Vyberte obrázek garáže,Wybierz zdjęcie garażu,Garagenbild auswählen
+newGarage.garagePicture,Garage picture,Fotka garáže,Zdjęcie garażu,Garagenfoto
+newGarage.garageAddress,Garage address,Adresa garáže,Adres garażu,Garagenadresse
+newGarage.garageFloors,Garage floors,Podlaží garáže,Piętro garażu,Garage Etagen
 newGarage.addFloor,Add floor,Přidejte podlaží,Dodaj piętro,Etage hinzufügen
 newGarage.maximumVehicleDimensions,Maximum vehicle dimensions,Maximální rozměry vozidla,Maksymalne wymiary pojazdu,Maximale Fahrzeugabmessungen
-newGarage.garageGates,Garage gates,Brány garáží,Bramy garażu,Parkhaustore
+newGarage.garageGates,Garage gates,Brány garáží,Bramy garażu,Garagentore
 newGarage.addGate,Add gate,Přidejte bránu,Dodaj bramę,Tor hinzufügen
 newGarage.placePriority,Set priority,Zadejte prioritu,Wpisz priorytet,Parkplatzpriorität
 newGarage.placePriorityDescription,Here you can set priority for your parking spots. The spots you select first will have higher priority. Spots not selected will have default priority and will be filled last.,"Zde můžete nastavit prioritu Vašich míst. Místa, která jsou označena jako první, budou mít vyšší prioritu. Nevybraná místa budou mít výchozí prioritu a nebudou upřednostňována.",Tutaj możesz ustawić priorytet swoich miejsc. Miejsca oznaczone jako pierwsze będą mieć wyższy priorytet. Niewybrana miejsca nie będą miejscami preferowanymi.,Hier können Sie die Priorität von Stellplätzen eingeben. Ausgewählte Stellplätze haben eine höhere Priorität. Nicht ausgewählte Stellplätze haben eine normale Priorität und werden nicht bevorzugt.
@@ -864,15 +865,15 @@ newGarage.count,count,spočítat,policzyć,Berechnen
 newGarage.invalidNumber,Invalid number,Neplatné číslo,Niepoprawne miejsce,Ungültige Nummer
 newGarage.countPlaceholder,1,1,1,1
 newGarage.garageTemlates,Try custom layouts,Vyzkoušejte šablony rozvržení,Wypróbuj szablony schematu garażu,Benutzerdefinierten Grundriss ausprobieren
-newGarage.orderOwnLayout,Do you want to look this professional? Order a layout of your own garage! We will send you an email with instructions.,Chcete vypadat takto profesionálně? Objednejte vlastní rozvržení garáže! Zašleme Vám e-mail s pokyny jak na to.,Chcesz wyglądać profesjonalnie? Zamów swój własny schemat garażu! W e-mailu prześlemy Ci szczegółowe informacje.,Möchten Sie einen professionelleren Eindruck machen? Bestellen Sie bei uns einen individuellen Parkhausgrundriss! Sie erhalten von uns eine E-Mail mit Anleitung.
+newGarage.orderOwnLayout,Do you want to look this professional? Order a layout of your own garage! We will send you an email with instructions.,Chcete vypadat takto profesionálně? Objednejte vlastní rozvržení garáže! Zašleme Vám e-mail s pokyny jak na to.,Chcesz wyglądać profesjonalnie? Zamów swój własny schemat garażu! W e-mailu prześlemy Ci szczegółowe informacje.,Möchten Sie einen professionelleren Eindruck machen? Bestellen Sie bei uns einen individuellen Garagengrundriss! Sie erhalten von uns eine E-Mail mit Anleitung.
 newGarage.orderLayout,I want to order a custom layout!,Chci objednat vlastní rozvržení!,Chcę zamówić własny schemat garażu!,Ich möchte meinen individuellen Grundriss!
 newGarage.customLayout,Custom layouts:,Vlastní rozvržení:,Własny schemat:,Eigener Grundriss:
 newGarage.perMonth,per month,za měsíc,na miesiąc,pro Monat
 newGarage.perLevel,per level,za patro,na piętro,pro Etage
 newGarage.now,now,nyní,teraz,jetzt
 newGarage.betterTarifMarketing,With this tariff you cannot offer your parking spots to the public. Select the Automation & Access tariff and earn money for parking!,S tímto tarifem nemůžete nabídnout Vaše místa veřejnosti. Vyberte tarif Automatizace & Přístup a vydělávej peníze za parkování!,Z tą taryfą nie możesz publicznie oferować swoich miejsc. Wybierz taryfę Automatyzacja&Dostęp i zarabiaj na parkowaniu!,"Mit diesem Tarif können Sie Ihre Stellplätze nicht der Öffentlichkeit anbieten. Wählen Sie „Automatisierung & Zugang“, um mit Ihren Stellplätzen mehr Geld zu verdienen!"
-newGarage.newGarage,New garage,Nová garáž,Nowy garaż,Neues Parkhaus
-newGarage.name,Garage name,Název garáže,Nazwa garażu,Name des Parkhauses
+newGarage.newGarage,New garage,Nová garáž,Nowy garaż,Neue Garage
+newGarage.name,Garage name,Název garáže,Nazwa garażu,Name der Garage
 newGarage.placeholder,Office center,Kancelářská budova,Centrum biurowe,Bürozentrum
 newGarage.gsmName,Name,Jméno,Imię i nazwisko,Name
 newGarage.gsmNameInvalid,Name is invalid,Neplatné jméno,Niepoprawne imię i nazwisko,Der Name ist ungültig.
@@ -881,7 +882,7 @@ newGarage.gsmModulesDescription,GSM modules will allow you to automatically open
 newGarage.floorName,Level,Podlaží,Piętro,Etage
 newGarage.placeholderFloor,%(index)s,%(index)s,%(index)s,%(index)s
 newGarage.invalidFloorName,Invalid floor name,Neplatný název patra,Niepoprawna nazwa piętra,Ungültiger Etagenname
-newGarage.invalidName,Invalid garage name,Neplatný název garáže,Niepoprawna nazwa garażu,Ungültiger Parkhausname
+newGarage.invalidName,Invalid garage name,Neplatný název garáže,Niepoprawna nazwa garażu,Ungültiger Garagenname
 newGarage.removeFloorRowQuestion,Are you sure you want to delete this floor?,Určitě chcete odstranit toto patro?,Czy na pewno chcesz usunąć to piętro?,Möchten Sie diese Etage wirklich löschen?
 newGarage.removeGateRowQuestion,Are you sure you want to delete this gate?,Určitě chcete odstranit tuto bránu?,Czy na pewno chcesz usunąć tę bramę?,Möchten Sie dieses Tor wirklich löschen?
 newGarage.street,Street address,Číslo ulice a domu,Ulica i numer domu,Straße und Hausnummer
@@ -920,7 +921,7 @@ newGarage.placeholderGatePhone,489234798,489234798,489234798,489234798
 newGarage.invalidPlaces,Format invalid,Neplatný formát,Niepoprawny format,Ungültiges Format
 newGarage.placesPlaceholder,"5-15, 17-20, 30, 32","5-15, 17-20, 30, 32","5-15, 17-20, 30, 32","5-15, 17-20, 30, 32"
 newGarage.lpgAllowed,LPG is allowed,LPG je povoleno,LPG jest dozwolone,LPG zulässig
-newGarage.placeNoGate,Not all spots were assigned to a gate. This can be changed later in garage management.,Ne všechna místa byla přiřazena k bráně. To může být později změněno ve správě garáže.,Nie wszystkie miejsca zostały przypisane do bramy. Możesz to później zmienić w zarządzaniu garażem.,Es wurden nicht alle Stellplätze einem Tor zugewiesen. Das kann später in der Parkhausverwaltung geändert werden.
+newGarage.placeNoGate,Not all spots were assigned to a gate. This can be changed later in garage management.,Ne všechna místa byla přiřazena k bráně. To může být později změněno ve správě garáže.,Nie wszystkie miejsca zostały przypisane do bramy. Możesz to później zmienić w zarządzaniu garażem.,Es wurden nicht alle Stellplätze einem Tor zugewiesen. Das kann später in der Garagenverwaltung geändert werden.
 newGarage.selectTarif,Select tariff,Vyberte tarif,Wybierz taryfę,Tarif auswählen
 newGarage.selectAccount,Select account,Vyberte účet,Wybierz konto,Konto auswählen
 newGarage.selectAccountMandatory,Select account,Vyberte účet,Wybierz konto,Konto auswählen
@@ -975,9 +976,9 @@ newClient.edit,Client,Klient,Klient,Kunde
 newClient.smsSettings,SMS module,SMS modul,Moduł SMS,SMS Modul
 newClient.activate,activate,aktivovat,Aktywuj,Aktivieren
 newClient.deactivate,deactivate,deaktivovat,Dezaktywuj,Deaktivieren
-newClient.timeCredit,Time credit,Časový kredit,,Zeitguthaben
-newClient.onetimeAddition,One-time addition of time credit,Jednorázové přidání časového kreditu,,Einmaliges hinzufügen des Zeitguthabens
-newClient.onetimeRemoval,One-time removal of time credit,Jednorázové odebrání časového kreditu,,Einmaliges entfernen des Zeitguthabens.
+newClient.timeCredit,Time credit,Časový kredit,,Time-credit
+newClient.onetimeAddition,One-time addition of time credit,Jednorázové přidání časového kreditu,,Einmaliges hinzufügen des Time-credites
+newClient.onetimeRemoval,One-time removal of time credit,Jednorázové odebrání časového kreditu,,Einmaliges entfernen des Time-credites
 newClient.amountToAdd,Amount to add,Částka pro přidání,,Betrag zum Hinzufügen
 newClient.amountToRemove,Amount to remove,Částka k odebrání,,Betrag zur Entnehmung
 newClient.onetimeAdditionPlaceholder,30,30,30,30
@@ -987,7 +988,7 @@ newClient.hoursThatCanBeParked,Hours that can be parked this month,"Hodiny, kter
 newClient.creditsThatCanBeDistributed,Credits that can be distributed this month,"Kredity, která je možné rozdat tento měsíc",,"Studen, die diesen Monat vergeben werden dürfen."
 newClient.creditsDistributed,Credits that were distributed,"Kredity, která byly rozdány",,Vergebens Guthaben.
 newClient.creditsDistributedOverMax,Credits over maximum,Kredity přes maximální počet,,Guthaben über die Maximalgrenze.
-newClient.cteditsOutOfBoundException,Exceeded amount of credits available to distribute,Překročena maximální hodnota kreditů určených k distribuci,,Die oberste Grenze des Zeitguthabens ist überschritten.
+newClient.cteditsOutOfBoundException,Exceeded amount of credits available to distribute,Překročena maximální hodnota kreditů určených k distribuci,,Die oberste Grenze des Time-credites ist überschritten.
 newClient.currencyName,Currency name,Jméno měny,,Bennenung der Währung
 newClient.currencyNamePlaceholder,Parkee coins,Parkovací mince,,Parkmünzen
 newClient.pricePerHour,Price per hour,Cena za hodinu,,Preis pro Stunde
@@ -1020,7 +1021,7 @@ inviteUser.sucessfullyInvited.many,%(count)s invitations were sucessfully sent.,
 inviteUser.sucessfullyInvited.other,%(count)s invitations were sucessfully sent.,%(count)s pozvánky bylo úspěšně odesláno.,%(count)s zaproszeń zostało wysłanych.,%(count)s Einladungen wurden erfolgreich gesendet.
 inviteUser.unSucessfullyInvited,We were not able to invite these users: %(emails)s.,Pozvánky těmto uživatelům se nepodařilo odeslat: %(emails)s.,Nie udało się wysłać zaproszeń następującym użytkownikom: %(emails)s.,Einladungen an diese Benutzer wurden nicht gesendet: %(emails)s.
 inviteUser.selectClient,Select client,Vyberte klienta,Wybierz klienta,Kunden auswählen
-inviteUser.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Parkhaus auswählen
+inviteUser.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Garage auswählen
 inviteUser.selectCar,Select car,Vyberte auto,Wybierz auto,Fahrzeug auswählen
 inviteUser.admin,admin,admin,admin,Administrator
 inviteUser.secretary,secretary,sekretář/ka,Sekretarz/sekretarka,Sekretär/in
@@ -1032,8 +1033,8 @@ inviteUser.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
 inviteUser.driver,driver,řidič,kierowca,Fahrer
 inviteUser.clientRights,User rights,Práva uživatele,Prawa klienta,Benutzerrechte
 inviteUser.clientRightsDesc,These rights will be only valid if the client is specified.,Tato práva budou platná pouze pokud bude klient specifikován.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy klient zostanie określony.","Diese Rechte sind nur gültig, wenn ein Kunde angegeben wird."
-inviteUser.GarageRights,Garage rights,Práva garáže,Prawa garażu,Parkhausrechte
-inviteUser.GarageRightsDesc,These rights will be valid only if the garage is specified.,Tato práva budou platná pouze pokud bude garáž specifikována.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy garaż zostanie określony.","Diese Rechte sind nur gültig, wenn ein Parkhaus angegeben wird."
+inviteUser.GarageRights,Garage rights,Práva garáže,Prawa garażu,Garagenrechte
+inviteUser.GarageRightsDesc,These rights will be valid only if the garage is specified.,Tato práva budou platná pouze pokud bude garáž specifikována.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy garaż zostanie określony.","Diese Rechte sind nur gültig, wenn eine Garage angegeben wird."
 inviteUser.carRights,Car rights,Práva aut,Prawa samochodów,Fahrzeugrechte
 inviteUser.carRightsDesc,These rights will be only valid if the car is specified,Tato práva budou platná pouze pokud bude auto specifikováno.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy samochód zostanie określony.","Diese Rechte sind nur gültig, wenn ein Fahrzeug angegeben wird."
 inviteUser.contactPerson,contact person,kontaktní osoba,osoba kontaktowa,Kontaktperson
@@ -1045,7 +1046,7 @@ notifications.created,created on,Vytvořeno dne,Utworzono dnia,Erstellt am
 notifications.declineQuestion,Are you sure you want to decline?,Určitě chcete odmítnout?,Czy na pewno chcesz odrzucić?,Möchten Sie wirklich ablehnen?
 notifications.expiration,Notification will expire on,Upozornění vyprší dne,Powiadomienie ważne do,Ablaufdatum der Benachrichtigung:
 notifications.clientInvitationMessage,You have been invited to '%(arg1)s' client account. Do you want to accept?,Byl(a) jste pozván(a) na klientský účet '%(arg1)s'. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania konta klienta '%(client)s'. Chcesz przyjąć zaproszenie?,Sie wurden zum Kundenkonto „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
-notifications.garageInvitationMessage,You have been invited to '%(arg1)s' garage. Do you want to accept?,Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania garaży '%(arg1)s'. Chcesz przyjąć zaproszenie?,Sie wurden zum Parkhaus „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
+notifications.garageInvitationMessage,You have been invited to '%(arg1)s' garage. Do you want to accept?,Byl(a) jste pozván(a) do '%(arg1)s' garáže. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania garaży '%(arg1)s'. Chcesz przyjąć zaproszenie?,Sie wurden zur Garage „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
 notifications.carInvitationMessage,You have been invited to use '%(arg1)s' car. Do you want to accept?,Byl(a) jste pozván(a) pro použití '%(arg1)s' auta. Chcete přijmout?,Zostałeś(-aś) zaproszony(-a) do używania samochodu '%(arg1)s'. Chcesz przyjąć zaproszenie?,Sie wurden zum Fahrzeug „%(arg1)s“ eingeladen. Möchten Sie die Einladung annehmen?
 notifications.clientUserDestroyed,You have been removed from client account '%(arg1)s'. All reservations associated with this client's account has been canceled.,"Byl(a) jste odstraněn(a) z účtu klienta '%(arg1)s', všechny rezervace přidružené k tomuto klientskému účtu byly zrušeny.",Zostałeś(-aś) usunięty(-a) z konta klienta '%(arg1)s'. Wszystkie rezerwacje przypisane do tego konta zostaną usunięte.,Sie wurden vom Kundenkonto „%(arg1)s“ entfernt. Alle mit diesem Kundenkonto verknüpften Buchungen wurden gelöscht.
 notifications.reservationDestroyed,Your reservation has been canceled.,Vaše rezervace byla stornována.,,Ihre Buchung wurde storniert.
@@ -1085,7 +1086,7 @@ profile.cars,Cars,Auta,Auta,Fahrzeuge
 profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,Pokaż garaże oferowane publicznie,Öffentlich angebotene Garagen anzeigen
 profile.privacyDocuments,All garages privacy documents,Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže,,GDPR Dokumente
 profile.myGarages,Garages you are in,Garáže jejichž jste členem,,Mitglied von Garagen
-profile.myClients,Clients you are in,Klienti jejichž jste členem,,Mitglied von klienten
+profile.myClients,Clients you are in,Klienti jejichž jste členem,,Mitglied von Klienten
 users.username,username,uživatelské jméno,Nazwa użytkownika,Benutzername
 users.email,email,E-mail,E-mail,E-Mail-Adresse
 users.phone,phone,Telefonní číslo,Numer telefonu,Telefonnummer
@@ -1098,7 +1099,7 @@ users.allKnownUsers,All known users,Všichni známí uživatelé,Wszyscy znani u
 users.pendingInvitations,Pending invitations,Čekající pozvánky,Oczekujące zaproszenia,Nicht bestätigte Einladungen
 users.memberOfClients,Member of clients:,Člen klientů:,Uczestniczy w kontach klientów:,Kundenmitgliedschaften:
 users.memberOfCars,Member of cars:,Člen aut:,Uczestniczy w autach:,Fahrzeugmitgliedschaften:
-users.memberOfGarages,Member of garages:,Člen garáží:,Uczestniczy w garażach:,Parkhausmitgliedschaften:
+users.memberOfGarages,Member of garages:,Člen garáží:,Uczestniczy w garażach:,Garagenmitgliedschaften:
 users.admin,admin,správce,admin,Administrator
 users.secretary,secretary,sekretář/ka,sekretarz/sekretarka,Sekretär/in
 users.internal,internal,interní,wewnętrzny,intern
@@ -1130,13 +1131,13 @@ newMarketing.guarded_parking,Guarded parking,Hídané parkoviště,Parking strze
 newMarketing.car_wash,Car wash,Myčka,Myjnia,Autowaschanlage
 newMarketing.airport_nearby,Airport nearby,Blízko letiště,Blisko lotniska,Nahe dem Flughafen
 newMarketing.charging_station,Electric car charging stations,Nabíjecí stanice pro elektrická auta,Stacja ładowania samochodów elektrycznych,Ladestation für Elektroautos
-newMarketing.garage,Garage,Garáž,Garaż,Parkhaus
+newMarketing.garage,Garage,Garáž,Garaż,Garage
 newMarketing.place,Spot,Místo,Miejsce,Stellplatz
 newMarketing.gate,Gate,Brána,Brama,Tor
 newMarketing.building,Building,Budova,Budynek,Gebäude
 newMarketing.map,Map,Mapa,Mapa,Karte
 newMarketing.shortName,URL short name,URL krátký název,Krótka nazwa URL,Kurze URL
-newMarketing.shortNamePlaceholder,st-patricks-garage,St-patricks-garáž,st-patricks-garaż,dom-parkhaus
+newMarketing.shortNamePlaceholder,st-patricks-garage,St-patricks-garáž,st-patricks-garaż,St-patrick-Garage
 newMarketing.invalidShortName,This has to be one lowercase word,Toto musí být jedno slovo malými písmeny,Musi to być jedno słowo napisane małymi literami.,Es muss sich um ein kleingeschriebenes Wort (ggf. mit Bindestrichen) handeln.
 newMarketing.phone,Emergency phone,Nouzový telefon,Telefon alarmowy,Notruf
 newMarketing.phonePlaceholder,#ERROR!,#ERROR!,#ERROR!,#ERROR!
@@ -1145,8 +1146,8 @@ newMarketing.email,Emergency email,Pohotovostní e-mail,E-mail alarmowy,Notfall-
 newMarketing.imvalidEmail,Email invalid,Neplatný email,Niepoprawny e-mail,Ungültige E-Mail-Adresse
 newMarketing.mailPlaceholder,Contact@email.com,Kontakt@email.com,kontakt@email.com,kontakt@email.de
 newMarketing.selectTag,Select image tag,Vyberte označení obrázku,Wybierz tag zdjęcia,Bild-Tag auswählen
-newMarketing.description,Garage description,Popis garáže,Opis garażu,Beschreibung des Parkhauses
-newMarketing.images,Garage images,Fotky garáže,Zdjęcia garażu,Bilder des Parkhauses
+newMarketing.description,Garage description,Popis garáže,Opis garażu,Beschreibung der Garage
+newMarketing.images,Garage images,Fotky garáže,Zdjęcia garażu,Bilder der Garage
 newMarketing.uploading,Uploading...,Nahrávám ...,Wgrywam...,Wird hochgeladen …
 newMarketing.notCreated,Marketing not created. The short name you selected is already taken.,"Marketing nebyl vytvořen, vybrané zkrácené jméno už bylo provedeno.","Nie można było utworzyć marketingu, ponieważ wybrana nazwa jest już zajęta.","Das Marketing wurde nicht erstellt, der ausgewählte kurze Name wird bereits verwendet."
 newMarketing.notUpdated,Marketing not updated. The short name you selected is already taken.,"Marketing nebyl aktualizován, vybrané krátké jméno je již použito.","Nie można było zaktualizować marketingu, ponieważ wybrana nazwa jest już zajęta.","Das Marketing wurde nicht geändert, der ausgewählte kurze Name wird bereits verwendet."
@@ -1234,7 +1235,7 @@ newReservationOverview.duration,Duration,Doba trvání,Okres,Dauer
 newReservationOverview.from,from,od ,od,von
 newReservationOverview.to,to,do,do,bis
 newReservationOverview.price,Price,Cena,Cena,Preis
-newReservationOverview.garage,Garage,Garáž,Garaż,Parkhaus
+newReservationOverview.garage,Garage,Garáž,Garaż,Garage
 newReservationOverview.floor,Floor,Podlaží,Piętro,Etage
 newReservationOverview.place,Spot,Místo,Miejsce,Stellplatz
 newReservationOverview.csob,ČSOB - online payment,ČSOB - online platba,ČSOB - płatność online,ČSOB - Online-Zahlung
@@ -1244,12 +1245,12 @@ newReservationOverview.paymentMethod,Payment method,Platební metoda,Metoda pła
 newReservationOverview.csobOneTimePaymentUseCard,Use One Click Payment,Použít platbu na klik,,Per Click Methode benutzen
 newReservationOverview.csobOneTimePaymentNewCard,Use different credit card,Použít jinou kartu,,Eine andere Bankkarte benutzen
 newReservationOverview.csobOneTimePayment,Remember card for One Click Payment,Zapamatovat kartu pro platbu na klik,,"Ihre Bankarte für die ""per Click Zahlung"" speichern"
-addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Parkhausbesitzer
+addFeatures.ImGarageOwner,I am a garage owner,Jsem majitelem garáže,Jestem właścicielem(-ką) garażu,Ich bin ein Garagenbesitzer
 addFeatures.LongTerm,LONG-TERM OR PERSONAL,DLOUHODOBÉ NEBO OSOBNÍ,DŁUGOTERMINOWO LUB PERSONALNIE,LANGFRISTIG ODER PERSÖNLICH
 addFeatures.Automation,AUTOMATION & ACCESS,AUTOMATIZACE A PŘÍSTUP,AUTOMATYZACJA I DOSTĘP,AUTOMATISIERUNG UND ZUGANG
 addFeatures.Integration,INTEGRATION,INTEGRACE,INTEGRACJA,INTEGRATION
 addFeatures.custom,CUSTOM,VLASTNÍ,WŁASNY,INDIVIDUELL
-addFeatures.canAddGarage,garages and spots,Garáže a místa,Garaże i miejsca,Parkhaus und Stellplätze
+addFeatures.canAddGarage,garages and spots,Garáže a místa,Garaże i miejsca,Garage und Stellplätze
 addFeatures.users,users,uživatelé,użytkownicy,Benutzer
 addFeatures.reservations,reservations,rezervace,rezerwacje,Buchungen
 addFeatures.saveContracts,save agreements,uložte dohody,zapisz umowy,Vereinbarungen speichern
@@ -1276,7 +1277,7 @@ addFeatures.gateModule,GATE MODULE,MODUL BRÁNY,MODUŁ BRAMY,TORMODUL
 addFeatures.openGate,Opens gate via app,Otevře bránu pomocí aplikaci,Otwórz bramę za pomocą aplikacji,Tor wird über App geöffnet
 addFeatures.IdontHaveAccout,I don't have an account,Nemám účet,Nie mam konta,Ich habe kein Konto
 addFeatures.createAccount,CREATE ACCOUNT,VYTVOŘIT ÚČET,UTWORZYĆ KONTO,KONTO ERSTELLEN
-addFeatures.IamGarageClient,I am a client of this garage,Jsem klient garáže,Jestem klientem garażu,Ich bin ein Parkhauskunde
+addFeatures.IamGarageClient,I am a client of this garage,Jsem klient garáže,Jestem klientem garażu,Ich bin ein Garagenkunde
 addFeatures.createClient,CREATE CLIENT,VYTVOŘIT KLIENTA,UTWORZYĆ KLIENTA,KUNDEN ERSTELLEN
 addFeatures.selected,Selected,Vybraný,Wybrany,Ausgewählte
 addFeatures.loading,Loading...,Načítám ...,Ładowanie...,Ladevorgang läuft …
@@ -1329,7 +1330,7 @@ invoices.redirecting,Redirecting ...,Přesměrovávám ...,Przekierowuję...,Wei
 invoices.paymentUnsucessfull,Payment was canceled and unsucessful.,Platba byla zrušena a neúspěšná.,Płatność została anulowana. Nie powiodła się.,Die Zahlung wurde abgebrochen und nicht durchgeführt.
 invoices.payingReservation,Paying reservation,Placení rezervace,Opłata rezerwacji,Buchung wird gezahlt
 invoices.selectClient,Select client,Vyberte klienta,Wybierz klienta,Kunden auswählen
-invoices.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Parkhaus auswählen
+invoices.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Garage auswählen
 invoices.invoiceNumber,Invoice No.,faktura č.,Faktura nr,Rechnungsnr.
 invoices.stornoInvoice,Do you really want to cancel this invoice?,Opravdu chcete tuto fakturu stornovat?,Czy naprawdę chcesz anulować fakturę?,Möchten Sie diese Rechnung wirklich stornieren?
 invoices.invoiceCanceled,This invoice has been canceled.,Faktura byla stornována,Faktura została anulowana.,Diese Rechnung wurde storniert
@@ -1370,7 +1371,7 @@ modules.goInternalDescription,Offer short-term parking to your tenants,Nabídně
 modules.setting,Settings,Nastavení,Ustawienia,Einstellungen
 modules.Preview,Preview,Náhled,Podgląd,Vorschau
 modules.startingMarketing,Upgrading your billing plan. Redirecting...,Aktualizuji Váš plán fakturace. Přesměrovávám ...,Aktualizuję twój plan faktur. Przekierowuję...,Rechnungsplan wird aktualisiert. Weiterleiten …
-modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihr Parkhaus erst dann für die Öffentlichkeit öffnen, wenn Sie eine Zahlungsmöglichkeit festgelegt haben (unter Administration > Finanzen)."
+modules.cannotBeChanged,You cannot go public until you set a payment method. To do this go to Admin/Finance.,"Vaše místa nejdou zveřejnit, protože nemáte nastavené žádné platební metody. Pro nastavení platebních metod jděte do Admin/Finance.","Nie można zaoferować Twoich miejsc publicznie, ponieważ nie ustawiłeś/-aś sposobu płatności. Aby to zmienić, przejdź do sekcji Admin/Finanse.","Sie können Ihre Garage erst dann für die Öffentlichkeit öffnen, wenn Sie eine Zahlungsmöglichkeit festgelegt haben (unter Administration > Finanzen)."
 modules.flexiplace,Flexi place,Flexi místo,Miejsce Flexi,Flexi Platz
 modules.flexiplaceDescription,"Flexi place is a support tool for optimize usage of all your places. Your users will not know their parking place until the reservation begins, reservations will be regrouped to maximize usage of parking places.","Flexi místo je optimalizační nástroj pro využití vašich míst. Uživatel se dozví svoje parkovací místo až při začátku rezervace; do té doby se rezervace přemisťují tak, aby bylo využití garáže maximální.","Miejsce Flexi jest narzędzie optymalizujące korzystanie ze wszystkich Twoich miejsc. Użytkownik dowiaduje się o swoim miejscu parkingowym dopiero wraz z rozpoczęciem rezerwacji, do tego czasu rezerwacje zmieniają się tam, aby maksymalizować używanie garażu.","Der Flexi Platz ist ein Unterstützungstool zur optimalen Nutzung Ihrer Plätze. Ihre Benutzer werden ihren Parkplatz bis zum Beginn der Buchung nicht kennen. Die Buchungen werden neu gruppiert, um die Nutzung von Parkplätzen zu maximieren."
 modules.showApiKey,Show API endpoint,Zobrazit API endpoint,Pokaż API endpoint,API Endpoint zeigen
@@ -1419,6 +1420,7 @@ newContract.shortterm,Shortterm,Krátkodobý,Krótkoterminowy,Kurzzeit
 newContract.longtermPrice,Longterm price:,Dlouhodobá cena:,Długoterminowa cena:,Langfristiger Preis:
 newContract.shorttermPrice,Shortterm price:,Krátkodobá cena:,Krótkoterminowa cena:,Kurfristiger Preis:
 newContract.removeReservations,Remove reservations of removed places,Smazat rezervace na odebraných místech,,Die Buchung auf den entfernten Plätzen löschen.
+newContract.generateInvoice,,,,
 newContract.doNotRemoveReservations,Try replacing reservations of removed places,Zkusit přemístit rezervace na odebraných místech,,Die Buchung auf den entfernten Plätzen verschieben.
 finance.financeSettings,Finance settings,Nastavení financí,,Finanzeinstellungen
 finance.paypal,Paypal,Paypal,PayPal,Paypal
@@ -1718,7 +1720,7 @@ railsEmails.reservation_not_approved_yet.reservation_was_not_yet_confirmed,Your 
 railsEmails.reservation_not_approved_yet.you_can_contact_these_peope,"To speed up things, you can contact one of contact presons:",Pro uspíšení vašeho potrvrzení můžete kontaktovat kontaktní osoby:,,Für die Beschleunigung Ihrer Genehmigung können Sie Ihre Kontaktperson kontaktieren.
 railsEmails.car_on_my_spot_notify_driver.you_have_been_reported,We were reported that a car associated with your account is blocking another reservation's place.,"Bylo nám nahlášeno, že auto spojené s Vaším účtem, blokuje místo pro jinou rezervaci.",,"Es wurde gemeldet, dass ein Wagen, der mit Ihrem Konto verknüpft ist, den Parkplatz einer anderen Buchung blockiert. "
 railsEmails.car_on_my_spot_notify_driver.infor_about_car,Information about reported car:,Informace o nahlášeném autě:,,Information über den gemeldeten Wagen:
-railsEmails.car_on_my_spot_notify_driver.suspected_reservation,We suspects tha this reservation might be a problem:,"Máme podezření, že problém nastal u této rezervace:",,"Wir haben einen Verdacht, dass das Problem bei dieser Buchung entstanden ist."
+railsEmails.car_on_my_spot_notify_driver.suspected_reservation,We suspect that this reservation might be a problem:,"Máme podezření, že problém nastal u této rezervace:",,"Wir haben einen Verdacht, dass das Problem bei dieser Buchung entstanden ist."
 railsEmails.car_on_my_spot_notify_driver.we_urge_you,We urge you to remedy the situation.,Prověřte prosím situaci a případně zjednejte okamžitou nápravu.,,Wir bitten Sie um die regelung der Situation.
 railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported,User %{user} just reported that car with licence plate %{licence_plate} is standing on his spot.,"Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",,"Der User %{user} meldete gerade, dass der Wagen mit dem Kennzeichen %{licence_plate} auf seinem Platz steht."
 railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_car,Further information about suspected car:,Další informace o autě:,,Weitere Informationen über den Wagen.
@@ -1752,7 +1754,8 @@ pidAdmin.pageBase.adminMode,ADMIN MODE OF PARK-IT-DIRECT,ADMIN MODE PARK-IT-DIRE
 pidAdmin.pageBase.generator,Generator,Generátor,netřeba překládat,netřeba překládat
 pidAdmin.pageBase.news,News,Novinky,netřeba překládat,netřeba překládat
 pidAdmin.pageBase.finance,Finance,Finance,netřeba překládat,netřeba překládat
-pidAdmin.pageBase.garagesOverview,Garage overview,Přehled garáží,,Garageübersicht
+pidAdmin.pageBase.mobileAppVersion,,,,
+pidAdmin.pageBase.garagesOverview,Garage overview,Přehled garáží,,Garagenübersicht
 pidAdmin.users.id,id,id,netřeba překládat,netřeba překládat
 pidAdmin.users.name,name,jméno,netřeba překládat,netřeba překládat
 pidAdmin.users.appVersion,app version,verze appky,netřeba překládat,netřeba překládat
