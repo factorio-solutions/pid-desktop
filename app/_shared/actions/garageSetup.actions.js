@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import { get }       from '../helpers/get'
 import * as nav      from '../helpers/navigation'
 import { t }         from '../modules/localization/localization'

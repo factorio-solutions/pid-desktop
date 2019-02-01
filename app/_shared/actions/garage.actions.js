@@ -1,5 +1,5 @@
 import moment        from 'moment'
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import { timeToUTC } from '../helpers/time'
 import actionFactory from '../helpers/actionFactory'
 

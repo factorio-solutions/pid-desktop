@@ -1,4 +1,4 @@
-import { request }  from '../helpers/request'
+import request  from '../helpers/request'
 
 import { UPDATE_CURRENT_USER } from '../queries/pageBase.queries.js'
 import { GET_CURRENT_USER, GET_CARS, DESTROY_CAR } from '../queries/profile.queries'

@@ -1,5 +1,5 @@
 import localforage from 'localforage'
-import { request }    from '../helpers/request'
+import request    from '../helpers/request'
 import requestPromise from '../helpers/requestPromise'
 import * as nav       from '../helpers/navigation'
 import actionFactory  from '../helpers/actionFactory'

@@ -1,5 +1,5 @@
 import { t } from '../modules/localization/localization'
-import { request } from './request'
+import request from './request'
 
 
 export default function upload(onSuccess, event, query, variables = null) {

@@ -1,5 +1,5 @@
 import update         from 'immutability-helper'
-import { request }    from '../helpers/request'
+import request    from '../helpers/request'
 import * as nav       from '../helpers/navigation'
 import { t }          from '../modules/localization/localization'
 import { toGarages }  from './pageBase.actions'

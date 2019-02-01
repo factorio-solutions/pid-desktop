@@ -3,7 +3,7 @@ import translate from 'counterpart'
 import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
 import { login }     from './login.actions'
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import { mobile }    from '../../index'
 
 import { CREATE_USER_QUERY } from '../queries/signUp.queries'

@@ -2,7 +2,7 @@ import update from 'immutability-helper'
 import moment from 'moment'
 import { batchActions } from 'redux-batched-actions'
 
-import { request }                           from '../helpers/request'
+import request                           from '../helpers/request'
 import requestPromise                        from '../helpers/requestPromise'
 import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 import * as nav                              from '../helpers/navigation'

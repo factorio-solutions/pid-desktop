@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { request } from '../_shared/helpers/request'
+import request from '../_shared/helpers/request'
 
 
 export default class App extends Component {
