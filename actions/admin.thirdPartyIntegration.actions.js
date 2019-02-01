@@ -1,4 +1,4 @@
-import { request }     from '../helpers/request'
+import request     from '../helpers/request'
 import actionFactory   from '../helpers/actionFactory'
 import requestPromise  from '../helpers/requestPromise'
 import { initModules } from './admin.modules.actions'

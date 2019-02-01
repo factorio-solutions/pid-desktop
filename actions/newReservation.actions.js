@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { batchActions } from 'redux-batched-actions'
 
-import { request }                       from '../helpers/request'
+import request                       from '../helpers/request'
 import actionFactory                     from '../helpers/actionFactory'
 import requestPromise                    from '../helpers/requestPromise'
 import * as nav                          from '../helpers/navigation'
@@ -216,7 +216,13 @@ export function setGarage(value) {
       }))
     } else {
       const reservationId = state.reservation && state.reservation.id
-      const reservableClients = (await clientsPromise(state.user && state.user.id, state.garage && state.garage.id, reservationId)).reservable_clients
+      const { reservable_clients: reservableClients } = (
+        await clientsPromise(
+          state.user && state.user.id,
+          state.garage && state.garage.id,
+          reservationId
+        )
+      )
       reservableClients.unshift({ name: t([ 'newReservation', 'selectClient' ]), id: undefined })
       state.user && dispatch(setUser({ ...state.user, availableClients: reservableClients }))
     }
@@ -234,7 +240,7 @@ export function setSendSms(sendSms) {
       templateIndex = 0
       templateText = client.sms_templates[0].template
     } else if (!state.selectedTemplate) {
-      templateText = state.templateText
+      ({ templateText } = state)
     }
 
     dispatch({ type: NEW_RESERVATION_SET_SEND_SMS, value: sendSms })
@@ -250,9 +256,15 @@ export function removeDiacritics() {
 }
 
 export function isPlaceGoInternal(state) {
-  const places = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : []
+  const places = state.garage
+    ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], [])
+    : []
   const selectedPlace = places.findById(state.place_id)
-  return state.garage && state.garage.has_payment_gate && state.client_id && selectedPlace && selectedPlace.go_internal
+  return state.garage
+  && state.garage.has_payment_gate
+  && state.client_id
+  && selectedPlace
+  && selectedPlace.go_internal
 }
 
 export function setFromDate(value) {

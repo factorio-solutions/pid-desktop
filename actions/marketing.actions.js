@@ -1,4 +1,4 @@
-import { request }    from '../helpers/request'
+import request    from '../helpers/request'
 
 import { GET_GARAGE_MARKETING_DETAILS } from '../queries/marketing.queries'
 

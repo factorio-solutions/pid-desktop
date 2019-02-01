@@ -7,11 +7,14 @@ import { setNotificationCount } from '../actions/notifications.actions'
 
 // helper request sender queries to the GraphQL API
 
-// import { request }  from '../_shared/helpers/request'
+// import request  from '../_shared/helpers/request'
 //
 // request ((response) => { console.log(response) }, "{garages{name}}")
-export async function request(onSuccess, query, variables = null, operationName = null, onError) {
-  const data = { query,
+export default async function request(
+  onSuccess, query, variables = null, operationName = null, onError
+) {
+  const data = {
+    query,
     operationName,
     variables
   }
@@ -23,10 +26,13 @@ export async function request(onSuccess, query, variables = null, operationName 
       if (mobile) { // mobile handle 401 error
         window.dispatchEvent(new Event('unauthorizedAccess'))
       } else { // desktop handle
-        localforage.removeIterm('jwt')
+        localforage.removeItem('jwt')
         const redirect = await localforage.getItem('redirect')
         if (!redirect) {
-          await localforage.setItem('redirect', window.location.hash.substring(4, window.location.hash.indexOf('?')))
+          await localforage.setItem(
+            'redirect',
+            window.location.hash.substring(4, window.location.hash.indexOf('?'))
+          )
         }
         nav.to('/')
       }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { request }           from '../helpers/request'
+import request           from '../helpers/request'
 import actionFactory         from '../helpers/actionFactory'
 import { composeParameters } from '../helpers/parseUrlParameters'
 import { t }                 from '../modules/localization/localization'
