@@ -144,7 +144,7 @@ class ReservationsPage extends Component {
     nav.to('/reservations/newReservation')
   }
 
- reservationTransformation = reservation => {
+  reservationTransformation = reservation => {
     const { place } = reservation
     const garage = place && place.floor && place.floor.garage
 
@@ -172,31 +172,33 @@ class ReservationsPage extends Component {
 
   // downloadClick = ids => this.props.actions.downloadInvoice(ids)
 
-  
-  transformData = data => data.reservations.map(reservation => ({
-    ...this.reservationTransformation(reservation),
-    history:        reservation.history.map(this.reservationTransformation),
-    record_updates: reservation.record_updates,
-    spoiler:        (
-      <ReservationSpoiler
-        reservation={reservation}
-        currentUser={currentUser}
-        destroyReservation={this.destroyClick}
-        editClick={this.editClick}
-        editNoteClick={this.editNoteClick}
-        interruptClick={this.interruptClick}
-        payReservation={actions.payReservation}
-        downloadInvoice={actions.downloadInvoice}
-        terminateEarly={interruptionActions.immediateReservationTermination}
-      />
-    )
-  }))
+  transformData = data => {
+    const { actions, currentUser } = this.props
+    return data.reservations.map(reservation => ({
+      ...this.reservationTransformation(reservation),
+      history:        reservation.history.map(this.reservationTransformation),
+      record_updates: reservation.record_updates,
+      spoiler:        (
+        <ReservationSpoiler
+          reservation={reservation}
+          currentUser={currentUser}
+          destroyReservation={this.destroyClick}
+          editClick={this.editClick}
+          editNoteClick={this.editNoteClick}
+          interruptClick={this.interruptClick}
+          payReservation={actions.payReservation}
+          downloadInvoice={actions.downloadInvoice}
+          terminateEarly={interruptionActions.immediateReservationTermination}
+        />
+      )
+    }))
+  }
 
   interruptClick = reservation => this.props.interruptionActions.setReservation(reservation)
 
   render() {
     const {
-      state, actions, interruption, interruptionActions, currentUser
+      state, actions, interruption, interruptionActions
     } = this.props
 
     const filters = [
@@ -237,7 +239,7 @@ class ReservationsPage extends Component {
           <PaginatedTable
             query={GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY}
             parseMetadata={data => data.reservations_metadata}
-            transformData={transformData}
+            transformData={this.transformData}
             schema={reservationsTableScheme}
             variables={{ past: state.past }}
             findId={parseInt(this.props.params.id, 10)}
