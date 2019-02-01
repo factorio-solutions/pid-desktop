@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import moment                          from 'moment'
+import moment from 'moment'
 
 import TableRow          from '../tableRow/TableRow'
 import HistoryTableRow   from '../tableRow/HistoryTableRow'
 import UpdatedAtTableRow from '../tableRow/UpdatedAtTableRow'
 import EnumButton        from './EnumButton'
 import SearchBox         from './SearchBox'
+
+import { t } from '../../modules/localization/localization'
 
 import styles from './Table.scss'
 
@@ -235,9 +237,12 @@ export default class Table extends Component {
     }
 
     const prepareHeader = (value, key) => {
+      const title = Array.isArray(value.title)
+        ? t(value.title)
+        : value.title
       return (
         <td key={key} onClick={() => { handleHeadClick(key) }} className={styles.tdHeader}>
-          {value.title}
+          {title}
           {value.comparator && sortKey === value.key && <i className={'fa fa-chevron-' + (sortType === 'asc' ? 'up' : 'down')} aria-hidden="true" />}
         </td>
       )
