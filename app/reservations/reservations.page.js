@@ -173,7 +173,7 @@ class ReservationsPage extends Component {
   // downloadClick = ids => this.props.actions.downloadInvoice(ids)
 
   transformData = data => {
-    const { actions, currentUser } = this.props
+    const { actions, currentUser, interruptionActions } = this.props
     return data.reservations.map(reservation => ({
       ...this.reservationTransformation(reservation),
       history:        reservation.history.map(this.reservationTransformation),
