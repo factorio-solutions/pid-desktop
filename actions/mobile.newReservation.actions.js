@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-import { request } from '../helpers/request'
+import request from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 import requestPromise from '../helpers/requestPromise'
 import { parseParameters } from '../helpers/parseUrlParameters'

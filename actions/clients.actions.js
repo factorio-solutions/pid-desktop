@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 
 import { GET_CLIENTS, GARAGE_CONTRACTS } from '../queries/clients.queries'

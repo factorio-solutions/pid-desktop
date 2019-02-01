@@ -1,4 +1,4 @@
-import { request } from '../helpers/request'
+import request from '../helpers/request'
 
 import { GET_KNOWN_USERS }  from '../queries/users.queries'
 

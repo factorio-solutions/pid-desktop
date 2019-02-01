@@ -1,4 +1,4 @@
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
 import { clearForm } from './newReservation.actions'

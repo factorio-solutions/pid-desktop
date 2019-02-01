@@ -2,7 +2,7 @@ import moment        from 'moment'
 import actionFactory from '../helpers/actionFactory'
 
 import { t }                                 from '../modules/localization/localization'
-import { request }                           from '../helpers/request'
+import request                           from '../helpers/request'
 import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 
 import { GARAGE_TURNOVER } from '../queries/analytics.garage.queries'

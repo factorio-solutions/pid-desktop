@@ -1,4 +1,4 @@
-import { request } from '../helpers/request'
+import request from '../helpers/request'
 import { fetchGarages } from './pageBase.actions.js'
 import { initGarages } from './mobile.header.actions.js'
 import { mobile } from '../../index'

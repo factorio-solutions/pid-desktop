@@ -1,4 +1,4 @@
-import { request } from './request'
+import request from './request'
 
 export default function requestPromise(query, variables = null) {
   return new Promise((resolve, reject) => {

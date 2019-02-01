@@ -1,5 +1,5 @@
 import actionFactory                  from '../helpers/actionFactory'
-import { request }                    from '../helpers/request'
+import request                    from '../helpers/request'
 import requestPromise                 from '../helpers/requestPromise'
 import { parseParameters }            from '../helpers/parseUrlParameters'
 import { download, downloadMultiple } from '../helpers/download'
