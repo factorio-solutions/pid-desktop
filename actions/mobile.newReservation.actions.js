@@ -151,6 +151,32 @@ export function setPlace(id) {
   }
 }
 
+export function setMinMaxDuration() {
+  return (dispatch, getState) => {
+    const state = getState().mobile.NewReservation
+    const isGoInternal = isPlaceGoInternal(state)
+    const client = dispatch(selectedClient())
+
+    const determineDuration = minOrMax => (state.garage && (isGoInternal
+      ? state.garage[`${minOrMax}_reservation_duration_go_internal`]
+      : state.garage[`${minOrMax}_reservation_duration_go_public`]))
+      || (client ? client[`${minOrMax}_reservation_duration`] : null)
+
+    const minDuration = determineDuration('min')
+    const maxDuration = determineDuration('max')
+
+    // set min/max duration of garage or of client
+    dispatch(setMinDuration(minDuration))
+    dispatch(setMaxDuration(maxDuration))
+    // does reservation meet min/max boundaries
+    const diff = moment(state.to, MOMENT_DATETIME_FORMAT)
+      .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
+    if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
+      dispatch(formatTo())
+    }
+  }
+}
+
 export function getAvailableClients() {
   return (dispatch, getState) => {
     const state = getState().mobileNewReservation
@@ -249,68 +275,62 @@ export function setDuration(duration) {
 }
 
 export function downloadReservation(id) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const currentUserId = getState().mobileHeader.current_user.id
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
-    requestPromise(GET_RESERVATION, { id: parseInt(id, 10) })
-      .then(res => {
-        const { reservation } = res
-        dispatch(setGarage(reservation.place.floor.garage.id))
-        if (reservation.user_id !== currentUserId) {
-          dispatch(setUserId(reservation.user_id))
-        }
+    const { reservation } = await requestPromise(GET_RESERVATION, { id: parseInt(id, 10) })
+    dispatch(setGarage(reservation.place.floor.garage.id))
+    if (reservation.user_id !== currentUserId) {
+      dispatch(setUserId(reservation.user_id))
+    }
 
-        Promise.all([
-          requestPromise(GET_AVAILABLE_CLIENTS, {
-            user_id:   getState().mobileHeader.current_user.id,
-            garage_id: reservation.place.floor.garage.id
-          }),
-          requestPromise(GET_AVAILABLE_FLOORS, {
-            id:             reservation.place.floor.garage.id,
-            begins_at:      reservation.begins_at,
-            ends_at:        reservation.ends_at,
-            client_id:      reservation.client_id,
-            reservation_id: reservation.id
-          }),
-          requestPromise(GET_USER, { id: getState().mobileHeader.current_user.id })
-        ])
-          .then(values => {
-            const [ client, garage, user ] = values
+    const [ client, garage, user ] = await Promise.all([
+      requestPromise(GET_AVAILABLE_CLIENTS, {
+        user_id:   getState().mobileHeader.current_user.id,
+        garage_id: reservation.place.floor.garage.id
+      }),
+      requestPromise(GET_AVAILABLE_FLOORS, {
+        id:             reservation.place.floor.garage.id,
+        begins_at:      reservation.begins_at,
+        ends_at:        reservation.ends_at,
+        client_id:      reservation.client_id,
+        reservation_id: reservation.id
+      }),
+      requestPromise(GET_USER, { id: getState().mobileHeader.current_user.id })
+    ])
 
-            let toSet = {
-              reservation_id:  reservation.id,
-              from:            moment(reservation.begins_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
-              to:              moment(reservation.ends_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
-              // availableClients: client.reservable_clients,
-              client_id:       reservation.client_id,
-              car_id:          !reservation.car.temporary ? reservation.car.id : undefined,
-              carLicencePlate: reservation.car.temporary
-                ? reservation.car.licence_plate
-                : undefined,
-              availableFloors: garage.garage.floors,
-              place_id:        reservation.place.id,
-              fromNow:         false,
-              duration:        undefined,
-              autoselect:      false
-            }
-            if (reservation.user_id === currentUserId) {
-              toSet = {
-                ...toSet,
-                availableCars: user.user.reservable_cars,
-                user_id:       undefined
-              }
-            } else {
-              dispatch(getAvailableUsers())
-            }
+    let toSet = {
+      reservation_id:  reservation.id,
+      from:            moment(reservation.begins_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
+      to:              moment(reservation.ends_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
+      // availableClients: client.reservable_clients,
+      client_id:       reservation.client_id,
+      car_id:          !reservation.car.temporary ? reservation.car.id : undefined,
+      carLicencePlate: reservation.car.temporary
+        ? reservation.car.licence_plate
+        : undefined,
+      availableFloors: garage.garage.floors,
+      place_id:        reservation.place.id,
+      fromNow:         false,
+      duration:        undefined,
+      autoselect:      false
+    }
+    if (reservation.user_id === currentUserId) {
+      toSet = {
+        ...toSet,
+        availableCars: user.user.reservable_cars,
+        user_id:       undefined
+      }
+    } else {
+      dispatch(getAvailableUsers())
+    }
 
-            dispatch(setAvailableClients(client.reservable_clients))
-            dispatch({
-              type: MOBILE_NEW_RESERVATION_SET_ALL,
-              ...toSet
-            })
-            dispatch(setCustomModal())
-          })
-      })
+    dispatch(setAvailableClients(client.reservable_clients))
+    dispatch({
+      type: MOBILE_NEW_RESERVATION_SET_ALL,
+      ...toSet
+    })
+    dispatch(setCustomModal())
   }
 }
 
