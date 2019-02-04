@@ -19,8 +19,8 @@ import { isPlaceGoInternal, selectedClient } from './newReservation.actions'
 
 import { GET_GARAGE, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
 import {
-  CREATE_RESERVATION,
-  UPDATE_RESERVATION,
+  CREATE_RESERVATION_NEW,
+  UPDATE_RESERVATION_NEW,
   GET_AVAILABLE_CLIENTS,
   GET_USER,
   PAY_RESREVATION,
@@ -586,7 +586,7 @@ export function payReservation(url, callback = () => {}) {
 export function submitReservation(callback) {
   return (dispatch, getState) => {
     const onSuccess = response => {
-      const res = response.data.create_reservation || response.data.update_reservation
+      const res = response.data.create_reservation_new || response.data.update_reservation_new
       const { payment_url: paymentUrl } = res.reservation
       if (paymentUrl) {
         dispatch(payReservation(paymentUrl, callback))
@@ -607,7 +607,7 @@ export function submitReservation(callback) {
           : t([ 'mobileApp', 'newReservation', 'creatingPayment' ])
     ))
 
-    request(onSuccess, state.reservation_id ? UPDATE_RESERVATION : CREATE_RESERVATION, {
+    request(onSuccess, state.reservation_id ? UPDATE_RESERVATION_NEW : CREATE_RESERVATION_NEW, {
       id:          state.reservation_id,
       reservation: {
         user_id:       reservation.user_id || getState().mobileHeader.current_user.id,
