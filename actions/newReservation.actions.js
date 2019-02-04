@@ -29,8 +29,8 @@ import {
   GET_USER,
   GET_GARAGE_DETAILS,
   GET_GARAGE_DETAILS_LIGHT,
-  CREATE_RESERVATION,
-  UPDATE_RESERVATION,
+  CREATE_RESERVATION_NEW,
+  UPDATE_RESERVATION_NEW,
   GET_RESERVATION,
   GET_GARAGE_FREE_INTERVAL
 } from '../queries/newReservation.queries'
@@ -753,7 +753,8 @@ function downloadGaragePromise(id, state) {
 
     request(
       onSuccess,
-      (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS), // download only free places if got rest of details
+      // download only free places if got rest of details
+      (id && id === (state.garage && state.garage.id) ? GET_GARAGE_DETAILS_LIGHT : GET_GARAGE_DETAILS),
       {
         id:             id || state.garage.id,
         user_id:        state.user.id,
@@ -941,7 +942,9 @@ export function submitReservation(id) {
     const onSuccess = async response => {
       dispatch(pageBaseActions.setCustomModal(undefined))
       try {
-        const { reservation, errors } = response.data[updatingReservation ? 'update_reservation' : 'create_reservation']
+        const { reservation, errors } = (
+          response.data[updatingReservation ? 'update_reservation_new' : 'create_reservation_new']
+        )
         if (errors.length >= 1) {
           const reservationOnPlace = errors.find(e => e.message === 'Place is occupied')
           if (reservationOnPlace) {
@@ -956,7 +959,11 @@ export function submitReservation(id) {
             throw Error('Cannot create reservation')
           }
         } else if (reservation && reservation.payment_url) {
-          dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'redirecting' ])}</div>))
+          dispatch(pageBaseActions.setCustomModal(
+            <div>
+              {t([ 'newReservation', 'redirecting' ])}
+            </div>
+          ))
           window.location.replace(reservation.payment_url)
         } else {
           nav.to(`/reservations/find/${reservation.id}`)
@@ -970,13 +977,18 @@ export function submitReservation(id) {
     }
 
     dispatch(pageBaseActions.setCustomModal(
-      <div>{t([ 'newReservation', updatingReservation ? 'updatingReservation' : 'creatingReservation' ])}</div>
+      <div>
+        {t([ 'newReservation', updatingReservation
+          ? 'updatingReservation'
+          : 'creatingReservation'
+        ])}
+      </div>
     ))
 
     const createTheReservation = (userId, userName) => {
       request(
         onSuccess,
-        updatingReservation ? UPDATE_RESERVATION : CREATE_RESERVATION,
+        updatingReservation ? UPDATE_RESERVATION_NEW : CREATE_RESERVATION_NEW,
         {
           reservation: {
             user_id:                  userId,
