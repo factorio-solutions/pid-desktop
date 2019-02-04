@@ -174,9 +174,36 @@ export const CREATE_RESERVATION = `mutation createReservation($reservation: Rese
 }
 `
 
+// create reservation mutation
+export const CREATE_RESERVATION_NEW = `mutation createReservation($reservation: ReservationInput!) {
+  create_reservation_new(reservation: $reservation) {
+    reservation {
+      id
+      payment_url
+    }
+    errors {
+      message
+    }
+  }
+}
+`
+
 // update reservation mutation
 export const UPDATE_RESERVATION = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
   update_reservation(reservation: $reservation, id: $id) {
+    reservation {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+`
+
+// update reservation mutation
+export const UPDATE_RESERVATION_NEW = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
+  update_reservation_new(reservation: $reservation, id: $id) {
     reservation {
       id
     }
