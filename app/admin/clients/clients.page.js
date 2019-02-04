@@ -54,12 +54,14 @@ class ClientsPage extends Component {
 
     const prepareContractButton = contract => {
       const onContractClick = () => nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`)
-      return (<div
-        className={`${styles.contract} ${!(pageBase.isGarageAdmin || pageBase.isGarageManager || (client.client_user && client.client_user.admin)) && styles.disabled}`}
-        onClick={(pageBase.isGarageAdmin || pageBase.isGarageManager || (client.client_user && client.client_user.admin)) && onContractClick}
-      >
-        {contract.name}
-      </div>)
+      return (
+        <div
+          className={`${styles.contract} ${!(pageBase.isGarageAdmin || pageBase.isGarageManager || (client.client_user && client.client_user.admin)) && styles.disabled}`}
+          onClick={(pageBase.isGarageAdmin || pageBase.isGarageManager || (client.client_user && client.client_user.admin)) && onContractClick}
+        >
+          {contract.name}
+        </div>
+      )
     }
 
     const prepareContactPersons = (acc, user, index, arr) => {
@@ -82,56 +84,60 @@ class ClientsPage extends Component {
 
     const currentUserIsAdmin = client.client_user && client.client_user.admin && !client.client_user.pending
 
-    const spoiler = (<div className={styles.spoiler}>
-      <div>
-        {t([ 'clients', 'contactPerson' ])}: {client.contact_persons.reduce(prepareContactPersons, [])}
-        <br />
-        {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
+    const spoiler = (
+      <div className={styles.spoiler}>
+        <div>
+          {t([ 'clients', 'contactPerson' ])}: {client.contact_persons.reduce(prepareContactPersons, [])}
+          <br />
+          {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
+        </div>
+        {(currentUserIsAdmin || pageBase.isGarageAdmin || pageBase.isGarageManager) && (
+          <div>
+            {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
+            {currentContracts.map(prepareContractButton)}
+            {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
+            {oldContracts.map(prepareContractButton)}
+          </div>
+        )}
+        <div>
+          <LabeledRoundButton
+            label={t([ 'clients', 'createAgreement' ])}
+            content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
+            onClick={toNewContract}
+            type="action"
+            state={!pageBase.isGarageAdmin && 'disabled'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'goToInvoices' ])}
+            content={<span className="fa fa-files-o" aria-hidden="true" />}
+            onClick={toInvoices}
+            type="action"
+            state={currentUserIsAdmin ? '' : 'disabled'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'editClient' ])}
+            content={<span className="fa fa-pencil" aria-hidden="true" />}
+            onClick={toEditClient}
+            type="action"
+            state={currentUserIsAdmin ? '' : 'disabled'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'modules' ])}
+            content={<span className="icon-plugins" aria-hidden="true" />}
+            onClick={toClientModules}
+            type="action"
+            state={currentUserIsAdmin ? '' : 'disabled'}
+          />
+          <LabeledRoundButton
+            label={t([ 'clients', 'goToUsers' ])}
+            content={<span className="fa fa-child" aria-hidden="true" />}
+            onClick={client.userOfClient && toClient}
+            type="action"
+            state={client.userOfClient ? '' : 'disabled'}
+          />
+        </div>
       </div>
-      {(currentUserIsAdmin || pageBase.isGarageAdmin || pageBase.isGarageManager) && <div>
-        {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
-        {currentContracts.map(prepareContractButton)}
-        {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
-        {oldContracts.map(prepareContractButton)}
-      </div>}
-      <div>
-        <LabeledRoundButton
-          label={t([ 'clients', 'createAgreement' ])}
-          content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
-          onClick={toNewContract}
-          type="action"
-          state={!pageBase.isGarageAdmin && 'disabled'}
-        />
-        <LabeledRoundButton
-          label={t([ 'clients', 'goToInvoices' ])}
-          content={<span className="fa fa-files-o" aria-hidden="true" />}
-          onClick={toInvoices}
-          type="action"
-          state={currentUserIsAdmin ? '' : 'disabled'}
-        />
-        <LabeledRoundButton
-          label={t([ 'clients', 'editClient' ])}
-          content={<span className="fa fa-pencil" aria-hidden="true" />}
-          onClick={toEditClient}
-          type="action"
-          state={currentUserIsAdmin ? '' : 'disabled'}
-        />
-        <LabeledRoundButton
-          label={t([ 'clients', 'modules' ])}
-          content={<span className="icon-plugins" aria-hidden="true" />}
-          onClick={toClientModules}
-          type="action"
-          state={currentUserIsAdmin ? '' : 'disabled'}
-        />
-        <LabeledRoundButton
-          label={t([ 'clients', 'goToUsers' ])}
-          content={<span className="fa fa-child" aria-hidden="true" />}
-          onClick={client.userOfClient && toClient}
-          type="action"
-          state={client.userOfClient ? '' : 'disabled'}
-        />
-      </div>
-    </div>)
+    )
 
     return { ...client,
       spoiler,
@@ -190,7 +196,7 @@ class ClientsPage extends Component {
             size="big"
             label={t([ 'clients', 'addClientLabel' ])}
           />
-          {pageBase.isGarageAdmin &&
+          {pageBase.isGarageAdmin && (
             <LabeledRoundButton
               content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
               onClick={this.addContract}
@@ -198,7 +204,7 @@ class ClientsPage extends Component {
               size="big"
               label={t([ 'clients', 'addContractLabel' ])}
             />
-          }
+          )}
         </div>
       </PageBase>
     )
