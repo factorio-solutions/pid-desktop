@@ -274,12 +274,13 @@ class ClientUsersPage extends Component {
           <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={this.onBack} />
         </div>
         <div className={styles.addButton}>
-          <RoundButton
+          <LabeledRoundButton
             content={<span className="fa fa-plus" aria-hidden="true" />}
             onClick={this.addClientUserClick}
             type="action"
             size="big"
             state={currentClientUser ? (currentClientUser.admin || currentClientUser.secretary || currentClientUser.internal) ? '' : 'disabled' : 'disabled'}
+            label={t([ 'clientUsers', 'addUser' ])}
           />
         </div>
       </PageBase>
