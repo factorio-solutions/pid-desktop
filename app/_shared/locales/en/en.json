@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Client",
 		"selectCarLabel": "Select car",
 		"smsTemplateLabel": "SMS template",
-		"reservationOnPlace": "EN: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Selected spot is already taken"
 	},
 	"clients": {
 		"name": "name",
@@ -322,6 +322,7 @@
 		"resendInvitation": "Resend email",
 		"resendSuccessfull": "Email was sucessfully send.",
 		"userNotFound": "Could not find this user.",
+		"addUser": "Add user",
 		"timeCredit": "time credit"
 	},
 	"reservations": {
@@ -397,7 +398,8 @@
 		"rentName": "Rent name",
 		"price": "Price (place per month)",
 		"places": "Places",
-		"editRent": "Edit rent"
+		"editRent": "Edit rent",
+		"addRent": "Add rent"
 	},
 	"occupancy": {
 		"selectClientClient": "Select client",
@@ -768,7 +770,8 @@
 		"manager": "manager",
 		"invitedToClient": "Invited %(date)s to be member of client:",
 		"invitedToGarage": "Invited %(date)s to be member of garage:",
-		"invitedToCar": "Invited %(date)s to be member of car:"
+		"invitedToCar": "Invited %(date)s to be member of car:",
+		"addUser": "Add user"
 	},
 	"datetimepicker": {
 		"today": "Today",
@@ -1113,7 +1116,7 @@
 		"longtermPrice": "Longterm price:",
 		"shorttermPrice": "Shortterm price:",
 		"removeReservations": "Remove reservations of removed places",
-		"generateInvoice": "EN: newContract.generateInvoice",
+		"generateInvoice": "Generate invoices",
 		"doNotRemoveReservations": "Try replacing reservations of removed places"
 	},
 	"finance": {

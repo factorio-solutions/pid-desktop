@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "PL: newReservation.selectCarLabel",
 		"smsTemplateLabel": "PL: newReservation.smsTemplateLabel",
-		"reservationOnPlace": "PL: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Wybrana lokalizacja jest już zajęta"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -322,6 +322,7 @@
 		"resendInvitation": "Wyślij ponownie",
 		"resendSuccessfull": "E-mail został wysłany.",
 		"userNotFound": "Nie znaleziono użytkownika.",
+		"addUser": "Dodaj użytkownika",
 		"timeCredit": "PL: clientUsers.timeCredit"
 	},
 	"reservations": {
@@ -397,7 +398,8 @@
 		"rentName": "Nazwa wynajmu",
 		"price": "Cena",
 		"places": "Miejsca",
-		"editRent": "Edytuj wynajem"
+		"editRent": "Edytuj wynajem",
+		"addRent": "Dodaj czynsz"
 	},
 	"occupancy": {
 		"selectClientClient": "Wybrać klienta",
@@ -768,7 +770,8 @@
 		"manager": "PL: users.manager",
 		"invitedToClient": "%(date)s zaproszony(-a) do uczestnictwa w:",
 		"invitedToGarage": "%(date)s zaproszony(-a) do garażu:",
-		"invitedToCar": "%(date)s zaproszony(-a) do auta:"
+		"invitedToCar": "%(date)s zaproszony(-a) do auta:",
+		"addUser": "Dodaj użytkownika"
 	},
 	"datetimepicker": {
 		"today": "Dzisiaj",

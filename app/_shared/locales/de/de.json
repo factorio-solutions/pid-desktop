@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Kunde",
 		"selectCarLabel": "DE: newReservation.selectCarLabel",
 		"smsTemplateLabel": "DE: newReservation.smsTemplateLabel",
-		"reservationOnPlace": "DE: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Der ausgewählte Parkplatz ist bereits belegt"
 	},
 	"clients": {
 		"name": "Name",
@@ -322,6 +322,7 @@
 		"resendInvitation": "E-Mail erneut senden",
 		"resendSuccessfull": "E-Mail wurde erfolgreich gesendet.",
 		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden.",
+		"addUser": "Einen Benutzer hinzufügen",
 		"timeCredit": "Zeit-Kredit"
 	},
 	"reservations": {
@@ -397,7 +398,8 @@
 		"rentName": "Name des Mietverhältnisses",
 		"price": "Preis (Platz pro Monat)",
 		"places": "Plätze",
-		"editRent": "Mietverhältnis bearbeiten"
+		"editRent": "Mietverhältnis bearbeiten",
+		"addRent": "Miete hinzufügen"
 	},
 	"occupancy": {
 		"selectClientClient": "Kunden auswählen",
@@ -768,7 +770,8 @@
 		"manager": "Manager",
 		"invitedToClient": "Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:",
 		"invitedToGarage": "Am %(date)s zur Mitgliedschaft beim Parkplatz eingeladen:",
-		"invitedToCar": "Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:"
+		"invitedToCar": "Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:",
+		"addUser": "Einen Benutzer hinzufügen"
 	},
 	"datetimepicker": {
 		"today": "Heute",
@@ -1112,8 +1115,8 @@
 		"shortterm": "Kurzzeit",
 		"longtermPrice": "Langfristiger Preis:",
 		"shorttermPrice": "Kurfristiger Preis:",
-		"removeReservations": "Die Buchung auf den entfernten Plätzen löschen.",
-		"generateInvoice": "DE: newContract.generateInvoice",
+		"removeReservations": "Die Buchungen auf den entfernten Plätzen löschen.",
+		"generateInvoice": "Rechnungen erstellen",
 		"doNotRemoveReservations": "Die Buchung auf den entfernten Plätzen verschieben."
 	},
 	"finance": {
