@@ -77,7 +77,7 @@ class GarageSetupFloorsPage extends Component {
       const handleFloorNameChange = value => actions.changeFloorLabel(value, index)
       const handleFloorFromChange = value => actions.changeFloorFrom(value, index)
       const handleFloorToChange = value => actions.changeFloorTo(value, index)
-      const fileSelector = () => document.getElementsByName(`floor${index}[file]`)[0].click()
+      const fileSelector = () => this.svgInput && this.svgInput.input && this.svgInput.input.click()
       const removeRow = () => actions.removeFloor(index)
 
       return (
@@ -126,6 +126,7 @@ class GarageSetupFloorsPage extends Component {
               accept=".svg"
               value=""
               readOnly={readOnly}
+              ref={ref => this.svgInput = ref}
             />
             { /* has to have empty value attribute, then onChange will fire on same file selected */ }
             {!readOnly && <LabeledRoundButton
