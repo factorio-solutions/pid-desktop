@@ -257,7 +257,7 @@ export function removeDiacritics() {
 
 export function isPlaceGoInternal(state) {
   const places = state.garage
-    ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], [])
+    ? state.garage.floors.reduce((acc, f) => [ ...acc, ...(f.places || f.free_places) ], [])
     : []
   const selectedPlace = places.findById(state.place_id)
   return state.garage
@@ -376,14 +376,16 @@ export function formatTo(loadGarage = false) {
 
     const MIN_RESERVATION_DURATION = state.minDuration
     const MAX_RESERVATION_DURATION = state.maxDuration
-    if (moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
-        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION
+    if (
+      moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+      && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < MIN_RESERVATION_DURATION
     ) {
       toValue = fromValue.clone().add(MIN_RESERVATION_DURATION, 'minutes')
     }
-    if (MAX_RESERVATION_DURATION
-        && moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
-        && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION
+    if (
+      MAX_RESERVATION_DURATION
+      && moment(state.to, MOMENT_DATETIME_FORMAT).isValid()
+      && moment(state.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') > MAX_RESERVATION_DURATION
     ) {
       toValue = fromValue.clone().add(MAX_RESERVATION_DURATION, 'minutes')
     }
@@ -442,10 +444,10 @@ export function setMinMaxDuration() {
 export function selectedClient() {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    return state.user
-      && state.client_id
-      && state.user.availableClients
-      && state.user.availableClients.findById(state.client_id)
+    return (state.user || state.user_id)
+    && state.client_id
+    && state.user.availableClients
+    && state.user.availableClients.findById(state.client_id)
   }
 }
 
