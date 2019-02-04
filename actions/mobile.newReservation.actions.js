@@ -11,9 +11,13 @@ import {
   toFifteenMinuteStep
 } from '../helpers/time'
 import { t } from '../modules/localization/localization'
-import { setError, setCustomModal, setGarage } from './mobile.header.actions'
+import {
+  setError, setCustomModal, setGarage as setMobileHeaderGarage
+} from './mobile.header.actions'
 
-import { GET_AVAILABLE_FLOORS, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
+import { isPlaceGoInternal, selectedClient } from './newReservation.actions'
+
+import { GET_GARAGE, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
 import {
   CREATE_RESERVATION,
   UPDATE_RESERVATION,
@@ -26,7 +30,6 @@ import { USER_AVAILABLE, ADD_CLIENT_USER } from '../queries/inviteUser.queries'
 import { CHECK_VALIDITY, CREATE_CSOB_PAYMENT } from '../queries/reservations.queries'
 import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
 import { entryPoint } from '../../index'
-
 
 export const MOBILE_NEW_RESERVATION_SET_FROM = 'MOBILE_NEW_RESERVATION_SET_FROM'
 export const MOBILE_NEW_RESERVATION_SET_TO = 'MOBILE_NEW_RESERVATION_SET_TO'
@@ -46,6 +49,9 @@ export const MOBILE_NEW_RESERVATION_SET_ALL = 'MOBILE_NEW_RESERVATION_SET_ALL'
 export const MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION = 'MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION'
 export const MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS = 'MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS'
 export const MOBILE_NEW_RESERVATION_SET_USER_ID = 'MOBILE_NEW_RESERVATION_SET_USER_ID'
+export const MOBILE_NEW_RESERVATION_SET_GARAGE = 'MOBILE_NEW_RESERVATION_SET_GARAGE'
+export const MOBILE_NEW_RESERVATION_SET_MIN_DURATION = 'MOBILE_NEW_RESERVATION_SET_MIN_DURATION'
+export const MOBILE_NEW_RESERVATION_SET_MAX_DURATION = 'MOBILE_NEW_RESERVATION_SET_MAX_DURATION'
 
 
 export const setAvailableCars = actionFactory(MOBILE_NEW_RESERVATION_AVAILABLE_CARS)
@@ -56,6 +62,10 @@ export const clearForm = actionFactory(MOBILE_NEW_RESERVATION_CLEAR_FORM)
 export const setReservationId = actionFactory(MOBILE_NEW_RESERVATION_SET_RESERVATION_ID)
 export const setGuestReservation = actionFactory(MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION)
 export const setAvailableUsers = actionFactory(MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS)
+export const setGarage = actionFactory(MOBILE_NEW_RESERVATION_SET_GARAGE)
+export const setMinDuration = actionFactory(MOBILE_NEW_RESERVATION_SET_MIN_DURATION)
+export const setMaxDuration = actionFactory(MOBILE_NEW_RESERVATION_SET_MAX_DURATION)
+
 
 export function setUserId(value) {
   return dispatch => {
@@ -67,13 +77,13 @@ export function setUserId(value) {
 
 export function setFrom(from) { // if time changed,
   return (dispatch, getState) => {
-    if (getState().mobileNewReservation.from !== from) {
+    if (getState().newReservation.from !== from) {
       dispatch({
         type:  MOBILE_NEW_RESERVATION_SET_FROM,
         value: roundTime(from)
       })
 
-      const state = getState().mobileNewReservation
+      const state = getState().newReservation
       if (!fromBeforeTo(from, state.to)) {
         dispatch(setDuration(AVAILABLE_DURATIONS[0]))
       }
@@ -88,11 +98,11 @@ export function setFrom(from) { // if time changed,
 
 export function setTo(to) {
   return (dispatch, getState) => {
-    const state = getState().mobileNewReservation
+    const state = getState().newReservation
 
     if (!fromBeforeTo(state.from || moment(), to)) {
       dispatch(setDuration(AVAILABLE_DURATIONS[0]))
-    } else if (getState().mobileNewReservation.to !== to) {
+    } else if (getState().newReservation.to !== to) {
       dispatch({
         type:  MOBILE_NEW_RESERVATION_SET_TO,
         value: roundTime(to)
@@ -117,12 +127,14 @@ export function setClientId(value) {
     })
     // no download clients
     dispatch(pickPlaces(true))
+    dispatch(formatTo())
+    dispatch(setMinMaxDuration())
   }
 }
 
 export function setAvailableClients(value) {
   return (dispatch, getState) => {
-    if (!getState().mobileNewReservation.guestReservation) {
+    if (!getState().newReservation.guestReservation) {
       value.unshift({ name: t([ 'mobileApp', 'newReservation', 'me' ]), id: undefined })
     }
     dispatch({
@@ -141,26 +153,62 @@ export function setFloors(floors, flexiplace) {
   }
 }
 
-export function setPlace(id) {
-  return dispatch => {
-    dispatch({
-      type:  MOBILE_NEW_RESERVATION_SET_PLACE_ID,
-      value: id
-    })
-    dispatch(setAutoselect(false))
+export function formatTo() {
+  return (dispatch, getState) => {
+    const {
+      from, to, minDuration, maxDuration, duration
+    } = getState().newReservation
+    const fromValue = from
+      ? moment(roundTime(from), MOMENT_DATETIME_FORMAT_MOBILE)
+      : moment(roundTime(moment()))
+
+    let toValue = to
+      ? moment(roundTime(to), MOMENT_DATETIME_FORMAT_MOBILE)
+      : fromValue.clone().add(duration, 'hours')
+    
+    const originalTo = toValue.clone()
+
+    if (
+      toValue.isValid()
+      && toValue.diff(fromValue, 'minutes') < minDuration
+    ) {
+      toValue = fromValue.clone().add(minDuration, 'minutes')
+    }
+    if (
+      maxDuration
+      && toValue.isValid()
+      && toValue.diff(fromValue, 'minutes') > maxDuration
+    ) {
+      toValue = fromValue.clone().add(maxDuration, 'minutes')
+    }
+
+    if (!toValue.isSame(originalTo)) {
+      dispatch({
+        type:  MOBILE_NEW_RESERVATION_SET_TO,
+        value: toValue.format(MOMENT_DATETIME_FORMAT_MOBILE)
+      })
+    }
   }
 }
 
 export function setMinMaxDuration() {
   return (dispatch, getState) => {
-    const state = getState().mobile.NewReservation
-    const isGoInternal = isPlaceGoInternal(state)
+    const {
+      from, to, garage, duration
+    } = getState().newReservation
+    const isGoInternal = isPlaceGoInternal(getState().newReservation)
     const client = dispatch(selectedClient())
 
-    const determineDuration = minOrMax => (state.garage && (isGoInternal
-      ? state.garage[`${minOrMax}_reservation_duration_go_internal`]
-      : state.garage[`${minOrMax}_reservation_duration_go_public`]))
+    const determineDuration = minOrMax => (
+      (
+        garage && (
+          isGoInternal
+            ? garage[`${minOrMax}_reservation_duration_go_internal`]
+            : garage[`${minOrMax}_reservation_duration_go_public`]
+        )
+      )
       || (client ? client[`${minOrMax}_reservation_duration`] : null)
+    )
 
     const minDuration = determineDuration('min')
     const maxDuration = determineDuration('max')
@@ -169,44 +217,60 @@ export function setMinMaxDuration() {
     dispatch(setMinDuration(minDuration))
     dispatch(setMaxDuration(maxDuration))
     // does reservation meet min/max boundaries
-    const diff = moment(state.to, MOMENT_DATETIME_FORMAT)
-      .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
+    let diff
+    if (duration) {
+      diff = duration * 60
+    } else {
+      diff = moment(to, MOMENT_DATETIME_FORMAT_MOBILE)
+        .diff(moment(from, MOMENT_DATETIME_FORMAT_MOBILE), 'minutes')
+    }
+
     if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
       dispatch(formatTo())
     }
   }
 }
 
-export function getAvailableClients() {
-  return (dispatch, getState) => {
-    const state = getState().mobileNewReservation
-    const { mobileHeader } = getState()
-
-    const onClients = response => {
-      const {
-        reservable_clients: reservableClients,
-        last_reservation_client: lastReservationClient
-      } = response.data
-      if (lastReservationClient) { // I see client from last reservation
-        const client = (
-          reservableClients.findById(lastReservationClient.id)
-        )
-        client
-        && !state.client_id
-        && state.client_id !== client.id
-        && dispatch(setClientId(client.id))
-      } else {
-        reservableClients.findById(state.client_id) === undefined
-        && state.client_id !== undefined
-        && dispatch(setClientId(undefined))
-      }
-      dispatch(setAvailableClients(reservableClients))
-    }
-
-    request(onClients, GET_AVAILABLE_CLIENTS, {
-      user_id:   state.guestReservation ? state.user_id : mobileHeader.current_user.id,
-      garage_id: mobileHeader.garage_id
+export function setPlace(id) {
+  return dispatch => {
+    dispatch({
+      type:  MOBILE_NEW_RESERVATION_SET_PLACE_ID,
+      value: id
     })
+    dispatch(setAutoselect(false))
+    dispatch(setMinMaxDuration())
+  }
+}
+
+export function getAvailableClients() {
+  return async (dispatch, getState) => {
+    const state = getState().newReservation
+    const { mobileHeader } = getState()
+    const {
+      reservable_clients: reservableClients,
+      last_reservation_client: lastReservationClient
+    } = await requestPromise(
+      GET_AVAILABLE_CLIENTS,
+      {
+        user_id:   state.guestReservation ? state.user_id : mobileHeader.current_user.id,
+        garage_id: mobileHeader.garage_id
+      }
+    )
+
+    if (lastReservationClient) { // I see client from last reservation
+      const client = (
+        reservableClients.findById(lastReservationClient.id)
+      )
+      client
+      && !state.client_id
+      && state.client_id !== client.id
+      && dispatch(setClientId(client.id))
+    } else {
+      reservableClients.findById(state.client_id) === undefined
+      && state.client_id !== null
+      && dispatch(setClientId(null))
+    }
+    dispatch(setAvailableClients(reservableClients))
   }
 }
 
@@ -216,7 +280,7 @@ export function getAvailableCars() {
       guestReservation,
       user_id: userId,
       car_id: carId
-    } = getState().mobileNewReservation
+    } = getState().newReservation
     const { current_user: currentUser } = getState().mobileHeader
     const id = guestReservation ? userId : currentUser && currentUser.id
 
@@ -225,11 +289,11 @@ export function getAvailableCars() {
         const { user: { reservable_cars: reservableCars } } = response.data
         dispatch(setAvailableCars(reservableCars))
         dispatch(setCustomModal())
-        if (carId !== undefined) { return }
+        if (carId !== null) { return }
         if (reservableCars.length === 1) {
           dispatch(setCarId(reservableCars[0].id))
         } else {
-          dispatch(setCarId(undefined))
+          dispatch(setCarId(null))
         }
       }
 
@@ -242,7 +306,7 @@ export function getAvailableCars() {
 
 export function getAvailableUsers() {
   return (dispatch, getState) => {
-    if (getState().mobileNewReservation.guestReservation) {
+    if (getState().newReservation.guestReservation) {
       const { garage_id: garageId, current_user: currentUser } = getState().mobileHeader
 
       requestPromise(
@@ -261,13 +325,13 @@ export function getAvailableUsers() {
 
 export function setDuration(duration) {
   return (dispatch, getState) => {
-    if (getState().mobileNewReservation.duration !== duration) {
+    if (getState().newReservation.duration !== duration) {
       dispatch({
         type:  MOBILE_NEW_RESERVATION_SET_DURATION,
         value: duration
       })
       // if set to undefined, then setTo is going to take care of pickPlaces
-      if (duration !== undefined) {
+      if (duration) {
         dispatch(pickPlaces())
       }
     }
@@ -279,7 +343,7 @@ export function downloadReservation(id) {
     const currentUserId = getState().mobileHeader.current_user.id
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     const { reservation } = await requestPromise(GET_RESERVATION, { id: parseInt(id, 10) })
-    dispatch(setGarage(reservation.place.floor.garage.id))
+    dispatch(setMobileHeaderGarage(reservation.place.floor.garage.id))
     if (reservation.user_id !== currentUserId) {
       dispatch(setUserId(reservation.user_id))
     }
@@ -289,7 +353,7 @@ export function downloadReservation(id) {
         user_id:   getState().mobileHeader.current_user.id,
         garage_id: reservation.place.floor.garage.id
       }),
-      requestPromise(GET_AVAILABLE_FLOORS, {
+      requestPromise(GET_GARAGE, {
         id:             reservation.place.floor.garage.id,
         begins_at:      reservation.begins_at,
         ends_at:        reservation.ends_at,
@@ -305,21 +369,21 @@ export function downloadReservation(id) {
       to:              moment(reservation.ends_at).format(MOMENT_DATETIME_FORMAT_MOBILE),
       // availableClients: client.reservable_clients,
       client_id:       reservation.client_id,
-      car_id:          !reservation.car.temporary ? reservation.car.id : undefined,
-      carLicencePlate: reservation.car.temporary
+      car_id:          reservation.car && !reservation.car.temporary ? reservation.car.id : null,
+      carLicencePlate: reservation.car && reservation.car.temporary
         ? reservation.car.licence_plate
-        : undefined,
-      availableFloors: garage.garage.floors,
-      place_id:        reservation.place.id,
-      fromNow:         false,
-      duration:        undefined,
-      autoselect:      false
+        : null,
+      garage:     garage.garage,
+      place_id:   reservation.place.id,
+      fromNow:    false,
+      duration:   null,
+      autoselect: false
     }
     if (reservation.user_id === currentUserId) {
       toSet = {
         ...toSet,
         availableCars: user.user.reservable_cars,
-        user_id:       undefined
+        user_id:       null
       }
     } else {
       dispatch(getAvailableUsers())
@@ -330,6 +394,7 @@ export function downloadReservation(id) {
       type: MOBILE_NEW_RESERVATION_SET_ALL,
       ...toSet
     })
+    dispatch(setMinMaxDuration())
     dispatch(setCustomModal())
   }
 }
@@ -338,7 +403,7 @@ export function initReservation(id) {
   return (dispatch, getState) => {
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (id) {
-      if (getState().mobileNewReservation.reservation_id !== parseInt(id, 10)) {
+      if (getState().newReservation.reservation_id !== parseInt(id, 10)) {
         dispatch(downloadReservation(id))
       } else {
         dispatch(setCustomModal())
@@ -365,7 +430,7 @@ export function fromBeforeTo(from, to) {
 }
 
 function stateToVariables(getState) {
-  const state = getState().mobileNewReservation
+  const state = getState().newReservation
   const from = state.fromNow ? timeToUTCmobile(roundTime(moment())) : timeToUTCmobile(state.from)
   const to = state.duration
     ? timeToUTCmobile(
@@ -388,59 +453,58 @@ function stateToVariables(getState) {
 
 export function autoselectPlace() {
   return (dispatch, getState) => {
-    const { mobileNewReservation } = getState()
-    const freePlaces = mobileNewReservation
+    const { newReservation } = getState()
+    const freePlaces = newReservation
       .availableFloors
       .reduce((arr, floor) => { // free places,
         return arr
           .concat(floor.free_places.filter(place => {
-            return mobileNewReservation.client_id === undefined ? place.pricing !== undefined : true
+            return newReservation.client_id === undefined ? place.pricing !== undefined : true
           }))
       }, [])
 
-    dispatch(setPlace(freePlaces.length === 0 ? undefined : freePlaces[0].id))
+    dispatch(setPlace(freePlaces.length === 0 ? null : freePlaces[0].id))
     dispatch(setAutoselect(true))
   }
 }
 
 export function pickPlaces(noClientDownload) {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
-      const { garage } = response.data
-      const { place_id: placeId } = getState().mobileNewReservation
-      dispatch(setFloors(garage.floors, garage.flexiplace))
-      dispatch(setCustomModal())
-
-      if (
-        !garage.floors.some(
-          floor => floor.free_places.find(place => place.id === placeId)
-        )
-      ) {
-        // autoselect place if selected place is not available anymore
-        dispatch(autoselectPlace())
-      }
-    }
-
+  return async (dispatch, getState) => {
     const variables = stateToVariables(getState)
-    const state = getState().mobileNewReservation
-    if (variables.garage_id) {
-      request(
-        onSuccess,
-        GET_AVAILABLE_FLOORS,
-        {
-          id:             variables.garage_id,
-          begins_at:      variables.begins_at,
-          ends_at:        variables.ends_at,
-          client_id:      variables.client_id,
-          user_id:        state.guestReservation ? state.user_id : null,
-          reservation_id: state.reservation_id
-        }
-      )
-      !noClientDownload && dispatch(getAvailableClients())
-    } else {
+    const state = getState().newReservation
+    if (!variables.garage_id) {
       dispatch(setFloors([]))
       dispatch(autoselectPlace())
       dispatch(setCustomModal())
+      return
+    }
+
+    !noClientDownload && dispatch(getAvailableClients())
+
+    const { garage } = await requestPromise(
+      GET_GARAGE,
+      {
+        id:             variables.garage_id,
+        begins_at:      variables.begins_at,
+        ends_at:        variables.ends_at,
+        client_id:      variables.client_id,
+        user_id:        state.guestReservation ? state.user_id : null,
+        reservation_id: state.reservation_id
+      }
+    )
+
+    const { place_id: placeId } = getState().newReservation
+    dispatch(setFloors(garage.floors, garage.flexiplace))
+    dispatch(setGarage(garage))
+    dispatch(setCustomModal())
+
+    if (
+      !garage.floors.some(
+        floor => floor.free_places.find(place => place.id === placeId)
+      )
+    ) {
+      // autoselect place if selected place is not available anymore
+      dispatch(autoselectPlace())
     }
   }
 }
@@ -457,7 +521,7 @@ export function checkGarageChange(garageId, nextGarageId) {
 
 export function paymentUnsucessfull(callback) {
   return dispatch => {
-    dispatch(setCustomModal(undefined))
+    dispatch(setCustomModal(null))
     dispatch(setError(t([ 'mobileApp', 'newReservation', 'paymentUnsucessfull' ])))
     dispatch(clearForm())
     callback()
@@ -466,7 +530,7 @@ export function paymentUnsucessfull(callback) {
 
 export function paymentSucessfull(callback) {
   return dispatch => {
-    dispatch(setCustomModal(undefined))
+    dispatch(setCustomModal(null))
     dispatch(clearForm())
     callback()
   }
@@ -534,7 +598,7 @@ export function submitReservation(callback) {
     }
 
     const reservation = stateToVariables(getState)
-    const state = getState().mobileNewReservation
+    const state = getState().newReservation
     dispatch(setCustomModal(
       state.reservation_id
         ? t([ 'mobileApp', 'newReservation', 'updatingReservation' ])
@@ -567,7 +631,7 @@ export function submitReservation(callback) {
 export function submitGuestReservation(callback) {
   return (dispatch, getState) => {
     const { newGuest } = getState()
-    const state = getState().mobileNewReservation
+    const state = getState().newReservation
     if (state.user_id === -1) {
       requestPromise(USER_AVAILABLE, {
         user: {

@@ -1,5 +1,5 @@
 // get available floors, mobile purposes
-export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_id: Id, $reservation_id: Id, $user_id: Id) {
+export const GET_GARAGE = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Datetime!, $client_id: Id, $reservation_id: Id, $user_id: Id) {
   garage(id: $id) {
     id
     min_reservation_duration_go_public
@@ -7,11 +7,14 @@ export const GET_AVAILABLE_FLOORS = `query ($id: Id!, $begins_at: Datetime!, $en
     min_reservation_duration_go_internal
     max_reservation_duration_go_internal
     flexiplace
+    has_payment_gate
     floors {
       label
       free_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id, reservation_id: $reservation_id, user_id: $user_id) {
         id
         label
+        priority
+        go_internal
         pricing{
           flat_price
           exponential_12h_price
