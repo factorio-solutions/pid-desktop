@@ -62,10 +62,10 @@ class NewReservationPage extends Component {
   handleBack = () => nav.to('/reservations')
 
   toOverview = () => {
-    const { state } = this.props
+    const { state, params, actions } = this.props
 
-    if (this.props.params.id) {
-      this.props.actions.submitReservation(+this.props.params.id)
+    if (params.id) {
+      actions.submitReservation(+params.id)
     } else if (
       !state.clientId
       || (
@@ -75,7 +75,7 @@ class NewReservationPage extends Component {
     ) {
       nav.to('/reservations/newReservation/overview')
     } else {
-      this.props.actions.submitReservation()
+      actions.submitReservation()
     }
   }
 
@@ -106,13 +106,24 @@ class NewReservationPage extends Component {
     } = this.props
 
     const ongoing = state.reservation && state.reservation.ongoing
-    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
+    const isSecretary = state.reservation
+    && state.reservation.client
+    && state.reservation.client.client_user.secretary
 
-    const errorContent = (<div className={styles.floatCenter}>
-      {t([ 'newReservation', 'fail' ])}: <br />
-      { state.error } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.modalClick} type="confirm" />
-    </div>)
+    const errorContent = (
+      <div className={styles.floatCenter}>
+        {t([ 'newReservation', 'fail' ])}
+        {': '}
+        <br />
+        {state.error}
+        <br />
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={this.modalClick}
+          type="confirm"
+        />
+      </div>
+    )
 
     return (
       <PageBase scrollbarVisible>
@@ -129,40 +140,51 @@ class NewReservationPage extends Component {
               >
                 <PickUserForm />
 
-                {state.user &&
-                  ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
-                  (state.name.valid && state.user.id === -2) ||
-                  state.user.id > 0) &&
-                  <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
+                {
+                  state.user
+                  && (
+                    (
+                      state.name.valid
+                      && state.email.valid
+                      && state.phone.valid
+                      && state.user.id === -1
+                    )
+                    || (state.name.valid && state.user.id === -2)
+                    || state.user.id > 0
+                  ) && (
+                    <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
 
-                    <GarageClientForm
-                      editable={!ongoing || isSecretary}
-                    />
+                      <GarageClientForm
+                        editable={!ongoing || isSecretary}
+                      />
 
-                    {state.garage &&
-                      <div>
-                        <DateTimeForm editable={!ongoing || isSecretary} />
+                      {state.garage && (
+                        <div>
+                          <DateTimeForm editable={!ongoing || isSecretary} />
 
-                        <PlaceForm freePlaces={freePlaces} />
-                      </div>
-                    }
-                  </SectionWithHeader>
+                          <PlaceForm freePlaces={freePlaces} />
+                        </div>
+                      )}
+                    </SectionWithHeader>
+                  )
                 }
-                {state.user && state.garage &&
+                {state.user && state.garage && (
                   <PriceSmsNote
                     accentRegex={ACCENT_REGEX}
                     selectedClient={selectedClient}
                     outOfTimeCredit={outOfTimeCredit}
                   />
-                }
+                )}
               </Form>
               {/* Has to be outside of Form tag because it contains Form */}
               <Recurring
                 show={state.showRecurring}
                 rule={state.recurringRule}
                 onSubmit={actions.setRecurringRule}
-                showDays={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
-                showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
+                showDays={moment(state.to, MOMENT_DATETIME_FORMAT)
+                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
+                showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT)
+                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
               />
             </div>
           </div>
@@ -190,7 +212,7 @@ class NewReservationPage extends Component {
 function mapStateToProps(state) {
   const {
     reservation,
-    client_id,
+    client_id: clientId,
     user,
     paidByHost,
     error,
@@ -211,7 +233,7 @@ function mapStateToProps(state) {
   return {
     state: {
       reservation,
-      client_id,
+      clientId,
       user,
       paidByHost,
       error,
