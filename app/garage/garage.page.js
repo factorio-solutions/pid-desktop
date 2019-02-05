@@ -35,73 +35,53 @@ class GaragePage extends Component {
 
   selectFactory = tab => () => this.props.actions.setSelected(tab)
 
-  tabFactory = tab => (<TabButton
-    label={t([ 'garages', tab ])}
-    onClick={this.selectFactory(tab)}
-    state={this.props.state.selected === tab && 'selected'}
-  />)
+  tabFactory = tab => (
+    <TabButton
+      label={t([ 'garages', tab ])}
+      onClick={this.selectFactory(tab)}
+      state={this.props.state.selected === tab && 'selected'}
+    />
+  )
 
-  render() {
-    const { state, actions } = this.props
+  preparePlaces = floor => {
+    const {
+      state: {
+        garage, time, selected
+      }
+    } = this.props
+    const newPlaces = floor.places.map(place => { // give places groups
+      const newPlace = { ...place }
+      const contracts = garage.contracts
+        .filter(contract => moment(time).isBetween(moment(contract.from), moment(contract.to)))
+        .filter(contract => contract.places.find(p => p.id === place.id) !== undefined)
+      const reservation = place.reservations[0]
 
-    const onDateSelectorClick = () => actions.setSelector(true)
-
-    const left = [ 'clients', 'contracts', 'reservations', 'prices', 'cars' ]
-    .map(this.tabFactory)
-    .concat(
-      <div className={styles.loading}>
-        <Loading show={state.loading} />
-      </div>
-    )
-
-    const right = [
-      <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
-      <div className={styles.inlineBlock}>
-        <TabButton label={t([ 'garages', 'setDate' ])} onDisabledClick={onDateSelectorClick} onClick={onDateSelectorClick} state={!state.now && 'selected'} />
-        <PopupDatetimepicker onSelect={actions.setTime} show={state.showSelector} flip okClick={() => actions.setSelector(false)} datetime={state.time} />
-      </div>
-    ]
-
-    const preparePlaces = floor => {
-      floor.places.map(place => { // give places groups
-        const contracts = state.garage.contracts
-          .filter(contract => moment(state.time).isBetween(moment(contract.from), moment(contract.to)))
-          .filter(contract => contract.places.find(p => p.id === place.id) !== undefined)
-        const reservation = place.reservations[0]
-
-        switch (state.selected) {
-          case 'clients':
-            place.group = contracts.length ? contracts
-              .map(contract => contract.client.id)
-              .filter((group, index, arr) => arr.indexOf(group) === index) : // unique values
-              undefined
-            break
-          case 'contracts':
-            place.group = contracts.length ? contracts
-              .map(contract => contract.id)
-              .filter((group, index, arr) => arr.indexOf(group) === index) :
-              undefined
-            break
-          case 'prices':
-            place.group = (place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent') || (place.pricing && place.pricing.id + 'price')
-            break
-          case 'cars':
-          case 'reservations':
-            place.group = reservation ? reservation.id : undefined
-            break
-        }
-        return place
-      })
-
-      floor.places.map(place => { // give places tooltips
-        const contracts = state.garage.contracts
-          .filter(contract => moment(state.time).isBetween(moment(contract.from), moment(contract.to)))
-          .filter(contract => contract.places.find(p => p.id === place.id) !== undefined)
-        const reservation = place.reservations[0]
-        const calculatePrice = price => valueAddedTax(price, state.garage.dic ? state.garage.vat : 0)
-        const assignedColors = state.garage && assignColorsToGroups(state.garage.floors)
-
-        place.tooltip = (<div className={styles.tooltip}>
+      switch (selected) {
+        case 'clients':
+          newPlace.group = contracts.length ? contracts
+            .map(contract => contract.client.id)
+            .filter((group, index, arr) => arr.indexOf(group) === index) : // unique values
+            undefined
+          break
+        case 'contracts':
+          newPlace.group = contracts.length ? contracts
+            .map(contract => contract.id)
+            .filter((group, index, arr) => arr.indexOf(group) === index) :
+            undefined
+          break
+        case 'prices':
+          newPlace.group = (place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent') || (place.pricing && place.pricing.id + 'price')
+          break
+        case 'cars':
+        case 'reservations':
+          newPlace.group = reservation ? reservation.id : undefined
+          break
+      }
+      // give places tooltips
+      const calculatePrice = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
+      const assignedColors = garage && assignColorsToGroups(garage.floors)
+      newPlace.tooltip = (
+        <div className={styles.tooltip}>
           <div>
             <table>
               <tbody>
@@ -120,7 +100,7 @@ class GaragePage extends Component {
                       .map(contract => contract.client)
                       .filter((client, index, arr) => arr.findIndexById(client.id) === index)
                       .map(client => [
-                        state.selected === 'clients' && <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[client.id] }} /></span>,
+                        selected === 'clients' && <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[client.id] }} /></span>,
                         <span>{client.name}</span>,
                         reservation && reservation.client && reservation.client.id === client.id && <span>({t([ 'reservations', 'host' ])})</span>,
                         <span>,</span>
@@ -145,7 +125,7 @@ class GaragePage extends Component {
                 </tr>
                 <tr>
                   <td>{t([ 'garages', 'contract' ])}</td>
-                  <td>{contracts.length > 0 && contracts.map(contract => [ state.selected === 'contracts' &&
+                  <td>{contracts.length > 0 && contracts.map(contract => [ selected === 'contracts' &&
                   <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[contract.id] }} /></span>,
                     <span>{contract.name},</span>
                   ])}</td>
@@ -154,21 +134,26 @@ class GaragePage extends Component {
             </table>
           </div>
 
-          {(place.contracts[0] || place.pricing) && <div className={styles.optional}>
+          {(place.contracts[0] || place.pricing) && (
+          <div className={styles.optional}>
             <table>
               <tbody>
                 <tr>
                   <td>{t([ 'garages', 'priceType' ])}</td>
                   <td>{place.contracts[0] ? t([ 'garages', 'longterm' ]) : place.pricing ? t([ 'garages', 'shortterm' ]) : ''}</td>
                 </tr>
-                {place.contracts[0] && place.contracts[0].rent && <tr>
+                {place.contracts[0] && place.contracts[0].rent && (
+                <tr>
                   <td>{t([ 'garages', 'pricePerSpot' ])}</td>
                   <td>{calculatePrice(place.contracts[0].rent.price) + ' ' + place.contracts[0].rent.currency.symbol}</td>
-                </tr>}
-                {!place.contracts[0] && place.pricing && place.pricing.flat_price && <tr>
-                  <td>{t([ 'garages', 'flatPrice' ])}</td>
-                  <td>{calculatePrice(place.pricing.flat_price) + ' ' + place.pricing.currency.symbol}</td>
-                </tr>}
+                </tr>
+                )}
+                {!place.contracts[0] && place.pricing && place.pricing.flat_price && (
+                  <tr>
+                    <td>{t([ 'garages', 'flatPrice' ])}</td>
+                    <td>{calculatePrice(place.pricing.flat_price) + ' ' + place.pricing.currency.symbol}</td>
+                  </tr>
+                )}
                 {!place.contracts[0] && place.pricing && place.pricing.exponential_12h_price && <tr>
                   <td>{t([ 'garages', '12HourPrice' ])}</td>
                   <td>{calculatePrice(place.pricing.exponential_12h_price) + ' ' + place.pricing.currency.symbol}</td>
@@ -191,17 +176,43 @@ class GaragePage extends Component {
                 </tr>}
               </tbody>
             </table>
-          </div>}
-        </div>)
-        return place
-      })
-      return floor
+          </div>
+        )}
+        </div>
+      )
+      return newPlace
+    })
+    return {
+      ...floor,
+      places: newPlaces
     }
+  }
+
+  render() {
+    const { state, actions } = this.props
+
+    const onDateSelectorClick = () => actions.setSelector(true)
+
+    const left = [ 'clients', 'contracts', 'reservations', 'prices', 'cars' ]
+      .map(this.tabFactory)
+      .concat(
+        <div className={styles.loading}>
+          <Loading show={state.loading} />
+        </div>
+      )
+
+    const right = [
+      <TabButton label={t([ 'garages', 'now' ])} onClick={actions.setNow} state={state.now && 'selected'} />,
+      <div className={styles.inlineBlock}>
+        <TabButton label={t([ 'garages', 'setDate' ])} onDisabledClick={onDateSelectorClick} onClick={onDateSelectorClick} state={!state.now && 'selected'} />
+        <PopupDatetimepicker onSelect={actions.setTime} show={state.showSelector} flip okClick={() => actions.setSelector(false)} datetime={state.time} />
+      </div>
+    ]
 
     return (
       <PageBase>
         <TabMenu left={left} right={right} />
-        <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors />
+        <GarageLayout floors={state.garage ? state.garage.floors.map(this.preparePlaces) : []} showEmptyFloors />
       </PageBase>
     )
   }
