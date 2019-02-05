@@ -11,7 +11,27 @@ import RoundButton from '../buttons/RoundButton'
 
 import styles from './GarageLayout.scss'
 
-const COLOR_PALETE = [ '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16' ]
+const COLOR_PALETE = [
+  '#803E75',
+  '#FF6800',
+  '#A6BDD7',
+  '#C10020',
+  '#CEA262',
+  '#817066',
+  '#007D34',
+  '#F6768E',
+  '#00538A',
+  '#FF7A5C',
+  '#53377A',
+  '#FF8E00',
+  '#B32851',
+  '#7F180D',
+  '#93AA00',
+  '#593315',
+  '#F13A13',
+  '#232C16'
+]
+
 const INIT_STATE = {
   content: '',
   mouseX:  0,
@@ -25,19 +45,6 @@ const GROUP_OFFSET_X = 20 // px
 const GROUP_OFFSET_Y = GROUP_OFFSET_X // px
 
 const IS_IE = detectIE()
-
-// floors:[
-//   { label: string...
-//     svg: string...
-//     places: [
-//       {label: string... , available: bool..., selected: bool... , tooltip: DOMelement..., group: string/number... }
-//     ]
-//   }
-// ]
-//
-// onPlaceClick: function... - what happens on place select
-// showEmptyFloors: bool... - floor with no available places will not be clickable
-
 
 class GarageLayout extends Component {
   static propTypes = {
@@ -232,20 +239,23 @@ class GarageLayout extends Component {
       })
   }
 
-  colorizeGroupedPlaces(currentSvg, assignColors, places) { // colorizes place with group with according colors
+  // colorizes place with group with according colors
+  colorizeGroupedPlaces(currentSvg, assignColors, places) {
     places
       .filter(place => place.group)
       .forEach(place => {
         const placeRect = currentSvg.getElementById('Place' + place.label)
         if (placeRect) {
-          if (!Array.isArray(place.group)) { // colorize Place rect
+          // colorize Place rect
+          if (!Array.isArray(place.group)) {
             place.group = [ place.group ]
           }
 
           if (place.group.length >= 5) { // render circle with count in it
             const center = this.calculateCenter(placeRect)
             const y = GROUP_OFFSET_Y * 2
-            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle') // circle for count
+            // circle for count
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
             circle.setAttribute('r', 18)
             circle.setAttribute('cx', center.x)
             circle.setAttribute('cy', center.y + y)
@@ -253,7 +263,8 @@ class GarageLayout extends Component {
             circle.classList.add('groupCircle')
             circle.classList.add(styles.text)
             placeRect.parentNode.appendChild(circle)
-            const count = document.createElementNS('http://www.w3.org/2000/svg', 'text') // text with count
+            // text with count
+            const count = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             count.setAttribute('x', center.x)
             count.setAttribute('y', center.y + y)
             count.setAttribute('class', `${styles.gvText} ${styles.text} groupCircle`)
@@ -294,13 +305,19 @@ class GarageLayout extends Component {
   colorizeHeatPlaces(currentSvg, floors) {
     const heatGroups = floors
       .reduce((acc, floor) => [ ...acc, ...(floor.places || []) ], [])
-      .reduce((groups, place) => (place.heat !== undefined ? [ ...groups, place.heat ] : groups), [])
+      .reduce((groups, place) => (
+        place.heat !== undefined
+          ? [ ...groups, place.heat ]
+          : groups
+      ), [])
 
     if (heatGroups && heatGroups.length) {
       const min = Math.min(...heatGroups)
       const max = Math.max(...heatGroups)
 
-      const floorOfCurrentSvg = floors.find(floor => currentSvg.parentElement.classList.contains(`id-${floor.id}`))
+      const floorOfCurrentSvg = floors.find(floor => (
+        currentSvg.parentElement.classList.contains(`id-${floor.id}`)
+      ))
       const places = floorOfCurrentSvg ? floorOfCurrentSvg.places : []
       places
         .filter(place => place.heat)
@@ -319,23 +336,44 @@ class GarageLayout extends Component {
       .forEach(place => {
         const placeRect = currentSvg.getElementById('Place' + place.label)
         if (placeRect) {
-          placeRect.onmouseenter = () => this.setState({ ...this.state, visible: place.tooltip && true, content: place.tooltip })
-          placeRect.onmouseleave = () => this.setState({ ...this.state, visible: false })
+          placeRect.onmouseenter = () => this.setState(state => ({
+            ...state,
+            visible: place.tooltip && true,
+            content: place.tooltip
+          }))
+          placeRect.onmouseleave = () => this.setState(state => ({
+            ...state,
+            visible: false
+          }))
           placeRect.onmousemove = event => {
-            const secondaryMenuCorrection = window.innerWidth > 1300 && (window.location.hash.includes('/admin/') || window.location.hash.includes('/analytics/'))
-            this.setState({
-              ...this.state,
-              mouseX: event.clientX - (this.props.showSecondaryMenu || secondaryMenuCorrection ? 200 : 0) + 20,
+            const secondaryMenuCorrection = (
+              window.innerWidth > 1300
+              && (
+                window.location.hash.includes('/admin/')
+                || window.location.hash.includes('/analytics/')
+              )
+            )
+
+            this.setState(state => ({
+              ...state,
+              mouseX: (
+                event.clientX
+                - (this.props.showSecondaryMenu || secondaryMenuCorrection ? 200 : 0)
+                + 20
+              ),
               mouseY: event.clientY
-            })
+            }))
           }
         }
       })
   }
 
-  scanPlacesAddLabels() { // add labels to all places
-    const elements = Array.from(document.getElementsByTagName('svg')) // go trough all svgs - can be multiple on page)
-    // const elements = document.getElementsByClassName('svgFromText') // go trough all svgs - can be multiple on page
+  // add labels to all places
+  scanPlacesAddLabels() {
+    // go trough all svgs - can be multiple on page)
+    const elements = Array.from(document.getElementsByTagName('svg'))
+    // go trough all svgs - can be multiple on page
+    // const elements = document.getElementsByClassName('svgFromText')
 
     elements.forEach((currentSvg, i) => {
       const gControl = currentSvg.getElementById('Gcontrol')
@@ -490,7 +528,6 @@ export function assignColorsToGroups(floors) {
     ], [])
     // unique values
     .filter((group, index, arr) => arr.indexOf(group) === index)
-    // .sort((a, b) => a - b)
 
   const colors = COLOR_PALETE.length >= uniqueGroups.length
     ? COLOR_PALETE.slice(0, uniqueGroups.length)
