@@ -4,16 +4,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
 
-import PageBase                               from '../_shared/containers/pageBase/PageBase'
-import TabMenu                                from '../_shared/components/tabMenu/TabMenu'
-import TabButton                              from '../_shared/components/buttons/TabButton'
-import PopupDatetimepicker                    from '../_shared/components/datetimepicker/PopupDatetimepicker'
-import GarageLayout, { assignColorsToGroups } from '../_shared/components/garageLayout/GarageLayout'
-import Loading                                from '../_shared/components/loading/Loading'
+import PageBase            from '../_shared/containers/pageBase/PageBase'
+import TabMenu             from '../_shared/components/tabMenu/TabMenu'
+import TabButton           from '../_shared/components/buttons/TabButton'
+import PopupDatetimepicker from '../_shared/components/datetimepicker/PopupDatetimepicker'
+import GarageLayout        from '../_shared/components/garageLayout/GarageLayout'
+import Loading             from '../_shared/components/loading/Loading'
+import GaragePlaceTooltip  from './garage.placeTooltip'
 
 import { t }              from '../_shared/modules/localization/localization'
 import * as garageActions from '../_shared/actions/garage.actions'
-import { valueAddedTax }  from '../_shared/helpers/calculatePrice'
 
 import styles from './garage.page.scss'
 
@@ -58,127 +58,42 @@ class GaragePage extends Component {
 
       switch (selected) {
         case 'clients':
-          newPlace.group = contracts.length ? contracts
-            .map(contract => contract.client.id)
-            .filter((group, index, arr) => arr.indexOf(group) === index) : // unique values
-            undefined
+          newPlace.group = contracts.length
+            ? contracts
+              .map(contract => contract.client.id)
+              .filter((group, index, arr) => arr.indexOf(group) === index) // unique values
+            : undefined
           break
         case 'contracts':
-          newPlace.group = contracts.length ? contracts
-            .map(contract => contract.id)
-            .filter((group, index, arr) => arr.indexOf(group) === index) :
-            undefined
+          newPlace.group = contracts.length
+            ? contracts
+              .map(contract => contract.id)
+              .filter((group, index, arr) => arr.indexOf(group) === index)
+            : undefined
           break
         case 'prices':
-          newPlace.group = (place.contracts[0] && place.contracts[0].rent && place.contracts[0].rent.id + 'rent') || (place.pricing && place.pricing.id + 'price')
+          newPlace.group = (
+            (
+              place.contracts[0]
+              && place.contracts[0].rent
+              && place.contracts[0].rent.id + 'rent'
+            )
+            || (place.pricing && place.pricing.id + 'price')
+          )
           break
         case 'cars':
         case 'reservations':
           newPlace.group = reservation ? reservation.id : undefined
           break
       }
-      // give places tooltips
-      const calculatePrice = price => valueAddedTax(price, garage.dic ? garage.vat : 0)
-      const assignedColors = garage && assignColorsToGroups(garage.floors)
       newPlace.tooltip = (
-        <div className={styles.tooltip}>
-          <div>
-            <table>
-              <tbody>
-                <tr>
-                  <td>{t([ 'garages', 'reservationId' ])}</td>
-                  <td>{reservation && reservation.id}</td>
-                </tr>
-                <tr>
-                  <td>{t([ 'garages', 'driver' ])}</td>
-                  <td>{reservation && reservation.user && reservation.user.full_name}</td>
-                </tr>
-                <tr>
-                  <td>{t([ 'garages', 'client' ])}</td>
-                  <td>
-                    {contracts.length > 0 && contracts
-                      .map(contract => contract.client)
-                      .filter((client, index, arr) => arr.findIndexById(client.id) === index)
-                      .map(client => [
-                        selected === 'clients' && <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[client.id] }} /></span>,
-                        <span>{client.name}</span>,
-                        reservation && reservation.client && reservation.client.id === client.id && <span>({t([ 'reservations', 'host' ])})</span>,
-                        <span>,</span>
-                      ].filter(o => o))
-                    }
-                    {reservation && !reservation.client && `(${t([ 'reservations', 'visitor' ])})`}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{t([ 'garages', 'period' ])}</td>
-                  <td className={styles.flex}>
-                    {reservation && [
-                      <div>{moment(reservation.begins_at).format('DD.MM.YYYY')} <br /> {moment(reservation.begins_at).format('HH:mm')}</div>,
-                      <div className={styles.dash}>-</div>,
-                      <div>{moment(reservation.ends_at).format('DD.MM.YYYY')} <br /> {moment(reservation.ends_at).format('HH:mm')}</div>
-                    ]}
-                  </td>
-                </tr>
-                <tr>
-                  <td>{t([ 'garages', 'licencePlate' ])}</td>
-                  <td>{reservation && reservation.car && reservation.car.licence_plate}</td>
-                </tr>
-                <tr>
-                  <td>{t([ 'garages', 'contract' ])}</td>
-                  <td>{contracts.length > 0 && contracts.map(contract => [ selected === 'contracts' &&
-                  <span className={styles.circle}><i className="fa fa-circle" aria-hidden="true" style={{ color: assignedColors[contract.id] }} /></span>,
-                    <span>{contract.name},</span>
-                  ])}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {(place.contracts[0] || place.pricing) && (
-          <div className={styles.optional}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>{t([ 'garages', 'priceType' ])}</td>
-                  <td>{place.contracts[0] ? t([ 'garages', 'longterm' ]) : place.pricing ? t([ 'garages', 'shortterm' ]) : ''}</td>
-                </tr>
-                {place.contracts[0] && place.contracts[0].rent && (
-                <tr>
-                  <td>{t([ 'garages', 'pricePerSpot' ])}</td>
-                  <td>{calculatePrice(place.contracts[0].rent.price) + ' ' + place.contracts[0].rent.currency.symbol}</td>
-                </tr>
-                )}
-                {!place.contracts[0] && place.pricing && place.pricing.flat_price && (
-                  <tr>
-                    <td>{t([ 'garages', 'flatPrice' ])}</td>
-                    <td>{calculatePrice(place.pricing.flat_price) + ' ' + place.pricing.currency.symbol}</td>
-                  </tr>
-                )}
-                {!place.contracts[0] && place.pricing && place.pricing.exponential_12h_price && <tr>
-                  <td>{t([ 'garages', '12HourPrice' ])}</td>
-                  <td>{calculatePrice(place.pricing.exponential_12h_price) + ' ' + place.pricing.currency.symbol}</td>
-                </tr>}
-                {!place.contracts[0] && place.pricing && place.pricing.exponential_day_price && <tr>
-                  <td>{t([ 'garages', 'dayPrice' ])}</td>
-                  <td>{calculatePrice(place.pricing.exponential_day_price) + ' ' + place.pricing.currency.symbol}</td>
-                </tr>}
-                {!place.contracts[0] && place.pricing && place.pricing.exponential_week_price && <tr>
-                  <td>{t([ 'garages', 'weekPrice' ])}</td>
-                  <td>{calculatePrice(place.pricing.exponential_week_price) + ' ' + place.pricing.currency.symbol}</td>
-                </tr>}
-                {!place.contracts[0] && place.pricing && place.pricing.exponential_month_price && <tr>
-                  <td>{t([ 'garages', 'monthPrice' ])}</td>
-                  <td>{calculatePrice(place.pricing.exponential_month_price) + ' ' + place.pricing.currency.symbol}</td>
-                </tr>}
-                {!place.contracts[0] && place.pricing && place.pricing.weekend_price && <tr>
-                  <td>{t([ 'garages', 'weekendPrice' ])}</td>
-                  <td>{calculatePrice(place.pricing.weekend_price) + ' ' + place.pricing.currency.symbol}</td>
-                </tr>}
-              </tbody>
-            </table>
-          </div>
-        )}
-        </div>
+        <GaragePlaceTooltip
+          garage={garage}
+          place={place}
+          reservation={reservation}
+          contracts={contracts}
+          selected={selected}
+        />
       )
       return newPlace
     })
