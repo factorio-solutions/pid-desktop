@@ -67,9 +67,11 @@ class NewReservationPage extends Component {
     if (this.props.params.id) {
       this.props.actions.submitReservation(+this.props.params.id)
     } else if (
-      !state.client_id ||
-      (state.paidByHost &&
-        (state.user && state.user.id) === (state.current_user && state.current_user.id))
+      !state.clientId
+      || (
+        state.paidByHost
+        && (state.user && state.user.id) === (state.currentUser && state.currentUser.id)
+      )
     ) {
       nav.to('/reservations/newReservation/overview')
     } else {
@@ -167,12 +169,15 @@ class NewReservationPage extends Component {
 
           <div className={styles.rightCollumn}>
             <div className={!state.showMap && styles.displayNone}>
-              {state.loading ?
-                <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
-                <GarageLayout
-                  floors={floors}
-                  onPlaceClick={this.handlePlaceClick}
-                />
+              {state.loading
+                ? <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div>
+                : (
+                  <GarageLayout
+                    floors={floors}
+                    placeId={state.placeId}
+                    onPlaceClick={this.handlePlaceClick}
+                  />
+                )
               }
             </div>
           </div>
@@ -198,9 +203,10 @@ function mapStateToProps(state) {
     from,
     to,
     showMap,
-    loading
+    loading,
+    place_id: placeId
   } = state.newReservation
-  const { current_user } = state.pageBase
+  const { current_user: currentUser } = state.pageBase
 
   return {
     state: {
@@ -219,7 +225,8 @@ function mapStateToProps(state) {
       to,
       showMap,
       loading,
-      current_user
+      currentUser,
+      placeId
     },
     isSubmittable:   getIsSubmittable(state),
     freePlaces:      getFreePlaces(state),
