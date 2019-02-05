@@ -383,7 +383,8 @@ class GarageLayout extends Component {
   }
 
   prepareButtons = (floor, index) => {
-    const { floor: stateFloor, showEmptyFloors } = this.state
+    const { floor: stateFloor } = this.state
+    const { showEmptyFloors } = this.props
     const onFloorClick = () => this.setState(state => ({ ...state, floor: index }))
     return (
       <RoundButton
