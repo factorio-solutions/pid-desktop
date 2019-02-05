@@ -215,9 +215,9 @@ export function loadGarage(id) {
         to:         timeToUTC(state.from.clone().add(1, state.duration)),
         client_ids: state.client_ids
       })
+      dispatch(loadClients(data.garage.clients))
       dispatch(batchActions([
         setGarage(updateGarage(data.garage)),
-        loadClients(data.garage.clients),
         setRefetching(false)
       ], 'OCCUPANCY_LOAD_GARAGE'))
     }
