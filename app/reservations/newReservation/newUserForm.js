@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Input        from '../../_shared/components/input/Input'
 import PatternInput from '../../_shared/components/input/PatternInput'
-import RoundButton  from '../../_shared/components/buttons/RoundButton'
+import CallToActionButton  from '../../_shared/components/buttons/CallToActionButton'
 
 
 import {
@@ -22,17 +23,18 @@ import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
 import {
   languagesSelector,
   searchField,
-  resetButton
+  actionButton
 } from '../newReservation.page.scss'
 
+import reservationStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class NewUserForm extends Component {
   static propTypes = {
-    state:     PropTypes.object,
-    actions:   PropTypes.object,
-    editable:  PropTypes.bool,
-    onetime:   PropTypes.bool,
-    clearForm: PropTypes.func
+    state:       PropTypes.object,
+    actions:     PropTypes.object,
+    editable:    PropTypes.bool,
+    onetime:     PropTypes.bool,
+    resetButton: PropTypes.func
   }
 
   hostEmailMandatoryCondition = () => {
@@ -48,55 +50,51 @@ class NewUserForm extends Component {
   renderLanguageButton = lang => {
     const { state, actions, onetime } = this.props
     const selectLanguage = state.user.language ? state.user.language : state.language
-    return (<RoundButton
+    return (<CallToActionButton
       state={(selectLanguage === lang && 'selected') || ((onetime || state.user.language) && 'disabled')}
-      content={lang.toUpperCase()}
+      label={lang.toUpperCase()}
       onClick={() => actions.setLanguage(lang)}
-      type="action"
+      type="reservationLangWith"
     />)
   }
 
   render() {
-    const { state, actions, editable, onetime, clearForm } = this.props
+    const { state, actions, editable, onetime, resetButton } = this.props
+
+    let userType
+
+    if (state.user.id === -1) {
+      if (state.user.rights.internal) {
+        userType = 'internal'
+      } else {
+        userType = 'host'
+      }
+    } else {
+      userType = 'visitor'
+    }
+
     return (
       <div>
         <div className={searchField}>
-          <span
-            className={resetButton}
-            onClick={clearForm}
-          >
-            <i className="fa fa-times-circle" aria-hidden="true" />
-          </span>
+          {resetButton}
           <PatternInput
             readOnly={!onetime && (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
-            label={`${t([
-              'newReservation',
-              state.user.id === -1
-                ? state.user.rights.internal
-                  ? 'internalsName'
-                  : 'hostsName'
-                : 'visitorsName'
-            ])} *`}
+            label={`${t([ 'newReservation', `${userType}sName` ])} *`}
             error={t([ 'signup_page', 'nameInvalid' ])}
             pattern="^(?!\s*$).+"
             value={state.name.value}
             highlight={state.highlight}
             align="left"
+            style={reservationStyles}
+            placeholder={t([ 'newReservation', 'namePlaceholder' ])}
           />
         </div>
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
           label={`
-            ${t([
-              'newReservation',
-              state.user.id === -1
-                ? state.user.rights.internal
-                  ? 'internalsEmail'
-                  : 'hostsEmail'
-                : 'visitorsEmail'
-            ])}
+            ${t([ 'newReservation', `${userType}sEmail` ])}
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
@@ -105,19 +103,14 @@ class NewUserForm extends Component {
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"
           normalizeInput={normalizeEmail}
+          style={reservationStyles}
+          placeholder={t([ 'newReservation', 'emailPlaceholder' ])}
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostPhone}
           label={`
-            ${t([
-              'newReservation',
-              state.user.id === -1
-                ? state.user.rights.internal
-                  ? 'internalsPhone'
-                  : 'hostsPhone'
-                : 'visitorsPhone'
-            ])}
+            ${t([ 'newReservation', `${userType}sPhone` ])}
             ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
@@ -125,6 +118,8 @@ class NewUserForm extends Component {
           value={state.phone.value}
           highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
+          style={reservationStyles}
+          placeholder={t([ 'newReservation', 'phonePlaceholder' ])}
         />
         <Input
           readOnly={!editable}
@@ -135,8 +130,9 @@ class NewUserForm extends Component {
           placeholder={t([ 'newReservation', 'licencePlatePlaceholder' ])}
           type="text"
           align="left"
+          style={reservationStyles}
         />
-        <div className={languagesSelector}>
+        <div className={`${languagesSelector} ${actionButton}`}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
           {AVAILABLE_LANGUAGES.map(this.renderLanguageButton)}
         </div>

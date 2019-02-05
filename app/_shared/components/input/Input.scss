@@ -236,6 +236,16 @@ $placeholder-delay:            .1s;
   }
 }
 
+.reservation {
+  background-color: $inputsBackGround;
+  color:            $black;
+  border-radius:    5px;
+
+  >input{
+    min-height: 1.7em;
+  }
+}
+
 .highlighted {
   >input {
     border-bottom: 1px solid $red;

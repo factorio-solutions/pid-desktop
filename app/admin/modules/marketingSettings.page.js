@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import ModulesPageBase    from './components/modulesPageBase'
 import Form               from '../../_shared/components/form/Form'
@@ -71,7 +72,7 @@ class MarketingSettingsPage extends Component {
         <div className={styles.imageRow} key={index}>
           <div className={styles.tag}>
             <Dropdown
-              label={t([ 'newMarketing', 'selectTag' ])}
+              placeholder={t([ 'newMarketing', 'selectTag' ])}
               content={imageTags.map(prepareTags)}
               style="light"
               selected={imageTags.findIndex(tag => tag === image.tag)}

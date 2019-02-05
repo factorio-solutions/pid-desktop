@@ -1,4 +1,4 @@
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
 import { clearForm } from './newReservation.actions'
@@ -14,10 +14,12 @@ import { fetchGarages, setError } from './pageBase.actions'
 export const SET_GARAGE_USERS = 'SET_GARAGE_USERS'
 export const SET_GARAGE_PENDING_USERS = 'SET_GARAGE_PENDING_USERS'
 export const SET_GARAGE_USER_GARAGE = 'SET_GARAGE_USER_GARAGE'
+export const SET_GARAGE_USERS_SELECTED_ID = 'SET_GARAGE_USERS_SELECTED_ID'
 
 export const setGarageUsersUsers = actionFactory(SET_GARAGE_USERS)
 export const setGarageUsersPendingUsers = actionFactory(SET_GARAGE_PENDING_USERS)
 export const setGarageUsersGarage = actionFactory(SET_GARAGE_USER_GARAGE)
+export const setSelectedId = actionFactory(SET_GARAGE_USERS_SELECTED_ID)
 
 
 export function initGarageUsers(garageId) {

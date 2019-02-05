@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from './Button.js'
@@ -29,11 +30,14 @@ export default function RoundButton(props) {
 }
 
 RoundButton.propTypes = {
-  content:         React.PropTypes.object,
-  onClick:         React.PropTypes.func,
-  onDisabledClick: React.PropTypes.func,
-  type:            React.PropTypes.string,
-  state:           React.PropTypes.string,
-  size:            React.PropTypes.string,
-  question:        React.PropTypes.string
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
+  onClick:         PropTypes.func,
+  onDisabledClick: PropTypes.func,
+  type:            PropTypes.string,
+  state:           PropTypes.string,
+  size:            PropTypes.string,
+  question:        PropTypes.string
 }

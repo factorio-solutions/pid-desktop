@@ -1,6 +1,6 @@
 import { UPDATE_GARAGE, GET_GARAGE_DOCUMENTS } from '../queries/legalDocuments.queries'
 
-import { request }      from '../helpers/request'
+import request      from '../helpers/request'
 import actionFactory    from '../helpers/actionFactory'
 import { getLanguage }  from '../modules/localization/localization'
 

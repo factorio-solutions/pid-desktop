@@ -11,8 +11,8 @@ export const GET_AVAILABLE_USERS = `{
 `
 
 // get available garages for this reservation form
-export const GET_AVAILABLE_GARAGES = `query Query($user_id: Id) {
-  reservable_garages(user_id: $user_id) {
+export const GET_AVAILABLE_GARAGES = `query Query($user_id: Id, $reservation_id: Id) {
+  reservable_garages(user_id: $user_id, reservation_id: $reservation_id) {
     id
     name
   }
@@ -20,8 +20,8 @@ export const GET_AVAILABLE_GARAGES = `query Query($user_id: Id) {
 `
 
 // get available garages for this reservation form
-export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) {
-  reservable_clients(user_id: $user_id, garage_id: $garage_id) {
+export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id, $reservation_id: Id) {
+  reservable_clients(user_id: $user_id, garage_id: $garage_id, reservation_id: $reservation_id) {
     id
     name
     has_sms_api_token
@@ -36,7 +36,11 @@ export const GET_AVAILABLE_CLIENTS = `query Query($user_id: Id, $garage_id: Id) 
     time_credit_currency
     min_reservation_duration
     max_reservation_duration
+    is_time_credit_active
+    time_credit_price
+    time_credit_currency
     sms_templates {
+      id
       name
       template
     }
@@ -159,8 +163,27 @@ export const GET_GARAGE_FREE_INTERVAL = `query ($id: Id!, $begins_at: Datetime!,
 // create reservation mutation
 export const CREATE_RESERVATION = `mutation createReservation($reservation: ReservationInput!) {
   create_reservation(reservation: $reservation) {
-    id
-    payment_url
+    reservation {
+      id
+      payment_url
+    }
+    errors {
+      message
+    }
+  }
+}
+`
+
+// create reservation mutation
+export const CREATE_RESERVATION_NEW = `mutation createReservation($reservation: ReservationInput!) {
+  create_reservation_new(reservation: $reservation) {
+    reservation {
+      id
+      payment_url
+    }
+    errors {
+      message
+    }
   }
 }
 `
@@ -168,18 +191,28 @@ export const CREATE_RESERVATION = `mutation createReservation($reservation: Rese
 // update reservation mutation
 export const UPDATE_RESERVATION = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
   update_reservation(reservation: $reservation, id: $id) {
-    id
+    reservation {
+      id
+    }
+    errors {
+      message
+    }
   }
 }
 `
 
-// export const PAY_RESREVATION = `mutation PaypalPayReservation ($token:String, $id:Id) {
-// 	paypal_pay_reservation(token: $token, id: $id) {
-// 		id
-//     approved
-// 	}
-// }`
-
+// update reservation mutation
+export const UPDATE_RESERVATION_NEW = `mutation updateReservation($reservation: ReservationInput!, $id:Id!) {
+  update_reservation_new(reservation: $reservation, id: $id) {
+    reservation {
+      id
+    }
+    errors {
+      message
+    }
+  }
+}
+`
 
 // get reservation details
 export const GET_RESERVATION = `query getReservation($id: Id!) {

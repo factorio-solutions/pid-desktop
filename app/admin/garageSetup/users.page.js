@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import GarageSetupPage          from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Table                    from '../../_shared/components/table/Table'
@@ -32,6 +33,15 @@ class GarageUsersPage extends Component {
   componentWillReceiveProps(nextProps) { // load garage if id changed
     if (nextProps.pageBase.garage !== this.props.pageBase.garage) {
       nextProps.pageBase.garage && this.props.actions.initGarageUsers(nextProps.pageBase.garage)
+    }
+  }
+
+  onRowSelect = data => {
+    const { actions } = this.props
+    if (data) {
+      actions.setSelectedId(data.id)
+    } else {
+      actions.setSelectedId(undefined)
     }
   }
 
@@ -73,46 +83,72 @@ class GarageUsersPage extends Component {
         actions.destroyGarageUser(pageBase.garage, garage_user.user.id)
       }
 
-      const adminClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { admin: !garage_user.admin })
-      }
-      const managerClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { manager: !garage_user.manager })
-      }
-      const receptionistClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { receptionist: !garage_user.receptionist })
-      }
-      const securityClick = () => {
-        actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { security: !garage_user.security })
+      const roles = [ 'admin', 'manager', 'receptionist', 'security' ]
+
+      const mapRoleButtons = role => {
+        const onClick = () => {
+          actions.setGarageUserRelation(pageBase.garage, garage_user.user.id, { [role]: !garage_user[role] })
+        }
+
+        return (
+          <span
+            className={garage_user[role] ? styles.boldText : styles.inactiveText}
+            onClick={onClick}
+            role="button"
+            tabIndex="0"
+          >
+            {t([ 'garageUsers', role ])}
+          </span>
+        )
       }
 
-      return (<div className={styles.spoiler}>
-        <div className={styles.devider}>
-          <span className={garage_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'garageUsers', 'admin' ])}</span>|
-          <span className={garage_user.manager ? styles.boldText : styles.inactiveText} onClick={managerClick}>{t([ 'garageUsers', 'manager' ])}</span>|
-          <span className={`${garage_user.receptionist ? styles.boldText : styles.inactiveText}`} onClick={receptionistClick}>{t([ 'garageUsers', 'receptionist' ])}</span>|
-          <span className={`${garage_user.security ? styles.boldText : styles.inactiveText}`} onClick={securityClick}>{t([ 'garageUsers', 'security' ])}</span>
+      return (
+        <div className={styles.spoiler}>
+          <div className={styles.devider}>
+            {
+              roles.map(mapRoleButtons)
+                   .reduce((acc, value) => {
+                     return acc === null ? [ value ] : [ ...acc, '|', value ]
+                   }, null)
+            }
+          </div>
+          <div className={styles.float}>
+            <LabeledRoundButton
+              label={t([ 'garageUsers', 'removeUser' ])}
+              content={<span className="fa fa-times" aria-hidden="true" />}
+              onClick={destroyClick}
+              type="remove"
+              question={t([ 'garageUsers', 'removeGarageUser' ])}
+              state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'}
+            />
+          </div>
         </div>
-        <div className={styles.float}>
-          <LabeledRoundButton label={t([ 'garageUsers', 'removeUser' ])} content={<span className="fa fa-times" aria-hidden="true" />} onClick={destroyClick} type="remove" question={t([ 'garageUsers', 'removeGarageUser' ])} state={((pageBase.current_user.id !== garage_user.user.id && isGarageAdmin) || garage_user.admin) && 'disabled'} />
-        </div>
-      </div>
       )
     }
 
     const data = state.users.sort((a, b) => { return a.user.id - b.user.id }).map(garage_user => { // sort - data order has to stay the same
-      const { full_name, email, phone } = garage_user.user
-      return { full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
+      const { id, full_name, email, phone } = garage_user.user
+      return { id, full_name, email, phone, created_at: garage_user.created_at, spoiler: renderSpoiler(garage_user) }
     })
 
     return (
       <GarageSetupPage>
-        <Table schema={schema} data={data} />
+        <Table
+          schema={schema}
+          data={data}
+          onRowSelect={this.onRowSelect}
+          selectId={state.selectedId}
+        />
 
-        { state.pending_users.length > 0 && <div>
-          <h2>{t([ 'garageUsers', 'pendingUsers' ])}</h2>
-          <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
-        </div> }
+        { state.pending_users.length > 0 &&
+          <div>
+            <h2>{t([ 'garageUsers', 'pendingUsers' ])}</h2>
+            <Table
+              schema={schemaPending}
+              data={state.pending_users.map(renderPendingSpoiler)}
+            />
+          </div>
+        }
 
         <div className={styles.addButton}>
           <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addGarageUserClick} type="action" size="big" state={isGarageAdmin && 'disabled'} />

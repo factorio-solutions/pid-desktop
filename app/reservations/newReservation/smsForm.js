@@ -1,19 +1,27 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Dropdown from '../../_shared/components/dropdown/Dropdown'
+import Checkbox from '../../_shared/components/checkbox/Checkbox'
+import TextArea from '../../_shared/components/input/TextArea'
 
 import {
   setSendSms,
   setSelectedTemplate,
   removeDiacritics,
-  setTemplateText
+  setTemplateText,
+  selectedClient as selectedClientImported,
+  isPlaceGoInternal,
+  setPaidByHost
 } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
 
-import styles from '../newReservation.page.scss'
+import styles         from '../newReservation.page.scss'
+import checkboxStyles from '../../_shared/components/checkbox/ReservationCheckbox.scss'
+
 
 class SmsForm extends Component {
   static propTypes = {
@@ -22,27 +30,47 @@ class SmsForm extends Component {
     accentRegex: PropTypes.object
   }
 
-  onTextAreaChange = event => this.props.actions.setTemplateText(event.target.value)
-
   render() {
     const { state, actions, accentRegex } = this.props
+
+    const selectedClient = actions.selectedClientImported()
     return (
       <div>
         {
-          state.client_id && state.user &&
-          state.user.availableClients.findById(state.client_id) &&
-          state.user.availableClients.findById(state.client_id).has_sms_api_token &&
-          state.user.availableClients.findById(state.client_id).is_sms_api_token_active &&
-          state.user.availableClients.findById(state.client_id).client_user.secretary &&
+          state.client_id &&
+          selectedClient &&
+          selectedClient.has_sms_api_token &&
+          selectedClient.is_sms_api_token_active &&
+          selectedClient.client_user.secretary &&
           <div>
-            <div className={styles.endSmsCheckbox} onClick={() => actions.setSendSms(!state.sendSMS)}>
-              <input type="checkbox" checked={state.sendSMS} align="left" />
+            {((state.user && state.current_user && state.user.id !== state.current_user.id &&
+              selectedClient && selectedClient.is_time_credit_active) ||
+              isPlaceGoInternal(state)) &&
+              <Checkbox
+                onChange={() => actions.setPaidByHost(!state.paidByHost)}
+                checked={state.paidByHost}
+                style={checkboxStyles}
+              >
+                {t([
+                  'newReservation',
+                  (selectedClient && selectedClient.is_time_credit_active) && !isPlaceGoInternal(state)
+                    ? 'paidByHostsTimeCredit'
+                    : 'paidByHost'
+                ])}
+              </Checkbox>
+            }
+            <Checkbox
+              onChange={() => actions.setSendSms(!state.sendSMS)}
+              checked={state.sendSMS}
+              style={checkboxStyles}
+            >
               {t([ 'newReservation', 'sendSms' ])}
-            </div>
+            </Checkbox>
             {state.sendSMS &&
               <div className={styles.smsTemplates}>
                 <Dropdown
-                  label={t([ 'newReservation', 'selectTemplate' ])}
+                  label={t([ 'newReservation', 'smsTemplateLabel' ])}
+                  placeholder={t([ 'newReservation', 'selectTemplate' ])}
                   content={state.user.availableClients.findById(state.client_id).sms_templates.map((template, index) => ({
                     label:   template.name,
                     onClick: () => actions.setSelectedTemplate(index, template.template)
@@ -50,14 +78,27 @@ class SmsForm extends Component {
                   selected={state.selectedTemplate}
                   style="reservation"
                 />
-                <div className={styles.textLabel}>
-                  <label>{t([ 'newReservation', 'smsText' ])}</label>
-                  <span className={styles.removeDiacritics} onClick={actions.removeDiacritics}>{t([ 'newReservation', 'removeDiacritics' ])}</span>
+                <div className={styles.smsText} >
+                  <TextArea
+                    placeholder={t([ 'newReservation', 'smsTextPlaceholder' ])}
+                    onChange={actions.setTemplateText}
+                    value={state.templateText}
+                  />
                 </div>
-                <textarea value={state.templateText} onChange={this.onTextAreaChange} />
-                <div className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}>
-                  {state.templateText.length}/{accentRegex.test(state.templateText) ? 140 : 320}
-                  {t([ 'newReservation', 'character' ])}
+                <div className={styles.textLabel}>
+                  <span
+                    className={state.highlight && state.templateText.length > (accentRegex.test(state.templateText) ? 140 : 320) && styles.redText}
+                  >
+                    {state.templateText.length}/{accentRegex.test(state.templateText) ? 140 : 320}
+                    {t([ 'newReservation', 'character' ])}
+                  </span> / <span
+                    role="button"
+                    tabIndex="0"
+                    className={styles.removeDiacritics}
+                    onClick={actions.removeDiacritics}
+                  >
+                    {t([ 'newReservation', 'removeDiacritics' ])}
+                  </span>
                 </div>
               </div>
             }
@@ -69,15 +110,14 @@ class SmsForm extends Component {
 }
 
 export default connect(
-  state => {
-    const { user, client_id, sendSMS, templateText, highlight } = state.newReservation
-    return { state: { user, client_id, sendSMS, templateText, highlight } }
-  },
+  state => ({ state: state.newReservation }),
   dispatch => ({ actions: bindActionCreators({
     setSendSms,
     setSelectedTemplate,
     removeDiacritics,
-    setTemplateText
+    setTemplateText,
+    selectedClientImported,
+    setPaidByHost
   }, dispatch)
   })
 )(SmsForm)

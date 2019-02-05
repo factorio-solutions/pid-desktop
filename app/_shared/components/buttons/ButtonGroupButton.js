@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import Button from './Button.js'
 
@@ -18,7 +19,7 @@ export default function ButtonGroupButton({ state, ...restOfProps }) {
 }
 
 ButtonGroupButton.propTypes = {
-  content: PropTypes.object,
+  content: PropTypes.string,
   onClick: PropTypes.func,
   state:   PropTypes.string
 }

@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import * as nav                        from '../../_shared/helpers/navigation'
-import { t }                           from '../../_shared/modules/localization/localization'
-import { AVAILABLE_LANGUAGES }         from '../../routes'
+import * as nav from '../../_shared/helpers/navigation'
+import { t } from '../../_shared/modules/localization/localization'
+import { AVAILABLE_LANGUAGES } from '../../routes'
 
 import PageBase       from '../../_shared/containers/pageBase/PageBase'
 import Dropdown       from '../../_shared/components/dropdown/Dropdown'
@@ -138,24 +139,30 @@ class inviteUserPage extends Component {
                 highlight={state.highlight}
                 normalizeInput={normalizeEmail}
               />
-              {clientDropdown.length > 1 && <Dropdown
-                label={t([ 'inviteUser', 'selectClient' ])}
-                content={clientDropdown}
-                style="light"
-                selected={state.clients.findIndexById(state.client_id)}
-              />}
-              {garageDropdown.length > 1 && <Dropdown
-                label={t([ 'inviteUser', 'selectGarage' ])}
-                content={garageDropdown}
-                style="light"
-                selected={state.garages.findIndexById(state.garage_id)}
-              />}
-              {carDropdown.length > 1 && <Dropdown
-                label={t([ 'inviteUser', 'selectCar' ])}
-                content={carDropdown}
-                style="light"
-                selected={state.cars.findIndexById(state.car_id)}
-              />}
+              {clientDropdown.length > 1 &&
+                <Dropdown
+                  placeholder={t([ 'inviteUser', 'selectClient' ])}
+                  content={clientDropdown}
+                  style="light"
+                  selected={state.clients.findIndexById(state.client_id)}
+                />
+              }
+              {garageDropdown.length > 1 &&
+                <Dropdown
+                  placeholder={t([ 'inviteUser', 'selectGarage' ])}
+                  content={garageDropdown}
+                  style="light"
+                  selected={state.garages.findIndexById(state.garage_id)}
+                />
+              }
+              {carDropdown.length > 1 &&
+                <Dropdown
+                  placeholder={t([ 'inviteUser', 'selectCar' ])}
+                  content={carDropdown}
+                  style="light"
+                  selected={state.cars.findIndexById(state.car_id)}
+                />
+              }
               <div>
                 <label>{t([ 'inviteUser', 'inviteMessage' ])}</label>
               </div>

@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import DatetimeInput from '../../_shared/components/input/DatetimeInput'
 import PageBase      from '../../_shared/containers/pageBase/PageBase'

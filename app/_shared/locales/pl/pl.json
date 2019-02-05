@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "PL: newReservation.selectCarLabel",
 		"smsTemplateLabel": "PL: newReservation.smsTemplateLabel",
-		"reservationOnPlace": "PL: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Wybrana lokalizacja jest już zajęta"
 	},
 	"clients": {
 		"name": "Nazwa klienta",
@@ -299,7 +299,9 @@
 		"invoices": "faktury",
 		"currentAgreements": "Aktywne umowy:",
 		"oldAgreements": "Stare umowy:",
-		"modules": "PL: clients.modules"
+		"modules": "PL: clients.modules",
+		"addClientLabel": "Nowy klient",
+		"addContractLabel": "Nowa umowa"
 	},
 	"clientUsers": {
 		"name": "nazwa użytkownika",
@@ -320,6 +322,7 @@
 		"resendInvitation": "Wyślij ponownie",
 		"resendSuccessfull": "E-mail został wysłany.",
 		"userNotFound": "Nie znaleziono użytkownika.",
+		"addUser": "Dodaj użytkownika",
 		"timeCredit": "PL: clientUsers.timeCredit"
 	},
 	"reservations": {
@@ -364,7 +367,9 @@
 			"many": " Edytuj wszystkie %(count)s rezerwacje w ustawionej powtórce.",
 			"other": "  Edytuj %(count)s rezerwacje w ustawionej powtórce."
 		},
-		"flexiblePlace": "Miejsce Flexi"
+		"flexiblePlace": "Miejsce Flexi",
+		"createReservationLabel": "Wytworzyć rezerwację",
+		"bulkRemovalLabel": "PL: reservations.bulkRemovalLabel"
 	},
 	"garages": {
 		"clients": "Klienci",
@@ -393,7 +398,8 @@
 		"rentName": "Nazwa wynajmu",
 		"price": "Cena",
 		"places": "Miejsca",
-		"editRent": "Edytuj wynajem"
+		"editRent": "Edytuj wynajem",
+		"addRent": "Dodaj czynsz"
 	},
 	"occupancy": {
 		"selectClientClient": "Wybrać klienta",
@@ -723,7 +729,8 @@
 		"reservationUpdateLegalDocuments": "PL: notifications.reservationUpdateLegalDocuments",
 		"contractLegalDocuments": "PL: notifications.contractLegalDocuments",
 		"reservationWasSuccessfullyPaid": "PL: notifications.reservationWasSuccessfullyPaid",
-		"reservationWillExpireSoon": "PL: notifications.reservationWillExpireSoon"
+		"reservationWillExpireSoon": "PL: notifications.reservationWillExpireSoon",
+		"expensesOn": "PL: notifications.expensesOn"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -763,7 +770,8 @@
 		"manager": "PL: users.manager",
 		"invitedToClient": "%(date)s zaproszony(-a) do uczestnictwa w:",
 		"invitedToGarage": "%(date)s zaproszony(-a) do garażu:",
-		"invitedToCar": "%(date)s zaproszony(-a) do auta:"
+		"invitedToCar": "%(date)s zaproszony(-a) do auta:",
+		"addUser": "Dodaj użytkownika"
 	},
 	"datetimepicker": {
 		"today": "Dzisiaj",
@@ -1187,7 +1195,8 @@
 	"reservationInteruption": {
 		"describtion": "Przerwij rezerwację",
 		"from": "Przerwać od",
-		"to": "Przerwać do"
+		"to": "Przerwać do",
+		"invalidaDate": "Niepoprawna data"
 	},
 	"languages": {
 		"language": "Język",

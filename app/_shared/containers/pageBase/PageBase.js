@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
@@ -17,9 +18,11 @@ import { logout }           from '../../actions/login.actions'
 
 class PageBase extends Component {
   static propTypes = {
-    state:         PropTypes.object,
-    actions:       PropTypes.object,
-    notifications: PropTypes.object
+    state:            PropTypes.object,
+    actions:          PropTypes.object,
+    notifications:    PropTypes.object,
+    scrollbarVisible: PropTypes.bool,
+    children:         PropTypes.object
   }
 
   componentDidMount() {
@@ -32,7 +35,7 @@ class PageBase extends Component {
   }
 
   render() {
-    const { state, actions, notifications } = this.props
+    const { state, actions, notifications, scrollbarVisible } = this.props
 
     const vertical = [
       // state.current_user && state.current_user.occupancy_garages.length &&
@@ -98,6 +101,7 @@ class PageBase extends Component {
           hint={state.hint}
           profileDropdown={profileDropdown}
           secondaryMenuBackButton={state.secondaryMenuBackButton}
+          scrollbarVisible={scrollbarVisible}
         >
           {this.props.children}
         </MasterPage>

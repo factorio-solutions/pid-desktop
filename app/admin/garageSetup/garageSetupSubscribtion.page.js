@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Form               from '../../_shared/components/form/Form'
@@ -61,7 +62,7 @@ class GarageSetupSubscribtionPage extends Component {
               <div>{t([ 'newGarage', 'tarif' ])}</div>
               <div>
                 <Dropdown
-                  label={t([ 'newGarage', 'selectTarif' ])}
+                  placeholder={t([ 'newGarage', 'selectTarif' ])}
                   content={tarifDropdown}
                   style="light"
                   selected={state.availableTarifs.findIndex(tarif => tarif.id === state.tarif_id)}

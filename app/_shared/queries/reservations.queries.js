@@ -70,6 +70,7 @@ export const GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY = `query Reservations($us
       email
     }
     place {
+      id
       label
       floor {
         label

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes }  from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import Datepicker  from './Datepicker'
 import RoundButton from '../buttons/RoundButton'
@@ -13,7 +14,8 @@ export default class PopupDatepicker extends Component {
     date:     PropTypes.string, // moment compatible format
     show:     PropTypes.bool,
     flip:     PropTypes.bool,
-    showInf:  PropTypes.bool
+    showInf:  PropTypes.bool,
+    gray:     PropTypes.bool
   }
 
   componentDidUpdate(prevProps) {
@@ -23,18 +25,32 @@ export default class PopupDatepicker extends Component {
   }
 
   render() {
-    const { onSelect, date, show, okClick, showInf, flip } = this.props
+    const {
+      onSelect,
+      date,
+      show,
+      okClick,
+      showInf,
+      flip,
+      gray
+    } = this.props
 
     return (
       <div
-        className={`${styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
+        className={`${gray ? styles.grayPopup : styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
         ref={div => { this.container = div }}
-        onBlur={okClick}
-        tabIndex={0}
       >
-        <Datepicker onSelect={onSelect} date={date} showInf={showInf} />
+        <Datepicker
+          onSelect={onSelect}
+          date={date}
+          showInf={showInf}
+        />
         <div className={styles.buttonContainer}>
-          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={okClick} type="confirm" />
+          <RoundButton
+            content={<span className="fa fa-check" aria-hidden="true" />}
+            onClick={okClick}
+            type="confirm"
+          />
         </div>
       </div>
     )

@@ -13,8 +13,16 @@
 // from = time in moment.js format
 // to = time in moment.js format
 
+import { getLanguage } from '../modules/localization/localization'
+
+export function convertPriceToString(price) {
+  if (price == undefined) return undefined
+
+  return price.toLocaleString(getLanguage(), { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
 export function valueAddedTax(price, vat = 0) {
-  return ((price) * (1 + vat)).toFixed(2)
+  return convertPriceToString(price * (1 + vat))
 }
 
 export function calculateDuration(from, to) {

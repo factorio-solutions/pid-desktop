@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Kunde",
 		"selectCarLabel": "DE: newReservation.selectCarLabel",
 		"smsTemplateLabel": "DE: newReservation.smsTemplateLabel",
-		"reservationOnPlace": "DE: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Der ausgewählte Parkplatz ist bereits belegt"
 	},
 	"clients": {
 		"name": "Name",
@@ -299,7 +299,9 @@
 		"invoices": "Rechnungen",
 		"currentAgreements": "Laufende Vereinbarungen",
 		"oldAgreements": "Beendete Vereinbarungen",
-		"modules": "Erweiterte Einstellungen"
+		"modules": "Erweiterte Einstellungen",
+		"addClientLabel": "Neuer Kunde",
+		"addContractLabel": "Neuer Vertrag"
 	},
 	"clientUsers": {
 		"name": "Benutzername",
@@ -320,6 +322,7 @@
 		"resendInvitation": "E-Mail erneut senden",
 		"resendSuccessfull": "E-Mail wurde erfolgreich gesendet.",
 		"userNotFound": "Dieser Benutzer konnte nicht gefunden werden.",
+		"addUser": "Einen Benutzer hinzufügen",
 		"timeCredit": "Zeit-Kredit"
 	},
 	"reservations": {
@@ -364,7 +367,9 @@
 			"many": "Alle %(count)s Buchungen der Serie bearbeiten.",
 			"other": "%(count)s Buchungen der Serie bearbeiten."
 		},
-		"flexiblePlace": "Flexiplatz"
+		"flexiblePlace": "Flexiplatz",
+		"createReservationLabel": "Buchung erstellen",
+		"bulkRemovalLabel": "Buchungen stornieren"
 	},
 	"garages": {
 		"clients": "Kunden",
@@ -393,7 +398,8 @@
 		"rentName": "Name des Mietverhältnisses",
 		"price": "Preis (Platz pro Monat)",
 		"places": "Plätze",
-		"editRent": "Mietverhältnis bearbeiten"
+		"editRent": "Mietverhältnis bearbeiten",
+		"addRent": "Miete hinzufügen"
 	},
 	"occupancy": {
 		"selectClientClient": "Kunden auswählen",
@@ -723,7 +729,8 @@
 		"reservationUpdateLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil in Ihrer Buchung Nr. '%(arg1)s' eine Änderung der Garage auf '%(arg2)s' vorgenommen wurde.",
 		"contractLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. ",
 		"reservationWasSuccessfullyPaid": "Das Mitglied %(arg1)s, welchem Sie eine Buchung erstellt haben, hat sie gerade bezahlt. Detail der Buchung: %(arg2)s",
-		"reservationWillExpireSoon": "Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s"
+		"reservationWillExpireSoon": "Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s",
+		"expensesOn": "DE: notifications.expensesOn"
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -763,7 +770,8 @@
 		"manager": "Manager",
 		"invitedToClient": "Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:",
 		"invitedToGarage": "Am %(date)s zur Mitgliedschaft beim Parkplatz eingeladen:",
-		"invitedToCar": "Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:"
+		"invitedToCar": "Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:",
+		"addUser": "Einen Benutzer hinzufügen"
 	},
 	"datetimepicker": {
 		"today": "Heute",
@@ -1107,8 +1115,8 @@
 		"shortterm": "Kurzzeit",
 		"longtermPrice": "Langfristiger Preis:",
 		"shorttermPrice": "Kurfristiger Preis:",
-		"removeReservations": "Die Buchung auf den entfernten Plätzen löschen.",
-		"generateInvoice": "DE: newContract.generateInvoice",
+		"removeReservations": "Die Buchungen auf den entfernten Plätzen löschen.",
+		"generateInvoice": "Rechnungen erstellen",
 		"doNotRemoveReservations": "Die Buchung auf den entfernten Plätzen verschieben."
 	},
 	"finance": {
@@ -1187,7 +1195,8 @@
 	"reservationInteruption": {
 		"describtion": "Buchungen unterbrechen",
 		"from": "Unterbrechen ab",
-		"to": "Unterbrechen bis"
+		"to": "Unterbrechen bis",
+		"invalidaDate": "Ungültiges Datum"
 	},
 	"languages": {
 		"language": "Sprache",

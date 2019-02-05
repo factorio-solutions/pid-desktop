@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import MasterPage   from '../_shared/components/masterLoginPage/MasterPage'
 import Logo         from '../_shared/components/logo/Logo'

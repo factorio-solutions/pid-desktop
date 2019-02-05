@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 import { t }                                 from '../modules/localization/localization'
-import { request }                           from '../helpers/request'
+import request                           from '../helpers/request'
 import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 
 import { INIT_RESERVATIONS, INIT_CONTRACTS } from '../queries/analytics.reservations.queries'

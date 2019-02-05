@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "Vyberte auto",
 		"smsTemplateLabel": "SMS šablona",
-		"reservationOnPlace": "CS: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Zvolené místo je již obsazeno"
 	},
 	"clients": {
 		"name": "jméno",
@@ -299,7 +299,9 @@
 		"invoices": "faktury",
 		"currentAgreements": "Aktivní dohody:",
 		"oldAgreements": "Proběhlé dohody:",
-		"modules": "Rozšířená nastavení"
+		"modules": "Rozšířená nastavení",
+		"addClientLabel": "Nový klient",
+		"addContractLabel": "Nová dohoda"
 	},
 	"clientUsers": {
 		"name": "uživatelské jméno",
@@ -320,6 +322,7 @@
 		"resendInvitation": "Znovu odeslat",
 		"resendSuccessfull": "Email úspěšně odeslán.",
 		"userNotFound": "Uživatel nenalezen.",
+		"addUser": "Přidat uživatele",
 		"timeCredit": "časový kredit"
 	},
 	"reservations": {
@@ -364,7 +367,9 @@
 			"many": "Upravit všech %(count)s rezervací v nastaveném opakování.",
 			"other": "Upravit %(count)s rezervace v nastaveném opakování."
 		},
-		"flexiblePlace": "fleximísto"
+		"flexiblePlace": "fleximísto",
+		"createReservationLabel": "Vytvořte rezervaci",
+		"bulkRemovalLabel": "Rušení rezervací"
 	},
 	"garages": {
 		"clients": "Klienti",
@@ -393,7 +398,8 @@
 		"rentName": "Název nájmu",
 		"price": "Cena (místo za měsíc)",
 		"places": "Místa",
-		"editRent": "Upravit nájem"
+		"editRent": "Upravit nájem",
+		"addRent": "Přidat nájem"
 	},
 	"occupancy": {
 		"selectClientClient": "Vybrat klienta",
@@ -723,7 +729,8 @@
 		"reservationUpdateLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",
 		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",
 		"reservationWasSuccessfullyPaid": "Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",
-		"reservationWillExpireSoon": "Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s"
+		"reservationWillExpireSoon": "Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s",
+		"expensesOn": "CS: notifications.expensesOn"
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -763,7 +770,8 @@
 		"manager": "CS: users.manager",
 		"invitedToClient": "Pozván %(date)s aby byl členem klienta:",
 		"invitedToGarage": "Pozván %(date)s aby byl členem garáže:",
-		"invitedToCar": "Pozván %(date)s aby byl členem auta"
+		"invitedToCar": "Pozván %(date)s aby byl členem auta",
+		"addUser": "Přidat uživatele"
 	},
 	"datetimepicker": {
 		"today": "Dnes",
@@ -1108,7 +1116,7 @@
 		"longtermPrice": "Dlouhodobá cena:",
 		"shorttermPrice": "Krátkodobá cena:",
 		"removeReservations": "Smazat rezervace na odebraných místech",
-		"generateInvoice": "CS: newContract.generateInvoice",
+		"generateInvoice": "Generovat doklady",
 		"doNotRemoveReservations": "Zkusit přemístit rezervace na odebraných místech"
 	},
 	"finance": {
@@ -1187,7 +1195,8 @@
 	"reservationInteruption": {
 		"describtion": "Přerušení rezervace",
 		"from": "Přerušit od",
-		"to": "Přerušit do"
+		"to": "Přerušit do",
+		"invalidaDate": "Neplatné datum"
 	},
 	"languages": {
 		"language": "Jazyk",

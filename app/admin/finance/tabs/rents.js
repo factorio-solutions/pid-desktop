@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import update                          from 'immutability-helper'
 
 import Table              from '../../../_shared/components/table/Table'
-import RoundButton        from '../../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../../_shared/components/buttons/LabeledRoundButton'
 
 import * as nav                 from '../../../_shared/helpers/navigation'
@@ -38,11 +38,13 @@ class RentsTab extends Component {
 
 
   prepareRent = rent => {
-    const spoiler = (<div>
-      <span className={styles.floatRight}>
-        <LabeledRoundButton label={t([ 'garages', 'editRent' ])} content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={() => this.editRent(rent.id)} type="action" />
-      </span>
-    </div>)
+    const spoiler = (
+      <div>
+        <span className={styles.floatRight}>
+          <LabeledRoundButton label={t([ 'garages', 'editRent' ])} content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={() => this.editRent(rent.id)} type="action" />
+        </span>
+      </div>
+    )
 
     return update(rent, { spoiler: { $set: spoiler }, price: { $set: `${Math.round(rent.price * 10) / 10} ${rent.currency.symbol}` }, place_count: { $set: rent.place_count + '' } })
   }
@@ -61,7 +63,13 @@ class RentsTab extends Component {
           data={state.rents.map(this.prepareRent)}
         />
         <div className={styles.centerDiv}>
-          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.newRentClick} type="action" size="big" />
+          <LabeledRoundButton
+            content={<span className="fa fa-plus" aria-hidden="true" />}
+            onClick={this.newRentClick}
+            type="action"
+            size="big"
+            label={t([ 'garages', 'addRent' ])}
+          />
         </div>
       </div>
     )

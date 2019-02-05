@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, hashHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
+import localforage from 'localforage'
 import createRoutes from './routes'
 import configureStore from './_store/configureStore'
 
@@ -35,10 +36,12 @@ if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
 //   const { whyDidYouUpdate } = require('why-did-you-update')
 //   whyDidYouUpdate(React, { exclude: [ /^Connect/ ] })
 // }
-
-render(
-  <Provider store={store}>
-    <Router history={history} routes={createRoutes()} />
-  </Provider>,
-  document.getElementById('root')
-)
+localforage.getItem('jwt')
+  .then(jwt => {
+    render(
+      <Provider store={store}>
+        <Router history={history} routes={createRoutes(jwt)} />
+      </Provider>,
+      document.getElementById('root')
+    )
+  })

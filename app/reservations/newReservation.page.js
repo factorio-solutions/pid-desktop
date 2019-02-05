@@ -1,26 +1,32 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
-import moment                           from 'moment'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
-import PageBase         from '../_shared/containers/pageBase/PageBase'
-import Uneditable       from '../_shared/components/input/Uneditable'
-import RoundButton      from '../_shared/components/buttons/RoundButton'
-import GarageLayout     from '../_shared/components/garageLayout/GarageLayout'
-import SearchField      from '../_shared/components/searchField/SearchField'
-import Form             from '../_shared/components/form/Form'
-import Modal            from '../_shared/components/modal/Modal'
-import Input            from '../_shared/components/input/Input'
-import ExistingUserForm from './newReservation/existingUserForm'
-import NewUserForm      from './newReservation/newUserForm'
-import GarageClientForm from './newReservation/garageClientForm'
-import SmsForm          from './newReservation/smsForm'
-import DateTimeForm     from './newReservation/dateTimeForm'
-import Recurring        from '../_shared/components/recurring/Recurring'
+import PageBase          from '../_shared/containers/pageBase/PageBase'
+import RoundButton       from '../_shared/components/buttons/RoundButton'
+import GarageLayout      from '../_shared/components/garageLayout/GarageLayout'
+import Form              from '../_shared/components/form/Form'
+import Modal             from '../_shared/components/modal/Modal'
+import PickUserForm      from './newReservation/pickUserForm/pickUserForm'
+import GarageClientForm  from './newReservation/garageClientForm'
+import PlaceForm         from './newReservation/placeForm'
+import PriceSmsNote      from './newReservation/priceSmsNote'
+import DateTimeForm      from './newReservation/dateTimeForm'
+import Recurring         from '../_shared/components/recurring/Recurring'
+import SectionWithHeader from '../_shared/components/wrapers/SectionWithHeader'
+import {
+  getIsSubmittable,
+  getFreePlaces,
+  getSelectedClient,
+  getOutOfTimeCredit,
+  getFloors
+} from './selectors/newReservation.selectors'
+
 import {
   MOMENT_DATETIME_FORMAT
 } from '../_shared/helpers/time'
-
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import * as nav                   from '../_shared/helpers/navigation'
@@ -28,88 +34,52 @@ import { t, getLanguage }         from '../_shared/modules/localization/localiza
 
 import styles from './newReservation.page.scss'
 
-const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤ]')
+export const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉďĎňŇťŤůŮúÚóÓ]')
 
 
 class NewReservationPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    params:   PropTypes.object,
-    pageBase: PropTypes.object,
-    actions:  PropTypes.object
+    state:           PropTypes.object,
+    params:          PropTypes.object,
+    actions:         PropTypes.object,
+    isSubmittable:   PropTypes.bool,
+    freePlaces:      PropTypes.array,
+    selectedClient:  PropTypes.object,
+    outOfTimeCredit: PropTypes.bool,
+    floors:          PropTypes.array
   }
 
   componentDidMount() {
     const { actions, params, state } = this.props
     if (state.reservation && ((typeof params.id === 'undefined' && state.reservation.id)
-        || (state.reservation.id !== params.id))) {
+        || state.reservation.id !== params.id)) {
       actions.clearForm()
     }
     actions.setInitialStore(params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
   }
 
-  userDropdown = () => {
-    const makeButton = (user, label, text) => {
-      return {
-        label,
-        text:    [ <b>{user.full_name}</b>, ' ', text ],
-        onClick: () => this.props.actions.downloadUser(user.id, user.rights)
-      }
-    }
-
-    const buttons = []
-    const users = this.props.state.availableUsers.reduce((acc, user) => {
-      if (user.id < 0) {
-        let roleName = ''
-        if (user.id === -1) {
-          if (user.rights && user.rights.internal) {
-            roleName = 'newInternal'
-          } else {
-            roleName = 'newHost'
-          }
-        } else {
-          roleName = 'onetimeVisit'
-        }
-        buttons.push(makeButton(user, [ <b>{user.full_name}</b> ], t([ 'newReservation', `${roleName}Text` ])))
-      } else {
-        acc.push({
-          label:   user.full_name,
-          phone:   user.phone,
-          email:   user.email,
-          order:   user.id === this.props.pageBase.current_user.id ? 1 : undefined,
-          onClick: () => {
-            const { state } = this.props
-            if (state.user === undefined || state.user.id !== user.id) {
-              this.props.actions.downloadUser(user.id, user.rights)
-            }
-          }
-        })
-      }
-      return acc
-    }, [])
-    return { users, buttons }
-  }
-
   handleBack = () => nav.to('/reservations')
 
   toOverview = () => {
-    const { state, pageBase } = this.props
+    const { state, params, actions } = this.props
 
-    if (this.props.params.id) {
-      this.props.actions.submitReservation(+this.props.params.id)
-    } else if (!state.client_id ||
-      (state.paidByHost && (state.user && state.user.id) === (pageBase.current_user && pageBase.current_user.id)))
-    {
+    if (params.id) {
+      actions.submitReservation(+params.id)
+    } else if (
+      !state.clientId
+      || (
+        state.paidByHost
+        && (state.user && state.user.id) === (state.currentUser && state.currentUser.id)
+      )
+    ) {
       nav.to('/reservations/newReservation/overview')
     } else {
-      this.props.actions.submitReservation()
+      actions.submitReservation()
     }
   }
 
   handlePlaceClick = place => this.props.actions.setPlace(place)
-
-  // hightlightInputs = () => this.props.actions.toggleHighlight()
 
   modalClick = () => {
     this.props.actions.setError(undefined)
@@ -124,202 +94,114 @@ class NewReservationPage extends Component {
     }
   }
 
-  // selectedClient = () => {
-  //   const { state } = this.props
-  //   return state.user && state.client_id && state.user.availableClients.findById(state.client_id)
-  // }
-
   render() {
-    const { state, pageBase, actions } = this.props
+    const {
+      state,
+      actions,
+      isSubmittable,
+      freePlaces,
+      selectedClient,
+      outOfTimeCredit,
+      floors
+    } = this.props
 
     const ongoing = state.reservation && state.reservation.ongoing
-    const onetime = state.reservation && state.reservation.onetime
-    const selectedClient = actions.selectedClient()
-    const outOfTimeCredit = selectedClient && state.timeCreditPrice > selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']
-    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
+    const isSecretary = state.reservation
+    && state.reservation.client
+    && state.reservation.client.client_user.secretary
 
-    const freePlaces = state.garage ? state.garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : []
-    // const placeIsGoInternal = selectedPlace && selectedPlace.go_internal
-    const userDropdown = this.userDropdown()
-
-    const isSubmitable = () => {
-      if ((state.user && state.user.id === -1) && (!state.email.valid || !state.phone.valid || !state.name.valid)) return false
-      if ((state.user && state.user.id === -2) && (!state.client_id || !state.name.valid)) return false
-      if (state.from === '' || state.to === '') return false
-      // if onetime visitor and he has to pay by himself, then the email is mandatory
-      if (state.user && state.user.id === -2 && state.paidByHost && (!state.email.value || !state.email.valid)) return false
-      if (ACCENT_REGEX.test(state.templateText) ? state.templateText.length > 140 : state.templateText.length > 320) return false
-      // if onetime visitor and we want to send him sms, then the phone is mandatory
-      if (state.user && state.user.id === -2 && state.sendSMS && (!state.phone.value || !state.phone.valid)) return false
-      // user has enought time credit?
-      if (selectedClient && selectedClient.is_time_credit_active && !newReservationActions.isPlaceGoInternal(state) && outOfTimeCredit) {
-        return false
-      }
-
-      return state.user && (state.place_id || (state.garage && state.garage.flexiplace && freePlaces.length))
-    }
-
-    const placeLabel = () => {
-      if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
-        return freePlaces.length ? t([ 'newReservation', 'flexiblePlaceSelected' ]) : t([ 'newReservation', 'noFreePlace' ])
-      } else {
-        const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
-        const place = floor && floor.places.findById(state.place_id)
-        return floor && place ? `${floor.label} / ${place.label}` : t([ 'newReservation', 'noFreePlace' ])
-      }
-    }
-
-    const highlightSelected = floor => ({
-      ...floor,
-      places: floor.places.map(place => ({
-        ...place,
-        selected: place.id === state.place_id
-      }))
-    })
-
-    const errorContent = (<div className={styles.floatCenter}>
-      {t([ 'newReservation', 'fail' ])}: <br />
-      { state.error } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.modalClick} type="confirm" />
-    </div>)
-
-    const getUserToSelect = () => {
-      if (state.reservation && state.reservation.onetime) {
-        return state.availableUsers.findIndex(user => user.id === -2)
-      } else if (state.reservation && state.user) {
-        return state.availableUsers.findIndexById(state.user.id)
-      } else if (state.user && state.user.id === -1) {
-        return userDropdown.users.findIndex(user => state.user && user.id === state.user.id && user.rights && JSON.stringify(user.rights) === JSON.stringify(state.user.rights))
-      } else {
-        return userDropdown.users.findIndex(user => state.user && user.id === state.user.id)
-      }
-    }
+    const errorContent = (
+      <div className={styles.floatCenter}>
+        {t([ 'newReservation', 'fail' ])}
+        {': '}
+        <br />
+        {state.error}
+        <br />
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={this.modalClick}
+          type="confirm"
+        />
+      </div>
+    )
 
     return (
-      <PageBase>
+      <PageBase scrollbarVisible>
         <div className={styles.parent}>
           <Modal content={errorContent} show={state.error !== undefined} />
 
           <div className={styles.leftCollumn}>
             <div className={styles.padding}>
-              <Form onSubmit={this.toOverview} onBack={this.handleBack} submitable={isSubmitable()} onHighlight={actions.toggleHighlight}>
-                { !(state.user && (state.user.id < 0 || onetime)) &&
-                  ((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
-                  <div className={styles.searchField}>
-                    <span
-                      className={styles.resetButton}
-                      onClick={this.clearForm}
-                    >
-                      <i className="fa fa-times-circle" aria-hidden="true" />
-                    </span>
-                    <SearchField
-                      editable={!ongoing || isSecretary}
-                      placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
-                      dropdownContent={userDropdown.users}
-                      selected={getUserToSelect()}
-                      highlight={state.highlight}
-                      searchQuery={state.name.value}
-                      onChange={actions.setHostName}
-                      buttons={userDropdown.buttons}
-                      ref={component => this.searchField = component}
-                    />
-                  </div>
-                }
+              <Form
+                onSubmit={this.toOverview}
+                onReset={this.clearForm}
+                submitable={isSubmittable}
+                onHighlight={actions.toggleHighlight}
+              >
+                <PickUserForm />
 
-                {state.user && state.user.id >= 0 &&
-                  <ExistingUserForm
-                    editable={!ongoing || isSecretary}
-                  />
-                }
+                {
+                  state.user
+                  && (
+                    (
+                      state.name.valid
+                      && state.email.valid
+                      && state.phone.valid
+                      && state.user.id === -1
+                    )
+                    || (state.name.valid && state.user.id === -2)
+                    || state.user.id > 0
+                  ) && (
+                    <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
 
-                {((state.user && state.user.id < 0) || (state.user && state.user.onetime)) &&
-                  <NewUserForm
-                    editable={!ongoing || isSecretary}
-                    onetime={onetime}
-                    clearForm={this.clearForm}
-                  />
-                }
-                {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid &&
-                  <div className={styles.fillInContact}>
-                    {t([ 'newReservation', 'fillInContact' ])}
-                  </div>
-                }
-
-                {state.user &&
-                ((state.name.valid && state.email.valid && state.phone.valid && state.user.id === -1) ||
-                (state.name.valid && state.user.id === -2) ||
-                state.user.id > 0) &&
-                  <GarageClientForm
-                    editable={!ongoing || isSecretary}
-                  />
-                }
-                {state.garage &&
-                  <div>
-                    <DateTimeForm editable={!ongoing || isSecretary} />
-                    {/* Place and price  */}
-                    <Uneditable
-                      label={t([ 'newReservation', 'place' ])}
-                      value={placeLabel()}
-                    />
-
-                    {selectedClient && selectedClient.is_time_credit_active &&
-                    !newReservationActions.isPlaceGoInternal(state) ?
-                      <Uneditable
-                        label={t([ 'newReservation', 'price' ])}
-                        highlight={state.highlight && outOfTimeCredit}
-                        value={`${state.timeCreditPrice} /
-                          ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
-                          ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
-                        `}
-                      /> :
-                      <Uneditable
-                        label={t([ 'newReservation', 'price' ])}
-                        value={`
-                          ${((newReservationActions.isPlaceGoInternal(state) || !state.client_id) && state.price) || ''}
-                          (${!state.client_id
-                            ? t([ 'newReservation', 'onUsersExpenses' ])
-                            : !newReservationActions.isPlaceGoInternal(state)
-                              ? t([ 'newReservation', 'longtermRent' ])
-                              : state.paidByHost
-                                ? t([ 'newReservation', 'onUsersExpenses' ])
-                                : t([ 'newReservation', 'onClientsExpenses' ])
-                          })
-                        `}
+                      <GarageClientForm
+                        editable={!ongoing || isSecretary}
                       />
-                    }
-                    {/*  Sms Part  */}
-                    {state.user &&
-                      <SmsForm accentRegex={ACCENT_REGEX} />
-                    }
-                    {/* Note input */}
-                    <Input
-                      onChange={actions.setNote}
-                      label={t([ 'newReservation', 'note' ])}
-                      value={state.note}
-                      align="left"
-                    />
-                  </div>
+
+                      {state.garage && (
+                        <div>
+                          <DateTimeForm editable={!ongoing || isSecretary} />
+
+                          <PlaceForm freePlaces={freePlaces} />
+                        </div>
+                      )}
+                    </SectionWithHeader>
+                  )
                 }
+                {state.user && state.garage && (
+                  <PriceSmsNote
+                    accentRegex={ACCENT_REGEX}
+                    selectedClient={selectedClient}
+                    outOfTimeCredit={outOfTimeCredit}
+                  />
+                )}
               </Form>
               {/* Has to be outside of Form tag because it contains Form */}
               <Recurring
                 show={state.showRecurring}
                 rule={state.recurringRule}
                 onSubmit={actions.setRecurringRule}
-                showDays={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
-                showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
+                showDays={moment(state.to, MOMENT_DATETIME_FORMAT)
+                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
+                showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT)
+                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
               />
             </div>
           </div>
 
           <div className={styles.rightCollumn}>
-            {state.loading ?
-              <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div> :
-              <GarageLayout
-                floors={state.garage ? state.garage.floors.map(highlightSelected) : []}
-                onPlaceClick={this.handlePlaceClick}
-              />
-            }
+            <div className={!state.showMap && styles.displayNone}>
+              {state.loading
+                ? <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div>
+                : (
+                  <GarageLayout
+                    floors={floors}
+                    placeId={state.placeId}
+                    onPlaceClick={this.handlePlaceClick}
+                  />
+                )
+              }
+            </div>
           </div>
         </div>
       </PageBase>
@@ -327,7 +209,56 @@ class NewReservationPage extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  const {
+    reservation,
+    client_id: clientId,
+    user,
+    paidByHost,
+    error,
+    name,
+    email,
+    phone,
+    garage,
+    showRecurring,
+    recurringRule,
+    from,
+    to,
+    showMap,
+    loading,
+    place_id: placeId
+  } = state.newReservation
+  const { current_user: currentUser } = state.pageBase
+
+  return {
+    state: {
+      reservation,
+      clientId,
+      user,
+      paidByHost,
+      error,
+      name,
+      email,
+      phone,
+      garage,
+      showRecurring,
+      recurringRule,
+      from,
+      to,
+      showMap,
+      loading,
+      currentUser,
+      placeId
+    },
+    isSubmittable:   getIsSubmittable(state),
+    freePlaces:      getFreePlaces(state),
+    selectedClient:  getSelectedClient(state),
+    outOfTimeCredit: getOutOfTimeCredit(state),
+    floors:          getFloors(state)
+  }
+}
+
 export default connect(
-  state => ({ state: state.newReservation, pageBase: state.pageBase }),
+  mapStateToProps,
   dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
 )(NewReservationPage)

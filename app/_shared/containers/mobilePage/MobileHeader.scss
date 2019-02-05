@@ -1,0 +1,38 @@
+@import '../../styles/app.components';
+
+.header {
+  display:          block;
+  position:         fixed;
+  top:              0;
+  right:            0;
+  left:             0;
+  background-color: $black;
+  z-index: 99;
+
+  .logo {
+    height:        35px;
+    margin:        0 15px;
+    border-bottom: 1px solid $yellow;
+
+    > img {
+      height: 100%;
+    }
+  }
+
+  .content {
+    padding:    5px 0;
+    color:      $white;
+    text-align: center;
+  }
+}
+
+.menuButton {
+  position:   fixed;
+  top:        6px;
+  left:       6px;
+  border:     0;
+  outline:    none;
+  background: none;
+  color:      $gray;
+  font-size:  22px;
+}

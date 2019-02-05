@@ -17,6 +17,12 @@
   }
 }
 
+.popupGray {
+  @extend .popup;
+
+  background-color: $inputsBackGround;
+}
+
 .hidden {
   display: none;
 }

@@ -3,7 +3,8 @@ import {
   SET_CLIENT_USER_CLIENT,
   SET_CLIENT_PENDING_USERS,
   SET_CLIENT_USERS_FILTER,
-  SET_CLIENT_USERS_NAME
+  SET_CLIENT_USERS_NAME,
+  SET_CLIENT_USERS_SELECTED_ID
 }  from '../actions/clientUsers.actions'
 
 const defaultState = {
@@ -11,7 +12,8 @@ const defaultState = {
   client:        {},
   pending_users: [],
   filter:        'all',
-  clientName:    ''
+  clientName:    '',
+  selectedId:    undefined
 }
 
 
@@ -46,6 +48,12 @@ export default function clientUsers(state = defaultState, action) {
       return {
         ...state,
         clientName: action.value
+      }
+
+    case SET_CLIENT_USERS_SELECTED_ID:
+      return {
+        ...state,
+        selectedId: action.value
       }
 
     default:

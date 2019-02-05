@@ -650,7 +650,7 @@ newReservation.garageDropdownLabel,Garage,Garáž,Garaż,Garage
 newReservation.clientDropdownLabel,Client,Klient,Klient,Kunde
 newReservation.selectCarLabel,Select car,Vyberte auto,,
 newReservation.smsTemplateLabel,SMS template,SMS šablona,,
-newReservation.reservationOnPlace,,,,
+newReservation.reservationOnPlace,Selected spot is already taken,Zvolené místo je již obsazeno,Wybrana lokalizacja jest już zajęta,Der ausgewählte Parkplatz ist bereits belegt
 clients.name,name,jméno,Nazwa klienta,Name
 clients.id,ID,id,ID,ID
 clients.from,from,od,od,von
@@ -670,6 +670,8 @@ clients.invoices,invoices,faktury,faktury,Rechnungen
 clients.currentAgreements,Active agreements:,Aktivní dohody:,Aktywne umowy:,Laufende Vereinbarungen
 clients.oldAgreements,Old agreements:,Proběhlé dohody:,Stare umowy:,Beendete Vereinbarungen
 clients.modules,Advanced setup,Rozšířená nastavení,,Erweiterte Einstellungen
+clients.addClientLabel,New client,Nový klient,Nowy klient,Neuer Kunde
+clients.addContractLabel,New contract,Nová dohoda,Nowa umowa,Neuer Vertrag
 clientUsers.name,username,uživatelské jméno,nazwa użytkownika,Benutzername
 clientUsers.email,email,e-mail,e-mail,E-Mail-Adresse
 clientUsers.memberSince,member since,členem od,członek od,Mitglied seit
@@ -688,6 +690,7 @@ clientUsers.removeUser,Remove user,Odstranit uživatele,Usuń użytkownika,Benut
 clientUsers.resendInvitation,Resend email,Znovu odeslat,Wyślij ponownie,E-Mail erneut senden
 clientUsers.resendSuccessfull,Email was sucessfully send.,Email úspěšně odeslán.,E-mail został wysłany.,E-Mail wurde erfolgreich gesendet.
 clientUsers.userNotFound,Could not find this user.,Uživatel nenalezen.,Nie znaleziono użytkownika.,Dieser Benutzer konnte nicht gefunden werden.
+clientUsers.addUser,Add user,Přidat uživatele,Dodaj użytkownika,Einen Benutzer hinzufügen
 clientUsers.timeCredit,time credit,časový kredit,,Zeit-Kredit
 reservations.name,name,jméno,Użytkownik,Name
 reservations.from,from,od,od,von
@@ -727,6 +730,8 @@ reservations.updateAllReservation.few,Update all %(count)s reservations in set r
 reservations.updateAllReservation.many,Update all %(count)s reservations in set repeat.,Upravit všech %(count)s rezervací v nastaveném opakování., Edytuj wszystkie %(count)s rezerwacje w ustawionej powtórce.,Alle %(count)s Buchungen der Serie bearbeiten.
 reservations.updateAllReservation.other,Update all %(count)s reservations in set repeat.,Upravit %(count)s rezervace v nastaveném opakování.,  Edytuj %(count)s rezerwacje w ustawionej powtórce.,%(count)s Buchungen der Serie bearbeiten.
 reservations.flexiblePlace,flexiplace,fleximísto,Miejsce Flexi,Flexiplatz
+reservations.createReservationLabel,Create reservation,Vytvořte rezervaci,Wytworzyć rezerwację,Buchung erstellen
+reservations.bulkRemovalLabel,Cancellation of reservations,Rušení rezervací,,Buchungen stornieren
 garages.clients,Clients,Klienti,Klienci,Kunden
 garages.contracts,Agreements,Dohody,Umowy,Vereinbarungen
 garages.reservations,Reservations,Rezervace,Rezerwacje,Buchungen
@@ -754,6 +759,7 @@ garages.rentName,Rent name,Název nájmu,Nazwa wynajmu,Name des Mietverhältniss
 garages.price,Price (place per month),Cena (místo za měsíc),Cena,Preis (Platz pro Monat)
 garages.places,Places,Místa,Miejsca,Plätze
 garages.editRent,Edit rent,Upravit nájem,Edytuj wynajem,Mietverhältnis bearbeiten
+garages.addRent,Add rent,Přidat nájem,Dodaj czynsz,Miete hinzufügen
 occupancy.selectClientClient,Select client,Vybrat klienta,Wybrać klienta,Kunden auswählen
 occupancy.allReservations,All reservations,Všechny rezervace,Wszystkie rezerwacje,Alle Buchungen
 occupancy.dayShortcut,D,D,D,T
@@ -1058,8 +1064,7 @@ notifications.reservationDeclined,"Your reservation on ""%(arg1)s""s place was d
 notifications.verifyYourEmail,"Welcome to Park-it-direct! You have been sent a verification email to ""%(arg1)s"". You will not be able to log in again until your email is verified.","Vítejte v Park-it-direct! Na adresu ""%(arg1)s""s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.","Witaj w Park-it-direct! Na adres ""%(arg1)s""s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.","Wilkommen bei Park-it-direct! Wir haben eine Bestätigungs-E-Mail an ""%(arg1)s""s geschickt.
 Nachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen."
 notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created a new reservation for you.,%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.,%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.,%(arg1)s (%(arg2)s) hat für Sie eine Buchung erstellt.
-notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"
-% (arg1) hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Buchungen""."
+notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"%(arg1)s hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Buchungen""."
 notifications.reservationRemovedDueToUnpaid,Your reservation has been canceled because it hasn't been paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.","Da Ihre Buchung innerhalb 15 Minuten nicht bezahlt wurde, haben wir sie storniert."
 notifications.reservationContactPersonNotification,"Your reservation has not been approved yet, if it is urgent you can contact one of the contact persons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,"Ihre Buchung wurde nocht nicht bestätigt. Falls dringend, können Sie eine der dazu befugten Personen kontaktieren: %(arg1)s"
 notifications.clientLegalDocuments,You can find new privacy documents in profile section because Client: '%(arg1)s' is in garage: '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' působí v garáži '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert."
@@ -1069,6 +1074,7 @@ notifications.reservationUpdateLegalDocuments,You can find new privacy documents
 notifications.contractLegalDocuments,You can find new privacy documents in profile section because client '%(arg1)s' makes contract with garage '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože klient '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. "
 notifications.reservationWasSuccessfullyPaid,"User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s","Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",,"Das Mitglied %(arg1)s, welchem Sie eine Buchung erstellt haben, hat sie gerade bezahlt. Detail der Buchung: %(arg2)s"
 notifications.reservationWillExpireSoon,Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s,"Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s",,"Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s"
+notifications.expensesOn,,,,
 profile.profileSettings,Profile settings,Nastavení profilu,Ustawienia profilu,Profileinstellungen
 profile.hints,I want to see hints:,Chci vidět nápovědu:,Chcę zobaczyć rady:,Ich möchte Tipps sehen
 profile.language,Choose language:,Vyberte jazyk:,Wybierz język:,Sprache auswählen:
@@ -1105,6 +1111,7 @@ users.manager,manager,,,Manager
 users.invitedToClient,Invited %(date)s to be member of client:,Pozván %(date)s aby byl členem klienta:,%(date)s zaproszony(-a) do uczestnictwa w:,Am %(date)s zur Mitgliedschaft beim Kunden eingeladen:
 users.invitedToGarage,Invited %(date)s to be member of garage:,Pozván %(date)s aby byl členem garáže:,%(date)s zaproszony(-a) do garażu:,Am %(date)s zur Mitgliedschaft beim Parkplatz eingeladen:
 users.invitedToCar,Invited %(date)s to be member of car:,Pozván %(date)s aby byl členem auta,%(date)s zaproszony(-a) do auta:,Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:
+users.addUser,Add user,Přidat uživatele,Dodaj użytkownika,Einen Benutzer hinzufügen
 datetimepicker.today,Today,Dnes,Dzisiaj,Heute
 datetimepicker.now,Now,Nyní,Teraz,Jetzt
 datetimepicker.inf,Infinity,Nekonečno,Nieskończoność,Unendlich
@@ -1414,8 +1421,8 @@ newContract.longterm,Longterm,Dlouhodobý,Długoterminowy,Langzeit
 newContract.shortterm,Shortterm,Krátkodobý,Krótkoterminowy,Kurzzeit
 newContract.longtermPrice,Longterm price:,Dlouhodobá cena:,Długoterminowa cena:,Langfristiger Preis:
 newContract.shorttermPrice,Shortterm price:,Krátkodobá cena:,Krótkoterminowa cena:,Kurfristiger Preis:
-newContract.removeReservations,Remove reservations of removed places,Smazat rezervace na odebraných místech,,Die Buchung auf den entfernten Plätzen löschen.
-newContract.generateInvoice,,,,
+newContract.removeReservations,Remove reservations of removed places,Smazat rezervace na odebraných místech,,Die Buchungen auf den entfernten Plätzen löschen.
+newContract.generateInvoice,Generate invoices,Generovat doklady,,Rechnungen erstellen
 newContract.doNotRemoveReservations,Try replacing reservations of removed places,Zkusit přemístit rezervace na odebraných místech,,Die Buchung auf den entfernten Plätzen verschieben.
 finance.financeSettings,Finance settings,Nastavení financí,,Finanzeinstellungen
 finance.paypal,Paypal,Paypal,PayPal,Paypal
@@ -1481,6 +1488,7 @@ loginVerification.codeInvalid,Code invalid,Neplatný kód,Niepoprawny kod,Code u
 reservationInteruption.describtion,Interrupt reservation,Přerušení rezervace,Przerwij rezerwację,Buchungen unterbrechen
 reservationInteruption.from,Interrupt from,Přerušit od,Przerwać od,Unterbrechen ab
 reservationInteruption.to,Interrupt to,Přerušit do,Przerwać do,Unterbrechen bis
+reservationInteruption.invalidaDate,Invalid date,Neplatné datum,Niepoprawna data,Ungültiges Datum
 languages.language,Language,Jazyk,Język,Sprache
 languages.en,English,English,English,English
 languages.cs,Česky,Česky,Česky,Česky

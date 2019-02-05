@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import moment from 'moment'
 
 import { MOMENT_DATETIME_FORMAT, MOMENT_TIME_FORMAT } from '../../helpers/time'
 
 import PopupTimepicker from '../timepicker/PopupTimepicker'
 
-import styles from './Input.scss'
+import defaultStyles from './Input.scss'
 
 
 // this component has to know its state, so it can be passed to \the value attribute of input
@@ -15,14 +16,18 @@ export default class TimeInput extends Component {
     label:       PropTypes.string.isRequired, // is the placeholder
     error:       PropTypes.string, // error message if patern not met
     placeholder: PropTypes.string,
-    style:       PropTypes.string,
-    onChange:    PropTypes.func, // use if you want to pass value to parent
-    onEnter:     PropTypes.func, // called when enter pressed
-    onBlur:      PropTypes.func, // called when enter pressed
-    value:       PropTypes.string,
-    align:       PropTypes.string,
-    inlineMenu:  PropTypes.object,
-    editable:    PropTypes.bool // can be turned off
+    style:       PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+    onChange:      PropTypes.func, // use if you want to pass value to parent
+    onEnter:       PropTypes.func, // called when enter pressed
+    onBlur:        PropTypes.func, // called when enter presseds
+    value:         PropTypes.string,
+    align:         PropTypes.string,
+    inlineMenu:    PropTypes.object,
+    editable:      PropTypes.bool, // can be turned off
+    pickerOnFocus: PropTypes.bool
   }
 
   static defaultProps = {
@@ -34,63 +39,162 @@ export default class TimeInput extends Component {
     this.state = { message: props.value || '', focus: false }
   }
 
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClick, false)
+  }
+
   componentWillReceiveProps(newProps) {
     newProps.value !== undefined && this.setState({ message: newProps.value })
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick, false)
+  }
+
+  handleClick = e => {
+    if (this.container && !this.container.contains(e.target)) {
+      this.hideDatepicker()
+    }
+  }
+
   timeToDate = time => `1.1.9999 ${time}` // will add some day to it, so moment can handle it
 
+  handleChange = event => {
+    const { editable, onChange } = this.props
+    editable && this.setState(state => ({
+      ...state,
+      message: event.target.value
+    }))
+
+    onChange && onChange(
+      event.target.value,
+      moment(event.target.value, MOMENT_TIME_FORMAT).isValid()
+    )
+  }
+
+  handlePick = time => {
+    const { onBlur, onChange } = this.props
+    const date = this.timeToDate(time)
+    const formatedDate = moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)
+
+    this.setState(state => ({
+      ...state,
+      message: formatedDate
+    }))
+
+    this.hideDatepicker()
+    onChange && onChange(formatedDate, moment(date).isValid())
+    onBlur && onBlur()
+  }
+
+  preventEnter = event => {
+    const { onEnter } = this.props
+    const key = (typeof event.which === 'number') ? event.which : event.keyCode
+    if (key === 13) {
+      event.preventDefault()
+      typeof (onEnter) === 'function' && onEnter()
+    }
+  }
+
+  showDatepicker = () => {
+    this.setState(state => ({ ...state, focus: true }))
+  }
+
+  hideDatepicker = () => {
+    this.setState(state => ({ ...state, focus: false }))
+  }
+
+  handleFocus = event => {
+    const { pickerOnFocus } = this.props
+    const { focus } = this.state
+
+    if (!pickerOnFocus) return
+
+    if (!focus) {
+      this.showDatepicker()
+      event.target.select()
+    }
+  }
+
   render() {
-    const { label, error, placeholder, onChange, onEnter, onBlur, inlineMenu, style, editable, align } = this.props
+    const {
+      label,
+      error,
+      placeholder,
+      inlineMenu,
+      style,
+      editable,
+      align,
+      pickerOnFocus
+    } = this.props
 
-    const handleChange = event => {
-      editable && this.setState({ ...this.state, message: event.target.value })
-      // onChange && onChange(moment(event.target.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATETIME_FORMAT), moment(event.target.value, MOMENT_DATETIME_FORMAT).isValid())
-      onChange && onChange(event.target.value, moment(event.target.value, MOMENT_TIME_FORMAT).isValid())
-    }
+    const {
+      focus, message
+    } = this.state
 
-    const handlePick = time => {
-      const date = this.timeToDate(time)
-      this.setState({ ...this.state, message: moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT) })
-      onChange && onChange(moment(date, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT), moment(date).isValid())
-      onBlur && onBlur()
-    }
-
-    const preventEnter = function (event) {
-      const key = (typeof event.which === 'number') ? event.which : event.keyCode
-      if (key === 13) {
-        event.preventDefault()
-        typeof (onEnter) === 'function' && onEnter()
-      }
-    }
-
-
-    const showDatepicker = () => this.setState({ ...this.state, focus: true })
-
-    const hideDatepicker = () => this.setState({ ...this.state, focus: false })
-
+    const styles = typeof style === 'object' ? style : defaultStyles
+    const inputId = 'TimeInput'
+    const date = moment(this.timeToDate(message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ])
+    const dateIsValid = date.isValid()
 
     return (
-      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`} >
+      <div
+        className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`}
+        ref={div => this.container = div}
+      >
         <input
-          type={'text'}
-          value={this.state.message}
-          onChange={handleChange}
+          type="text"
+          value={message}
+          onChange={this.handleChange}
           placeholder={placeholder}
-          onKeyPress={preventEnter.bind(this)}
+          onKeyPress={this.preventEnter}
           pattern="(\d{1,2}):(\d{2})"
-          onBlur={onBlur}
+          onFocus={this.handleFocus}
+          id={inputId}
         />
         <span className={styles.bar} />
-        <label className={styles.label}>{label}</label>
-        <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
-        <label className={`${styles.customFormGroup}  ${styles.error}`} style={{ opacity: moment(this.state.message, MOMENT_TIME_FORMAT).isValid() ? 0 : 1 }}>{error}</label>
-        <label className={`${styles.customFormGroup}  ${styles.callendar}`} onClick={editable && showDatepicker}><i className="fa fa-clock-o" aria-hidden="true" /></label>
+
+        <label
+          className={styles.label}
+          htmlFor={inputId}
+        >
+          {label}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.inlineMenu}`}
+          htmlFor={inputId}
+        >
+          {inlineMenu}
+        </label>
+
+        <label
+          className={`${styles.customFormGroup}  ${styles.error}`}
+          style={{ opacity: dateIsValid ? 0 : 1 }}
+          htmlFor={inputId}
+        >
+          {error}
+        </label>
+
+        {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
+        {
+          !pickerOnFocus
+          && (
+            <label
+              className={`${styles.customFormGroup}  ${styles.callendar}`}
+              onClick={editable && this.showDatepicker}
+              htmlFor={inputId}
+            >
+              <i className="fa fa-clock-o" aria-hidden="true" />
+            </label>
+          )
+        }
         <PopupTimepicker
-          onSelect={handlePick}
-          time={moment(this.timeToDate(this.state.message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ]).isValid() ? moment(this.timeToDate(this.state.message), MOMENT_DATETIME_FORMAT).format('HH:mm') : undefined}
-          show={this.state.focus}
-          okClick={hideDatepicker}
+          onSelect={this.handlePick}
+          time={dateIsValid ? date.format('HH:mm') : undefined}
+          show={focus}
+          okClick={this.hideDatepicker}
+          gray={style === 'gray'}
         />
       </div>
     )
