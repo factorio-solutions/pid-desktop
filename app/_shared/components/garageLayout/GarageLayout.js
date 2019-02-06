@@ -60,7 +60,12 @@ class GarageLayout extends Component {
   }
 
   componentDidMount() {
+    const { floors, placeId } = this.props
     this.scanPlacesAddLabels()
+    if (placeId && floors) {
+      const floorIndex = floors.findIndex(f => f.places.some(p => p.id === placeId))
+      this.setState(state => ({ ...state, floor: floorIndex }))
+    }
   }
 
   componentWillReceiveProps(nextProps) {
