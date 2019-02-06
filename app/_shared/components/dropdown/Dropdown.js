@@ -117,18 +117,20 @@ export default class Dropdown extends Component {
 
       return {
         ...item,
-        render: (<li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
-          <label>
-            {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
-              .split(this.state.filter.toLowerCase() || undefined) // split by filter
-              .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
-              .filter(o => o !== false)
-              .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
-              .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
-              .map((part, index) => index % 2 === 0 ? <span key={index}>{part}</span> : <b key={index}>{part}</b>)
-            }
-          </label>
-        </li>)
+        render: (
+          <li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
+            <label>
+              {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
+                .split(this.state.filter.toLowerCase() || undefined) // split by filter
+                .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
+                .filter(o => o !== false)
+                .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
+                .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
+                .map((part, index) => index % 2 === 0 ? <span key={index}>{part}</span> : <b key={index}>{part}</b>)
+              }
+            </label>
+          </li>
+          )
       }
     })
 

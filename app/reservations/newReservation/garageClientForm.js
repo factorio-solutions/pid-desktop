@@ -63,7 +63,7 @@ class GarageClientForm extends Component {
           highlight={state.highlight}
           placeholder={t([ 'newReservation', 'selectGarage' ])}
         />
-        {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
+        {state.user && state.user.availableClients && state.user.availableClients.length > 1 && (
           <Dropdown
             editable={editable}
             label={t([ 'newReservation', 'clientDropdownLabel' ])}
@@ -73,7 +73,7 @@ class GarageClientForm extends Component {
             filter
             placeholder={t([ 'newReservation', 'selectClient' ])}
           />
-        }
+        )}
       </div>
     )
   }
@@ -86,7 +86,8 @@ export default connect(
     return { state: { user, highlight, paidByHost, garage, client_id, place_id, current_user } }
   },
   dispatch => ({ actions: bindActionCreators(
-    { downloadGarage,
+    {
+      downloadGarage,
       setPaidByHost,
       setClient,
       selectedClient

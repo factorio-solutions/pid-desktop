@@ -23,7 +23,9 @@ const defaultEmptyArray = []
 const getSelectedPlace = createSelector(
   [ getGarage, getPlaceId ],
   (garage, placeId) => {
-    const places = garage ? garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], []) : defaultEmptyArray
+    const places = garage && garage.floors
+      ? garage.floors.reduce((acc, f) => [ ...acc, ...f.places ], [])
+      : defaultEmptyArray
     return places.findById(placeId)
   }
 )
@@ -39,24 +41,28 @@ export const getFloors = createSelector(
       }))
     })
 
-    return garage ? garage.floors.map(highlightSelected) : defaultEmptyArray
+    return garage && garage.floors
+      ? garage.floors.map(highlightSelected)
+      : defaultEmptyArray
   }
 )
 
 export const getSelectedClient = createSelector(
   [ getUser, getClientId ],
   (user, clientId) => {
-    return user &&
-      clientId &&
-      user.availableClients &&
-      user.availableClients.findById(clientId)
+    return user
+    && clientId
+    && user.availableClients
+    && user.availableClients.findById(clientId)
   }
 )
 
 export const getFreePlaces = createSelector(
   getGarage,
   garage => {
-    return garage ? garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], []) : defaultEmptyArray
+    return garage && garage.floors
+      ? garage.floors.reduce((acc, f) => [ ...acc, ...f.free_places ], [])
+      : defaultEmptyArray
   }
 )
 
@@ -64,9 +70,9 @@ export const getOutOfTimeCredit = createSelector(
   [ getSelectedClient, getTimeCreditPrice, getPaidByHost ],
   (selectedClient, timeCreditPrice, paidByHost) => {
     return selectedClient && timeCreditPrice > selectedClient[
-      paidByHost ?
-        'current_time_credit' :
-        'current_users_current_time_credit'
+      paidByHost
+        ? 'current_time_credit'
+        : 'current_users_current_time_credit'
     ]
   }
 )
