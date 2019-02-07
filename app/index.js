@@ -6,6 +6,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import localforage from 'localforage'
 import createRoutes from './routes'
 import configureStore from './_store/configureStore'
+import { version } from '../package.json'
+import request from './_shared/helpers/requestPromise'
 
 import './_shared/helpers/findById'
 import './_shared/helpers/stringOperations'
@@ -30,6 +32,26 @@ require('moment').updateLocale('en', {
 
 if (process.env.NODE_ENV !== 'production') { // exposed stuff for development
   window.moment = require('moment')
+}
+
+let lastError
+window.onerror = (message, source, lineno, colno, error) => {
+  const state = store.getState().pageBase
+  if (message !== lastError) { // block error cycle
+    lastError = message
+    console.log('error user', state)
+    request(`mutation ErrorSend ($origin: String!, $message: String!, $backtrace: String!, $location: String!, $user_id: Id, $version: String!) {
+      error(origin: $origin, message: $message, backtrace: $backtrace, location: $location, user_id: $user_id, version: $version)
+    }`,
+    {
+      origin:    'desktop_client',
+      message,
+      backtrace: error.stack,
+      location:  window.location.href,
+      user_id:   state.current_user ? state.current_user.id : undefined,
+      version
+    })
+  }
 }
 
 // if (process.env.NODE_ENV !== 'production') {

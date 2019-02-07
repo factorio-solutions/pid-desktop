@@ -50,6 +50,11 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name:     'shared',
       filename: 'shared.js'
+    }),
+    new webpack.SourceMapDevToolPlugin({
+      module:                 true,
+      columns:                false,
+      moduleFilenameTemplate: info => { return `${info.resourcePath}?${info.loaders}` }
     })
   ],
 
