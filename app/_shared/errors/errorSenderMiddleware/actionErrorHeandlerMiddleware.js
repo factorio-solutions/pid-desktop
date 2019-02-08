@@ -1,4 +1,4 @@
-import wrapper from './asyncErrorHandler'
+import wrapper from './errorHandlerWrapper'
 
 function actionErrorMiddleware() {
   return next => action => {

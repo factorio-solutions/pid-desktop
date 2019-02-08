@@ -5,7 +5,7 @@ import { createLogger }                           from 'redux-logger'
 import { hashHistory }                            from 'react-router'
 import { routerMiddleware, push }                 from 'react-router-redux'
 import { enableBatching }                         from 'redux-batched-actions'
-import wrapper  from '../_shared/helpers/actionErrorHeandlerMiddleware'
+import errorSender  from '../_shared/errors/errorSenderMiddleware/actionErrorHeandlerMiddleware'
 
 import rootReducer from '../_app/app.reducer'
 
@@ -21,7 +21,7 @@ const logger = createLogger({
 const router = routerMiddleware(hashHistory)
 
 const enhancer = compose(
-  applyMiddleware(wrapper, thunk, router, logger),
+  applyMiddleware(errorSender, thunk, router, logger),
   reduxReset(),
   window.devToolsExtension ?
     window.devToolsExtension({ actionCreators }) :
