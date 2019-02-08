@@ -82,6 +82,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "swiper": "^4.0.1",
+    "ua-parser-js": "^0.7.19",
     "webpack": "^3.7.1",
     "ws": "^3.0.0",
     "xlsx": "^0.12.13"
