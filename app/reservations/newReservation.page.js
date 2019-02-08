@@ -181,6 +181,7 @@ class NewReservationPage extends Component {
                 show={state.showRecurring}
                 rule={state.recurringRule}
                 onSubmit={actions.setRecurringRule}
+                preferedFrom={moment(state.from, MOMENT_DATETIME_FORMAT)}
                 showDays={moment(state.to, MOMENT_DATETIME_FORMAT)
                   .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
                 showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT)

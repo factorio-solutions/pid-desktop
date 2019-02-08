@@ -31,7 +31,8 @@ export default class Recurring extends Component {
     rule:      PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
-    ]) // start value
+    ]), // start value
+    preferedFrom: PropTypes.object
   }
 
   static defaultProps = {
@@ -41,11 +42,12 @@ export default class Recurring extends Component {
 
   constructor(props) {
     super(props)
+    const from = props.preferedFrom || moment()
     this.state = {
       type:     'week',
       interval: 1,
-      day:      [ moment().weekday() ],
-      starts:   formatDate(moment()),
+      day:      [ from.weekday() ],
+      starts:   formatDate(from),
       count:    10,
       ...props.rule
     }
@@ -248,6 +250,15 @@ export default class Recurring extends Component {
   checkProps(props) {
     let newState = this.state
     const { starts, type, day } = this.state
+    const { preferedFrom, rule } = this.props
+
+    if (!rule && preferedFrom !== props.preferedFrom) {
+      newState = {
+        ...newState,
+        starts: formatDate(props.preferedFrom),
+        day:    [ props.preferedFrom.weekday() ]
+      }
+    }
 
     if (props.rule && props.rule.starts !== starts) {
       newState = {
