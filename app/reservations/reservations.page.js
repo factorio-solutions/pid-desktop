@@ -200,7 +200,6 @@ class ReservationsPage extends Component {
     const {
       state, actions, interruption, interruptionActions
     } = this.props
-    actions.neco.string()
     const filters = [
       <TabButton
         label={t([ 'notifications', 'current' ])}
@@ -282,6 +281,7 @@ export default connect(
       setRecurringReservationId,
       clearForm
     }, dispatch),
-    interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
+    interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch),
+
   })
 )(ReservationsPage)
