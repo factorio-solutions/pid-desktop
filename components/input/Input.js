@@ -111,8 +111,17 @@ export default class Input extends Component {
 
     const isEmpty = () => this.input ? this.input.value === '' : true
 
+    const classes = [
+      styles.customFormGroup,
+      styles[align || 'left'],
+      styles[style],
+      style,
+      highlight && isEmpty() && styles.highlighted,
+      readOnly && styles.dimmer
+    ]
+
     return (
-      <div className={`${styles.customFormGroup} ${styles[align || 'left']} ${styles[style]} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+      <div className={classes.join(' ')}>
         <input
           onBlur={onBlur}
           onFocus={onFocus}

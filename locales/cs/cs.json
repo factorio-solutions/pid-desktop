@@ -278,7 +278,7 @@
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "Vyberte auto",
 		"smsTemplateLabel": "SMS šablona",
-		"reservationOnPlace": "CS: newReservation.reservationOnPlace"
+		"reservationOnPlace": "Zvolené místo je již obsazeno"
 	},
 	"clients": {
 		"name": "jméno",
@@ -322,6 +322,7 @@
 		"resendInvitation": "Znovu odeslat",
 		"resendSuccessfull": "Email úspěšně odeslán.",
 		"userNotFound": "Uživatel nenalezen.",
+		"addUser": "Přidat uživatele",
 		"timeCredit": "časový kredit"
 	},
 	"reservations": {
@@ -397,7 +398,8 @@
 		"rentName": "Název nájmu",
 		"price": "Cena (místo za měsíc)",
 		"places": "Místa",
-		"editRent": "Upravit nájem"
+		"editRent": "Upravit nájem",
+		"addRent": "Přidat nájem"
 	},
 	"occupancy": {
 		"selectClientClient": "Vybrat klienta",
@@ -768,7 +770,8 @@
 		"manager": "CS: users.manager",
 		"invitedToClient": "Pozván %(date)s aby byl členem klienta:",
 		"invitedToGarage": "Pozván %(date)s aby byl členem garáže:",
-		"invitedToCar": "Pozván %(date)s aby byl členem auta"
+		"invitedToCar": "Pozván %(date)s aby byl členem auta",
+		"addUser": "Přidat uživatele"
 	},
 	"datetimepicker": {
 		"today": "Dnes",
@@ -1113,7 +1116,7 @@
 		"longtermPrice": "Dlouhodobá cena:",
 		"shorttermPrice": "Krátkodobá cena:",
 		"removeReservations": "Smazat rezervace na odebraných místech",
-		"generateInvoice": "CS: newContract.generateInvoice",
+		"generateInvoice": "Generovat doklady",
 		"doNotRemoveReservations": "Zkusit přemístit rezervace na odebraných místech"
 	},
 	"finance": {
