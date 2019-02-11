@@ -91,3 +91,7 @@ localforage.getItem('jwt')
       document.getElementById('root')
     )
   })
+  .catch(e => {
+    sendError(e)
+    throw e
+  })
