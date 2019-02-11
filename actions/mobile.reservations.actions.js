@@ -4,7 +4,6 @@ import { t }                from '../modules/localization/localization'
 import * as ble             from '../modules/ble/ble'
 import { setCustomModal }   from './pageBase.actions'
 import { hideSplashscreen } from './mobile.header.actions'
-import { logout }           from './login.actions'
 
 import {
   MOBILE_GET_RESERVATIONS_QUERY,
@@ -40,7 +39,7 @@ export function setFind(value) {
 
 function createPaginationVariables(getState) {
   const header = getState().mobileHeader
-  const reservations = getState().reservations
+  const { reservations } = getState()
 
   return {
     count:         RESERVATIONS_PER_PAGE,
@@ -62,15 +61,14 @@ export function initReservations() {
       MOBILE_GET_RESERVATIONS_QUERY,
       createPaginationVariables(getState)
     )
-    .then(response => {
-      const metadata = response.mobile_reservations_meta
-      dispatch(setReservations(response.mobile_reservations))
-      dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
-
-      dispatch(hideSplashscreen())
-    }).catch(() => {
-      dispatch(hideSplashscreen())
-    })
+      .then(response => {
+        const metadata = response.mobile_reservations_meta
+        dispatch(setReservations(response.mobile_reservations))
+        dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
+        dispatch(hideSplashscreen())
+      }).catch(() => {
+        dispatch(hideSplashscreen())
+      })
   }
 }
 
@@ -81,46 +79,51 @@ export function loadAnotherReservationsPage() {
 
     requestPromise(
       MOBILE_GET_RESERVATIONS_QUERY,
-      { ...paginationVars,
+      {
+        ...paginationVars,
         page: paginationVars.page + 1
       }
     )
-    .then(response => {
-      const metadata = response.mobile_reservations_meta
-      dispatch(setReservations([
-        ...getState().reservations.reservations,
-        ...response.mobile_reservations
-      ]))
-      dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
+      .then(response => {
+        const metadata = response.mobile_reservations_meta
+        dispatch(setReservations([
+          ...getState().reservations.reservations,
+          ...response.mobile_reservations
+        ]))
+        dispatch(setPagination(metadata.page, metadata.page > 0 && metadata.page < metadata.count))
 
-      dispatch(setCustomModal())
-    })
+        dispatch(setCustomModal())
+      })
   }
 }
 
 function createGateAccessLog(reservationId, gateId, currentUser) {
   return new Promise(resolve => {
     requestPromise(
-    MOBILE_ACCESS_LOG_ACCESS,
-    { gate_access_log: {
-      user_id:        currentUser.id,
-      reservation_id: reservationId,
-      gate_id:        gateId,
-      access_type:    'Bluetooth'
-    } }
+      MOBILE_ACCESS_LOG_ACCESS,
+      {
+        gate_access_log: {
+          user_id:        currentUser.id,
+          reservation_id: reservationId,
+          gate_id:        gateId,
+          access_type:    'Bluetooth'
+        }
+      }
     )
-    .then(data => {
-      console.log(data)
-      resolve(data)
-    })
-    .catch(resolve)
+      .then(data => {
+        console.log(data)
+        resolve(data)
+      })
+      .catch(resolve)
   })
 }
 
 
 export function setOpened(opened, message, reservationId, gateId) {
   return dispatch => {
-    dispatch({ type: MOBILE_RESERVATIONS_SET_OPENED, opened, message, reservationId, gateId })
+    dispatch({
+      type: MOBILE_RESERVATIONS_SET_OPENED, opened, message, reservationId, gateId
+    })
 
     setTimeout(() => {
       dispatch({
@@ -144,16 +147,16 @@ export function openGarageViaPhone(reservationId, gateId) {
         gate_id:        gateId
       }
     )
-    .then(data => {
-      if (data.open_gate != null) {
-        dispatch(setOpened(true, undefined, reservationId, gateId))
-      } else {
-        dispatch(setOpened(false, 'No reservation found', reservationId, gateId))
-      }
-    })
-    .catch(() => {
-      dispatch(setOpened(false, 'No connection', reservationId, gateId))
-    })
+      .then(data => {
+        if (data.open_gate != null) {
+          dispatch(setOpened(true, undefined, reservationId, gateId))
+        } else {
+          dispatch(setOpened(false, 'No reservation found', reservationId, gateId))
+        }
+      })
+      .catch(() => {
+        dispatch(setOpened(false, 'No connection', reservationId, gateId))
+      })
   }
 }
 
@@ -200,24 +203,24 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
         connectionAction = ble.connect(device.address)
       } else {
         connectionAction = ble.initialize()
-        .catch(() => logError('Bluetooth not enabled'))
-        .then(() => ble.scan(name))
-        .then(onDeviceFound)
+          .catch(() => logError('Bluetooth not enabled'))
+          .then(() => ble.scan(name))
+          .then(onDeviceFound)
       }
 
       connectionAction
-      .then(() => ble.write(device.address, isRepeater, onOpen))
-      .then(() => ble.close(device.address))
-      .catch(error => {
-        logError(error)
-        if (device) {
-          ble.close(device.address)
-          .catch(e => console.log('Disconnecting cannot be performed:', e))
-        } else {
-          ble.stopScan()
-          .catch(e => console.log('Scanning cannot be stopped because:', e))
-        }
-      })
+        .then(() => ble.write(device.address, isRepeater, onOpen))
+        .then(() => ble.close(device.address))
+        .catch(error => {
+          logError(error)
+          if (device) {
+            ble.close(device.address)
+              .catch(e => console.log('Disconnecting cannot be performed:', e))
+          } else {
+            ble.stopScan()
+              .catch(e => console.log('Scanning cannot be stopped because:', e))
+          }
+        })
     } else {
       logError('Cannot see bluetoothLE library')
     }
