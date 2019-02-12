@@ -19,11 +19,15 @@ class PlaceForm extends Component {
   }
 
   placeLabel = (state, freePlaces) => {
-    if (state.place_id === undefined && state.garage && state.garage.flexiplace) {
+    const { garage, place_id: placeId } = state
+    if (placeId === undefined && garage && garage.flexiplace) {
       return freePlaces.length ? 'flexiblePlaceSelected' : 'noFreePlace'
     } else {
-      const floor = state.garage && state.garage.floors.find(floor => floor.places.findById(state.place_id) !== undefined)
-      const place = floor && floor.places.findById(state.place_id)
+      const floor = garage
+      && garage.floors
+      && garage.floors.find(f => f.places.some(p => p.id === placeId))
+
+      const place = floor && floor.places.findById(placeId)
       return floor && place ? `${floor.label} / ${place.label}` : 'noFreePlace'
     }
   }

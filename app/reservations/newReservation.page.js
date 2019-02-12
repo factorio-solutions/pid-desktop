@@ -151,7 +151,8 @@ class NewReservationPage extends Component {
                     )
                     || (state.name.valid && state.user.id === -2)
                     || state.user.id > 0
-                  ) && (
+                  )
+                  && (
                     <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
 
                       <GarageClientForm
