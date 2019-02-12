@@ -562,7 +562,7 @@ export function setInitialStore(id) {
       const values = await Promise.all([ availableUsersPromise, editReservationPromise ])
       const users = values[0]
       dispatch(setAvailableUsers(users))
-  
+
       if (values[1] !== undefined) { // if reservation edit set details
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(batchActions([
@@ -948,56 +948,178 @@ export function overviewInit() {
   return (dispatch, getState) => {
     const state = getState().newReservation
 
-    if (state.user === undefined || (state.place_id === undefined && (state.garage && !state.garage.flexiplace)) || state.from === '' || state.to === '') {
+    if (
+      state.user === undefined
+      || (state.place_id === undefined && (state.garage && !state.garage.flexiplace))
+      || state.from === ''
+      || state.to === ''
+    ) {
       nav.to('/reservations/newReservation')
     }
   }
+}
+// Reservation create / update \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userName }) {
+  const ongoing = state.reservation && state.reservation.ongoing
+  const reservationId = state.reservation ? state.reservation.id : undefined
+  const updatingReservation = reservationId !== undefined
+
+  return requestPromise(
+    updatingReservation ? UPDATE_RESERVATION_NEW : CREATE_RESERVATION_NEW,
+    {
+      reservation: {
+        user_id:       userId,
+        note:          state.note ? state.note : undefined,
+        place_id:      state.place_id,
+        garage_id:     state.garage.id,
+        client_id:     state.client_id,
+        paid_by_host:  ongoing ? undefined : state.client_id && state.paidByHost,
+        car_id:        state.car_id,
+        licence_plate: state.carLicencePlate === '' ? undefined : state.carLicencePlate,
+        url:           ongoing
+          ? undefined
+          : window.location.href.split('?')[0] + `?garage_id=${urlGarageId}`,
+        begins_at:      timeToUTC(state.from),
+        ends_at:        timeToUTC(state.to),
+        recurring_rule: state.useRecurring
+          ? JSON.stringify(state.recurringRule)
+          : undefined,
+        recurring_reservation_id: state.recurring_reservation_id,
+        send_sms:                 state.sendSMS,
+        sms_text:                 state.templateText,
+        payment_method:           ongoing || (state.client_id && !state.paidByHost)
+          ? undefined
+          : state.paymentMethod,
+        csob_one_click:          state.csobOneClick,
+        csob_one_click_new_card: state.csobOneClickNewCard,
+        user_name:               userName
+      },
+      reservationId
+    },
+    'reservationMutation'
+  )
+}
+
+function createUserAsync(state) {
+  return requestPromise(USER_AVAILABLE, {
+    user: {
+      email:     state.email.value.toLowerCase(),
+      full_name: state.name.value,
+      phone:     state.phone.value.replace(/\s/g, ''),
+      language:  state.language,
+      onetime:   state.user.id === -2
+    },
+    client_user: state.client_id && state.user.id === -1 ? {
+      client_id: +state.client_id,
+      ...state.user.rights,
+      message:   [
+        'clientInvitationMessage',
+        state.user.availableClients.findById(state.client_id).name
+      ].join(';')
+    } : null
+  })
+}
+
+function inviteUserToClient(userId, state) {
+  return requestPromise(ADD_CLIENT_USER, {
+    user_id:     userId,
+    client_user: {
+      client_id: +state.client_id,
+      ...state.user.rights,
+      message:   [
+        'clientInvitationMessage',
+        state.user.availableClients.findById(state.client_id).name
+      ].join(';')
+    }
+  })
+}
+
+async function afterCreateReservation(dispatch, getState, data) {
+  const state = getState().newReservation
+  const updatingReservation = state.reservation !== undefined
+
+  try {
+    const { reservation, errors } = (
+      data[updatingReservation ? 'update_reservation_new' : 'create_reservation_new']
+    )
+
+    if (errors.length > 0) {
+      const reservationOnPlace = errors.find(e => e.message === 'Place is occupied')
+      if (reservationOnPlace) {
+        // Some modal and update accessible places.
+        dispatch(pageBaseActions.setError(t([ 'newReservation', 'reservationOnPlace' ])))
+        dispatch(setPlace())
+        await dispatch(downloadGarage(state.garage.id))
+        if (updatingReservation) {
+          dispatch(autoSelectPlace())
+        }
+      } else {
+        throw Error('Cannot create reservation')
+      }
+    } else if (reservation && reservation.payment_url) {
+      dispatch(pageBaseActions.setCustomModal(
+        <div>
+          {t([ 'newReservation', 'redirecting' ])}
+        </div>
+      ))
+      window.location.replace(reservation.payment_url)
+    } else {
+      dispatch(pageBaseActions.setCustomModal(undefined))
+      nav.to(`/reservations/find/${reservation.id}`)
+      dispatch(clearForm())
+    }
+  } catch (err) {
+    console.log(err)
+    dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
+    nav.to('/reservations')
+  }
+}
+
+async function sendNewReservationRequest(dispatch, getState) {
+  // const changeUserName = id && state.user && state.user.onetime
+  const state = getState().newReservation
+  const urlGarageId = getState().pageBase.garage
+  const changeUserName = state.reservation && state.user && state.user.onetime
+  const args = {
+    userName: changeUserName
+      ? state.name.value
+      : undefined,
+    userId: state.user.id
+  }
+
+  // if  new Host being created during new reservation
+  if (state.user && state.user.id < 0) {
+    const { user_by_email: user } = await createUserAsync(state)
+    // if the user exists
+    if (user !== null) {
+      // invite to client
+      // if client is selected then invite as host
+      if (state.client_id && state.user.id === -1) {
+        const response = await inviteUserToClient(user.id, state)
+        console.log('client successfully created', response)
+        args.userName = null
+      }
+      args.userId = user.id
+    } else {
+      // user is current user
+      args.userId = null
+      args.userName = null
+    }
+  }
+
+  const res = await createUpdateReservationRequestAsync(
+    getState().newReservation,
+    urlGarageId,
+    args
+  )
+  await afterCreateReservation(dispatch, getState, res)
 }
 
 export function submitReservation(id) {
   return (dispatch, getState) => {
     const state = getState().newReservation
-    const ongoing = state.reservation && state.reservation.ongoing
     const updatingReservation = id !== undefined
-
-    const changeUserName = id && state.user && state.user.onetime
-
-    const onSuccess = async response => {
-      dispatch(pageBaseActions.setCustomModal(undefined))
-      try {
-        const { reservation, errors } = (
-          response.data[updatingReservation ? 'update_reservation_new' : 'create_reservation_new']
-        )
-        if (errors.length >= 1) {
-          const reservationOnPlace = errors.find(e => e.message === 'Place is occupied')
-          if (reservationOnPlace) {
-            // Some modal and update accessible places.
-            dispatch(pageBaseActions.setError(t([ 'newReservation', 'reservationOnPlace' ])))
-            dispatch(setPlace())
-            await dispatch(downloadGarage(state.garage.id))
-            if (updatingReservation) {
-              dispatch(autoSelectPlace())
-            }
-          } else {
-            throw Error('Cannot create reservation')
-          }
-        } else if (reservation && reservation.payment_url) {
-          dispatch(pageBaseActions.setCustomModal(
-            <div>
-              {t([ 'newReservation', 'redirecting' ])}
-            </div>
-          ))
-          window.location.replace(reservation.payment_url)
-        } else {
-          nav.to(`/reservations/find/${reservation.id}`)
-          dispatch(clearForm())
-        }
-      } catch (err) {
-        console.log(err)
-        dispatch(pageBaseActions.setError(t([ 'newReservation', 'notAbleToCreateReservation' ])))
-        nav.to('/reservations')
-      }
-    }
 
     dispatch(pageBaseActions.setCustomModal(
       <div>
@@ -1008,90 +1130,21 @@ export function submitReservation(id) {
       </div>
     ))
 
-    const createTheReservation = (userId, userName) => {
-      request(
-        onSuccess,
-        updatingReservation ? UPDATE_RESERVATION_NEW : CREATE_RESERVATION_NEW,
-        {
-          reservation: {
-            user_id:                  userId,
-            note:                     state.note ? state.note : undefined,
-            place_id:                 state.place_id,
-            garage_id:                state.garage.id,
-            client_id:                state.client_id,
-            paid_by_host:             ongoing ? undefined : state.client_id && state.paidByHost,
-            car_id:                   state.car_id,
-            licence_plate:            state.carLicencePlate === '' ? undefined : state.carLicencePlate,
-            url:                      ongoing ? undefined : window.location.href.split('?')[0] + `?garage_id=${getState().pageBase.garage}`,
-            begins_at:                timeToUTC(state.from),
-            ends_at:                  timeToUTC(state.to),
-            recurring_rule:           state.useRecurring ? JSON.stringify(state.recurringRule) : undefined,
-            recurring_reservation_id: state.recurring_reservation_id,
-            send_sms:                 state.sendSMS,
-            sms_text:                 state.templateText,
-            payment_method:           ongoing || (state.client_id && !state.paidByHost) ? undefined : state.paymentMethod,
-            csob_one_click:           state.csobOneClick,
-            csob_one_click_new_card:  state.csobOneClickNewCard,
-            user_name:                userName
-          },
-          id
-        },
-        'reservationMutation'
-      )
-    }
-
-    const sendNewReservationRequest = () => {
-      if (state.user && state.user.id < 0) { // if  new Host being created during new reservation
-        requestPromise(USER_AVAILABLE, {
-          user: {
-            email:     state.email.value.toLowerCase(),
-            full_name: state.name.value,
-            phone:     state.phone.value.replace(/\s/g, ''),
-            language:  state.language,
-            onetime:   state.user.id === -2
-          },
-          client_user: state.client_id && state.user.id === -1 ? {
-            client_id: +state.client_id,
-            ...state.user.rights,
-            message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
-          } : null
-        }).then(data => {
-          if (data.user_by_email !== null) { // if the user exists
-            // invite to client
-            if (state.client_id && state.user.id === -1) { // if client is selected then invite as host
-              requestPromise(ADD_CLIENT_USER, {
-                user_id:     data.user_by_email.id,
-                client_user: {
-                  client_id: +state.client_id,
-                  ...state.user.rights,
-                  message:   [ 'clientInvitationMessage', state.user.availableClients.findById(state.client_id).name ].join(';')
-                }
-              }).then(response => {
-                console.log('client successfully created', response)
-                createTheReservation(data.user_by_email.id)
-              })
-            } else { // no client selected, create reservation
-              createTheReservation(data.user_by_email.id, changeUserName ? state.name.value : undefined)
-            }
-          } else { // user is current user
-            createTheReservation()
-          }
-        })
-      } else { // create reservation as normal
-        createTheReservation(state.user.id, changeUserName ? state.name.value : undefined)
-      }
-    }
-
     // check if reservation is being created in the past - warn user about it
     const fromValue = moment(roundTime(state.from), MOMENT_DATETIME_FORMAT)
     const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
     if (fromValue.diff(now, 'minutes') < 0) {
-      dispatch(pageBaseActions.confirm(t([ 'newReservation', 'creatingReservationInPast' ]), sendNewReservationRequest))
+      dispatch(pageBaseActions.confirm(
+        t([ 'newReservation', 'creatingReservationInPast' ]),
+        () => sendNewReservationRequest(dispatch, getState)
+      ))
     } else {
-      sendNewReservationRequest()
+      sendNewReservationRequest(dispatch, getState)
     }
   }
 }
+
+// END Reservation create / update \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 export function afterPayment(id, success) {
   return dispatch => {
