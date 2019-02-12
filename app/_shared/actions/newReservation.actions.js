@@ -995,7 +995,7 @@ function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userN
         csob_one_click_new_card: state.csobOneClickNewCard,
         user_name:               userName
       },
-      reservationId
+      id: reservationId
     },
     'reservationMutation'
   )
@@ -1096,8 +1096,7 @@ async function sendNewReservationRequest(dispatch, getState) {
       // invite to client
       // if client is selected then invite as host
       if (state.client_id && state.user.id === -1) {
-        const response = await inviteUserToClient(user.id, state)
-        console.log('client successfully created', response)
+        await inviteUserToClient(user.id, state)
         args.userName = null
       }
       args.userId = user.id
