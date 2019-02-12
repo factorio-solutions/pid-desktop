@@ -1133,7 +1133,27 @@ export function submitReservation(id) {
     // check if reservation is being created in the past - warn user about it
     const fromValue = moment(roundTime(state.from), MOMENT_DATETIME_FORMAT)
     const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
-    if (fromValue.diff(now, 'minutes') < 0) {
+    let {
+      longterm_generating:  longTermGenerated,
+      shortterm_generating: shortTermGenerated
+    } = state.garage
+
+    longTermGenerated = moment(longTermGenerated)
+    shortTermGenerated = moment(shortTermGenerated)
+
+    let invoicesAlreadyGenerated = false
+    if (state.client_id && !state.paidByHost) {
+      invoicesAlreadyGenerated = fromValue.isBefore(
+        isPlaceGoInternal(state)
+          ? shortTermGenerated
+          : longTermGenerated
+      )
+    }
+
+    if (
+      fromValue.diff(now, 'minutes') < 0
+      && invoicesAlreadyGenerated
+    ) {
       dispatch(pageBaseActions.confirm(
         t([ 'newReservation', 'creatingReservationInPast' ]),
         () => sendNewReservationRequest(dispatch, getState)
