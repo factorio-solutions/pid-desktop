@@ -25,6 +25,7 @@ class PidAdminNewsPage extends Component {
 
   componentDidMount() {
     this.props.actions.initNews()
+    this.props.actions.setGar()
   }
 
   render() {

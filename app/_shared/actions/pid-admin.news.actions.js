@@ -43,12 +43,11 @@ export function mpiGarage() {
       `query{
         mpi_test{
           id
-          name
         }
       }`
     )
     if (res.mpi_test) {
-      dispatch(setGar(res.mpi_test.name))
+      dispatch(setGar(res.mpi_test.id))
     } else {
       dispatch(setGar(res.error))
     }
