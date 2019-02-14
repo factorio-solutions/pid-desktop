@@ -16,7 +16,7 @@ export default function pidAdminNews(state = defaultState, action) {
     case SET_PID_ADMIN_MPI_GAR_NAME:
       return {
         ...state,
-        garName: action.value
+        garName: action.value || defaultState.garName
       }
 
     default:
