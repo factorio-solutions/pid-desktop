@@ -42,7 +42,6 @@ import {
 
 // const MIN_RESERVATION_DURATION = 30 // minutes
 
-
 export const NEW_RESERVATION_SET_USER = 'NEW_RESERVATION_SET_USER'
 export const NEW_RESERVATION_SET_NOTE = 'NEW_RESERVATION_SET_NOTE'
 export const NEW_RESERVATION_SET_AVAILABLE_USERS = 'NEW_RESERVATION_SET_AVAILABLE_USERS'
@@ -83,7 +82,6 @@ export const NEW_RESERVATION_SET_PREFERED_PLACE_ID = 'NEW_RESERVATION_SET_PREFER
 export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
 export const NEW_RESERVATION_SHOW_MAP = 'NEW_RESERVATION_SHOW_MAP'
 export const NEW_RESERVATION_LAST_USER_WAS_SAVED = 'NEW_RESERVATION_LAST_USER_WAS_SAVED'
-
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
 export const setReservation = actionFactory(NEW_RESERVATION_SET_RESERVATION)
@@ -562,9 +560,10 @@ export function setInitialStore(id) {
       const values = await Promise.all([ availableUsersPromise, editReservationPromise ])
       const users = values[0]
       dispatch(setAvailableUsers(users))
-
-      if (values[1] !== undefined) { // if reservation edit set details
-        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
+      // if reservation edit set details
+      if (values[1] !== undefined) {
+        // editing ongoing reservation
+        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment())
         dispatch(batchActions([
           setNote(values[1].reservation.note),
           setReservation(values[1].reservation),

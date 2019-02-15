@@ -62,7 +62,10 @@ class DateTimeForm extends Component {
   endsInlineMenu = () => {
     const { state } = this.props
     return (
-      <ButtonStack style="horizontal" divider={<span> | </span>}>
+      <ButtonStack
+        style="horizontal"
+        divider={<span> | </span>}
+      >
         <span
           role="button"
           tabIndex={0}
@@ -79,14 +82,17 @@ class DateTimeForm extends Component {
         >
           {t([ 'newReservation', 'date' ])}
         </span>
-      </ButtonStack>)
+      </ButtonStack>
+    )
   }
 
   showRecurring = () => this.props.actions.setShowRecurring(true)
 
   freeIntervalLabel = () => {
     const { state: { freeInterval } } = this.props
-    const interval = freeInterval.split(', ').map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
+    const interval = freeInterval
+      .split(', ')
+      .map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
     const dateFrom = interval[0].format(MOMENT_DATE_FORMAT)
     const timeForm = interval[0].format(MOMENT_TIME_FORMAT)
     const dateTo = interval[1].format(MOMENT_DATE_FORMAT)
@@ -97,14 +103,16 @@ class DateTimeForm extends Component {
         <b>{t([ 'newReservation', 'AlternativeInterval' ])}</b>
         <div className={styles.dateTimeContainer}>
           <div className={styles.leftCollumn}>
-            {dateFrom}<br />
+            {dateFrom}
+            <br />
             {timeForm}
           </div>
-          <div className={styles.middleCollumn} >
+          <div className={styles.middleCollumn}>
             <i className="fa fa-arrow-right" aria-hidden="true" />
           </div>
           <div className={styles.rightCcollumn}>
-            {dateTo}<br />
+            {dateTo}
+            <br />
             {timeTo}
           </div>
         </div>
@@ -168,7 +176,7 @@ class DateTimeForm extends Component {
 
         {state.garage
         && state.freeInterval
-        && state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true)
+        && !state.garage.floors.some(floor => floor.free_places.length > 0)
         && (
           <CallToActionButton
             label={this.freeIntervalLabel()}
@@ -180,24 +188,30 @@ class DateTimeForm extends Component {
 
 
         {/* Duration Input */}
-        {state.durationDate &&
+        {state.durationDate && (
           <Input
             onChange={actions.durationChange}
             label={t([ 'newReservation', 'duration' ])}
             error={t([ 'newReservation', 'invalidaValue' ])}
             inlineMenu={this.endsInlineMenu()}
-            value={String(moment.duration(moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT))).asHours())}
+            value={String(
+              moment.duration(
+                moment(state.to, MOMENT_DATETIME_FORMAT)
+                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT))
+              )
+                .asHours()
+            )}
             type="number"
             min={0.25}
             step={0.25}
             align="left"
             style="gray"
           />
-        }
+        )}
 
         {/* Recurring reservation */}
         {/* Recurring modal is in newReservationPage because Recurring component contains Form */}
-        {state.reservation === undefined &&
+        {state.reservation === undefined && (
           <div className={`${styles.recurringForm} ${overMonth && styles.hidden}`}>
             <div>
               <Checkbox
@@ -216,7 +230,7 @@ class DateTimeForm extends Component {
               </Checkbox>
             </div>
           </div>
-        }
+        )}
       </div>
     )
   }

@@ -281,7 +281,7 @@ export default connect(
       setRecurringReservationId,
       clearForm
     }, dispatch),
-    interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch),
+    interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
 
   })
 )(ReservationsPage)
