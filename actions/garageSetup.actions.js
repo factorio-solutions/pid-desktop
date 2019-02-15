@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import { get }       from '../helpers/get'
 import * as nav      from '../helpers/navigation'
 import { t }         from '../modules/localization/localization'
@@ -19,6 +19,7 @@ import {
 import { emptyGate, emptyFloor, defaultImage } from '../reducers/garageSetup.reducer'
 import { setGarage, fetchGarages }             from './pageBase.actions'
 
+import IsIe from '../helpers/internetExplorer'
 
 export const GARAGE_SETUP_SET_ID = 'GARAGE_SETUP_SET_ID'
 export const GARAGE_SETUP_SET_SELECTED_FLOOR = 'GARAGE_SETUP_SET_SELECTED_FLOOR'
@@ -85,6 +86,8 @@ export function toggleBookingPage() { return (dispatch, getState) => { dispatch(
 
 export function removeFloor(index) { return (dispatch, getState) => { dispatch(setFloors(update(getState().garageSetup.floors, { $splice: [ [ index, 1 ] ] }))) } }
 export function removeGate(index) { return (dispatch, getState) => { dispatch(setGates(update(getState().garageSetup.gates, { $splice: [ [ index, 1 ] ] }))) } }
+
+const IS_IE = IsIe()
 
 function updateKey(object, key, value) {
   return update(object, { [key]: { $set: value } })
@@ -239,11 +242,11 @@ function createFloor(index) {
     const inRow = Math.floor(Math.sqrt(to - from + 1)) // + 1 // optional + 1
     const inColumn = Math.ceil((to - from + 1) / inRow)
 
-    const padding = 10
+    const padding = 10````
     const canvasWidth = 900
     const canvasHeight = 1350
 
-    const newSVGHead = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="${canvasWidth}px" height="${canvasHeight}px" viewBox="0 0 900 1350" style="enable-background:new 0 0 900 1350;" xml:space="preserve"><style type="text/css">.st0{fill:#B3B3B3;}.st1{fill:#00D3FF;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st2{fill:#E6E6E6;}.st3{fill:#CCCCCC;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st4{fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.75;stroke-miterlimit:10;}.st5{fill:none;stroke:#000000;stroke-miterlimit:10;}.st6{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st7{fill:none;stroke:#000000;stroke-width:7;stroke-miterlimit:10;}.st8{stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st9{stroke:#000000;stroke-miterlimit:10;}.st10{fill:#CCCCCC;}.st11{fill:#8CC63F;}</style><g id="IMGback"><rect style="fill: gray" id="Outside" className="st0" x="0" y="0" width="900" height="1350"/></g><g id="Gcontrol">`
+    const newSVGHead = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="${canvasWidth}px" height="${canvasHeight}px" viewBox="0 0 900 1350" style="enable-background:new 0 0 900 1350;${IS_IE ? `height: ${canvasHeight}px;` : ''}" xml:space="preserve"><style type="text/css">.st0{fill:#B3B3B3;}.st1{fill:#00D3FF;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st2{fill:#E6E6E6;}.st3{fill:#CCCCCC;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st4{fill:#4D4D4D;stroke:#4D4D4D;stroke-width:0.75;stroke-miterlimit:10;}.st5{fill:none;stroke:#000000;stroke-miterlimit:10;}.st6{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st7{fill:none;stroke:#000000;stroke-width:7;stroke-miterlimit:10;}.st8{stroke:#000000;stroke-width:3;stroke-miterlimit:10;}.st9{stroke:#000000;stroke-miterlimit:10;}.st10{fill:#CCCCCC;}.st11{fill:#8CC63F;}</style><g id="IMGback"><rect style="fill: gray" id="Outside" className="st0" x="0" y="0" width="900" height="1350"/></g><g id="Gcontrol">`
     const newSVGEnd = '</g></svg>'
 
     const rectWidth = (canvasWidth - (padding * (inRow + 1))) / inRow

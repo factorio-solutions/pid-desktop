@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from './Button.js'
@@ -33,9 +34,9 @@ export default function MenuButton({ icon, label, ...restOfProps }) {
 }
 
 MenuButton.propTypes = {
-  icon:    React.PropTypes.string,
-  label:   React.PropTypes.string,
-  onClick: React.PropTypes.func,
-  type:    React.PropTypes.string,
-  state:   React.PropTypes.string
+  icon:    PropTypes.string,
+  label:   PropTypes.string,
+  onClick: PropTypes.func,
+  type:    PropTypes.string,
+  state:   PropTypes.string
 }

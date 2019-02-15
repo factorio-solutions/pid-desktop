@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react'
-import defaultStyles                          from './Input.scss'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import defaultStyles from './Input.scss'
 
 
 // this component has to know its state, so it can be passed to the value attribute of input

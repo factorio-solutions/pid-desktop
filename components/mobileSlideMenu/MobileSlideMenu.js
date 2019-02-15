@@ -1,15 +1,27 @@
-import React    from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import styles   from './MobileSlideMenu.scss'
+import MobileSideMenu from '../mobileSideMenu/MobileSideMenu'
 
 
-export default function MobileSlideMenu({ content, show, dimmerClick }) {
+function MobileSlideMenu({ showSlideMenu, dimmerClick, ...props }) {
   return (
     <div>
-      <div onClick={dimmerClick} className={`${styles.dimmer} ${show ? '' : styles.hidden}`} />
-      <div className={`${styles.menu} ${show ? styles.shown : ''}`}>
-        {content}
+      <div
+        className={`${styles.dimmer} ${showSlideMenu ? '' : styles.hidden}`}
+        onClick={dimmerClick}
+      />
+      <div className={`${styles.menu} ${showSlideMenu ? styles.shown : ''}`}>
+        <MobileSideMenu {...props} />
       </div>
     </div>
   )
 }
+
+MobileSlideMenu.propTypes = {
+  showSlideMenu: PropTypes.bool,
+  dimmerClick:   PropTypes.func
+}
+
+export default MobileSlideMenu

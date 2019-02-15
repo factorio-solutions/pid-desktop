@@ -1,4 +1,4 @@
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import { t }         from '../modules/localization/localization'
 import { setError }  from './pageBase.actions'
 import actionFactory from '../helpers/actionFactory'

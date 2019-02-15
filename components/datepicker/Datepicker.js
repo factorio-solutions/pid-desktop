@@ -1,4 +1,5 @@
-import React, { Component, PropTypes }  from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import moment                           from 'moment'
 import { t }                            from '../../modules/localization/localization'
 
@@ -74,7 +75,6 @@ export default class Datepicker extends Component {
         <div className={styles.buttonContainer}>
           <span
             role="button"
-            tabIndex={0}
             onClick={this.todayClick}
           >
             {t([ 'datetimepicker', 'today' ])}

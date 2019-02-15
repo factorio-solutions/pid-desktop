@@ -2,11 +2,18 @@ import React from 'react'
 
 import styles from './SvgFromText.scss'
 
+import IsIe from '../../helpers/internetExplorer'
+
+const internetExplorer = IsIe()
 
 export default function SvgFromText({ identfier, svg, svgClick, rotate }) {
   const setSvgWidth = containerDiv => {
     if (containerDiv) {
-      if (rotate) {
+      if (internetExplorer) {
+        if (containerDiv.children[0]) {
+          containerDiv.children[0].style.height = '1350px'
+        }
+      } else if (rotate) {
         if (containerDiv.children[0]) {
           containerDiv.children[0].style.height = `${containerDiv.getBoundingClientRect().width}px`
         }

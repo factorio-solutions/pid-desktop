@@ -19,3 +19,7 @@ export const GET_RESERVABLE_GARAGES = `query Query($user_id: Id!) {
   }
 }
 `
+
+export const GET_CURRENT_MOBILE_VERSION = `query MobileAppVersion($platform:String) {
+  mobile_app_version(platform: $platform)
+} `

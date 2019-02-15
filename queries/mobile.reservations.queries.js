@@ -10,6 +10,7 @@ export const MOBILE_GET_RESERVATIONS_QUERY = `query MobileReservations($count: I
       name
       client_user{
         secretary
+        internal
       }
     }
     place {

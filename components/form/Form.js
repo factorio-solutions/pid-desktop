@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import RoundButton from '../buttons/RoundButton'
 
@@ -99,7 +100,7 @@ export default class Form extends Component {
             content={<span className="fa fa-check" aria-hidden="true" />}
             onClick={sendReservation}
             type="confirm"
-            state={!submitable && 'disabled'}
+            state={!submitable ? 'disabled' : undefined}
             onDisabledClick={highlightInputs}
           />
         }

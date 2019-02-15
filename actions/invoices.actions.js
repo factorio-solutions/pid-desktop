@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { request }      from '../helpers/request'
+import request      from '../helpers/request'
 import requestPromise   from '../helpers/requestPromise'
 import { downloadCSV }  from '../helpers/downloadCSV'
 import { downloadXLSX } from '../helpers/downloadXLSX'

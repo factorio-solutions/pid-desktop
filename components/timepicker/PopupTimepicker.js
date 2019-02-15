@@ -1,4 +1,5 @@
-import React, { Component, PropTypes }  from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import Timepicker  from './Timepicker'
 import RoundButton from '../buttons/RoundButton'
@@ -38,7 +39,6 @@ export default class PopupTimepicker extends Component {
       <div
         className={`${gray ? styles.popupGray : styles.popup} ${show ? '' : styles.hidden}  ${flip && styles.flip}`}
         ref={div => { this.container = div }}
-        onBlur={okClick}
         tabIndex={0}
       >
         <Timepicker

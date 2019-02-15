@@ -1,4 +1,4 @@
-import { request }     from '../helpers/request'
+import request     from '../helpers/request'
 import actionFactory   from '../helpers/actionFactory'
 import requestPromise  from '../helpers/requestPromise'
 import { initModules } from './admin.modules.actions'
@@ -43,20 +43,25 @@ export function submitIntegration(key) {
   return (dispatch, getState) => {
     const state = getState().adminThirdPartyIntegration
 
-    requestPromise(UPDATE_ALL_PLACES, { places: getPlaces(getState).map(place => ({
-      id:    place.id,
-      [key]: state.places.includes(place.id)
-    })) }).then(() => dispatch(initModules()))
+    requestPromise(UPDATE_ALL_PLACES, {
+      places: getPlaces(getState).map(place => ({
+        id:    place.id,
+        [key]: state.places.includes(place.id)
+      }))
+    })
+      .then(() => dispatch(initModules()))
   }
 }
 
 export function disableIntegration(key) {
   return (dispatch, getState) => {
-    requestPromise(UPDATE_ALL_PLACES, { places: getPlaces(getState).map(place => ({ id: place.id, [key]: false })) })
-    .then(() => {
-      dispatch(initThirdPartyIntegration(key))
-      dispatch(initModules())
+    requestPromise(UPDATE_ALL_PLACES, {
+      places: getPlaces(getState).map(place => ({ id: place.id, [key]: false }))
     })
+      .then(() => {
+        dispatch(initThirdPartyIntegration(key))
+        dispatch(initModules())
+      })
   }
 }
 

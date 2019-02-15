@@ -16,40 +16,45 @@ import {
   MOBILE_NEW_RESERVATION_SET_ALL,
   MOBILE_NEW_RESERVATION_SET_GUEST_RESERVATION,
   MOBILE_NEW_RESERVATION_SET_AVAILABLE_USERS,
-  MOBILE_NEW_RESERVATION_SET_USER_ID
+  MOBILE_NEW_RESERVATION_SET_USER_ID,
+  MOBILE_NEW_RESERVATION_SET_GARAGE,
+  MOBILE_NEW_RESERVATION_SET_MIN_DURATION,
+  MOBILE_NEW_RESERVATION_SET_MAX_DURATION
 } from '../actions/mobile.newReservation.actions'
 import { AVAILABLE_DURATIONS } from '../../reservations/newReservation.page'
 
 const defaultState = {
-  reservation_id: undefined, // the reservation being updated
+  reservation_id: null, // the reservation being updated
 
-  from: undefined,
-  to:   undefined,
+  from: null,
+  to:   null,
 
   fromNow:  true, // marks if  from NOW is selected or not
   duration: AVAILABLE_DURATIONS[0], // if undefined, then other is selected
 
   availableClients: [], // available clients for this reservation
-  client_id:        undefined, // currently selected client
+  client_id:        null, // currently selected client
 
   availableUsers: [], // only in case of guest reservation
-  user_id:        undefined, // only in case of guest reservation
+  user_id:        null, // only in case of guest reservation
 
   availableCars:   [], // cars of currently selected user
-  car_id:          undefined, // selected car id
+  car_id:          null, // selected car id
   carLicencePlate: '', // in case there are no available cars
 
   flexiplace:       false, // Does garage set flexible place?
-  availableFloors:  undefined,
+  availableFloors:  null,
   autoselect:       true,
-  place_id:         undefined, // undefined means no available places
-  guestReservation: false
+  place_id:         null, // undefined means no available places
+  guestReservation: false,
+  garage:           null,
+  minDuration:      null,
+  maxDuration:      null
 }
 
 
 export default function mobileNewReservation(state = defaultState, action) {
   switch (action.type) {
-
     case MOBILE_NEW_RESERVATION_SET_ALL: {
       const { type, ...params } = action
       return {
@@ -159,6 +164,24 @@ export default function mobileNewReservation(state = defaultState, action) {
       return {
         ...state,
         guestReservation: action.value
+      }
+
+    case MOBILE_NEW_RESERVATION_SET_GARAGE:
+      return {
+        ...state,
+        garage: action.value
+      }
+
+    case MOBILE_NEW_RESERVATION_SET_MIN_DURATION:
+      return {
+        ...state,
+        minDuration: action.value
+      }
+
+    case MOBILE_NEW_RESERVATION_SET_MAX_DURATION:
+      return {
+        ...state,
+        maxDuration: action.value
       }
 
     case MOBILE_NEW_RESERVATION_CLEAR_FORM:

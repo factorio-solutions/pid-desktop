@@ -1,4 +1,5 @@
 const MAX_SCANNING_DURATION = 15000 // ms
+const MAX_SCANNING_BETWEEN_DEVICES_TIME = 5000 // ms
 const IS_ANDROID = window.cordova && cordova.platformId === 'android'
 let UNIT_PASSWORD = 'heslo'
 const UNIT_OPEN_SEQUENCE = [ '0xFE', '0xFF', '0x20' ]
@@ -69,7 +70,45 @@ function isScanning() {
 function startScan(name) { // use when you know the device you are looking for
   console.log('scanning for name', name)
   return new Promise((resolve, reject) => {
-    const onDeviceFound = device => device.name && (device.name === name || device.name === 'r' + name) ? resolve(device) : console.log('found', device, 'but i am looking for ', name)
+    let scanTimeout
+    let scanBetweenDevices
+    let found = false
+
+    const onTimeout = async () => {
+      try {
+        await stopScan()
+      } catch (e) {
+        console.log('Scanning cannot be stopped because:', e)
+      }
+
+      reject('Device was not found')
+    }
+
+    const onBetweenDevicesTimeOut = async () => {
+      scanTimeout && clearTimeout(scanTimeout)
+      await onTimeout()
+    }
+
+    const onDeviceFound = async device => {
+      scanBetweenDevices && clearTimeout(scanBetweenDevices)
+
+      if (device.name && (device.name === name || device.name === 'r' + name)) {
+        found = true
+        scanTimeout && clearTimeout(scanTimeout)
+        try {
+          await stopScan()
+          setTimeout(() => resolve(device), 200)
+        } catch (e) {
+          reject(e)
+        }
+      } else {
+        console.log('found', device, 'but i am looking for', name)
+        scanBetweenDevices = !found && setTimeout(
+          onBetweenDevicesTimeOut,
+          MAX_SCANNING_BETWEEN_DEVICES_TIME
+        )
+      }
+    }
 
     const params = {
       allowDuplicates: true, // iOS
@@ -79,8 +118,9 @@ function startScan(name) { // use when you know the device you are looking for
       callbackType:    bluetoothle.CALLBACK_TYPE_ALL_MATCHES
     }
 
+    scanTimeout = setTimeout(onTimeout, MAX_SCANNING_DURATION)
+
     bluetoothle.startScan(onDeviceFound, reject, params)
-    setTimeout(() => reject('Device was not found'), MAX_SCANNING_DURATION)
   })
 }
 
@@ -143,13 +183,14 @@ function closeBLE(address) {
 }
 
 function reconnectErrorHandler(address, error) {
-  console.log('recconect error handling', address, error)
+  console.log('reconnect error handling', address, error)
   return new Promise((resolve, reject) => {
     if (error.error === 'isNotDisconnected') {
       closeBLE(address)
-      .then(() => reconnect(address))
+      .then(() => connectBLE(address))
       .catch(err => reconnectErrorHandler(address, err))
       .catch(reject)
+      .then(resolve)
     } else if (error.error === 'neverConnected') {
       connectBLE(address)
       .then(resolve)
@@ -165,7 +206,7 @@ export function setPassword(pwd) {
   UNIT_PASSWORD = (pwd && pwd.substr(0, 12)) || 'heslo'
 }
 
-export function intialize() {
+export function initialize() {
   console.log('STEP 1: INITIALIZE')
   return new Promise((resolve, reject) => {
     isInitialized()
@@ -183,6 +224,8 @@ export function scan(name) {
   console.log('STEP 2: SCAN')
   return new Promise((resolve, reject) => {
     startScan(name)
+    .then(resolve)
+    .catch(() => startScan(name))
     .catch(reject)
     .then(resolve)
   })

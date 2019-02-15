@@ -1,7 +1,9 @@
 import update from 'immutability-helper'
 import moment from 'moment'
+import { batchActions } from 'redux-batched-actions'
 
-import { request }                           from '../helpers/request'
+import request                           from '../helpers/request'
+import requestPromise                        from '../helpers/requestPromise'
 import { MOMENT_DATETIME_FORMAT, timeToUTC } from '../helpers/time'
 import * as nav                              from '../helpers/navigation'
 import actionFactory                         from '../helpers/actionFactory'
@@ -44,6 +46,7 @@ export const ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGINAL_TO = 'ADMIN_CLIENTS_NEW_CON
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL'
 export const ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS'
 export const ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM = 'ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM'
+export const ADMIN_CLIENTS_NEW_CONTRACT_SET_GENERATE_INVOICE = 'ADMIN_CLIENTS_NEW_CONTRACT_SET_GENERATE_INVOICE'
 
 
 export const setContractId = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID)
@@ -67,6 +70,7 @@ export const setOriginalTo = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_ORIGIN
 export const setRemoveReservationsModal = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS_MODAL)
 export const setRemoveReservations = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_REMOVE_RESERVATIONS)
 export const eraseForm = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_ERASE_FORM)
+export const setGenerateInvoice = actionFactory(ADMIN_CLIENTS_NEW_CONTRACT_SET_GENERATE_INVOICE)
 
 export function setSecurityInterval(value) {
   return {
@@ -131,114 +135,110 @@ export function toggleIndefinitly() {
 
 
 export function initContract(id) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(setContractId(id))
-
-    const onRentsSuccess = response => {
-      dispatch(setRents(response.data.rents))
-      if (response.data.rents.length === 1) {
-        dispatch(setRent(response.data.rents[0]))
-      }
-    }
-
-    const onClientsSuccess = response => {
-      const clients = response.data.garage.contracts.reduce((arr, contracts) => {
-        if (arr.find(client => client.id === contracts.client.id) === undefined) {
-          arr.push(contracts.client)
-        }
-        return arr
-      }, getState().clients.clients || []) // will find unique clients, start with clients from clients page
-
-      dispatch(setClients(clients))
-      if (clients.length === 1) { dispatch(setClient(clients[0].id)) }
-    }
-
-    const onDetailsSuccess = response => {
-      const to = moment(response.data.contract.to)
-      dispatch(setFrom(moment(response.data.contract.from).format(MOMENT_DATETIME_FORMAT), false))
-      // if (to.year() === 9999) { // then is infinite
-      //   dispatch(setIndefinitly(true))
-      //   dispatch(setOriginalIndefinitly(true))
-      //   // dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
-      // } else {
-      const isIndefinite = to.year() === 9999
-      dispatch(setIndefinitly(isIndefinite))
-      dispatch(setOriginalIndefinitly(isIndefinite))
-      dispatch(setTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : '', false))
-      dispatch(setOriginalTo(response.data.contract.to ? moment(response.data.contract.to).format(MOMENT_DATETIME_FORMAT) : ''))
-      // }
-      dispatch(setClient(response.data.contract.client.id))
-      dispatch(setPlaces(response.data.contract.places))
-      dispatch(getGarage(response.data.contract.garage.id))
-      dispatch(setClient(response.data.contract.client.id))
-      dispatch(setRent(response.data.contract.rent))
-      dispatch(setPlaces(response.data.contract.places))
-      dispatch(setOriginalPlaces(response.data.contract.places))
-      dispatch(setSecurityInterval(response.data.contract.security_interval))
-    }
-
     const garageId = getState().pageBase.garage
     if (!id) {
       dispatch(setFrom(moment().startOf('day'), false))
       dispatch(setTo(moment().endOf('day'), false))
       dispatch(getGarage(garageId)) // if id, then i have to download garage from contract, not this one
     }
-    request(onRentsSuccess, GET_RENTS)
-    if (garageId) request(onClientsSuccess, GARAGE_CONTRACTS, { id: garageId })
-    if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, { id: +id })
+    const { rents } = await requestPromise(GET_RENTS)
+
+    dispatch(setRents(rents))
+    if (rents.length === 1) {
+      dispatch(setRent(rents[0]))
+    }
+
+    const clientsPromise = garageId && requestPromise(GARAGE_CONTRACTS, { id: garageId })
+    const detailsPromise = id && requestPromise(GET_CONTRACT_DETAILS, { id: +id })
+
+    const [ clientsData, detailsData ] = [
+      await clientsPromise,
+      await detailsPromise
+    ]
+
+    const clients = clientsData && clientsData.garage.contracts.reduce((arr, contracts) => {
+      if (arr.find(client => client.id === contracts.client.id) === undefined) {
+        arr.push(contracts.client)
+      }
+      return arr
+    }, getState().clients.clients || []) // will find unique clients, start with clients from clients page
+
+    dispatch(setClients(clients))
+    if (clients && clients.length === 1) { dispatch(setClient(clients[0].id)) }
+
+    if (detailsData) {
+      const to = moment(detailsData.contract.to)
+      const isIndefinite = to.year() === 9999
+      dispatch(setFrom(moment(detailsData.contract.from).format(MOMENT_DATETIME_FORMAT), false))
+      dispatch(setTo(detailsData.contract.to ? moment(detailsData.contract.to).format(MOMENT_DATETIME_FORMAT) : '', false))
+      dispatch(batchActions([
+        setIndefinitly(isIndefinite),
+        setOriginalIndefinitly(isIndefinite),
+        setOriginalTo(detailsData.contract.to ? moment(detailsData.contract.to).format(MOMENT_DATETIME_FORMAT) : '')
+      ], 'ADMIN_CLIENTS_NEW_CONTRACT_INIT_CONTRACT_BATCH_1'))
+
+      dispatch(getGarage(detailsData.contract.garage.id))
+
+      dispatch(batchActions([
+        setPlaces(detailsData.contract.places),
+        setClient(detailsData.contract.client.id),
+        setRent(detailsData.contract.rent),
+        setPlaces(detailsData.contract.places),
+        setOriginalPlaces(detailsData.contract.places),
+        setSecurityInterval(detailsData.contract.security_interval),
+        setGenerateInvoice(detailsData.contract.generate_invoice)
+      ], 'ADMIN_CLIENTS_NEW_CONTRACT_INIT_CONTRACT_BATCH_2'))
+    }
+
+    // if (garageId) request(onClientsSuccess, GARAGE_CONTRACTS, { id: garageId })
+    // if (id) request(onDetailsSuccess, GET_CONTRACT_DETAILS, { id: +id })
   }
 }
 
 export function getGarage(garageId) {
-  const removeFromArray = (array, index) => {
-    return array.slice(0, index).concat(array.slice(index + 1))
-  }
-
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState().newContract
-    const onSuccess = response => {
-      // It is like that because removePlace() work weird in map callback bellow
-      let places = state.places
-      dispatch(setGarage({
-        ...response.data.garage,
-        floors: response.data.garage.floors.map(floor => ({
-          ...floor,
-          places: floor.places.map(place => {
-            const available = floor.contractable_places.find(p => p.id === place.id) !== undefined
-            // !state.contract_id is here for legacy reasons
-            // when a client has more then one contract at the same time.
-            if (!available && !state.contract_id) {
-              const index = places.findIndex(p => p.id === place.id)
-              if (index > -1) {
-                places = removeFromArray(places, index)
-              }
-            }
-            return {
-              ...place,
-              available,
-              // contracts: response.garage.clients.filter(client => client.contracts.find(contract => contract.places.find(p => p.id === place.id))),
-              contracts: response.data.garage.clients.reduce((acc, client) => {
-                let contracts = client.contracts.filter(contract => contract.places.find(p => p.id === place.id))
-                contracts = contracts.map(contract => ({ ...contract, client }))
-                return acc.concat(contracts)
-              }, [])
-            }
-          })
-        }))
-      }))
-      dispatch(setPlaces(places))
-    }
 
-    request(
-      onSuccess,
-      GET_GARAGE_CLIENT,
-      { garage_id:   +garageId,
-        begins_at:   state.from,
-        ends_at:     state.to,
-        client_id:   +state.client_id,
-        contract_id: +state.contract_id
-      }
-    )
+    const { garage } = await requestPromise(GET_GARAGE_CLIENT, {
+      garage_id:   +garageId,
+      begins_at:   state.from,
+      ends_at:     state.to,
+      client_id:   +state.client_id,
+      contract_id: +state.contract_id
+    })
+
+    const { places: statePlaces, contract_id: contractId } = getState().newContract
+    // It is like that because removePlace() work weird in map callback bellow
+    let places = statePlaces
+    dispatch(setGarage({
+      ...garage,
+      floors: garage.floors.map(floor => ({
+        ...floor,
+        places: floor.places.map(place => {
+          const available = floor.contractable_places.some(p => p.id === place.id)
+          // !state.contract_id is here for legacy reasons
+          // when a client has more then one contract at the same time.
+          if (!available && !contractId) {
+            places = places.filter(p => p.id !== place.id)
+          }
+          return {
+            ...place,
+            available,
+            // contracts: response.garage.clients.filter(client => client.contracts.find(contract => contract.places.find(p => p.id === place.id))),
+            contracts: garage.clients.reduce((acc, client) => {
+              const contracts = client.contracts
+                .filter(contract => contract.places.some(p => p.id === place.id))
+                .map(contract => ({ ...contract, client }))
+              return acc.concat(contracts)
+            }, [])
+          }
+        })
+      }))
+    }))
+
+    dispatch(setPlaces(places))
   }
 }
 
@@ -276,7 +276,8 @@ export function addClient() {
       }
     }
 
-    request(onSuccess,
+    request(
+      onSuccess,
       ADD_CLIENT,
       { token: getState().newContract.client_token }
     )
@@ -310,7 +311,8 @@ export function submitNewContract(id) {
         contract_places:   state.places.map(place => ({ place_id: place.id })),
         from:              timeToUTC(state.from),
         to:                state.indefinitly ? null : timeToUTC(state.to),
-        security_interval: state.securityInterval
+        security_interval: state.securityInterval,
+        generate_invoice:  state.generateInvoice
       }
     }
 
