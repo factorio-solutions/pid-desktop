@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import PageBase          from '../_shared/containers/pageBase/PageBase'
 import Dropdown          from '../_shared/components/dropdown/Dropdown'
@@ -28,7 +29,7 @@ const UPDATE_EVERY_X_MINUTES = 3
 class OccupancyPage extends Component {
   static propTypes = {
     state:                 PropTypes.object,
-    pageBase:              PropTypes.object,
+    currentUser:           PropTypes.object,
     actions:               PropTypes.object,
     newReservationActions: PropTypes.object
   }
@@ -51,19 +52,19 @@ class OccupancyPage extends Component {
   setNow = () => this.props.actions.setFrom(moment().startOf('day'))
 
   submitNewReservation = () => {
-    const { state, newReservationActions } = this.props
-    newReservationActions.clearForm()
+    const { state, newReservationActions: newResActions, actions } = this.props
+    newResActions.clearForm()
     nav.to('/reservations/newReservation')
-    this.props.actions.unsetNewReservation()
+    actions.unsetNewReservation()
 
-    newReservationActions.setFrom(state.newReservation.from)
-    newReservationActions.setTo(state.newReservation.to)
-    newReservationActions.setPreferedGarageId(state.garage.id)
-    newReservationActions.setPreferedPlaceId(state.newReservation.placeId)
+    newResActions.setFrom(state.newReservation.from)
+    newResActions.setTo(state.newReservation.to)
+    newResActions.setPreferedGarageId(state.garage.id)
+    newResActions.setPreferedPlaceId(state.newReservation.placeId)
   }
 
   render() {
-    const { state, pageBase, actions } = this.props
+    const { state, currentUser, actions } = this.props
     const { garage } = state
 
     const clientDropdown = () => {
@@ -71,8 +72,17 @@ class OccupancyPage extends Component {
 
       return state.clients.map((client, index) => ({
         label:       client.name,
-        representer: o => <span>{client.id && state.client_ids.includes(client.id) && <i className="fa fa-check" aria-hidden="true" />}{o}</span>,
-        onClick:     () => clientSelected(index)
+        representer: o => (
+          <span>
+            {
+              client.id
+              && state.client_ids.includes(client.id)
+              && <i className="fa fa-check" aria-hidden="true" />
+            }
+            {o}
+          </span>
+        ),
+        onClick: () => clientSelected(index)
       }))
     }
 
@@ -82,33 +92,53 @@ class OccupancyPage extends Component {
         .map(place => ({
           ...place,
           floor:        floor.label,
-          reservations: state.client_ids.length ?
-            place.reservations_in_interval.filter(reservation => reservation.client && state.client_ids.includes(reservation.client.id)) :
-            place.reservations_in_interval
-        }))
-      )
+          reservations: state.client_ids.length
+            ? place.reservations_in_interval
+              .filter(reservation => (
+                reservation.client
+                && state.client_ids.includes(reservation.client.id)
+              ))
+            : place.reservations_in_interval
+        })))
     }
 
     const filters = [
-      <TabButton label={t([ 'newReservation', 'now' ])} onClick={this.setNow} />,
-      <TabButton label={t([ 'occupancy', 'day' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />,
-      <TabButton label={t([ 'occupancy', 'week' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />,
-      <TabButton label={t([ 'occupancy', 'month' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
+      <TabButton
+        label={t([ 'newReservation', 'now' ])}
+        onClick={this.setNow}
+      />,
+      <TabButton
+        label={t([ 'occupancy', 'day' ])}
+        onClick={actions.dayClick}
+        state={state.duration === 'day' && 'selected'}
+      />,
+      <TabButton
+        label={t([ 'occupancy', 'week' ])}
+        onClick={actions.weekClick}
+        state={state.duration === 'week' && 'selected'}
+      />,
+      <TabButton
+        label={t([ 'occupancy', 'month' ])}
+        onClick={actions.monthClick}
+        state={state.duration === 'month' && 'selected'}
+      />
     ]
 
     const clientSelector = [
       <Dropdown
-        label={t([ 'occupancy', 'selectClientClient' ])}
+        placeholder={t([ 'occupancy', 'selectClientClient' ])}
         content={clientDropdown()}
         style="tabDropdown"
         selected={state.clients.findIndex(client => client.id === state.client_ids[0])}
         filter
-        icon={ state.client_ids.length
-          ? <IconWithCount
-            icon="fa fa-filter"
-            count={state.client_ids.length}
-            type="light"
-          />
+        icon={state.client_ids.length
+          ? (
+            <IconWithCount
+              icon="fa fa-filter"
+              count={state.client_ids.length}
+              type="light"
+            />
+          )
           : undefined
         }
       />,
@@ -117,10 +147,12 @@ class OccupancyPage extends Component {
       </div>
     ]
 
-    const placeForNewReservation = garage &&
-      state.newReservation &&
-        garage.floors.reduce(preparePlaces, []).findById(state.newReservation.placeId)
-    
+    const placeForNewReservation = (
+      garage
+      && state.newReservation
+      && garage.floors.reduce(preparePlaces, []).findById(state.newReservation.placeId)
+    )
+
     return (
       <PageBase>
         <Modal show={state.newReservation}>
@@ -140,8 +172,9 @@ class OccupancyPage extends Component {
                   <tr>
                     <td>{t([ 'occupancy', 'place' ])}</td>
                     <td>
-                    {placeForNewReservation && placeForNewReservation.floor}/
-                    {placeForNewReservation && placeForNewReservation.label}
+                      {placeForNewReservation && placeForNewReservation.floor}
+                      {'/'}
+                      {placeForNewReservation && placeForNewReservation.label}
                     </td>
                   </tr>
                   <tr>
@@ -174,22 +207,62 @@ class OccupancyPage extends Component {
           <OccupancyOverview
             places={garage ? garage.floors.reduce(preparePlaces, []) : []}
             from={state.from}
-            showDetails={garage && (garage.user_garage && (garage.user_garage.admin || garage.user_garage.manager || garage.user_garage.receptionist || garage.user_garage.security))}
+            showDetails={
+              garage
+              && (
+                garage.user_garage
+                && (
+                  garage.user_garage.admin
+                  || garage.user_garage.manager
+                  || garage.user_garage.receptionist
+                  || garage.user_garage.security
+                )
+              )
+            }
             duration={state.duration}
             resetClientClick={actions.resetClientClick}
             loading={!state.garages.length || state.loading}
             onReservationClick={this.onReservationClick}
+            currentUser={currentUser}
+            setNewReservation={actions.setNewReservation}
           />
         </div>
 
-        <div className={`${styles.controlls} ${pageBase.current_user && !pageBase.current_user.hint && styles.rightOffset}`}>
-          <div> <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={actions.subtract} /> </div>
-          <div className={`${styles.flex} ${styles.hideOnSmallDisplays}`}>
-            <RoundButton content={t([ 'occupancy', 'dayShortcut' ])} onClick={actions.dayClick} state={state.duration === 'day' && 'selected'} />
-            <RoundButton content={t([ 'occupancy', 'weekShortcut' ])} onClick={actions.weekClick} state={state.duration === 'week' && 'selected'} />
-            <RoundButton content={t([ 'occupancy', 'monthShortcut' ])} onClick={actions.monthClick} state={state.duration === 'month' && 'selected'} />
+        <div
+          className={[
+            styles.controlls,
+            currentUser && !currentUser.hint && styles.rightOffset
+          ].join(' ')}
+        >
+          <div>
+            <RoundButton
+              content={<span className="fa fa-chevron-left" aria-hidden="true" />}
+              onClick={actions.subtract}
+            />
           </div>
-          <div> <RoundButton content={<span className="fa fa-chevron-right" aria-hidden="true" />} onClick={actions.add} /> </div>
+          <div className={`${styles.flex} ${styles.hideOnSmallDisplays}`}>
+            <RoundButton
+              content={t([ 'occupancy', 'dayShortcut' ])}
+              onClick={actions.dayClick}
+              state={state.duration === 'day' && 'selected'}
+            />
+            <RoundButton
+              content={t([ 'occupancy', 'weekShortcut' ])}
+              onClick={actions.weekClick}
+              state={state.duration === 'week' && 'selected'}
+            />
+            <RoundButton
+              content={t([ 'occupancy', 'monthShortcut' ])}
+              onClick={actions.monthClick}
+              state={state.duration === 'month' && 'selected'}
+            />
+          </div>
+          <div>
+            <RoundButton
+              content={<span className="fa fa-chevron-right" aria-hidden="true" />}
+              onClick={actions.add}
+            />
+          </div>
         </div>
       </PageBase>
     )
@@ -197,7 +270,10 @@ class OccupancyPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.occupancy, pageBase: state.pageBase }),
+  state => ({
+    state:       state.occupancy,
+    currentUser: state.pageBase.current_user
+  }),
   dispatch => ({
     actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
     newReservationActions: bindActionCreators(newReservationActions, dispatch)

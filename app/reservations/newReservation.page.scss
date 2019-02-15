@@ -1,6 +1,8 @@
 @import '../_styles/app.desktop';
 
 $priceFontSize: 30px;
+$expenseOnFontSize: 20px;
+$expenseOnPadding: (($priceFontSize + 4 - $expenseOnFontSize) / 2);
 
 .padding {
   padding-top:   30px;
@@ -191,20 +193,20 @@ $priceFontSize: 30px;
   }
 }
 
-.placeLabelArea {
-  @extend .textArea;
-  text-align:       center;
-  background-color: transparent;
-  >textarea {
-    vertical-align: center;
-    font-size:      35px;
-    font-weight:    bold;
-    resize:         none;
-    padding:        0;
+.label {
+  left:        5px;
+  font-size:   11px;
+  white-space: nowrap;
+  min-height:  14px;
+  width:       100%;
+  text-align:  left;
+  position:    relative;
+}
 
-    background-color: transparent;
-    text-align:       center;
-  }
+.placeLabel {
+  font-size:      35px;
+  font-weight:    bold;
+  text-align:     center;
 }
 
 .displayNone {
@@ -215,19 +217,36 @@ $priceFontSize: 30px;
   font-size: $priceFontSize;
   font-weight: 600;
   display: flex;
+  text-align: center;
 }
 
 .priceTag {
   min-width: 10em;
 }
 
-.expenseOn{
-  font-size: 20px;
+.expenseOn {
+  font-size:   $expenseOnFontSize;
   font-weight: normal;
-  line-height: $priceFontSize + 4px;
+  line-height: $expenseOnFontSize;
+  padding: $expenseOnPadding 0px;
   margin-left: 10px;
+  text-align: center;
 }
 
 .smsText {
   height: 10em;
+}
+
+.showMap {
+  >button {
+    text-align: center;
+    width:      100%;
+    margin:     0em;
+  }
+}
+
+.actionButton {
+  >button {
+    padding: 0.5em 0.7em;
+  }
 }

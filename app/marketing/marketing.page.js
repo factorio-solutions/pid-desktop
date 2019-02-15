@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import Map, { Marker }                 from 'google-maps-react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import Map, { Marker } from 'google-maps-react'
 
 import Logo     from '../_shared/components/logo/Logo'
 import Carousel from '../_shared/components/carousel/Carousel'
@@ -21,7 +22,7 @@ class MarketingPage extends Component {
   }
 
   static contextTypes = {
-    router: React.PropTypes.object
+    router: PropTypes.object
   }
 
   componentDidMount() {

@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import ModulesPageBase from './components/modulesPageBase'
 import GarageLayout    from '../../_shared/components/garageLayout/GarageLayout'
@@ -89,7 +90,7 @@ class GoInternalPage extends Component {
               />
               <div>
                 <Dropdown
-                  label={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
+                  placeholder={t([ 'newPricing', 'selectCurrency' ]) + ' *'}
                   content={currencies()}
                   style="light"
                   selected={state.currencies.findIndexById(state.currency_id)}

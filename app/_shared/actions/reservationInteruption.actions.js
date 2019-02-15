@@ -24,15 +24,15 @@ export const formatTo = actionFactory(RESERVATION_INTERUPTION_FORMAT_TO)
 function generalReservationInteruption(callback, id, from, to) {
   return dispatch => {
     request(INTERUPT_RESERVATION, { id, from, to })
-    .then(() => {
-      if (mobile) {
-        dispatch(setReservation())
-        callback()
-      } else {
-        dispatch(initReservations())
-        dispatch(setReservation())
-      }
-    })
+      .then(() => {
+        if (mobile) {
+          dispatch(setReservation())
+          callback()
+        } else {
+          dispatch(initReservations())
+          dispatch(setReservation())
+        }
+      })
   }
 }
 

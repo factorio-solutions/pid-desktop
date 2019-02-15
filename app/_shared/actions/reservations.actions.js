@@ -1,5 +1,5 @@
 import actionFactory                  from '../helpers/actionFactory'
-import { request }                    from '../helpers/request'
+import request                    from '../helpers/request'
 import requestPromise                 from '../helpers/requestPromise'
 import { parseParameters }            from '../helpers/parseUrlParameters'
 import { download, downloadMultiple } from '../helpers/download'
@@ -101,10 +101,10 @@ export function payReservation(reservation) {
 }
 
 export function editReservationNote() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const state = getState().reservations
     // HACK: place_id has to be sent, because of how update function works.
-    requestPromise(
+    await requestPromise(
       UPDATE_RESERVATION,
       {
         id:          state.newNoteReservation.id,
@@ -113,9 +113,8 @@ export function editReservationNote() {
           place_id: state.newNoteReservation.place.id
         }
       }
-    ).then(() => {
-      dispatch(setNewNoteReservation())
-      dispatch(initReservations())
-    })
+    )
+    dispatch(setNewNoteReservation())
+    dispatch(initReservations())
   }
 }

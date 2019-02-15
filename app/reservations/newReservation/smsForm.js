@@ -1,6 +1,7 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Dropdown from '../../_shared/components/dropdown/Dropdown'
 import Checkbox from '../../_shared/components/checkbox/Checkbox'
@@ -68,7 +69,8 @@ class SmsForm extends Component {
             {state.sendSMS &&
               <div className={styles.smsTemplates}>
                 <Dropdown
-                  label={t([ 'newReservation', 'selectTemplate' ])}
+                  label={t([ 'newReservation', 'smsTemplateLabel' ])}
+                  placeholder={t([ 'newReservation', 'selectTemplate' ])}
                   content={state.user.availableClients.findById(state.client_id).sms_templates.map((template, index) => ({
                     label:   template.name,
                     onClick: () => actions.setSelectedTemplate(index, template.template)

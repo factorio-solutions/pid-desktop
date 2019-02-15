@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from './Button.js'
@@ -36,11 +37,11 @@ export default function MobileMenuButton({ icon, label, ...restOfProps }) {
 }
 
 MobileMenuButton.propTypes = {
-  icon:     React.PropTypes.string,
-  label:    React.PropTypes.string,
-  onClick:  React.PropTypes.func,
-  type:     React.PropTypes.string,
-  state:    React.PropTypes.string,
-  size:     React.PropTypes.string,
-  question: React.PropTypes.string
+  icon:     PropTypes.string,
+  label:    PropTypes.string,
+  onClick:  PropTypes.func,
+  type:     PropTypes.string,
+  state:    PropTypes.string,
+  size:     PropTypes.string,
+  question: PropTypes.string
 }

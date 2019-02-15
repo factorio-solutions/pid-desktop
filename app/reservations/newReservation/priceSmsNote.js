@@ -1,8 +1,9 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import TextArea          from '../../_shared/components/input/TextArea'
+import Input          from '../../_shared/components/input/Input'
 import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeader'
 import Uneditable        from '../../_shared/components/input/Uneditable'
 import SmsForm           from './smsForm'
@@ -18,6 +19,8 @@ import {
 import { t } from '../../_shared/modules/localization/localization'
 
 import styles         from '../newReservation.page.scss'
+
+import inputStyles from '../../_shared/components/input/ReservationInput.scss'
 
 class PriceSmsNote extends Component {
   static propTypes = {
@@ -45,63 +48,70 @@ class PriceSmsNote extends Component {
         return acc || floor.places.find(p => p.id === state.place_id)
       }, undefined)
       // Place.pricing.currency.symbol
-      if (place && place.pricing) {
+      if (place && place.pricing && place.pricing.currency) {
         price += ` ${place.pricing.currency.symbol}`
       }
     }
 
     let expenseOn
 
-    if (!state.client_id) {
+    if (!state.client_id || state.paidByHost) {
       expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
     } else if (!isPlaceGoInternal(state)) {
       expenseOn = t([ 'newReservation', 'longtermRent' ])
-    } else if (state.paidByHost) {
-      expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
     } else {
       expenseOn = t([ 'newReservation', 'onClientsExpenses' ])
     }
 
     return (
       <div>
-        {state.garage &&
+        {state.garage
+        && (
           <SectionWithHeader header={t([ 'newReservation', 'priceAndOthers' ])}>
             {/* Price */}
-            {selectedClient && selectedClient.is_time_credit_active &&
-            isPlaceGoInternal(state) ?
-              <Uneditable
-                label={t([ 'newReservation', 'price' ])}
-                highlight={state.highlight && outOfTimeCredit}
-                value={`${state.timeCreditPrice} /
-                  ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
-                  ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
-                `}
-              /> :
-              <div className={styles.price}>
-                <div className={`${styles.floatLeft} ${styles.priceTag}`} >
-                  {`${t([ 'newReservation', 'price' ])} ${price}`}
+            {selectedClient && selectedClient.is_time_credit_active
+            && isPlaceGoInternal(state)
+              ? (
+                <Uneditable
+                  label={t([ 'newReservation', 'price' ])}
+                  highlight={state.highlight && outOfTimeCredit}
+                  value={`${state.timeCreditPrice} /
+                    ${selectedClient[state.paidByHost ? 'current_time_credit' : 'current_users_current_time_credit']}
+                    ${selectedClient.time_credit_currency || t([ 'newClient', 'timeCredit' ])}
+                  `}
+                />
+              )
+              : (
+                <div className={`${styles.price} ${styles.dateTimeContainer}`}>
+                  <div className={` ${styles.priceTag} ${styles.leftCollumn}`}>
+                    {`${t([ 'newReservation', 'price' ])} ${price}`}
+                  </div>
+                  <div className={styles.middleCollumn} />
+                  <div className={` ${styles.expenseOn} ${styles.rightCcollumn}`}>
+                    {expenseOn}
+                  </div>
                 </div>
-
-                <div className={`${styles.floatRight} ${styles.expenseOn}`} >
-                  {expenseOn}
-                </div>
-              </div>
+              )
             }
             {/* SMS */}
-            {state.user &&
+            {state.user
+            && (
               <SmsForm
                 accentRegex={accentRegex}
                 selectedClient={selectedClient}
               />
+            )
             }
             {/* Note */}
-            <TextArea
+            <Input
               placeholder={t([ 'newReservation', 'notePlaceholder' ])}
               onChange={actions.setNote}
               label={t([ 'newReservation', 'note' ])}
               value={state.note}
+              style={inputStyles}
             />
           </SectionWithHeader>
+        )
         }
       </div>
     )
@@ -110,8 +120,9 @@ class PriceSmsNote extends Component {
 
 export default connect(
   state => ({ state: state.newReservation }),
-  dispatch => ({ actions: bindActionCreators({
-    setNote
-  }, dispatch)
+  dispatch => ({
+    actions: bindActionCreators({
+      setNote
+    }, dispatch)
   })
 )(PriceSmsNote)

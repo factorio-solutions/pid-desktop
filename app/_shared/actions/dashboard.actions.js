@@ -1,4 +1,4 @@
-import { request }  from '../helpers/request'
+import request  from '../helpers/request'
 
 import { INIT_DASHBOARD, INIT_GARAGE } from '../queries/dashboard.queries'
 

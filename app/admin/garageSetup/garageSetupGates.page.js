@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
@@ -153,7 +154,7 @@ class GarageSetupGatesPage extends Component {
           <div className={styles.phoneNumberDropdown}>
             <label>{t([ 'newGarage', 'selcetNumber' ])}</label>
             <Dropdown
-              label={t([ 'newGarage', 'selcetNumber' ])}
+              placeholder={t([ 'newGarage', 'selcetNumber' ])}
               content={availableNumbers.map(availableNumbersDropdown)}
               selected={availableNumbers.findIndexById(gate.phone_number_id)}
               style="garageSetupGates"

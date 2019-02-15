@@ -1,4 +1,4 @@
-import { request }        from '../helpers/request'
+import request        from '../helpers/request'
 import { t, getLanguage } from '../modules/localization/localization'
 import actionFactory      from '../helpers/actionFactory'
 

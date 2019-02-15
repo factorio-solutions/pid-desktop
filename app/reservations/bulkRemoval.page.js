@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import PageBase           from '../_shared/containers/pageBase/PageBase'
 import Checkbox           from '../_shared/components/checkbox/Checkbox'
@@ -106,7 +107,7 @@ class BulkRemovalReservationPage extends Component {
           {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
             <div>
               <Dropdown
-                label={t([ 'newReservation', 'selectUser' ]) + ' *'}
+                placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
                 content={this.userDropdown()}
                 selected={state.availableUsers.findIndexById(state.userId)}
                 highlight={state.highlight}

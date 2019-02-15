@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
@@ -35,7 +36,8 @@ class PageBase extends Component {
       { label: t([ 'pidAdmin', 'pageBase', 'news' ]), key: 'news', icon: 'fa fa-newspaper-o', onClick: () => nav.to('/pid-admin/news') },
       { label: t([ 'pidAdmin', 'pageBase', 'finance' ]), key: 'finance', icon: 'fa fa-money', onClick: () => nav.to('/pid-admin/finance') },
       { label: t([ 'pageBase', 'Activity log' ]), key: 'logs', icon: 'fa fa-file-text', onClick: () => nav.to('/pid-admin/logs') },
-      { label: t([ 'pidAdmin', 'pageBase', 'garagesOverview' ]), key: 'garages', icon: 'icon-garage', onClick: () => nav.to('/pid-admin/garagesOverview') }
+      { label: t([ 'pidAdmin', 'pageBase', 'garagesOverview' ]), key: 'garages', icon: 'icon-garage', onClick: () => nav.to('/pid-admin/garagesOverview') },
+      { label: t([ 'pidAdmin', 'pageBase', 'mobileAppVersion' ]), key: 'mobileAppVersion', icon: 'fa fa-mobile', onClick: () => nav.to('/pid-admin/mobileAppVersion') }
     ]
 
     const profileDropdown = [

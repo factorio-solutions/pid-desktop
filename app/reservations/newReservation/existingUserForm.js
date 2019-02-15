@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Input    from '../../_shared/components/input/Input'
 import Dropdown from '../../_shared/components/dropdown/Dropdown'
@@ -45,11 +46,12 @@ class ExistingUserForm extends Component {
           /> :
           <Dropdown
             editable={editable}
-            label={`${t([ 'newReservation', 'selectCar' ])} *`}
+            placeholder={`${t([ 'newReservation', 'selectCar' ])} *`}
             content={this.carDropdown()}
             selected={state.user && state.user.reservable_cars && state.user.reservable_cars.findIndexById(state.car_id)}
             style="reservation"
             highlight={state.highlight}
+            label={`${t([ 'newReservation', 'selectCarLabel' ])} *`}
           />
         }
       </div>

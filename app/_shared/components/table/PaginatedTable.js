@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import Table from './Table'
 import RoundButton from '../buttons/RoundButton'
@@ -172,6 +173,7 @@ export default class PaginatedTable extends Component {
           filterClick={filterClick}
           selectId={findId}
           searchBar
+          dontFilter
         />
         <div>
           <RoundButton

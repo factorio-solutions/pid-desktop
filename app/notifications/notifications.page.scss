@@ -7,3 +7,16 @@
 .expiration{
   margin-top: 10px;
 }
+
+.reservationInfo {
+  margin-top: 0.5em;
+  border: none;
+  border-collapse: collapse;
+
+  tr > td {
+    padding: 0.5em;
+    border-left: 1px solid #000;
+  }
+
+  tr > td:first-child { border-left: none }
+}

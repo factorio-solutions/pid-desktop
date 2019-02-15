@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import PageBase              from '../../_shared/containers/pageBase/PageBase'
 import LabeledRoundButton    from '../../_shared/components/buttons/LabeledRoundButton'
@@ -173,7 +174,7 @@ class InvoicesPage extends Component {
       <TabButton label={t([ 'notifications', 'current' ])} onClick={() => actions.setPast(false)} state={!state.past && 'selected'} />,
       <div className={styles.dropdownsContainer}>
         <Dropdown
-          label={t([ 'invoices', 'selectClient' ])}
+          placeholder={t([ 'invoices', 'selectClient' ])}
           content={clientDropdown()}
           selected={state.clients.findIndexById(state.client_id)}
           style="tabDropdown"

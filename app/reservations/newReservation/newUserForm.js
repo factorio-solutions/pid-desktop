@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Input        from '../../_shared/components/input/Input'
 import PatternInput from '../../_shared/components/input/PatternInput'
@@ -21,7 +22,8 @@ import normalizeEmail          from '../../_shared/helpers/normalizeEmail'
 
 import {
   languagesSelector,
-  searchField
+  searchField,
+  actionButton
 } from '../newReservation.page.scss'
 
 import reservationStyles from '../../_shared/components/input/ReservationInput.scss'
@@ -58,6 +60,19 @@ class NewUserForm extends Component {
 
   render() {
     const { state, actions, editable, onetime, resetButton } = this.props
+
+    let userType
+
+    if (state.user.id === -1) {
+      if (state.user.rights.internal) {
+        userType = 'internal'
+      } else {
+        userType = 'host'
+      }
+    } else {
+      userType = 'visitor'
+    }
+
     return (
       <div>
         <div className={searchField}>
@@ -65,14 +80,7 @@ class NewUserForm extends Component {
           <PatternInput
             readOnly={!onetime && (state.user && state.user.id > -1)}
             onChange={actions.setHostName}
-            label={`${t([
-              'newReservation',
-              state.user.id === -1
-                ? state.user.rights.internal
-                  ? 'internalsName'
-                  : 'hostsName'
-                : 'visitorsName'
-            ])} *`}
+            label={`${t([ 'newReservation', `${userType}sName` ])} *`}
             error={t([ 'signup_page', 'nameInvalid' ])}
             pattern="^(?!\s*$).+"
             value={state.name.value}
@@ -86,14 +94,7 @@ class NewUserForm extends Component {
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostEmail}
           label={`
-            ${t([
-              'newReservation',
-              state.user.id === -1
-                ? state.user.rights.internal
-                  ? 'internalsEmail'
-                  : 'hostsEmail'
-                : 'visitorsEmail'
-            ])}
+            ${t([ 'newReservation', `${userType}sEmail` ])}
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
@@ -109,14 +110,7 @@ class NewUserForm extends Component {
           readOnly={onetime || (state.user && state.user.id > -1)}
           onChange={actions.setHostPhone}
           label={`
-            ${t([
-              'newReservation',
-              state.user.id === -1
-                ? state.user.rights.internal
-                  ? 'internalsPhone'
-                  : 'hostsPhone'
-                : 'visitorsPhone'
-            ])}
+            ${t([ 'newReservation', `${userType}sPhone` ])}
             ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
@@ -138,7 +132,7 @@ class NewUserForm extends Component {
           align="left"
           style={reservationStyles}
         />
-        <div className={languagesSelector}>
+        <div className={`${languagesSelector} ${actionButton}`}>
           <h4 style={{ fontWeight: 'normal', margin: '0' }}>{t([ 'newReservation', 'languageSelector' ])}</h4>
           {AVAILABLE_LANGUAGES.map(this.renderLanguageButton)}
         </div>

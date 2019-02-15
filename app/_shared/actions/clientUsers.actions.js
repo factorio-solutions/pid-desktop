@@ -1,9 +1,14 @@
-import { request } from '../helpers/request'
+import request from '../helpers/request'
 import { t } from '../modules/localization/localization'
 import { setError, setSuccess } from './pageBase.actions'
 import { clearForm } from './newReservation.actions'
 
-import { GET_CLIENTUSERS, UPDATE_CLIENTUSERS, DESTROY_CLIENTUSERS, RESEND_INVITATION } from '../queries/clientUsers.queries'
+import {
+  GET_CLIENTUSERS,
+  UPDATE_CLIENTUSERS,
+  DESTROY_CLIENTUSERS,
+  RESEND_INVITATION
+} from '../queries/clientUsers.queries'
 
 
 export const SET_CLIENT_USERS = 'SET_CLIENT_USERS'

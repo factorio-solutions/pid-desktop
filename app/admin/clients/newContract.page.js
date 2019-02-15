@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 import moment                          from 'moment'
@@ -12,6 +13,7 @@ import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import DatetimeInput      from '../../_shared/components/input/DatetimeInput'
+import Checkbox           from '../../_shared/components/checkbox/Checkbox'
 import Modal              from '../../_shared/components/modal/Modal'
 import { valueAddedTax }  from '../../_shared/helpers/calculatePrice'
 
@@ -25,21 +27,44 @@ import styles from './newContract.page.scss'
 
 class NewContractPage extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    params:   PropTypes.object,
-    pageBase: PropTypes.object,
-    actions:  PropTypes.object
+    state:          PropTypes.object,
+    params:         PropTypes.object,
+    actions:        PropTypes.object,
+    pageBaseGarage: PropTypes.object
   }
 
   componentDidMount() {
-    if (this.props.params.contract_id || this.props.pageBase.garage) {
-      this.props.actions.initContract(this.props.params.contract_id)
+    const {
+      pageBaseGarage,
+      params: {
+        contract_id: contractId
+      },
+      actions: {
+        initContract
+      }
+    } = this.props
+    if (contractId || pageBaseGarage) {
+      initContract(contractId)
     }
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
-    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.eraseForm()
-    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initContract(this.props.params.contract_id)
+    const {
+      pageBaseGarage,
+      actions: {
+        eraseForm,
+        initContract
+      },
+      params: {
+        contract_id: contractId
+      }
+    } = this.props
+    const { pageBaseGarage: nextPageBaseGarage } = nextProps
+
+    if (nextPageBaseGarage !== pageBaseGarage) {
+      initContract(contractId)
+      eraseForm()
+    }
   }
 
   checkSubmitable = () => {
@@ -72,17 +97,25 @@ class NewContractPage extends Component {
   }
 
   onRemoveReservationsClick = () => this.setRemoveReservationsAndSubmit(true)
+
   onDoNotRemoveReservationsClick = () => this.setRemoveReservationsAndSubmit(false)
 
   setRemoveReservationsAndSubmit = action => {
-    const { actions } = this.props
+    const {
+      actions,
+      params: { contract_id: contractId }
+    } = this.props
     actions.setRemoveReservations(action)
-    actions.submitNewContract(this.props.params.contract_id)
+    actions.submitNewContract(contractId)
   }
 
   goBack = () => {
-    this.props.actions.eraseForm()
-    nav.to(`/${this.props.pageBase.garage}/admin/clients`)
+    const {
+      pageBaseGarage,
+      actions: { eraseForm }
+    } = this.props
+    eraseForm()
+    nav.to(`/${pageBaseGarage}/admin/clients`)
   }
 
   prepareClients = client => ({
@@ -100,24 +133,22 @@ class NewContractPage extends Component {
 
   currentContractsFilter = contract => moment().isBetween(moment(contract.from), moment(contract.to))
 
-  render() {
-    const { state, actions } = this.props
-
-    const selectedClient = state.client_id ? state.clients.findIndex(c => state.client_id === c.id) : -1
-    const selectedCurrency = state.currency_id ? state.currencies.findIndex(currency => state.currency_id === currency.id) : -1
-    const selectedRent = state.rent ? state.rents.findIndex(rent => state.rent.id === rent.id) : -1
-
-    const makeButton = (place, index) => <CallToActionButton label={place.label} onClick={() => { state.garage && state.garage.is_admin && actions.removePlace(index) }} />
-
-    const placeSelected = floor => {
-      const vat = state.garage.dic ? state.garage.vat : 0
-      return {
-        ...floor,
-        places: floor.places.map(place => ({
-          ...place,
-          group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
-          selected: (state.places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
-          tooltip:  (<table className={styles.tooltip}>
+  renderPlaceSelected = floor => {
+    const {
+      state: {
+        garage,
+        places
+      }
+    } = this.props
+    const vat = garage.dic ? garage.vat : 0
+    return {
+      ...floor,
+      places: floor.places.map(place => ({
+        ...place,
+        group:    place.contracts.filter(this.currentContractsFilter).map(contract => contract.id),
+        selected: (places.find(selectedPlace => selectedPlace.id === place.id) !== undefined),
+        tooltip:  (
+          <table className={styles.tooltip}>
             <tbody>
               <tr>
                 <td>{t([ 'newContract', 'place' ])}</td>
@@ -126,7 +157,7 @@ class NewContractPage extends Component {
               <tr>
                 <td>{t([ 'newContract', 'usedBy' ])}</td>
                 <td>
-                  {state.garage.is_public && place.pricing && !place.contracts.length ?
+                  {garage.is_public && place.pricing && !place.contracts.length ?
                     t([ 'newContract', 'goPublic' ]) :
                     place.contracts
                       .filter(this.currentContractsFilter)
@@ -175,10 +206,31 @@ class NewContractPage extends Component {
                 </td>
               </tr>
             </tbody>
-          </table>)
-        }))
-      }
+          </table>
+        )
+      }))
     }
+  }
+
+  makeButton = (place, index) => {
+    const {
+      state: { garage },
+      actions: { removePlace }
+    } = this.props
+    return (
+      <CallToActionButton
+        label={place.label}
+        onClick={() => { garage && garage.is_admin && removePlace(index) }}
+      />
+    )
+  }
+
+  render() {
+    const { state, actions } = this.props
+
+    const selectedClient = state.client_id ? state.clients.findIndex(c => state.client_id === c.id) : -1
+    const selectedCurrency = state.currency_id ? state.currencies.findIndex(currency => state.currency_id === currency.id) : -1
+    const selectedRent = state.rent ? state.rents.findIndex(rent => state.rent.id === rent.id) : -1
 
     return (
       <PageBase>
@@ -222,7 +274,7 @@ class NewContractPage extends Component {
                 </div> :
                 <div className={styles.oneButton}>
                   <Dropdown
-                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
+                    placeholder={t([ 'newContract', 'selectClient' ]) + ' *'}
                     content={state.clients.map(this.prepareClients)}
                     style="light"
                     selected={selectedClient}
@@ -234,7 +286,7 @@ class NewContractPage extends Component {
 
               <div>
                 <div>{t([ 'newContract', 'selectedPlaces' ]) + ' *'}</div>
-                {state.places.length ? state.places.map(makeButton) : <b className={state.highlight && styles.red}>{t([ 'newContract', 'noSelectedPlaces' ])}</b>}
+                {state.places.length ? state.places.map(this.makeButton) : <b className={state.highlight && styles.red}>{t([ 'newContract', 'noSelectedPlaces' ])}</b>}
               </div>
 
               { state.garage && (state.garage.is_admin ? (state.newRent ?
@@ -250,7 +302,7 @@ class NewContractPage extends Component {
                     highlight={state.highlight}
                   />
                   <Dropdown
-                    label={t([ 'newContract', 'selectCurrency' ]) + ' *'}
+                    placeholder={t([ 'newContract', 'selectCurrency' ]) + ' *'}
                     content={state.currencies.map(this.prepareCurrencies)}
                     style="light"
                     selected={selectedCurrency}
@@ -259,18 +311,36 @@ class NewContractPage extends Component {
                   <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleNewRent} type="remove" />
                 </div> :
                 <div className={styles.oneButton}>
-                  <Dropdown label={t([ 'newContract', 'selectRent' ])} content={state.rents.map(this.prepareRents)} style="light" selected={selectedRent} highlight={state.highlight} />
-                  <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleNewRent} type="action" />
+                  <Dropdown
+                    placeholder={t([ 'newContract', 'selectRent' ])}
+                    content={state.rents.map(this.prepareRents)}
+                    style="light"
+                    selected={selectedRent}
+                    highlight={state.highlight}
+                  />
+                  <RoundButton
+                    content={<i className="fa fa-plus" aria-hidden="true" />}
+                    onClick={actions.toggleNewRent}
+                    type="action"
+                  />
                 </div>) :
                 <div> {t([ 'newContract', 'placePrice' ])} {state.rent && `${Math.round(state.rent.price * 10) / 10} ${state.rent.currency.symbol}`} </div>)
               }
               {state.garage && state.garage.is_admin ?
               [ <DatetimeInput onChange={this.handleFrom} label={t([ 'newReservation', 'begins' ])} error={t([ 'newReservation', 'invalidaDate' ])} value={state.from} highlight={state.highlight} />,
                 state.indefinitly ? null : <DatetimeInput onChange={this.handleTo} label={t([ 'newReservation', 'ends' ])} value={state.to} />,
-                <div className={styles.checkbox}>
-                  <input type="checkbox" checked={state.indefinitly} onClick={actions.toggleIndefinitly} />
-                  <span onClick={actions.toggleIndefinitly}>{t([ 'newContract', 'indefinitContract' ])}</span>
-                </div>,
+                <Checkbox
+                  onChange={val => actions.toggleIndefinitly(!val)}
+                  checked={state.indefinitly}
+                >
+                  {t([ 'newContract', 'indefinitContract' ])}
+                </Checkbox>,
+                <Checkbox
+                  onChange={val => actions.setGenerateInvoice(!val)}
+                  checked={state.generateInvoice}
+                >
+                  {t([ 'newContract', 'generateInvoice' ])}
+                </Checkbox>,
                 <div>
                   <Input
                     type="number"
@@ -297,7 +367,7 @@ class NewContractPage extends Component {
 
           <div>
             <GarageLayout
-              floors={state.garage ? state.garage.floors.map(placeSelected) : []}
+              floors={state.garage ? state.garage.floors.map(this.renderPlaceSelected) : []}
               onPlaceClick={state.garage && state.garage.is_admin ? actions.selectPlace : () => {}}
               showEmptyFloors
             />
@@ -310,6 +380,6 @@ class NewContractPage extends Component {
 
 
 export default connect(
-  state => ({ state: state.newContract, pageBase: state.pageBase }), // { state: state.dashboard }
+  state => ({ state: state.newContract, pageBaseGarage: state.pageBase.garage }), // { state: state.dashboard }
   dispatch => ({ actions: bindActionCreators(newContractActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
 )(NewContractPage)

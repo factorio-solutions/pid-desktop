@@ -1,5 +1,6 @@
-import React, { Component, PropTypes }  from 'react'
-import moment                           from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import moment from 'moment'
 
 import Datepicker from '../datepicker/Datepicker'
 import Timepicker from '../timepicker/Timepicker'

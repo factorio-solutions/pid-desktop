@@ -1,8 +1,12 @@
-import { request }   from '../helpers/request'
-import * as nav      from '../helpers/navigation'
-import actionFactory from '../helpers/actionFactory'
-import { mobile }    from '../../index'
-import { version }   from '../../../package'
+import localforage from 'localforage'
+import request    from '../helpers/request'
+import requestPromise from '../helpers/requestPromise'
+import * as nav       from '../helpers/navigation'
+import actionFactory  from '../helpers/actionFactory'
+import { mobile }     from '../../index'
+import { version }    from '../../../package'
+
+import RequestInProgressError from '../errors/requestInProgress.error'
 
 import { LOGIN_USER, LOGIN_VERIFICATION } from '../queries/login.queries.js'
 
@@ -16,7 +20,7 @@ export const RESET_LOGIN_FORM = 'RESET_LOGIN_FORM'
 export const LOGIN_SET_DEVICE_FINGERPRINT = 'LOGIN_SET_DEVICE_FINGERPRINT'
 export const LOGIN_PASSWORD_RESET_SUCCESSFUL = 'LOGIN_PASSWORD_RESET_SUCCESSFUL'
 export const LOGIN_SHOW_PASSWORD_RESET_MODAL = 'LOGIN_SHOW_PASSWORD_RESET_MODAL'
-
+export const LOGIN_SET_REFRESHING_LOGIN = 'LOGIN_SET_REFRESHING_LOGIN'
 
 export const setError = actionFactory(LOGIN_FAILURE)
 export const setDeviceFingerprint = actionFactory(LOGIN_SET_DEVICE_FINGERPRINT)
@@ -24,21 +28,25 @@ export const resetLoginForm = actionFactory(RESET_LOGIN_FORM)
 export const resetStore = actionFactory('RESET')
 export const setPasswordResetSuccessful = actionFactory(LOGIN_PASSWORD_RESET_SUCCESSFUL)
 export const setShowPasswordResetModal = actionFactory(LOGIN_SHOW_PASSWORD_RESET_MODAL)
+export const setRefreshingLogin = actionFactory(LOGIN_SET_REFRESHING_LOGIN)
 
 export function setEmail(value, valid) {
-  return { type:  LOGIN_SET_EMAIL,
+  return {
+    type:  LOGIN_SET_EMAIL,
     value: { value, valid }
   }
 }
 
 export function setPassword(value, valid) {
-  return { type:  LOGIN_SET_PASSWORD,
+  return {
+    type:  LOGIN_SET_PASSWORD,
     value: { value, valid }
   }
 }
 
 export function setCode(value, valid) {
-  return { type:  LOGIN_SET_CODE,
+  return {
+    type:  LOGIN_SET_CODE,
     value: { value, valid }
   }
 }
@@ -53,17 +61,19 @@ export function dismissModal() {
 
 
 export function loginSuccess(result, redirect, callback) {
-  return dispatch => {
+  return async dispatch => {
     if ('id_token' in result) {
-      localStorage.jwt = result.id_token
-      localStorage.refresh_token = result.refresh_token
+      await Promise.all([
+        localforage.setItem('jwt', result.id_token),
+        localforage.setItem('refresh_token', result.refresh_token)
+      ])
       dispatch({ type: LOGIN_SUCCESS })
 
-      callback(result)
       dispatch(resetLoginForm())
+      callback(result)
       if (redirect) {
-        const path = localStorage.redirect || '/occupancy'
-        delete localStorage.redirect
+        const path = await localforage.getItem('redirect') || '/occupancy'
+        localforage.removeItem('redirect')
         nav.to(path)
       }
     } else {
@@ -84,15 +94,17 @@ export function login(email, password, redirect = false, callback = () => {}) {
       }
     }
 
-    const onError = () => {
+    const onError = e => {
       dispatch(setError('No response'))
+      console.log(e)
     }
 
     dispatch({ type: LOGIN_REQUEST })
     request(
       success,
       LOGIN_USER,
-      { email,
+      {
+        email,
         password,
         device_fingerprint: getState().login.deviceFingerprint,
         mobile_app_version: mobile ? version : null
@@ -122,7 +134,8 @@ export function verifyCode(email, code, redirect = true, callback = () => {}) {
     request(
       success,
       LOGIN_VERIFICATION,
-      { email,
+      {
+        email,
         code,
         device_fingerprint: getState().login.deviceFingerprint
       },
@@ -135,39 +148,45 @@ export function verifyCode(email, code, redirect = true, callback = () => {}) {
 export function logout() {
   return dispatch => {
     dispatch(resetStore())
-    delete localStorage.jwt
-    // delete localStorage['refresh_token']
+    localforage.removeItem('jwt')
+    localforage.removeItem('refresh_token')
     nav.to('/')
   }
 }
 
-export function refreshLogin(callback, errorCallback) {
-  return (dispatch, getState) => {
-    const success = response => {
-      const result = JSON.parse(response.data.login)
-      if (result && result.id_token) {
-        localStorage.jwt = result.id_token
-        dispatch({ type: LOGIN_SUCCESS })
-        callback && callback(result)
-        dispatch(resetLoginForm())
-      } else {
-        localStorage.refresh_token && dispatch(logout())
-        delete localStorage.refresh_token
-        errorCallback && errorCallback()
-      }
+export function refreshLogin() {
+  return async (dispatch, getState) => {
+    const { refreshingLogin } = getState().login
+    if (refreshingLogin) { throw new RequestInProgressError('refreshingInProgress') }
+    dispatch(setRefreshingLogin(true))
+    const { current_user: currentUser } = getState().mobileHeader
+    const refreshToken = await localforage.getItem('refresh_token')
+    // if (!currentUser) { throw new Error('Current user is not set.') }
+    if (!refreshToken) {
+      throw new Error('refresh token is not set.')
     }
 
-    const currentUser = getState().mobileHeader.current_user
-    const onError = () => console.log('Error while refreshing token')
-    request(
-      success,
-      LOGIN_USER,
-      { refresh_token:      localStorage.refresh_token,
-        email:              currentUser ? currentUser.email : null,
-        mobile_app_version: version
-      },
-      null,
-      onError
-    )
+    try {
+      const data = await requestPromise(
+        LOGIN_USER,
+        {
+          refresh_token:      refreshToken,
+          email:              currentUser && currentUser.email,
+          mobile_app_version: version
+        },
+      )
+      const result = JSON.parse(data.login)
+      if (result && result.id_token) {
+        localforage.setItem('jwt', result.id_token)
+        dispatch({ type: LOGIN_SUCCESS })
+        dispatch(resetLoginForm())
+      } else {
+        await localforage.removeItem('refresh_token')
+        console.log('Not successful refresh.')
+        throw new Error('Cannot refresh.')
+      }
+    } finally {
+      dispatch(setRefreshingLogin(false))
+    }
   }
 }

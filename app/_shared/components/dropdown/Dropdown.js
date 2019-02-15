@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import styles from './Dropdown.scss'
 
@@ -12,17 +13,18 @@ import styles from './Dropdown.scss'
 
 export default class Dropdown extends Component {
   static propTypes = {
-    label:     PropTypes.string.isRequired,
-    content:   PropTypes.array.isRequired,
-    style:     PropTypes.string,
-    selected:  PropTypes.number,
-    onChange:  PropTypes.func,
-    highlight: PropTypes.bool,
-    position:  PropTypes.string,
-    editable:  PropTypes.bool,
-    filter:    PropTypes.bool,
-    order:     PropTypes.bool,
-    icon:      PropTypes.object
+    placeholder: PropTypes.string.isRequired,
+    content:     PropTypes.array.isRequired,
+    style:       PropTypes.string,
+    selected:    PropTypes.number,
+    onChange:    PropTypes.func,
+    highlight:   PropTypes.bool,
+    position:    PropTypes.string,
+    editable:    PropTypes.bool,
+    filter:      PropTypes.bool,
+    order:       PropTypes.bool,
+    label:       PropTypes.string,
+    icon:        PropTypes.object
   }
 
   static defaultProps = {
@@ -49,16 +51,13 @@ export default class Dropdown extends Component {
     this.validateContent(nextProps)
   }
 
-  validateContent(nextProps) {
-    if (nextProps.content.length === 1) { // if only one item, autoselect it
-      this.setState({ ...this.state, selected: 0 })
-    } else {
-      this.setState({ ...this.state, selected: nextProps.selected })
-    }
-  }
 
   toggleDropdown = () => {
-    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
+    if (this.ul.classList.contains(styles.hidden)) {
+      this.unhide()
+    } else {
+      this.hide()
+    }
   }
 
   hide = () => {
@@ -81,8 +80,28 @@ export default class Dropdown extends Component {
     }
   }
 
+  validateContent(nextProps) {
+    if (nextProps.content.length === 1) { // if only one item, autoselect it
+      this.setState({ ...this.state, selected: 0 })
+    } else {
+      this.setState({ ...this.state, selected: nextProps.selected })
+    }
+  }
+
   render() {
-    const { label, content, style, onChange, highlight, position, editable, filter, order, icon } = this.props
+    const {
+      label,
+      content,
+      style,
+      onChange,
+      highlight,
+      position,
+      editable,
+      filter,
+      order,
+      icon,
+      placeholder
+    } = this.props
 
     let lis = content.map((item, index) => {
       const onClick = e => {
@@ -98,18 +117,20 @@ export default class Dropdown extends Component {
 
       return {
         ...item,
-        render: (<li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
-          <label>
-            {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
-              .split(this.state.filter.toLowerCase() || undefined) // split by filter
-              .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
-              .filter(o => o !== false)
-              .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
-              .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
-              .map((part, index) => index % 2 === 0 ? <span key={index}>{part}</span> : <b key={index}>{part}</b>)
-            }
-          </label>
-        </li>)
+        render: (
+          <li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
+            <label>
+              {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
+                .split(this.state.filter.toLowerCase() || undefined) // split by filter
+                .reduce((acc, item, index, arr) => [ ...acc, item, index <= arr.length - 2 && this.state.filter.length && this.state.filter ], [])
+                .filter(o => o !== false)
+                .reduce((acc, item, index) => [ ...acc, (acc[index - 1] || 0) + item.length ], [])
+                .map((length, index, arr) => String(item.label).substring(arr[index - 1] || 0, length))
+                .map((part, index) => index % 2 === 0 ? <span key={index}>{part}</span> : <b key={index}>{part}</b>)
+              }
+            </label>
+          </li>
+          )
       }
     })
 
@@ -143,6 +164,9 @@ export default class Dropdown extends Component {
 
     return (
       <div className={styles.dropdownContainter}>
+        {label &&
+          <label>{label}</label>
+        }
         <button
           type="button"
           className={`${styles.button} ${styles[style]} ${highlight && (this.state.selected === -1 || this.state.selected === undefined) && styles.highlighted} ${!editable && styles.dimmer}`}
@@ -151,7 +175,7 @@ export default class Dropdown extends Component {
           ref={button => { this.button = button }}
         >
           {icon}
-          <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? label : content[this.state.selected].label} </span>
+          <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? placeholder : content[this.state.selected].label} </span>
           <i className={`fa fa-caret-down ${style === 'reservation' ? styles.reservationFloat : styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
         </button>
 

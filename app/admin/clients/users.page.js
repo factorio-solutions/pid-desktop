@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
@@ -18,7 +19,6 @@ import { t } from '../../_shared/modules/localization/localization'
 
 import styles from './users.page.scss'
 
-
 class ClientUsersPage extends Component {
   static propTypes = {
     params:   PropTypes.object,
@@ -27,52 +27,89 @@ class ClientUsersPage extends Component {
     actions:  PropTypes.object
   }
 
+
+  schemaPending = [
+    {
+      key:         'full_name',
+      title:       t([ 'clientUsers', 'name' ]),
+      comparator:  'string',
+      representer: o => <strong>{o}</strong>,
+      sort:        'asc'
+    },
+    { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
+    { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' }
+  ]
+
   componentDidMount() {
-    this.props.actions.initClientUsers(this.props.params.client_id)
+    const {
+      actions: { initClientUsers },
+      params: { client_id }
+    } = this.props
+    initClientUsers(client_id)
   }
 
   onRowSelect = data => {
-    const { actions } = this.props
+    const {
+      actions: { setSelectedId }
+    } = this.props
     if (data) {
-      actions.setSelectedId(data.id)
+      setSelectedId(data.id)
     } else {
-      actions.setSelectedId(undefined)
+      setSelectedId(undefined)
     }
   }
 
-  render() {
-    const { state, pageBase, actions } = this.props
-
-    const schema = [
-      { key: 'full_name', title: t([ 'clientUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+  schema = () => {
+    const { state } = this.props
+    return [
+      {
+        key:         'full_name',
+        title:       t([ 'clientUsers', 'name' ]),
+        comparator:  'string',
+        representer: o => (<strong>{o}</strong>),
+        sort:        'asc'
+      },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' },
-      state.client && state.client.is_time_credit_active ?
-        { key: 'timeCredit', title: t([ 'clientUsers', 'timeCredit' ]), comparator: 'string' } :
-        {},
-      { key: 'created_at', title: t([ 'clientUsers', 'memberSince' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span> }
-    ].filter(o => o)
-
-    const schemaPending = [
-      { key: 'full_name', title: t([ 'clientUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
-      { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
-      { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' }
+      state.client && state.client.is_time_credit_active
+        ? { key: 'timeCredit', title: t([ 'clientUsers', 'timeCredit' ]), comparator: 'string' }
+        : {},
+      {
+        key:         'created_at',
+        title:       t([ 'clientUsers', 'memberSince' ]),
+        comparator:  'date',
+        representer: o => {
+          const date = moment(o)
+          return (
+            <span>
+              {`${date.format('ddd DD.MM.YYYY')} ${moment(o).format('H:mm')}`}
+            </span>
+          )
+        }
+      }
     ]
+  }
 
-    const currentClientUser = state.users.find(user => pageBase.current_user ? user.user.id === pageBase.current_user.id : false)
+  addClientUserClick = () => {
+    const {
+      params: { client_id },
+      actions: { setClient: setClientAction },
+      pageBase: { garage }
+    } = this.props
+    setClientAction(+client_id)
+    nav.to(`/${garage}/admin/users/invite`)
+  }
 
-    const addClientUserClick = () => {
-      actions.setClient(+this.props.params.client_id)
-      nav.to(`/${pageBase.garage}/admin/users/invite`)
-    }
-
-    const onBack = () => nav.to(`/${pageBase.garage}/admin/clients`)
-
-    const renderPendingSpoiler = user => {
-      const returnable = user.user
-      const destroyClick = () => { actions.destroyClientUser(this.props.params.client_id, user.user.id) }
-      returnable.spoiler = (<div className={styles.float}>
-        <InvitationReminderButton userId={user.user.id} clientId={parseInt(this.props.params.client_id, 10)} />
+  renderPendingSpoiler = user => {
+    const {
+      actions: destroyClientUser,
+      params: client_id
+    } = this.props
+    const returnable = user.user
+    const destroyClick = () => { destroyClientUser(client_id, user.user.id) }
+    returnable.spoiler = (
+      <div className={styles.float}>
+        <InvitationReminderButton userId={user.user.id} clientId={parseInt(client_id, 10)} />
         <LabeledRoundButton
           label={t([ 'clientUsers', 'removeUser' ])}
           content={<span className="fa fa-times" aria-hidden="true" />}
@@ -80,44 +117,50 @@ class ClientUsersPage extends Component {
           type="remove"
           question={t([ 'clientUsers', 'removeClientUser' ])}
         />
-      </div>)
-      return returnable
-    }
+      </div>
+    )
+    return returnable
+  }
 
-    const renderSpoiler = client_user => {
-      const clientId = this.props.params.client_id
-      const userId = client_user.user.id
+  renderSpoiler = (clientUser, currentClientUser) => {
+    const {
+      actions,
+      pageBase,
+      params: { client_id }
+    } = this.props
+    const userId = clientUser.user.id
 
-      const destroyClick = () => actions.destroyClientUser(clientId, userId)
+    const destroyClick = () => actions.destroyClientUser(client_id, userId)
 
-      const secretaryPresetClick = () => actions.setSecretary(clientId, userId)
-      const internalPresetClick = () => actions.setInternal(clientId, userId)
+    const secretaryPresetClick = () => actions.setSecretary(client_id, userId)
+    const internalPresetClick = () => actions.setInternal(client_id, userId)
 
-      const roles = [ 'admin', 'contact_person', 'secretary', 'host', 'internal' ]
+    const roles = [ 'admin', 'contact_person', 'secretary', 'host', 'internal' ]
 
-      const mapRoleButtons = role => {
-        const onClick = () => {
-          actions.setClientUserRelation(clientId, userId, { [role]: !client_user[role] })
-        }
-
-        return (
-          <span
-            className={client_user[role] ? styles.boldText : styles.inactiveText}
-            onClick={onClick}
-            role="button"
-            tabIndex="0"
-          >
-            {t([ 'clientUsers', role ])}
-          </span>
-        )
+    const mapRoleButtons = role => {
+      const onClick = () => {
+        actions.setClientUserRelation(client_id, userId, { [role]: !clientUser[role] })
       }
 
-      return (<div className={styles.spoiler}>
+      return (
+        <span
+          className={clientUser[role] ? styles.boldText : styles.inactiveText}
+          onClick={onClick}
+          role="button"
+          tabIndex="0"
+        >
+          {t([ 'clientUsers', role ])}
+        </span>
+      )
+    }
+
+    return (
+      <div className={styles.spoiler}>
         <div className={styles.devider}>
           {roles.map(mapRoleButtons)
-                .reduce((acc, value) => {
-                  return acc === null ? [ value ] : [ ...acc, '|', value ]
-                }, null)}
+            .reduce((acc, value) => {
+              return acc === null ? [ value ] : [ ...acc, '|', value ]
+            }, null)}
         </div>
         <div>
           {t([ 'clientUsers', 'presetAs' ])}
@@ -128,7 +171,8 @@ class ClientUsersPage extends Component {
             tabIndex="0"
           >
             {t([ 'clientUsers', 'internal' ])}
-          </span>|
+          </span>
+          |
           <span
             className={styles.clickable}
             onClick={secretaryPresetClick}
@@ -146,61 +190,97 @@ class ClientUsersPage extends Component {
               type="remove"
               question={t([ 'clientUsers', 'removeClientUser' ])}
               state={
-                ((pageBase.current_user &&
-                  pageBase.current_user.id !== userId &&
-                  currentClientUser &&
-                  !(currentClientUser.admin || currentClientUser.secretary)
-                 ) ||
-                 client_user.admin ||
-                 (client_user.contact_person && currentClientUser && currentClientUser.secretary)
-                ) &&
-                'disabled'
+                (
+                  (pageBase.current_user
+                  && pageBase.current_user.id !== userId
+                  && currentClientUser
+                  && !(currentClientUser.admin || currentClientUser.secretary)
+                  )
+                || clientUser.admin
+                || (clientUser.contact_person && currentClientUser && currentClientUser.secretary)
+                )
+                && 'disabled'
               }
             />
           </div>
         </div>
       </div>
-      )
-    }
+    )
+  }
 
-    const data = state.users.map(client_user => ({
-      ...client_user.user,
-      timeCredit: client_user.current_time_credit_amount + ' / ' + client_user.client.time_credit_amount_per_month,
-      created_at: client_user.created_at,
-      spoiler:    renderSpoiler(client_user)
+  getData = currentClientUser => {
+    const { state: { users } } = this.props
+    return users.map(clientUser => ({
+      ...clientUser.user,
+      timeCredit: `${clientUser.current_time_credit_amount} / ${clientUser.client.time_credit_amount_per_month}`,
+      created_at: clientUser.created_at,
+      spoiler:    this.renderSpoiler(clientUser, currentClientUser)
     }))
+  }
 
-    const filters = [
-      <TabButton label={t([ 'clientUsers', 'confirmedUsers' ], { name: state.clientName })} onClick={() => { actions.allClicked() }} state={state.filter === 'all' && 'selected'} />,
-      <TabButton label={t([ 'clientUsers', 'pendingUsers' ])} onClick={() => { actions.pendingClicked() }} state={state.filter === 'pending' && 'selected'} />
+  filters = () => {
+    const {
+      state: {
+        clientName,
+        filter
+      },
+      actions: {
+        allClicked,
+        pendingClicked
+      }
+    } = this.props
+    return [
+      <TabButton label={t([ 'clientUsers', 'confirmedUsers' ], { name: clientName })} onClick={() => { allClicked() }} state={filter === 'all' && 'selected'} />,
+      <TabButton label={t([ 'clientUsers', 'pendingUsers' ])} onClick={() => { pendingClicked() }} state={filter === 'pending' && 'selected'} />
     ]
+  }
 
+  onBack = () => {
+    const { pageBase: { garage } } = this.props
+    nav.to(`/${garage}/admin/clients`)
+  }
+
+  render() {
+    const {
+      schemaPending,
+      props: {
+        state,
+        pageBase
+      }
+    } = this
+
+    const currentClientUser = state.users.find(user => pageBase.current_user ? user.user.id === pageBase.current_user.id : false)
+
+    const data = this.getData(currentClientUser)
     return (
       <PageBase>
-        <TabMenu left={filters} />
+        <TabMenu left={this.filters()} />
 
         <div className={styles.tableContainer}>
-          {state.filter === 'all' &&
-            <Table
-              schema={schema}
-              data={data}
-              onRowSelect={this.onRowSelect}
-              selectId={state.selectedId}
-            />
+          {state.filter === 'all'
+            && (
+              <Table
+                schema={this.schema()}
+                data={data}
+                onRowSelect={this.onRowSelect}
+                selectId={state.selectedId}
+              />
+            )
           }
-          {state.filter === 'pending' && <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />}
+          {state.filter === 'pending' && <Table schema={schemaPending} data={state.pending_users.map(this.renderPendingSpoiler)} />}
         </div>
 
         <div className={styles.backButton}>
-          <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={onBack} />
+          <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={this.onBack} />
         </div>
         <div className={styles.addButton}>
-          <RoundButton
+          <LabeledRoundButton
             content={<span className="fa fa-plus" aria-hidden="true" />}
-            onClick={addClientUserClick}
+            onClick={this.addClientUserClick}
             type="action"
             size="big"
             state={currentClientUser ? (currentClientUser.admin || currentClientUser.secretary || currentClientUser.internal) ? '' : 'disabled' : 'disabled'}
+            label={t([ 'clientUsers', 'addUser' ])}
           />
         </div>
       </PageBase>

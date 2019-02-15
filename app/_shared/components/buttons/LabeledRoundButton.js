@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import { connect }          from 'react-redux'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 
 import RoundButton from './RoundButton.js'
 
@@ -9,17 +10,24 @@ import styles from './LabeledRoundButton.scss'
 // label = label to be displayed below the button
 
 
-function LabeledRoundButton({ label, hint, size, ...buttonProps }) {
+function LabeledRoundButton({
+  label,
+  hint,
+  size,
+  ...buttonProps
+}) {
   return (
     <div className={` ${styles.labeledRoundButton}`}>
       <RoundButton {...buttonProps} size={size} />
       {/* {label && hint && */}
-      {label &&
+      {label
+      && (
         <div
           className={size ? styles[`${size}Text`] : styles.normalText}
         >
           {label}
         </div>
+      )
       }
     </div>
   )

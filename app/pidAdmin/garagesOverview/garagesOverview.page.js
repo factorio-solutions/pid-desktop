@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import PageBase               from '../../_shared/containers/adminPageBase/PageBase'
 import Table                  from '../../_shared/components/table/Table'
@@ -25,19 +26,33 @@ class GaragesOverview extends Component {
     key,
     title:       t([ 'pidAdmin', 'garagesOverview', key ]),
     comparator:  'boolean',
-    representer: o => <i className={o ? 'fa fa-check-circle' : 'fa fa-times-circle'} style={{ color: o ? 'green' : 'red' }} aria-hidden="true" />,
-    enum:        [ true, false ]
+    representer: o => (
+      <i
+        className={o ? 'fa fa-check-circle' : 'fa fa-times-circle'}
+        style={{ color: o ? 'green' : 'red' }}
+        aria-hidden="true"
+      />
+    ),
+    enum: [ true, false ]
   })
 
   makesContacts = person => `${person.full_name} (${person.phone}, ${person.email})`
 
-  makeSpoiler = garage => (<div>
-    {t([ 'pidAdmin', 'garagesOverview', 'createdAt' ])}: {moment(garage.created_at).format(MOMENT_DATE_FORMAT)}<br />
-    {t([ 'pidAdmin', 'garagesOverview', 'admin' ])}: {garage.admins.map(this.makesContacts).join(', ')}
-    { garage.managers.length > 0 &&
-      <div>{t([ 'pidAdmin', 'garagesOverview', 'manager' ])}: {garage.managers.map(this.makesContacts).join(', ')}</div>
-    }
-  </div>)
+  makeSpoiler = garage => (
+    <div>
+      {`${t([ 'pidAdmin', 'garagesOverview', 'createdAt' ])}: ${moment(garage.created_at)
+        .format(MOMENT_DATE_FORMAT)}`}
+      <br />
+      {`${t([ 'pidAdmin', 'garagesOverview', 'admin' ])}: ${garage.admins
+        .map(this.makesContacts).join(', ')}`}
+      {garage.managers.length > 0 && (
+        <div>
+          {`${t([ 'pidAdmin', 'garagesOverview', 'manager' ])}: ${garage.managers
+            .map(this.makesContacts).join(', ')}`}
+        </div>
+      )}
+    </div>
+  )
 
   transformGarages = garage => ({
     ...garage,

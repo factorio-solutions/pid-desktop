@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Dropdown from '../../_shared/components/dropdown/Dropdown'
 
@@ -31,7 +32,7 @@ class GarageClientForm extends Component {
 
   garageDropdown = () => {
     const { state, actions } = this.props
-    
+
     return (state.user && state.user.availableGarages && state.user.availableGarages.map((garage, index) => ({
       label:   garage.name,
       onClick: () => actions.downloadGarage(state.user.availableGarages[index].id)
@@ -50,31 +51,29 @@ class GarageClientForm extends Component {
   render() {
     const { state, actions, editable } = this.props
     const selectedClient = actions.selectedClient()
-    
-
 
     return (
       <div>
         <Dropdown
           editable={editable}
-          label={`${t([ 'newReservation', 'selectGarage' ])} *`}
+          label={`${t([ 'newReservation', 'garageDropdownLabel' ])} *`}
           content={this.garageDropdown()}
           selected={state.user.availableGarages.findIndexById(state.garage && state.garage.id)}
           style="reservation"
           highlight={state.highlight}
           placeholder={t([ 'newReservation', 'selectGarage' ])}
         />
-        {state.user && state.user.availableClients && state.user.availableClients.length > 1 &&
+        {state.user && state.user.availableClients && state.user.availableClients.length > 1 && (
           <Dropdown
             editable={editable}
-            label={t([ 'newReservation', 'selectClient' ])}
+            label={t([ 'newReservation', 'clientDropdownLabel' ])}
             content={this.clientDropdown()}
             selected={state.user.availableClients.findIndexById(state.client_id)}
             style="reservation"
             filter
             placeholder={t([ 'newReservation', 'selectClient' ])}
           />
-        }
+        )}
       </div>
     )
   }
@@ -87,7 +86,8 @@ export default connect(
     return { state: { user, highlight, paidByHost, garage, client_id, place_id, current_user } }
   },
   dispatch => ({ actions: bindActionCreators(
-    { downloadGarage,
+    {
+      downloadGarage,
       setPaidByHost,
       setClient,
       selectedClient

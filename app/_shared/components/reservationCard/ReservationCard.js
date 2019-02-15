@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react'
-import { bindActionCreators }          from 'redux'
-import moment                          from 'moment'
-import { connect }                     from 'react-redux'
-import { withRouter }                  from 'react-router'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import Swipe from '../swipe/Swipe'
 
@@ -29,9 +30,10 @@ export class ReservationCard extends Component {
 
   toReservation = () => {
     const { router, reservation, mobileHeader } = this.props
-    router.push((mobileHeader.personal ?
-      paths.RESERVATION_GET :
-      paths.GUEST_RESERVATION_GET
+    router.push((
+      mobileHeader.personal
+        ? paths.RESERVATION_GET
+        : paths.GUEST_RESERVATION_GET
     ) + '/' + reservation.id)
   }
 
@@ -39,6 +41,8 @@ export class ReservationCard extends Component {
     const { reservation, personal, mobileHeader } = this.props
     const from = moment(reservation.begins_at)
     const to = moment(reservation.ends_at)
+
+    const clientUser = reservation.client && reservation.client.client_user
 
     return (
       <div className={styles.reservationCard}>
@@ -51,7 +55,7 @@ export class ReservationCard extends Component {
             <div>{reservation.place.floor.garage.name}</div>
           </div>
 
-          {((reservation.client && reservation.client.client_user.secretary && to.isAfter(moment())) ||
+          {((clientUser && clientUser.secretary && to.isAfter(moment())) ||
             (mobileHeader.current_user && mobileHeader.current_user.id === reservation.user.id)) &&
             <div className={`${styles.gray} ${styles.icon}`} onClick={this.toReservation}><i className="icon-more" aria-hidden="true" /></div>
           }

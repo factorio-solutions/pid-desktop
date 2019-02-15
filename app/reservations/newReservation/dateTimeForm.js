@@ -1,7 +1,8 @@
-import React, { Component, PropTypes }  from 'react'
-import { connect }                      from 'react-redux'
-import { bindActionCreators }           from 'redux'
-import moment                           from 'moment'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import moment from 'moment'
 
 import DateInput          from '../../_shared/components/input/DateInput'
 import TimeInput          from '../../_shared/components/input/TimeInput'
@@ -11,7 +12,6 @@ import CallToActionButton from '../../_shared/components/buttons/CallToActionBut
 import Checkbox           from '../../_shared/components/checkbox/Checkbox'
 
 import {
-  beginsToNow,
   formatFrom,
   setFromDate,
   setFromTime,
@@ -116,7 +116,7 @@ class DateTimeForm extends Component {
     const { state, actions, editable } = this.props
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT)
-                        .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
+      .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
 
     return (
       <div>
@@ -166,14 +166,16 @@ class DateTimeForm extends Component {
           </div>
         </div>
 
-        {state.garage &&
-        state.freeInterval &&
-        !state.garage.floors.some(floor => floor.free_places.length > 0) &&
+        {state.garage
+        && state.freeInterval
+        && state.garage.floors.reduce((freeFloors, floor) => freeFloors && floor.free_places.length === 0, true)
+        && (
           <CallToActionButton
             label={this.freeIntervalLabel()}
             type="alternativeTime"
             onClick={this.setGreatestFreeInterval}
           />
+        )
         }
 
 
@@ -222,12 +224,17 @@ class DateTimeForm extends Component {
 
 export default connect(
   state => {
-    const { from, to, recurringRule, useRecurring, garage, freeInterval } = state.newReservation
-    return { state: { from, to, recurringRule, useRecurring, garage, freeInterval } }
+    const {
+      from, to, recurringRule, useRecurring, garage, freeInterval
+    } = state.newReservation
+    return {
+      state: {
+        from, to, recurringRule, useRecurring, garage, freeInterval
+      }
+    }
   },
   dispatch => ({
     actions: bindActionCreators({
-      beginsToNow,
       formatFrom,
       setFromDate,
       setFromTime,
@@ -239,7 +246,6 @@ export default connect(
       setFrom,
       setTo
     },
-    dispatch
-  )
+    dispatch)
   })
 )(DateTimeForm)

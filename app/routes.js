@@ -1,4 +1,4 @@
-import React                                from 'react'
+import React from 'react'
 import { Route, IndexRoute, IndexRedirect } from 'react-router'
 
 import * as localization from './_shared/modules/localization/localization'
@@ -107,11 +107,12 @@ import TestingPage from './testing/testing.page'
 // //////////////////////////////////////////////////////////////////////////////
 // //////////////////////////PID ADMIN PAGES/////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////
-import PidAdminDashboardPage   from './pidAdmin/dashboard/dashboard.page'
-import PidAdminUsersPage       from './pidAdmin/users/users.page'
-import PidAdminFinancePage     from './pidAdmin/finance/finance.page'
-import PidAdminLogsPage        from './pidAdmin/logs/logs.page'
-import PidAdminGaragesOverview from './pidAdmin/garagesOverview/garagesOverview.page'
+import PidAdminDashboardPage    from './pidAdmin/dashboard/dashboard.page'
+import PidAdminUsersPage        from './pidAdmin/users/users.page'
+import PidAdminFinancePage      from './pidAdmin/finance/finance.page'
+import PidAdminLogsPage         from './pidAdmin/logs/logs.page'
+import PidAdminGaragesOverview  from './pidAdmin/garagesOverview/garagesOverview.page'
+import PidAdminMobileAppVersion from './pidAdmin/mobileAppVersion/mobileAppVersion.page'
 
 import PidAdminGeneratorGaragesPage      from './pidAdmin/generator/generatorGarages.page'
 import PidAdminGeneratorClientsPage      from './pidAdmin/generator/generatorClients.page'
@@ -125,7 +126,7 @@ import PidAdminNewNewsPage from './pidAdmin/news/newNews.page'
 export const AVAILABLE_LANGUAGES = [ 'en', 'cs', 'de' ] // 'pl'
 
 
-export default function createRoutes() {
+export default function createRoutes(jwt) {
   const adminSubRoutes = (
     <Route>
       <IndexRoute component={PidAdminDashboardPage} />
@@ -133,6 +134,7 @@ export default function createRoutes() {
       <Route path="finance" component={PidAdminFinancePage} />
       <Route path="logs" component={PidAdminLogsPage} />
       <Route path="garagesOverview" component={PidAdminGaragesOverview} />
+      <Route path="mobileAppVersion" component={PidAdminMobileAppVersion} />
 
       <Route path="generator" component={PidAdminGeneratorGaragesPage} />
       <Route path="generator/clients" component={PidAdminGeneratorClientsPage} />
@@ -245,13 +247,12 @@ export default function createRoutes() {
 
   return (
     <Route path="/" component={App}>
-      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${localStorage.jwt ? 'occupancy/' : ''}`} />
+      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} />
       {AVAILABLE_LANGUAGES.map(lang => (
         <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
           {subRoutes}
         </Route>
       ))}
-
     </Route>
   )
 }

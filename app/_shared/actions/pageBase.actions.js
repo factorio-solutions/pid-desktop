@@ -5,7 +5,7 @@ import ConfirmModal from '../components/modal/ConfirmModal'
 import AlertModal   from '../components/modal/AlertModal'
 
 import * as nav      from '../helpers/navigation'
-import { request }   from '../helpers/request'
+import request   from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
 

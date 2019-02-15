@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import { connect }          from 'react-redux'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 
 import { confirm } from '../../actions/pageBase.actions'
 
@@ -48,7 +49,10 @@ function Button({
 }
 
 Button.propTypes = {
-  content:         PropTypes.object,
+  content: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object
+  ]),
   onClick:         PropTypes.func,
   onDisabledClick: PropTypes.func,
   type:            PropTypes.string,
