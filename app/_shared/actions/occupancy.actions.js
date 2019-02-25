@@ -212,7 +212,7 @@ export function loadGarage(id) {
       const data = await requestPromise(GARAGE_DETAILS_QUERY, {
         id:         garageId,
         from:       timeToUTC(state.from),
-        to:         timeToUTC(state.from.clone().add(1, state.duration)),
+        to:         timeToUTC(state.from.clone().add(31, 'days')),
         client_ids: state.client_ids
       })
       dispatch(loadClients(data.garage.clients))
