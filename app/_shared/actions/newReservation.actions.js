@@ -467,16 +467,16 @@ export function setPrice() {
     ))
 
     let price
+    const placePricing = selectedPlace && selectedPlace.pricing
 
-    if (selectedPlace && selectedPlace.pricing) {
-      price = calculatePrice(selectedPlace.pricing, from, to, state.garage.dic ? state.garage.vat : 0)
+    if (placePricing) {
+      price = calculatePrice(placePricing, from, to, state.garage.dic ? state.garage.vat : 0)
     }
 
     dispatch({
-      type:  NEW_RESERVATION_SET_PRICE,
-      value: selectedPlace && selectedPlace.pricing
-        ? `${price} ${selectedPlace.pricing.currency.symbol}`
-        : undefined
+      type:     NEW_RESERVATION_SET_PRICE,
+      value:    placePricing ? price : undefined,
+      currency: placePricing ? placePricing.currency.symbol : ''
     })
   }
 }

@@ -16,13 +16,13 @@
 import { getLanguage } from '../modules/localization/localization'
 
 export function convertPriceToString(price) {
-  if (price == undefined) return undefined
+  if (price === undefined) return undefined
 
   return price.toLocaleString(getLanguage(), { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
 export function valueAddedTax(price, vat = 0) {
-  return convertPriceToString(price * (1 + vat))
+  return price * (1 + vat)
 }
 
 export function calculateDuration(from, to) {

@@ -40,21 +40,10 @@ class PriceSmsNote extends Component {
       outOfTimeCredit
     } = this.props
 
-    let price = ((isPlaceGoInternal(state) || !state.client_id) && state.price) ? state.price : ''
-
-    if (!price && state.place_id) {
-      price = convertPriceToString(0)
-      const place = state.garage && state.garage.floors.reduce((acc, floor) => {
-        return acc || floor.places.find(p => p.id === state.place_id)
-      }, undefined)
-      // Place.pricing.currency.symbol
-      if (place && place.pricing && place.pricing.currency) {
-        price += ` ${place.pricing.currency.symbol}`
-      }
-    }
+    const price = ((isPlaceGoInternal(state) || !state.client_id) && state.price) ? state.price : ''
+    const currency = ((isPlaceGoInternal(state) || !state.client_id) && state.currencySymbol) ? state.currencySymbol : ''
 
     let expenseOn
-
     if (!state.client_id || state.paidByHost) {
       expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
     } else if (!isPlaceGoInternal(state)) {
@@ -84,7 +73,7 @@ class PriceSmsNote extends Component {
               : (
                 <div className={`${styles.price} ${styles.dateTimeContainer}`}>
                   <div className={` ${styles.priceTag} ${styles.leftCollumn}`}>
-                    {`${t([ 'newReservation', 'price' ])} ${price}`}
+                    {`${t([ 'newReservation', 'price' ])} ${convertPriceToString(price)} ${currency}`}
                   </div>
                   <div className={styles.middleCollumn} />
                   <div className={` ${styles.expenseOn} ${styles.rightCcollumn}`}>
@@ -93,6 +82,7 @@ class PriceSmsNote extends Component {
                 </div>
               )
             }
+
             {/* SMS */}
             {state.user
             && (
@@ -102,6 +92,7 @@ class PriceSmsNote extends Component {
               />
             )
             }
+
             {/* Note */}
             <Input
               placeholder={t([ 'newReservation', 'notePlaceholder' ])}
