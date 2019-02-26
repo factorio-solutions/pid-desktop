@@ -98,7 +98,7 @@ class NewUserForm extends Component {
             ${this.hostEmailMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'emailInvalid' ])}
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$"
           value={(state.email.value)}
           highlight={state.highlight && this.hostEmailMandatoryCondition()}
           align="left"

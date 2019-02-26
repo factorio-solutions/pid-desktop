@@ -209,12 +209,19 @@ export function loadGarage(id) {
     const state = getState().occupancy
     const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage
     if (garageId) {
+      let to
+      if (state.duration === 'month') {
+        to = state.from.clone().add(31, 'day')
+      } else {
+        to = state.from.clone().add(1, state.duration)
+      }
       const data = await requestPromise(GARAGE_DETAILS_QUERY, {
         id:         garageId,
         from:       timeToUTC(state.from),
-        to:         timeToUTC(state.from.clone().add(31, 'days')),
+        to:         timeToUTC(to),
         client_ids: state.client_ids
       })
+
       dispatch(loadClients(data.garage.clients))
       dispatch(batchActions([
         setGarage(updateGarage(data.garage)),
