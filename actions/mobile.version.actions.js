@@ -8,7 +8,7 @@ import RoundButton from '../components/buttons/RoundButton'
 import { GET_CURRENT_MOBILE_VERSION } from '../queries/mobile.header.queries'
 
 import { setCustomModal } from './mobile.header.actions'
-import { t } from '../modules/localization/localization';
+import { t } from '../modules/localization/localization'
 
 export const SET_CURRENT_VERSION = 'SET_CURRENT_VERSION'
 export const SET_APP_VERSION = 'SET_APP_VERSION'
@@ -34,7 +34,7 @@ export function getCurrentMobileVersion(platform) {
 export function showOlderVersionModal() {
   return dispatch => dispatch(setCustomModal(
     <div>
-      <div>{t([ 'mobile', 'version', 'oldAppVersion' ])}</div>
+      <div>{t([ 'mobileApp', 'version', 'oldAppVersion' ])}</div>
       <RoundButton
         content={<span className="fa fa-check" aria-hidden="true" />}
         onClick={() => dispatch(setCustomModal())}
@@ -55,7 +55,6 @@ export function checkCurrentVersion() {
       const { mobile_app_version: mobileAppVersion } = await getCurrentMobileVersion(platform)
 
       dispatch(setCurrentVersion(mobileAppVersion))
-
       if (mobileAppVersion !== appVersion) {
         dispatch(showOlderVersionModal())
       }
