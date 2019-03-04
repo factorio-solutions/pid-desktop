@@ -13,6 +13,7 @@ import styles from './Page.scss'
 import * as headerActions   from '../../actions/mobile.header.actions'
 import * as loginActions    from '../../actions/login.actions'
 import { initReservations } from '../../actions/mobile.reservations.actions'
+import { checkCurrentVersion } from '../../actions/mobile.version.actions'
 
 import { LOGIN, RESERVATIONS } from '../../../_resources/constants/RouterPaths'
 
@@ -51,7 +52,9 @@ class Page extends Component {
   async componentDidMount() {
     // 401 status, redirect to login
     window.addEventListener('unauthorizedAccess', this.unauthorizedHandler)
-    const { state, actions, hideDropdown, hideHeader, hideHamburger, gray } = this.props
+    const {
+      state, actions, hideDropdown, hideHeader, hideHamburger, gray
+    } = this.props
     actions.setAllHeader(!hideHeader, !hideHamburger, !hideDropdown)
     actions.setShowBottomMenu(gray)
     console.log('init garages call')
@@ -105,6 +108,7 @@ class Page extends Component {
       return
     }
 
+    actions.checkCurrentVersion()
     router.push(RESERVATIONS)
     await actions.initGarages()
     if (state.current_user && !state.current_user.secretary) {
@@ -192,7 +196,7 @@ class Page extends Component {
 export default connect(
   state => ({ state: state.mobileHeader }),
   dispatch => ({
-    actions:             bindActionCreators(headerActions, dispatch),
+    actions:             bindActionCreators({ ...headerActions, checkCurrentVersion }, dispatch),
     loginActions:        bindActionCreators(loginActions, dispatch),
     reservationsActions: bindActionCreators({ initReservations }, dispatch)
   })
