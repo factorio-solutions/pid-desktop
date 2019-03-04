@@ -242,7 +242,7 @@ function createFloor(index) {
     const inRow = Math.floor(Math.sqrt(to - from + 1)) // + 1 // optional + 1
     const inColumn = Math.ceil((to - from + 1) / inRow)
 
-    const padding = 10````
+    const padding = 10
     const canvasWidth = 900
     const canvasHeight = 1350
 
