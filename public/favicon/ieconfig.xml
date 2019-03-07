@@ -3,7 +3,7 @@
 <browserconfig>
   <msapplication>
     <tile>
-      <square70x70logo src="PID_favicon_76.png"/>
+      <square70x70logo src="PID_favicon_128.png"/>
       <square150x150logo src="PID_favicon_228.png"/>
 	<TileColor>#FFFFFF</TileColor>
     </tile>
