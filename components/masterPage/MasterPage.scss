@@ -20,9 +20,8 @@ $hintWidth:          180px;
   }
 
   >.logoContainer {
-    width:  150px;
+    width:  160px;
     margin: auto;
-    margin-left: 5px;
     cursor: pointer;
   }
 }
@@ -242,10 +241,6 @@ $hintWidth:          180px;
         flex-direction: column-reverse;
         text-align:     center;
       }
-    }
-
-    >.logoContainer {
-      margin-left: auto;
     }
   }
 
