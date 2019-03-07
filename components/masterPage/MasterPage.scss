@@ -7,7 +7,7 @@ $hintWidth:          180px;
 .horizontalMenu {
   display:          block;
   background-color: $horizontalMenuBackground;
-  color:            $yellow;
+  color:            $horizontalMenuFontColor;
   z-index:          900;
 
   >.hamburger {
@@ -20,8 +20,9 @@ $hintWidth:          180px;
   }
 
   >.logoContainer {
-    width:  160px;
+    width:  150px;
     margin: auto;
+    margin-left: 5px;
     cursor: pointer;
   }
 }
@@ -46,6 +47,11 @@ $hintWidth:          180px;
     font-size:      32px;
     vertical-align: middle;
   }
+}
+
+.profileDropdown {
+  background-color: $horizontalMenuBackground;
+  color:            $horizontalMenuFontColor;
 }
 
 .page {
@@ -236,6 +242,10 @@ $hintWidth:          180px;
         flex-direction: column-reverse;
         text-align:     center;
       }
+    }
+
+    >.logoContainer {
+      margin-left: auto;
     }
   }
 
