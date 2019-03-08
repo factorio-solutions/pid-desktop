@@ -470,7 +470,7 @@ export function updateGarageOrder(id) {
 
     const onSuccess = response => {
       dispatch(setFetching(false))
-      nav.to(`/${id}/admin/garageSetup/order`)
+      nav.to(`/${id}/admin/garageSetup/legalDocuments`)
     }
 
     const garage = { id: +id, garage: { floors: floorsForRequest(state) } }
