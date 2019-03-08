@@ -23,37 +23,43 @@ class LegalDocuments extends Component {
   }
 
   componentDidMount() {
-    if (this.props.params.id) {
-      this.props.actions.initDocuments()
+    const { params, actions } = this.props
+    if (params.id) {
+      actions.initDocuments()
     }
   }
 
   componentWillReceiveProps(nextProps) {
     const { garageSetup, actions, params } = this.props
     if (nextProps.params.id !== params.id) {
-      this.props.actions.initDocuments()
+      actions.initDocuments()
       garageSetup.availableTarifs.length === 0 && actions.initTarif()
       nextProps.params.id && actions.intiEditGarageOrder(nextProps.params.id)
     }
   }
 
   onSubmit = () => {
-    if (this.props.params.id) {
-      this.props.actions.updateGarageDocuments()
+    const { params, actions } = this.props
+    if (params.id) {
+      actions.updateGarageDocuments()
     } else {
       nav.to('/addFeatures/garageSetup/subscribtion')
     }
   }
 
   goBack = () => {
-    if (this.props.params.id) {
-      nav.to(`/${this.props.params.id}/admin/garageSetup/order`)
+    const { params } = this.props
+    if (params.id) {
+      nav.to(`/${params.id}/admin/garageSetup/order`)
     } else {
       nav.to('/addFeatures/garageSetup/order')
     }
   }
 
-  submitable = () => this.props.state.documents.filter(doc => doc.doc_type === 'privacy' && !doc.remove).length >= 1
+  submitable = () => {
+    const { state: { documents } } = this.props
+    return documents.some(doc => doc.doc_type === 'privacy' && !doc.remove)
+  }
 
   isGarageAdmin = () => {
     const { pageBase, params } = this.props
@@ -74,26 +80,40 @@ class LegalDocuments extends Component {
 
     return (
       <GarageSetupPage>
-        <Form onSubmit={this.onSubmit} submitable={this.submitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
-          { state.documentsTypes &&
-            state.documentsTypes.map(type => (
-              <Documents
-                header={`${t([ 'newGarage', type ]).firstToUpperCase()} ${t([ 'newGarage', 'documents' ])}`}
-                type={type}
-                documents={state.documents.filter(doc => doc.doc_type === type)}
-                highlight={state.highlight}
-                isGarageAdmin={this.isGarageAdmin()}
-              />)
-            )
+        <Form
+          onSubmit={this.onSubmit}
+          submitable={this.submitable()}
+          onBack={this.goBack}
+          onHighlight={actions.toggleHighlight}
+        >
+          {state.documentsTypes
+          && state.documentsTypes.map(type => (
+            <Documents
+              header={`${t([ 'newGarage', type ]).firstToUpperCase()} ${t([ 'newGarage', 'documents' ])}`}
+              type={type}
+              documents={state.documents.filter(doc => doc.doc_type === type)}
+              highlight={state.highlight}
+              isGarageAdmin={this.isGarageAdmin()}
+            />
+          ))
           }
         </Form>
       </GarageSetupPage>
     )
   }
-
 }
 
 export default connect(
-  state => ({ state: state.legalDocuments, garageSetup: state.garageSetup, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...legalDocumentsActions, initTarif, intiEditGarageOrder }, dispatch) })
+  state => ({
+    state:       state.legalDocuments,
+    garageSetup: state.garageSetup,
+    pageBase:    state.pageBase
+  }),
+  dispatch => ({
+    actions: bindActionCreators({
+      ...legalDocumentsActions,
+      initTarif,
+      intiEditGarageOrder
+    }, dispatch)
+  })
 )(LegalDocuments)

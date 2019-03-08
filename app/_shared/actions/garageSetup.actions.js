@@ -404,7 +404,7 @@ export function updateGarageGeneral(id, backUrl) {
     }
 
     const garage = {
- id:     +id,
+      id:     +id,
       garage: {
         name:         state.name,
         lpg:          state.lpg,
@@ -412,7 +412,7 @@ export function updateGarageGeneral(id, backUrl) {
         pid_tarif_id: state.tarif_id,
         url:          backUrl,
         address:      {
- line_1:      state.line_1,
+          line_1:      state.line_1,
           line_2:      state.line_2,
           city:        state.city,
           postal_code: state.postal_code,
@@ -508,33 +508,33 @@ export function submitGarage() {
       request(onSuccess,
         CREATE_NEW_GARAGE,
         {
- garage: {
-          name:         state.name,
-          lpg:          state.lpg,
-          img:          state.img === defaultImage ? null : state.img,
-          floors:       newFloors,
-          gates:        newGates,
-          pid_tarif_id: state.tarif_id,
-          url:          window.location.href.split('?')[0],
-          marketing:    state.bookingPage,
-          address:      {
- line_1:      state.line_1,
-            line_2:      state.line_2,
-            city:        state.city,
-            postal_code: state.postal_code,
-            state:       state.state,
-            country:     state.country,
-            lat:         parseFloat(state.lat),
-            lng:         parseFloat(state.lng)
+          garage: {
+            name:         state.name,
+            lpg:          state.lpg,
+            img:          state.img === defaultImage ? null : state.img,
+            floors:       newFloors,
+            gates:        newGates,
+            pid_tarif_id: state.tarif_id,
+            url:          window.location.href.split('?')[0],
+            marketing:    state.bookingPage,
+            address:      {
+              line_1:      state.line_1,
+              line_2:      state.line_2,
+              city:        state.city,
+              postal_code: state.postal_code,
+              state:       state.state,
+              country:     state.country,
+              lat:         parseFloat(state.lat),
+              lng:         parseFloat(state.lng)
+            }
           }
-        }
         },
         'garageMutations')
     } else { // garage edit
       request(onSuccess,
         UPDATE_GARAGE,
         {
- id:     state.id,
+          id:     state.id,
           garage: {
             name:         state.name,
             lpg:          state.lpg,
@@ -543,7 +543,7 @@ export function submitGarage() {
             gates:        newGates,
             pid_tarif_id: state.tarif_id,
             address:      {
- line_1:      state.line_1,
+              line_1:      state.line_1,
               line_2:      state.line_2,
               city:        state.city,
               postal_code: state.postal_code,
@@ -576,9 +576,9 @@ function prepareModuleOrder() {
   return (dispatch, getState) => {
     const state = getState().garageSetup
     return state.gsmModules === 0 ? null : {
- amount:  state.gsmModules,
+      amount:  state.gsmModules,
       address: {
- name:        state.gsm_name,
+        name:        state.gsm_name,
         line_1:      state.gsm_line_1,
         line_2:      state.gsm_line_2,
         city:        state.gsm_city,
@@ -640,7 +640,7 @@ function gatesForRequest(state) {
       }, [])
 
     return {
- ...gateWithoutPlaces,
+      ...gateWithoutPlaces,
       address: {
         line_1:      gate.address.line_1,
         city:        state.city,
