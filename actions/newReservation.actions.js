@@ -84,7 +84,6 @@ export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTER
 export const NEW_RESERVATION_SHOW_MAP = 'NEW_RESERVATION_SHOW_MAP'
 export const NEW_RESERVATION_LAST_USER_WAS_SAVED = 'NEW_RESERVATION_LAST_USER_WAS_SAVED'
 
-
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
 export const setReservation = actionFactory(NEW_RESERVATION_SET_RESERVATION)
 export const setShowRecurring = actionFactory(NEW_RESERVATION_SHOW_RECURRING)
@@ -562,9 +561,10 @@ export function setInitialStore(id) {
       const values = await Promise.all([ availableUsersPromise, editReservationPromise ])
       const users = values[0]
       dispatch(setAvailableUsers(users))
-
-      if (values[1] !== undefined) { // if reservation edit set details
-        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
+      // if reservation edit set details
+      if (values[1] !== undefined) {
+        // editing ongoing reservation
+        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment())
         dispatch(batchActions([
           setNote(values[1].reservation.note),
           setReservation(values[1].reservation),
@@ -1147,13 +1147,10 @@ export function submitReservation(id) {
     // check if reservation is being created in the past - warn user about it
     const fromValue = moment(roundTime(state.from), MOMENT_DATETIME_FORMAT)
     const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
-    let {
+    const {
       longterm_generating:  longTermGenerated,
       shortterm_generating: shortTermGenerated
     } = state.garage
-
-    longTermGenerated = moment(longTermGenerated)
-    shortTermGenerated = moment(shortTermGenerated)
 
     let invoicesAlreadyGenerated = false
     if (state.client_id && !state.paidByHost) {
@@ -1164,10 +1161,7 @@ export function submitReservation(id) {
       )
     }
 
-    if (
-      fromValue.diff(now, 'minutes') < 0
-      && invoicesAlreadyGenerated
-    ) {
+    if (fromValue.isBefore(now) && invoicesAlreadyGenerated) {
       dispatch(pageBaseActions.confirm(
         t([ 'newReservation', 'creatingReservationInPast' ]),
         () => sendNewReservationRequest(dispatch, getState)
