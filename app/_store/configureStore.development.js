@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose }  from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk                                      from 'redux-thunk'
 import reduxReset                                 from 'redux-reset'
 import { createLogger }                           from 'redux-logger'
@@ -20,12 +21,11 @@ const logger = createLogger({
 
 const router = routerMiddleware(hashHistory)
 
-const enhancer = compose(
+const enhancer = composeWithDevTools({
+  trace: true
+})(
   applyMiddleware(errorSender, thunk, router, logger),
-  reduxReset(),
-  window.devToolsExtension ?
-    window.devToolsExtension({ actionCreators }) :
-    noop => noop
+  reduxReset()
 )
 
 export default function configureStore(initialState) {
@@ -36,8 +36,7 @@ export default function configureStore(initialState) {
   }
 
   if (module.hot) {
-    module.hot.accept('../_app/app.reducer', () =>
-      store.replaceReducer(require('../_app/app.reducer')) // eslint-disable-line global-require
+    module.hot.accept('../_app/app.reducer', () => store.replaceReducer(require('../_app/app.reducer')) // eslint-disable-line global-require
     )
   }
 
