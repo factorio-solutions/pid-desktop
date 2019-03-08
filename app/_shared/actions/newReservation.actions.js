@@ -36,12 +36,12 @@ import {
 } from '../queries/newReservation.queries'
 
 import {
-  USER_AVAILABLE,
+  NEW_USER_AVAILABLE,
   ADD_CLIENT_USER
 } from '../queries/inviteUser.queries'
 
-// const MIN_RESERVATION_DURATION = 30 // minutes
-
+const HOST_USER_ID = -1
+const ONETIME_USER_ID = -2
 
 export const NEW_RESERVATION_SET_USER = 'NEW_RESERVATION_SET_USER'
 export const NEW_RESERVATION_SET_NOTE = 'NEW_RESERVATION_SET_NOTE'
@@ -960,7 +960,11 @@ export function overviewInit() {
 }
 // Reservation create / update \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userName }) {
+function createUpdateReservationRequestAsync(
+  state,
+  urlGarageId,
+  { userId, userName, forceOnetimeUser }
+) {
   const ongoing = state.reservation && state.reservation.ongoing
   const reservationId = state.reservation ? state.reservation.id : undefined
   const updatingReservation = reservationId !== undefined
@@ -993,7 +997,8 @@ function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userN
           : state.paymentMethod,
         csob_one_click:          state.csobOneClick,
         csob_one_click_new_card: state.csobOneClickNewCard,
-        user_name:               userName
+        user_name:               userName,
+        force_onetime_user:      forceOnetimeUser
       },
       id: reservationId
     },
@@ -1002,13 +1007,13 @@ function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userN
 }
 
 function createUserAsync(state) {
-  return requestPromise(USER_AVAILABLE, {
+  return requestPromise(NEW_USER_AVAILABLE, {
     user: {
       email:     state.email.value.toLowerCase(),
       full_name: state.name.value,
       phone:     state.phone.value.replace(/\s/g, ''),
       language:  state.language,
-      onetime:   state.user.id === -2
+      onetime:   state.user.id === ONETIME_USER_ID
     },
     client_user: state.client_id && state.user.id === -1 ? {
       client_id: +state.client_id,
@@ -1085,17 +1090,27 @@ async function sendNewReservationRequest(dispatch, getState) {
     userName: changeUserName
       ? state.name.value
       : undefined,
-    userId: state.user.id
+    userId:           state.user.id,
+    forceOnetimeUser: false
   }
 
   // if  new Host being created during new reservation
   if (state.user && state.user.id < 0) {
-    const { user_by_email: user } = await createUserAsync(state)
+    const {
+      user_by_email_new: {
+        user,
+        is_new_user: isNewUser
+      }
+    } = await createUserAsync(state)
     // if the user exists
-    if (user !== null) {
+    if (user) {
+      // If user is already
+      if (!isNewUser && state.user.id === ONETIME_USER_ID) {
+        args.forceOnetimeUser = true
+      }
       // invite to client
       // if client is selected then invite as host
-      if (state.client_id && state.user.id === -1) {
+      if (state.client_id && state.user.id === HOST_USER_ID) {
         await inviteUserToClient(user.id, state)
         args.userName = null
       }
