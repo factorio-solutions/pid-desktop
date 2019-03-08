@@ -164,12 +164,12 @@ export function addTemplate(file, label) {
   return (dispatch, getState) => {
     const floors = getState().garageSetup.floors
     if (!( // If no othe places, make template first floor
-      floors.length === 1 &&
-      floors[0].from === '' &&
-      floors[0].label === '' &&
-      floors[0].places.length === 0 &&
-      floors[0].scheme === '' &&
-      floors[0].to === ''
+      floors.length === 1
+      && floors[0].from === ''
+      && floors[0].label === ''
+      && floors[0].places.length === 0
+      && floors[0].scheme === ''
+      && floors[0].to === ''
     )) dispatch(addFloor())
     get(file).then(data => {
       const index = getState().garageSetup.floors.length - 1
@@ -379,10 +379,10 @@ export function intiEditGarageOrder(id) {
       getState().garageSetup.floors.forEach((floor, index) => { dispatch(scanSVG(floor.scheme, index)) })
       dispatch(setOrder(
         response.data.garage.floors
-        .reduce((arr, floor) => [ ...arr, ...floor.places ], [])
-        .filter(place => place.priority !== 0)
-        .sort((a, b) => b.priority - a.priority)
-        .map(place => place.label)
+          .reduce((arr, floor) => [ ...arr, ...floor.places ], [])
+          .filter(place => place.priority !== 0)
+          .sort((a, b) => b.priority - a.priority)
+          .map(place => place.label)
       ))
 
       dispatch(setFetching(false))
@@ -403,14 +403,16 @@ export function updateGarageGeneral(id, backUrl) {
       nav.to(`/${id}/admin/garageSetup/floors`)
     }
 
-    const garage = { id:     +id,
+    const garage = {
+      id:     +id,
       garage: {
         name:         state.name,
         lpg:          state.lpg,
         img:          state.img === defaultImage ? null : state.img,
         pid_tarif_id: state.tarif_id,
         url:          backUrl,
-        address:      { line_1:      state.line_1,
+        address:      {
+          line_1:      state.line_1,
           line_2:      state.line_2,
           city:        state.city,
           postal_code: state.postal_code,
@@ -505,32 +507,7 @@ export function submitGarage() {
     if (state.id === undefined) { // new garage
       request(onSuccess,
         CREATE_NEW_GARAGE,
-        { garage: {
-          name:         state.name,
-          lpg:          state.lpg,
-          img:          state.img === defaultImage ? null : state.img,
-          floors:       newFloors,
-          gates:        newGates,
-          pid_tarif_id: state.tarif_id,
-          url:          window.location.href.split('?')[0],
-          marketing:    state.bookingPage,
-          address:      { line_1:      state.line_1,
-            line_2:      state.line_2,
-            city:        state.city,
-            postal_code: state.postal_code,
-            state:       state.state,
-            country:     state.country,
-            lat:         parseFloat(state.lat),
-            lng:         parseFloat(state.lng)
-          }
-        }
-        },
-        'garageMutations'
-      )
-    } else { // garage edit
-      request(onSuccess,
-        UPDATE_GARAGE,
-        { id:     state.id,
+        {
           garage: {
             name:         state.name,
             lpg:          state.lpg,
@@ -538,7 +515,10 @@ export function submitGarage() {
             floors:       newFloors,
             gates:        newGates,
             pid_tarif_id: state.tarif_id,
-            address:      { line_1:      state.line_1,
+            url:          window.location.href.split('?')[0],
+            marketing:    state.bookingPage,
+            address:      {
+              line_1:      state.line_1,
               line_2:      state.line_2,
               city:        state.city,
               postal_code: state.postal_code,
@@ -549,8 +529,32 @@ export function submitGarage() {
             }
           }
         },
-        'garageMutations'
-      )
+        'garageMutations')
+    } else { // garage edit
+      request(onSuccess,
+        UPDATE_GARAGE,
+        {
+          id:     state.id,
+          garage: {
+            name:         state.name,
+            lpg:          state.lpg,
+            img:          state.img === defaultImage ? null : state.img,
+            floors:       newFloors,
+            gates:        newGates,
+            pid_tarif_id: state.tarif_id,
+            address:      {
+              line_1:      state.line_1,
+              line_2:      state.line_2,
+              city:        state.city,
+              postal_code: state.postal_code,
+              state:       state.state,
+              country:     state.country,
+              lat:         parseFloat(state.lat),
+              lng:         parseFloat(state.lng)
+            }
+          }
+        },
+        'garageMutations')
     }
 
     // check if all places have gates
@@ -571,8 +575,10 @@ export function submitGarage() {
 function prepareModuleOrder() {
   return (dispatch, getState) => {
     const state = getState().garageSetup
-    return state.gsmModules === 0 ? null : { amount:  state.gsmModules,
-      address: { name:        state.gsm_name,
+    return state.gsmModules === 0 ? null : {
+      amount:  state.gsmModules,
+      address: {
+        name:        state.gsm_name,
         line_1:      state.gsm_line_1,
         line_2:      state.gsm_line_2,
         city:        state.gsm_city,
@@ -608,8 +614,8 @@ function floorsForRequest(state) {
 
 function removeKeys(object, keys) {
   return Object.keys(object)
-               .filter(key => keys.indexOf(key) < 0)
-               .reduce((newObj, key) => ({ ...newObj, [key]: object[key] }), {})
+    .filter(key => keys.indexOf(key) < 0)
+    .reduce((newObj, key) => ({ ...newObj, [key]: object[key] }), {})
 }
 
 
@@ -633,7 +639,8 @@ function gatesForRequest(state) {
         return acc
       }, [])
 
-    return { ...gateWithoutPlaces,
+    return {
+      ...gateWithoutPlaces,
       address: {
         line_1:      gate.address.line_1,
         city:        state.city,
