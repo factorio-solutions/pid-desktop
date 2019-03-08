@@ -6,7 +6,6 @@ import moment from 'moment'
 
 import GarageSetupPage          from '../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Table                    from '../../_shared/components/table/Table'
-import RoundButton              from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton       from '../../_shared/components/buttons/LabeledRoundButton'
 import InvitationReminderButton from '../../_shared/components/buttons/InvitationReminderButton'
 
@@ -151,7 +150,14 @@ class GarageUsersPage extends Component {
         }
 
         <div className={styles.addButton}>
-          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={addGarageUserClick} type="action" size="big" state={isGarageAdmin && 'disabled'} />
+          <LabeledRoundButton
+            content={<span className="fa fa-plus" aria-hidden="true" />}
+            onClick={addGarageUserClick}
+            type="action"
+            size="big"
+            state={isGarageAdmin && 'disabled'}
+            label={t([ 'garageUsers', 'addUser' ])}
+          />
         </div>
       </GarageSetupPage>
     )
