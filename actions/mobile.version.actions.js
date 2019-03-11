@@ -15,7 +15,7 @@ export const SET_APP_VERSION = 'SET_APP_VERSION'
 
 export const setAppVersion = actionFactory(SET_APP_VERSION)
 
-export function setCurrentVersion(currentVersion) {
+function setCurrentVersion(currentVersion) {
   return dispatch => {
     dispatch({
       type:  SET_CURRENT_VERSION,
@@ -27,7 +27,7 @@ export function setCurrentVersion(currentVersion) {
   }
 }
 
-export function getCurrentMobileVersion(platform) {
+function getCurrentMobileVersion(platform) {
   return requestPromise(GET_CURRENT_MOBILE_VERSION, { platform })
 }
 
