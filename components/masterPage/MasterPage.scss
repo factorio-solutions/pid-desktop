@@ -7,7 +7,7 @@ $hintWidth:          180px;
 .horizontalMenu {
   display:          block;
   background-color: $horizontalMenuBackground;
-  color:            $yellow;
+  color:            $horizontalMenuFontColor;
   z-index:          900;
 
   >.hamburger {
@@ -46,6 +46,11 @@ $hintWidth:          180px;
     font-size:      32px;
     vertical-align: middle;
   }
+}
+
+.profileDropdown {
+  background-color: $horizontalMenuBackground;
+  color:            $horizontalMenuFontColor;
 }
 
 .page {

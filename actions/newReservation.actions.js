@@ -36,12 +36,12 @@ import {
 } from '../queries/newReservation.queries'
 
 import {
-  USER_AVAILABLE,
+  NEW_USER_AVAILABLE,
   ADD_CLIENT_USER
 } from '../queries/inviteUser.queries'
 
-// const MIN_RESERVATION_DURATION = 30 // minutes
-
+const HOST_USER_ID = -1
+const ONETIME_USER_ID = -2
 
 export const NEW_RESERVATION_SET_USER = 'NEW_RESERVATION_SET_USER'
 export const NEW_RESERVATION_SET_NOTE = 'NEW_RESERVATION_SET_NOTE'
@@ -83,7 +83,6 @@ export const NEW_RESERVATION_SET_PREFERED_PLACE_ID = 'NEW_RESERVATION_SET_PREFER
 export const NEW_RESERVATION_SET_FREE_INTERVAL = 'NEW_RESERVATION_SET_FREE_INTERVAL'
 export const NEW_RESERVATION_SHOW_MAP = 'NEW_RESERVATION_SHOW_MAP'
 export const NEW_RESERVATION_LAST_USER_WAS_SAVED = 'NEW_RESERVATION_LAST_USER_WAS_SAVED'
-
 
 export const setAvailableUsers = actionFactory(NEW_RESERVATION_SET_AVAILABLE_USERS)
 export const setReservation = actionFactory(NEW_RESERVATION_SET_RESERVATION)
@@ -562,9 +561,10 @@ export function setInitialStore(id) {
       const values = await Promise.all([ availableUsersPromise, editReservationPromise ])
       const users = values[0]
       dispatch(setAvailableUsers(users))
-
-      if (values[1] !== undefined) { // if reservation edit set details
-        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
+      // if reservation edit set details
+      if (values[1] !== undefined) {
+        // editing ongoing reservation
+        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment())
         dispatch(batchActions([
           setNote(values[1].reservation.note),
           setReservation(values[1].reservation),
@@ -960,7 +960,11 @@ export function overviewInit() {
 }
 // Reservation create / update \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userName }) {
+function createUpdateReservationRequestAsync(
+  state,
+  urlGarageId,
+  { userId, userName, forceOnetimeUser }
+) {
   const ongoing = state.reservation && state.reservation.ongoing
   const reservationId = state.reservation ? state.reservation.id : undefined
   const updatingReservation = reservationId !== undefined
@@ -993,7 +997,8 @@ function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userN
           : state.paymentMethod,
         csob_one_click:          state.csobOneClick,
         csob_one_click_new_card: state.csobOneClickNewCard,
-        user_name:               userName
+        user_name:               userName,
+        force_onetime_user:      forceOnetimeUser
       },
       id: reservationId
     },
@@ -1002,13 +1007,13 @@ function createUpdateReservationRequestAsync(state, urlGarageId, { userId, userN
 }
 
 function createUserAsync(state) {
-  return requestPromise(USER_AVAILABLE, {
+  return requestPromise(NEW_USER_AVAILABLE, {
     user: {
       email:     state.email.value.toLowerCase(),
       full_name: state.name.value,
       phone:     state.phone.value.replace(/\s/g, ''),
       language:  state.language,
-      onetime:   state.user.id === -2
+      onetime:   state.user.id === ONETIME_USER_ID
     },
     client_user: state.client_id && state.user.id === -1 ? {
       client_id: +state.client_id,
@@ -1085,17 +1090,27 @@ async function sendNewReservationRequest(dispatch, getState) {
     userName: changeUserName
       ? state.name.value
       : undefined,
-    userId: state.user.id
+    userId:           state.user.id,
+    forceOnetimeUser: false
   }
 
   // if  new Host being created during new reservation
   if (state.user && state.user.id < 0) {
-    const { user_by_email: user } = await createUserAsync(state)
+    const {
+      user_by_email_new: {
+        user,
+        is_new_user: isNewUser
+      }
+    } = await createUserAsync(state)
     // if the user exists
-    if (user !== null) {
+    if (user) {
+      // If user is already
+      if (!isNewUser && state.user.id === ONETIME_USER_ID) {
+        args.forceOnetimeUser = true
+      }
       // invite to client
       // if client is selected then invite as host
-      if (state.client_id && state.user.id === -1) {
+      if (state.client_id && state.user.id === HOST_USER_ID) {
         await inviteUserToClient(user.id, state)
         args.userName = null
       }
@@ -1132,13 +1147,10 @@ export function submitReservation(id) {
     // check if reservation is being created in the past - warn user about it
     const fromValue = moment(roundTime(state.from), MOMENT_DATETIME_FORMAT)
     const now = moment(roundTime(moment()), MOMENT_DATETIME_FORMAT)
-    let {
+    const {
       longterm_generating:  longTermGenerated,
       shortterm_generating: shortTermGenerated
     } = state.garage
-
-    longTermGenerated = moment(longTermGenerated)
-    shortTermGenerated = moment(shortTermGenerated)
 
     let invoicesAlreadyGenerated = false
     if (state.client_id && !state.paidByHost) {
@@ -1149,10 +1161,7 @@ export function submitReservation(id) {
       )
     }
 
-    if (
-      fromValue.diff(now, 'minutes') < 0
-      && invoicesAlreadyGenerated
-    ) {
+    if (fromValue.isBefore(now) && invoicesAlreadyGenerated) {
       dispatch(pageBaseActions.confirm(
         t([ 'newReservation', 'creatingReservationInPast' ]),
         () => sendNewReservationRequest(dispatch, getState)
