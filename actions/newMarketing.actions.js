@@ -232,7 +232,7 @@ export function editGarageMarketing() {
       } else {
         // marketing updated
         dispatch(setModal(undefined))
-        dispatch(clearForm())
+        // dispatch(clearForm())
 
         // nav.to(`/${getState().pageBase.garage}/admin/modules`)
       }
