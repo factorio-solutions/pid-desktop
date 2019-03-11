@@ -22,28 +22,58 @@ class PidAdminDashboardPage extends Component {
     const { actions } = this.props
 
     const schema = [
-      { key: 'id', title: t([ 'pidAdmin', 'users', 'id' ]), comparator: 'number', orderBy: 'id', sort: 'asc' },
-      { key: 'full_name', title: t([ 'pidAdmin', 'users', 'name' ]), comparator: 'string', orderBy: 'full_name' },
-      { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string', orderBy: 'email' },
-      { key: 'mobile_app_version', title: t([ 'pidAdmin', 'users', 'appVersion' ]), comparator: 'string', orderBy: 'mobile_app_version' },
-      { key:         'last_active',
+      {
+        key:        'id',
+        title:      t([ 'pidAdmin', 'users', 'id' ]),
+        comparator: 'number',
+        orderBy:    'id',
+        sort:       'asc'
+      },
+      {
+        key:        'full_name',
+        title:      t([ 'pidAdmin', 'users', 'name' ]),
+        comparator: 'string',
+        orderBy:    'full_name'
+      },
+      {
+        key:        'email',
+        title:      t([ 'clientUsers', 'email' ]),
+        comparator: 'string',
+        orderBy:    'email'
+      },
+      {
+        key:        'mobile_app_version',
+        title:      t([ 'pidAdmin', 'users', 'appVersion' ]),
+        comparator: 'string',
+        orderBy:    'mobile_app_version'
+      },
+      {
+        key:         'last_active',
         title:       t([ 'pidAdmin', 'users', 'lastActive' ]),
         comparator:  'date',
-        representer: o => <span>{moment(o).isValid() ? [ moment(o).format('ddd DD.MM.'), <br />, moment(o).format('H:mm') ] : 'Never active'}</span>,
-        orderBy:     'last_active'
+        representer: o => (
+          <span>
+            {moment(o).isValid()
+              ? [ moment(o).format('ddd DD.MM.'), <br />, moment(o).format('H:mm') ]
+              : 'Never active'}
+          </span>
+        ),
+        orderBy: 'last_active'
       }
     ]
 
     const transformData = data => data.users.map(user => ({
       ...user,
-      spoiler: user.last_active ? <div>
-        <LabeledRoundButton
-          label={t([ 'pidAdmin', 'users', 'impersonate' ])}
-          content={<span className="fa fa-user-secret" aria-hidden="true" />}
-          onClick={() => actions.impersonate(user.id)}
-          type="action"
-        />
-      </div> : undefined
+      spoiler: user.last_active
+        ? (
+          <LabeledRoundButton
+            label={t([ 'pidAdmin', 'users', 'impersonate' ])}
+            content={<span className="fa fa-user-secret" aria-hidden="true" />}
+            onClick={() => actions.impersonate(user.id)}
+            type="action"
+          />
+        )
+        : undefined
     }))
 
     return (
@@ -61,6 +91,6 @@ class PidAdminDashboardPage extends Component {
 }
 
 export default connect(
-  state => ({ state }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators(usersActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
+  state => ({ state }),
+  dispatch => ({ actions: bindActionCreators(usersActions, dispatch) })
 )(PidAdminDashboardPage)
