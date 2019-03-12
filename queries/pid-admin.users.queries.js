@@ -1,6 +1,6 @@
 // Will return impersonation link
-export const IMPERSONATE_USER = `query ImpersonateUser ($id: Id!){
-  impersonate_user(id: $id)
+export const IMPERSONATE_USER = `query ImpersonateUser ($id: Id!, $return_domain: String){
+  impersonate_user(id: $id, return_domain: $return_domain)
 }
 `
 
