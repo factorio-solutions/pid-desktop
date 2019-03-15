@@ -134,12 +134,13 @@ export function setDuration(duration) {
 }
 
 export function setFrom(from) {
-  return dispatch => {
+  return async dispatch => {
+    dispatch(loadGarage(undefined, from))
+    console.log('setFrom')
     dispatch({
       type:  OCCUPANCY_SET_FROM,
       value: from
     })
-    dispatch(loadGarage())
   }
 }
 
@@ -204,20 +205,23 @@ function updateGarage(garage) {
   }
 }
 
-export function loadGarage(id) {
+export function loadGarage(id, argumentFrom) {
   return async (dispatch, getState) => {
+    dispatch(setRefetching(true))
     const state = getState().occupancy
+    const from = argumentFrom || state.from
     const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage
     if (garageId) {
       let to
       if (state.duration === 'month') {
-        to = state.from.clone().add(31, 'day')
+        to = from.clone().add(31, 'day')
       } else {
-        to = state.from.clone().add(1, state.duration)
+        to = from.clone().add(1, state.duration)
       }
+      console.timeStamp('Before Request')
       const data = await requestPromise(GARAGE_DETAILS_QUERY, {
         id:         garageId,
-        from:       timeToUTC(state.from),
+        from:       timeToUTC(from),
         to:         timeToUTC(to),
         client_ids: state.client_ids
       })
@@ -265,14 +269,16 @@ function updateUsersSettings() {
 // =============================================================================
 // occupancy actions
 export function subtract() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
+    console.log('subtract')
     const duration = getState().occupancy.duration
     dispatch(setFrom(moment(getState().occupancy.from).subtract(1, duration)))
   }
 }
 
 export function add() {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
+    console.log('add')
     const duration = getState().occupancy.duration
     dispatch(setFrom(moment(getState().occupancy.from).add(1, duration)))
   }
