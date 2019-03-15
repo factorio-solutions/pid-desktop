@@ -39,10 +39,10 @@ export function initReservations() { // will download first 5 reservations
 export function destroyReservation(id, callback) {
   return dispatch => {
     const onSuccess = response => {
+      dispatch(setCustomModal())
       if (mobile) {
         callback()
       } else {
-        dispatch(setCustomModal())
         dispatch(initReservations())
       }
     }
