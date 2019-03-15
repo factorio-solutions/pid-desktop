@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import moment from 'moment'
 
 import Reservation from './Reservation'
 
 import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview'
 import { getTextWidth14px }           from '../../helpers/estimateTextWidth'
+import {
+  firstDateIsBefore, diff, firstDateIsBeforeOrEqual, firstDateIsAfter, dateIsInRange, dateAdd
+} from '../../helpers/dateHelper'
 
 import detectIE from '../../helpers/internetExplorer'
 
@@ -14,75 +16,90 @@ import styles from './OccupancyOverview.scss'
 
 export default class Place extends Component {
   static propTypes = {
-    currentUser:        PropTypes.object,
-    setNewReservation:  PropTypes.func,
-    place:              PropTypes.object,
-    duration:           PropTypes.string,
-    from:               PropTypes.object,
-    now:                PropTypes.number,
-    showDetails:        PropTypes.bool,
-    onReservationClick: PropTypes.func
+    currentUser:             PropTypes.object,
+    setNewReservation:       PropTypes.func,
+    place:                   PropTypes.object,
+    duration:                PropTypes.string,
+    from:                    PropTypes.object,
+    now:                     PropTypes.number,
+    showDetails:             PropTypes.bool,
+    onReservationClick:      PropTypes.func,
+    renderTextInReservation: PropTypes.bool
   }
 
   isIe = detectIE()
 
   constructor(props) {
     super(props)
+    const { place } = props
     this.state = {
       rendered:  false,
       mouseDown: false,
       left:      0,
-      width:     0
+      width:     0,
+      place
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      ...this.state,
-      rendered: true
-    })
+  componentWillMount() {
+    this.setState(state => ({
+      ...state,
+      timeStamp: window.performance.now()
+    }))
+  }
 
-    document.body.addEventListener('mousemove', this.onMouseMove)
-    document.body.addEventListener('mouseup', this.onMouseUp)
+  componentDidMount() {
+    const { place, timeStamp } = this.state
+    console.log(`Place ${place.floor}-${place.label}: ${window.performance.now() - timeStamp}`)
+    this.setState(state => ({
+      ...state,
+      rendered: true
+    }))
+
+    this.row.addEventListener('mousemove', this.onMouseMove)
+    this.row.addEventListener('mouseup', this.onMouseUp)
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener('mousemove', this.onMouseMove)
-    document.body.removeEventListener('mouseup', this.onMouseUp)
+    this.row.removeEventListener('mousemove', this.onMouseMove)
+    this.row.removeEventListener('mouseup', this.onMouseUp)
   }
 
   onMouseDown = event => {
-    const newWidth = this.state.mouseDown ? this.state.width : 0
-    const newLeft = this.state.mouseDown
-      ? this.state.left
+    const { left, mouseDown, width } = this.state
+    const newWidth = mouseDown ? width : 0
+    const newLeft = mouseDown
+      ? left
       : event.clientX - this.td.getBoundingClientRect().left
 
-    this.setState({
-      ...this.state,
+    this.setState(state => ({
+      ...state,
       mouseDown: true,
       width:     newWidth,
       left:      newLeft
-    })
+    }))
   }
 
   onMouseMove = event => {
-    if (this.state.mouseDown) {
-      const newWidth = event.clientX - this.td.getBoundingClientRect().left - this.state.left
+    const { left, mouseDown } = this.state
+    if (mouseDown) {
+      const newWidth = event.clientX - this.td.getBoundingClientRect().left - left
       const range = this.calculateReservationFromDiv(undefined, newWidth)
       const reservations = this.reservationsInRange(range.beginsAt, range.endsAt)
 
       if (!reservations.length) {
-        this.setState({
-          ...this.state,
-          width: event.clientX - this.td.getBoundingClientRect().left - this.state.left
-        })
+        this.setState(state => ({
+          ...state,
+          width: event.clientX - this.td.getBoundingClientRect().left - state.left
+        }))
       }
     }
   }
 
   onMouseUp = () => {
     const {
-      setNewReservation: setNewReservationAction
+      setNewReservation: setNewReservationAction,
+      place
     } = this.props
     if (this.newReservationDiv) {
       const range = this.calculateReservationFromDiv()
@@ -90,40 +107,41 @@ export default class Place extends Component {
 
       setNewReservationAction(
         range.beginsAt,
-        reservations.length ? moment(reservations[0].begins_at) : range.endsAt,
-        this.props.place.id
+        reservations.length ? reservations[0].begins_at : range.endsAt,
+        place.id
       )
     }
 
-    this.setState({ ...this.state, mouseDown: false })
+    this.setState(state => ({ ...state, mouseDown: false }))
   }
 
   reservationsInRange = (from, to) => this.props.place.reservations
-    .filter(reservation => from.isBefore(moment(reservation.ends_at)))
-    .filter(reservation => to.isAfter(moment(reservation.begins_at)))
-    .sort((a, b) => moment(a.begins_at).diff(moment(b.begins_at)))
+    .filter(reservation => from.isBefore(reservation.ends_at))
+    .filter(reservation => to.isAfter(reservation.begins_at))
+    .sort((a, b) => a.begins_at.diff(b.begins_at))
 
   calculateReservationFromDiv = (left, width) => {
-    if (this.newReservationDiv) {
-      const { from, duration } = this.props
-      const divDimensions = this.newReservationDiv.getBoundingClientRect()
-      // in days
-      const dur = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS)
-      const rowWidth = (
-        this.td.parentElement.getBoundingClientRect().width
-        - this.td.parentElement.children[0].getBoundingClientRect().width
-      )
-      const reservationStart = (
-        ((left || divDimensions.left) - this.td.getBoundingClientRect().left)
-        / (rowWidth / dur)
-      )
-      const reservationDuration = (width || divDimensions.width) / (rowWidth / dur)
-      const beginsAt = from.clone().add(reservationStart * 24, 'hours')
-      const endsAt = beginsAt.clone().add(reservationDuration * 24, 'hours')
-
-      return { beginsAt, endsAt }
+    if (!this.newReservationDiv) {
+      return {}
     }
-    return {}
+
+    const { from, duration } = this.props
+    const divDimensions = this.newReservationDiv.getBoundingClientRect()
+    // in days
+    const dur = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS)
+    const rowWidth = (
+      this.td.parentElement.getBoundingClientRect().width
+      - this.td.parentElement.children[0].getBoundingClientRect().width
+    )
+    const reservationStart = (
+      ((left || divDimensions.left) - this.td.getBoundingClientRect().left)
+      / (rowWidth / dur)
+    )
+    const reservationDuration = (width || divDimensions.width) / (rowWidth / dur)
+    const beginsAt = from.clone().add(reservationStart * 24, 'hours')
+    const endsAt = beginsAt.clone().add(reservationDuration * 24, 'hours')
+
+    return { beginsAt, endsAt }
   }
 
   isForCurrentUser = reservation => {
@@ -172,14 +190,15 @@ export default class Place extends Component {
     const rowWidth = this.rowWidth()
     const windowLength = this.windowLength() // in days
     const cellCount = windowLength * (duration === 'day' ? 24 : 2)
-    const beginning = moment(reservation.begins_at).isBefore(from)
-      ? from
-      : moment(reservation.begins_at)
-    const dur = moment(reservation.ends_at).diff(beginning.isSameOrBefore(from)
-      ? from
-      : beginning, 'hours', true)
+    const fromDate = from.toDate()
+    const beginning = firstDateIsBefore(reservation.begins_at, fromDate)
+      ? fromDate
+      : reservation.begins_at
+    const dur = diff(firstDateIsBeforeOrEqual(beginning, fromDate)
+      ? fromDate
+      : beginning, reservation.ends_at, 'hours', true)
     const durationInCells = dur / cellDuration
-    const fromStart = beginning.diff(from, 'days', true)
+    const fromStart = diff(fromDate, beginning, 'days', true)
 
     return {
       ...reservation,
@@ -241,17 +260,20 @@ export default class Place extends Component {
     const cellDuration = duration === 'day' ? 1 : 12 // hours
     const details = this.shouldShowDetails(reservation)
     const forCurrentUser = this.isForCurrentUser(reservation)
+    const currentTime = new Date()
+    const fromDate = from.toDate()
 
     const classes = [
       styles.reservation,
       reservation.displayTextLeft && styles.textOnLeft,
       reservation.displayTextRight && styles.textOnRight,
-      moment().isBefore(moment(reservation.begins_at)) && styles.future,
-      moment().isBetween(
-        moment(reservation.begins_at),
-        moment(reservation.ends_at)
+      firstDateIsBefore(currentTime, reservation.begins_at) && styles.future,
+      dateIsInRange(
+        currentTime,
+        reservation.begins_at,
+        reservation.ends_at
       ) && styles.ongoing,
-      moment().isAfter(moment(reservation.ends_at)) && styles.fulfilled,
+      firstDateIsAfter(currentTime, reservation.ends_at) && styles.fulfilled,
       details
         ? forCurrentUser
           ? styles.forCurrentUser
@@ -260,16 +282,17 @@ export default class Place extends Component {
       !reservation.approved && styles.notApproved
     ]
 
-    const beginning = moment(reservation.begins_at)
-    const dur = moment(reservation.ends_at).diff(beginning.isSameOrBefore(from)
-      ? from
-      : beginning, 'hours', true)
+    const beginning = reservation.begins_at
+    const dur = diff(firstDateIsBeforeOrEqual(beginning, fromDate)
+      ? fromDate
+      : beginning, reservation.ends_at, 'hours', true)
 
     const durationInCells = dur / cellDuration
 
-    const firstCellOffset = beginning.isSameOrBefore(from)
+    const firstCellOffset = firstDateIsBeforeOrEqual(beginning, fromDate)
       ? 0
-      : ((beginning.hours() + (beginning.minutes() / 60)) % cellDuration) / cellDuration
+      : ((beginning.getHours() + (beginning.getMinutes() / 60)) % cellDuration) / cellDuration
+
     const firstCellWidth = this.row.childNodes[firstCellIndex]
       ? this.row.childNodes[firstCellIndex].getBoundingClientRect().width
       : 0
@@ -279,7 +302,7 @@ export default class Place extends Component {
       ? this.row.childNodes[lastCellIndex].getBoundingClientRect().width
       : 0
 
-    const left = beginning.isSameOrBefore(from) ? 0 : (firstCellOffset * firstCellWidth)
+    const left = firstDateIsBeforeOrEqual(beginning, fromDate) ? 0 : (firstCellOffset * firstCellWidth)
     const width = Array(...{ length: Math.floor(durationInCells + firstCellOffset) })
       .map((cell, index) => firstCellIndex + index)
       .reduce((sum, cell) => (
@@ -306,22 +329,25 @@ export default class Place extends Component {
     )
   }
 
-  renderCells = (o, index) => {
+  renderCell = (index, renderTextInReservation) => {
     const {
       from, duration, place, now
     } = this.props
-    const date = moment(from).locale(moment.locale()).add(
+    const fromDate = from.toDate()
+    const date = dateAdd(
+      fromDate,
       (duration === 'day' ? 0 : index / 2) * 24,
       'hours'
     )
     const classes = [
-      (date.isoWeekday() === 6 || date.isoWeekday() === 7) && styles.weekend,
+      (date.getDay() === 6 || date.getDay() === 0) && styles.weekend,
       duration !== 'day' && index % 2 === 1 && styles.rightBorder,
       duration !== 'day' && index % 2 === 0 && styles.rightBorderDotted,
       duration === 'day' && styles.rightBorderDotted,
       duration === 'day' && ((index + 1) % 6) - 3 === 0 && styles.rightBorder,
       duration === 'day' && (index + 1) % 6 === 0 && styles.boldBorder
     ]
+
     const renderReservationFactory = reservation => this.renderReservation(reservation, index + 1)
 
     const style = {
@@ -333,14 +359,19 @@ export default class Place extends Component {
       style.height = `${this.td.clientHeight - 5}px`
     }
 
-    const newPlace = {
-      ...place,
-      reservations: place.reservations
-        .sort(this.sortByDate)
+    let placeReservation = place.reservations.sort(this.sortByDate)
+
+    if (!renderTextInReservation) {
+      placeReservation = placeReservation
         .map(this.estimatePosition)
         .map(this.estimateSpaceArround)
         .map(this.displayTextOnLeft)
         .map(this.displayTextOnRight)
+    }
+
+    const newPlace = {
+      ...place,
+      reservations: placeReservation
     }
 
     return (
@@ -363,8 +394,8 @@ export default class Place extends Component {
           && this.state.rendered
           && newPlace.reservations
             .filter(reservation => (
-              moment(reservation.begins_at).isBefore(from)
-              && !moment(reservation.ends_at).isSameOrBefore(from)
+              firstDateIsBefore(reservation.begins_at, fromDate)
+              && !firstDateIsBeforeOrEqual(reservation.ends_at, fromDate)
             ))
             .map(renderReservationFactory)
         }
@@ -372,19 +403,19 @@ export default class Place extends Component {
           this.state.rendered
           && newPlace.reservations
             .filter(reservation => {
-              const beginsAt = moment(reservation.begins_at)
+              const beginsAt = reservation.begins_at
               if (duration === 'day') {
-                return beginsAt.isBetween(
-                  date.clone().add(index, 'hours'),
-                  date.clone().add(index + 1, 'hours'),
-                  null,
+                return dateIsInRange(
+                  beginsAt,
+                  dateAdd(date, index, 'hours'),
+                  dateAdd(date, index + 1, 'hours'),
                   '[)'
                 )
               }
-              return beginsAt.isBetween(
+              return dateIsInRange(
+                beginsAt,
                 date,
-                date.clone().add(12, 'hours'),
-                null,
+                dateAdd(date, 12, 'hours'),
                 '[)'
               )
             })
@@ -404,9 +435,15 @@ export default class Place extends Component {
 
 
   render() {
-    const { place, duration } = this.props
+    const { place, duration, renderTextInReservation } = this.props
     const windowLength = this.windowLength() // in days
     const cellCount = windowLength * (duration === 'day' ? 24 : 2)
+
+    const cells = new Array(cellCount)
+
+    for (let i = 0; i < cellCount; i += 1) {
+      cells[i] = this.renderCell(i, renderTextInReservation)
+    }
 
     return (
       <tr
@@ -416,7 +453,7 @@ export default class Place extends Component {
         onMouseDown={this.onMouseDown}
       >
         <td className={styles.rightBorder}>{`${place.floor}/${place.label}`}</td>
-        {Array(...{ length: cellCount }).map(this.renderCells)}
+        {cells}
       </tr>
     )
   }
