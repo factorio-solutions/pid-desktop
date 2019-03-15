@@ -177,6 +177,8 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
   return (dispatch, getState) => {
     const logError = dispatch(logErrorFactory(reservationId, gateId))
 
+    const IS_ANDROID = window.cordova && cordova.platformId === 'android'
+
     if (window.bluetoothle) {
       const unit = getState().reservations.bleDevices[name]
       const repeater = getState().reservations.bleDevices['r' + name]
@@ -202,7 +204,8 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
       if (device) {
         connectionAction = ble.connect(device.address)
       } else {
-        connectionAction = ble.initialize()
+        connectionAction = ble
+          .initialize()
           .catch(() => logError('Bluetooth not enabled'))
           .then(() => ble.scan(name))
           .then(onDeviceFound)
@@ -215,10 +218,11 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
           logError(error)
           if (device) {
             ble.close(device.address)
-              .catch(e => console.log('Disconnecting cannot be performed:', e))
+              .catch(e => console.log('Disconnecting cannot be performed:', IS_ANDROID ? e : e.message))
           } else {
-            ble.stopScan()
-              .catch(e => console.log('Scanning cannot be stopped because:', e))
+            ble.isScanning()
+              .catch(() => { console.log('Open gate catch.'); ble.stopScan() })
+              .catch(e => console.log('Scanning cannot be stopped because:', IS_ANDROID ? e : e.message))
           }
         })
     } else {
