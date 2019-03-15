@@ -15,6 +15,11 @@ import Modal             from '../_shared/components/modal/Modal'
 import Form              from '../_shared/components/form/Form'
 import Loading           from '../_shared/components/loading/Loading'
 
+import {
+  getPlaces,
+  getSelectedPlace
+} from './selectors/occupancy.selectors'
+
 import * as OccupancyActions      from '../_shared/actions/occupancy.actions'
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import { setPast }                from '../_shared/actions/reservations.actions'
@@ -31,7 +36,9 @@ class OccupancyPage extends Component {
     state:                 PropTypes.object,
     currentUser:           PropTypes.object,
     actions:               PropTypes.object,
-    newReservationActions: PropTypes.object
+    newReservationActions: PropTypes.object,
+    selectedPlace:         PropTypes.object,
+    places:                PropTypes.object
   }
 
   componentDidMount() {
@@ -39,7 +46,7 @@ class OccupancyPage extends Component {
     actions.initOccupancy()
     this.timerID = setInterval(actions.loadGarage, UPDATE_EVERY_X_MINUTES * 60 * 1000)
   }
-  
+
   componentWillUnmount() {
     clearInterval(this.timerID)
   }
@@ -64,7 +71,9 @@ class OccupancyPage extends Component {
   }
 
   render() {
-    const { state, currentUser, actions } = this.props
+    const {
+      state, currentUser, actions, selectedPlace, places
+    } = this.props
     const { garage } = state
 
     const clientDropdown = () => {
@@ -84,22 +93,6 @@ class OccupancyPage extends Component {
         ),
         onClick: () => clientSelected(index)
       }))
-    }
-
-    const preparePlaces = (places, floor) => {
-      return places.concat(floor.occupancy_places
-        .filter(place => !state.client_ids.length || place.contracts_in_interval.length)
-        .map(place => ({
-          ...place,
-          floor:        floor.label,
-          reservations: state.client_ids.length
-            ? place.reservations_in_interval
-              .filter(reservation => (
-                reservation.client
-                && state.client_ids.includes(reservation.client.id)
-              ))
-            : place.reservations_in_interval
-        })))
     }
 
     const filters = [
@@ -147,12 +140,6 @@ class OccupancyPage extends Component {
       </div>
     ]
 
-    const placeForNewReservation = (
-      garage
-      && state.newReservation
-      && garage.floors.reduce(preparePlaces, []).findById(state.newReservation.placeId)
-    )
-
     return (
       <PageBase>
         <Modal show={state.newReservation}>
@@ -172,9 +159,9 @@ class OccupancyPage extends Component {
                   <tr>
                     <td>{t([ 'occupancy', 'place' ])}</td>
                     <td>
-                      {placeForNewReservation && placeForNewReservation.floor}
+                      {selectedPlace && selectedPlace.floor}
                       {'/'}
-                      {placeForNewReservation && placeForNewReservation.label}
+                      {selectedPlace && selectedPlace.label}
                     </td>
                   </tr>
                   <tr>
@@ -205,8 +192,8 @@ class OccupancyPage extends Component {
         <div className={styles.occupancies}>
           <h2>{garage && garage.name}</h2>
           <OccupancyOverview
-            places={garage ? garage.floors.reduce(preparePlaces, []) : []}
-            from={state.from}
+            places={places}
+            from={moment(state.from)}
             showDetails={
               garage
               && (
@@ -225,6 +212,7 @@ class OccupancyPage extends Component {
             onReservationClick={this.onReservationClick}
             currentUser={currentUser}
             setNewReservation={actions.setNewReservation}
+            reservationsCount={state.garage && state.garage.reservations_in_interval.length}
           />
         </div>
 
@@ -271,8 +259,10 @@ class OccupancyPage extends Component {
 
 export default connect(
   state => ({
-    state:       state.occupancy,
-    currentUser: state.pageBase.current_user
+    state:         state.occupancy,
+    currentUser:   state.pageBase.current_user,
+    places:        getPlaces(state),
+    selectedPlace: getSelectedPlace(state)
   }),
   dispatch => ({
     actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
