@@ -221,7 +221,7 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
               .catch(e => console.log('Disconnecting cannot be performed:', IS_ANDROID ? e : e.message))
           } else {
             ble.isScanning()
-              .catch(() => { console.log('Open gate catch.'); ble.stopScan() })
+              .catch(() => { console.log('Open gate catch. Error:', error); ble.stopScan() })
               .catch(e => console.log('Scanning cannot be stopped because:', IS_ANDROID ? e : e.message))
           }
         })

@@ -76,11 +76,14 @@ function startScan(name) { // use when you know the device you are looking for
     let timeout = false
 
     const onTimeout = async () => {
-      timeout = true
       scanBetweenDevices && clearTimeout(scanBetweenDevices)
-      console.log((new Date()).toISOString() + ' BT scanning timeout')
+      if (found || timeout) return
+      timeout = true
+
       try {
-        await stopScan()
+        if (await isScanning()) {
+          await stopScan()
+        }
       } catch (e) {
         console.log('Scanning cannot be stopped because:', IS_ANDROID ? e : e.message)
       }
@@ -88,19 +91,18 @@ function startScan(name) { // use when you know the device you are looking for
     }
 
     const onBetweenDevicesTimeOut = async () => {
-      timeout = true
       scanTimeout && clearTimeout(scanTimeout)
-      console.log((new Date()).toISOString() + ' BT scanning timeout, between devices.')
 
-      await onTimeout()
+      !found && !timeout && await onTimeout()
     }
 
     const onDeviceFound = async device => {
       scanBetweenDevices && clearTimeout(scanBetweenDevices)
+      if (found || timeout) return
 
       if (device.name && (device.name === name || device.name === 'r' + name)) {
-        found = true
         scanTimeout && clearTimeout(scanTimeout)
+        found = true
         console.log('device found')
         try {
           await stopScan()
@@ -234,7 +236,10 @@ export function scan(name) {
   return new Promise((resolve, reject) => {
     startScan(name)
       .then(resolve)
-      .catch(() => startScan(name))
+      .catch(() => {
+        console.log(`${(new Date()).toISOString()} Rescanning`)
+        return startScan(name)
+      })
       .catch(reject)
       .then(resolve)
   })
