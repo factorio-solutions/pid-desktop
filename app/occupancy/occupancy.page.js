@@ -193,7 +193,7 @@ class OccupancyPage extends Component {
           <h2>{garage && garage.name}</h2>
           <OccupancyOverview
             places={places}
-            from={moment(state.from)}
+            from={state.from}
             showDetails={
               garage
               && (

@@ -9,8 +9,6 @@ import {
   firstDateIsBefore, diff, firstDateIsBeforeOrEqual, firstDateIsAfter, dateIsInRange, dateAdd
 } from '../../helpers/dateHelper'
 
-import detectIE from '../../helpers/internetExplorer'
-
 import styles from './OccupancyOverview.scss'
 
 
@@ -24,45 +22,25 @@ export default class Place extends Component {
     now:                     PropTypes.number,
     showDetails:             PropTypes.bool,
     onReservationClick:      PropTypes.func,
-    renderTextInReservation: PropTypes.bool
+    renderTextInReservation: PropTypes.bool,
+    isIe:                    PropTypes.bool
   }
-
-  isIe = detectIE()
 
   constructor(props) {
     super(props)
-    const { place } = props
     this.state = {
       rendered:  false,
       mouseDown: false,
       left:      0,
-      width:     0,
-      place
+      width:     0
     }
   }
 
-  componentWillMount() {
-    this.setState(state => ({
-      ...state,
-      timeStamp: window.performance.now()
-    }))
-  }
-
   componentDidMount() {
-    const { place, timeStamp } = this.state
-    console.log(`Place ${place.floor}-${place.label}: ${window.performance.now() - timeStamp}`)
     this.setState(state => ({
       ...state,
       rendered: true
     }))
-
-    this.row.addEventListener('mousemove', this.onMouseMove)
-    this.row.addEventListener('mouseup', this.onMouseUp)
-  }
-
-  componentWillUnmount() {
-    this.row.removeEventListener('mousemove', this.onMouseMove)
-    this.row.removeEventListener('mouseup', this.onMouseUp)
   }
 
   onMouseDown = event => {
@@ -71,6 +49,9 @@ export default class Place extends Component {
     const newLeft = mouseDown
       ? left
       : event.clientX - this.td.getBoundingClientRect().left
+
+    document.body.addEventListener('mousemove', this.onMouseMove)
+    document.body.addEventListener('mouseup', this.onMouseUp)
 
     this.setState(state => ({
       ...state,
@@ -101,9 +82,13 @@ export default class Place extends Component {
       setNewReservation: setNewReservationAction,
       place
     } = this.props
+
     if (this.newReservationDiv) {
       const range = this.calculateReservationFromDiv()
       const reservations = this.reservationsInRange(range.beginsAt, range.endsAt)
+
+      document.body.removeEventListener('mousemove', this.onMouseMove)
+      document.body.removeEventListener('mouseup', this.onMouseUp)
 
       setNewReservationAction(
         range.beginsAt,
@@ -184,12 +169,9 @@ export default class Place extends Component {
   // can be sorted as string - might be faster
   sortByDate = (a, b) => (a.begins_at < b.begins_at ? -1 : (a.begins_at > b.begins_at ? 1 : 0))
 
-  estimatePosition = reservation => {
-    const { from, duration } = this.props
+  estimatePosition = (reservation, cellWidth) => {
+    const { from } = this.props
     const cellDuration = this.cellDuration()
-    const rowWidth = this.rowWidth()
-    const windowLength = this.windowLength() // in days
-    const cellCount = windowLength * (duration === 'day' ? 24 : 2)
     const fromDate = from.toDate()
     const beginning = firstDateIsBefore(reservation.begins_at, fromDate)
       ? fromDate
@@ -198,18 +180,17 @@ export default class Place extends Component {
       ? fromDate
       : beginning, reservation.ends_at, 'hours', true)
     const durationInCells = dur / cellDuration
-    const fromStart = diff(fromDate, beginning, 'days', true)
+    const fromStart = diff(fromDate, beginning, 'hours', true)
 
     return {
       ...reservation,
-      estimatedWidth:     (durationInCells / cellCount) * rowWidth, // in px
-      estimatedStart:     (fromStart / windowLength) * rowWidth, // in px
+      estimatedWidth:     durationInCells * cellWidth, // in px
+      estimatedStart:     (fromStart / cellDuration) * cellWidth, // in px
       estimatedTextWidth: getTextWidth14px(this.composeLabel(reservation)) // in px
     }
   }
 
-  estimateSpaceArround = (reservation, index, arr) => {
-    const { estimatedStart, ...restOfReservation } = reservation
+  estimateSpaceAround = (estimatedStart, estimatedWidth, index, arr) => {
     const endOfReservationBefore = index === 0
       ? 0
       : arr[index - 1].estimatedStart + arr[index - 1].estimatedWidth
@@ -218,45 +199,61 @@ export default class Place extends Component {
       : this.rowWidth
 
     return {
-      ...restOfReservation,
       // in px
       estimatedLeftSpace:  estimatedStart - endOfReservationBefore,
       // in px
-      estimatedRightSpace: startOfReservationAfter - (estimatedStart + reservation.estimatedWidth)
+      estimatedRightSpace: startOfReservationAfter - (estimatedStart + estimatedWidth)
     }
   }
 
-  displayTextOnLeft = reservation => ({
-    ...reservation,
-    displayTextLeft: reservation.estimatedWidth < reservation.estimatedTextWidth
-      && reservation.estimatedLeftSpace > reservation.estimatedTextWidth
-  })
-
-  displayTextOnRight = (reservation, index, arr) => {
+  estimateTextPosition = (reservation, index, arr) => {
     const {
       estimatedWidth,
       estimatedTextWidth,
-      estimatedLeftSpace,
-      estimatedRightSpace,
-      ...reserOfReservation
+      estimatedStart,
+      ...resetOfReservation
     } = reservation
-    const right = estimatedWidth < estimatedTextWidth
+
+    const {
+      estimatedLeftSpace,
+      estimatedRightSpace
+    } = this.estimateSpaceAround(estimatedStart, estimatedWidth, index, arr)
+
+    const result = {
+      ...resetOfReservation,
+      displayTextLeft:  false,
+      displayTextRight: false,
+      estimatedTextWidth
+    }
+
+    if (
+      estimatedWidth < estimatedTextWidth
+      && estimatedLeftSpace > estimatedTextWidth
+    ) {
+      result.displayTextLeft = true
+      return result
+    }
+
+    if (
+      estimatedWidth < estimatedTextWidth
       && !reservation.displayTextLeft
       && (
         index + 1 < arr.length
           ? estimatedRightSpace - arr[index + 1].estimatedTextWidth > estimatedTextWidth
           : estimatedRightSpace > estimatedTextWidth
       )
-
-    return {
-      ...reserOfReservation,
-      displayTextRight: right,
-      estimatedTextWidth
+    ) {
+      result.displayTextRight = true
+      return result
     }
+
+    return result
   }
 
-  renderReservation = (reservation, firstCellIndex) => {
-    const { duration, from, onReservationClick } = this.props
+  renderReservation = (reservation, firstCellIndex, cellWidth) => {
+    const {
+      duration, from, onReservationClick, isIe
+    } = this.props
     const cellDuration = duration === 'day' ? 1 : 12 // hours
     const details = this.shouldShowDetails(reservation)
     const forCurrentUser = this.isForCurrentUser(reservation)
@@ -293,24 +290,15 @@ export default class Place extends Component {
       ? 0
       : ((beginning.getHours() + (beginning.getMinutes() / 60)) % cellDuration) / cellDuration
 
-    const firstCellWidth = this.row.childNodes[firstCellIndex]
-      ? this.row.childNodes[firstCellIndex].getBoundingClientRect().width
-      : 0
-
-    const lastCellIndex = firstCellIndex + Math.floor(durationInCells + firstCellOffset)
-    const lastCellWidth = this.row.childNodes[lastCellIndex]
-      ? this.row.childNodes[lastCellIndex].getBoundingClientRect().width
-      : 0
-
-    const left = firstDateIsBeforeOrEqual(beginning, fromDate) ? 0 : (firstCellOffset * firstCellWidth)
+    const left = firstDateIsBeforeOrEqual(beginning, fromDate) ? 0 : (firstCellOffset * cellWidth)
     const width = Array(...{ length: Math.floor(durationInCells + firstCellOffset) })
       .map((cell, index) => firstCellIndex + index)
       .reduce((sum, cell) => (
         sum + (this.row.childNodes[cell]
-          ? this.row.childNodes[cell].getBoundingClientRect().width
+          ? cellWidth
           : 0)
       //                                                              due to first cell offset
-      ), lastCellWidth * ((durationInCells + firstCellOffset) % 1)) - left
+      ), cellWidth * ((durationInCells + firstCellOffset) % 1)) - left
 
     const text = this.composeLabel(reservation)
 
@@ -323,15 +311,15 @@ export default class Place extends Component {
         width={width}
         text={text}
         onClick={onReservationClick}
-        height={this.isIe && this.td ? `${this.td.clientHeight - 5}px` : 'calc(100% - 5px)'}
-        isIe={this.isIe}
+        height={isIe && this.td ? `${this.td.clientHeight - 5}px` : 'calc(100% - 5px)'}
+        isIe={isIe}
       />
     )
   }
 
-  renderCell = (index, renderTextInReservation) => {
+  renderCell = (index, renderTextInReservation, cellWidth) => {
     const {
-      from, duration, place, now
+      from, duration, place, now, isIe
     } = this.props
     const fromDate = from.toDate()
     const date = dateAdd(
@@ -348,7 +336,9 @@ export default class Place extends Component {
       duration === 'day' && (index + 1) % 6 === 0 && styles.boldBorder
     ]
 
-    const renderReservationFactory = reservation => this.renderReservation(reservation, index + 1)
+    const renderReservationFactory = reservation => (
+      this.renderReservation(reservation, index + 1, cellWidth)
+    )
 
     const style = {
       left:  this.state.left + 'px',
@@ -363,10 +353,8 @@ export default class Place extends Component {
 
     if (!renderTextInReservation) {
       placeReservation = placeReservation
-        .map(this.estimatePosition)
-        .map(this.estimateSpaceArround)
-        .map(this.displayTextOnLeft)
-        .map(this.displayTextOnRight)
+        .map(r => this.estimatePosition(r, cellWidth))
+        .map(this.estimateTextPosition)
     }
 
     const newPlace = {
@@ -385,7 +373,7 @@ export default class Place extends Component {
             className={styles.now}
             style={{
               left:   now + 'px',
-              height: this.isIe && this.td ? `${this.td.clientHeight}px` : '100%'
+              height: isIe && this.td ? `${this.td.clientHeight}px` : '100%'
             }}
           />
         )}
@@ -436,13 +424,18 @@ export default class Place extends Component {
 
   render() {
     const { place, duration, renderTextInReservation } = this.props
+    const { rendered } = this.state
     const windowLength = this.windowLength() // in days
     const cellCount = windowLength * (duration === 'day' ? 24 : 2)
 
+    const cellWidth = rendered && place.reservations.length > 0
+      ? this.row.childNodes[1].getBoundingClientRect().width
+      : 0
+
     const cells = new Array(cellCount)
 
-    for (let i = 0; i < cellCount; i += 1) {
-      cells[i] = this.renderCell(i, renderTextInReservation)
+    for (let i = 0; i < cells.length; i += 1) {
+      cells[i] = this.renderCell(i, renderTextInReservation, cellWidth)
     }
 
     return (
