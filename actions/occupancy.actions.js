@@ -226,8 +226,13 @@ export function loadGarage(id, argumentFrom) {
         client_ids: state.client_ids
       })
 
-      dispatch(loadClients(data.garage.clients))
+      const clients = [
+        { name: t([ 'occupancy', 'allReservations' ]), id: undefined },
+        ...data.garage.clients
+      ]
+
       dispatch(batchActions([
+        setClients(clients),
         setGarage(updateGarage(data.garage)),
         setRefetching(false)
       ], 'OCCUPANCY_LOAD_GARAGE'))
@@ -271,16 +276,16 @@ function updateUsersSettings() {
 export function subtract() {
   return async (dispatch, getState) => {
     console.log('subtract')
-    const duration = getState().occupancy.duration
-    dispatch(setFrom(moment(getState().occupancy.from).subtract(1, duration)))
+    const { duration, from } = getState().occupancy
+    dispatch(setFrom(from.subtract(1, duration)))
   }
 }
 
 export function add() {
   return async (dispatch, getState) => {
     console.log('add')
-    const duration = getState().occupancy.duration
-    dispatch(setFrom(moment(getState().occupancy.from).add(1, duration)))
+    const { duration, from } = getState().occupancy
+    dispatch(setFrom(from.add(1, duration)))
   }
 }
 

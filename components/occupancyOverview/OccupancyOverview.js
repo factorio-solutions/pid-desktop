@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import moment from 'moment'
 
 import CallToActionButton from '../buttons/CallToActionButton'
 import Loading            from '../loading/Loading'
 import Place              from './Place'
 
+import detectIE from '../../helpers/internetExplorer'
 import { t } from '../../modules/localization/localization'
 
 import styles from './OccupancyOverview.scss'
@@ -17,7 +18,9 @@ const WIDTH_OF_PLACE_CELL = 63 // px
 
 const MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND = 200
 
-export default class OccupancyOverview extends Component {
+const isIe = detectIE()
+
+export default class OccupancyOverview extends PureComponent {
   static propTypes = {
     places:             PropTypes.array.isRequired,
     from:               PropTypes.object,
@@ -156,6 +159,7 @@ export default class OccupancyOverview extends Component {
         currentUser={currentUser}
         setNewReservation={setNewReservation}
         renderTextInReservation={renderTextInReservation}
+        isIe={isIe}
       />
     ))
   }
