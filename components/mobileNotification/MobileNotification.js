@@ -24,28 +24,31 @@ export class MobileNotification extends Component {
 
   render() {
     const { notification, actions } = this.props
-
     return (
       <div className={styles.notification}>
-        <div className={styles.header}> {notification.creator.full_name} </div>
-        <div className={styles.header}> {notification.creator.email} </div>
+        <div className={styles.header}>{notification.creator.full_name}</div>
+        <div className={styles.header}>{notification.creator.email}</div>
 
         <div className={styles.body}>
           {this.returnMessage(notification.message)}
         </div>
 
         <div className={styles.notificationsButtons}>
-          {notification.notification_type.indexOf('No') !== -1 && <RoundButton
-            content={<span className="fa fa-times" aria-hidden="true" />}
-            onClick={() => { actions.decline(notification) }}
-            type="remove"
-            question={'Are you sure you want to decline?'}
-          />}
-          {notification.notification_type.indexOf('Yes') !== -1 && <RoundButton
-            content={<span className="fa fa-check" aria-hidden="true"></span>}
-            onClick={() => { actions.accept(notification) }}
-            type="confirm"
-          />}
+          {notification.notification_type.indexOf('No') !== -1 && (
+            <RoundButton
+              content={<span className="fa fa-times" aria-hidden="true" />}
+              onClick={() => { actions.decline(notification) }}
+              type="remove"
+              question="Are you sure you want to decline?"
+            />
+          )}
+          {notification.notification_type.indexOf('Yes') !== -1 && (
+            <RoundButton
+              content={<span className="fa fa-check" aria-hidden="true" />}
+              onClick={() => { actions.accept(notification) }}
+              type="confirm"
+            />
+          )}
         </div>
       </div>
     )

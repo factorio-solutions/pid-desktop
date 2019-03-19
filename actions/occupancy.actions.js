@@ -221,7 +221,6 @@ export function loadGarage(id) {
         to:         timeToUTC(to),
         client_ids: state.client_ids
       })
-
       dispatch(loadClients(data.garage.clients))
       dispatch(batchActions([
         setGarage(updateGarage(data.garage)),

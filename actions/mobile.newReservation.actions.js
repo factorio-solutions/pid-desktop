@@ -15,7 +15,7 @@ import {
   setError, setCustomModal, setGarage as setMobileHeaderGarage
 } from './mobile.header.actions'
 
-import { isPlaceGoInternal, selectedClient } from './newReservation.actions'
+import { isPlaceGoInternal } from './newReservation.actions'
 
 import { GET_GARAGE, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
 import {
@@ -93,6 +93,16 @@ export function setFrom(from) { // if time changed,
 
       dispatch(pickPlaces())
     }
+  }
+}
+
+export function selectedClient() {
+  return (dispatch, getState) => {
+    const state = getState().newReservation
+    return state.user_id
+    && state.client_id
+    && state.availableClients
+    && state.availableClients.findById(state.client_id)
   }
 }
 
@@ -401,6 +411,7 @@ export function downloadReservation(id) {
 
 export function initReservation(id) {
   return (dispatch, getState) => {
+    const { personal, current_user: currentUser } = getState().mobileHeader
     dispatch(setCustomModal(t([ 'addFeatures', 'loading' ])))
     if (id) {
       if (getState().newReservation.reservation_id !== parseInt(id, 10)) {
@@ -413,6 +424,9 @@ export function initReservation(id) {
       dispatch(pickPlaces())
       dispatch(getAvailableCars())
       dispatch(getAvailableUsers())
+      if (personal) {
+        dispatch({ type: MOBILE_NEW_RESERVATION_SET_USER_ID, value: currentUser.id })
+      }
     }
   }
 }
