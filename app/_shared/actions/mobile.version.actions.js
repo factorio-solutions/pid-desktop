@@ -15,7 +15,7 @@ export const SET_APP_VERSION = 'SET_APP_VERSION'
 
 export const setAppVersion = actionFactory(SET_APP_VERSION)
 
-export function setCurrentVersion(currentVersion) {
+function setCurrentVersion(currentVersion) {
   return dispatch => {
     dispatch({
       type:  SET_CURRENT_VERSION,
@@ -27,14 +27,14 @@ export function setCurrentVersion(currentVersion) {
   }
 }
 
-export function getCurrentMobileVersion(platform) {
+function getCurrentMobileVersion(platform) {
   return requestPromise(GET_CURRENT_MOBILE_VERSION, { platform })
 }
 
 export function showOlderVersionModal() {
   return dispatch => dispatch(setCustomModal(
     <div>
-      <div>{t([ 'mobile', 'version', 'oldAppVersion' ])}</div>
+      <div>{t([ 'mobileApp', 'version', 'oldAppVersion' ])}</div>
       <RoundButton
         content={<span className="fa fa-check" aria-hidden="true" />}
         onClick={() => dispatch(setCustomModal())}
@@ -55,7 +55,6 @@ export function checkCurrentVersion() {
       const { mobile_app_version: mobileAppVersion } = await getCurrentMobileVersion(platform)
 
       dispatch(setCurrentVersion(mobileAppVersion))
-
       if (mobileAppVersion !== appVersion) {
         dispatch(showOlderVersionModal())
       }

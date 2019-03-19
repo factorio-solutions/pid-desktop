@@ -8,6 +8,8 @@ import { version }    from '../../../package'
 
 import RequestInProgressError from '../errors/requestInProgress.error'
 
+import { checkCurrentVersion } from './mobile.version.actions'
+
 import { LOGIN_USER, LOGIN_VERIFICATION } from '../queries/login.queries.js'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -60,7 +62,7 @@ export function dismissModal() {
 }
 
 
-export function loginSuccess(result, redirect, callback) {
+function loginSuccess(result, redirect, callback) {
   return async dispatch => {
     if ('id_token' in result) {
       await Promise.all([
@@ -70,6 +72,7 @@ export function loginSuccess(result, redirect, callback) {
       dispatch({ type: LOGIN_SUCCESS })
 
       dispatch(resetLoginForm())
+      dispatch(checkCurrentVersion())
       callback(result)
       if (redirect) {
         const path = await localforage.getItem('redirect') || '/occupancy'

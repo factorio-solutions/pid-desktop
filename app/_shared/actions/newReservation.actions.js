@@ -561,10 +561,9 @@ export function setInitialStore(id) {
       const values = await Promise.all([ availableUsersPromise, editReservationPromise ])
       const users = values[0]
       dispatch(setAvailableUsers(users))
-      // if reservation edit set details
-      if (values[1] !== undefined) {
-        // editing ongoing reservation
-        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment())
+  
+      if (values[1] !== undefined) { // if reservation edit set details
+        values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(batchActions([
           setNote(values[1].reservation.note),
           setReservation(values[1].reservation),
