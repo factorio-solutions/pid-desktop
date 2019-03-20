@@ -1,3 +1,4 @@
+import React from 'react'
 import moment from 'moment'
 
 import request from '../helpers/request'
@@ -16,6 +17,8 @@ import {
 } from './mobile.header.actions'
 
 import { isPlaceGoInternal } from './newReservation.actions'
+
+import RoundButton from '../components/buttons/RoundButton'
 
 import { GET_GARAGE, GET_AVAILABLE_USERS } from '../queries/mobile.newReservation.queries'
 import {
@@ -145,12 +148,13 @@ export function setClientId(value) {
 export function setAvailableClients(value) {
   return (dispatch, getState) => {
     if (!getState().newReservation.guestReservation) {
-      value.unshift({ name: t([ 'mobileApp', 'newReservation', 'me' ]), id: undefined })
+      value.unshift({ name: t([ 'mobileApp', 'newReservation', 'me' ]), id: 0 })
     }
     dispatch({
       type: MOBILE_NEW_RESERVATION_SET_AVAILABLE_CLIENTS,
       value
     })
+
     if (value.length === 1) { dispatch(setClientId(value[0].id)) }
   }
 }
@@ -175,7 +179,7 @@ export function formatTo() {
     let toValue = to
       ? moment(roundTime(to), MOMENT_DATETIME_FORMAT_MOBILE)
       : fromValue.clone().add(duration, 'hours')
-    
+
     const originalTo = toValue.clone()
 
     if (
@@ -272,7 +276,7 @@ export function getAvailableClients() {
         reservableClients.findById(lastReservationClient.id)
       )
       client
-      && !state.client_id
+      && state.client_id == null
       && state.client_id !== client.id
       && dispatch(setClientId(client.id))
     } else {
@@ -597,10 +601,29 @@ export function payReservation(url, callback = () => {}) {
   }
 }
 
+function showReservationErrorModal(dispatch) {
+  dispatch(setCustomModal(
+    <div>
+      <div>{t([ 'newReservation', 'reservationOnPlace' ])}</div>
+      <RoundButton
+        content={<span className="fa fa-check" aria-hidden="true" />}
+        onClick={() => dispatch(setCustomModal())}
+        type="confirm"
+      />
+    </div>
+  ))
+}
+
 export function submitReservation(callback) {
   return (dispatch, getState) => {
     const onSuccess = response => {
       const res = response.data.create_reservation_new || response.data.update_reservation_new
+
+      if (!res.reservation && res.errors) {
+        showReservationErrorModal(dispatch)
+        callback()
+      }
+
       const { payment_url: paymentUrl } = res.reservation
       if (paymentUrl) {
         dispatch(payReservation(paymentUrl, callback))
@@ -626,7 +649,7 @@ export function submitReservation(callback) {
       reservation: {
         user_id:       reservation.user_id || getState().mobileHeader.current_user.id,
         place_id:      reservation.place_id,
-        client_id:     reservation.client_id,
+        client_id:     reservation.client_id === 0 ? undefined : reservation.client_id,
         car_id:        reservation.car_id,
         licence_plate: reservation.licence_plate === '' ? undefined : reservation.licence_plate,
         url:           window.cordova === undefined
