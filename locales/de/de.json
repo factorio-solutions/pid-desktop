@@ -1355,7 +1355,7 @@
 			"noGuestResrevations": "Keine Buchungen für Nutzer/-innen ohne Genehmigungsbefugnis"
 		},
 		"version": {
-			"oldAppVersion": "Die App ist nicht auf dem neuesten Stand und funktioniert möglicherweise nicht richtig."
+			"oldAppVersion": "Wir arbeiten an einem Update. Bitte überprüfen Sie die aktuelle Version über den folgenden Link."
 		}
 	},
 	"auth0Errors": {

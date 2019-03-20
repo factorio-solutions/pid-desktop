@@ -1355,7 +1355,7 @@
 			"noGuestResrevations": "Žádné rezervace uživatele podléhajícího schvalování"
 		},
 		"version": {
-			"oldAppVersion": "Aplikace není aktuální a nemusí fungovat správně."
+			"oldAppVersion": "Pracujeme na aktualizaci, zkontrolujte aktuální verzi na odkazu níže."
 		}
 	},
 	"auth0Errors": {

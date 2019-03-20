@@ -1355,7 +1355,7 @@
 			"noGuestResrevations": "No reservations of subject to authorization"
 		},
 		"version": {
-			"oldAppVersion": "The application is not up to date and may not work properly."
+			"oldAppVersion": "We're working on an update, please check the current version on the link below."
 		}
 	},
 	"auth0Errors": {
