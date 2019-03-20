@@ -37,7 +37,10 @@ RoundButton.propTypes = {
   onClick:         PropTypes.func,
   onDisabledClick: PropTypes.func,
   type:            PropTypes.string,
-  state:           PropTypes.string,
-  size:            PropTypes.string,
-  question:        PropTypes.string
+  state:           PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]),
+  size:     PropTypes.string,
+  question: PropTypes.string
 }
