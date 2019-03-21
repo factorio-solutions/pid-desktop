@@ -211,18 +211,51 @@ function closeBLE(address) {
   return new Promise((resolve, reject) => bluetoothle.close(resolve, reject, { address }))
 }
 
+function disconnectAndClose(address) {
+  consoleLogWithTime('Disconnect and close BT connection.')
+  return new Promise((resolve, reject) => {
+    isConnected(address)
+      .then(connected => {
+        if (connected) {
+          return disconnect(address)
+        } else {
+          consoleLogWithTime('Device already disconnected.')
+          return Promise.resolve({ status: 'disconnected' })
+        }
+      })
+      .then(result => {
+        if (result.status === 'disconnected') {
+          return closeBLE(address)
+        } else {
+          return Promise.reject(new Error('Device cannot be disconnected'))
+        }
+      })
+      .then(resolve)
+      .catch(error => {
+        consoleLogWithTime('Cannot disconnected/close connection because of error:', error)
+        reject(error)
+      })
+  })
+}
+
 function reconnectErrorHandler(address, error) {
   consoleLogWithTime('reconnect error handling', address, error)
   return new Promise((resolve, reject) => {
-    if (error.error === 'isNotDisconnected') {
-      closeBLE(address)
+    if (error.error === 'isNotDisconnected' || error.error === 'isDisconnected') {
+      disconnectAndClose(address)
         .then(() => connectBLE(address))
         .catch(err => reconnectErrorHandler(address, err))
         .catch(reject)
-        .then(resolve)
+        .then(result => {
+          consoleLogWithTime('Connection finished:', result)
+          resolve(result)
+        })
     } else if (error.error === 'neverConnected') {
       connectBLE(address)
-        .then(resolve)
+        .then(result => {
+          consoleLogWithTime('Connection finished:', result)
+          resolve(result)
+        })
         .catch(reject)
     } else {
       reject(error)
@@ -303,6 +336,11 @@ export function connect(address) {
           return Promise.resolve()
         } else {
           return discover(address)
+            .catch(error => {
+              consoleLogWithTime('Discover error:', error)
+              return reconnectErrorHandler(address, error)
+                .then(() => discover(address))
+            })
         }
       })
       .then(resolve)
@@ -329,22 +367,7 @@ export function write(address, repeater, success) {
 export function close(address) {
   consoleLogWithTime('STEP 5: DISCONNECT')
   return new Promise((resolve, reject) => {
-    isConnected(address)
-      .then(connected => {
-        if (connected) {
-          return disconnect(address)
-        } else {
-          consoleLogWithTime('')
-          return Promise.resolve({ status: 'disconnected' })
-        }
-      })
-      .then(result => {
-        if (result.status === 'disconnected') {
-          return closeBLE(address)
-        } else {
-          return Promise.reject(new Error('Device cannot be disconnected'))
-        }
-      })
+    disconnectAndClose(address)
       .then(resolve)
       .catch(reject)
   })
