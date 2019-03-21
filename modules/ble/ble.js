@@ -329,7 +329,22 @@ export function write(address, repeater, success) {
 export function close(address) {
   consoleLogWithTime('STEP 5: DISCONNECT')
   return new Promise((resolve, reject) => {
-    closeBLE(address)
+    isConnected(address)
+      .then(connected => {
+        if (connected) {
+          return disconnect(address)
+        } else {
+          consoleLogWithTime('')
+          return Promise.resolve({ status: 'disconnected' })
+        }
+      })
+      .then(result => {
+        if (result.status === 'disconnected') {
+          return closeBLE(address)
+        } else {
+          return Promise.reject(new Error('Device cannot be disconnected'))
+        }
+      })
       .then(resolve)
       .catch(reject)
   })
