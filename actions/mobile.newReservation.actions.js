@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
+import { batchActions } from 'redux-batched-actions'
 import request from '../helpers/request'
 import actionFactory from '../helpers/actionFactory'
 import requestPromise from '../helpers/requestPromise'
@@ -362,7 +363,7 @@ export function downloadReservation(id) {
       dispatch(setUserId(reservation.user_id))
     }
 
-    const [ client, garage, user ] = await Promise.all([
+    const [ client, { garage }, { user } ] = await Promise.all([
       requestPromise(GET_AVAILABLE_CLIENTS, {
         user_id:   getState().mobileHeader.current_user.id,
         garage_id: reservation.place.floor.garage.id
@@ -387,16 +388,18 @@ export function downloadReservation(id) {
       carLicencePlate: reservation.car && reservation.car.temporary
         ? reservation.car.licence_plate
         : null,
-      garage:     garage.garage,
-      place_id:   reservation.place.id,
-      fromNow:    false,
-      duration:   null,
-      autoselect: false
+      garage,
+      place_id:        reservation.place.id,
+      fromNow:         false,
+      duration:        null,
+      autoselect:      false,
+      availableFloors: garage.floors,
+      flexiplace:      garage.flexiplace
     }
     if (reservation.user_id === currentUserId) {
       toSet = {
         ...toSet,
-        availableCars: user.user.reservable_cars,
+        availableCars: user.reservable_cars,
         user_id:       null
       }
     } else {
@@ -404,12 +407,14 @@ export function downloadReservation(id) {
     }
 
     dispatch(setAvailableClients(client.reservable_clients))
-    dispatch({
-      type: MOBILE_NEW_RESERVATION_SET_ALL,
-      ...toSet
-    })
+    dispatch(batchActions([
+      {
+        type: MOBILE_NEW_RESERVATION_SET_ALL,
+        ...toSet
+      },
+      setCustomModal()
+    ], 'MOBILE_NEW_RESERVATION_SET_ALL_PLUS_MODAL'))
     dispatch(setMinMaxDuration())
-    dispatch(setCustomModal())
   }
 }
 
