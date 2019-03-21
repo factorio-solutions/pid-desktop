@@ -177,7 +177,7 @@ function connectBLE(address) {
 }
 
 function reconnect(address) {
-  consoleLogWithTime('recconecting to device: ', address)
+  consoleLogWithTime('reconnecting to device: ', address)
   return new Promise((resolve, reject) => bluetoothle.reconnect(resolve, reject, { address }))
 }
 
