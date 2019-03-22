@@ -325,7 +325,7 @@ export function connect(address) {
       .catch(error => reconnectErrorHandler(address, error))
       .then(result => {
         consoleLogWithTime('Connection finished:', result)
-        return isDiscovered(result.address)
+        return isDiscovered(address)
       })
       .catch(error => {
         consoleLogWithTime('Cannot discover device because of error:', error)
