@@ -165,11 +165,11 @@ export function refreshLogin() {
     const { current_user: currentUser } = getState().mobileHeader
     const refreshToken = await localforage.getItem('refresh_token')
     // if (!currentUser) { throw new Error('Current user is not set.') }
-    if (!refreshToken) {
-      throw new Error('refresh token is not set.')
-    }
-
     try {
+      if (!refreshToken) {
+        throw new Error('refresh token is not set.')
+      }
+
       const data = await requestPromise(
         LOGIN_USER,
         {
@@ -180,7 +180,7 @@ export function refreshLogin() {
       )
       const result = JSON.parse(data.login)
       if (result && result.id_token) {
-        localforage.setItem('jwt', result.id_token)
+        await localforage.setItem('jwt', result.id_token)
         dispatch({ type: LOGIN_SUCCESS })
         dispatch(resetLoginForm())
       } else {
