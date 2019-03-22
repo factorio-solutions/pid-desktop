@@ -255,7 +255,7 @@ function reconnectErrorHandler(address, error) {
     } else if (error.error === 'neverConnected') {
       connectBLE(address)
         .then(result => {
-          consoleLogWithTime('Connection finished:', result)
+          consoleLogWithTime('[reconnectErrorHandler] Connection finished:', result)
           resolve(result)
         })
         .catch(reject)
@@ -347,7 +347,7 @@ export function connect(address, continuousScanning = false) {
       .catch(() => reconnect(address))
       .catch(error => reconnectErrorHandler(address, error))
       .then(result => {
-        consoleLogWithTime('Connection finished:', result)
+        consoleLogWithTime('[connect] Connection finished:', result)
         return isDiscovered(address)
       })
       .catch(error => {
