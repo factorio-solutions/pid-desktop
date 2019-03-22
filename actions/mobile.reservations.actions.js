@@ -188,7 +188,7 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
         ble.consoleLogWithTime('Scan successful, found device:', dev)
         device = dev
         isRepeater = dev.name[0] === 'r'
-        return ble.connect(device.address)
+        return ble.connect(device.address, true)
       }
 
       const onOpen = () => {
@@ -201,12 +201,12 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
       let connectionAction
 
       if (device) {
-        connectionAction = ble.connect(device.address)
+        connectionAction = ble.connect(device.address, true)
       } else {
         connectionAction = ble
           .initialize()
           .catch(() => logError('Bluetooth not enabled'))
-          .then(() => ble.scan(name))
+          .then(() => ble.scan(name, false))
           .then(onDeviceFound)
       }
 

@@ -85,7 +85,7 @@ function isDiscovered(address) {
   })
 }
 
-function startScan(name) { // use when you know the device you are looking for
+function startScan(name, stopScanning = true) { // use when you know the device you are looking for
   consoleLogWithTime('scanning for name', name)
   return new Promise((resolve, reject) => {
     let scanTimeout
@@ -99,7 +99,7 @@ function startScan(name) { // use when you know the device you are looking for
       timeout = true
 
       try {
-        if (await isScanning()) {
+        if (stopScanning && await isScanning()) {
           await stopScan()
         }
       } catch (e) {
@@ -123,7 +123,9 @@ function startScan(name) { // use when you know the device you are looking for
         found = true
         consoleLogWithTime('device found')
         try {
-          await stopScan()
+          if (stopScanning) {
+            await stopScan()
+          }
           setTimeout(() => resolve(device), 200)
         } catch (e) {
           reject(e)
@@ -296,11 +298,32 @@ export function scan(name) {
   })
 }
 
-export function connect(address) {
+export function connect(address, continuousScanning = false) {
   consoleLogWithTime('STEP 3: CONNECT', address)
   return new Promise((resolve, reject) => {
+    const stopScanning = () => {
+      return isScanning()
+        .then(scanning => {
+          if (scanning) {
+            consoleLogWithTime('Stopping scanning')
+            return stopScan()
+          } else {
+            consoleLogWithTime('Device is not scanning.')
+            return Promise.resolve()
+          }
+        })
+        .catch(error => {
+          consoleLogWithTime('Cannot Stop scanning because of error:', error)
+          return Promise.resolve()
+        })
+    }
+
     isScanning()
       .then(scanning => {
+        if (continuousScanning && scanning) {
+          consoleLogWithTime('Device will continue scanning through connecting.')
+          return Promise.resolve()
+        }
         if (scanning) {
           consoleLogWithTime('[Connect] Device still scanning.')
           return stopScan()
@@ -345,6 +368,12 @@ export function connect(address) {
       })
       .then(resolve)
       .catch(reject)
+      .finally(() => {
+        if (continuousScanning) {
+          consoleLogWithTime('Finally stop scanning.')
+          stopScanning()
+        }
+      })
   })
 }
 
