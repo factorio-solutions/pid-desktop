@@ -354,16 +354,17 @@ export function connect(address, continuousScanning = false) {
         consoleLogWithTime('Cannot discover device because of error:', error)
         return Promise.resolve(false)
       })
-      .then(discovered => {
+      .then(async discovered => {
         if (discovered) {
           return Promise.resolve()
         } else {
-          return discover(address)
-            .catch(error => {
-              consoleLogWithTime('Discover error:', error)
-              return reconnectErrorHandler(address, error)
-                .then(() => discover(address))
-            })
+          try {
+            return discover(address)
+          } catch (error) {
+            consoleLogWithTime('Discover error:', IS_ANDROID ? error : error && error.message)
+            await reconnectErrorHandler(address, error)
+            return discover(address)
+          }
         }
       })
       .then(resolve)
