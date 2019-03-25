@@ -79,9 +79,17 @@ function isConnected(address) {
 }
 
 function isDiscovered(address) {
+  consoleLogWithTime('Checking if a device is discovered')
   return new Promise((resolve, reject) => {
-    const callback = result => resolve(result.isDiscovered)
-    bluetoothle.isDiscovered(callback, reject, { address })
+    const callback = result => {
+      consoleLogWithTime('isDiscovered on success:', result)
+      resolve(result.isDiscovered)
+    }
+    const onError = error => {
+      consoleLogWithTime('isDiscovered on error:', error)
+      reject(error)
+    }
+    bluetoothle.isDiscovered(callback, onError, { address })
   })
 }
 
@@ -249,13 +257,13 @@ function reconnectErrorHandler(address, error) {
         .catch(err => reconnectErrorHandler(address, err))
         .catch(reject)
         .then(result => {
-          consoleLogWithTime('Connection finished:', result)
+          consoleLogWithTime('[reconnectErrorHandler#1] Connection finished:', result)
           resolve(result)
         })
     } else if (error.error === 'neverConnected') {
       connectBLE(address)
         .then(result => {
-          consoleLogWithTime('[reconnectErrorHandler] Connection finished:', result)
+          consoleLogWithTime('[reconnectErrorHandler#2] Connection finished:', result)
           resolve(result)
         })
         .catch(reject)
@@ -347,7 +355,7 @@ export function connect(address, continuousScanning = false) {
       .catch(() => reconnect(address))
       .catch(error => reconnectErrorHandler(address, error))
       .then(result => {
-        consoleLogWithTime('[connect] Connection finished:', result)
+        consoleLogWithTime('[connect] Connection finished:', result, 'Result is undefined:', !result)
         return isDiscovered(address)
       })
       .catch(error => {

@@ -162,10 +162,9 @@ export function openGarageViaPhone(reservationId, gateId) {
 function logErrorFactory(reservationId, gateId) {
   return dispatch => {
     return result => {
-      ble.consoleLogWithTime('Error occurred:', result, reservationId, gateId)
+      const message = result && result.message
+      ble.consoleLogWithTime('Error occurred:', message || result, reservationId, gateId)
       if (reservationId !== undefined && gateId !== undefined) {
-        const message = result && result.message
-
         dispatch(setOpened(false, message || result, reservationId, gateId))
       }
     }
