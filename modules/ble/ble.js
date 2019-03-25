@@ -369,7 +369,7 @@ export function connect(address, continuousScanning = false) {
           try {
             return discover(address)
           } catch (error) {
-            consoleLogWithTime('Discover error:', IS_ANDROID ? error : error && error.message)
+            consoleLogWithTime('Discover error:', IS_ANDROID ? error : error && `${error.message}. Error name: ${error.error}`)
             await reconnectErrorHandler(address, error)
             return discover(address)
           }
