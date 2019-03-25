@@ -72,7 +72,6 @@ function loginSuccess(result, redirect, callback) {
       dispatch({ type: LOGIN_SUCCESS })
 
       dispatch(resetLoginForm())
-      dispatch(checkCurrentVersion())
       callback(result)
       if (redirect) {
         const path = await localforage.getItem('redirect') || '/occupancy'
