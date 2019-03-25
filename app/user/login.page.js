@@ -68,11 +68,20 @@ class LoginPage extends Component {
       </div>
     )
 
-    const errorContent = (<div className={styles.redFont}>
-      <div>{ t([ 'login_page', 'loginFailed' ]) }:</div>
-      <div>{ state.error }</div>
-      <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.dismissModal} type="red" />
-    </div>)
+    const errorContent = (
+      <div className={styles.redFont}>
+        <div>
+          {t([ 'login_page', 'loginFailed' ])}
+          {':'}
+        </div>
+        <div>{state.error}</div>
+        <RoundButton
+          content={<i className="fa fa-times" aria-hidden="true" />}
+          onClick={actions.dismissModal}
+          type="red"
+        />
+      </div>
+    )
 
     return (
       <MasterPage>
@@ -106,7 +115,9 @@ class LoginPage extends Component {
             />
           </Form>
           <div className={styles.resetPasswordPage}>
-            {t([ 'login_page', 'forgot' ])} <Link to={nav.path('/resetPassword')} >{t([ 'login_page', 'proceed' ])}</Link>
+            {t([ 'login_page', 'forgot' ])}
+            {' '}
+            <Link to={nav.path('/resetPassword')}>{t([ 'login_page', 'proceed' ])}</Link>
           </div>
 
         </div>
