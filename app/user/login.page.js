@@ -44,7 +44,7 @@ class LoginPage extends Component {
     }
   }
 
-  home = () => window.location.href = 'https://www.park-it-direct.com';
+  home = () => window.location.href = 'https://parkit.direct';
 
   render() {
     const { actions, state } = this.props

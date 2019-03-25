@@ -20,7 +20,8 @@
     "react",
     "react-router",
     "webpack",
-    "park-it-direct"
+    "park-it-direct",
+    "parkit.direct"
   ],
   "devDependencies": {
     "babel-eslint": "^10.0.1",
