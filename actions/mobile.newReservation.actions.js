@@ -257,7 +257,7 @@ export function setPlace(id) {
   }
 }
 
-export function getAvailableClients() {
+export function getAvailableClients(changingGarage = false) {
   return async (dispatch, getState) => {
     const state = getState().newReservation
     const { mobileHeader } = getState()
@@ -277,7 +277,7 @@ export function getAvailableClients() {
         reservableClients.findById(lastReservationClient.id)
       )
       client
-      && state.client_id == null
+      && (state.client_id == null || changingGarage)
       && state.client_id !== client.id
       && dispatch(setClientId(client.id))
     } else {
@@ -535,8 +535,8 @@ export function pickPlaces(noClientDownload) {
 export function checkGarageChange(garageId, nextGarageId) {
   return dispatch => {
     if (garageId !== nextGarageId) {
-      dispatch(pickPlaces())
-      dispatch(getAvailableClients())
+      dispatch(pickPlaces(true))
+      dispatch(getAvailableClients(true))
       dispatch(getAvailableUsers())
     }
   }
