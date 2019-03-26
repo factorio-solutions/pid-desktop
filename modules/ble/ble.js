@@ -292,14 +292,14 @@ export function initialize() {
   })
 }
 
-export function scan(name) {
+export function scan(name, stopScanning = true) {
   consoleLogWithTime('STEP 2: SCAN')
   return new Promise((resolve, reject) => {
-    startScan(name)
+    startScan(name, stopScanning)
       .then(resolve)
       .catch(() => {
         consoleLogWithTime(`${(new Date()).toISOString()} Rescanning`)
-        return startScan(name)
+        return startScan(name, stopScanning)
       })
       .catch(reject)
       .then(resolve)
