@@ -181,8 +181,24 @@ function wasConnected(address) {
 function connectBLE(address) {
   consoleLogWithTime('connecting to device:', address)
   return new Promise((resolve, reject) => {
-    bluetoothle.connect(resolve, reject, { address })
-    setTimeout(reject, MAX_SCANNING_DURATION)
+    let timeout
+
+    const onSuccess = result => {
+      timeout && clearTimeout(timeout)
+      resolve(result)
+    }
+
+    const onError = error => {
+      timeout && clearTimeout(timeout)
+      reject(error)
+    }
+
+    bluetoothle.connect(onSuccess, onError, { address })
+    // eslint-disable-next-line prefer-promise-reject-errors
+    timeout = setTimeout(() => reject({
+      error:   'connectionTimeout',
+      message: `Cannot connect to device in ${MAX_SCANNING_DURATION}s`
+    }), MAX_SCANNING_DURATION)
   })
 }
 
@@ -260,7 +276,7 @@ function reconnectErrorHandler(address, error) {
           consoleLogWithTime('[reconnectErrorHandler#1] Connection finished:', result)
           resolve(result)
         })
-    } else if (error.error === 'neverConnected') {
+    } else if (error.error === 'neverConnected' || error.error === 'connectionTimeOut') {
       connectBLE(address)
         .then(result => {
           consoleLogWithTime('[reconnectErrorHandler#2] Connection finished:', result)
