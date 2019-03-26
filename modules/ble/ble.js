@@ -249,7 +249,7 @@ function disconnectAndClose(address) {
 }
 
 function reconnectErrorHandler(address, error) {
-  consoleLogWithTime('reconnect error handling', address, error)
+  consoleLogWithTime('reconnect error handling', address, error, error && error.error)
   return new Promise((resolve, reject) => {
     if (error.error === 'isNotDisconnected' || error.error === 'isDisconnected') {
       disconnectAndClose(address)
@@ -309,21 +309,20 @@ export function scan(name, stopScanning = true) {
 export function connect(address, continuousScanning = false) {
   consoleLogWithTime('STEP 3: CONNECT', address)
   return new Promise((resolve, reject) => {
-    const stopScanning = () => {
-      return isScanning()
-        .then(scanning => {
-          if (scanning) {
-            consoleLogWithTime('Stopping scanning')
-            return stopScan()
-          } else {
-            consoleLogWithTime('Device is not scanning.')
-            return Promise.resolve()
-          }
-        })
-        .catch(error => {
-          consoleLogWithTime('Cannot Stop scanning because of error:', error)
+    const stopScanning = async () => {
+      try {
+        const scanning = await isScanning()
+        if (scanning) {
+          consoleLogWithTime('Stopping scanning')
+          return stopScan()
+        } else {
+          consoleLogWithTime('Device is not scanning.')
           return Promise.resolve()
-        })
+        }
+      } catch (error) {
+        consoleLogWithTime('Cannot Stop scanning because of error:', error)
+        return Promise.resolve()
+      }
     }
 
     isScanning()
