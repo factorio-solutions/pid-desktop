@@ -107,7 +107,7 @@ function startScan(name, stopScanning = true) { // use when you know the device 
       timeout = true
 
       try {
-        if (stopScanning && await isScanning()) {
+        if (await isScanning()) {
           await stopScan()
         }
       } catch (e) {
