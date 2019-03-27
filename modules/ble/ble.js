@@ -1,4 +1,5 @@
 const MAX_SCANNING_DURATION = 15000 // ms
+const MAX_CONNECTING_DURATION = 7000 // ms
 const MAX_SCANNING_BETWEEN_DEVICES_TIME = 5000 // ms
 const IS_ANDROID = window.cordova && cordova.platformId === 'android'
 let UNIT_PASSWORD = 'heslo'
@@ -197,8 +198,8 @@ function connectBLE(address) {
     // eslint-disable-next-line prefer-promise-reject-errors
     timeout = setTimeout(() => reject({
       error:   'connectionTimeout',
-      message: `Cannot connect to device in ${MAX_SCANNING_DURATION}s`
-    }), MAX_SCANNING_DURATION)
+      message: `Cannot connect to device in ${MAX_CONNECTING_DURATION}s`
+    }), MAX_CONNECTING_DURATION)
   })
 }
 
