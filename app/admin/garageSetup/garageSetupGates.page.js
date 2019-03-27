@@ -79,11 +79,27 @@ class GarageSetupGatesPage extends Component {
       }
     }
 
-    const checkSubmitable = () => {
-      if (!state.gates.reduce((acc, gate) => { return acc && (gate.phone === '' || /^\+?[\d,A-Z]{3,}$/.test(gate.phone)) }, true)) return false
-      if (state.gates.find(gate => { return gate.label === '' || gate.address.line_1 === '' }) != undefined) return false
+    const checkSubmittable = () => {
+      const allGatesOk = !state.gates.some(gate => {
+        let isBad = (
+          (gate.phone !== '' && !(/^\+?[\d,A-Z]{3,}$/.test(gate.phone)))
+          || gate.lable === ''
+          || gate.address.line_1 === ''
+        )
 
-      return true
+        // HACK: Test if whole string is correct according RegExp.
+        if (!isBad) {
+          const regesResult = (new RegExp('(-?\\w+\\s*)(\\s*(,|-|\\/)\\s*-?\\w+)*', 'g'))
+            .exec(gate.places)
+          isBad = !regesResult
+          || !regesResult[0]
+          || regesResult[0].length !== gate.places.length
+        }
+
+        return isBad
+      })
+
+      return allGatesOk
     }
 
     const prepareGates = (gate, index, arr) => {
