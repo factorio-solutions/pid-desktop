@@ -135,12 +135,12 @@ export function setDuration(duration) {
 
 export function setFrom(from) {
   return async dispatch => {
-    dispatch(loadGarage(undefined, from))
     console.log('setFrom')
     dispatch({
       type:  OCCUPANCY_SET_FROM,
       value: from
     })
+    dispatch(loadGarage(undefined, from))
   }
 }
 
@@ -186,22 +186,39 @@ export function resetClientsLoadGarage(id) {
   }
 }
 
-// It is time consuming on large garages but still faster then when it is handled on server.
-function updateGarage(garage) {
+function updateGarage(garage, from, to, garIntervals) {
+  let intervals
+  if (!garIntervals) {
+    intervals = []
+  } else {
+    intervals = garIntervals
+  }
+
+  let interval = intervals.find(intr => intr.from.isSame(from) && intr.to.isSame(to))
+
+  if (!interval) {
+    interval = {
+      from:         from.clone(),
+      to:           to.clone(),
+      reservations: garage.reservations_in_interval,
+      contracts:    garage.contracts_in_interval
+    }
+  } else {
+    interval = {
+      ...interval,
+      reservations: garage.reservations_in_interval,
+      contracts:    garage.contracts_in_interval
+    }
+  }
+
+  intervals = [
+    ...intervals.filter(intr => !intr.from.isSame(from) || !intr.to.isSame(to)),
+    interval
+  ]
+
   return {
     ...garage,
-    floors: garage.floors.map(floor => ({
-      ...floor,
-      occupancy_places: floor.occupancy_places.map(place => {
-        const contracts_in_interval = garage.contracts_in_interval.filter(con => !!con.places.find(p => p.id === place.id))
-        const reservations_in_interval = garage.reservations_in_interval.filter(r => r.place.id === place.id)
-        return {
-          ...place,
-          contracts_in_interval,
-          reservations_in_interval
-        }
-      })
-    }))
+    intervals
   }
 }
 
@@ -218,7 +235,7 @@ export function loadGarage(id, argumentFrom) {
       } else {
         to = from.clone().add(1, state.duration)
       }
-      console.timeStamp('Before Request')
+
       const data = await requestPromise(GARAGE_DETAILS_QUERY, {
         id:         garageId,
         from:       timeToUTC(from),
@@ -233,7 +250,7 @@ export function loadGarage(id, argumentFrom) {
 
       dispatch(batchActions([
         setClients(clients),
-        setGarage(updateGarage(data.garage)),
+        setGarage(updateGarage(data.garage, from, to, state.garage && state.garage.intervals)),
         setRefetching(false)
       ], 'OCCUPANCY_LOAD_GARAGE'))
     }
@@ -277,7 +294,7 @@ export function subtract() {
   return async (dispatch, getState) => {
     console.log('subtract')
     const { duration, from } = getState().occupancy
-    dispatch(setFrom(from.subtract(1, duration)))
+    dispatch(setFrom(from.clone().subtract(1, duration)))
   }
 }
 
@@ -285,7 +302,7 @@ export function add() {
   return async (dispatch, getState) => {
     console.log('add')
     const { duration, from } = getState().occupancy
-    dispatch(setFrom(from.add(1, duration)))
+    dispatch(setFrom(from.clone().add(1, duration)))
   }
 }
 
