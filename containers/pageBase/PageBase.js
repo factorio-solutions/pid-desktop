@@ -35,52 +35,128 @@ class PageBase extends Component {
   }
 
   render() {
-    const { state, actions, notifications, scrollbarVisible } = this.props
+    const {
+      state, actions, notifications, scrollbarVisible, children
+    } = this.props
 
     const vertical = [
       // state.current_user && state.current_user.occupancy_garages.length &&
-      { label: t([ 'pageBase', 'Occupancy' ]), key: 'occupancy', icon: 'icon-occupancy', onClick: () => nav.to('/occupancy') }, // edit preferences in pageBase.action too
-      // { label: t([ 'pageBase', 'Dashboard' ]), key: 'dashboard', icon: 'icon-dashboard', onClick: () => nav.to('/dashboard') },
-      { label: t([ 'pageBase', 'Reservation' ]), key: 'reservations', icon: 'icon-reservations', onClick: () => nav.to('/reservations') },
-      (state.isGarageAdmin || state.isGarageManager || state.isGarageReceptionist || state.isGarageSecurity) &&
-        { label: t([ 'pageBase', 'Garage' ]), key: 'garage', icon: 'icon-garage', onClick: () => nav.to(`/${state.garage}/garage`) }, // edit preferences in pageBase.action too
-      ((state.isGarageAdmin || state.isGarageManager) && state.pid_tarif >= 2) &&
-        { label: t([ 'pageBase', 'analytics' ]), key: 'analytics', icon: 'icon-invoices', onClick: actions.analyticsClick }, // edit preferences in pageBase.action too
-      // { label: t([ 'pageBase', 'Issues' ]), key: 'issues', icon: 'icon-issues', onClick: () => { nav.to(`/${state.garage}/issues`) } },
-      { label: t([ 'pageBase', 'Admin' ]), key: 'admin', icon: 'icon-admin', onClick: actions.adminClick }
+      {
+        label:   t([ 'pageBase', 'Occupancy' ]),
+        key:     'occupancy',
+        icon:    'icon-occupancy',
+        onClick: () => nav.to('/occupancy')
+      }, // edit preferences in pageBase.action too
+      {
+        label:   t([ 'pageBase', 'Reservation' ]),
+        key:     'reservations',
+        icon:    'icon-reservations',
+        onClick: () => nav.to('/reservations')
+      },
+      (
+        state.isGarageAdmin
+        || state.isGarageManager
+        || state.isGarageReceptionist
+        || state.isGarageSecurity
+      ) && {
+        label:   t([ 'pageBase', 'Garage' ]),
+        key:     'garage',
+        icon:    'icon-garage',
+        onClick: () => nav.to(`/${state.garage}/garage`)
+      }, // edit preferences in pageBase.action too
+      (
+        (state.isGarageAdmin || state.isGarageManager)
+        && state.pid_tarif >= 2
+      ) && {
+        label:   t([ 'pageBase', 'analytics' ]),
+        key:     'analytics',
+        icon:    'icon-invoices',
+        onClick: actions.analyticsClick
+      },
+      {
+        label:   t([ 'pageBase', 'Admin' ]),
+        key:     'admin',
+        icon:    'icon-admin',
+        onClick: actions.adminClick
+      }
     ].filter(field => field) // will filter false states out
 
     const callToAction = [
-      { label: t([ 'pageBase', 'Create reservation' ]), onClick: () => nav.to('/reservations/newReservation') },
-      state.isGarageAdmin && { label: t([ 'pageBase', 'Create contract' ]), onClick: () => nav.to(`/${state.garage}/admin/clients/newContract`) }
-      // { label: t([ 'pageBase', 'Add Features' ]), onClick: () => { nav.to('/addFeatures') } }
+      {
+        label:   t([ 'pageBase', 'Create reservation' ]),
+        onClick: () => nav.to('/reservations/newReservation')
+      },
+      state.isGarageAdmin && {
+        label:   t([ 'pageBase', 'Create contract' ]),
+        onClick: () => nav.to(`/${state.garage}/admin/clients/newContract`)
+      }
     ].filter(field => field)
 
     const profileDropdown = [
-      <div className={styles.dropdownContent} onClick={() => nav.to('/profile')}><i className="icon-profile" aria-hidden="true" />{t([ 'pageBase', 'Profile' ])}</div>,
-      state.current_user && state.current_user.pid_admin &&
-      <div className={styles.dropdownContent} onClick={() => nav.to('/pid-admin')}><i className="fa fa-wrench" aria-hidden="true" />{t([ 'pageBase', 'pidAdmin' ])}</div>,
-      <div className={styles.dropdownContent} onClick={actions.logout}><i className="fa fa-sign-out" aria-hidden="true" />{t([ 'pageBase', 'Logout' ])}</div>
+      (
+        <div className={styles.dropdownContent} onClick={() => nav.to('/profile')}>
+          <i className="icon-profile" aria-hidden="true" />
+          {t([ 'pageBase', 'Profile' ])}
+        </div>
+      ),
+      state.current_user && state.current_user.pid_admin && (
+        <div className={styles.dropdownContent} onClick={() => nav.to('/pid-admin')}>
+          <i className="fa fa-wrench" aria-hidden="true" />
+          {t([ 'pageBase', 'pidAdmin' ])}
+        </div>
+      ),
+      (
+        <div className={styles.dropdownContent} onClick={actions.logout}>
+          <i className="fa fa-sign-out" aria-hidden="true" />
+          {t([ 'pageBase', 'Logout' ])}
+        </div>
+      )
     ].filter(field => field)
 
     const notificationsModalClick = () => actions.setShowModal(false)
 
-    const errorContent = (<div style={{ textAlign: 'center' }}>
-      {t([ 'pageBase', 'error' ])}: <br />
-      { state.error } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setError} type="confirm" />
-    </div>)
+    const errorContent = (
+      <div style={{ textAlign: 'center' }}>
+        {t([ 'pageBase', 'error' ])}
+        {':'}
+        <br />
+        {state.error}
+        <br />
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={actions.setError}
+          type="confirm"
+        />
+      </div>
+    )
 
-    const successContent = (<div style={{ textAlign: 'center' }}>
-      {t([ 'pageBase', 'success' ])}: <br />
-      { state.success } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setSuccess} type="confirm" />
-    </div>)
+    const successContent = (
+      <div style={{ textAlign: 'center' }}>
+        {t([ 'pageBase', 'success' ])}
+        {':'}
+        <br />
+        {state.success}
+        <br />
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={actions.setSuccess}
+          type="confirm"
+        />
+      </div>
+    )
 
-    const notificationsModal = (<div style={{ textAlign: 'center' }}>
-      {t([ 'pageBase', 'unredNotifications' ], { count: notifications.count })}. <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={notificationsModalClick} type="confirm" />
-    </div>)
+    const notificationsModal = (
+      <div style={{ textAlign: 'center' }}>
+        {t([ 'pageBase', 'unredNotifications' ], { count: notifications.count })}
+        {'.'}
+        <br />
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={notificationsModalClick}
+          type="confirm"
+        />
+      </div>
+    )
 
     return (
       <div>
@@ -103,7 +179,7 @@ class PageBase extends Component {
           secondaryMenuBackButton={state.secondaryMenuBackButton}
           scrollbarVisible={scrollbarVisible}
         >
-          {this.props.children}
+          {children}
         </MasterPage>
       </div>
     )
