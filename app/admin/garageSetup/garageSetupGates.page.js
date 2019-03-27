@@ -96,7 +96,11 @@ class GarageSetupGatesPage extends Component {
       const handleGateAddressLng = value => actions.changeGateAddressLng(value, index)
       const removeGateRow = () => actions.removeGate(index)
       const addAllPlaces = () => actions.addAllPlaces(index)
-      const addAllPlacesInlineMenu = <span className={styles.clickable} onClick={addAllPlaces}>{t([ 'newGarage', 'addAllPalces' ])}</span>
+      const addAllPlacesInlineMenu = (
+        <span className={styles.clickable} onClick={addAllPlaces}>
+          {t([ 'newGarage', 'addAllPalces' ])}
+        </span>
+      )
       const availableNumbers = [
         { id: null, number: t([ 'newGarage', 'notAssignNumber' ]), order: 1 },
         ...state.registeredNumbers.filter(number => !state.gates.map(gate => gate.phone_number_id).includes(number.id) || gate.phone_number_id === number.id)
@@ -144,12 +148,14 @@ class GarageSetupGatesPage extends Component {
               pattern="\+?[\d,A-Z]{3,}"
               readOnly={readOnly}
             />
-            {arr.length > 1 && !readOnly && <RoundButton
+            {arr.length > 1 && !readOnly && (
+            <RoundButton
               content={<span className="fa fa-times" aria-hidden="true" />}
               onClick={removeGateRow}
               type="remove"
               question={t([ 'newGarage', 'removeGateRowQuestion' ])}
-            />}
+            />
+            )}
           </div>
           <div className={styles.phoneNumberDropdown}>
             <label>{t([ 'newGarage', 'selcetNumber' ])}</label>
@@ -161,7 +167,8 @@ class GarageSetupGatesPage extends Component {
               editable={!readOnly}
             />
           </div>
-          {gate.phone.match(/[a-z]/i) &&
+          {gate.phone.match(/[a-z]/i)
+            && (
             <div className={styles.flexi}>
               <Input
                 onChange={handleGatePasswordChange}
@@ -173,11 +180,22 @@ class GarageSetupGatesPage extends Component {
                 type="password"
                 readOnly={readOnly}
               />
-              { gate.has_password ?
-                <i className={`fa fa-check-circle-o ${styles.passwordIndication} ${styles.green}`} title={t([ 'newGarage', 'passwordWasSet' ])} /> :
-                <i className={`fa fa-times-circle-o ${styles.passwordIndication} ${styles.red}`} title={t([ 'newGarage', 'passwordWasNotSet' ])} />
+              { gate.has_password
+                ? (
+                  <i
+                    className={`fa fa-check-circle-o ${styles.passwordIndication} ${styles.green}`}
+                    title={t([ 'newGarage', 'passwordWasSet' ])}
+                  />
+                )
+                : (
+                  <i
+                    className={`fa fa-times-circle-o ${styles.passwordIndication} ${styles.red}`}
+                    title={t([ 'newGarage', 'passwordWasNotSet' ])}
+                  />
+                )
               }
             </div>
+            )
           }
           <Input
             onChange={handleGatePlacesChange}
@@ -225,28 +243,41 @@ class GarageSetupGatesPage extends Component {
       )
     }
 
-    const formContent = (<div className={styles.gates}>
-      <div className={styles.gatesForm}>
-        <h2>{t([ 'newGarage', 'garageGates' ])}</h2>
-        {state.gates.map(prepareGates)}
-        {!readOnly && <CallToActionButton label={t([ 'newGarage', 'addGate' ])} onClick={actions.addGate} />}
+    const formContent = (
+      <div className={styles.gates}>
+        <div className={styles.gatesForm}>
+          <h2>{t([ 'newGarage', 'garageGates' ])}</h2>
+          {state.gates.map(prepareGates)}
+          {!readOnly && (
+            <CallToActionButton
+              label={t([ 'newGarage', 'addGate' ])}
+              onClick={actions.addGate}
+            />
+          )}
+        </div>
+        <div className={styles.garageLayout}>
+          <GarageLayout
+            floors={allFloors}
+            showEmptyFloors
+          />
+        </div>
       </div>
-      <div className={styles.garageLayout}>
-        <GarageLayout
-          floors={allFloors}
-          showEmptyFloors
-        />
-      </div>
-    </div>
     )
 
     return (
       <GarageSetupPage>
-        {readOnly ?
-          formContent :
-          <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={this.goBack} onHighlight={hightlightInputs}>
-            {formContent}
-          </Form>
+        {readOnly
+          ? formContent
+          : (
+            <Form
+              onSubmit={submitForm}
+              submitable={checkSubmitable()}
+              onBack={this.goBack}
+              onHighlight={hightlightInputs}
+            >
+              {formContent}
+            </Form>
+          )
         }
       </GarageSetupPage>
     )
@@ -254,6 +285,6 @@ class GarageSetupGatesPage extends Component {
 }
 
 export default connect(
-  state => ({ state: state.garageSetup, pageBase: state.pageBase }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
+  state => ({ state: state.garageSetup, pageBase: state.pageBase }),
+  dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })
 )(GarageSetupGatesPage)
