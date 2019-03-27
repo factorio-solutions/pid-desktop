@@ -367,10 +367,23 @@ export function connect(address, continuousScanning = false) {
           return connectBLE(address)
         }
       })
-      .catch(() => reconnect(address))
+      .catch(async () => {
+        // HACK: On some iPhones connectBLE timeout even if it was connected.
+        try {
+          if (await isConnected(address)) {
+            return Promise.resolve({
+              status:  'isConnected',
+              message: 'Connection ends with error but device is connected.'
+            })
+          }
+        } catch (e) {
+          consoleLogWithTime('Error when isConnected:', e && e.message)
+        }
+        return reconnect(address)
+      })
       .catch(error => reconnectErrorHandler(address, error))
       .then(result => {
-        consoleLogWithTime('[connect] Connection finished:', result, 'Result is undefined:', !result)
+        consoleLogWithTime('[connect] Connection finished:', result, 'Result is undefined:', !result, 'Message:', result && result.message)
         return isDiscovered(address)
       })
       .catch(error => {
