@@ -17,7 +17,8 @@ import Loading           from '../_shared/components/loading/Loading'
 
 import {
   getPlaces,
-  getSelectedPlace
+  getSelectedPlace,
+  getInterval
 } from './selectors/occupancy.selectors'
 
 import * as OccupancyActions      from '../_shared/actions/occupancy.actions'
@@ -38,7 +39,8 @@ class OccupancyPage extends Component {
     actions:               PropTypes.object,
     newReservationActions: PropTypes.object,
     selectedPlace:         PropTypes.object,
-    places:                PropTypes.object
+    places:                PropTypes.object,
+    interval:              PropTypes.object
   }
 
   componentDidMount() {
@@ -72,7 +74,7 @@ class OccupancyPage extends Component {
 
   render() {
     const {
-      state, currentUser, actions, selectedPlace, places
+      state, currentUser, actions, selectedPlace, places, interval
     } = this.props
     const { garage } = state
 
@@ -212,7 +214,7 @@ class OccupancyPage extends Component {
             onReservationClick={this.onReservationClick}
             currentUser={currentUser}
             setNewReservation={actions.setNewReservation}
-            reservationsCount={state.garage && state.garage.reservations_in_interval.length}
+            reservationsCount={interval && interval.reservations ? interval.reservations.length : 0}
           />
         </div>
 
@@ -262,7 +264,8 @@ export default connect(
     state:         state.occupancy,
     currentUser:   state.pageBase.current_user,
     places:        getPlaces(state),
-    selectedPlace: getSelectedPlace(state)
+    selectedPlace: getSelectedPlace(state),
+    interval:      getInterval(state)
   }),
   dispatch => ({
     actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
