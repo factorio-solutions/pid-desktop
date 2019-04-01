@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react'
 import moment from 'moment'
 import requestPromise from '../helpers/requestPromise'
@@ -40,6 +41,7 @@ export function showOlderVersionModal() {
         {t([ 'mobileApp', 'version', 'oldAppVersion' ])}
         <br />
         {window.cordova && (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
           <img
             src={IS_ANDROID ? './public/google+play.png' : './public/apple+store.png'}
             alt={IS_ANDROID ? 'google play' : 'apple app store'}
@@ -68,9 +70,9 @@ export function showOlderVersionModal() {
         )}
       </div>
       <RoundButton
-        content={<span className="fa fa-check" aria-hidden="true" />}
+        content={<span className="fa fa-times" aria-hidden="true" />}
         onClick={() => dispatch(setCustomModal())}
-        type="confirm"
+        type="gray"
       />
     </div>
   ))
