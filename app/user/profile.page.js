@@ -21,6 +21,7 @@ import * as profileActions from '../_shared/actions/profile.actions'
 import { setCustomModal }  from '../_shared/actions/pageBase.actions'
 
 import styles from './profile.page.scss'
+import Input from '../_shared/components/input/Input'
 
 
 class SettingsPage extends Component {
@@ -45,10 +46,14 @@ class SettingsPage extends Component {
       return state.name.valid && state.phone.valid // && state.email.valid
     }
 
-    const schema = [ { key: 'name', title: t([ 'newCar', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
-                    { key: 'licence_plate', title: t([ 'cars', 'licencePlate' ]), comparator: 'string', representer: o => <strong>{o}</strong> },
-                    { key: 'model', title: t([ 'cars', 'model' ]), comparator: 'string' },
-                    { key: 'color', title: t([ 'cars', 'color' ]), comparator: 'string' }
+    const schema = [ {
+      key:         'name', title:       t([ 'newCar', 'name' ]), comparator:  'string', representer: o => <strong>{o}</strong>, sort:        'asc'
+    },
+    {
+      key:         'licence_plate', title:       t([ 'cars', 'licencePlate' ]), comparator:  'string', representer: o => <strong>{o}</strong>
+    },
+    { key: 'model', title: t([ 'cars', 'model' ]), comparator: 'string' },
+    { key: 'color', title: t([ 'cars', 'color' ]), comparator: 'string' }
     ]
 
     const addCar = () => nav.to('/profile/cars/newCar')
@@ -58,18 +63,24 @@ class SettingsPage extends Component {
       const toEditCar = () => nav.to(`/profile/cars/${car.id}/edit`)
       const destroyCar = () => actions.destroyCar(car.id)
 
-      const spoiler = (<span className={styles.floatRight}>
-        <RoundButton content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={toEditCar} type="action" state={car.admin ? '' : 'disabled'} />
-        <RoundButton content={<span className="fa fa-child" aria-hidden="true" />} onClick={toCar} type="action" />
-        {car.admin && <RoundButton content={<span className="fa fa-times" aria-hidden="true" />} onClick={destroyCar} type="remove" question={t([ 'cars', 'destroyCar' ])} />}
-      </span>)
+      const spoiler = (
+        <span className={styles.floatRight}>
+          <RoundButton content={<span className="fa fa-pencil" aria-hidden="true" />} onClick={toEditCar} type="action" state={car.admin ? '' : 'disabled'} />
+          <RoundButton content={<span className="fa fa-child" aria-hidden="true" />} onClick={toCar} type="action" />
+          {car.admin && <RoundButton content={<span className="fa fa-times" aria-hidden="true" />} onClick={destroyCar} type="remove" question={t([ 'cars', 'destroyCar' ])} />}
+        </span>
+      )
       return update(car, { spoiler: { $set: spoiler } })
     }
 
-    const emailSentModal = (<div style={{ textAlign: 'center' }}>
-      { t([ 'profile', 'emailSent' ]) } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setCustomModal} type="confirm" />
-    </div>)
+    const emailSentModal = (
+      <div style={{ textAlign: 'center' }}>
+        { t([ 'profile', 'emailSent' ]) }
+        {' '}
+        <br />
+        <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setCustomModal} type="confirm" />
+      </div>
+    )
 
     return (
       <PageBase>
@@ -138,7 +149,10 @@ class SettingsPage extends Component {
           <div className={styles.rightColumn}>
             {/* HACK: sccale the letters size. */}
             <div style={{ transform: 'scale(1.4)', 'transform-origin': '0 0' }}>
-              <h3>{t([ 'profile', 'myGarages' ])}:</h3>
+              <h3>
+                {t([ 'profile', 'myGarages' ])}
+                {':'}
+              </h3>
               <ul>
                 {state.garages.map(garage => (
                   <li>
@@ -150,16 +164,37 @@ class SettingsPage extends Component {
                   </li>
                 ))}
               </ul>
-              <h3>{t([ 'profile', 'myClients' ])}:</h3>
-              <ul>{state.clients.map(client => (
-                <li>
-                  <b>{client.name}</b>
-                  {client.admin && <span className={styles.rights}>{t([ 'users', 'admin' ])}</span>}
-                  {client.secretary && <span className={styles.rights}>{t([ 'users', 'secretary' ])}</span>}
-                  {client.internal && <span className={styles.rights}>{t([ 'users', 'internal' ])}</span>}
-                  {client.host && <span className={styles.rights}>{t([ 'users', 'host' ])}</span>}
-                </li>
-              ))}</ul>
+              <h3>
+                {t([ 'profile', 'myClients' ])}
+                {':'}
+              </h3>
+              <ul>
+                {state.clients.map(client => (
+                  <li>
+                    <b>{client.name}</b>
+                    {client.admin && <span className={styles.rights}>{t([ 'users', 'admin' ])}</span>}
+                    {client.secretary && <span className={styles.rights}>{t([ 'users', 'secretary' ])}</span>}
+                    {client.internal && <span className={styles.rights}>{t([ 'users', 'internal' ])}</span>}
+                    {client.host && <span className={styles.rights}>{t([ 'users', 'host' ])}</span>}
+                  </li>
+                ))}
+              </ul>
+              <ul>
+                {
+                  state.calendar_hash
+                    ? (
+                      <Input
+                        value={`${window.location.origin}/calendar/${state.calendar_hash}/calendar.ical`}
+                      />
+                    )
+                    : (
+                      <CallToActionButton
+                        label="Generate calendar link."
+                        onClick={actions.generateCalendarHash}
+                      />
+                    )
+                }
+              </ul>
             </div>
           </div>
         </div>
