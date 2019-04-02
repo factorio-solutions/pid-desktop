@@ -144,7 +144,7 @@ class SettingsPage extends Component {
                   <li>
                     <b>{garage.name}</b>
                     {garage.admin && <span className={styles.rights}>{t([ 'users', 'admin' ])}</span>}
-                    {garage.manager && <span className={styles.rights}>{t([ 'users', 'manager' ])}</span>}
+                    {garage.manager && <span className={styles.rights}>{t([ 'garageUsers', 'manager' ])}</span>}
                     {garage.security && <span className={styles.rights}>{t([ 'users', 'security' ])}</span>}
                     {garage.receptionist && <span className={styles.rights}>{t([ 'users', 'receptionist' ])}</span>}
                   </li>

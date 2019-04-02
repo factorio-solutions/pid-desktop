@@ -76,20 +76,22 @@ class CarUsersPage extends Component {
       const adminClick = () => actions.setCarUserRelation(this.props.params.id, car_user.user.id, { admin: !car_user.admin })
       const driverClick = () => actions.setCarUserRelation(this.props.params.id, car_user.user.id, { driver: !car_user.driver })
 
-      return (<div className={styles.spoiler}>
-        <span className={car_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'clientUsers', 'admin' ])}</span>|
-        <span className={car_user.driver ? styles.boldText : styles.inactiveText} onClick={driverClick}>{t([ 'clientUsers', 'driver' ])}</span>
-        <div className={styles.float}>
-          <LabeledRoundButton
-            label={t([ 'clientUsers', 'removeUser' ])}
-            content={<span className="fa fa-times" aria-hidden="true" />}
-            onClick={destroyClick}
-            type="remove"
-            question={t([ 'clientUsers', 'removeClientUser' ])}
-            state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}
-          />
+      return (
+        <div className={styles.spoiler}>
+          <span className={car_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'carUsers', 'admin' ])}</span>
+          {'|'}
+          <span className={car_user.driver ? styles.boldText : styles.inactiveText} onClick={driverClick}>{t([ 'clientUsers', 'driver' ])}</span>
+          <div className={styles.float}>
+            <LabeledRoundButton
+              label={t([ 'clientUsers', 'removeUser' ])}
+              content={<span className="fa fa-times" aria-hidden="true" />}
+              onClick={destroyClick}
+              type="remove"
+              question={t([ 'clientUsers', 'removeClientUser' ])}
+              state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}
+            />
+          </div>
         </div>
-      </div>
       )
     }
 
