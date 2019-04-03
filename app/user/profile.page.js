@@ -184,7 +184,7 @@ class SettingsPage extends Component {
                   state.calendar_hash
                     ? (
                       <Input
-                        value={`${window.location.origin}/calendar/${state.calendar_hash}/calendar.ical`}
+                        value={`${window.location.origin}/calendar/${state.calendar_hash}/calendar.ics`}
                       />
                     )
                     : (
