@@ -134,12 +134,13 @@ export function setDuration(duration) {
 }
 
 export function setFrom(from) {
-  return dispatch => {
+  return async dispatch => {
+    console.log('setFrom')
     dispatch({
       type:  OCCUPANCY_SET_FROM,
       value: from
     })
-    dispatch(loadGarage())
+    dispatch(loadGarage(undefined, from))
   }
 }
 
@@ -185,45 +186,71 @@ export function resetClientsLoadGarage(id) {
   }
 }
 
-// It is time consuming on large garages but still faster then when it is handled on server.
-function updateGarage(garage) {
+function updateGarage(garage, from, to, garIntervals) {
+  let intervals
+  if (!garIntervals) {
+    intervals = []
+  } else {
+    intervals = garIntervals
+  }
+
+  let interval = intervals.find(intr => intr.from.isSame(from) && intr.to.isSame(to))
+
+  if (!interval) {
+    interval = {
+      from:         from.clone(),
+      to:           to.clone(),
+      reservations: garage.reservations_in_interval,
+      contracts:    garage.contracts_in_interval
+    }
+  } else {
+    interval = {
+      ...interval,
+      reservations: garage.reservations_in_interval,
+      contracts:    garage.contracts_in_interval
+    }
+  }
+
+  intervals = [
+    ...intervals.filter(intr => !intr.from.isSame(from) || !intr.to.isSame(to)),
+    interval
+  ]
+
   return {
     ...garage,
-    floors: garage.floors.map(floor => ({
-      ...floor,
-      occupancy_places: floor.occupancy_places.map(place => {
-        const contracts_in_interval = garage.contracts_in_interval.filter(con => !!con.places.find(p => p.id === place.id))
-        const reservations_in_interval = garage.reservations_in_interval.filter(r => r.place.id === place.id)
-        return {
-          ...place,
-          contracts_in_interval,
-          reservations_in_interval
-        }
-      })
-    }))
+    intervals
   }
 }
 
-export function loadGarage(id) {
+export function loadGarage(id, argumentFrom) {
   return async (dispatch, getState) => {
+    dispatch(setRefetching(true))
     const state = getState().occupancy
+    const from = argumentFrom || state.from
     const garageId = id || (state.garage && state.garage.id) || (state.garages[0] && state.garages[0].id) || getState().pageBase.garage
     if (garageId) {
       let to
       if (state.duration === 'month') {
-        to = state.from.clone().add(31, 'day')
+        to = from.clone().add(31, 'day')
       } else {
-        to = state.from.clone().add(1, state.duration)
+        to = from.clone().add(1, state.duration)
       }
+
       const data = await requestPromise(GARAGE_DETAILS_QUERY, {
         id:         garageId,
-        from:       timeToUTC(state.from),
+        from:       timeToUTC(from),
         to:         timeToUTC(to),
         client_ids: state.client_ids
       })
-      dispatch(loadClients(data.garage.clients))
+
+      const clients = [
+        { name: t([ 'occupancy', 'allReservations' ]), id: undefined },
+        ...data.garage.clients
+      ]
+
       dispatch(batchActions([
-        setGarage(updateGarage(data.garage)),
+        setClients(clients),
+        setGarage(updateGarage(data.garage, from, to, state.garage && state.garage.intervals)),
         setRefetching(false)
       ], 'OCCUPANCY_LOAD_GARAGE'))
     }
@@ -264,16 +291,18 @@ function updateUsersSettings() {
 // =============================================================================
 // occupancy actions
 export function subtract() {
-  return (dispatch, getState) => {
-    const duration = getState().occupancy.duration
-    dispatch(setFrom(moment(getState().occupancy.from).subtract(1, duration)))
+  return async (dispatch, getState) => {
+    console.log('subtract')
+    const { duration, from } = getState().occupancy
+    dispatch(setFrom(from.clone().subtract(1, duration)))
   }
 }
 
 export function add() {
-  return (dispatch, getState) => {
-    const duration = getState().occupancy.duration
-    dispatch(setFrom(moment(getState().occupancy.from).add(1, duration)))
+  return async (dispatch, getState) => {
+    console.log('add')
+    const { duration, from } = getState().occupancy
+    dispatch(setFrom(from.clone().add(1, duration)))
   }
 }
 
