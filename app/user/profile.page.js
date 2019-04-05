@@ -21,6 +21,7 @@ import * as profileActions from '../_shared/actions/profile.actions'
 import { setCustomModal }  from '../_shared/actions/pageBase.actions'
 
 import styles from './profile.page.scss'
+import Input from '../_shared/components/input/Input'
 
 
 class SettingsPage extends Component {
@@ -184,7 +185,22 @@ class SettingsPage extends Component {
                     {client.host && <span className={styles.rights}>{t([ 'users', 'host' ])}</span>}
                   </li>
                 ))}
-
+              </ul>
+              <ul>
+                {
+                  state.calendar_hash
+                    ? (
+                      <Input
+                        value={`${window.location.origin}/calendar/${state.calendar_hash}/calendar.ics`}
+                      />
+                    )
+                    : (
+                      <CallToActionButton
+                        label="Generate calendar link."
+                        onClick={actions.generateCalendarHash}
+                      />
+                    )
+                }
               </ul>
             </div>
           </div>
