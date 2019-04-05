@@ -287,7 +287,7 @@ class GarageSetupGatesPage extends Component {
           : (
             <Form
               onSubmit={submitForm}
-              submitable={checkSubmitable()}
+              submitable={checkSubmittable()}
               onBack={this.goBack}
               onHighlight={hightlightInputs}
             >
