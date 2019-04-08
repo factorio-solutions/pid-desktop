@@ -2,15 +2,16 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import Reservation from './Reservation'
-import Tooltip from '../tooltip/Tooltip'
 
 import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview'
 import { getTextWidth14px }           from '../../helpers/estimateTextWidth'
 import {
   firstDateIsBefore, diff, firstDateIsBeforeOrEqual, firstDateIsAfter, dateIsInRange, dateAdd
 } from '../../helpers/dateHelper'
+import { MOMENT_DATETIME_FORMAT } from '../../helpers/time'
 
 import styles from './OccupancyOverview.scss'
+import Cell from './cell'
 
 
 export default class Place extends Component {
@@ -107,9 +108,13 @@ export default class Place extends Component {
   onTdMouseMove = e => this.setState({
     ...this.state,
     showTime: true,
-    time:     this.calculateTime(e.target, e.clientX).format(MOMENT_DATETIME_FORMAT),
-    mouseX:   e.clientX + 20,
-    mouseY:   e.clientY
+    time:     (
+      this.state.mouseDown
+        ? this.calculateReservationFromDiv().endsAt
+        : this.calculateTime(e.target, e.clientX)
+    ).format(MOMENT_DATETIME_FORMAT),
+    mouseX: e.clientX + 20,
+    mouseY: e.clientY
   })
 
   onTdMouseLeave=() => this.setState(state => ({ state, showTime: false }))
@@ -353,7 +358,7 @@ export default class Place extends Component {
       from, duration, place, now, isIe
     } = this.props
     const {
-      showTime, time, mouseX, mouseY
+      showTime, time, mouseX, mouseY, rendered
     } = this.state
     const fromDate = from.toDate()
     const date = dateAdd(
@@ -361,18 +366,7 @@ export default class Place extends Component {
       (duration === 'day' ? 0 : index / 2) * 24,
       'hours'
     )
-    const classes = [
-      (date.getDay() === 6 || date.getDay() === 0) && styles.weekend,
-      duration !== 'day' && index % 2 === 1 && styles.rightBorder,
-      duration !== 'day' && index % 2 === 0 && styles.rightBorderDotted,
-      duration === 'day' && styles.rightBorderDotted,
-      duration === 'day' && ((index + 1) % 6) - 3 === 0 && styles.rightBorder,
-      duration === 'day' && (index + 1) % 6 === 0 && styles.boldBorder
-    ]
 
-    const renderReservationFactory = reservation => (
-      this.renderReservation(reservation, index + 1, cellWidth)
-    )
 
     const style = {
       left:  this.state.left + 'px',
@@ -397,73 +391,17 @@ export default class Place extends Component {
     }
 
     return (
-      <td
-        key={`${place.floor}-${place.label}-${index}`}
-        className={classes.filter(c => c).join(' ')}
-        ref={td => { if (!index) this.td = td }}
-        onMouseMove={this.onTdMouseMove}
-        onMouseLeave={this.onTdMouseLeave}
-        onMouseEnter={this.onTdMouseEnter}
-      >
-        {!index && now > 0 && (
-          <div
-            className={styles.now}
-            style={{
-              left:   now + 'px',
-              height: isIe && this.td ? `${this.td.clientHeight}px` : '100%'
-            }}
-          />
-        )}
-        {
-          !index
-          && this.state.rendered
-          && newPlace.reservations
-            .filter(reservation => (
-              firstDateIsBefore(reservation.begins_at, fromDate)
-              && !firstDateIsBeforeOrEqual(reservation.ends_at, fromDate)
-            ))
-            .map(renderReservationFactory)
-        }
-        {
-          this.state.rendered
-          && newPlace.reservations
-            .filter(reservation => {
-              const beginsAt = reservation.begins_at
-              if (duration === 'day') {
-                return dateIsInRange(
-                  beginsAt,
-                  dateAdd(date, index, 'hours'),
-                  dateAdd(date, index + 1, 'hours'),
-                  '[)'
-                )
-              }
-              return dateIsInRange(
-                beginsAt,
-                date,
-                dateAdd(date, 12, 'hours'),
-                '[)'
-              )
-            })
-            .map(renderReservationFactory)
-        }
-
-        {this.state.mouseDown && !index && (
-          <div
-            className={styles.newReservation}
-            style={style}
-            ref={div => { this.newReservationDiv = div }}
-          />
-        )}
-
-        <Tooltip
-          content={time}
-          mouseX={mouseX}
-          mouseY={mouseY}
-          visible={showTime}
-          height="50px"
-          style={{ zIndex: 10 }}
-        />
-      </td>
+      <Cell
+        place={place}
+        index={index}
+        now={now}
+        from={from}
+        isIe={isIe}
+        duration={duration}
+        cellWidth={cellWidth}
+        renderTextInReservation={renderTextInReservation}
+        rendered={rendered}
+      />
     )
   }
 
