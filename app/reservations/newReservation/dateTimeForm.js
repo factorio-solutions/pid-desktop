@@ -40,24 +40,39 @@ import checkboxStyles     from '../../_shared/components/checkbox/ReservationChe
 
 class DateTimeForm extends Component {
   static propTypes = {
-    state:    PropTypes.object,
-    actions:  PropTypes.object,
-    editable: PropTypes.bool
+    state:            PropTypes.object,
+    editable:         PropTypes.bool,
+    formatFrom:       PropTypes.func,
+    setFromDate:      PropTypes.func,
+    setFromTime:      PropTypes.func,
+    formatTo:         PropTypes.func,
+    setToDate:        PropTypes.func,
+    setToTime:        PropTypes.func,
+    durationChange:   PropTypes.func,
+    setShowRecurring: PropTypes.func,
+    setFrom:          PropTypes.func,
+    setTo:            PropTypes.func
   }
 
 
   setGreatestFreeInterval = () => {
-    const { state, actions } = this.props
+    const {
+      state,
+      setFrom,
+      setTo,
+      formatFrom,
+      formatTo
+    } = this.props
     const interval = state.freeInterval.split(', ').map(date => moment(date, MOMENT_UTC_DATETIME_FORMAT_DASH))
-    actions.setFrom(interval[0].format(MOMENT_DATETIME_FORMAT))
-    actions.setTo(interval[1].format(MOMENT_DATETIME_FORMAT))
-    actions.formatFrom()
-    actions.formatTo(true)
+    setFrom(interval[0].format(MOMENT_DATETIME_FORMAT))
+    setTo(interval[1].format(MOMENT_DATETIME_FORMAT))
+    formatFrom()
+    formatTo(true)
   }
 
-  handleDuration = () => this.props.actions.setDurationDate(true)
+  handleDuration = () => this.props.setDurationDate(true)
 
-  handleDate = () => this.props.actions.setDurationDate(false)
+  handleDate = () => this.props.setDurationDate(false)
 
   endsInlineMenu = () => {
     const { state } = this.props
@@ -86,7 +101,7 @@ class DateTimeForm extends Component {
     )
   }
 
-  showRecurring = () => this.props.actions.setShowRecurring(true)
+  showRecurring = () => this.props.setShowRecurring(true)
 
   freeIntervalLabel = () => {
     const { state: { freeInterval } } = this.props
@@ -121,7 +136,24 @@ class DateTimeForm extends Component {
   }
 
   render() {
-    const { state, actions, editable } = this.props
+    const {
+      state,
+      editable,
+      formatFrom,
+      setFromDate,
+      setFromTime,
+      formatTo,
+      setToDate,
+      setToTime,
+      durationChange
+    } = this.props
+    const isInternal = state.reservation
+    && state.reservation.client
+    && state.reservation.client.client_user
+    && state.reservation.client.client_user.internal
+    const ongoing = state.reservation && state.reservation.ongoing
+
+    const isEndsAtEditable = !!(editable || (ongoing && isInternal))
 
     const overMonth = moment(state.to, MOMENT_DATETIME_FORMAT)
       .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'months') >= 1
@@ -132,8 +164,8 @@ class DateTimeForm extends Component {
           <div className={styles.leftCollumn}>
             <DateInput
               editable={editable}
-              onBlur={actions.formatFrom}
-              onChange={actions.setFromDate}
+              onBlur={formatFrom}
+              onChange={setFromDate}
               label={`${t([ 'newReservation', 'begins' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
@@ -142,8 +174,8 @@ class DateTimeForm extends Component {
             />
             <TimeInput
               editable={editable}
-              onBlur={actions.formatFrom}
-              onChange={actions.setFromTime}
+              onBlur={formatFrom}
+              onChange={setFromTime}
               label={`${t([ 'newReservation', 'begins' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.from, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
@@ -154,8 +186,9 @@ class DateTimeForm extends Component {
           <div className={styles.middleCollumn} />
           <div className={styles.rightCcollumn}>
             <DateInput
-              onBlur={actions.formatTo}
-              onChange={actions.setToDate}
+              editable={isEndsAtEditable}
+              onBlur={formatTo}
+              onChange={setToDate}
               label={`${t([ 'newReservation', 'ends' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)}
@@ -163,8 +196,9 @@ class DateTimeForm extends Component {
               pickerOnFocus
             />
             <TimeInput
-              onBlur={actions.formatTo}
-              onChange={actions.setToTime}
+              editable={isEndsAtEditable}
+              onBlur={formatTo}
+              onChange={setToTime}
               label={`${t([ 'newReservation', 'ends' ])} *`}
               error={t([ 'newReservation', 'invalidaDate' ])}
               value={moment(state.to, MOMENT_DATETIME_FORMAT).format(MOMENT_TIME_FORMAT)}
@@ -190,7 +224,7 @@ class DateTimeForm extends Component {
         {/* Duration Input */}
         {state.durationDate && (
           <Input
-            onChange={actions.durationChange}
+            onChange={durationChange}
             label={t([ 'newReservation', 'duration' ])}
             error={t([ 'newReservation', 'invalidaValue' ])}
             inlineMenu={this.endsInlineMenu()}
@@ -239,27 +273,24 @@ class DateTimeForm extends Component {
 export default connect(
   state => {
     const {
-      from, to, recurringRule, useRecurring, garage, freeInterval
+      from, to, recurringRule, useRecurring, garage, freeInterval, reservation
     } = state.newReservation
     return {
       state: {
-        from, to, recurringRule, useRecurring, garage, freeInterval
+        from, to, recurringRule, useRecurring, garage, freeInterval, reservation
       }
     }
   },
-  dispatch => ({
-    actions: bindActionCreators({
-      formatFrom,
-      setFromDate,
-      setFromTime,
-      formatTo,
-      setToDate,
-      setToTime,
-      durationChange,
-      setShowRecurring,
-      setFrom,
-      setTo
-    },
-    dispatch)
-  })
+  {
+    formatFrom,
+    setFromDate,
+    setFromTime,
+    formatTo,
+    setToDate,
+    setToTime,
+    durationChange,
+    setShowRecurring,
+    setFrom,
+    setTo
+  }
 )(DateTimeForm)

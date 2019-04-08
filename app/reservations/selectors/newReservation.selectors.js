@@ -15,7 +15,9 @@ import {
   getGarage,
   getTimeCreditPrice,
   getSendSMS,
-  getPlaceId
+  getPlaceId,
+  getReservationClient,
+  getReservation
 } from './newReservationDefaultSelectors'
 
 const defaultEmptyArray = []
@@ -106,5 +108,19 @@ export const getIsSubmittable = createSelector(
     }
 
     return user && (placeId || (garage && garage.flexiplace && freePlaces.length))
+  }
+)
+
+export const getIsSecretary = createSelector(
+  getReservationClient,
+  client => {
+    return client && client.client_user && client.client_user.secretary
+  }
+)
+
+export const getIsEditable = createSelector(
+  [ getReservation, getIsSecretary ],
+  (reservation, isSecretary) => {
+    return !(reservation && reservation.ongoing) || isSecretary
   }
 )

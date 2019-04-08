@@ -56,7 +56,7 @@ export default class DateInput extends Component {
   handleChange = event => {
     const { editable } = this.props
     if (editable) {
-      this.setState({ ...this.state, message: event.target.value })
+      this.setState(state => ({ ...state, message: event.target.value }))
     }
   }
 
@@ -64,10 +64,10 @@ export default class DateInput extends Component {
     const { onChange, onBlur } = this.props
     const convertedDate = date === '' ? '' : moment(date).format('DD.MM.YYYY')
 
-    this.setState({
-      ...this.state,
+    this.setState(state => ({
+      state,
       message: convertedDate
-    })
+    }))
 
 
     this.hideDatepicker()
@@ -88,11 +88,11 @@ export default class DateInput extends Component {
   }
 
   showDatepicker = () => {
-    this.setState({ ...this.state, focus: true })
+    this.setState(state => ({ ...state, focus: true }))
   }
 
   hideDatepicker = () => {
-    this.setState({ ...this.state, focus: false })
+    this.setState(state => ({ ...state, focus: false }))
   }
 
   handleInputFocus = event => {
@@ -135,11 +135,11 @@ export default class DateInput extends Component {
     const messageIsValidDate = this.isValidDate(this.state.message)
 
     const errorStyle = {
-      opacity: this.state.message === undefined ||
-               this.state.message === '' ||
-               messageIsValidDate ?
-                 0 :
-                 1
+      opacity: this.state.message === undefined
+               || this.state.message === ''
+               || messageIsValidDate
+        ? 0
+        : 1
     }
 
     return (
@@ -148,7 +148,7 @@ export default class DateInput extends Component {
         ref={div => this.container = div}
       >
         <input
-          type={'text'}
+          type="text"
           value={this.state.message}
           onChange={this.handleChange}
           placeholder={placeholder}
@@ -156,6 +156,7 @@ export default class DateInput extends Component {
           pattern="(\d{1,2}).(\d{1,2}).(\d{4})"
           onFocus={this.handleInputFocus}
           onBlur={this.handleBlur}
+          ref={ref => this.input = ref}
         />
         <span className={styles.bar} />
 
@@ -178,7 +179,8 @@ export default class DateInput extends Component {
           {error}
         </label>
         {
-          !pickerOnFocus &&
+          !pickerOnFocus
+            && (
             <label
               className={`${styles.customFormGroup}  ${styles.callendar}`}
               onClick={this.showDatepicker}
@@ -188,14 +190,15 @@ export default class DateInput extends Component {
                 aria-hidden="true"
               />
             </label>
+            )
         }
 
         <PopupDatepicker
           showInf={showInf}
           onSelect={this.handlePick}
-          date={messageIsValidDate ?
-            moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD') :
-            undefined
+          date={messageIsValidDate
+            ? moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD')
+            : undefined
           }
           show={this.state.focus}
           flip={flip}
