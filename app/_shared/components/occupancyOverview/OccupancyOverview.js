@@ -160,6 +160,8 @@ export default class OccupancyOverview extends PureComponent {
       duration, reservationsCount
     } = this.props
 
+    console.log(reservationsCount)
+
     return (
       <div>
         <table className={`${styles.table} ${styles.fixedHeader}`}>

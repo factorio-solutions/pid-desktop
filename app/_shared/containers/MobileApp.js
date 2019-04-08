@@ -22,7 +22,6 @@ class MobileApp extends Component {
   componentDidMount() {
     const { actions } = this.props
     actions.setCustomModal()
-    actions.checkCurrentVersion()
   }
 
   afterLanguageChange = () => {

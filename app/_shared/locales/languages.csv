@@ -1622,7 +1622,7 @@ mobileApp.guest.invalidName,Invalid name,Špatné jméno,Niepoprawna nazwa,Name 
 mobileApp.guest.invalidEmail,Invalid email,Špatný email,Niepoprawny e-mail,E-Mail falsch
 mobileApp.guest.invalidPhone,Invalid phone,Špatný telefon,Niepoprawny telefon,Telefonnummer falsch
 mobileApp.guest.noGuestResrevations,No reservations of subject to authorization,Žádné rezervace uživatele podléhajícího schvalování,Brak rezerwacji regularnych gości,Keine Buchungen für Nutzer/-innen ohne Genehmigungsbefugnis
-mobileApp.version.oldAppVersion,The application is not up to date and may not work properly.,Aplikace není aktuální a nemusí fungovat správně.,,Die App ist nicht auf dem neuesten Stand und funktioniert möglicherweise nicht richtig.
+mobileApp.version.oldAppVersion,"We're working on an update, please check the current version on the link below.","Pracujeme na aktualizaci, zkontrolujte aktuální verzi na odkazu níže.",,Wir arbeiten an einem Update. Bitte überprüfen Sie die aktuelle Version über den folgenden Link.
 auth0Errors.emailNotVerified,Please verify your email before logging in. Verification email was send to ,"Prosím, před přihlášením ověřte svůj email. Verifikační email Vám byl zaslán na ",,"Bevor Sie sich einloggen können, müssen Sie Ihre E-Mail Adresse verifizieren. Eine Verifizierungs-E-Mail wurde an <mail> gesendet."
 auth0Emails.verificationEmailSubject,Verification email,Ověřovací email,E-mail kontrolny,Verifizierungs-E-Mail
 auth0Emails.securityReasons,For security reasons we need you to verify your email,Z bezpečnostních důvodů potřebujeme ověřit váš email,Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.,Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse

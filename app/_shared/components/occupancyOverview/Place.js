@@ -9,7 +9,6 @@ import { getTextWidth14px }           from '../../helpers/estimateTextWidth'
 import {
   firstDateIsBefore, diff, firstDateIsBeforeOrEqual, firstDateIsAfter, dateIsInRange, dateAdd
 } from '../../helpers/dateHelper'
-import { MOMENT_DATETIME_FORMAT } from '../../helpers/time'
 
 import styles from './OccupancyOverview.scss'
 

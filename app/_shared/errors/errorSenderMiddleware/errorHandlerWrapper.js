@@ -1,16 +1,28 @@
 import { sendError } from '../../../index'
 
+const WhiteList = [
+  'refreshingInProgress',
+  'refresh token is not set.',
+  'Cannot refresh.'
+]
+
 const asyncRegex = /^async /
 
 const asyncTraspiledRegex = /return _ref[^\.]*\.apply/
+
+function onError(e) {
+  if (!WhiteList.some(message => message === e.message)) {
+    sendError(e)
+  }
+  throw e
+}
 
 function asyncWrapper(asyncFnc) {
   return async (dispatch, getState) => {
     try {
       return await asyncFnc(dispatch, getState)
     } catch (e) {
-      sendError(e)
-      throw e
+      onError(e)
     }
   }
 }
@@ -20,8 +32,7 @@ function syncWrapper(syncFnc) {
     try {
       return syncFnc(dispatch, getState)
     } catch (e) {
-      sendError(e)
-      throw e
+      onError(e)
     }
   }
 }

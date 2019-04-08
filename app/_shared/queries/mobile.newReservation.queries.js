@@ -8,6 +8,7 @@ export const GET_GARAGE = `query ($id: Id!, $begins_at: Datetime!, $ends_at: Dat
     max_reservation_duration_go_internal
     flexiplace
     has_payment_gate
+    vat
     floors {
       label
       free_places(begins_at: $begins_at, ends_at: $ends_at, client_id: $client_id, reservation_id: $reservation_id, user_id: $user_id) {
