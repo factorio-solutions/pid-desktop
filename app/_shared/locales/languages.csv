@@ -29,7 +29,7 @@ login_page.password,Password,Heslo,Hasło,Passwort
 login_page.loginFailed,Login failed,Špatné přihlášení,Nie udało się zalogować,Anmeldung fehlgeschlagen
 login_page.forgot,Forgot password?,Zapomenuté heslo?,Nie pamiętasz hasła?,Passwort vergessen?
 login_page.proceed,Proceed here,Pokračujte zde,Przejdź dalej,Hier fortfahren
-login_page.emailPlaceholder,Mr@park.it,Mr@park.it,Mr@park.it,Mr@park.it
+login_page.emailPlaceholder,info@parkit.direct,info@parkit.direct,Mr@park.it,info@parkit.direct
 login_page.resetPasswordUnsuccessful,,,,Ihr Passwort gelang es nicht zu ändern.
 login_page.resetPasswordSuccessful,Your password has been successfully changed.,Vaše heslo bylo úspěšně změněno.,,Ihr Passwort wurde erfolgreich geändert.
 signup_page.name,Name,Jméno,Imię i nazwisko,Vor- und Nachname
@@ -660,15 +660,7 @@ clients.token,group token,token skupiny,Token klienta,Gruppen-Token
 clients.contactPerson,Contact person,Kontaktní osoba,Osoba kontaktowa,Ansprechpartner
 clients.createdAt,Created at,Skupina vytvořena,Klient utworzony,Erstellungsort
 clients.createAgreement,Create agreement,Vytvořit dohodu,Utworzyć umowę,Vereinbarung erstellen
-clients.editClient,Edit group,Upravit skupinu,Edytować klienta,"Hier wird eine Übersicht der Garage angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.
-
-Gruppen: Die einzelnen Gruppenwerden in verschiedenen Farben dargestellt.
-Vereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.
-Buchungen: Die einzelnen Buchungen werden in verschiedenen Farben dargestellt.
-Preise: Die einzelnen Preiseinstellungen werden in verschiedenen Farben dargestellt.
-Fahrzeuge: Die einzelnen Fahrzeuge werden sind in verschiedenen Farben dargestellt.
-
-Rechts oben kann ausgewählt werden, ob der aktuelle Zeitraum oder ein bestimmtes Datum angezeigt werden soll."
+clients.editClient,Edit group,Upravit skupinu,Edytować klienta,Gruppe bearbeiten
 clients.goToUsers,Go to users,Uživatelé,Użytkownicy,Nutzer
 clients.goToInvoices,Accounting documents,Účetní doklady,Faktury,Rechnungen
 clients.places,places,místa,miejsca,Stellplätze
@@ -684,12 +676,12 @@ clientUsers.name,username,uživatelské jméno,nazwa użytkownika,Name
 clientUsers.email,email,e-mail,e-mail,E-Mail-Adresse
 clientUsers.memberSince,member since,členem od,członek od,Mitglied seit
 clientUsers.phone,phone,telefon,telefon,Telefon
-clientUsers.contact_person,contact person,kontaktní osoba,osoba kontaktowa,Kontaktperson
-clientUsers.admin,group admin,správce skupiny,jest adminem,Gruppenverwalter/-in
-clientUsers.secretary,reservations manager,Manažer rezervací,Sekretarz/Sekretarka,Buchungsmanager/-in
-clientUsers.internal,authorized,Oprávněný rezervovat,Wewnętrzny,Mit Genehmigungsbefugnis
-clientUsers.host,subject to authorization,podléhající schvalování,jest regularnym gościem,Ohne Genehmigungsbefugnis
-clientUsers.driver,driver,řidič,kierowca,Fahrer
+clientUsers.contact_person,Contact person,Kontaktní osoba,osoba kontaktowa,Kontaktperson
+clientUsers.admin,Group admin,Správce skupiny,jest adminem,Gruppenverwalter/-in
+clientUsers.secretary,Reservations manager,Manažer rezervací,Sekretarz/Sekretarka,Buchungsmanager/-in
+clientUsers.internal,Authorized,Oprávněný rezervovat,Wewnętrzny,Mit Genehmigungsbefugnis
+clientUsers.host,Subject to authorization,Podléhající schvalování,jest regularnym gościem,Ohne Genehmigungsbefugnis
+clientUsers.driver,Driver,Řidič,kierowca,Fahrer
 clientUsers.presetAs,Preset as,Nastavit jako,Ustaw jako,Einstellen als
 clientUsers.removeClientUser,Are you sure you want to remove this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć użytkownika?,Möchten Sie diesen Nutzer wirklich entfernen?
 clientUsers.pendingUsers,Pending invitations,Nevyřízené pozvánky,Zaproszenia czekające na odpowiedź,Offene Einladungen
@@ -795,10 +787,10 @@ occupancy.garage,garage:,Garáž:,,Garage:
 occupancy.place,place:,Místo:,,Platz:
 occupancy.placeNotAvailable,This place cannot be reserved.,Toto místo není možné rezervovat.,,Diesen Platz können Sie nicht Buchen.
 garageUsers.noRights,You do not have the right to do that.,Na tuto akci nemáte práva.,Nie posiadasz odpowiednich uprawnień.,Sie haben nicht die erforderlichen Berechtigungen.
-garageUsers.admin,asset admin,správce objektu,admin,Objektverwalter/-in
-garageUsers.manager,supervisor,supervizor,,Supervisor/-in
-garageUsers.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
-garageUsers.security,security,ostraha,ochrona,Wachdienst
+garageUsers.admin,Asset admin,Správce objektu,admin,Objektverwalter/-in
+garageUsers.manager,Supervisor,Supervizor,,Supervisor/-in
+garageUsers.receptionist,Receptionist,Recepční,recepcjonist(k)a,Rezeptionist/in
+garageUsers.security,Security,Ostraha,ochrona,Wachdienst
 garageUsers.pendingUsers,Pending users,Nepotvrzení uživatelé,Niepotwierdzeni użytkownicy,Nicht bestätigte Nutzer
 garageUsers.removeGarageUser,Are you sure you want to delete this user?,Určitě chcete odstranit tohoto uživatele?,Czy na pewno chcesz usunąć tego użytkownika?,Möchten Sie diesen Nutzer wirklich entfernen?
 garageUsers.name,username,uživatelské jméno,nazwa użytkownika,Nutzername
@@ -1034,14 +1026,14 @@ inviteUser.unSucessfullyInvited,We were not able to invite these users: %(emails
 inviteUser.selectClient,Select group,Vyberte skupiny,Wybierz klienta,Gruppe auswählen
 inviteUser.selectGarage,Select garage,Vyberte garáž,Wybierz garaż,Garage auswählen
 inviteUser.selectCar,Select car,Vyberte auto,Wybierz auto,Fahrzeug auswählen
-inviteUser.admin,group admin,správce skupiny,admin,Gruppenverwalter/-in
-inviteUser.secretary,reservations manager,manažer rezervací,Sekretarz/sekretarka,Buchungsmanager/-in
-inviteUser.host,subject to authorization,podléhající schvalování,regularny gość,Ohne Genehmigungsbefugnis
-inviteUser.internal,authorized,oprávněný rezervovat,wewnętrzny,Mit Genehmigungsbefugnis
-inviteUser.security,security,ostraha,ochrona,Wachdienst
-inviteUser.manager,supervisor,supervizor,,Supervisor/-in
-inviteUser.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
-inviteUser.driver,driver,řidič,kierowca,Fahrer
+inviteUser.admin,Group admin,Správce skupiny,admin,Gruppenverwalter/-in
+inviteUser.secretary,Reservations manager,Manažer rezervací,Sekretarz/sekretarka,Buchungsmanager/-in
+inviteUser.host,Subject to authorization,Podléhající schvalování,regularny gość,Ohne Genehmigungsbefugnis
+inviteUser.internal,Authorized,Oprávněný rezervovat,wewnętrzny,Mit Genehmigungsbefugnis
+inviteUser.security,Security,Ostraha,ochrona,Wachdienst
+inviteUser.manager,Supervisor,Supervizor,,Supervisor/-in
+inviteUser.receptionist,Receptionist,Recepční,recepcjonist(k)a,Rezeptionist/in
+inviteUser.driver,Driver,Řidič,kierowca,Fahrer
 inviteUser.clientRights,User rights,Práva uživatele,Prawa klienta,Nutzerrechte
 inviteUser.clientRightsDesc,These rights will be only valid if the group is specified.,Tato práva budou platná pouze pokud bude skupina specifikována.,"Prawa zaczną obowiązywać jedynie w momencie, kiedy klient zostanie określony.","Diese Rechte sind nur gültig, wenn eine Gruppe angegeben wird."
 inviteUser.GarageRights,Garage rights,Práva garáže,Prawa garażu,Garagenrechte
@@ -1110,13 +1102,13 @@ users.pendingInvitations,Pending invitations,Čekající pozvánky,Oczekujące z
 users.memberOfClients,Member of groups:,Člen skupin:,Uczestniczy w kontach klientów:,Gruppenmitgliedschaften:
 users.memberOfCars,Member of cars:,Člen aut:,Uczestniczy w autach:,Fahrzeugmitgliedschaften:
 users.memberOfGarages,Member of garages:,Člen garáží:,Uczestniczy w garażach:,Garagenmitgliedschaften:
-users.admin,group admin,správce skupiny,admin,Gruppenverwalter/-in
-users.secretary,reservations manager,manažer rezervací,sekretarz/sekretarka,Buchungsmanager/-in
-users.internal,authorized,oprávněný rezervovat,wewnętrzny,Mit Genehmigungsbefugnis
-users.host,subject to authorization,podléhající schvalování,regularny gość,Ohne Genehmigungsbefugnis
-users.security,security,ostraha,ochrona,Wachdienst
-users.receptionist,receptionist,recepční,recepcjonist(k)a,Rezeptionist/in
-users.manager,supervisor,,,Supervisor/-in
+users.admin,Group admin,Správce skupiny,admin,Gruppenverwalter/-in
+users.secretary,Reservations manager,Manažer rezervací,sekretarz/sekretarka,Buchungsmanager/-in
+users.internal,Authorized,Oprávněný rezervovat,wewnętrzny,Mit Genehmigungsbefugnis
+users.host,Subject to authorization,Podléhající schvalování,regularny gość,Ohne Genehmigungsbefugnis
+users.security,Security,Ostraha,ochrona,Wachdienst
+users.receptionist,Receptionist,Recepční,recepcjonist(k)a,Rezeptionist/in
+users.manager,Supervisor,Supervizor,,Supervisor/-in
 users.invitedToClient,Invited %(date)s to be member of group:,Pozván %(date)s aby byl členem skupiny:,%(date)s zaproszony(-a) do uczestnictwa w:,Am %(date)s zur Mitgliedschaft bei Gruppe eingeladen:
 users.invitedToGarage,Invited %(date)s to be member of garage:,Pozván %(date)s aby byl členem garáže:,%(date)s zaproszony(-a) do garażu:,Am %(date)s zur Mitgliedschaft beim Parkplatz eingeladen:
 users.invitedToCar,Invited %(date)s to be member of car:,Pozván %(date)s aby byl členem auta,%(date)s zaproszony(-a) do auta:,Am %(date)s zur Mitgliedschaft beim Fahrzeug eingeladen:
@@ -1239,7 +1231,7 @@ newCar.lpg,LPG,LPG,LPG,LPG
 carUsers.name,name,název,nazwa,Bezeichnung
 carUsers.email,email,email,e-mail,E-Mail-Adresse
 carUsers.phone,phone,telefon,telefon,Telefonnummer
-carUsers.admin,vehicle admin,správce vozidla,admin,Fahrzeugverwalter/-in
+carUsers.admin,Vehicle admin,Správce vozidla,admin,Fahrzeugverwalter/-in
 newReservationOverview.overview,Reservation overview,Přehled rezervací,Podgląd rezerwacji,Buchungsübersicht
 newReservationOverview.selectedPlace,Selected spot,Vybrané místo,Wybrane miejsce,Ausgewählter Stellplatz
 newReservationOverview.duration,Duration,Doba trvání,Okres,Dauer
@@ -1577,7 +1569,7 @@ mobileApp.reservation.garage,Garage,Garáž,,Garage
 mobileApp.reservation.begins,Begins,Začíná,,Anfang
 mobileApp.reservation.ends,Ends,Končí,,Ende
 mobileApp.reservation.issue,Report issues,Nahlásit problém,,Problem melden
-mobileApp.reservation.carOnMySpot,There is a car in my spot.,Někdo mi stojí na místě,,Parkplatz besetzt
+mobileApp.reservation.carOnMySpot,There is a car on my spot,Někdo mi stojí na místě,,Parkplatz besetzt
 mobileApp.reservation.reservationMoved,Reservation moved to:,Rezervace přesunuta na:,,Buchung verschoben:
 mobileApp.reservation.noFreePlaces,There seem to by no other free places.,Nepodařilo se nám najít náhradní místo.,,Es gelang uns keinen freien Platz zu finden.
 mobileApp.reservation.enterCarsLicencePlate,Enter cars licence plate,Vložte SPZ auta,,Kennzeichen des blockierenden Autos
@@ -1612,7 +1604,7 @@ mobileApp.newReservation.redirecting,Redirecting ...,Přesměrovávám ...,Przek
 mobileApp.newReservation.paymentUnsucessfull,Payment was unsuccessful.,Platba byla neúspěšná.,Płatność nie powiodła się.,Zahlung ist fehlgeschlagen.
 mobileApp.newReservation.processingPayment,Processing payment ...,Zpracovávám platbu ...,Przetwarzam płatność...,Zahlungsverarbeitung ...
 mobileApp.newReservation.flexiplace,FLEXI,FLEXI,FLEXI,FLEXI
-mobileApp.newReservation.guest,Subject to authorization,Podléhající schvalování,Regularny gość,Ohne Genehmigungsbefugnis
+mobileApp.newReservation.guest,User,Uživatel,Regularny gość,Benutzer
 mobileApp.guest.newGuest,NEW,NOVÝ,Nowy,NEU
 mobileApp.guest.pickGuest,PICK,ZVOLIT,WYBIERZ,WÄHLEN
 mobileApp.guest.name,Name of subject to authorization,Jméno uživatele podléhajícího schvalování,Nazwa regularnego gościa,Name des/der Nutzer/-in ohne Genehmigungsbefugnis
@@ -1622,7 +1614,7 @@ mobileApp.guest.invalidName,Invalid name,Špatné jméno,Niepoprawna nazwa,Name 
 mobileApp.guest.invalidEmail,Invalid email,Špatný email,Niepoprawny e-mail,E-Mail falsch
 mobileApp.guest.invalidPhone,Invalid phone,Špatný telefon,Niepoprawny telefon,Telefonnummer falsch
 mobileApp.guest.noGuestResrevations,No reservations of subject to authorization,Žádné rezervace uživatele podléhajícího schvalování,Brak rezerwacji regularnych gości,Keine Buchungen für Nutzer/-innen ohne Genehmigungsbefugnis
-mobileApp.version.oldAppVersion,The application is not up to date and may not work properly.,Aplikace není aktuální a nemusí fungovat správně.,,Die App ist nicht auf dem neuesten Stand und funktioniert möglicherweise nicht richtig.
+mobileApp.version.oldAppVersion,"We're working on an update, please check the current version on the link below.","Pracujeme na aktualizaci, zkontrolujte aktuální verzi na odkazu níže.",,Wir arbeiten an einem Update. Bitte überprüfen Sie die aktuelle Version über den folgenden Link.
 auth0Errors.emailNotVerified,Please verify your email before logging in. Verification email was send to ,"Prosím, před přihlášením ověřte svůj email. Verifikační email Vám byl zaslán na ",,"Bevor Sie sich einloggen können, müssen Sie Ihre E-Mail Adresse verifizieren. Eine Verifizierungs-E-Mail wurde an <mail> gesendet."
 auth0Emails.verificationEmailSubject,Verification email,Ověřovací email,E-mail kontrolny,Verifizierungs-E-Mail
 auth0Emails.securityReasons,For security reasons we need you to verify your email,Z bezpečnostních důvodů potřebujeme ověřit váš email,Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.,Aus Sicherheitsgründen prüfen wir Ihre E-Mail Adresse
