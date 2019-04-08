@@ -157,36 +157,30 @@ class inviteUserPage extends Component {
                 highlight={state.highlight}
                 normalizeInput={normalizeEmail}
               />
-              {clientDropdown.length > 1
-              && (
+              {clientDropdown.length > 1 && (
                 <Dropdown
                   placeholder={t([ 'inviteUser', 'selectClient' ])}
                   content={clientDropdown}
                   style="light"
                   selected={state.clients.findIndexById(state.client_id)}
                 />
-              )
-              }
-              {garageDropdown.length > 1
-              && (
+              )}
+              {garageDropdown.length > 1 && (
                 <Dropdown
                   placeholder={t([ 'inviteUser', 'selectGarage' ])}
                   content={garageDropdown}
                   style="light"
                   selected={state.garages.findIndexById(state.garage_id)}
                 />
-              )
-              }
-              {carDropdown.length > 1
-              && (
+              )}
+              {carDropdown.length > 1 && (
                 <Dropdown
                   placeholder={t([ 'inviteUser', 'selectCar' ])}
                   content={carDropdown}
                   style="light"
                   selected={state.cars.findIndexById(state.car_id)}
                 />
-              )
-              }
+              )}
               <div>
                 <label>{t([ 'inviteUser', 'inviteMessage' ])}</label>
               </div>
@@ -221,132 +215,136 @@ class inviteUserPage extends Component {
                 {AVAILABLE_LANGUAGES.map(renderLanguage).reduce(addSeparator, [])}
               </div>
               {state.client_id && (
-              <div>
-                <h3>{t([ 'inviteUser', 'clientRights' ]) + ' *'}</h3>
-                <p>{t([ 'inviteUser', 'clientRightsDesc' ])}</p>
-                {currentClient && (
-                  <p className={styles.rights}>
-                    {currentClient.admin && [
-                      <AttributeSpan
-                        state={state}
-                        attribute="client_admin"
-                        actions={actions}
-                        labelSection="clientUsers"
-                        label="admin"
-                        highlight={highlightClientRoles}
-                      />,
-                      <span>|</span>,
-                      <AttributeSpan
-                        state={state}
-                        attribute="client_contact_person"
-                        actions={actions}
-                        labelSection="clientUsers"
-                        label="contact_person"
-                        highlight={highlightClientRoles}
-                      />,
-                      <span>|</span>,
-                      <AttributeSpan
-                        state={state}
-                        attribute="client_secretary"
-                        actions={actions}
-                        labelSection="clientUsers"
-                        label="secretary"
-                        highlight={highlightClientRoles}
-                      />,
-                      <span>|</span>
-                    ]}
-                    {(currentClient.admin || currentClient.secretary) && [
-                      <AttributeSpan
-                        state={state}
-                        attribute="client_internal"
-                        actions={actions}
-                        labelSection="clientUsers"
-                        label="internal"
-                        highlight={highlightClientRoles}
-                      />,
-                      <span>|</span>
-                    ]}
-                    {(currentClient.admin || currentClient.secretary || currentClient.internal) && (
-                      <AttributeSpan
-                        state={state}
-                        attribute="client_host"
-                        actions={actions}
-                        labelSection="clientUsers"
-                        label="host"
-                        highlight={highlightClientRoles}
-                      />
-                    )}
-                  </p>
-                )}
-              </div>
+                <div>
+                  <h3>{t([ 'inviteUser', 'clientRights' ]) + ' *'}</h3>
+                  <p>{t([ 'inviteUser', 'clientRightsDesc' ])}</p>
+                  {currentClient && (
+                    <p className={styles.rights}>
+                      {currentClient.admin && [
+                        <AttributeSpan
+                          state={state}
+                          attribute="client_admin"
+                          actions={actions}
+                          labelSection="clientUsers"
+                          label="admin"
+                          highlight={highlightClientRoles}
+                        />,
+                        <span>|</span>,
+                        <AttributeSpan
+                          state={state}
+                          attribute="client_contact_person"
+                          actions={actions}
+                          labelSection="clientUsers"
+                          label="contact_person"
+                          highlight={highlightClientRoles}
+                        />,
+                        <span>|</span>,
+                        <AttributeSpan
+                          state={state}
+                          attribute="client_secretary"
+                          actions={actions}
+                          labelSection="clientUsers"
+                          label="secretary"
+                          highlight={highlightClientRoles}
+                        />,
+                        <span>|</span>
+                      ]}
+                      {(currentClient.admin || currentClient.secretary) && [
+                        <AttributeSpan
+                          state={state}
+                          attribute="client_internal"
+                          actions={actions}
+                          labelSection="clientUsers"
+                          label="internal"
+                          highlight={highlightClientRoles}
+                        />,
+                        <span>|</span>
+                      ]}
+                      {(
+                        currentClient.admin
+                        || currentClient.secretary
+                        || currentClient.internal
+                      ) && (
+                        <AttributeSpan
+                          state={state}
+                          attribute="client_host"
+                          actions={actions}
+                          labelSection="clientUsers"
+                          label="host"
+                          highlight={highlightClientRoles}
+                        />
+                      )}
+                    </p>
+                  )}
+                </div>
               )}
 
               {state.garage_id && (
-              <div>
-                <h3>{t([ 'inviteUser', 'GarageRights' ]) + ' *'}</h3>
-                <p>{t([ 'inviteUser', 'GarageRightsDesc' ])}</p>
-                <p className={styles.rights}>
-                  <AttributeSpan
-                    state={state}
-                    attribute="garage_admin"
-                    actions={actions}
-                    labelSection="garageUsers"
-                    label="admin"
-                    highlight={highlightGarageRoles}
-                  />
-                  {'|'}
-                  <AttributeSpan
-                    state={state}
-                    attribute="garage_manager"
-                    actions={actions}
-                    labelSection="garageUsers"
-                    label="manager"
-                    highlight={highlightGarageRoles}
-                  />
-                  {'|'}
-                  <AttributeSpan
-                    state={state}
-                    attribute="garage_receptionist"
-                    actions={actions}
-                    labelSection="garageUsers"
-                    label="receptionist"
-                    highlight={highlightGarageRoles}
-                  />
-                  {'|'}
-                  <AttributeSpan
-                    state={state}
-                    attribute="garage_security"
-                    actions={actions}
-                    labelSection="garageUsers"
-                    label="security"
-                    highlight={highlightGarageRoles}
-                  />
-                </p>
-              </div>
+                <div>
+                  <h3>{t([ 'inviteUser', 'GarageRights' ]) + ' *'}</h3>
+                  <p>{t([ 'inviteUser', 'GarageRightsDesc' ])}</p>
+                  <p className={styles.rights}>
+                    <AttributeSpan
+                      state={state}
+                      attribute="garage_admin"
+                      actions={actions}
+                      labelSection="garageUsers"
+                      label="admin"
+                      highlight={highlightGarageRoles}
+                    />
+                    {'|'}
+                    <AttributeSpan
+                      state={state}
+                      attribute="garage_manager"
+                      actions={actions}
+                      labelSection="garageUsers"
+                      label="manager"
+                      highlight={highlightGarageRoles}
+                    />
+                    {'|'}
+                    <AttributeSpan
+                      state={state}
+                      attribute="garage_receptionist"
+                      actions={actions}
+                      labelSection="garageUsers"
+                      label="receptionist"
+                      highlight={highlightGarageRoles}
+                    />
+                    {'|'}
+                    <AttributeSpan
+                      state={state}
+                      attribute="garage_security"
+                      actions={actions}
+                      labelSection="garageUsers"
+                      label="security"
+                      highlight={highlightGarageRoles}
+                    />
+                  </p>
+                </div>
               )}
 
               {state.car_id && (
-              <div>
-                <h3>{t([ 'inviteUser', 'carRights' ]) + ' *'}</h3>
-                <p>{t([ 'inviteUser', 'carRightsDesc' ])}</p>
-                <p className={styles.rights}>
-                  <AttributeSpan
-                    state={state}
-                    attribute="car_admin"
-                    actions={actions}
-                    label="admin"
-                    highlight={highlightCarRoles}
-                  />
-                  {'|'}
-                  <AttributeSpan
-                    state={state}
-                    attribute="car_driver"
-                    actions={actions}
-                    label="driver"
-                    highlight={highlightCarRoles}
-                  />
-                </p>
-              </div>
+                <div>
+                  <h3>{t([ 'inviteUser', 'carRights' ]) + ' *'}</h3>
+                  <p>{t([ 'inviteUser', 'carRightsDesc' ])}</p>
+                  <p className={styles.rights}>
+                    <AttributeSpan
+                      state={state}
+                      attribute="car_admin"
+                      actions={actions}
+                      label="admin"
+                      highlight={highlightCarRoles}
+                    />
+                    {'|'}
+                    <AttributeSpan
+                      state={state}
+                      attribute="car_driver"
+                      actions={actions}
+                      label="driver"
+                      highlight={highlightCarRoles}
+                    />
+                  </p>
+                </div>
               )}
             </div>
           </div>
