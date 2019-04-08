@@ -32,7 +32,7 @@
 		"loginFailed": "Anmeldung fehlgeschlagen",
 		"forgot": "Passwort vergessen?",
 		"proceed": "Hier fortfahren",
-		"emailPlaceholder": "Mr@park.it",
+		"emailPlaceholder": "info@parkit.direct",
 		"resetPasswordUnsuccessful": "Ihr Passwort gelang es nicht zu ändern.",
 		"resetPasswordSuccessful": "Ihr Passwort wurde erfolgreich geändert."
 	},
@@ -290,7 +290,7 @@
 		"contactPerson": "Ansprechpartner",
 		"createdAt": "Erstellungsort",
 		"createAgreement": "Vereinbarung erstellen",
-		"editClient": "Hier wird eine Übersicht der Garage angezeigt. Links oben finden Sie verschiedene Darstellungsoptionen.\n\nGruppen: Die einzelnen Gruppenwerden in verschiedenen Farben dargestellt.\nVereinbarungen: Die einzelnen Vereinbarungen sind in verschiedenen Farben dargestellt.\nBuchungen: Die einzelnen Buchungen werden in verschiedenen Farben dargestellt.\nPreise: Die einzelnen Preiseinstellungen werden in verschiedenen Farben dargestellt.\nFahrzeuge: Die einzelnen Fahrzeuge werden sind in verschiedenen Farben dargestellt.\n\nRechts oben kann ausgewählt werden, ob der aktuelle Zeitraum oder ein bestimmtes Datum angezeigt werden soll.",
+		"editClient": "Gruppe bearbeiten",
 		"goToUsers": "Nutzer",
 		"goToInvoices": "Rechnungen",
 		"places": "Stellplätze",
@@ -1341,7 +1341,7 @@
 			"paymentUnsucessfull": "Zahlung ist fehlgeschlagen.",
 			"processingPayment": "Zahlungsverarbeitung ...",
 			"flexiplace": "FLEXI",
-			"guest": "Ohne Genehmigungsbefugnis"
+			"guest": "Benutzer"
 		},
 		"guest": {
 			"newGuest": "NEU",
@@ -1355,7 +1355,7 @@
 			"noGuestResrevations": "Keine Buchungen für Nutzer/-innen ohne Genehmigungsbefugnis"
 		},
 		"version": {
-			"oldAppVersion": "Die App ist nicht auf dem neuesten Stand und funktioniert möglicherweise nicht richtig."
+			"oldAppVersion": "Wir arbeiten an einem Update. Bitte überprüfen Sie die aktuelle Version über den folgenden Link."
 		}
 	},
 	"auth0Errors": {
