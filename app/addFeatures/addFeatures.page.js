@@ -36,7 +36,7 @@ class AddFeaturesPage extends Component {
     const longtermClick     = () => { actions.tarifSelected(1) }
     const automationClick   = () => { actions.tarifSelected(2) }
     const integrationClick  = () => { actions.tarifSelected(3) }
-    const customClick       = () => { location.href='mailto:support@park-it-direct.com' }
+    const customClick       = () => { location.href='mailto:support@parkit.direct' }
     const bookingPageClick  = () => { console.log('bookingClick');}
     const gateModuleClick   = () => { nav.to('/addFeatures/gateModuleOrder') }
     const accountClick      = () => { nav.to('/accounts/newAccount') }

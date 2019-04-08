@@ -63,8 +63,8 @@ class ModulesPageBase extends Component {
   }
 
   toggleMrParkitIntegration = () => {
-    const { actions } = this.props
-    if (this.props.state.mrParkitIntegration) {
+    const { state, actions } = this.props
+    if (state.mrParkitIntegration) {
       actions.disableMrParkitIntegration()
       actions.setMrParkitIntegration(false)
     } else {
@@ -167,16 +167,16 @@ class ModulesPageBase extends Component {
         {window.location.hash.includes('marketingPage') &&
         <Module
           name={t([ 'modules', 'marketingPage' ])}
-          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+          disabled={userGarage === undefined || !userGarage.admin}
           actions={[
             <CallToActionButton
               label={t([ 'modules', 'Preview' ])}
-              state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
+              state={(userGarage === undefined || !userGarage.admin) ? 'disabled' : 'inverted'}
               onClick={this.toMarketingPreview}
             />,
             <Switch
               on={state.marketing && state.marketing.active_marketing_launched}
-              state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+              state={(userGarage === undefined || !userGarage.admin) && 'disabled'}
               onClick={actions.toggleMarketing}
             />
           ]}
@@ -226,7 +226,7 @@ class ModulesPageBase extends Component {
           (window.location.hash.includes('flexiplace')) ||
           (window.location.hash.includes('3rdPartyIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)) ||
           (window.location.hash.includes('mrParkitIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)) ||
-          (window.location.hash.includes('marketingPage') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2))) &&
+          (window.location.hash.includes('marketingPage') && !(userGarage === undefined || !userGarage.admin))) &&
           children
         }
       </PageBase>

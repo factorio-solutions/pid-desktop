@@ -18,7 +18,7 @@ export const GET_GARAGE_MODULES = `query GetGarage($id: Id!){
 // edit marketing - returns garageType
 export const UPDATE_MARKETING = `mutation UpdateMarketing($id: Id!, $marketing: MarketingInput!) {
   update_marketing(id: $id, marketing: $marketing) {
-    payment_url
+    marketing_launched
   }
 }
 `

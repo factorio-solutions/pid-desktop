@@ -79,11 +79,27 @@ class GarageSetupGatesPage extends Component {
       }
     }
 
-    const checkSubmitable = () => {
-      if (!state.gates.reduce((acc, gate) => { return acc && (gate.phone === '' || /^\+?[\d,A-Z]{3,}$/.test(gate.phone)) }, true)) return false
-      if (state.gates.find(gate => { return gate.label === '' || gate.address.line_1 === '' }) != undefined) return false
+    const checkSubmittable = () => {
+      const allGatesOk = !state.gates.some(gate => {
+        let isBad = (
+          (gate.phone !== '' && !(/^\+?[\d,A-Z]{3,}$/.test(gate.phone)))
+          || gate.lable === ''
+          || gate.address.line_1 === ''
+        )
 
-      return true
+        // HACK: Test if whole string is correct according RegExp.
+        if (!isBad) {
+          const regesResult = (new RegExp('(-?\\w+\\s*)(\\s*(,|-|\\/)\\s*-?\\w+)*', 'g'))
+            .exec(gate.places)
+          isBad = !regesResult
+          || !regesResult[0]
+          || regesResult[0].length !== gate.places.length
+        }
+
+        return isBad
+      })
+
+      return allGatesOk
     }
 
     const prepareGates = (gate, index, arr) => {
@@ -144,12 +160,14 @@ class GarageSetupGatesPage extends Component {
               pattern="\+?[\d,A-Z]{3,}"
               readOnly={readOnly}
             />
-            {arr.length > 1 && !readOnly && <RoundButton
+            {arr.length > 1 && !readOnly && (
+<RoundButton
               content={<span className="fa fa-times" aria-hidden="true" />}
               onClick={removeGateRow}
               type="remove"
               question={t([ 'newGarage', 'removeGateRowQuestion' ])}
-            />}
+            />
+)}
           </div>
           <div className={styles.phoneNumberDropdown}>
             <label>{t([ 'newGarage', 'selcetNumber' ])}</label>
@@ -161,8 +179,8 @@ class GarageSetupGatesPage extends Component {
               editable={!readOnly}
             />
           </div>
-          {gate.phone.match(/[a-z]/i) &&
-            <div className={styles.flexi}>
+          {gate.phone.match(/[a-z]/i)
+            && <div className={styles.flexi}>
               <Input
                 onChange={handleGatePasswordChange}
                 label={t([ 'newGarage', 'gatePassword' ])}
@@ -173,9 +191,9 @@ class GarageSetupGatesPage extends Component {
                 type="password"
                 readOnly={readOnly}
               />
-              { gate.has_password ?
-                <i className={`fa fa-check-circle-o ${styles.passwordIndication} ${styles.green}`} title={t([ 'newGarage', 'passwordWasSet' ])} /> :
-                <i className={`fa fa-times-circle-o ${styles.passwordIndication} ${styles.red}`} title={t([ 'newGarage', 'passwordWasNotSet' ])} />
+              { gate.has_password
+                ? <i className={`fa fa-check-circle-o ${styles.passwordIndication} ${styles.green}`} title={t([ 'newGarage', 'passwordWasSet' ])} />
+                : <i className={`fa fa-times-circle-o ${styles.passwordIndication} ${styles.red}`} title={t([ 'newGarage', 'passwordWasNotSet' ])} />
               }
             </div>
           }
@@ -225,7 +243,8 @@ class GarageSetupGatesPage extends Component {
       )
     }
 
-    const formContent = (<div className={styles.gates}>
+    const formContent = (
+<div className={styles.gates}>
       <div className={styles.gatesForm}>
         <h2>{t([ 'newGarage', 'garageGates' ])}</h2>
         {state.gates.map(prepareGates)}
@@ -242,9 +261,9 @@ class GarageSetupGatesPage extends Component {
 
     return (
       <GarageSetupPage>
-        {readOnly ?
-          formContent :
-          <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={this.goBack} onHighlight={hightlightInputs}>
+        {readOnly
+          ? formContent
+          : <Form onSubmit={submitForm} submitable={checkSubmittable()} onBack={this.goBack} onHighlight={hightlightInputs}>
             {formContent}
           </Form>
         }

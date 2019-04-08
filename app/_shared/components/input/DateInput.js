@@ -106,6 +106,17 @@ export default class DateInput extends Component {
     }
   }
 
+  isValidDate = message => moment(message, 'DD.MM.YYYY').isValid()
+
+  handleBlur = event => {
+    const { onChange, onBlur, value } = this.props
+    if (event.target.value !== value && onChange) {
+      onChange(event.target.value, this.isValidDate(event.target.value))
+      onBlur(event)
+    }
+  }
+
+
   render() {
     const {
       label,
@@ -116,13 +127,12 @@ export default class DateInput extends Component {
       showInf,
       flip,
       editable,
-      onBlur,
       pickerOnFocus
     } = this.props
 
     const styles = typeof style === 'object' ? style : defaultStyles
 
-    const messageIsValidDate = moment(this.state.message, 'DD.MM.YYYY').isValid()
+    const messageIsValidDate = this.isValidDate(this.state.message)
 
     const errorStyle = {
       opacity: this.state.message === undefined ||
@@ -145,7 +155,7 @@ export default class DateInput extends Component {
           onKeyPress={this.preventEnter}
           pattern="(\d{1,2}).(\d{1,2}).(\d{4})"
           onFocus={this.handleInputFocus}
-          onBlur={onBlur}
+          onBlur={this.handleBlur}
         />
         <span className={styles.bar} />
 

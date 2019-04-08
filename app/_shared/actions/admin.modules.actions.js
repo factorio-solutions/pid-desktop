@@ -53,16 +53,14 @@ export function toggleMarketing() {
     const state = getState().adminModules
 
     const onSuccess = response => {
-      window.location.replace(response.data.update_marketing.payment_url)
+      dispatch(initModules())
     }
 
-    dispatch(setCustomModal(t([ 'modules', 'startingMarketing' ])))
     request(onSuccess,
       UPDATE_MARKETING,
       { id:        state.marketing.id,
         marketing: {
           marketing_launched: !state.marketing.active_marketing_launched,
-          url:                window.location.href
         }
       }
     )

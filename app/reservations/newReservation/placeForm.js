@@ -10,7 +10,6 @@ import { showMap } from '../../_shared/actions/newReservation.actions'
 
 import { t } from '../../_shared/modules/localization/localization'
 
-
 class PlaceForm extends Component {
   static propTypes = {
     state:      PropTypes.object,

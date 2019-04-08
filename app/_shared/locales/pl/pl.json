@@ -99,7 +99,7 @@
 		"error": "Błąd",
 		"success": "Sukces",
 		"inviteUser": "Zaprosić nowego użytkownika",
-		"dashboardHint": "Tutaj znajduje się przegląd wszystkich ważnych informacji o Twoim koncie. Na planie garażu widzisz, czy pojedyncze miejsca są wynajęte długoterminowo lub zarezerwowane. W Aktualnościach pokazują się wiadomości ze świata Park-it-direct. W Ostatnich aktywnościach zobaczysz niedawne zmiany w Twoim garaży oraz szczegóły na temat tego, kto i kiedy ich dokonał. W Stanie aktualnym możesz sprawdzić statystyki na temat wolnych i zajętych miejsc. W Przeglądzie finansowym pokazywane są aktualne statystyki finansowe. ",
+		"dashboardHint": "Tutaj znajduje się przegląd wszystkich ważnych informacji o Twoim koncie. Na planie garażu widzisz, czy pojedyncze miejsca są wynajęte długoterminowo lub zarezerwowane. W Aktualnościach pokazują się wiadomości ze świata Parkit.direct. W Ostatnich aktywnościach zobaczysz niedawne zmiany w Twoim garaży oraz szczegóły na temat tego, kto i kiedy ich dokonał. W Stanie aktualnym możesz sprawdzić statystyki na temat wolnych i zajętych miejsc. W Przeglądzie finansowym pokazywane są aktualne statystyki finansowe. ",
 		"issuesHint": "PL: pageBase.issuesHint",
 		"analyticsHint": "Tutaj możesz sprawdzić różne statystyki.",
 		"invoicesHint": "Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.",
@@ -112,7 +112,7 @@
 		"financePaypalHint": "PL: pageBase.financePaypalHint",
 		"financeCSOBHint": "PL: pageBase.financeCSOBHint",
 		"pidSettingsHint": "PL: pageBase.pidSettingsHint",
-		"activityLogHint": "Tutaj znajdziesz dziennik wszystkich aktywności w systemie Park-it-direct, włącznie z tym, o jaką akcję chodziło oraz kto i kiedy jej dokonał.",
+		"activityLogHint": "Tutaj znajdziesz dziennik wszystkich aktywności w systemie Parkit.direct, włącznie z tym, o jaką akcję chodziło oraz kto i kiedy jej dokonał.",
 		"reservationsHint": "Tutaj znajdziesz wszystkie swoje rezerwacje - zarówno te wytworzone przez Ciebie, jak i rezerwacje wytworzone przez innych w Twoich garażach.",
 		"newReservationHint": "Tutaj możesz dokonać nowej rezerwacji. Najpierw wybierz użytkownika i garaż, a następnie datę i miejsce parkingowe. Voilá!",
 		"garagesHint": "Tutaj znajdziesz schemat klientów, umów, rezerwacji, cen i aut na planie Twojego garaży. Takie same wartości są zawsze oznaczone tym samym kolorem. W lewym górnym rogu wybierz, jaką wartość chcesz zobaczyć. W prawym górnym rogu ustaw datę, która Cię interesuje.",
@@ -159,7 +159,7 @@
 		"editMarketing": "Edytować marketing",
 		"garageMarketingHint": "Tutaj możesz aktywować/dezaktywować poszczególne moduły oraz zarządzać nimi. Więcej informacji uzyskasz po kliknięciu na „Ustawienia” przy poszczególnych modułach. ",
 		"garageNewMarketingHint": "Tutaj możesz ustawić nowy marketing.",
-		"garageEditMarketingHint": "W tym module możesz zmieniać ustawienia strony internetowej służącej do reklamowania Twojego garaży oraz do przyjmowania rezerwacji miejsc parkingowych.\n\nW polu \"URL krótka nazwa\" ustaw link do Twojej strony. Poprawny format to \"URL krótka nazwa.park-it-direct.com\".\n\nTelefon awaryjny i e-mail awaryjny to dane kontaktowe, które pojawią się na stronie internetowej w dziale kontaktów.\n\nW opisie garaży możesz podać krótki opis w 4 językach (zmienisz je w prawym górnym rogu pola).\n\nObok pola z opisem możesz wybrać dowolną liczbę parametrów, które pojawią się w opisie garażu.\n\nW części \"Zdjęcia garaży\" możesz wgrać fotografie, które pojawią się na stronie internetowej. Polecamy zdjęcia o rozmiarze do 1MB w formacie .jpg.",
+		"garageEditMarketingHint": "W tym module możesz zmieniać ustawienia strony internetowej służącej do reklamowania Twojego garaży oraz do przyjmowania rezerwacji miejsc parkingowych.\n\nW polu \"URL krótka nazwa\" ustaw link do Twojej strony. Poprawny format to \"URL krótka nazwa.Parkit.direct.com\".\n\nTelefon awaryjny i e-mail awaryjny to dane kontaktowe, które pojawią się na stronie internetowej w dziale kontaktów.\n\nW opisie garaży możesz podać krótki opis w 4 językach (zmienisz je w prawym górnym rogu pola).\n\nObok pola z opisem możesz wybrać dowolną liczbę parametrów, które pojawią się w opisie garażu.\n\nW części \"Zdjęcia garaży\" możesz wgrać fotografie, które pojawią się na stronie internetowej. Polecamy zdjęcia o rozmiarze do 1MB w formacie .jpg.",
 		"garageNewPricingHint": "Tutaj możesz ustawić nową cenę rezerwacji.",
 		"garageEditPricingHint": "Tutaj możesz edytować właściwości ceny.",
 		"garageNewRentHint": "Tutaj możesz ustawić nowy wynajem swoich miejsc.",
@@ -441,7 +441,8 @@
 		"email": "e-mail",
 		"memberSince": "członek od",
 		"phone": "telefon",
-		"removeUser": "Usunąć użytkownika"
+		"removeUser": "Usunąć użytkownika",
+		"addUser": "PL: garageUsers.addUser"
 	},
 	"garageManagement": {
 		"garageManagement": "Zarząd garażu",
@@ -718,7 +719,7 @@
 		"invoiceReminder": "Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.",
 		"reservationAccepted": "Twoja rezerwacja na miejsce \"%(arg1)s\" została zaakceptowana.",
 		"reservationDeclined": "Twoja rezerwacja na miejsce \"%(arg1)s\" została odrzucona.",
-		"verifyYourEmail": "Witaj w Park-it-direct! Na adres \"%(arg1)s\"s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.",
+		"verifyYourEmail": "Witaj w Parkit.direct! Na adres \"%(arg1)s\"s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.",
 		"reservationUpdatedNotification": "%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.",
 		"reservationRemovedDueToUnpaid": "Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.",
@@ -982,9 +983,9 @@
 		"CSOBnotValid": "Klucz osobisty i id handlowe są niepoprawne.",
 		"permissionNotGranted": "Nie udało się dokonać płatności przez Paypal. Spróbuj ponownie.",
 		"whatIsMerchant": "Proces tworzenia konta",
-		"start": "Zacznij od wybrania preferowanego sposobu płatności. Jeśli chcesz, żebyśmy wprowadzili nowy sposób płatności, skontaktuj się z naszym serwisem Park-it-direct.",
+		"start": "Zacznij od wybrania preferowanego sposobu płatności. Jeśli chcesz, żebyśmy wprowadzili nowy sposób płatności, skontaktuj się z naszym serwisem Parkit.direct.",
 		"merchantDesc": "Używamy Paypal, żeby dbał o Twoje finanse. Jeśli chcesz otrzymywać pieniądze, musisz posiadać własne konto firmowe Paypal i dać nam pozwolenie na przetwarzanie płatności. Wejdź na paypal.com i zarejestruj swoje konto firmowe! Jak tylko dostaniesz własne konto firmowe Paypal, możesz kontynuować wypełnianie formularza.",
-		"merchantDesc2": "Wypełnij formularz i kliknij przycisk OK. Nastąpi automatyczne przekierowanie na stronę paypal, gdzie zalogujesz się na konto paypal, które chcesz używać wraz z tym kontem Park-it-direct. Następnie kliknij na \"Dać pozwolenie\".",
+		"merchantDesc2": "Wypełnij formularz i kliknij przycisk OK. Nastąpi automatyczne przekierowanie na stronę paypal, gdzie zalogujesz się na konto paypal, które chcesz używać wraz z tym kontem Parkit.direct. Następnie kliknij na \"Dać pozwolenie\".",
 		"csobMerchantDesc": "Jeśli chcesz skorzystać z bramki płatniczej ČSOB, musisz najpierw odwiedzić oddział ČSOB, gdzie otrzymasz nowe id oraz klucz osobisty. Skontaktuje się z ČSOB, aby uzyskać więcej informacji.",
 		"csobMerchantDesc2": "Jeśli posiadasz już swoje identyfikatory, podaj id oraz wgraj klucz osobisty z pliku *.pub.",
 		"updateProcess": "Proces aktualizacji konta",
@@ -1352,6 +1353,9 @@
 			"invalidEmail": "Niepoprawny e-mail",
 			"invalidPhone": "Niepoprawny telefon",
 			"noGuestResrevations": "Brak rezerwacji regularnych gości"
+		},
+		"version": {
+			"oldAppVersion": "PL: mobileApp.version.oldAppVersion"
 		}
 	},
 	"auth0Errors": {
@@ -1362,31 +1366,31 @@
 		"securityReasons": "Z powodów bezpieczeństwa musimy skontrolować Twój e-mail.",
 		"easyAsClickingButton": "Wystarczy kliknąć na poniższy przycisk:",
 		"confirmAccount": "Potwierdzić konto!",
-		"enjoy": "Miłego korzystania z Park-it-direct!",
+		"enjoy": "Miłego korzystania z Parkit.direct!",
 		"bestRegards": "Pozdrawiamy",
-		"PidTeam": "Zespół Park-it-Direct",
-		"welcome": "Witamy w Park-it-Direct!",
-		"thankYou": "Dziękujemy za korzystanie z naszego narzędzia do zarządzania. Sprawdź, w jaki sposób Park-it-direct może Ci pomóc w zarządzaniu parkingiem.",
+		"PidTeam": "Zespół Parkit.direct",
+		"welcome": "Witamy w Parkit.direct!",
+		"thankYou": "Dziękujemy za korzystanie z naszego narzędzia do zarządzania. Sprawdź, w jaki sposób Parkit.direct może Ci pomóc w zarządzaniu parkingiem.",
 		"howToStart": "Jak zacząć przygodę z PID?",
 		"pleasantExperience": "Szukasz przyjemnego parkingu? Nie chce Ci się organizoać miejsc parkingowych dla całej firmy? A może zarabiasz wynajmowaniem miejsc parkingowych?",
 		"helpForHelp": "Na każdej stronie na górze lub po prawej stronie znajdziesz niebieskie okienko pomocy, które wyjaśnia zawartość strony. W ustawieniach konta możesz w każdym momencie możesz włączyć/wyłączyć pomoc. ",
 		"garageSetup": "Chcesz założyć garaż? Pomożemy Ci w tym! Daj nam znać, a zadzwonimy do Ciebie. Omówimy razem wszystki ustawienia i dostosujemy je do Twoich potrzeb, żeby zagwarantować Ci jak największy zysk i oszczędność czasu.",
 		"getInTouch": "Chcesz skontaktować się z nami?",
-		"website": "Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=\"https://www.park-it-direct.com/en/get-in-touch-with-sales\">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
+		"website": "Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=\"https://www.Parkit.direct.com/en/get-in-touch-with-sales\">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.",
 		"passwordResetSubject": "PL: auth0Emails.passwordResetSubject",
 		"passwordResetSubmited": "Poprosiłeś/-aś o zmianę hasła!",
 		"pwdResetDescr": "Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,",
 		"confirmPwdReset": "Dokończ zmianę hasła",
 		"troubleWithAccount": "W przypadku problemów z kontem, nie zwlekaj - skontaktuj się z nami odpowiadając na ten e-mail.",
 		"verificationCodeEmailSubject": "Kod weryfikacyjny",
-		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Park-it-direct!",
+		"verificationCode": "Poniżej znajdziesz swój kod weryfikacyjny Parkit.direct!",
 		"blockedTitle": "PL: auth0Emails.blockedTitle",
 		"blockedDescription": "PL: auth0Emails.blockedDescription",
 		"blockedUnblock": "PL: auth0Emails.blockedUnblock"
 	},
 	"railsEmails": {
-		"invitation_mail_subject": "Zostałeś zaproszony do Park-It-Direct!",
-		"resend_invitation_mail_subject": "Przypominamy o zaproszeniu do Park-It-Direct.",
+		"invitation_mail_subject": "Zostałeś zaproszony do Parkit.direct!",
+		"resend_invitation_mail_subject": "Przypominamy o zaproszeniu do Parkit.direct.",
 		"new_reservation_mail_subject": "%{user} utworzył(a) nową rezerwację.",
 		"reservation_confirmed_subject": "Rezerwacja w %{garage} została potwierdzona.",
 		"reservation_not_confirmed_subject": "PL: railsEmails.reservation_not_confirmed_subject",
@@ -1409,14 +1413,14 @@
 			}
 		},
 		"footer": {
-			"enjoy": "Dziękujemy za korzystanie z Park-it-direct!",
+			"enjoy": "Dziękujemy za korzystanie z Parkit.direct!",
 			"regards": "Pozdrawiamy",
-			"team": "Zespół Park-it-Direct"
+			"team": "Zespół Parkit.direct"
 		},
 		"invitation_mail": {
 			"hello": "Dzień dobry,",
-			"invitation": "właśnie zaproszono Cię do Park-it-direct!",
-			"invited_you": "zaprosił/a Cię do korzystania z Park-it-direct.",
+			"invitation": "właśnie zaproszono Cię do Parkit.direct!",
+			"invited_you": "zaprosił/a Cię do korzystania z Parkit.direct.",
 			"says": "pisze:",
 			"admin": "administrator",
 			"secretary": "sekretarz/sekretarka",
@@ -1453,7 +1457,7 @@
 		"resend_invitation_mail": {
 			"hello": "Dzień dobry,",
 			"invitation_reminder": "przypominamy Ci o zaproszeniu",
-			"remind_you": "do Park-it-direct.",
+			"remind_you": "do Parkit.direct.",
 			"admin": "administrator/ka",
 			"secretary": "sekretarz/sekretarka",
 			"host": "regularny gość",
@@ -1466,7 +1470,7 @@
 			"invited_to_car": "zaprosił/a Cię do auta",
 			"as": "jako",
 			"to_sign_up": "Zarejestruj się!",
-			"to_pid": "Do Park-it-direct!",
+			"to_pid": "Do Parkit.direct!",
 			"issue": "W przypadku jakichkolwiek problemów",
 			"let_us_know": "skontaktuj się z nami mailowo,",
 			"we_will_help": "a my pomożemy Ci aktywować konto."
@@ -1517,7 +1521,7 @@
 		},
 		"accept_new_reservation_secretary_notification": {
 			"new_reservation_needs_confirmation": "PL: railsEmails.accept_new_reservation_secretary_notification.new_reservation_needs_confirmation",
-			"to_pid": "Do Park-it-direct!"
+			"to_pid": "Do Parkit.direct!"
 		},
 		"reservation_destroyed_mail": {
 			"reservation_was_destroyed": "PL: railsEmails.reservation_destroyed_mail.reservation_was_destroyed"
@@ -1528,7 +1532,7 @@
 	},
 	"railsSMSs": {
 		"reservation_sms": {
-			"new_reservation": "Masz nową rezerwacją w Park-it-direct!",
+			"new_reservation": "Masz nową rezerwacją w Parkit.direct!",
 			"from": "Od:",
 			"to": "Do:",
 			"garage": "Garaż:"

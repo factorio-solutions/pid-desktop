@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
@@ -20,7 +20,8 @@
     "react",
     "react-router",
     "webpack",
-    "park-it-direct"
+    "park-it-direct",
+    "parkit.direct"
   ],
   "devDependencies": {
     "babel-eslint": "^10.0.1",
@@ -29,6 +30,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.12.4",
+    "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-middleware": "^1.6.1",
@@ -82,6 +84,7 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "swiper": "^4.0.1",
+    "ua-parser-js": "^0.7.19",
     "webpack": "^3.7.1",
     "ws": "^3.0.0",
     "xlsx": "^0.12.13"

@@ -200,7 +200,6 @@ class ReservationsPage extends Component {
     const {
       state, actions, interruption, interruptionActions
     } = this.props
-
     const filters = [
       <TabButton
         label={t([ 'notifications', 'current' ])}
@@ -283,5 +282,6 @@ export default connect(
       clearForm
     }, dispatch),
     interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
+
   })
 )(ReservationsPage)

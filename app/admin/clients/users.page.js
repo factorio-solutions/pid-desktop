@@ -43,9 +43,9 @@ class ClientUsersPage extends Component {
   componentDidMount() {
     const {
       actions: { initClientUsers },
-      params: { client_id }
+      params: { client_id: clientId }
     } = this.props
-    initClientUsers(client_id)
+    initClientUsers(clientId)
   }
 
   onRowSelect = data => {
@@ -92,24 +92,24 @@ class ClientUsersPage extends Component {
 
   addClientUserClick = () => {
     const {
-      params: { client_id },
+      params: { client_id: clientId },
       actions: { setClient: setClientAction },
       pageBase: { garage }
     } = this.props
-    setClientAction(+client_id)
+    setClientAction(+clientId)
     nav.to(`/${garage}/admin/users/invite`)
   }
 
   renderPendingSpoiler = user => {
     const {
-      actions: destroyClientUser,
-      params: client_id
+      actions: { destroyClientUser },
+      params: { client_id: clientId }
     } = this.props
     const returnable = user.user
-    const destroyClick = () => { destroyClientUser(client_id, user.user.id) }
+    const destroyClick = () => { destroyClientUser(clientId, user.user.id) }
     returnable.spoiler = (
       <div className={styles.float}>
-        <InvitationReminderButton userId={user.user.id} clientId={parseInt(client_id, 10)} />
+        <InvitationReminderButton userId={user.user.id} clientId={parseInt(clientId, 10)} />
         <LabeledRoundButton
           label={t([ 'clientUsers', 'removeUser' ])}
           content={<span className="fa fa-times" aria-hidden="true" />}
@@ -126,20 +126,20 @@ class ClientUsersPage extends Component {
     const {
       actions,
       pageBase,
-      params: { client_id }
+      params: { client_id: clientId }
     } = this.props
     const userId = clientUser.user.id
 
-    const destroyClick = () => actions.destroyClientUser(client_id, userId)
+    const destroyClick = () => actions.destroyClientUser(clientId, userId)
 
-    const secretaryPresetClick = () => actions.setSecretary(client_id, userId)
-    const internalPresetClick = () => actions.setInternal(client_id, userId)
+    const secretaryPresetClick = () => actions.setSecretary(clientId, userId)
+    const internalPresetClick = () => actions.setInternal(clientId, userId)
 
     const roles = [ 'admin', 'contact_person', 'secretary', 'host', 'internal' ]
 
     const mapRoleButtons = role => {
       const onClick = () => {
-        actions.setClientUserRelation(client_id, userId, { [role]: !clientUser[role] })
+        actions.setClientUserRelation(clientId, userId, { [role]: !clientUser[role] })
       }
 
       return (
@@ -172,7 +172,7 @@ class ClientUsersPage extends Component {
           >
             {t([ 'clientUsers', 'internal' ])}
           </span>
-          |
+          {'|'}
           <span
             className={styles.clickable}
             onClick={secretaryPresetClick}

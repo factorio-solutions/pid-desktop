@@ -42,7 +42,8 @@ class GarageSetupFloorsPage extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) { // load garage if id changed
+  // load garage if id changed
+  componentWillReceiveProps(nextProps) {
     if (nextProps.pageBase.garage !== this.props.pageBase.garage) {
       const { state, actions } = this.props
       state.availableTarifs.length === 0 && actions.initTarif()

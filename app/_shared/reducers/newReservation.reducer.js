@@ -84,6 +84,7 @@ const defaultState = {
   to:              '',
   place_id:        undefined, // if of selected place
   price:           undefined,
+  currencySymbol:  '',
   timeCreditPrice: undefined,
 
   durationDate: false, // set duration or end of parking?
@@ -95,7 +96,7 @@ const defaultState = {
   selectedTemplate: undefined, // index of it
   templateText:     '',
 
-  paymentMethod:    '',
+  paymentMethod: '',
 
   preferedGarageId: undefined,
   preferedPlaceId:  undefined,
@@ -160,7 +161,6 @@ function substituteVariablesInTemplate(template, state) {
 
 export default function newReservation(state = defaultState, action) {
   switch (action.type) {
-
     case NEW_RESERVATION_SET_USER:
       return {
         ...state,
@@ -222,7 +222,8 @@ export default function newReservation(state = defaultState, action) {
       }
 
     case NEW_RESERVATION_SET_PAID_BY_HOST:
-      return { ...state,
+      return {
+        ...state,
         // paidByHost: state.user.id === -2 ? state.email.value && state.email.valid && action.value : action.value
         paidByHost: action.value
       }
@@ -284,7 +285,8 @@ export default function newReservation(state = defaultState, action) {
         ...state,
         from:          action.value,
         to:            action.to || state.to,
-        recurringRule: { ...state.recurringRule,
+        recurringRule: {
+          ...state.recurringRule,
           starts: moment(action.value, MOMENT_DATETIME_FORMAT).format(MOMENT_DATE_FORMAT)
         }
       }
@@ -304,7 +306,8 @@ export default function newReservation(state = defaultState, action) {
     case NEW_RESERVATION_SET_PRICE:
       return {
         ...state,
-        price: action.value
+        price:          action.value,
+        currencySymbol: action.currency
       }
 
 

@@ -49,24 +49,47 @@ class NotificationsPage extends Component {
     const { state, actions } = this.props
 
     const schema = [
-      { key: 'name', title: t([ 'notifications', 'user' ]), comparator: 'string', representer: o => <strong>{o}</strong> },
+      {
+        key:         'name',
+        title:       t([ 'notifications', 'user' ]),
+        comparator:  'string',
+        representer: o => <strong>{o}</strong>
+      },
       { key: 'email', title: t([ 'notifications', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'notifications', 'phone' ]), comparator: 'number' },
-      { key: 'created_at', title: t([ 'notifications', 'sent' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span>, sort: 'desc' }
+      {
+        key:         'created_at',
+        title:       t([ 'notifications', 'sent' ]),
+        comparator:  'date',
+        representer: o => (
+          <span>
+            {moment(o).format('ddd DD.MM.YYYY')}
+            {' '}
+            {moment(o).format('H:mm')}
+          </span>
+        ),
+        sort: 'desc'
+      }
     ]
 
     const data = state.notifications.map(notification => {
       const createSpoiler = () => {
         const returnMessage = () => {
-          const parts = notification.message ? notification.message.split(';') : [ 'noMessage' ] // if no message comes
-          const translation = t([ 'notifications', parts[0] ], { arg1: parts[1] || '', arg2: parts[2] || '' })
+          const parts = notification.message
+            ? notification.message.split(';')
+            : [ 'noMessage' ] // if no message comes
+          const translation = t(
+            [ 'notifications', parts[0] ],
+            { arg1: parts[1] || '', arg2: parts[2] || '' }
+          )
 
           let reservation
           if (parts[3] === 'reservation') {
             reservation = this.makeReservation(parts.slice(4))
           }
 
-          if (translation.includes('missing translation:')) { // news are not ment to be translated.
+          // news are not ment to be translated.
+          if (translation.includes('missing translation:')) {
             return parts[1]
               ? <a href={parts[1]}>{parts[0]}</a>
               : parts[0]
@@ -76,9 +99,9 @@ class NotificationsPage extends Component {
                 <div>
                   {translation}
                 </div>
-                {reservation &&
+                {reservation && (
                   <ReservationInfo reservation={reservation} />
-                }
+                )}
               </div>
             )
           }
@@ -87,35 +110,50 @@ class NotificationsPage extends Component {
         const confirm = () => actions.accept(notification)
         const decline = () => actions.decline(notification)
 
-        return (<div>
-          <span>{returnMessage()}</span> <br />
-          {notification.custom_message && <span>{notification.creator.full_name} {t([ 'notifications', 'sais' ])}: {notification.custom_message}</span>}{notification.custom_message && <br />}
-          {!notification.confirmed &&
-            <span className={styles.floatRight}>
-              {notification.notification_type.indexOf('No') !== -1 &&
-                <RoundButton
-                  content={<span className="fa fa-times" aria-hidden="true" />}
-                  onClick={decline}
-                  type="remove"
-                  question={t([ 'notifications', 'declineQuestion' ])}
-                />
-              }
-              {notification.notification_type.indexOf('Yes') !== -1 &&
-                <RoundButton
-                  content={<span className="fa fa-check" aria-hidden="true" />}
-                  onClick={confirm}
-                  type="confirm"
-                />
-              }
-            </span>
-          }
-          {notification.confirmed &&
-            <span>
-              {notification.confirmed ? t([ 'notifications', 'NotificationAccepted' ]) : t([ 'notifications', 'NotificationDeclined' ]) }
-              {moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}
-            </span>
-          }
-        </div>)
+        return (
+          <div>
+            <span>{returnMessage()}</span>
+            {' '}
+            <br />
+            {notification.custom_message && (
+              <span>
+                {notification.creator.full_name}
+                {' '}
+                {t([ 'notifications', 'sais' ])}
+                {': '}
+                {notification.custom_message}
+              </span>
+            )}
+            {notification.custom_message && <br />}
+            {!notification.confirmed && (
+              <span className={styles.floatRight}>
+                {notification.notification_type.indexOf('No') !== -1 && (
+                  <RoundButton
+                    content={<span className="fa fa-times" aria-hidden="true" />}
+                    onClick={decline}
+                    type="remove"
+                    question={t([ 'notifications', 'declineQuestion' ])}
+                  />
+                )}
+                {notification.notification_type.indexOf('Yes') !== -1 && (
+                  <RoundButton
+                    content={<span className="fa fa-check" aria-hidden="true" />}
+                    onClick={confirm}
+                    type="confirm"
+                  />
+                )}
+              </span>
+            )}
+            {notification.confirmed && (
+              <span>
+                {notification.confirmed
+                  ? t([ 'notifications', 'NotificationAccepted' ])
+                  : t([ 'notifications', 'NotificationDeclined' ])}
+                {moment(notification.updated_at).format('ddd DD.MM.YYYY HH:mm')}
+              </span>
+            )}
+          </div>
+        )
       }
 
       return {

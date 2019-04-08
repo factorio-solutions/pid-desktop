@@ -63,52 +63,65 @@ export default class Form extends Component {
 
     const highlightInputs = () => onHighlight && onHighlight()
 
-    const submitButton = (<div
-      className={`
-        ${mobile ? styles.mobileSubmitButton : styles.submitBtn}
-        ${margin && styles.marginBot}
-        ${modal && styles.inModal}
-        ${center && styles.center}
-      `}
-    >
-      {onBack && <div className={styles.floatLeft}>
-        <RoundButton
-          content={<span className={`fa fa-${home ? 'home' : 'chevron-left'}`} aria-hidden="true" />}
-          onClick={onBack}
-        />
-      </div>}
-      {onReset &&
-        <div className={styles.floatLeft}>
-          <RoundButton
-            content={<span className={'fa fa-times'} />}
-            onClick={onReset}
-            type="remove"
-            question="No message"
-          />
+    const submitButton = (
+      <div
+        className={`
+          ${mobile ? styles.mobileSubmitButton : styles.submitBtn}
+          ${margin && styles.marginBot}
+          ${modal && styles.inModal}
+          ${center && styles.center}
+        `}
+      >
+        {onBack && (
+          <div className={styles.floatLeft}>
+            <RoundButton
+              content={(
+                <span
+                  className={`fa fa-${home ? 'home' : 'chevron-left'}`}
+                  aria-hidden="true"
+                />
+              )}
+              onClick={onBack}
+            />
+          </div>
+        )}
+        {onReset && (
+          <div className={styles.floatLeft}>
+            <RoundButton
+              content={<span className="fa fa-times" />}
+              onClick={onReset}
+              type="remove"
+              question="No message"
+            />
+          </div>
+        )}
+        <div className={(onBack || submitbtnRight) && styles.floatRight}>
+          {this.state.submited
+            ? (
+              <RoundButton
+                content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />}
+                onClick={() => {}}
+                type="confirm"
+                state="loading"
+                onDisabledClick={highlightInputs}
+              />
+            )
+            : (
+              <RoundButton
+                content={<span className="fa fa-check" aria-hidden="true" />}
+                onClick={sendReservation}
+                type="confirm"
+                state={!submitable ? 'disabled' : undefined}
+                onDisabledClick={highlightInputs}
+              />
+            )
+          }
         </div>
-      }
-      <div className={(onBack || submitbtnRight) && styles.floatRight}>
-        {this.state.submited ?
-          <RoundButton
-            content={<span className={`fa fa-spinner ${styles.rotating}`} aria-hidden="true" />}
-            onClick={() => {}}
-            type="confirm"
-            state={'loading'}
-            onDisabledClick={highlightInputs}
-          /> :
-          <RoundButton
-            content={<span className="fa fa-check" aria-hidden="true" />}
-            onClick={sendReservation}
-            type="confirm"
-            state={!submitable ? 'disabled' : undefined}
-            onDisabledClick={highlightInputs}
-          />
-        }
       </div>
-    </div>)
+    )
 
     return (
-      <form onSubmit={sendReservation} >
+      <form onSubmit={sendReservation}>
         {children}
         {submitButton}
       </form>

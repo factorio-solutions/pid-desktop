@@ -42,14 +42,29 @@ class CarUsersPage extends Component {
     const { state, pageBase, actions } = this.props
 
     const schema = [
-      { key: 'full_name', title: t([ 'clientUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+      {
+        key:         'full_name', title:       t([ 'clientUsers', 'name' ]), comparator:  'string', representer: o => <strong>{o}</strong>, sort:        'asc'
+      },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' },
-      { key: 'created_at', title: t([ 'clientUsers', 'memberSince' ]), comparator: 'date', representer: o => <span>{ moment(o).format('ddd DD.MM.YYYY')} {moment(o).format('H:mm')}</span> }
+      {
+        key:         'created_at',
+title:       t([ 'clientUsers', 'memberSince' ]),
+comparator:  'date',
+representer: o => (
+          <span>
+            { moment(o).format('ddd DD.MM.YYYY')}
+            {' '}
+            {moment(o).format('H:mm')}
+          </span>
+        )
+      }
     ]
 
     const schemaPending = [
-      { key: 'full_name', title: t([ 'clientUsers', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+      {
+        key:         'full_name', title:       t([ 'clientUsers', 'name' ]), comparator:  'string', representer: o => <strong>{o}</strong>, sort:        'asc'
+      },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' }
     ]
@@ -57,17 +72,20 @@ class CarUsersPage extends Component {
 
     const renderPendingSpoiler = user => {
       const destroyClick = () => actions.destroyCarUser(this.props.params.id, user.user.id)
-      return { ...user.user,
-        spoiler: (<div className={styles.float}>
-          <InvitationReminderButton userId={user.user.id} carId={parseInt(this.props.params.id, 10)} />
-          <LabeledRoundButton
-            label={t([ 'clientUsers', 'removeUser' ])}
-            content={<span className="fa fa-times" aria-hidden="true" />}
-            onClick={destroyClick}
-            type="remove"
-            question={t([ 'clientUsers', 'removeClientUser' ])}
-          />
-        </div>)
+      return {
+        ...user.user,
+        spoiler: (
+          <div className={styles.float}>
+            <InvitationReminderButton userId={user.user.id} carId={parseInt(this.props.params.id, 10)} />
+            <LabeledRoundButton
+              label={t([ 'clientUsers', 'removeUser' ])}
+              content={<span className="fa fa-times" aria-hidden="true" />}
+              onClick={destroyClick}
+              type="remove"
+              question={t([ 'clientUsers', 'removeClientUser' ])}
+            />
+          </div>
+        )
       }
     }
 
@@ -76,20 +94,22 @@ class CarUsersPage extends Component {
       const adminClick = () => actions.setCarUserRelation(this.props.params.id, car_user.user.id, { admin: !car_user.admin })
       const driverClick = () => actions.setCarUserRelation(this.props.params.id, car_user.user.id, { driver: !car_user.driver })
 
-      return (<div className={styles.spoiler}>
-        <span className={car_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'clientUsers', 'admin' ])}</span>|
-        <span className={car_user.driver ? styles.boldText : styles.inactiveText} onClick={driverClick}>{t([ 'clientUsers', 'driver' ])}</span>
-        <div className={styles.float}>
-          <LabeledRoundButton
-            label={t([ 'clientUsers', 'removeUser' ])}
-            content={<span className="fa fa-times" aria-hidden="true" />}
-            onClick={destroyClick}
-            type="remove"
-            question={t([ 'clientUsers', 'removeClientUser' ])}
-            state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}
-          />
+      return (
+        <div className={styles.spoiler}>
+          <span className={car_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'carUsers', 'admin' ])}</span>
+          {'|'}
+          <span className={car_user.driver ? styles.boldText : styles.inactiveText} onClick={driverClick}>{t([ 'clientUsers', 'driver' ])}</span>
+          <div className={styles.float}>
+            <LabeledRoundButton
+              label={t([ 'clientUsers', 'removeUser' ])}
+              content={<span className="fa fa-times" aria-hidden="true" />}
+              onClick={destroyClick}
+              type="remove"
+              question={t([ 'clientUsers', 'removeClientUser' ])}
+              state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}
+            />
+          </div>
         </div>
-      </div>
       )
     }
 
@@ -100,10 +120,12 @@ class CarUsersPage extends Component {
         <div>
           <Table schema={schema} data={data} />
 
-          { state.pending_users.length > 0 && <div>
-            <h2>{t([ 'clientUsers', 'pendingUsers' ])}</h2>
-            <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
-          </div> }
+          {state.pending_users.length > 0 && (
+            <div>
+              <h2>{t([ 'clientUsers', 'pendingUsers' ])}</h2>
+              <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
+            </div>
+          )}
 
           <div className={styles.addButton}>
             <div style={{ float: 'left' }}>

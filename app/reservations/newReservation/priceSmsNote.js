@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import Input          from '../../_shared/components/input/Input'
+import Input from '../../_shared/components/input/Input'
 import SectionWithHeader from '../../_shared/components/wrapers/SectionWithHeader'
-import Uneditable        from '../../_shared/components/input/Uneditable'
-import SmsForm           from './smsForm'
+import Uneditable from '../../_shared/components/input/Uneditable'
+import SmsForm from './smsForm'
 
 import { convertPriceToString } from '../../_shared/helpers/calculatePrice'
 
@@ -18,7 +18,7 @@ import {
 
 import { t } from '../../_shared/modules/localization/localization'
 
-import styles         from '../newReservation.page.scss'
+import styles from '../newReservation.page.scss'
 
 import inputStyles from '../../_shared/components/input/ReservationInput.scss'
 
@@ -40,21 +40,9 @@ class PriceSmsNote extends Component {
       outOfTimeCredit
     } = this.props
 
-    let price = ((isPlaceGoInternal(state) || !state.client_id) && state.price) ? state.price : ''
-
-    if (!price && state.place_id) {
-      price = convertPriceToString(0)
-      const place = state.garage && state.garage.floors.reduce((acc, floor) => {
-        return acc || floor.places.find(p => p.id === state.place_id)
-      }, undefined)
-      // Place.pricing.currency.symbol
-      if (place && place.pricing && place.pricing.currency) {
-        price += ` ${place.pricing.currency.symbol}`
-      }
-    }
+    const price = convertPriceToString((isPlaceGoInternal(state) || !state.client_id) ? state.price || 0 : 0)
 
     let expenseOn
-
     if (!state.client_id || state.paidByHost) {
       expenseOn = t([ 'newReservation', 'onUsersExpenses' ])
     } else if (!isPlaceGoInternal(state)) {
@@ -84,7 +72,7 @@ class PriceSmsNote extends Component {
               : (
                 <div className={`${styles.price} ${styles.dateTimeContainer}`}>
                   <div className={` ${styles.priceTag} ${styles.leftCollumn}`}>
-                    {`${t([ 'newReservation', 'price' ])} ${price}`}
+                    {`${t([ 'newReservation', 'price' ])} ${price} ${state.currencySymbol}`}
                   </div>
                   <div className={styles.middleCollumn} />
                   <div className={` ${styles.expenseOn} ${styles.rightCcollumn}`}>
@@ -93,6 +81,7 @@ class PriceSmsNote extends Component {
                 </div>
               )
             }
+
             {/* SMS */}
             {state.user
             && (
@@ -102,6 +91,7 @@ class PriceSmsNote extends Component {
               />
             )
             }
+
             {/* Note */}
             <Input
               placeholder={t([ 'newReservation', 'notePlaceholder' ])}

@@ -83,6 +83,8 @@ export const GET_GARAGE_DETAILS = `query ($id: Id!, $begins_at: Datetime!, $ends
     flexiplace
     is_public
     has_payment_gate
+    longterm_generating
+    shortterm_generating
     account {
       raiffeisenbank_is_active
       csob_is_active
