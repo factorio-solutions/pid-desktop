@@ -3,8 +3,9 @@ import React  from 'react'
 import styles from './Tooltip.scss'
 
 
-export default function Tooltip({ content, visible, mouseX, mouseY }) {
-  const style = {
+export default function Tooltip({ content, visible, mouseX, mouseY, style }) {
+  const newStyles = {
+    ...style,
     left: mouseX + 5,
     top:  mouseY
   }
@@ -17,7 +18,7 @@ export default function Tooltip({ content, visible, mouseX, mouseY }) {
         ${window.innerHeight / 4 > mouseY && styles.originOnTop}
         ${(window.innerWidth / 3) * 2 < mouseX && styles.originOnLeft}
       `}
-      style={style}
+      style={newStyles}
     >{ content }</div> :
     null
 }

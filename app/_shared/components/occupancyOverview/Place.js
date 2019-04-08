@@ -2,12 +2,14 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import Reservation from './Reservation'
+import Tooltip from '../tooltip/Tooltip'
 
 import { DAY, WEEK_DAYS, MONTH_DAYS } from './OccupancyOverview'
 import { getTextWidth14px }           from '../../helpers/estimateTextWidth'
 import {
   firstDateIsBefore, diff, firstDateIsBeforeOrEqual, firstDateIsAfter, dateIsInRange, dateAdd
 } from '../../helpers/dateHelper'
+import { MOMENT_DATETIME_FORMAT } from '../../helpers/time'
 
 import styles from './OccupancyOverview.scss'
 
@@ -32,7 +34,10 @@ export default class Place extends Component {
       rendered:  false,
       mouseDown: false,
       left:      0,
-      width:     0
+      width:     0,
+      showTime:  false,
+      mouseX:    0,
+      mouseY:    0
     }
   }
 
@@ -100,10 +105,37 @@ export default class Place extends Component {
     this.setState(state => ({ ...state, mouseDown: false }))
   }
 
+  onTdMouseMove = e => this.setState({
+    ...this.state,
+    showTime: true,
+    time:     this.calculateTime(e.target, e.clientX).format(MOMENT_DATETIME_FORMAT),
+    mouseX:   e.clientX + 20,
+    mouseY:   e.clientY
+  })
+
+  onTdMouseLeave=() => this.setState(state => ({ state, showTime: false }))
+
+  onTdMouseEnter=() => this.setState(state => ({ state, showTime: true }))
+
   reservationsInRange = (from, to) => this.props.place.reservations
     .filter(reservation => from.isBefore(reservation.ends_at))
     .filter(reservation => to.isAfter(reservation.begins_at))
     .sort((a, b) => a.begins_at.diff(b.begins_at))
+
+  calculateTime = (target, position) => {
+    const td = target.parentElement.children[1]
+    const { from, duration } = this.props
+    const dur = (duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS)
+    const rowWidth = (
+      td.parentElement.getBoundingClientRect().width
+      - td.parentElement.children[0].getBoundingClientRect().width
+    )
+    const reservationStart = (
+      (position - td.getBoundingClientRect().left)
+      / (rowWidth / dur)
+    )
+    return from.clone().add(reservationStart * 24, 'hours')
+  }
 
   calculateReservationFromDiv = (left, width) => {
     if (!this.newReservationDiv) {
@@ -321,6 +353,9 @@ export default class Place extends Component {
     const {
       from, duration, place, now, isIe
     } = this.props
+    const {
+      showTime, time, mouseX, mouseY
+    } = this.state
     const fromDate = from.toDate()
     const date = dateAdd(
       fromDate,
@@ -367,6 +402,9 @@ export default class Place extends Component {
         key={`${place.floor}-${place.label}-${index}`}
         className={classes.filter(c => c).join(' ')}
         ref={td => { if (!index) this.td = td }}
+        onMouseMove={this.onTdMouseMove}
+        onMouseLeave={this.onTdMouseLeave}
+        onMouseEnter={this.onTdMouseEnter}
       >
         {!index && now > 0 && (
           <div
@@ -417,6 +455,15 @@ export default class Place extends Component {
             ref={div => { this.newReservationDiv = div }}
           />
         )}
+
+        <Tooltip
+          content={time}
+          mouseX={mouseX}
+          mouseY={mouseY}
+          visible={showTime}
+          height="50px"
+          style={{ zIndex: 10 }}
+        />
       </td>
     )
   }
