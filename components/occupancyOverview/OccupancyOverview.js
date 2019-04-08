@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import moment                          from 'moment'
+import React, { PureComponent } from 'react'
+import moment from 'moment'
 
 import CallToActionButton from '../buttons/CallToActionButton'
 import Loading            from '../loading/Loading'
 import Place              from './Place'
 
+import detectIE from '../../helpers/internetExplorer'
 import { t } from '../../modules/localization/localization'
 
 import styles from './OccupancyOverview.scss'
@@ -15,8 +16,11 @@ export const WEEK_DAYS = 7
 export const MONTH_DAYS = 30
 const WIDTH_OF_PLACE_CELL = 63 // px
 
+const MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND = 200
 
-export default class OccupancyOverview extends Component {
+const isIe = detectIE()
+
+export default class OccupancyOverview extends PureComponent {
   static propTypes = {
     places:             PropTypes.array.isRequired,
     from:               PropTypes.object,
@@ -26,7 +30,8 @@ export default class OccupancyOverview extends Component {
     showDetails:        PropTypes.bool,
     onReservationClick: PropTypes.func,
     currentUser:        PropTypes.object,
-    setNewReservation:  PropTypes.func
+    setNewReservation:  PropTypes.func,
+    reservationsCount:  PropTypes.number
   }
 
   constructor(props) {
@@ -48,22 +53,46 @@ export default class OccupancyOverview extends Component {
     this.forceUpdate()
   }
 
-  prepareDates = () => {
+  renderDates = () => {
     const { from, duration } = this.props
+    const dates = new Array(duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS)
+
+    for (let index = 0; index < dates.length; index += 1) {
+      const date = from.clone().add(index, 'days')
+      dates[index] = duration === 'month'
+        ? (
+          <td
+            key={`d-${index}`}
+            className={`${styles.center} ${styles.bold} ${styles.monthDate}`}
+            colSpan={2}
+          >
+            {date.format('DD.')}
+            <br />
+            {date.format('MM.')}
+          </td>
+        )
+        : (
+          <td
+            key={`d-${index}`}
+            className={`${styles.center} ${styles.bold} ${styles.weekDate}`}
+            colSpan={duration === 'day' ? 24 : 2}
+          >
+            {date.format('ddd')}
+            {duration !== 'day' && <br />}
+            {date.format('DD.MM.')}
+          </td>
+        )
+    }
+
     return (
       <tr className={duration !== 'day' && styles.bottomBorder}>
         <td className={styles.placePadding}>{t([ 'occupancy', 'places' ])}</td>
-        {Array(...{ length: duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS }).map((d, index) => {
-          const date = moment(from).add(index, 'days')
-          return duration === 'month' ?
-            <td key={`d-${index}`} className={`${styles.center} ${styles.bold} ${styles.monthDate}`} colSpan={2}> {date.format('DD.')} <br /> {date.format('MM.')} </td> :
-            <td key={`d-${index}`} className={`${styles.center} ${styles.bold} ${styles.weekDate}`} colSpan={duration === 'day' ? 24 : 2}>{date.locale(moment.locale()).format('ddd')} {duration !== 'day' && <br />} {date.format('DD.MM.')} </td>
-        })}
+        {dates}
       </tr>
     )
   }
 
-  prepareBody = () => {
+  renderBody = renderTextInReservation => {
     const {
       places, loading, resetClientClick, showDetails, duration, from, onReservationClick, currentUser, setNewReservation
     } = this.props
@@ -81,8 +110,15 @@ export default class OccupancyOverview extends Component {
       return (
         <tr>
           <td colSpan="100%" className={styles.center}>
-            <div> {t([ 'occupancy', 'noClientPlaces' ])} </div>
-            <div> <CallToActionButton onClick={resetClientClick} label={t([ 'occupancy', 'resetFilter' ])} /> </div>
+            <div>
+              {t([ 'occupancy', 'noClientPlaces' ])}
+            </div>
+            <div>
+              <CallToActionButton
+                onClick={resetClientClick}
+                label={t([ 'occupancy', 'resetFilter' ])}
+              />
+            </div>
           </td>
         </tr>
       )
@@ -113,22 +149,25 @@ export default class OccupancyOverview extends Component {
         onReservationClick={onReservationClick}
         currentUser={currentUser}
         setNewReservation={setNewReservation}
+        renderTextInReservation={renderTextInReservation}
+        isIe={isIe}
       />
     ))
   }
 
   render() {
     const {
-      duration
+      duration, reservationsCount
     } = this.props
+
+    console.log(reservationsCount)
 
     return (
       <div>
         <table className={`${styles.table} ${styles.fixedHeader}`}>
           <thead ref={thead => { this.thead = thead }}>
-            {this.prepareDates()}
-            {duration === 'day'
-            && (
+            {this.renderDates()}
+            {duration === 'day' && (
               <tr className={`${styles.center} ${styles.bottomBorder}`}>
                 <td />
                 <td colSpan="2" />
@@ -147,14 +186,13 @@ export default class OccupancyOverview extends Component {
                 <td colSpan="2">21:00</td>
                 <td colSpan="2" />
               </tr>
-            )
-            }
+            )}
           </thead>
         </table>
         <div className={styles.tableDiv} ref={o => { this.container = o }}>
           <table className={styles.table}>
             <tbody ref={tbody => { this.tbody = tbody }}>
-              {this.prepareBody()}
+              {this.renderBody(reservationsCount >= MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND)}
             </tbody>
           </table>
         </div>

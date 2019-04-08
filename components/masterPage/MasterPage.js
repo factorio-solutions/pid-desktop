@@ -119,8 +119,8 @@ class MasterPage extends Component {
                 />
 
                 <DropdownContent content={profileDropdown} style={styles.profileDropdown}>
-                  <div className={styles.profile} >
-                    <i className={'icon-profile'} aria-hidden="true" />
+                  <div className={styles.profile}>
+                    <i className="icon-profile" aria-hidden="true" />
                     <span className={styles.name}>{name}</span>
                   </div>
                 </DropdownContent>
@@ -144,13 +144,15 @@ class MasterPage extends Component {
           </div>
 
           <div className={`${styles.content} ${showSecondaryMenu && styles.shift}`}>
-            {showHints && hint && <div className={styles.hint}>
-              <div className={styles.hintCross} onClick={actions.changeHints}>
-                <i className="fa fa-times" aria-hidden="true" />
+            {showHints && hint && (
+              <div className={styles.hint}>
+                <div className={styles.hintCross} onClick={actions.changeHints}>
+                  <i className="fa fa-times" aria-hidden="true" />
+                </div>
+                <I />
+                <div dangerouslySetInnerHTML={{ __html: hint.hint }} />
               </div>
-              <I />
-              <div dangerouslySetInnerHTML={{ __html: hint.hint }} />
-            </div>}
+            )}
             <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${scrollbarVisible && styles.scrollbarVisible}`}>
               {children}
             </div>

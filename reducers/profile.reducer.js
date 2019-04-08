@@ -4,7 +4,8 @@ import {
   PROFILE_SET_CARS,
   PROFILE_TOGGLE_HIGHLIGHT,
   PROFILE_SET_GARAGES,
-  PROFILE_SET_CLIENTS
+  PROFILE_SET_CLIENTS,
+  PROFILE_SET_CALENDAR_HASH
 }  from '../actions/profile.actions'
 
 const defaultState = {
@@ -14,13 +15,13 @@ const defaultState = {
   cars:            [],
   highlight:       false,
   garages:         [],
-  clients:         []
+  clients:         [],
+  calendar_hash:   undefined
 }
 
 
 export default function profile(state = defaultState, action) {
   switch (action.type) {
-
     case PROFILE_EDIT_USER_SET_NAME:
       return {
         ...state,
@@ -55,6 +56,12 @@ export default function profile(state = defaultState, action) {
       return {
         ...state,
         clients: action.value
+      }
+
+    case PROFILE_SET_CALENDAR_HASH:
+      return {
+        ...state,
+        calendar_hash: action.value
       }
 
     default:
