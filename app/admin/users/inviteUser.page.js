@@ -332,6 +332,7 @@ class inviteUserPage extends Component {
                       state={state}
                       attribute="car_admin"
                       actions={actions}
+                      labelSection="carUsers"
                       label="admin"
                       highlight={highlightCarRoles}
                     />
