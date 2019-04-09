@@ -17,7 +17,7 @@
 .table {
   width:           100%;
   border-collapse: collapse;
-
+  table-layout: fixed;
   &.fixedHeader {
     @media (min-width: $collapseWidth) {
       width: calc(100% - 16px);
@@ -28,8 +28,6 @@
   }
 
   >tbody {
-    table-layout: fixed;
-
     >tr {
       background-color: $white;
 

@@ -9,16 +9,37 @@ import Place              from './Place'
 import detectIE from '../../helpers/internetExplorer'
 import { t } from '../../modules/localization/localization'
 
+import { getCellSelector } from './occupancyOverview.selector'
+
 import styles from './OccupancyOverview.scss'
 
-export const DAY = 1
-export const WEEK_DAYS = 7
-export const MONTH_DAYS = 30
-const WIDTH_OF_PLACE_CELL = 63 // px
+const DAY = 1
+const WEEK_DAYS = 7
+const MONTH_DAYS = 30
+
+const DAY_DURATION_CELLS_PER_DAY = 24
+const OTHER_DURATION_CELLS_PER_DAY = 2
+
+const MAX_POSITIVE_TABLE_MARGIN = 40 // px
+const MAX_POSSIBLE_TABLE_MARGIN = 59 // px
 
 const MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND = 200
-
 const isIe = detectIE()
+
+export const WIDTH_OF_PLACE_LABEL_CELL = 62 // px
+
+export const windowLength = duration => {
+  return duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS
+}
+
+export const cellsPerDay = duration => {
+  return duration === 'day' ? DAY_DURATION_CELLS_PER_DAY : OTHER_DURATION_CELLS_PER_DAY
+}
+
+export const cellDuration = duration => {
+  const hoursInDay = 24
+  return hoursInDay / cellsPerDay(duration)
+}
 
 export default class OccupancyOverview extends PureComponent {
   static propTypes = {
@@ -37,6 +58,8 @@ export default class OccupancyOverview extends PureComponent {
   constructor(props) {
     super(props)
     this.onWindowResize = this.onWindowResize.bind(this)
+    this.changeTableMargin = this.changeTableMargin.bind(this)
+    this.tableMargin = null
   }
 
   componentDidMount() {
@@ -44,13 +67,41 @@ export default class OccupancyOverview extends PureComponent {
     this.onWindowResize()
   }
 
+  componentWillUpdate(newProps) {
+    const { duration } = this.props
+    const { duration: newDuration } = newProps
+    console.log('newProps duration:', newProps.duration)
+    if (newDuration !== duration) {
+      this.changeTableMargin(newDuration)
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize, true)
   }
 
   onWindowResize() {
+    const { duration } = this.props
     this.container.style['max-height'] = (Math.max(document.documentElement.clientHeight, window.innerHeight || 780) - 230) + 'px'
+    this.changeTableMargin(duration)
     this.forceUpdate()
+  }
+
+  changeTableMargin(duration) {
+    if (this.table && this.tableDiv) {
+      const { width } = this.table.children[0].children[0].getBoundingClientRect()
+      let margin = this.tableMargin || 0
+      margin = (
+        (width - WIDTH_OF_PLACE_LABEL_CELL + margin)
+        % (windowLength(duration) * cellsPerDay(duration))
+      )
+      if (margin > MAX_POSITIVE_TABLE_MARGIN) {
+        margin -= MAX_POSSIBLE_TABLE_MARGIN
+      }
+      // HACK: I do not know why there has to be - 1.
+      this.tableMargin = margin - 1
+      this.tableDiv.style['margin-left'] = margin + 'px'
+    }
   }
 
   renderDates = () => {
@@ -75,7 +126,7 @@ export default class OccupancyOverview extends PureComponent {
           <td
             key={`d-${index}`}
             className={`${styles.center} ${styles.bold} ${styles.weekDate}`}
-            colSpan={duration === 'day' ? 24 : 2}
+            colSpan={cellsPerDay(duration)}
           >
             {date.format('ddd')}
             {duration !== 'day' && <br />}
@@ -135,7 +186,7 @@ export default class OccupancyOverview extends PureComponent {
     }
 
     const tBodyWidth = (this.tbody ? this.tbody.childNodes[0].getBoundingClientRect().width : 300)
-    const rowWidth = (tBodyWidth - WIDTH_OF_PLACE_CELL)
+    const rowWidth = (tBodyWidth - WIDTH_OF_PLACE_LABEL_CELL)
     const nowLinePosition = moment().diff(from, duration, true) * rowWidth
 
     return places.sort(sorter).map(place => (
@@ -151,6 +202,7 @@ export default class OccupancyOverview extends PureComponent {
         setNewReservation={setNewReservation}
         renderTextInReservation={renderTextInReservation}
         isIe={isIe}
+        cellSelector={getCellSelector()}
       />
     ))
   }
@@ -163,7 +215,9 @@ export default class OccupancyOverview extends PureComponent {
     console.log(reservationsCount)
 
     return (
-      <div>
+      <div
+        ref={ref => this.tableDiv = ref}
+      >
         <table className={`${styles.table} ${styles.fixedHeader}`}>
           <thead ref={thead => { this.thead = thead }}>
             {this.renderDates()}
@@ -190,7 +244,10 @@ export default class OccupancyOverview extends PureComponent {
           </thead>
         </table>
         <div className={styles.tableDiv} ref={o => { this.container = o }}>
-          <table className={styles.table}>
+          <table
+            className={styles.table}
+            ref={ref => this.table = ref}
+          >
             <tbody ref={tbody => { this.tbody = tbody }}>
               {this.renderBody(reservationsCount >= MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND)}
             </tbody>
