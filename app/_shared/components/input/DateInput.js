@@ -6,6 +6,8 @@ import PopupDatepicker from '../datepicker/PopupDatepicker'
 
 import defaultStyles from './Input.scss'
 
+const MAX_RANDOM_NUM = 10000
+
 export default class DateInput extends Component {
   static propTypes = {
     label:       PropTypes.string.isRequired, // is the placeholder
@@ -32,7 +34,11 @@ export default class DateInput extends Component {
 
   constructor(props) { // just to handle two way databinding
     super(props)
-    this.state = { message: props.value || '', focus: false }
+    this.state = {
+      message: props.value || '',
+      focus:   false,
+      inputId: `DateInput${(Math.random() * MAX_RANDOM_NUM) + 1}`
+    }
   }
 
   componentDidMount() {
@@ -96,11 +102,12 @@ export default class DateInput extends Component {
   }
 
   handleInputFocus = event => {
-    const { pickerOnFocus } = this.props
+    const { pickerOnFocus, editable } = this.props
+    const { focus } = this.state
 
     if (!pickerOnFocus) return
 
-    if (!this.state.focus) {
+    if (!focus && editable) {
       this.showDatepicker()
       event.target.select()
     }
@@ -130,81 +137,98 @@ export default class DateInput extends Component {
       pickerOnFocus
     } = this.props
 
+    const { focus, message, inputId } = this.state
+
     const styles = typeof style === 'object' ? style : defaultStyles
 
-    const messageIsValidDate = this.isValidDate(this.state.message)
+    const messageIsValidDate = this.isValidDate(message)
 
     const errorStyle = {
-      opacity: this.state.message === undefined
-               || this.state.message === ''
-               || messageIsValidDate
-        ? 0
-        : 1
+      opacity: (
+        message === undefined
+        || message === ''
+        || messageIsValidDate
+          ? 0
+          : 1
+      )
     }
+
+    const containerStyle = [
+      styles.customFormGroup,
+      styles.center,
+      style,
+      !editable && styles.dimmer
+    ]
+      .filter(s => s)
+      .join(' ')
 
     return (
       <div
-        className={`${styles.customFormGroup} ${styles.center} ${style} ${!editable && styles.dimmer}`}
+        className={containerStyle}
         ref={div => this.container = div}
       >
         <input
+          id={inputId}
           type="text"
-          value={this.state.message}
+          value={message}
           onChange={this.handleChange}
           placeholder={placeholder}
           onKeyPress={this.preventEnter}
           pattern="(\d{1,2}).(\d{1,2}).(\d{4})"
           onFocus={this.handleInputFocus}
           onBlur={this.handleBlur}
-          ref={ref => this.input = ref}
+          readOnly={!editable}
         />
         <span className={styles.bar} />
 
         <label
           className={styles.label}
+          htmlFor={inputId}
         >
           {label}
         </label>
 
         <label
           className={`${styles.customFormGroup}  ${styles.inlineMenu}`}
+          htmlFor={inputId}
         >
           {inlineMenu}
         </label>
 
         <label
           className={`${styles.customFormGroup}  ${styles.error}`}
+          htmlFor={inputId}
           style={errorStyle}
         >
           {error}
         </label>
-        {
-          !pickerOnFocus
-            && (
-            <label
-              className={`${styles.customFormGroup}  ${styles.callendar}`}
-              onClick={this.showDatepicker}
-            >
-              <i
-                className="fa fa-calendar"
-                aria-hidden="true"
-              />
-            </label>
-            )
-        }
-
-        <PopupDatepicker
-          showInf={showInf}
-          onSelect={this.handlePick}
-          date={messageIsValidDate
-            ? moment(this.state.message, 'DD.MM.YYYY').format('YYYY-MM-DD')
-            : undefined
-          }
-          show={this.state.focus}
-          flip={flip}
-          okClick={this.hideDatepicker}
-          gray={style === 'gray'}
-        />
+        {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
+        {!pickerOnFocus && (
+          <label
+            className={`${styles.customFormGroup}  ${styles.callendar}`}
+            onClick={this.showDatepicker}
+            htmlFor={inputId}
+          >
+            <i
+              className="fa fa-calendar"
+              aria-hidden="true"
+            />
+          </label>
+        )}
+        {focus && (
+          <PopupDatepicker
+            showInf={showInf}
+            onSelect={this.handlePick}
+            date={messageIsValidDate
+              ? moment(message, 'DD.MM.YYYY').format('YYYY-MM-DD')
+              : undefined
+            }
+            show
+            flip={flip}
+            okClick={this.hideDatepicker}
+            gray={style === 'gray'}
+          />
+        )}
       </div>
     )
   }
