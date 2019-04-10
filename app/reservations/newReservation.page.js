@@ -21,7 +21,8 @@ import {
   getFreePlaces,
   getSelectedClient,
   getOutOfTimeCredit,
-  getFloors
+  getFloors,
+  getIsEditable
 } from './selectors/newReservation.selectors'
 
 import {
@@ -46,13 +47,19 @@ class NewReservationPage extends Component {
     freePlaces:      PropTypes.array,
     selectedClient:  PropTypes.object,
     outOfTimeCredit: PropTypes.bool,
-    floors:          PropTypes.array
+    floors:          PropTypes.array,
+    isEditable:      PropTypes.bool
   }
 
   componentDidMount() {
     const { actions, params, state } = this.props
-    if (state.reservation && ((typeof params.id === 'undefined' && state.reservation.id)
-        || state.reservation.id !== params.id)) {
+    if (
+      state.reservation
+      && (
+        (typeof params.id === 'undefined' && state.reservation.id)
+        || state.reservation.id !== params.id
+      )
+    ) {
       actions.clearForm()
     }
     actions.setInitialStore(params.id)
@@ -102,13 +109,9 @@ class NewReservationPage extends Component {
       freePlaces,
       selectedClient,
       outOfTimeCredit,
-      floors
+      floors,
+      isEditable
     } = this.props
-
-    const ongoing = state.reservation && state.reservation.ongoing
-    const isSecretary = state.reservation
-    && state.reservation.client
-    && state.reservation.client.client_user.secretary
 
     const errorContent = (
       <div className={styles.floatCenter}>
@@ -156,12 +159,12 @@ class NewReservationPage extends Component {
                     <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
 
                       <GarageClientForm
-                        editable={!ongoing || isSecretary}
+                        editable={isEditable}
                       />
 
                       {state.garage && (
                         <div>
-                          <DateTimeForm editable={!ongoing || isSecretary} />
+                          <DateTimeForm editable={isEditable} />
 
                           <PlaceForm freePlaces={freePlaces} />
                         </div>
@@ -256,7 +259,8 @@ function mapStateToProps(state) {
     freePlaces:      getFreePlaces(state),
     selectedClient:  getSelectedClient(state),
     outOfTimeCredit: getOutOfTimeCredit(state),
-    floors:          getFloors(state)
+    floors:          getFloors(state),
+    isEditable:      getIsEditable(state)
   }
 }
 

@@ -8,6 +8,7 @@ import PopupTimepicker from '../timepicker/PopupTimepicker'
 
 import defaultStyles from './Input.scss'
 
+const MAX_RANDOM_NUM = 10000
 
 // this component has to know its state, so it can be passed to \the value attribute of input
 // this way scss can validate if input has something in it
@@ -36,7 +37,11 @@ export default class TimeInput extends Component {
 
   constructor(props) { // just to handle two way databinding
     super(props)
-    this.state = { message: props.value || '', focus: false }
+    this.state = {
+      message: props.value || '',
+      focus:   false,
+      inputId: `TimeInput${(Math.random() * MAX_RANDOM_NUM) + 1}`
+    }
   }
 
   componentDidMount() {
@@ -61,7 +66,8 @@ export default class TimeInput extends Component {
 
   handleChange = event => {
     const { editable, onChange } = this.props
-    editable && this.setState(state => ({
+    if (!editable) return
+    this.setState(state => ({
       ...state,
       message: event.target.value
     }))
@@ -105,12 +111,12 @@ export default class TimeInput extends Component {
   }
 
   handleFocus = event => {
-    const { pickerOnFocus } = this.props
+    const { pickerOnFocus, editable } = this.props
     const { focus } = this.state
 
     if (!pickerOnFocus) return
 
-    if (!focus) {
+    if (!focus && editable) {
       this.showDatepicker()
       event.target.select()
     }
@@ -129,17 +135,25 @@ export default class TimeInput extends Component {
     } = this.props
 
     const {
-      focus, message
+      focus, message, inputId
     } = this.state
 
     const styles = typeof style === 'object' ? style : defaultStyles
-    const inputId = 'TimeInput'
     const date = moment(this.timeToDate(message), [ 'YYYY-MM-DDTHH:mm', MOMENT_DATETIME_FORMAT ])
     const dateIsValid = date.isValid()
 
+    const containerStyle = [
+      styles.customFormGroup,
+      styles[align || 'center'],
+      style,
+      !editable && styles.dimmer
+    ]
+      .filter(s => s)
+      .join(' ')
+
     return (
       <div
-        className={`${styles.customFormGroup} ${styles[align || 'center']} ${style} ${!editable && styles.dimmer}`}
+        className={containerStyle}
         ref={div => this.container = div}
       >
         <input
@@ -151,6 +165,7 @@ export default class TimeInput extends Component {
           pattern="(\d{1,2}):(\d{2})"
           onFocus={this.handleFocus}
           id={inputId}
+          readOnly={!editable}
         />
         <span className={styles.bar} />
 
@@ -177,25 +192,24 @@ export default class TimeInput extends Component {
         </label>
 
         {/* eslint jsx-a11y/label-has-associated-control: ["error", { assert: "either" } ] */}
-        {
-          !pickerOnFocus
-          && (
-            <label
-              className={`${styles.customFormGroup}  ${styles.callendar}`}
-              onClick={editable && this.showDatepicker}
-              htmlFor={inputId}
-            >
-              <i className="fa fa-clock-o" aria-hidden="true" />
-            </label>
-          )
-        }
-        <PopupTimepicker
-          onSelect={this.handlePick}
-          time={dateIsValid ? date.format('HH:mm') : undefined}
-          show={focus}
-          okClick={this.hideDatepicker}
-          gray={style === 'gray'}
-        />
+        {!pickerOnFocus && (
+          <label
+            className={`${styles.customFormGroup}  ${styles.callendar}`}
+            onClick={editable && this.showDatepicker}
+            htmlFor={inputId}
+          >
+            <i className="fa fa-clock-o" aria-hidden="true" />
+          </label>
+        )}
+        {focus && (
+          <PopupTimepicker
+            onSelect={this.handlePick}
+            time={dateIsValid ? date.format('HH:mm') : undefined}
+            show
+            okClick={this.hideDatepicker}
+            gray={style === 'gray'}
+          />
+        )}
       </div>
     )
   }
