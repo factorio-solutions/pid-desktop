@@ -1456,10 +1456,10 @@
 			"licence_plate": "SPZ",
 			"reservation_information": "Informace o rezervaci",
 			"gps": "GPS:",
-			"user_name": "CS: railsEmails.new_reservation_mail.user_name",
-			"garage_name": "CS: railsEmails.new_reservation_mail.garage_name",
-			"client_name": "CS: railsEmails.new_reservation_mail.client_name",
-			"payed_by": "CS: railsEmails.new_reservation_mail.payed_by"
+			"user_name": "Jméno uživatele",
+			"garage_name": "Jméno garáže",
+			"client_name": "Jméno skupiny",
+			"payed_by": "Hrazeno"
 		},
 		"resend_invitation_mail": {
 			"hello": "Dobrý den,",

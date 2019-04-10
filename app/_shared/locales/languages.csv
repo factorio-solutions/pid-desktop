@@ -601,11 +601,11 @@ newReservation.validtyCheck,Performing validity check ...,Provádím kontrolu pl
 newReservation.tokenInvalid,This transaction is no longer valid and the reservation will be deleted.,Tato transakce již není platná a rezervace bude smazána,Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.,Diese Transaktion ist nicht mehr gültig. Die Buchung wird gelöscht.
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
 newReservation.newHost,Subject to authorization,Podléhající schvalování,Nowy regularny gość,Ohne Genehmigungsbefugnis
-newReservation.newHostTextBeginning,,Nový uživatel ,,
-newReservation.newHostText,"can request reservations, is member of the group account.","může žádat o rezervace, je členem účtu skupiny.",,"kann Buchungen anfragen, ist ein Mtiglied des Klientenkontos."
-newReservation.newInternal,New authorized user,Oprávněný rezervovat,,Neue/-r Nutzer/-in mit Genehmigungsbefugnis
-newReservation.newInternalTextBeginning,,Nový uživatel ,,
-newReservation.newInternalText,"can request reservations, is member of the group account.","si může vytvářet rezervace, je členem účtu skupiny.",,"kann Buchungen erstellen, ist ein Mitglied des Klientenkontos."
+newReservation.newHostTextBeginning,New,Nový uživatel ,,Neue/-r Nutzer/-in
+newReservation.newHostText,"can request reservations, is a member of the group account.","může žádat o rezervace, je členem účtu skupiny.",,"kann Buchungen anfragen, ist ein Mtiglied des Klientenkontos."
+newReservation.newInternal,Authorized,Oprávněný rezervovat,,Mit Genehmigungsbefugnis
+newReservation.newInternalTextBeginning,New,Nový uživatel ,,Neue/-r Nutzer/-in
+newReservation.newInternalText,"user can request reservations, is a member of the group account.","si může vytvářet rezervace, je členem účtu skupiny.",,"kann Buchungen erstellen, ist ein Mitglied des Klientenkontos."
 newReservation.hostsName,Name of subject to authorization,Jméno uživatele podléhajícího schvalování,Nazwisko regularnego gościa,Name des/der Nutzer/-in ohne Genehmigungsbefugnis
 newReservation.phone,Phone number,Telefonní číslo,,Telefonnummer
 newReservation.hostsPhone,Phone of subject to authorization,Telefon uživatele podléhajícího schvalování,Telefon regularnego gościa,Telefon des/der Nutzer/-in ohne Genehmigungsbefugnis
@@ -909,7 +909,7 @@ newGarage.placeholderFloorFrom,3,3,3,3
 newGarage.placeholderFloorTo,12,12,12,12
 newGarage.streetPlaceholder,Martense Avenue 526,Vinohradská 1,Martense Avenue 526,Neue Straße 123
 newGarage.cityPlaceholder,Pittsburgh,Praha,Česká republika,Dresden
-newGarage.postalCodePlaceholder,7666,12000,7666,1127
+newGarage.postalCodePlaceholder,7666,12000,7666,01127
 newGarage.statePlaceholder,Pennsylvania,-,New Jersey,Sachsen
 newGarage.countryPlaceholder,USA,Česká republika,USA,Deutschland
 newGarage.lat,Latitude,Zeměpisná šířka,Szerokość geograficzna,Geographische Breite
@@ -1699,10 +1699,10 @@ railsEmails.new_reservation_mail.spot,Spot number,Číslo místa,Numer miejsca:,
 railsEmails.new_reservation_mail.licence_plate,Licence plate,SPZ,Nr rejestracyjny,Kennzeichen
 railsEmails.new_reservation_mail.reservation_information,Reservation information,Informace o rezervaci,Informacje o rezerwacji,Information über die Buchung
 railsEmails.new_reservation_mail.gps,GPS:,GPS:,GPS:,GPS:
-railsEmails.new_reservation_mail.user_name,,,,
-railsEmails.new_reservation_mail.garage_name,,,,
-railsEmails.new_reservation_mail.client_name,,,,
-railsEmails.new_reservation_mail.payed_by,,,,
+railsEmails.new_reservation_mail.user_name,User name,Jméno uživatele,,Nutzername
+railsEmails.new_reservation_mail.garage_name,Garage name,Jméno garáže,,Garagenname
+railsEmails.new_reservation_mail.client_name,Group name,Jméno skupiny,,Gruppenname
+railsEmails.new_reservation_mail.payed_by,Payed by,Hrazeno,,Bezahlt
 railsEmails.resend_invitation_mail.hello,"Hello,","Dobrý den,","Dzień dobry,","Guten Tag,"
 railsEmails.resend_invitation_mail.invitation_reminder,This is an invitation reminder to Parkit.direct!,Toto je připomínkový email od Parkit.direct!,przypominamy Ci o zaproszeniu,dies ist eine Erinnerungs-Nachricht von Parkit.direct!
 railsEmails.resend_invitation_mail.remind_you,would like to remind you about your invitation to Parkit.direct.,by Vám rád připoměl pozvánku do Parkit.direct.,do Parkit.direct.,würde Sie gerne in die Parkit.direct App wiederholt einladen.
