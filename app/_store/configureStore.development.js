@@ -1,25 +1,26 @@
 import { createStore, applyMiddleware, compose }  from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { composeWithDevTools }                    from 'redux-devtools-extension'
 import thunk                                      from 'redux-thunk'
 import reduxReset                                 from 'redux-reset'
 import { createLogger }                           from 'redux-logger'
-import { hashHistory }                            from 'react-router'
-import { routerMiddleware, push }                 from 'react-router-redux'
+import { routerMiddleware }                       from 'connected-react-router'
+import { createBrowserHistory }                   from 'history'
 import { enableBatching }                         from 'redux-batched-actions'
 import errorSender  from '../_shared/errors/errorSenderMiddleware/actionErrorHeandlerMiddleware'
 
-import rootReducer from '../_app/app.reducer'
+import createRootReducer from '../_app/app.reducer'
 
-const actionCreators = {
-  push
-}
+// const actionCreators = {
+//   push
+// }
 
+export const history = createBrowserHistory()
 const logger = createLogger({
   level:     'info',
   collapsed: true
 })
 
-const router = routerMiddleware(hashHistory)
+const router = routerMiddleware(history)
 
 const enhancer = composeWithDevTools({
   trace: true
@@ -29,7 +30,7 @@ const enhancer = composeWithDevTools({
 )
 
 export default function configureStore(initialState) {
-  const store = createStore(enableBatching(rootReducer), initialState, enhancer)
+  const store = createStore(enableBatching(createRootReducer(history)), initialState, enhancer)
 
   if (window.devToolsExtension) {
     window.devToolsExtension.updateStore(store)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute, IndexRedirect } from 'react-router'
+import { Route, IndexRoute, Redirect } from 'react-router-dom'
 
 import * as localization from './_shared/modules/localization/localization'
 
@@ -247,7 +247,8 @@ export default function createRoutes(jwt) {
 
   return (
     <Route path="/" component={App}>
-      <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} />
+      {/* <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} /> */}
+      <Route exact path="/" component={() => <Redirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} />} />
       {AVAILABLE_LANGUAGES.map(lang => (
         <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
           {subRoutes}
