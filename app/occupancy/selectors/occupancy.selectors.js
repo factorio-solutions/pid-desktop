@@ -86,7 +86,7 @@ const getPlaceId = createSelector(
 )
 
 export const getSelectedPlace = createSelector(
-  (getPlaces, getPlaceId),
+  [ getPlaces, getPlaceId ],
   (places, placeId) => {
     if (places === defaultEmptyArray || !placeId) {
       return undefined

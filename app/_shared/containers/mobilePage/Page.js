@@ -59,6 +59,7 @@ class Page extends Component {
     actions.setShowBottomMenu(gray)
     console.log('init garages call')
     !hideHeader && !hideDropdown && await actions.initGarages()
+    actions.checkCurrentVersion()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
 
@@ -108,9 +109,9 @@ class Page extends Component {
       return
     }
 
-    actions.checkCurrentVersion()
     router.push(RESERVATIONS)
     await actions.initGarages()
+    actions.checkCurrentVersion()
     if (state.current_user && !state.current_user.secretary) {
       actions.setPersonal(true)
     } else {

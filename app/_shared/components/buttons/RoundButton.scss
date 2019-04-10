@@ -66,12 +66,19 @@ $small:       .6;
   // }
 }
 
-.disabled {
+%display-gray {
   background: $lightGray;
   color:      darken($lightGray, 10);
   cursor:     default;
 }
 
+.disabled {
+  @extend %display-gray;
+}
+
+.gray {
+  @extend %display-gray;
+}
 
 .big {
   width:     $big * $size-normal;

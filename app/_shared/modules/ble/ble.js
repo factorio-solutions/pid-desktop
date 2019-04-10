@@ -1,4 +1,5 @@
 const MAX_SCANNING_DURATION = 15000 // ms
+const MAX_CONNECTING_DURATION = 7000 // ms
 const MAX_SCANNING_BETWEEN_DEVICES_TIME = 5000 // ms
 const IS_ANDROID = window.cordova && cordova.platformId === 'android'
 let UNIT_PASSWORD = 'heslo'
@@ -9,8 +10,12 @@ const UNIT_CHARACTERISTICS_PASSWORD = '68F60100-FE41-D5EC-5BED-CD853CA1FDBC'
 const UNIT_CHARACTERISTICS_OPEN_GATE = '68F6000B-FE41-D5EC-5BED-CD853CA1FDBC'
 
 
+export function consoleLogWithTime(...arg) {
+  console.log((new Date()).toISOString(), ...arg)
+}
+
 function isInitialized() {
-  console.log('is initialized?')
+  consoleLogWithTime('is initialized?')
   return new Promise((resolve, reject) => {
     const callback = result => result.isInitialized ? resolve(result) : reject(result)
     bluetoothle.isInitialized(callback)
@@ -18,7 +23,7 @@ function isInitialized() {
 }
 
 function initializeBLE() {
-  console.log('Initializing bluetooth')
+  consoleLogWithTime('Initializing bluetooth')
   return new Promise((resolve, reject) => {
     const callback = result => result.status === 'enabled' ? resolve(result) : reject(result)
     const params = {
@@ -31,7 +36,7 @@ function initializeBLE() {
 }
 
 function isEnabled() {
-  console.log('is enabled?')
+  consoleLogWithTime('is enabled?')
   return new Promise((resolve, reject) => {
     const callback = result => result.isEnabled ? resolve() : reject()
     bluetoothle.isEnabled(callback)
@@ -39,12 +44,12 @@ function isEnabled() {
 }
 
 function enable() { // doesnt work well, resolve is not being called
-  console.log('enabling bluetooth')
+  consoleLogWithTime('enabling bluetooth')
   return new Promise((resolve, reject) => IS_ANDROID ? bluetoothle.enable(resolve, reject) : reject())
 }
 
 function hasPermission() {
-  console.log('checking has permission?')
+  consoleLogWithTime('checking has permission?')
   return new Promise((resolve, reject) => {
     if (IS_ANDROID) {
       const callback = result => result.hasPermission ? resolve(result) : reject(result)
@@ -56,19 +61,41 @@ function hasPermission() {
 }
 
 function requestPermission() {
-  console.log('requesting for permission')
+  consoleLogWithTime('requesting for permission')
   return new Promise((resolve, reject) => bluetoothle.requestPermission(resolve, reject))
 }
 
 export function isScanning() {
-  return new Promise((resolve, reject) => {
-    const callback = result => result.isScanning ? reject(result) : resolve(result)
+  return new Promise(resolve => {
+    const callback = result => resolve(result.isScanning)
     bluetoothle.isScanning(callback)
   })
 }
 
-function startScan(name) { // use when you know the device you are looking for
-  console.log('scanning for name', name)
+function isConnected(address) {
+  return new Promise((resolve, reject) => {
+    const callback = result => resolve(result.isConnected)
+    bluetoothle.isConnected(callback, reject, { address })
+  })
+}
+
+function isDiscovered(address) {
+  consoleLogWithTime('Checking if a device is discovered')
+  return new Promise((resolve, reject) => {
+    const callback = result => {
+      consoleLogWithTime('isDiscovered on success:', result)
+      resolve(result.isDiscovered)
+    }
+    const onError = error => {
+      consoleLogWithTime('isDiscovered on error:', error)
+      reject(error)
+    }
+    bluetoothle.isDiscovered(callback, onError, { address })
+  })
+}
+
+function startScan(name, stopScanning = true) { // use when you know the device you are looking for
+  consoleLogWithTime('scanning for name', name)
   return new Promise((resolve, reject) => {
     let scanTimeout
     let scanBetweenDevices
@@ -85,7 +112,7 @@ function startScan(name) { // use when you know the device you are looking for
           await stopScan()
         }
       } catch (e) {
-        console.log('Scanning cannot be stopped because:', IS_ANDROID ? e : e.message)
+        consoleLogWithTime('[onTimeout] Scanning cannot be stopped because:', IS_ANDROID ? e : e.message)
       }
       reject('Device was not found')
     }
@@ -103,15 +130,17 @@ function startScan(name) { // use when you know the device you are looking for
       if (device.name && (device.name === name || device.name === 'r' + name)) {
         scanTimeout && clearTimeout(scanTimeout)
         found = true
-        console.log('device found')
+        consoleLogWithTime('device found')
         try {
-          await stopScan()
+          if (stopScanning) {
+            await stopScan()
+          }
           setTimeout(() => resolve(device), 200)
         } catch (e) {
           reject(e)
         }
       } else {
-        console.log('found', device, 'but i am looking for', name)
+        consoleLogWithTime('found', device, 'but i am looking for', name)
         scanBetweenDevices = !found && !timeout && setTimeout(
           onBetweenDevicesTimeOut,
           MAX_SCANNING_BETWEEN_DEVICES_TIME
@@ -134,15 +163,15 @@ function startScan(name) { // use when you know the device you are looking for
 }
 
 export function stopScan() {
-  console.log('scan stop')
+  consoleLogWithTime('scan stop')
   return new Promise((resolve, reject) => bluetoothle.stopScan(resolve, reject))
 }
 
 function wasConnected(address) {
-  console.log('checking if was connected')
+  consoleLogWithTime('checking if was connected')
   return new Promise((resolve, reject) => {
     const callback = result => {
-      console.log(result.wasConnected ? 'resolveing' : 'rejecting')
+      consoleLogWithTime(result.wasConnected ? 'resolveing' : 'rejecting')
       result.wasConnected ? resolve(address) : reject(address)
     }
 
@@ -151,25 +180,41 @@ function wasConnected(address) {
 }
 
 function connectBLE(address) {
-  console.log('connecting to device:', address)
+  consoleLogWithTime('connecting to device:', address)
   return new Promise((resolve, reject) => {
-    bluetoothle.connect(resolve, reject, { address })
-    setTimeout(reject, MAX_SCANNING_DURATION)
+    let timeout
+
+    const onSuccess = result => {
+      timeout && clearTimeout(timeout)
+      resolve(result)
+    }
+
+    const onError = error => {
+      timeout && clearTimeout(timeout)
+      reject(error)
+    }
+
+    bluetoothle.connect(onSuccess, onError, { address })
+    // eslint-disable-next-line prefer-promise-reject-errors
+    timeout = setTimeout(() => reject({
+      error:   'connectionTimeout',
+      message: `Cannot connect to device in ${MAX_CONNECTING_DURATION}s`
+    }), MAX_CONNECTING_DURATION)
   })
 }
 
 function reconnect(address) {
-  console.log('recconecting to device: ', address)
+  consoleLogWithTime('reconnecting to device: ', address)
   return new Promise((resolve, reject) => bluetoothle.reconnect(resolve, reject, { address }))
 }
 
 function discover(address) {
-  console.log('discovering device', address)
+  consoleLogWithTime('discovering device', address)
   return new Promise((resolve, reject) => bluetoothle.discover(resolve, reject, { address }))
 }
 
 function writeBLE(address, service, characteristic, value) {
-  console.log('writing', value)
+  consoleLogWithTime('writing', value)
   return new Promise((resolve, reject) => bluetoothle.write(resolve, reject, {
     address, service, characteristic, value
   }))
@@ -184,27 +229,60 @@ function stringToEncodedString(input) {
 }
 
 function disconnect(address) {
-  console.log('disconnecting from', address)
+  consoleLogWithTime('disconnecting from', address)
   return new Promise((resolve, reject) => bluetoothle.disconnect(resolve, reject, { address }))
 }
 
 function closeBLE(address) {
-  console.log('closing connection')
+  consoleLogWithTime('closing connection')
   return new Promise((resolve, reject) => bluetoothle.close(resolve, reject, { address }))
 }
 
-function reconnectErrorHandler(address, error) {
-  console.log('reconnect error handling', address, error)
+function disconnectAndClose(address) {
+  consoleLogWithTime('Disconnect and close BT connection.')
   return new Promise((resolve, reject) => {
-    if (error.error === 'isNotDisconnected') {
-      closeBLE(address)
+    isConnected(address)
+      .then(connected => {
+        if (connected) {
+          return disconnect(address)
+        } else {
+          consoleLogWithTime('Device already disconnected.')
+          return Promise.resolve({ status: 'disconnected' })
+        }
+      })
+      .then(result => {
+        if (result.status === 'disconnected') {
+          return closeBLE(address)
+        } else {
+          return Promise.reject(new Error('Device cannot be disconnected'))
+        }
+      })
+      .then(resolve)
+      .catch(error => {
+        consoleLogWithTime('Cannot disconnected/close connection because of error:', error)
+        reject(error)
+      })
+  })
+}
+
+function reconnectErrorHandler(address, error) {
+  consoleLogWithTime('reconnect error handling', address, error, error && error.error)
+  return new Promise((resolve, reject) => {
+    if (error.error === 'isNotDisconnected' || error.error === 'isDisconnected') {
+      disconnectAndClose(address)
         .then(() => connectBLE(address))
         .catch(err => reconnectErrorHandler(address, err))
         .catch(reject)
-        .then(resolve)
-    } else if (error.error === 'neverConnected') {
+        .then(result => {
+          consoleLogWithTime('[reconnectErrorHandler#1] Connection finished:', result)
+          resolve(result)
+        })
+    } else if (error.error === 'neverConnected' || error.error === 'connectionTimeOut') {
       connectBLE(address)
-        .then(resolve)
+        .then(result => {
+          consoleLogWithTime('[reconnectErrorHandler#2] Connection finished:', result)
+          resolve(result)
+        })
         .catch(reject)
     } else {
       reject(error)
@@ -218,7 +296,7 @@ export function setPassword(pwd) {
 }
 
 export function initialize() {
-  console.log('STEP 1: INITIALIZE')
+  consoleLogWithTime('STEP 1: INITIALIZE')
   return new Promise((resolve, reject) => {
     isInitialized()
       .catch(initializeBLE)
@@ -231,43 +309,121 @@ export function initialize() {
   })
 }
 
-export function scan(name) {
-  console.log('STEP 2: SCAN')
+export function scan(name, stopScanning = true) {
+  consoleLogWithTime('STEP 2: SCAN')
   return new Promise((resolve, reject) => {
-    startScan(name)
+    startScan(name, stopScanning)
       .then(resolve)
       .catch(() => {
-        console.log(`${(new Date()).toISOString()} Rescanning`)
-        return startScan(name)
+        consoleLogWithTime(`${(new Date()).toISOString()} Rescanning`)
+        return startScan(name, stopScanning)
       })
       .catch(reject)
       .then(resolve)
   })
 }
 
-export function connect(address) {
-  console.log('STEP 3: CONNECT', address)
+export function connect(address, continuousScanning = false) {
+  consoleLogWithTime('STEP 3: CONNECT', address)
   return new Promise((resolve, reject) => {
+    const stopScanning = async () => {
+      try {
+        const scanning = await isScanning()
+        if (scanning) {
+          consoleLogWithTime('Stopping scanning')
+          return stopScan()
+        } else {
+          consoleLogWithTime('Device is not scanning.')
+          return Promise.resolve()
+        }
+      } catch (error) {
+        consoleLogWithTime('Cannot Stop scanning because of error:', error)
+        return Promise.resolve()
+      }
+    }
+
     isScanning()
-      .catch(() => { console.log('connect stop'); stopScan() })
-      .then(() => connectBLE(address))
-      .catch(() => reconnect(address))
+      .then(scanning => {
+        if (continuousScanning && scanning) {
+          consoleLogWithTime('Device will continue scanning through connecting.')
+          return Promise.resolve()
+        }
+        if (scanning) {
+          consoleLogWithTime('[Connect] Device still scanning.')
+          return stopScan()
+        } else {
+          return Promise.resolve()
+        }
+      })
+      .catch(error => {
+        consoleLogWithTime('Cannot Stop scanning because of error:', error)
+        return Promise.resolve()
+      })
+      .then(() => isConnected(address))
+      .catch(() => Promise.resolve(false))
+      .then(connected => {
+        if (connected) {
+          return Promise.resolve()
+        } else {
+          return connectBLE(address)
+        }
+      })
+      .catch(async () => {
+        // HACK: On some iPhones connectBLE timeout even if it was connected.
+        try {
+          if (await isConnected(address)) {
+            return Promise.resolve({
+              status:  'isConnected',
+              message: 'Connection ends with error but device is connected.'
+            })
+          }
+        } catch (e) {
+          consoleLogWithTime('Error when isConnected:', e && e.message)
+        }
+        return reconnect(address)
+      })
       .catch(error => reconnectErrorHandler(address, error))
-      .then(result => discover(result.address))
+      .then(result => {
+        consoleLogWithTime('[connect] Connection finished:', result, 'Result is undefined:', !result, 'Message:', result && result.message)
+        return isDiscovered(address)
+      })
+      .catch(error => {
+        consoleLogWithTime('Cannot discover device because of error:', error)
+        return Promise.resolve(false)
+      })
+      .then(async discovered => {
+        if (discovered) {
+          return Promise.resolve()
+        } else {
+          try {
+            return discover(address)
+          } catch (error) {
+            consoleLogWithTime('Discover error:', IS_ANDROID ? error : error && `${error.message}. Error name: ${error.error}`)
+            await reconnectErrorHandler(address, error)
+            return discover(address)
+          }
+        }
+      })
       .then(resolve)
       .catch(reject)
+      .finally(() => {
+        if (continuousScanning) {
+          consoleLogWithTime('Finally stop scanning.')
+          stopScanning()
+        }
+      })
   })
 }
 
 export function write(address, repeater, success) {
-  console.log('STEP 4: WRITE', address)
+  consoleLogWithTime('STEP 4: WRITE', address)
   return new Promise((resolve, reject) => {
     const delayedResolve = () => {
       success()
       setTimeout(resolve, repeater ? 5000 : 1000)
     }
 
-    console.log('writing password: ', UNIT_PASSWORD)
+    consoleLogWithTime('writing password: ', UNIT_PASSWORD)
     writeBLE(address, UNIT_SERVICE, UNIT_CHARACTERISTICS_PASSWORD, stringToEncodedString(UNIT_PASSWORD))
       .then(() => writeBLE(address, UNIT_SERVICE, UNIT_CHARACTERISTICS_OPEN_GATE, packetToEncodedString(UNIT_OPEN_SEQUENCE)))
       .then(delayedResolve)
@@ -276,17 +432,16 @@ export function write(address, repeater, success) {
 }
 
 export function close(address) {
-  console.log('STEP 5: DISCONNECT')
+  consoleLogWithTime('STEP 5: DISCONNECT')
   return new Promise((resolve, reject) => {
-    disconnect(address)
-      .then(result => closeBLE(result.address))
+    disconnectAndClose(address)
       .then(resolve)
       .catch(reject)
   })
 }
 
 export function scanUnlimited(onResult, error) { // use when you just want to see nearby devices
-  console.log('scanning unlimitedly')
+  consoleLogWithTime('scanning unlimitedly')
   const params = {
     allowDuplicates: true, // iOS
     scanMode:        bluetoothle.SCAN_MODE_LOW_POWER, // lowe power consumtion
