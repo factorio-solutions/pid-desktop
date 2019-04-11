@@ -734,7 +734,8 @@
 		"contractLegalDocuments": "You can find new privacy documents in profile section because group '%(arg1)s' makes contract with garage '%(arg2)s'.",
 		"reservationWasSuccessfullyPaid": "User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s",
 		"reservationWillExpireSoon": "Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s",
-		"expensesOn": "Price"
+		"expensesOn": "Price",
+		"recurringReservationDestroyed": "%(arg1)s reservations were removed (these are remaining reservations of original %(arg2)s recurring reservations)."
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
