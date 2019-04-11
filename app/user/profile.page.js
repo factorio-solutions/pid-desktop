@@ -23,6 +23,7 @@ import { setCustomModal }  from '../_shared/actions/pageBase.actions'
 import styles from './profile.page.scss'
 import Input from '../_shared/components/input/Input'
 
+const SHOW_CALENDAR_HASH = false
 
 class SettingsPage extends Component {
   static propTypes = {
@@ -187,7 +188,7 @@ class SettingsPage extends Component {
                 ))}
               </ul>
               <ul>
-                {
+                {SHOW_CALENDAR_HASH && (
                   state.calendar_hash
                     ? (
                       <Input
@@ -200,7 +201,7 @@ class SettingsPage extends Component {
                         onClick={actions.generateCalendarHash}
                       />
                     )
-                }
+                )}
               </ul>
             </div>
           </div>
