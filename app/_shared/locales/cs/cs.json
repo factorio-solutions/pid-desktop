@@ -718,7 +718,7 @@
 		"NotificationDeclined": "odmítnuto dne",
 		"current": "aktuální",
 		"sais": "vzkazuje",
-		"accpetReservationNotification": "Uživatel podléhající schvalování %(arg2)s by chtěl vytvořtit rezervaci na náklady skupiny %(arg1).",
+		"accpetReservationNotification": "Uživatel podléhající schvalování %(arg2)s by chtěl vytvořtit rezervaci na náklady skupiny %(arg1)s.",
 		"invoiceReminder": "Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.",
 		"reservationAccepted": "Vaše rezervace na \"%(arg1)s místo byla akceptována.",
 		"reservationDeclined": "Vaše rezervace na \"%(arg1)s místo byla zrušena.",
