@@ -8,7 +8,10 @@ import Tooltip from '../tooltip/Tooltip'
 
 import { dateAdd } from '../../helpers/dateHelper'
 
-import { MOMENT_DATETIME_FORMAT } from '../../helpers/time'
+import {
+  floorTime,
+  MOMENT_DATETIME_FORMAT
+} from '../../helpers/time'
 
 export default class Place extends Component {
   static propTypes = {
@@ -48,7 +51,7 @@ export default class Place extends Component {
   }
 
   formatTimeInTimeTooltip = date => {
-    let minutes = date.getMinutes()
+    let minutes = Math.floor(date.getMinutes() / 15) * 15
     let hours = date.getHours()
     let day = date.getDate()
     let month = date.getMonth() + 1
@@ -91,7 +94,7 @@ export default class Place extends Component {
     showTime: true,
     time:     (
       this.state.mouseDown
-        ? this.calculateReservationFromDiv().endsAt.format(MOMENT_DATETIME_FORMAT)
+        ? floorTime(this.calculateReservationFromDiv().endsAt).format(MOMENT_DATETIME_FORMAT)
         : this.formatTimeInTimeTooltip(this.calculateTime(e.target, e.clientX))
     ),
     mouseX: e.clientX + 20,
