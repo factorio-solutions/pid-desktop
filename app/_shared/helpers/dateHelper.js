@@ -110,8 +110,15 @@ export function diff(dateA, dateB, unit = 'milliseconds', float = false) {
   return difference
 }
 
+export function floorTime(date) {
+  const minutes = Math.floor(date.getMinutes() / 15) * 15
+
+  date.setMinutes(minutes)
+  return date
+}
+
 export function formatDateToDateTimeString(date) {
-  let minutes = Math.floor(date.getMinutes() / 15) * 15
+  let minutes = date.getMinutes()
   let hours = date.getHours()
   let day = date.getDate()
   let month = date.getMonth() + 1

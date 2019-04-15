@@ -6,9 +6,9 @@ import { windowLength } from './OccupancyOverview'
 import styles from './OccupancyOverview.scss'
 import Tooltip from '../tooltip/Tooltip'
 
-import { dateAdd, formatDateToDateTimeString } from '../../helpers/dateHelper'
+import { dateAdd, formatDateToDateTimeString, floorTime as floorTimeDate } from '../../helpers/dateHelper'
 
-import { MOMENT_DATETIME_FORMAT } from '../../helpers/time'
+import { MOMENT_DATETIME_FORMAT, floorTime as floorTimeMoment } from '../../helpers/time'
 
 export default class Place extends Component {
   static propTypes = {
@@ -67,8 +67,8 @@ export default class Place extends Component {
     showTime: true,
     time:     (
       this.state.mouseDown
-        ? floorTime(this.calculateReservationFromDiv().endsAt).format(MOMENT_DATETIME_FORMAT)
-        : formatDateToDateTimeString(this.calculateTime(e.target, e.clientX))
+        ? floorTimeMoment(this.calculateReservationFromDiv().endsAt).format(MOMENT_DATETIME_FORMAT)
+        : formatDateToDateTimeString(floorTimeDate(this.calculateTime(e.target, e.clientX)))
     ),
     mouseX: e.clientX + 20,
     mouseY: e.clientY
