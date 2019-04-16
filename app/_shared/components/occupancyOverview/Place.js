@@ -6,12 +6,9 @@ import { windowLength } from './OccupancyOverview'
 import styles from './OccupancyOverview.scss'
 import Tooltip from '../tooltip/Tooltip'
 
-import { dateAdd } from '../../helpers/dateHelper'
+import { dateAdd, formatDateToDateTimeString, floorTime as floorTimeDate } from '../../helpers/dateHelper'
 
-import {
-  floorTime,
-  MOMENT_DATETIME_FORMAT
-} from '../../helpers/time'
+import { MOMENT_DATETIME_FORMAT, floorTime as floorTimeMoment } from '../../helpers/time'
 
 export default class Place extends Component {
   static propTypes = {
@@ -50,30 +47,6 @@ export default class Place extends Component {
     }))
   }
 
-  formatTimeInTimeTooltip = date => {
-    let minutes = Math.floor(date.getMinutes() / 15) * 15
-    let hours = date.getHours()
-    let day = date.getDate()
-    let month = date.getMonth() + 1
-    const baseYear = 1900
-    const year = date.getYear() + baseYear
-
-    if (minutes < 10) {
-      minutes = '0' + minutes
-    }
-    if (hours < 10) {
-      hours = '0' + hours
-    }
-    if (day < 10) {
-      day = '0' + day
-    }
-    if (month < 10) {
-      month = '0' + month
-    }
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`
-  }
-
   calculateTime = (target, position) => {
     const td = target.parentElement.children[1]
     const { from, duration } = this.props
@@ -94,8 +67,8 @@ export default class Place extends Component {
     showTime: true,
     time:     (
       this.state.mouseDown
-        ? floorTime(this.calculateReservationFromDiv().endsAt).format(MOMENT_DATETIME_FORMAT)
-        : this.formatTimeInTimeTooltip(this.calculateTime(e.target, e.clientX))
+        ? floorTimeMoment(this.calculateReservationFromDiv().endsAt).format(MOMENT_DATETIME_FORMAT)
+        : formatDateToDateTimeString(floorTimeDate(this.calculateTime(e.target, e.clientX)))
     ),
     mouseX: e.clientX + 20,
     mouseY: e.clientY

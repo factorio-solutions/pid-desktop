@@ -5,6 +5,8 @@ import moment from 'moment'
 
 import Tooltip from '../tooltip/Tooltip'
 
+import { formatDateToDateTimeString } from '../../helpers/dateHelper'
+
 import { t } from '../../modules/localization/localization'
 
 import styles from './OccupancyOverview.scss'
@@ -80,9 +82,9 @@ const ReservationContent = ({
               {t([ 'occupancy', 'period' ])}
             </td>
             <td>
-              {moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')}
+              {formatDateToDateTimeString(reservation.begins_at)}
               {' - '}
-              {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}
+              {formatDateToDateTimeString(reservation.ends_at)}
             </td>
           </tr>
           <tr>
@@ -109,9 +111,9 @@ const ReservationContent = ({
               {t([ 'occupancy', 'period' ])}
             </td>
             <td>
-              {reservation.begins_at.format('DD.MM.YYYY HH:mm')}
+              {formatDateToDateTimeString(reservation.begins_at)}
               {' - '}
-              {reservation.ends_at.format('DD.MM.YYYY HH:mm')}
+              {formatDateToDateTimeString(reservation.ends_at)}
             </td>
           </tr>
         </tbody>
