@@ -55,7 +55,7 @@ module.exports = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name:     'shared',
-      filename: 'shared.js'
+      filename: '[name].[hash].js'
     }),
     new webpack.SourceMapDevToolPlugin({
       module:                 true,
