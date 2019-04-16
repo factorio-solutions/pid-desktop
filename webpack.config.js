@@ -49,7 +49,10 @@ module.exports = {
         API_ENTRYPOINT: JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
     }),
-    new ExtractTextPlugin('styles.css'),
+    // new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin({
+      filename: '[name].[contenthash].css'
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name:     'shared',
       filename: 'shared.js'
@@ -60,7 +63,6 @@ module.exports = {
       moduleFilenameTemplate: info => { return `${info.resourcePath}?${info.loaders}` }
     }),
     new HtmlWebpackPlugin({
-      title:    'Caching',
       template: 'index.html'
     })
   ],
