@@ -29,9 +29,16 @@ const ButtonsTableRow = ({ button, onClick }) => {
           onMouseDown={() => onClick(button.id, button.rights)}
         />
       </td>
-      <td>{
-        [ label, ' ', t([ 'newReservation', `${typeOfUser}Text` ]) ]
-      }</td>
+      <td>
+        {
+        [ t([ 'newReservation', `${typeOfUser}TextBeginning` ]),
+          ' ',
+          label,
+          ' ',
+          t([ 'newReservation', `${typeOfUser}Text` ])
+        ]
+      }
+      </td>
     </tr>
   )
 }

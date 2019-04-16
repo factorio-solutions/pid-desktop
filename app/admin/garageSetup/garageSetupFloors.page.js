@@ -105,7 +105,7 @@ class GarageSetupFloorsPage extends Component {
               value={floor.from}
               name={`floor${index}[from]`}
               placeholder={t([ 'newGarage', 'placeholderFloorFrom' ])}
-              type="tel"
+              type="number"
               highlight={state.highlight}
               readOnly={readOnly}
             />

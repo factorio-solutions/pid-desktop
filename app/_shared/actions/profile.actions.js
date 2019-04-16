@@ -1,7 +1,12 @@
-import request  from '../helpers/request'
+import { batchActions } from 'redux-batched-actions'
+
+import request from '../helpers/request'
+import requestPromise from '../helpers/requestPromise'
 
 import { UPDATE_CURRENT_USER } from '../queries/pageBase.queries.js'
-import { GET_CURRENT_USER, GET_CARS, DESTROY_CAR } from '../queries/profile.queries'
+import {
+  GET_CURRENT_USER, GET_CARS, DESTROY_CAR, GENERATE_CALENDAR_HASH
+} from '../queries/profile.queries'
 import { setCustomModal, fetchCurrentUser } from './pageBase.actions'
 import { resetPassword }  from './resetPassword.actions'
 import actionFactory      from '../helpers/actionFactory'
@@ -13,6 +18,7 @@ export const PROFILE_SET_CARS = 'PROFILE_SET_CARS'
 export const PROFILE_TOGGLE_HIGHLIGHT = 'PROFILE_TOGGLE_HIGHLIGHT'
 export const PROFILE_SET_GARAGES = 'PROFILE_SET_GARAGES'
 export const PROFILE_SET_CLIENTS = 'PROFILE_SET_CLIENTS'
+export const PROFILE_SET_CALENDAR_HASH = 'PROFILE_SET_CALENDAR_HASH'
 
 const patternInputActionFactory = type => (value, valid) => ({ type, value: { value, valid } })
 
@@ -23,6 +29,7 @@ export const setCars = actionFactory(PROFILE_SET_CARS)
 export const setGarages = actionFactory(PROFILE_SET_GARAGES)
 export const setClients = actionFactory(PROFILE_SET_CLIENTS)
 export const toggleHighlight = actionFactory(PROFILE_TOGGLE_HIGHLIGHT)
+const setCalendarHash = actionFactory(PROFILE_SET_CALENDAR_HASH)
 
 function formatCars(userCars) {
   return userCars.map(userCar => ({ ...userCar.car, admin: userCar.admin }))
@@ -55,11 +62,14 @@ export function initCars(id) {
 export function initUser() {
   return dispatch => {
     const onSuccess = response => {
-      dispatch(setCars(formatCars(response.data.current_user.user_cars)))
-      dispatch(setName(response.data.current_user.full_name, true))
-      dispatch(setPhone(response.data.current_user.phone, true))
-      dispatch(setGarages(fromatGarages(response.data.current_user.user_garages)))
-      dispatch(setClients(formatClients(response.data.current_user.client_users)))
+      dispatch(batchActions([
+        setCars(formatCars(response.data.current_user.user_cars)),
+        setName(response.data.current_user.full_name, true),
+        setPhone(response.data.current_user.phone, true),
+        setGarages(fromatGarages(response.data.current_user.user_garages)),
+        setClients(formatClients(response.data.current_user.client_users)),
+        setCalendarHash(response.data.current_user.calendar_hash)
+      ], 'PROFILE_INIT_USER'))
     }
 
     request(onSuccess, GET_CURRENT_USER)
@@ -75,13 +85,13 @@ export function submitUser() {
 
     request(onSuccess,
       UPDATE_CURRENT_USER,
-      { id:   base.current_user.id,
+      {
+        id:   base.current_user.id,
         user: {
           full_name: state.name.value,
           phone:     state.phone.value.replace(/\s/g, '')
         }
-      }
-    )
+      })
   }
 }
 
@@ -92,12 +102,12 @@ export function toggleShowPublicGarages() {
 
     request(onSuccess,
       UPDATE_CURRENT_USER,
-      { id:   currentUser.id,
+      {
+        id:   currentUser.id,
         user: {
           hide_public_garages: !currentUser.hide_public_garages
         }
-      }
-    )
+      })
   }
 }
 
@@ -123,5 +133,12 @@ export function changePassword(modal) {
   return (dispatch, getState) => {
     dispatch(resetPassword(getState().pageBase.current_user.email))
     dispatch(setCustomModal(modal))
+  }
+}
+
+export function generateCalendarHash() {
+  return async dispatch => {
+    const { calendar_hash: { calendar_hash: calendarHash } } = await requestPromise(GENERATE_CALENDAR_HASH)
+    dispatch(setCalendarHash(calendarHash))
   }
 }

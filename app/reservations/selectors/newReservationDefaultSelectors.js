@@ -14,5 +14,9 @@ export const getPlaceId = state => state.newReservation.place_id
 export const getReservation = state => state.newReservation.reservation
 export const getAvailableUsers = state => state.newReservation.availableUsers
 export const getCurrentUser = state => state.pageBase.current_user
+export const getReservationClient = state => {
+  const reservation = getReservation(state)
+  return reservation && reservation.client
+}
 
 export const getDownloadUserAction = (_, props) => props.actions ? props.actions.downloadUser : undefined

@@ -11,7 +11,6 @@ import {
   MOBILE_ACCESS_LOG_ACCESS
 } from '../queries/mobile.reservations.queries'
 
-
 export const RESERVATIONS_PER_PAGE = 10
 export const MOBILE_RESERVATIONS_SET_RESERVATIONS = 'MOBILE_RESERVATIONS_SET_RESERVATIONS'
 export const MOBILE_RESERVATIONS_SET_BLE_DEVICES = 'MOBILE_RESERVATIONS_SET_BLE_DEVICES'
@@ -163,10 +162,9 @@ export function openGarageViaPhone(reservationId, gateId) {
 function logErrorFactory(reservationId, gateId) {
   return dispatch => {
     return result => {
-      console.log('error occured:', result, reservationId, gateId)
+      const message = result && result.message
+      ble.consoleLogWithTime('Error occurred:', message || result, reservationId, gateId)
       if (reservationId !== undefined && gateId !== undefined) {
-        const message = result && result.message
-
         dispatch(setOpened(false, message || result, reservationId, gateId))
       }
     }
@@ -186,14 +184,14 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
       let isRepeater = device && device.name[0] === 'r'
 
       const onDeviceFound = dev => {
-        console.log('Scan successful, found device:', dev)
+        ble.consoleLogWithTime('Scan successful, found device:', dev)
         device = dev
         isRepeater = dev.name[0] === 'r'
-        return ble.connect(device.address)
+        return ble.connect(device.address, true)
       }
 
       const onOpen = () => {
-        console.log('Opening successful')
+        ble.consoleLogWithTime('Opening successful')
         dispatch(setOpened(true, undefined, reservationId, gateId))
       }
 
@@ -202,12 +200,12 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
       let connectionAction
 
       if (device) {
-        connectionAction = ble.connect(device.address)
+        connectionAction = ble.connect(device.address, true)
       } else {
         connectionAction = ble
           .initialize()
           .catch(() => logError('Bluetooth not enabled'))
-          .then(() => ble.scan(name))
+          .then(() => ble.scan(name, false))
           .then(onDeviceFound)
       }
 
@@ -218,11 +216,18 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
           logError(error)
           if (device) {
             ble.close(device.address)
-              .catch(e => console.log('Disconnecting cannot be performed:', IS_ANDROID ? e : e.message))
+              .catch(e => ble.consoleLogWithTime('Disconnecting cannot be performed:', e))
           } else {
             ble.isScanning()
-              .catch(() => { console.log('Open gate catch. Error:', error); ble.stopScan() })
-              .catch(e => console.log('Scanning cannot be stopped because:', IS_ANDROID ? e : e.message))
+              .then(scanning => {
+                if (scanning) {
+                  ble.consoleLogWithTime('Open gate catch. Error:', error)
+                  return ble.stopScan()
+                } else {
+                  return Promise.resolve()
+                }
+              })
+              .catch(e => ble.consoleLogWithTime('Scanning cannot be stopped because:', e))
           }
         })
     } else {
@@ -234,7 +239,7 @@ export function openGarageViaBluetooth(name, pwd, reservationId, gateId) {
 export function openGarage(reservation, gateId) {
   return async (dispatch, getState) => {
     const gate = reservation.place.gates.findById(gateId)
-    console.log('opening gate')
+    ble.consoleLogWithTime('opening gate')
     // dispatch(stopScanning()) // stop previous scanning
     if (gate.phone.match(/[A-Z]/i)) {
       await createGateAccessLog(reservation.id, gateId, getState().mobileHeader.current_user)

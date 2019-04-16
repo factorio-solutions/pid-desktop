@@ -7,6 +7,7 @@ export const GET_CURRENT_USER = `query {
     phone
     language
     created_at
+    calendar_hash
     user_cars{
       admin
       car {
@@ -72,6 +73,13 @@ export const GET_CARS = `query {
 export const DESTROY_CAR = `mutation destroyCar($id: Id!) {
   destroy_car(id: $id) {
     id
+  }
+}
+`
+
+export const GENERATE_CALENDAR_HASH = `query {
+  calendar_hash {
+    calendar_hash
   }
 }
 `

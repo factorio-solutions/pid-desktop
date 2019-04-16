@@ -5,6 +5,8 @@ import moment from 'moment'
 
 import Tooltip from '../tooltip/Tooltip'
 
+import { formatDateToDateTimeString } from '../../helpers/dateHelper'
+
 import { t } from '../../modules/localization/localization'
 
 import styles from './OccupancyOverview.scss'
@@ -15,6 +17,116 @@ const INIT_STATE = {
   mouseY:  0
 }
 
+const ReservationContent = ({
+  showDetails,
+  clientUser,
+  currentUser,
+  reservation
+}) => {
+  return (
+    showDetails
+    || (clientUser && (clientUser.admin || clientUser.secretary))
+    || (currentUser && currentUser.id === reservation.user.id)
+  )
+    ? (
+      <table className={styles.tooltipTable}>
+        <tbody>
+          {!reservation.approved && (
+            <tr>
+              <td colSpan={2} className={styles.notApprovedLabel}>
+                {t([ 'occupancy', 'reservationNotApproved' ])}
+              </td>
+            </tr>
+          )}
+          <tr>
+            <td>
+              {t([ 'occupancy', 'reservationsId' ])}
+            </td>
+            <td>
+              {reservation.id}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t([ 'occupancy', 'driver' ])}
+            </td>
+            <td>
+              {reservation.user && reservation.user.full_name}
+            </td>
+          </tr>
+          {reservation.client && (
+            <tr>
+              <td>
+                {t([ 'occupancy', 'client' ])}
+              </td>
+              <td>
+                {reservation.client.name}
+              </td>
+            </tr>
+          )}
+          <tr>
+            <td>{t([ 'occupancy', 'type' ])}</td>
+            <td>
+              {reservation.reservation_case === 'guest'
+                ? t([ 'reservations', 'host' ])
+                : reservation.reservation_case === 'internal'
+                  ? t([ 'reservations', 'internal' ])
+                  : reservation.reservation_case === 'mr_parkit'
+                    ? t([ 'reservations', 'mrParkit' ])
+                    : t([ 'reservations', 'visitor' ])
+              }
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t([ 'occupancy', 'period' ])}
+            </td>
+            <td>
+              {formatDateToDateTimeString(reservation.begins_at)}
+              {' - '}
+              {formatDateToDateTimeString(reservation.ends_at)}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t([ 'occupancy', 'licencePlate' ])}
+            </td>
+            <td>
+              {reservation.car && reservation.car.licence_plate}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )
+    : (
+      <table className={styles.tooltipTable}>
+        <tbody>
+          <tr>
+            <td colSpan={2} className={styles.notApprovedLabel}>
+              {t([ 'occupancy', 'detailsInaccessible' ])}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {t([ 'occupancy', 'period' ])}
+            </td>
+            <td>
+              {formatDateToDateTimeString(reservation.begins_at)}
+              {' - '}
+              {formatDateToDateTimeString(reservation.ends_at)}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )
+}
+
+ReservationContent.propTypes = {
+  showDetails: PropTypes.bool,
+  clientUser:  PropTypes.object,
+  currentUser: PropTypes.object,
+  reservation: PropTypes.object
+}
 
 class Reservation extends Component {
   static propTypes = {
@@ -65,100 +177,7 @@ class Reservation extends Component {
     }
 
     const clientUser = reservation.client ? reservation.client.client_user : {}
-    const content = (showDetails || (clientUser && clientUser.admin)
-    || (clientUser && clientUser.secretary)
-    || (currentUser && currentUser.id === reservation.user.id))
-      ? (
-        <table className={styles.tooltipTable}>
-          <tbody>
-            {!reservation.approved && (
-              <tr>
-                <td colSpan={2} className={styles.notApprovedLabel}>
-                  {t([ 'occupancy', 'reservationNotApproved' ])}
-                </td>
-              </tr>
-            )}
-            <tr>
-              <td>
-                {t([ 'occupancy', 'reservationsId' ])}
-              </td>
-              <td>
-                {reservation.id}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {t([ 'occupancy', 'driver' ])}
-              </td>
-              <td>
-                {reservation.user && reservation.user.full_name}
-              </td>
-            </tr>
-            {reservation.client && (
-              <tr>
-                <td>
-                  {t([ 'occupancy', 'client' ])}
-                </td>
-                <td>
-                  {reservation.client.name}
-                </td>
-              </tr>
-            )}
-            <tr>
-              <td>{t([ 'occupancy', 'type' ])}</td>
-              <td>
-                {reservation.reservation_case === 'guest'
-                  ? t([ 'reservations', 'host' ])
-                  : reservation.reservation_case === 'internal'
-                    ? t([ 'reservations', 'internal' ])
-                    : reservation.reservation_case === 'mr_parkit'
-                      ? t([ 'reservations', 'mrParkit' ])
-                      : t([ 'reservations', 'visitor' ])
-                }
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {t([ 'occupancy', 'period' ])}
-              </td>
-              <td>
-                {moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')}
-                {' - '}
-                {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {t([ 'occupancy', 'licencePlate' ])}
-              </td>
-              <td>
-                {reservation.car && reservation.car.licence_plate}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      )
-      : (
-        <table className={styles.tooltipTable}>
-          <tbody>
-            <tr>
-              <td colSpan={2} className={styles.notApprovedLabel}>
-                {t([ 'occupancy', 'detailsInaccessible' ])}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {t([ 'occupancy', 'period' ])}
-              </td>
-              <td>
-                {moment(reservation.begins_at).format('DD.MM.YYYY HH:mm')}
-                {' - '}
-                {moment(reservation.ends_at).format('DD.MM.YYYY HH:mm')}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      )
+
     const spanStyle = {}
     // IE do not handles relative units.
     if (isIe) {
@@ -184,7 +203,14 @@ class Reservation extends Component {
         </div>
         {visible && (
           <Tooltip
-            content={content}
+            content={(
+              <ReservationContent
+                showDetails={showDetails}
+                clientUser={clientUser}
+                currentUser={currentUser}
+                reservation={reservation}
+              />
+            )}
             mouseX={mouseX}
             mouseY={mouseY}
             visible
