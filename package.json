@@ -58,6 +58,7 @@
     "fingerprintjs2": "^1.5.1",
     "font-awesome": "^4.7.0",
     "google-maps-react": "^1.0.19",
+    "html-webpack-plugin": "^3.2.0",
     "iban": "0.0.10",
     "immutability-helper": "^2.2.3",
     "is-utf8": "^0.2.1",

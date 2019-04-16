@@ -33,3 +33,5 @@ public/shared.js.map
 public/shared.js
 public/bundle.js.map
 public/bundle.js
+public/main.*
+public/index.html
