@@ -223,7 +223,7 @@ pageBase.newReservationHint,"You can create a new reservation here. The reservat
 
 First you choose the recipient of the reservation - either yourself, another member of the group, or you can create a new authorized user or a subject to authorization.
 
-In the next step, you choose a garage, group, and a term.
+In the next step, you choose a garage, group, and a term. If you press the Show garage map button, you can choose your spot in the garage. At the top left corner there is a number in the circle showing the garage floor. Blue spots are available, yellow is your chosen spot.
 
 If the setting allows it, you can choose who will pay for the reservation (whether a parker or the selected group) and select or modify the text of the SMS reservation notification.
 
@@ -233,7 +233,7 @@ If its you who pay for the reservation, the payment will be in the next step. If
 
 Nejprve si vyberete parkujícícho - buď sebe, jiného člena skupiny, případně můžete založit nového uživatele oprávněného rezervovat či uživatele podléhajícího schvalování.
 
-V dalších krocích zvolíte garáž, skupinu a termín.
+V dalších krocích zvolíte garáž, skupinu a termín. Pokud stisknete tlačítko Zobrazit mapu garáže, můžete si vybrat volné místo. Vlevo nahoře je číslem v kruhu zobrazeno patro garáže. Modrá místa jsou dostupná, žluté jsou Vámi vybraná místa.
 
 Pokud to nastavení umožňuje, můžete zvolit i kdo bude rezervaci hradit (zda parkující, nebo skupina) a vybrat či upravit text SMS upozornění na rezervaci. 
 
@@ -243,7 +243,7 @@ Pokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rez
 
 Zuerst wählen Sie den Nutzer - entweder sich selbst oder ein anderes Mitglied der Gruppe oder Sie können eine/-n neue/-n Nutzer/-in mit oder ohne Genehmigungsbefugnis anlegen.
 
-Als Nächstes wählen Sie die Garage, die Gruppe und den Termin.
+Als Nächstes wählen Sie die Garage, die Gruppe und den Termin. Wenn Sie die Taste ""Garagenplan anzeigen"" drücken, sehen Sie links oben die Etagen und unten den Plan der Parkplätze. Gelbe Markierung bedeutet ""Gewählt"", blaue bedeutet ""Zu Auswahl"".
 
 Lässt es die Einstellung zu, können Sie wählen, wer die Buchung bezahlt (ob der Parkende oder die ausgewählte Gruppe) und dazu noch den Text der optionalen SMS-Buchungsbenachrichtigung auswählen oder ändern.
 
@@ -602,10 +602,10 @@ newReservation.tokenInvalid,This transaction is no longer valid and the reservat
 newReservation.creatingNewPayment,Creating payment ...,Vytvářím platbu ...,Wytwarzam płatność...,Zahlung wird erstellt …
 newReservation.newHost,Subject to authorization,Podléhající schvalování,Nowy regularny gość,Ohne Genehmigungsbefugnis
 newReservation.newHostTextBeginning,New,Nový uživatel ,,Neue/-r Nutzer/-in
-newReservation.newHostText,"can request reservations, is a member of the group account.","může žádat o rezervace, je členem účtu skupiny.",,"kann Buchungen anfragen, ist ein Mtiglied des Klientenkontos."
+newReservation.newHostText,"can request reservations, is a member of the group account.","může žádat o rezervace, je členem účtu skupiny.",,"kann Buchungen anfragen, ist ein Mtiglied des Gruppenkontos."
 newReservation.newInternal,Authorized,Oprávněný rezervovat,,Mit Genehmigungsbefugnis
 newReservation.newInternalTextBeginning,New,Nový uživatel ,,Neue/-r Nutzer/-in
-newReservation.newInternalText,"user can request reservations, is a member of the group account.","si může vytvářet rezervace, je členem účtu skupiny.",,"kann Buchungen erstellen, ist ein Mitglied des Klientenkontos."
+newReservation.newInternalText,"user can request reservations, is a member of the group account.","si může vytvářet rezervace, je členem účtu skupiny.",,"kann Buchungen erstellen, ist ein Mitglied des Gruppenkontos."
 newReservation.hostsName,Name of subject to authorization,Jméno uživatele podléhajícího schvalování,Nazwisko regularnego gościa,Name des/der Nutzer/-in ohne Genehmigungsbefugnis
 newReservation.phone,Phone number,Telefonní číslo,,Telefonnummer
 newReservation.hostsPhone,Phone of subject to authorization,Telefon uživatele podléhajícího schvalování,Telefon regularnego gościa,Telefon des/der Nutzer/-in ohne Genehmigungsbefugnis
@@ -646,12 +646,12 @@ newReservation.priceAndOthers,Payment and other options,Platba a další možnos
 newReservation.notePlaceholder,Public note,Veřejná poznámka k rezervaci,,Öffentliche Notiz
 newReservation.showMap,Show garage map,Zobrazit mapu garáže,,Garagenplan Ansicht
 newReservation.smsTextPlaceholder,SMS Message,SMS zpráva,,SMS Nachricht
-newReservation.namePlaceholder,Name,Jméno,,
-newReservation.emailPlaceholder,Email,Email,,
-newReservation.phonePlaceholder,Phone number,Telefonní číslo,,
+newReservation.namePlaceholder,John Doe,Jan Novák,,Wolfgang Müller
+newReservation.emailPlaceholder,john@gmail.com,jan@email.cz,,wolfgang@email.de
+newReservation.phonePlaceholder,+12025550195,+420123456789,,+4906105841953
 newReservation.garageDropdownLabel,Garage,Garáž,Garaż,Garage
 newReservation.clientDropdownLabel,Group,Skupina,Klient,Gruppe 
-newReservation.selectCarLabel,Select car,Vyberte auto,,
+newReservation.selectCarLabel,Select car,Vyberte auto,,Wählen Sie ein Fahrzeug
 newReservation.smsTemplateLabel,SMS template,SMS šablona,,
 newReservation.reservationOnPlace,Selected spot is already taken,Zvolené místo je již obsazeno,Wybrana lokalizacja jest już zajęta,Der ausgewählte Parkplatz ist bereits belegt
 clients.name,name,jméno,Nazwa klienta,Name
@@ -1061,7 +1061,7 @@ notifications.NotificationAccepted,accepted on,přijato dne,przyjęte dnia,Angen
 notifications.NotificationDeclined,declined on,odmítnuto dne,odrzucone dnia,Abgelehnt am
 notifications.current,current,aktuální,aktualnie,aktuell
 notifications.sais,says,vzkazuje,pokazuje,sagt
-notifications.accpetReservationNotification,Subject to authorization %(arg2)s would like to create a reservation on %(arg1)s expenses.,Uživatel podléhající schvalování %(arg2)s by chtěl vytvořtit rezervaci na náklady skupiny %(arg1).,Regularny gość %(arg2)s chce utworzyć rezerwację na koszt %(arg1)s.,Ein Nutzer ohne Genehmigungsbefugnis %(arg2)s möchte eine Buchung auf Kosten von %(arg1)s erstellen.
+notifications.accpetReservationNotification,Subject to authorization %(arg2)s would like to create a reservation on %(arg1)s expenses.,Uživatel podléhající schvalování %(arg2)s by chtěl vytvořtit rezervaci na náklady skupiny %(arg1)s.,Regularny gość %(arg2)s chce utworzyć rezerwację na koszt %(arg1)s.,Ein Nutzer ohne Genehmigungsbefugnis %(arg2)s möchte eine Buchung auf Kosten von %(arg1)s erstellen.
 notifications.invoiceReminder,Account %(arg1)s would like to inform you that you have unpaid invoices to settle.,"Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.","Konto %(arg1)s chce się poinformować, że masz niezapłacone faktury.","Konto %(arg1)s möchten Sie darüber informieren, dass einige Rechnungen noch nicht beglichen wurden."
 notifications.reservationAccepted,"Your reservation on ""%(arg1)s""s spot was accepted.","Vaše rezervace na ""%(arg1)s místo byla akceptována.","Twoja rezerwacja na miejsce ""%(arg1)s"" została zaakceptowana.",Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde angenommen.
 notifications.reservationDeclined,"Your reservation on ""%(arg1)s""s place was declined.","Vaše rezervace na ""%(arg1)s místo byla zrušena.","Twoja rezerwacja na miejsce ""%(arg1)s"" została odrzucona.",Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.
@@ -1071,14 +1071,15 @@ notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created a new reserv
 notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"%(arg1)s hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Buchungen""."
 notifications.reservationRemovedDueToUnpaid,Your reservation has been canceled because it hasn't been paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.","Da Ihre Buchung innerhalb 15 Minuten nicht bezahlt wurde, haben wir sie storniert."
 notifications.reservationContactPersonNotification,"Your reservation has not been approved yet, if it is urgent you can contact one of the contact persons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,"Ihre Buchung wurde nocht nicht bestätigt. Falls dringend, können Sie eine der dazu befugten Personen kontaktieren: %(arg1)s"
-notifications.clientLegalDocuments,You can find new privacy documents in profile section because Group: '%(arg1)s' is in garage: '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože skupina '%(arg1)s' působí v garáži '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert."
-notifications.garageLegalDocuments,You can find new privacy documents in profile section because you were add to '%(arg1)s' garage.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie zum Klienten '%(arg1)s' hinzugefügt wurden."
-notifications.reservationLegalDocuments,You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie eine neue Buchung in der Garage '%(arg1)s' haben."
-notifications.reservationUpdateLegalDocuments,You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil in Ihrer Buchung Nr. '%(arg1)s' eine Änderung der Garage auf '%(arg2)s' vorgenommen wurde."
-notifications.contractLegalDocuments,You can find new privacy documents in profile section because group '%(arg1)s' makes contract with garage '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože skupina '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. "
+notifications.clientLegalDocuments,You can find new privacy documents in profile section because Group: '%(arg1)s' is in garage: '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože skupina '%(arg1)s' působí v garáži '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert."
+notifications.garageLegalDocuments,You can find new privacy documents in profile section because you were add to '%(arg1)s' garage.,"Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie zum Klienten '%(arg1)s' hinzugefügt wurden."
+notifications.reservationLegalDocuments,You can find new privacy documents in profile section because you have reservatin in garage '%(arg1)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Sie eine neue Buchung in der Garage '%(arg1)s' haben."
+notifications.reservationUpdateLegalDocuments,You can find new privacy documents in profile section because in reservation with id '%(arg1)s' garage was changed to '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil in Ihrer Buchung Nr. '%(arg1)s' eine Änderung der Garage auf '%(arg2)s' vorgenommen wurde."
+notifications.contractLegalDocuments,You can find new privacy documents in profile section because group '%(arg1)s' makes contract with garage '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože skupina '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. "
 notifications.reservationWasSuccessfullyPaid,"User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s","Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",,"Das Mitglied %(arg1)s, welchem Sie eine Buchung erstellt haben, hat sie gerade bezahlt. Detail der Buchung: %(arg2)s"
 notifications.reservationWillExpireSoon,Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s,"Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s",,"Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s"
 notifications.expensesOn,Price,Cena,,Preis
+notifications.recurringReservationDestroyed,%(arg1)s reservations were removed (these are remaining reservations of original %(arg2)s recurring reservations).,%(arg1)s rezervace byly smazány (jsou to zbývající z původního počtu %(arg2)s rezervací).,,%(arg1)s Buchungen wurden storniert (es sind die restlichen von ursprünglich %(arg2)s Buchungen).
 profile.profileSettings,Profile settings,Nastavení profilu,Ustawienia profilu,Profileinstellungen
 profile.hints,I want to see hints:,Chci vidět nápovědu:,Chcę zobaczyć rady:,Ich möchte Tipps sehen
 profile.language,Choose language:,Vyberte jazyk:,Wybierz język:,Sprache auswählen:
@@ -1089,7 +1090,7 @@ profile.email,Email:,Email:,E-mail:,E-Mail-Adresse:
 profile.createdAt,Profile created:,Profil vytvořen:,Profil założony:,Profilerstellungsdatum:
 profile.cars,Cars,Auta,Auta,Fahrzeuge
 profile.showPublicGarages,Show me public garages,Zobrazovat veřejné garáže,Pokaż garaże oferowane publicznie,Öffentlich angebotene Garagen anzeigen
-profile.privacyDocuments,All garages privacy documents,Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže,,GDPR Dokumente
+profile.privacyDocuments,All garages privacy documents,Dokumenty týkající se pravidel ochrany osobních údajů pro všechny garáže,,GDPR Dokumente
 profile.myGarages,Garages you are in,Garáže jejichž jste členem,,Mitglied von Garagen
 profile.myClients,Groups you are in,Skupiny jejichž jste členem,,Mitglied von Klienten
 users.username,username,uživatelské jméno,Nazwa użytkownika,Nutzername
@@ -1555,7 +1556,7 @@ mobileApp.signUp.niceToMeetYou,"Hi, nice to meet you.","Ahoj, jsme rádi, že js
 mobileApp.signUp.fillDetails,Please fill in some details:,"Prosím, vyplňte detaily:",Wypełnij poniższe informacje:,Füllen Sie bitte das Formular aus:
 mobileApp.signUp.name,your full name,Vaše celé jméno,Imię i nazwisko,Vor- und Nachname
 mobileApp.signUp.nameInvalid,Invalid name,Neplatné jméno,Niepoprawne imię i nazwisko,Name ungültig
-mobileApp.signUp.phone,phone number,Telefoní číslo,Numer telefonu,Telefonnummer
+mobileApp.signUp.phone,phone number,Telefonní číslo,Numer telefonu,Telefonnummer
 mobileApp.signUp.phoneInvalid,Invalid phone number,Neplatné telefonní číslo,Niepoprawny numer telefonu,Telefonnummer ungültig
 mobileApp.signUp.email,email,E-mail,E-mail,E-Mail-Adresse
 mobileApp.signUp.emailInvalid,Invalid email address,Neplatná e-mailová adresa,Niepoprawny adres e-mail,Ungültige E-Mail-Adresse
@@ -1657,6 +1658,7 @@ railsEmails.car_on_my_spot_notify_secretary_subject,User has been reported,Uživ
 railsEmails.right_updated,Your right has been updated,Vaše práva byla aktualizována,,Ihre Rechte wurden aktualisiert.
 railsEmails.accept_new_reservation_secretary_notification_subject,New reservation needs your decision,Nová rezervace potřebuje Vaše rozhodnutí,,Eine neue Buchung braucht Ihre Entscheidung.
 railsEmails.your_reservation_was_destroyed,You reservation was canceled,Vaše rezervace byla stornována,,Ihre Buchung wurde storniert-
+railsEmails.your_recurring_reservation_was_destroyed,You recurring reservation was canceled,Vaše opakovaná rezervace byla zrušena,,Ihre wiederholte Buchung wurde storniert
 railsEmails.reservation_will_expire_soon_subject,Your reservation will expire soon,Vaše rezervace brzy propadne,,Ihre Buchung läuft bald ab.
 railsEmails.aliases.garage_table.user,User:,Uživatel:,Użytkownik:,Nutzer:
 railsEmails.aliases.garage_table.garage,Garage:,Garáž:,Garaż:,Garage
@@ -1755,6 +1757,10 @@ railsEmails.updated_rights.driver,driver,řidič,,Fahrer
 railsEmails.accept_new_reservation_secretary_notification.new_reservation_needs_confirmation,"There has been a new reservation created by %{creator} on %{client} expenses, you can now go to Parkit.direct to accept or decline this reservation.","%{creator} vytvořil novou rezervaci na náklady skupiny %{client}, nyní můžete přejít do Parkit.direct a přijmout nebo zamítnout tuto rezervaci.",,"%{creator} erstellte eine Buchung auf Kosten der Gruppe %{client}, jetzt können Sie zu Parkit.direct gehen und die Buchung bestätigen oder ablehnen."
 railsEmails.accept_new_reservation_secretary_notification.to_pid,To Parkit.direct!,Do Parkit.direct!,Do Parkit.direct!,Zu Parkit.direct!
 railsEmails.reservation_destroyed_mail.reservation_was_destroyed,Your reservation had been canceled.,Vaše rezervace byla stornována.,,Ihre Buchung wurde storniert
+railsEmails.recurring_reservation_destroyed_mail.recurring_reservation_was_destroyed,%{remaining} reservations were removed (these are remaining reservations of original %{count} recurring reservations).,%{remaining} rezervace byly smazány (jsou to zbývající z původního počtu %{count} rezervací).',,%{remaining} Buchungen wurden storniert (es sind die restlichen von ursprünglich %{count} Buchungen).
+railsEmails.recurring_reservation_destroyed_mail.reservation_information,Here are some details:',Zde jsou detaily:',,Detailierte Informationen:'
+railsEmails.recurring_reservation_destroyed_mail.first_reservation,First reservation,První rezervace,,Erste Buchung
+railsEmails.recurring_reservation_destroyed_mail.last_reservation,Last reservation,Poslední rezervace,,Letzte Buchung
 railsEmails.reservation_will_expire_soon.reservation_will_expire_soon,Your reservation in %{garage} will expire in 30 minutes.,Vaše rezervace v garáži %{garage} propadne přibližně za 30 minut.,,Ihre Buchung in Garage %{garage} läuft in 30 Minuten ab.
 railsSMSs.reservation_sms.new_reservation,There has been a new reservation created for you,Byla Vám vytvořena nová rezervace,Masz nową rezerwacją w Parkit.direct!,Es wurde für Sie eine neue Buchung erstellt
 railsSMSs.reservation_sms.from,Begins at:,Začátek:,Od:,Von:

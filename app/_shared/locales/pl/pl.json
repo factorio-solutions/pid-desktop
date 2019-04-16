@@ -734,7 +734,8 @@
 		"contractLegalDocuments": "PL: notifications.contractLegalDocuments",
 		"reservationWasSuccessfullyPaid": "PL: notifications.reservationWasSuccessfullyPaid",
 		"reservationWillExpireSoon": "PL: notifications.reservationWillExpireSoon",
-		"expensesOn": "PL: notifications.expensesOn"
+		"expensesOn": "PL: notifications.expensesOn",
+		"recurringReservationDestroyed": "PL: notifications.recurringReservationDestroyed"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -1405,6 +1406,7 @@
 		"right_updated": "PL: railsEmails.right_updated",
 		"accept_new_reservation_secretary_notification_subject": "PL: railsEmails.accept_new_reservation_secretary_notification_subject",
 		"your_reservation_was_destroyed": "PL: railsEmails.your_reservation_was_destroyed",
+		"your_recurring_reservation_was_destroyed": "PL: railsEmails.your_recurring_reservation_was_destroyed",
 		"reservation_will_expire_soon_subject": "PL: railsEmails.reservation_will_expire_soon_subject",
 		"aliases": {
 			"garage_table": {
@@ -1532,6 +1534,12 @@
 		},
 		"reservation_destroyed_mail": {
 			"reservation_was_destroyed": "PL: railsEmails.reservation_destroyed_mail.reservation_was_destroyed"
+		},
+		"recurring_reservation_destroyed_mail": {
+			"recurring_reservation_was_destroyed": "PL: railsEmails.recurring_reservation_destroyed_mail.recurring_reservation_was_destroyed",
+			"reservation_information": "PL: railsEmails.recurring_reservation_destroyed_mail.reservation_information",
+			"first_reservation": "PL: railsEmails.recurring_reservation_destroyed_mail.first_reservation",
+			"last_reservation": "PL: railsEmails.recurring_reservation_destroyed_mail.last_reservation"
 		},
 		"reservation_will_expire_soon": {
 			"reservation_will_expire_soon": "PL: railsEmails.reservation_will_expire_soon.reservation_will_expire_soon"
