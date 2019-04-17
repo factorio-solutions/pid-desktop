@@ -1190,6 +1190,7 @@ export function afterPayment(id, success) {
 export function cancelUser() {
   return dispatch => {
     dispatch(setHostName(''))
+    dispatch(setRecurringRule(undefined))
     dispatch({
       type:  NEW_RESERVATION_SET_USER,
       value: undefined
