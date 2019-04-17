@@ -37,7 +37,7 @@ export const getInterval = createSelector(
 export const getPlaces = createSelector(
   [ getGarage, getClientsIds, getInterval ],
   (garage, clientIds, interval) => {
-    if (!interval || !interval.reservations || interval.reservations.length === 0) {
+    if (garage === undefined) {
       return defaultEmptyArray
     }
 
