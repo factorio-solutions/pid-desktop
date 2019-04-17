@@ -88,6 +88,7 @@ class NewUserForm extends Component {
             align="left"
             style={reservationStyles}
             placeholder={t([ 'newReservation', 'namePlaceholder' ])}
+            maxLength="40"
           />
         </div>
         <PatternInput
@@ -105,6 +106,7 @@ class NewUserForm extends Component {
           normalizeInput={normalizeEmail}
           style={reservationStyles}
           placeholder={t([ 'newReservation', 'emailPlaceholder' ])}
+          maxLength="40"
         />
         <PatternInput
           readOnly={onetime || (state.user && state.user.id > -1)}
@@ -114,12 +116,13 @@ class NewUserForm extends Component {
             ${this.hostPhoneMandatoryCondition() ? ' *' : ''}
           `}
           error={t([ 'signup_page', 'phoneInvalid' ])}
-          pattern="\+[\d]{2,4}[\d\s]{3,}"
+          pattern="\+[\d]{5,19}"
           value={state.phone.value}
           highlight={state.highlight && this.hostPhoneMandatoryCondition()}
           align="left"
           style={reservationStyles}
           placeholder={t([ 'newReservation', 'phonePlaceholder' ])}
+          maxLength="20"
         />
         <Input
           readOnly={!editable}
