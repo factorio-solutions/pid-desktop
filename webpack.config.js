@@ -63,7 +63,7 @@ module.exports = {
       moduleFilenameTemplate: info => { return `${info.resourcePath}?${info.loaders}` }
     }),
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: 'index.production.html'
     })
   ],
 
