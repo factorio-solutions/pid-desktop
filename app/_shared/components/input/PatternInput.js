@@ -24,7 +24,8 @@ export default class PatternInput extends Component {
       PropTypes.string,
       PropTypes.object
     ]),
-    reservation:    PropTypes.bool
+    reservation: PropTypes.bool,
+    maxLength:   PropTypes.string
   }
 
   constructor(props) { // just to handle two way databinding
@@ -64,14 +65,16 @@ export default class PatternInput extends Component {
   }
 
   render() {
-    const { label, error, pattern, placeholder, inlineMenu, type, highlight, readOnly, align, style, reservation } = this.props
+    const {
+      label, error, pattern, placeholder, inlineMenu, type, highlight, readOnly, align, style, reservation, maxLength
+    } = this.props
 
     const styles = style && typeof style !== 'string' ? style : defaultStyles
 
     const isEmpty = () => this.input ? this.input.value === '' : true
 
     return (
-      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${styles[style]} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
+      <div className={`${styles.customFormGroup} ${styles[align || 'center']} ${styles[style]} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`}>
         <input
           pattern={pattern}
           type={type || 'text'}
@@ -81,6 +84,7 @@ export default class PatternInput extends Component {
           onKeyPress={this.preventEnter}
           ref={input => { this.input = input }}
           readOnly={readOnly}
+          maxLength={maxLength}
         />
         <span className={styles.bar} />
         <label className={reservation ? styles.reservationLabel : styles.label}>{label}</label>
