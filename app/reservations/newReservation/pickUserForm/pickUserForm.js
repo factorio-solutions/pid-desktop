@@ -11,6 +11,8 @@ import RoundButton       from '../../../_shared/components/buttons/RoundButton'
 
 import {
   downloadUser,
+  showLoading,
+  hideLoading,
   setHostName,
   clearForm,
   cancelUser
@@ -57,6 +59,13 @@ class PickUserForm extends Component {
     />
   )
 
+  handleDownloadUser = async (id, rights) => {
+    const { actions } = this.props
+    actions.showLoading()
+    await actions.downloadUser(id, rights)
+    actions.hideLoading()
+  }
+
   render() {
     const {
       state,
@@ -89,7 +98,7 @@ class PickUserForm extends Component {
               ref={component => this.searchField = component}
               separateFirst={usersDropdown.some(user => user.id === state.currentUser.id)}
               user={state.user}
-              downloadUser={actions.downloadUser}
+              downloadUser={this.handleDownloadUser}
             />
           </div>
         )
@@ -158,6 +167,8 @@ const mapDispatchToProps = dispatch => (
     actions: bindActionCreators(
       {
         downloadUser,
+        showLoading,
+        hideLoading,
         setHostName,
         clearForm,
         cancelUser
