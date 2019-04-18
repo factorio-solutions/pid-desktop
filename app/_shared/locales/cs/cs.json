@@ -114,7 +114,7 @@
 		"pidSettingsHint": "CS: pageBase.pidSettingsHint",
 		"activityLogHint": "Zde najdete záznam veškerých aktivit v systému Parkit.direct, včetně toho, o jakou akci se jednalo a kdo a kdy ji provedl.",
 		"reservationsHint": "Zde najdete přehled rezervací.\n\nV závislosti na přidělených právech uvidíte buď jen své rezervace, nebo i rezervace všech členů vaší Skupiny, popřípadě celé garáže.",
-		"newReservationHint": "Zde můžete vytvořit novou rezervaci. Formulář rezervace se rozbaluje postupně v několika krocích. Nabídka je také ovlivněna Vašimi právy a nastavením garáže.\n\nNejprve si vyberete parkujícícho - buď sebe, jiného člena skupiny, případně můžete založit nového uživatele oprávněného rezervovat či uživatele podléhajícího schvalování.\n\nV dalších krocích zvolíte garáž, skupinu a termín.\n\nPokud to nastavení umožňuje, můžete zvolit i kdo bude rezervaci hradit (zda parkující, nebo skupina) a vybrat či upravit text SMS upozornění na rezervaci. \n\nPo vyplnění všech údajů můžete rezervaci potvrdit. Pokud rezervaci hradí skupina, je tím rezervace dokončena. Pokud je placena parkujícím, je následujícím krokem platba.\n\nPokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rezervaci platí host, obdrží pokyny do emailu.",
+		"newReservationHint": "Zde můžete vytvořit novou rezervaci. Formulář rezervace se rozbaluje postupně v několika krocích. Nabídka je také ovlivněna Vašimi právy a nastavením garáže.\n\nNejprve si vyberete parkujícícho - buď sebe, jiného člena skupiny, případně můžete založit nového uživatele oprávněného rezervovat či uživatele podléhajícího schvalování.\n\nV dalších krocích zvolíte garáž, skupinu a termín. Pokud stisknete tlačítko Zobrazit mapu garáže, můžete si vybrat volné místo. Vlevo nahoře je číslem v kruhu zobrazeno patro garáže. Modrá místa jsou dostupná, žluté jsou Vámi vybraná místa.\n\nPokud to nastavení umožňuje, můžete zvolit i kdo bude rezervaci hradit (zda parkující, nebo skupina) a vybrat či upravit text SMS upozornění na rezervaci. \n\nPo vyplnění všech údajů můžete rezervaci potvrdit. Pokud rezervaci hradí skupina, je tím rezervace dokončena. Pokud je placena parkujícím, je následujícím krokem platba.\n\nPokud platíte rezervaci Vy, bude platba hned v následujícím kroku. Pokud rezervaci platí host, obdrží pokyny do emailu.",
 		"garagesHint": "Zde najdete zobrazení skupin, dohod, rezervací, cen a aut na plánku Vaší garáže. Stejné hodnoty jsou vždy vyznačeny stejnou barvou.\nV levém horním rohu si vyberte kterou hodnotu chcete zobrazit, v pravém horním rohu si můžete zvolit, zda se zobrazí situace k zvolenému datu, nebo aktuální.",
 		"newGarageHint": "Vytvořte novou garáž. Zadejte název a detaily, dále pokračujte definováním podlaží a parkovacích míst. Tyto informace lze zadat dvěma způsoby. Můžete nahrát plánky jednotlivých pater ze souboru SVG s informacemi o parkovacích místech (s vytvořením souboru Vám rádi pomůžeme, více informací naleznete na našich stránkách). Druhá možnost je každému patru definovat počet míst.",
 		"newGarageFloorsHint": "Zde můžete nastavit počet podlaží a kolik je v každém podlaží parkovacích míst.\n\nKe každému podlaží je možné nahrát plánek ve formátu .svg. S jeho tvorbou Vám rádi pomůžeme, popřípadě si můžete vybrat z předpřipravených šablon.\n\nDále je zde možno nastavit maximální rozměry vozidel.",
@@ -229,8 +229,10 @@
 		"tokenInvalid": "Tato transakce již není platná a rezervace bude smazána",
 		"creatingNewPayment": "Vytvářím platbu ...",
 		"newHost": "Podléhající schvalování",
+		"newHostTextBeginning": "Nový uživatel ",
 		"newHostText": "může žádat o rezervace, je členem účtu skupiny.",
-		"newInternal": "Nový uživatel oprávněný rezervovat",
+		"newInternal": "Oprávněný rezervovat",
+		"newInternalTextBeginning": "Nový uživatel ",
 		"newInternalText": "si může vytvářet rezervace, je členem účtu skupiny.",
 		"hostsName": "Jméno uživatele podléhajícího schvalování",
 		"phone": "Telefonní číslo",
@@ -248,6 +250,7 @@
 		"noFreePlace": "Žádná volná místa",
 		"note": "Veřejná poznámka",
 		"onetimeVisit": "Návštěva",
+		"onetimeVisitTextBeginning": " ",
 		"onetimeVisitText": "nemůže vytvářet ani žádat o rezervace, není členem účtu skupiny.",
 		"fillInContact": "Prosím vyplňte kontaktní údaje návštěvy. Bez kontaktních údajů nebude možné návštěvu informovat o rezervaci.",
 		"paidByHost": "Rezervaci platí parkující",
@@ -271,9 +274,9 @@
 		"notePlaceholder": "Veřejná poznámka k rezervaci",
 		"showMap": "Zobrazit mapu garáže",
 		"smsTextPlaceholder": "SMS zpráva",
-		"namePlaceholder": "Jméno",
-		"emailPlaceholder": "Email",
-		"phonePlaceholder": "Telefonní číslo",
+		"namePlaceholder": "Jan Novák",
+		"emailPlaceholder": "jan@email.cz",
+		"phonePlaceholder": "+420123456789",
 		"garageDropdownLabel": "Garáž",
 		"clientDropdownLabel": "Skupina",
 		"selectCarLabel": "Vyberte auto",
@@ -715,7 +718,7 @@
 		"NotificationDeclined": "odmítnuto dne",
 		"current": "aktuální",
 		"sais": "vzkazuje",
-		"accpetReservationNotification": "Uživatel podléhající schvalování %(arg2)s by chtěl vytvořtit rezervaci na %(arg1)s náklady.",
+		"accpetReservationNotification": "Uživatel podléhající schvalování %(arg2)s by chtěl vytvořtit rezervaci na náklady skupiny %(arg1)s.",
 		"invoiceReminder": "Účet %(arg1)s by Vás chtěl informovat, že máte k vyřízení nezaplacené faktury.",
 		"reservationAccepted": "Vaše rezervace na \"%(arg1)s místo byla akceptována.",
 		"reservationDeclined": "Vaše rezervace na \"%(arg1)s místo byla zrušena.",
@@ -724,14 +727,15 @@
 		"reservationUpdatedNotification": "%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.",
 		"reservationRemovedDueToUnpaid": "Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut",
 		"reservationContactPersonNotification": "Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",
-		"clientLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože skupina '%(arg1)s' působí v garáži '%(arg2)s'.",
-		"garageLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",
-		"reservationLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",
-		"reservationUpdateLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",
-		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidlel ochrany osobních údajů, protože skupina '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",
+		"clientLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože skupina '%(arg1)s' působí v garáži '%(arg2)s'.",
+		"garageLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože jste byl přidán do garáže '%(arg1)s'.",
+		"reservationLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože máte rezervaci v garáži '%(arg1)s'.",
+		"reservationUpdateLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože v rezervaci č. '%(arg1)s' byla změněna garáž na '%(arg2)s'.",
+		"contractLegalDocuments": "Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože skupina '%(arg1)s' uzavřel dohodu s garáží '%(arg2)s'.",
 		"reservationWasSuccessfullyPaid": "Uživatel %(arg1)s, kterému jste vytvořil(a) rezervaci, ji práve zaplatil. Detail rezervace: %(arg2)s",
 		"reservationWillExpireSoon": "Uživateli %(arg1)s brzy propadne rezervace, kterou jste pro něho vytvořili. Detail rezervace: %(arg2)s",
-		"expensesOn": "Cena"
+		"expensesOn": "Cena",
+		"recurringReservationDestroyed": "%(arg1)s rezervace byly smazány (jsou to zbývající z původního počtu %(arg2)s rezervací)."
 	},
 	"profile": {
 		"profileSettings": "Nastavení profilu",
@@ -744,7 +748,7 @@
 		"createdAt": "Profil vytvořen:",
 		"cars": "Auta",
 		"showPublicGarages": "Zobrazovat veřejné garáže",
-		"privacyDocuments": "Dokumenty týkající se pravidlel ochrany osobních údajů pro všechny garáže",
+		"privacyDocuments": "Dokumenty týkající se pravidel ochrany osobních údajů pro všechny garáže",
 		"myGarages": "Garáže jejichž jste členem",
 		"myClients": "Skupiny jejichž jste členem"
 	},
@@ -1283,7 +1287,7 @@
 			"fillDetails": "Prosím, vyplňte detaily:",
 			"name": "Vaše celé jméno",
 			"nameInvalid": "Neplatné jméno",
-			"phone": "Telefoní číslo",
+			"phone": "Telefonní číslo",
 			"phoneInvalid": "Neplatné telefonní číslo",
 			"email": "E-mail",
 			"emailInvalid": "Neplatná e-mailová adresa",
@@ -1402,6 +1406,7 @@
 		"right_updated": "Vaše práva byla aktualizována",
 		"accept_new_reservation_secretary_notification_subject": "Nová rezervace potřebuje Vaše rozhodnutí",
 		"your_reservation_was_destroyed": "Vaše rezervace byla stornována",
+		"your_recurring_reservation_was_destroyed": "Vaše opakovaná rezervace byla zrušena",
 		"reservation_will_expire_soon_subject": "Vaše rezervace brzy propadne",
 		"aliases": {
 			"garage_table": {
@@ -1452,7 +1457,11 @@
 			"spot": "Číslo místa",
 			"licence_plate": "SPZ",
 			"reservation_information": "Informace o rezervaci",
-			"gps": "GPS:"
+			"gps": "GPS:",
+			"user_name": "Jméno uživatele",
+			"garage_name": "Jméno garáže",
+			"client_name": "Jméno skupiny",
+			"payed_by": "Hrazeno"
 		},
 		"resend_invitation_mail": {
 			"hello": "Dobrý den,",
@@ -1525,6 +1534,12 @@
 		},
 		"reservation_destroyed_mail": {
 			"reservation_was_destroyed": "Vaše rezervace byla stornována."
+		},
+		"recurring_reservation_destroyed_mail": {
+			"recurring_reservation_was_destroyed": "%{remaining} rezervace byly smazány (jsou to zbývající z původního počtu %{count} rezervací).'",
+			"reservation_information": "Zde jsou detaily:'",
+			"first_reservation": "První rezervace",
+			"last_reservation": "Poslední rezervace"
 		},
 		"reservation_will_expire_soon": {
 			"reservation_will_expire_soon": "Vaše rezervace v garáži %{garage} propadne přibližně za 30 minut."

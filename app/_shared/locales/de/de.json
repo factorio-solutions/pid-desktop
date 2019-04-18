@@ -114,7 +114,7 @@
 		"pidSettingsHint": "DE: pageBase.pidSettingsHint",
 		"activityLogHint": "Hier finden Sie ein Verzeichnis aller Aktivitäten im Parkit.direct-System mit allen detailierten Angaben wer und wann die Aktion durgeführt hat.",
 		"reservationsHint": "Hier finden Sie die Liste der Buchungen.\n\nAbhängig von Ihren Rechten sehen Sie entweder nur die von Ihnen erstellte Buchungen, alle andere Buchungen der selben Gruppe, oder die Buchungen der gesamten Garage. ",
-		"newReservationHint": "Hier können Sie neue Buchungen erstellen. Das Buchungsformular erweitert sich Schritt nach Schritt und das Angebot ist von Ihren Rechten und Garageneinstellungen abhängig.\n\nZuerst wählen Sie den Nutzer - entweder sich selbst oder ein anderes Mitglied der Gruppe oder Sie können eine/-n neue/-n Nutzer/-in mit oder ohne Genehmigungsbefugnis anlegen.\n\nAls Nächstes wählen Sie die Garage, die Gruppe und den Termin.\n\nLässt es die Einstellung zu, können Sie wählen, wer die Buchung bezahlt (ob der Parkende oder die ausgewählte Gruppe) und dazu noch den Text der optionalen SMS-Buchungsbenachrichtigung auswählen oder ändern.\n\nNach der Angabe aller Details können Sie Ihre Buchung bestätigen. Wird die Buchung von der Gruppe bezahlt, gilt die Buchung als abgeschlossen. Wird sie von Ihrem Gast bezahlt, ist der nächste Schritt die Zahlung.\n\nWird die Zahlung von Ihnen durchgeführt, folgt die Zahlung gleich im nächsten Schritt. Bezahlt ein Gast die Buchung, erhält er seine Anweisungen per E-Mail, damit er seine Buchung abschließen kann.",
+		"newReservationHint": "Hier können Sie neue Buchungen erstellen. Das Buchungsformular erweitert sich Schritt nach Schritt und das Angebot ist von Ihren Rechten und Garageneinstellungen abhängig.\n\nZuerst wählen Sie den Nutzer - entweder sich selbst oder ein anderes Mitglied der Gruppe oder Sie können eine/-n neue/-n Nutzer/-in mit oder ohne Genehmigungsbefugnis anlegen.\n\nAls Nächstes wählen Sie die Garage, die Gruppe und den Termin. Wenn Sie die Taste \"Garagenplan anzeigen\" drücken, sehen Sie links oben die Etagen und unten den Plan der Parkplätze. Gelbe Markierung bedeutet \"Gewählt\", blaue bedeutet \"Zu Auswahl\".\n\nLässt es die Einstellung zu, können Sie wählen, wer die Buchung bezahlt (ob der Parkende oder die ausgewählte Gruppe) und dazu noch den Text der optionalen SMS-Buchungsbenachrichtigung auswählen oder ändern.\n\nNach der Angabe aller Details können Sie Ihre Buchung bestätigen. Wird die Buchung von der Gruppe bezahlt, gilt die Buchung als abgeschlossen. Wird sie von Ihrem Gast bezahlt, ist der nächste Schritt die Zahlung.\n\nWird die Zahlung von Ihnen durchgeführt, folgt die Zahlung gleich im nächsten Schritt. Bezahlt ein Gast die Buchung, erhält er seine Anweisungen per E-Mail, damit er seine Buchung abschließen kann.",
 		"garagesHint": "Hier finden Sie eine Darstellung der Gruppen, Vereinbarungen, Buchungen, Preise und Autos auf dem Garagenplan. Gleiche Werte werden immer in der gleichen Farbe dargestellt.\nLinks oben können Sie auswählen, welcher Wert angezeigt werden soll. Rechts oben können Sie einstellen, ob die Situation zu einem bestimmten Datum oder zum aktuellen Zeitpunkt angezeigt werden soll.",
 		"newGarageHint": "Erstellen Sie eine neue Garage. Legen Sie den Namen und die Details fest. Definieren Sie anschließend die Etagen und Stellplätze. Es stehen zwei Eingabemöglichkeiten zur Auswahl: Sie können die Grundrisse als SVG-Bild mit Daten zu den Stellplätzen hochladen. (Wir können Ihnen bei der Erstellung dieses Grundrisses helfen – weitere Informationen finden Sie auf unserer Website). Als zweite Option können Sie für jede Etage eine Anzahl von Stellplätzen festlegen.",
 		"newGarageFloorsHint": "Hier können Sie die Stockwerke und jeweilige Parkplätze erstellen.\n\nZu jedem Stockwerk können Sie ein Plan im .svg Format hinzufügen. Gerne helfen wir Ihnen mit der Darstellung der Parkplätze im Stockwerk. Sie können auch eine der Vorlagen verwenden.\n\nWeiter ist es hier möglich die maximalen Abmessungen der Fahrzeuge zu bestimmen.",
@@ -229,9 +229,11 @@
 		"tokenInvalid": "Diese Transaktion ist nicht mehr gültig. Die Buchung wird gelöscht.",
 		"creatingNewPayment": "Zahlung wird erstellt …",
 		"newHost": "Ohne Genehmigungsbefugnis",
-		"newHostText": "kann Buchungen anfragen, ist ein Mtiglied des Klientenkontos.",
-		"newInternal": "Neue/-r Nutzer/-in mit Genehmigungsbefugnis",
-		"newInternalText": "kann Buchungen erstellen, ist ein Mitglied des Klientenkontos.",
+		"newHostTextBeginning": "Neue/-r Nutzer/-in",
+		"newHostText": "kann Buchungen anfragen, ist ein Mtiglied des Gruppenkontos.",
+		"newInternal": "Mit Genehmigungsbefugnis",
+		"newInternalTextBeginning": "Neue/-r Nutzer/-in",
+		"newInternalText": "kann Buchungen erstellen, ist ein Mitglied des Gruppenkontos.",
 		"hostsName": "Name des/der Nutzer/-in ohne Genehmigungsbefugnis",
 		"phone": "Telefonnummer",
 		"hostsPhone": "Telefon des/der Nutzer/-in ohne Genehmigungsbefugnis",
@@ -248,6 +250,7 @@
 		"noFreePlace": "Keine freie Plätze",
 		"note": "Öffentliche Notiz",
 		"onetimeVisit": "Besucher/-in ",
+		"onetimeVisitTextBeginning": " ",
 		"onetimeVisitText": "kann keine Buchungen erstellen und Sie nichtmal anfragen, ist kein Mitglied des Klientenkontos.",
 		"fillInContact": "Bitte füllen Sie die Kontaktdaten aus. Ohne Kontaktdaten ist es nicht möglich den Empfänger über die Buchung zu informieren.",
 		"paidByHost": "Buchung wird vom Gast bezahlt",
@@ -271,12 +274,12 @@
 		"notePlaceholder": "Öffentliche Notiz",
 		"showMap": "Garagenplan Ansicht",
 		"smsTextPlaceholder": "SMS Nachricht",
-		"namePlaceholder": "DE: newReservation.namePlaceholder",
-		"emailPlaceholder": "DE: newReservation.emailPlaceholder",
-		"phonePlaceholder": "DE: newReservation.phonePlaceholder",
+		"namePlaceholder": "Wolfgang Müller",
+		"emailPlaceholder": "wolfgang@email.de",
+		"phonePlaceholder": "+4906105841953",
 		"garageDropdownLabel": "Garage",
 		"clientDropdownLabel": "Gruppe ",
-		"selectCarLabel": "DE: newReservation.selectCarLabel",
+		"selectCarLabel": "Wählen Sie ein Fahrzeug",
 		"smsTemplateLabel": "DE: newReservation.smsTemplateLabel",
 		"reservationOnPlace": "Der ausgewählte Parkplatz ist bereits belegt"
 	},
@@ -731,7 +734,8 @@
 		"contractLegalDocuments": "In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' eine Vereinbarung mit der Garage '%(arg2)s' abgeschlossen hat. ",
 		"reservationWasSuccessfullyPaid": "Das Mitglied %(arg1)s, welchem Sie eine Buchung erstellt haben, hat sie gerade bezahlt. Detail der Buchung: %(arg2)s",
 		"reservationWillExpireSoon": "Dem Mitglied %(arg1)s verfällt bald seine Buchung, die von Ihnen erstellt wurde. Detail der Buchung: %(arg2)s",
-		"expensesOn": "Preis"
+		"expensesOn": "Preis",
+		"recurringReservationDestroyed": "%(arg1)s Buchungen wurden storniert (es sind die restlichen von ursprünglich %(arg2)s Buchungen)."
 	},
 	"profile": {
 		"profileSettings": "Profileinstellungen",
@@ -1402,6 +1406,7 @@
 		"right_updated": "Ihre Rechte wurden aktualisiert.",
 		"accept_new_reservation_secretary_notification_subject": "Eine neue Buchung braucht Ihre Entscheidung.",
 		"your_reservation_was_destroyed": "Ihre Buchung wurde storniert-",
+		"your_recurring_reservation_was_destroyed": "Ihre wiederholte Buchung wurde storniert",
 		"reservation_will_expire_soon_subject": "Ihre Buchung läuft bald ab.",
 		"aliases": {
 			"garage_table": {
@@ -1452,7 +1457,11 @@
 			"spot": "Parkplatznummer:",
 			"licence_plate": "Kennzeichen",
 			"reservation_information": "Information über die Buchung",
-			"gps": "GPS:"
+			"gps": "GPS:",
+			"user_name": "Nutzername",
+			"garage_name": "Garagenname",
+			"client_name": "Gruppenname",
+			"payed_by": "Bezahlt"
 		},
 		"resend_invitation_mail": {
 			"hello": "Guten Tag,",
@@ -1525,6 +1534,12 @@
 		},
 		"reservation_destroyed_mail": {
 			"reservation_was_destroyed": "Ihre Buchung wurde storniert"
+		},
+		"recurring_reservation_destroyed_mail": {
+			"recurring_reservation_was_destroyed": "%{remaining} Buchungen wurden storniert (es sind die restlichen von ursprünglich %{count} Buchungen).",
+			"reservation_information": "Detailierte Informationen:'",
+			"first_reservation": "Erste Buchung",
+			"last_reservation": "Letzte Buchung"
 		},
 		"reservation_will_expire_soon": {
 			"reservation_will_expire_soon": "Ihre Buchung in Garage %{garage} läuft in 30 Minuten ab."

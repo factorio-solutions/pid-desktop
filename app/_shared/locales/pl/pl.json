@@ -229,8 +229,10 @@
 		"tokenInvalid": "Ta transakcja nie jest już ważna. Rezerwacja zostanie usunięta.",
 		"creatingNewPayment": "Wytwarzam płatność...",
 		"newHost": "Nowy regularny gość",
+		"newHostTextBeginning": "PL: newReservation.newHostTextBeginning",
 		"newHostText": "PL: newReservation.newHostText",
 		"newInternal": "PL: newReservation.newInternal",
+		"newInternalTextBeginning": "PL: newReservation.newInternalTextBeginning",
 		"newInternalText": "PL: newReservation.newInternalText",
 		"hostsName": "Nazwisko regularnego gościa",
 		"phone": "PL: newReservation.phone",
@@ -248,6 +250,7 @@
 		"noFreePlace": "Brak wolnych miejsc",
 		"note": "Uwagi",
 		"onetimeVisit": "Jednorazowe odwiedziny",
+		"onetimeVisitTextBeginning": "PL: newReservation.onetimeVisitTextBeginning",
 		"onetimeVisitText": "PL: newReservation.onetimeVisitText",
 		"fillInContact": "PL: newReservation.fillInContact",
 		"paidByHost": "Za rezerwację płaci gość",
@@ -731,7 +734,8 @@
 		"contractLegalDocuments": "PL: notifications.contractLegalDocuments",
 		"reservationWasSuccessfullyPaid": "PL: notifications.reservationWasSuccessfullyPaid",
 		"reservationWillExpireSoon": "PL: notifications.reservationWillExpireSoon",
-		"expensesOn": "PL: notifications.expensesOn"
+		"expensesOn": "PL: notifications.expensesOn",
+		"recurringReservationDestroyed": "PL: notifications.recurringReservationDestroyed"
 	},
 	"profile": {
 		"profileSettings": "Ustawienia profilu",
@@ -1402,6 +1406,7 @@
 		"right_updated": "PL: railsEmails.right_updated",
 		"accept_new_reservation_secretary_notification_subject": "PL: railsEmails.accept_new_reservation_secretary_notification_subject",
 		"your_reservation_was_destroyed": "PL: railsEmails.your_reservation_was_destroyed",
+		"your_recurring_reservation_was_destroyed": "PL: railsEmails.your_recurring_reservation_was_destroyed",
 		"reservation_will_expire_soon_subject": "PL: railsEmails.reservation_will_expire_soon_subject",
 		"aliases": {
 			"garage_table": {
@@ -1452,7 +1457,11 @@
 			"spot": "Numer miejsca:",
 			"licence_plate": "Nr rejestracyjny",
 			"reservation_information": "Informacje o rezerwacji",
-			"gps": "GPS:"
+			"gps": "GPS:",
+			"user_name": "PL: railsEmails.new_reservation_mail.user_name",
+			"garage_name": "PL: railsEmails.new_reservation_mail.garage_name",
+			"client_name": "PL: railsEmails.new_reservation_mail.client_name",
+			"payed_by": "PL: railsEmails.new_reservation_mail.payed_by"
 		},
 		"resend_invitation_mail": {
 			"hello": "Dzień dobry,",
@@ -1525,6 +1534,12 @@
 		},
 		"reservation_destroyed_mail": {
 			"reservation_was_destroyed": "PL: railsEmails.reservation_destroyed_mail.reservation_was_destroyed"
+		},
+		"recurring_reservation_destroyed_mail": {
+			"recurring_reservation_was_destroyed": "PL: railsEmails.recurring_reservation_destroyed_mail.recurring_reservation_was_destroyed",
+			"reservation_information": "PL: railsEmails.recurring_reservation_destroyed_mail.reservation_information",
+			"first_reservation": "PL: railsEmails.recurring_reservation_destroyed_mail.first_reservation",
+			"last_reservation": "PL: railsEmails.recurring_reservation_destroyed_mail.last_reservation"
 		},
 		"reservation_will_expire_soon": {
 			"reservation_will_expire_soon": "PL: railsEmails.reservation_will_expire_soon.reservation_will_expire_soon"

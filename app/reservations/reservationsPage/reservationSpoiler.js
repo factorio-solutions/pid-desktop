@@ -36,7 +36,8 @@ const reservationSpoiler = ({
   interruptClick,
   payReservation,
   downloadInvoice,
-  terminateEarly
+  terminateEarly,
+  past
 }) => {
   const garage = reservation.place && reservation.place.floor && reservation.place.floor.garage
   const canEdit = isSecretary(reservation)
@@ -44,6 +45,7 @@ const reservationSpoiler = ({
     isInternal(reservation)
     && ownsReservation(reservation, currentUser)
     && reservation.reservation_case !== 'visitor'
+    && !past
   )
   return (
     <div className={styles.spoiler}>
@@ -181,7 +183,8 @@ reservationSpoiler.propTypes = {
   interruptClick:     PropTypes.func,
   payReservation:     PropTypes.func,
   downloadInvoice:    PropTypes.func,
-  terminateEarly:     PropTypes.func
+  terminateEarly:     PropTypes.func,
+  past:               PropTypes.bool
 }
 
 export default reservationSpoiler

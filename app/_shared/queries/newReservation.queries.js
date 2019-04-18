@@ -232,6 +232,7 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     client {
       client_user{
         secretary
+        internal
       }
     }
     place{

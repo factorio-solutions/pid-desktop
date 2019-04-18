@@ -114,7 +114,7 @@
 		"pidSettingsHint": "TODO: pidSettings Hint",
 		"activityLogHint": "Here you have records of all activities in the Parkit.direct system, including what was done, by whom, and when.",
 		"reservationsHint": "Here you can find a list of reservations.\n\nYou will see either your reservation only or the reservation of all members of your Group or the entire garage, depending on the rights you have.",
-		"newReservationHint": "You can create a new reservation here. The reservation form is expanded in several steps, and the options are affected by your rights and garage settings.\n\nFirst you choose the recipient of the reservation - either yourself, another member of the group, or you can create a new authorized user or a subject to authorization.\n\nIn the next step, you choose a garage, group, and a term.\n\nIf the setting allows it, you can choose who will pay for the reservation (whether a parker or the selected group) and select or modify the text of the SMS reservation notification.\n\nOnce you've filled in all the details, you can confirm your booking. If the reservation is paid by the group, the reservation is completed. If it is paid by a parker, the next step is a payment.\n\nIf its you who pay for the reservation, the payment will be in the next step. If its a guest, he/she will receive instructions in the email.",
+		"newReservationHint": "You can create a new reservation here. The reservation form is expanded in several steps, and the options are affected by your rights and garage settings.\n\nFirst you choose the recipient of the reservation - either yourself, another member of the group, or you can create a new authorized user or a subject to authorization.\n\nIn the next step, you choose a garage, group, and a term. If you press the Show garage map button, you can choose your spot in the garage. At the top left corner there is a number in the circle showing the garage floor. Blue spots are available, yellow is your chosen spot.\n\nIf the setting allows it, you can choose who will pay for the reservation (whether a parker or the selected group) and select or modify the text of the SMS reservation notification.\n\nOnce you've filled in all the details, you can confirm your booking. If the reservation is paid by the group, the reservation is completed. If it is paid by a parker, the next step is a payment.\n\nIf its you who pay for the reservation, the payment will be in the next step. If its a guest, he/she will receive instructions in the email.",
 		"garagesHint": "Here you have a depiction of the groups, deals, reservations, prices and vehicles on your garage map. The same values are always shown with the same color. \nIn the upper left-hand corner you can choose which value you would like to display, while in the upper right-hand corner you can choose whether to display values for a certain date or for the current date.",
 		"newGarageHint": "Create new garage. Set the name and details, then follow by defining the floors and parking places. Two input options are available. You can load each floor plan as an SVG image with information about parking places. (We can help you to create this floor plan; see our website for more information.) The second option is to define a range of numbers for each level.",
 		"newGarageFloorsHint": "Here you can set the number of floors and number of parking spots on each floor. \n\nYou can upload a map of each floor as an .svg file, which we will be happy to help you create (or you can use one of our templates). \n\nYou can also set maximum vehicle dimensions here.",
@@ -229,9 +229,11 @@
 		"tokenInvalid": "This transaction is no longer valid and the reservation will be deleted.",
 		"creatingNewPayment": "Creating payment ...",
 		"newHost": "Subject to authorization",
-		"newHostText": "can request reservations, is member of the group account.",
-		"newInternal": "New authorized user",
-		"newInternalText": "can request reservations, is member of the group account.",
+		"newHostTextBeginning": "New",
+		"newHostText": "can request reservations, is a member of the group account.",
+		"newInternal": "Authorized",
+		"newInternalTextBeginning": "New",
+		"newInternalText": "user can request reservations, is a member of the group account.",
 		"hostsName": "Name of subject to authorization",
 		"phone": "Phone number",
 		"hostsPhone": "Phone of subject to authorization",
@@ -248,6 +250,7 @@
 		"noFreePlace": "No free place",
 		"note": "Public note",
 		"onetimeVisit": "Visitor",
+		"onetimeVisitTextBeginning": " ",
 		"onetimeVisitText": "can't make or request reservation, isn't a member of the group account.",
 		"fillInContact": "Please fill in visitors contact. Wihtout contact there is no way to contact user about his newly created reservation.",
 		"paidByHost": "Reservation paid by guest",
@@ -271,9 +274,9 @@
 		"notePlaceholder": "Public note",
 		"showMap": "Show garage map",
 		"smsTextPlaceholder": "SMS Message",
-		"namePlaceholder": "Name",
-		"emailPlaceholder": "Email",
-		"phonePlaceholder": "Phone number",
+		"namePlaceholder": "John Doe",
+		"emailPlaceholder": "john@gmail.com",
+		"phonePlaceholder": "+12025550195",
 		"garageDropdownLabel": "Garage",
 		"clientDropdownLabel": "Group",
 		"selectCarLabel": "Select car",
@@ -731,7 +734,8 @@
 		"contractLegalDocuments": "You can find new privacy documents in profile section because group '%(arg1)s' makes contract with garage '%(arg2)s'.",
 		"reservationWasSuccessfullyPaid": "User %(arg1)s, you created reservation for, just paid his reservation: %(arg2)s",
 		"reservationWillExpireSoon": "Reservation of %(arg1)s will expire soon. Reservation details: %(arg2)s",
-		"expensesOn": "Price"
+		"expensesOn": "Price",
+		"recurringReservationDestroyed": "%(arg1)s reservations were removed (these are remaining reservations of original %(arg2)s recurring reservations)."
 	},
 	"profile": {
 		"profileSettings": "Profile settings",
@@ -1402,6 +1406,7 @@
 		"right_updated": "Your right has been updated",
 		"accept_new_reservation_secretary_notification_subject": "New reservation needs your decision",
 		"your_reservation_was_destroyed": "You reservation was canceled",
+		"your_recurring_reservation_was_destroyed": "You recurring reservation was canceled",
 		"reservation_will_expire_soon_subject": "Your reservation will expire soon",
 		"aliases": {
 			"garage_table": {
@@ -1452,7 +1457,11 @@
 			"spot": "Spot number",
 			"licence_plate": "Licence plate",
 			"reservation_information": "Reservation information",
-			"gps": "GPS:"
+			"gps": "GPS:",
+			"user_name": "User name",
+			"garage_name": "Garage name",
+			"client_name": "Group name",
+			"payed_by": "Payed by"
 		},
 		"resend_invitation_mail": {
 			"hello": "Hello,",
@@ -1525,6 +1534,12 @@
 		},
 		"reservation_destroyed_mail": {
 			"reservation_was_destroyed": "Your reservation had been canceled."
+		},
+		"recurring_reservation_destroyed_mail": {
+			"recurring_reservation_was_destroyed": "%{remaining} reservations were removed (these are remaining reservations of original %{count} recurring reservations).",
+			"reservation_information": "Here are some details:'",
+			"first_reservation": "First reservation",
+			"last_reservation": "Last reservation"
 		},
 		"reservation_will_expire_soon": {
 			"reservation_will_expire_soon": "Your reservation in %{garage} will expire in 30 minutes."
