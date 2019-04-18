@@ -9,13 +9,16 @@ import {
 } from './basicSelectors'
 
 const defaultEmptyArray = []
-const defaultEmptyObject = {}
+const defaultEmptyInterval = {
+  reservations: [],
+  contracts:    []
+}
 
 export const getInterval = createSelector(
   [ getGarage, getFrom, getDuration ],
   (garage, from, duration) => {
     if (!garage || !garage.intervals) {
-      return defaultEmptyObject
+      return defaultEmptyInterval
     }
 
     let to
@@ -27,7 +30,7 @@ export const getInterval = createSelector(
     const interval = garage.intervals.find(intr => intr.from.isSame(from) && intr.to.isSame(to))
 
     if (!interval) {
-      return defaultEmptyObject
+      return defaultEmptyInterval
     }
 
     return interval
