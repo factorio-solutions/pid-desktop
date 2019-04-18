@@ -18,5 +18,3 @@ export const getReservationClient = state => {
   const reservation = getReservation(state)
   return reservation && reservation.client
 }
-
-export const getDownloadUserAction = (_, props) => props.actions ? props.actions.downloadUser : undefined

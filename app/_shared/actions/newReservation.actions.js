@@ -120,7 +120,19 @@ export const setHostName = patternInputActionFactory(NEW_RESERVATION_SET_HOST_NA
 export const setHostPhone = patternInputActionFactory(NEW_RESERVATION_SET_HOST_PHONE)
 export const setHostEmail = patternInputActionFactory(NEW_RESERVATION_SET_HOST_EMAIL)
 
-const hideLoading = dispatch => { dispatch(pageBaseActions.setCustomModal(undefined)); dispatch(setLoading(false)) }
+export const showLoading = () => dispatch => {
+  dispatch(batchActions([
+    setLoading(true),
+    pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'loading' ])}</div>)
+  ], 'NEW_RESERVATION_SHOW_LOADING'))
+}
+
+export const hideLoading = () => dispatch => {
+  dispatch(batchActions([
+    pageBaseActions.setCustomModal(undefined),
+    setLoading(false)
+  ], 'NEW_RESERVATION_HIDE_LOADING'))
+}
 
 function showLoadingModal(show) {
   return dispatch => {
@@ -414,17 +426,36 @@ export function setMinMaxDuration() {
     const isGoInternal = isPlaceGoInternal(state)
     const client = dispatch(selectedClient())
 
-    const determineDuration = minOrMax => (state.garage && (isGoInternal
-      ? state.garage[`${minOrMax}_reservation_duration_go_internal`]
-      : state.garage[`${minOrMax}_reservation_duration_go_public`]))
-      || (client ? client[`${minOrMax}_reservation_duration`] : null)
+    const determineDuration = minOrMax => {
+      let duration = null
+      if (state.garage) {
+        if (isGoInternal) {
+          duration = state.garage[`${minOrMax}_reservation_duration_go_internal`]
+        } else if (state.garage.is_public) {
+          duration = state.garage[`${minOrMax}_reservation_duration_go_public`]
+        }
+      }
+
+      if (!duration && client) {
+        duration = client[`${minOrMax}_reservation_duration`]
+      }
+
+      // Make sure it is not undefined.
+      if (!duration) {
+        duration = null
+      }
+
+      return duration
+    }
 
     const minDuration = determineDuration('min')
     const maxDuration = determineDuration('max')
 
     // set min/max duration of garage or of client
-    dispatch(setMinDuration(minDuration))
-    dispatch(setMaxDuration(maxDuration))
+    dispatch(batchActions([
+      setMinDuration(minDuration),
+      setMaxDuration(maxDuration)
+    ], 'NEW_RESERVATION_SET_MIN_MAX'))
     // does reservation meet min/max boundaries
     const diff = moment(state.to, MOMENT_DATETIME_FORMAT).diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'minutes')
     if ((minDuration && diff < minDuration) || (maxDuration && diff > maxDuration)) {
@@ -535,14 +566,12 @@ export function availableUsers(currentUser) {
 
 export function setInitialStore(id) {
   return async (dispatch, getState) => {
-    dispatch(setLoading(true))
-    dispatch(pageBaseActions.setCustomModal(<div>{t([ 'newReservation', 'loading' ])}</div>))
+    dispatch(showLoading())
 
     const availableUsersPromise = availableUsers(getState().pageBase.current_user)
 
     const editReservationPromise = new Promise((resolve, reject) => {
       if (id) {
-        dispatch(setLoading(true))
         const onSuccess = response => {
           // dispatch(setLoading(false))
           if (response.hasOwnProperty('data')) {
@@ -561,7 +590,7 @@ export function setInitialStore(id) {
       const values = await Promise.all([ availableUsersPromise, editReservationPromise ])
       const users = values[0]
       dispatch(setAvailableUsers(users))
-  
+
       if (values[1] !== undefined) { // if reservation edit set details
         values[1].reservation.ongoing = moment(values[1].reservation.begins_at).isBefore(moment()) // editing ongoing reservation
         dispatch(batchActions([
@@ -570,10 +599,10 @@ export function setInitialStore(id) {
           setFrom(moment(values[1].reservation.begins_at).format(MOMENT_DATETIME_FORMAT)),
           setTo(moment(values[1].reservation.ends_at).format(MOMENT_DATETIME_FORMAT))
         ], 'SET_INFO_ABOUT_RESERVATION'))
-        dispatch(setPlace(values[1].reservation.place))
-        dispatch(setClient(values[1].reservation.client_id))
+        await dispatch(downloadUser(values[1].reservation.user_id, undefined, true))
         await dispatch(downloadGarage(values[1].reservation.place.floor.garage.id, false))
-        dispatch(downloadUser(values[1].reservation.user_id, undefined, true))
+        dispatch(setClient(values[1].reservation.client_id))
+        dispatch(setPlace(values[1].reservation.place))
         if (values[1].reservation.car) {
           values[1].reservation.car.temporary
             ? dispatch(setCarLicencePlate(values[1].reservation.car.licence_plate))
@@ -591,15 +620,11 @@ export function setInitialStore(id) {
         dispatch(formatFrom())
         dispatch(formatTo())
         if (users.length === 1) {
-          dispatch(downloadUser(users[0].id, undefined))
-        } else {
-          hideLoading(dispatch)
+          await dispatch(downloadUser(users[0].id, undefined))
         }
       }
-      dispatch(setLoading(false))
-    } catch (e) {
-      hideLoading(dispatch)
-      throw (e)
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }
@@ -656,7 +681,6 @@ function availableGaragesPromise(userId, reservationId) {
 export function downloadUser(id, rights) {
   return async (dispatch, getState) => {
     const { lastUserWasSaved, reservation } = getState().newReservation
-    dispatch(showLoadingModal(true))
 
     const getUser = userPromise(id)
 
@@ -673,7 +697,7 @@ export function downloadUser(id, rights) {
     } catch (error) {
       // [urgent]TODO: Change or remove error handling.
       console.log(error)
-      dispatch(showLoadingModal(false))
+      dispatch(hideLoading())
       throw error
     }
 
@@ -746,7 +770,6 @@ export function downloadUser(id, rights) {
     }
 
     dispatch(setLastUserWasSaved(id > 0))
-    dispatch(showLoadingModal(false))
   }
 }
 
@@ -1190,6 +1213,7 @@ export function afterPayment(id, success) {
 export function cancelUser() {
   return dispatch => {
     dispatch(setHostName(''))
+    dispatch(setRecurringRule(undefined))
     dispatch({
       type:  NEW_RESERVATION_SET_USER,
       value: undefined
