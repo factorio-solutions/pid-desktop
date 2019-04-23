@@ -23,7 +23,7 @@ import { setCustomModal }  from '../_shared/actions/pageBase.actions'
 import styles from './profile.page.scss'
 import Input from '../_shared/components/input/Input'
 
-const SHOW_CALENDAR_HASH = false
+const SHOW_CALENDAR_HASH = true
 
 class SettingsPage extends Component {
   static propTypes = {
