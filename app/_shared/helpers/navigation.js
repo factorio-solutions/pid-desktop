@@ -1,5 +1,5 @@
 import translate from 'counterpart'
-import { hashHistory } from 'react-router'
+import { history } from '../../_store/configureStore'
 import { composeParameters, parseParameters } from './parseUrlParameters'
 
 
@@ -8,13 +8,14 @@ export function path(dest) {
 }
 
 export function to(dest) {
-  hashHistory.push(path(dest))
+  history.push(path(dest))
 }
 
 export function back() {
-  hashHistory.goBack()
+  history.goBack()
 }
 
 export function changeLanguage(language) {
-  hashHistory.push(`${language}${window.location.hash.substr(4).split('?')[0]}?${composeParameters(parseParameters(window.location.hash))}`)
+  const split = window.location.hash.substr(4).split('?')
+  history.push(`/${language}${split[0]}${split[1] ? '?' + split[1] : ''}`)
 }
