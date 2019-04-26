@@ -5,7 +5,7 @@ import MenuButton from '../buttons/MenuButton'
 // import style    from './VerticalMenu.scss'
 
 
-export default function VerticalMenu({ content, selected, onClick }) {
+const VerticalMenu = ({ content, selected, onClick }) => {
   const prepareMenuButton = (object, index) => {
     const newOnClick = () => {
       onClick()
@@ -20,3 +20,5 @@ export default function VerticalMenu({ content, selected, onClick }) {
     </div>
   )
 }
+
+export default VerticalMenu

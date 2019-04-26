@@ -2,8 +2,7 @@ import React      from 'react'
 
 import styles     from './Logo.scss'
 
-
-export default function Logo({ style = 'rect' }) {
+const Logo = ({ style = 'rect' }) => {
   let errorChecked = false
   const src = `./public/logo/logo-${style}.svg`
   const handleError = e => {
@@ -17,3 +16,5 @@ export default function Logo({ style = 'rect' }) {
     <img className={styles.logo} src={src} onError={handleError} />
   )
 }
+
+export default Logo
