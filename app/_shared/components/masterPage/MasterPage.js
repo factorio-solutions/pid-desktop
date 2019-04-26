@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
+import { Route, Switch } from 'react-router-dom'
 
 import Logo                  from '../logo/Logo'
 import CallToActionButton    from '../buttons/CallToActionButton'
@@ -12,39 +13,51 @@ import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
 import DropdownContent       from '../dropdown/DropdownContent'
 import IconWithCount         from '../iconWithCount/IconWithCount'
 
+import { t } from '../../modules/localization/localization'
+
+
 import * as nav                 from '../../helpers/navigation'
+import { logout }               from '../../actions/login.actions'
 import { changeHints }          from '../../actions/profile.actions'
-import { setShowSecondaryMenu } from '../../actions/pageBase.actions'
+import {
+  setShowSecondaryMenu,
+  analyticsClick,
+  adminClick,
+  initialPageBase
+} from '../../actions/pageBase.actions'
 
 import styles from './MasterPage.scss'
+
+import pageBaseStyles from '../../containers/pageBase/PageBase.scss'
+import PageBase from '../../containers/pageBase/PageBase'
+import OccupancyPage from '../../../occupancy/occupancy.page'
+import ProfilePage from '../../../user/profile.page'
 
 
 class MasterPage extends Component {
   static propTypes = {
-    actions:  PropTypes.object,
-    pageBase: PropTypes.object,
-
-    name:         PropTypes.string,
+    actions:      PropTypes.object,
+    match:        PropTypes.object,
     messageCount: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
     ]),
-    callToAction: PropTypes.array, // [{label, state, onClick}, ... ]
-
-    verticalMenu:     PropTypes.array, // [{label, key, icon, onClick}, ... ]
     verticalSelected: PropTypes.string,
 
     verticalSecondaryMenu:     PropTypes.array, // [{label, key, onClick}, ... ]
     verticalSecondarySelected: PropTypes.string,
     showSecondaryMenu:         PropTypes.bool,
     secondaryMenuBackButton:   PropTypes.object, // {label, onClick}
+    currentUser:               PropTypes.object,
 
-    showHints: PropTypes.bool,
-    hint:      PropTypes.object, // {hint, href}
-
-    profileDropdown:  PropTypes.object, // [ DOMelement, ... ]
-    children:         PropTypes.object,
-    scrollbarVisible: PropTypes.bool
+    hint:                 PropTypes.object, // {hint, href}
+    scrollbarVisible:     PropTypes.bool,
+    garage:               PropTypes.object,
+    isGarageAdmin:        PropTypes.bool,
+    isGarageManager:      PropTypes.bool,
+    isGarageReceptionist: PropTypes.bool,
+    isGarageSecurity:     PropTypes.bool,
+    pid_tarif:            PropTypes.number
   }
 
   constructor(props) {
@@ -52,8 +65,12 @@ class MasterPage extends Component {
     this.state = { menu: false }
   }
 
+  componentDidMount() {
+    this.props.actions.initialPageBase()
+  }
+
   onHamburgerClick = () => {
-    this.setState({ menu: !this.props.pageBase.showSecondaryMenu && !this.state.menu })
+    this.setState({ menu: !this.props.showSecondaryMenu && !this.state.menu })
     this.props.actions.setShowSecondaryMenu(false)
   }
 
@@ -63,33 +80,129 @@ class MasterPage extends Component {
 
   verticalMenuClick = () => this.setState({ menu: false })
 
+  profileDropdown = () => {
+    const {
+      currentUser,
+      actions
+    } = this.props
+    return [
+      (
+        <div className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/profile')}>
+          <i className="icon-profile" aria-hidden="true" />
+          {t([ 'pageBase', 'Profile' ])}
+        </div>
+      ),
+      currentUser && currentUser.pid_admin && (
+        <div className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/pid-admin')}>
+          <i className="fa fa-wrench" aria-hidden="true" />
+          {t([ 'pageBase', 'pidAdmin' ])}
+        </div>
+      ),
+      (
+        <div className={pageBaseStyles.dropdownContent} onClick={actions.logout}>
+          <i className="fa fa-sign-out" aria-hidden="true" />
+          {t([ 'pageBase', 'Logout' ])}
+        </div>
+      )
+    ].filter(field => field)
+  }
+
   secondaryVerticalMenuClick = () => {
     this.setState({ menu: true })
-    this.props.secondaryMenuBackButton.onClick()
+    const { secondaryMenuBackButton } = this.props
+    secondaryMenuBackButton.onClick()
+  }
+
+  renderVerticalMenu = () => {
+    const {
+      garage,
+      isGarageAdmin,
+      isGarageManager,
+      isGarageReceptionist,
+      isGarageSecurity,
+      pid_tarif: pidTariff,
+      actions
+    } = this.props
+    return [
+      // state.current_user && state.current_user.occupancy_garages.length &&
+      {
+        label:   t([ 'pageBase', 'Occupancy' ]),
+        key:     'occupancy',
+        icon:    'icon-occupancy',
+        onClick: () => nav.to('/occupancy')
+      }, // edit preferences in pageBase.action too
+      {
+        label:   t([ 'pageBase', 'Reservation' ]),
+        key:     'reservations',
+        icon:    'icon-reservations',
+        onClick: () => nav.to('/reservations')
+      },
+      (
+        isGarageAdmin
+        || isGarageManager
+        || isGarageReceptionist
+        || isGarageSecurity
+      ) && {
+        label:   t([ 'pageBase', 'Garage' ]),
+        key:     'garage',
+        icon:    'icon-garage',
+        onClick: () => nav.to(`/${garage}/garage`)
+      }, // edit preferences in pageBase.action too
+      (
+        (isGarageAdmin || isGarageManager)
+        && pidTariff >= 2
+      ) && {
+        label:   t([ 'pageBase', 'analytics' ]),
+        key:     'analytics',
+        icon:    'icon-invoices',
+        onClick: actions.analyticsClick
+      },
+      {
+        label:   t([ 'pageBase', 'Admin' ]),
+        key:     'admin',
+        icon:    'icon-admin',
+        onClick: actions.adminClick
+      }
+    ].filter(field => field) // will filter false states out
+  }
+
+  callToAction = () => {
+    const {
+      isGarageAdmin,
+      garage
+    } = this.props
+
+    return [
+      {
+        label:   t([ 'pageBase', 'Create reservation' ]),
+        onClick: () => nav.to('/reservations/newReservation')
+      },
+      isGarageAdmin && {
+        label:   t([ 'pageBase', 'Create contract' ]),
+        onClick: () => nav.to(`/${garage}/admin/clients/newContract`)
+      }
+    ].filter(field => field)
   }
 
   render() {
     const {
+      match,
       actions,
-      name,
-      messageCount,
-      callToAction,
-      verticalMenu,
+      scrollbarVisible,
+      currentUser,
       verticalSelected,
       verticalSecondaryMenu,
       verticalSecondarySelected,
-      showSecondaryMenu,
       secondaryMenuBackButton,
-      showHints,
+      showSecondaryMenu,
       hint,
-      profileDropdown,
-      children,
-      scrollbarVisible
+      messageCount
     } = this.props
 
+    const showHints = currentUser && currentUser.hint
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
-
+    console.log('Path:', `${match.path}/occupancy`)
     return (
       <div>
         <div className={styles.horizontalMenu}>
@@ -103,7 +216,7 @@ class MasterPage extends Component {
           <div className={styles.horizontalMenuContent}>
             <div className={styles.theContent}>
               <div className={styles.callToAction}>
-                {callToAction.map(createCallToActionButton)}
+                {this.callToAction().map(createCallToActionButton)}
               </div>
 
               <div className={styles.user}>
@@ -118,10 +231,10 @@ class MasterPage extends Component {
                   type="dark"
                 />
 
-                <DropdownContent content={profileDropdown} style={styles.profileDropdown}>
+                <DropdownContent content={this.profileDropdown()} style={styles.profileDropdown}>
                   <div className={styles.profile}>
                     <i className="icon-profile" aria-hidden="true" />
-                    <span className={styles.name}>{name}</span>
+                    <span className={styles.name}>{currentUser && currentUser.full_name}</span>
                   </div>
                 </DropdownContent>
               </div>
@@ -132,7 +245,7 @@ class MasterPage extends Component {
         <div className={styles.page}>
           <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
             <GarageSelector />
-            <VerticalMenu content={verticalMenu} selected={verticalSelected} onClick={this.verticalMenuClick} />
+            <VerticalMenu content={this.renderVerticalMenu()} selected={verticalSelected} onClick={this.verticalMenuClick} />
           </div>
 
           <div className={`${styles.secondaryVerticalMenu} ${showSecondaryMenu && styles.shift} ${verticalSecondarySelected === undefined && styles.hideAdmin}`}>
@@ -154,7 +267,12 @@ class MasterPage extends Component {
               </div>
             )}
             <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${scrollbarVisible && styles.scrollbarVisible}`}>
-              {children}
+              <PageBase>
+                <Switch>
+                  <Route path={`${match.path}occupancy`} component={OccupancyPage} />
+                  <Route path={`${match.path}profile`} component={ProfilePage} />
+                </Switch>
+              </PageBase>
             </div>
           </div>
         </div>
@@ -163,7 +281,47 @@ class MasterPage extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const {
+    current_user:      currentUser,
+    selected:          verticalSelected,
+    secondaryMenu:     verticalSecondaryMenu,
+    secondarySelected: verticalSecondarySelected,
+    secondaryMenuBackButton,
+    showSecondaryMenu,
+    hint,
+    garage,
+    isGarageAdmin,
+    isGarageManager,
+    isGarageReceptionist,
+    isGarageSecurity,
+    pid_tarif
+  } = state.pageBase
+  const { count } = state.notifications
+
+  return {
+    currentUser,
+    verticalSelected,
+    verticalSecondaryMenu,
+    verticalSecondarySelected,
+    secondaryMenuBackButton,
+    showSecondaryMenu,
+    hint,
+    garage,
+    isGarageAdmin,
+    isGarageManager,
+    isGarageReceptionist,
+    isGarageSecurity,
+    pid_tarif,
+    messageCount: count
+  }
+}
+
 export default connect(
-  state => ({ pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ changeHints, setShowSecondaryMenu }, dispatch) })
+  mapStateToProps,
+  dispatch => ({
+    actions: bindActionCreators({
+      changeHints, setShowSecondaryMenu, logout, analyticsClick, adminClick, initialPageBase
+    }, dispatch)
+  })
 )(MasterPage)

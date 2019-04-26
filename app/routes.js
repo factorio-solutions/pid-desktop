@@ -1,5 +1,7 @@
 import React from 'react'
-import { Route, IndexRoute, Redirect } from 'react-router-dom'
+import {
+  Route, IndexRoute, Redirect, Switch, HashRouter
+} from 'react-router-dom'
 
 import * as localization from './_shared/modules/localization/localization'
 
@@ -149,8 +151,9 @@ export default function createRoutes(jwt) {
   )
 
   const subRoutes = (
-    <Route>
-      <IndexRoute component={LoginPage} />
+    <Switch>
+      {/* <IndexRoute component={LoginPage} /> */}
+
       <Route path="codeVerification" component={CodeVerificationPage} />
       <Route path="signUpPage" component={SignUpPage} />
       <Route path="resetPassword" component={ResetPasswordPage} />
@@ -242,18 +245,16 @@ export default function createRoutes(jwt) {
       <Route path="pid-admin">
         {adminSubRoutes}
       </Route>
-    </Route>
+      <Route exact path="/en/" component={LoginPage} />
+    </Switch>
   )
 
   return (
-    <Route path="/" component={App}>
-      {/* <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} /> */}
-      <Route exact path="/" component={() => <Redirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} />} />
-      {AVAILABLE_LANGUAGES.map(lang => (
-        <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
-          {subRoutes}
-        </Route>
-      ))}
-    </Route>
+    <HashRouter>
+      <Route path="/">
+        <App jwt={jwt} />
+        {/* <IndexRedirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : ''}`} /> */}
+      </Route>
+    </HashRouter>
   )
 }

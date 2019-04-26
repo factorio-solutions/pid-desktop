@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { ConnectedRouter  } from 'connected-react-router'
@@ -75,10 +75,12 @@ window.onerror = (message, source, lineno, colno, error) => {
 // }
 localforage.getItem('jwt')
   .then(jwt => {
-    render(
+    ReactDOM.render(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Router routes={createRoutes(jwt)} />
+          <Router>
+            {createRoutes(jwt)}
+          </Router>
         </ConnectedRouter>
       </Provider>,
       document.getElementById('root')

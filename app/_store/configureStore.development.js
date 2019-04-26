@@ -4,7 +4,7 @@ import thunk                                      from 'redux-thunk'
 import reduxReset                                 from 'redux-reset'
 import { createLogger }                           from 'redux-logger'
 import { routerMiddleware }                       from 'connected-react-router'
-import { createBrowserHistory }                   from 'history'
+import { createHashHistory }                      from 'history'
 import { enableBatching }                         from 'redux-batched-actions'
 import errorSender  from '../_shared/errors/errorSenderMiddleware/actionErrorHeandlerMiddleware'
 
@@ -14,7 +14,7 @@ import createRootReducer from '../_app/app.reducer'
 //   push
 // }
 
-export const history = createBrowserHistory()
+export const history = createHashHistory()
 const logger = createLogger({
   level:     'info',
   collapsed: true
@@ -37,7 +37,8 @@ export default function configureStore(initialState) {
   }
 
   if (module.hot) {
-    module.hot.accept('../_app/app.reducer', () => store.replaceReducer(require('../_app/app.reducer')) // eslint-disable-line global-require
+    module.hot.accept(
+      '../_app/app.reducer', () => store.replaceReducer(require('../_app/app.reducer')) // eslint-disable-line global-require
     )
   }
 
