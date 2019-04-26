@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import update from 'immutability-helper'
 import moment from 'moment'
 
-import PageBase           from '../_shared/containers/pageBase/PageBase'
 import Localization       from '../_shared/components/localization/Localization'
 import PatternInput       from '../_shared/components/input/PatternInput'
 import Form               from '../_shared/components/form/Form'
@@ -91,7 +90,7 @@ class SettingsPage extends Component {
     )
 
     return (
-      <PageBase>
+      <React.Fragment>
         <div className={styles.parent}>
           <div className={styles.leftColumn}>
             <h2>{t([ 'profile', 'profileSettings' ])}</h2>
@@ -206,7 +205,7 @@ class SettingsPage extends Component {
             </div>
           </div>
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }

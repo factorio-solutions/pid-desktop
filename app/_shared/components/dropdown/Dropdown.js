@@ -118,7 +118,7 @@ export default class Dropdown extends Component {
       return {
         ...item,
         render: (
-          <li key={index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick} >
+          <li key={item.key || index} className={`${index === this.state.selected && styles.selected} ${!show && styles.displayNone}`} onClick={onClick}>
             <label>
               {item.representer ? item.representer(item.label) : lowercaseTrimmedLabel
                 .split(this.state.filter.toLowerCase() || undefined) // split by filter
@@ -130,18 +130,17 @@ export default class Dropdown extends Component {
               }
             </label>
           </li>
-          )
+        )
       }
     })
 
 
     // if object has first: true - then push it to the top
-    const sorter = (a, b) =>
-    (a.order || b.order) ?
-      ((a.order && !b.order) ? -1 : (!a.order && b.order) ? 1 : a.order - b.order) :
-      (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase() ?
-        -1 :
-        ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
+    const sorter = (a, b) => (a.order || b.order)
+      ? ((a.order && !b.order) ? -1 : (!a.order && b.order) ? 1 : a.order - b.order)
+      : (a.label.toString() || '').toLowerCase() < (b.label.toString() || '').toLowerCase()
+        ? -1
+        : ((a.label.toString() || '').toLowerCase() > (b.label.toString() || '').toLowerCase() ? 1 : 0)
 
     if (order) { // order if needed
       lis = lis.sort(sorter)
@@ -156,16 +155,18 @@ export default class Dropdown extends Component {
         this.unhide()
       }
 
-      lis.unshift(<li className={styles.filter}>
-        <input type="search" value={this.state.filter} onChange={filterChange} onFocus={onFocus} onBlur={this.hide} ref={el => { this.filter = el }} />
-        <i className="fa fa-search" aria-hidden="true" />
-      </li>)
+      lis.unshift(
+        <li className={styles.filter} key={`DropdownFilter${Math.random()}`}>
+          <input type="search" value={this.state.filter} onChange={filterChange} onFocus={onFocus} onBlur={this.hide} ref={el => { this.filter = el }} />
+          <i className="fa fa-search" aria-hidden="true" />
+        </li>
+      )
     }
 
     return (
       <div className={styles.dropdownContainter}>
-        {label &&
-          <label>{label}</label>
+        {label
+          && <label>{label}</label>
         }
         <button
           type="button"
@@ -175,7 +176,11 @@ export default class Dropdown extends Component {
           ref={button => { this.button = button }}
         >
           {icon}
-          <span className={styles.marginCorrection}> {this.state.selected === undefined || content[this.state.selected] === undefined ? placeholder : content[this.state.selected].label} </span>
+          <span className={styles.marginCorrection}>
+            {' '}
+            {this.state.selected === undefined || content[this.state.selected] === undefined ? placeholder : content[this.state.selected].label}
+            {' '}
+          </span>
           <i className={`fa fa-caret-down ${style === 'reservation' ? styles.reservationFloat : styles.float} ${content.length > 1 && styles.visible}`} aria-hidden="true" />
         </button>
 

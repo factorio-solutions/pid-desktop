@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import Fingerprint2 from 'fingerprintjs2'
 import localforage from 'localforage'
 
@@ -26,7 +26,13 @@ class LoginPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object,
-    location: PropTypes.object
+    location: PropTypes.object,
+    match:    PropTypes.object
+  }
+
+  constructor(props) {
+    super(props)
+    console.log('loginPage')
   }
 
   async componentDidMount() {
@@ -47,7 +53,7 @@ class LoginPage extends Component {
   home = () => window.location.href = 'https://parkit.direct';
 
   render() {
-    const { actions, state } = this.props
+    const { actions, state, match } = this.props
 
     const isSubmitable = () => { return state.email.valid && state.password.valid }
 
@@ -82,7 +88,6 @@ class LoginPage extends Component {
         />
       </div>
     )
-
     return (
       <MasterPage>
         <div className={styles.loginPage}>
@@ -117,7 +122,8 @@ class LoginPage extends Component {
           <div className={styles.resetPasswordPage}>
             {t([ 'login_page', 'forgot' ])}
             {' '}
-            <Link to={nav.path('/resetPassword')}>{t([ 'login_page', 'proceed' ])}</Link>
+            <NavLink to={`${match.url}resetPassword`}>{t([ 'login_page', 'proceed' ])}</NavLink>
+            <button type="button" onClick={nav.to('/resetPassword')}>Ahoj</button>
           </div>
 
         </div>

@@ -73,6 +73,7 @@ class OccupancyPage extends Component {
   }
 
   render() {
+    console.log('Render Occupancy')
     const {
       state, currentUser, actions, selectedPlace, places, interval
     } = this.props
@@ -143,7 +144,7 @@ class OccupancyPage extends Component {
     ]
 
     return (
-      <PageBase>
+      <React.Fragment>
         <Modal show={state.newReservation}>
           <Form
             onSubmit={this.submitNewReservation}
@@ -254,7 +255,7 @@ class OccupancyPage extends Component {
             />
           </div>
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
