@@ -73,6 +73,7 @@ export default class SearchField extends Component {
           highlight={highlight}
           style={inputStyles}
           readOnly={!show}
+          key="input"
         />
 
         {show
@@ -86,6 +87,7 @@ export default class SearchField extends Component {
                 onClick={this.onUserClick}
                 searchQuery={searchQuery}
                 selectedIndex={selected}
+                key="UserListFist"
               />
             )
             }
@@ -98,6 +100,7 @@ export default class SearchField extends Component {
                   onClick={this.onUserClick}
                   searchQuery={searchQuery}
                   selectedIndex={selected}
+                  key="UserList"
                 />
               )
               }
@@ -105,6 +108,7 @@ export default class SearchField extends Component {
                 className={styles.buttons}
                 buttons={buttons}
                 onClick={downloadUser}
+                key="buttonTable"
               />
             </div>
           </div>

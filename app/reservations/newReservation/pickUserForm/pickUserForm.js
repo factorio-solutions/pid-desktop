@@ -99,6 +99,7 @@ class PickUserForm extends Component {
               separateFirst={usersDropdown.some(user => user.id === state.currentUser.id)}
               user={state.user}
               downloadUser={this.handleDownloadUser}
+              key="SearchField"
             />
           </div>
         )
@@ -108,6 +109,7 @@ class PickUserForm extends Component {
         && (
           <ExistingUserForm
             editable={!ongoing || isSecretary}
+            key="ExistingUserForm"
           />
         )
         }
@@ -118,12 +120,13 @@ class PickUserForm extends Component {
             editable={!ongoing || isSecretary}
             onetime={onetime}
             resetButton={this.renderResetButton}
+            key="NewUserForm"
           />
         )
         }
         {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid
         && (
-          <div className={styles.fillInContact}>
+          <div className={styles.fillInContact} key="infoMessage">
             {t([ 'newReservation', 'fillInContact' ])}
           </div>
         )

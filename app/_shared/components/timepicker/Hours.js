@@ -1,19 +1,29 @@
 import React    from 'react'
+import PropTypes from 'prop-types'
 import styles   from './Timepicker.scss'
 import { t } from '../../modules/localization/localization'
 
 
-export default function Hours({ time, onClick }) {
+function Hours({ time, onClick }) {
   const createHours = () => {
     const hours = Array(4).fill().map((_, row) => Array(6).fill().map((_, col) => (6 * row) + col))
 
-    return hours.map((hoursRow, index) => {
-      const createRow = hour => (<td key={hour} className={`${styles.clickable}`} onClick={() => onClick(hour)}>
-        <div className={parseInt(time.split(':')[0], 10) === hour && styles.selected}>{hour}</div>
-      </td>)
-
-      return <tr key={index} className={styles.pickerRow}>{hoursRow.map(createRow)}</tr>
-    })
+    return hours.map((hoursRow, index) => (
+      <tr
+        key={index}
+        className={styles.pickerRow}
+      >
+        {hoursRow.map(hour => (
+          <td key={hour} className={`${styles.clickable}`} onClick={() => onClick(hour)}>
+            <div
+              className={parseInt(time.split(':')[0], 10) === hour ? styles.selected : undefined}
+            >
+              {hour}
+            </div>
+          </td>
+        ))}
+      </tr>
+    ))
   }
 
   return (
@@ -31,3 +41,10 @@ export default function Hours({ time, onClick }) {
     </div>
   )
 }
+
+Hours.propTypes = {
+  time:    PropTypes.string,
+  onClick: PropTypes.func
+}
+
+export default Hours

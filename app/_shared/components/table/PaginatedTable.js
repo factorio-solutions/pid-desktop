@@ -156,11 +156,14 @@ export default class PaginatedTable extends Component {
       .map((o, i) => i + 1)
       .slice(page - 1 > PAGE_BUTTONS_ON_THE_SIDE ? page - PAGE_BUTTONS_ON_THE_SIDE - 1 : 0, page + PAGE_BUTTONS_ON_THE_SIDE)
 
-    const renderPageButtons = number => (<RoundButton
-      content={number}
-      onClick={setPage(number)}
-      state={number === page && 'selected'}
-    />)
+    const renderPageButtons = number => (
+      <RoundButton
+        content={number}
+        onClick={setPage(number)}
+        state={number === page && 'selected'}
+        key={`${number}`}
+      />
+    )
 
     return (
       <div className={styles.paginatedTable}>
@@ -180,6 +183,7 @@ export default class PaginatedTable extends Component {
             content={<i className="fa fa-chevron-left" aria-hidden="true" />}
             onClick={prevPage}
             state={page <= 1 && 'disabled'}
+            key="previousPageButton"
           />
           {page - 1 > PAGE_BUTTONS_ON_THE_SIDE && '...'}
           {pages.map(renderPageButtons)}
@@ -188,6 +192,7 @@ export default class PaginatedTable extends Component {
             content={<i className="fa fa-chevron-right" aria-hidden="true" />}
             onClick={nextPage}
             state={page >= pageCount && 'disabled'}
+            key="nextPageButton"
           />
         </div>
       </div>

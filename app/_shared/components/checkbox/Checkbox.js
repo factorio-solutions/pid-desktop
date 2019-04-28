@@ -15,9 +15,15 @@ export default class Checkbox extends Component {
     ])
   }
 
+  constructor(props) {
+    super(props)
+
+    this.checkbox = React.createRef()
+  }
+
   onEnter = event => event.keyCode === 13 && this.props.onChange(!event.target.checked)
 
-  onClick = event => this.props.onChange(this.checkbox.checked)
+  onChange = () => this.props.onChange(this.checkbox.current.checked)
 
   render() {
     const { children, checked, style } = this.props
@@ -25,9 +31,22 @@ export default class Checkbox extends Component {
     const styles = typeof style === 'object' ? style : defaultStyles
 
     return (
-      <div role="presentation" className={styles.checkbox} onClick={this.onClick} onKeyUp={this.onEnter} >
-        <input type="checkbox" checked={checked} ref={ref => this.checkbox = ref}/>
-        <label><span style={{ verticalAlign: 'bottom' }}>{children}</span></label>
+      <div
+        role="presentation"
+        className={styles.checkbox}
+        onClick={this.onChange}
+        onKeyUp={this.onEnter}
+      >
+        <input
+          type="checkbox"
+          checked={checked}
+          ref={this.checkbox}
+          onChange={this.onChange}
+          key="checkbox"
+        />
+        <label key="label">
+          <span style={{ verticalAlign: 'bottom' }}>{children}</span>
+        </label>
       </div>
     )
   }

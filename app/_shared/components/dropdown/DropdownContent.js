@@ -37,19 +37,21 @@ export default class DropdownContent extends Component {
     const { content, style, children } = this.props
 
     const hideDropdown = row => {
-      return { ...row,
+      return {
+        ...row,
         onClick: () => {
           this.hide()
           row.onClick()
-        } }
+        }
+      }
     }
 
     return (
       <div>
-        <div onClick={this.toggleDropdown}>
+        <div key="Div_on_click" onClick={this.toggleDropdown}>
           {children}
         </div>
-        <ul className={`${style} ${styles.drop} ${styles.hidden} ${styles.displayNone}`} ref={ul => { this.ul = ul }}>
+        <ul key="content_list" className={`${style} ${styles.drop} ${styles.hidden} ${styles.displayNone}`} ref={ul => { this.ul = ul }}>
           {content.map(hideDropdown)}
         </ul>
       </div>

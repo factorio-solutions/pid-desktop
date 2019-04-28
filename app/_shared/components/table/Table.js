@@ -326,15 +326,23 @@ export default class Table extends Component {
 
     return (
       <div>
-        {searchBox && <div className={styles.searchBox}>
-          <input type="search" onChange={onFilterChange} value={this.state.search} />
-          <i className="fa fa-search" aria-hidden="true" />
-        </div>}
+        {searchBox && (
+          <div className={styles.searchBox} key="searchBoxDiv">
+            <input
+              type="search"
+              onChange={onFilterChange}
+              value={this.state.search}
+              key="searchInput"
+            />
+            <i className="fa fa-search" aria-hidden="true" key="searchIcon" />
+          </div>
+        )}
 
         <table
           className={styles.rtTable}
           style={{ transform: `scale(${this.state.scale})` }}
           ref={table => { this.table = table }}
+          key="PaginatedTable"
         >
           <thead>
             <tr>

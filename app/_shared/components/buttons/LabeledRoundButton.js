@@ -18,12 +18,17 @@ function LabeledRoundButton({
 }) {
   return (
     <div className={` ${styles.labeledRoundButton}`}>
-      <RoundButton {...buttonProps} size={size} />
+      <RoundButton
+        {...buttonProps}
+        size={size}
+        key="roundButton"
+      />
       {/* {label && hint && */}
       {label
       && (
         <div
           className={size ? styles[`${size}Text`] : styles.normalText}
+          key="label"
         >
           {label}
         </div>

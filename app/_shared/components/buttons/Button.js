@@ -41,7 +41,7 @@ function Button({
         ? onDisabledClick
         : handleClick
       }
-      onMouseDown={state !== 'disabled' && onMouseDown}
+      onMouseDown={state !== 'disabled' ? onMouseDown : undefined}
     >
       {content}
     </button>
