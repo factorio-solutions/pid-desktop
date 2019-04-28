@@ -6,7 +6,11 @@ import { windowLength } from './OccupancyOverview'
 import styles from './OccupancyOverview.scss'
 import Tooltip from '../tooltip/Tooltip'
 
-import { dateAdd, formatDateToDateTimeString, floorTime as floorTimeDate } from '../../helpers/dateHelper'
+import {
+  dateAdd,
+  formatDateToDateTimeString,
+  floorTime as floorTimeDate
+} from '../../helpers/dateHelper'
 
 import { MOMENT_DATETIME_FORMAT, floorTime as floorTimeMoment } from '../../helpers/time'
 
@@ -37,7 +41,10 @@ export default class Place extends Component {
       showTime:  false,
       time:      null
     }
-    this.mouseIsOverTimeout
+    this.mouseIsOverTimeout = null
+    this.td = React.createRef()
+    this.row = React.createRef()
+    this.newReservationDiv = React.createRef()
   }
 
   componentDidMount() {
@@ -97,7 +104,7 @@ export default class Place extends Component {
     const newWidth = mouseDown ? width : 0
     const newLeft = mouseDown
       ? left
-      : event.clientX - this.td.getBoundingClientRect().left
+      : event.clientX - this.td.current.getBoundingClientRect().left
     document.body.addEventListener('mousemove', this.onMouseMove)
     document.body.addEventListener('mouseup', this.onMouseUp)
 
@@ -112,14 +119,14 @@ export default class Place extends Component {
   onMouseMove = event => {
     const { left, mouseDown } = this.state
     if (mouseDown) {
-      const newWidth = event.clientX - this.td.getBoundingClientRect().left - left
+      const newWidth = event.clientX - this.td.current.getBoundingClientRect().left - left
       const range = this.calculateReservationFromDiv(undefined, newWidth)
       const reservations = this.reservationsInRange(range.beginsAt, range.endsAt)
 
       if (!reservations.length) {
         this.setState(state => ({
           ...state,
-          width: event.clientX - this.td.getBoundingClientRect().left - state.left
+          width: event.clientX - this.td.current.getBoundingClientRect().left - state.left
         }))
       }
     }
@@ -131,7 +138,7 @@ export default class Place extends Component {
       place
     } = this.props
 
-    if (this.newReservationDiv) {
+    if (this.newReservationDiv.current) {
       const range = this.calculateReservationFromDiv()
       const reservations = this.reservationsInRange(range.beginsAt, range.endsAt)
 
@@ -154,17 +161,17 @@ export default class Place extends Component {
     .sort((a, b) => a.begins_at.diff(b.begins_at))
 
   calculateReservationFromDiv = (left, width) => {
-    if (!this.newReservationDiv) {
+    if (!this.newReservationDiv.current) {
       return {}
     }
 
     const { from, duration } = this.props
-    const divDimensions = this.newReservationDiv.getBoundingClientRect()
+    const divDimensions = this.newReservationDiv.current.getBoundingClientRect()
     // in days
     const dur = windowLength(duration)
-    const tdDimensions = this.td.getBoundingClientRect()
+    const tdDimensions = this.td.current.getBoundingClientRect()
     const rowWidth = (
-      this.row.getBoundingClientRect().width
+      this.row.current.getBoundingClientRect().width
       - tdDimensions.width
     )
 
@@ -200,7 +207,7 @@ export default class Place extends Component {
     const cellCount = windowLengthInDay * (duration === 'day' ? 24 : 2)
 
     const cellWidth = rendered && place.reservations.length > 0
-      ? this.row.childNodes[1].getBoundingClientRect().width
+      ? this.row.current.childNodes[1].getBoundingClientRect().width
       : 0
 
     const cellsState = {
@@ -216,7 +223,7 @@ export default class Place extends Component {
       onReservationClick,
       showDetails,
       currentUser,
-      row: this.row
+      row: this.row.current
     }
 
     const style = {
@@ -228,7 +235,7 @@ export default class Place extends Component {
       <tr
         key={`${place.floor}-${place.label}`}
         className={styles.bottomBorder}
-        ref={row => { this.row = row }}
+        ref={this.row}
         onMouseDown={this.onMouseDown}
         onMouseMove={this.onTrMouseMove}
         onMouseLeave={this.onTrMouseLeave}
@@ -236,14 +243,14 @@ export default class Place extends Component {
       >
         <td
           className={styles.rightBorder}
-          ref={ref => this.td = ref}
+          ref={this.td}
         >
           {`${place.floor}/${place.label}`}
           {mouseDown && (
             <div
               className={styles.newReservation}
               style={style}
-              ref={div => { this.newReservationDiv = div }}
+              ref={this.newReservationDiv}
             />
           )}
           <Tooltip
