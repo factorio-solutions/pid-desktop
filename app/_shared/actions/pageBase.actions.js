@@ -29,6 +29,7 @@ export const PAGE_BASE_SET_IS_GARAGE_ADMIN = 'PAGE_BASE_SET_IS_GARAGE_ADMIN'
 export const PAGE_BASE_SET_IS_GARAGE_MANAGER = 'PAGE_BASE_SET_IS_GARAGE_MANAGER'
 export const PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST = 'PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST'
 export const PAGE_BASE_SET_IS_GARAGE_SECURITY = 'PAGE_BASE_SET_IS_GARAGE_SECURITY'
+export const PAGE_BASE_SHOW_SCROLL_BAR = 'PAGE_BASE_SHOW_SCROLL_BAR'
 
 export const setSelected = actionFactory(PAGE_BASE_SELECTED)
 export const setSecondaryMenu = actionFactory(PAGE_BASE_SECONDARY_MENU)
@@ -45,6 +46,7 @@ export const setIsGarageAdmin = actionFactory(PAGE_BASE_SET_IS_GARAGE_ADMIN)
 export const setIsGarageManager = actionFactory(PAGE_BASE_SET_IS_GARAGE_MANAGER)
 export const setIsGarageReceptionist = actionFactory(PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST)
 export const setIsGarageSecurity = actionFactory(PAGE_BASE_SET_IS_GARAGE_SECURITY)
+export const setShowScrollbar = actionFactory(PAGE_BASE_SHOW_SCROLL_BAR)
 
 export function setHint(hint, href) {
   return {
@@ -603,7 +605,7 @@ export function toAdmin() {
 
 export function toAddFeatures() {
   return dispatch => {
-    const hash = window.location.hash
+    const { hash } = window.location
 
     switch (true) { // MainMenu
       case (contains(hash, 'gateModuleOrder')):

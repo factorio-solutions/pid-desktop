@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
 
-import PageBase           from '../_shared/containers/pageBase/PageBase'
 import PaginatedTable     from '../_shared/components/table/PaginatedTable'
 import RoundButton        from '../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../_shared/components/buttons/LabeledRoundButton'
@@ -217,7 +216,7 @@ class ReservationsPage extends Component {
     ]
 
     return (
-      <PageBase>
+      <React.Fragment>
         <ReservationNewNoteModal
           editReservationNote={actions.editReservationNote}
           setNewNoteReservation={actions.setNewNoteReservation}
@@ -244,13 +243,14 @@ class ReservationsPage extends Component {
             transformData={this.transformData}
             schema={reservationsTableScheme}
             variables={{ past: state.past }}
-            findId={parseInt(this.props.params.id, 10)}
+            findId={parseInt(this.props.match.params.id, 10)}
             storeState={actions.setState}
             state={state.tableState}
           />
         </div>
         <div className={styles.centerDiv}>
           <LabeledRoundButton
+            key="createReservation"
             content={<span className="fa fa-plus" aria-hidden="true" />}
             onClick={this.newReservation}
             type="action"
@@ -258,6 +258,7 @@ class ReservationsPage extends Component {
             label={t([ 'reservations', 'createReservationLabel' ])}
           />
           <LabeledRoundButton
+            key="bulkRemovel"
             content={<span className="fa fa-times" aria-hidden="true" />}
             onClick={() => nav.to('/reservations/bulkRemoval')}
             type="remove"
@@ -265,7 +266,7 @@ class ReservationsPage extends Component {
             label={t([ 'reservations', 'bulkRemovalLabel' ])}
           />
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }

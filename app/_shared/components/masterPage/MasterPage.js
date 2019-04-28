@@ -27,10 +27,13 @@ import {
 } from '../../actions/pageBase.actions'
 
 import styles from './MasterPage.scss'
-
 import pageBaseStyles from '../../containers/pageBase/PageBase.scss'
+
 import PageBase from '../../containers/pageBase/PageBase'
+import NotificationsPage from '../../../notifications/notifications.page'
 import OccupancyPage from '../../../occupancy/occupancy.page'
+import ReservationsRoute from '../../../reservations/reservationsRoute'
+import GaragePage from '../../../garage/garage.page'
 import ProfilePage from '../../../user/profile.page'
 
 
@@ -51,13 +54,13 @@ class MasterPage extends Component {
     currentUser:               PropTypes.object,
 
     hint:                 PropTypes.object, // {hint, href}
-    scrollbarVisible:     PropTypes.bool,
     garage:               PropTypes.object,
     isGarageAdmin:        PropTypes.bool,
     isGarageManager:      PropTypes.bool,
     isGarageReceptionist: PropTypes.bool,
     isGarageSecurity:     PropTypes.bool,
-    pid_tarif:            PropTypes.number
+    pid_tarif:            PropTypes.number,
+    showScrollbar:        PropTypes.bool
   }
 
   constructor(props) {
@@ -87,19 +90,19 @@ class MasterPage extends Component {
     } = this.props
     return [
       (
-        <div className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/profile')}>
+        <div key="showProfile" className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/profile')}>
           <i className="icon-profile" aria-hidden="true" />
           {t([ 'pageBase', 'Profile' ])}
         </div>
       ),
       currentUser && currentUser.pid_admin && (
-        <div className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/pid-admin')}>
+        <div key="toPIDAdmin" className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/pid-admin')}>
           <i className="fa fa-wrench" aria-hidden="true" />
           {t([ 'pageBase', 'pidAdmin' ])}
         </div>
       ),
       (
-        <div className={pageBaseStyles.dropdownContent} onClick={actions.logout}>
+        <div key="logout" className={pageBaseStyles.dropdownContent} onClick={actions.logout}>
           <i className="fa fa-sign-out" aria-hidden="true" />
           {t([ 'pageBase', 'Logout' ])}
         </div>
@@ -188,7 +191,7 @@ class MasterPage extends Component {
     const {
       match,
       actions,
-      scrollbarVisible,
+      showScrollbar,
       currentUser,
       verticalSelected,
       verticalSecondaryMenu,
@@ -202,7 +205,6 @@ class MasterPage extends Component {
     const showHints = currentUser && currentUser.hint
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
-    console.log('Path:', `${match.path}/occupancy`)
     return (
       <div>
         <div className={styles.horizontalMenu}>
@@ -232,9 +234,9 @@ class MasterPage extends Component {
                 />
 
                 <DropdownContent content={this.profileDropdown()} style={styles.profileDropdown}>
-                  <div className={styles.profile}>
-                    <i className="icon-profile" aria-hidden="true" />
-                    <span className={styles.name}>{currentUser && currentUser.full_name}</span>
+                  <div key="userName" className={styles.profile}>
+                    <i key="icon" className="icon-profile" aria-hidden="true" />
+                    <span key="name" className={styles.name}>{currentUser && currentUser.full_name}</span>
                   </div>
                 </DropdownContent>
               </div>
@@ -245,7 +247,7 @@ class MasterPage extends Component {
         <div className={styles.page}>
           <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
             <GarageSelector />
-            <VerticalMenu content={this.renderVerticalMenu()} selected={verticalSelected} onClick={this.verticalMenuClick} />
+            <VerticalMenu content={this.renderVerticalMenu()} url={window.location.hash} onClick={this.verticalMenuClick} />
           </div>
 
           <div className={`${styles.secondaryVerticalMenu} ${showSecondaryMenu && styles.shift} ${verticalSecondarySelected === undefined && styles.hideAdmin}`}>
@@ -266,11 +268,14 @@ class MasterPage extends Component {
                 <div dangerouslySetInnerHTML={{ __html: hint.hint }} />
               </div>
             )}
-            <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${scrollbarVisible && styles.scrollbarVisible}`}>
+            <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${showScrollbar && styles.scrollbarVisible}`}>
               <PageBase>
                 <Switch>
-                  <Route path={`${match.path}occupancy`} component={OccupancyPage} />
-                  <Route path={`${match.path}profile`} component={ProfilePage} />
+                  <Route path={`${match.path}/notifications`} component={NotificationsPage} />
+                  <Route path={`${match.path}/occupancy`} component={OccupancyPage} />
+                  <Route path={`${match.path}/reservations`} component={ReservationsRoute} />
+                  <Route path={`${match.path}/:id/garage`} component={GaragePage} />
+                  <Route path={`${match.path}/profile`} component={ProfilePage} />
                 </Switch>
               </PageBase>
             </div>
@@ -295,7 +300,8 @@ const mapStateToProps = state => {
     isGarageManager,
     isGarageReceptionist,
     isGarageSecurity,
-    pid_tarif
+    pid_tarif,
+    showScrollbar
   } = state.pageBase
   const { count } = state.notifications
 
@@ -313,7 +319,8 @@ const mapStateToProps = state => {
     isGarageReceptionist,
     isGarageSecurity,
     pid_tarif,
-    messageCount: count
+    messageCount: count,
+    showScrollbar
   }
 }
 

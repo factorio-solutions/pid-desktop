@@ -30,6 +30,7 @@ import {
 } from '../_shared/helpers/time'
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
+import { setShowScrollbar }       from '../_shared/actions/pageBase.actions'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t, getLanguage }         from '../_shared/modules/localization/localization'
 
@@ -41,7 +42,7 @@ export const ACCENT_REGEX = new RegExp('[ěĚšŠčČřŘžŽýÝáÁíÍéÉď�
 class NewReservationPage extends Component {
   static propTypes = {
     state:           PropTypes.object,
-    params:          PropTypes.object,
+    match:           PropTypes.object,
     actions:         PropTypes.object,
     isSubmittable:   PropTypes.bool,
     freePlaces:      PropTypes.array,
@@ -52,24 +53,30 @@ class NewReservationPage extends Component {
   }
 
   componentDidMount() {
-    const { actions, params, state } = this.props
+    const { actions, match, state } = this.props
     if (
       state.reservation
       && (
-        (typeof params.id === 'undefined' && state.reservation.id)
-        || state.reservation.id !== params.id
+        (typeof match.params.id === 'undefined' && state.reservation.id)
+        || state.reservation.id !== match.params.id
       )
     ) {
       actions.clearForm()
     }
-    actions.setInitialStore(params.id)
+    actions.setInitialStore(match.params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
+    actions.setShowScrollbar(true)
+  }
+
+  componentWillUnmount() {
+    const { actions } = this.props
+    actions.setShowScrollbar(false)
   }
 
   handleBack = () => nav.to('/reservations')
 
   toOverview = () => {
-    const { state, params, actions } = this.props
+    const { state, match: { params }, actions } = this.props
 
     if (params.id) {
       actions.submitReservation(+params.id)
@@ -129,87 +136,85 @@ class NewReservationPage extends Component {
     )
 
     return (
-      <PageBase scrollbarVisible>
-        <div className={styles.parent}>
-          <Modal content={errorContent} show={state.error !== undefined} />
+      <div className={styles.parent}>
+        <Modal content={errorContent} show={state.error !== undefined} />
 
-          <div className={styles.leftCollumn}>
-            <div className={styles.padding}>
-              <Form
-                onSubmit={this.toOverview}
-                onReset={this.clearForm}
-                submitable={isSubmittable}
-                onHighlight={actions.toggleHighlight}
-              >
-                <PickUserForm />
+        <div className={styles.leftCollumn}>
+          <div className={styles.padding}>
+            <Form
+              onSubmit={this.toOverview}
+              onReset={this.clearForm}
+              submitable={isSubmittable}
+              onHighlight={actions.toggleHighlight}
+            >
+              <PickUserForm />
 
-                {
-                  state.user
-                  && (
-                    (
-                      state.name.valid
-                      && state.email.valid
-                      && state.phone.valid
-                      && state.user.id === -1
-                    )
-                    || (state.name.valid && state.user.id === -2)
-                    || state.user.id > 0
+              {
+                state.user
+                && (
+                  (
+                    state.name.valid
+                    && state.email.valid
+                    && state.phone.valid
+                    && state.user.id === -1
                   )
-                  && (
-                    <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
+                  || (state.name.valid && state.user.id === -2)
+                  || state.user.id > 0
+                )
+                && (
+                  <SectionWithHeader header={t([ 'newReservation', 'placeSelector' ])}>
 
-                      <GarageClientForm
-                        editable={isEditable}
-                      />
+                    <GarageClientForm
+                      editable={isEditable}
+                    />
 
-                      {state.garage && (
-                        <div>
-                          <DateTimeForm editable={isEditable} />
+                    {state.garage && (
+                      <div>
+                        <DateTimeForm editable={isEditable} />
 
-                          <PlaceForm freePlaces={freePlaces} />
-                        </div>
-                      )}
-                    </SectionWithHeader>
-                  )
-                }
-                {state.user && state.garage && (
-                  <PriceSmsNote
-                    accentRegex={ACCENT_REGEX}
-                    selectedClient={selectedClient}
-                    outOfTimeCredit={outOfTimeCredit}
-                  />
-                )}
-              </Form>
-              {/* Has to be outside of Form tag because it contains Form */}
-              <Recurring
-                show={state.showRecurring}
-                rule={state.recurringRule}
-                onSubmit={actions.setRecurringRule}
-                preferedFrom={moment(state.from, MOMENT_DATETIME_FORMAT)}
-                showDays={moment(state.to, MOMENT_DATETIME_FORMAT)
-                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
-                showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT)
-                  .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
-              />
-            </div>
-          </div>
-
-          <div className={styles.rightCollumn}>
-            <div className={!state.showMap && styles.displayNone}>
-              {state.loading
-                ? <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div>
-                : (
-                  <GarageLayout
-                    floors={floors}
-                    placeId={state.placeId}
-                    onPlaceClick={this.handlePlaceClick}
-                  />
+                        <PlaceForm freePlaces={freePlaces} />
+                      </div>
+                    )}
+                  </SectionWithHeader>
                 )
               }
-            </div>
+              {state.user && state.garage && (
+                <PriceSmsNote
+                  accentRegex={ACCENT_REGEX}
+                  selectedClient={selectedClient}
+                  outOfTimeCredit={outOfTimeCredit}
+                />
+              )}
+            </Form>
+            {/* Has to be outside of Form tag because it contains Form */}
+            <Recurring
+              show={state.showRecurring}
+              rule={state.recurringRule}
+              onSubmit={actions.setRecurringRule}
+              preferedFrom={moment(state.from, MOMENT_DATETIME_FORMAT)}
+              showDays={moment(state.to, MOMENT_DATETIME_FORMAT)
+                .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'days') < 1}
+              showWeeks={moment(state.to, MOMENT_DATETIME_FORMAT)
+                .diff(moment(state.from, MOMENT_DATETIME_FORMAT), 'weeks') < 1}
+            />
           </div>
         </div>
-      </PageBase>
+
+        <div className={styles.rightCollumn}>
+          <div className={state.showMap ? undefined : styles.displayNone}>
+            {state.loading
+              ? <div className={styles.loading}>{t([ 'newReservation', 'loadingGarage' ])}</div>
+              : (
+                <GarageLayout
+                  floors={floors}
+                  placeId={state.placeId}
+                  onPlaceClick={this.handlePlaceClick}
+                />
+              )
+            }
+          </div>
+        </div>
+      </div>
     )
   }
 }
@@ -266,5 +271,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  dispatch => ({ actions: bindActionCreators(newReservationActions, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...newReservationActions, setShowScrollbar }, dispatch) })
 )(NewReservationPage)
