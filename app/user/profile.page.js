@@ -126,7 +126,10 @@ class SettingsPage extends Component {
               </div>
 
               <div>
-                <Checkbox checked={pageBase.current_user && !pageBase.current_user.hide_public_garages} onChange={actions.toggleShowPublicGarages}>
+                <Checkbox
+                  checked={pageBase.current_user && !pageBase.current_user.hide_public_garages}
+                  onChange={actions.toggleShowPublicGarages}
+                >
                   {<span>{t([ 'profile', 'showPublicGarages' ])}</span>}
                 </Checkbox>
               </div>
@@ -155,7 +158,7 @@ class SettingsPage extends Component {
           </div>
           <div className={styles.rightColumn}>
             {/* HACK: sccale the letters size. */}
-            <div style={{ transform: 'scale(1.4)', 'transform-origin': '0 0' }}>
+            <div style={{ transform: 'scale(1.4)', transformOrigin: '0 0' }}>
               <h3>
                 {t([ 'profile', 'myGarages' ])}
                 {':'}

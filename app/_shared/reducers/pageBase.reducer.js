@@ -16,7 +16,8 @@ import {
   PAGE_BASE_SET_IS_GARAGE_ADMIN,
   PAGE_BASE_SET_IS_GARAGE_MANAGER,
   PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
-  PAGE_BASE_SET_IS_GARAGE_SECURITY
+  PAGE_BASE_SET_IS_GARAGE_SECURITY,
+  PAGE_BASE_SHOW_SCROLL_BAR
 }  from '../actions/pageBase.actions'
 
 const defaultState = {
@@ -45,7 +46,8 @@ const defaultState = {
   isGarageReceptionist: false, // is receptionist of currently selected garage?
   isGarageSecurity:     false, // is security of currently selected garage?
   garage:               undefined,
-  pid_tarif:            undefined // tarif of currently selected garage
+  pid_tarif:            undefined, // tarif of currently selected garage
+  showScrollbar:        false
 }
 
 
@@ -167,6 +169,12 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         isGarageSecurity: action.value
+      }
+
+    case PAGE_BASE_SHOW_SCROLL_BAR:
+      return {
+        ...state,
+        showScrollbar: action.value
       }
 
     default:

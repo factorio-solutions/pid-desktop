@@ -123,7 +123,7 @@ class LoginPage extends Component {
             {t([ 'login_page', 'forgot' ])}
             {' '}
             <NavLink to={`${match.url}resetPassword`}>{t([ 'login_page', 'proceed' ])}</NavLink>
-            <button type="button" onClick={nav.to('/resetPassword')}>Ahoj</button>
+            {/* <button type="button" onClick={nav.to('/resetPassword')}>Ahoj</button> */}
           </div>
 
         </div>

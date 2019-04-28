@@ -11,13 +11,13 @@ import App from './_app/App'
 // ////////////////////////////REGULAR PAGES/////////////////////////////////////
 // //////////////////////////////////////////////////////////////////////////////
 // login pages
-import LoginPage            from './user/login.page'
+import LoginPage            from './user/login.page' // Done
 import CodeVerificationPage from './user/codeVerification.page'
 import SignUpPage           from './user/signUp.page'
 import ResetPasswordPage    from './user/resetPassword.page'
 
 // user profile and notifications
-import ProfilePage       from './user/profile.page'
+import ProfilePage       from './user/profile.page' // Done
 import CarUsersPage      from './user/cars/users.page'
 import NewCarPage        from './user/cars/newCar.page'
 import NotificationsPage from './notifications/notifications.page'
@@ -32,7 +32,7 @@ import NewReservationOverviewPage from './reservations/newReservationOverview.pa
 import BulkRemovalReservationPage from './reservations/bulkRemoval.page'
 
 // occupancy page
-import OccupancyPage from './occupancy/occupancy.page'
+import OccupancyPage from './occupancy/occupancy.page' // Done
 
 // garage in main menu
 import GaragePage from './garage/garage.page'
@@ -158,24 +158,24 @@ export default function createRoutes(jwt) {
       <Route path="signUpPage" component={SignUpPage} />
       <Route path="resetPassword" component={ResetPasswordPage} />
 
-      <Route path="profile" component={ProfilePage} />
+      {/* <Route path="profile" component={ProfilePage} />  */}
       <Route path="profile/cars/:id/users" component={CarUsersPage} />
       <Route path="profile/cars/newCar" component={NewCarPage} />
       <Route path="profile/cars/:id/edit" component={NewCarPage} />
-      <Route path="notifications" component={NotificationsPage} />
+      {/* <Route path="notifications" component={NotificationsPage} /> */}
 
       {/* <Route path="dashboard" component={DashboardPage} /> */}
 
-      <Route path="reservations" component={ReservationsPage} />
-      <Route path="reservations/find/:id" component={ReservationsPage} />
-      <Route path="reservations/newReservation" component={NewReservationPage} />
-      <Route path="reservations/:id/edit" component={NewReservationPage} />
-      <Route path="reservations/newReservation/overview" component={NewReservationOverviewPage} />
-      <Route path="reservations/bulkRemoval" component={BulkRemovalReservationPage} />
+      {/* <Route path="reservations" component={ReservationsPage} /> */}
+      {/* <Route path="reservations/find/:id" component={ReservationsPage} /> */}
+      {/* <Route path="reservations/newReservation" component={NewReservationPage} /> */}
+      {/* <Route path="reservations/:id/edit" component={NewReservationPage} /> */}
+      {/* <Route path="reservations/newReservation/overview" component={NewReservationOverviewPage} /> */}
+      {/* <Route path="reservations/bulkRemoval" component={BulkRemovalReservationPage} /> */}
 
-      <Route path="occupancy" component={OccupancyPage} />
+      {/* <Route path="occupancy" component={OccupancyPage} /> */}
 
-      <Route path=":id/garage" component={GaragePage} />
+      {/* <Route path=":id/garage" component={GaragePage} /> */}
 
       <Route path=":id/issues" component={IssuesPage} />
 

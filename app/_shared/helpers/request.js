@@ -34,7 +34,7 @@ export default async function request(
             window.location.hash.substring(4, window.location.hash.indexOf('?'))
           )
         }
-        nav.to('/')
+        nav.to('/login')
       }
     } else if (xmlHttp.readyState === 4) { // not 401 status
       try {

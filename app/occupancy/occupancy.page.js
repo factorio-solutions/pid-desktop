@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import moment from 'moment'
 
-import PageBase          from '../_shared/containers/pageBase/PageBase'
 import Dropdown          from '../_shared/components/dropdown/Dropdown'
 import OccupancyOverview from '../_shared/components/occupancyOverview/OccupancyOverview'
 import TabMenu           from '../_shared/components/tabMenu/TabMenu'

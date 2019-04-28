@@ -7,7 +7,6 @@ import * as localization from '../_shared/modules/localization/localization'
 import { AVAILABLE_LANGUAGES } from '../routes'
 
 import LoginPage from '../user/login.page'
-import OccupancyPage from '../occupancy/occupancy.page'
 import MasterPage from '../_shared/components/masterPage/MasterPage'
 
 
@@ -29,15 +28,9 @@ export default class App extends PureComponent {
             exact
             path="/"
             component={() => {
-              console.log('redirect')
-              return <Redirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : 'login'}`} />
+              return <Redirect to={`${AVAILABLE_LANGUAGES[0]}/${jwt ? 'occupancy/' : 'login/'}`} />
             }}
           />
-          {/* {AVAILABLE_LANGUAGES.map(lang => (
-            <Route key={lang} path={lang} onEnter={() => { localization.changeLanguage(lang) }}>
-              {subRoutes}
-            </Route>
-          ))} */}
 
           <Route
             path="/:lang"
@@ -47,13 +40,14 @@ export default class App extends PureComponent {
                 path
               }
             }) => {
-              console.log('path:', path)
-              localization.changeLanguage(params.lang)
+              if (params.lang !== localization.getLanguage()) {
+                localization.changeLanguage(params.lang)
+              }
               return (
                 <Switch>
                   <Route path={`${path}/login`} component={LoginPage} />
 
-                  <Route path={`${path}/`} component={MasterPage} />
+                  <Route path={`${path}`} component={MasterPage} />
                 </Switch>
               )
             }}
