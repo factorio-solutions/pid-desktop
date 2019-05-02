@@ -15,7 +15,7 @@ export function parseParameters(url) {
 
 export function composeParameters(obj) {
   return Object.keys(obj)
-  .filter(key => key !== '_k' && key !== '') // remove empty keys, Router hashes
-  .map(key => encodeURI(`${key}=${obj[key]}`))
-  .join('&')
+    .filter(key => key !== '_k' && key !== '') // remove empty keys, Router hashes
+    .map(key => encodeURI(`${key}=${obj[key]}`))
+    .join('&')
 }

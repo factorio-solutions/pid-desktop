@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase          from '../_shared/containers/pageBase/PageBase'
-import RoundButton       from '../_shared/components/buttons/RoundButton'
-import GarageLayout      from '../_shared/components/garageLayout/GarageLayout'
-import Form              from '../_shared/components/form/Form'
-import Modal             from '../_shared/components/modal/Modal'
-import PickUserForm      from './newReservation/pickUserForm/pickUserForm'
-import GarageClientForm  from './newReservation/garageClientForm'
-import PlaceForm         from './newReservation/placeForm'
-import PriceSmsNote      from './newReservation/priceSmsNote'
-import DateTimeForm      from './newReservation/dateTimeForm'
-import Recurring         from '../_shared/components/recurring/Recurring'
-import SectionWithHeader from '../_shared/components/wrapers/SectionWithHeader'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+import RoundButton        from '../_shared/components/buttons/RoundButton'
+import GarageLayout       from '../_shared/components/garageLayout/GarageLayout'
+import Form               from '../_shared/components/form/Form'
+import Modal              from '../_shared/components/modal/Modal'
+import PickUserForm       from './newReservation/pickUserForm/pickUserForm'
+import GarageClientForm   from './newReservation/garageClientForm'
+import PlaceForm          from './newReservation/placeForm'
+import PriceSmsNote       from './newReservation/priceSmsNote'
+import DateTimeForm       from './newReservation/dateTimeForm'
+import Recurring          from '../_shared/components/recurring/Recurring'
+import SectionWithHeader  from '../_shared/components/wrapers/SectionWithHeader'
 import {
   getIsSubmittable,
   getFreePlaces,
@@ -30,7 +30,7 @@ import {
 } from '../_shared/helpers/time'
 
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
-import { setShowScrollbar }       from '../_shared/actions/pageBase.actions'
+import { toReservations }         from '../_shared/actions/pageBase.actions'
 import * as nav                   from '../_shared/helpers/navigation'
 import { t, getLanguage }         from '../_shared/modules/localization/localization'
 
@@ -65,12 +65,6 @@ class NewReservationPage extends Component {
     }
     actions.setInitialStore(match.params.id)
     actions.setLanguage(getLanguage()) // Initialize language of communication
-    actions.setShowScrollbar(true)
-  }
-
-  componentWillUnmount() {
-    const { actions } = this.props
-    actions.setShowScrollbar(false)
   }
 
   handleBack = () => nav.to('/reservations')
@@ -269,7 +263,16 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  dispatch => ({ actions: bindActionCreators({ ...newReservationActions, setShowScrollbar }, dispatch) })
-)(NewReservationPage)
+const mapActionsToProps = dispatch => ({
+  actions: bindActionCreators(newReservationActions, dispatch)
+})
+
+const enhancers = compose(
+  withMasterPageConf(toReservations('newReservation')),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
+)
+
+export default enhancers(NewReservationPage)

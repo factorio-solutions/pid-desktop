@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase                 from '../../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Table                    from '../../_shared/components/table/Table'
 import RoundButton              from '../../_shared/components/buttons/RoundButton'
 import InvitationReminderButton from '../../_shared/components/buttons/InvitationReminderButton'
@@ -12,6 +13,7 @@ import LabeledRoundButton       from '../../_shared/components/buttons/LabeledRo
 
 import * as carUserActions from '../../_shared/actions/carUsers.actions'
 import { setCar }          from '../../_shared/actions/inviteUser.actions'
+import { toProfile }       from '../../_shared/actions/pageBase.actions'
 import * as nav            from '../../_shared/helpers/navigation'
 import { t }               from '../../_shared/modules/localization/localization'
 
@@ -23,18 +25,21 @@ class CarUsersPage extends Component {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
     params:   PropTypes.object,
-    actions:  PropTypes.object
+    actions:  PropTypes.object,
+    match:    PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.initCarUsers(this.props.params.id)
+    const { actions, match: { params } } = this.props
+    actions.initCarUsers(params.id)
   }
 
   onBack = () => nav.to('/profile')
 
   addCarUserClick = () => {
-    this.props.actions.setCar(this.props.params.id)
-    nav.to(`/${this.props.pageBase.garage}/admin/users/invite`)
+    const { actions, pageBase, match: { params } } = this.props
+    actions.setCar(params.id)
+    nav.to(`/${pageBase.garage}/admin/users/invite`)
   }
 
 
@@ -49,9 +54,9 @@ class CarUsersPage extends Component {
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' },
       {
         key:         'created_at',
-title:       t([ 'clientUsers', 'memberSince' ]),
-comparator:  'date',
-representer: o => (
+        title:       t([ 'clientUsers', 'memberSince' ]),
+        comparator:  'date',
+        representer: o => (
           <span>
             { moment(o).format('ddd DD.MM.YYYY')}
             {' '}
@@ -116,30 +121,33 @@ representer: o => (
     const data = state.users.map(carUser => ({ ...carUser.user, created_at: carUser.created_at, spoiler: renderSpoiler(carUser) }))
 
     return (
-      <PageBase>
-        <div>
-          <Table schema={schema} data={data} />
+      <React.Fragment>
+        <Table schema={schema} data={data} />
 
-          {state.pending_users.length > 0 && (
-            <div>
-              <h2>{t([ 'clientUsers', 'pendingUsers' ])}</h2>
-              <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
-            </div>
-          )}
-
-          <div className={styles.addButton}>
-            <div style={{ float: 'left' }}>
-              <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={this.onBack} />
-            </div>
-            <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.addCarUserClick} type="action" size="big" state={!state.car.admin && 'disabled'} />
+        {state.pending_users.length > 0 && (
+          <div>
+            <h2>{t([ 'clientUsers', 'pendingUsers' ])}</h2>
+            <Table schema={schemaPending} data={state.pending_users.map(renderPendingSpoiler)} />
           </div>
+        )}
+
+        <div className={styles.addButton}>
+          <div style={{ float: 'left' }}>
+            <RoundButton content={<span className="fa fa-chevron-left" aria-hidden="true" />} onClick={this.onBack} />
+          </div>
+          <RoundButton content={<span className="fa fa-plus" aria-hidden="true" />} onClick={this.addCarUserClick} type="action" size="big" state={!state.car.admin && 'disabled'} />
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.carUsers, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...carUserActions, setCar }, dispatch) })
-)(CarUsersPage)
+const enhancers = compose(
+  withMasterPageConf(toProfile('carsUsers')),
+  connect(
+    state => ({ state: state.carUsers, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators({ ...carUserActions, setCar }, dispatch) })
+  )
+)
+
+export default enhancers(CarUsersPage)

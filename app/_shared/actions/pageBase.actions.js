@@ -1,5 +1,6 @@
 import React     from 'react'
 import translate from 'counterpart'
+import { batchActions } from 'redux-batched-actions'
 
 import ConfirmModal from '../components/modal/ConfirmModal'
 import AlertModal   from '../components/modal/AlertModal'
@@ -48,7 +49,9 @@ export const setIsGarageReceptionist = actionFactory(PAGE_BASE_SET_IS_GARAGE_REC
 export const setIsGarageSecurity = actionFactory(PAGE_BASE_SET_IS_GARAGE_SECURITY)
 export const setShowScrollbar = actionFactory(PAGE_BASE_SHOW_SCROLL_BAR)
 
-export function setHint(hint, href) {
+const defaultEmptyArray = []
+
+export function setHint(hint, href = 'https://www.youtube.com/') {
   return {
     type:  PAGE_BASE_SET_HINT,
     value: { hint, href }
@@ -112,29 +115,28 @@ export function setGarage(value) {
   }
 }
 
-const secondaryMenuClickFactort = (dispatch, path) => () => {
+const secondaryMenuClickFactory = path => () => {
   nav.to(path)
-  dispatch(setShowSecondaryMenu(false))
 }
 
 function prepareAdminSecondaryMenu() {
   return (dispatch, getState) => {
-    const garage = getState().pageBase.garage
+    const { garage } = getState().pageBase
     const state = getState().pageBase
 
     return [
-      { label: t([ 'pageBase', 'Invoices' ]), key: 'invoices', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/invoices`) },
-      { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/clients`) },
+      { label: t([ 'pageBase', 'Invoices' ]), key: 'invoices', onClick: secondaryMenuClickFactory(`/${garage}/admin/invoices`) },
+      { label: t([ 'pageBase', 'Clients' ]), key: 'clients', onClick: secondaryMenuClickFactory(`/${garage}/admin/clients`) },
       state.isGarageAdmin
-      && { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/modules/goPublic`) },
+      && { label: t([ 'pageBase', 'Modules' ]), key: 'modules', onClick: secondaryMenuClickFactory(`/${garage}/admin/modules/goPublic`) },
       (state.isGarageAdmin || state.isGarageManager)
-      && { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/garageSetup/general`) },
-      { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/users`) },
+      && { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactory(`/${garage}/admin/garageSetup/general`) },
+      { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactory(`/${garage}/admin/users`) },
       state.isGarageAdmin
-      && { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/finance`) },
+      && { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactory(`/${garage}/admin/finance`) },
       //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/pidSettings`)} }
       state.isGarageAdmin
-      && { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/activityLog`) }
+      && { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactory(`/${garage}/admin/activityLog`) }
     ].filter(field => field !== false)
   }
 }
@@ -143,9 +145,9 @@ function prepareAnalyticsSecondaryMenu(state) {
   const { garage } = state
 
   return [
-    (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'garageTurnover' ]), key: 'garageTurnover', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/garageTurnover`) },
-    (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'reservations' ]), key: 'reservationsAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/reservationsAnalytics`) },
-    (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'places' ]), key: 'placesAnalytics', onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/placesAnalytics`) }
+    (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'garageTurnover' ]), key: 'garageTurnover', onClick: secondaryMenuClickFactory(`/${garage}/analytics/garageTurnover`) },
+    (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'reservations' ]), key: 'reservationsAnalytics', onClick: secondaryMenuClickFactory(`/${garage}/analytics/reservationsAnalytics`) },
+    (state.isGarageAdmin || state.isGarageManager) && { label: t([ 'pageBase', 'places' ]), key: 'placesAnalytics', onClick: secondaryMenuClickFactory(`/${garage}/analytics/placesAnalytics`) }
     //  , state.isGarageAdmin && {label: t(['pageBase', 'payments']),       key: "paymentsAnalytics",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/paymentsAnalytics`) }
     //  , state.isGarageAdmin && {label: t(['pageBase', 'gates']),          key: "gatesAnalytics",         onClick: secondaryMenuClickFactort(dispatch, `/${garage}/analytics/gatesAnalytics`) }
   ].filter(field => field !== false)
@@ -196,7 +198,9 @@ export function fetchCurrentUser() {
         merchant_ids:      user.csob_payment_templates.map(template => template.merchant_id),
         occupancy_garages: response.data.occupancy_garages
       }))
-      if (response.data.current_user.language !== translate.getLocale()) nav.changeLanguage(response.data.current_user.language)
+      if (response.data.current_user.language !== translate.getLocale()) {
+        nav.changeLanguage(response.data.current_user.language)
+      }
     }
     request(onSuccess, GET_CURRENT_USER)
   }
@@ -226,12 +230,15 @@ export function fetchGarages(goToDashboard = true) {
 }
 
 
-function setAll(selected, secondaryMenu, secondarySelected, hint, href) {
+function setAll(selected, secondaryMenu, secondarySelected, hint, href, showSecondaryMenu = false) {
   return dispatch => {
-    dispatch(setSelected(selected))
-    dispatch(setSecondaryMenu(secondaryMenu))
-    dispatch(setSecondaryMenuSelected(secondarySelected))
-    dispatch(setHint(hint, href))
+    dispatch(batchActions([
+      setSelected(selected),
+      setShowSecondaryMenu(showSecondaryMenu),
+      setSecondaryMenu(secondaryMenu),
+      setSecondaryMenuSelected(secondarySelected),
+      setHint(hint, href)
+    ], 'MASTER_PAGE_SET_ALL'))
   }
 }
 
@@ -259,13 +266,13 @@ export function toReservations(subPage) {
         hint = t([ 'pageBase', 'reservationsHint' ])
     }
 
-    dispatch(setAll('reservations', [], undefined, hint, 'https://www.youtube.com/'))
+    dispatch(setAll('reservations', defaultEmptyArray, undefined, hint, 'https://www.youtube.com/'))
   }
 }
 
 export function toOccupancy() {
   return dispatch => {
-    dispatch(setAll('occupancy', [], undefined, t([ 'pageBase', 'OccupancyOverviewHint' ]), 'https://www.youtube.com/'))
+    dispatch(setAll('occupancy', defaultEmptyArray, undefined, t([ 'pageBase', 'OccupancyOverviewHint' ]), 'https://www.youtube.com/'))
   }
 }
 
@@ -273,7 +280,7 @@ export function toGarage() {
   return (dispatch, getState) => {
     const state = getState().pageBase
     if (state.isGarageAdmin || state.isGarageManager || state.isGarageReceptionist || state.isGarageSecurity) {
-      dispatch(setAll('garage', [], undefined, t([ 'pageBase', 'garagesHint' ]), 'https://www.youtube.com/'))
+      dispatch(setAll('garage', defaultEmptyArray, undefined, t([ 'pageBase', 'garagesHint' ]), 'https://www.youtube.com/'))
     } else {
       nav.to('/occupancy')
     }
@@ -327,7 +334,7 @@ export function toAnalytics(subPage) {
           break
       }
 
-      dispatch(setAll('analytics', prepareAnalyticsSecondaryMenu(state), secondarySelected, hint, hintVideo))
+      dispatch(setAll('analytics', prepareAnalyticsSecondaryMenu(state), secondarySelected, hint, hintVideo, true))
     } else {
       nav.to('/occupancy') // not accessible for this user
     }
@@ -596,7 +603,7 @@ export function toAdmin(subPage) {
         break
     }
 
-    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo))
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
   }
 }
 
@@ -630,40 +637,40 @@ export function toAddFeatures() {
   }
 }
 
-export function toProfile() {
+export function toProfile(subPage) {
   return dispatch => {
-    const hash = window.location.hash
     // let secondarySelected = undefined
-    // let hint = undefined
+    let hint = ''
     // let hintVideo = undefined
 
-    switch (true) { // MainMenu
-      case (contains(hash, 'cars') && contains(hash, 'users')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'carUsersHint' ]), 'https://www.youtube.com/'))
+    switch (subPage) { // MainMenu
+      case 'carsUsers':
+        hint = t([ 'pageBase', 'carUsersHint' ])
         break
-      case (contains(hash, 'cars') && contains(hash, 'newCar')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'newCarHint' ]), 'https://www.youtube.com/'))
+      case 'carsNewCar':
+        hint = t([ 'pageBase', 'newCarHint' ])
         break
-      case (contains(hash, 'cars') && contains(hash, 'edit')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'editCarHint' ]), 'https://www.youtube.com/'))
+      case 'carsEdit':
+        hint = t([ 'pageBase', 'editCarHint' ])
         break
       default:
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'settingsHint' ]), 'https://www.youtube.com/'))
+        hint = t([ 'pageBase', 'settingsHint' ])
         break
     }
+    dispatch(setAll(undefined, defaultEmptyArray, undefined, hint, 'https://www.youtube.com/'))
   }
 }
 
 export function toNotifications() {
   return dispatch => {
-    dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'notificationsHint' ]), 'https://www.youtube.com/'))
+    dispatch(setAll(undefined, defaultEmptyArray, undefined, t([ 'pageBase', 'notificationsHint' ]), 'https://www.youtube.com/'))
   }
 }
 
 
 export function initialPageBase() {
   return (dispatch, getState) => {
-    const hash = window.location.hash
+    const { hash } = window.location
 
     if (!contains(hash, 'admin') && !contains(hash, 'analytics')) {
       dispatch(setShowSecondaryMenu(false))

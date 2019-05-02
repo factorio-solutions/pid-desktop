@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 
+import withMasterPageConf from '../hoc/withMasterPageConf'
 import Form     from '../_shared/components/form/Form'
 import Checkbox from '../_shared/components/checkbox/Checkbox'
 
@@ -10,7 +11,7 @@ import * as nav                   from '../_shared/helpers/navigation'
 import { parseParameters }        from '../_shared/helpers/parseUrlParameters'
 import { t }                      from '../_shared/modules/localization/localization'
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
-import { setGarage }              from '../_shared/actions/pageBase.actions'
+import { setGarage, toReservations } from '../_shared/actions/pageBase.actions'
 
 import styles from './newReservationOverview.page.scss'
 
@@ -28,7 +29,9 @@ class NewReservationOverviewPage extends Component {
   }
 
   componentDidMount() {
-    const { location, actions, pageBaseActions, match } = this.props
+    const {
+      location, actions, pageBaseActions, match
+    } = this.props
     const query = parseParameters(location.search)
     if (query.hasOwnProperty('garage_id')) {
       const garageId = parseInt(query.garage_id, 10)
@@ -70,11 +73,47 @@ class NewReservationOverviewPage extends Component {
       if (floor && place) {
         return (
           <div>
-            <span className={styles.label}>{t([ 'newReservationOverview', 'garage' ])}: </span>
+            <span className={styles.label}>
+              {t([ 'newReservationOverview', 'garage' ])}
+
+
+
+
+
+
+
+
+:
+{' '}
+            </span>
             <span>{state.garage.name}</span>
-            <span className={styles.label}>{t([ 'newReservationOverview', 'floor' ])}: </span>
+            <span className={styles.label}>
+              {t([ 'newReservationOverview', 'floor' ])}
+
+
+
+
+
+
+
+
+:
+{' '}
+            </span>
             <span>{floor.label}</span>
-            <span className={styles.label}>{t([ 'newReservationOverview', 'place' ])}: </span>
+            <span className={styles.label}>
+              {t([ 'newReservationOverview', 'place' ])}
+
+
+
+
+
+
+
+
+:
+{' '}
+            </span>
             <span>{place.label}</span>
           </div>
         )
@@ -206,10 +245,19 @@ class NewReservationOverviewPage extends Component {
   }
 }
 
-export default connect(
-  state => ({ state: state.newReservation, pageBase: state.pageBase }),
-  dispatch => ({
-    actions:         bindActionCreators(newReservationActions, dispatch),
-    pageBaseActions: bindActionCreators({ setGarage }, dispatch)
-  })
-)(NewReservationOverviewPage)
+const mapStateToProps = state => ({ state: state.newReservation, pageBase: state.pageBase })
+
+const mapActionsToProps = dispatch => ({
+  actions:         bindActionCreators(newReservationActions, dispatch),
+  pageBaseActions: bindActionCreators({ setGarage }, dispatch)
+})
+
+const enhancers = compose(
+  withMasterPageConf(toReservations('overview')),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
+)
+
+export default enhancers(NewReservationOverviewPage)

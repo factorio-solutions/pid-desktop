@@ -291,7 +291,7 @@ const mapActionsToProps = dispatch => ({
 })
 
 const enhancers = compose(
-  withMasterPageConf(() => toReservations('reservations')),
+  withMasterPageConf(toReservations('reservations')),
   connect(
     mapStateToProps,
     mapActionsToProps

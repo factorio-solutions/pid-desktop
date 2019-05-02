@@ -11,7 +11,7 @@ const withMasterPageConf = (WrappedComponent, action) => {
     componentDidMount() {
       const { dispatch } = this.props
 
-      dispatch(action())
+      dispatch(action)
     }
 
     render() {

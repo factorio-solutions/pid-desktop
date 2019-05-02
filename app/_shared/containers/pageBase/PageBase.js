@@ -6,12 +6,8 @@ import Modal       from '../../components/modal/Modal'
 import RoundButton from '../../components/buttons/RoundButton'
 
 import { t }    from '../../modules/localization/localization'
-import * as nav from '../../helpers/navigation'
-
-import styles from './PageBase.scss'
 
 import * as pageBaseActions from '../../actions/pageBase.actions'
-import { logout }           from '../../actions/login.actions'
 
 
 class PageBase extends Component {
@@ -32,29 +28,8 @@ class PageBase extends Component {
 
   render() {
     const {
-      state, actions, notifications, scrollbarVisible, children
+      state, actions, notifications, children
     } = this.props
-
-    const profileDropdown = [
-      (
-        <div className={styles.dropdownContent} onClick={() => nav.to('/profile')}>
-          <i className="icon-profile" aria-hidden="true" />
-          {t([ 'pageBase', 'Profile' ])}
-        </div>
-      ),
-      state.current_user && state.current_user.pid_admin && (
-        <div className={styles.dropdownContent} onClick={() => nav.to('/pid-admin')}>
-          <i className="fa fa-wrench" aria-hidden="true" />
-          {t([ 'pageBase', 'pidAdmin' ])}
-        </div>
-      ),
-      (
-        <div className={styles.dropdownContent} onClick={actions.logout}>
-          <i className="fa fa-sign-out" aria-hidden="true" />
-          {t([ 'pageBase', 'Logout' ])}
-        </div>
-      )
-    ].filter(field => field)
 
     const notificationsModalClick = () => actions.setShowModal(false)
 
@@ -115,5 +90,5 @@ class PageBase extends Component {
 
 export default connect(
   state => ({ state: state.pageBase, notifications: state.notifications }),
-  dispatch => ({ actions: bindActionCreators({ ...pageBaseActions, logout }, dispatch) })
+  dispatch => ({ actions: bindActionCreators(pageBaseActions, dispatch) })
 )(PageBase)

@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import update from 'immutability-helper'
 import moment from 'moment'
+
+import withMasterPageConf from '../hoc/withMasterPageConf'
 
 import Localization       from '../_shared/components/localization/Localization'
 import PatternInput       from '../_shared/components/input/PatternInput'
@@ -17,12 +19,12 @@ import Documents          from '../admin/garageSetup/legalDocuments/documents'
 import * as nav            from '../_shared/helpers/navigation'
 import { t }               from '../_shared/modules/localization/localization'
 import * as profileActions from '../_shared/actions/profile.actions'
-import { setCustomModal }  from '../_shared/actions/pageBase.actions'
+import { setCustomModal, toProfile }  from '../_shared/actions/pageBase.actions'
 
 import styles from './profile.page.scss'
 import Input from '../_shared/components/input/Input'
 
-const SHOW_CALENDAR_HASH = false
+const SHOW_CALENDAR_HASH = true
 
 class SettingsPage extends Component {
   static propTypes = {
@@ -213,7 +215,12 @@ class SettingsPage extends Component {
   }
 }
 
-export default connect(
-  state => ({ state: state.profile, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...profileActions, setCustomModal }, dispatch) })
-)(SettingsPage)
+const enhancers = compose(
+  withMasterPageConf(toProfile()),
+  connect(
+    state => ({ state: state.profile, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators({ ...profileActions, setCustomModal }, dispatch) })
+  )
+)
+
+export default enhancers(SettingsPage)

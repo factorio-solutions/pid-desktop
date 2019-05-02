@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
+
+import withMasterPageConf from '../../hoc/withMasterPageConf'
 
 import PageBase from '../../_shared/containers/pageBase/PageBase'
 import Input    from '../../_shared/components/input/Input'
@@ -10,6 +12,7 @@ import Form     from '../../_shared/components/form/Form'
 import * as nav           from '../../_shared/helpers/navigation'
 import { t }              from '../../_shared/modules/localization/localization'
 import * as newCarActions from '../../_shared/actions/newCar.actions'
+import { toProfile } from '../../_shared/actions/pageBase.actions'
 
 import styles from './newCar.page.scss'
 
@@ -18,17 +21,24 @@ class NewCarPage extends Component {
   static propTypes = {
     state:   PropTypes.object,
     actions: PropTypes.object,
-    params:  PropTypes.object
+    match:   PropTypes.object
   }
 
   componentDidMount() {
-    this.props.params.id && this.props.actions.initCar(this.props.params.id)
+    const { actions, match: { params } } = this.props
+    params.id && actions.initCar(params.id)
   }
 
-  submitForm = () => this.checkSubmitable() && this.props.actions.submitNewCar(this.props.params.id)
+  submitForm = () => {
+    const { actions, match: { params } } = this.props
+    if (this.checkSubmittable()) {
+      actions.submitNewCar(params.id)
+    }
+  }
+
   goBack = () => nav.to('/profile')
 
-  checkSubmitable = () => {
+  checkSubmittable = () => {
     const { state } = this.props
     if (state.name === '') return false
     if (state.licence_plate === '') return false
@@ -46,7 +56,7 @@ class NewCarPage extends Component {
         <div>
           <Form
             onSubmit={this.submitForm}
-            submitable={this.checkSubmitable()}
+            submitable={this.checkSubmittable()}
             onBack={this.goBack}
             onHighlight={actions.toggleHighlight}
           >
@@ -86,7 +96,7 @@ class NewCarPage extends Component {
               placeholder={t([ 'newCar', 'modelPlaceholder' ])}
               highlight={state.highlight}
             />
-            
+
             <input
               type="checkbox"
               checked={state.lpg || false}
@@ -134,7 +144,12 @@ class NewCarPage extends Component {
   }
 }
 
-export default connect(
-  state => ({ state: state.newCar }),
-  dispatch => ({ actions: bindActionCreators(newCarActions, dispatch) })
-)(NewCarPage)
+const enhancers = compose(
+  withMasterPageConf(toProfile(window.location.hash.includes('edit') ? 'carsEdit' : 'carsNewCar')),
+  connect(
+    state => ({ state: state.newCar }),
+    dispatch => ({ actions: bindActionCreators(newCarActions, dispatch) })
+  )
+)
+
+export default enhancers(NewCarPage)

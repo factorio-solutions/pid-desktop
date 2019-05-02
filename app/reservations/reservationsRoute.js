@@ -7,18 +7,20 @@ import NewReservationPage from './newReservation.page'
 import ReservationsBulkRemoval from './bulkRemoval.page'
 import NewReservationOverviewPage from './newReservationOverview.page'
 
-const reservationsRoute = ({ match }) => (
-  <Switch>
-    <Route exact path={`${match.path}/newReservation`} component={NewReservationPage} />
-    <Route path={`${match.path}/:id/edit`} component={NewReservationPage} />
-    <Route path={`${match.path}/newReservation/overview`} component={NewReservationOverviewPage} />
+function reservationsRoute({ match }) {
+  return (
+    <Switch>
+      <Route exact path={`${match.path}/newReservation`} component={NewReservationPage} />
+      <Route path={`${match.path}/:id/edit`} component={NewReservationPage} />
+      <Route path={`${match.path}/newReservation/overview`} component={NewReservationOverviewPage} />
 
-    <Route path={`${match.path}/bulkRemoval`} component={ReservationsBulkRemoval} />
+      <Route path={`${match.path}/bulkRemoval`} component={ReservationsBulkRemoval} />
 
-    <Route path={`${match.path}/find/:id`} component={ReservationsPage} />
-    <Route exact path={match.path} component={ReservationsPage} />
-  </Switch>
-)
+      <Route path={`${match.path}/find/:id`} component={ReservationsPage} />
+      <Route exact path={match.path} component={ReservationsPage} />
+    </Switch>
+  )
+}
 
 reservationsRoute.propTypes = {
   match: PropTypes.object

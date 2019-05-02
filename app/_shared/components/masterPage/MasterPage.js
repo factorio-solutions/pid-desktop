@@ -23,7 +23,10 @@ import {
   setShowSecondaryMenu,
   analyticsClick,
   adminClick,
-  initialPageBase
+  initialPageBase,
+  toReservations,
+  toOccupancy,
+  toGarage
 } from '../../actions/pageBase.actions'
 
 import styles from './MasterPage.scss'
@@ -34,7 +37,8 @@ import NotificationsPage from '../../../notifications/notifications.page'
 import OccupancyPage from '../../../occupancy/occupancy.page'
 import ReservationsRoute from '../../../reservations/reservationsRoute'
 import GaragePage from '../../../garage/garage.page'
-import ProfilePage from '../../../user/profile.page'
+import AnalyticsRouter from '../../../analytics/analytics.router'
+import ProfileRoutes from '../../../user/profile.routes'
 
 
 class MasterPage extends Component {
@@ -132,13 +136,19 @@ class MasterPage extends Component {
         label:   t([ 'pageBase', 'Occupancy' ]),
         key:     'occupancy',
         icon:    'icon-occupancy',
-        onClick: () => nav.to('/occupancy')
+        onClick: () => {
+          nav.to('/occupancy')
+          actions.toOccupancy()
+        }
       }, // edit preferences in pageBase.action too
       {
         label:   t([ 'pageBase', 'Reservation' ]),
         key:     'reservations',
         icon:    'icon-reservations',
-        onClick: () => nav.to('/reservations')
+        onClick: () => {
+          nav.to('/reservations')
+          actions.toReservations()
+        }
       },
       (
         isGarageAdmin
@@ -149,7 +159,10 @@ class MasterPage extends Component {
         label:   t([ 'pageBase', 'Garage' ]),
         key:     'garage',
         icon:    'icon-garage',
-        onClick: () => nav.to(`/${garage}/garage`)
+        onClick: () => {
+          nav.to(`/${garage}/garage`)
+          actions.toGarage()
+        }
       }, // edit preferences in pageBase.action too
       (
         (isGarageAdmin || isGarageManager)
@@ -279,7 +292,8 @@ class MasterPage extends Component {
                   <Route path={`${match.path}/occupancy`} component={OccupancyPage} />
                   <Route path={`${match.path}/reservations`} component={ReservationsRoute} />
                   <Route path={`${match.path}/:id/garage`} component={GaragePage} />
-                  <Route path={`${match.path}/profile`} component={ProfilePage} />
+                  <Route path={`${match.path}/:id/analytics`} component={AnalyticsRouter} />
+                  <Route path={`${match.path}/profile`} component={ProfileRoutes} />
                 </Switch>
               </PageBase>
             </div>
@@ -332,7 +346,7 @@ export default connect(
   mapStateToProps,
   dispatch => ({
     actions: bindActionCreators({
-      changeHints, setShowSecondaryMenu, logout, analyticsClick, adminClick, initialPageBase
+      changeHints, setShowSecondaryMenu, logout, analyticsClick, adminClick, initialPageBase, toReservations, toOccupancy, toGarage
     }, dispatch)
   })
 )(MasterPage)

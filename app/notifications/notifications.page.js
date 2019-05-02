@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
 import { MOMENT_DATETIME_FORMAT } from '../_shared/helpers/time'
 
-import PageBase         from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import Table            from '../_shared/components/table/Table'
 // import Form             from '../_shared/components/form/Form'
 import RoundButton      from '../_shared/components/buttons/RoundButton'
@@ -18,6 +19,7 @@ import { t }       from '../_shared/modules/localization/localization'
 import styles from './notifications.page.scss'
 
 import * as notificationsActions from '../_shared/actions/notifications.actions'
+import { toNotifications } from '../_shared/actions/pageBase.actions'
 
 import { convertPriceToString } from '../_shared/helpers/calculatePrice'
 
@@ -166,17 +168,17 @@ class NotificationsPage extends Component {
     })
 
     return (
-      <PageBase>
-        <div>
-          <Table schema={schema} data={data} />
-        </div>
-      </PageBase>
+      <Table schema={schema} data={data} />
     )
   }
 }
 
+const enhancers = compose(
+  withMasterPageConf(toNotifications()),
+  connect(
+    state => ({ state: state.notifications }),
+    dispatch => ({ actions: bindActionCreators(notificationsActions, dispatch) })
+  )
+)
 
-export default connect(
-  state => ({ state: state.notifications }),
-  dispatch => ({ actions: bindActionCreators(notificationsActions, dispatch) })
-)(NotificationsPage)
+export default enhancers(NotificationsPage)
