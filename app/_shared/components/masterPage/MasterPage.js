@@ -247,7 +247,11 @@ class MasterPage extends Component {
         <div className={styles.page}>
           <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
             <GarageSelector />
-            <VerticalMenu content={this.renderVerticalMenu()} url={window.location.hash} onClick={this.verticalMenuClick} />
+            <VerticalMenu
+              content={this.renderVerticalMenu()}
+              verticalSelected={verticalSelected}
+              onClick={this.verticalMenuClick}
+            />
           </div>
 
           <div className={`${styles.secondaryVerticalMenu} ${showSecondaryMenu && styles.shift} ${verticalSecondarySelected === undefined && styles.hideAdmin}`}>

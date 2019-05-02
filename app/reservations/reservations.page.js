@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
 import PaginatedTable     from '../_shared/components/table/PaginatedTable'
@@ -13,6 +13,7 @@ import TabButton          from '../_shared/components/buttons/TabButton'
 import ReservationSpoiler from './reservationsPage/reservationSpoiler'
 import ReservationNewNoteModal from './reservationsPage/modals/reservationNewNoteModal'
 import ReservationInterruptionModal from './reservationsPage/modals/reservationIterruptinModal'
+import withMasterPageConf from '../hoc/withMasterPageConf'
 
 import reservationsTableScheme from './reservationsPage/resevationsTableScheme'
 
@@ -20,7 +21,7 @@ import * as nav from '../_shared/helpers/navigation'
 import * as reservationActions from '../_shared/actions/reservations.actions'
 import * as reservationInteruptionActions from '../_shared/actions/reservationInteruption.actions'
 import { setRecurringReservationId, clearForm } from '../_shared/actions/newReservation.actions'
-import { setCustomModal } from '../_shared/actions/pageBase.actions'
+import { setCustomModal, toReservations } from '../_shared/actions/pageBase.actions'
 import { t } from '../_shared/modules/localization/localization'
 import { GET_RESERVATIONS_PAGINATION_DESKTOP_QUERY } from '../_shared/queries/reservations.queries'
 
@@ -271,21 +272,30 @@ class ReservationsPage extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    state:               state.reservations,
-    interruption:        state.reservationInteruption,
-    newReservationState: state.newReservation,
-    currentUser:         state.pageBase.current_user
-  }),
-  dispatch => ({
-    actions: bindActionCreators({
-      ...reservationActions,
-      setCustomModal,
-      setRecurringReservationId,
-      clearForm
-    }, dispatch),
-    interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
+const mapStateToProps = state => ({
+  state:               state.reservations,
+  interruption:        state.reservationInteruption,
+  newReservationState: state.newReservation,
+  currentUser:         state.pageBase.current_user
+})
 
-  })
-)(ReservationsPage)
+const mapActionsToProps = dispatch => ({
+  actions: bindActionCreators({
+    ...reservationActions,
+    setCustomModal,
+    setRecurringReservationId,
+    clearForm
+  }, dispatch),
+  interruptionActions: bindActionCreators(reservationInteruptionActions, dispatch)
+
+})
+
+const enhancers = compose(
+  withMasterPageConf(() => toReservations('reservations')),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
+)
+
+export default enhancers(ReservationsPage)
