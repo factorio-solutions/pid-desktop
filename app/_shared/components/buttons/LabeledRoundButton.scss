@@ -4,13 +4,15 @@
   display: inline-block;
   min-width: 50px;
   vertical-align: top;
+  text-align: center;
   padding: 5px;
 
   >div {
     padding: 2px 0px;
     font-size: 12px;
     text-align: center;
-    word-wrap: break-word;
+    word-wrap: normal;
+    white-space: pre-wrap;
   }
 
   >button {
