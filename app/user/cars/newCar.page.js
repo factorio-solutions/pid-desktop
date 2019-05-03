@@ -5,7 +5,6 @@ import { bindActionCreators, compose } from 'redux'
 
 import withMasterPageConf from '../../hoc/withMasterPageConf'
 
-import PageBase from '../../_shared/containers/pageBase/PageBase'
 import Input    from '../../_shared/components/input/Input'
 import Form     from '../../_shared/components/form/Form'
 
@@ -52,100 +51,96 @@ class NewCarPage extends Component {
 
 
     return (
-      <PageBase>
-        <div>
-          <Form
-            onSubmit={this.submitForm}
-            submitable={this.checkSubmittable()}
-            onBack={this.goBack}
-            onHighlight={actions.toggleHighlight}
-          >
-            <Input
-              onEnter={this.submitForm}
-              onChange={actions.setName}
-              label={t([ 'newCar', 'name' ]) + ' *'}
-              error={t([ 'newCar', 'nameInvalid' ])}
-              value={state.name}
-              placeholder={t([ 'newCar', 'namePlaceholder' ])}
-              highlight={state.highlight}
-            />
-            <Input
-              onEnter={this.submitForm}
-              onChange={actions.setLicencePlate}
-              label={t([ 'newCar', 'licencePlate' ]) + ' *'}
-              error={t([ 'newCar', 'licencePlateInvalid' ])}
-              value={state.licence_plate}
-              placeholder={t([ 'newCar', 'licencePlatePlaceholder' ])}
-              highlight={state.highlight}
-            />
-            <Input
-              onEnter={this.submitForm}
-              onChange={actions.setColor}
-              label={t([ 'newCar', 'color' ]) + ' *'}
-              error={t([ 'newCar', 'colorInvalid' ])}
-              value={state.color}
-              placeholder={t([ 'newCar', 'colorPlaceholder' ])}
-              highlight={state.highlight}
-            />
-            <Input
-              onEnter={this.submitForm}
-              onChange={actions.setModel}
-              label={t([ 'newCar', 'model' ]) + ' *'}
-              error={t([ 'newCar', 'modelInvalid' ])}
-              value={state.model}
-              placeholder={t([ 'newCar', 'modelPlaceholder' ])}
-              highlight={state.highlight}
-            />
+      <Form
+        onSubmit={this.submitForm}
+        submitable={this.checkSubmittable()}
+        onBack={this.goBack}
+        onHighlight={actions.toggleHighlight}
+      >
+        <Input
+          onEnter={this.submitForm}
+          onChange={actions.setName}
+          label={t([ 'newCar', 'name' ]) + ' *'}
+          error={t([ 'newCar', 'nameInvalid' ])}
+          value={state.name}
+          placeholder={t([ 'newCar', 'namePlaceholder' ])}
+          highlight={state.highlight}
+        />
+        <Input
+          onEnter={this.submitForm}
+          onChange={actions.setLicencePlate}
+          label={t([ 'newCar', 'licencePlate' ]) + ' *'}
+          error={t([ 'newCar', 'licencePlateInvalid' ])}
+          value={state.licence_plate}
+          placeholder={t([ 'newCar', 'licencePlatePlaceholder' ])}
+          highlight={state.highlight}
+        />
+        <Input
+          onEnter={this.submitForm}
+          onChange={actions.setColor}
+          label={t([ 'newCar', 'color' ]) + ' *'}
+          error={t([ 'newCar', 'colorInvalid' ])}
+          value={state.color}
+          placeholder={t([ 'newCar', 'colorPlaceholder' ])}
+          highlight={state.highlight}
+        />
+        <Input
+          onEnter={this.submitForm}
+          onChange={actions.setModel}
+          label={t([ 'newCar', 'model' ]) + ' *'}
+          error={t([ 'newCar', 'modelInvalid' ])}
+          value={state.model}
+          placeholder={t([ 'newCar', 'modelPlaceholder' ])}
+          highlight={state.highlight}
+        />
 
-            <input
-              type="checkbox"
-              checked={state.lpg || false}
-              onChange={actions.setLPG}
-            />
-            {t([ 'newCar', 'lpg' ])}
+        <input
+          type="checkbox"
+          checked={state.lpg || false}
+          onChange={actions.setLPG}
+        />
+        {t([ 'newCar', 'lpg' ])}
 
-            <div className={styles.inlineForm}>
-              <Input
-                onEnter={this.submitForm}
-                step="0.01"
-                onChange={actions.setWidth}
-                label={t([ 'newCar', 'width' ])}
-                error={t([ 'newCar', 'widthInvalid' ])}
-                value={state.width}
-                placeholder={t([ 'newCar', 'widthPlaceholder' ])}
-                type="number"
-              />
-              <Input
-                onEnter={this.submitForm}
-                style={styles.middle}
-                step="0.01"
-                onChange={actions.setHeight}
-                label={t([ 'newCar', 'height' ])}
-                error={t([ 'newCar', 'heightInvalid' ])}
-                value={state.height}
-                placeholder={t([ 'newCar', 'heightPlaceholder' ])}
-                type="number"
-              />
-              <Input
-                onEnter={this.submitForm}
-                step="0.01"
-                onChange={actions.setLength}
-                label={t([ 'newCar', 'length' ])}
-                error={t([ 'newCar', 'lengthInvalid' ])}
-                value={state.length}
-                placeholder={t([ 'newCar', 'lengthPlaceholder' ])}
-                type="number"
-              />
-            </div>
-          </Form>
+        <div className={styles.inlineForm}>
+          <Input
+            onEnter={this.submitForm}
+            step="0.01"
+            onChange={actions.setWidth}
+            label={t([ 'newCar', 'width' ])}
+            error={t([ 'newCar', 'widthInvalid' ])}
+            value={state.width}
+            placeholder={t([ 'newCar', 'widthPlaceholder' ])}
+            type="number"
+          />
+          <Input
+            onEnter={this.submitForm}
+            style={styles.middle}
+            step="0.01"
+            onChange={actions.setHeight}
+            label={t([ 'newCar', 'height' ])}
+            error={t([ 'newCar', 'heightInvalid' ])}
+            value={state.height}
+            placeholder={t([ 'newCar', 'heightPlaceholder' ])}
+            type="number"
+          />
+          <Input
+            onEnter={this.submitForm}
+            step="0.01"
+            onChange={actions.setLength}
+            label={t([ 'newCar', 'length' ])}
+            error={t([ 'newCar', 'lengthInvalid' ])}
+            value={state.length}
+            placeholder={t([ 'newCar', 'lengthPlaceholder' ])}
+            type="number"
+          />
         </div>
-      </PageBase>
+      </Form>
     )
   }
 }
 
 const enhancers = compose(
-  withMasterPageConf(toProfile(window.location.hash.includes('edit') ? 'carsEdit' : 'carsNewCar')),
+  withMasterPageConf(toProfile, { pattern: 'edit', array: [ 'carsEdit', 'carsNewCar' ] }),
   connect(
     state => ({ state: state.newCar }),
     dispatch => ({ actions: bindActionCreators(newCarActions, dispatch) })

@@ -2,6 +2,7 @@ import React     from 'react'
 import translate from 'counterpart'
 import { batchActions } from 'redux-batched-actions'
 
+import { func } from 'prop-types'
 import ConfirmModal from '../components/modal/ConfirmModal'
 import AlertModal   from '../components/modal/AlertModal'
 
@@ -349,7 +350,7 @@ export function toAdmin(subPage) {
     let hintVideo
     const { hash } = window.location
 
-    switch (true) { // MainMenu
+    switch (subPage) { // MainMenu
       case 'editInvoice':
         secondarySelected = 'invoices'
         hint = t([ 'pageBase', 'editInvoiceHint' ])
@@ -603,6 +604,24 @@ export function toAdmin(subPage) {
         break
     }
 
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
+  }
+}
+
+export function toAdminClients(subPage) {
+  return dispatch => {
+    const secondarySelected = 'clients'
+    const hint = t([ 'pageBase', `${subPage || 'clients'}Hint` ])
+    const hintVideo = 'https://www.youtube.com/'
+    console.log(subPage)
+
+    //   hint = t([ 'pageBase', 'clientUsersHint' ])
+    // hint = t([ 'pageBase', 'newClientHint' ])
+    // hint = t([ 'pageBase', 'editClientHint' ])
+    // hint = t([ 'pageBase', 'smsSettingsHint' ])
+    // hint = t([ 'pageBase', 'newContractHint' ])
+    // hint = t([ 'pageBase', 'editContractHint' ])
+    // hint = t([ 'pageBase', 'clientsHint' ])
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
   }
 }

@@ -39,6 +39,7 @@ import ReservationsRoute from '../../../reservations/reservationsRoute'
 import GaragePage from '../../../garage/garage.page'
 import AnalyticsRouter from '../../../analytics/analytics.router'
 import ProfileRoutes from '../../../user/profile.routes'
+import AdminRoutes from '../../../admin/admin.routes'
 
 
 class MasterPage extends Component {
@@ -293,6 +294,7 @@ class MasterPage extends Component {
                   <Route path={`${match.path}/reservations`} component={ReservationsRoute} />
                   <Route path={`${match.path}/:id/garage`} component={GaragePage} />
                   <Route path={`${match.path}/:id/analytics`} component={AnalyticsRouter} />
+                  <Route path={`${match.path}/:id/admin`} component={AdminRoutes} />
                   <Route path={`${match.path}/profile`} component={ProfileRoutes} />
                 </Switch>
               </PageBase>

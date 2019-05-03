@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase from '../../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Table from '../../_shared/components/table/Table'
 import RoundButton from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
@@ -14,6 +15,7 @@ import TabMenu     from '../../_shared/components/tabMenu/TabMenu'
 
 import * as clientUserActions from '../../_shared/actions/clientUsers.actions'
 import { setClient } from '../../_shared/actions/inviteUser.actions'
+import { toAdminClients } from '../../_shared/actions/pageBase.actions'
 import * as nav from '../../_shared/helpers/navigation'
 import { t } from '../../_shared/modules/localization/localization'
 
@@ -21,7 +23,7 @@ import styles from './users.page.scss'
 
 class ClientUsersPage extends Component {
   static propTypes = {
-    params:   PropTypes.object,
+    match:    PropTypes.object,
     state:    PropTypes.object,
     pageBase: PropTypes.object,
     actions:  PropTypes.object
@@ -43,7 +45,7 @@ class ClientUsersPage extends Component {
   componentDidMount() {
     const {
       actions: { initClientUsers },
-      params: { client_id: clientId }
+      match: { params: { client_id: clientId } }
     } = this.props
     initClientUsers(clientId)
   }
@@ -92,7 +94,7 @@ class ClientUsersPage extends Component {
 
   addClientUserClick = () => {
     const {
-      params: { client_id: clientId },
+      match: { params: { client_id: clientId } },
       actions: { setClient: setClientAction },
       pageBase: { garage }
     } = this.props
@@ -103,7 +105,7 @@ class ClientUsersPage extends Component {
   renderPendingSpoiler = user => {
     const {
       actions: { destroyClientUser },
-      params: { client_id: clientId }
+      match: { params: { client_id: clientId } }
     } = this.props
     const returnable = user.user
     const destroyClick = () => { destroyClientUser(clientId, user.user.id) }
@@ -126,7 +128,7 @@ class ClientUsersPage extends Component {
     const {
       actions,
       pageBase,
-      params: { client_id: clientId }
+      match: { params: { client_id: clientId } }
     } = this.props
     const userId = clientUser.user.id
 
@@ -253,7 +255,7 @@ class ClientUsersPage extends Component {
 
     const data = this.getData(currentClientUser)
     return (
-      <PageBase>
+      <React.Fragment>
         <TabMenu left={this.filters()} />
 
         <div className={styles.tableContainer}>
@@ -283,12 +285,17 @@ class ClientUsersPage extends Component {
             label={t([ 'clientUsers', 'addUser' ])}
           />
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.clientUsers, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...clientUserActions, setClient }, dispatch) })
-)(ClientUsersPage)
+const enhancers = compose(
+  withMasterPageConf(toAdminClients('clientUsers')),
+  connect(
+    state => ({ state: state.clientUsers, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators({ ...clientUserActions, setClient }, dispatch) })
+  )
+)
+
+export default enhancers(ClientUsersPage)

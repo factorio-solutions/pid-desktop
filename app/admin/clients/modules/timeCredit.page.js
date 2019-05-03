@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { bindActionCreators, compose }          from 'redux'
 import moment                          from 'moment'
 
-import ClientModules      from './clientModules.page'
+import withMasterPageConf from '../../../hoc/withMasterPageConf'
+
 import Form               from '../../../_shared/components/form/Form'
 import Module             from '../../../_shared/components/module/Module'
 import Switch             from '../../../_shared/components/switch/Switch'
@@ -18,6 +19,7 @@ import { t }                  from '../../../_shared/modules/localization/locali
 import * as timeCreditActions from '../../../_shared/actions/admin.timeCredit.actions'
 import * as clientActions     from '../../../_shared/actions/clients.actions'
 import * as clientUserActions from '../../../_shared/actions/clientUsers.actions'
+import { toAdminClients } from '../../../_shared/actions/pageBase.actions'
 
 import styles from './timeCredit.page.scss'
 
@@ -31,17 +33,25 @@ class TimeCreditPage extends Component {
     actions:            PropTypes.object,
     clientActions:      PropTypes.object,
     clientUsersActions: PropTypes.object,
-    params:             PropTypes.object
+    match:              PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.initTimeCredit(+this.props.params.client_id)
-    this.props.clientUsersActions.initClientUsers(+this.props.params.client_id)
+    const {
+      actions,
+      clientActions,
+      clientUsersActions,
+      clients,
+      pageBase: { garage },
+      match: { params }
+    } = this.props
+    actions.initTimeCredit(+params.client_id)
+    clientUsersActions.initClientUsers(+params.client_id)
 
     // init clients and get the place count
-    if (!this.props.clients.clients.length) {
-      this.props.clientActions.initClients()
-      this.props.pageBase.garage && this.props.clientActions.initGarageContracts()
+    if (!clients.clients.length) {
+      clientActions.initClients()
+      garage && clientActions.initGarageContracts()
     }
   }
 
@@ -54,21 +64,25 @@ class TimeCreditPage extends Component {
     return true
   }
 
-  toggleTimeCredit = () => this.props.actions.toggleTimeCredit(+this.props.params.client_id)
-  submitTimeCredit = () => this.checkSubmitable() && this.props.actions.submitTimeCredit(+this.props.params.client_id)
+  toggleTimeCredit = () => this.props.actions.toggleTimeCredit(+this.props.match.params.client_id)
+
+  submitTimeCredit = () => this.checkSubmitable() && this.props.actions.submitTimeCredit(+this.props.match.params.client_id)
+
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/clients`)
 
   submitOnetimeAddition =() => this.checkOnetimeAdditionSubmitable() && this.props.actions.submitOnetimeAddition(+this.props.params.client_id)
 
   render() {
-    const { state, actions, clients, users } = this.props
-    const client = clients.clients.findById(+this.props.params.client_id)
+    const {
+      state, actions, clients, users, match: { params }
+    } = this.props
+    const client = clients.clients.findById(+params.client_id)
     const hoursThisMonth = ((client && client.place_count) || 0) * 24 * moment().daysInMonth()
     const creditsPossibleToDistribute = hoursThisMonth * (state.pricePerHour <= 0 ? Infinity : state.pricePerHour)
     const creditsDistributed = ((client && client.user_count) || 0) * state.monthlyAmount
 
     return (
-      <ClientModules params={this.props.params}>
+      <React.Fragment>
         <Modal show={state.showModal}>
           <Form
             onSubmit={this.submitOnetimeAddition}
@@ -97,15 +111,17 @@ class TimeCreditPage extends Component {
 
               <h4 className={styles.noMarginBottom}>{t([ 'newClient', 'selectUsers' ])}</h4>
               <div className={styles.users}>
-                {users.users.map(({ user }) => (<Checkbox
-                  checked={state.usersToAdd.includes(user.id)}
-                  onChange={() => actions.toggleUser(user.id)}
-                >
-                  {[ user.full_name,
-                    user.email,
-                    user.phone
-                  ].join(', ')}
-                </Checkbox>))}
+                {users.users.map(({ user }) => (
+                  <Checkbox
+                    checked={state.usersToAdd.includes(user.id)}
+                    onChange={() => actions.toggleUser(user.id)}
+                  >
+                    {[ user.full_name,
+                      user.email,
+                      user.phone
+                    ].join(', ')}
+                  </Checkbox>
+                ))}
               </div>
             </div>
           </Form>
@@ -114,10 +130,12 @@ class TimeCreditPage extends Component {
         <Module
           name={t([ 'newClient', 'timeCredit' ])}
           description={t([ 'newClient', 'timeCreditDescription' ])}
-          actions={<Switch
-            on={state.active}
-            onClick={this.toggleTimeCredit}
-          />}
+          actions={(
+            <Switch
+              on={state.active}
+              onClick={this.toggleTimeCredit}
+            />
+)}
         />
 
         <div>
@@ -125,26 +143,76 @@ class TimeCreditPage extends Component {
           <table>
             <tbody>
               <tr>
-                <td>{t([ 'newClient', 'hoursThatCanBeParked' ])}:</td>
+                <td>
+                  {t([ 'newClient', 'hoursThatCanBeParked' ])}
+
+
+
+
+
+
+
+
+:
+</td>
                 <td>{hoursThisMonth}</td>
               </tr>
               <tr>
-                <td>{t([ 'newClient', 'creditsThatCanBeDistributed' ])}:</td>
+                <td>
+                  {t([ 'newClient', 'creditsThatCanBeDistributed' ])}
+
+
+
+
+
+
+
+
+:
+</td>
                 <td>{creditsPossibleToDistribute}</td>
               </tr>
               <tr>
-                <td>{t([ 'newClient', 'creditsDistributed' ])}:</td>
+                <td>
+                  {t([ 'newClient', 'creditsDistributed' ])}
+
+
+
+
+
+
+
+
+:
+</td>
                 <td>{creditsDistributed}</td>
               </tr>
               <tr>
-                <td>{t([ 'newClient', 'creditsDistributedOverMax' ])}:</td>
+                <td>
+                  {t([ 'newClient', 'creditsDistributedOverMax' ])}
+
+
+
+
+
+
+
+
+:
+</td>
                 <td>{creditsDistributed - creditsPossibleToDistribute}</td>
               </tr>
             </tbody>
           </table>
 
-          {creditsDistributed - creditsPossibleToDistribute > 0 &&
-            <div className={styles.warning}> {t([ 'newClient', 'cteditsOutOfBoundException' ])} </div>
+          {creditsDistributed - creditsPossibleToDistribute > 0
+            && (
+            <div className={styles.warning}>
+              {' '}
+              {t([ 'newClient', 'cteditsOutOfBoundException' ])}
+              {' '}
+            </div>
+            )
           }
         </div>
 
@@ -193,16 +261,27 @@ class TimeCreditPage extends Component {
             />
           </div>
         </Form>
-      </ClientModules>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.timeCredit, pageBase: state.pageBase, clients: state.clients, users: state.clientUsers }),
-  dispatch => ({
-    actions:            bindActionCreators(timeCreditActions, dispatch),
-    clientActions:      bindActionCreators(clientActions, dispatch),
-    clientUsersActions: bindActionCreators(clientUserActions, dispatch)
-  })
-)(TimeCreditPage)
+const mapStateToProps = state => ({
+  state:    state.timeCredit,
+  pageBase: state.pageBase,
+  clients:  state.clients,
+  users:    state.clientUsers
+})
+
+const mapActionsToProps = dispatch => ({
+  actions:            bindActionCreators(timeCreditActions, dispatch),
+  clientActions:      bindActionCreators(clientActions, dispatch),
+  clientUsersActions: bindActionCreators(clientUserActions, dispatch)
+})
+
+const enhancer = compose(
+  withMasterPageConf(toAdminClients('timeCredit')),
+  connect(mapStateToProps, mapActionsToProps)
+)
+
+export default enhancer(TimeCreditPage)

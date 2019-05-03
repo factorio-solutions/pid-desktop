@@ -159,9 +159,9 @@ export default function createRoutes(jwt) {
       <Route path="resetPassword" component={ResetPasswordPage} />
 
       {/* <Route path="profile" component={ProfilePage} />  */}
-      <Route path="profile/cars/:id/users" component={CarUsersPage} />
+      {/* <Route path="profile/cars/:id/users" component={CarUsersPage} />
       <Route path="profile/cars/newCar" component={NewCarPage} />
-      <Route path="profile/cars/:id/edit" component={NewCarPage} />
+      <Route path="profile/cars/:id/edit" component={NewCarPage} /> */}
       {/* <Route path="notifications" component={NotificationsPage} /> */}
 
       {/* <Route path="dashboard" component={DashboardPage} /> */}
@@ -179,25 +179,25 @@ export default function createRoutes(jwt) {
 
       <Route path=":id/issues" component={IssuesPage} />
 
-      <Route path=":id/analytics/garageTurnover" component={GarageTurnoverPage} />
+      {/* <Route path=":id/analytics/garageTurnover" component={GarageTurnoverPage} />
       <Route path=":id/analytics/reservationsAnalytics" component={ReservationsAnalyticsPage} />
       <Route path=":id/analytics/placesAnalytics" component={PlacesPage} />
       <Route path=":id/analytics/paymentsAnalytics" component={PaymentsPage} />
-      <Route path=":id/analytics/gatesAnalytics" component={GatesPage} />
+      <Route path=":id/analytics/gatesAnalytics" component={GatesPage} /> */}
 
       <Route path="addFeatures" component={AddFeaturesPage} />
       <Route path="addFeatures/gateModuleOrder" component={GateModuleOrderPage} />
 
-      <Route path=":id/admin/invoices" component={InvoicesPage} />
-      <Route path=":id/admin/invoices/:invoice_id/edit" component={EditInvoicePage} />
+      {/* <Route path=":id/admin/invoices" component={InvoicesPage} />
+      <Route path=":id/admin/invoices/:invoice_id/edit" component={EditInvoicePage} /> */}
 
-      <Route path=":id/admin/clients" component={ClientsPage} />
-      <Route path=":id/admin/clients/:client_id/users" component={ClientUsersPage} />
-      <Route path=":id/admin/clients/newClient" component={NewClientPage} />
-      <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} />
-      <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
+      {/* <Route path=":id/admin/clients" component={ClientsPage} />
+      <Route path=":id/admin/clients/:client_id/users" component={ClientUsersPage} /> */}
+      {/* <Route path=":id/admin/clients/newClient" component={NewClientPage} />
+      <Route path=":id/admin/clients/:client_id/edit" component={NewClientPage} /> */}
+      {/* <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
       <Route path=":id/admin/clients/:client_id/timeCredit" component={TimeCreditPage} />
-      <Route path=":id/admin/clients/:client_id/minMaxReservationDuration" component={MinMaxDurationPage} />
+      <Route path=":id/admin/clients/:client_id/minMaxReservationDuration" component={MinMaxDurationPage} /> */}
       <Route path=":id/admin/clients/newContract" component={NewContractPage} />
       <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
 

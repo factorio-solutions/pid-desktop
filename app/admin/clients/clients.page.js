@@ -1,21 +1,23 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { bindActionCreators, compose }          from 'redux'
 import moment                          from 'moment'
+
+import withMasterPageConf from '../../hoc/withMasterPageConf'
 
 import Table              from '../../_shared/components/table/Table'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
-import PageBase           from '../../_shared/containers/pageBase/PageBase'
 
 import * as clientActions         from '../../_shared/actions/clients.actions'
 import { setClient }              from '../../_shared/actions/newContract.actions'
 import { setClientId }            from '../../_shared/actions/invoices.actions'
+import { toAdminClients }         from '../../_shared/actions/pageBase.actions'
 import { t }                      from '../../_shared/modules/localization/localization'
 import * as nav                   from '../../_shared/helpers/navigation'
-import { MOMENT_DATETIME_FORMAT } from '../../_shared/helpers/time'
 
 import styles from './clients.page.scss'
+import ClientSpoiler from './clientSpoiler'
 
 
 class ClientsPage extends Component {
@@ -35,40 +37,11 @@ class ClientsPage extends Component {
   }
 
   addClient = () => nav.to(`/${this.props.pageBase.garage}/admin/clients/newClient`)
+
   addContract = () => nav.to(`/${this.props.pageBase.garage}/admin/clients/newContract`)
 
   addSpoiler = client => {
     const { actions, pageBase } = this.props
-    const toClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/users`)
-    const toEditClient = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/edit`)
-    const toClientModules = () => nav.to(`/${pageBase.garage}/admin/clients/${client.id}/smsSettings`)
-    const toInvoices = () => {
-      nav.to(`/${pageBase.garage}/admin/invoices`)
-      actions.setClientId(client.id)
-    }
-
-    const toNewContract = () => {
-      nav.to(`/${pageBase.garage}/admin/clients/newContract`)
-      actions.setClient(client.id)
-    }
-
-    const prepareContractButton = contract => {
-      const onContractClick = () => nav.to(`/${pageBase.garage}/admin/clients/${contract.id}/editContract`)
-      return (
-        <div
-          className={`${styles.contract} ${!(pageBase.isGarageAdmin || pageBase.isGarageManager || (client.client_user && client.client_user.admin)) && styles.disabled}`}
-          onClick={(pageBase.isGarageAdmin || pageBase.isGarageManager || (client.client_user && client.client_user.admin)) && onContractClick}
-        >
-          {contract.name}
-        </div>
-      )
-    }
-
-    const prepareContactPersons = (acc, user, index, arr) => {
-      acc.push(<span><b>{user.full_name}</b> ({user.email}, {user.phone})</span>)
-      if (arr.length - 1 !== index) acc.push(<span>, </span>)
-      return acc
-    }
 
     const currentContractsFilter = contract => moment().isBetween(moment(contract.from), moment(contract.to))
     const oldContractsFilter = contract => !currentContractsFilter(contract)
@@ -79,75 +52,34 @@ class ClientsPage extends Component {
       return sum + Math.round(contract.rent.price * contract.place_count * endOfMonth.diff(startOfMonth, 'days') / moment().daysInMonth())
     }
 
-    const currentContracts = client.contracts ? client.contracts.filter(currentContractsFilter) : []
-    const oldContracts = client.contracts ? client.contracts.filter(oldContractsFilter) : []
-
-    const currentUserIsAdmin = client.client_user && client.client_user.admin && !client.client_user.pending
-
     const spoiler = (
-      <div className={styles.spoiler}>
-        <div>
-          {t([ 'clients', 'contactPerson' ])}: {client.contact_persons.reduce(prepareContactPersons, [])}
-          <br />
-          {t([ 'clients', 'createdAt' ])}: {moment(client.created_at).format(MOMENT_DATETIME_FORMAT)}
-        </div>
-        {(currentUserIsAdmin || pageBase.isGarageAdmin || pageBase.isGarageManager) && (
-          <div>
-            {currentContracts.length > 0 && <div>{t([ 'clients', 'currentAgreements' ])}</div>}
-            {currentContracts.map(prepareContractButton)}
-            {oldContracts.length > 0 && <div>{t([ 'clients', 'oldAgreements' ])}</div>}
-            {oldContracts.map(prepareContractButton)}
-          </div>
-        )}
-        <div>
-          <LabeledRoundButton
-            label={t([ 'clients', 'createAgreement' ])}
-            content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
-            onClick={toNewContract}
-            type="action"
-            state={!pageBase.isGarageAdmin && 'disabled'}
-          />
-          <LabeledRoundButton
-            label={t([ 'clients', 'goToInvoices' ])}
-            content={<span className="fa fa-files-o" aria-hidden="true" />}
-            onClick={toInvoices}
-            type="action"
-            state={currentUserIsAdmin ? '' : 'disabled'}
-          />
-          <LabeledRoundButton
-            label={t([ 'clients', 'editClient' ])}
-            content={<span className="fa fa-pencil" aria-hidden="true" />}
-            onClick={toEditClient}
-            type="action"
-            state={currentUserIsAdmin ? '' : 'disabled'}
-          />
-          <LabeledRoundButton
-            label={t([ 'clients', 'modules' ])}
-            content={<span className="icon-plugins" aria-hidden="true" />}
-            onClick={toClientModules}
-            type="action"
-            state={currentUserIsAdmin ? '' : 'disabled'}
-          />
-          <LabeledRoundButton
-            label={t([ 'clients', 'goToUsers' ])}
-            content={<span className="fa fa-child" aria-hidden="true" />}
-            onClick={client.userOfClient && toClient}
-            type="action"
-            state={client.userOfClient ? '' : 'disabled'}
-          />
-        </div>
-      </div>
+      <ClientSpoiler
+        client={client}
+        garageId={pageBase.garage}
+        isGarageAdmin={pageBase.isGarageAdmin}
+        isGarageManager={pageBase.isGarageManager}
+        currentContractsFilter={currentContractsFilter}
+        oldContractsFilter={oldContractsFilter}
+        setClientId={actions.setClientId}
+        setClient={actions.setClient}
+      />
     )
 
-    return { ...client,
+    return {
+      ...client,
       spoiler,
       hasContract:   client.contracts && client.contracts.filter(currentContractsFilter).length > 0,
-      monthly_total: client.contracts ? client.contracts.filter(currentContractsFilter).reduce(contractSum, 0) + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '') : 0
+      monthly_total: client.contracts
+        ? client.contracts
+          .filter(currentContractsFilter)
+          .reduce(contractSum, 0)
+        + ' ' + (client.contracts.length ? client.contracts[0].rent.currency.symbol : '')
+        : 0
     }
   }
 
   filterAttributes = client => {
-    let newClient = { ...client }
+    const newClient = { ...client }
     if (!(client.client_user && client.client_user.admin) || client.is_pending) {
       newClient.monthly_total = null
       newClient.all_invoices_paid = null
@@ -162,30 +94,56 @@ class ClientsPage extends Component {
     const { state, pageBase } = this.props
 
     const schema = [
-      { key: 'name', title: t([ 'clients', 'name' ]), comparator: 'string', representer: o => <strong>{o}</strong>, sort: 'asc' },
+      {
+        key:         'name',
+        title:       t([ 'clients', 'name' ]),
+        comparator:  'string',
+        representer: o => <strong>{o}</strong>,
+        sort:        'asc'
+      },
       { key: 'token', title: t([ 'clients', 'token' ]), comparator: 'string' },
-      { key:         'hasContract',
+      {
+        key:         'hasContract',
         title:       t([ 'clients', 'contract' ]),
         comparator:  'boolean',
-        representer: o => o === null ? null : <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+        representer: o => o === null
+          ? null
+          : (
+            <i
+              className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`}
+              aria-hidden="true"
+            />
+          )
       },
       { key: 'place_count', title: t([ 'clients', 'places' ]), comparator: 'number' },
       { key: 'monthly_total', title: t([ 'clients', 'monthlyTotal' ]), comparator: 'string' },
-      { key:         'all_invoices_paid',
+      {
+        key:         'all_invoices_paid',
         title:       t([ 'clients', 'invoices' ]),
         comparator:  'boolean',
-        representer: o => o === null ? null : <i className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+        representer: o => o === null
+          ? null
+          : (
+            <i
+              className={`fa ${o ? 'fa-check-circle' : ' fa-exclamation-triangle'} ${o ? styles.green : styles.red}`}
+              aria-hidden="true"
+            />
+          )
       },
       { key: 'user_count', title: t([ 'clients', 'users' ]), comparator: 'number' }
     ]
 
 
-    const filterPresent = client => state.clients.find(c => c.id === client.id) === undefined // filter out client already present in state.clients
+    // filter out client already present in state.clients
+    const filterPresent = client => state.clients.find(c => c.id === client.id) === undefined
 
     return (
-      <PageBase>
+      <React.Fragment>
         <div className={styles.tableContainer}>
-          <Table schema={schema} data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(this.addSpoiler).map(this.filterAttributes)} />
+          <Table
+            schema={schema}
+            data={state.clients.concat(state.garageContracts.filter(filterPresent)).map(this.addSpoiler).map(this.filterAttributes)}
+          />
         </div>
 
         <div className={styles.addButton}>
@@ -198,7 +156,12 @@ class ClientsPage extends Component {
           />
           {pageBase.isGarageAdmin && (
             <LabeledRoundButton
-              content={<span>+<span className="fa fa-file-text-o" aria-hidden="true" /></span>}
+              content={(
+                <span>
+                  {'+'}
+                  <span className="fa fa-file-text-o" aria-hidden="true" />
+                </span>
+              )}
               onClick={this.addContract}
               type="action"
               size="big"
@@ -206,12 +169,17 @@ class ClientsPage extends Component {
             />
           )}
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.clients, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...clientActions, setClient, setClientId }, dispatch) })
-)(ClientsPage)
+const enhancers = compose(
+  withMasterPageConf(toAdminClients('clients')),
+  connect(
+    state => ({ state: state.clients, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators({ ...clientActions, setClient, setClientId }, dispatch) })
+  )
+)
+
+export default enhancers(ClientsPage)

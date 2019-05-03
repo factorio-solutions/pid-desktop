@@ -132,7 +132,7 @@ export default function pageBase(state = defaultState, action) {
     case PAGE_BASE_SET_GARAGES:
       return {
         ...state,
-        garages: action.value
+        garages: action.value*
       }
 
     case PAGE_BASE_SET_GARAGE:
