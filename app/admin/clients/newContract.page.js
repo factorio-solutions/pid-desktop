@@ -30,7 +30,7 @@ import styles from './newContract.page.scss'
 class NewContractPage extends Component {
   static propTypes = {
     state:          PropTypes.object,
-    params:         PropTypes.object,
+    match:          PropTypes.object,
     actions:        PropTypes.object,
     pageBaseGarage: PropTypes.object
   }
@@ -38,8 +38,10 @@ class NewContractPage extends Component {
   componentDidMount() {
     const {
       pageBaseGarage,
-      params: {
-        contract_id: contractId
+      match: {
+        params: {
+          contract_id: contractId
+        }
       },
       actions: {
         initContract
@@ -57,8 +59,10 @@ class NewContractPage extends Component {
         eraseForm,
         initContract
       },
-      params: {
-        contract_id: contractId
+      match: {
+        params: {
+          contract_id: contractId
+        }
       }
     } = this.props
     const { pageBaseGarage: nextPageBaseGarage } = nextProps
@@ -85,6 +89,12 @@ class NewContractPage extends Component {
   handleTo = (value, valid) => valid && this.props.actions.setTo(value)
 
   submitForm = () => {
+    const {
+      match: {
+        params: { contract_id: contractId }
+      }
+    } = this.props
+
     if (this.checkSubmitable()) {
       const { state, actions } = this.props
       const placeIds = state.places.map(place => place.id)
@@ -94,7 +104,7 @@ class NewContractPage extends Component {
       || (state.originalIndefinitly && !state.indefinitly)
       || (!state.indefinitly && moment(state.to, MOMENT_DATETIME_FORMAT).isBefore(moment(state.originalTo, MOMENT_DATETIME_FORMAT)))
         ? actions.setRemoveReservationsModal(true)
-        : actions.submitNewContract(this.props.params.contract_id)
+        : actions.submitNewContract(contractId)
     }
   }
 
@@ -105,7 +115,9 @@ class NewContractPage extends Component {
   setRemoveReservationsAndSubmit = action => {
     const {
       actions,
-      params: { contract_id: contractId }
+      match: {
+        params: { contract_id: contractId }
+      }
     } = this.props
     actions.setRemoveReservations(action)
     actions.submitNewContract(contractId)

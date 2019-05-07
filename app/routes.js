@@ -222,15 +222,15 @@ export default function createRoutes(jwt) {
       <Route path=":id/admin/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/users" component={GarageUsersPage} />
       <Route path=":id/admin/garageSetup/legalDocuments" component={LegalDocuments} /> */}
-
+      {/*
       <Route path=":id/admin/users" component={UsersPage} />
-      <Route path=":id/admin/users/invite" component={InviteUserPage} />
-
+      <Route path=":id/admin/users/invite" component={InviteUserPage} /> */}
+      {/*
       <Route path=":id/admin/finance" component={FinancePage} />
       <Route path=":id/admin/finance/newRent" component={NewRentPage} />
       <Route path=":id/admin/finance/:rent_id/editRent" component={NewRentPage} />
       <Route path=":id/admin/finance/csob" component={CsobPage} />
-      <Route path=":id/admin/finance/GpWebpay" component={GpWebpayPage} />
+      <Route path=":id/admin/finance/GpWebpay" component={GpWebpayPage} /> */}
 
       <Route path=":id/admin/pidSettings" component={PidSettingsPage} />
 

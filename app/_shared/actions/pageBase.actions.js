@@ -134,10 +134,10 @@ function prepareAdminSecondaryMenu() {
       && { label: t([ 'pageBase', 'Garage setup' ]), key: 'garageSetup', onClick: secondaryMenuClickFactory(`/${garage}/admin/garageSetup/general`) },
       { label: t([ 'pageBase', 'Users' ]), key: 'users', onClick: secondaryMenuClickFactory(`/${garage}/admin/users`) },
       state.isGarageAdmin
-      && { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactory(`/${garage}/admin/finance`) },
+      && { label: t([ 'pageBase', 'Finance' ]), key: 'finance', onClick: secondaryMenuClickFactory(`/${garage}/admin/finance`) }
       //  , state.isGarageAdmin && {label: t(['pageBase', 'PID settings']),  key: "PID",      onClick: secondaryMenuClickFactort(dispatch, `/${garage}/admin/pidSettings`)} }
-      state.isGarageAdmin
-      && { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactory(`/${garage}/admin/activityLog`) }
+      // state.isGarageAdmin
+      // && { label: t([ 'pageBase', 'Activity log' ]), key: 'activity', onClick: secondaryMenuClickFactory(`/${garage}/admin/activityLog`) }
     ].filter(field => field !== false)
   }
 }
@@ -356,67 +356,11 @@ export function toAdmin(subPage) {
         hint = t([ 'pageBase', 'editInvoiceHint' ])
         hintVideo = 'https://www.youtube.com/'
         break
+
       case 'invoices':
         secondarySelected = 'invoices'
         hint = t([ 'pageBase', 'invoicesHint' ])
         hintVideo = 'https://www.youtube.com/'
-        break
-
-      case (!contains(hash, 'clients') && !contains(hash, 'garageSetup') && contains(hash, 'users') && contains(hash, 'invite')):
-        secondarySelected = 'users'
-        hint = t([ 'pageBase', 'inviteUsersHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case (!contains(hash, 'clients') && contains(hash, 'users')):
-        secondarySelected = 'users'
-        hint = t([ 'pageBase', 'usersHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-
-      case (contains(hash, 'finance') && contains(hash, 'paypal')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'finance'
-          hint = t([ 'pageBase', 'financePaypalHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'finance') && contains(hash, 'csob')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'finance'
-          hint = t([ 'pageBase', 'financeCSOBHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'finance') && contains(hash, 'newRent')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'finance'
-          hint = t([ 'pageBase', 'garageNewRentHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'finance') && contains(hash, 'editRent')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'finance'
-          hint = t([ 'pageBase', 'garageEditRentHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'finance')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'finance'
-          hint = t([ 'pageBase', 'financeHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
         break
 
       case (contains(hash, 'pidSettings')):
@@ -429,7 +373,7 @@ export function toAdmin(subPage) {
         }
         break
 
-      case (contains(hash, 'activityLog')):
+      case 'activityLog':
         if (state.isGarageAdmin) {
           secondarySelected = 'activity'
           hint = t([ 'pageBase', 'activityLogHint' ])
@@ -460,7 +404,32 @@ export function toAdminGarageSetup(subPage) {
     const hint = t([ 'pageBase', `${subPage || 'newGarage'}Hint` ])
     const hintVideo = 'https://www.youtube.com/'
 
-    console.log('Garage setup:', subPage)
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
+  }
+}
+
+export function toAdminUsers(subPage) {
+  return dispatch => {
+    const secondarySelected = 'users'
+    const hint = t([ 'pageBase', `${subPage || 'users'}Hint` ])
+    const hintVideo = 'https://www.youtube.com/'
+
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
+  }
+}
+
+export function toAdminFinance(subPage) {
+  return (dispatch, getState) => {
+    const state = getState().pageBase
+    const secondarySelected = 'finance'
+    const hint = t([ 'pageBase', `${subPage || 'finance'}Hint` ])
+    const hintVideo = 'https://www.youtube.com/'
+
+    console.log(subPage)
+
+    if (!state.isGarageAdmin) {
+      return nav.to('/occupancy')
+    }
 
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
   }
@@ -472,8 +441,6 @@ export function toAdminModules(subPage) {
     const secondarySelected = 'modules'
     const hint = t([ 'pageBase', `${subPage || 'goPublic'}Hint` ])
     const hintVideo = 'https://www.youtube.com/'
-
-    console.log('Admin modules:', subPage)
 
     if (!state.isGarageAdmin) {
       return nav.to('/occupancy')

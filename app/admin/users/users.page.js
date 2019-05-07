@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase           from '../../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Table              from '../../_shared/components/table/Table'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 import TabMenu            from '../../_shared/components/tabMenu/TabMenu'
@@ -14,6 +15,7 @@ import * as nav    from '../../_shared/helpers/navigation'
 import { t }       from '../../_shared/modules/localization/localization'
 
 import * as usersActions from '../../_shared/actions/users.actions'
+import { toAdminUsers } from '../../_shared/actions/pageBase.actions'
 
 import styles from './users.page.scss'
 
@@ -43,22 +45,36 @@ class UsersPage extends Component {
     const { state, actions } = this.props
 
     const schema = [
-      { key: 'full_name', title: t([ 'users', 'username' ]), comparator: 'string', representer: o => <strong> {o} </strong>, sort: 'asc' },
+      {
+        key:         'full_name',
+        title:       t([ 'users', 'username' ]),
+        comparator:  'string',
+        representer: o => (
+          <strong>
+            {' '}
+            {o}
+            {' '}
+          </strong>
+        ),
+        sort: 'asc'
+      },
       { key: 'email', title: t([ 'users', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'users', 'phone' ]), comparator: 'number' },
-      { key:         'last_active',
+      {
+        key:         'last_active',
         title:       t([ 'users', 'active' ]),
         comparator:  'date',
-        representer: o => o ?
-          moment().diff(moment(o), 'days') < INACTIVE_AFTER ?
-            <i className={`fa fa-check-circle ${styles.green}`} aria-hidden="true" title={t([ 'users', 'active' ])} /> :
-            <i className={`fa fa-question-circle ${styles.yellow}`} aria-hidden="true" title={t([ 'users', 'notActive' ])} /> :
-            <i className={`fa fa-times-circle ${styles.red}`} aria-hidden="true" title={t([ 'users', 'notConfimed' ])} />
+        representer: o => o
+          ? moment().diff(moment(o), 'days') < INACTIVE_AFTER
+            ? <i className={`fa fa-check-circle ${styles.green}`} aria-hidden="true" title={t([ 'users', 'active' ])} />
+            : <i className={`fa fa-question-circle ${styles.yellow}`} aria-hidden="true" title={t([ 'users', 'notActive' ])} />
+          : <i className={`fa fa-times-circle ${styles.red}`} aria-hidden="true" title={t([ 'users', 'notConfimed' ])} />
       }
     ]
 
     const createClientLink = (client, index) => (
-      <li key={index} className={styles.clickable} onClick={() => { this.clientOnClick(client.id) }}> {client.name}
+      <li key={index} className={styles.clickable} onClick={() => { this.clientOnClick(client.id) }}>
+        {client.name}
         {client.admin && <span>{t([ 'users', 'admin' ])}</span>}
         {client.contactPerson && <span>{t([ 'clientUsers', 'contact_person' ])}</span>}
         {client.secretary && <span>{t([ 'users', 'secretary' ])}</span>}
@@ -68,14 +84,17 @@ class UsersPage extends Component {
     )
 
     const createCarLink = (car, index) => (
-      <li key={index} className={styles.clickable} onClick={() => { this.carOnClick(car.id) }}> {car.model}
+      <li key={index} className={styles.clickable} onClick={() => { this.carOnClick(car.id) }}>
+        {' '}
+        {car.model}
         {car.admin && <span>{t([ 'users', 'admin' ])}</span>}
         {car.driver && <span>{t([ 'clientUsers', 'driver' ])}</span>}
       </li>
     )
 
     const createGarageLink = (garage, index) => (
-      <li key={index} className={styles.clickable} onClick={() => { this.garageOnClick(garage.id) }}>{garage.name}
+      <li key={index} className={styles.clickable} onClick={() => { this.garageOnClick(garage.id) }}>
+        {garage.name}
         {garage.admin && <span>{t([ 'users', 'admin' ])}</span>}
         {garage.manager && <span>{t([ 'garageUsers', 'manager' ])}</span>}
         {garage.security && <span>{t([ 'users', 'security' ])}</span>}
@@ -136,7 +155,7 @@ class UsersPage extends Component {
     ]
 
     return (
-      <PageBase>
+      <React.Fragment>
         <TabMenu left={filters} />
         <div className={styles.tableContainer}>
           <Table schema={schema} data={usersData} />
@@ -150,12 +169,17 @@ class UsersPage extends Component {
             label={t([ 'users', 'addUser' ])}
           />
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.users, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(usersActions, dispatch) })
-)(UsersPage)
+const enhancers = compose(
+  withMasterPageConf(toAdminUsers('users')),
+  connect(
+    state => ({ state: state.users, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(usersActions, dispatch) })
+  )
+)
+
+export default enhancers(UsersPage)

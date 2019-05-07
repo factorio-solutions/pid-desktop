@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators, compose } from 'redux'
 
-import PageBase        from '../../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import TabMenu         from '../../_shared/components/tabMenu/TabMenu'
 import TabButton       from '../../_shared/components/buttons/TabButton'
 import RentsTab        from './tabs/rents'
@@ -13,21 +14,23 @@ import BillingAddress  from './tabs/billingAddress'
 
 import { t }               from '../../_shared/modules/localization/localization'
 import * as financeActions from '../../_shared/actions/admin.finance.actions'
+import { toAdminFinance } from '../../_shared/actions/pageBase.actions'
 
 
 class FinancePage extends Component {
   static propTypes = {
     pageBase: PropTypes.object,
-    params:   PropTypes.object,
+    match:    PropTypes.object,
     location: PropTypes.object
   }
 
   constructor(props) {
     super(props)
 
-    const { pageBase, params, location } = props
+    const { pageBase, match: { params }, location } = props
     const FINANCE_TABS = [
-      { name:    'paymentGates',
+      {
+        name:    'paymentGates',
         content: <PaymentGatesTab params={params} location={location} />
       },
       pageBase.current_user && pageBase.current_user.garage_admin && {
@@ -38,7 +41,8 @@ class FinancePage extends Component {
         name:    'billingAddress',
         content: <BillingAddress />
       },
-      { name:    'financeSettings',
+      {
+        name:    'financeSettings',
         content: <SettingsTab params={params} />
       }
     ]
@@ -50,31 +54,39 @@ class FinancePage extends Component {
     }
   }
 
-  tabFactory = tab => (<TabButton
-    label={t([ 'finance', tab.name ])}
-    onClick={() => this.setState({
-      ...this.state,
-      selected: tab.name,
-      content:  tab.content
-    })}
-    state={this.state.selected === tab.name && 'selected'}
-  />)
+  tabFactory = tab => (
+    <TabButton
+      label={t([ 'finance', tab.name ])}
+      onClick={() => this.setState({
+        ...this.state,
+        selected: tab.name,
+        content:  tab.content
+      })}
+      state={this.state.selected === tab.name && 'selected'}
+    />
+  )
 
   render() {
-    const tabs = this.state.tabs
+    const { tabs: stateTabs, content } = this.state
+    const tabs = stateTabs
       .filter(o => o)
       .map(this.tabFactory)
 
     return (
-      <PageBase>
+      <React.Fragment>
         <TabMenu left={tabs} />
-        {this.state.content}
-      </PageBase>
+        {content}
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.adminFinance, pageBase: state.pageBase }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators(financeActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
-)(FinancePage)
+const enhancers = compose(
+  withMasterPageConf(toAdminFinance('finance')),
+  connect(
+    state => ({ state: state.adminFinance, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(financeActions, dispatch) })
+  )
+)
+
+export default enhancers(FinancePage)
