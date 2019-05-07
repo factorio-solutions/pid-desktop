@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import PageBase           from '../../../_shared/containers/pageBase/PageBase'
 import TabMenu            from '../../../_shared/components/tabMenu/TabMenu'
 import TabButton          from '../../../_shared/components/buttons/TabButton'
 import Switch             from '../../../_shared/components/switch/Switch'
@@ -20,7 +19,7 @@ import { disableGoInternal }    from '../../../_shared/actions/admin.goInternal.
 
 import styles from './modulesPageBase.scss'
 
-const MODULE_PAGES = [ 'goPublic', 'goInternal', 'flexiplace', 'marketingPage', '3rdPartyIntegration', 'mrParkitIntegration']
+const MODULE_PAGES = [ 'goPublic', 'goInternal', 'flexiplace', 'marketingPage', '3rdPartyIntegration', 'mrParkitIntegration' ]
 
 
 class ModulesPageBase extends Component {
@@ -37,11 +36,13 @@ class ModulesPageBase extends Component {
 
   selectTab = tab => () => nav.to(`/${this.props.pageBase.garage}/admin/modules/${tab}`)
 
-  tabFactory = tab => (<TabButton
-    label={t([ 'modules', tab ])}
-    onClick={this.selectTab(tab)}
-    state={window.location.hash.includes(`/${tab}`) && 'selected'}
-  />)
+  tabFactory = tab => (
+    <TabButton
+      label={t([ 'modules', tab ])}
+      onClick={this.selectTab(tab)}
+      state={window.location.hash.includes(`/${tab}`) && 'selected'}
+    />
+  )
 
   toGoInternalSettings = () => {
     const { state, actions } = this.props
@@ -83,92 +84,113 @@ class ModulesPageBase extends Component {
   }
 
   render() {
-    const { children, pageBase, state, actions } = this.props
+    const {
+      children, pageBase, state, actions
+    } = this.props
 
     const tabs = MODULE_PAGES.map(this.tabFactory)
 
     const userGarage = pageBase.garages.find(garage => garage.garage.id === pageBase.garage)
 
-    const tokenModal = (<div>
+    const tokenModal = (
       <div>
-        <div className={styles.warning}>{t([ 'modules', 'warning' ])}</div>
-        <div className={styles.warningDesribtion}>{t([ 'modules', 'warningDesribtion' ])}</div>
-      </div>
+        <div>
+    <div className={styles.warning}>{t([ 'modules', 'warning' ])}</div>
+    <div className={styles.warningDesribtion}>{t([ 'modules', 'warningDesribtion' ])}</div>
+  </div>
 
-      <div className={styles.copyField}>
-        <h5>{t([ 'modules', 'apiEndpoint' ])}</h5>
-        <input className={styles.tokenInput} ref={el => { this.endpoint = el }} value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/queries'} />
-        <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyEndpoint} />
-      </div>
+        <div className={styles.copyField}>
+    <h5>{t([ 'modules', 'apiEndpoint' ])}</h5>
+    <input className={styles.tokenInput} ref={el => { this.endpoint = el }} value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/queries'} />
+    <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyEndpoint} />
+  </div>
 
-      <div className={styles.copyField}>
-        <h5>{t([ 'modules', 'token' ])}</h5>
-        <input className={styles.tokenInput} ref={el => { this.token = el }} value={state.token} />
-        <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyToken} />
-      </div>
+        <div className={styles.copyField}>
+    <h5>{t([ 'modules', 'token' ])}</h5>
+    <input className={styles.tokenInput} ref={el => { this.token = el }} value={state.token} />
+    <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyToken} />
+  </div>
 
-      <div className={styles.toApiExplorer}>
-        <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart1' ])}</div>
-        <div className={styles.headerDesribtion}>{t([ 'modules', 'requestDesribtionPart2' ])} {state.token}</div>
-        <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart3' ])}</div>
-        <a href={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/explorer'} target="_blank">{t([ 'modules', 'toApiExplorer' ])}</a>
-      </div>
+        <div className={styles.toApiExplorer}>
+    <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart1' ])}</div>
+    <div className={styles.headerDesribtion}>
+          {t([ 'modules', 'requestDesribtionPart2' ])}
+          {' '}
+          {state.token}
+                </div>
+    <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart3' ])}</div>
+    <a href={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/explorer'} target="_blank">{t([ 'modules', 'toApiExplorer' ])}</a>
+  </div>
 
-      <div className={styles.dismissButton}>
-        <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" />
-      </div>
-    </div>)
+        <div className={styles.dismissButton}>
+    <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" />
+  </div>
+            </div>
+    )
 
-    const hintModal = (<div>
-      <div>{t([ 'modules', 'selectPlaces' ])}</div>
+    const hintModal = (
+      <div>
+        <div>{t([ 'modules', 'selectPlaces' ])}</div>
 
-      <div className={styles.dismissButton}>
-        <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.toggleShowHint} type="confirm" />
-      </div>
-    </div>)
-
+        <div className={styles.dismissButton}>
+    <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.toggleShowHint} type="confirm" />
+  </div>
+            </div>
+    )
+    console.log('ModulesPageBase rerender')
     return (
-      <PageBase>
+      <React.Fragment>
         <Modal content={tokenModal} show={state.token} />
         <Modal content={hintModal} show={state.showHint} />
         <TabMenu left={tabs} />
 
-        {window.location.hash.includes('goPublic') &&
+        {window.location.hash.includes('goPublic')
+        && (
         <Module
-          name={t([ 'modules', 'goPublic' ])}
-          description={t([ 'modules', 'goPublicDescription' ])}
-          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
-          actions={<Switch
-            on={state.goPublic}
-            state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
-            onClick={actions.toggleGoPublic}
-          />}
-        />}
+  name={t([ 'modules', 'goPublic' ])}
+  description={t([ 'modules', 'goPublicDescription' ])}
+  disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+  actions={(
+            <Switch
+  on={state.goPublic}
+  state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
+  onClick={actions.toggleGoPublic}
+/>
+)}
+/>
+        )}
 
-        {window.location.hash.includes('goInternal') &&
+        {window.location.hash.includes('goInternal')
+        && (
         <Module
-          name={t([ 'modules', 'goInternal' ])}
-          description={t([ 'modules', 'goInternalDescription' ])}
-          disabled={userGarage === undefined}
-          actions={<Switch
-            on={state.goInternal}
-            state={(userGarage === undefined) && 'disabled'}
-            onClick={this.toGoInternalSettings}
-          />}
-        />}
+  name={t([ 'modules', 'goInternal' ])}
+  description={t([ 'modules', 'goInternalDescription' ])}
+  disabled={userGarage === undefined}
+  actions={(
+            <Switch
+  on={state.goInternal}
+  state={(userGarage === undefined) && 'disabled'}
+  onClick={this.toGoInternalSettings}
+/>
+)}
+/>
+        )}
 
-        {window.location.hash.includes('flexiplace') &&
+        {window.location.hash.includes('flexiplace')
+        && (
         <Module
-          name={t([ 'modules', 'flexiplace' ])}
-          description={t([ 'modules', 'flexiplaceDescription' ])}
-          actions={<Switch on={state.flexiplace} onClick={this.toggleFLexiplace} />}
-        />}
+  name={t([ 'modules', 'flexiplace' ])}
+  description={t([ 'modules', 'flexiplaceDescription' ])}
+  actions={<Switch on={state.flexiplace} onClick={this.toggleFLexiplace} />}
+/>
+        )}
 
-        {window.location.hash.includes('marketingPage') &&
+        {window.location.hash.includes('marketingPage')
+        && (
         <Module
-          name={t([ 'modules', 'marketingPage' ])}
-          disabled={userGarage === undefined || !userGarage.admin}
-          actions={[
+  name={t([ 'modules', 'marketingPage' ])}
+  disabled={userGarage === undefined || !userGarage.admin}
+  actions={[
             <CallToActionButton
               label={t([ 'modules', 'Preview' ])}
               state={(userGarage === undefined || !userGarage.admin) ? 'disabled' : 'inverted'}
@@ -180,14 +202,16 @@ class ModulesPageBase extends Component {
               onClick={actions.toggleMarketing}
             />
           ]}
-        />}
+/>
+        )}
 
-        {window.location.hash.includes('3rdPartyIntegration') &&
+        {window.location.hash.includes('3rdPartyIntegration')
+        && (
         <Module
-          name={t([ 'modules', '3rdPartyIntegration' ])}
-          description={t([ 'modules', 'thirdPartyIntegrationDescription' ])}
-          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
-          actions={[
+  name={t([ 'modules', '3rdPartyIntegration' ])}
+  description={t([ 'modules', 'thirdPartyIntegrationDescription' ])}
+  disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+  actions={[
             <CallToActionButton
               label={t([ 'modules', 'showApiKey' ])}
               state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) ? 'disabled' : 'inverted'}
@@ -205,31 +229,34 @@ class ModulesPageBase extends Component {
               onClick={this.toggleThirdPartyIntegration}
             />
           ]}
-        />}
+/>
+        )}
 
-        {window.location.hash.includes('mrParkitIntegration') &&
+        {window.location.hash.includes('mrParkitIntegration')
+        && (
         <Module
-          name={t([ 'modules', 'mrParkitIntegration' ])}
-          description={t([ 'modules', 'mrParkitIntegrationDescription' ])}
-          disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
-          actions={[
+  name={t([ 'modules', 'mrParkitIntegration' ])}
+  description={t([ 'modules', 'mrParkitIntegrationDescription' ])}
+  disabled={userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2}
+  actions={[
             <Switch
               on={state.mrParkitIntegration}
               state={(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2) && 'disabled'}
               onClick={this.toggleMrParkitIntegration}
             />
           ]}
-        />}
+/>
+        )}
 
-        { ((window.location.hash.includes('goPublic') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2 || state.flexiplace)) ||
-          (window.location.hash.includes('goInternal') && userGarage) ||
-          (window.location.hash.includes('flexiplace')) ||
-          (window.location.hash.includes('3rdPartyIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)) ||
-          (window.location.hash.includes('mrParkitIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)) ||
-          (window.location.hash.includes('marketingPage') && !(userGarage === undefined || !userGarage.admin))) &&
-          children
+        { ((window.location.hash.includes('goPublic') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2 || state.flexiplace))
+          || (window.location.hash.includes('goInternal') && userGarage)
+          || (window.location.hash.includes('flexiplace'))
+          || (window.location.hash.includes('3rdPartyIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2))
+          || (window.location.hash.includes('mrParkitIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2))
+          || (window.location.hash.includes('marketingPage') && !(userGarage === undefined || !userGarage.admin)))
+          && children
         }
-      </PageBase>
+      </React.Fragment>
     )
   }
 }

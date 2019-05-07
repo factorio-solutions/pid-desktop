@@ -22,7 +22,7 @@ import {
 
 const defaultState = {
   selected:                undefined, // key selected in primary menu
-  secondaryMenu:           [],        // secondary menu content
+  secondaryMenu:           [], // secondary menu content
   secondarySelected:       undefined, // key selected in secondary menu
   showSecondaryMenu:       false, // key selected in secondary menu
   secondaryMenuBackButton: undefined,
@@ -53,7 +53,6 @@ const defaultState = {
 
 export default function pageBase(state = defaultState, action) {
   switch (action.type) {
-
     case PAGE_BASE_SELECTED:
       return {
         ...state,
@@ -132,7 +131,7 @@ export default function pageBase(state = defaultState, action) {
     case PAGE_BASE_SET_GARAGES:
       return {
         ...state,
-        garages: action.value*
+        garages: action.value
       }
 
     case PAGE_BASE_SET_GARAGE:

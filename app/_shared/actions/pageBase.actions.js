@@ -362,170 +362,6 @@ export function toAdmin(subPage) {
         hintVideo = 'https://www.youtube.com/'
         break
 
-      case (contains(hash, 'clients/') && contains(hash, 'users')):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'clientUsersHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case (contains(hash, 'clients/') && contains(hash, 'newClient')):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'newClientHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case (contains(hash, 'clients/') && contains(hash, 'edit') && !contains(hash, 'editContract')):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'editClientHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case (contains(hash, 'clients/') && contains(hash, 'smsSettings')):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'smsSettingsHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case (contains(hash, 'clients/') && contains(hash, 'newContract')):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'newContractHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case (contains(hash, 'clients/') && contains(hash, 'editContract')):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'editContractHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-      case contains(hash, 'clients'):
-        secondarySelected = 'clients'
-        hint = t([ 'pageBase', 'clientsHint' ])
-        hintVideo = 'https://www.youtube.com/'
-        break
-
-      case (contains(hash, 'modules/') && contains(hash, 'marketingSettings')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'garageNewMarketingHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'modules/') && contains(hash, 'reservationButton')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'ReservationButtonHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'modules/') && contains(hash, 'mrParkitIntegration')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'mrParkitIntegrationHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'modules/') && contains(hash, 'goPublic')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'goPublicHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'modules/') && contains(hash, 'goInternal')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'goInternalHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'modules/') && contains(hash, 'flexiplace')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'flexiplaceHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'modules')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'modules'
-          hint = t([ 'pageBase', 'garageMarketingHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-
-      case (contains(hash, 'garageSetup') && contains(hash, 'general')):
-        if (state.isGarageAdmin || state.isGarageManager) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGarageHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
-        if (state.isGarageAdmin || state.isGarageManager) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGarageFloorsHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
-        if (state.isGarageAdmin || state.isGarageManager) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGarageGatesHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'order')):
-        if (state.isGarageAdmin || state.isGarageManager) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGarageOrderHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'subscribtion')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGarageSubscribtionHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'legalDocuments')):
-        if (state.isGarageAdmin) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'newGarageLegalDocumentsHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'users')):
-        if (state.isGarageAdmin || state.isGarageManager) {
-          secondarySelected = 'garageSetup'
-          hint = t([ 'pageBase', 'garageGarageUsersHint' ])
-          hintVideo = 'https://www.youtube.com/'
-        } else {
-          nav.to('/occupancy') // not accessible for this user
-        }
-        break
-
       case (!contains(hash, 'clients') && !contains(hash, 'garageSetup') && contains(hash, 'users') && contains(hash, 'invite')):
         secondarySelected = 'users'
         hint = t([ 'pageBase', 'inviteUsersHint' ])
@@ -613,15 +449,38 @@ export function toAdminClients(subPage) {
     const secondarySelected = 'clients'
     const hint = t([ 'pageBase', `${subPage || 'clients'}Hint` ])
     const hintVideo = 'https://www.youtube.com/'
-    console.log(subPage)
 
-    //   hint = t([ 'pageBase', 'clientUsersHint' ])
-    // hint = t([ 'pageBase', 'newClientHint' ])
-    // hint = t([ 'pageBase', 'editClientHint' ])
-    // hint = t([ 'pageBase', 'smsSettingsHint' ])
-    // hint = t([ 'pageBase', 'newContractHint' ])
-    // hint = t([ 'pageBase', 'editContractHint' ])
-    // hint = t([ 'pageBase', 'clientsHint' ])
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
+  }
+}
+
+export function toAdminGarageSetup(subPage) {
+  return dispatch => {
+    const secondarySelected = 'garageSetup'
+    const hint = t([ 'pageBase', `${subPage || 'newGarage'}Hint` ])
+    const hintVideo = 'https://www.youtube.com/'
+
+    console.log('Garage setup:', subPage)
+
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
+  }
+}
+
+export function toAdminModules(subPage) {
+  return (dispatch, getState) => {
+    const state = getState().pageBase
+    const secondarySelected = 'modules'
+    const hint = t([ 'pageBase', `${subPage || 'goPublic'}Hint` ])
+    const hintVideo = 'https://www.youtube.com/'
+
+    console.log('Admin modules:', subPage)
+
+    if (!state.isGarageAdmin) {
+      return nav.to('/occupancy')
+    }
+
+    // hint = t([ 'pageBase', 'garageNewMarketingHint' ]) Where??
+
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
   }
 }

@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase    from '../pageBase/PageBase'
 import TabButton   from '../../components/buttons/TabButton'
 import RoundButton from '../../components/buttons/RoundButton'
 import Modal       from '../../components/modal/Modal'
@@ -24,7 +23,9 @@ class GarageSetupPage extends Component {
   }
 
   render() {
-    const { state, garageSetup, actions, children } = this.props
+    const {
+      state, garageSetup, actions, children
+    } = this.props
 
     const preapareTabsButtons = tab => <TabButton label={tab.label} onClick={tab.onClick} state={tab.state} />
 
@@ -39,22 +40,27 @@ class GarageSetupPage extends Component {
       { label: t([ 'newGarage', 'gates' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/gates`), state: createState('garageSetup/gates') },
       { label: t([ 'newGarage', 'order' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/order`), state: createState('garageSetup/order') },
       { label: t([ 'newGarage', 'legalDocuments' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/legalDocuments`), state: createState('garageSetup/legalDocuments') },
-      window.location.hash.includes('admin') ?
-        { label: t([ 'newGarage', 'users' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/users`), state: createState('garageSetup/users') } :
-        { label: t([ 'newGarage', 'subscribtion' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/subscribtion`), state: createState('garageSetup/subscribtion') }
+      window.location.hash.includes('admin')
+        ? { label: t([ 'newGarage', 'users' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/users`), state: createState('garageSetup/users') }
+        : { label: t([ 'newGarage', 'subscribtion' ]), onClick: () => nav.to(`/${state.garage}/admin/garageSetup/subscribtion`), state: createState('garageSetup/subscribtion') }
     ]
 
-    const errorContent = (<div className={styles.floatCenter}>
-      { garageSetup.error } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setError} type="confirm" />
-    </div>)
+    const errorContent = (
+      <div className={styles.floatCenter}>
+        {garageSetup.error}
+        <br />
+        <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.setError} type="confirm" />
+      </div>
+    )
 
-    const processingContent = (<div className={styles.floatCenter}>
-      {t([ 'newGarage', 'processing' ])}
-    </div>)
+    const processingContent = (
+      <div className={styles.floatCenter}>
+        {t([ 'newGarage', 'processing' ])}
+      </div>
+    )
 
     return (
-      <PageBase>
+      <React.Fragment>
         <Modal content={errorContent} show={garageSetup.error !== undefined && !garageSetup.fetching} />
         <Modal content={processingContent} show={garageSetup.fetching} />
 
@@ -67,7 +73,7 @@ class GarageSetupPage extends Component {
         </div>
 
         <div className={styles.bottomMargin} />
-      </PageBase>
+      </React.Fragment>
     )
   }
 }

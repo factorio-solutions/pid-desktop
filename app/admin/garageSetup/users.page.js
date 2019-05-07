@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import GarageSetupPage          from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Table                    from '../../_shared/components/table/Table'
 import LabeledRoundButton       from '../../_shared/components/buttons/LabeledRoundButton'
 import InvitationReminderButton from '../../_shared/components/buttons/InvitationReminderButton'
 
 import * as garageUsersActions from '../../_shared/actions/garageUsers.actions'
 import { setGarage }           from '../../_shared/actions/inviteUser.actions'
+import { toAdminGarageSetup }           from '../../_shared/actions/pageBase.actions'
 import * as nav                from '../../_shared/helpers/navigation'
 import { t }                   from '../../_shared/modules/localization/localization'
 
@@ -21,17 +23,20 @@ class GarageUsersPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
-    actions:  PropTypes.object
+    actions:  PropTypes.object,
+    match:    PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.initGarageUsers(this.props.params.id)
+    const { match: { params }, actions } = this.props
+    actions.initGarageUsers(params.id)
   }
 
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
-    if (nextProps.pageBase.garage !== this.props.pageBase.garage) {
-      nextProps.pageBase.garage && this.props.actions.initGarageUsers(nextProps.pageBase.garage)
+    const { pageBase, actions } = this.props
+    if (nextProps.pageBase.garage !== pageBase.garage) {
+      nextProps.pageBase.garage && actions.initGarageUsers(nextProps.pageBase.garage)
     }
   }
 
@@ -169,7 +174,7 @@ class GarageUsersPage extends Component {
     })
 
     return (
-      <GarageSetupPage>
+      <React.Fragment>
         <Table
           schema={schema}
           data={data}
@@ -197,12 +202,17 @@ class GarageUsersPage extends Component {
             label={t([ 'garageUsers', 'addUser' ])}
           />
         </div>
-      </GarageSetupPage>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.garageUsers, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...garageUsersActions, setGarage }, dispatch) })
-)(GarageUsersPage)
+const enhancers = compose(
+  withMasterPageConf(toAdminGarageSetup('garageGarageUsers')),
+  connect(
+    state => ({ state: state.garageUsers, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators({ ...garageUsersActions, setGarage }, dispatch) })
+  )
+)
+
+export default enhancers(GarageUsersPage)

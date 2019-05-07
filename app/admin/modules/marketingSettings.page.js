@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 
-import ModulesPageBase    from './components/modulesPageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Form               from '../../_shared/components/form/Form'
 import Wysiwyg            from '../../_shared/components/wysiwyg/Wysiwyg'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
@@ -15,6 +16,7 @@ import Modal              from '../../_shared/components/modal/Modal'
 
 import { t }                              from '../../_shared/modules/localization/localization'
 import * as newMarketingActions           from '../../_shared/actions/newMarketing.actions'
+import { toAdminModules }                  from '../../_shared/actions/pageBase.actions'
 import { PRESIGNE_MARKETING_IMAGE_QUERY } from '../../_shared/queries/newMarketing.queries'
 
 import styles from './marketingSettings.page.scss'
@@ -56,11 +58,14 @@ class MarketingSettingsPage extends Component {
 
     const prepareAttributes = (attribute, index) => {
       const attributeClick = () => actions.setParameter(attribute, !state[attribute])
-      return <tr key={index}>
-        <td className={styles.attribute} onClick={attributeClick}><input type="checkbox" checked={state[attribute] || false} onChange={attributeClick} />
-          {t([ 'newMarketing', attribute ])}
-        </td>
-      </tr>
+      return (
+        <tr key={index}>
+          <td className={styles.attribute} onClick={attributeClick}>
+            <input type="checkbox" checked={state[attribute] || false} onChange={attributeClick} />
+            {t([ 'newMarketing', attribute ])}
+          </td>
+        </tr>
+      )
     }
 
     const prepareImages = (image, index, arr) => {
@@ -87,7 +92,8 @@ class MarketingSettingsPage extends Component {
               query={PRESIGNE_MARKETING_IMAGE_QUERY}
               variables={{ garage_id: pageBase.garage }}
             />
-            {state.images.length - 1 !== index &&
+            {state.images.length - 1 !== index
+              && (
               <LabeledRoundButton
                 label={t([ 'newMarketing', 'removeImage' ])}
                 content={<span className="fa fa-times" aria-hidden="true" />}
@@ -95,6 +101,7 @@ class MarketingSettingsPage extends Component {
                 type="remove"
                 question={t([ 'newMarketing', 'removeImageQuestion' ])}
               />
+              )
             }
           </div>
           <div className={styles.imgPreview}>
@@ -104,19 +111,23 @@ class MarketingSettingsPage extends Component {
       )
     }
 
-    const modalContent = (<div className={styles.floatCenter}>
-      { state.modalContent }
-    </div>)
-
-    const modalError = (<div className={styles.floatCenter}>
-      <div>
-        { state.modalError }
+    const modalContent = (
+      <div className={styles.floatCenter}>
+        { state.modalContent }
       </div>
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={() => actions.setModalError()} type="confirm" />
-    </div>)
+    )
+
+    const modalError = (
+      <div className={styles.floatCenter}>
+        <div>
+          { state.modalError }
+        </div>
+        <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={() => actions.setModalError()} type="confirm" />
+      </div>
+    )
 
     return (
-      <ModulesPageBase>
+      <React.Fragment>
         <Form onSubmit={this.submitForm} submitable={checkSubmitable()} onHighlight={this.hightlightInputs}>
           <Modal content={modalContent} show={state.modalContent !== undefined} />
           <Modal content={modalError} show={state.modalError !== undefined} />
@@ -177,12 +188,17 @@ class MarketingSettingsPage extends Component {
         </Form>
 
         <div className={styles.bottomMargin} />
-      </ModulesPageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.newMarketing, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(newMarketingActions, dispatch) })
-)(MarketingSettingsPage)
+const enhancers = compose(
+  withMasterPageConf(toAdminModules('garageMarketing')),
+  connect(
+    state => ({ state: state.newMarketing, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(newMarketingActions, dispatch) })
+  )
+)
+
+export default enhancers(MarketingSettingsPage)

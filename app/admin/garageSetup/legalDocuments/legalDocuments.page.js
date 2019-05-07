@@ -1,45 +1,47 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
+
+import withMasterPageConf from '../../../hoc/withMasterPageConf'
 
 import Documents       from './documents'
-import GarageSetupPage from '../../../_shared/containers/garageSetupPage/GarageSetupPage'
 import Form            from '../../../_shared/components/form/Form'
 
 import * as legalDocumentsActions         from '../../../_shared/actions/legalDocuments.actions'
 import * as nav                           from '../../../_shared/helpers/navigation'
 import { t }                              from '../../../_shared/modules/localization/localization'
 import { initTarif, intiEditGarageOrder } from '../../../_shared/actions/garageSetup.actions'
+import { toAdminGarageSetup } from '../../../_shared/actions/pageBase.actions'
 
 
 class LegalDocuments extends Component {
   static propTypes = {
     state:       PropTypes.object,
     actions:     PropTypes.object,
-    params:      PropTypes.object,
+    match:       PropTypes.object,
     garageSetup: PropTypes.object,
     pageBase:    PropTypes.object
   }
 
   componentDidMount() {
-    const { params, actions } = this.props
+    const { match: { params }, actions } = this.props
     if (params.id) {
       actions.initDocuments()
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { garageSetup, actions, params } = this.props
-    if (nextProps.params.id !== params.id) {
+    const { garageSetup, actions, match: { params } } = this.props
+    if (nextProps.match.params.id !== params.id) {
       actions.initDocuments()
       garageSetup.availableTarifs.length === 0 && actions.initTarif()
-      nextProps.params.id && actions.intiEditGarageOrder(nextProps.params.id)
+      nextProps.match.params.id && actions.intiEditGarageOrder(nextProps.match.params.id)
     }
   }
 
   onSubmit = () => {
-    const { params, actions } = this.props
+    const { match: { params }, actions } = this.props
     if (params.id) {
       actions.updateGarageDocuments()
     } else {
@@ -48,7 +50,7 @@ class LegalDocuments extends Component {
   }
 
   goBack = () => {
-    const { params } = this.props
+    const { match: { params } } = this.props
     if (params.id) {
       nav.to(`/${params.id}/admin/garageSetup/order`)
     } else {
@@ -62,7 +64,7 @@ class LegalDocuments extends Component {
   }
 
   isGarageAdmin = () => {
-    const { pageBase, params } = this.props
+    const { pageBase, match: { params } } = this.props
     if (!params.id) {
       return true
     }
@@ -79,41 +81,48 @@ class LegalDocuments extends Component {
     const { state, actions } = this.props
 
     return (
-      <GarageSetupPage>
-        <Form
-          onSubmit={this.onSubmit}
-          submitable={this.submitable()}
-          onBack={this.goBack}
-          onHighlight={actions.toggleHighlight}
-        >
-          {state.documentsTypes
-          && state.documentsTypes.map(type => (
-            <Documents
-              header={`${t([ 'newGarage', type ]).firstToUpperCase()} ${t([ 'newGarage', 'documents' ])}`}
-              type={type}
-              documents={state.documents.filter(doc => doc.doc_type === type)}
-              highlight={state.highlight}
-              isGarageAdmin={this.isGarageAdmin()}
-            />
-          ))
-          }
-        </Form>
-      </GarageSetupPage>
+      <Form
+        onSubmit={this.onSubmit}
+        submitable={this.submitable()}
+        onBack={this.goBack}
+        onHighlight={actions.toggleHighlight}
+      >
+        {state.documentsTypes
+        && state.documentsTypes.map(type => (
+          <Documents
+            header={`${t([ 'newGarage', type ]).firstToUpperCase()} ${t([ 'newGarage', 'documents' ])}`}
+            type={type}
+            documents={state.documents.filter(doc => doc.doc_type === type)}
+            highlight={state.highlight}
+            isGarageAdmin={this.isGarageAdmin()}
+          />
+        ))
+        }
+      </Form>
     )
   }
 }
 
-export default connect(
-  state => ({
-    state:       state.legalDocuments,
-    garageSetup: state.garageSetup,
-    pageBase:    state.pageBase
-  }),
-  dispatch => ({
-    actions: bindActionCreators({
-      ...legalDocumentsActions,
-      initTarif,
-      intiEditGarageOrder
-    }, dispatch)
-  })
-)(LegalDocuments)
+const mapStateToProps = state => ({
+  state:       state.legalDocuments,
+  garageSetup: state.garageSetup,
+  pageBase:    state.pageBase
+})
+
+const mapActionsToProps = dispatch => ({
+  actions: bindActionCreators({
+    ...legalDocumentsActions,
+    initTarif,
+    intiEditGarageOrder
+  }, dispatch)
+})
+
+const enhancers = compose(
+  withMasterPageConf(toAdminGarageSetup('newGarageLegalDocuments')),
+  connect(
+    mapStateToProps,
+    mapActionsToProps
+  )
+)
+
+export default enhancers(LegalDocuments)

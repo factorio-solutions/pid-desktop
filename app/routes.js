@@ -198,16 +198,16 @@ export default function createRoutes(jwt) {
       {/* <Route path=":id/admin/clients/:client_id/smsSettings" component={SmsSettingsPage} />
       <Route path=":id/admin/clients/:client_id/timeCredit" component={TimeCreditPage} />
       <Route path=":id/admin/clients/:client_id/minMaxReservationDuration" component={MinMaxDurationPage} /> */}
-      <Route path=":id/admin/clients/newContract" component={NewContractPage} />
-      <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} />
+      {/* <Route path=":id/admin/clients/newContract" component={NewContractPage} />
+      <Route path=":id/admin/clients/:contract_id/editContract" component={NewContractPage} /> */}
 
-      <Route path=":id/admin/modules/marketingPage" component={MarketingSettingsPage} />
-      <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} />
-      <Route path=":id/admin/modules/3rdPartyIntegration" component={ThirdPartyIntegrationPage} />
-      <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} />
-      <Route path=":id/admin/modules/goPublic" component={GoPublicPage} />
-      <Route path=":id/admin/modules/goInternal" component={GoInternalPage} />
-      <Route path=":id/admin/modules/flexiplace" component={FlexiplacePage} />
+      {/* <Route path=":id/admin/modules/marketingPage" component={MarketingSettingsPage} /> */}
+      {/* <Route path=":id/admin/modules/reservationButton" component={ReservationButtonPage} /> */}
+      {/* <Route path=":id/admin/modules/3rdPartyIntegration" component={ThirdPartyIntegrationPage} /> */}
+      {/* <Route path=":id/admin/modules/mrParkitIntegration" component={MrParkitIntegrationPage} /> */}
+      {/* <Route path=":id/admin/modules/goPublic" component={GoPublicPage} /> */}
+      {/* <Route path=":id/admin/modules/goInternal" component={GoInternalPage} /> */}
+      {/* <Route path=":id/admin/modules/flexiplace" component={FlexiplacePage} /> */}
 
       <Route path="addFeatures/garageSetup/general" component={GarageSetupGeneralPage} />
       <Route path="addFeatures/garageSetup/floors" component={GarageSetupFloorsPage} />
@@ -215,13 +215,13 @@ export default function createRoutes(jwt) {
       <Route path="addFeatures/garageSetup/order" component={GarageSetupOrderPage} />
       <Route path="addFeatures/garageSetup/legalDocuments" component={LegalDocuments} />
       <Route path="addFeatures/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
-      <Route path=":id/admin/garageSetup/general" component={GarageSetupGeneralPage} />
+      {/* <Route path=":id/admin/garageSetup/general" component={GarageSetupGeneralPage} />
       <Route path=":id/admin/garageSetup/floors" component={GarageSetupFloorsPage} />
       <Route path=":id/admin/garageSetup/gates" component={GarageSetupGatesPage} />
       <Route path=":id/admin/garageSetup/order" component={GarageSetupOrderPage} />
       <Route path=":id/admin/garageSetup/subscribtion" component={GarageSetupSubscribtionPage} />
       <Route path=":id/admin/garageSetup/users" component={GarageUsersPage} />
-      <Route path=":id/admin/garageSetup/legalDocuments" component={LegalDocuments} />
+      <Route path=":id/admin/garageSetup/legalDocuments" component={LegalDocuments} /> */}
 
       <Route path=":id/admin/users" component={UsersPage} />
       <Route path=":id/admin/users/invite" component={InviteUserPage} />

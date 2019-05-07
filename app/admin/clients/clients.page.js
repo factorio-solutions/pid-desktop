@@ -9,12 +9,12 @@ import withMasterPageConf from '../../hoc/withMasterPageConf'
 import Table              from '../../_shared/components/table/Table'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
-import * as clientActions         from '../../_shared/actions/clients.actions'
-import { setClient }              from '../../_shared/actions/newContract.actions'
-import { setClientId }            from '../../_shared/actions/invoices.actions'
-import { toAdminClients }         from '../../_shared/actions/pageBase.actions'
-import { t }                      from '../../_shared/modules/localization/localization'
-import * as nav                   from '../../_shared/helpers/navigation'
+import * as clientActions from '../../_shared/actions/clients.actions'
+import { setClient } from '../../_shared/actions/newContract.actions'
+import { setClientId } from '../../_shared/actions/invoices.actions'
+import { toAdminClients } from '../../_shared/actions/pageBase.actions'
+import { t } from '../../_shared/modules/localization/localization'
+import * as nav from '../../_shared/helpers/navigation'
 
 import styles from './clients.page.scss'
 import ClientSpoiler from './clientSpoiler'
@@ -28,12 +28,15 @@ class ClientsPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initClients()
-    this.props.pageBase.garage && this.props.actions.initGarageContracts()
+    const { actions, pageBase } = this.props
+    actions.initClients()
+    pageBase.garage && actions.initGarageContracts()
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
-    nextProps.pageBase.garage !== this.props.pageBase.garage && this.props.actions.initGarageContracts()
+    const { actions, pageBase } = this.props
+
+    nextProps.pageBase.garage !== pageBase.garage && actions.initGarageContracts()
   }
 
   addClient = () => nav.to(`/${this.props.pageBase.garage}/admin/clients/newClient`)
