@@ -456,10 +456,12 @@ class NewContractPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toAdminClients({
-    pattern: 'edit',
-    array:   [ 'editContract', 'newContract' ]
-  })),
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const tag = hash.includes('edit') ? 'editContract' : 'newContract'
+
+    return toAdminClients(tag)
+  }),
   connect(
     state => ({ state: state.newContract, pageBaseGarage: state.pageBase.garage }),
     dispatch => ({ actions: bindActionCreators(newContractActions, dispatch) })

@@ -6,7 +6,7 @@ import MenuButton from '../buttons/MenuButton'
 const VerticalMenu = ({ content, onClick, verticalSelected }) => {
   const prepareMenuButton = (object, index) => {
     const newOnClick = () => {
-      onClick()
+      onClick && onClick()
       object.onClick()
     }
 

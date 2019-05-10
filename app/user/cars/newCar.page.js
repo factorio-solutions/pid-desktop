@@ -140,7 +140,12 @@ class NewCarPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toProfile, { pattern: 'edit', array: [ 'carsEdit', 'carsNewCar' ] }),
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const tag = hash.includes('edit') ? 'carsEdit' : 'carsNewCar'
+
+    return toProfile(tag)
+  }),
   connect(
     state => ({ state: state.newCar }),
     dispatch => ({ actions: bindActionCreators(newCarActions, dispatch) })

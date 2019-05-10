@@ -91,9 +91,11 @@ class NewRentPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toAdminFinance, {
-    pattern: 'edit',
-    array:   [ 'garageEditRent', 'garageNewRent' ]
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const tag = hash.includes('edit') ? 'garageEditRent' : 'garageNewRent'
+
+    return toAdminFinance(tag)
   }),
   connect(
     state => ({ state: state.newRent, pageBase: state.pageBase }),

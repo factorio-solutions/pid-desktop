@@ -14,7 +14,7 @@ import GarageLayout       from '../../_shared/components/garageLayout/GarageLayo
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
 import * as garageSetupActions  from '../../_shared/actions/garageSetup.actions'
-import { toAdminGarageSetup }   from '../../_shared/actions/pageBase.actions'
+import { toAdminGarageSetup, toAddFeatures } from '../../_shared/actions/pageBase.actions'
 
 import styles from './garageSetupGeneral.page.scss'
 
@@ -262,7 +262,12 @@ class GarageSetupFloorsPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toAdminGarageSetup('newGarageFloors')),
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const action = hash.includes('admin') ? toAdminGarageSetup : toAddFeatures
+
+    return action('newGarageFloors')
+  }),
   connect(
     state => ({ state: state.garageSetup, pageBase: state.pageBase }),
     dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })

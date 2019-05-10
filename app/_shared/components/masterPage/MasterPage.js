@@ -40,7 +40,11 @@ import GaragePage from '../../../garage/garage.page'
 import AnalyticsRouter from '../../../analytics/analytics.router'
 import ProfileRoutes from '../../../user/profile.routes'
 import AdminRoutes from '../../../admin/admin.routes'
+import AddFeaturesRoutes from '../../../addFeatures/addFeatures.routes'
 
+import isIe from '../../helpers/internetExplorer'
+
+const IS_IE = isIe()
 
 class MasterPage extends Component {
   static propTypes = {
@@ -65,12 +69,15 @@ class MasterPage extends Component {
     isGarageReceptionist: PropTypes.bool,
     isGarageSecurity:     PropTypes.bool,
     pid_tarif:            PropTypes.number,
-    showScrollbar:        PropTypes.bool
+    showScrollbar:        PropTypes.bool,
+    location:             PropTypes.object
   }
 
   constructor(props) {
     super(props)
     this.state = { menu: false }
+
+    this.hintStyle = IS_IE ? { top: '60px' } : undefined
   }
 
   componentDidMount() {
@@ -78,15 +85,21 @@ class MasterPage extends Component {
   }
 
   onHamburgerClick = () => {
-    this.setState({ menu: !this.props.showSecondaryMenu && !this.state.menu })
-    this.props.actions.setShowSecondaryMenu(false)
+    const { actions, showSecondaryMenu } = this.props
+    this.setState(state => ({ ...state, menu: !showSecondaryMenu && !state.menu }))
+    actions.setShowSecondaryMenu(false)
   }
 
   onLogoClick = () => nav.to('/occupancy')
 
   onMessageClick =() => nav.to('/notifications')
 
-  verticalMenuClick = () => this.setState({ menu: false })
+  verticalMenuClick = () => {
+    const { menu } = this.state
+    if (menu) {
+      this.setState(state => ({ ...state, menu: false }))
+    }
+  }
 
   profileDropdown = () => {
     const {
@@ -139,7 +152,7 @@ class MasterPage extends Component {
         icon:    'icon-occupancy',
         onClick: () => {
           nav.to('/occupancy')
-          actions.toOccupancy()
+          // actions.toOccupancy()
         }
       }, // edit preferences in pageBase.action too
       {
@@ -148,7 +161,7 @@ class MasterPage extends Component {
         icon:    'icon-reservations',
         onClick: () => {
           nav.to('/reservations')
-          actions.toReservations()
+          // actions.toReservations()
         }
       },
       (
@@ -162,7 +175,7 @@ class MasterPage extends Component {
         icon:    'icon-garage',
         onClick: () => {
           nav.to(`/${garage}/garage`)
-          actions.toGarage()
+          // actions.toGarage()
         }
       }, // edit preferences in pageBase.action too
       (
@@ -178,7 +191,7 @@ class MasterPage extends Component {
         label:   t([ 'pageBase', 'Admin' ]),
         key:     'admin',
         icon:    'icon-admin',
-        onClick: actions.adminClick
+        onClick: () => nav.to(`/${garage}/admin/invoices`) // actions.adminClick
       }
     ].filter(field => field) // will filter false states out
   }
@@ -213,12 +226,15 @@ class MasterPage extends Component {
       secondaryMenuBackButton,
       showSecondaryMenu,
       hint,
-      messageCount
+      messageCount,
+      location
     } = this.props
 
     const showHints = currentUser && currentUser.hint
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
+
+    console.log(location)
     return (
       <div>
         <div className={styles.horizontalMenu}>
@@ -278,7 +294,7 @@ class MasterPage extends Component {
 
           <div className={`${styles.content} ${showSecondaryMenu && styles.shift}`}>
             {showHints && hint && (
-              <div className={styles.hint}>
+              <div className={styles.hint} style={this.hintStyle}>
                 <div className={styles.hintCross} onClick={actions.changeHints}>
                   <i className="fa fa-times" aria-hidden="true" />
                 </div>
@@ -290,6 +306,7 @@ class MasterPage extends Component {
               <PageBase>
                 <Switch>
                   <Route path={`${match.path}/notifications`} component={NotificationsPage} />
+                  <Route path={`${match.path}/addFeatures`} component={AddFeaturesRoutes} />
                   <Route path={`${match.path}/occupancy`} component={OccupancyPage} />
                   <Route path={`${match.path}/reservations`} component={ReservationsRoute} />
                   <Route path={`${match.path}/:id/garage`} component={GaragePage} />

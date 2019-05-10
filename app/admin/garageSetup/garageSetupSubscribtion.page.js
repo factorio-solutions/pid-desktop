@@ -11,7 +11,7 @@ import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import * as nav from '../../_shared/helpers/navigation'
 import { t } from '../../_shared/modules/localization/localization'
 import * as garageSetupActions from '../../_shared/actions/garageSetup.actions'
-import { toAdminGarageSetup } from '../../_shared/actions/pageBase.actions'
+import { toAdminGarageSetup, toAddFeatures } from '../../_shared/actions/pageBase.actions'
 import { bookingPagePrice } from '../../_shared/reducers/garageSetup.reducer'
 import styles from './garageSetupGeneral.page.scss'
 
@@ -109,7 +109,12 @@ class GarageSetupSubscribtionPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toAdminGarageSetup('newGarageSubscribtion')),
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const action = hash.includes('admin') ? toAdminGarageSetup : toAddFeatures
+
+    return action('newGarageSubscribtion')
+  }),
   connect(
     state => ({ state: state.garageSetup }),
     dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })

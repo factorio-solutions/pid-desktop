@@ -12,7 +12,7 @@ import Input              from '../../_shared/components/input/Input'
 import * as nav                        from '../../_shared/helpers/navigation'
 import { t }                           from '../../_shared/modules/localization/localization'
 import * as garageSetupActions         from '../../_shared/actions/garageSetup.actions'
-import { toAdminGarageSetup }          from '../../_shared/actions/pageBase.actions'
+import { toAdminGarageSetup, toAddFeatures } from '../../_shared/actions/pageBase.actions'
 import { defaultImage }                from '../../_shared/reducers/garageSetup.reducer'
 import geocoder                        from '../../_shared/helpers/geocode'
 import { PRESIGNE_GARAGE_IMAGE_QUERY } from '../../_shared/queries/garageSetup.queries'
@@ -224,7 +224,12 @@ class GarageSetupGeneralPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toAdminGarageSetup('newGarage')),
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const action = hash.includes('admin') ? toAdminGarageSetup : toAddFeatures
+
+    return action('newGarage')
+  }),
   connect(
     state => ({ state: state.garageSetup, pageBase: state.pageBase }),
     dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })

@@ -19,6 +19,10 @@ export default class App extends PureComponent {
     store: PropTypes.object
   }
 
+  componentDidMount() {
+    localization.changeLanguage(localization.getLanguage())
+  }
+
   render() {
     const { jwt } = this.props
     return (
@@ -35,18 +39,16 @@ export default class App extends PureComponent {
           <Route
             path="/:lang"
             render={({
-              match: {
-                params,
-                path
-              }
+              match: { params, path }
             }) => {
               if (params.lang !== localization.getLanguage()) {
                 localization.changeLanguage(params.lang)
               }
+              const PidAdminMasterPage = null
               return (
                 <Switch>
                   <Route path={`${path}/login`} component={LoginPage} />
-
+                  <Route path={`${path}/pid-admin`} component={PidAdminMasterPage} />
                   <Route path={`${path}`} component={MasterPage} />
                 </Switch>
               )

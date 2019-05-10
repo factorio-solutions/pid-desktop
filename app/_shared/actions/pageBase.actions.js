@@ -2,12 +2,11 @@ import React     from 'react'
 import translate from 'counterpart'
 import { batchActions } from 'redux-batched-actions'
 
-import { func } from 'prop-types'
 import ConfirmModal from '../components/modal/ConfirmModal'
 import AlertModal   from '../components/modal/AlertModal'
 
 import * as nav      from '../helpers/navigation'
-import request   from '../helpers/request'
+import request from '../helpers/requestPromise'
 import actionFactory from '../helpers/actionFactory'
 import { t }         from '../modules/localization/localization'
 
@@ -87,11 +86,13 @@ export function setGarages(value) {
 
     const selectedGarage = value.find(userGarage => userGarage.garage.id === getState().pageBase.garage)
     if (selectedGarage) {
-      dispatch(setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id))
-      dispatch(setIsGarageAdmin(selectedGarage.admin))
-      dispatch(setIsGarageManager(selectedGarage.manager))
-      dispatch(setIsGarageReceptionist(selectedGarage.receptionist))
-      dispatch(setIsGarageSecurity(selectedGarage.security))
+      dispatch(batchActions([
+        setGaragePidTarif(selectedGarage.garage.active_pid_tarif_id),
+        setIsGarageAdmin(selectedGarage.admin),
+        setIsGarageManager(selectedGarage.manager),
+        setIsGarageReceptionist(selectedGarage.receptionist),
+        setIsGarageSecurity(selectedGarage.security)
+      ], 'PAGE_BASE_SET_GARAGES_USER_INFORMATION'))
     }
   }
 }
@@ -108,11 +109,13 @@ export function setGarage(value) {
     })
 
     const selectedGarage = getState().pageBase.garages.find(userGarage => userGarage.garage.id === value)
-    dispatch(setGaragePidTarif(selectedGarage ? selectedGarage.garage.active_pid_tarif_id : false))
-    dispatch(setIsGarageAdmin(selectedGarage ? selectedGarage.admin : false))
-    dispatch(setIsGarageManager(selectedGarage ? selectedGarage.manager : false))
-    dispatch(setIsGarageReceptionist(selectedGarage ? selectedGarage.receptionist : false))
-    dispatch(setIsGarageSecurity(selectedGarage ? selectedGarage.security : false))
+    dispatch(batchActions([
+      setGaragePidTarif(selectedGarage ? selectedGarage.garage.active_pid_tarif_id : false),
+      setIsGarageAdmin(selectedGarage ? selectedGarage.admin : false),
+      setIsGarageManager(selectedGarage ? selectedGarage.manager : false),
+      setIsGarageReceptionist(selectedGarage ? selectedGarage.receptionist : false),
+      setIsGarageSecurity(selectedGarage ? selectedGarage.security : false)
+    ], 'PAGE_BASE_SET_GARAGE_USER_INFORMATION'))
   }
 }
 
@@ -154,6 +157,21 @@ function prepareAnalyticsSecondaryMenu(state) {
   ].filter(field => field !== false)
 }
 
+function prepareSecondaryMenu() {
+  return (dispatch, getState) => {
+    const state = getState().pageBase
+    let secondaryMenu
+
+    if (state.showSecondaryMenu && state.selected === 'admin') {
+      secondaryMenu = dispatch(prepareAdminSecondaryMenu())
+    } else {
+      secondaryMenu = dispatch(prepareAnalyticsSecondaryMenu(state))
+    }
+
+    dispatch(setSecondaryMenu(secondaryMenu))
+  }
+}
+
 export function adminClick() {
   return (dispatch, getState) => {
     const state = getState().pageBase
@@ -191,42 +209,52 @@ function contains(string, text) {
 }
 
 export function fetchCurrentUser() {
-  return dispatch => {
-    const onSuccess = response => {
-      const user = response.data.current_user
-      dispatch(setCurrentUser({
-        ...user,
-        merchant_ids:      user.csob_payment_templates.map(template => template.merchant_id),
-        occupancy_garages: response.data.occupancy_garages
-      }))
-      if (response.data.current_user.language !== translate.getLocale()) {
-        nav.changeLanguage(response.data.current_user.language)
-      }
+  return async (dispatch, getState) => {
+    const response = await request(GET_CURRENT_USER)
+    const user = response.current_user
+
+    dispatch(setCurrentUser({
+      ...user,
+      merchant_ids:      user.csob_payment_templates.map(template => template.merchant_id),
+      occupancy_garages: response.occupancy_garages
+    }))
+
+    if (user.language !== translate.getLocale()) {
+      nav.changeLanguage(user.language)
     }
-    request(onSuccess, GET_CURRENT_USER)
+    const state = getState().pageBase
+
+    if (state.showSecondaryMenu) {
+      dispatch(prepareSecondaryMenu())
+    }
   }
 }
 
 export function fetchGarages(goToDashboard = true) {
-  return (dispatch, getState) => {
-    const onSuccess = response => {
-      const userGarages = response.data.user_garages
-        .filter(userGarage => userGarage.user_id === response.data.current_user.id) // find garages of current user
-        .filter(userGarage => !userGarage.pending) // find only garages that are not pending
+  return async (dispatch, getState) => {
+    const response = await request(GET_GARAGES)
 
-      dispatch(setGarages(userGarages))
-      const garageIdFromUrl = parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined
-      if (!getState().pageBase.garage || (garageIdFromUrl && getState().pageBase.garage !== garageIdFromUrl)) {
-        dispatch(setGarage(garageIdFromUrl)) // parse current garage from  URL
-      }
+    const userGarages = response.user_garages
+      .filter(userGarage => userGarage.user_id === response.current_user.id) // find garages of current user
+      .filter(userGarage => !userGarage.pending) // find only garages that are not pending
 
-      if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
-        // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
-        goToDashboard && nav.to('/occupancy') // if no garage available from URL, select first and redirect to dashboard
-        userGarages.length > 0 && dispatch(setGarage(userGarages[0].garage.id))
-      }
+    dispatch(setGarages(userGarages))
+    const garageIdFromUrl = parseInt(window.location.hash.substring(5).split('/')[0], 10) || undefined
+    if (!getState().pageBase.garage || (garageIdFromUrl && getState().pageBase.garage !== garageIdFromUrl)) {
+      dispatch(setGarage(garageIdFromUrl)) // parse current garage from  URL
     }
-    request(onSuccess, GET_GARAGES)
+
+    if (userGarages.length > 0 && (getState().pageBase.garage === undefined || userGarages.find(userGarage => userGarage.garage.id === getState().pageBase.garage) === undefined)) {
+      // HACK: When it is called form notifications.actions.js then it is do not go to dashboard.
+      goToDashboard && nav.to('/occupancy') // if no garage available from URL, select first and redirect to dashboard
+      userGarages.length > 0 && dispatch(setGarage(userGarages[0].garage.id))
+    }
+
+    const state = getState().pageBase
+
+    if (state.showSecondaryMenu) {
+      dispatch(prepareSecondaryMenu())
+    }
   }
 }
 
@@ -347,27 +375,23 @@ export function toAdmin(subPage) {
     const state = getState().pageBase
     let secondarySelected
     let hint
-    let hintVideo
     const { hash } = window.location
 
     switch (subPage) { // MainMenu
       case 'editInvoice':
         secondarySelected = 'invoices'
         hint = t([ 'pageBase', 'editInvoiceHint' ])
-        hintVideo = 'https://www.youtube.com/'
         break
 
       case 'invoices':
         secondarySelected = 'invoices'
         hint = t([ 'pageBase', 'invoicesHint' ])
-        hintVideo = 'https://www.youtube.com/'
         break
 
       case (contains(hash, 'pidSettings')):
         if (state.isGarageAdmin) {
           secondarySelected = 'PID'
           hint = t([ 'pageBase', 'pidSettingsHint' ])
-          hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/occupancy') // not accessible for this user
         }
@@ -377,14 +401,13 @@ export function toAdmin(subPage) {
         if (state.isGarageAdmin) {
           secondarySelected = 'activity'
           hint = t([ 'pageBase', 'activityLogHint' ])
-          hintVideo = 'https://www.youtube.com/'
         } else {
           nav.to('/occupancy') // not accessible for this user
         }
         break
     }
 
-    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
+    dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, 'https://www.youtube.com/', true))
   }
 }
 
@@ -425,8 +448,6 @@ export function toAdminFinance(subPage) {
     const hint = t([ 'pageBase', `${subPage || 'finance'}Hint` ])
     const hintVideo = 'https://www.youtube.com/'
 
-    console.log(subPage)
-
     if (!state.isGarageAdmin) {
       return nav.to('/occupancy')
     }
@@ -446,39 +467,15 @@ export function toAdminModules(subPage) {
       return nav.to('/occupancy')
     }
 
-    // hint = t([ 'pageBase', 'garageNewMarketingHint' ]) Where??
-
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
   }
 }
 
-export function toAddFeatures() {
+export function toAddFeatures(subPage = 'addFeatures') {
   return dispatch => {
-    const { hash } = window.location
+    const hint = t([ 'pageBase', `${subPage}Hint` ])
 
-    switch (true) { // MainMenu
-      case (contains(hash, 'gateModuleOrder')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'orderGarageModuleHint' ]), 'https://www.youtube.com/'))
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'general')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'newGarageHint' ]), 'https://www.youtube.com/'))
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'floors')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'newGarageFloorsHint' ]), 'https://www.youtube.com/'))
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'gates')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'newGarageGatesHint' ]), 'https://www.youtube.com/'))
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'order')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'newGarageOrderHint' ]), 'https://www.youtube.com/'))
-        break
-      case (contains(hash, 'garageSetup') && contains(hash, 'subscribtion')):
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'newGarageSubscribtionHint' ]), 'https://www.youtube.com/'))
-        break
-      default:
-        dispatch(setAll(undefined, [], undefined, t([ 'pageBase', 'addFeaturesHint' ]), 'https://www.youtube.com/'))
-        break
-    }
+    dispatch(setAll(undefined, [], undefined, hint, 'https://www.youtube.com/'))
   }
 }
 
@@ -525,9 +522,6 @@ export function initialPageBase() {
       case contains(hash, 'dashboard'):
         dispatch(toDashboard())
         break
-      case (contains(hash, 'reservations') && !contains(hash, 'analytics')):
-        dispatch(toReservations())
-        break
       case contains(hash, 'occupancy'):
         dispatch(toOccupancy())
         break
@@ -540,14 +534,8 @@ export function initialPageBase() {
       case contains(hash, 'analytics'):
         dispatch(toAnalytics())
         break
-      case contains(hash, 'admin'):
-        dispatch(toAdmin())
-        break
       case contains(hash, 'addFeatures'):
         dispatch(toAddFeatures())
-        break
-      case contains(hash, 'profile'):
-        dispatch(toProfile())
         break
       case contains(hash, 'notifications'):
         dispatch(toNotifications())

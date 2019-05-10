@@ -135,7 +135,12 @@ class NewClientPage extends Component {
 }
 
 const enhancers = compose(
-  withMasterPageConf(toAdminClients, { pattern: 'edit', array: [ 'editClient', 'newClient' ] }),
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const tag = hash.includes('edit') ? 'editClient' : 'newClient'
+
+    return toAdminClients(tag)
+  }),
   connect(
     state => ({ state: state.newClient, pageBase: state.pageBase }),
     dispatch => ({ actions: bindActionCreators(newClientActions, dispatch) })
