@@ -1,5 +1,5 @@
 import { combineReducers }          from 'redux'
-import { routerReducer as routing } from 'react-router-redux'
+import { connectRouter } from 'connected-react-router'
 
 import pageBase from '../_shared/reducers/pageBase.reducer'
 
@@ -69,8 +69,7 @@ import pidAdminLogs             from '../_shared/reducers/pid-admin.logs.reducer
 import pidAdminGaragesOverview  from '../_shared/reducers/pid-admin.garagesOverview.reducer'
 import pidAdminMobileAppVersion from '../_shared/reducers/pid-admin.mobileAppVersion.reducer'
 
-const appReducer = combineReducers({
-  routing,
+const appReducer = {
   pageBase,
 
   login,
@@ -138,14 +137,18 @@ const appReducer = combineReducers({
   pidAdminLogs,
   pidAdminGaragesOverview,
   pidAdminMobileAppVersion
-})
-
-const rootReducer = (state, action) => { // app reducer container reducer
-  if (action.type === 'RESET') {
-    window.Intercom('shutdown')
-    state = undefined
-  } // will erase store
-  return appReducer(state, action)
 }
 
-export default rootReducer
+export default history => {
+  const reducer = combineReducers({
+    ...appReducer,
+    router: connectRouter(history)
+  })
+  return (state, action) => {
+    if (action.type === 'RESET') {
+      window.Intercom('shutdown')
+      state = undefined
+    } // will erase store
+    return reducer(state, action)
+  }
+}

@@ -26,6 +26,7 @@ const ModalForm = ({
       value={newNote}
       align="center"
       onEnter={editReservationNote}
+      key="newNoteInput"
     />
   </Form>
 )

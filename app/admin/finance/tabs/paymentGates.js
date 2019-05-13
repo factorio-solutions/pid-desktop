@@ -7,6 +7,7 @@ import CallToActionButton from '../../../_shared/components/buttons/CallToAction
 import Switch             from '../../../_shared/components/switch/Switch'
 
 import * as nav            from '../../../_shared/helpers/navigation'
+import { parseParameters } from '../../../_shared/helpers/parseUrlParameters'
 import { t }               from '../../../_shared/modules/localization/localization'
 import * as financeActions from '../../../_shared/actions/admin.finance.actions'
 
@@ -23,10 +24,12 @@ class PaymentGatesTab extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.query.hasOwnProperty('request_token')) { // got request token => Permissions granted -> update account
-      this.props.actions.upadteAccountPaypal(this.props.location.query)
+    const { actions, location, params } = this.props
+    const query = parseParameters(location.search)
+    if (query.hasOwnProperty('request_token')) { // got request token => Permissions granted -> update account
+      actions.upadteAccountPaypal(query)
     }
-    this.props.actions.initFinance(this.props.params.id)
+    actions.initFinance(params.id)
   }
 
   componentWillReceiveProps(nextProps) { // load garage if id changed
@@ -56,7 +59,7 @@ class PaymentGatesTab extends Component {
         <div className={styles.module}>
           {t([ 'finance', 'csob' ])}
           <div className={styles.settings}>
-            <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toCsobSettings} />
+            <CallToActionButton label={t([ 'modules', 'setting' ])} state="inverted" onClick={this.toCsobSettings} />
             <Switch on={state.csob} onClick={state.csob ? actions.disableAccountCsob : this.toCsobSettings} />
           </div>
         </div>
@@ -64,7 +67,7 @@ class PaymentGatesTab extends Component {
         <div className={styles.module}>
           {t([ 'finance', 'gpWebpay' ])}
           <div className={styles.settings}>
-            <CallToActionButton label={t([ 'modules', 'setting' ])} state={'inverted'} onClick={this.toGpWebpaySettings} />
+            <CallToActionButton label={t([ 'modules', 'setting' ])} state="inverted" onClick={this.toGpWebpaySettings} />
             <Switch on={state.gp_webpay} onClick={state.gp_webpay ? actions.disableAccountGpWebpay : this.toGpWebpaySettings} />
           </div>
         </div>

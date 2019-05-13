@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase          from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import Dropdown          from '../_shared/components/dropdown/Dropdown'
 import OccupancyOverview from '../_shared/components/occupancyOverview/OccupancyOverview'
 import TabMenu           from '../_shared/components/tabMenu/TabMenu'
@@ -24,6 +25,7 @@ import {
 import * as OccupancyActions      from '../_shared/actions/occupancy.actions'
 import * as newReservationActions from '../_shared/actions/newReservation.actions'
 import { setPast }                from '../_shared/actions/reservations.actions'
+import { toOccupancy }         from '../_shared/actions/pageBase.actions'
 import { t }                      from '../_shared/modules/localization/localization'
 import * as nav                   from '../_shared/helpers/navigation'
 
@@ -73,6 +75,7 @@ class OccupancyPage extends Component {
   }
 
   render() {
+    console.log('Render Occupancy')
     const {
       state, currentUser, actions, selectedPlace, places, interval
     } = this.props
@@ -143,7 +146,7 @@ class OccupancyPage extends Component {
     ]
 
     return (
-      <PageBase>
+      <React.Fragment>
         <Modal show={state.newReservation}>
           <Form
             onSubmit={this.submitNewReservation}
@@ -254,21 +257,27 @@ class OccupancyPage extends Component {
             />
           </div>
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({
-    state:         state.occupancy,
-    currentUser:   state.pageBase.current_user,
-    places:        getPlaces(state),
-    selectedPlace: getSelectedPlace(state),
-    interval:      getInterval(state)
-  }),
-  dispatch => ({
-    actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
-    newReservationActions: bindActionCreators(newReservationActions, dispatch)
-  })
-)(OccupancyPage)
+const mapStateToProps = state => ({
+  state:         state.occupancy,
+  currentUser:   state.pageBase.current_user,
+  places:        getPlaces(state),
+  selectedPlace: getSelectedPlace(state),
+  interval:      getInterval(state)
+})
+
+const mapActionsToProps = dispatch => ({
+  actions:               bindActionCreators({ ...OccupancyActions, setPast }, dispatch),
+  newReservationActions: bindActionCreators(newReservationActions, dispatch)
+})
+
+const enhancers = compose(
+  withMasterPageConf(toOccupancy()),
+  connect(mapStateToProps, mapActionsToProps)
+)
+
+export default enhancers(OccupancyPage)

@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import PageBase     from '../../_shared/containers/adminPageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
+import { toPidAdmin } from '../../_shared/actions/pageBase.actions'
+
 import FinanceTable from './components/FinanceTable'
 
-
-export default class PidAdminFinancePage extends Component {
-  render() {
-    return (
-      <PageBase>
-        <FinanceTable />
-      </PageBase>
-    )
-  }
+function PidAdminFinancePage() {
+  return (
+    <FinanceTable />
+  )
 }
+
+export default withMasterPageConf(toPidAdmin('finance'))(PidAdminFinancePage)

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { bindActionCreators, compose }          from 'redux'
 
-import PageBase from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import Form     from '../_shared/components/form/Form'
 import Input    from '../_shared/components/input/Input'
 
@@ -11,6 +12,7 @@ import styles                  from './gateModuleOrder.page.scss'
 import * as nav                from '../_shared/helpers/navigation'
 import { t }                   from '../_shared/modules/localization/localization'
 import * as orderModuleActions from '../_shared/actions/gateModuleOrder.actions'
+import { toAddFeatures } from '../_shared/actions/pageBase.actions'
 
 
 class GateModuleOrderPage extends Component {
@@ -53,7 +55,7 @@ class GateModuleOrderPage extends Component {
 
     const hightlightInputs = () => actions.toggleHighlight()
 
-    return (<PageBase>
+    return (
       <Form onSubmit={submitForm} submitable={checkSubmitable()} onBack={goBack} onHighlight={hightlightInputs}>
         <h2>{t([ 'orderGarageModule', 'garageModule' ])}</h2>
         <p>{t([ 'orderGarageModule', 'garageModuleDescription' ])}</p>
@@ -129,74 +131,85 @@ class GateModuleOrderPage extends Component {
           <div>
             <div className={styles.checkbox}>
               <input type="checkbox" checked={state.equalAddresses} onChange={actions.toggleEqualAddresses} />
-              <span onClick={actions.toggleEqualAddresses}> {t([ 'orderGarageModule', 'equalAddresses' ])} </span>
+              <span onClick={actions.toggleEqualAddresses}>
+                {' '}
+                {t([ 'orderGarageModule', 'equalAddresses' ])}
+                {' '}
+              </span>
             </div>
 
-            {!state.equalAddresses && <div>
-              <h2>{t([ 'orderGarageModule', 'invoiceAddress' ])}</h2>
-              <Input
-                onChange={actions.setInvoiceName}
-                label={t([ 'addresses', 'name' ]) + ' *'}
-                error={t([ 'newGarage', 'invalidName' ])}
-                value={state.invoice_address.name}
-                placeholder={t([ 'addresses', 'namePlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setInvoiceLine1}
-                label={t([ 'addresses', 'line1' ]) + ' *'}
-                error={t([ 'newGarage', 'line1Invalid' ])}
-                value={state.invoice_address.line_1}
-                placeholder={t([ 'addresses', 'line1Placeholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setInvoiceLine2}
-                label={t([ 'addresses', 'line2' ])}
-                error={t([ 'addresses', 'line2Invalid' ])}
-                value={state.invoice_address.line_2}
-                placeholder={t([ 'addresses', 'line2Placeholder' ])}
-              />
-              <Input
-                onChange={actions.setInvoiceCity}
-                label={t([ 'addresses', 'city' ]) + ' *'}
-                error={t([ 'newGarage', 'invalidCity' ])}
-                value={state.invoice_address.city}
-                placeholder={t([ 'addresses', 'cityPlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setInvoicePostalCode}
-                label={t([ 'addresses', 'postalCode' ]) + ' *'}
-                error={t([ 'newGarage', 'invalidPostalCode' ])}
-                value={state.invoice_address.postal_code}
-                placeholder={t([ 'addresses', 'postalCodePlaceholder' ])}
-                highlight={state.highlight}
-              />
-              <Input
-                onChange={actions.setInvoiceState}
-                label={t([ 'addresses', 'state' ])}
-                error={t([ 'newGarage', 'invalidCountry' ])}
-                value={state.invoice_address.state}
-                placeholder={t([ 'addresses', 'statePlaceholder' ])}
-              />
-              <Input
-                onChange={actions.setInvoiceCountry}
-                label={t([ 'addresses', 'country' ]) + ' *'}
-                error={t([ 'newGarage', 'invalidState' ])}
-                value={state.invoice_address.country}
-                placeholder={t([ 'addresses', 'countryPlaceholder' ])}
-                highlight={state.highlight}
-              />
-            </div>}
+            {!state.equalAddresses && (
+              <div>
+                <h2>{t([ 'orderGarageModule', 'invoiceAddress' ])}</h2>
+                <Input
+                  onChange={actions.setInvoiceName}
+                  label={t([ 'addresses', 'name' ]) + ' *'}
+                  error={t([ 'newGarage', 'invalidName' ])}
+                  value={state.invoice_address.name}
+                  placeholder={t([ 'addresses', 'namePlaceholder' ])}
+                  highlight={state.highlight}
+                />
+                <Input
+                  onChange={actions.setInvoiceLine1}
+                  label={t([ 'addresses', 'line1' ]) + ' *'}
+                  error={t([ 'newGarage', 'line1Invalid' ])}
+                  value={state.invoice_address.line_1}
+                  placeholder={t([ 'addresses', 'line1Placeholder' ])}
+                  highlight={state.highlight}
+                />
+                <Input
+                  onChange={actions.setInvoiceLine2}
+                  label={t([ 'addresses', 'line2' ])}
+                  error={t([ 'addresses', 'line2Invalid' ])}
+                  value={state.invoice_address.line_2}
+                  placeholder={t([ 'addresses', 'line2Placeholder' ])}
+                />
+                <Input
+                  onChange={actions.setInvoiceCity}
+                  label={t([ 'addresses', 'city' ]) + ' *'}
+                  error={t([ 'newGarage', 'invalidCity' ])}
+                  value={state.invoice_address.city}
+                  placeholder={t([ 'addresses', 'cityPlaceholder' ])}
+                  highlight={state.highlight}
+                />
+                <Input
+                  onChange={actions.setInvoicePostalCode}
+                  label={t([ 'addresses', 'postalCode' ]) + ' *'}
+                  error={t([ 'newGarage', 'invalidPostalCode' ])}
+                  value={state.invoice_address.postal_code}
+                  placeholder={t([ 'addresses', 'postalCodePlaceholder' ])}
+                  highlight={state.highlight}
+                />
+                <Input
+                  onChange={actions.setInvoiceState}
+                  label={t([ 'addresses', 'state' ])}
+                  error={t([ 'newGarage', 'invalidCountry' ])}
+                  value={state.invoice_address.state}
+                  placeholder={t([ 'addresses', 'statePlaceholder' ])}
+                />
+                <Input
+                  onChange={actions.setInvoiceCountry}
+                  label={t([ 'addresses', 'country' ]) + ' *'}
+                  error={t([ 'newGarage', 'invalidState' ])}
+                  value={state.invoice_address.country}
+                  placeholder={t([ 'addresses', 'countryPlaceholder' ])}
+                  highlight={state.highlight}
+                />
+              </div>
+            )}
           </div>
         </div>
       </Form>
-    </PageBase>)
+    )
   }
 }
 
-export default connect(
-  state => ({ state: state.gateModuleOrder }),
-  dispatch => ({ actions: bindActionCreators(orderModuleActions, dispatch) })
-)(GateModuleOrderPage)
+const enhancers = compose(
+  withMasterPageConf(toAddFeatures('orderGarageModule')),
+  connect(
+    state => ({ state: state.gateModuleOrder }),
+    dispatch => ({ actions: bindActionCreators(orderModuleActions, dispatch) })
+  )
+)
+
+export default enhancers(GateModuleOrderPage)

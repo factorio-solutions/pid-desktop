@@ -1,12 +1,12 @@
 import React from 'react'
-import { render } from 'react-dom'
+import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, hashHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { ConnectedRouter  } from 'connected-react-router'
 import localforage from 'localforage'
 import { UAParser } from 'ua-parser-js'
 import createRoutes from './routes'
-import configureStore from './_store/configureStore'
+import configureStore, { history } from './_store/configureStore'
 import { version } from '../package.json'
 import request from './_shared/helpers/requestPromise'
 
@@ -58,15 +58,6 @@ export const sendError = (error, message = error.message) => {
   }
 }
 
-
-const history = syncHistoryWithStore(hashHistory, store)
-// Force Monday as the first day of a week when English is set.
-require('moment').updateLocale('en', {
-  week: {
-    dow: 1
-  }
-})
-
 // exposed stuff for development
 if (process.env.NODE_ENV !== 'production') {
   window.moment = require('moment')
@@ -84,9 +75,13 @@ window.onerror = (message, source, lineno, colno, error) => {
 // }
 localforage.getItem('jwt')
   .then(jwt => {
-    render(
+    ReactDOM.render(
       <Provider store={store}>
-        <Router history={history} routes={createRoutes(jwt)} />
+        <ConnectedRouter history={history}>
+          <Router>
+            {createRoutes(jwt)}
+          </Router>
+        </ConnectedRouter>
       </Provider>,
       document.getElementById('root')
     )

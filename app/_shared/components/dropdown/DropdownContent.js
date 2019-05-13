@@ -19,38 +19,63 @@ export default class DropdownContent extends Component {
 
   static defaultProps = { style: '' }
 
+  constructor(props) {
+    super(props)
+
+    this.containerRef = React.createRef()
+
+    this.state = {
+      hide: true
+    }
+  }
+
+  handleClick = e => {
+    if (this.containerRef.current && !this.containerRef.current.contains(e.target)) {
+      this.hide()
+    }
+  }
+
   toggleDropdown = () => {
-    this.ul.classList.contains(styles.hidden) ? this.unhide() : this.hide()
+    const { hide } = this.state
+    hide ? this.unhide() : this.hide()
   }
 
   hide = () => {
-    this.ul.classList.add(styles.hidden)
-    setTimeout(() => { this.ul.classList.add(styles.displayNone) }, 250)
+    this.setState(state => ({ ...state, hide: true }))
+    document.removeEventListener('mousedown', this.handleClick, false)
   }
 
   unhide = () => {
-    this.ul.classList.remove(styles.displayNone)
-    this.ul.classList.remove(styles.hidden)
+    this.setState(state => ({ ...state, hide: false }))
+    document.addEventListener('mousedown', this.handleClick, false)
   }
+
+  handleListClick = () => this.hide()
 
   render() {
     const { content, style, children } = this.props
+    const { hide } = this.state
 
-    const hideDropdown = row => {
-      return { ...row,
-        onClick: () => {
-          this.hide()
-          row.onClick()
-        } }
-    }
+    const ulClassName = [
+      style,
+      styles.drop,
+      hide && styles.hidden,
+      hide && styles.displayNone
+    ]
+      .filter(s => s)
+      .join(' ')
 
     return (
-      <div>
-        <div onClick={this.toggleDropdown}>
+      <div ref={this.containerRef}>
+        <div key="Div_on_click" onClick={this.toggleDropdown}>
           {children}
         </div>
-        <ul className={`${style} ${styles.drop} ${styles.hidden} ${styles.displayNone}`} ref={ul => { this.ul = ul }}>
-          {content.map(hideDropdown)}
+        <ul
+          key="content_list"
+          className={ulClassName}
+          onClick={this.handleListClick}
+        >
+          {content}
         </ul>
       </div>
     )

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators, compose } from 'redux'
+
+import withMasterPageConf from '../../../hoc/withMasterPageConf'
 
 import Input         from '../../../_shared/components/input/Input'
 import Form          from '../../../_shared/components/form/Form'
-import ClientModules from './clientModules.page'
 import Dropdown      from '../../../_shared/components/dropdown/Dropdown'
 import RoundButton   from '../../../_shared/components/buttons/RoundButton'
 import Modal         from '../../../_shared/components/modal/Modal'
@@ -13,6 +14,7 @@ import Modal         from '../../../_shared/components/modal/Modal'
 import * as nav              from '../../../_shared/helpers/navigation'
 import { t }                 from '../../../_shared/modules/localization/localization'
 import * as newClientActions from '../../../_shared/actions/newClient.actions'
+import { toAdminClients } from '../../../_shared/actions/pageBase.actions'
 
 import styles from './smsSettings.page.scss'
 
@@ -22,15 +24,17 @@ class SmsSettingsPage extends Component {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
     actions:  PropTypes.object,
-    params:   PropTypes.object
+    match:    PropTypes.object
   }
 
   componentDidMount() {
-    this.props.actions.clearForm()
-    this.props.params.client_id && this.props.actions.initClient(this.props.params.client_id)
+    const { actions, match: { params } } = this.props
+    actions.clearForm()
+    params.client_id && actions.initClient(params.client_id)
   }
 
   onTextAreaChange = event => this.props.actions.setNewTemplateText(event.target.value)
+
   onUpdateTextAreaChange = event => this.props.actions.updateTemplateText(event.target.value)
 
   checkSubmitable = () => {
@@ -43,10 +47,13 @@ class SmsSettingsPage extends Component {
   }
 
   templatesDropdown = template => ({ label: template.name, onClick: () => this.props.actions.setSelectedSmsTemplate(template.id) })
+
   goBack = () => nav.to(`/${this.props.pageBase.garage}/admin/clients`)
 
   submitForm = () => this.checkSubmitable() && this.props.actions.submitSmsTemplates(this.props.params.client_id)
+
   toggleSmsApiToken = () => this.props.actions.toggleIsSmsApiTokenActive(this.props.params.client_id)
+
   submitNewTemplateForm = () => this.checkNewTemplateSubmitable() && this.props.actions.submitNewTemplate(this.props.params.client_id)
 
   checkNewTemplateSubmitable = () => {
@@ -61,12 +68,17 @@ class SmsSettingsPage extends Component {
     const selectedTemplateIndex = state.templates.findIndexById(state.selectedTemplate)
     const selectedTemplate = state.templates[selectedTemplateIndex]
 
-    const beginsInlineMenu = <span className={state.isSmsApiTokenActive ? styles.deactivate : styles.activate} onClick={this.toggleSmsApiToken}>
-      {t([ 'newClient', state.isSmsApiTokenActive ? 'deactivate' : 'activate' ])}
-    </span>
+    const beginsInlineMenu = (
+      <span
+        className={state.isSmsApiTokenActive ? styles.deactivate : styles.activate}
+        onClick={this.toggleSmsApiToken}
+      >
+        {t([ 'newClient', state.isSmsApiTokenActive ? 'deactivate' : 'activate' ])}
+      </span>
+    )
 
     return (
-      <ClientModules params={this.props.params}>
+      <React.Fragment>
         <Modal show={state.showNewTemplateModal}>
           <Form
             onSubmit={this.submitNewTemplateForm}
@@ -119,12 +131,17 @@ class SmsSettingsPage extends Component {
           </div>
           <textarea className={styles.editTemplateTextArea} onChange={this.onUpdateTextAreaChange} value={selectedTemplate && selectedTemplate.template} />
         </Form>
-      </ClientModules>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.newClient, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(newClientActions, dispatch) })
-)(SmsSettingsPage)
+const enhancers = compose(
+  withMasterPageConf(toAdminClients('smsSettings')),
+  connect(
+    state => ({ state: state.newClient, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(newClientActions, dispatch) })
+  )
+)
+
+export default enhancers(SmsSettingsPage)

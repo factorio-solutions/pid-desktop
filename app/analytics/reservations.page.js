@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { Chart } from 'react-google-charts'
 
-import PageBase  from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import TabMenu   from '../_shared/components/tabMenu/TabMenu'
 import TabButton from '../_shared/components/buttons/TabButton'
 import Table     from '../_shared/components/table/Table'
@@ -13,6 +14,7 @@ import Loading   from '../_shared/components/loading/Loading'
 
 import { t }                             from '../_shared/modules/localization/localization'
 import * as analyticsReservationsActions from '../_shared/actions/analytics.reservations.actions'
+import { toAnalytics } from '../_shared/actions/pageBase.actions'
 
 import styles from './reservations.page.scss'
 
@@ -44,7 +46,9 @@ class ReservationsAnalyticsPage extends Component {
     ]
 
     const schema = [
-      { key: 0, title: t([ 'analytics', 'period' ]), comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> }
+      {
+        key:         0, title:       t([ 'analytics', 'period' ]), comparator:  'string', sort:        'asc', representer: o => <strong>{o}</strong>
+      }
     ]
 
     const tableData = state.filter === 'shortterm' ? actions.reservationsToData() : actions.contractsToData()
@@ -68,38 +72,41 @@ class ReservationsAnalyticsPage extends Component {
     ]
 
     return (
-      <PageBase>
-        <div className={`${styles.analyticsContainer} ${pageBase.current_user && pageBase.current_user.hint && styles.shrink}`}>
-          <TabMenu left={filters} right={datePickers} />
-          <Chart
-            chartType="ComboChart"
-            data={actions.dataToArray(tableData)}
-            options={{
-              vAxes: {
-                0: { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
-                1: { title: t([ 'analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount' ]) }
-              },
-              hAxis:      { title: t([ 'analytics', 'date' ]) },
-              seriesType: 'bars',
-              series:     {
-                0: { targetAxisIndex: 0 },
-                1: { targetAxisIndex: 1, type: 'line' }
-              }
-            }}
-            graph_id="ComboChart"
-            width="100%"
-            height="400px"
-          />
-          <Table schema={schema} data={data} searchBox={false} />
+      <div className={`${styles.analyticsContainer} ${pageBase.current_user && pageBase.current_user.hint && styles.shrink}`}>
+        <TabMenu left={filters} right={datePickers} />
+        <Chart
+          chartType="ComboChart"
+          data={actions.dataToArray(tableData)}
+          options={{
+            vAxes: {
+              0: { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+              1: { title: t([ 'analytics', state.filter === 'shortterm' ? 'reservationCount' : 'contractCount' ]) }
+            },
+            hAxis:      { title: t([ 'analytics', 'date' ]) },
+            seriesType: 'bars',
+            series:     {
+              0: { targetAxisIndex: 0 },
+              1: { targetAxisIndex: 1, type: 'line' }
+            }
+          }}
+          graph_id="ComboChart"
+          width="100%"
+          height="400px"
+        />
+        <Table schema={schema} data={data} searchBox={false} />
 
-          <div className={styles.bottomMargin} />
-        </div>
-      </PageBase>
+        <div className={styles.bottomMargin} />
+      </div>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.analyticsReservations, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(analyticsReservationsActions, dispatch) })
-)(ReservationsAnalyticsPage)
+const enhancers = compose(
+  withMasterPageConf(toAnalytics('reservationsAnalytics')),
+  connect(
+    state => ({ state: state.analyticsReservations, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(analyticsReservationsActions, dispatch) })
+  )
+)
+
+export default enhancers(ReservationsAnalyticsPage)

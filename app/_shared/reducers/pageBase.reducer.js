@@ -16,12 +16,15 @@ import {
   PAGE_BASE_SET_IS_GARAGE_ADMIN,
   PAGE_BASE_SET_IS_GARAGE_MANAGER,
   PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
-  PAGE_BASE_SET_IS_GARAGE_SECURITY
+  PAGE_BASE_SET_IS_GARAGE_SECURITY,
+  PAGE_BASE_SHOW_SCROLL_BAR,
+  PAGE_BASE_SET_CURRENT_USER_LANGUAGE,
+  PAGE_BASE_SET_IN_PID_ADMIN
 }  from '../actions/pageBase.actions'
 
 const defaultState = {
   selected:                undefined, // key selected in primary menu
-  secondaryMenu:           [],        // secondary menu content
+  secondaryMenu:           [], // secondary menu content
   secondarySelected:       undefined, // key selected in secondary menu
   showSecondaryMenu:       false, // key selected in secondary menu
   secondaryMenuBackButton: undefined,
@@ -33,7 +36,7 @@ const defaultState = {
   notificationsModal: true,
 
   // current user
-  current_user: undefined,
+  current_user: {},
 
   // page hints
   hint: undefined, // {hint, href}
@@ -45,13 +48,14 @@ const defaultState = {
   isGarageReceptionist: false, // is receptionist of currently selected garage?
   isGarageSecurity:     false, // is security of currently selected garage?
   garage:               undefined,
-  pid_tarif:            undefined // tarif of currently selected garage
+  pid_tarif:            undefined, // tarif of currently selected garage
+  showScrollbar:        false,
+  inPidAdmin:           false
 }
 
 
 export default function pageBase(state = defaultState, action) {
   switch (action.type) {
-
     case PAGE_BASE_SELECTED:
       return {
         ...state,
@@ -80,6 +84,12 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         secondaryMenuBackButton: action.value
+      }
+
+    case PAGE_BASE_SET_IN_PID_ADMIN:
+      return {
+        ...state,
+        inPidAdmin: action.value
       }
 
     case PAGE_BASE_SET_ERROR:
@@ -119,6 +129,15 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         current_user: action.value
+      }
+
+    case PAGE_BASE_SET_CURRENT_USER_LANGUAGE:
+      return {
+        ...state,
+        current_user: {
+          ...state.current_user,
+          language: action.value
+        }
       }
 
     case PAGE_BASE_SET_HINT:
@@ -167,6 +186,12 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         isGarageSecurity: action.value
+      }
+
+    case PAGE_BASE_SHOW_SCROLL_BAR:
+      return {
+        ...state,
+        showScrollbar: action.value
       }
 
     default:

@@ -42,21 +42,24 @@ class GarageSelector extends Component {
   render() {
     const { state, occupancy } = this.props
 
-    const content = window.location.hash.includes('occupancy') ?
-      occupancy.garages :
-      state.garages.map(userGarage => userGarage.garage)
+    const content = window.location.hash.includes('occupancy')
+      ? occupancy.garages
+      : state.garages.map(userGarage => userGarage.garage)
 
-    const selectedIndex = window.location.hash.includes('occupancy') ?
-      content.findIndex(garage => garage.id === (occupancy.garage && occupancy.garage.id)) :
-      content.findIndex(garage => garage.id === state.garage)
+    const selectedIndex = window.location.hash.includes('occupancy')
+      ? content.findIndex(garage => garage.id === (occupancy.garage && occupancy.garage.id))
+      : content.findIndex(garage => garage.id === state.garage)
 
     if (content === undefined || content.length === 0 || selectedIndex === -1) return this.emptyGarageSelector
-
-    const dropdownContent = content.map(object => ({ label: object.name, onClick: () => this.selected(object) }))
+    const dropdownContent = content.map(object => ({
+      label:   object.name,
+      onClick: () => this.selected(object),
+      key:     `GarageSelector${object.id}`
+    }))
 
     return (
       <div>
-        <div className={styles.img} >
+        <div className={styles.img}>
           <img src={content[selectedIndex].img || './public/garage_icon.jpg'} />
         </div>
         <Dropdown

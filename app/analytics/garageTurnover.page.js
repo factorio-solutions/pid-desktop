@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { Chart } from 'react-google-charts'
 
-import PageBase  from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import TabMenu   from '../_shared/components/tabMenu/TabMenu'
 import TabButton from '../_shared/components/buttons/TabButton'
 import Table     from '../_shared/components/table/Table'
@@ -13,6 +14,7 @@ import DateInput from '../_shared/components/input/DateInput'
 
 import { t }                       from '../_shared/modules/localization/localization'
 import * as analyticsGarageActions from '../_shared/actions/analytics.garage.actions'
+import { toAnalytics } from '../_shared/actions/pageBase.actions'
 
 import styles from './garageTurnover.page.scss'
 
@@ -41,7 +43,9 @@ class GarageTurnoverPage extends Component {
     const { chartData, tableData, schema } = actions.dataToArray(
       actions.stateToData(),
       [ [ t([ 'analytics', 'turnover' ]) ], [ t([ 'analytics', 'reservations' ]) ] ],
-      [ { key: 0, title: t([ 'analytics', 'period' ]), comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> } ]
+      [ {
+        key:         0, title:       t([ 'analytics', 'period' ]), comparator:  'string', sort:        'asc', representer: o => <strong>{o}</strong>
+      } ]
     )
 
     const filters = [
@@ -57,11 +61,11 @@ class GarageTurnoverPage extends Component {
     ]
 
     return (
-      <PageBase>
-        <div className={`${styles.analyticsContainer} ${pageBase.current_user && pageBase.current_user.hint && styles.shrink}`}>
-          <TabMenu left={filters} right={datePickers} />
-          {chartData.length === 1 ?
-            <h3>{t([ 'analytics', 'noData' ])}</h3> :
+      <div className={`${styles.analyticsContainer} ${pageBase.current_user && pageBase.current_user.hint && styles.shrink}`}>
+        <TabMenu left={filters} right={datePickers} />
+        {chartData.length === 1
+          ? <h3>{t([ 'analytics', 'noData' ])}</h3>
+          : (
             <Chart
               chartType="ComboChart"
               data={chartData}
@@ -74,18 +78,24 @@ class GarageTurnoverPage extends Component {
               graph_id="ComboChart"
               width="100%"
               height="400px"
-            />}
+            />
+          )
+        }
 
-          <Table schema={schema} data={tableData} searchBox={false} />
+        <Table schema={schema} data={tableData} searchBox={false} />
 
-          <div className={styles.bottomMargin} />
-        </div>
-      </PageBase>
+        <div className={styles.bottomMargin} />
+      </div>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.analyticsGarage, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(analyticsGarageActions, dispatch) })
-)(GarageTurnoverPage)
+const enhancers = compose(
+  withMasterPageConf(toAnalytics('garageTurnover')),
+  connect(
+    state => ({ state: state.analyticsGarage, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(analyticsGarageActions, dispatch) })
+  )
+)
+
+export default enhancers(GarageTurnoverPage)

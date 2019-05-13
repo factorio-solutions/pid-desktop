@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 
-import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Form               from '../../_shared/components/form/Form'
 import CallToActionButton from '../../_shared/components/buttons/CallToActionButton'
 import GarageLayout       from '../../_shared/components/garageLayout/GarageLayout'
@@ -11,6 +12,7 @@ import GarageLayout       from '../../_shared/components/garageLayout/GarageLayo
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
 import * as garageSetupActions  from '../../_shared/actions/garageSetup.actions'
+import { toAdminGarageSetup, toAddFeatures } from '../../_shared/actions/pageBase.actions'
 
 import styles from './garageSetupGeneral.page.scss'
 
@@ -19,12 +21,12 @@ class GarageSetupOrderPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
-    params:   PropTypes.object,
+    match:    PropTypes.object,
     actions:  PropTypes.object
   }
 
   componentDidMount() {
-    const { state, params, actions } = this.props
+    const { state, match: { params }, actions } = this.props
     state.availableTarifs.length === 0 && actions.initTarif()
     if (params.id) {
       actions.intiEditGarageOrder(params.id)
@@ -43,7 +45,7 @@ class GarageSetupOrderPage extends Component {
   }
 
   goBack = () => {
-    const { params } = this.props
+    const { match: { params } } = this.props
     if (params.id) {
       nav.to(`/${params.id}/admin/garageSetup/gates`)
     } else {
@@ -99,7 +101,7 @@ class GarageSetupOrderPage extends Component {
   }
 
   submitForm = () => {
-    const { params, actions } = this.props
+    const { match: { params }, actions } = this.props
     if (params.id) {
       actions.updateGarageOrder(params.id)
       nav.to(`/${params.id}/admin/garageSetup/legalDocuments`)
@@ -113,7 +115,7 @@ class GarageSetupOrderPage extends Component {
     const readOnly = this.readOnly()
 
     return (
-      <GarageSetupPage>
+      <React.Fragment>
         {readOnly
           ? this.renderFormContent(readOnly)
           : (
@@ -127,12 +129,22 @@ class GarageSetupOrderPage extends Component {
             </Form>
           )
         }
-      </GarageSetupPage>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.garageSetup, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })
-)(GarageSetupOrderPage)
+const enhancers = compose(
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const action = hash.includes('admin') ? toAdminGarageSetup : toAddFeatures
+
+    return action('newGarageOrder')
+  }),
+  connect(
+    state => ({ state: state.garageSetup, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })
+  )
+)
+
+export default enhancers(GarageSetupOrderPage)

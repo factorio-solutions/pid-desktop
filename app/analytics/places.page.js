@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { Chart } from 'react-google-charts'
 
-import PageBase     from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import TabMenu      from '../_shared/components/tabMenu/TabMenu'
 import TabButton    from '../_shared/components/buttons/TabButton'
 import Table        from '../_shared/components/table/Table'
@@ -14,8 +15,10 @@ import DateInput    from '../_shared/components/input/DateInput'
 
 import { t }                       from '../_shared/modules/localization/localization'
 import * as analyticsPlacesActions from '../_shared/actions/analytics.places.actions'
+import { toAnalytics } from '../_shared/actions/pageBase.actions'
 
 import styles from './places.page.scss'
+import { windowLength } from '../_shared/components/occupancyOverview/OccupancyOverview'
 
 
 class PlacesPage extends Component {
@@ -48,7 +51,9 @@ class PlacesPage extends Component {
     ]
 
     const schema = [
-      { key: 0, title: t([ 'analytics', 'period' ]), comparator: 'string', sort: 'asc', representer: o => <strong>{o}</strong> }
+      {
+        key:         0, title:       t([ 'analytics', 'period' ]), comparator:  'string', sort:        'asc', representer: o => <strong>{o}</strong>
+      }
     ]
 
     const chartData = [
@@ -82,64 +87,115 @@ class PlacesPage extends Component {
     })
 
     const preparePlaces = floor => {
-      return { ...floor,
+      return {
+        ...floor,
         places: floor.places.map(place => ({
           ...place,
           heat:    place.averageRevenue,
-          tooltip: <table className={styles.tooltip}>
-            <tbody>
-              <tr><td>{t([ 'analytics', 'avgRevenue' ])}</td><td>{place.averageRevenue} {actions.currency()}</td></tr>
-              <tr><td>{t([ 'analytics', 'minRevenue' ])}</td><td>{isFinite(place.minRevenue) ? place.minRevenue : 0} {actions.currency()}</td></tr>
-              <tr><td>{t([ 'analytics', 'maxRevenue' ])}</td><td>{isFinite(place.maxRevenue) ? place.maxRevenue : 0} {actions.currency()}</td></tr>
-            </tbody>
-          </table>
+          tooltip: (
+            <table className={styles.tooltip}>
+              <tbody>
+                <tr>
+                  <td>{t([ 'analytics', 'avgRevenue' ])}</td>
+                  <td>
+                    {place.averageRevenue}
+                    {' '}
+                    {actions.currency()}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{t([ 'analytics', 'minRevenue' ])}</td>
+                  <td>
+                    {isFinite(place.minRevenue) ? place.minRevenue : 0}
+                    {' '}
+                    {actions.currency()}
+                  </td>
+                </tr>
+                <tr>
+                  <td>{t([ 'analytics', 'maxRevenue' ])}</td>
+                  <td>
+                    {isFinite(place.maxRevenue) ? place.maxRevenue : 0}
+                    {' '}
+                    {actions.currency()}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          )
         }))
       }
     }
 
     const filters = [
-      <TabButton label={t([ 'analytics', 'graph' ])} onClick={() => { actions.graphClick() }} state={state.display === 'graph' && 'selected'} />,
-      <TabButton label={t([ 'analytics', 'heatmap' ])} onClick={() => { actions.heatmapClick() }} state={state.display === 'heatmap' && 'selected'} />
+      <TabButton
+        label={t([ 'analytics', 'graph' ])}
+        onClick={() => { actions.graphClick() }}
+        state={state.display === 'graph' ? 'selected' : undefined}
+      />,
+      <TabButton
+        label={t([ 'analytics', 'heatmap' ])}
+        onClick={() => { actions.heatmapClick() }}
+        state={state.display === 'heatmap' ? 'selected' : undefined}
+      />
     ]
 
     const datePickers = [
       <Loading show={state.loading} />,
-      <DateInput onChange={shorttermHandleFrom} label={t([ 'reservations', 'from' ])} value={state.from} style={styles.inline} flip />,
+      <DateInput
+        onChange={shorttermHandleFrom}
+        label={t([ 'reservations', 'from' ])}
+        value={state.from}
+        style={styles.inline}
+        flip
+      />,
       <span className={styles.dash} />,
       <DateInput onChange={shorttermHandleTo} label={t([ 'reservations', 'to' ])} value={state.to} style={styles.inline} flip />
     ]
 
 
     return (
-      <PageBase>
-        <div className={`${styles.analyticsContainer} ${pageBase.current_user && pageBase.current_user.hint && styles.shrink}`}>
-          <TabMenu left={filters} right={datePickers} />
-          {state.display === 'graph' ? <div>
-            <Chart
-              chartType="ComboChart"
-              data={chartData}
-              options={{
-                vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
-                hAxis:      { title: t([ 'analytics', 'month' ]) },
-                seriesType: 'bars'
-              }}
-              graph_id="ComboChart"
-              width="100%"
-              height="400px"
+      <div className={`${styles.analyticsContainer}
+        ${pageBase.current_user && pageBase.current_user.hint ? styles.shrink : undefined}`}
+      >
+        <TabMenu left={filters} right={datePickers} />
+        {state.display === 'graph'
+          ? (
+            <div>
+              <Chart
+                chartType="ComboChart"
+                data={chartData}
+                options={{
+                  vAxis:      { title: t([ 'analytics', 'turnover' ]), format: `# ${actions.currency()}` },
+                  hAxis:      { title: t([ 'analytics', 'month' ]) },
+                  seriesType: 'bars'
+                }}
+                graph_id="ComboChart"
+                width="100%"
+                height="400px"
+              />
+              <Table schema={schema} data={data} searchBox={false} />
+            </div>
+          )
+          : (
+            <GarageLayout
+              floors={state.garage ? state.garage.floors.map(preparePlaces) : []}
+              showEmptyFloors
             />
-            <Table schema={schema} data={data} searchBox={false} />
-          </div> : <div>
-            <GarageLayout floors={state.garage ? state.garage.floors.map(preparePlaces) : []} showEmptyFloors />
-          </div>}
+          )
+        }
 
-          <div className={styles.bottomMargin} />
-        </div>
-      </PageBase>
+        <div className={styles.bottomMargin} />
+      </div>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.analyticsPlaces, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(analyticsPlacesActions, dispatch) })
-)(PlacesPage)
+const enhancers = compose(
+  withMasterPageConf(toAnalytics('placesAnalytics')),
+  connect(
+    state => ({ state: state.analyticsPlaces, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(analyticsPlacesActions, dispatch) })
+  )
+)
+
+export default enhancers(PlacesPage)

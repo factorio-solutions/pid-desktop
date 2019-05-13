@@ -16,6 +16,7 @@ export default class SearchBox extends Component {
   constructor(props) {
     super(props)
 
+    this.input = React.createRef()
     this.state = { showDateSelector: false }
   }
 
@@ -49,19 +50,55 @@ export default class SearchBox extends Component {
 
   render() {
     const { value, onChange, type } = this.props
+    const { showDateSelector } = this.state
 
-    return (<span>
-      <input type="search" value={value} onChange={this.onInputChange} placeholder="------------------------------------------------" ref={input => { this.input = input }} />
+    return (
+      <span>
+        <input
+          type="search"
+          value={value}
+          onChange={this.onInputChange}
+          placeholder="------------------------------------------------"
+          ref={this.input}
+          key="SearchBoxInput"
+        />
 
-      { type === 'date' && [
-        <i className={`fa fa-calendar ${styles.callendar}`} aria-hidden="true" onClick={this.showDatePicker} />,
-        <PopupDatepicker onSelect={onChange} show={this.state.showDateSelector} flip okClick={this.hideDatePicker} date={value} />
-      ]}
+        {type === 'date' && [
+          <i
+            className={`fa fa-calendar ${styles.callendar}`}
+            aria-hidden="true"
+            onClick={this.showDatePicker}
+            key="CalendarIcon"
+          />,
+          <PopupDatepicker
+            onSelect={onChange}
+            show={showDateSelector}
+            flip
+            okClick={this.hideDatePicker}
+            date={value}
+            key="DatePicker"
+          />
+        ]}
 
-      { value ?
-        <i className="fa fa-times" aria-hidden="true" onClick={this.setEmpty} /> :
-        <i className="fa fa-search" aria-hidden="true" onClick={this.focusInput} />
-      }
-    </span>)
+        {value
+          ? (
+            <i
+              className="fa fa-times"
+              aria-hidden="true"
+              onClick={this.setEmpty}
+              key="TimesIcon"
+            />
+          )
+          : (
+            <i
+              className="fa fa-search"
+              aria-hidden="true"
+              onClick={this.focusInput}
+              key="SearchIcon"
+            />
+          )
+        }
+      </span>
+    )
   }
 }

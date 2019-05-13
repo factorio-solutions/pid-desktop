@@ -56,7 +56,7 @@ export default class TextArea extends Component {
 
     return (
       <div className={`${styles.textAreaContainer} ${styles[align || 'left']} ${styles[style]} ${highlight && isEmpty() && styles.highlighted} ${readOnly && styles.dimmer}`} >
-        <label>{label}</label>
+        <label key="label">{label}</label>
         <textarea
           onBlur={onBlur}
           onFocus={onFocus}
@@ -67,6 +67,7 @@ export default class TextArea extends Component {
           ref={input => { this.input = input }}
           readOnly={readOnly}
           value={value}
+          key="textarea"
         />
         <span className={styles.bar} />
       </div>

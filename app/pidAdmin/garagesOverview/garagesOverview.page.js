@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase               from '../../_shared/containers/adminPageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Table                  from '../../_shared/components/table/Table'
 import { t }                  from '../../_shared/modules/localization/localization'
 import { MOMENT_DATE_FORMAT } from '../../_shared/helpers/time'
 
 import { initState } from '../../_shared/actions/pid-admin.garagesOverview.actions'
-
+import { toPidAdmin } from '../../_shared/actions/pageBase.actions'
 
 class GaragesOverview extends Component {
   static propTypes = {
@@ -65,7 +66,9 @@ class GaragesOverview extends Component {
     const { state } = this.props
 
     const schema = [
-      { key: 'id', title: 'ID', comparator: 'number', sort: 'asc' },
+      {
+        key:        'id', title:      'ID', comparator: 'number', sort:       'asc'
+      },
       { key: 'name', title: t([ 'pidAdmin', 'garagesOverview', 'garageName' ]), comparator: 'string' },
       { key: 'place_count', title: t([ 'pidAdmin', 'garagesOverview', 'places' ]), comparator: 'string' },
       { key: 'tarif', title: t([ 'pidAdmin', 'garagesOverview', 'tarif' ]), comparator: 'string' },
@@ -78,19 +81,22 @@ class GaragesOverview extends Component {
     ]
 
     return (
-      <PageBase>
-        <Table
-          schema={schema}
-          data={state.garages.map(this.transformGarages)}
-          searchBar
-          searchBox={false}
-        />
-      </PageBase>
+      <Table
+        schema={schema}
+        data={state.garages.map(this.transformGarages)}
+        searchBar
+        searchBox={false}
+      />
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.pidAdminGaragesOverview }),
-  dispatch => ({ actions: bindActionCreators({ initState }, dispatch) })
-)(GaragesOverview)
+const enhancers = compose(
+  withMasterPageConf(toPidAdmin('garages')),
+  connect(
+    state => ({ state: state.pidAdminGaragesOverview }),
+    dispatch => ({ actions: bindActionCreators({ initState }, dispatch) })
+  )
+)
+
+export default enhancers(GaragesOverview)

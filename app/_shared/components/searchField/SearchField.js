@@ -23,6 +23,13 @@ export default class SearchField extends Component {
     downloadUser:    PropTypes.func
   }
 
+  constructor(props) {
+    super(props)
+
+    this.ul = React.createRef()
+    this.outerDiv = React.createRef()
+  }
+
   componentDidMount() {
     const { searchQuery } = this.props
     if (!searchQuery) {
@@ -61,7 +68,7 @@ export default class SearchField extends Component {
     const showList = list.length > 0 && !(showFirst && list.length === 1)
 
     return (
-      <div className={styles.searchField} ref={div => this.outerDiv = div}>
+      <div className={styles.searchField} ref={this.outerDiv}>
         <Input
           onChange={onChange}
           value={searchQuery}
@@ -73,6 +80,7 @@ export default class SearchField extends Component {
           highlight={highlight}
           style={inputStyles}
           readOnly={!show}
+          key="input"
         />
 
         {show
@@ -86,10 +94,11 @@ export default class SearchField extends Component {
                 onClick={this.onUserClick}
                 searchQuery={searchQuery}
                 selectedIndex={selected}
+                key="UserListFist"
               />
             )
             }
-            <div className={`${styles.drop}`} ref={ul => this.ul = ul}>
+            <div className={`${styles.drop}`} ref={this.ul} key="UserListDiv">
               {showList
               && (
                 <UsersList
@@ -98,6 +107,7 @@ export default class SearchField extends Component {
                   onClick={this.onUserClick}
                   searchQuery={searchQuery}
                   selectedIndex={selected}
+                  key="UserList"
                 />
               )
               }
@@ -105,6 +115,7 @@ export default class SearchField extends Component {
                 className={styles.buttons}
                 buttons={buttons}
                 onClick={downloadUser}
+                key="buttonTable"
               />
             </div>
           </div>

@@ -1,22 +1,38 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import MenuButton from '../buttons/MenuButton'
 
-// import style    from './VerticalMenu.scss'
-
-
-export default function VerticalMenu({ content, selected, onClick }) {
-  const prepareMenuButton = (object, index) => {
+const VerticalMenu = ({ content, onClick, verticalSelected }) => {
+  const prepareMenuButton = object => {
     const newOnClick = () => {
-      onClick()
+      onClick && onClick()
       object.onClick()
     }
-    return <MenuButton key={index} icon={object.icon} label={object.label} onClick={newOnClick} type={object.type} state={object.key === selected && 'selected'} />
+
+    return (
+      <MenuButton
+        key={object.key}
+        icon={object.icon}
+        label={object.label}
+        onClick={newOnClick}
+        type={object.type}
+        state={verticalSelected === object.key ? 'selected' : undefined}
+      />
+    )
   }
 
   return (
-    <div>
+    <React.Fragment>
       {content.map(prepareMenuButton)}
-    </div>
+    </React.Fragment>
   )
 }
+
+VerticalMenu.propTypes = {
+  content:          PropTypes.object,
+  verticalSelected: PropTypes.string,
+  onClick:          PropTypes.func
+}
+
+export default VerticalMenu

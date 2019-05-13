@@ -34,12 +34,15 @@ export default async function request(
             window.location.hash.substring(4, window.location.hash.indexOf('?'))
           )
         }
-        nav.to('/')
+        nav.to('/login')
       }
     } else if (xmlHttp.readyState === 4) { // not 401 status
       try {
         const response = JSON.parse(xmlHttp.responseText)
-        store.dispatch(setNotificationCount(response.notifications.data.notifications.length))
+        const notificationsCount = response.notifications.data.notifications.length
+        if (store.getState().notifications.count !== notificationsCount) {
+          store.dispatch(setNotificationCount(notificationsCount))
+        }
         onSuccess({ data: response.data })
       } catch (e) {
         if (onError === undefined) {

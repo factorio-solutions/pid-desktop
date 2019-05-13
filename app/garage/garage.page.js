@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import TabMenu from '../_shared/components/tabMenu/TabMenu'
 import TabButton from '../_shared/components/buttons/TabButton'
 import PopupDatetimepicker from '../_shared/components/datetimepicker/PopupDatetimepicker'
@@ -13,6 +14,7 @@ import Loading from '../_shared/components/loading/Loading'
 
 import { t }              from '../_shared/modules/localization/localization'
 import * as garageActions from '../_shared/actions/garage.actions'
+import { toGarage } from '../_shared/actions/pageBase.actions'
 
 import styles from './garage.page.scss'
 import PlaceTooltip from './placeTooltip'
@@ -128,18 +130,23 @@ class GaragePage extends Component {
     }
 
     return (
-      <PageBase>
+      <React.Fragment>
         <TabMenu left={left} right={right} />
         <GarageLayout
           floors={state.garage ? state.garage.floors.map(preparePlaces) : []}
           showEmptyFloors
         />
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.garage, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(garageActions, dispatch) })
-)(GaragePage)
+const enhancers = compose(
+  withMasterPageConf(toGarage()),
+  connect(
+    state => ({ state: state.garage, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(garageActions, dispatch) })
+  )
+)
+
+export default enhancers(GaragePage)

@@ -9,6 +9,7 @@ const ButtonsTable = ({ buttons, className, ...props }) => {
         {buttons.map(button => (
           <ButtonsTableRow
             button={button}
+            key={button.full_name}
             {...props}
           />
         ))}

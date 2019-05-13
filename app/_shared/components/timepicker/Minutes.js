@@ -1,19 +1,28 @@
 import React    from 'react'
+import PropTypes from 'prop-types'
 import styles   from './Timepicker.scss'
 import { t } from '../../modules/localization/localization'
 
 
-export default function Minutes({ time, onClick }) {
+function Minutes({ time, onClick }) {
   const createMinutes = () => {
     const minutes = Array(4).fill().map((_, row) => row * 15)
 
-    return minutes.map(minute => {
-      return (<tr key={minute} className={`${styles.clickable} ${styles.pickerRow}`} onClick={() => { onClick(minute) }}>
+    return minutes.map(minute => (
+      <tr
+        key={minute}
+        className={`${styles.clickable} ${styles.pickerRow}`}
+        onClick={() => { onClick(minute) }}
+      >
         <td>
-          <div className={parseInt(time.split(':')[1], 10) === minute && styles.selected}>{minute}</div>
+          <div
+            className={parseInt(time.split(':')[1], 10) === minute ? styles.selected : undefined}
+          >
+            {minute}
+          </div>
         </td>
-      </tr>)
-    })
+      </tr>
+    ))
   }
 
   return (
@@ -31,3 +40,10 @@ export default function Minutes({ time, onClick }) {
     </div>
   )
 }
+
+Minutes.propTypes = {
+  time:    PropTypes.string,
+  onClick: PropTypes.func
+}
+
+export default Minutes

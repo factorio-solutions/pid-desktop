@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
+
+import withMasterPageConf from '../hoc/withMasterPageConf'
 
 import PageBase           from '../_shared/containers/pageBase/PageBase'
 import Checkbox           from '../_shared/components/checkbox/Checkbox'
@@ -13,7 +15,7 @@ import Loading            from '../_shared/components/loading/Loading'
 import Modal              from '../_shared/components/modal/Modal'
 
 import * as bulkRemovalActions from '../_shared/actions/reservationsBulkRemoval.actions'
-import { setCustomModal }      from '../_shared/actions/pageBase.actions'
+import { setCustomModal, toReservations }      from '../_shared/actions/pageBase.actions'
 import { t }                   from '../_shared/modules/localization/localization'
 import { MOMENT_DATE_FORMAT }  from '../_shared/helpers/time'
 
@@ -21,7 +23,6 @@ import styles from './bulkRemoval.page.scss'
 
 
 class BulkRemovalReservationPage extends Component {
-
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object,
@@ -29,17 +30,18 @@ class BulkRemovalReservationPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.resetTimes()
-    this.props.actions.loadAvailableUsers()
+    const { actions } = this.props
+    actions.resetTimes()
+    actions.loadAvailableUsers()
   }
 
   userDropdown = () => this.props.state.availableUsers.map(user => ({
     label: user.full_name,
-    order: user.id === this.props.pageBase.current_user.id ?
-      2 :
-      user.id === -1 ?
-        1 :
-        undefined,
+    order: user.id === this.props.pageBase.current_user.id
+      ? 2
+      : user.id === -1
+        ? 1
+        : undefined,
     onClick: () => this.props.actions.setUserId(user.id)
   }))
 
@@ -53,7 +55,23 @@ class BulkRemovalReservationPage extends Component {
 
     return (
       <Checkbox checked={state.toBeRemoved.includes(reservation.id)} onChange={onChecked}>
-        <b>{startsAtDate}</b> {startsAtTime} - <b>{endsAtDate}</b> {endsAtTime}
+        <b>{startsAtDate}</b>
+        {' '}
+        {startsAtTime}
+        {' '}
+
+
+
+
+
+
+
+
+-
+{' '}
+        <b>{endsAtDate}</b>
+        {' '}
+        {endsAtTime}
       </Checkbox>
     )
   }
@@ -67,7 +85,11 @@ class BulkRemovalReservationPage extends Component {
       <div>
         <div className={styles.h3BorderBottom}>
           <Checkbox checked={isChecked} onChange={onChange}>
-            <h3> {client.name} </h3>
+            <h3>
+              {' '}
+              {client.name}
+              {' '}
+            </h3>
           </Checkbox>
         </div>
         {client.reservations.map(this.formatReservation)}
@@ -84,7 +106,11 @@ class BulkRemovalReservationPage extends Component {
       <div>
         <div className={styles.h2BorderBottom}>
           <Checkbox checked={isChecked} onChange={onChange}>
-            <h2> {garage.name} </h2>
+            <h2>
+              {' '}
+              {garage.name}
+              {' '}
+            </h2>
           </Checkbox>
         </div>
         {garage.clients.map(this.formatClient)}
@@ -104,7 +130,8 @@ class BulkRemovalReservationPage extends Component {
 
         <div className={styles.container}>
           <h1>{t([ 'bulkCancellation', 'bulkCancellation' ])}</h1>
-          {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1) &&
+          {((state.user && pageBase.current_user && state.user.id !== pageBase.current_user.id) || state.availableUsers.length > 1)
+            && (
             <div>
               <Dropdown
                 placeholder={t([ 'newReservation', 'selectUser' ]) + ' *'}
@@ -115,6 +142,7 @@ class BulkRemovalReservationPage extends Component {
                 filter
               />
             </div>
+            )
           }
           <DatetimeInput
             onChange={actions.adjustFromDate}
@@ -136,13 +164,17 @@ class BulkRemovalReservationPage extends Component {
             />
           </div>
 
-          {allGarages && (allGarages.noData ?
-            <div className={styles.centerDiv}>
-              <h1>{t([ 'bulkCancellation', 'noReservations' ])}</h1>
-            </div> :
-            <div className={`${styles.centerDiv} ${styles.padding}`}>
-              {allGarages.map(this.formatGarage)}
-            </div>)
+          {allGarages && (allGarages.noData
+            ? (
+              <div className={styles.centerDiv}>
+                <h1>{t([ 'bulkCancellation', 'noReservations' ])}</h1>
+              </div>
+            )
+            : (
+              <div className={`${styles.centerDiv} ${styles.padding}`}>
+                {allGarages.map(this.formatGarage)}
+              </div>
+            ))
           }
 
           <div className={styles.centerDiv}>
@@ -159,9 +191,14 @@ class BulkRemovalReservationPage extends Component {
   }
 }
 
-export default connect(
-  state => ({ state: state.reservationBulkRemoval, pageBase: state.pageBase }),
-  dispatch => ({
-    actions: bindActionCreators({ ...bulkRemovalActions, setCustomModal }, dispatch)
-  })
-)(BulkRemovalReservationPage)
+const enhancers = compose(
+  withMasterPageConf(toReservations('bulkRemoval')),
+  connect(
+    state => ({ state: state.reservationBulkRemoval, pageBase: state.pageBase }),
+    dispatch => ({
+      actions: bindActionCreators({ ...bulkRemovalActions, setCustomModal }, dispatch)
+    })
+  )
+)
+
+export default enhancers(BulkRemovalReservationPage)

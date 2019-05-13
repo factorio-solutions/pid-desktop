@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import Fingerprint2 from 'fingerprintjs2'
 import localforage from 'localforage'
 
@@ -16,6 +16,7 @@ import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav           from '../_shared/helpers/navigation'
 import normalizeEmail     from '../_shared/helpers/normalizeEmail'
+import { parseParameters } from '../_shared/helpers/parseUrlParameters'
 import { t }              from '../_shared/modules/localization/localization'
 import * as loginActions  from '../_shared/actions/login.actions'
 
@@ -29,16 +30,24 @@ class LoginPage extends Component {
     location: PropTypes.object
   }
 
+  constructor(props) {
+    super(props)
+    console.log('loginPage')
+  }
+
   async componentDidMount() {
     const { actions, location } = this.props
     new Fingerprint2().get(actions.setDeviceFingerprint)
-    if (location && location.query && location.query.token) {
+    const query = parseParameters(location.search)
+    if (query && query.token) {
       actions.resetStore()
-      await localforage.setItem('jwt', location.query.token)
+      await localforage.setItem('jwt', query.token)
       nav.to('/occupancy')
     }
-    if (location && location.query
-    && location.query.hasOwnProperty('password_reset_success')) {
+    if (
+      query
+      && query.hasOwnProperty('password_reset_success')
+    ) {
       actions.setShowPasswordResetModal(true)
       actions.setPasswordResetSuccessful(location.query.password_reset_success === 'true')
     }
@@ -82,7 +91,6 @@ class LoginPage extends Component {
         />
       </div>
     )
-
     return (
       <MasterPage>
         <div className={styles.loginPage}>
@@ -117,7 +125,7 @@ class LoginPage extends Component {
           <div className={styles.resetPasswordPage}>
             {t([ 'login_page', 'forgot' ])}
             {' '}
-            <Link to={nav.path('/resetPassword')}>{t([ 'login_page', 'proceed' ])}</Link>
+            <NavLink to={nav.path('/resetPassword')}>{t([ 'login_page', 'proceed' ])}</NavLink>
           </div>
 
         </div>

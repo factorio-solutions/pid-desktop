@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase from '../../_shared/containers/adminPageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import PaginatedTable from '../../_shared/components/table/PaginatedTable'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
 
+import { toPidAdmin } from '../../_shared/actions/pageBase.actions'
 import * as usersActions from '../../_shared/actions/pid-admin.users.actions'
 import { t } from '../../_shared/modules/localization/localization'
 import { USERS_PAGINATED_TABLE } from '../../_shared/queries/pid-admin.users.queries'
@@ -77,20 +79,23 @@ class PidAdminDashboardPage extends Component {
     }))
 
     return (
-      <PageBase>
-        <PaginatedTable
-          schema={schema}
-          query={USERS_PAGINATED_TABLE}
-          transformData={transformData}
-          parseMetadata={data => data.users_metadata}
-          admin
-        />
-      </PageBase>
+      <PaginatedTable
+        schema={schema}
+        query={USERS_PAGINATED_TABLE}
+        transformData={transformData}
+        parseMetadata={data => data.users_metadata}
+        admin
+      />
     )
   }
 }
 
-export default connect(
-  state => ({ state }),
-  dispatch => ({ actions: bindActionCreators(usersActions, dispatch) })
-)(PidAdminDashboardPage)
+const enhancers = compose(
+  withMasterPageConf(toPidAdmin('users')),
+  connect(
+    null,
+    dispatch => ({ actions: bindActionCreators(usersActions, dispatch) })
+  )
+)
+
+export default enhancers(PidAdminDashboardPage)

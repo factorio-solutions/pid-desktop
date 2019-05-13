@@ -42,7 +42,7 @@ class Localization extends Component {
         user_id: user.id
       })
     }
-    afterChange && afterChange()
+    afterChange && afterChange(language)
   }
 
   prepareButtons = (language, i) => (

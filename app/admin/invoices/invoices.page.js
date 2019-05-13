@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
 
-import PageBase              from '../../_shared/containers/pageBase/PageBase'
-import LabeledRoundButton    from '../../_shared/components/buttons/LabeledRoundButton'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
+import InvoiceSpoiler        from './components/invoiceSpoiler'
 import TabButton             from '../../_shared/components/buttons/TabButton'
 import TabMenu               from '../../_shared/components/tabMenu/TabMenu'
 import Dropdown              from '../../_shared/components/dropdown/Dropdown'
@@ -16,30 +17,77 @@ import Invoices              from './tabs/invoices'
 import SimplifiedTaxReceipts from './tabs/simplifiedTaxReceipts'
 import CanceledInvoices      from './tabs/canceledInvoices'
 
-import * as nav             from '../../_shared/helpers/navigation'
 import { t }                from '../../_shared/modules/localization/localization'
 import * as invoicesActions from '../../_shared/actions/invoices.actions'
+import { toAdmin }          from '../../_shared/actions/pageBase.actions'
 import { valueAddedTax }    from '../../_shared/helpers/calculatePrice'
 
 import styles from './invoices.page.scss'
 
 
 export const createSchema = () => [
-  { key: 'invoice_number', title: t([ 'invoices', 'invoiceNumber' ]), comparator: 'number', representer: o => <b>{o}</b>, sort: 'desc' },
-  { key: 'invoice_date', title: t([ 'invoices', 'invoiceDate' ]), comparator: 'date', representer: o => o ? moment(o).format('DD. MM. YYYY') : null },
-  { key: 'due_date', title: t([ 'invoices', 'dueDate' ]), comparator: 'date', representer: o => o ? moment(o).format('DD. MM. YYYY') : null },
-  { key: 'client_name', title: t([ 'invoices', 'client' ]), comparator: 'string', representer: o => <b>{o}</b> },
-  { key: 'longterm_rent', title: t([ 'invoices', 'type' ]), comparator: 'boolean', representer: o => <i className={`fa ${o ? 'fa-home' : 'fa-clock-o'}`} aria-hidden="true" /> },
-  { key: 'subject', title: t([ 'invoices', 'subject' ]), comparator: 'string', representer: o => o.length > 20 ? o.substring(0, 20) + '...' : o },
-  { key: 'price', title: t([ 'invoices', 'ammount' ]), comparator: 'string' },
-  { key:         'payed',
+  {
+    key:         'invoice_number',
+    title:       t([ 'invoices', 'invoiceNumber' ]),
+    comparator:  'number',
+    representer: o => <b>{o}</b>,
+    sort:        'desc'
+  },
+  {
+    key:         'invoice_date',
+    title:       t([ 'invoices', 'invoiceDate' ]),
+    comparator:  'date',
+    representer: o => o ? moment(o).format('DD. MM. YYYY') : null
+  },
+  {
+    key:         'due_date',
+    title:       t([ 'invoices', 'dueDate' ]),
+    comparator:  'date',
+    representer: o => o ? moment(o).format('DD. MM. YYYY') : null
+  },
+  {
+    key:         'client_name',
+    title:       t([ 'invoices', 'client' ]),
+    comparator:  'string',
+    representer: o => <b>{o}</b>
+  },
+  {
+    key:         'longterm_rent',
+    title:       t([ 'invoices', 'type' ]),
+    comparator:  'boolean',
+    representer: o => <i className={`fa ${o ? 'fa-home' : 'fa-clock-o'}`} aria-hidden="true" />
+  },
+  {
+    key:         'subject',
+    title:       t([ 'invoices', 'subject' ]),
+    comparator:  'string',
+    representer: o => o.length > 20 ? o.substring(0, 20) + '...' : o
+  },
+  {
+    key:        'price',
+    title:      t([ 'invoices', 'ammount' ]),
+    comparator: 'string'
+  },
+  {
+    key:         'payed',
     title:       t([ 'invoices', 'paid' ]),
     comparator:  'boolean',
-    representer: o => <i className={`fa ${o ? 'fa-check-circle' : 'fa-exclamation-triangle'} ${o ? styles.green : styles.red}`} aria-hidden="true" />
+    representer: o => (
+      <i
+        className={`fa ${o
+          ? 'fa-check-circle'
+          : 'fa-exclamation-triangle'} ${o ? styles.green : styles.red}`}
+        aria-hidden="true"
+      />
+    )
   }
 ]
 
-export const filterByClient = (invoice, clientId) => clientId === undefined ? true : invoice.client.id === clientId
+export const filterByClient = (invoice, clientId) => (
+  clientId === undefined
+    ? true
+    : invoice.client.id === clientId
+)
 
 export const prepareInvoice = (invoice, actions, pageBase) => ({
   ...invoice,
@@ -48,82 +96,31 @@ export const prepareInvoice = (invoice, actions, pageBase) => ({
   user_name:   invoice.user && invoice.user.full_name,
   price:       valueAddedTax(invoice.ammount, invoice.vat) + ' ' + invoice.currency.symbol,
   disabled:    invoice.canceled,
-  spoiler:     (<div>
-    {invoice.canceled ? <div>
-      <b>{t([ 'invoices', 'invoiceCanceled' ])} </b>
-      {invoice.subject}
-      <span className={styles.floatRight}>
-        <LabeledRoundButton
-          label={t([ 'invoices', 'downloadInvoice' ])}
-          content={<span className="fa fa-download" aria-hidden="true" />}
-          onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
-          type="action"
-        />
-        <LabeledRoundButton
-          label={t([ 'invoices', 'editInvoice' ])}
-          content={<span className="fa fa-pencil" aria-hidden="true" />}
-          onClick={() => nav.to(`/${pageBase.garage}/admin/invoices/${invoice.id}/edit`)}
-          type="action"
-        />
-      </span>
-    </div> :
-    <div>
-      {t([ 'invoices', 'subject' ])}:
-      {invoice.subject}
-      <span className={styles.floatRight}>
-        <LabeledRoundButton
-          label={t([ 'invoices', 'downloadInvoice' ])}
-          content={<span className="fa fa-download" aria-hidden="true" />}
-          onClick={() => actions.downloadInvoice(invoice.id, invoice.invoice_number)}
-          type="action"
-        />
-        {!invoice.payed && ((!invoice.is_storno_invoice && invoice.client && invoice.client.client_user &&
-        (invoice.client.client_user.admin || invoice.client.client_user.secretary)) ||
-          (invoice.payer_type === 'User' && invoice.invoice_item && invoice.invoice_item.invoiceable_type === 'Reservation'
-          && invoice.user.id === pageBase.current_user.id))
-        &&
-          <LabeledRoundButton
-            label={t([ 'invoices', 'payInvoice' ])}
-            content={<i className="fa fa-credit-card" aria-hidden="true" />}
-            onClick={() => actions.payInvoice(invoice.id)}
-            type="action"
-          />}
-        {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&
-          <LabeledRoundButton
-            label={t([ 'invoices', 'sendReminder' ])}
-            content={<span className="fa fa-bell-o" aria-hidden="true" />}
-            onClick={() => actions.reminder(invoice.id)}
-            type="action"
-          />}
-        {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&
-          <LabeledRoundButton
-            label={t([ 'invoices', 'invoicePaidLabel' ])}
-            content={<span className="fa fa-check" aria-hidden="true" />}
-            onClick={() => actions.invoicePayed(invoice.id, pageBase.garage)}
-            type="remove"
-            question={t([ 'invoices', 'invoicePaid' ])}
-          />}
-        {!invoice.payed && !invoice.is_storno_invoice && invoice.account.garage.is_admin &&
-          <LabeledRoundButton
-            label={t([ 'invoices', 'invoiceIncorect' ])}
-            content={<span className="fa fa-times" aria-hidden="true" />}
-            onClick={() => actions.toggleReason(invoice.id)}
-            type="remove"
-            question={t([ 'invoices', 'stornoInvoice' ])}
-          />}
-      </span>
-    </div>}
-  </div>)
+  spoiler:     (
+    <InvoiceSpoiler
+      invoice={invoice}
+      garage={pageBase.garage}
+      currentUser={pageBase.currentUser}
+      downloadInvoice={actions.downloadInvoice}
+      payInvoice={actions.payInvoice}
+      reminder={actions.reminder}
+      invoicePayed={actions.invoicePayed}
+      toggleReason={actions.toggleReason}
+    />
+  )
 })
 
 const INVOICE_TABS = [
-  { id:      'invoices',
+  {
+    id:      'invoices',
     content: <Invoices />
   },
-  { id:      'simplifiedTaxReceipts',
+  {
+    id:      'simplifiedTaxReceipts',
     content: <SimplifiedTaxReceipts />
   },
-  { id:      'canceledInvoices',
+  {
+    id:      'canceledInvoices',
     content: <CanceledInvoices />
   }
 ]
@@ -132,7 +129,7 @@ class InvoicesPage extends Component {
   static propTypes = {
     state:   PropTypes.object,
     actions: PropTypes.object,
-    params:  PropTypes.object
+    match:   PropTypes.object
   }
 
   constructor(props) {
@@ -144,22 +141,25 @@ class InvoicesPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initInvoices(this.props.params.id)
+    const { match: { params }, actions } = this.props
+    actions.initInvoices(params.id)
   }
 
   clientSelected = client => this.props.actions.setClientId(client.id)
 
-  prepareTabs = tab => (<TabButton
-    label={t([ 'invoices', tab.id ])}
-    onClick={() => this.setState({
-      ...this.state,
-      selected: tab.id
-    })}
-    state={this.state.selected === tab.id && 'selected'}
-  />)
+  prepareTabs = tab => (
+    <TabButton
+      label={t([ 'invoices', tab.id ])}
+      onClick={() => this.setState({
+        ...this.state,
+        selected: tab.id
+      })}
+      state={this.state.selected === tab.id && 'selected'}
+    />
+  )
 
   render() {
-    const { state, actions } = this.props
+    const { state, actions, match: { params } } = this.props
 
     const clientDropdown = () => {
       return state.clients.map(client => ({
@@ -170,8 +170,16 @@ class InvoicesPage extends Component {
     }
 
     const filters = [
-      <TabButton label={t([ 'notifications', 'past' ])} onClick={() => actions.setPast(true)} state={state.past && 'selected'} />,
-      <TabButton label={t([ 'notifications', 'current' ])} onClick={() => actions.setPast(false)} state={!state.past && 'selected'} />,
+      <TabButton
+        label={t([ 'notifications', 'past' ])}
+        onClick={() => actions.setPast(true)}
+        state={state.past && 'selected'}
+      />,
+      <TabButton
+        label={t([ 'notifications', 'current' ])}
+        onClick={() => actions.setPast(false)}
+        state={!state.past && 'selected'}
+      />,
       <div className={styles.dropdownsContainer}>
         <Dropdown
           placeholder={t([ 'invoices', 'selectClient' ])}
@@ -182,10 +190,10 @@ class InvoicesPage extends Component {
       </div>
     ]
 
-    const customModal = (<div>
+    const customModal = (
       <Form
         submitable={state.reason !== '' && state.reason !== undefined}
-        onSubmit={() => actions.stornoInvoice(state.invoice_id, this.props.params.id)}
+        onSubmit={() => actions.stornoInvoice(state.invoice_id, params.id)}
         onBack={() => actions.toggleReason()}
         modal
       >
@@ -199,20 +207,25 @@ class InvoicesPage extends Component {
           type="text"
         />
       </Form>
-    </div>)
+    )
 
     return (
-      <PageBase>
+      <React.Fragment>
         <Modal content={customModal} show={state.showModal} />
         <TabMenu left={INVOICE_TABS.map(this.prepareTabs)} right={filters} />
 
         {INVOICE_TABS.findById(this.state.selected).content}
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.invoices, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(invoicesActions, dispatch) })
-)(InvoicesPage)
+const enhancers = compose(
+  withMasterPageConf(toAdmin('invoices')),
+  connect(
+    state => ({ state: state.invoices, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(invoicesActions, dispatch) })
+  )
+)
+
+export default enhancers(InvoicesPage)

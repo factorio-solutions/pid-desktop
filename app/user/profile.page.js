@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import update from 'immutability-helper'
 import moment from 'moment'
 
-import PageBase           from '../_shared/containers/pageBase/PageBase'
+import withMasterPageConf from '../hoc/withMasterPageConf'
+
 import Localization       from '../_shared/components/localization/Localization'
 import PatternInput       from '../_shared/components/input/PatternInput'
 import Form               from '../_shared/components/form/Form'
@@ -18,7 +19,10 @@ import Documents          from '../admin/garageSetup/legalDocuments/documents'
 import * as nav            from '../_shared/helpers/navigation'
 import { t }               from '../_shared/modules/localization/localization'
 import * as profileActions from '../_shared/actions/profile.actions'
-import { setCustomModal }  from '../_shared/actions/pageBase.actions'
+import {
+  setCustomModal,
+  toProfile
+}  from '../_shared/actions/pageBase.actions'
 
 import styles from './profile.page.scss'
 import Input from '../_shared/components/input/Input'
@@ -91,7 +95,7 @@ class SettingsPage extends Component {
     )
 
     return (
-      <PageBase>
+      <React.Fragment>
         <div className={styles.parent}>
           <div className={styles.leftColumn}>
             <h2>{t([ 'profile', 'profileSettings' ])}</h2>
@@ -127,7 +131,10 @@ class SettingsPage extends Component {
               </div>
 
               <div>
-                <Checkbox checked={pageBase.current_user && !pageBase.current_user.hide_public_garages} onChange={actions.toggleShowPublicGarages}>
+                <Checkbox
+                  checked={pageBase.current_user && !pageBase.current_user.hide_public_garages}
+                  onChange={actions.toggleShowPublicGarages}
+                >
                   {<span>{t([ 'profile', 'showPublicGarages' ])}</span>}
                 </Checkbox>
               </div>
@@ -156,7 +163,7 @@ class SettingsPage extends Component {
           </div>
           <div className={styles.rightColumn}>
             {/* HACK: sccale the letters size. */}
-            <div style={{ transform: 'scale(1.4)', 'transform-origin': '0 0' }}>
+            <div style={{ transform: 'scale(1.4)', transformOrigin: '0 0' }}>
               <h3>
                 {t([ 'profile', 'myGarages' ])}
                 {':'}
@@ -206,12 +213,17 @@ class SettingsPage extends Component {
             </div>
           </div>
         </div>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.profile, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators({ ...profileActions, setCustomModal }, dispatch) })
-)(SettingsPage)
+const enhancers = compose(
+  withMasterPageConf(toProfile()),
+  connect(
+    state => ({ state: state.profile, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators({ ...profileActions, setCustomModal }, dispatch) })
+  )
+)
+
+export default enhancers(SettingsPage)

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Button from '../buttons/Button'
+import Button from './Button'
 
 import styles from './I.scss'
 
 
-export default function I({ onClick, size }) {
+const I = ({ onClick, size }) => {
   const style = [
     styles.button,
     onClick && styles.clickable,
@@ -28,3 +28,5 @@ I.propTypes = {
   onClick: PropTypes.func,
   size:    PropTypes.string
 }
+
+export default I

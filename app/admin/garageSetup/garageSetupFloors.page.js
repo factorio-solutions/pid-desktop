@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { bindActionCreators, compose }          from 'redux'
 
-import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Form               from '../../_shared/components/form/Form'
 import Input              from '../../_shared/components/input/Input'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
@@ -13,6 +14,7 @@ import GarageLayout       from '../../_shared/components/garageLayout/GarageLayo
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
 import * as garageSetupActions  from '../../_shared/actions/garageSetup.actions'
+import { toAdminGarageSetup, toAddFeatures } from '../../_shared/actions/pageBase.actions'
 
 import styles from './garageSetupGeneral.page.scss'
 
@@ -21,12 +23,12 @@ class GarageSetupFloorsPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
-    params:   PropTypes.object,
+    match:    PropTypes.object,
     actions:  PropTypes.object
   }
 
   componentDidMount() {
-    const { state, params, actions } = this.props
+    const { state, match: { params }, actions } = this.props
     state.availableTarifs.length === 0 && actions.initTarif()
     if (params.id) {
       actions.intiEditGarageFloors(params.id)
@@ -52,23 +54,27 @@ class GarageSetupFloorsPage extends Component {
   }
 
   goBack = () => {
-    if (this.props.params.id) {
-      nav.to(`/${this.props.params.id}/admin/garageSetup/general`)
+    const { match: { params } } = this.props
+    if (params.id) {
+      nav.to(`/${params.id}/admin/garageSetup/general`)
     } else {
       nav.to('/addFeatures/garageSetup/general')
     }
   }
 
   render() {
-    const { state, pageBase, actions } = this.props
+    const {
+      state, pageBase, actions, match: { params }
+    } = this.props
+
     const readOnly = pageBase.isGarageManager && !pageBase.isGarageAdmin
 
     const allFloors = state.floors.filter(floor => floor.label.length > 0 && floor.scheme.length > 0)
     const hightlightInputs = () => actions.toggleHighlight()
 
     const submitForm = () => {
-      if (this.props.params.id) {
-        actions.updateGarageFloors(this.props.params.id, window.location.href)
+      if (params.id) {
+        actions.updateGarageFloors(params.id, window.location.href)
       } else {
         nav.to('/addFeatures/garageSetup/gates')
       }
@@ -236,7 +242,7 @@ class GarageSetupFloorsPage extends Component {
     )
 
     return (
-      <GarageSetupPage>
+      <React.Fragment>
         {readOnly
           ? formContent
           : (
@@ -250,12 +256,22 @@ class GarageSetupFloorsPage extends Component {
             </Form>
           )
         }
-      </GarageSetupPage>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.garageSetup, pageBase: state.pageBase }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
-)(GarageSetupFloorsPage)
+const enhancers = compose(
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const action = hash.includes('admin') ? toAdminGarageSetup : toAddFeatures
+
+    return action('newGarageFloors')
+  }),
+  connect(
+    state => ({ state: state.garageSetup, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })
+  )
+)
+
+export default enhancers(GarageSetupFloorsPage)

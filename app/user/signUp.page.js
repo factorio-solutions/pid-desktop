@@ -17,6 +17,8 @@ import normalizeEmail     from '../_shared/helpers/normalizeEmail'
 import { t, getLanguage } from '../_shared/modules/localization/localization'
 import * as signUpActions from '../_shared/actions/signUp.actions'
 
+import { parseParameters } from '../_shared/helpers/parseUrlParameters'
+
 import styles from './signUp.page.scss'
 
 export const MINIMUM_PASSWORD_LENGTH = 4
@@ -35,7 +37,8 @@ class SignUpPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.init(this.props.location.query)
+    const { actions, location } = this.props
+    actions.init(parseParameters(location.search))
   }
 
   onSubmit = () => this.isSubmitable() && this.props.actions.register()
@@ -51,7 +54,7 @@ class SignUpPage extends Component {
     && state.acceptTermsOfService
   }
 
-  goBack = () => nav.to('/')
+  goBack = () => nav.to('/login')
 
   successConfirm = () => {
     this.props.actions.clearForm()
@@ -60,7 +63,9 @@ class SignUpPage extends Component {
 
   successContent = (
     <div>
-      { t([ 'signup_page', 'success' ]) } <br />
+      { t([ 'signup_page', 'success' ]) }
+      {' '}
+      <br />
       <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={this.successConfirm} type="confirm" />
     </div>
   )
@@ -69,13 +74,25 @@ class SignUpPage extends Component {
     const { actions, state } = this.props
 
 
-    const loadingContent = <div>{ t([ 'signup_page', 'loading' ]) } ...</div>
+    const loadingContent = (
+      <div>
+        { t([ 'signup_page', 'loading' ]) }
 
-    const errorContent = (<div>
-      { t([ 'signup_page', 'loginFailed' ]) }: <br />
-      { state.error } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
-    </div>)
+        {'...'}
+      </div>
+    )
+
+    const errorContent = (
+      <div>
+        { t([ 'signup_page', 'loginFailed' ]) }
+        {': '}
+        <br />
+        { state.error }
+        {' '}
+        <br />
+        <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
+      </div>
+    )
 
     const handleTermsOfService = () => actions.setAcceptTermsOfService(!state.acceptTermsOfService)
 
@@ -136,7 +153,11 @@ class SignUpPage extends Component {
                 onChange={handleTermsOfService}
                 checked={state.acceptTermsOfService}
               >
-                <span onClick={handleTermsOfService}> {t([ 'signup_page', 'acceptTerms' ])} </span>
+                <span onClick={handleTermsOfService}>
+                  {' '}
+                  {t([ 'signup_page', 'acceptTerms' ])}
+                  {' '}
+                </span>
                 <a target="_blank" rel="noopener noreferrer" href={`https://www.park-it-direct.com/${getLanguage().replace('de', 'en').replace('pl', 'en')}/privacy`}>{t([ 'signup_page', 'termsOfService' ])}</a>
               </Checkbox>
             </Form>

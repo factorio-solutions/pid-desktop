@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
-import { bindActionCreators }          from 'redux'
+import { bindActionCreators, compose }          from 'redux'
 
-import GarageSetupPage    from '../../_shared/containers/garageSetupPage/GarageSetupPage'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import Form               from '../../_shared/components/form/Form'
 import Input              from '../../_shared/components/input/Input'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
@@ -14,6 +15,7 @@ import Dropdown           from '../../_shared/components/dropdown/Dropdown'
 import * as nav                 from '../../_shared/helpers/navigation'
 import { t }                    from '../../_shared/modules/localization/localization'
 import * as garageSetupActions  from '../../_shared/actions/garageSetup.actions'
+import { toAdminGarageSetup, toAddFeatures }  from '../../_shared/actions/pageBase.actions'
 
 import styles from './garageSetupGeneral.page.scss'
 
@@ -21,22 +23,22 @@ import styles from './garageSetupGeneral.page.scss'
 class GarageSetupGatesPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
-    params:   PropTypes.object,
+    match:    PropTypes.object,
     pageBase: PropTypes.object,
     actions:  PropTypes.object
   }
 
   componentDidMount() {
-    const { state, params, actions } = this.props
+    const { state, match: { params }, actions } = this.props
     state.availableTarifs.length === 0 && actions.initTarif()
     if (params.id) {
       actions.intiEditGarageGates(params.id)
     } else {
-      const firstFloor = this.props.state.floors[0] // uncoment later
+      const firstFloor = state.floors[0] // uncoment later
       if (firstFloor.label === '' || firstFloor.scheme === '') {
         this.goBack()
       } else {
-        this.props.state.gates.length === 0 && this.props.actions.addGate() // will add gate with
+        state.gates.length === 0 && actions.addGate() // will add gate with
       }
     }
   }
@@ -50,8 +52,9 @@ class GarageSetupGatesPage extends Component {
   }
 
   goBack = () => {
-    if (this.props.params.id) {
-      nav.to(`/${this.props.params.id}/admin/garageSetup/floors`)
+    const { match: { params } } = this.props
+    if (params.id) {
+      nav.to(`/${params.id}/admin/garageSetup/floors`)
     } else {
       nav.to('/addFeatures/garageSetup/floors')
     }
@@ -71,9 +74,10 @@ class GarageSetupGatesPage extends Component {
     const hightlightInputs = () => actions.toggleHighlight()
 
     const submitForm = () => {
-      if (this.props.params.id) {
-        actions.updateGarageGates(this.props.params.id)
-        nav.to(`/${this.props.params.id}/admin/garageSetup/order`)
+      const { match: { params } } = this.props
+      if (params.id) {
+        actions.updateGarageGates(params.id)
+        nav.to(`/${params.id}/admin/garageSetup/order`)
       } else {
         nav.to('/addFeatures/garageSetup/order')
       }
@@ -281,7 +285,7 @@ class GarageSetupGatesPage extends Component {
     )
 
     return (
-      <GarageSetupPage>
+      <React.Fragment>
         {readOnly
           ? formContent
           : (
@@ -295,12 +299,22 @@ class GarageSetupGatesPage extends Component {
             </Form>
           )
         }
-      </GarageSetupPage>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.garageSetup, pageBase: state.pageBase }),
-  dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })
-)(GarageSetupGatesPage)
+const enhancers = compose(
+  withMasterPageConf(() => {
+    const { hash } = window.location
+    const action = hash.includes('admin') ? toAdminGarageSetup : toAddFeatures
+
+    return action('newGarageGates')
+  }),
+  connect(
+    state => ({ state: state.garageSetup, pageBase: state.pageBase }),
+    dispatch => ({ actions: bindActionCreators(garageSetupActions, dispatch) })
+  )
+)
+
+export default enhancers(GarageSetupGatesPage)

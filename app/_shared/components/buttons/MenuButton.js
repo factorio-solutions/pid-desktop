@@ -1,5 +1,5 @@
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
-import React from 'react'
 
 import Button from './Button.js'
 
@@ -10,7 +10,7 @@ import styles from './MenuButton.scss'
 // state = 'selected', 'disabled'
 
 
-export default function MenuButton({ icon, label, ...restOfProps }) {
+const MenuButton = ({ icon, label, ...restOfProps }) => {
   const style = [
     styles.button,
     styles[restOfProps.type],
@@ -40,3 +40,5 @@ MenuButton.propTypes = {
   type:    PropTypes.string,
   state:   PropTypes.string
 }
+
+export default memo(MenuButton)

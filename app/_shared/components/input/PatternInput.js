@@ -81,11 +81,25 @@ export default class PatternInput extends Component {
           onKeyPress={this.preventEnter}
           ref={input => { this.input = input }}
           readOnly={readOnly}
+          key="PatternInput"
         />
-        <span className={styles.bar} />
-        <label className={reservation ? styles.reservationLabel : styles.label}>{label}</label>
-        <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
-        <label className={`${styles.customFormGroup}  ${styles.error}`}>
+        <span className={styles.bar} key="bar" />
+        <label
+          className={reservation ? styles.reservationLabel : styles.label}
+          key="label"
+        >
+          {label}
+        </label>
+        <label
+          className={`${styles.customFormGroup} ${styles.inlineMenu}`}
+          key="inlineMenu"
+        >
+          {inlineMenu}
+        </label>
+        <label
+          className={`${styles.customFormGroup} ${styles.error}`}
+          key="error"
+        >
           {error}
         </label>
       </div>

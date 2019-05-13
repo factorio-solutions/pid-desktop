@@ -1,41 +1,33 @@
-import React, { Component }   from 'react'
-import { connect }            from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React from 'react'
 
-import PageBase from '../../_shared/containers/adminPageBase/PageBase'
+import withMasterPageConf from '../../hoc/withMasterPageConf'
+
 import FinanceTable from '../finance/components/FinanceTable'
 import LogsTable from '../logs/components/LogsTable'
 
 import { t } from '../../_shared/modules/localization/localization'
 
+import { toPidAdmin } from '../../_shared/actions/pageBase.actions'
+
 import styles from './dashboard.page.scss'
 
+const PidAdminDashboardPage = () => {
+  return (
+    <React.Fragment>
+      <div className={styles.section}>
+        <h2>{t([ 'pidAdmin', 'pageBase', 'finance' ])}</h2>
+        <FinanceTable />
+      </div>
 
-class PidAdminDashboardPage extends Component {
-  static propTypes = {}
-
-  render() {
-    return (
-      <PageBase>
-        <div className={styles.section}>
-          <h2>{t([ 'pidAdmin', 'pageBase', 'finance' ])}</h2>
-          <FinanceTable />
+      <div className={styles.flexbox}>
+        <div className={`${styles.flex} ${styles.section}`}>
+          <h2>{t([ 'pageBase', 'Activity log' ])}</h2>
+          <LogsTable />
         </div>
 
-        <div className={styles.flexbox}>
-          <div className={`${styles.flex} ${styles.section}`}>
-            <h2>{t([ 'pageBase', 'Activity log' ])}</h2>
-            <LogsTable />
-          </div>
-
-          <div className={`${styles.flex} ${styles.section}`} />
-        </div>
-      </PageBase>
-    )
-  }
+        <div className={`${styles.flex} ${styles.section}`} />
+      </div>
+    </React.Fragment>
+  )
 }
-
-export default connect(
-  state => ({ state }), // { state: state.dashboard }
-  dispatch => ({ actions: bindActionCreators({}, dispatch) }) // { actions: bindActionCreators(dashboardActions, dispatch) }
-)(PidAdminDashboardPage)
+export default withMasterPageConf(toPidAdmin('dashboard'))(PidAdminDashboardPage)

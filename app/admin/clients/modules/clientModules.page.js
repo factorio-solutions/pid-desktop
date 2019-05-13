@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect }                     from 'react-redux'
 import { bindActionCreators }          from 'redux'
 
-import PageBase  from '../../../_shared/containers/pageBase/PageBase'
 import TabMenu   from '../../../_shared/components/tabMenu/TabMenu'
 import TabButton from '../../../_shared/components/buttons/TabButton'
 
@@ -19,13 +18,21 @@ class ClientModules extends Component {
     params:   PropTypes.object
   }
 
-  selectTab = tab => () => nav.to(`/${this.props.pageBase.garage}/admin/clients/${this.props.params.client_id}/${tab}`)
+  selectTab = tab => () => {
+    const {
+      params,
+      pageBase: { garage }
+    } = this.props
+    nav.to(`/${garage}/admin/clients/${params.client_id}/modules/${tab}`)
+  }
 
-  tabFactory = tab => (<TabButton
-    label={t([ 'newClient', tab ])}
-    onClick={this.selectTab(tab)}
-    state={window.location.hash.includes(`/${tab}`) && 'selected'}
-  />)
+  tabFactory = tab => (
+    <TabButton
+      label={t([ 'newClient', tab ])}
+      onClick={this.selectTab(tab)}
+      state={window.location.hash.includes(`/${tab}`) ? 'selected' : undefined}
+    />
+  )
 
   render() {
     const { children } = this.props
@@ -33,10 +40,10 @@ class ClientModules extends Component {
     const tabs = [ 'smsSettings', 'minMaxReservationDuration', 'timeCredit' ].map(this.tabFactory)
 
     return (
-      <PageBase>
+      <React.Fragment>
         <TabMenu left={tabs} />
-        { children }
-      </PageBase>
+        {children}
+      </React.Fragment>
     )
   }
 }

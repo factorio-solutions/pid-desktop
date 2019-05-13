@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
+
+import withMasterPageConf from '../../hoc/withMasterPageConf'
 
 import * as nav from '../../_shared/helpers/navigation'
 import { t } from '../../_shared/modules/localization/localization'
 import { AVAILABLE_LANGUAGES } from '../../routes'
 
-import PageBase       from '../../_shared/containers/pageBase/PageBase'
 import Dropdown       from '../../_shared/components/dropdown/Dropdown'
 import Form           from '../../_shared/components/form/Form'
 import PatternInput   from '../../_shared/components/input/PatternInput'
@@ -18,6 +19,7 @@ import AttributeSpan  from './components/AttributeSpan'
 import LanguageSpan   from './components/LanguageSpan'
 
 import * as inviteUserActions from '../../_shared/actions/inviteUser.actions'
+import { toAdminUsers } from '../../_shared/actions/pageBase.actions'
 
 import styles from './inviteUser.page.scss'
 
@@ -139,7 +141,7 @@ class inviteUserPage extends Component {
     const multipleUsers = state.email.value.includes(',')
 
     return (
-      <PageBase>
+      <React.Fragment>
         <Modal content={errorContent} show={state.error} />
         <Modal content={successContent} show={state.success} />
         <Modal content={loadingContent} show={state.currentEmail} />
@@ -350,17 +352,19 @@ class inviteUserPage extends Component {
             </div>
           </div>
         </Form>
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
+const enhancers = compose(
+  withMasterPageConf(toAdminUsers('inviteUsers')),
+  connect(state => ({
+    state: state.inviteUser
+  }),
+  dispatch => ({
+    actions: bindActionCreators(inviteUserActions, dispatch)
+  }))
+)
 
-export default connect(state => {
-  const { inviteUser } = state
-  return ({
-    state: inviteUser
-  })
-}, dispatch => ({
-  actions: bindActionCreators(inviteUserActions, dispatch)
-}))(inviteUserPage)
+export default enhancers(inviteUserPage)

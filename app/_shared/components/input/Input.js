@@ -139,11 +139,20 @@ export default class Input extends Component {
           accept={accept}
           readOnly={readOnly}
           required={required}
+          key="TheInput"
         />
-        <span className={styles.bar} />
-        <label className={styles.label}>{label}</label>
-        <label className={`${styles.customFormGroup}  ${styles.inlineMenu}`}>{inlineMenu}</label>
-        <label className={`${styles.customFormGroup}  ${styles.error}`}>
+        <span className={styles.bar} key="InputSpan" />
+        <label className={styles.label} key="InputLabel">{label}</label>
+        <label
+          className={`${styles.customFormGroup} ${styles.inlineMenu}`}
+          key="InputInlineMenu"
+        >
+          {inlineMenu}
+        </label>
+        <label
+          className={`${styles.customFormGroup}  ${styles.error}`}
+          key="InputErrorLabel"
+        >
           {error + ' '}
         </label>
       </div>
