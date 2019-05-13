@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import MenuButton from '../buttons/MenuButton'
 
 const VerticalMenu = ({ content, onClick, verticalSelected }) => {
-  const prepareMenuButton = (object, index) => {
+  const prepareMenuButton = object => {
     const newOnClick = () => {
       onClick && onClick()
       object.onClick()
@@ -12,7 +12,7 @@ const VerticalMenu = ({ content, onClick, verticalSelected }) => {
 
     return (
       <MenuButton
-        key={`${index}_${object.label}`}
+        key={object.key}
         icon={object.icon}
         label={object.label}
         onClick={newOnClick}

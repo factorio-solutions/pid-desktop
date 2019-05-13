@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import moment from 'moment'
+
+import withMasterPageConf from '../../hoc/withMasterPageConf'
 
 import Table              from '../../_shared/components/table/Table'
 import RoundButton        from '../../_shared/components/buttons/RoundButton'
 import LabeledRoundButton from '../../_shared/components/buttons/LabeledRoundButton'
-import PageBase           from '../../_shared/containers/adminPageBase/PageBase'
 
 import * as newsActions from '../../_shared/actions/pid-admin.news.actions'
+import { toPidAdmin } from '../../_shared/actions/pageBase.actions'
 import { initNewNews }  from '../../_shared/actions/pid-admin.newNews.actions'
 import { t }            from '../../_shared/modules/localization/localization'
 
@@ -33,12 +35,22 @@ class PidAdminNewsPage extends Component {
 
     const schema = [
       {
-        key:        'id', title:      t([ 'pidAdmin', 'news', 'id' ]), comparator: 'number', sort:       'asc'
+        key:        'id',
+        title:      t([ 'pidAdmin', 'news', 'id' ]),
+        comparator: 'number',
+        sort:       'asc'
       },
       {
-        key:         'label', title:       t([ 'pidAdmin', 'news', 'label' ]), comparator:  'string', representer: o => <span dangerouslySetInnerHTML={{ __html: o }} />
+        key:         'label',
+        title:       t([ 'pidAdmin', 'news', 'label' ]),
+        comparator:  'string',
+        representer: o => <span dangerouslySetInnerHTML={{ __html: o }} />
       },
-      { key: 'url', title: t([ 'pidAdmin', 'news', 'url' ]), comparator: 'string' },
+      {
+        key:        'url',
+        title:      t([ 'pidAdmin', 'news', 'url' ]),
+        comparator: 'string'
+      },
       {
         key:         'created_at',
         title:       t([ 'pidAdmin', 'news', 'createdAt' ]),
@@ -83,7 +95,7 @@ class PidAdminNewsPage extends Component {
     }
 
     return (
-      <PageBase>
+      <React.Fragment>
         <div>
           <Table schema={schema} data={state.news.map(addSpoiler)} />
         </div>
@@ -94,12 +106,17 @@ class PidAdminNewsPage extends Component {
           content={state.garName}
           onClick={actions.mpiGarage}
         />
-      </PageBase>
+      </React.Fragment>
     )
   }
 }
 
-export default connect(
-  state => ({ state: state.pidAdminNews }),
-  dispatch => ({ actions: bindActionCreators({ ...newsActions, initNewNews }, dispatch) })
-)(PidAdminNewsPage)
+const enhancers = compose(
+  withMasterPageConf(toPidAdmin('news')),
+  connect(
+    state => ({ state: state.pidAdminNews }),
+    dispatch => ({ actions: bindActionCreators({ ...newsActions, initNewNews }, dispatch) })
+  )
+)
+
+export default enhancers(PidAdminNewsPage)

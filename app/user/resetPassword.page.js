@@ -28,15 +28,22 @@ class ResetPasswordPage extends Component {
 
   isSubmitable = () => this.props.state.email.valid
 
-  goBack = () => nav.to('/')
+  goBack = () => nav.to('/login')
 
   render() {
     const { actions, state } = this.props
 
-    const modalContent = (<div>
-      { state.modal } <br />
-      <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.dismissModal} type="confirm" />
-    </div>)
+    const modalContent = (
+      <div>
+        { state.modal }
+        <br />
+        <RoundButton
+          content={<i className="fa fa-check" aria-hidden="true" />}
+          onClick={actions.dismissModal}
+          type="confirm"
+        />
+      </div>
+    )
 
     return (
       <MasterPage>

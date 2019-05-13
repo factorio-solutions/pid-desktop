@@ -16,6 +16,7 @@ import Loading      from '../_shared/components/loading/Loading'
 
 import * as nav           from '../_shared/helpers/navigation'
 import normalizeEmail     from '../_shared/helpers/normalizeEmail'
+import { parseParameters } from '../_shared/helpers/parseUrlParameters'
 import { t }              from '../_shared/modules/localization/localization'
 import * as loginActions  from '../_shared/actions/login.actions'
 
@@ -26,8 +27,7 @@ class LoginPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     actions:  PropTypes.object,
-    location: PropTypes.object,
-    match:    PropTypes.object
+    location: PropTypes.object
   }
 
   constructor(props) {
@@ -38,13 +38,16 @@ class LoginPage extends Component {
   async componentDidMount() {
     const { actions, location } = this.props
     new Fingerprint2().get(actions.setDeviceFingerprint)
-    if (location && location.query && location.query.token) {
+    const query = parseParameters(location.search)
+    if (query && query.token) {
       actions.resetStore()
-      await localforage.setItem('jwt', location.query.token)
+      await localforage.setItem('jwt', query.token)
       nav.to('/occupancy')
     }
-    if (location && location.query
-    && location.query.hasOwnProperty('password_reset_success')) {
+    if (
+      query
+      && query.hasOwnProperty('password_reset_success')
+    ) {
       actions.setShowPasswordResetModal(true)
       actions.setPasswordResetSuccessful(location.query.password_reset_success === 'true')
     }
@@ -53,7 +56,7 @@ class LoginPage extends Component {
   home = () => window.location.href = 'https://parkit.direct';
 
   render() {
-    const { actions, state, match } = this.props
+    const { actions, state } = this.props
 
     const isSubmitable = () => { return state.email.valid && state.password.valid }
 
@@ -122,8 +125,7 @@ class LoginPage extends Component {
           <div className={styles.resetPasswordPage}>
             {t([ 'login_page', 'forgot' ])}
             {' '}
-            <NavLink to={`${match.url}resetPassword`}>{t([ 'login_page', 'proceed' ])}</NavLink>
-            {/* <button type="button" onClick={nav.to('/resetPassword')}>Ahoj</button> */}
+            <NavLink to={nav.path('/resetPassword')}>{t([ 'login_page', 'proceed' ])}</NavLink>
           </div>
 
         </div>

@@ -1,18 +1,25 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import * as localization from '../_shared/modules/localization/localization'
 
 import { AVAILABLE_LANGUAGES } from '../routes'
 
+import { setCurrentUserLanguage } from '../_shared/actions/pageBase.actions'
+
 import LoginPage from '../user/login.page'
+import SignUpPage from '../user/signUp.page'
+import ResetPasswordPage from '../user/resetPassword.page'
+import MarketingPage from '../marketing/marketing.page'
 import MasterPage from '../_shared/components/masterPage/MasterPage'
 
 
-export default class App extends PureComponent {
+class App extends PureComponent {
   static propTypes = {
-    jwt: PropTypes.string
+    jwt:                    PropTypes.string,
+    setCurrentUserLanguage: PropTypes.func
   }
 
   static contextTypes = {
@@ -24,7 +31,7 @@ export default class App extends PureComponent {
   }
 
   render() {
-    const { jwt } = this.props
+    const { jwt, setCurrentUserLanguage } = this.props
     return (
       <div>
         <Switch>
@@ -43,12 +50,14 @@ export default class App extends PureComponent {
             }) => {
               if (params.lang !== localization.getLanguage()) {
                 localization.changeLanguage(params.lang)
+                setCurrentUserLanguage(params.lang)
               }
-              const PidAdminMasterPage = null
               return (
                 <Switch>
                   <Route path={`${path}/login`} component={LoginPage} />
-                  <Route path={`${path}/pid-admin`} component={PidAdminMasterPage} />
+                  <Route path={`${path}/signUpPage`} component={SignUpPage} />
+                  <Route path={`${path}/resetPassword`} component={ResetPasswordPage} />
+                  <Route path={`${path}/marketing/:short_name`} component={MarketingPage} />
                   <Route path={`${path}`} component={MasterPage} />
                 </Switch>
               )
@@ -59,3 +68,5 @@ export default class App extends PureComponent {
     )
   }
 }
+
+export default connect(null, { setCurrentUserLanguage })(App)

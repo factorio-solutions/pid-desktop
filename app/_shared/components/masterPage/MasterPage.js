@@ -13,24 +13,24 @@ import VerticalSecondaryMenu from '../verticalMenu/VerticalSecondaryMenu'
 import DropdownContent       from '../dropdown/DropdownContent'
 import IconWithCount         from '../iconWithCount/IconWithCount'
 
-import { t } from '../../modules/localization/localization'
-
-
 import * as nav                 from '../../helpers/navigation'
 import { logout }               from '../../actions/login.actions'
 import { changeHints }          from '../../actions/profile.actions'
 import {
   setShowSecondaryMenu,
-  analyticsClick,
-  adminClick,
   initialPageBase,
   toReservations,
   toOccupancy,
   toGarage
 } from '../../actions/pageBase.actions'
 
+import {
+  getVerticalMenu,
+  getProfileDropdown,
+  getCallToAction
+} from './MasterPage.selectors'
+
 import styles from './MasterPage.scss'
-import pageBaseStyles from '../../containers/pageBase/PageBase.scss'
 
 import PageBase from '../../containers/pageBase/PageBase'
 import NotificationsPage from '../../../notifications/notifications.page'
@@ -41,6 +41,7 @@ import AnalyticsRouter from '../../../analytics/analytics.router'
 import ProfileRoutes from '../../../user/profile.routes'
 import AdminRoutes from '../../../admin/admin.routes'
 import AddFeaturesRoutes from '../../../addFeatures/addFeatures.routes'
+import PidAdminRoutes from '../../../pidAdmin/pidAdmin.routes'
 
 import isIe from '../../helpers/internetExplorer'
 
@@ -62,15 +63,13 @@ class MasterPage extends Component {
     secondaryMenuBackButton:   PropTypes.object, // {label, onClick}
     currentUser:               PropTypes.object,
 
-    hint:                 PropTypes.object, // {hint, href}
-    garage:               PropTypes.object,
-    isGarageAdmin:        PropTypes.bool,
-    isGarageManager:      PropTypes.bool,
-    isGarageReceptionist: PropTypes.bool,
-    isGarageSecurity:     PropTypes.bool,
-    pid_tarif:            PropTypes.number,
-    showScrollbar:        PropTypes.bool,
-    location:             PropTypes.object
+    hint:            PropTypes.object, // {hint, href}
+    showScrollbar:   PropTypes.bool,
+    location:        PropTypes.object,
+    verticalMenu:    PropTypes.arrayOf(PropTypes.object),
+    profileDropdown: PropTypes.arrayOf(PropTypes.object),
+    callToAction:    PropTypes.arrayOf(PropTypes.object),
+    inPidAdmin:      PropTypes.bool
   }
 
   constructor(props) {
@@ -101,117 +100,10 @@ class MasterPage extends Component {
     }
   }
 
-  profileDropdown = () => {
-    const {
-      currentUser,
-      actions
-    } = this.props
-    return [
-      (
-        <div key="showProfile" className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/profile')}>
-          <i className="icon-profile" aria-hidden="true" />
-          {t([ 'pageBase', 'Profile' ])}
-        </div>
-      ),
-      currentUser && currentUser.pid_admin && (
-        <div key="toPIDAdmin" className={pageBaseStyles.dropdownContent} onClick={() => nav.to('/pid-admin')}>
-          <i className="fa fa-wrench" aria-hidden="true" />
-          {t([ 'pageBase', 'pidAdmin' ])}
-        </div>
-      ),
-      (
-        <div key="logout" className={pageBaseStyles.dropdownContent} onClick={actions.logout}>
-          <i className="fa fa-sign-out" aria-hidden="true" />
-          {t([ 'pageBase', 'Logout' ])}
-        </div>
-      )
-    ].filter(field => field)
-  }
-
   secondaryVerticalMenuClick = () => {
     this.setState({ menu: true })
     const { secondaryMenuBackButton } = this.props
     secondaryMenuBackButton.onClick()
-  }
-
-  renderVerticalMenu = () => {
-    const {
-      garage,
-      isGarageAdmin,
-      isGarageManager,
-      isGarageReceptionist,
-      isGarageSecurity,
-      pid_tarif: pidTariff,
-      actions
-    } = this.props
-    return [
-      // state.current_user && state.current_user.occupancy_garages.length &&
-      {
-        label:   t([ 'pageBase', 'Occupancy' ]),
-        key:     'occupancy',
-        icon:    'icon-occupancy',
-        onClick: () => {
-          nav.to('/occupancy')
-          // actions.toOccupancy()
-        }
-      }, // edit preferences in pageBase.action too
-      {
-        label:   t([ 'pageBase', 'Reservation' ]),
-        key:     'reservations',
-        icon:    'icon-reservations',
-        onClick: () => {
-          nav.to('/reservations')
-          // actions.toReservations()
-        }
-      },
-      (
-        isGarageAdmin
-        || isGarageManager
-        || isGarageReceptionist
-        || isGarageSecurity
-      ) && {
-        label:   t([ 'pageBase', 'Garage' ]),
-        key:     'garage',
-        icon:    'icon-garage',
-        onClick: () => {
-          nav.to(`/${garage}/garage`)
-          // actions.toGarage()
-        }
-      }, // edit preferences in pageBase.action too
-      (
-        (isGarageAdmin || isGarageManager)
-        && pidTariff >= 2
-      ) && {
-        label:   t([ 'pageBase', 'analytics' ]),
-        key:     'analytics',
-        icon:    'icon-invoices',
-        onClick: actions.analyticsClick
-      },
-      {
-        label:   t([ 'pageBase', 'Admin' ]),
-        key:     'admin',
-        icon:    'icon-admin',
-        onClick: () => nav.to(`/${garage}/admin/invoices`) // actions.adminClick
-      }
-    ].filter(field => field) // will filter false states out
-  }
-
-  callToAction = () => {
-    const {
-      isGarageAdmin,
-      garage
-    } = this.props
-
-    return [
-      {
-        label:   t([ 'pageBase', 'Create reservation' ]),
-        onClick: () => nav.to('/reservations/newReservation')
-      },
-      isGarageAdmin && {
-        label:   t([ 'pageBase', 'Create contract' ]),
-        onClick: () => nav.to(`/${garage}/admin/clients/newContract`)
-      }
-    ].filter(field => field)
   }
 
   render() {
@@ -227,10 +119,14 @@ class MasterPage extends Component {
       showSecondaryMenu,
       hint,
       messageCount,
-      location
+      location,
+      verticalMenu,
+      profileDropdown,
+      callToAction,
+      inPidAdmin
     } = this.props
 
-    const showHints = currentUser && currentUser.hint
+    const showHints = currentUser && currentUser.hint && !inPidAdmin
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
 
@@ -248,7 +144,7 @@ class MasterPage extends Component {
           <div className={styles.horizontalMenuContent}>
             <div className={styles.theContent}>
               <div className={styles.callToAction}>
-                {this.callToAction().map(createCallToActionButton)}
+                {callToAction.map(createCallToActionButton)}
               </div>
 
               <div className={styles.user}>
@@ -263,7 +159,7 @@ class MasterPage extends Component {
                   type="dark"
                 />
 
-                <DropdownContent content={this.profileDropdown()} style={styles.profileDropdown}>
+                <DropdownContent content={profileDropdown} style={styles.profileDropdown}>
                   <div key="userName" className={styles.profile}>
                     <i key="icon" className="icon-profile" aria-hidden="true" />
                     <span key="name" className={styles.name}>{currentUser && currentUser.full_name}</span>
@@ -278,7 +174,7 @@ class MasterPage extends Component {
           <div className={`${styles.verticalMenu} ${showSecondaryMenu && styles.shift} ${this.state.menu && styles.active}`}>
             <GarageSelector />
             <VerticalMenu
-              content={this.renderVerticalMenu()}
+              content={verticalMenu}
               verticalSelected={verticalSelected}
               onClick={this.verticalMenuClick}
             />
@@ -305,6 +201,7 @@ class MasterPage extends Component {
             <div className={`${styles.children} ${showHints && hint && styles.hashHint} ${showScrollbar && styles.scrollbarVisible}`}>
               <PageBase>
                 <Switch>
+                  <Route path={`${match.path}/pid-admin`} component={PidAdminRoutes} />
                   <Route path={`${match.path}/notifications`} component={NotificationsPage} />
                   <Route path={`${match.path}/addFeatures`} component={AddFeaturesRoutes} />
                   <Route path={`${match.path}/occupancy`} component={OccupancyPage} />
@@ -332,13 +229,8 @@ const mapStateToProps = state => {
     secondaryMenuBackButton,
     showSecondaryMenu,
     hint,
-    garage,
-    isGarageAdmin,
-    isGarageManager,
-    isGarageReceptionist,
-    isGarageSecurity,
-    pid_tarif,
-    showScrollbar
+    showScrollbar,
+    inPidAdmin
   } = state.pageBase
   const { count } = state.notifications
 
@@ -350,14 +242,12 @@ const mapStateToProps = state => {
     secondaryMenuBackButton,
     showSecondaryMenu,
     hint,
-    garage,
-    isGarageAdmin,
-    isGarageManager,
-    isGarageReceptionist,
-    isGarageSecurity,
-    pid_tarif,
-    messageCount: count,
-    showScrollbar
+    showScrollbar,
+    inPidAdmin,
+    messageCount:    count,
+    verticalMenu:    getVerticalMenu(state),
+    profileDropdown: getProfileDropdown(state),
+    callToAction:    getCallToAction(state)
   }
 }
 
@@ -365,7 +255,7 @@ export default connect(
   mapStateToProps,
   dispatch => ({
     actions: bindActionCreators({
-      changeHints, setShowSecondaryMenu, logout, analyticsClick, adminClick, initialPageBase, toReservations, toOccupancy, toGarage
+      changeHints, setShowSecondaryMenu, logout, initialPageBase, toReservations, toOccupancy, toGarage
     }, dispatch)
   })
 )(MasterPage)

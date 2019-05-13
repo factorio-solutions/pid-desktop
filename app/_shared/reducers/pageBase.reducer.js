@@ -17,7 +17,9 @@ import {
   PAGE_BASE_SET_IS_GARAGE_MANAGER,
   PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST,
   PAGE_BASE_SET_IS_GARAGE_SECURITY,
-  PAGE_BASE_SHOW_SCROLL_BAR
+  PAGE_BASE_SHOW_SCROLL_BAR,
+  PAGE_BASE_SET_CURRENT_USER_LANGUAGE,
+  PAGE_BASE_SET_IN_PID_ADMIN
 }  from '../actions/pageBase.actions'
 
 const defaultState = {
@@ -34,7 +36,7 @@ const defaultState = {
   notificationsModal: true,
 
   // current user
-  current_user: undefined,
+  current_user: {},
 
   // page hints
   hint: undefined, // {hint, href}
@@ -47,7 +49,8 @@ const defaultState = {
   isGarageSecurity:     false, // is security of currently selected garage?
   garage:               undefined,
   pid_tarif:            undefined, // tarif of currently selected garage
-  showScrollbar:        false
+  showScrollbar:        false,
+  inPidAdmin:           false
 }
 
 
@@ -81,6 +84,12 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         secondaryMenuBackButton: action.value
+      }
+
+    case PAGE_BASE_SET_IN_PID_ADMIN:
+      return {
+        ...state,
+        inPidAdmin: action.value
       }
 
     case PAGE_BASE_SET_ERROR:
@@ -120,6 +129,15 @@ export default function pageBase(state = defaultState, action) {
       return {
         ...state,
         current_user: action.value
+      }
+
+    case PAGE_BASE_SET_CURRENT_USER_LANGUAGE:
+      return {
+        ...state,
+        current_user: {
+          ...state.current_user,
+          language: action.value
+        }
       }
 
     case PAGE_BASE_SET_HINT:

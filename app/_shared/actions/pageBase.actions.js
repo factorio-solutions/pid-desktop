@@ -31,6 +31,8 @@ export const PAGE_BASE_SET_IS_GARAGE_MANAGER = 'PAGE_BASE_SET_IS_GARAGE_MANAGER'
 export const PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST = 'PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST'
 export const PAGE_BASE_SET_IS_GARAGE_SECURITY = 'PAGE_BASE_SET_IS_GARAGE_SECURITY'
 export const PAGE_BASE_SHOW_SCROLL_BAR = 'PAGE_BASE_SHOW_SCROLL_BAR'
+export const PAGE_BASE_SET_CURRENT_USER_LANGUAGE = 'PAGE_BASE_SET_CURRENT_USER_LANGUAGE'
+export const PAGE_BASE_SET_IN_PID_ADMIN = 'PAGE_BASE_SET_IN_PID_ADMIN'
 
 export const setSelected = actionFactory(PAGE_BASE_SELECTED)
 export const setSecondaryMenu = actionFactory(PAGE_BASE_SECONDARY_MENU)
@@ -48,6 +50,8 @@ export const setIsGarageManager = actionFactory(PAGE_BASE_SET_IS_GARAGE_MANAGER)
 export const setIsGarageReceptionist = actionFactory(PAGE_BASE_SET_IS_GARAGE_RECEPTIONIST)
 export const setIsGarageSecurity = actionFactory(PAGE_BASE_SET_IS_GARAGE_SECURITY)
 export const setShowScrollbar = actionFactory(PAGE_BASE_SHOW_SCROLL_BAR)
+export const setCurrentUserLanguage = actionFactory(PAGE_BASE_SET_CURRENT_USER_LANGUAGE)
+export const setInPidAdmin = actionFactory(PAGE_BASE_SET_IN_PID_ADMIN)
 
 const defaultEmptyArray = []
 
@@ -169,38 +173,6 @@ function prepareSecondaryMenu() {
     }
 
     dispatch(setSecondaryMenu(secondaryMenu))
-  }
-}
-
-export function adminClick() {
-  return (dispatch, getState) => {
-    const state = getState().pageBase
-    const secondaryMenu = dispatch(prepareAdminSecondaryMenu())
-    const wasAdminMenuSelected = secondaryMenu.map(o => o.key).includes(state.secondarySelected)
-
-    dispatch(setSecondaryMenu(secondaryMenu))
-    dispatch(setSecondaryMenuBackButton({ label: `< ${t([ 'pageBase', 'Admin' ])}`, onClick: () => { dispatch(setShowSecondaryMenu(false)) } }))
-    dispatch(setShowSecondaryMenu(!state.showSecondaryMenu || !wasAdminMenuSelected))
-    if (!wasAdminMenuSelected) {
-      dispatch(setSecondaryMenuSelected('invoices'))
-      nav.to(`/${state.garage}/admin/invoices`)
-    }
-  }
-}
-
-export function analyticsClick() {
-  return (dispatch, getState) => {
-    const state = getState().pageBase
-    const secondaryMenu = prepareAnalyticsSecondaryMenu(state)
-    const wasAnalyticsMenuSelected = secondaryMenu.map(o => o.key).includes(state.secondarySelected)
-
-    dispatch(setSecondaryMenu(secondaryMenu))
-    dispatch(setSecondaryMenuBackButton({ label: `< ${t([ 'pageBase', 'analytics' ])}`, onClick: () => { dispatch(setShowSecondaryMenu(false)) } }))
-    dispatch(setShowSecondaryMenu(!state.showSecondaryMenu || !wasAnalyticsMenuSelected)) // if was previously selected, then hide
-    if (!wasAnalyticsMenuSelected) {
-      dispatch(setSecondaryMenuSelected('garageTurnover'))
-      nav.to(`/${state.garage}/analytics/garageTurnover`)
-    }
   }
 }
 
@@ -509,6 +481,17 @@ export function toNotifications() {
   }
 }
 
+export function toPidAdmin(subPage) {
+  return (dispatch, getState) => {
+    const { current_user: { pid_admin: pidAdmin } } = getState().pageBase
+    if (!pidAdmin) {
+      nav.to('/occupancy')
+    } else {
+      dispatch(setAll(subPage, defaultEmptyArray, undefined, undefined, undefined))
+    }
+  }
+}
+
 
 export function initialPageBase() {
   return (dispatch, getState) => {
@@ -542,7 +525,7 @@ export function initialPageBase() {
         break
     }
 
-    if (getState().pageBase.current_user === undefined) { // if no information about current user
+    if (Object.keys(getState().pageBase.current_user).length <= 1) { // if no information about current user
       dispatch(fetchCurrentUser())
     }
     if (getState().pageBase.garages.length === 0) { // if no garages

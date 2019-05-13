@@ -18,7 +18,8 @@ import styles from './marketing.page.scss'
 class MarketingPage extends Component {
   static propTypes = {
     state:   PropTypes.object,
-    actions: PropTypes.object
+    actions: PropTypes.object,
+    match:   PropTypes.object
   }
 
   static contextTypes = {
@@ -26,7 +27,8 @@ class MarketingPage extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.initMarketingPage(this.props.params.short_name, () => this.forceUpdate()) // to redraw map to show correct position
+    const { actions, match: { params } } = this.props
+    actions.initMarketingPage(params.short_name, () => this.forceUpdate()) // to redraw map to show correct position
   }
 
   componentWillUpdate(nextProps) {
@@ -40,60 +42,86 @@ class MarketingPage extends Component {
     const { marketing } = state
 
     const properties = [
-      { icon: <div><i className="icon-size-restriction" title="size_restriction" /></div>,
+      {
+        icon: <div><i className="icon-size-restriction" title="size_restriction" /></div>,
         key:  'size_restriction'
       },
-      { icon: <div><i className="icon-non-stop-open" title="non_stop_open" /></div>,
+      {
+        icon: <div><i className="icon-non-stop-open" title="non_stop_open" /></div>,
         key:  'non_stop_open'
       },
-      { icon: <div><i className="icon-non-stop-reception" title="non_stop_reception" /></div>,
+      {
+        icon: <div><i className="icon-non-stop-reception" title="non_stop_reception" /></div>,
         key:  'non_stop_reception'
       },
-      { icon: <div>
-        <span className="icon-gate-opened-by-phone">
-          <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" /><span className="path6" /><span className="path7" />
-        </span>
-      </div>,
+      {
+        icon: <div>
+          <span className="icon-gate-opened-by-phone">
+            <span className="path1" />
+            <span className="path2" />
+            <span className="path3" />
+            <span className="path4" />
+            <span className="path5" />
+            <span className="path6" />
+            <span className="path7" />
+          </span>
+        </div>,
         key: 'gate_opened_by_phone'
       },
-      { icon: <div>
-        <span className="icon-gate-opened-by-receptionist">
-          <span className="path1" /><span className="path2" /><span className="path3" /><span className="path4" /><span className="path5" />
-        </span>
-      </div>,
+      {
+        icon: <div>
+          <span className="icon-gate-opened-by-receptionist">
+            <span className="path1" />
+            <span className="path2" />
+            <span className="path3" />
+            <span className="path4" />
+            <span className="path5" />
+          </span>
+              </div>,
         key: 'gate_opened_by_receptionist'
       },
-      { icon: <div><i className="icon-historical-center" title="historical_center" /></div>,
+      {
+        icon: <div><i className="icon-historical-center" title="historical_center" /></div>,
         key:  'historical_center'
       },
-      { icon: <div><i className="icon-city-center" title="city_center" /></div>,
+      {
+        icon: <div><i className="icon-city-center" title="city_center" /></div>,
         key:  'city_center'
       },
-      { icon: <div><i className="icon-fifteen-minutes-from-center" title="fifteen_minutes_from_center" /></div>,
+      {
+        icon: <div><i className="icon-fifteen-minutes-from-center" title="fifteen_minutes_from_center" /></div>,
         key:  'fifteen_minutes_from_center'
       },
-      { icon: <div><i className="icon-cameras" title="cameras" /></div>,
+      {
+        icon: <div><i className="icon-cameras" title="cameras" /></div>,
         key:  'cameras'
       },
-      { icon: <div><i className="icon-camera-at-gate" title="camera_at_gate" /></div>,
+      {
+        icon: <div><i className="icon-camera-at-gate" title="camera_at_gate" /></div>,
         key:  'camera_at_gate'
       },
-      { icon: <div><i className="icon-tram-nearby" title="tram_nearby" /></div>,
+      {
+        icon: <div><i className="icon-tram-nearby" title="tram_nearby" /></div>,
         key:  'tram_nearby'
       },
-      { icon: <div><i className="icon-wc" title="wc" /></div>,
+      {
+        icon: <div><i className="icon-wc" title="wc" /></div>,
         key:  'wc'
       },
-      { icon: <div><i className="icon-charging-station" title="charging_station" /></div>,
+      {
+        icon: <div><i className="icon-charging-station" title="charging_station" /></div>,
         key:  'charging_station'
       },
-      { icon: <div><i className="icon-guarded-parking" title="guarded_parking" /></div>,
+      {
+        icon: <div><i className="icon-guarded-parking" title="guarded_parking" /></div>,
         key:  'guarded_parking'
       },
-      { icon: <div><i className="icon-car-wash" title="car_wash" /></div>,
+      {
+        icon: <div><i className="icon-car-wash" title="car_wash" /></div>,
         key:  'car_wash'
       },
-      { icon: <div><i className="icon-airport-nearby" title="airport_nearby" /></div>,
+      {
+        icon: <div><i className="icon-airport-nearby" title="airport_nearby" /></div>,
         key:  'airport_nearby'
       }
     ]
@@ -122,16 +150,20 @@ class MarketingPage extends Component {
 
     const prepareTableBody = (propertie, index, arr) => { // make pairs into tr
       if (index % 2 === 0) {
-        return (<tr>
-          <td className={styles.active}>
-            {arr[index].icon}
-            {t([ 'newMarketing', arr[index].key ])}
-          </td>
-          {arr[index + 1] !== undefined && <td className={styles.active}>
-            {arr[index + 1].icon}
-            {t([ 'newMarketing', arr[index + 1].key ])}
-          </td>}
-        </tr>)
+        return (
+          <tr>
+            <td className={styles.active}>
+              {arr[index].icon}
+              {t([ 'newMarketing', arr[index].key ])}
+            </td>
+            {arr[index + 1] !== undefined && (
+            <td className={styles.active}>
+              {arr[index + 1].icon}
+              {t([ 'newMarketing', arr[index + 1].key ])}
+            </td>
+            )}
+          </tr>
+        )
       } else {
         return null
       }
@@ -146,7 +178,11 @@ class MarketingPage extends Component {
           <a href={`https://${process.env.CLIENT_DOMAIN || 'localhost:8080'}/`}>
             <Logo />
           </a>
-          <div className={styles.languages}> {AVAILABLE_LANGUAGES.filter(filterLanguages).map(prepareLanguages)} </div>
+          <div className={styles.languages}>
+            {' '}
+            {AVAILABLE_LANGUAGES.filter(filterLanguages).map(prepareLanguages)}
+            {' '}
+          </div>
         </div>
 
         {marketing.images && <Carousel width="100%" height="500px" images={marketing.images.map(prepareImages)} />}
@@ -159,7 +195,7 @@ class MarketingPage extends Component {
               <div className={styles.innerContent} dangerouslySetInnerHTML={{ __html: (marketingOfLanguage || marketing.descriptions[0]).text }} />
 
               <h3>{t([ 'marketing', 'properties' ])}</h3>
-              <div className={styles.innerContent} >
+              <div className={styles.innerContent}>
                 <table className={styles.propertiesTtable}>
                   <tbody>
                     {properties.filter(filterProperties).map(prepareTableBody)}
@@ -171,23 +207,42 @@ class MarketingPage extends Component {
             <div className={styles.contacts}>
               <h2>{t([ 'marketing', 'contacts' ])}</h2>
               <div className={styles.contact}>
-                <i className="fa fa-phone" aria-hidden="true" /><br />
+                <i className="fa fa-phone" aria-hidden="true" />
+                <br />
                 {marketing.phone}
               </div>
               <div className={styles.contact}>
-                <i className="fa fa-at" aria-hidden="true" /><br />
+                <i className="fa fa-at" aria-hidden="true" />
+                <br />
                 {marketing.email}
               </div>
               <div className={styles.contact}>
-                <i className="fa fa-map-marker" aria-hidden="true" /><br />
-                <strong>{marketing.garage.name}</strong><br />
-                {marketing.garage.address.line_1}<br />
-                {marketing.garage.address.line_2}{marketing.garage.address.line_2 && <br />}
-                {marketing.garage.address.city}<br />
-                {marketing.garage.address.postal_code}<br />
-                {marketing.garage.address.state}{marketing.garage.address.state && <br />}
-                {marketing.garage.address.country}<br />
-                <small>{t([ 'marketing', 'lat' ])}: {marketing.garage.address.lat}, {t([ 'marketing', 'lng' ])}: {marketing.garage.address.lng}<br /></small>
+                <i className="fa fa-map-marker" aria-hidden="true" />
+                <br />
+                <strong>{marketing.garage.name}</strong>
+                <br />
+                {marketing.garage.address.line_1}
+                <br />
+                {marketing.garage.address.line_2}
+                {marketing.garage.address.line_2 && <br />}
+                {marketing.garage.address.city}
+                <br />
+                {marketing.garage.address.postal_code}
+                <br />
+                {marketing.garage.address.state}
+                {marketing.garage.address.state && <br />}
+                {marketing.garage.address.country}
+                <br />
+                <small>
+                  {t([ 'marketing', 'lat' ])}
+                  {': '}
+                  {marketing.garage.address.lat}
+                  {', '}
+                  {t([ 'marketing', 'lng' ])}
+                  {': '}
+                  {marketing.garage.address.lng}
+                  <br />
+                </small>
               </div>
             </div>
           </div>

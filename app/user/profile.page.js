@@ -19,7 +19,10 @@ import Documents          from '../admin/garageSetup/legalDocuments/documents'
 import * as nav            from '../_shared/helpers/navigation'
 import { t }               from '../_shared/modules/localization/localization'
 import * as profileActions from '../_shared/actions/profile.actions'
-import { setCustomModal, toProfile }  from '../_shared/actions/pageBase.actions'
+import {
+  setCustomModal,
+  toProfile
+}  from '../_shared/actions/pageBase.actions'
 
 import styles from './profile.page.scss'
 import Input from '../_shared/components/input/Input'
