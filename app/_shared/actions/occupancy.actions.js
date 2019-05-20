@@ -135,7 +135,6 @@ export function setDuration(duration) {
 
 export function setFrom(from) {
   return async dispatch => {
-    console.log('setFrom')
     dispatch({
       type:  OCCUPANCY_SET_FROM,
       value: from
@@ -292,7 +291,6 @@ function updateUsersSettings() {
 // occupancy actions
 export function subtract() {
   return async (dispatch, getState) => {
-    console.log('subtract')
     const { duration, from } = getState().occupancy
     dispatch(setFrom(from.clone().subtract(1, duration)))
   }
@@ -300,7 +298,6 @@ export function subtract() {
 
 export function add() {
   return async (dispatch, getState) => {
-    console.log('add')
     const { duration, from } = getState().occupancy
     dispatch(setFrom(from.clone().add(1, duration)))
   }

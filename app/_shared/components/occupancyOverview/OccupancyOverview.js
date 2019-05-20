@@ -70,7 +70,6 @@ export default class OccupancyOverview extends PureComponent {
   componentWillUpdate(newProps) {
     const { duration } = this.props
     const { duration: newDuration } = newProps
-    console.log('newProps duration:', newProps.duration)
     if (newDuration !== duration) {
       this.changeTableMargin(newDuration)
     }
@@ -211,8 +210,6 @@ export default class OccupancyOverview extends PureComponent {
     const {
       duration, reservationsCount
     } = this.props
-
-    console.log(reservationsCount)
 
     return (
       <div

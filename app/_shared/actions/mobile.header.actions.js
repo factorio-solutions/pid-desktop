@@ -61,7 +61,6 @@ export function hideSplashscreen() {
 
 export function initGarages() {
   return async (dispatch, getState) => {
-    console.log('InitGarage')
     const currentUserData = await requestPromise(GET_CURRENT_USER)
 
     dispatch(setLanguage(currentUserData.current_user.language))
@@ -70,8 +69,6 @@ export function initGarages() {
     const garagesData = await requestPromise(GET_RESERVABLE_GARAGES, {
       user_id: getState().mobileHeader.personal ? currentUserData.current_user.id : -1
     })
-    console.log('Garage request OK.')
-
 
     const garages = garagesData.reservable_garages
     garages.unshift({ id: null, name: t([ 'mobileApp', 'page', 'allGarages' ]), order: 1 })

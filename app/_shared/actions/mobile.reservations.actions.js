@@ -110,7 +110,6 @@ function createGateAccessLog(reservationId, gateId, currentUser) {
       }
     )
       .then(data => {
-        console.log(data)
         resolve(data)
       })
       .catch(resolve)

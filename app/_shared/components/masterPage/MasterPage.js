@@ -130,7 +130,6 @@ class MasterPage extends Component {
 
     const createCallToActionButton = object => <CallToActionButton label={object.label} state={object.state} onClick={object.onClick} />
 
-    console.log(location)
     return (
       <div>
         <div className={styles.horizontalMenu}>

@@ -444,7 +444,6 @@ export function updateGarageFloors(id, backUrl) {
 
     const garage = { id: +id, garage: { url: backUrl, floors: floorsForRequest(state) } }
 
-    // console.log(garage)
     dispatch(setFetching(true))
     request(onSuccess, UPDATE_GARAGE, garage, 'garageMutations')
   }

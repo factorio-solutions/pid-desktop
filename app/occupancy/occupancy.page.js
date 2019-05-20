@@ -75,7 +75,6 @@ class OccupancyPage extends Component {
   }
 
   render() {
-    console.log('Render Occupancy')
     const {
       state, currentUser, actions, selectedPlace, places, interval
     } = this.props

@@ -57,13 +57,10 @@ class Page extends Component {
     } = this.props
     actions.setAllHeader(!hideHeader, !hideHamburger, !hideDropdown)
     actions.setShowBottomMenu(gray)
-    console.log('init garages call')
     !hideHeader && !hideDropdown && await actions.initGarages()
     actions.checkCurrentVersion()
 
     state.current_user && !state.current_user.secretary && actions.setPersonal(true)
-
-    console.log('hide splashscreen')
     // actions.hideSplashscreen()
   }
 

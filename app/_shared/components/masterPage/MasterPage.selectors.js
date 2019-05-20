@@ -133,7 +133,6 @@ export const getVerticalMenu = createSelector(
     pidTarif,
     pidAdmin
   ) => {
-    console.log('New vertical menu')
     if (pidAdmin) {
       return getPidAdminVerticalMenu()
     } else {

@@ -30,11 +30,6 @@ class LoginPage extends Component {
     location: PropTypes.object
   }
 
-  constructor(props) {
-    super(props)
-    console.log('loginPage')
-  }
-
   async componentDidMount() {
     const { actions, location } = this.props
     new Fingerprint2().get(actions.setDeviceFingerprint)
