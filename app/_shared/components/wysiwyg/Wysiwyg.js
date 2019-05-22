@@ -80,9 +80,11 @@ export default class Wysiwyg extends Component {
     return delta
   }
 
-  onEditorChange = (content, delta, source, editor) => {
+  onEditorChange = (html, delta, source) => {
     const { onChange } = this.props
-    onChange(editor.getContents())
+    if (source === 'user') {
+      onChange(html)
+    }
   }
 
   checkCharCount = e => {
@@ -153,14 +155,14 @@ export default class Wysiwyg extends Component {
 
   render() {
     const { CustomToolbar } = this
-    const { content } = this.props
+    const { content, max } = this.props
 
     return (
       <div>
         {AVAILABLE_LANGUAGES.map(this.renderLangButtons)}
         <CustomToolbar />
         <ReactQuill
-          value={new Delta(content)}
+          value={content || ''}
           style={{
             borderRadius: '5px',
             width:        '100%',
