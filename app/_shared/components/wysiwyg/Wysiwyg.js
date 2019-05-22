@@ -165,13 +165,16 @@ export default class Wysiwyg extends Component {
           value={content || ''}
           style={{
             borderRadius: '5px',
-            width:        '100%',
             height:       '200px',
             border:       '1px solid #5a5a5a',
             marginTop:    '5px',
             marginRight:  '5px',
             zIndex:       '3',
-            outline:      'none'
+            outline:      'none',
+            overflowX:    'hidden',
+            overflowY:    'auto',
+            lineHeight:   '0.4',
+            padding:      '12px 15px'
           }}
           onChange={this.onEditorChange}
           modules={this.modules}
