@@ -44,7 +44,10 @@ export default class Wysiwyg extends Component {
   componentDidMount() {
     document.getElementsByClassName('ql-hidden')[0].style.display = 'none'
     document.getElementsByClassName('ql-clipboard')[0].style.display = 'none'
-    document.getElementsByClassName('ql-editor')[0].style.outline = 'none'
+    const editor = document.getElementsByClassName('ql-editor')[0]
+    editor.style.outline = 'none'
+    editor.style.height = '100%'
+    document.getElementsByClassName('ql-container')[0].style.height = '90%'
   }
 
   componentDidUpdate() {
