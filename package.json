@@ -8,6 +8,7 @@
     "build": "webpack -p",
     "start": "node ./src/app.js",
     "dev": "OPEN_ANALYZER=false webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
+    "dev-win": "set OPEN_ANALYZER=false && webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
     "pro": "webpack-dev-server --progress --colors --open --watch",
     "export_languages": "node app/_shared/modules/localization/export.js /mnt/c/PID/repos/pid-desktop/app/_shared/locales/",
     "import_languages": "node app/_shared/modules/localization/import.js /mnt/c/PID/repos/pid-desktop/app/_shared/locales/",
@@ -40,7 +41,7 @@
     "why-did-you-update": "^0.2.0"
   },
   "dependencies": {
-    "babel-core": "^6.14.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-polyfill": "^6.23.0",
@@ -68,7 +69,7 @@
     "localforage": "^1.7.3",
     "moment": "^2.24.0",
     "node-libs-browser": "^2.0.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.12.0",
     "npm": "^4.6.1",
     "prop-types": "^15.6.2",
     "quill": "^1.3.6",
@@ -96,12 +97,12 @@
     "xlsx": "^0.12.13"
   },
   "devEngines": {
-    "node": "8.9.3",
-    "npm": "4.6.1"
+    "node": "10.15.3",
+    "npm": "6.9.0"
   },
   "engines": {
-    "node": "8.9.3",
-    "npm": "4.6.1"
+    "node": "10.15.3",
+    "npm": "6.9.0"
   },
   "heroku-run-build-script": true
 }
