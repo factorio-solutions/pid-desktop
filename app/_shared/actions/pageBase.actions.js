@@ -394,10 +394,15 @@ export function toAdminClients(subPage) {
 }
 
 export function toAdminGarageSetup(subPage) {
-  return dispatch => {
+  return (dispatch, getState) => {
     const secondarySelected = 'garageSetup'
     const hint = t([ 'pageBase', `${subPage || 'newGarage'}Hint` ])
     const hintVideo = 'https://www.youtube.com/'
+    const state = getState().pageBase
+
+    if (!state.isGarageAdmin && !state.isGarageManager) {
+      nav.to('/occupancy')
+    }
 
     dispatch(setAll('admin', dispatch(prepareAdminSecondaryMenu()), secondarySelected, hint, hintVideo, true))
   }
