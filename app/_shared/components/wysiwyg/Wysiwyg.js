@@ -1,42 +1,22 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactQuill from 'react-quill'
-import Delta from 'quill-delta'
-import detectIE from '../../helpers/internetExplorer'
 
 import { AVAILABLE_LANGUAGES } from '../../../routes.js'
 
 import styles from './Wysiwyg.scss'
 
-const IS_IE = detectIE()
-
-
-function ieSetActiveClasses(element) {
-  const removeFromArray = (array, toFind) => {
-    let index = array.indexOf(toFind)
-    while (index > -1) {
-      array.splice(index, 1)
-      index = array.indexOf(toFind)
+function myClipMatch(node, delta) {
+  const ops = []
+  delta.ops.forEach(op => {
+    if (op.insert && typeof op.insert === 'string') {
+      ops.push({
+        insert: op.insert
+      })
     }
-  }
-
-  if (element.className.baseVal.includes('ql-active')) {
-    element.className.baseVal += ` ${styles.active}`
-  } else if (element.className.baseVal.includes(styles.active)) {
-    const classes = element.className.baseVal.split(' ')
-    removeFromArray(classes, styles.active)
-    element.className.baseVal = classes.join(' ')
-  }
-}
-
-function standardSetActiveClasses(element) {
-  if (element.classList.contains('ql-active')) {
-    if (!element.classList.contains(styles.active)) {
-      element.classList.add(styles.active)
-    }
-  } else if (element.classList.contains(styles.active)) {
-    element.classList.remove(styles.active)
-  }
+  })
+  delta.ops = ops
+  return delta
 }
 
 export default class Wysiwyg extends Component {
@@ -55,7 +35,9 @@ export default class Wysiwyg extends Component {
   modules = {
     toolbar:   '#toolbar',
     clipboard: {
-      matchVisual: false
+      matchers: [
+        [ Node.ELEMENT_NODE, myClipMatch ]
+      ]
     }
   }
 
@@ -71,8 +53,28 @@ export default class Wysiwyg extends Component {
     // Filter out languages buttons.
     elements = elements.filter(element => !element.classList.contains(styles.floatRight))
 
-    // TODO: Support for IE11.
-    elements.forEach(standardSetActiveClasses)
+    elements.forEach(element => {
+      if (element.classList.contains('ql-active')) {
+        if (!element.classList.contains(styles.active)) {
+          element.classList.add(styles.active)
+        }
+      } else if (element.classList.contains(styles.active)) {
+        element.classList.remove(styles.active)
+      }
+    })
+  }
+
+  clipboardMatcher = (node, delta) => {
+    const ops = []
+    delta.ops.forEach(op => {
+      if (op.insert && typeof op.insert === 'string') {
+        ops.push({
+          insert: op.insert
+        })
+      }
+    })
+    delta.ops = ops
+    return delta
   }
 
   onEditorChange = (content, delta, source, editor) => {
