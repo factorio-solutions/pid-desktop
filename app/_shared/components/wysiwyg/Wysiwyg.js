@@ -173,6 +173,7 @@ export default class Wysiwyg extends Component {
           formats={this.formats}
           onKeyDown={this.checkCharCount}
         />
+        {`Max ${max} characters.`}
       </div>
     )
   }
