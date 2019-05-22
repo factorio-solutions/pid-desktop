@@ -13,8 +13,6 @@ const BabelPolyfill = require('babel-polyfill')
 * It also adds compilation time, which is a good trade for better loading times.
 * */
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-
 
 let env = process.env.RAILS_ENV
 if (!env || env === 'alpha') {
@@ -29,8 +27,7 @@ module.exports = {
 
   output: {
     path:       path.join(__dirname, 'public'),
-    // filename:   'bundle.js',
-    filename:   '[name].[hash].js',
+    filename:   'bundle.js',
     publicPath: '/public/'
   },
 
@@ -49,21 +46,15 @@ module.exports = {
         API_ENTRYPOINT: JSON.stringify(process.env.API_ENTRYPOINT || 'http://localhost:3000')
       }
     }),
-    // new ExtractTextPlugin('styles.css'),
-    new ExtractTextPlugin({
-      filename: '[name].[contenthash].css'
-    }),
+    new ExtractTextPlugin('styles.css'),
     new webpack.optimize.CommonsChunkPlugin({
       name:     'shared',
-      filename: '[name].[hash].js'
+      filename: 'shared.js'
     }),
     new webpack.SourceMapDevToolPlugin({
       module:                 true,
       columns:                false,
       moduleFilenameTemplate: info => { return `${info.resourcePath}?${info.loaders}` }
-    }),
-    new HtmlWebpackPlugin({
-      template: 'index.production.html'
     })
   ],
 

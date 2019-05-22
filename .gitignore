@@ -27,6 +27,9 @@ node_modules
 
 /app/views/garageInformation/*
 .vscode/
-public/main.*
-public/shared.*
-public/index.html
+public/styles.css.map
+public/styles.css
+public/shared.js.map
+public/shared.js
+public/bundle.js.map
+public/bundle.js
