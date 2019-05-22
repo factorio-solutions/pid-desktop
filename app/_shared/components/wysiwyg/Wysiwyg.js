@@ -1,13 +1,43 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import ReactQuill, { Rest } from 'react-quill'
+import ReactQuill from 'react-quill'
 import Delta from 'quill-delta'
-import 'react-quill/dist/quill.snow.css'
+import detectIE from '../../helpers/internetExplorer'
 
 import { AVAILABLE_LANGUAGES } from '../../../routes.js'
 
 import styles from './Wysiwyg.scss'
 
+const IS_IE = detectIE()
+
+
+function ieSetActiveClasses(element) {
+  const removeFromArray = (array, toFind) => {
+    let index = array.indexOf(toFind)
+    while (index > -1) {
+      array.splice(index, 1)
+      index = array.indexOf(toFind)
+    }
+  }
+
+  if (element.className.baseVal.includes('ql-active')) {
+    element.className.baseVal += ` ${styles.active}`
+  } else if (element.className.baseVal.includes(styles.active)) {
+    const classes = element.className.baseVal.split(' ')
+    removeFromArray(classes, styles.active)
+    element.className.baseVal = classes.join(' ')
+  }
+}
+
+function standardSetActiveClasses(element) {
+  if (element.classList.contains('ql-active')) {
+    if (!element.classList.contains(styles.active)) {
+      element.classList.add(styles.active)
+    }
+  } else if (element.classList.contains(styles.active)) {
+    element.classList.remove(styles.active)
+  }
+}
 
 export default class Wysiwyg extends Component {
   static propTypes = {
@@ -18,162 +48,129 @@ export default class Wysiwyg extends Component {
     max:         PropTypes.number
   }
 
-  modules = {
-    toolbar: {
-      container: '#my-quill-toolbar'
-    }
-  }
-
-  toolbarMenu = [
-    {
-      type:     'bold',
-      value:    'Bold',
-      label:    'Bold',
-      children: (
-        <button className={styles.button}>
-          <i className="fa fa-bold" aria-hidden="true" />
-        </button>
-      )
-    },
-    {
-      type:     'italic',
-      value:    'Italic',
-      label:    'Italic',
-      children: (
-        <button className={styles.button}>
-          <i className="fa fa-italic" aria-hidden="true" />
-        </button>
-      )
-    },
-    {
-      type:     'strike',
-      value:    'Strike',
-      label:    'Strike',
-      children: (
-        <button className={styles.button}>
-          <i className="fa fa-strikethrough" aria-hidden="true" />
-        </button>
-      )
-    },
-    {
-      type:     'underline',
-      value:    'Underline',
-      label:    'Underline',
-      children: (
-        <button className={styles.button}>
-          <i className="fa fa-underline" aria-hidden="true" />
-        </button>
-      )
-    },
-    {
-      type:     'bullet',
-      value:    'Bullet',
-      label:    'Bullet',
-      children: (
-        <button className={styles.button}>
-          <i className="fa fa-list-ul" aria-hidden="true" />
-        </button>
-      )
-    },
-    {
-      type:     'list',
-      value:    'List',
-      label:    'List',
-      children: (
-        <button className={styles.button}>
-          <i className="fa fa-list-ol" aria-hidden="true" />
-        </button>
-      )
-    }
-  ]
-
   formats = [
-    'bold', 'italic', 'strike', 'underline'
+    'bold', 'italic', 'strike', 'underline', 'bullet', 'list'
   ]
 
-
-  constructor(props) {
-    super(props)
-
-    this.toolbar = React.createRef()
-    this.editor = React.createRef()
+  modules = {
+    toolbar:   '#toolbar',
+    clipboard: {
+      matchVisual: false
+    }
   }
 
   componentDidMount() {
-    // document.getElementsByClassName('quill-toolbar')[0].style.display = 'inline'
+    document.getElementsByClassName('ql-hidden')[0].style.display = 'none'
+    document.getElementsByClassName('ql-clipboard')[0].style.display = 'none'
+    document.getElementsByClassName('ql-editor')[0].style.outline = 'none'
   }
 
-  onEditorChange = html => {
+  componentDidUpdate() {
+    let elements = Array.from(document.getElementsByClassName(styles.button))
+
+    // Filter out languages buttons.
+    elements = elements.filter(element => !element.classList.contains(styles.floatRight))
+
+    // TODO: Support for IE11.
+    elements.forEach(standardSetActiveClasses)
+  }
+
+  onEditorChange = (content, delta, source, editor) => {
     const { onChange } = this.props
-    if (this.editor.current) {
-      onChange(this.editor.current.editor.getContents())
-    } else {
-      onChange(new Delta(html))
+    onChange(editor.getContents())
+  }
+
+  checkCharCount = e => {
+    const { max } = this.props
+    if (e.which !== 8 && e.target.children[0].innerText.length > max) {
+      e.preventDefault()
     }
+  }
+
+  CustomToolbar = () => (
+    <div id="toolbar">
+      <button
+        key="ql-bold"
+        type="button"
+        className={`ql-bold ${styles.button} fa fa-bold`}
+        onClick={() => this.forceUpdate()}
+      />
+      <button
+        key="ql-italic"
+        type="button"
+        className={`ql-italic ${styles.button} fa fa-italic`}
+        onClick={() => this.forceUpdate()}
+      />
+      <button
+        key="ql-strike"
+        type="button"
+        className={`ql-strike ${styles.button} fa fa-strikethrough`}
+        onClick={() => this.forceUpdate()}
+      />
+      <button
+        key="ql-underline"
+        type="button"
+        className={`ql-underline ${styles.button} fa fa-underline`}
+        onClick={() => this.forceUpdate()}
+      />
+      <button
+        key="ql-bullet"
+        type="button"
+        className={`ql-list ${styles.button} fa fa-list-ul`}
+        onClick={() => this.forceUpdate()}
+        value="bullet"
+      />
+      <button
+        key="ql-list"
+        type="button"
+        className={`ql-list ${styles.button} fa fa-list-ol`}
+        onClick={() => this.forceUpdate()}
+        value="ordered"
+      />
+    </div>
+  )
+
+  renderLangButtons = lang => {
+    const { onLangClick, activeLang } = this.props
+    const languageClick = () => onLangClick(lang)
+    return (
+      <span key={lang}>
+        <button
+          type="button"
+          className={`${styles.button} ${styles.floatRight} ${lang === activeLang ? styles.active : undefined}`}
+          onClick={languageClick}
+        >
+          {lang.toUpperCase()}
+        </button>
+      </span>
+    )
   }
 
   render() {
-    const {
-      content, onChange, onLangClick, activeLang, max
-    } = this.props
-
-    const CustomToolbar = () => (
-      <div id="toolbar">
-        <button className={`ql-bold ${styles.button}`}>
-          <i className="fa fa-bold" aria-hidden="true" />
-        </button>
-        <button className={`ql-italic ${styles.button}`}>
-          <i className="fa fa-italic" aria-hidden="true" />
-        </button>
-        <button className={`ql-strike ${styles.button}`}>
-          <i className="fa fa-strikethrough" aria-hidden="true" />
-        </button>
-        <button className={`ql-underline ${styles.button}`}>
-          <i className="fa fa-underline" aria-hidden="true" />
-        </button>
-      </div>
-    )
-
-
-    const prepareLanguages = (lang, index) => {
-      const languageClick = () => onLangClick(lang)
-      return (
-        <span key={index}>
-          <button
-            type="button"
-            className={`${styles.button} ${styles.floatRight} ${lang === activeLang && styles.active}`}
-            onClick={languageClick}
-          >
-            {lang.toUpperCase()}
-          </button>
-        </span>
-      )
-    }
-
-    const charCount = e => {
-      if (e.which !== 8 && e.target.children[0].innerText.length > max) {
-        e.preventDefault()
-      }
-    }
+    const { CustomToolbar } = this
+    const { content } = this.props
 
     return (
       <div>
-        { AVAILABLE_LANGUAGES.map(prepareLanguages)}
-        {/* <CustomToolbar /> */}
-        <ReactQuill.Toolbar id="my-quill-toolbar" key="toolbar" ref={this.toolbar} items={this.toolbarMenu} />
+        {AVAILABLE_LANGUAGES.map(this.renderLangButtons)}
+        <CustomToolbar />
         <ReactQuill
           value={new Delta(content)}
+          style={{
+            borderRadius: '5px',
+            width:        '100%',
+            height:       '200px',
+            border:       '1px solid #5a5a5a',
+            marginTop:    '5px',
+            marginRight:  '5px',
+            zIndex:       '3',
+            outline:      'none'
+          }}
           onChange={this.onEditorChange}
           modules={this.modules}
           formats={this.formats}
-          ref={this.editor}
+          onKeyDown={this.checkCharCount}
         />
-        {/* <React.Fragment>
-             */}
-        {/* <div className={`quill-contents ${styles.editor}`} key="editor" ref={this.editor} onKeyDown={charCount} /> */}
-        {/* </React.Fragment> */}
-        {/* </ReactQuill> */}
-        {`Max ${max} characters.`}
       </div>
     )
   }

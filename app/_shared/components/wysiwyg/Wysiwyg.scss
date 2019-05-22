@@ -9,6 +9,10 @@
   &:hover {
     color: $blue;
   }
+
+  > svg {
+    display: none;
+  }
 }
 
 .floatRight {
@@ -17,12 +21,4 @@
 
 .active {
   color: $blue;
-}
-
-.editor {
-  @include border-radius(5px);
-
-  width:   100%;
-  height:  200px !important;
-  border:  1px solid $gray;
 }
