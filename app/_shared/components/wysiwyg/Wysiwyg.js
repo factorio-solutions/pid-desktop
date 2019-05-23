@@ -158,7 +158,7 @@ export default class Wysiwyg extends Component {
     const { content, max } = this.props
 
     return (
-      <div>
+      <div className={styles.container}>
         {AVAILABLE_LANGUAGES.map(this.renderLangButtons)}
         <CustomToolbar />
         <ReactQuill
@@ -180,6 +180,7 @@ export default class Wysiwyg extends Component {
           modules={this.modules}
           formats={this.formats}
           onKeyDown={this.checkCharCount}
+          onChangeSelection={() => this.forceUpdate()}
         />
         {`Max ${max} characters.`}
       </div>
