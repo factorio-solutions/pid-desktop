@@ -38,8 +38,13 @@ class MarketingPage extends Component {
   }
 
   render() {
-    const { state, actions } = this.props
+    const { state } = this.props
     const { marketing } = state
+
+    // download page first, make sure marketing is launched
+    if (!marketing || !marketing.marketing_launched) {
+      return null
+    }
 
     const properties = [
       {
@@ -55,29 +60,33 @@ class MarketingPage extends Component {
         key:  'non_stop_reception'
       },
       {
-        icon: <div>
-          <span className="icon-gate-opened-by-phone">
-            <span className="path1" />
-            <span className="path2" />
-            <span className="path3" />
-            <span className="path4" />
-            <span className="path5" />
-            <span className="path6" />
-            <span className="path7" />
-          </span>
-        </div>,
+        icon: (
+          <div>
+            <span className="icon-gate-opened-by-phone">
+              <span className="path1" />
+              <span className="path2" />
+              <span className="path3" />
+              <span className="path4" />
+              <span className="path5" />
+              <span className="path6" />
+              <span className="path7" />
+            </span>
+          </div>
+        ),
         key: 'gate_opened_by_phone'
       },
       {
-        icon: <div>
-          <span className="icon-gate-opened-by-receptionist">
-            <span className="path1" />
-            <span className="path2" />
-            <span className="path3" />
-            <span className="path4" />
-            <span className="path5" />
-          </span>
-              </div>,
+        icon: (
+          <div>
+            <span className="icon-gate-opened-by-receptionist">
+              <span className="path1" />
+              <span className="path2" />
+              <span className="path3" />
+              <span className="path4" />
+              <span className="path5" />
+            </span>
+          </div>
+        ),
         key: 'gate_opened_by_receptionist'
       },
       {
@@ -125,11 +134,6 @@ class MarketingPage extends Component {
         key:  'airport_nearby'
       }
     ]
-
-    // download page first, make sure marketing is launched
-    if (marketing == undefined || marketing.marketing_launched != true) {
-      return null
-    }
 
     const filterLanguages = lang => {
       return marketing.descriptions.map(desc => { return desc.language }).includes(lang)
