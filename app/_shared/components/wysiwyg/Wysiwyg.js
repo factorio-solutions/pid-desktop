@@ -5,17 +5,48 @@ import ReactQuill from 'react-quill'
 import { AVAILABLE_LANGUAGES } from '../../../routes.js'
 
 import styles from './Wysiwyg.scss'
+import './Wysiwyg.noHash.css'
+
+const formats = [
+  'bold', 'italic', 'strike', 'underline', 'bullet', 'list'
+]
 
 function myClipMatch(node, delta) {
-  const ops = []
-  delta.ops.forEach(op => {
+  delta.ops = delta.ops.map(op => {
     if (op.insert && typeof op.insert === 'string') {
-      ops.push({
+      const newOp = {
         insert: op.insert
-      })
+      }
+
+      if (op.attributes) {
+        const attributes = Object.keys(op.attributes)
+          .filter(attr => formats.includes(attr))
+          .reduce((acc, attr) => {
+            if (
+              attr === 'list'
+              && op.attributes[attr] !== 'bullet'
+              && op.attributes[attr] !== 'ordered'
+            ) {
+              return acc
+            }
+            return {
+              ...acc,
+              [attr]: op.attributes[attr]
+            }
+          }, {})
+
+        if (Object.keys(attributes).length > 0) {
+          newOp.attributes = attributes
+        }
+      }
+
+      return newOp
     }
+
+    return undefined
   })
-  delta.ops = ops
+    .filter(attr => attr)
+
   return delta
 }
 
@@ -41,45 +72,6 @@ export default class Wysiwyg extends Component {
     }
   }
 
-  componentDidMount() {
-    document.getElementsByClassName('ql-hidden')[0].style.display = 'none'
-    document.getElementsByClassName('ql-clipboard')[0].style.display = 'none'
-    const editor = document.getElementsByClassName('ql-editor')[0]
-    editor.style.outline = 'none'
-    editor.style.height = '100%'
-    document.getElementsByClassName('ql-container')[0].style.height = '90%'
-  }
-
-  componentDidUpdate() {
-    let elements = Array.from(document.getElementsByClassName(styles.button))
-
-    // Filter out languages buttons.
-    elements = elements.filter(element => !element.classList.contains(styles.floatRight))
-
-    elements.forEach(element => {
-      if (element.classList.contains('ql-active')) {
-        if (!element.classList.contains(styles.active)) {
-          element.classList.add(styles.active)
-        }
-      } else if (element.classList.contains(styles.active)) {
-        element.classList.remove(styles.active)
-      }
-    })
-  }
-
-  clipboardMatcher = (node, delta) => {
-    const ops = []
-    delta.ops.forEach(op => {
-      if (op.insert && typeof op.insert === 'string') {
-        ops.push({
-          insert: op.insert
-        })
-      }
-    })
-    delta.ops = ops
-    return delta
-  }
-
   onEditorChange = (html, delta, source) => {
     const { onChange } = this.props
     if (source === 'user') {
@@ -100,38 +92,32 @@ export default class Wysiwyg extends Component {
         key="ql-bold"
         type="button"
         className={`ql-bold ${styles.button} fa fa-bold`}
-        onClick={() => this.forceUpdate()}
       />
       <button
         key="ql-italic"
         type="button"
         className={`ql-italic ${styles.button} fa fa-italic`}
-        onClick={() => this.forceUpdate()}
       />
       <button
         key="ql-strike"
         type="button"
         className={`ql-strike ${styles.button} fa fa-strikethrough`}
-        onClick={() => this.forceUpdate()}
       />
       <button
         key="ql-underline"
         type="button"
         className={`ql-underline ${styles.button} fa fa-underline`}
-        onClick={() => this.forceUpdate()}
       />
       <button
         key="ql-bullet"
         type="button"
         className={`ql-list ${styles.button} fa fa-list-ul`}
-        onClick={() => this.forceUpdate()}
         value="bullet"
       />
       <button
         key="ql-list"
         type="button"
         className={`ql-list ${styles.button} fa fa-list-ol`}
-        onClick={() => this.forceUpdate()}
         value="ordered"
       />
     </div>
@@ -178,9 +164,8 @@ export default class Wysiwyg extends Component {
           }}
           onChange={this.onEditorChange}
           modules={this.modules}
-          formats={this.formats}
+          formats={formats}
           onKeyDown={this.checkCharCount}
-          onChangeSelection={() => this.forceUpdate()}
         />
         {`Max ${max} characters.`}
       </div>

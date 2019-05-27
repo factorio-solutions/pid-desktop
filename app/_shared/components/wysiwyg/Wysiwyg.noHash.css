@@ -1,0 +1,20 @@
+.ql-hidden {
+  display: none;
+}
+
+.ql-clipboard {
+  display: none;
+}
+
+.ql-editor {
+  outline: none;
+  height: 100%;
+}
+
+.ql-container {
+  height: 90%;
+}
+
+.ql-active {
+  color: #1e9dd9;
+}
