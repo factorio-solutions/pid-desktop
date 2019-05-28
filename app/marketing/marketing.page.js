@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import Map, { Marker } from 'google-maps-react'
+import { withRouter } from 'react-router-dom'
 
 import Logo     from '../_shared/components/logo/Logo'
 import Carousel from '../_shared/components/carousel/Carousel'
@@ -10,20 +11,17 @@ import Carousel from '../_shared/components/carousel/Carousel'
 import * as marketingActions   from '../_shared/actions/marketing.actions'
 import { AVAILABLE_LANGUAGES } from '../routes'
 import { t }                   from '../_shared/modules/localization/localization'
-import { entryPoint }          from '../index'
+
+import properties from './propertiesDefinition'
 
 import styles from './marketing.page.scss'
-
 
 class MarketingPage extends Component {
   static propTypes = {
     state:   PropTypes.object,
     actions: PropTypes.object,
-    match:   PropTypes.object
-  }
-
-  static contextTypes = {
-    router: PropTypes.object
+    match:   PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
 
   componentDidMount() {
@@ -31,10 +29,22 @@ class MarketingPage extends Component {
     actions.initMarketingPage(params.short_name, () => this.forceUpdate()) // to redraw map to show correct position
   }
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.state.marketing && !nextProps.state.marketing.descriptions.find(desc => desc.language === window.location.hash.substring(2, 4))) {
-      this.context.router.push(`/${nextProps.state.marketing.descriptions[0].language}${window.location.hash.substring(4)}`)
+  componentDidUpdate() {
+    const { match: { params }, state } = this.props
+
+    if (
+      state.marketing
+      && !state.marketing.descriptions.some(desc => desc.language === params.lang)
+    ) {
+      this.changeLanguage(state.marketing.descriptions[0].language)
     }
+  }
+
+  changeLanguage = lang => {
+    const { match: { url }, history } = this.props
+    const pathSplit = url.substring(1).split('/')
+    pathSplit[0] = lang
+    history.push(`/${pathSplit.join('/')}`)
   }
 
   render() {
@@ -46,113 +56,36 @@ class MarketingPage extends Component {
       return null
     }
 
-    const properties = [
-      {
-        icon: <div><i className="icon-size-restriction" title="size_restriction" /></div>,
-        key:  'size_restriction'
-      },
-      {
-        icon: <div><i className="icon-non-stop-open" title="non_stop_open" /></div>,
-        key:  'non_stop_open'
-      },
-      {
-        icon: <div><i className="icon-non-stop-reception" title="non_stop_reception" /></div>,
-        key:  'non_stop_reception'
-      },
-      {
-        icon: (
-          <div>
-            <span className="icon-gate-opened-by-phone">
-              <span className="path1" />
-              <span className="path2" />
-              <span className="path3" />
-              <span className="path4" />
-              <span className="path5" />
-              <span className="path6" />
-              <span className="path7" />
-            </span>
-          </div>
-        ),
-        key: 'gate_opened_by_phone'
-      },
-      {
-        icon: (
-          <div>
-            <span className="icon-gate-opened-by-receptionist">
-              <span className="path1" />
-              <span className="path2" />
-              <span className="path3" />
-              <span className="path4" />
-              <span className="path5" />
-            </span>
-          </div>
-        ),
-        key: 'gate_opened_by_receptionist'
-      },
-      {
-        icon: <div><i className="icon-historical-center" title="historical_center" /></div>,
-        key:  'historical_center'
-      },
-      {
-        icon: <div><i className="icon-city-center" title="city_center" /></div>,
-        key:  'city_center'
-      },
-      {
-        icon: <div><i className="icon-fifteen-minutes-from-center" title="fifteen_minutes_from_center" /></div>,
-        key:  'fifteen_minutes_from_center'
-      },
-      {
-        icon: <div><i className="icon-cameras" title="cameras" /></div>,
-        key:  'cameras'
-      },
-      {
-        icon: <div><i className="icon-camera-at-gate" title="camera_at_gate" /></div>,
-        key:  'camera_at_gate'
-      },
-      {
-        icon: <div><i className="icon-tram-nearby" title="tram_nearby" /></div>,
-        key:  'tram_nearby'
-      },
-      {
-        icon: <div><i className="icon-wc" title="wc" /></div>,
-        key:  'wc'
-      },
-      {
-        icon: <div><i className="icon-charging-station" title="charging_station" /></div>,
-        key:  'charging_station'
-      },
-      {
-        icon: <div><i className="icon-guarded-parking" title="guarded_parking" /></div>,
-        key:  'guarded_parking'
-      },
-      {
-        icon: <div><i className="icon-car-wash" title="car_wash" /></div>,
-        key:  'car_wash'
-      },
-      {
-        icon: <div><i className="icon-airport-nearby" title="airport_nearby" /></div>,
-        key:  'airport_nearby'
-      }
-    ]
-
     const filterLanguages = lang => {
       return marketing.descriptions.map(desc => { return desc.language }).includes(lang)
     }
 
-    const filterProperties = propertie => {
-      return marketing[propertie.key]
+    const filterProperties = property => {
+      return marketing[property.key]
     }
 
-    const prepareLanguages = (lang, index) => {
-      const langClick = () => { this.context.router.push(`/${lang}${window.location.hash.substring(4)}`) }
-      return <span key={index} className={window.location.hash.substring(2, 4) == lang && styles.active} onClick={langClick}>{lang.toUpperCase()}</span>
+    const prepareLanguages = lang => {
+      const { match: { params } } = this.props
+      const langClick = () => {
+        this.changeLanguage(lang)
+      }
+
+      return (
+        <span
+          key={lang}
+          className={params.lang == lang ? styles.active : undefined}
+          onClick={langClick}
+        >
+          {lang.toUpperCase()}
+        </span>
+      )
     }
 
     const prepareImages = image => {
       return image.img
     }
 
-    const prepareTableBody = (propertie, index, arr) => { // make pairs into tr
+    const prepareTableBody = (property, index, arr) => { // make pairs into tr
       if (index % 2 === 0) {
         return (
           <tr>
@@ -263,7 +196,12 @@ class MarketingPage extends Component {
   }
 }
 
-export default connect(
-  state => ({ state: state.marketing }),
-  dispatch => ({ actions: bindActionCreators(marketingActions, dispatch) })
-)(MarketingPage)
+const enhancers = compose(
+  withRouter,
+  connect(
+    state => ({ state: state.marketing }),
+    dispatch => ({ actions: bindActionCreators(marketingActions, dispatch) })
+  )
+)
+
+export default enhancers(MarketingPage)
