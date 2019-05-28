@@ -155,11 +155,9 @@ export default class Wysiwyg extends Component {
             border:       '1px solid #5a5a5a',
             marginTop:    '5px',
             marginRight:  '5px',
-            zIndex:       '3',
             outline:      'none',
             overflowX:    'hidden',
             overflowY:    'auto',
-            lineHeight:   '0.4',
             padding:      '12px 15px'
           }}
           onChange={this.onEditorChange}
