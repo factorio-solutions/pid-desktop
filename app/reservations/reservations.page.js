@@ -32,7 +32,7 @@ class ReservationsPage extends Component {
   static propTypes = {
     state:               PropTypes.object,
     actions:             PropTypes.object,
-    params:              PropTypes.object,
+    match:               PropTypes.object,
     interruption:        PropTypes.object,
     interruptionActions: PropTypes.object,
     newReservationState: PropTypes.object,
@@ -176,6 +176,7 @@ class ReservationsPage extends Component {
     const {
       actions, currentUser, interruptionActions, state: { past }
     } = this.props
+
     return data.reservations.map(reservation => ({
       ...this.reservationTransformation(reservation),
       history:        reservation.history.map(this.reservationTransformation),
@@ -201,7 +202,7 @@ class ReservationsPage extends Component {
 
   render() {
     const {
-      state, actions, interruption, interruptionActions
+      state, actions, interruption, interruptionActions, match: { params }
     } = this.props
     const filters = [
       <TabButton
@@ -244,7 +245,7 @@ class ReservationsPage extends Component {
             transformData={this.transformData}
             schema={reservationsTableScheme}
             variables={{ past: state.past }}
-            findId={parseInt(this.props.match.params.id, 10)}
+            findId={parseInt(params.id, 10)}
             storeState={actions.setState}
             state={state.tableState}
           />

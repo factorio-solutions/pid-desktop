@@ -3,10 +3,9 @@
 .labeledRoundButton {
   display: inline-block;
   min-width: 50px;
-  max-width: 60px;
+  max-width: 70px;
   vertical-align: top;
   text-align: center;
-  padding: 5px;
 
   >div {
     padding: 2px 0px;
@@ -22,13 +21,16 @@
 }
 
 .bigText {
-  width: $big * $size-normal;
+  min-width: $big * $size-normal;
+  max-width: $big * $size-normal;
 }
 
 .smallText {
-  width: $small * $size-normal;
+  min-width: $small * $size-normal;
+  max-width: $big * $size-normal;
 }
 
 .normalText {
-  width: $size-normal;
+  min-width: $size-normal;
+  max-width: $big * $size-normal;
 }

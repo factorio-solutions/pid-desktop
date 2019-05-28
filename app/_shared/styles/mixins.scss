@@ -87,7 +87,9 @@
   right:      50%;
   transform: translateX(50%);
   text-align: center;
-
+  > :first-child {
+    padding: 0px 5px;
+  }
   @media (min-width: $collapseWidth) {
     bottom:  0;
     padding: $addButtonMargin 0;
