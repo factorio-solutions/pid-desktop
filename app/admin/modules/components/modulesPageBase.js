@@ -95,35 +95,82 @@ class ModulesPageBase extends Component {
     const tokenModal = (
       <div>
         <div>
-          <div className={styles.warning}>{t([ 'modules', 'warning' ])}</div>
-          <div className={styles.warningDesribtion}>{t([ 'modules', 'warningDesribtion' ])}</div>
+          <div
+            className={styles.warning}
+            key="warning-div"
+          >
+            {t([ 'modules', 'warning' ])}
+          </div>
+          <div
+            className={styles.warningDesribtion}
+            key="warning-desc-div"
+          >
+            {t([ 'modules', 'warningDesribtion' ])}
+          </div>
         </div>
 
         <div className={styles.copyField}>
           <h5>{t([ 'modules', 'apiEndpoint' ])}</h5>
-          <input className={styles.tokenInput} ref={el => { this.endpoint = el }} value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/queries'} />
-          <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyEndpoint} />
+          <input
+            key="apiEndpoint-input"
+            className={styles.tokenInput}
+            ref={el => { this.endpoint = el }}
+            value={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/queries'}
+            readOnly
+          />
+          <i
+            key="apiEndpoint-icon"
+            className={`fa fa-files-o ${styles.copy}`}
+            aria-hidden="true"
+            onClick={this.copyEndpoint}
+          />
         </div>
 
         <div className={styles.copyField}>
           <h5>{t([ 'modules', 'token' ])}</h5>
-          <input className={styles.tokenInput} ref={el => { this.token = el }} value={state.token} />
-          <i className={`fa fa-files-o ${styles.copy}`} aria-hidden="true" onClick={this.copyToken} />
+          <input
+            key="apiToken-input"
+            className={styles.tokenInput}
+            ref={el => { this.token = el }}
+            value={state.token}
+            readOnly
+          />
+          <i
+            key="apiToken-icon"
+            className={`fa fa-files-o ${styles.copy}`}
+            aria-hidden="true"
+            onClick={this.copyToken}
+          />
         </div>
 
         <div className={styles.toApiExplorer}>
-          <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart1' ])}</div>
-          <div className={styles.headerDesribtion}>
+          <div key="toApiExp-desc" className={styles.warningDesribtion}>
+            {t([ 'modules', 'requestDesribtionPart1' ])}
+          </div>
+          <div key="toApiExp-desc2" className={styles.headerDesribtion}>
             {t([ 'modules', 'requestDesribtionPart2' ])}
             {' '}
             {state.token}
           </div>
-          <div className={styles.warningDesribtion}>{t([ 'modules', 'requestDesribtionPart3' ])}</div>
-          <a href={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/explorer'} target="_blank">{t([ 'modules', 'toApiExplorer' ])}</a>
+          <div key="toApiExp-warnDesc" className={styles.warningDesribtion}>
+            {t([ 'modules', 'requestDesribtionPart3' ])}
+          </div>
+          <a
+            key="toApiExp-ref"
+            href={(process.env.API_ENTRYPOINT || 'http://localhost:3000') + '/api/explorer'}
+            target="_blank"
+          >
+            {t([ 'modules', 'toApiExplorer' ])}
+          </a>
         </div>
 
         <div className={styles.dismissButton}>
-          <RoundButton content={<span className="fa fa-check" aria-hidden="true" />} onClick={actions.setToken} type="confirm" />
+          <RoundButton
+            key="dismissButton"
+            content={<span className="fa fa-check" aria-hidden="true" />}
+            onClick={actions.setToken}
+            type="confirm"
+          />
         </div>
       </div>
     )
@@ -137,7 +184,7 @@ class ModulesPageBase extends Component {
         </div>
       </div>
     )
-    console.log('ModulesPageBase rerender')
+
     return (
       <React.Fragment>
         <Modal content={tokenModal} show={state.token} />
@@ -171,7 +218,7 @@ class ModulesPageBase extends Component {
               state={(userGarage === undefined) && 'disabled'}
               onClick={this.toGoInternalSettings}
             />
-)}
+          )}
         />
         )}
 
@@ -265,8 +312,15 @@ class ModulesPageBase extends Component {
               || userGarage.garage.active_pid_tarif_id < 2
             )
           )
-          || (window.location.hash.includes('mrParkitIntegration') && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2))
-          || (window.location.hash.includes('marketingPage') && !(userGarage === undefined || !userGarage.admin)))
+          || (
+            window.location.hash.includes('mrParkitIntegration')
+            && !(userGarage === undefined || userGarage.garage.active_pid_tarif_id < 2)
+          )
+          || (
+            window.location.hash.includes('marketingPage')
+            && !(userGarage === undefined || !userGarage.admin)
+          )
+        )
           && children
         }
       </React.Fragment>

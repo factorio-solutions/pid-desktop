@@ -10,7 +10,7 @@ import styles from './UploadButton.scss'
 
 export default class UploadButton extends PureComponent {
   static propTypes = {
-    onUpload:  PropTypes.function.isRequired,
+    onUpload:  PropTypes.func.isRequired,
     query:     PropTypes.string.isRequired,
     variables: PropTypes.object,
     label:     PropTypes.string.isRequired,
@@ -38,13 +38,15 @@ export default class UploadButton extends PureComponent {
   }
 
   render() {
-    const { label, type, state, accept } = this.props
+    const {
+      label, type, state, accept
+    } = this.props
 
     const buttonContent = (
       <i
         className={`fa
           ${this.state.uploading ? 'fa-cloud-upload' : 'fa-file-text-o'}
-          ${this.state.uploading && styles.pulsing}
+          ${this.state.uploading ? styles.pulsing : undefined}
         `}
         aria-hidden="true"
       />
@@ -53,6 +55,7 @@ export default class UploadButton extends PureComponent {
     return (
       <span>
         <input
+          key="uploadbtn-input"
           type="file"
           ref={input => { this.fileInput = input }}
           onChange={this.onFileSelected}
@@ -61,6 +64,7 @@ export default class UploadButton extends PureComponent {
         />
 
         <LabeledRoundButton
+          key="uploadbtn-button"
           label={label}
           type={type}
           state={state}
