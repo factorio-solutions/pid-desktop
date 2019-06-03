@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 import { windowLength } from './OccupancyOverview'
+import PlaceCells from './PlaceCells'
 
 import styles from './OccupancyOverview.scss'
 import Tooltip from '../tooltip/Tooltip'
@@ -25,8 +26,7 @@ export default class Place extends Component {
     showDetails:             PropTypes.bool,
     onReservationClick:      PropTypes.func,
     renderTextInReservation: PropTypes.bool,
-    isIe:                    PropTypes.bool,
-    cellSelector:            PropTypes.func
+    isIe:                    PropTypes.bool
   }
 
   constructor(props) {
@@ -197,8 +197,7 @@ export default class Place extends Component {
       onReservationClick,
       showDetails,
       currentUser,
-      renderTextInReservation,
-      cellSelector
+      renderTextInReservation
     } = this.props
     const {
       rendered, mouseDown, left, width, showTime, time, mouseX, mouseY
@@ -209,22 +208,6 @@ export default class Place extends Component {
     const cellWidth = rendered && place.reservations.length > 0
       ? this.row.current.childNodes[1].getBoundingClientRect().width
       : 0
-
-    const cellsState = {
-      cellCount,
-      cellWidth,
-      place,
-      now,
-      from,
-      isIe,
-      duration,
-      renderTextInReservation,
-      rendered,
-      onReservationClick,
-      showDetails,
-      currentUser,
-      row: this.row.current
-    }
 
     const style = {
       left:  left + 'px',
@@ -262,7 +245,21 @@ export default class Place extends Component {
             style={{ zIndex: 10 }}
           />
         </td>
-        {cellSelector(cellsState)}
+        <PlaceCells
+          cellCount={cellCount}
+          cellWidth={cellWidth}
+          place={place}
+          now={now}
+          from={from}
+          isIe={isIe}
+          duration={duration}
+          renderTextInReservation={renderTextInReservation}
+          rendered={rendered}
+          onReservationClick={onReservationClick}
+          showDetails={showDetails}
+          currentUser={currentUser}
+          row={this.row.current}
+        />
       </tr>
     )
   }

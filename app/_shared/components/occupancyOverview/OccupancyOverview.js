@@ -9,8 +9,6 @@ import Place              from './Place'
 import detectIE from '../../helpers/internetExplorer'
 import { t } from '../../modules/localization/localization'
 
-import { getCellSelector } from './occupancyOverview.selector'
-
 import styles from './OccupancyOverview.scss'
 
 const DAY = 1
@@ -60,6 +58,8 @@ export default class OccupancyOverview extends PureComponent {
     this.onWindowResize = this.onWindowResize.bind(this)
     this.changeTableMargin = this.changeTableMargin.bind(this)
     this.tableMargin = null
+
+    this.renderDates = React.memo(this.renderDates)
   }
 
   componentDidMount() {
@@ -103,36 +103,35 @@ export default class OccupancyOverview extends PureComponent {
     }
   }
 
-  renderDates = () => {
-    const { from, duration } = this.props
+  renderDates = ({ from, duration }) => {
     const dates = new Array(duration === 'day' ? DAY : duration === 'week' ? WEEK_DAYS : MONTH_DAYS)
-
-    for (let index = 0; index < dates.length; index += 1) {
-      const date = from.clone().add(index, 'days')
-      dates[index] = duration === 'month'
-        ? (
-          <td
-            key={`d-${index}`}
-            className={`${styles.center} ${styles.bold} ${styles.monthDate}`}
-            colSpan={2}
-          >
-            {date.format('DD.')}
-            <br />
-            {date.format('MM.')}
-          </td>
-        )
-        : (
-          <td
-            key={`d-${index}`}
-            className={`${styles.center} ${styles.bold} ${styles.weekDate}`}
-            colSpan={cellsPerDay(duration)}
-          >
-            {date.format('ddd')}
-            {duration !== 'day' && <br />}
-            {date.format('DD.MM.')}
-          </td>
-        )
-    }
+      .fill('')
+      .map((_, index) => {
+        const date = from.clone().add(index, 'days')
+        return duration === 'month'
+          ? (
+            <td
+              key={`d-${index}`}
+              className={`${styles.center} ${styles.bold} ${styles.monthDate}`}
+              colSpan={2}
+            >
+              {date.format('DD.')}
+              <br />
+              {date.format('MM.')}
+            </td>
+          )
+          : (
+            <td
+              key={`d-${index}`}
+              className={`${styles.center} ${styles.bold} ${styles.weekDate}`}
+              colSpan={cellsPerDay(duration)}
+            >
+              {date.format('ddd')}
+              {duration !== 'day' && <br />}
+              {date.format('DD.MM.')}
+            </td>
+          )
+      })
 
     return (
       <tr className={duration !== 'day' && styles.bottomBorder}>
@@ -142,7 +141,7 @@ export default class OccupancyOverview extends PureComponent {
     )
   }
 
-  renderBody = renderTextInReservation => {
+  renderBody = ({ renderTextInReservation }) => {
     const {
       places, loading, resetClientClick, showDetails, duration, from, onReservationClick, currentUser, setNewReservation
     } = this.props
@@ -201,15 +200,17 @@ export default class OccupancyOverview extends PureComponent {
         setNewReservation={setNewReservation}
         renderTextInReservation={renderTextInReservation}
         isIe={isIe}
-        cellSelector={getCellSelector()}
       />
     ))
   }
 
   render() {
     const {
-      duration, reservationsCount
+      from, duration, reservationsCount
     } = this.props
+
+    const Dates = this.renderDates
+    const Body = this.renderBody
 
     return (
       <div
@@ -217,7 +218,7 @@ export default class OccupancyOverview extends PureComponent {
       >
         <table className={`${styles.table} ${styles.fixedHeader}`}>
           <thead ref={thead => { this.thead = thead }}>
-            {this.renderDates()}
+            <Dates from={from} duration={duration} />
             {duration === 'day' && (
               <tr className={`${styles.center} ${styles.bottomBorder}`}>
                 <td />
@@ -246,7 +247,9 @@ export default class OccupancyOverview extends PureComponent {
             ref={ref => this.table = ref}
           >
             <tbody ref={tbody => { this.tbody = tbody }}>
-              {this.renderBody(reservationsCount >= MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND)}
+              <Body
+                renderTextInReservation={reservationsCount >= MAX_COUNT_OF_RESERVATIONS_TO_CALCULATE_SPACE_AROUND}
+              />
             </tbody>
           </table>
         </div>
