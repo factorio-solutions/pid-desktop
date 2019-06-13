@@ -164,7 +164,11 @@ class GarageLayout extends Component {
 
     elements = Array.from(mainElement.getElementsByClassName('groupCircle'))
     elements.forEach(element => {
-      element.remove()
+      if (IS_IE) {
+        element.parentNode && element.parentNode.removeChild(element)
+      } else {
+        element.remove()
+      }
     })
   }
 
@@ -255,8 +259,12 @@ class GarageLayout extends Component {
             circle.setAttribute('cx', center.x)
             circle.setAttribute('cy', center.y + y)
             circle.setAttribute('style', 'fill: #5a5a5a;')
-            circle.classList.add('groupCircle')
-            circle.classList.add(styles.text)
+            if (IS_IE) {
+              circle.className.baseVal += ` groupCircle ${styles.text}`
+            } else {
+              circle.classList.add('groupCircle')
+              circle.classList.add(styles.text)
+            }
             placeRect.parentNode.appendChild(circle)
             const count = document.createElementNS('http://www.w3.org/2000/svg', 'text') // text with count
             count.setAttribute('x', center.x)
@@ -280,8 +288,12 @@ class GarageLayout extends Component {
               const y = i >= 2 ? GROUP_OFFSET_Y * 2 : GROUP_OFFSET_Y
               const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
               circle.setAttribute('style', `fill: ${assignColors[group]};`)
-              circle.classList.add('groupCircle')
-              circle.classList.add('text')
+              if (IS_IE) {
+                circle.className.baseVal += ' groupCircle text'
+              } else {
+                circle.classList.add('groupCircle')
+                circle.classList.add('text')
+              }
               circle.setAttribute('r', 8)
               circle.setAttribute('cx', center.x + x)
               circle.setAttribute('cy', center.y + y)
