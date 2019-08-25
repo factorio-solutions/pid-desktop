@@ -60,7 +60,7 @@ class GarageSelector extends Component {
     return (
       <div>
         <div className={styles.img}>
-          <img src={content[selectedIndex].img || './public/garage_icon.jpg'} />
+          <img src={content[selectedIndex].img || './public/garage_icon.png'} />
         </div>
         <Dropdown
           placeholder={t([ 'occupancy', 'selectGarage' ])}

@@ -50,7 +50,7 @@ export const emptyGate = {
   }
 }
 
-export const defaultImage = './public/garage_icon.jpg'
+export const defaultImage = './public/garage_icon.png'
 export const gsmModulePrice = 4600
 export const layoutPrice = 540
 export const bookingPagePrice = 2100
@@ -94,7 +94,6 @@ const defaultState = {
 
 export default function garageSetup(reducerState = defaultState, action) {
   switch (action.type) {
-
     case GARAGE_SETUP_SET_ID:
       return {
         ...reducerState,
