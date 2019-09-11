@@ -102,11 +102,11 @@ Fastest way to create new reservation is the blue button at the top!
 
 Need more help? Get in touch with us via Intercom - our communicator in the bottom right corner. We will be glad to help! :-)","Vítejte v Parkit.direct!
 
-Tento modrý sloupec s nápovědou můžete schovat křížkem v jeho levém rohu. Znovu aktivovat ho pak můžete kliknutím na modrou informační ikonu, která se objeví v pravém horním rohu.
+Tento modrý sloupec s nápovědou můžete schovat křížkem v jeho levém rohu. Znovu aktivovat ho pak můžete kliknutím na modrou informační ikonu, kterou naleznete v pravém horním rohu.
 
-Pro pohyb v Parkit.direct využívejte menu na levé straně.
+Pro pohyb v Parkit.direct používejte menu na levé straně.
 
-Rezervaci parkování nejrychleji vytvoříte kliknutím na tlačítko na horním okraji.
+Rezervaci parkování nejrychleji vytvoříte kliknutím na tlačítko nahoře uprostřed.
 
 Potřebujete daší pomoc? Napište nám na Intercom - náš komunikátor v pravém dolním rohu. Rádi Vám pomůžeme! :-)","Tutaj znajduje się przegląd wszystkich ważnych informacji o Twoim koncie. Na planie garażu widzisz, czy pojedyncze miejsca są wynajęte długoterminowo lub zarezerwowane. W Aktualnościach pokazują się wiadomości ze świata Parkit.direct. W Ostatnich aktywnościach zobaczysz niedawne zmiany w Twoim garaży oraz szczegóły na temat tego, kto i kiedy ich dokonał. W Stanie aktualnym możesz sprawdzić statystyki na temat wolnych i zajętych miejsc. W Przeglądzie finansowym pokazywane są aktualne statystyki finansowe. ","Herzlich willkommen bei Parkit.direct!
 
@@ -131,13 +131,11 @@ In the upper left corner, you can also filter the documents by group.
 
 In the top right corner, you can choose between displaying current documents or entire history.","Zde naleznete všechny vystavené účetní doklady.
 
-V levém horním rohu si můžete vybrat, zda chcete zobrazit faktury, zjednodušené daňové doklady, nebo opravné daňové doklady.
+V levém horním rohu si můžete vybrat, zda chcete zobrazit faktury, zjednodušené daňové doklady nebo zrušené faktury.
 
-Faktury se váží k dohodám o dlouhodobém pronájmu parkovacích míst, zjednodušené daňové doklady k parkovnému, které si hradí parkující do částy 10 000 Kč a opravné daňové doklady se váží ke stornovaným rezervacím, které si hradil parkující.
+Faktury se váží k dohodám o dlouhodobém pronájmu parkovacích míst, zjednodušené daňové doklady k parkovnému, které si hradí parkující do částy 10 000 Kč a zrušené faktury se váží ke stornovaným rezervacím, které si hradil parkující.
 
-V levém horním rohu si  také můžete doklady vyfiltrovat podle skupiny.
-
-V pravém horním rohu si můžete vybrat mezi zobrazením aktuálních dokladů nebo celé historie.",Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.,"""Hier finden Sie eine Liste aller ausgestellten Rechnungen. 
+V pravém horním rohu si můžete doklady vyfiltrovat podle skupiny a vybrat mezi zobrazením aktuálních dokladů nebo celé historie.",Tutaj znajduje się lista wystawionych faktur. W lewym górnym rogu możesz filtrować faktury według klienta. W prawym górnym rogu możesz wybrać podgląd aktualnych faktur lub całej historii.,"""Hier finden Sie eine Liste aller ausgestellten Rechnungen. 
 
 Links oben können Sie auswählen, ob Sie Rechnungen, vereinfachte Steuerbelege oder Gutschriften / Korrektursteuerbelege einsehen möchten.
 
@@ -1068,7 +1066,7 @@ notifications.reservationDeclined,"Your reservation on ""%(arg1)s""s place was d
 notifications.verifyYourEmail,"Welcome to Parkit.direct! You have been sent a verification email to ""%(arg1)s"". You will not be able to log in again until your email is verified.","Vítejte v Parkit.direct! Na adresu ""%(arg1)s""s Vám byl zaslán ověřovací email. Následná příhlášení selžou dokud nebude Váš email ověřen.","Witaj w Parkit.direct! Na adres ""%(arg1)s""s wysłaliśmy Ci kontrolny e-mail. Potwierdź go, aby móc się zalogować.","Wilkommen bei Parkit.direct! Wir haben eine Bestätigungs-E-Mail an ""%(arg1)s""s geschickt.
 Nachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen."
 notifications.newReservationForYou,%(arg1)s (%(arg2)s) just created a new reservation for you.,%(arg1)s (%(arg2)s) Vám právě vytvořil novou rezervaci.,%(arg1)s (%(arg2)s) utworzył Ci właśnie nową rezerwację.,%(arg1)s (%(arg2)s) hat für Sie eine Buchung erstellt.
-notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaší rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"%(arg1)s hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Buchungen""."
+notifications.reservationUpdatedNotification,%(arg1)s just updated your reservation. For more information go to reservations tab.,%(arg1)s upravil Vaši rezervaci. Více informací naleznete v záložce rezervace.,%(arg1)s zmienił Twoją rezerwację. Więcej informacji znajdziesz w zakładce rezerwacji.,"%(arg1)s hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab ""Buchungen""."
 notifications.reservationRemovedDueToUnpaid,Your reservation has been canceled because it hasn't been paid in last 15 minutes,"Vaše rezervace byla zrušena, protože nebyla zaplacena do 15. minut","Twoja rezerwacja została anulowana, ponieważ po upływie 15 minut nie została opłacona.","Da Ihre Buchung innerhalb 15 Minuten nicht bezahlt wurde, haben wir sie storniert."
 notifications.reservationContactPersonNotification,"Your reservation has not been approved yet, if it is urgent you can contact one of the contact persons: %(arg1)s","Vaše rezervace zatím nebyla potvrzena, pokud je to urgentní, můžete kontaktovat některou z pověřených osob: %(arg1)s",,"Ihre Buchung wurde nocht nicht bestätigt. Falls dringend, können Sie eine der dazu befugten Personen kontaktieren: %(arg1)s"
 notifications.clientLegalDocuments,You can find new privacy documents in profile section because Group: '%(arg1)s' is in garage: '%(arg2)s'.,"Ve svém profilu naleznete nové dokumenty týkající se pravidel ochrany osobních údajů, protože skupina '%(arg1)s' působí v garáži '%(arg2)s'.",,"In Ihrem Profil finden Sie neue Dokumente betreffend des Datenschutzes, weil Ihr Klient '%(arg1)s' in der Garage '%(arg2)s' fungiert."
@@ -1634,7 +1632,7 @@ auth0Emails.pleasantExperience,Are you looking for a good parking experience? Or
 auth0Emails.helpForHelp,A blue help window on the top or right side of each screen explains the content. You can turn this help on or off at any time in your account settings.,"Na každé stránce najdete modrý pruh s nápovědou, ten vysvětluje obsah stránky. Nápovědu můžete kdykoliv vypnout/zapnout v nastavení vašeho účtu.","Na każdej stronie na górze lub po prawej stronie znajdziesz niebieskie okienko pomocy, które wyjaśnia zawartość strony. W ustawieniach konta możesz w każdym momencie możesz włączyć/wyłączyć pomoc. ",Auf jeder Seite befinden sich rechts Hinweise in blauen Feldern. Hinweise können Sie in Ihrem Profil immer wieder ein- oder ausschlaten.
 auth0Emails.garageSetup,"Would you like to set up your garage? We will gladly help you. Just let us know and we will give you a call! Together we can go through all the settings and make sure you benefit from using Parkit.direct as much as possible, while saving your valuable time.","Chtěli byste založit garáž? S tím Vám rádi pomůžeme, dejte nám vědět a my Vám zavoláme! Spolu projdeme všechna nastavení a ujistíme se, že Vám Parkit.direct zajistí maximální prospěch a úsporu času.","Chcesz założyć garaż? Pomożemy Ci w tym! Daj nam znać, a zadzwonimy do Ciebie. Omówimy razem wszystki ustawienia i dostosujemy je do Twoich potrzeb, żeby zagwarantować Ci jak największy zysk i oszczędność czasu.","Möchten Sie eine Garage Erstellen, und alle Funktionen von Parkit.direct ausprobieren? Da helfen wir Ihnen gerne weiter. Schreiben Sie uns einfach eine Nachricht. Gemeinsam gehen wir das System durch, sodass alles richtig eingestellt ist, und Sie auch wirklich alle Möglichkeiten nutzen können."
 auth0Emails.getInTouch, Need to get in touch with us?,Chcete nás kontaktovat?,Chcesz skontaktować się z nami?,Möchten Sie uns kontaktieren?
-auth0Emails.website,"We are always here for you. You can find contact details on our <a href=""https://www.Parkit.direct.com/en/get-in-touch-with-sales"">website</a> or you can use the chat button on our website and in the app.","Jsme tu pro vás pořád. Kontakt najdete na <a href=""https://www.Parkit.direct.com/en/get-in-touch-with-sales"">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.","Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=""https://www.Parkit.direct.com/en/get-in-touch-with-sales"">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.","Wir sind immer für Sie da! Den Kontakt finden Sie auf <a href=""https://www.Parkit.direct.com/en/get-in-touch-with-sales""> unserer Webseite</a>, oder schreiben Sie uns einfach im Chat unten rechts an."
+auth0Emails.website,"We are always here for you. You can find contact details on our <a href=""https://parkit.direct/"">website</a> or you can use the chat button on our website and in the app.","Jsme tu pro vás pořád. Kontakt najdete na <a href=""https://parkit.direct/"">naší stránce</a>, nebo použijte tlačítko podpory v pravém dolním rohu stránky.","Jesteśmy tu dla Ciebie. Zawsze. Kontakt znajdziesz na  <a href=""https://www.Parkit.direct.com/en/get-in-touch-with-sales"">naszej stronie</a>. Możesz też kliknąć na okienko chatu w prawym dolnym rogu strony.","Wir sind immer für Sie da! Den Kontakt finden Sie auf <a href=""https://parkit.direct/""> unserer Webseite</a>, oder schreiben Sie uns einfach im Chat unten rechts an."
 auth0Emails.passwordResetSubject,Password reset,Reset hesla,,Passwort zurücksetzen
 auth0Emails.passwordResetSubmited,You have submitted a password change request!,Požádali jste o změnu hesla!,Poprosiłeś/-aś o zmianę hasła!,Sie haben eine Kennwortänderung verlangt!
 auth0Emails.pwdResetDescr,"If it wasn't you, please disregard this email and make sure you can still log in to your account. If it was you, then ","Pokud jste o změnu hesla nepožádali, můžete tuto zprávu ignorovat. Pokud jste to byli vy, pak ","Jeśli to nie Ty chciałeś/-aś zmienić hasło, zignoruj tę wiadomość. Jeśli byłeś/-aś to Ty,","Falls Sie eine Kennwortänderung nicht verlangt haben, können Sie diese Nachricht ignorieren. Falls Sie eine verlangt haben, dann"
@@ -1673,6 +1671,9 @@ railsEmails.invitation_mail.invitation,You have been invited to Parkit.direct!,P
 railsEmails.invitation_mail.invited_you,have just invited you to start using Parkit.direct.,Vás pozval k používání Parkit.direct.,zaprosił/a Cię do korzystania z Parkit.direct.,hat Sie zum benutzen der Parkit.direct App eingeladen.
 railsEmails.invitation_mail.says,says:,vzkazuje:,pisze:,Ihre/ Seine Nachricht lautet:
 railsEmails.invitation_mail.admin,group admin,správce skupiny,administrator,Gruppenverwalter/-in
+railsEmails.invitation_mail.client_admin,group admin,správce skupiny,administrator/ka,Gruppenverwalter/-in
+railsEmails.invitation_mail.garage_admin,asset admin,Správce objektu,,Objektverwalter/-in
+railsEmails.invitation_mail.car_admin,vehicle admin,správce vozidla,admin,Fahrzeugverwalter/-in
 railsEmails.invitation_mail.secretary,reservations manager,manažer rezervací,sekretarz/sekretarka,Buchungsmanager/-in
 railsEmails.invitation_mail.host,subject to authorization,podléhající schvalování,regularny gość,Ohne Genehmigungsbefugnis
 railsEmails.invitation_mail.internal,authorized,oprávněný rezervovat,wewnętrzny,Mit Genehmigungsbefugnis
@@ -1698,7 +1699,7 @@ railsEmails.new_reservation_mail.garage_address,Garage address,Adresa garáže,A
 railsEmails.new_reservation_mail.reservation_start,Reservation start,Začátek rezervace,Początek rezerwacji:,Gebucht ab:
 railsEmails.new_reservation_mail.reservation_end,Reservation end,Konec rezervace,Koniec rezerwacji:,Gebucht bis:
 railsEmails.new_reservation_mail.spot,Spot number,Číslo místa,Numer miejsca:,Parkplatznummer:
-railsEmails.new_reservation_mail.licence_plate,Licence plate,SPZ,Nr rejestracyjny,Kennzeichen
+railsEmails.new_reservation_mail.licence_plate,License plate,SPZ,Nr rejestracyjny,Kennzeichen
 railsEmails.new_reservation_mail.reservation_information,Reservation information,Informace o rezervaci,Informacje o rezerwacji,Information über die Buchung
 railsEmails.new_reservation_mail.gps,GPS:,GPS:,GPS:,GPS:
 railsEmails.new_reservation_mail.user_name,User name,Jméno uživatele,,Nutzername
@@ -1708,7 +1709,9 @@ railsEmails.new_reservation_mail.payed_by,Payed by,Hrazeno,,Bezahlt
 railsEmails.resend_invitation_mail.hello,"Hello,","Dobrý den,","Dzień dobry,","Guten Tag,"
 railsEmails.resend_invitation_mail.invitation_reminder,This is an invitation reminder to Parkit.direct!,Toto je připomínkový email od Parkit.direct!,przypominamy Ci o zaproszeniu,dies ist eine Erinnerungs-Nachricht von Parkit.direct!
 railsEmails.resend_invitation_mail.remind_you,would like to remind you about your invitation to Parkit.direct.,by Vám rád připoměl pozvánku do Parkit.direct.,do Parkit.direct.,würde Sie gerne in die Parkit.direct App wiederholt einladen.
-railsEmails.resend_invitation_mail.admin,group admin,správce skupiny,administrator/ka,Gruppenverwalter/-in
+railsEmails.resend_invitation_mail.client_admin,group admin,správce skupiny,administrator/ka,Gruppenverwalter/-in
+railsEmails.resend_invitation_mail.garage_admin,asset admin,Správce objektu,,Objektverwalter/-in
+railsEmails.resend_invitation_mail.car_admin,vehicle admin,správce vozidla,admin,Fahrzeugverwalter/-in
 railsEmails.resend_invitation_mail.secretary,reservations manager,manažer rezervací,sekretarz/sekretarka,Buchungsmanager/-in
 railsEmails.resend_invitation_mail.host,subject to authorization,podléhající schvalování,regularny gość,Ohne Genehmigungsbefugnis
 railsEmails.resend_invitation_mail.internal,authorized,oprávněný rezervovat,wewnętrzny,Mit Genehmigungsbefugnis
@@ -1735,7 +1738,7 @@ railsEmails.car_on_my_spot_notify_driver.you_have_been_reported,We were reported
 railsEmails.car_on_my_spot_notify_driver.infor_about_car,Information about reported car:,Informace o nahlášeném autě:,,Information über den gemeldeten Wagen:
 railsEmails.car_on_my_spot_notify_driver.suspected_reservation,We suspect that this reservation might be a problem:,"Máme podezření, že problém nastal u této rezervace:",,"Wir haben einen Verdacht, dass das Problem bei dieser Buchung entstanden ist."
 railsEmails.car_on_my_spot_notify_driver.we_urge_you,We urge you to remedy the situation.,Prověřte prosím situaci a případně zjednejte okamžitou nápravu.,,Wir bitten Sie um die regelung der Situation.
-railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported,User %{user} just reported that car with licence plate %{licence_plate} is standing on his spot.,"Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",,"Der User %{user} meldete gerade, dass der Wagen mit dem Kennzeichen %{licence_plate} auf seinem Platz steht."
+railsEmails.car_on_my_spot_notify_secretary_and_security.user_has_been_reported,User %{user} just reported that car with license plate %{licence_plate} is standing on his spot.,"Uživatel %{user} právě nareportoval, že auto s poznávací značkou %{licence_plate} mu stojí na místě",,"Der User %{user} meldete gerade, dass der Wagen mit dem Kennzeichen %{licence_plate} auf seinem Platz steht."
 railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_car,Further information about suspected car:,Další informace o autě:,,Weitere Informationen über den Wagen.
 railsEmails.car_on_my_spot_notify_secretary_and_security.infor_about_reservation,Further information about suspected reservation:,Další informace o rezervaci:,,Weitere Informationen über die Buchung
 railsEmails.updated_rights.right_updated,Your right has been updated,Vaše práva byla aktualizována,,Ihre Rechte wurden aktualisiert.
@@ -1745,7 +1748,9 @@ railsEmails.updated_rights.disabled,You were denied role %{role},Byla Vám odebr
 railsEmails.updated_rights.client_user,group,skupiny,,Gruppe
 railsEmails.updated_rights.user_car,car,auta,,Autos
 railsEmails.updated_rights.user_garage,garage,garáže,,Garage
-railsEmails.updated_rights.admin,asset admin,Správce objektu,,Objektverwalter/-in
+railsEmails.updated_rights.user_garage_admin,asset admin,správce objektu,,Objektverwalter/-in
+railsEmails.updated_rights.client_user_admin,group admin,správce skupiny,administrator/ka,Gruppenverwalter/-in
+railsEmails.updated_rights.user_car_admin,vehicle admin,správce vozidla,admin,Fahrzeugverwalter/-in
 railsEmails.updated_rights.receptionist,receptionist,recepční,,Rezeptionist
 railsEmails.updated_rights.security,security,ostraha,,Wache
 railsEmails.updated_rights.secretary,reservations manager,manažer rezervací,,Buchungsmanager/-in
