@@ -83,11 +83,9 @@ export default class SearchField extends Component {
           key="input"
         />
 
-        {show
-        && (
+        {show && (
           <div>
-            {showFirst
-            && (
+            {showFirst && (
               <UsersList
                 className={styles.separated}
                 users={[ list.shift() ]}
@@ -96,11 +94,9 @@ export default class SearchField extends Component {
                 selectedIndex={selected}
                 key="UserListFist"
               />
-            )
-            }
+            )}
             <div className={`${styles.drop}`} ref={this.ul} key="UserListDiv">
-              {showList
-              && (
+              {showList && (
                 <UsersList
                   className={styles.scrollable}
                   users={list}
@@ -109,8 +105,7 @@ export default class SearchField extends Component {
                   selectedIndex={selected}
                   key="UserList"
                 />
-              )
-              }
+              )}
               <ButtonsTable
                 className={styles.buttons}
                 buttons={buttons}
@@ -119,8 +114,7 @@ export default class SearchField extends Component {
               />
             </div>
           </div>
-        )
-        }
+        )}
       </div>
     )
   }

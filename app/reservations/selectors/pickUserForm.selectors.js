@@ -1,13 +1,14 @@
-import React              from 'react'
 import { createSelector } from 'reselect'
-import { t }              from '../../_shared/modules/localization/localization'
 
 import {
   getUser,
   getName,
   getReservation,
   getAvailableUsers,
-  getCurrentUser
+  getCurrentUser,
+  getEmail,
+  getPhone,
+  getHighlight
 } from './newReservationDefaultSelectors'
 
 const getSortedAvailableUsers = createSelector(
@@ -74,4 +75,27 @@ export const getUserToSelect = createSelector(
       return usersDropdown.findIndex(u => user && u.id === user.id)
     }
   }
+)
+
+export const getComponentState = createSelector(
+  [
+    getUser,
+    getAvailableUsers,
+    getReservation,
+    getName,
+    getEmail,
+    getPhone,
+    getHighlight,
+    getCurrentUser
+  ],
+  (user, availableUsers, reservation, name, email, phone, highlight, currentUser) => ({
+    user,
+    availableUsers,
+    reservation,
+    highlight,
+    name,
+    currentUser,
+    email,
+    phone
+  })
 )

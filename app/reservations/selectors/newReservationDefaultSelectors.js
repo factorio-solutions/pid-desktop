@@ -2,6 +2,7 @@ export const getUser = state => state.newReservation.user
 export const getEmail = state => state.newReservation.email
 export const getPhone = state => state.newReservation.phone
 export const getName = state => state.newReservation.name
+export const getHighlight = state => state.newReservation.highlight
 export const getClientId = state => state.newReservation.client_id
 export const getFrom = state => state.newReservation.from
 export const getTo = state => state.newReservation.to

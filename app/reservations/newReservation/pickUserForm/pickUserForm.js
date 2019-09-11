@@ -21,7 +21,8 @@ import {
 import {
   getUsers,
   getButtons,
-  getUserToSelect
+  getUserToSelect,
+  getComponentState
 } from '../../selectors/pickUserForm.selectors'
 
 import { t } from '../../../_shared/modules/localization/localization'
@@ -77,13 +78,23 @@ class PickUserForm extends Component {
 
     const ongoing = state.reservation && state.reservation.ongoing
     const onetime = state.reservation && state.reservation.onetime
-    const isSecretary = state.reservation && state.reservation.client && state.reservation.client.client_user.secretary
+    const isSecretary = (
+      state.reservation
+      && state.reservation.client
+      && state.reservation.client.client_user.secretary
+    )
 
     return (
       <SectionWithHeader header={t([ 'newReservation', 'userSection' ])}>
-        { !(state.user && (state.user.id < 0 || onetime))
-        && ((state.user && state.currentUser && state.user.id !== state.currentUser.id) || state.availableUsers.length > 1)
+        {!(state.user && (state.user.id < 0 || onetime))
         && (
+          (
+            state.user
+            && state.currentUser
+            && state.user.id !== state.currentUser.id
+          )
+          || state.availableUsers.length > 1
+        ) && (
           <div className={styles.searchField}>
             {state.user && this.renderResetButton}
             <SearchField
@@ -102,68 +113,39 @@ class PickUserForm extends Component {
               key="SearchField"
             />
           </div>
-        )
-        }
+        )}
 
-        {state.user && state.user.id >= 0 && !state.user.onetime
-        && (
+        {state.user && state.user.id >= 0 && !state.user.onetime && (
           <ExistingUserForm
             editable={!ongoing || isSecretary}
             key="ExistingUserForm"
           />
-        )
-        }
+        )}
 
-        {((state.user && state.user.id < 0) || (state.user && state.user.onetime))
-        && (
+        {((state.user && state.user.id < 0) || (state.user && state.user.onetime)) && (
           <NewUserForm
             editable={!ongoing || isSecretary}
             onetime={onetime}
             resetButton={this.renderResetButton}
             key="NewUserForm"
           />
-        )
-        }
-        {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid
-        && (
+        )}
+        {(state.user && state.user.id === -2) && !state.email.valid && !state.phone.valid && (
           <div className={styles.fillInContact} key="infoMessage">
             {t([ 'newReservation', 'fillInContact' ])}
           </div>
-        )
-        }
+        )}
       </SectionWithHeader>
     )
   }
 }
 
-const mapStateToProps = state => {
-  const {
-    user,
-    availableUsers,
-    reservation,
-    highlight,
-    name,
-    email,
-    phone
-  } = state.newReservation
-  const { current_user: currentUser } = state.pageBase
-
-  return {
-    state: {
-      user,
-      availableUsers,
-      reservation,
-      highlight,
-      name,
-      currentUser,
-      email,
-      phone
-    },
-    usersDropdown:   getUsers(state),
-    buttonsDropdown: getButtons(state),
-    userToSelect:    getUserToSelect(state)
-  }
-}
+const mapStateToProps = state => ({
+  state:           getComponentState(state),
+  usersDropdown:   getUsers(state),
+  buttonsDropdown: getButtons(state),
+  userToSelect:    getUserToSelect(state)
+})
 
 const mapDispatchToProps = dispatch => (
   {

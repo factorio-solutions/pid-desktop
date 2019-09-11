@@ -50,16 +50,20 @@ class NewUserForm extends Component {
   renderLanguageButton = lang => {
     const { state, actions, onetime } = this.props
     const selectLanguage = state.user.language ? state.user.language : state.language
-    return (<CallToActionButton
-      state={(selectLanguage === lang && 'selected') || ((onetime || state.user.language) && 'disabled')}
-      label={lang.toUpperCase()}
-      onClick={() => actions.setLanguage(lang)}
-      type="reservationLangWith"
-    />)
+    return (
+      <CallToActionButton
+        state={(selectLanguage === lang && 'selected') || ((onetime || state.user.language) && 'disabled')}
+        label={lang.toUpperCase()}
+        onClick={() => actions.setLanguage(lang)}
+        type="reservationLangWith"
+      />
+    )
   }
 
   render() {
-    const { state, actions, editable, onetime, resetButton } = this.props
+    const {
+      state, actions, editable, onetime, resetButton
+    } = this.props
 
     let userType
 
@@ -143,17 +147,25 @@ class NewUserForm extends Component {
 
 export default connect(
   state => {
-    const { user, name, phone, email, highlight, language, carLicencePlate, paidByHost } = state.newReservation
-    return { state: { user, name, phone, email, highlight, language, carLicencePlate, paidByHost } }
+    const {
+      user, name, phone, email, highlight, language, carLicencePlate, paidByHost
+    } = state.newReservation
+    return {
+      state: {
+        user, name, phone, email, highlight, language, carLicencePlate, paidByHost
+      }
+    }
   },
-  dispatch => ({ actions: bindActionCreators(
-    { setHostName,
-      setHostPhone,
-      setHostEmail,
-      setLanguage,
-      setCarLicencePlate
-    },
-    dispatch
-  )
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        setHostName,
+        setHostPhone,
+        setHostEmail,
+        setLanguage,
+        setCarLicencePlate
+      },
+      dispatch
+    )
   })
 )(NewUserForm)

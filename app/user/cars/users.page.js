@@ -51,7 +51,11 @@ class CarUsersPage extends Component {
 
     const schema = [
       {
-        key:         'full_name', title:       t([ 'clientUsers', 'name' ]), comparator:  'string', representer: o => <strong>{o}</strong>, sort:        'asc'
+        key:         'full_name',
+        title:       t([ 'clientUsers', 'name' ]),
+        comparator:  'string',
+        representer: o => <strong>{o}</strong>,
+        sort:        'asc'
       },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' },
@@ -71,7 +75,11 @@ class CarUsersPage extends Component {
 
     const schemaPending = [
       {
-        key:         'full_name', title:       t([ 'clientUsers', 'name' ]), comparator:  'string', representer: o => <strong>{o}</strong>, sort:        'asc'
+        key:         'full_name',
+        title:       t([ 'clientUsers', 'name' ]),
+        comparator:  'string',
+        representer: o => <strong>{o}</strong>,
+        sort:        'asc'
       },
       { key: 'email', title: t([ 'clientUsers', 'email' ]), comparator: 'string' },
       { key: 'phone', title: t([ 'clientUsers', 'phone' ]), comparator: 'number' }
@@ -106,9 +114,9 @@ class CarUsersPage extends Component {
 
       return (
         <div className={styles.spoiler}>
-          <span className={car_user.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'carUsers', 'admin' ])}</span>
+          <span className={carUser.admin ? styles.boldText : styles.inactiveText} onClick={adminClick}>{t([ 'carUsers', 'admin' ])}</span>
           {'|'}
-          <span className={car_user.driver ? styles.boldText : styles.inactiveText} onClick={driverClick}>{t([ 'clientUsers', 'driver' ])}</span>
+          <span className={carUser.driver ? styles.boldText : styles.inactiveText} onClick={driverClick}>{t([ 'clientUsers', 'driver' ])}</span>
           <div className={styles.float}>
             <LabeledRoundButton
               label={t([ 'clientUsers', 'removeUser' ])}
@@ -116,7 +124,7 @@ class CarUsersPage extends Component {
               onClick={destroyClick}
               type="remove"
               question={t([ 'clientUsers', 'removeClientUser' ])}
-              state={((pageBase.current_user.id !== car_user.user.id && !state.car.admin) || car_user.admin) && 'disabled'}
+              state={((pageBase.current_user.id !== carUser.user.id && !state.car.admin) || carUser.admin) && 'disabled'}
             />
           </div>
         </div>
