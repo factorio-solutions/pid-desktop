@@ -11,7 +11,7 @@
     "dev-win": "set OPEN_ANALYZER=false && webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
     "pro": "webpack-dev-server --progress --colors --open --watch",
     "export_languages": "node app/_shared/modules/localization/export.js /mnt/c/PID/repos/pid-desktop/app/_shared/locales/",
-    "import_languages": "node app/_shared/modules/localization/import.js /mnt/c/PID/repos/pid-desktop/app/_shared/locales/",
+    "import_languages": "node app/_shared/modules/localization/import.js .\\app\\_shared\\locales\\",
     "heroku-postbuild": "npm run build"
   },
   "author": {
