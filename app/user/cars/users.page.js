@@ -24,9 +24,12 @@ class CarUsersPage extends Component {
   static propTypes = {
     state:    PropTypes.object,
     pageBase: PropTypes.object,
-    params:   PropTypes.object,
     actions:  PropTypes.object,
-    match:    PropTypes.object
+    match:    PropTypes.objectOf({
+      params: PropTypes.objectOf({
+        id: PropTypes.string.isRequired
+      })
+    })
   }
 
   componentDidMount() {
@@ -76,12 +79,13 @@ class CarUsersPage extends Component {
 
 
     const renderPendingSpoiler = user => {
-      const destroyClick = () => actions.destroyCarUser(this.props.params.id, user.user.id)
+      const { match: { params: { id: carId } } } = this.props
+      const destroyClick = () => actions.destroyCarUser(carId, user.user.id)
       return {
         ...user.user,
         spoiler: (
           <div className={styles.float}>
-            <InvitationReminderButton userId={user.user.id} carId={parseInt(this.props.params.id, 10)} />
+            <InvitationReminderButton userId={user.user.id} carId={parseInt(carId, 10)} />
             <LabeledRoundButton
               label={t([ 'clientUsers', 'removeUser' ])}
               content={<span className="fa fa-times" aria-hidden="true" />}
@@ -94,10 +98,11 @@ class CarUsersPage extends Component {
       }
     }
 
-    const renderSpoiler = car_user => {
-      const destroyClick = () => actions.destroyCarUser(this.props.params.id, car_user.user.id)
-      const adminClick = () => actions.setCarUserRelation(this.props.params.id, car_user.user.id, { admin: !car_user.admin })
-      const driverClick = () => actions.setCarUserRelation(this.props.params.id, car_user.user.id, { driver: !car_user.driver })
+    const renderSpoiler = carUser => {
+      const { match: { params: { id: carrId } } } = this.props
+      const destroyClick = () => actions.destroyCarUser(carrId, carUser.user.id)
+      const adminClick = () => actions.setCarUserRelation(carrId, carUser.user.id, { admin: !carUser.admin })
+      const driverClick = () => actions.setCarUserRelation(carrId, carUser.user.id, { driver: !carUser.driver })
 
       return (
         <div className={styles.spoiler}>
