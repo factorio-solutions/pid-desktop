@@ -146,7 +146,6 @@ export default history => {
   })
   return (state, action) => {
     if (action.type === 'RESET') {
-      window.Intercom('shutdown')
       state = undefined
     } // will erase store
     return reducer(state, action)

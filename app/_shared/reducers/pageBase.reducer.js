@@ -117,15 +117,6 @@ export default function pageBase(state = defaultState, action) {
       }
 
     case PAGE_BASE_SET_CURRENT_USER:
-      if (action.value) {
-        window.Intercom('boot', {
-          app_id:     'gjfjce4s', // Intercom identifier
-          name:       action.value.full_name, // Full name
-          email:      action.value.email, // Email address
-          created_at: +new Date(), // Signup date as a Unix timestamp
-          user_hash:  action.value.intercom_user_hash // HMAC using SHA-256
-        })
-      }
       return {
         ...state,
         current_user: action.value
