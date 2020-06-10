@@ -1,13 +1,14 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "ElectronReact",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development. NPM global packages: webpack-dev-server, webpack, cordova",
   "main": "main.js",
   "scripts": {
     "build": "webpack -p",
     "start": "node ./src/app.js",
     "dev": "OPEN_ANALYZER=false webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
+    "dev-win": "set OPEN_ANALYZER=false && webpack-dev-server --config webpack.config.dev.js --progress --colors --open --watch",
     "pro": "webpack-dev-server --progress --colors --open --watch",
     "export_languages": "node app/_shared/modules/localization/export.js /mnt/c/PID/repos/pid-desktop/app/_shared/locales/",
     "import_languages": "node app/_shared/modules/localization/import.js /mnt/c/PID/repos/pid-desktop/app/_shared/locales/",
