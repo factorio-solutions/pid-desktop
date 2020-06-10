@@ -142,7 +142,6 @@ const appReducer = combineReducers({
 
 const rootReducer = (state, action) => { // app reducer container reducer
   if (action.type === 'RESET') {
-    window.Intercom('shutdown')
     state = undefined
   } // will erase store
   return appReducer(state, action)
