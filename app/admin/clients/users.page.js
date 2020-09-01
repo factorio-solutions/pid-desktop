@@ -111,7 +111,10 @@ class ClientUsersPage extends Component {
     const destroyClick = () => { destroyClientUser(clientId, user.user.id) }
     returnable.spoiler = (
       <div className={styles.float}>
-        <InvitationReminderButton userId={user.user.id} clientId={parseInt(clientId, 10)} />
+        <InvitationReminderButton
+          userId={user.user.id}
+          clientId={parseInt(clientId, 10)}
+        />
         <LabeledRoundButton
           label={t([ 'clientUsers', 'removeUser' ])}
           content={<span className="fa fa-times" aria-hidden="true" />}
