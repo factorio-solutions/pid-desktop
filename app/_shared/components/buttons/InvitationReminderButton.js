@@ -26,30 +26,34 @@ class InvitationReminderButton extends PureComponent {
   }
 
   resendClick = () => {
-    const { userId, clientId, garageId, carId, actions } = this.props
+    const {
+      userId, clientId, garageId, carId, actions
+    } = this.props
 
-    request(`mutation resendInvitation($user_id: Id!, $client_id: Id, $car_id: Id, $garage_id: Id) {
-      resend_invitation(user_id: $user_id, client_id: $client_id, car_id: $car_id, garage_id: $garage_id)
+    request(`mutation resendInvitation($user_id: Id!, $client_id: Id, $car_id: Id, $garage_id: Id, $notification_message_key: String) {
+      resend_invitation(user_id: $user_id, client_id: $client_id, car_id: $car_id, garage_id: $garage_id, notification_message_key: $notification_message_key)
     }`, {
-      user_id:   userId,
-      client_id: clientId,
-      garage_id: garageId,
-      car_id:    carId
+      user_id:                  userId,
+      client_id:                clientId,
+      garage_id:                garageId,
+      car_id:                   carId,
+      notification_message_key: 'clientInvitationMessage'
     }).then(data => data.resend_invitation
       ? actions.setSuccess(t([ 'clientUsers', 'resendSuccessfull' ]))
-      : actions.setError(t([ 'clientUsers', 'userNotFound' ]))
-    )
+      : actions.setError(t([ 'clientUsers', 'userNotFound' ])))
   }
 
   render() {
     const content = <span className="fa fa-repeat" aria-hidden="true" />
 
-    return (<LabeledRoundButton
-      label={t([ 'clientUsers', 'resendInvitation' ])}
-      content={content}
-      onClick={this.resendClick}
-      type="action"
-    />)
+    return (
+      <LabeledRoundButton
+        label={t([ 'clientUsers', 'resendInvitation' ])}
+        content={content}
+        onClick={this.resendClick}
+        type="action"
+      />
+    )
   }
 }
 
