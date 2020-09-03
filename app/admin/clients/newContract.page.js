@@ -62,8 +62,8 @@ class NewContractPage extends Component {
     const { pageBaseGarage: nextPageBaseGarage } = nextProps
 
     if (nextPageBaseGarage !== pageBaseGarage) {
-      initContract(contractId)
       eraseForm()
+      initContract(contractId)
     }
   }
 
@@ -88,9 +88,9 @@ class NewContractPage extends Component {
       const placeIds = state.places.map(place => place.id)
       const removedPlaces = state.originalPlaces.filter(place => !placeIds.includes(place.id))
 
-      removedPlaces.length ||
-      (state.originalIndefinitly && !state.indefinitly) ||
-      (!state.indefinitly && moment(state.to, MOMENT_DATETIME_FORMAT).isBefore(moment(state.originalTo, MOMENT_DATETIME_FORMAT)))
+      removedPlaces.length
+      || (state.originalIndefinitly && !state.indefinitly)
+      || (!state.indefinitly && moment(state.to, MOMENT_DATETIME_FORMAT).isBefore(moment(state.originalTo, MOMENT_DATETIME_FORMAT)))
         ? actions.setRemoveReservationsModal(true)
         : actions.submitNewContract(this.props.params.contract_id)
     }
@@ -157,9 +157,9 @@ class NewContractPage extends Component {
               <tr>
                 <td>{t([ 'newContract', 'usedBy' ])}</td>
                 <td>
-                  {garage.is_public && place.pricing && !place.contracts.length ?
-                    t([ 'newContract', 'goPublic' ]) :
-                    place.contracts
+                  {garage.is_public && place.pricing && !place.contracts.length
+                    ? t([ 'newContract', 'goPublic' ])
+                    : place.contracts
                       .filter(this.currentContractsFilter)
                       .map(contract => contract.client.name)
                       .filter((group, index, arr) => arr.indexOf(group) === index)
@@ -170,17 +170,18 @@ class NewContractPage extends Component {
               <tr>
                 <td>{t([ 'newContract', 'rentyType' ])}</td>
                 <td>
-                  {place.contracts.length ?
-                    t([ 'newContract', 'longterm' ]) :
-                    place.pricing ?
-                      t([ 'newContract', 'shortterm' ]) :
-                      ''
+                  {place.contracts.length
+                    ? t([ 'newContract', 'longterm' ])
+                    : place.pricing
+                      ? t([ 'newContract', 'shortterm' ])
+                      : ''
                   }
                 </td>
               </tr>
               <tr>
                 <td>{t([ 'newContract', 'longtermPrice' ])}</td>
-                <td>{
+                <td>
+                  {
                   place.contracts
                     .filter((contract, index, arr) => arr.findIndex(c => c.client.name === contract.client.name) === index)
                     .map(contract => `${valueAddedTax(contract.rent.price, vat)} ${contract.rent.currency.symbol}`)
@@ -200,7 +201,12 @@ class NewContractPage extends Component {
                         place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${valueAddedTax(place.pricing.exponential_month_price, vat)} ${place.pricing.currency.symbol}` ],
                         place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${valueAddedTax(place.pricing.flat_price, vat)} ${place.pricing.currency.symbol}` ],
                         place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${valueAddedTax(place.pricing.weekend_price, vat)} ${place.pricing.currency.symbol}` ]
-                      ].filter(o => o).reduce((arr, o) => [ ...arr, <tr><td>{o[0]}</td><td>{o[1]}</td></tr> ], [])}
+                      ].filter(o => o).map(o => (
+                        <tr>
+                          <td>{o[0]}</td>
+                          <td>{o[1]}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </td>
@@ -228,7 +234,7 @@ class NewContractPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const selectedClient = state.client_id ? state.clients.findIndex(c => state.client_id === c.id) : -1
+    const selectedClient = state.client_id && state.clients ? state.clients.findIndex(c => state.client_id === c.id) : -1
     const selectedCurrency = state.currency_id ? state.currencies.findIndex(currency => state.currency_id === currency.id) : -1
     const selectedRent = state.rent ? state.rents.findIndex(rent => state.rent.id === rent.id) : -1
 
@@ -258,30 +264,34 @@ class NewContractPage extends Component {
           <div>
             <Form onSubmit={state.garage && state.garage.is_admin ? this.submitForm : this.goBack} submitable={this.checkSubmitable()} onBack={this.goBack} onHighlight={actions.toggleHighlight}>
               <h2>{state.garage && `${state.garage.is_admin ? t([ 'newContract', state.contract_id ? 'edit' : 'description' ]) : t([ 'newContract', 'yourContract' ])} ${state.garage.name}`}</h2>
-              { state.garage && state.garage.is_admin && (state.addClient ?
-                <div className={styles.twoButtons}>
-                  <PatternInput
-                    onChange={actions.setClientToken}
-                    label={t([ 'newContract', 'selectClient' ]) + ' *'}
-                    error={t([ 'newContract', 'invalidToken' ])}
-                    type="text"
-                    placeholder={t([ 'newContract', 'tokenPlaceholder' ])}
-                    value={state.client_token ? state.client_token : ''}
-                    highlight={state.highlight}
-                  />
-                  <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.addClient} type="confirm" />
-                  <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleAddClient} type="remove" />
-                </div> :
-                <div className={styles.oneButton}>
-                  <Dropdown
-                    placeholder={t([ 'newContract', 'selectClient' ]) + ' *'}
-                    content={state.clients.map(this.prepareClients)}
-                    style="light"
-                    selected={selectedClient}
-                    highlight={state.highlight}
-                  />
-                  <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleAddClient} type="action" />
-                </div>)
+              { state.garage && state.garage.is_admin && (state.addClient
+                ? (
+                  <div className={styles.twoButtons}>
+                    <PatternInput
+                      onChange={actions.setClientToken}
+                      label={t([ 'newContract', 'selectClient' ]) + ' *'}
+                      error={t([ 'newContract', 'invalidToken' ])}
+                      type="text"
+                      placeholder={t([ 'newContract', 'tokenPlaceholder' ])}
+                      value={state.client_token ? state.client_token : ''}
+                      highlight={state.highlight}
+                    />
+                    <RoundButton content={<i className="fa fa-check" aria-hidden="true" />} onClick={actions.addClient} type="confirm" />
+                    <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleAddClient} type="remove" />
+                  </div>
+                )
+                : (
+                  <div className={styles.oneButton}>
+                    <Dropdown
+                      placeholder={t([ 'newContract', 'selectClient' ]) + ' *'}
+                      content={state.clients.map(this.prepareClients)}
+                      style="light"
+                      selected={selectedClient}
+                      highlight={state.highlight}
+                    />
+                    <RoundButton content={<i className="fa fa-plus" aria-hidden="true" />} onClick={actions.toggleAddClient} type="action" />
+                  </div>
+                ))
               }
 
               <div>
@@ -289,78 +299,104 @@ class NewContractPage extends Component {
                 {state.places.length ? state.places.map(this.makeButton) : <b className={state.highlight && styles.red}>{t([ 'newContract', 'noSelectedPlaces' ])}</b>}
               </div>
 
-              { state.garage && (state.garage.is_admin ? (state.newRent ?
-                <div className={styles.oneButton}>
-                  <Input
-                    onChange={actions.setContractPrice}
-                    label={t([ 'newContract', 'contractPrice' ]) + ' *'}
-                    error={t([ 'newContract', 'priceInvalid' ])}
-                    type="number"
-                    placeholder={t([ 'newContract', 'pricePlaceholder' ])}
-                    value={state.price ? state.price : ''}
-                    min={0}
-                    highlight={state.highlight}
-                  />
-                  <Dropdown
-                    placeholder={t([ 'newContract', 'selectCurrency' ]) + ' *'}
-                    content={state.currencies.map(this.prepareCurrencies)}
-                    style="light"
-                    selected={selectedCurrency}
-                    highlight={state.highlight}
-                  />
-                  <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleNewRent} type="remove" />
-                </div> :
-                <div className={styles.oneButton}>
-                  <Dropdown
-                    placeholder={t([ 'newContract', 'selectRent' ])}
-                    content={state.rents.map(this.prepareRents)}
-                    style="light"
-                    selected={selectedRent}
-                    highlight={state.highlight}
-                  />
-                  <RoundButton
-                    content={<i className="fa fa-plus" aria-hidden="true" />}
-                    onClick={actions.toggleNewRent}
-                    type="action"
-                  />
-                </div>) :
-                <div> {t([ 'newContract', 'placePrice' ])} {state.rent && `${Math.round(state.rent.price * 10) / 10} ${state.rent.currency.symbol}`} </div>)
+              { state.garage && (state.garage.is_admin ? (state.newRent
+                ? (
+                  <div className={styles.oneButton}>
+                    <Input
+                      onChange={actions.setContractPrice}
+                      label={t([ 'newContract', 'contractPrice' ]) + ' *'}
+                      error={t([ 'newContract', 'priceInvalid' ])}
+                      type="number"
+                      placeholder={t([ 'newContract', 'pricePlaceholder' ])}
+                      value={state.price ? state.price : ''}
+                      min={0}
+                      highlight={state.highlight}
+                    />
+                    <Dropdown
+                      placeholder={t([ 'newContract', 'selectCurrency' ]) + ' *'}
+                      content={state.currencies.map(this.prepareCurrencies)}
+                      style="light"
+                      selected={selectedCurrency}
+                      highlight={state.highlight}
+                    />
+                    <RoundButton content={<i className="fa fa-times" aria-hidden="true" />} onClick={actions.toggleNewRent} type="remove" />
+                  </div>
+                )
+                : (
+                  <div className={styles.oneButton}>
+                    <Dropdown
+                      placeholder={t([ 'newContract', 'selectRent' ])}
+                      content={state.rents.map(this.prepareRents)}
+                      style="light"
+                      selected={selectedRent}
+                      highlight={state.highlight}
+                    />
+                    <RoundButton
+                      content={<i className="fa fa-plus" aria-hidden="true" />}
+                      onClick={actions.toggleNewRent}
+                      type="action"
+                    />
+                  </div>
+                ))
+                : (
+                  <div>
+                    {' '}
+                    {t([ 'newContract', 'placePrice' ])}
+                    {' '}
+                    {state.rent && `${Math.round(state.rent.price * 10) / 10} ${state.rent.currency.symbol}`}
+                    {' '}
+                  </div>
+                ))
               }
-              {state.garage && state.garage.is_admin ?
-              [ <DatetimeInput onChange={this.handleFrom} label={t([ 'newReservation', 'begins' ])} error={t([ 'newReservation', 'invalidaDate' ])} value={state.from} highlight={state.highlight} />,
-                state.indefinitly ? null : <DatetimeInput onChange={this.handleTo} label={t([ 'newReservation', 'ends' ])} value={state.to} />,
-                <Checkbox
-                  onChange={val => actions.toggleIndefinitly(!val)}
-                  checked={state.indefinitly}
-                >
-                  {t([ 'newContract', 'indefinitContract' ])}
-                </Checkbox>,
-                <Checkbox
-                  onChange={val => actions.setGenerateInvoice(!val)}
-                  checked={state.generateInvoice}
-                >
-                  {t([ 'newContract', 'generateInvoice' ])}
-                </Checkbox>,
-                <div>
-                  <Input
-                    type="number"
-                    label={`${t([ 'newContract', 'securityInterval' ])} ${t([ 'newContract', 'inMinutes' ])}`}
-                    error={t([ 'newContract', 'securityIntervalInvalid' ])}
-                    placeholder="15"
-                    min={0}
-                    max={60}
-                    step={1}
-                    highlight={state.highlight}
-                    onChange={actions.setSecurityInterval}
-                    value={state.securityInterval || '0'}
-                  />
-                </div>
-              ] :
-              <div>
-                <p>{t([ 'newReservation', 'begins' ])}: {state.from}</p>
-                <p>{t([ 'newReservation', 'ends' ])}: {state.indefinitly ? t([ 'newContract', 'indefinite' ]) : state.to}</p>
-                <p>{t([ 'newContract', 'securityInterval' ])}: {state.securityInterval}</p>
-              </div>
+              {state.garage && state.garage.is_admin
+                ? [ <DatetimeInput onChange={this.handleFrom} label={t([ 'newReservation', 'begins' ])} error={t([ 'newReservation', 'invalidaDate' ])} value={state.from} highlight={state.highlight} />,
+                  state.indefinitly ? null : <DatetimeInput onChange={this.handleTo} label={t([ 'newReservation', 'ends' ])} value={state.to} />,
+                  <Checkbox
+                    onChange={val => actions.toggleIndefinitly(!val)}
+                    checked={state.indefinitly}
+                  >
+                    {t([ 'newContract', 'indefinitContract' ])}
+                  </Checkbox>,
+                  <Checkbox
+                    onChange={val => actions.setGenerateInvoice(!val)}
+                    checked={state.generateInvoice}
+                  >
+                    {t([ 'newContract', 'generateInvoice' ])}
+                  </Checkbox>,
+                  <div>
+                    <Input
+                      type="number"
+                      label={`${t([ 'newContract', 'securityInterval' ])} ${t([ 'newContract', 'inMinutes' ])}`}
+                      error={t([ 'newContract', 'securityIntervalInvalid' ])}
+                      placeholder="15"
+                      min={0}
+                      max={60}
+                      step={1}
+                      highlight={state.highlight}
+                      onChange={actions.setSecurityInterval}
+                      value={state.securityInterval || '0'}
+                    />
+                  </div>
+                ]
+                : (
+                  <div>
+                    <p>
+                      {t([ 'newReservation', 'begins' ])}
+                      {': '}
+                      {state.from}
+                    </p>
+                    <p>
+                      {t([ 'newReservation', 'ends' ])}
+                      {': '}
+                      {state.indefinitly ? t([ 'newContract', 'indefinite' ]) : state.to}
+                    </p>
+                    <p>
+                      {t([ 'newContract', 'securityInterval' ])}
+                      {': '}
+                      {state.securityInterval}
+                    </p>
+                  </div>
+                )
               }
             </Form>
           </div>

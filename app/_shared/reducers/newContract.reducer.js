@@ -61,7 +61,6 @@ const defaultState = {
 
 export default function newContract(state = defaultState, action) {
   switch (action.type) {
-
     case ADMIN_CLIENTS_NEW_CONTRACT_SET_CONTRACT_ID:
       return {
         ...state,
