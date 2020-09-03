@@ -68,8 +68,8 @@ class NewContractPage extends Component {
     const { pageBaseGarage: nextPageBaseGarage } = nextProps
 
     if (nextPageBaseGarage !== pageBaseGarage) {
-      initContract(contractId)
       eraseForm()
+      initContract(contractId)
     }
   }
 
@@ -215,10 +215,12 @@ class NewContractPage extends Component {
                         place.pricing.exponential_month_price && [ t([ 'garages', 'monthPrice' ]), `${valueAddedTax(place.pricing.exponential_month_price, vat)} ${place.pricing.currency.symbol}` ],
                         place.pricing.flat_price && [ t([ 'garages', 'flatPrice' ]), `${valueAddedTax(place.pricing.flat_price, vat)} ${place.pricing.currency.symbol}` ],
                         place.pricing.weekend_price && [ t([ 'garages', 'weekendPrice' ]), `${valueAddedTax(place.pricing.weekend_price, vat)} ${place.pricing.currency.symbol}` ]
-                      ].filter(o => o).reduce((arr, o) => [ ...arr, <tr>
-                        <td>{o[0]}</td>
-                        <td>{o[1]}</td>
-                                                                    </tr> ], [])}
+                      ].filter(o => o).map(o => (
+                        <tr>
+                          <td>{o[0]}</td>
+                          <td>{o[1]}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </td>
@@ -246,7 +248,7 @@ class NewContractPage extends Component {
   render() {
     const { state, actions } = this.props
 
-    const selectedClient = state.client_id ? state.clients.findIndex(c => state.client_id === c.id) : -1
+    const selectedClient = state.client_id && state.clients ? state.clients.findIndex(c => state.client_id === c.id) : -1
     const selectedCurrency = state.currency_id ? state.currencies.findIndex(currency => state.currency_id === currency.id) : -1
     const selectedRent = state.rent ? state.rents.findIndex(rent => state.rent.id === rent.id) : -1
 
