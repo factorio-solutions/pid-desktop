@@ -88,8 +88,8 @@ export function setFrom(value, refreshGarage = true) {
       fromValue = now
     }
 
-    if (moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).isValid() &&
-        moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < 0) {
+    if (moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).isValid()
+        && moment(getState().newContract.to, MOMENT_DATETIME_FORMAT).diff(fromValue, 'minutes') < 0) {
       dispatch(setTo(fromValue.clone().endOf('day').format(MOMENT_DATETIME_FORMAT), refreshGarage))
     }
 
@@ -141,7 +141,8 @@ export function initContract(id) {
     if (!id) {
       dispatch(setFrom(moment().startOf('day'), false))
       dispatch(setTo(moment().endOf('day'), false))
-      dispatch(getGarage(garageId)) // if id, then i have to download garage from contract, not this one
+      // If id, then i have to download garage from contract, not this one.
+      dispatch(getGarage(garageId))
     }
     const { rents } = await requestPromise(GET_RENTS)
 
@@ -158,26 +159,37 @@ export function initContract(id) {
       await detailsPromise
     ]
 
+    // Will find unique clients, start with clients from clients page.
     const clients = clientsData && clientsData.garage.contracts.reduce((arr, contracts) => {
       if (arr.find(client => client.id === contracts.client.id) === undefined) {
         arr.push(contracts.client)
       }
       return arr
-    }, getState().clients.clients || []) // will find unique clients, start with clients from clients page
+    }, getState().clients.clients || [])
 
-    dispatch(setClients(clients))
+    dispatch(setClients(clients || []))
     if (clients && clients.length === 1) { dispatch(setClient(clients[0].id)) }
 
     if (detailsData) {
+      const infiniteYear = 9999
+
       const to = moment(detailsData.contract.to)
-      const isIndefinite = to.year() === 9999
-      dispatch(setFrom(moment(detailsData.contract.from).format(MOMENT_DATETIME_FORMAT), false))
-      dispatch(setTo(detailsData.contract.to ? moment(detailsData.contract.to).format(MOMENT_DATETIME_FORMAT) : '', false))
+      const isIndefinite = to.year() === infiniteYear
+
+      const fromString = moment(detailsData.contract.from).format(MOMENT_DATETIME_FORMAT)
+      const toString = detailsData.contract.to ? to.format(MOMENT_DATETIME_FORMAT) : ''
+
+      dispatch(setFrom(fromString, false))
+      dispatch(setTo(toString, false))
       dispatch(batchActions([
         setIndefinitly(isIndefinite),
         setOriginalIndefinitly(isIndefinite),
-        setOriginalTo(detailsData.contract.to ? moment(detailsData.contract.to).format(MOMENT_DATETIME_FORMAT) : '')
+        setOriginalTo(toString)
       ], 'ADMIN_CLIENTS_NEW_CONTRACT_INIT_CONTRACT_BATCH_1'))
+
+      if (!isIndefinite) {
+        dispatch(setTo(toString, false))
+      }
 
       dispatch(getGarage(detailsData.contract.garage.id))
 
@@ -319,7 +331,8 @@ export function submitNewContract(id) {
     if (state.newRent) {
       variables.contract = {
         ...variables.contract,
-        rent: { currency_id: state.currency_id,
+        rent: {
+          currency_id: state.currency_id,
           price:       state.price / state.places.length
         }
       }
