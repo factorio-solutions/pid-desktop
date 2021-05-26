@@ -168,6 +168,7 @@ export const CREATE_RESERVATION = `mutation createReservation($reservation: Rese
     reservation {
       id
       payment_url
+      recurring_reservation_id
     }
     errors {
       message
@@ -182,6 +183,7 @@ export const CREATE_RESERVATION_NEW = `mutation createReservation($reservation: 
     reservation {
       id
       payment_url
+      recurring_reservation_id
     }
     errors {
       message
@@ -208,6 +210,7 @@ export const UPDATE_RESERVATION_NEW = `mutation updateReservation($reservation: 
   update_reservation_new(reservation: $reservation, id: $id) {
     reservation {
       id
+      recurring_reservation_id
     }
     errors {
       message
@@ -246,6 +249,14 @@ export const GET_RESERVATION = `query getReservation($id: Id!) {
     }
     begins_at
     ends_at
+    recurring_reservation_id
   }
 }
 `
+
+export const GET_RECURRING_RESERVATION = `query getRecurringReservation($id: Id!) {
+  recurring_reservation(id: $id) {
+    id
+    state
+  }
+}`
