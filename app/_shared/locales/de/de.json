@@ -281,7 +281,10 @@
 		"clientDropdownLabel": "Gruppe ",
 		"selectCarLabel": "Wählen Sie ein Fahrzeug",
 		"smsTemplateLabel": "DE: newReservation.smsTemplateLabel",
-		"reservationOnPlace": "Der ausgewählte Parkplatz ist bereits belegt"
+		"reservationOnPlace": "Der ausgewählte Parkplatz ist bereits belegt",
+		"recurringReservationError": "DE: newReservation.recurringReservationError",
+		"creatingRecurringReservation": "DE: newReservation.creatingRecurringReservation",
+		"updatingRecurringReservation": "DE: newReservation.updatingRecurringReservation"
 	},
 	"clients": {
 		"name": "Name",
@@ -722,7 +725,7 @@
 		"invoiceReminder": "Konto %(arg1)s möchten Sie darüber informieren, dass einige Rechnungen noch nicht beglichen wurden.",
 		"reservationAccepted": "Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde angenommen.",
 		"reservationDeclined": "Ihre Buchung für den Stellplatz von „%(arg1)s“ wurde abgelehnt.",
-		"verifyYourEmail": "Wilkommen bei Parkit.direct! Wir haben eine Bestätigungs-E-Mail an \"%(arg1)s\"s geschickt.\nNachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen.",
+		"verifyYourEmail": "Willkommen bei Parkit.direct! Wir haben eine Bestätigungs-E-Mail an \"%(arg1)s\"s geschickt.\nNachdem Sie Ihr Konto bestätigt haben, können Sie sich einloggen.",
 		"newReservationForYou": "%(arg1)s (%(arg2)s) hat für Sie eine Buchung erstellt.",
 		"reservationUpdatedNotification": "%(arg1)s hat gerade Ihre Buchung aktualisiert. Für weitere Informationen gehen Sie zum Tab \"Buchungen\".",
 		"reservationRemovedDueToUnpaid": "Da Ihre Buchung innerhalb 15 Minuten nicht bezahlt wurde, haben wir sie storniert.",
@@ -1373,7 +1376,7 @@
 		"enjoy": "Viel Spaß mit Parkit.direct",
 		"bestRegards": "Mit freundlichen Grüßen,",
 		"PidTeam": "Team Parkit.direct",
-		"welcome": "Wilkommen bei Parkit.direct",
+		"welcome": "Willkommen bei Parkit.direct",
 		"thankYou": "Vielen Dank, dass Sie sich für unser Verwaltungssystem entschieden haben. Schauen wir mal, wie Ihnen Parkit.direct bei dem Verwalten Ihrer Parkflächen helfen kann.",
 		"howToStart": "Wie fängt man mit PID an?",
 		"pleasantExperience": "Möchten Sie bequem ein Parkplatz finden? Würden Sie gerne das Parken in Ihrem Unternehmen verwalten? Möchten Sie den Gewinn von Ihren Parkflächen erhöhen? ",

@@ -281,7 +281,10 @@
 		"clientDropdownLabel": "Klient",
 		"selectCarLabel": "PL: newReservation.selectCarLabel",
 		"smsTemplateLabel": "PL: newReservation.smsTemplateLabel",
-		"reservationOnPlace": "Wybrana lokalizacja jest już zajęta"
+		"reservationOnPlace": "Wybrana lokalizacja jest już zajęta",
+		"recurringReservationError": "PL: newReservation.recurringReservationError",
+		"creatingRecurringReservation": "PL: newReservation.creatingRecurringReservation",
+		"updatingRecurringReservation": "PL: newReservation.updatingRecurringReservation"
 	},
 	"clients": {
 		"name": "Nazwa klienta",

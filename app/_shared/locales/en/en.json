@@ -281,7 +281,10 @@
 		"clientDropdownLabel": "Group",
 		"selectCarLabel": "Select car",
 		"smsTemplateLabel": "SMS template",
-		"reservationOnPlace": "Selected spot is already taken"
+		"reservationOnPlace": "Selected spot is already taken",
+		"recurringReservationError": "Error occurred when making/updating recurring reservation. Please contact support.",
+		"creatingRecurringReservation": "Making recurring reservation. Operation may take several tens of seconds.",
+		"updatingRecurringReservation": "Updating recurring reservation. Operation may take several tens of seconds."
 	},
 	"clients": {
 		"name": "name",

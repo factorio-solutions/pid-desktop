@@ -281,7 +281,10 @@
 		"clientDropdownLabel": "Skupina",
 		"selectCarLabel": "Vyberte auto",
 		"smsTemplateLabel": "SMS šablona",
-		"reservationOnPlace": "Zvolené místo je již obsazeno"
+		"reservationOnPlace": "Zvolené místo je již obsazeno",
+		"recurringReservationError": "Při vytváření opakované rezervace došlo k chybě.",
+		"creatingRecurringReservation": "Vytváří se opakovaná rezervace. Operace může trvat i několik desítek vteřin.",
+		"updatingRecurringReservation": "Aktualizuje se opakovaná rezervace. Operace může trvat i několik desítek vteřin."
 	},
 	"clients": {
 		"name": "jméno",
