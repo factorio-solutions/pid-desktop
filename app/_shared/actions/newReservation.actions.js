@@ -19,6 +19,9 @@ import {
   MOMENT_TIME_FORMAT,
   timeToUTC
 } from '../helpers/time'
+
+import waitToRecurringReservation, { showRecurringErrorModalAction } from '../helpers/recurringReservationHelper'
+
 import * as pageBaseActions from './pageBase.actions'
 
 
@@ -1092,6 +1095,14 @@ async function afterCreateReservation(dispatch, getState, data) {
       ))
       window.location.replace(reservation.payment_url)
     } else {
+      if (reservation.recurring_reservation_id) {
+        const completed = await waitToRecurringReservation(reservation.recurring_reservation_id)
+
+        if (!completed) {
+          await dispatch(showRecurringErrorModalAction())
+        }
+      }
+
       dispatch(pageBaseActions.setCustomModal(undefined))
       nav.to(`/reservations/find/${reservation.id}`)
       dispatch(clearForm())
@@ -1156,13 +1167,13 @@ export function submitReservation(id) {
   return (dispatch, getState) => {
     const state = getState().newReservation
     const updatingReservation = id !== undefined
+    const isRecurringReservation = state.useRecurring || !!state.recurring_reservation_id
+
+    const translateKey = `${updatingReservation ? 'updating' : 'creating'}${isRecurringReservation ? 'Recurring' : ''}Reservation`
 
     dispatch(pageBaseActions.setCustomModal(
       <div>
-        {t([ 'newReservation', updatingReservation
-          ? 'updatingReservation'
-          : 'creatingReservation'
-        ])}
+        {t([ 'newReservation', translateKey ])}
       </div>
     ))
 
